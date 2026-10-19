@@ -567,3 +567,145 @@ test('wholly timed-out recordings end unavailable after one bounded attempt per 
   assert.equal(clock.pending, 0);
   director.dispose();
 });
+
+for (const attemptMs of [9999, 10000, 11000])
+  test(`recovery checks its total ${attemptMs * 3}ms before adopting a prepared source`, async () => {
+    const clock = demoLoadingClock();
+    const prepared = adapter();
+    let attempts = 0;
+    const director = createDemoDirector({
+      sources: [
+        { id: 'one', levelId: 'one', kind: 'replay', approachable: true },
+        { id: 'two', levelId: 'two', kind: 'replay' },
+        { id: 'three', levelId: 'three', kind: 'replay' },
+      ],
+      random: () => 0,
+      loading: clock.options,
+      prepare: () => {
+        clock.elapse(attemptMs);
+        if (++attempts < 3) throw new Error('Try another recording');
+        return prepared;
+      },
+    });
+    const withinBudget = attemptMs * 3 < 30000;
+    assert.equal(await director.start(), withinBudget);
+    assert.equal(attempts, 3);
+    assert.equal(director.phase, withinBudget ? 'playing' : 'unavailable');
+    assert.equal(director.player, withinBudget ? prepared : null);
+    assert.equal(prepared.disposals, withinBudget ? 0 : 1);
+    assert.equal(clock.pending, 0);
+    if (!withinBudget) assert.match(director.error, /30-second budget/);
+    director.dispose();
+    assert.equal(prepared.disposals, 1);
+  });
+
+test('synchronous retirement and replacement preparation share the recovery budget', async () => {
+  const clock = demoLoadingClock();
+  const original = adapter(),
+    replacement = adapter();
+  const disposeOriginal = original.dispose;
+  original.dispose = () => {
+    clock.elapse(25000);
+    disposeOriginal();
+  };
+  let attempts = 0;
+  const director = createDemoDirector({
+    sources,
+    random: () => 0,
+    loading: clock.options,
+    prepare: () => {
+      if (++attempts === 1) return original;
+      clock.elapse(6000);
+      return replacement;
+    },
+  });
+  assert.equal(await director.start(), true);
+  assert.equal(await director.next(), false);
+  assert.equal(attempts, 2);
+  assert.equal(director.phase, 'unavailable');
+  assert.equal(director.player, null);
+  assert.match(director.error, /30-second budget/);
+  assert.equal(original.disposals, 1);
+  assert.equal(replacement.disposals, 1);
+  assert.equal(clock.pending, 0);
+  director.dispose();
+  assert.equal(replacement.disposals, 1);
+});
+
+test('retirement that exhausts recovery cannot begin another source or quarantine the old source', async () => {
+  const clock = demoLoadingClock();
+  const original = adapter();
+  const disposeOriginal = original.dispose;
+  original.dispose = () => {
+    clock.elapse(30000);
+    disposeOriginal();
+  };
+  let attempts = 0;
+  const director = createDemoDirector({
+    sources,
+    loading: clock.options,
+    prepare: () => {
+      attempts++;
+      return original;
+    },
+  });
+  assert.equal(await director.start(), true);
+  assert.equal(await director.next(), false);
+  assert.equal(attempts, 1);
+  assert.equal(director.phase, 'unavailable');
+  assert.equal(director.player, null);
+  assert.deepEqual(director.failedSourceIds, []);
+  assert.equal(original.disposals, 1);
+  assert.equal(clock.pending, 0);
+  director.dispose();
+});
+
+for (const exit of ['timeout', 'cancel'])
+  test(`preparation evidence survives ${exit} and ignores late diagnostic updates`, async () => {
+    const clock = demoLoadingClock();
+    const gate = deferred(),
+      late = adapter(),
+      fallback = adapter();
+    let report;
+    const director = createDemoDirector({
+      sources: [
+        { id: 'slow', levelId: 'slow', approachable: true },
+        { id: 'fallback', levelId: 'fallback' },
+      ],
+      loading: clock.options,
+      prepare: (source, { reportPreparation }) => {
+        if (source.id !== 'slow') return fallback;
+        report = reportPreparation;
+        report('candidate', { variant: 'chromium', engineHint: 'chromium' });
+        report('verification');
+        report('progress', { tick: 2400, totalTicks: 19020 });
+        return gate.promise;
+      },
+    });
+    const pending = director.start();
+    if (exit === 'timeout') clock.advance(15000);
+    else {
+      clock.elapse(100);
+      director.suspend();
+    }
+    assert.equal(await pending, exit === 'timeout');
+    const row = director.diagnostics.find((item) => item.sourceId === 'slow');
+    assert.equal(row.event, exit === 'timeout' ? 'failed' : 'cancelled');
+    assert.equal(row.preparation.status, row.event);
+    assert.equal(row.preparation.stage, 'verification');
+    assert.equal(row.preparation.elapsedMs, exit === 'timeout' ? 15000 : 100);
+    assert.equal(row.preparation.candidates[0].tick, 2400);
+    const original = JSON.stringify(row);
+    clock.elapse(90000);
+    report('renderer');
+    report('progress', { tick: 19020, totalTicks: 19020 });
+    gate.resolve(late);
+    await settleDemoLoading();
+    assert.equal(late.disposals, 1);
+    assert.equal(
+      JSON.stringify(director.diagnostics.find((item) => item.sourceId === 'slow')),
+      original,
+    );
+    assert.equal(clock.pending, 0);
+    director.dispose();
+  });

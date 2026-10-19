@@ -1,0 +1,1407 @@
+{
+  "format": "SharedDemoInstalledSoloNodeX64ObservationV1",
+  "complete": true,
+  "started": "2026-10-19T09:30:01.618Z",
+  "environment": {
+    "version": "v22.13.1",
+    "arch": "x64",
+    "platform": "darwin",
+    "versions": {
+      "node": "22.13.1",
+      "acorn": "8.14.0",
+      "ada": "2.9.2",
+      "amaro": "0.2.0",
+      "ares": "1.34.4",
+      "brotli": "1.1.0",
+      "cjs_module_lexer": "1.4.1",
+      "cldr": "46.0",
+      "icu": "76.1",
+      "llhttp": "9.2.1",
+      "modules": "127",
+      "napi": "9",
+      "nbytes": "0.1.1",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.64.0",
+      "nghttp3": "1.6.0",
+      "ngtcp2": "1.9.1",
+      "openssl": "3.0.15+quic",
+      "simdjson": "3.10.1",
+      "simdutf": "5.6.4",
+      "sqlite": "3.47.2",
+      "tz": "2024b",
+      "undici": "6.21.1",
+      "unicode": "16.0",
+      "uv": "1.49.2",
+      "uvwasi": "0.0.21",
+      "v8": "12.4.254.21-node.22",
+      "zlib": "1.3.0.1-motley-82a5fec"
+    },
+    "executable": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    }
+  },
+  "headBefore": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceBefore": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsBefore": {
+    "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256": "514cc0e26add6d098ffb442a80ebd04571d6769f889f8e96f5634ac9e1ea8965",
+  "checks": [
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "engine": "primary",
+      "replay": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json",
+        "sha256": "06642a1d92e6405531297802a2eb9632795ce7540029d35f34813525409aad4b",
+        "bytes": 13941
+      },
+      "sidecar": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.diagnostics.json",
+        "sha256": "2ef490e8c2aedba62874ee045181503ffd5a9db917382b8dda096a5507ce11d3",
+        "bytes": 5370
+      },
+      "match": false,
+      "diagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "28fc2e7ba2c0539c",
+          "actual": "c3ba914e89640524"
+        }
+      ],
+      "diagnostic": {
+        "code": "diagnostic-checkpoint-mismatch",
+        "firstMismatchingCheckpointTick": 600,
+        "expected": "67078d401c4d6b47",
+        "actual": "2de4810180a47587"
+      },
+      "actual": {
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-08",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+          "seed": 123,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "won",
+          "won": true,
+          "tick": 7322,
+          "time": 61.010105580691,
+          "lives": 2,
+          "score": 12330,
+          "coverage": 0.7632258064516129,
+          "claimedCount": 1183,
+          "totalClaimable": 1550,
+          "medal": "silver",
+          "objectives": {
+            "captured": 1,
+            "total": 1,
+            "required": 1
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "a6a49980b08ebcab",
+          "sections": {
+            "identity": "2d88a59f014880bd",
+            "configuration": "786bbd305565a787",
+            "board": "620d2d05315a7608",
+            "player": "fe5606397901f03e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "c3ba914e89640524",
+            "objectives": "a77a0767441490cd",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "83be6483dc2b7278",
+            "continuation": "a9d828ced6380d30",
+            "result": "4d4888fdb5494cc5"
+          }
+        }
+      },
+      "recorded": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "e75b8aa015be9306",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "28fc2e7ba2c0539c",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "83be6483dc2b7278",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "at600": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "2de4810180a47587",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "dee67ee00cdbea01",
+          "player": "98b26a787c09feeb",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "dc5fb9c94acc1d3e",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "f5ad50b86f780000",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "clock": {
+        "status": "won",
+        "tick": 7322,
+        "time": 61.010105580691,
+        "lives": 2,
+        "score": 12330,
+        "respawnAt": 14.803932533904936,
+        "medal": "silver",
+        "cutStartedAt": null,
+        "failureCause": "enemy-trail"
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 29.218173638427537,
+          "y": 17.407292968261498,
+          "vx": 10.616778000287024,
+          "vy": 3.0637436075202866,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 10.723016194851809,
+          "y": 17.939217105698884,
+          "vx": -5.495273336347686,
+          "vy": -9.586681957738364,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 34.5,
+          "y": 15.5,
+          "axis": "vertical",
+          "period": 6.512499999999999,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2,
+          "radius": 0.25,
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1,
+          "bossPhase": "warning",
+          "lane": 4.5,
+          "nextWarningAt": 67.1624999999972,
+          "warningUntil": 62.6499999999972,
+          "activeUntil": 63.8499999999972
+        }
+      ],
+      "matchesLinuxFinalEnemy": true,
+      "matchesLinuxFinalClock": true,
+      "matchesLinuxFirstCheckpoint": true
+    },
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "engine": "chromium",
+      "replay": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.replay.json",
+        "sha256": "05cfc23fd5add25ff44a5fb61201a5f60690ec97064624e030241cb4fa096982",
+        "bytes": 13941
+      },
+      "sidecar": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.diagnostics.json",
+        "sha256": "a5992afc38ee9268ea78e9b1838a11e92c3a382836e3b137a381b1150e9eca2c",
+        "bytes": 5370
+      },
+      "match": false,
+      "diagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "5d5f527833603614",
+          "actual": "c3ba914e89640524"
+        }
+      ],
+      "diagnostic": {
+        "code": "diagnostic-checkpoint-mismatch",
+        "firstMismatchingCheckpointTick": 1200,
+        "expected": "9095fb0429e7a2d4",
+        "actual": "6c776c2a332f6dc1"
+      },
+      "actual": {
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-08",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+          "seed": 123,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "won",
+          "won": true,
+          "tick": 7322,
+          "time": 61.010105580691,
+          "lives": 2,
+          "score": 12330,
+          "coverage": 0.7632258064516129,
+          "claimedCount": 1183,
+          "totalClaimable": 1550,
+          "medal": "silver",
+          "objectives": {
+            "captured": 1,
+            "total": 1,
+            "required": 1
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "a6a49980b08ebcab",
+          "sections": {
+            "identity": "2d88a59f014880bd",
+            "configuration": "786bbd305565a787",
+            "board": "620d2d05315a7608",
+            "player": "fe5606397901f03e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "c3ba914e89640524",
+            "objectives": "a77a0767441490cd",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "83be6483dc2b7278",
+            "continuation": "a9d828ced6380d30",
+            "result": "4d4888fdb5494cc5"
+          }
+        }
+      },
+      "recorded": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "c9b1881bd08b8a93",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "5d5f527833603614",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "83be6483dc2b7278",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "at600": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "2de4810180a47587",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "dee67ee00cdbea01",
+          "player": "98b26a787c09feeb",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "dc5fb9c94acc1d3e",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "f5ad50b86f780000",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "clock": {
+        "status": "won",
+        "tick": 7322,
+        "time": 61.010105580691,
+        "lives": 2,
+        "score": 12330,
+        "respawnAt": 14.803932533904936,
+        "medal": "silver",
+        "cutStartedAt": null,
+        "failureCause": "enemy-trail"
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 29.218173638427537,
+          "y": 17.407292968261498,
+          "vx": 10.616778000287024,
+          "vy": 3.0637436075202866,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 10.723016194851809,
+          "y": 17.939217105698884,
+          "vx": -5.495273336347686,
+          "vy": -9.586681957738364,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 34.5,
+          "y": 15.5,
+          "axis": "vertical",
+          "period": 6.512499999999999,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2,
+          "radius": 0.25,
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1,
+          "bossPhase": "warning",
+          "lane": 4.5,
+          "nextWarningAt": 67.1624999999972,
+          "warningUntil": 62.6499999999972,
+          "activeUntil": 63.8499999999972
+        }
+      ],
+      "matchesLinuxFinalEnemy": true,
+      "matchesLinuxFinalClock": true,
+      "matchesLinuxFirstCheckpoint": true
+    },
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "engine": "firefox",
+      "replay": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.replay.json",
+        "sha256": "7d29830644a9e8029fe1cd35dcadbf45725918a4f498e8427bc0222e7a951c09",
+        "bytes": 13941
+      },
+      "sidecar": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.diagnostics.json",
+        "sha256": "257a3a6b39cb97247e0208838b6595467cdbb31855256272e7455e57958f41b3",
+        "bytes": 5370
+      },
+      "match": false,
+      "diagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "d7b102f8a9128e95",
+          "actual": "c3ba914e89640524"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "9e232cdb3132c194",
+          "actual": "83be6483dc2b7278"
+        }
+      ],
+      "diagnostic": {
+        "code": "diagnostic-checkpoint-mismatch",
+        "firstMismatchingCheckpointTick": 600,
+        "expected": "a693a2b0126e2de9",
+        "actual": "2de4810180a47587"
+      },
+      "actual": {
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-08",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+          "seed": 123,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "won",
+          "won": true,
+          "tick": 7322,
+          "time": 61.010105580691,
+          "lives": 2,
+          "score": 12330,
+          "coverage": 0.7632258064516129,
+          "claimedCount": 1183,
+          "totalClaimable": 1550,
+          "medal": "silver",
+          "objectives": {
+            "captured": 1,
+            "total": 1,
+            "required": 1
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "a6a49980b08ebcab",
+          "sections": {
+            "identity": "2d88a59f014880bd",
+            "configuration": "786bbd305565a787",
+            "board": "620d2d05315a7608",
+            "player": "fe5606397901f03e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "c3ba914e89640524",
+            "objectives": "a77a0767441490cd",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "83be6483dc2b7278",
+            "continuation": "a9d828ced6380d30",
+            "result": "4d4888fdb5494cc5"
+          }
+        }
+      },
+      "recorded": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "088f8832794dd30d",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "d7b102f8a9128e95",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "9e232cdb3132c194",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "at600": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "2de4810180a47587",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "dee67ee00cdbea01",
+          "player": "98b26a787c09feeb",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "dc5fb9c94acc1d3e",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "f5ad50b86f780000",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "clock": {
+        "status": "won",
+        "tick": 7322,
+        "time": 61.010105580691,
+        "lives": 2,
+        "score": 12330,
+        "respawnAt": 14.803932533904936,
+        "medal": "silver",
+        "cutStartedAt": null,
+        "failureCause": "enemy-trail"
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 29.218173638427537,
+          "y": 17.407292968261498,
+          "vx": 10.616778000287024,
+          "vy": 3.0637436075202866,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 10.723016194851809,
+          "y": 17.939217105698884,
+          "vx": -5.495273336347686,
+          "vy": -9.586681957738364,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 34.5,
+          "y": 15.5,
+          "axis": "vertical",
+          "period": 6.512499999999999,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2,
+          "radius": 0.25,
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1,
+          "bossPhase": "warning",
+          "lane": 4.5,
+          "nextWarningAt": 67.1624999999972,
+          "warningUntil": 62.6499999999972,
+          "activeUntil": 63.8499999999972
+        }
+      ],
+      "matchesLinuxFinalEnemy": true,
+      "matchesLinuxFinalClock": true,
+      "matchesLinuxFirstCheckpoint": true
+    },
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "engine": "webkit",
+      "replay": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.replay.json",
+        "sha256": "d11a9014a1bcdf8de8c2387f8701acc2cd2aee33f833f73429a6292cfaa7134e",
+        "bytes": 13941
+      },
+      "sidecar": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.diagnostics.json",
+        "sha256": "9154d2bda3df4e701d71880dd9ac4b6c766bd3e004f72c31ee035e81b430e9e7",
+        "bytes": 5370
+      },
+      "match": false,
+      "diagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "ed391a595d4e2fb9",
+          "actual": "c3ba914e89640524"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "ca39e0a04aa6d20e",
+          "actual": "83be6483dc2b7278"
+        }
+      ],
+      "diagnostic": {
+        "code": "diagnostic-checkpoint-mismatch",
+        "firstMismatchingCheckpointTick": 600,
+        "expected": "a693a2b0126e2de9",
+        "actual": "2de4810180a47587"
+      },
+      "actual": {
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-08",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+          "seed": 123,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "won",
+          "won": true,
+          "tick": 7322,
+          "time": 61.010105580691,
+          "lives": 2,
+          "score": 12330,
+          "coverage": 0.7632258064516129,
+          "claimedCount": 1183,
+          "totalClaimable": 1550,
+          "medal": "silver",
+          "objectives": {
+            "captured": 1,
+            "total": 1,
+            "required": 1
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "a6a49980b08ebcab",
+          "sections": {
+            "identity": "2d88a59f014880bd",
+            "configuration": "786bbd305565a787",
+            "board": "620d2d05315a7608",
+            "player": "fe5606397901f03e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "c3ba914e89640524",
+            "objectives": "a77a0767441490cd",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "83be6483dc2b7278",
+            "continuation": "a9d828ced6380d30",
+            "result": "4d4888fdb5494cc5"
+          }
+        }
+      },
+      "recorded": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "0ecb8c5346ff5738",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "ed391a595d4e2fb9",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "ca39e0a04aa6d20e",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "at600": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "2de4810180a47587",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "dee67ee00cdbea01",
+          "player": "98b26a787c09feeb",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "dc5fb9c94acc1d3e",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "f5ad50b86f780000",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "clock": {
+        "status": "won",
+        "tick": 7322,
+        "time": 61.010105580691,
+        "lives": 2,
+        "score": 12330,
+        "respawnAt": 14.803932533904936,
+        "medal": "silver",
+        "cutStartedAt": null,
+        "failureCause": "enemy-trail"
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 29.218173638427537,
+          "y": 17.407292968261498,
+          "vx": 10.616778000287024,
+          "vy": 3.0637436075202866,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 10.723016194851809,
+          "y": 17.939217105698884,
+          "vx": -5.495273336347686,
+          "vy": -9.586681957738364,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 34.5,
+          "y": 15.5,
+          "axis": "vertical",
+          "period": 6.512499999999999,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2,
+          "radius": 0.25,
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1,
+          "bossPhase": "warning",
+          "lane": 4.5,
+          "nextWarningAt": 67.1624999999972,
+          "warningUntil": 62.6499999999972,
+          "activeUntil": 63.8499999999972
+        }
+      ],
+      "matchesLinuxFinalEnemy": true,
+      "matchesLinuxFinalClock": true,
+      "matchesLinuxFirstCheckpoint": true
+    }
+  ],
+  "installed": [
+    {
+      "sourceId": "first-signal-left",
+      "levelId": "signal-01",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1",
+        "levelId": "signal-01",
+        "levelName": "First Signal",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 35,
+        "totalTicks": 3682,
+        "durationSeconds": 30.683333333333334,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 48.00799999999981,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/first-signal-left.replay.json"
+      ]
+    },
+    {
+      "sourceId": "first-signal-right",
+      "levelId": "signal-01",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1-browser",
+        "levelId": "signal-01",
+        "levelName": "First Signal",
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "seed": 5,
+        "totalTicks": 3829,
+        "durationSeconds": 31.90833333333333,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 70.42266599999948,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/first-signal-right.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/first-signal-right.chromium-macos.replay.json"
+      ]
+    },
+    {
+      "sourceId": "relay-orchard-loop",
+      "levelId": "signal-02",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1",
+        "levelId": "signal-02",
+        "levelName": "Relay Orchard",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 331,
+        "totalTicks": 5457,
+        "durationSeconds": 45.475,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 40.540750000000116,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/relay-orchard-loop.replay.json"
+      ]
+    },
+    {
+      "sourceId": "relay-orchard-stairs",
+      "levelId": "signal-02",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1",
+        "levelId": "signal-02",
+        "levelName": "Relay Orchard",
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "seed": 322,
+        "totalTicks": 5481,
+        "durationSeconds": 45.675,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 38.70874999999978,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/relay-orchard-stairs.replay.json"
+      ]
+    },
+    {
+      "sourceId": "crosswind-openings",
+      "levelId": "signal-03",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1",
+        "levelId": "signal-03",
+        "levelName": "Crosswind",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 287,
+        "totalTicks": 5604,
+        "durationSeconds": 46.7,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 45.54266699999971,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/crosswind-openings.replay.json"
+      ]
+    },
+    {
+      "sourceId": "night-patrol-loop",
+      "levelId": "signal-05",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1",
+        "levelId": "signal-05",
+        "levelName": "Night Patrol",
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "seed": 376,
+        "totalTicks": 5602,
+        "durationSeconds": 46.68333333333333,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 64.34962499999983,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/night-patrol-loop.replay.json"
+      ]
+    },
+    {
+      "sourceId": "stone-lanes-detour",
+      "levelId": "signal-04",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1",
+        "levelId": "signal-04",
+        "levelName": "Stone Lanes",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 1,
+        "totalTicks": 3005,
+        "durationSeconds": 25.041666666666668,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 25.24316700000054,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/stone-lanes-detour.replay.json"
+      ]
+    },
+    {
+      "sourceId": "hidden-frequency-search",
+      "levelId": "signal-06",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1-browser",
+        "levelId": "signal-06",
+        "levelName": "Hidden Frequency",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 1,
+        "totalTicks": 5327,
+        "durationSeconds": 44.391666666666666,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 70.14408300000014,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/hidden-frequency-search.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/hidden-frequency-search.chromium-macos.replay.json"
+      ]
+    },
+    {
+      "sourceId": "the-crossing-windows",
+      "levelId": "signal-07",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1",
+        "levelId": "signal-07",
+        "levelName": "The Crossing",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 1,
+        "totalTicks": 4153,
+        "durationSeconds": 34.608333333333334,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 37.96849999999995,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/the-crossing-windows.replay.json"
+      ]
+    },
+    {
+      "sourceId": "signal-garden-route",
+      "levelId": "signal-09",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": false,
+      "admitted": true,
+      "info": {
+        "build": "authored-attract-route.v1",
+        "levelId": "signal-09",
+        "levelName": "Signal Garden",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 1,
+        "totalTicks": 5656,
+        "durationSeconds": 47.13333333333333,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 46.93633300000056,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/signal-garden-route.replay.json"
+      ]
+    },
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "levelId": "signal-08",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": true,
+      "admitted": false,
+      "error": {
+        "name": "ReplayVerificationError",
+        "message": "Replay verification failed. Its inputs do not reproduce the recorded final state.",
+        "diagnostics": [
+          {
+            "code": "state-mismatch",
+            "section": "enemies",
+            "message": "Authoritative enemies differs.",
+            "expected": "ed391a595d4e2fb9",
+            "actual": "c3ba914e89640524"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "clock",
+            "message": "Authoritative clock differs.",
+            "expected": "ca39e0a04aa6d20e",
+            "actual": "83be6483dc2b7278"
+          },
+          {
+            "code": "diagnostic-checkpoint-mismatch",
+            "firstMismatchingCheckpointTick": 600,
+            "expected": "a693a2b0126e2de9",
+            "actual": "2de4810180a47587"
+          }
+        ]
+      },
+      "elapsedMs": 273.8551669999997,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.diagnostics.json"
+      ]
+    },
+    {
+      "sourceId": "solo-qualified-acdacc2c6fce041f",
+      "levelId": "signal-10",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": true,
+      "admitted": true,
+      "info": {
+        "build": "revealline-improvised-demo.v2",
+        "levelId": "signal-10",
+        "levelName": "Supply Circuit",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 123,
+        "totalTicks": 2688,
+        "durationSeconds": 22.4,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 94.85674999999992,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.chromium.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.chromium.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.firefox.replay.json"
+      ]
+    },
+    {
+      "sourceId": "solo-qualified-365f2ab3bab05af8",
+      "levelId": "signal-11",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": true,
+      "admitted": true,
+      "info": {
+        "build": "revealline-improvised-demo.v2",
+        "levelId": "signal-11",
+        "levelName": "Short Fuse",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 123,
+        "totalTicks": 1673,
+        "durationSeconds": 13.941666666666666,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 18.589125000000422,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-365f2ab3bab05af8.replay.json"
+      ]
+    },
+    {
+      "sourceId": "solo-qualified-d0257fa131665b79",
+      "levelId": "signal-12",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "qualified": true,
+      "admitted": false,
+      "error": {
+        "name": "ReplayVerificationError",
+        "message": "Replay verification failed. Its inputs do not reproduce the recorded final state.",
+        "diagnostics": [
+          {
+            "code": "state-mismatch",
+            "section": "player",
+            "message": "Authoritative player differs.",
+            "expected": "b50f342c786af93d",
+            "actual": "83a95f97d3892437"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "enemies",
+            "message": "Authoritative enemies differs.",
+            "expected": "8909d417ef3865c5",
+            "actual": "b88cae6a3194d38b"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "clock",
+            "message": "Authoritative clock differs.",
+            "expected": "d8cc59ffc76fd53b",
+            "actual": "72f282cee72cb15f"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "result",
+            "message": "Authoritative result differs.",
+            "expected": "76e03c2623074b17",
+            "actual": "2268d69c203b8544"
+          },
+          {
+            "code": "summary-mismatch",
+            "message": "Recorded and reconstructed summaries differ."
+          },
+          {
+            "code": "diagnostic-checkpoint-mismatch",
+            "firstMismatchingCheckpointTick": 1200,
+            "expected": "267f6d206352ec81",
+            "actual": "13436f85b3c91698"
+          }
+        ]
+      },
+      "elapsedMs": 352.4166670000004,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.chromium.performance.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.chromium.performance.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.firefox.performance.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.firefox.performance.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.webkit.performance.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.webkit.performance.diagnostics.json"
+      ]
+    },
+    {
+      "sourceId": "solo-qualified-6cdffde70fe72fa4",
+      "levelId": "orchard-crossing",
+      "campaignId": "fpv-pressure-lines",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "qualified": true,
+      "admitted": true,
+      "info": {
+        "build": "revealline-improvised-demo.v2",
+        "levelId": "orchard-crossing",
+        "levelName": "Orchard Crossing",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 123,
+        "totalTicks": 9218,
+        "durationSeconds": 76.81666666666666,
+        "recordedStatus": "won"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 431.8951669999997,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-6cdffde70fe72fa4.replay.json"
+      ]
+    },
+    {
+      "sourceId": "solo-qualified-cc8994b6f3d0482f",
+      "levelId": "courtyard-exits",
+      "campaignId": "fpv-pressure-lines",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "qualified": true,
+      "admitted": false,
+      "error": {
+        "name": "ReplayVerificationError",
+        "message": "Replay verification failed. Its inputs do not reproduce the recorded final state.",
+        "diagnostics": [
+          {
+            "code": "state-mismatch",
+            "section": "player",
+            "message": "Authoritative player differs.",
+            "expected": "321cc441b50c9525",
+            "actual": "5284d8e2ee592613"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "enemies",
+            "message": "Authoritative enemies differs.",
+            "expected": "fe706991110f52de",
+            "actual": "3d9718c3dbf50026"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "classic",
+            "message": "Authoritative classic differs.",
+            "expected": "eae8601e2f593fa5",
+            "actual": "8e307cf86ea754bd"
+          },
+          {
+            "code": "diagnostic-checkpoint-mismatch",
+            "firstMismatchingCheckpointTick": 600,
+            "expected": "1ea64ed8b6614a00",
+            "actual": "c70b23d109864dee"
+          }
+        ]
+      },
+      "elapsedMs": 1182.5670410000002,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.chromium.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.chromium.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.firefox.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.firefox.diagnostics.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.webkit.replay.json",
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.webkit.diagnostics.json"
+      ]
+    },
+    {
+      "sourceId": "solo-qualified-596ebdf496c9e073",
+      "levelId": "night-crossfire",
+      "campaignId": "fpv-pressure-lines",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "qualified": true,
+      "admitted": true,
+      "info": {
+        "build": "revealline-improvised-demo.v2",
+        "levelId": "night-crossfire",
+        "levelName": "Night Crossfire",
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "seed": 123,
+        "totalTicks": 6126,
+        "durationSeconds": 51.05,
+        "recordedStatus": "lost"
+      },
+      "initialPhase": "paused",
+      "initialTick": 0,
+      "disposed": true,
+      "elapsedMs": 299.6375829999997,
+      "attemptedURLs": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-596ebdf496c9e073.replay.json"
+      ]
+    }
+  ],
+  "errors": [],
+  "originalTest": {
+    "path": "game/test/demo-sources.test.mjs",
+    "sha256": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+    "bytes": 26080
+  },
+  "scope": "Read-only four exact published signal-08 payloads and every actual Standard/Gentle installed replay source using production creation. Native verifier unchanged; existing reviewed-only compatibility retained by the source API. macOS x64 Node22.13.1 is not Linux qualification. Completion means every requested observation finished, not every replay was admitted.",
+  "linuxReference": {
+    "path": ".cache/hosted-demo-admission-failure-b4688ca21.json",
+    "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+    "bytes": 2874
+  },
+  "enumeration": {
+    "replays": 17,
+    "sources": 23,
+    "metadataRequests": 1,
+    "ids": [
+      "first-signal-left",
+      "first-signal-right",
+      "relay-orchard-loop",
+      "relay-orchard-stairs",
+      "crosswind-openings",
+      "night-patrol-loop",
+      "stone-lanes-detour",
+      "hidden-frequency-search",
+      "the-crossing-windows",
+      "signal-garden-route",
+      "solo-qualified-478808a96f4fbf5e",
+      "solo-qualified-acdacc2c6fce041f",
+      "solo-qualified-365f2ab3bab05af8",
+      "solo-qualified-d0257fa131665b79",
+      "solo-qualified-6cdffde70fe72fa4",
+      "solo-qualified-cc8994b6f3d0482f",
+      "solo-qualified-596ebdf496c9e073"
+    ]
+  },
+  "counts": {
+    "targeted": 4,
+    "targetedMatch": 0,
+    "installed": 17,
+    "installedAdmitted": 14,
+    "installedFailed": 3
+  },
+  "headAfter": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceAfter": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsAfter": {
+    "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256After": "514cc0e26add6d098ffb442a80ebd04571d6769f889f8e96f5634ac9e1ea8965",
+  "originalTestAfter": {
+    "path": "game/test/demo-sources.test.mjs",
+    "sha256": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+    "bytes": 26080
+  },
+  "sourceUnchanged": true,
+  "finished": "2026-10-19T09:30:12.798Z"
+}

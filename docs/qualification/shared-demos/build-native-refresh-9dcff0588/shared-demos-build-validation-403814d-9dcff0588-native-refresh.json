@@ -1,0 +1,197 @@
+{
+  "format": "revealline-demo-final-build-validation.v2",
+  "started": "2026-10-19T10:40:45.246Z",
+  "expected": {
+    "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+    "base": "403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+    "runtime": {
+      "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+      "files": 10273,
+      "bytes": 410435495
+    }
+  },
+  "attempt": "native-refresh",
+  "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "runtimeFingerprint": {
+    "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "files": 10273,
+    "bytes": 410435495
+  },
+  "buildInputFingerprint": {
+    "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+    "files": 9411,
+    "bytes": 348449477
+  },
+  "wrapper": {
+    "path": ".cache/run-final-build-native-refresh.mjs",
+    "sha256": "31ca951f98b354d4e9a85a22d8777894e533acb4428a3baa071d4ee9968a9bae"
+  },
+  "wrapperHelper": {
+    "path": ".cache/final-build-wrapper-support.mjs",
+    "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e"
+  },
+  "scratchHelper": {
+    "path": ".cache/final-build-external-tmp.mjs",
+    "sha256": "76d87ce26f2ed9c5873e3ee75c9f9ae296aa8fc6c2485ed39c4aa0d16df7480f"
+  },
+  "scratch": {
+    "root": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos",
+    "directory": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "sourceDevice": 16777235,
+    "device": 905969668,
+    "parentInode": 37530202,
+    "ownerUid": 502,
+    "tmp": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/build-tmp-403814d-9dcff0588-native-refresh",
+    "childInode": 37577349,
+    "availableBytesAtAdmission": 44646400000
+  },
+  "previewOutput": ".cache/shared-demos-emitted-403814d-9dcff0588-native-refresh",
+  "storageScope": "Only TMPDIR/TMP/TEMP use the verified external child. Capture and audit remain internal under unchanged canonical admission.",
+  "limitations": [
+    "Original stage-close supervision retained; no identity-based process-cleanup claim. Synchronous external filesystem calls are not hard-preemptive."
+  ],
+  "floorHelper": {
+    "path": ".cache/final-build-scratch.mjs",
+    "sha256": "1c8c537e0e9c68a57a5d568fccd641b6c26a7c5458115755c2125afd4546d6e7"
+  },
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5",
+    "created": "2026-10-19T10:32:32.952145+00:00",
+    "integrationBase": "403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "files": 10273,
+    "bytes": 410435495
+  },
+  "materializedBuild": false,
+  "deploymentAdmission": false,
+  "complete": true,
+  "stages": [
+    {
+      "name": "main-pages",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/qualify-demo-main-pages.mjs",
+        "--report=.cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.json",
+        "--preview-output=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh"
+      ],
+      "started": "2026-10-19T10:40:45.247Z",
+      "logPath": ".cache/final-native-refresh-evidence/final-main-pages-403814d-9dcff0588-native-refresh.log.txt",
+      "receivedLogBytes": 1362554,
+      "availableDiskBeforeBytes": 422010880,
+      "availableScratchBeforeBytes": 44646400000,
+      "pid": 31407,
+      "minimumObservedDiskBytes": 419942400,
+      "minimumObservedScratchBytes": 43417600000,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 259361,
+      "retainedLogBytes": 1362554,
+      "logTruncated": false,
+      "logSHA256": "8f5cdb826f0ab9f234f25a5c8d8eeb09bff9ff96796d344f5385ff03fa2e99d6",
+      "receipt": {
+        "path": ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.json",
+        "bytes": 2225146,
+        "sha256": "9c0b3ea78beecf9f1a00aac5727680a05e0a4a002091914a35323d1356e466e0",
+        "complete": true
+      }
+    },
+    {
+      "name": "full-packaging",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/qualify-demo-packaging.mjs",
+        "--report=.cache/final-native-refresh-evidence/shared-demos-packaging-403814d-9dcff0588-native-refresh.json"
+      ],
+      "started": "2026-10-19T10:45:04.659Z",
+      "logPath": ".cache/final-native-refresh-evidence/final-full-packaging-403814d-9dcff0588-native-refresh.log.txt",
+      "receivedLogBytes": 2344,
+      "availableDiskBeforeBytes": 275439616,
+      "availableScratchBeforeBytes": 43417600000,
+      "pid": 34320,
+      "minimumObservedDiskBytes": 271822848,
+      "minimumObservedScratchBytes": 43008000000,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 260849,
+      "retainedLogBytes": 2344,
+      "logTruncated": false,
+      "logSHA256": "b3a0c2994969c4874c9d269a16e5145aba37f3fbc60135bf55b90b472cebcc56",
+      "receipt": {
+        "path": ".cache/final-native-refresh-evidence/shared-demos-packaging-403814d-9dcff0588-native-refresh.json",
+        "bytes": 779566,
+        "sha256": "ce99d4605aebc0a5c4cb51cff0aea8e1a7661e928422fa92fa37272bc489e6fb",
+        "complete": true
+      }
+    },
+    {
+      "name": "validate",
+      "command": [
+        "npm",
+        "run",
+        "validate"
+      ],
+      "started": "2026-10-19T10:49:25.602Z",
+      "logPath": ".cache/final-native-refresh-evidence/final-validate-403814d-9dcff0588-native-refresh.log.txt",
+      "receivedLogBytes": 3932,
+      "availableDiskBeforeBytes": 307253248,
+      "availableScratchBeforeBytes": 43008000000,
+      "pid": 37155,
+      "minimumObservedDiskBytes": 227004416,
+      "minimumObservedScratchBytes": 43008000000,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 160048,
+      "retainedLogBytes": 3932,
+      "logTruncated": false,
+      "logSHA256": "cdcf99644cb9dc6c03daf97f69ec3d2e9419a02ce25fbec7fc358cc575e23a3b"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "started": "2026-10-19T10:52:05.691Z",
+      "logPath": ".cache/final-native-refresh-evidence/final-lint-403814d-9dcff0588-native-refresh.log.txt",
+      "receivedLogBytes": 196,
+      "availableDiskBeforeBytes": 285462528,
+      "availableScratchBeforeBytes": 43008000000,
+      "pid": 38646,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 17490,
+      "retainedLogBytes": 196,
+      "logTruncated": false,
+      "logSHA256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c"
+    }
+  ],
+  "limits": {
+    "logBytesPerStage": 2097152,
+    "stopIfAvailableDiskBelowBytes": 209715200,
+    "stopIfScratchAvailableBelowBytes": 209715200,
+    "stageTimeoutMs": 1200000
+  },
+  "updated": "2026-10-19T10:52:26.274Z",
+  "finalSourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "finalRuntimeFingerprint": {
+    "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "files": 10273,
+    "bytes": 410435495
+  },
+  "finalBuildInputFingerprint": {
+    "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+    "files": 9411,
+    "bytes": 348449477
+  },
+  "sourceStable": true,
+  "finalScratch": {
+    "availableBytes": 43008000000,
+    "device": 905969668,
+    "parentInode": 37530202,
+    "childInode": 37577349
+  },
+  "scratchStable": true
+}

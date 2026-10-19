@@ -18,6 +18,7 @@ import {
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
 import { writeBuildEntry } from './build-entry-writer.mjs';
+import { mainPagesSourceOriginals } from './main-pages-source-originals.mjs';
 import {
   isOptionalSpatialAudioBody,
   isOptionalReactionVoiceBody,
@@ -639,7 +640,13 @@ export function offlineIcons(sizes = [180, 192, 512]) {
 }
 
 /** Adds a content-addressed offline app only when this source has its explicit UI helper. */
-export function applyPublicationProfile(entries, catalogue, profile, optionalArtwork) {
+export function applyPublicationProfile(
+  entries,
+  catalogue,
+  profile,
+  optionalArtwork,
+  { onOmittedSourceOriginals = () => {} } = {},
+) {
   if (profile === null) return optionalArtwork;
   if (profile !== 'main-pages') fail(`Unknown publication profile: ${profile}`);
   // Main Pages is the continuously deployed production/testing channel, not an
@@ -713,6 +720,19 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
         fail(`Main Pages canonical locale original has a browser consumer: ${entry.name}`);
     for (const name of canonicalLocalePaths) omittedPaths.add(name);
   }
+  // Source previews share the exact native pack/media resolver. Keep source PNGs
+  // in full releases; omit only finite, byte-pinned redundant workshop originals.
+  const originalProjection = mainPagesSourceOriginals(entries, catalogue, omittedPaths);
+  for (const name of originalProjection.paths) omittedPaths.add(name);
+  for (const group of retainedGroups) {
+    const files = group.files.filter((name) => !omittedPaths.has(name));
+    group.files = [
+      ...new Set([
+        ...files,
+        ...(group.id === 'tooling:workshop' ? originalProjection.dependencies : []),
+      ]),
+    ].sort();
+  }
   const retainedGroupIDs = new Set(retainedGroups.map((group) => group.id));
   const groupsRetained = (record) =>
     [...(record.groups || []), ...(record.runtimeGroups || [])].every((id) =>
@@ -739,6 +759,18 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
   catalogue.groups = retainedGroups;
   catalogue.sharedPolicy =
     'The rolling main channel keeps current gameplay and active tools. Archived playable copies remain in Git and complete release distributions.';
+  // The worker needs these exact deliberate omissions offline, where an
+  // unknown original would otherwise fail on the network before its native fallback.
+  const omittedSourceOriginals = [...originalProjection.paths].sort();
+  if (
+    omittedSourceOriginals.some(
+      (name) =>
+        entries.some((entry) => entry.name === name) ||
+        catalogue.files.some((file) => file.path === name),
+    )
+  )
+    fail('Omitted source original remains a retained file.');
+  onOmittedSourceOriginals(omittedSourceOriginals);
   // The summary promises every listed original is hosted, so optional artwork
   // metadata is omitted together with preview-only files that are not retained.
   return null;
@@ -856,14 +888,15 @@ export async function addOfflineEntries(
     ...entries
       .filter((entry) => entry.name.startsWith('optional-practice/'))
       .map((entry) => entry.name),
-    // Demo recordings and the large landing photograph remain published for
+    // Demo recordings/diagnostics and the large landing photograph remain published for
     // online playback, but they are optional bodies rather than core offline boot.
     // Excluding only their bodies preserves URLs, provenance and on-demand tests
     // while keeping the 80 MiB service-worker cache bound.
     ...entries
       .filter(
         (entry) =>
-          (entry.name.startsWith('game/demo-data/') && entry.name.endsWith('.replay.json')) ||
+          (entry.name.startsWith('game/demo-data/') &&
+            /\.(?:replay|diagnostics)\.json$/.test(entry.name)) ||
           entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp' ||
           // The current Social Drone reward uses the mobile-prepared v2 clip.
           // Keep v1 hosted for retained presentations without charging every
@@ -912,11 +945,17 @@ export async function addOfflineEntries(
   const contentCatalogue = await buildOfflineContent(entries, excluded, info.version, {
     bundledPackages,
   });
+  let omittedSourceOriginals = [];
   const publishedOptionalArtwork = applyPublicationProfile(
     entries,
     contentCatalogue,
     publicationProfile,
     optionalArtwork,
+    {
+      onOmittedSourceOriginals: (paths) => {
+        omittedSourceOriginals = paths;
+      },
+    },
   );
   const { finalizeOfflineContent } = await import('./offline-finalize.mjs');
   // Derived catalogue data can be compact without changing any published
@@ -1033,6 +1072,7 @@ export async function addOfflineEntries(
       ? { packageConsent: true, navigationBootstraps: contentCatalogue.navigationBootstraps }
       : {}),
     downloadFiles: contentCatalogue.files.filter((file) => file.kind === 'gameplay'),
+    ...(omittedSourceOriginals.length ? { omittedSourceOriginals } : {}),
     ...(optionalPacks.length ? { optionalPacks } : {}),
     ...(publishedOptionalArtwork ? { optionalArtwork: publishedOptionalArtwork } : {}),
   };

@@ -1,0 +1,466 @@
+{
+  "format": "SharedDemoBrowserRestorationV2",
+  "engine": "chromium",
+  "started": "2026-10-18T22:15:27.637Z",
+  "complete": false,
+  "source": {
+    "binding": "The declared frozen manifest is checked before and after; this probe does not independently recompute the complete source tree fingerprint.",
+    "head": "e78c5812f8bf3da6975c75221924239666a2e9ed",
+    "manifestPath": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "created": "2026-10-18T21:24:01.185264+00:00",
+    "integrationBase": "237b405437def3c41b01165fe057af1ab06f618c",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "probe": {
+    "path": "scripts/qualify-demo-restoration-browser.mjs",
+    "sha256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+    "helperSHA256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+  },
+  "functionalComplete": false,
+  "strictDiagnosticGate": false,
+  "checks": [
+    {
+      "type": "ordinary-control-reload",
+      "iteration": 1,
+      "mode": "solo",
+      "state": {
+        "documentId": "1792361733925-0.9123301728837128",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": "briefing",
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "04d984ed8db8f884c363bbc321d115d6228bd2bea27e504b0a9b7dc83446fd59",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "mutationSignatures": []
+    },
+    {
+      "type": "reload-from-demo",
+      "mode": "solo",
+      "stateName": "watching",
+      "active": {
+        "documentId": "1792361733925-0.9123301728837128",
+        "open": true,
+        "practice": false,
+        "phase": "playing",
+        "mode": "solo",
+        "tick": "121",
+        "bodyState": "briefing",
+        "dialogs": [
+          "demo-dialog"
+        ],
+        "nativeSurfaces": 0,
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "restored": {
+        "documentId": "1792361741630-0.641942908881959",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": "briefing",
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "04d984ed8db8f884c363bbc321d115d6228bd2bea27e504b0a9b7dc83446fd59",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "activeMutations": [
+        {
+          "mode": "solo",
+          "stage": "watching",
+          "id": "1792361733925-0.9123301728837128",
+          "path": "/game/",
+          "at": 1792361738732,
+          "kind": "mutation",
+          "api": "Storage",
+          "owner": "sessionStorage",
+          "method": "removeItem",
+          "key": "revealline.accepted-appearance-context.v1",
+          "absentRemoval": true
+        },
+        {
+          "mode": "solo",
+          "stage": "watching",
+          "id": "1792361733925-0.9123301728837128",
+          "path": "/game/",
+          "at": 1792361738959,
+          "kind": "mutation",
+          "api": "IndexedDB",
+          "owner": "revealline-soundtrack-v1/reservations",
+          "method": "put",
+          "key": "7faa66a2-6a37-4267-a40f-55eb8af16a5c"
+        },
+        {
+          "mode": "solo",
+          "stage": "watching",
+          "id": "1792361733925-0.9123301728837128",
+          "path": "/game/",
+          "at": 1792361738959,
+          "kind": "mutation",
+          "api": "IndexedDB",
+          "owner": "revealline-soundtrack-v1/managedState",
+          "method": "put",
+          "key": "ledger"
+        },
+        {
+          "mode": "solo",
+          "stage": "watching",
+          "id": "1792361733925-0.9123301728837128",
+          "path": "/game/",
+          "at": 1792361739014,
+          "kind": "mutation",
+          "api": "IndexedDB",
+          "owner": "revealline-soundtrack-v1/mediaBlobs",
+          "method": "put",
+          "key": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce"
+        },
+        {
+          "mode": "solo",
+          "stage": "watching",
+          "id": "1792361733925-0.9123301728837128",
+          "path": "/game/",
+          "at": 1792361739014,
+          "kind": "mutation",
+          "api": "IndexedDB",
+          "owner": "revealline-soundtrack-v1/mediaRecords",
+          "method": "put",
+          "key": "library"
+        },
+        {
+          "mode": "solo",
+          "stage": "watching",
+          "id": "1792361733925-0.9123301728837128",
+          "path": "/game/",
+          "at": 1792361739014,
+          "kind": "mutation",
+          "api": "IndexedDB",
+          "owner": "revealline-soundtrack-v1/reservations",
+          "method": "delete",
+          "key": "7faa66a2-6a37-4267-a40f-55eb8af16a5c"
+        },
+        {
+          "mode": "solo",
+          "stage": "watching",
+          "id": "1792361733925-0.9123301728837128",
+          "path": "/game/",
+          "at": 1792361739014,
+          "kind": "mutation",
+          "api": "IndexedDB",
+          "owner": "revealline-soundtrack-v1/managedState",
+          "method": "put",
+          "key": "ledger"
+        }
+      ],
+      "reloadMutationSignatures": [],
+      "workers": 0
+    }
+  ],
+  "errors": [],
+  "bfcache": [],
+  "instrumentation": "Ephemeral init observers wrap Storage mutations and IndexedDB object-store writes without changing arguments/results. A context binding retains bounded mutation/lifecycle metadata across reload. A separate task-owned preview serves unchanged frozen runtime with fixture credentials and public,max-age=0,must-revalidate headers. No Playwright routing is installed; a minimal away page is served by this test-only server.",
+  "limitations": [
+    "Reload is not browser discard; no actual discard is claimed.",
+    "BFCache is proved only by pageshow.persisted=true and the original document identity; failed admission is reported separately.",
+    "Solo explicitly suspends Demo on pagehide, including persisted history navigation, in inherited upstream app.mjs behavior. A paused watching return documents that policy; it does not prove preservation of playing intent through freeze/resume.",
+    "Fresh ephemeral test profiles exercise ordinary entry and compare a control reload. This does not replay every possible saved-game recovery state.",
+    "Read/write observers detect API calls, not every browser-internal storage mechanism. Existing persistence and saved-flight tests remain complementary.",
+    "Background managed-media asset-cache writes (game/managed-media-store.mjs) are recorded separately from player progress, saves, recovery and tuning; the ordinary app can preload those assets independently of Demo."
+  ],
+  "preview": {
+    "port": 8771,
+    "cache": "revalidate",
+    "mode": "source",
+    "headers": "PUBLIC_SECURITY_HEADERS",
+    "fixtureAccess": true,
+    "observedCacheControl": "public, max-age=0, must-revalidate"
+  },
+  "browserVersion": "155.0.8059.85",
+  "failure": "locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#shell-menu')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"shell-menu\" data-menu-label=\"MENU\" aria-label=\"Game menu\" data-i18n-aria-label=\"interface:gameMenu\" data-i18n-data-menu-label=\"common:navigation.menu\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:171:32)\n    at async startDemo (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:185:3)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:384:22",
+  "activeStage": {
+    "mode": "solo",
+    "stage": "practice"
+  },
+  "events": [
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792361730330-0.07754797137385028",
+      "path": "/game/",
+      "at": 1792361730471,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792361730330-0.07754797137385028",
+      "path": "/game/",
+      "at": 1792361730591,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.access.revealline.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792361733026-0.10752870478829524",
+      "path": "blank",
+      "at": 1792361733026,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792361730330-0.07754797137385028",
+      "path": "/game/",
+      "at": 1792361733221,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792361733925-0.9123301728837128",
+      "path": "/game/",
+      "at": 1792361734221,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792361735587-0.3500914265378786",
+      "path": "blank",
+      "at": 1792361735587,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792361733925-0.9123301728837128",
+      "path": "/game/",
+      "at": 1792361735675,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "watching",
+      "id": "1792361733925-0.9123301728837128",
+      "path": "/game/",
+      "at": 1792361738732,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "watching",
+      "id": "1792361733925-0.9123301728837128",
+      "path": "/game/",
+      "at": 1792361738959,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/reservations",
+      "method": "put",
+      "key": "7faa66a2-6a37-4267-a40f-55eb8af16a5c"
+    },
+    {
+      "mode": "solo",
+      "stage": "watching",
+      "id": "1792361733925-0.9123301728837128",
+      "path": "/game/",
+      "at": 1792361738959,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/managedState",
+      "method": "put",
+      "key": "ledger"
+    },
+    {
+      "mode": "solo",
+      "stage": "watching",
+      "id": "1792361733925-0.9123301728837128",
+      "path": "/game/",
+      "at": 1792361739014,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/mediaBlobs",
+      "method": "put",
+      "key": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce"
+    },
+    {
+      "mode": "solo",
+      "stage": "watching",
+      "id": "1792361733925-0.9123301728837128",
+      "path": "/game/",
+      "at": 1792361739014,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/mediaRecords",
+      "method": "put",
+      "key": "library"
+    },
+    {
+      "mode": "solo",
+      "stage": "watching",
+      "id": "1792361733925-0.9123301728837128",
+      "path": "/game/",
+      "at": 1792361739014,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/reservations",
+      "method": "delete",
+      "key": "7faa66a2-6a37-4267-a40f-55eb8af16a5c"
+    },
+    {
+      "mode": "solo",
+      "stage": "watching",
+      "id": "1792361733925-0.9123301728837128",
+      "path": "/game/",
+      "at": 1792361739014,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/managedState",
+      "method": "put",
+      "key": "ledger"
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792361741630-0.641942908881959",
+      "path": "/game/",
+      "at": 1792361741824,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792361742765-0.2739468161200659",
+      "path": "blank",
+      "at": 1792361742765,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792361741630-0.641942908881959",
+      "path": "/game/",
+      "at": 1792361742848,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    }
+  ],
+  "failedState": {
+    "documentId": "1792361741630-0.641942908881959",
+    "open": false,
+    "practice": false,
+    "phase": null,
+    "mode": null,
+    "tick": null,
+    "bodyState": "briefing",
+    "dialogs": [],
+    "nativeSurfaces": 0,
+    "lifecycle": [
+      {
+        "type": "pageshow",
+        "persisted": false
+      }
+    ],
+    "navigation": [
+      {
+        "type": "reload",
+        "notRestoredReasons": null
+      }
+    ]
+  },
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T22:15:50.281Z",
+  "previewClosed": true
+}

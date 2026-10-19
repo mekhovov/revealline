@@ -1,0 +1,204 @@
+import assert from 'node:assert/strict';
+import { createHash, randomUUID, pbkdf2Sync } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { restorationDiagnosticGate } from '../scripts/demo-restoration-observation.mjs';
+import { bounded } from './demo-native-discard-environment.mjs';
+
+const pin = bytes => ({ bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') });
+const entryPaths = new Map([
+  ['/game/', 'game/index.html'], ['/game/index.html', 'game/index.html'],
+  ['/game/snake/play.html', 'game/snake/play.html'],
+  ['/game/overflight/play.html', 'game/overflight/play.html'],
+  ['/optional-practice/fpv-worlds/index.html', 'optional-practice/fpv-worlds/index.html'],
+]);
+
+/** Instrument only the four entry documents; all native modules remain provider-owned. */
+export async function installDiscardObservationFixture({ preview, events, getStage, getMode }) {
+  const observer = await readFile(new URL('./demo-discard-observer-browser.js', import.meta.url));
+  const token = randomUUID();
+  const scriptPath = '/__discard-observer-' + token + '.js';
+  const collectorPath = '/__discard-observer-' + token + '/events';
+  const bootstrapPath = '/__discard-observer-' + token + '/credential-bootstrap';
+  const bootstrapHTML = Buffer.from('<!doctype html><html><head><title>Owned credential bootstrap</title></head><body></body></html>');
+  const accessSeeds = [];
+  const received = new Map(), reconciliations = [], html = new Map(), errors = [];
+  let errorOverflow = 0;
+  const rememberError = value => { if (errors.length < 16) errors.push(value); else errorOverflow++; };
+  const eventIdentity = event => event.id + ':' + event.seq;
+  const accept = rows => {
+    assert.ok(Array.isArray(rows) && rows.length <= 32);
+    for (const row of rows) {
+      assert.ok(row && typeof row.id === 'string' && /^[a-f0-9-]{36}$/.test(row.id));
+      assert.ok(Number.isSafeInteger(row.seq) && row.seq > 0 && row.seq <= 2000);
+      assert.ok(typeof row.kind === 'string' && JSON.stringify(row).length <= 8192);
+      const key = eventIdentity(row), prior = received.get(key);
+      if (prior) assert.deepEqual(row, prior, 'Collector duplicates must be byte-equivalent data.');
+      else {
+        assert.ok(received.size < 3000, 'Collector overflow cannot silently omit observations.');
+        received.set(key, row); events.push(row);
+      }
+    }
+  };
+  const handlers = preview.server.listeners('request');
+  assert.equal(handlers.length, 1);
+  preview.server.removeAllListeners('request');
+  preview.server.on('request', (request, response) => {
+    const pathname = new URL(request.url, 'http://127.0.0.1').pathname;
+    if (pathname === bootstrapPath) {
+      response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store',
+        'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'; base-uri 'none'" });
+      response.end(bootstrapHTML); return;
+    }
+    if (pathname === scriptPath) {
+      response.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8', 'Cache-Control': 'no-store' });
+      response.end(observer); return;
+    }
+    if (pathname === collectorPath) {
+      if (request.method !== 'POST') { response.writeHead(405); response.end(); return; }
+      const chunks = []; let bytes = 0;
+      request.setTimeout(2000, () => { rememberError('Collector body deadline.'); request.destroy(); });
+      request.on('data', chunk => {
+        bytes += chunk.length;
+        if (bytes > 262144) { rememberError('Collector body overflow.'); request.destroy(); }
+        else chunks.push(chunk);
+      });
+      request.on('error', error => rememberError(String(error).slice(0, 1024)));
+      request.on('end', () => {
+        request.setTimeout(0);
+        try {
+          accept(JSON.parse(Buffer.concat(chunks).toString('utf8')));
+          response.writeHead(204, { 'Cache-Control': 'no-store' }); response.end();
+        } catch (error) {
+          rememberError(String(error).slice(0, 2048)); response.writeHead(400); response.end();
+        }
+      });
+      return;
+    }
+    const relative = entryPaths.get(pathname);
+    if (!relative || request.method !== 'GET') { handlers[0](request, response); return; }
+    // Provider still performs exact emitted admission and applies its existing credential fixture.
+    const originalWriteHead = response.writeHead.bind(response);
+    const originalEnd = response.end.bind(response);
+    let status = 200, headers = {}, chunks = [];
+    response.writeHead = (nextStatus, nextHeaders) => { status = nextStatus; headers = nextHeaders ?? {}; return response; };
+    response.write = chunk => { chunks.push(Buffer.from(chunk)); return true; };
+    response.end = chunk => {
+      if (chunk) chunks.push(Buffer.from(chunk));
+      let body = Buffer.concat(chunks);
+      try {
+        if (status === 200 && String(headers['Content-Type']).startsWith('text/html')) {
+          assert.ok(body.length < 2097152, 'Entry HTML observation is bounded.');
+          const source = body.toString('utf8');
+          assert.match(source, /<head(?:\s[^>]*)?>/i);
+          const mode = getMode() ?? 'preflight', stage = getStage();
+          assert.match(mode, /^[a-z-]+$/); assert.match(stage, /^[a-z-]+$/);
+          const addition = '<script src="' + scriptPath + '" data-collector="' + collectorPath +
+            '" data-mode="' + mode + '" data-stage="' + stage + '"></script>';
+          const injected = Buffer.from(source.replace(/<head(?:\s[^>]*)?>/i, match => match + addition));
+          const fixture = preview.fixtureResponses.find(row => row.path === relative);
+          assert.ok(fixture?.original, 'Require the strict emitted original HTML pin.');
+          const key = relative + ':' + pin(injected).sha256;
+          html.set(key, { path: relative, original: fixture.original, credentialFixture: pin(body),
+            addedTag: addition, observer: pin(observer), served: pin(injected),
+            credentialBytes: body, servedBytes: injected });
+          body = injected;
+          headers['Content-Length'] = body.length;
+          headers.ETag = '"' + pin(body).sha256 + '"';
+          headers['Accept-Ranges'] = 'none';
+        }
+        originalWriteHead(status, headers); originalEnd(body);
+      } catch (error) {
+        rememberError(String(error).slice(0, 2048));
+        originalWriteHead(500, { 'Content-Type': 'text/plain' }); originalEnd('Observation fixture failed.');
+      }
+      return response;
+    };
+    handlers[0](request, response);
+  });
+  const reconcile = async (page, label) => {
+    const value = await bounded(() => page.evaluate(() => window.demoRestorationObservation.flush()), 5000);
+    assert.equal(value.observerFailures, 0, 'Observer errors must remain explicit qualification failures.');
+    assert.equal(value.overflow, 0, 'In-document buffer overflow is a strict failure.');
+    assert.equal(value.buffer.length, value.cutoff);
+    for (let index = 0; index < value.cutoff; index++) {
+      const row = value.buffer[index];
+      assert.equal(row.id, value.id); assert.equal(row.seq, index + 1);
+      assert.deepEqual(received.get(eventIdentity(row)), row, 'Collector must acknowledge the complete retained document prefix.');
+    }
+    assert.equal(value.buffer[0]?.kind, 'observer-installed', 'Observer must precede native application startup.');
+    const receipt = { label, id: value.id, cutoff: value.cutoff, overflow: value.overflow,
+      transportRejected: value.transportRejected, observerFailures: value.observerFailures, at: new Date().toISOString() };
+    reconciliations.push(receipt);
+    assert.deepEqual(errors, []);
+    return receipt;
+  };
+  const seedAccess = async (page, targetURL) => {
+    const target = new URL(targetURL), origin = new URL(preview.url).origin;
+    assert.equal(target.origin, origin, 'Only the owned preview origin may receive fixture access.');
+    assert.ok(entryPaths.has(target.pathname), 'Access metadata must come from an admitted native entry.');
+    const body = await bounded(async () => {
+      const response = await fetch(targetURL);
+      assert.equal(response.status, 200);
+      return Buffer.from(await response.arrayBuffer());
+    }, 5000);
+    const access = readDiscardFixtureAccess(body);
+    await page.goto(origin + bootstrapPath);
+    const result = await page.evaluate(seedDiscardFixtureAccess, { origin, access });
+    assert.deepEqual(result.before, { local: [], session: [] });
+    assert.deepEqual(result.after, { local: [access.key], session: [] });
+    const receipt = { targetPath: target.pathname, sourceHTML: pin(body), bootstrapHTML: pin(bootstrapHTML),
+      key: access.key, valueSHA256: pin(Buffer.from(access.value)).sha256, ...result,
+      at: new Date().toISOString(), kind: 'Exact served fixture verifier through existing access storage contract before first game document; no form edit, game preferences or progress seed.' };
+    accessSeeds.push(receipt);
+    return receipt;
+  };
+  return { observer, bootstrapHTML, html, errors, reconcile, seedAccess, summary: () => ({
+    observer: pin(observer), collectorPath, accessSeeds, bootstrap: { path: bootstrapPath, ...pin(bootstrapHTML),
+      purpose: 'Blank same-origin document used once per fresh profile solely to seed the known fixture credential before native game startup.' }, eventCount: received.size, reconciliations,
+    html: [...html.values()].map(({ credentialBytes, servedBytes, ...row }) => row),
+    limits: 'Top-document buffer and acknowledged collector prefixes only. The old document may have an undelivered tail between final reconciliation and native destruction. Restored startup is reconciled from its surviving in-memory buffer. Native inspector-only diagnostics during detachment and unobserved frames/workers are outside this observer.',
+    htmlException: 'A synchronous same-origin observer script tag is inserted immediately after head, before access/app scripts. Exact emitted HTML pins, credential-only bytes, observer bytes, and final served bytes are recorded. This diagnostic fixture is not byte-identical HTML or offline-integrity qualification.',
+    errors, errorOverflow,
+  }) };
+}
+
+/** Invoke again after browser/server cleanup so late diagnostics cannot escape admission. */
+export function assertDiscardObservationHealth({ summary, errors, errorOverflow, events }) {
+  assert.deepEqual(summary.errors, [], 'Collector/fixture errors remain strict failures.');
+  assert.equal(summary.errorOverflow, 0, 'Collector errors must not overflow.');
+  assert.equal(errorOverflow ?? 0, 0, 'Native errors must not overflow.');
+  for (const prefix of summary.reconciliations) {
+    assert.equal(prefix.overflow, 0);
+    assert.equal(prefix.observerFailures, 0);
+  }
+  const diagnostics = restorationDiagnosticGate(errors, events);
+  assert.equal(diagnostics, true, 'Observed native or DOM errors remain strict failures.');
+  return diagnostics;
+}
+
+export function readDiscardFixtureAccess(bytes) {
+  const html = Buffer.from(bytes).toString('utf8');
+  const meta = name => {
+    const rows = [...html.matchAll(new RegExp('<meta\\s+name="' + name + '"\\s+content="([^"]+)"\\s*/?>', 'g'))];
+    assert.equal(rows.length, 1, 'Require exactly one credential metadata field: ' + name);
+    return rows[0][1];
+  };
+  const id = meta('revealline-access-id');
+  assert.match(id, /^[a-zA-Z0-9_.-]{1,100}$/);
+  assert.equal(meta('revealline-access-salt'), Buffer.from('performance-fixture').toString('base64url'));
+  const value = meta('revealline-access-verifier');
+  assert.equal(value, pbkdf2Sync('fixture-password', 'performance-fixture', 150000, 32, 'sha256').toString('base64url'),
+    'Seed only the explicitly admitted local fixture credential.');
+  return { key: 'revealline.access.' + id + '.v1', value };
+}
+
+/** Serialized to the blank same-origin bootstrap document, before any game script. */
+export function seedDiscardFixtureAccess({ origin, access }) {
+  if (location.origin !== origin) throw new Error('Credential seed origin mismatch.');
+  const snapshot = () => ({ local: Object.keys(localStorage).sort(), session: Object.keys(sessionStorage).sort() });
+  const before = snapshot();
+  if (before.local.length || before.session.length) throw new Error('Credential seed requires an empty fresh profile origin.');
+  localStorage.setItem(access.key, access.value);
+  if (localStorage.getItem(access.key) !== access.value) throw new Error('Credential seed was not retained.');
+  return { before, after: snapshot() };
+}

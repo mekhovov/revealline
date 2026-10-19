@@ -1,0 +1,11 @@
+{
+  "created": "2026-10-19T01:04:51.017129+00:00",
+  "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-2b8591448",
+  "scope": "Only this task-owned regenerable emitted-preview cache for superseded2b8591448. No user files or current693947ed1 capture removed. All historical audits, inventory, raw results and manifest are retained.",
+  "sourceRevision": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+  "filesRemoved": 287,
+  "bytesRemoved": 141813811,
+  "manifestSHA256": "f6a3dd91289cb76bf3a5351a8c4866dec32c4edc411ff8d9c9ef50eb90383fbe",
+  "noOpenFileHandlesObserved": true,
+  "complete": true
+}

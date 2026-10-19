@@ -1,0 +1,67 @@
+{
+  "created": "2026-10-18T22:50:56.757557+00:00",
+  "format": "SharedDemoMainIncomingImpactV1",
+  "previousBase": "237b405437def3c41b01165fe057af1ab06f618c",
+  "targetBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "reviewedHead": "3c1a17b58658b2adf22659d0fd0acec9885f3834",
+  "incomingPaths": [
+    ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+    ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+    ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+    ".github/workflows/solo-remote-final-soak-temporary.yml",
+    ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+    "docs/performance/fixtures/solo-retired-diagnostics/source.json",
+    "game/official-downloads.mjs",
+    "game/test/fpv-aircraft-coach.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/official-downloads.test.mjs",
+    "optional-practice/civilian-fpv/beginner-coach.mjs",
+    "optional-practice/civilian-fpv/world-app.mjs",
+    "scripts/solo-final-wave-witness.mjs",
+    "scripts/solo-page-error-source-witness.mjs",
+    "scripts/solo-retired-diagnostic-source.mjs",
+    "scripts/test-solo-final-timing-v2-release.mjs",
+    "scripts/test-solo-readiness-source-witness.mjs",
+    "scripts/test-solo-retired-diagnostic-source.mjs"
+  ],
+  "nativeIdentityScopes": [
+    "game/core",
+    "game/snake",
+    "game/overflight",
+    "game/demo-data",
+    "game/demo-modes",
+    "game/replay.mjs",
+    "optional-practice/civilian-fpv/demo-data",
+    "optional-practice/civilian-fpv/model.mjs",
+    "optional-practice/civilian-fpv/world-model.mjs",
+    "optional-practice/civilian-fpv/flight-response.mjs",
+    "optional-practice/civilian-fpv/world-catalogue.mjs",
+    "optional-practice/civilian-fpv/catalogue.mjs",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs"
+  ],
+  "incomingNativeIdentityChanges": [],
+  "nativeCorpusRegenerationRequired": false,
+  "findings": [
+    "Recording lookup batching conflicts with our owner-cancellation fix. Preserve batching, order/duplicates, conflicting-size fallback, zero-open empty scan and propagated aborts together.",
+    "Native SIM lesson-mode restart guidance changes ordinary presentation/start selection. Catalog, model, response and demonstration identities stay unchanged.",
+    "Thirteen old diagnostic workflows retire automatic triggers without changing jobs/permissions/guards. One old sentry-v2 workflow hash test still reads raw retired bytes; route that historical assertion through the new validated historical-source reader."
+  ],
+  "verificationRequired": [
+    "Merged official-downloads and soundtrack cancellation regressions",
+    "Native SIM coach/world/Fresh/input/ordinary control regressions",
+    "Retired diagnostic reader, witness and sentry tests",
+    "Fresh emitted/build and affected browser gates"
+  ],
+  "limitations": [
+    "Read-only pre-integration impact review. This is not a rebase or passing test receipt.",
+    "Previously failed restoration and incomplete endurance remain unqualified."
+  ]
+}

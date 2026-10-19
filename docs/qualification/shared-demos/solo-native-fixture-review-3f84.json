@@ -1,0 +1,40 @@
+{
+  "format": "SoloNativeFixtureIndependentReviewV1",
+  "observedAt": "2026-10-19T10:08:18.242806+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "reviewOnly": true,
+  "source": [
+    {
+      "path": "game/test/demo-solo-coverage.test.mjs",
+      "bytes": 8403,
+      "sha256": "d6d23fd1b53cb136697926456edd8725e1a08324c25670e153fcb6501fa5d518"
+    },
+    {
+      "path": "game/demo-sources.mjs",
+      "bytes": 8049,
+      "sha256": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80"
+    },
+    {
+      "path": "game/demo-catalog.mjs",
+      "bytes": 11812,
+      "sha256": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101"
+    },
+    {
+      "path": "game/replay-player.mjs",
+      "bytes": 10545,
+      "sha256": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70"
+    },
+    {
+      "path": "scripts/qualify-solo-demos.mjs",
+      "bytes": 12229,
+      "sha256": "f2b2128c03182d01d5cbb18dc775b0ed63cc05724ecbbd37a8d94530fbf64664"
+    }
+  ],
+  "findings": [],
+  "conclusion": "No actionable issue found. Qualified Solo fixture IDs resolve through the unchanged production source.create strict verification and export the accepted actual recording. Tests then rerun the full qualifier and keep exact corruption, diagnostic checkpoint and engine-order assertions. demoDescriptor binds injected test metadata to the actual verified body; no production catalog or verifier is relaxed.",
+  "limitations": [
+    "Read-only independent code review; no tests rerun by this reviewer.",
+    "Behavior fixture selection does not establish full catalog coverage; the separate native gate retains that responsibility.",
+    "Reviewed-only compatibility cannot satisfy these qualified-ID fixtures."
+  ]
+}

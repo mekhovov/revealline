@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: the tar model reproduces the actual pinned baseline without building or materializing payloads
+ok 1 - the tar model reproduces the actual pinned baseline without building or materializing payloads
+  ---
+  duration_ms: 8.952292
+  ...
+# Subtest: tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+ok 2 - tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+  ---
+  duration_ms: 0.832708
+  ...
+# Subtest: every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+ok 3 - every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+  ---
+  duration_ms: 0.516875
+  ...
+# Subtest: CLI requires explicit fresh report path and rejects unknown or duplicated options
+ok 4 - CLI requires explicit fresh report path and rejects unknown or duplicated options
+  ---
+  duration_ms: 0.266083
+  ...
+# Subtest: existing evidence is rejected before any costly build or source snapshot
+ok 5 - existing evidence is rejected before any costly build or source snapshot
+  ---
+  duration_ms: 4.959375
+  ...
+# Subtest: only the existing mission-index compaction is admitted and semantic changes remain detectable
+ok 6 - only the existing mission-index compaction is admitted and semantic changes remain detectable
+  ---
+  duration_ms: 0.469375
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 282.363083

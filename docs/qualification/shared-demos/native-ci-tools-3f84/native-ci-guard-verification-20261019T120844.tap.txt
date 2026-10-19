@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: pull-request admission workflows do not require GitHub Pages
+ok 1 - pull-request admission workflows do not require GitHub Pages
+  ---
+  duration_ms: 22.158042
+  type: 'test'
+  ...
+# Subtest: the optional Pages publisher cannot run for a pull request
+ok 2 - the optional Pages publisher cannot run for a pull request
+  ---
+  duration_ms: 0.473209
+  type: 'test'
+  ...
+# Subtest: the required exact-head source gate remains independent of hosted deployment
+ok 3 - the required exact-head source gate remains independent of hosted deployment
+  ---
+  duration_ms: 0.438125
+  type: 'test'
+  ...
+# Subtest: auto-merge wakes from PR validation, never hosted deployment
+ok 4 - auto-merge wakes from PR validation, never hosted deployment
+  ---
+  duration_ms: 0.335959
+  type: 'test'
+  ...
+# Subtest: the package interface exposes no Pages build command
+ok 5 - the package interface exposes no Pages build command
+  ---
+  duration_ms: 0.336708
+  type: 'test'
+  ...
+# Subtest: the retired Pages playbook cannot prescribe a deployment path
+ok 6 - the retired Pages playbook cannot prescribe a deployment path
+  ---
+  duration_ms: 1.08375
+  type: 'test'
+  ...
+# Subtest: optional practice integrates the event workflow source while company admission retains the PR head
+ok 7 - optional practice integrates the event workflow source while company admission retains the PR head
+  ---
+  duration_ms: 0.763708
+  type: 'test'
+  ...
+# Subtest: focused matrix retains trusted automation, two workers per host, limits and failure evidence
+ok 8 - focused matrix retains trusted automation, two workers per host, limits and failure evidence
+  ---
+  duration_ms: 0.604292
+  type: 'test'
+  ...
+# Subtest: aggregate preserves the required focused status and rejects any nonsuccess matrix result
+ok 9 - aggregate preserves the required focused status and rejects any nonsuccess matrix result
+  ---
+  duration_ms: 152.977625
+  type: 'test'
+  ...
+# Subtest: native capture replays a complete real cut and retains five-second diagnostic identity
+ok 10 - native capture replays a complete real cut and retains five-second diagnostic identity
+  ---
+  duration_ms: 49.235417
+  type: 'test'
+  ...
+# Subtest: native source binding rejects changed authored content and catalog identity
+ok 11 - native source binding rejects changed authored content and catalog identity
+  ---
+  duration_ms: 7.79675
+  type: 'test'
+  ...
+# Subtest: releaseBefore and a genuine final release survive same-trace authoring exactly
+ok 12 - releaseBefore and a genuine final release survive same-trace authoring exactly
+  ---
+  duration_ms: 15.181584
+  type: 'test'
+  ...
+# Subtest: a trace that reaches its natural terminal early is an independent prefix, never same-trace
+ok 13 - a trace that reaches its natural terminal early is an independent prefix, never same-trace
+  ---
+  duration_ms: 17.088875
+  type: 'test'
+  ...
+# Subtest: unfinished traces and natural terminal runs without captures remain unqualified
+ok 14 - unfinished traces and natural terminal runs without captures remain unqualified
+  ---
+  duration_ms: 7.712375
+  type: 'test'
+  ...
+# Subtest: an independent qualifier rejection cannot be replaced by a captured outcome
+ok 15 - an independent qualifier rejection cannot be replaced by a captured outcome
+  ---
+  duration_ms: 8.552416
+  type: 'test'
+  ...
+# Subtest: worker success requires normal exit after its single result and removes owned listeners
+ok 16 - worker success requires normal exit after its single result and removes owned listeners
+  ---
+  duration_ms: 2.475083
+  type: 'test'
+  ...
+# Subtest: worker duplicate results and abnormal exit are rejected even after a useful message
+ok 17 - worker duplicate results and abnormal exit are rejected even after a useful message
+  ---
+  duration_ms: 0.249375
+  type: 'test'
+  ...
+# Subtest: worker timeout awaits termination and cannot turn a late result into success
+ok 18 - worker timeout awaits termination and cannot turn a late result into success
+  ---
+  duration_ms: 5.323959
+  type: 'test'
+  ...
+# Subtest: pre-aborted requests create no worker, and live abort retains its original reason
+ok 19 - pre-aborted requests create no worker, and live abort retains its original reason
+  ---
+  duration_ms: 0.610125
+  type: 'test'
+  ...
+# Subtest: failed owned-worker cleanup is explicit, fatal and bounded
+ok 20 - failed owned-worker cleanup is explicit, fatal and bounded
+  ---
+  duration_ms: 12.033625
+  type: 'test'
+  ...
+# Subtest: inventory grouping retains reviewed identifiers and multiple clips for one required entry
+ok 21 - inventory grouping retains reviewed identifiers and multiple clips for one required entry
+  ---
+  duration_ms: 0.351834
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 582.515917

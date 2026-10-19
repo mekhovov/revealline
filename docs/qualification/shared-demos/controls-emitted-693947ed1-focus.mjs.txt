@@ -1,0 +1,165 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, stat } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
+import { startProductionPreview } from '../scripts/serve-production-preview.mjs';
+import { finishQualification, diagnoseQualificationFailure, writeQualificationReport } from '../scripts/shared-demo-browser-report.mjs';
+import { emptyLibrary, updatePreferences } from '../game/library.mjs';
+import { replaceKeyBinding } from '../game/key-bindings.mjs';
+import { resolveControllerBindings } from '../game/controller-bindings.mjs';
+import { demoSettingsKey } from '../game/demo-settings.mjs';
+
+const args = Object.fromEntries(process.argv.slice(2).map(arg => arg.replace(/^--/, '').split('=')));
+assert.ok(args.head && args.fingerprint && args.report?.endsWith('.json'), 'Explicit held HEAD, runtime fingerprint and unique JSON report are required.');
+if (Object.hasOwn(args, 'emitted-preview')) assert.ok(args['emitted-preview']);
+for (const filename of [args.report, args.report.replace(/\.json$/, '.mjs.txt')]) {
+  try { await stat(filename); throw Error(`Refusing existing evidence: ${filename}`); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+}
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const head = () => execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+async function fingerprint(directories = ['game', 'optional-practice', 'publishing']) {
+  const paths = execFileSync('rg', ['--files', ...directories], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }).trim().split('\n')
+    .filter(p => /\.(mjs|js|json|css|html)$/.test(p) && !p.includes('/test/') && !p.endsWith('.test.mjs') && !p.endsWith('/coverage.json')).sort();
+  const hash = createHash('sha256'); let bytes = 0;
+  for (const p of paths) { const body = await readFile(p); bytes += body.length; hash.update(p + '\0').update(Buffer.from(sha(body), 'hex')); }
+  return { sha256: hash.digest('hex'), files: paths.length, bytes };
+}
+const bounded = async (work, ms) => {
+  let timer;
+  try { return await Promise.race([work(), new Promise((_, reject) => timer = setTimeout(() => reject(Error(`Bound ${ms}ms exceeded`)), ms))]); }
+  finally { clearTimeout(timer); }
+};
+const script = await readFile(new URL(import.meta.url));
+const report = {
+  started: new Date().toISOString(), complete: false, checks: [], errors: [], headBefore: head(),
+  sourceBefore: await fingerprint(), buildInputsBefore: await fingerprint(['scripts', 'authoring']), observerSHA256: sha(script),
+  scope: 'Actual native pages with seeded isolated shared preferences and a virtual standard gamepad. No runtime module or response routing. The preview changes access credentials only. Physical controllers remain a separate human check.',
+};
+assert.equal(report.headBefore, args.head); assert.equal(report.sourceBefore.sha256, args.fingerprint);
+let browser, preview, page;
+const pads = () => [{ index: 0, id: 'Shared controls qualification gamepad', mapping: 'standard', connected: true, axes: [0, 0, 0, 0], buttons: Array.from({ length: 24 }, () => ({ pressed: false, value: 0 })), timestamp: 1 }];
+const binding = resolveControllerBindings(); binding.flight.buttons.up = 11;
+const profile = updatePreferences(emptyLibrary(), { keyboardBindings: replaceKeyBinding(null, 'up', 'KeyI'), controllerBindings: binding, controllerBoostMode: 'toggle' });
+const seeded = { 'revealline.library.dev.v1': JSON.stringify(profile), 'revealline.touch.v1': JSON.stringify({ mode: 'dpad', side: 'left', size: 'large', opacity: 0.7 }), 'revealline.fpv.keyboard-preset.v1': 'classic' };
+const snap = () => page.locator('#demo-dialog').evaluate(node => ({ mode: node.dataset.demoMode, source: node.dataset.demoSource, phase: node.dataset.demoPhase, tick: node.dataset.demoTick, practice: node.classList.contains('is-practice') }));
+const storage = () => page.evaluate(() => Object.fromEntries(Object.keys(localStorage).sort().map(key => [key, localStorage.getItem(key)])));
+const ready = () => page.waitForFunction(() => document.querySelector('#demo-dialog')?.dataset.demoPhase === 'playing', null, { timeout: 35000 });
+const frames = count => page.evaluate(count => new Promise(resolve => { const next = () => --count ? requestAnimationFrame(next) : resolve(); requestAnimationFrame(next); }), count);
+async function button(index, pressed) { await page.evaluate(({ index, pressed }) => { Object.assign(window.qualificationPads[0].buttons[index], { pressed, value: Number(pressed) }); window.qualificationPads[0].timestamp++; }, { index, pressed }); await frames(5); }
+async function select(mode) {
+  for (let i = 0; i < 8; i++) { await ready(); if ((await snap()).mode === mode) return; await page.locator('#demo-next').click(); }
+  throw Error(`Mode ${mode} did not appear in bounded rotation`);
+}
+async function practiceByRemap(origin, mode) {
+  await select(mode);
+  const hint = await page.locator('#demo-bound-controls').innerText(); assert.match(hint, /\bI\b/);
+  await page.locator('#demo-interrupt').click();
+  assert.equal(await page.evaluate(() => !!document.activeElement?.closest('[data-demo-ui]')), true);
+  await page.keyboard.press('KeyI'); await frames(5);
+  assert.equal((await snap()).practice, false, 'Focused demo menus own remapped gameplay keys.');
+  report.checks.push({ type: 'menu-owns-remapped-key', origin, mode });
+  await page.locator('#demo-resume').click(); await ready();
+  assert.equal(await page.evaluate(() => !!document.activeElement?.closest('[data-demo-ui]')), false, 'Keep watching restores game-surface focus.');
+  await page.keyboard.press('ArrowUp'); await frames(5); assert.equal((await snap()).practice, false, 'replaced keyboard default must not take over');
+  await page.keyboard.press('KeyI');
+  await page.waitForFunction(() => document.querySelector('#demo-dialog').classList.contains('is-practice'), null, { timeout: 15000 });
+  const keyed = await snap();
+  await page.waitForFunction(tick => document.querySelector('#demo-dialog').dataset.demoTick !== tick, keyed.tick, { timeout: 3500 });
+  report.checks.push({ type: 'fresh-remapped-key-practice', origin, ...await snap(), hint });
+  await page.locator('#demo-return').click(); await ready();
+  assert.equal(await page.evaluate(() => !!document.activeElement?.closest('[data-demo-ui]')), false, 'Return to demo restores game-surface focus.');
+  await button(12, true); await button(12, false);
+  assert.equal((await snap()).practice, false, 'replaced controller direction must not take over');
+  await button(11, true); await button(11, false);
+  await page.waitForFunction(() => document.querySelector('#demo-dialog').classList.contains('is-practice'), null, { timeout: 15000 });
+  const played = await snap();
+  await page.waitForFunction(tick => document.querySelector('#demo-dialog').dataset.demoTick !== tick, played.tick, { timeout: 3500 });
+  report.checks.push({ type: 'fresh-remapped-pad-practice', origin, ...await snap(), hint: await page.locator('#demo-pad-controls').innerText() });
+  await page.locator('#demo-return').click(); await ready();
+}
+try {
+  preview = await startProductionPreview({ root: process.cwd(), port: 0, fixtureAccess: true, cache: 'revalidate',
+    ...(args['emitted-preview'] ? { emittedPreview: args['emitted-preview'], verifyEmittedSource: true } : {}),
+  });
+  report.preview = { mode: preview.mode, headers: preview.headers, cache: preview.cache, fixtureAccess: preview.fixtureAccess,
+    ...(preview.emittedPreview ? { emittedPreview: preview.emittedPreview } : {}),
+  };
+  if (args['emitted-preview']) {
+    assert.equal(preview.emittedPreview.sourceVerified, true);
+    assert.equal(preview.emittedPreview.sourceRevision, args.head);
+    assert.deepEqual(preview.emittedPreview.sourceFingerprint, report.sourceBefore);
+    assert.deepEqual(preview.emittedPreview.buildInputFingerprint, report.buildInputsBefore);
+    const metadata = await bounded(async () => {
+      const response = await fetch(new URL('game/build-info.json', preview.url));
+      assert.equal(response.ok, true);
+      return response.json();
+    }, 10000);
+    const profileKey = demoSettingsKey({ buildInfo: metadata }).replace('revealline.demo.', 'revealline.library.');
+    delete seeded['revealline.library.dev.v1'];
+    seeded[profileKey] = JSON.stringify(profile);
+    report.seededProfileKey = profileKey;
+    report.limitations = ['Emitted bytes are verified against the held source; only local HTML access credentials differ. No offline HTML integrity or physical-controller claim.'];
+  }
+  const playwright = await import(pathToFileURL(args.runtime ?? '/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs').href);
+  browser = await playwright.chromium.launch({ headless: true, executablePath: args.executable ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
+  await bounded(async () => {
+    for (const [origin, entry, targets] of [
+      ['snake', 'game/snake/play.html?level=classic-snake-open-loop&ready=1', ['snake', 'solo']],
+      ['survival', 'game/overflight/play.html?layout=field-crossing-shelterbelt-gaps', ['solo']],
+      ['sim', 'optional-practice/fpv-worlds/index.html', []],
+    ]) {
+      const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+      await context.addInitScript(({ seeded, pads }) => { for (const [key, value] of Object.entries(seeded)) if (localStorage.getItem(key) === null) localStorage.setItem(key, value); window.qualificationPads = pads; Object.defineProperty(navigator, 'getGamepads', { value: () => window.qualificationPads }); }, { seeded, pads: pads() });
+      page = await context.newPage(); page.on('pageerror', error => { if (report.errors.length < 64) report.errors.push({ origin, error: String(error.stack ?? error) }); });
+      await page.goto(new URL(entry, preview.url).href);
+      await page.getByLabel('Password', { exact: true }).fill('fixture-password');
+      await page.getByRole('button', { name: 'Unlock', exact: true }).click();
+      if (origin === 'snake') await page.locator('#snake-action-menu').click();
+      const start = origin === 'sim' ? '#demo-button' : '#demo-all-button';
+      await page.locator(start).waitFor({ state: 'visible', timeout: 30000 });
+      const before = await storage(); await page.locator(start).click();
+      for (const mode of targets) await practiceByRemap(origin, mode);
+      if (origin === 'sim') {
+        await ready();
+        await page.waitForFunction(() => !document.querySelector('#demo-pad-controls').hidden, null, { timeout: 3000 });
+        const keyHint = await page.locator('#demo-bound-controls').innerText(), padHint = await page.locator('#demo-pad-controls').innerText();
+        assert.match(keyHint, /Q \/ E.*yaw/); assert.match(keyHint, /Space.*fire/);
+        assert.match(padHint, /Left stick: yaw and throttle/); assert.match(padHint, /X\/Square: fire/); assert.doesNotMatch(padHint, /reset|camera/);
+        report.checks.push({ type: 'native-SIM-controller-and-classic-preset-hints', ...await snap(), keyHint, padHint });
+      }
+      await page.locator('#demo-back').click();
+      assert.deepEqual(await storage(), before, `${origin} demo controls do not write preferences or game saves`);
+      report.checks.push({ type: 'isolated-preferences-and-persistence', origin });
+      await bounded(() => context.close(), 10000);
+    }
+  }, 360000);
+  assert.deepEqual(report.errors, []); report.complete = true;
+} catch (error) {
+  await diagnoseQualificationFailure({ report, error, page, screenshotPath: args.report.replace(/\.json$/, '.png') });
+} finally {
+  try {
+    report.headAfter = head(); report.sourceAfter = await fingerprint(); report.buildInputsAfter = await fingerprint(['scripts', 'authoring']);
+    report.observerSHA256After = sha(await readFile(new URL(import.meta.url)));
+    report.sourceUnchanged = report.headBefore === report.headAfter && report.sourceBefore.sha256 === report.sourceAfter.sha256 && report.buildInputsBefore.sha256 === report.buildInputsAfter.sha256 && report.observerSHA256 === report.observerSHA256After;
+    if (!report.sourceUnchanged) throw Error('Source, build inputs, observer or HEAD changed during browser checks.');
+    await writeFile(args.report.replace(/\.json$/, '.mjs.txt'), script, { flag: 'wx' });
+  } catch (error) { report.complete = false; report.failure ??= String(error.stack ?? error); }
+  const result = await finishQualification({ report, reportPath: args.report, browser,
+    writeReport: async (...writeArgs) => {
+      if (preview) {
+        report.preview.fixtureResponses = preview.fixtureResponses;
+        try {
+          await bounded(() => new Promise((resolve, reject) => {
+            preview.server.close(error => error ? reject(error) : resolve());
+            preview.server.closeAllConnections();
+          }), 3000);
+          report.previewClosed = true;
+        } catch (error) { report.previewClosed = false; report.complete = false; report.failure ??= String(error.stack ?? error); }
+      }
+      await writeQualificationReport(...writeArgs);
+    },
+  });
+  if (!result.complete) process.exitCode = 1;
+}

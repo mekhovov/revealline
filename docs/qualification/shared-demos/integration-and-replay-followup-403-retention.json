@@ -1,0 +1,48 @@
+{
+  "recordedAt": "2026-10-19T09:44:42.969731+00:00",
+  "files": [
+    {
+      "source": ".cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-403814d2-state.json",
+      "path": "docs/qualification/shared-demos/main-integration-403814d2-rebase.json",
+      "bytes": 357668,
+      "sha256": "494dfeac0ccb4b93b50d1536cec756c17934d395a306b2cf329ba012436437e3"
+    },
+    {
+      "source": ".cache/preserved-node22131-x64-archive-b4688ca21.json",
+      "path": "docs/qualification/shared-demos/preserved-node22131-x64-archive-b4688ca21.json",
+      "bytes": 1780,
+      "sha256": "95667502674a42861554f243347cbcc22c7bc878419ca00ea57f9563974abba2"
+    },
+    {
+      "source": ".cache/preserved-obsolete-main-previews-3f84b51f8.json",
+      "path": "docs/qualification/shared-demos/preserved-obsolete-main-previews-3f84b51f8.json",
+      "bytes": 2269,
+      "sha256": "170b115ec8563451e84d97123272f7892a8b96159c2662aab46a3121bd8fc70b"
+    },
+    {
+      "source": ".cache/preserved-obsolete-capture-b4688ca21-after-403.json",
+      "path": "docs/qualification/shared-demos/preserved-obsolete-capture-b4688ca21-after-403.json",
+      "bytes": 2156,
+      "sha256": "6e62de03d3ad03b67d3254dfc9895b721021cf592893107285711ac310d08e65"
+    },
+    {
+      "source": ".cache/hosted-b4688ca21-job-117982924360.log.txt",
+      "path": "docs/qualification/shared-demos/hosted-replay-focused-failure-b4688ca21.log.txt",
+      "bytes": 575701,
+      "sha256": "cae8dd45e855ecd0c89e465da151e9b5ed70d32914219f61269773034dbb0d11"
+    },
+    {
+      "source": ".cache/solo-node22131-x64-admission-3f84b51f8-20261019T113953.json",
+      "path": "docs/qualification/shared-demos/solo-native-admission-3f84b51f8-initial.json",
+      "bytes": 19753,
+      "sha256": "370e8b5680313fae5344d88043c3af36c6450de91e3f11ff614cf67b11696b4c"
+    },
+    {
+      "source": ".cache/solo-node22131-x64-admission-3f84b51f8-20261019T113953.tap.txt",
+      "path": "docs/qualification/shared-demos/solo-native-admission-3f84b51f8-initial.tap.txt",
+      "bytes": 10838,
+      "sha256": "842ffc5ffe5a3aa93f7c42d39ea2e93de760aa2724072a0a3387e81f1e24af2a"
+    }
+  ],
+  "scope": "Exact originals: successful rebase/storage preservation, original hosted reviewed-replay failure and failed first native admission (25/27). No corrected qualification or Linux pass claimed."
+}

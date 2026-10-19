@@ -1,0 +1,32 @@
+from pathlib import Path
+import hashlib,json,subprocess,datetime
+root=Path.cwd(); out=root/'docs/qualification/shared-demos'
+report=out/'readiness-owner-webkit-diagnostic-dd337c8.json'; binding=out/'readiness-owner-webkit-diagnostic-dd337c8-binding.json'; log=root/'.cache/readiness-owner-webkit-dd337c8.log'
+expected_head='9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d'; expected='8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04'
+manifest_path='docs/qualification/shared-demos/source-freeze-latest.json'; clone='.cache/qualify-readiness-owner-webkit-dd337c8.mjs'
+def now(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def sha(data): return hashlib.sha256(data).hexdigest()
+def fingerprint(dirs,select):
+ names=sorted(n for n in subprocess.check_output(['rg','--files',*dirs],text=True).splitlines() if select(n));h=hashlib.sha256();size=0
+ for n in names:
+  data=Path(n).read_bytes();size+=len(data);h.update(n.encode()+bytes([0]));h.update(hashlib.sha256(data).digest())
+ return {'sha256':h.hexdigest(),'files':len(names),'bytes':size}
+def capture():
+ return {'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'runtime':fingerprint(['game','optional-practice','publishing'],lambda n:Path(n).suffix in ['.mjs','.js','.json','.css','.html'] and '/test/' not in n and not n.endswith('.test.mjs') and not n.endswith('/coverage.json')),'harness':fingerprint(['scripts'],lambda n:True),'manifestSHA256':sha(Path(manifest_path).read_bytes()),'manifest':json.loads(Path(manifest_path).read_text()),'cloneSHA256':sha(Path(clone).read_bytes()),'wrapperSHA256':sha(Path(__file__).read_bytes()),'projectionSHA256':sha(Path('.cache/app-readiness-owner-dd337c8.mjs').read_bytes()),'presentationProjectionSHA256':sha(Path('.cache/presentation-readiness-owner-dd337c8.mjs').read_bytes())}
+assert not any(p.exists() for p in [report,binding,log]),'Fresh diagnostic paths required'
+before=capture();assert before['head']==expected_head;assert before['runtime']['sha256']==expected
+assert before['runtime']['sha256']==before['manifest']['sourceFingerprint'];assert before['runtime']['files']==before['manifest']['files'];assert before['runtime']['bytes']==before['manifest']['bytes']
+cmd=['node',clone,'--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs','--browser=webkit','--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh','--port=8771','--mode=solo','--reload=false','--report='+str(report)]
+receipt={'format':'SharedDemoReadinessDiagnosticBindingV1','started':now(),'before':before,'command':cmd,'report':str(report.relative_to(root)),'scope':'One observation-only Solo ordinary entry/reload sample. Original readiness predicate and30-second gate,3-second click and240-second qualification timer unchanged. Extra DOM/boot snapshots and server-only incoming-handoff stage observers may perturb timing. Original tracked runtime is unchanged; the served app projection is explicitly hashed. No broad error filtering. This is not replacement browser qualification.'}
+try:
+ with log.open('x') as f:
+  run=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT,timeout=300);receipt['exitCode']=run.returncode
+except Exception as e: receipt['runnerError']=repr(e)
+finally:
+ receipt['finished']=now();receipt['after']=capture();receipt['bindingComplete']=receipt['after']==before
+ if report.exists():
+  data=json.loads(report.read_text());receipt.update({'reportSHA256':sha(report.read_bytes()),'checks':len(data.get('checks',[])),'errors':len(data.get('errors',[])),'browserCloseCompleted':data.get('browserCloseCompleted'),'previewClosed':data.get('previewClosed'),'failure':data.get('failure')})
+ receipt['complete']=receipt.get('exitCode')==0 and receipt['bindingComplete'] and receipt.get('browserCloseCompleted') is True and receipt.get('previewClosed') is True
+ with binding.open('x') as f: json.dump(receipt,f,indent=2);f.write('\n')
+ print(json.dumps(receipt),flush=True)
+raise SystemExit(0 if receipt['complete'] else 1)

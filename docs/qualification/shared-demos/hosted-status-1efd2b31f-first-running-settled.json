@@ -1,0 +1,116 @@
+{
+  "format": "SharedDemoHostedWatchSnapshotV1",
+  "scope": "Original three running jobs have settled: gameplay passed; candidate and optional-practice failed file-count budgets. Other jobs remain outstanding.",
+  "checks": [
+    {
+      "completedAt": "2026-10-19T07:08:33Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506104/job/117904302540",
+      "name": "optional-practice",
+      "status": "COMPLETED",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506247/job/117928938474",
+      "name": "preflight",
+      "status": "QUEUED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "completedAt": "2026-10-19T07:03:48Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117904302404",
+      "name": "admission",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "completedAt": "2026-10-19T06:58:25Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301416",
+      "name": "feature (gameplay)",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "2026-10-19T07:08:14Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301683",
+      "name": "feature (creator)",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "2026-10-19T07:09:26Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301656",
+      "name": "feature (presentation)",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301665",
+      "name": "feature (recordings)",
+      "status": "QUEUED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301702",
+      "name": "feature (rooms)",
+      "status": "QUEUED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301570",
+      "name": "feature (local-ux)",
+      "status": "QUEUED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "2026-10-19T06:59:08Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506104/job/117904302321",
+      "name": "candidate",
+      "status": "COMPLETED",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117904302635",
+      "name": "demo_admission",
+      "status": "QUEUED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "completedAt": "2026-10-19T07:06:31Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117904302563",
+      "name": "team_admission",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117904302584",
+      "name": "installed_admission",
+      "status": "IN_PROGRESS",
+      "workflowName": "Appearance preview"
+    }
+  ],
+  "headRefOid": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "mergeable": "CONFLICTING",
+  "limitations": [
+    "Snapshot contains five successful, two failed, one running and five queued checks.",
+    "No workflow action, source change, Git fetch, or endurance interruption."
+  ]
+}

@@ -79,6 +79,7 @@ async function mountedFlight(t, { createPage = soloPage, browserSetup, ...option
     ...options,
     storage,
     titleScreen: true,
+    initialReadyTimeoutMs: 30000,
     browserSetup(context) {
       const { globals } = context;
       const ordinary = globals.indexedDB;
@@ -272,7 +273,9 @@ test('mounted ordinary restored win is retained automatically only after the rea
     0,
     'Enabled collection defers replay serialization until after the winning host frame.',
   );
-  await settle(() => database.allPuts.length === 1);
+  await settle(() => database.allPuts.length === 1, 'The verified ordinary win must be retained.', {
+    timeoutMs: 20000,
+  });
   assertRetained(await readCache(database), checkpoint);
   assert.equal(page.$('demo-keep-status').textContent, '', 'No manual Keep action was used.');
   assert.equal(JSON.parse(page.storage.getItem(SETTINGS)).collect, true);

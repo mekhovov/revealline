@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-19T01:51:57.852631+00:00",
+  "scope": "Only the task-generated obsolete emitted preview is retired after both native-discard and failed-endurance cleanup. Runtime correction requires a fresh capture; all original receipts and exact manifest remain retained. No user files or repository objects deleted.",
+  "directory": ".cache/shared-demos-emitted-dd337c8-693947ed1",
+  "fileBytes": 142897418,
+  "manifest": "retired-emitted-cache-693947ed1-manifest.json",
+  "manifestSHA256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474",
+  "availableBeforeBytes": 626634752,
+  "availableAfterBytes": 770830336,
+  "retired": true
+}

@@ -1,0 +1,127 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T05:16:32.691Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:container-yard-05-acro-b22648d12041a47a",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "4",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Patrol interruption",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-field-open-seam:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Seam",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-33e6a62cdaa16aaa",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Open frequency",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "offline-recovery-budget",
+      "loadingMs": 9884,
+      "mode": "solo",
+      "source": "",
+      "phase": "unavailable",
+      "failure": "sim:container-yard-05-acro-b22648d12041a47a : Failed to fetch",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "sim:container-yard-05-acro-b22648d12041a47a",
+        "modeId": "sim",
+        "at": 1792300617547,
+        "loadingMs": 4,
+        "code": null,
+        "message": "Failed to fetch",
+        "stack": "TypeError: Failed to fetch\n    at read (http://127.0.0.1:8769/game/demo-modes/sim.mjs:24:28)\n    at Object.create (http://127.0.0.1:8769/game/demo-modes/sim.mjs:108:37)\n    at prepareScene (http://127.0.0.1:8769/game/ui/demo-host.mjs:805:33)\n    at async prepare (http://127.0.0.1:8769/game/ui/demo-host.mjs:796:14)"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T05:16:57.563Z",
+  "enduranceFinished": "2026-10-18T05:16:57.563Z",
+  "finished": "2026-10-18T05:16:57.645Z"
+}

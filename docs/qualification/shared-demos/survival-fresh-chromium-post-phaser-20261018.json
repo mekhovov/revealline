@@ -1,0 +1,451 @@
+{
+  "engine": "chromium",
+  "started": "2026-10-18T18:02:15.772Z",
+  "checks": [
+    {
+      "type": "stay-retains-original-sortie",
+      "flight": {
+        "id": "interceptor",
+        "speed": 198,
+        "boostSpeed": 350,
+        "maxHull": 80
+      },
+      "format": "OverflightRunSummaryV1",
+      "projectId": "survivor-field-crossing-broken-crossroads",
+      "projectIdentity": "a28134de5e580e0e",
+      "seed": 42,
+      "phase": "paused",
+      "outcome": "incomplete",
+      "reason": null,
+      "fixture": null,
+      "fixtureWorkload": null,
+      "time": 0.016666666666666666,
+      "tick": 1,
+      "airframes": 1,
+      "airframesRemaining": 1,
+      "stats": {
+        "kills": 0,
+        "spawned": 0,
+        "enemiesAlive": 0,
+        "enemiesVisible": 0,
+        "peakAlive": 0,
+        "peakVisible": 0,
+        "heaviesAlive": 0,
+        "specialistsAlive": 0,
+        "priorityAttacks": 0,
+        "damageDealt": 0,
+        "damageTaken": 0,
+        "damageCauses": {
+          "contact": 0,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 0,
+        "xpCollected": 0,
+        "xpOnGround": 0,
+        "pickupsAlive": 0,
+        "pickupMerges": 0,
+        "boostsUsed": 0,
+        "airframesLost": 0,
+        "upgradesChosen": 0,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 0,
+        "hits": 0,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0
+      },
+      "build": {
+        "primary": {
+          "rank": 1,
+          "branch": null,
+          "evolved": false
+        },
+        "combat": [],
+        "support": null,
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "upgrades": [],
+      "goals": {
+        "eliteSpawned": false,
+        "eliteDefeated": false,
+        "finalSpawned": false,
+        "finalDefeated": false,
+        "finalId": null
+      },
+      "appearance": {
+        "projectIdentity": "a28134de5e580e0e",
+        "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+        "presentation": {
+          "id": "field-kit",
+          "revision": 104
+        },
+        "themeIdentity": "9670af00f1ea5378",
+        "familyId": "industrial-workshop",
+        "familyRevision": "r3",
+        "interfaceId": "industrial-workshop",
+        "interfaceRevision": "r3",
+        "arcade": {
+          "id": "industrial-workshop",
+          "revision": "r2"
+        },
+        "actorArtRevision": "industrial-roster-v3",
+        "equipment": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "materialStyle": "steel",
+        "materialVariant": "steel",
+        "characterId": "interceptor",
+        "playerSlot": "player.interceptor.detailed",
+        "cast": "authored",
+        "visualIdentity": "eb5cda0d8f2f7bbb"
+      },
+      "review": null
+    },
+    {
+      "type": "same-page-standard-ready",
+      "flight": {
+        "id": "balanced",
+        "speed": 180,
+        "boostSpeed": 330,
+        "maxHull": 100
+      },
+      "format": "OverflightRunSummaryV1",
+      "projectId": "survivor-field-crossing-broken-crossroads",
+      "projectIdentity": "f58d3caba411de4a",
+      "seed": 17031991,
+      "phase": "ready",
+      "outcome": "incomplete",
+      "reason": null,
+      "fixture": null,
+      "fixtureWorkload": null,
+      "time": 0,
+      "tick": 0,
+      "airframes": 3,
+      "airframesRemaining": 3,
+      "stats": {
+        "kills": 0,
+        "spawned": 0,
+        "enemiesAlive": 0,
+        "enemiesVisible": 0,
+        "peakAlive": 0,
+        "peakVisible": 0,
+        "heaviesAlive": 0,
+        "specialistsAlive": 0,
+        "priorityAttacks": 0,
+        "damageDealt": 0,
+        "damageTaken": 0,
+        "damageCauses": {
+          "contact": 0,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 0,
+        "xpCollected": 0,
+        "xpOnGround": 0,
+        "pickupsAlive": 0,
+        "pickupMerges": 0,
+        "boostsUsed": 0,
+        "airframesLost": 0,
+        "upgradesChosen": 0,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 0,
+        "hits": 0,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0
+      },
+      "build": {
+        "primary": {
+          "rank": 1,
+          "branch": null,
+          "evolved": false
+        },
+        "combat": [],
+        "support": null,
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "upgrades": [],
+      "goals": {
+        "eliteSpawned": false,
+        "eliteDefeated": false,
+        "finalSpawned": false,
+        "finalDefeated": false,
+        "finalId": null
+      },
+      "appearance": {
+        "projectIdentity": "f58d3caba411de4a",
+        "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+        "presentation": {
+          "id": "field-kit",
+          "revision": 104
+        },
+        "themeIdentity": "9670af00f1ea5378",
+        "familyId": "industrial-workshop",
+        "familyRevision": "r3",
+        "interfaceId": "industrial-workshop",
+        "interfaceRevision": "r3",
+        "arcade": {
+          "id": "industrial-workshop",
+          "revision": "r2"
+        },
+        "actorArtRevision": "industrial-roster-v3",
+        "equipment": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "materialStyle": "steel",
+        "materialVariant": "steel",
+        "characterId": "interceptor",
+        "playerSlot": "player.interceptor.detailed",
+        "cast": "authored",
+        "visualIdentity": "eb5cda0d8f2f7bbb"
+      },
+      "review": null
+    },
+    {
+      "type": "manual-start-retains-standard",
+      "flight": {
+        "id": "balanced",
+        "speed": 180,
+        "boostSpeed": 330,
+        "maxHull": 100
+      },
+      "format": "OverflightRunSummaryV1",
+      "projectId": "survivor-field-crossing-broken-crossroads",
+      "projectIdentity": "f58d3caba411de4a",
+      "seed": 17031991,
+      "phase": "playing",
+      "outcome": "incomplete",
+      "reason": null,
+      "fixture": null,
+      "fixtureWorkload": null,
+      "time": 0,
+      "tick": 0,
+      "airframes": 3,
+      "airframesRemaining": 3,
+      "stats": {
+        "kills": 0,
+        "spawned": 0,
+        "enemiesAlive": 0,
+        "enemiesVisible": 0,
+        "peakAlive": 0,
+        "peakVisible": 0,
+        "heaviesAlive": 0,
+        "specialistsAlive": 0,
+        "priorityAttacks": 0,
+        "damageDealt": 0,
+        "damageTaken": 0,
+        "damageCauses": {
+          "contact": 0,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 0,
+        "xpCollected": 0,
+        "xpOnGround": 0,
+        "pickupsAlive": 0,
+        "pickupMerges": 0,
+        "boostsUsed": 0,
+        "airframesLost": 0,
+        "upgradesChosen": 0,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 0,
+        "hits": 0,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0
+      },
+      "build": {
+        "primary": {
+          "rank": 1,
+          "branch": null,
+          "evolved": false
+        },
+        "combat": [],
+        "support": null,
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "upgrades": [],
+      "goals": {
+        "eliteSpawned": false,
+        "eliteDefeated": false,
+        "finalSpawned": false,
+        "finalDefeated": false,
+        "finalId": null
+      },
+      "appearance": {
+        "projectIdentity": "f58d3caba411de4a",
+        "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+        "presentation": {
+          "id": "field-kit",
+          "revision": 104
+        },
+        "themeIdentity": "9670af00f1ea5378",
+        "familyId": "industrial-workshop",
+        "familyRevision": "r3",
+        "interfaceId": "industrial-workshop",
+        "interfaceRevision": "r3",
+        "arcade": {
+          "id": "industrial-workshop",
+          "revision": "r2"
+        },
+        "actorArtRevision": "industrial-roster-v3",
+        "equipment": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "materialStyle": "steel",
+        "materialVariant": "steel",
+        "characterId": "interceptor",
+        "playerSlot": "player.interceptor.detailed",
+        "cast": "authored",
+        "visualIdentity": "eb5cda0d8f2f7bbb"
+      },
+      "review": null
+    },
+    {
+      "type": "cross-page-standard-ready",
+      "flight": {
+        "id": "balanced",
+        "speed": 180,
+        "boostSpeed": 330,
+        "maxHull": 100
+      },
+      "format": "OverflightRunSummaryV1",
+      "projectId": "survivor-field-crossing-broken-crossroads",
+      "projectIdentity": "f58d3caba411de4a",
+      "seed": 17031991,
+      "phase": "ready",
+      "outcome": "incomplete",
+      "reason": null,
+      "fixture": null,
+      "fixtureWorkload": null,
+      "time": 0,
+      "tick": 0,
+      "airframes": 3,
+      "airframesRemaining": 3,
+      "stats": {
+        "kills": 0,
+        "spawned": 0,
+        "enemiesAlive": 0,
+        "enemiesVisible": 0,
+        "peakAlive": 0,
+        "peakVisible": 0,
+        "heaviesAlive": 0,
+        "specialistsAlive": 0,
+        "priorityAttacks": 0,
+        "damageDealt": 0,
+        "damageTaken": 0,
+        "damageCauses": {
+          "contact": 0,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 0,
+        "xpCollected": 0,
+        "xpOnGround": 0,
+        "pickupsAlive": 0,
+        "pickupMerges": 0,
+        "boostsUsed": 0,
+        "airframesLost": 0,
+        "upgradesChosen": 0,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 0,
+        "hits": 0,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0
+      },
+      "build": {
+        "primary": {
+          "rank": 1,
+          "branch": null,
+          "evolved": false
+        },
+        "combat": [],
+        "support": null,
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "upgrades": [],
+      "goals": {
+        "eliteSpawned": false,
+        "eliteDefeated": false,
+        "finalSpawned": false,
+        "finalDefeated": false,
+        "finalId": null
+      },
+      "appearance": {
+        "projectIdentity": "f58d3caba411de4a",
+        "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+        "presentation": {
+          "id": "field-kit",
+          "revision": 104
+        },
+        "themeIdentity": "9670af00f1ea5378",
+        "familyId": "industrial-workshop",
+        "familyRevision": "r3",
+        "interfaceId": "industrial-workshop",
+        "interfaceRevision": "r3",
+        "arcade": {
+          "id": "industrial-workshop",
+          "revision": "r2"
+        },
+        "actorArtRevision": "industrial-roster-v3",
+        "equipment": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "materialStyle": "steel",
+        "materialVariant": "steel",
+        "characterId": "interceptor",
+        "playerSlot": "player.interceptor.detailed",
+        "cast": "authored",
+        "visualIdentity": "eb5cda0d8f2f7bbb"
+      },
+      "review": null
+    }
+  ],
+  "errors": [],
+  "events": [
+    {
+      "type": "navigation",
+      "at": "2026-10-18T18:02:17.214Z",
+      "url": "http://127.0.0.1:8769/game/overflight/play.html?layout=field-crossing-broken-crossroads&seed=42"
+    },
+    {
+      "type": "cross-page-navigation-request",
+      "at": "2026-10-18T18:02:22.283Z"
+    },
+    {
+      "type": "navigation",
+      "at": "2026-10-18T18:02:22.321Z",
+      "url": "http://127.0.0.1:8769/game/overflight/play.html?layout=field-crossing-broken-crossroads&survival-demo=standard&seed=99"
+    }
+  ],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T18:02:24.266Z"
+}

@@ -252,3 +252,66 @@ test('source archive ships exact selected projections with original input hashes
     /artifact bytes differ|unprojected aggregate/,
   );
 });
+
+test('candidate sources bind the selected demo catalog and exclude unselected recording bodies', async () => {
+  const f = editionAdmissionFixture();
+  const name = 'game/demo-data/catalog.json';
+  const originalCatalog = JSON.parse(
+    await fs.readFile(new URL('../game/demo-data/catalog.json', import.meta.url)),
+  );
+  const original = editionJSON(originalCatalog);
+  const projected = editionJSON({ format: 'revealline-demo-catalog.v1', clips: [] });
+  const omitted = 'game/' + originalCatalog.clips[0].replayURL.slice(2);
+  const snake = 'game/demo-data/snake/kept.replay.json';
+  const sourceFiles = new Map([
+    ...f.sourceFiles,
+    [name, original],
+    [omitted, text('FOREIGN_RECORDING')],
+    [snake, text('{}')],
+  ]);
+  const runtime = new Map([...f.runtime, [name, projected], [snake, text('{}')]]);
+  const candidate = createEditionCandidate({
+    compiled: { files: runtime, runtimeCatalog: f.catalog },
+    sourceFiles,
+    version: f.envelope.version,
+    sourceRevision: f.envelope.sourceRevision,
+    sourceTree: f.envelope.sourceTree,
+  });
+  const archive = readEditionZip(candidate.files.get(candidate.edition.sourceArchive.path));
+  const inventory = JSON.parse(candidate.files.get(candidate.edition.sourceInventory.path));
+  assert.equal(archive.has(omitted), false);
+  assert.deepEqual(archive.get(name), projected);
+  assert.ok(archive.has(snake));
+  assert.deepEqual(inventory.projections, [
+    {
+      kind: 'selected-demo-catalog',
+      original: editionDescriptor(name, original),
+      output: editionDescriptor(name, projected),
+    },
+  ]);
+  assert.equal(
+    (
+      await validateEditionAdmission(
+        { ...f.envelope, editions: [candidate.edition] },
+        { read: async (row) => candidate.files.get(row.path) },
+      )
+    ).zipMembersVerified,
+    true,
+  );
+  assert.equal(sourceFiles.has(omitted), true, 'The frozen source input map is not mutated.');
+  const arbitrary = 'game/demo-data/other.json';
+  assert.throws(
+    () =>
+      createEditionCandidate({
+        compiled: {
+          files: new Map([...runtime, [arbitrary, projected]]),
+          runtimeCatalog: f.catalog,
+        },
+        sourceFiles: new Map([...sourceFiles, [arbitrary, original]]),
+        version: f.envelope.version,
+        sourceRevision: f.envelope.sourceRevision,
+        sourceTree: f.envelope.sourceTree,
+      }),
+    /Unclassified selected source projection/,
+  );
+});

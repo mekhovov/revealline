@@ -1,0 +1,99 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { createRun, stepRun, releaseInputs, FIXED_DT } from '../game/core/index.mjs';
+import { snapshotReplay, createRecorder, recordInput, recordRelease, exportReplay,
+  verifyReplay, authoritativeCheckpoint } from '../game/replay.mjs';
+import { prepareReplayPlayer } from '../game/replay-player.mjs';
+import { demoInputTraceIdentity, validateDemoCatalog } from '../game/demo-catalog.mjs';
+import { diagnoseDemoReplay } from '../game/demo-replay-diagnostics.mjs';
+const reportPath = '.cache/solo-node22131-x64-capture-b4688ca21.json';
+const outputPath = '.cache/solo-node22131-x64-candidate-independent-checks.json';
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const readPinned = async pin => {
+  const bytes = await readFile(pin.path);
+  assert.equal(bytes.length, pin.bytes);
+  assert.equal(sha(bytes), pin.sha256);
+  return bytes;
+};
+const started = new Date().toISOString();
+assert.equal(process.version, 'v22.13.1');
+assert.equal(process.platform, 'darwin');
+assert.equal(process.arch, 'x64');
+const capture = JSON.parse(await readFile(reportPath));
+assert.equal(capture.complete, true);
+assert.equal(capture.sourceUnchanged, true);
+await readPinned(capture.environment.executable);
+const catalog = validateDemoCatalog(await readFile('game/demo-data/catalog.json', 'utf8'));
+const checks = [];
+for (const row of capture.checks) {
+  assert.equal(row.genericVariantEligible, true);
+  const original = snapshotReplay((await readPinned(row.source)).toString());
+  const candidate = snapshotReplay((await readPinned(row.candidate)).toString());
+  const diagnosticBytes = await readPinned(row.diagnostic);
+  const sidecar = JSON.parse(diagnosticBytes);
+  const clip = catalog.clips.find(clip => clip.id === row.id);
+  assert.ok(clip);
+  for (const key of ['version', 'ruleset', 'build', 'level', 'options', 'segments', 'ticks', 'releaseAfter'])
+    assert.deepEqual(candidate[key], original[key], `${row.id}: ${key}`);
+  assert.equal(candidate.summary.status, original.summary.status);
+  assert.equal(candidate.ticks / 120, clip.durationSeconds);
+  assert.equal(demoInputTraceIdentity(candidate), clip.inputTraceIdentity);
+  assert.equal(candidate.options.turnPolicy, clip.turnPolicy);
+  assert.ok((clip.replayVariants?.length ?? 0) < 3);
+  const admittedURL = './demo-data/' + row.candidate.path.split('/').at(-1);
+  validateDemoCatalog({ ...catalog, clips: catalog.clips.map(item => item.id === clip.id ?
+    { ...item, replayVariants: [...(item.replayVariants ?? []), admittedURL] } : item) });
+  const run = createRun(original.level, original.options);
+  const recorder = createRecorder(original.level, original.options, original.build);
+  const initial = run.claimedCount;
+  let captures = 0, checkpointIndex = 0;
+  for (const segment of original.segments) {
+    if (segment.releaseBefore) { releaseInputs(run); recordRelease(recorder); }
+    for (let offset = 0; offset < segment.ticks; offset++) {
+      assert.ok(!['won', 'lost'].includes(run.status));
+      recordInput(recorder, segment.input);
+      stepRun(run, segment.input, FIXED_DT);
+      captures += run.events.filter(event => event.type === 'cut.closed').length;
+      if (run.tick % 600 === 0)
+        assert.deepEqual(sidecar.checkpoints[checkpointIndex++], { tick: run.tick, ...authoritativeCheckpoint(run) });
+    }
+  }
+  if (original.releaseAfter) { releaseInputs(run); recordRelease(recorder); }
+  assert.deepEqual(snapshotReplay(exportReplay(recorder, run)), candidate);
+  assert.equal(run.tick, candidate.ticks);
+  assert.equal(run.status, candidate.summary.status);
+  assert.ok(['won', 'lost'].includes(run.status));
+  assert.ok(captures > 0 && run.claimedCount > initial);
+  assert.equal(checkpointIndex, sidecar.checkpoints.length);
+  assert.equal(checkpointIndex, Math.floor(candidate.ticks / 600));
+  assert.equal(await diagnoseDemoReplay(candidate, diagnosticBytes.toString()), null);
+  const verified = verifyReplay(candidate);
+  assert.equal(verified.match, true, JSON.stringify(verified.diagnostics));
+  const player = await prepareReplayPlayer(candidate, { chunkTicks: 1200 });
+  let playerCaptures = 0;
+  try {
+    player.play();
+    for (let advances = 0; player.phase === 'playing'; advances++) {
+      assert.ok(advances <= Math.ceil(candidate.ticks / 30) + 2);
+      playerCaptures += player.advance(.25).events.filter(event => event.type === 'cut.closed').length;
+    }
+    assert.equal(player.phase, 'complete');
+    assert.equal(player.state.tick, candidate.ticks);
+    assert.equal(player.state.status, candidate.summary.status);
+    assert.deepEqual(authoritativeCheckpoint(player.state), candidate.checkpoint);
+    assert.equal(playerCaptures, captures);
+    assert.equal(player.state.claimedCount - initial, row.natural.capturedCells);
+  } finally { await player.dispose(); }
+  checks.push({ id: row.id, levelId: row.levelId, admittedURL, outcome: run.status,
+    ticks: run.tick, durationSeconds: clip.durationSeconds, captures, capturedCells: run.claimedCount - initial,
+    inputTraceIdentity: demoInputTraceIdentity(candidate), finalCheckpoint: candidate.checkpoint.hash,
+    sidecarCheckpoints: checkpointIndex, ordinaryRecorderExact: true, fullVerification: true,
+    playerComplete: true, diagnosticMatch: true, hypotheticalCatalogValid: true });
+}
+assert.equal(checks.length, 3);
+await writeFile(outputPath, JSON.stringify({ format: 'SoloNativeCandidateIndependentChecksV1', complete: true,
+  started, finished: new Date().toISOString(), environment: { version: process.version, platform: process.platform, arch: process.arch },
+  captureSHA256: sha(await readFile(reportPath)), helperSHA256: sha(await readFile(new URL(import.meta.url))), checks,
+  scope: 'Independent same-native-runtime normal recorder reconstruction, sidecar checkpoint comparison, strict full verification and actual replay-player terminal playback. No catalog adoption; no Linux or browser qualification claim.' }, null, 2) + '\n', { flag: 'wx' });
+console.log(JSON.stringify({ complete: true, checks: checks.length, path: outputPath }));

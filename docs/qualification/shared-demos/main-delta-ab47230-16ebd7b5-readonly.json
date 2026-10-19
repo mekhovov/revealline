@@ -1,0 +1,783 @@
+{
+  "format": "SharedDemoIncomingMainScopeV1",
+  "observedAt": "2026-10-19T04:30:19.469Z",
+  "purpose": "Read-only scope assessment of one pinned current-main snapshot while the already emitted candidate remains held for browser qualification. This is not a merge or integration pass.",
+  "candidate": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+  "fixedBase": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+  "comparedMain": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "hostedStatusReceipt": "hosted-status-7438d14d6-browser.json",
+  "mainObservation": {
+    "command": "gh api repos/mekhovov/revealline/branches/main --jq '{name,protected,commit:{sha:.commit.sha,url:.commit.html_url,commit:{message:.commit.commit.message,committer:.commit.commit.committer}},_links}'",
+    "startedAt": "2026-10-19T04:28:38.554Z",
+    "finishedAt": "2026-10-19T04:28:39.125Z",
+    "result": {
+      "_links": {
+        "html": "https://github.com/mekhovov/revealline/tree/main",
+        "self": "https://api.github.com/repos/mekhovov/revealline/branches/main"
+      },
+      "commit": {
+        "commit": {
+          "committer": {
+            "date": "2026-10-19T04:28:17Z",
+            "email": "noreply@github.com",
+            "name": "GitHub"
+          },
+          "message": "Merge pull request #1712 from mekhovov/codex/solo-backing-context-recovery\n\nfix(render): restore cached actor backing after context loss"
+        },
+        "sha": "16ebd7b51984387c39622380a8e51a60e745152e",
+        "url": "https://github.com/mekhovov/revealline/commit/16ebd7b51984387c39622380a8e51a60e745152e"
+      },
+      "name": "main",
+      "protected": false
+    }
+  },
+  "compareObservation": {
+    "command": "gh api 'repos/mekhovov/revealline/compare/ab47230fd8e0e68c5536fe9d76616c7fe9a03516...16ebd7b51984387c39622380a8e51a60e745152e?per_page=100' --jq '{url,html_url,status,ahead_by,behind_by,total_commits,base_commit:{sha:.base_commit.sha},merge_base_commit:{sha:.merge_base_commit.sha},commits:[.commits[]|{sha,parents:[.parents[].sha],message:.commit.message,committedAt:.commit.committer.date}],files:[.files[]|{filename,previous_filename,status,additions,deletions,changes}]}'",
+    "startedAt": "2026-10-19T04:28:51.348Z",
+    "finishedAt": "2026-10-19T04:28:52.176Z",
+    "status": "ahead",
+    "aheadBy": 21,
+    "behindBy": 0,
+    "totalCommits": 21,
+    "returnedCommits": 21,
+    "returnedFiles": 27,
+    "htmlUrl": "https://github.com/mekhovov/revealline/compare/ab47230fd8e0e68c5536fe9d76616c7fe9a03516...16ebd7b51984387c39622380a8e51a60e745152e",
+    "baseCommit": {
+      "sha": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516"
+    },
+    "mergeBaseCommit": {
+      "sha": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516"
+    }
+  },
+  "scopeCounts": {
+    "runtime/source": 15,
+    "test": 10,
+    "documentation": 2
+  },
+  "changedPaths": [
+    {
+      "additions": 27,
+      "changes": 27,
+      "deletions": 0,
+      "filename": "docs/overflight-reroll-count-language.md",
+      "previous_filename": null,
+      "status": "added",
+      "scope": "documentation"
+    },
+    {
+      "additions": 49,
+      "changes": 87,
+      "deletions": 38,
+      "filename": "docs/performance/solo-performance-followup-plan.md",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "documentation"
+    },
+    {
+      "additions": 28,
+      "changes": 47,
+      "deletions": 19,
+      "filename": "game/core/capture.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 5,
+      "changes": 5,
+      "deletions": 0,
+      "filename": "game/couch/couch.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 1,
+      "changes": 2,
+      "deletions": 1,
+      "filename": "game/i18n/catalogs.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 3,
+      "changes": 4,
+      "deletions": 1,
+      "filename": "game/journey/reaction-voice-cache.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 3,
+      "changes": 4,
+      "deletions": 1,
+      "filename": "game/locales/en/interface.json",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 5,
+      "changes": 6,
+      "deletions": 1,
+      "filename": "game/locales/uk/interface.json",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 3,
+      "changes": 4,
+      "deletions": 1,
+      "filename": "game/overflight/app.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 92,
+      "changes": 111,
+      "deletions": 19,
+      "filename": "game/overflight/raid-upgrade-card.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 9,
+      "changes": 12,
+      "deletions": 3,
+      "filename": "game/soundtrack-source.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 331,
+      "changes": 331,
+      "deletions": 0,
+      "filename": "game/test/body-backing-recovery.test.mjs",
+      "previous_filename": null,
+      "status": "added",
+      "scope": "test"
+    },
+    {
+      "additions": 52,
+      "changes": 52,
+      "deletions": 0,
+      "filename": "game/test/classic-snake-ui.test.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "test"
+    },
+    {
+      "additions": 139,
+      "changes": 140,
+      "deletions": 1,
+      "filename": "game/test/core-capture.test.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "test"
+    },
+    {
+      "additions": 63,
+      "changes": 63,
+      "deletions": 0,
+      "filename": "game/test/couch-enemy-stats-locale.test.mjs",
+      "previous_filename": null,
+      "status": "added",
+      "scope": "test"
+    },
+    {
+      "additions": 98,
+      "changes": 98,
+      "deletions": 0,
+      "filename": "game/test/global-settings-tools.test.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "test"
+    },
+    {
+      "additions": 230,
+      "changes": 230,
+      "deletions": 0,
+      "filename": "game/test/overflight-raid-refit-shield.test.mjs",
+      "previous_filename": null,
+      "status": "added",
+      "scope": "test"
+    },
+    {
+      "additions": 49,
+      "changes": 50,
+      "deletions": 1,
+      "filename": "game/test/overflight-reroll-disclosure.test.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "test"
+    },
+    {
+      "additions": 265,
+      "changes": 265,
+      "deletions": 0,
+      "filename": "game/test/reaction-recording-cancellation.test.mjs",
+      "previous_filename": null,
+      "status": "added",
+      "scope": "test"
+    },
+    {
+      "additions": 270,
+      "changes": 270,
+      "deletions": 0,
+      "filename": "game/test/soundtrack-player.test.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "test"
+    },
+    {
+      "additions": 64,
+      "changes": 64,
+      "deletions": 0,
+      "filename": "game/test/soundtrack-source.test.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "test"
+    },
+    {
+      "additions": 77,
+      "changes": 106,
+      "deletions": 29,
+      "filename": "game/ui/body-backing.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 11,
+      "changes": 19,
+      "deletions": 8,
+      "filename": "game/ui/global-settings-tools.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 45,
+      "changes": 46,
+      "deletions": 1,
+      "filename": "game/ui/settings-panels.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 59,
+      "changes": 72,
+      "deletions": 13,
+      "filename": "game/ui/soundtrack-player.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 47,
+      "changes": 49,
+      "deletions": 2,
+      "filename": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    },
+    {
+      "additions": 4,
+      "changes": 6,
+      "deletions": 2,
+      "filename": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "previous_filename": null,
+      "status": "modified",
+      "scope": "runtime/source"
+    }
+  ],
+  "commits": [
+    {
+      "committedAt": "2026-10-18T22:22:57Z",
+      "message": "fix(settings): restore nested tool focus after responsive resize",
+      "parents": [
+        "536a70aa9e1fb36489985754cbccfa5148a1c3bc"
+      ],
+      "sha": "2046ab82b4c73737cf1a5a41a33c7892caff0567"
+    },
+    {
+      "committedAt": "2026-10-18T22:56:31Z",
+      "message": "Avoid temporary trail copies without changing collision calculations",
+      "parents": [
+        "dd337c8120fd6f875544c1479713d3aa4299c323"
+      ],
+      "sha": "d1cec960ca866c3c27a7959856f4dd3e331052dd"
+    },
+    {
+      "committedAt": "2026-10-18T23:25:55Z",
+      "message": "Keep downloaded soundtrack validation in the playback inspector",
+      "parents": [
+        "dd337c8120fd6f875544c1479713d3aa4299c323"
+      ],
+      "sha": "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933"
+    },
+    {
+      "committedAt": "2026-10-18T23:40:48Z",
+      "message": "Show available shield charges in Raid refit previews",
+      "parents": [
+        "dd337c8120fd6f875544c1479713d3aa4299c323"
+      ],
+      "sha": "74e6a6cc203642652645f3fbc946c4e9b545debb"
+    },
+    {
+      "committedAt": "2026-10-19T01:03:46Z",
+      "message": "Merge latest main into downloaded soundtrack inspection source qualification",
+      "parents": [
+        "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+        "bd15820bee10a33ba64534071d22657fbd7326d3"
+      ],
+      "sha": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500"
+    },
+    {
+      "committedAt": "2026-10-19T01:14:59Z",
+      "message": "Merge latest main into trail allocation source qualification",
+      "parents": [
+        "d1cec960ca866c3c27a7959856f4dd3e331052dd",
+        "bd15820bee10a33ba64534071d22657fbd7326d3"
+      ],
+      "sha": "73d56d3b674bcfba890656143c810f10ffd233b3"
+    },
+    {
+      "committedAt": "2026-10-19T01:22:51Z",
+      "message": "fix(duel): refresh enemy statistics on language changes",
+      "parents": [
+        "bd15820bee10a33ba64534071d22657fbd7326d3"
+      ],
+      "sha": "2843ec10ef17423881f590185ebc8cea3c7a3f52"
+    },
+    {
+      "committedAt": "2026-10-19T03:41:23Z",
+      "message": "Merge pull request #1696 from mekhovov/codex/solo-trail-allocation\n\nperf(core): avoid temporary trail copies during movement",
+      "parents": [
+        "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+        "73d56d3b674bcfba890656143c810f10ffd233b3"
+      ],
+      "sha": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1"
+    },
+    {
+      "committedAt": "2026-10-19T03:43:20Z",
+      "message": "fix(audio): stop cancelled recording inspection before parsing",
+      "parents": [
+        "a2c0b33c43d56adbdbb666c618d5f489cbdd32e7"
+      ],
+      "sha": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384"
+    },
+    {
+      "committedAt": "2026-10-19T03:51:40Z",
+      "message": "docs: update performance qualification and cancellation progress",
+      "parents": [
+        "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1"
+      ],
+      "sha": "45c6a6fb034cfd7a38eb6ed0fde505bfe3e10d9e"
+    },
+    {
+      "committedAt": "2026-10-19T03:58:07Z",
+      "message": "fix: pluralize remaining rerolls in upgrade dialogs",
+      "parents": [
+        "ab47230fd8e0e68c5536fe9d76616c7fe9a03516"
+      ],
+      "sha": "5385fb52a2abd1b58e9aa10da42bca200117aa64"
+    },
+    {
+      "committedAt": "2026-10-19T03:59:27Z",
+      "message": "Merge pull request #1680 from mekhovov/codex/f19a-refit-shield-consequence\n\nShow ready shield charges before Raid refits",
+      "parents": [
+        "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+        "74e6a6cc203642652645f3fbc946c4e9b545debb"
+      ],
+      "sha": "4a2592087e35be31115c2333bcbb57d585c3f184"
+    },
+    {
+      "committedAt": "2026-10-19T04:00:20Z",
+      "message": "Merge pull request #1701 from mekhovov/codex/f59-live-enemy-statistics-language\n\nfix(duel): keep enemy statistics in the selected language",
+      "parents": [
+        "4a2592087e35be31115c2333bcbb57d585c3f184",
+        "2843ec10ef17423881f590185ebc8cea3c7a3f52"
+      ],
+      "sha": "9943f63c3d3de5821f861b221e464d62a8a9ecd8"
+    },
+    {
+      "committedAt": "2026-10-19T04:04:14Z",
+      "message": "Merge pull request #1710 from mekhovov/codex/solo-performance-qualification-20261019\n\ndocs: update Solo performance qualification priorities",
+      "parents": [
+        "9943f63c3d3de5821f861b221e464d62a8a9ecd8",
+        "45c6a6fb034cfd7a38eb6ed0fde505bfe3e10d9e"
+      ],
+      "sha": "0b6abc3e7e4c33091a1670a0f9756131eb8c9cff"
+    },
+    {
+      "committedAt": "2026-10-19T04:05:44Z",
+      "message": "Merge pull request #1694 from mekhovov/codex/solo-playback-inspection-owner\n\nperf(audio): reuse playback inspection for downloaded recordings",
+      "parents": [
+        "0b6abc3e7e4c33091a1670a0f9756131eb8c9cff",
+        "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500"
+      ],
+      "sha": "ac0a06f76a048bbcd0701c0c990785989673080c"
+    },
+    {
+      "committedAt": "2026-10-19T04:08:31Z",
+      "message": "fix(render): restore cached actor backing after context loss",
+      "parents": [
+        "ac0a06f76a048bbcd0701c0c990785989673080c"
+      ],
+      "sha": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a"
+    },
+    {
+      "committedAt": "2026-10-19T04:13:03Z",
+      "message": "Merge main into responsive Settings focus return while preserving current owners",
+      "parents": [
+        "2046ab82b4c73737cf1a5a41a33c7892caff0567",
+        "ac0a06f76a048bbcd0701c0c990785989673080c"
+      ],
+      "sha": "0fd780bba39ae36ae952172d4de2805cf8325c43"
+    },
+    {
+      "committedAt": "2026-10-19T04:14:22Z",
+      "message": "Merge pull request #1673 from mekhovov/codex/f81-responsive-tool-focus\n\nfix(settings): restore nested tool focus after responsive resize",
+      "parents": [
+        "ac0a06f76a048bbcd0701c0c990785989673080c",
+        "0fd780bba39ae36ae952172d4de2805cf8325c43"
+      ],
+      "sha": "a94f2a6c3dac43ebeead58036a7b890414dfff37"
+    },
+    {
+      "committedAt": "2026-10-19T04:21:37Z",
+      "message": "Merge pull request #1711 from mekhovov/codex/f59-reroll-count-language\n\nUse count-aware remaining reroll captions",
+      "parents": [
+        "a94f2a6c3dac43ebeead58036a7b890414dfff37",
+        "5385fb52a2abd1b58e9aa10da42bca200117aa64"
+      ],
+      "sha": "754bfd4fa6675cc8bc5f527819179ef3b95b0afc"
+    },
+    {
+      "committedAt": "2026-10-19T04:23:06Z",
+      "message": "Merge pull request #1708 from mekhovov/codex/solo-recording-cancellation\n\nfix(audio): stop cancelled recording inspection before parsing",
+      "parents": [
+        "754bfd4fa6675cc8bc5f527819179ef3b95b0afc",
+        "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384"
+      ],
+      "sha": "4dc5abeb4aac9d3cf405ede364f71c615b13c370"
+    },
+    {
+      "committedAt": "2026-10-19T04:28:17Z",
+      "message": "Merge pull request #1712 from mekhovov/codex/solo-backing-context-recovery\n\nfix(render): restore cached actor backing after context loss",
+      "parents": [
+        "4dc5abeb4aac9d3cf405ede364f71c615b13c370",
+        "3d565db52ef85cac2b7173df9e9d48a51e20bb3a"
+      ],
+      "sha": "16ebd7b51984387c39622380a8e51a60e745152e"
+    }
+  ],
+  "featureOverlap": {
+    "method": "GIT_NO_LAZY_FETCH=1 git diff --name-status fixedBase candidate -- each of the 27 incoming paths; exact local source tree reads only.",
+    "base": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+    "head": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+    "incomingCount": 27,
+    "overlap": [
+      {
+        "status": "M",
+        "path": "game/i18n/catalogs.mjs"
+      },
+      {
+        "status": "M",
+        "path": "game/overflight/app.mjs"
+      },
+      {
+        "status": "M",
+        "path": "game/test/classic-snake-ui.test.mjs"
+      },
+      {
+        "status": "M",
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+      }
+    ],
+    "headNow": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+    "sourceDeclarationSHA256": "c278cb5a6257f1e8975807f921251d4b9a9487928792d4632f541a85b3a2af69"
+  },
+  "overlapHunkReview": {
+    "started": "2026-10-19T04:29:41.441197+00:00",
+    "finished": "2026-10-19T04:29:42.388891+00:00",
+    "command": [
+      "gh",
+      "api",
+      "repos/mekhovov/revealline/compare/ab47230fd8e0e68c5536fe9d76616c7fe9a03516...16ebd7b51984387c39622380a8e51a60e745152e?per_page=100"
+    ],
+    "paths": [
+      {
+        "path": "game/i18n/catalogs.mjs",
+        "incomingPatchPresent": false,
+        "incomingChangesAtBase": [],
+        "featureChangesAtBase": [
+          {
+            "start": 30,
+            "deleted": 1,
+            "added": 1
+          }
+        ],
+        "sameBaseLineChanges": [],
+        "incomingPatchExcerpt": "GitHub compare API omits this generated catalog patch. Incoming line-level conflicts cannot be assessed from the returned patch; only changed-path overlap is established."
+      },
+      {
+        "path": "game/overflight/app.mjs",
+        "incomingPatchPresent": true,
+        "incomingChangesAtBase": [
+          {
+            "start": 995,
+            "deleted": 1,
+            "added": 3
+          }
+        ],
+        "featureChangesAtBase": [
+          {
+            "start": 1,
+            "deleted": 0,
+            "added": 7
+          },
+          {
+            "start": 285,
+            "deleted": 0,
+            "added": 3
+          },
+          {
+            "start": 301,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 307,
+            "deleted": 6,
+            "added": 8
+          },
+          {
+            "start": 332,
+            "deleted": 0,
+            "added": 2
+          },
+          {
+            "start": 464,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 1034,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 1039,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 1057,
+            "deleted": 1,
+            "added": 1
+          },
+          {
+            "start": 1060,
+            "deleted": 1,
+            "added": 1
+          },
+          {
+            "start": 1083,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 1131,
+            "deleted": 1,
+            "added": 1
+          },
+          {
+            "start": 1184,
+            "deleted": 1,
+            "added": 1
+          },
+          {
+            "start": 1336,
+            "deleted": 0,
+            "added": 24
+          },
+          {
+            "start": 2069,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 2078,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 2282,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 2300,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 2307,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 2460,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 2551,
+            "deleted": 0,
+            "added": 94
+          }
+        ],
+        "sameBaseLineChanges": [],
+        "incomingPatchExcerpt": "@@ -992,7 +992,9 @@ function syncUpgrade(force = false) {\n     $('reroll-upgrades').textContent = text('reroll');\n     $('reroll-hint').textContent = text('rerollHint');\n     const remaining = run.progression.rerolls;\n-    $('rerolls-left').textContent = `${remaining} ${text('rerolls')}`;\n+    $('rerolls-left').textContent = t('interface:overflight.rerollsRemaining', {\n+      count: remaining,\n+    });\n     $('reroll-upgrades').disabled = review.active() || remaining <= 0;\n   }\n   if (!$('upgrade-dialog').open) {"
+      },
+      {
+        "path": "game/test/classic-snake-ui.test.mjs",
+        "incomingPatchPresent": true,
+        "incomingChangesAtBase": [
+          {
+            "start": 1914,
+            "deleted": 0,
+            "added": 52
+          }
+        ],
+        "featureChangesAtBase": [
+          {
+            "start": 1,
+            "deleted": 0,
+            "added": 2
+          },
+          {
+            "start": 175,
+            "deleted": 1,
+            "added": 1
+          },
+          {
+            "start": 213,
+            "deleted": 0,
+            "added": 19
+          },
+          {
+            "start": 582,
+            "deleted": 0,
+            "added": 1
+          },
+          {
+            "start": 605,
+            "deleted": 0,
+            "added": 3
+          },
+          {
+            "start": 1348,
+            "deleted": 0,
+            "added": 25
+          }
+        ],
+        "sameBaseLineChanges": [],
+        "incomingPatchExcerpt": "@@ -1911,6 +1911,58 @@ test('Snake nested tools preserve iframe input and controller Back returns to th\n   );\n });\n \n+test('Snake About returns to its visible panel after a compact resize without advancing the paused attempt', async (t) => {\n+  const h = await harness({ sharedTools: true });\n+  t.after(() => h.disposeTools());\n+  h.document.defaultView.innerWidth = 1280;\n+  h.start();\n+  h.frame(0);\n+  h.frame(100);\n+  h.shell.elements.buttons.pause.click();\n+  const paused = h.created.map((run) => core.exportClassicSnakeReplay(run));\n+  h.shell.elements.buttons.settings.click();\n+  h.$('snake-menu-settings-tab-extras').click();\n+  const settings = h.shell.elements.dialogs.settings,\n+    opener = h.$('snake-global-tools-about'),\n+    rects = opener.getClientRects.bind(opener),\n+    focus = opener.focus.bind(opener),\n+    stored = [...h.storage];\n+  // Model only the existing compact CSS/native focus boundary; the real\n+  // Settings/tool owners, host handlers and accepted simulation run below.\n+  opener.getClientRects = () =>\n+    h.document.defaultView.innerWidth <= 700 && settings.dataset.settingsView === 'categories'\n+      ? []\n+      : rects();\n+  opener.focus = (...args) => {\n+    if (opener.getClientRects().length) focus(...args);\n+  };\n+  opener.focus();\n+  opener.click();\n+  const dialog = h.$('snake-global-tools-tool-dialog'),\n+    frame = dialog.querySelector('iframe');\n+  frame.focus();\n+  h.document.defaultView.innerWidth = 316;\n+  h.document.defaultView.emit('resize');\n+  h.window.emit('resize');\n+  assert.equal(settings.dataset.settingsView, 'categories');\n+  assert.equal(opener.getClientRects().length, 0);\n+  h.$('snake-global-tools-tool-back').click();\n+  assert.equal(dialog.open, false);\n+  assert.equal(settings.open, true);\n+  assert.equal(settings.dataset.settingsView, 'panel');\n+  assert.equal(h.document.activeElement, opener);\n+  assert.ok(opener.getClientRects().length);\n+  assert.equal(frame.getAttribute('src'), null);\n+  h.frame(200);\n+  h.frame(1200);\n+  assert.deepEqual(\n+    h.created.map((run) => core.exportClassicSnakeReplay(run)),\n+    paused,\n+  );\n+  assert.deepEqual([...h.storage], stored);\n+  assert.equal(h.shell.blocksPlay(), true);\n+});\n+\n test('Snake reading controls update the shared display owner without replacing or advancing an attempt', async () => {\n   const state = await harness({ mode: 'team' });\n   const before = state.created.map((run) => core.exportClassicSnakeReplay(run));"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "incomingPatchPresent": true,
+        "incomingChangesAtBase": [
+          {
+            "start": 9123,
+            "deleted": 1,
+            "added": 1
+          },
+          {
+            "start": 9331,
+            "deleted": 0,
+            "added": 14
+          },
+          {
+            "start": 9442,
+            "deleted": 1,
+            "added": 31
+          },
+          {
+            "start": 10488,
+            "deleted": 0,
+            "added": 1
+          }
+        ],
+        "featureChangesAtBase": [
+          {
+            "start": 9123,
+            "deleted": 1,
+            "added": 1
+          },
+          {
+            "start": 9857,
+            "deleted": 0,
+            "added": 6
+          },
+          {
+            "start": 10464,
+            "deleted": 0,
+            "added": 1
+          }
+        ],
+        "sameBaseLineChanges": [
+          {
+            "incoming": {
+              "start": 9123,
+              "deleted": 1,
+              "added": 1
+            },
+            "feature": {
+              "start": 9123,
+              "deleted": 1,
+              "added": 1
+            }
+          }
+        ],
+        "incomingPatchExcerpt": "@@ -9120,7 +9120,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;\n export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;\n export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;\n export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;\n-// Canonical source sha256: 5ad4d180084e82aeeee30fd336a56aa099ae3b5a1952c0e2dfc3f15c16f38cc5\n+// Canonical source sha256: a5ebd172991cc1269a3e7abc132b967f47fbc405f8897435a55935203de3b8ae\n const sharedModeShell=(()=>{\n // Dependency-free presentation shared with bundled simulator builds.\n const GAME_MODE_ORDER=Object.freeze([\n@@ -9328,6 +9328,20 @@ settings.closest('[hidden],[inert],[aria-hidden=\"true\"]')||\n return false;\n return panelOwners.get(settings)?.back()===true;\n }\n+\n+/** A nested tool may close after its Settings parent changed responsive layout. */\n+function restoreSettingsPanelFocus(root,opener){\n+const settings=root?.classList?.contains('native-settings')\n+?root\n+:root?.querySelector?.('.native-settings');\n+if(\n+!settings||\n+settings.closest('[hidden],[inert],[aria-hidden=\"true\"]')||\n+!settings.getClientRects().length\n+)\n+return false;\n+return panelOwners.get(settings)?.restoreFocus(opener)===true;\n+}\n const owns=(root,doc,list,{tab,panel})=>\n root?.ownerDocument===doc&&\n doc?.contains(root)&&\n@@ -9439,7 +9453,37 @@ return true;\n }\n return false;\n };\n-if(root)panelOwners.set(root,{back});\n+const focusable=(element)=>\n+element?.isConnected&&\n+!element.disabled&&\n+element.getAttribute('aria-disabled')!=='true'&&\n+element.tabIndex>=0&&\n+!element.closest('[hidden],[inert],[aria-hidden=\"true\"]')&&\n+element.getClientRects().length&&\n+doc.defaultView?.getComputedStyle(element)?.visibility!=='hidden';\n+const restoreFocus=(opener)=>{\n+if(!current|| !owned(current)|| !enabled(current))return false;\n+// Reveal only the still-selected category. A retired/hidden control must\n+// not change categories or be made available by closing a child tool.\n+if(\n+current.panel.contains(opener)&&\n+!opener.disabled&&\n+!opener.closest('[hidden],[inert],[aria-hidden=\"true\"]')\n+){\n+if(compact())view('panel');\n+if(focusable(opener)){\n+opener.focus({preventScroll:true});\n+if(compact())opener.scrollIntoView?.({block:'nearest',inline:'nearest'});\n+return true;\n+}\n+}\n+view('categories');\n+if(!focusable(current.tab))return false;\n+current.tab.focus({preventScroll:true});\n+if(compact())current.tab.scrollIntoView?.({block:'nearest',inline:'nearest'});\n+return true;\n+};\n+if(root)panelOwners.set(root,{back,restoreFocus});\n const cancel=(event)=>{\n if(back()){\n event.preventDefault();\n@@ -10485,6 +10529,7 @@ return{\n GAME_MODE_ORDER,\n renderModeChoices,\n settingsPanelBack,\n+restoreSettingsPanelFocus,\n settingsTabOwnsKey,\n attachSettingsPanels,\n MODE_SETTINGS_CATEGORIES,"
+      }
+    ],
+    "limitations": "Same-base-line changes identify potential conflicts, not proof of exact Git merge conflicts. No merge or remote object hydration performed."
+  },
+  "findings": [
+    {
+      "priority": "P0 after the held qualification interval",
+      "finding": "GitHub reports the published candidate as CONFLICTING. A single post-qualification integration of this pinned main snapshot is required before merge readiness; this audit does not change HEAD or chase subsequent main commits."
+    },
+    {
+      "priority": "Integration scope",
+      "finding": "Four paths also changed on the feature branch. flight-fullscreen.mjs changes the same base-line generated canonical SHA256 marker in both branches; it is a likely textual conflict. catalogs.mjs is another generated-output overlap, but the API omits its patch so exact conflicting lines are unproven. overflight/app.mjs and classic-snake-ui.test.mjs change disjoint base-line intervals in the returned patches; same-path overlap alone is not treated as a conflict."
+    },
+    {
+      "priority": "Evidence scope",
+      "finding": "Fifteen runtime/source paths change, including capture simulation allocation, graphics context recovery, soundtrack/reaction cancellation, reroll localization, and Settings focus. The delta is not documentation-only. Preserve current emitted results at their original source identities; integration requires a new source declaration and checks scoped to the actual change and generated outputs."
+    },
+    {
+      "priority": "Coverage scope",
+      "finding": "No authored mission/catalog recording-body paths or shared demo adapter/director/host/controller paths appear in this incoming list. This path-level observation does not assert unchanged simulation outcomes."
+    }
+  ],
+  "limitations": [
+    "No fetch, rebase, merge, remote object hydration, workflow mutation, source edit or local tests were performed.",
+    "Changed paths and base-line overlap identify integration risk; only an actual merge or rebase can establish exact conflict resolution.",
+    "Current-main observation is fixed to 16ebd7b51984387c39622380a8e51a60e745152e; later main commits are outside this receipt.",
+    "The initial broad local changed-path listing was output-truncated and not used for overlap qualification. The complete overlap calculation was repeated with only the 27 incoming paths."
+  ]
+}

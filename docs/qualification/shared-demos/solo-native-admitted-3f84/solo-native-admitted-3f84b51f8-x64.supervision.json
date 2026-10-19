@@ -1,0 +1,181 @@
+{
+  "format": "SoloNativeAdmittedAvailabilitySupervisionV1",
+  "complete": true,
+  "started": "2026-10-19T10:16:20.580884+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+    ".cache/verify-admitted-native-solo.mjs",
+    "--run=approved",
+    "--head=3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "--report=.cache/solo-native-admitted-3f84b51f8-x64.json"
+  ],
+  "timeoutSeconds": 930,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp",
+  "before": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "nativeInputs": {
+      "manifest": {
+        "path": ".cache/solo-native-admitted-3f84b51f8-inputs.json",
+        "sha256": "df56bf67efb83240ae4bafacac8f4c16cfc6f739a75fa5b5f8483350faba6926",
+        "bytes": 511907
+      },
+      "sha256": "2d41d85992970f9211ba81f29cbb711b3d088fad30abb76cd28fb40a3e77c916",
+      "files": 2505,
+      "bytes": 152488126
+    },
+    "helpers": {
+      ".cache/verify-admitted-native-solo.mjs": {
+        "sha256": "5275ec8f09b4282cc38c64090930688fe1a663abae8c1a920a59336fb1d6bcd2",
+        "bytes": 6447
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      ".cache/solo-native-admitted-3f84b51f8-inputs.json": {
+        "sha256": "df56bf67efb83240ae4bafacac8f4c16cfc6f739a75fa5b5f8483350faba6926",
+        "bytes": 511907
+      },
+      ".cache/solo-native-inventory-3f84b51f8-x64.json": {
+        "sha256": "d800a59a7b4825c745eeb831d1a588f7a983bc5aacf8c070cb48929902e53172",
+        "bytes": 671634
+      },
+      ".cache/linux-capture-draft/scripts/capture-solo-native-candidates.mjs": {
+        "sha256": "fcc8313b1a2bae95c28ab1988e3dff53c20f77a7793ab98e7de185dbfb98e5f4",
+        "bytes": 22895
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "dacd84f67d68686bb0522005d57593538ab67e0eb9255ba9703de80d2456c623",
+      "bytes": 11129
+    }
+  },
+  "limitations": [
+    "Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after960 seconds.",
+    "Complete admitted Solo availability in macOSx64 Node22.13.1 underRosetta; notLinuxproof. Qualification requires every resolved source strictly usable and every entry covered. No authoring. Exact native closure/top-level SoloJSON binding permits unrelated Survival/UI/test changes."
+  ],
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 1,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 4194,
+        "ppid": 4183,
+        "pgid": 4194,
+        "uid": 502,
+        "started": "Mon Oct 19 12:16:20 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-admitted-native-solo.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --report=.cache/solo-native-admitted-3f84b51f8-x64.json",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T10:16:20.630487+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/solo-native-admitted-3f84b51f8-x64.log",
+    "byteLimit": 1048576,
+    "totalBytes": 23970,
+    "writtenBytes": 23970,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 16384,
+    "tailSHA256": "f415bedc901a790a457f213f0b217d0a9f6eed48e69c4d07fc69a3bcb824fb26",
+    "tail": "ull}\n{\"finished\":79,\"required\":242,\"id\":\"solo-qualified-da69d08373c12fee\",\"strict\":true,\"failure\":null}\n{\"finished\":80,\"required\":242,\"id\":\"solo-qualified-014fa419dd4cee2b\",\"strict\":true,\"failure\":null}\n{\"finished\":81,\"required\":242,\"id\":\"solo-qualified-c7131a2a20fe532d\",\"strict\":true,\"failure\":null}\n{\"finished\":82,\"required\":242,\"id\":\"solo-qualified-14d1e5097d455385\",\"strict\":true,\"failure\":null}\n{\"finished\":83,\"required\":242,\"id\":\"solo-qualified-7e1dbadc86cf52ca\",\"strict\":true,\"failure\":null}\n{\"finished\":84,\"required\":242,\"id\":\"solo-qualified-73fda9cd13ee6004\",\"strict\":true,\"failure\":null}\n{\"finished\":85,\"required\":242,\"id\":\"solo-qualified-0cf6a5512cf875ec\",\"strict\":true,\"failure\":null}\n{\"finished\":86,\"required\":242,\"id\":\"solo-qualified-e546fded69fb9336\",\"strict\":true,\"failure\":null}\n{\"finished\":87,\"required\":242,\"id\":\"solo-qualified-ae4fe97bb5a844f3\",\"strict\":true,\"failure\":null}\n{\"finished\":88,\"required\":242,\"id\":\"solo-qualified-b420aacc8400ae19\",\"strict\":true,\"failure\":null}\n{\"finished\":89,\"required\":242,\"id\":\"solo-qualified-5345516b36f07dce\",\"strict\":true,\"failure\":null}\n{\"finished\":90,\"required\":242,\"id\":\"solo-qualified-9f0dd1a83a873b3a\",\"strict\":true,\"failure\":null}\n{\"finished\":91,\"required\":242,\"id\":\"solo-qualified-6a03bb8315594257\",\"strict\":true,\"failure\":null}\n{\"finished\":92,\"required\":242,\"id\":\"solo-qualified-8e69822594538456\",\"strict\":true,\"failure\":null}\n{\"finished\":93,\"required\":242,\"id\":\"solo-qualified-b20ed0897d0f5ffc\",\"strict\":true,\"failure\":null}\n{\"finished\":94,\"required\":242,\"id\":\"solo-qualified-209dd22e35205b41\",\"strict\":true,\"failure\":null}\n{\"finished\":95,\"required\":242,\"id\":\"solo-qualified-ab36af48e02d65ca\",\"strict\":true,\"failure\":null}\n{\"finished\":96,\"required\":242,\"id\":\"solo-qualified-70dd4c708b708cfc\",\"strict\":true,\"failure\":null}\n{\"finished\":97,\"required\":242,\"id\":\"solo-qualified-5fe1b2d2833db1f9\",\"strict\":true,\"failure\":null}\n{\"finished\":98,\"required\":242,\"id\":\"solo-qualified-58fa121c41ee9a76\",\"strict\":true,\"failure\":null}\n{\"finished\":99,\"required\":242,\"id\":\"solo-qualified-8c5a7d940162231c\",\"strict\":true,\"failure\":null}\n{\"finished\":100,\"required\":242,\"id\":\"solo-qualified-ec7912cb8caf199d\",\"strict\":true,\"failure\":null}\n{\"finished\":101,\"required\":242,\"id\":\"solo-qualified-01c45eb2a92b2a48\",\"strict\":true,\"failure\":null}\n{\"finished\":102,\"required\":242,\"id\":\"solo-qualified-906d14f392635406\",\"strict\":true,\"failure\":null}\n{\"finished\":103,\"required\":242,\"id\":\"solo-qualified-7cf943719a6391a9\",\"strict\":true,\"failure\":null}\n{\"finished\":104,\"required\":242,\"id\":\"solo-qualified-44273034491a74e4\",\"strict\":true,\"failure\":null}\n{\"finished\":105,\"required\":242,\"id\":\"solo-qualified-d1a5994b174c9108\",\"strict\":true,\"failure\":null}\n{\"finished\":106,\"required\":242,\"id\":\"solo-qualified-b669b6afe477abbb\",\"strict\":true,\"failure\":null}\n{\"finished\":107,\"required\":242,\"id\":\"solo-qualified-c0d8a5252aaa7f39\",\"strict\":true,\"failure\":null}\n{\"finished\":108,\"required\":242,\"id\":\"solo-qualified-1d64e506d5980412\",\"strict\":true,\"failure\":null}\n{\"finished\":109,\"required\":242,\"id\":\"solo-qualified-4ac90773fa58369b\",\"strict\":true,\"failure\":null}\n{\"finished\":110,\"required\":242,\"id\":\"solo-qualified-11133b7849422018\",\"strict\":true,\"failure\":null}\n{\"finished\":111,\"required\":242,\"id\":\"solo-qualified-be318c73458f4900\",\"strict\":true,\"failure\":null}\n{\"finished\":112,\"required\":242,\"id\":\"solo-qualified-5678d483da29e23a\",\"strict\":true,\"failure\":null}\n{\"finished\":113,\"required\":242,\"id\":\"solo-qualified-965c3d07edf7944d\",\"strict\":true,\"failure\":null}\n{\"finished\":114,\"required\":242,\"id\":\"solo-qualified-f7181f0af9511fcc\",\"strict\":true,\"failure\":null}\n{\"finished\":115,\"required\":242,\"id\":\"solo-qualified-0e6f0bf3f5775703\",\"strict\":true,\"failure\":null}\n{\"finished\":116,\"required\":242,\"id\":\"solo-qualified-728dc5622c493506\",\"strict\":true,\"failure\":null}\n{\"finished\":117,\"required\":242,\"id\":\"solo-qualified-3996626042c502db\",\"strict\":true,\"failure\":null}\n{\"finished\":118,\"required\":242,\"id\":\"solo-qualified-b7b6ea7705c422d5\",\"strict\":true,\"failure\":null}\n{\"finished\":119,\"required\":242,\"id\":\"solo-qualified-70a708ee64355d75\",\"strict\":true,\"failure\":null}\n{\"finished\":120,\"required\":242,\"id\":\"solo-qualified-d87dc7be0d62a2b1\",\"strict\":true,\"failure\":null}\n{\"finished\":121,\"required\":242,\"id\":\"solo-qualified-7b3a3b7248f976ce\",\"strict\":true,\"failure\":null}\n{\"finished\":122,\"required\":242,\"id\":\"solo-qualified-a06599f68a914d16\",\"strict\":true,\"failure\":null}\n{\"finished\":123,\"required\":242,\"id\":\"solo-qualified-9dddcc84f7d60f65\",\"strict\":true,\"failure\":null}\n{\"finished\":124,\"required\":242,\"id\":\"solo-qualified-9aa30fcd0b3c8281\",\"strict\":true,\"failure\":null}\n{\"finished\":125,\"required\":242,\"id\":\"solo-qualified-f1f91fa91991d51b\",\"strict\":true,\"failure\":null}\n{\"finished\":126,\"required\":242,\"id\":\"solo-qualified-dd5c4beb661682f0\",\"strict\":true,\"failure\":null}\n{\"finished\":127,\"required\":242,\"id\":\"solo-qualified-bbd69e7ccb5526d9\",\"strict\":true,\"failure\":null}\n{\"finished\":128,\"required\":242,\"id\":\"solo-qualified-484de1d1d425f0c5\",\"strict\":true,\"failure\":null}\n{\"finished\":129,\"required\":242,\"id\":\"solo-qualified-0eafd68dc70ee8a8\",\"strict\":true,\"failure\":null}\n{\"finished\":130,\"required\":242,\"id\":\"solo-qualified-821bba1882552b03\",\"strict\":true,\"failure\":null}\n{\"finished\":131,\"required\":242,\"id\":\"solo-qualified-bbe0c5897adb725d\",\"strict\":true,\"failure\":null}\n{\"finished\":132,\"required\":242,\"id\":\"solo-qualified-dc59e6e76ae9df8b\",\"strict\":true,\"failure\":null}\n{\"finished\":133,\"required\":242,\"id\":\"solo-qualified-08bfbce48d50a5c0\",\"strict\":true,\"failure\":null}\n{\"finished\":134,\"required\":242,\"id\":\"solo-qualified-614567e280b3c780\",\"strict\":true,\"failure\":null}\n{\"finished\":135,\"required\":242,\"id\":\"solo-qualified-2df382183e2f00d6\",\"strict\":true,\"failure\":null}\n{\"finished\":136,\"required\":242,\"id\":\"solo-qualified-7e1cae99ddeff5f9\",\"strict\":true,\"failure\":null}\n{\"finished\":137,\"required\":242,\"id\":\"solo-qualified-2d3df26570caee45\",\"strict\":true,\"failure\":null}\n{\"finished\":138,\"required\":242,\"id\":\"solo-qualified-10d16d94f297eb0c\",\"strict\":true,\"failure\":null}\n{\"finished\":139,\"required\":242,\"id\":\"solo-qualified-8f766bd89a83be7e\",\"strict\":true,\"failure\":null}\n{\"finished\":140,\"required\":242,\"id\":\"solo-qualified-7ff2d0d3f752cf2b\",\"strict\":true,\"failure\":null}\n{\"finished\":141,\"required\":242,\"id\":\"solo-qualified-bcc2b9ca5521a87d\",\"strict\":true,\"failure\":null}\n{\"finished\":142,\"required\":242,\"id\":\"solo-qualified-86af557da6e8a323\",\"strict\":true,\"failure\":null}\n{\"finished\":143,\"required\":242,\"id\":\"solo-qualified-f223736d7f7b47b2\",\"strict\":true,\"failure\":null}\n{\"finished\":144,\"required\":242,\"id\":\"solo-qualified-1c903081aa79df1e\",\"strict\":true,\"failure\":null}\n{\"finished\":145,\"required\":242,\"id\":\"solo-qualified-a99c5711c5c1839d\",\"strict\":true,\"failure\":null}\n{\"finished\":146,\"required\":242,\"id\":\"solo-qualified-f96b30d71b0716cf\",\"strict\":true,\"failure\":null}\n{\"finished\":147,\"required\":242,\"id\":\"solo-qualified-30038742a961b399\",\"strict\":true,\"failure\":null}\n{\"finished\":148,\"required\":242,\"id\":\"solo-qualified-8812ad38e87d1a3e\",\"strict\":true,\"failure\":null}\n{\"finished\":149,\"required\":242,\"id\":\"solo-qualified-2e72fe1d788ce165\",\"strict\":true,\"failure\":null}\n{\"finished\":150,\"required\":242,\"id\":\"solo-qualified-86ee84d48134b04b\",\"strict\":true,\"failure\":null}\n{\"finished\":151,\"required\":242,\"id\":\"solo-qualified-e32d403f3f492be1\",\"strict\":true,\"failure\":null}\n{\"finished\":152,\"required\":242,\"id\":\"solo-qualified-ead64a471b9edd54\",\"strict\":true,\"failure\":null}\n{\"finished\":153,\"required\":242,\"id\":\"solo-qualified-cd19eddd5888061f\",\"strict\":true,\"failure\":null}\n{\"finished\":154,\"required\":242,\"id\":\"solo-qualified-84debdfc44a43699\",\"strict\":true,\"failure\":null}\n{\"finished\":155,\"required\":242,\"id\":\"solo-qualified-205560abb7070791\",\"strict\":true,\"failure\":null}\n{\"finished\":156,\"required\":242,\"id\":\"solo-qualified-0a95463cda39b995\",\"strict\":true,\"failure\":null}\n{\"finished\":157,\"required\":242,\"id\":\"solo-qualified-d5027ee8cc9ab251\",\"strict\":true,\"failure\":null}\n{\"finished\":158,\"required\":242,\"id\":\"solo-qualified-bfae960cf9bf13c8\",\"strict\":true,\"failure\":null}\n{\"finished\":159,\"required\":242,\"id\":\"solo-qualified-b03217288edf527a\",\"strict\":true,\"failure\":null}\n{\"finished\":160,\"required\":242,\"id\":\"solo-qualified-72dfbcf032b5ad25\",\"strict\":true,\"failure\":null}\n{\"finished\":161,\"required\":242,\"id\":\"solo-qualified-d4d010be74f4ff34\",\"strict\":true,\"failure\":null}\n{\"finished\":162,\"required\":242,\"id\":\"solo-qualified-4a4987306df02c59\",\"strict\":true,\"failure\":null}\n{\"finished\":163,\"required\":242,\"id\":\"solo-qualified-99b7fe8c6c02e8f5\",\"strict\":true,\"failure\":null}\n{\"finished\":164,\"required\":242,\"id\":\"solo-qualified-2d68ede8fad57f5b\",\"strict\":true,\"failure\":null}\n{\"finished\":165,\"required\":242,\"id\":\"solo-qualified-4301d76f85efb491\",\"strict\":true,\"failure\":null}\n{\"finished\":166,\"required\":242,\"id\":\"solo-qualified-86e49440668d32eb\",\"strict\":true,\"failure\":null}\n{\"finished\":167,\"required\":242,\"id\":\"solo-qualified-1045a071c392b17f\",\"strict\":true,\"failure\":null}\n{\"finished\":168,\"required\":242,\"id\":\"solo-qualified-26c083d6a304753c\",\"strict\":true,\"failure\":null}\n{\"finished\":169,\"required\":242,\"id\":\"solo-qualified-03e90b310d2bc700\",\"strict\":true,\"failure\":null}\n{\"finished\":170,\"required\":242,\"id\":\"solo-qualified-9bd405709d380bb7\",\"strict\":true,\"failure\":null}\n{\"finished\":171,\"required\":242,\"id\":\"solo-qualified-fe13ae38e227f3d4\",\"strict\":true,\"failure\":null}\n{\"finished\":172,\"required\":242,\"id\":\"solo-qualified-20e853301cb3ac52\",\"strict\":true,\"failure\":null}\n{\"finished\":173,\"required\":242,\"id\":\"solo-qualified-9b61f76591ea319f\",\"strict\":true,\"failure\":null}\n{\"finished\":174,\"required\":242,\"id\":\"solo-qualified-b8a409de0207c16a\",\"strict\":true,\"failure\":null}\n{\"finished\":175,\"required\":242,\"id\":\"solo-qualified-9a05e4f32fe3e8c3\",\"strict\":true,\"failure\":null}\n{\"finished\":176,\"required\":242,\"id\":\"solo-qualified-6066cc64f5796336\",\"strict\":true,\"failure\":null}\n{\"finished\":177,\"required\":242,\"id\":\"solo-qualified-f420d6e14fbac1ed\",\"strict\":true,\"failure\":null}\n{\"finished\":178,\"required\":242,\"id\":\"solo-qualified-45ff8eaac10d989c\",\"strict\":true,\"failure\":null}\n{\"finished\":179,\"required\":242,\"id\":\"solo-qualified-d658e2bd3c0d5c7e\",\"strict\":true,\"failure\":null}\n{\"finished\":180,\"required\":242,\"id\":\"solo-qualified-fabdfb2541546426\",\"strict\":true,\"failure\":null}\n{\"finished\":181,\"required\":242,\"id\":\"solo-qualified-acd938abf093e19a\",\"strict\":true,\"failure\":null}\n{\"finished\":182,\"required\":242,\"id\":\"solo-qualified-ab4de59fa240aa05\",\"strict\":true,\"failure\":null}\n{\"finished\":183,\"required\":242,\"id\":\"solo-qualified-f8e0d67f3ee24811\",\"strict\":true,\"failure\":null}\n{\"finished\":184,\"required\":242,\"id\":\"solo-qualified-4f9aec8fe9b37c0d\",\"strict\":true,\"failure\":null}\n{\"finished\":185,\"required\":242,\"id\":\"solo-qualified-17b6edccaf82b693\",\"strict\":true,\"failure\":null}\n{\"finished\":186,\"required\":242,\"id\":\"solo-qualified-512b66c5e6a7ca41\",\"strict\":true,\"failure\":null}\n{\"finished\":187,\"required\":242,\"id\":\"solo-qualified-d775783a12234789\",\"strict\":true,\"failure\":null}\n{\"finished\":188,\"required\":242,\"id\":\"solo-qualified-56165d770d83ee1e\",\"strict\":true,\"failure\":null}\n{\"finished\":189,\"required\":242,\"id\":\"solo-qualified-6bd31868bd8f9091\",\"strict\":true,\"failure\":null}\n{\"finished\":190,\"required\":242,\"id\":\"solo-qualified-a13b85ddde0f9663\",\"strict\":true,\"failure\":null}\n{\"finished\":191,\"required\":242,\"id\":\"solo-qualified-22874d7656ce6c3e\",\"strict\":true,\"failure\":null}\n{\"finished\":192,\"required\":242,\"id\":\"solo-qualified-dd80d3e78efbf350\",\"strict\":true,\"failure\":null}\n{\"finished\":193,\"required\":242,\"id\":\"solo-qualified-11ac088d9288363c\",\"strict\":true,\"failure\":null}\n{\"finished\":194,\"required\":242,\"id\":\"solo-qualified-c258ed926a320cc2\",\"strict\":true,\"failure\":null}\n{\"finished\":195,\"required\":242,\"id\":\"solo-qualified-b2087ebb50aee570\",\"strict\":true,\"failure\":null}\n{\"finished\":196,\"required\":242,\"id\":\"solo-qualified-3ab81dea52f12ba3\",\"strict\":true,\"failure\":null}\n{\"finished\":197,\"required\":242,\"id\":\"solo-qualified-3037b64d2bd5cd52\",\"strict\":true,\"failure\":null}\n{\"finished\":198,\"required\":242,\"id\":\"solo-qualified-d6bea0fb51f4d9b7\",\"strict\":true,\"failure\":null}\n{\"finished\":199,\"required\":242,\"id\":\"solo-qualified-30d8c82c95cfaa84\",\"strict\":true,\"failure\":null}\n{\"finished\":200,\"required\":242,\"id\":\"solo-qualified-896fc42fcd97192f\",\"strict\":true,\"failure\":null}\n{\"finished\":201,\"required\":242,\"id\":\"solo-qualified-8abdfdb8249526a1\",\"strict\":true,\"failure\":null}\n{\"finished\":202,\"required\":242,\"id\":\"solo-qualified-0c1decf0a2983bd4\",\"strict\":true,\"failure\":null}\n{\"finished\":203,\"required\":242,\"id\":\"solo-qualified-3e2c476ed99d280e\",\"strict\":true,\"failure\":null}\n{\"finished\":204,\"required\":242,\"id\":\"solo-qualified-2c530a2670b6a7f3\",\"strict\":true,\"failure\":null}\n{\"finished\":205,\"required\":242,\"id\":\"solo-qualified-47b82cbab227cd1f\",\"strict\":true,\"failure\":null}\n{\"finished\":206,\"required\":242,\"id\":\"solo-qualified-23166f06bb57b9b3\",\"strict\":true,\"failure\":null}\n{\"finished\":207,\"required\":242,\"id\":\"solo-qualified-fd3673e16fd6a8fb\",\"strict\":true,\"failure\":null}\n{\"finished\":208,\"required\":242,\"id\":\"solo-qualified-1c34f9397715919f\",\"strict\":true,\"failure\":null}\n{\"finished\":209,\"required\":242,\"id\":\"solo-qualified-08205883fcfeb6de\",\"strict\":true,\"failure\":null}\n{\"finished\":210,\"required\":242,\"id\":\"solo-qualified-29078bd0c9992bd0\",\"strict\":true,\"failure\":null}\n{\"finished\":211,\"required\":242,\"id\":\"solo-qualified-ebc3051ed29e5814\",\"strict\":true,\"failure\":null}\n{\"finished\":212,\"required\":242,\"id\":\"solo-qualified-5bd37fe7b93c3853\",\"strict\":true,\"failure\":null}\n{\"finished\":213,\"required\":242,\"id\":\"solo-qualified-a57cfb4b64844ce9\",\"strict\":true,\"failure\":null}\n{\"finished\":214,\"required\":242,\"id\":\"solo-qualified-ee5ba3df09bda042\",\"strict\":true,\"failure\":null}\n{\"finished\":215,\"required\":242,\"id\":\"solo-qualified-ee30594d88087e08\",\"strict\":true,\"failure\":null}\n{\"finished\":216,\"required\":242,\"id\":\"solo-qualified-5307e5f38725a0e3\",\"strict\":true,\"failure\":null}\n{\"finished\":217,\"required\":242,\"id\":\"solo-qualified-5915fde156c7fb92\",\"strict\":true,\"failure\":null}\n{\"finished\":218,\"required\":242,\"id\":\"solo-qualified-33e6a62cdaa16aaa\",\"strict\":true,\"failure\":null}\n{\"finished\":219,\"required\":242,\"id\":\"solo-qualified-f229f1af7ed82073\",\"strict\":true,\"failure\":null}\n{\"finished\":220,\"required\":242,\"id\":\"solo-qualified-81e24a32328f7a3c\",\"strict\":true,\"failure\":null}\n{\"finished\":221,\"required\":242,\"id\":\"solo-qualified-8cfed8cf70713745\",\"strict\":true,\"failure\":null}\n{\"finished\":222,\"required\":242,\"id\":\"solo-qualified-8d1b4bbb885d0b9d\",\"strict\":true,\"failure\":null}\n{\"finished\":223,\"required\":242,\"id\":\"solo-qualified-5aa8f6bd6fb84df2\",\"strict\":true,\"failure\":null}\n{\"finished\":224,\"required\":242,\"id\":\"solo-qualified-47cfdd798430bc97\",\"strict\":true,\"failure\":null}\n{\"finished\":225,\"required\":242,\"id\":\"solo-qualified-8fbfa21663542ea1\",\"strict\":true,\"failure\":null}\n{\"finished\":226,\"required\":242,\"id\":\"solo-qualified-93ffe1fc5a201d2e\",\"strict\":true,\"failure\":null}\n{\"finished\":227,\"required\":242,\"id\":\"solo-qualified-27223f09fed82eb2\",\"strict\":true,\"failure\":null}\n{\"finished\":228,\"required\":242,\"id\":\"solo-qualified-a922c6b22d771e68\",\"strict\":true,\"failure\":null}\n{\"finished\":229,\"required\":242,\"id\":\"solo-qualified-d3260fe50e480049\",\"strict\":true,\"failure\":null}\n{\"finished\":230,\"required\":242,\"id\":\"solo-qualified-b61cda337720b14d\",\"strict\":true,\"failure\":null}\n{\"finished\":231,\"required\":242,\"id\":\"solo-qualified-c4afd0fd10fd9d29\",\"strict\":true,\"failure\":null}\n{\"finished\":232,\"required\":242,\"id\":\"solo-qualified-d6b94392830623da\",\"strict\":true,\"failure\":null}\n{\"finished\":233,\"required\":242,\"id\":\"solo-qualified-bd23e3eb635875d1\",\"strict\":true,\"failure\":null}\n{\"finished\":234,\"required\":242,\"id\":\"solo-qualified-6ab3604dd6a03040\",\"strict\":true,\"failure\":null}\n{\"finished\":235,\"required\":242,\"id\":\"solo-qualified-84508838cf882427\",\"strict\":true,\"failure\":null}\n{\"finished\":236,\"required\":242,\"id\":\"solo-qualified-f1a05094f22dda3a\",\"strict\":true,\"failure\":null}\n{\"finished\":237,\"required\":242,\"id\":\"solo-qualified-61e28381c52a36af\",\"strict\":true,\"failure\":null}\n{\"finished\":238,\"required\":242,\"id\":\"solo-qualified-9695696535e4ee17\",\"strict\":true,\"failure\":null}\n{\"finished\":239,\"required\":242,\"id\":\"solo-qualified-348cde9a8a95df59\",\"strict\":true,\"failure\":null}\n{\"finished\":240,\"required\":242,\"id\":\"solo-qualified-f57d5e1891de81f5\",\"strict\":true,\"failure\":null}\n{\"finished\":241,\"required\":242,\"id\":\"solo-qualified-53797d64463a8706\",\"strict\":true,\"failure\":null}\n{\"finished\":242,\"required\":242,\"id\":\"solo-qualified-7c360a513791c0c5\",\"strict\":true,\"failure\":null}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "after": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "nativeInputs": {
+      "manifest": {
+        "path": ".cache/solo-native-admitted-3f84b51f8-inputs.json",
+        "sha256": "df56bf67efb83240ae4bafacac8f4c16cfc6f739a75fa5b5f8483350faba6926",
+        "bytes": 511907
+      },
+      "sha256": "2d41d85992970f9211ba81f29cbb711b3d088fad30abb76cd28fb40a3e77c916",
+      "files": 2505,
+      "bytes": 152488126
+    },
+    "helpers": {
+      ".cache/verify-admitted-native-solo.mjs": {
+        "sha256": "5275ec8f09b4282cc38c64090930688fe1a663abae8c1a920a59336fb1d6bcd2",
+        "bytes": 6447
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      ".cache/solo-native-admitted-3f84b51f8-inputs.json": {
+        "sha256": "df56bf67efb83240ae4bafacac8f4c16cfc6f739a75fa5b5f8483350faba6926",
+        "bytes": 511907
+      },
+      ".cache/solo-native-inventory-3f84b51f8-x64.json": {
+        "sha256": "d800a59a7b4825c745eeb831d1a588f7a983bc5aacf8c070cb48929902e53172",
+        "bytes": 671634
+      },
+      ".cache/linux-capture-draft/scripts/capture-solo-native-candidates.mjs": {
+        "sha256": "fcc8313b1a2bae95c28ab1988e3dff53c20f77a7793ab98e7de185dbfb98e5f4",
+        "bytes": 22895
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "dacd84f67d68686bb0522005d57593538ab67e0eb9255ba9703de80d2456c623",
+      "bytes": 11129
+    }
+  },
+  "bindingsStable": true,
+  "result": {
+    "path": ".cache/solo-native-admitted-3f84b51f8-x64.json",
+    "sha256": "6fb908e58df9b03186090e7f54085d1a57d090ecfcb94997543c093a34bfb863",
+    "complete": true,
+    "sources": 242,
+    "pageErrors": 0,
+    "failure": null,
+    "counts": {
+      "requiredEntries": 240,
+      "sources": 242,
+      "strictUsable": 242,
+      "strictFailed": 0,
+      "strictUsableEntries": 240,
+      "reviewedCompatibilityOnly": 0,
+      "workerFailures": 0
+    }
+  },
+  "elapsedSeconds": 468.3931249999987,
+  "finished": "2026-10-19T10:24:08.976818+00:00"
+}

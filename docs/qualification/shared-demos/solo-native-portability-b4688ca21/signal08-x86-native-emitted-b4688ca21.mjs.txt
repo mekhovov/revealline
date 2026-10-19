@@ -1,0 +1,122 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, stat } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
+import { startProductionPreview } from '../scripts/serve-production-preview.mjs';
+import { fingerprintDemoSources } from '../scripts/demo-source-fingerprint.mjs';
+import { emittedEvidenceSnapshot, closeOwnedPreview } from './demo-probe-evidence.mjs';
+const args = Object.fromEntries(process.argv.slice(2).map(arg => arg.replace(/^--/, '').split('=')));
+assert.equal(args.run, 'approved');
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const head = () => execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+for (const name of [args.report, args.report.replace(/\.json$/, '.mjs.txt')]) {
+  try { await stat(name); throw Error(`Refusing existing evidence ${name}`); } catch(error) { if(error.code !== 'ENOENT') throw error; }
+}
+const script = await readFile(new URL(import.meta.url));
+const launcher = await readFile(args.executable);
+assert.equal(launcher.toString(), '#!/bin/sh\nexec /usr/bin/arch -x86_64 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" "$@"\n');
+const report = { format: 'SharedDemoSignal08X86ObservationV1', started: new Date().toISOString(), complete: false,
+  checks: [], errors: [], errorOverflow: 0, headBefore: head(), sourceBefore: await fingerprintDemoSources(process.cwd()),
+  buildInputsBefore: await fingerprintDemoSources(process.cwd(), ['scripts','authoring']), observerSHA256: sha(script),
+  originalNativeProbeSHA256: sha(await readFile('.cache/qualify-demo-menu-focus-emitted.mjs')),
+  emittedBefore: await emittedEvidenceSnapshot(process.cwd(), args['emitted-preview']),
+  launcher: { path: args.executable, sha256: sha(launcher), text: launcher.toString() },
+  rosettaUname: execFileSync('/usr/bin/arch', ['-x86_64','/usr/bin/uname','-m'], { encoding:'utf8' }).trim(),
+  scope: 'Read-only original four published signal-08 replay payloads in installed universal Chrome forced x86_64 on macOS under Rosetta, using exact held emitted modules. Observation completion is not replay admission or Linux qualification. No generated recording or checkpoint mutation.',
+};
+assert.equal(report.headBefore,args.head); assert.equal(report.sourceBefore.sha256,args.fingerprint);
+assert.equal(report.rosettaUname,'x86_64');
+let browser, preview;
+const bounded = async (promise, ms) => { let timer; try { return await Promise.race([promise, new Promise((_,reject)=>timer=setTimeout(()=>reject(Error(`Bound ${ms}ms exceeded`)),ms))]); } finally { clearTimeout(timer); } };
+try {
+  preview = await startProductionPreview({ root:process.cwd(), port:0, fixtureAccess:false, cache:'revalidate', emittedPreview:args['emitted-preview'], verifyEmittedSource:true });
+  assert.equal(preview.emittedPreview.sourceVerified,true); assert.equal(preview.emittedPreview.sourceRevision,args.head);
+  report.preview = { url:preview.url, emittedPreview:preview.emittedPreview };
+  const playwright = await import(pathToFileURL(args.runtime).href);
+  browser = await playwright.chromium.launch({ headless:true, executablePath:args.executable });
+  report.browserVersion=browser.version();
+  const page = await browser.newPage();
+  page.on('pageerror',error=>{ if(report.errors.length<8)report.errors.push(String(error)); else report.errorOverflow++; });
+  const fixture = new URL('__signal08_x86_observation__',preview.url).href;
+  await page.route(fixture,route=>route.fulfill({contentType:'text/html',body:'<!doctype html><html><body></body></html>'}));
+  await page.goto(fixture);
+  report.userAgent = await page.evaluate(async()=>({userAgent:navigator.userAgent,platform:navigator.platform,highEntropy:await navigator.userAgentData?.getHighEntropyValues(['architecture','bitness','platform'])}));
+  const cdp=await browser.newBrowserCDPSession();
+  const processes=(await cdp.send('SystemInfo.getProcessInfo')).processInfo;
+  const targets=[processes.find(row=>row.type==='browser'),processes.find(row=>row.type==='renderer')];
+  assert.ok(targets.every(Boolean),'Browser and renderer process identities are required.');
+  report.nativeArchitecture=[];
+  for(const target of targets){
+    assert.ok(Number.isSafeInteger(target.id)&&target.id>0);
+    const samplePath=args.report.replace(/\.json$/,`.${target.type}.sample.txt`);
+    const identity=()=>execFileSync('/bin/ps',['-p',String(target.id),'-o','pid=,ppid=,lstart=,uid=,command='],{encoding:'utf8'}).trim();
+    const before=identity();
+    execFileSync('/usr/bin/sample',[String(target.id),'1','10','-file',samplePath],{encoding:'utf8',timeout:10000,maxBuffer:65536});
+    const after=identity();assert.equal(after,before);
+    const sampleBytes=await readFile(samplePath);assert.ok(sampleBytes.length<2*1024*1024);
+    const header=sampleBytes.toString().slice(0,4096);
+    const codeType=/^Code Type:\s*(.+)$/m.exec(header)?.[1];
+    report.nativeArchitecture.push({type:target.type,pid:target.id,identity:before,codeType,sample:{path:samplePath,sha256:sha(sampleBytes),bytes:sampleBytes.length},header});
+    assert.match(codeType??'',/X86-64.*Translated/i,'Require native OS evidence that browser and renderer execute translated Intel code.');
+  }
+  await cdp.detach();
+  const sourceId='solo-qualified-478808a96f4fbf5e';
+  const catalog=JSON.parse(await readFile('game/demo-data/catalog.json','utf8'));
+  const clip=catalog.clips.find(row=>row.id===sourceId);
+  const candidates=[clip,...clip.runtimePerformances];
+  assert.equal(candidates.length,4);
+  const linux=JSON.parse(await readFile('.cache/hosted-demo-admission-failure-b4688ca21.json','utf8'));
+  report.linuxReference={path:'.cache/hosted-demo-admission-failure-b4688ca21.json',sha256:sha(await readFile('.cache/hosted-demo-admission-failure-b4688ca21.json')),environment:linux.environment,sourceFailure:linux.sourceFailure};
+  for(const candidate of candidates){
+    const replayPath='game/'+candidate.replayURL.replace(/^\.\//,'');
+    const diagnosticPath=replayPath.replace(/\.replay\.json$/,'.diagnostics.json');
+    const replayBytes=await readFile(replayPath),diagnosticBytes=await readFile(diagnosticPath);
+    const result=await bounded(page.evaluate(async({url,diagnosticURL})=>{
+      const [{verifyReplayAsync,authoritativeCheckpoint},{diagnoseDemoReplay},{createRun,stepRun,releaseInputs,FIXED_DT}]=await Promise.all([import('/game/replay.mjs'),import('/game/demo-replay-diagnostics.mjs'),import('/game/core/index.mjs')]);
+      const source=await (await fetch(url)).json(); const sidecar=await (await fetch(diagnosticURL)).json();
+      const verified=await verifyReplayAsync(source);
+      const diagnostic=await diagnoseDemoReplay(source,sidecar);
+      const run=createRun(source.level,source.options); const initial=authoritativeCheckpoint(run);
+      let captures=0,at600=null;
+      for(const segment of source.segments){
+        if(segment.releaseBefore)releaseInputs(run);
+        for(let tick=0;tick<segment.ticks;tick++){
+          stepRun(run,segment.input,FIXED_DT); captures+=run.events.filter(event=>event.type==='cut.closed').length;
+          if(run.tick===600)at600=authoritativeCheckpoint(run);
+        }
+      }
+      if(source.releaseAfter)releaseInputs(run);
+      const clockKeys=['status','tick','time','lives','score','respawnAt','medal','cutStartedAt','failureCause'];
+      return {match:verified.match,diagnostics:verified.diagnostics,actual:verified.actual,recorded:source.checkpoint,
+        diagnostic,at600,initial,captures,claimedCount:run.claimedCount,
+        clock:Object.fromEntries(clockKeys.map(key=>[key,run[key]])),
+        enemies:run.enemies.map(enemy=>({...enemy})),ticks:run.tick,finalCheckpoint:authoritativeCheckpoint(run)};
+    },{url:'/game/'+candidate.replayURL.replace(/^\.\//,''),diagnosticURL:'/'+diagnosticPath}),60000);
+    assert.equal(result.actual.checkpoint.hash,result.finalCheckpoint.hash);
+    assert.ok(result.at600);
+    const last=linux.sourceFailure.diagnostics;
+    result.matchesLinuxFinalEnemy=result.actual.checkpoint.sections.enemies===last.find(row=>row.section==='enemies').actual;
+    result.matchesLinuxFinalClock=result.actual.checkpoint.sections.clock===last.find(row=>row.section==='clock').actual;
+    result.matchesLinuxTick600=result.at600.hash===last.find(row=>row.code==='diagnostic-checkpoint-mismatch').actual;
+    report.checks.push({sourceId,engine:candidate.engine??'primary',replay:{path:replayPath,sha256:sha(replayBytes),bytes:replayBytes.length},sidecar:{path:diagnosticPath,sha256:sha(diagnosticBytes),bytes:diagnosticBytes.length},...result});
+    console.log(JSON.stringify({engine:candidate.engine??'primary',match:result.match,diagnostics:result.diagnostics,diagnostic:result.diagnostic,linux:[result.matchesLinuxFinalEnemy,result.matchesLinuxFinalClock,result.matchesLinuxTick600]}));
+  }
+  report.observationCompleted=report.checks.length===4;
+  report.complete=report.observationCompleted&&report.errors.length===0&&report.errorOverflow===0;
+}catch(error){report.complete=false;report.failure=String(error.stack??error);}
+finally{
+  try{if(browser){await bounded(browser.close(),10000);report.browserCloseCompleted=true;}}catch(error){report.complete=false;report.browserCloseCompleted=false;report.cleanupFailure=String(error);}
+  await closeOwnedPreview(preview,report,3000);report.previewClosed=report.serverClosed===true;
+  try{
+    report.headAfter=head();report.sourceAfter=await fingerprintDemoSources(process.cwd());report.buildInputsAfter=await fingerprintDemoSources(process.cwd(),['scripts','authoring']);
+    report.observerSHA256After=sha(await readFile(new URL(import.meta.url)));report.emittedAfter=await emittedEvidenceSnapshot(process.cwd(),args['emitted-preview']);
+    assert.deepEqual(report.sourceBefore,report.sourceAfter);assert.deepEqual(report.buildInputsBefore,report.buildInputsAfter);assert.deepEqual(report.emittedBefore,report.emittedAfter);
+    assert.equal(report.headBefore,report.headAfter);assert.equal(report.observerSHA256,report.observerSHA256After);assert.equal(sha(await readFile(args.executable)),report.launcher.sha256);
+    report.sourceUnchanged=true;
+  }catch(error){report.complete=false;report.sourceUnchanged=false;report.bindingFailure=String(error.stack??error);}
+  report.finished=new Date().toISOString();
+  await writeFile(args.report.replace(/\.json$/,'.mjs.txt'),script,{flag:'wx'});
+  await writeFile(args.report,JSON.stringify(report,null,2)+'\n',{flag:'wx'});
+  if(!report.complete)process.exitCode=1;
+}

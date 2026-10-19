@@ -1,0 +1,192 @@
+{
+  "format": "SharedDemoHostedBrowserSupervisionV1",
+  "complete": false,
+  "started": "2026-10-19T12:12:42.237389+00:00",
+  "command": [
+    "/opt/hostedtoolcache/node/22.13.1/x64/bin/node",
+    "scripts/qualify-shared-demo-hosted-browser.mjs",
+    "--runtime=/home/runner/work/_temp/shared-demo-playwright/node_modules/playwright/index.mjs",
+    "--head=27138039f30d759aaf10d0b8c80564757bc9e905",
+    "--base=403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+    "--fingerprint=cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "--emitted-preview=.cache/hosted-demo-emitted",
+    "--report=.cache/hosted-demo-browser/matrix.json",
+    "--phase=matrix"
+  ],
+  "timeoutSeconds": 1800,
+  "cleanupSeconds": 14,
+  "childElapsedSeconds": 112.11137403999999,
+  "ownedProcesses": {
+    "verified": true,
+    "rootObserved": true,
+    "method": "Linux /proc startTicks/UID/full raw argv SHA256; pidfd signals; dedicated subreaper",
+    "observed": [
+      {
+        "pid": 6045,
+        "ppid": 6043,
+        "state": "R",
+        "startTicks": 75410,
+        "uid": 1001,
+        "argvSHA256": "0dff1dd2241fd556071fa86f78d6cc562b190031e6f22bc54c43f47372137c85",
+        "argv": "/opt/hostedtoolcache/node/22.13.1/x64/bin/node scripts/qualify-shared-demo-hosted-browser.mjs --runtime=/home/runner/work/_temp/shared-demo-playwright/node_modules/playwright/index.mjs --head=27138039f30d759aaf10d0b8c80564757bc9e905 --base=403814d27c8e1dd7ba704d8f1eeb7bb6598d454f --fingerprint=cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9 --emitted-preview=.cache/hosted-demo-emitted --report=.cache/hosted-demo-browser/matrix.json --phase=matrix ",
+        "ownership": "spawned root"
+      },
+      {
+        "pid": 6120,
+        "ppid": 6045,
+        "state": "R",
+        "startTicks": 77061,
+        "uid": 1001,
+        "argvSHA256": "3900bcccdd4839a09e725a56c5f27f248703e39fb37828855fe7ef90529dc394",
+        "argv": "/opt/hostedtoolcache/node/22.13.1/x64/bin/node scripts/qualify-demo-restoration-browser.mjs --runtime=/home/runner/work/_temp/shared-demo-playwright/node_modules/playwright/index.mjs --executable=/home/runner/work/_temp/shared-demo-browsers/webkit-2336/pw_run.sh --report=/home/runner/work/revealline/revealline/.cache/hosted-demo-browser/matrix.restoration-webkit.json --emitted-preview=.cache/hosted-demo-emitted --browser=webkit --port=8771 ",
+        "ownership": "observed descendant"
+      },
+      {
+        "pid": 6147,
+        "ppid": 6120,
+        "state": "S",
+        "startTicks": 77612,
+        "uid": 1001,
+        "argvSHA256": "2695deabb58302fc4f4c98ac549aaa58a2d89c871561c803d38754d7b58dabfa",
+        "argv": "bash /home/runner/work/_temp/shared-demo-browsers/webkit-2336/pw_run.sh --inspector-pipe --headless --no-startup-window ",
+        "ownership": "observed descendant"
+      },
+      {
+        "pid": 6153,
+        "ppid": 6147,
+        "state": "R",
+        "startTicks": 77612,
+        "uid": 1001,
+        "argvSHA256": "e6cfe73f3356642379dcc14ca146b822046cddaf5505cf37e23718ec1d5736f9",
+        "argv": "/home/runner/work/_temp/shared-demo-browsers/webkit-2336/minibrowser-wpe/bin/MiniBrowser --inspector-pipe --headless --no-startup-window ",
+        "ownership": "observed descendant"
+      },
+      {
+        "pid": 6156,
+        "ppid": 6153,
+        "state": "R",
+        "startTicks": 77617,
+        "uid": 1001,
+        "argvSHA256": "c38ccecd6d94d75fa6c9e83c1f230ec6458b58db4002687b81ba16f3f93fc43f",
+        "argv": "/usr/lib/x86_64-linux-gnu/../../lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner -l /home/runner/work/_temp/shared-demo-browsers/webkit-2336/minibrowser-wpe/bin/MiniBrowser ",
+        "ownership": "observed descendant"
+      },
+      {
+        "pid": 6171,
+        "ppid": 6153,
+        "state": "R",
+        "startTicks": 77664,
+        "uid": 1001,
+        "argvSHA256": "1d63a79aed72cd7f93eeb242aeeebed95a6130d700095b2849ada2ae61cc5e95",
+        "argv": "/home/runner/work/_temp/shared-demo-browsers/webkit-2336/minibrowser-wpe/bin/WPENetworkProcess 2 16 ",
+        "ownership": "observed descendant"
+      },
+      {
+        "pid": 6173,
+        "ppid": 6153,
+        "state": "S",
+        "startTicks": 77665,
+        "uid": 1001,
+        "argvSHA256": "810eddfdd3df2f5d1d5502fbb79a4e19325ce48f0c99553d3c9a87565b38677b",
+        "argv": "/home/runner/work/_temp/shared-demo-browsers/webkit-2336/minibrowser-wpe/bin/WPEWebProcess 4 22 ",
+        "ownership": "observed descendant"
+      },
+      {
+        "pid": 6249,
+        "ppid": 6153,
+        "state": "R",
+        "startTicks": 84645,
+        "uid": 1001,
+        "argvSHA256": "3cf0e99051380456cd0ea983267647f49504d385f24d0e54e8886578ed356e82",
+        "argv": "/home/runner/work/_temp/shared-demo-browsers/webkit-2336/minibrowser-wpe/bin/WPENetworkProcess 5 26 ",
+        "ownership": "observed descendant"
+      },
+      {
+        "pid": 6251,
+        "ppid": 6153,
+        "state": "R",
+        "startTicks": 84645,
+        "uid": 1001,
+        "argvSHA256": "fe1e4752a2fddb44d99bf4fc2c707dec9c434ec39bfb6aba7ef4a8be0f8608e6",
+        "argv": "/home/runner/work/_temp/shared-demo-browsers/webkit-2336/minibrowser-wpe/bin/WPEWebProcess 7 38 ",
+        "ownership": "observed descendant"
+      }
+    ],
+    "actions": [],
+    "identityTransitions": [
+      {
+        "before": [
+          6156,
+          77617,
+          1001,
+          "c38ccecd6d94d75fa6c9e83c1f230ec6458b58db4002687b81ba16f3f93fc43f"
+        ],
+        "after": [
+          6156,
+          77617,
+          1001,
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ]
+      },
+      {
+        "before": [
+          6251,
+          84645,
+          1001,
+          "fe1e4752a2fddb44d99bf4fc2c707dec9c434ec39bfb6aba7ef4a8be0f8608e6"
+        ],
+        "after": [
+          6251,
+          84645,
+          1001,
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ]
+      },
+      {
+        "before": [
+          6120,
+          77061,
+          1001,
+          "3900bcccdd4839a09e725a56c5f27f248703e39fb37828855fe7ef90529dc394"
+        ],
+        "after": [
+          6120,
+          77061,
+          1001,
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ]
+      }
+    ],
+    "remaining": [],
+    "boundsExceeded": false
+  },
+  "childExit": 1,
+  "log": {
+    "complete": true,
+    "error": null,
+    "limitBytes": 4194304,
+    "totalBytes": 1452,
+    "writtenBytes": 1452,
+    "overflow": false,
+    "sha256": "03b1d2307de9ed08f1158c0298d428524b4023a4113d12def73c132b67e8fffb"
+  },
+  "validationFailure": "AssertionError()",
+  "elapsedSeconds": 112.22713669899997,
+  "finished": "2026-10-19T12:14:34.464665+00:00",
+  "phase": "matrix",
+  "head": "27138039f30d759aaf10d0b8c80564757bc9e905",
+  "base": "403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+  "runtimeFingerprint": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+  "inputPins": {
+    "/home/runner/work/revealline/revealline/scripts/qualify-shared-demo-hosted-browser.py": "185373074ebf52bf67150dac5dfe0001d5989c0f466eb4c3eee260120d0b5065",
+    "/home/runner/work/revealline/revealline/scripts/qualify-shared-demo-hosted-browser.mjs": "95c450ac55262623f5b2b3450a19f9493016b2b6eb92792acc116945b37be9d8",
+    "/opt/hostedtoolcache/node/22.13.1/x64/bin/node": "a3627568bc920247f5edecc025a040bfa3c3f76bf3456ac424f6ac76aa5e6a47",
+    "/home/runner/work/_temp/shared-demo-playwright/node_modules/playwright/index.mjs": "a0f5715ea22354f922791a9c53dc012d5d5c067ff9cc4cd35ffb7cd272071a9f",
+    "/home/runner/work/revealline/revealline/.cache/hosted-demo-emitted/manifest.json": "0da69b845a18ae3d23c5c98f66535ed9f44dfbcba8ce2bfa88aa6f4d0db42392",
+    "/home/runner/work/revealline/revealline/docs/qualification/shared-demos/source-freeze-latest.json": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5"
+  },
+  "limitations": [
+    "Synchronous filesystem reads may delay polling; final elapsed checks reject results outside the phase budget plus30seconds.",
+    "Only this dedicated Linux process tree is owned. No process-group/name-wide signals or other job cancellation."
+  ]
+}

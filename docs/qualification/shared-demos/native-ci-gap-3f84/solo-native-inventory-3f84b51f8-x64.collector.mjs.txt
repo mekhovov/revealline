@@ -1,0 +1,585 @@
+#!/usr/bin/env node
+/** Observe every catalog-derived Solo source. New native recordings are review
+ * candidates only: this command never edits a catalog or changes admission. */
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { lstat, mkdir, readFile, realpath, statfs, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { Worker, isMainThread, parentPort, workerData } from 'node:worker_threads';
+import { createRun, stepRun, releaseInputs, FIXED_DT } from '../game/core/index.mjs';
+import {
+  createRecorder,
+  recordInput,
+  recordRelease,
+  exportReplay,
+  snapshotReplay,
+  MAX_REPLAY_BYTES,
+  MAX_REPLAY_TICKS,
+} from '../game/replay.mjs';
+import {
+  demoDescriptor,
+  demoInputTraceIdentity,
+  resolveDemoCatalog,
+  validateDemoCatalog,
+} from '../game/demo-catalog.mjs';
+import { prepareReviewedReplayPlayer } from '../game/replay-player.mjs';
+import { soloDemoInventory, qualifySoloPerformance } from './qualify-solo-demos.mjs';
+
+const sha = (body) => createHash('sha256').update(body).digest('hex');
+const terminal = (run) => ['won', 'lost'].includes(run.status);
+const message = (error) => String(error?.message ?? error).slice(0, 2048);
+const OUTPUT = '.cache/solo-native-candidates';
+const TOTAL_MS = 15 * 60 * 1000;
+const WORKER_MS = 60 * 1000;
+const OUTPUT_BYTES = 128 * 1024 * 1024;
+const REPORT_BYTES = 8 * 1024 * 1024;
+const FREE_FLOOR_BYTES = 200 * 1024 * 1024;
+const CATALOGS = [
+  'game/demo-data/catalog.json',
+  'game/demo-data/catalog.journey-current.json',
+  'game/demo-data/catalog.journey-archive.json',
+];
+
+export function assertSoloSourceBinding(source, descriptor, entry) {
+  const replay = snapshotReplay(source);
+  const actual = demoDescriptor(replay, entry);
+  for (const key of [
+    'campaignKey',
+    'campaignId',
+    'levelId',
+    'levelRevision',
+    'identity',
+    'recordingIdentity',
+    'inputTraceIdentity',
+    'durationSeconds',
+    'turnPolicy',
+  ])
+    assert.deepEqual(actual[key], descriptor[key], `Source differs from catalog: ${key}`);
+  return replay;
+}
+
+/** Consume only the original public commands, stopping at a genuine terminal
+ * state. Full independent qualification runs again from tick zero afterward. */
+export function captureSoloInputTrace(
+  source,
+  descriptor,
+  entry,
+  { qualify = qualifySoloPerformance } = {},
+) {
+  const original = assertSoloSourceBinding(source, descriptor, entry);
+  const run = createRun(original.level, original.options);
+  const recorder = createRecorder(original.level, original.options, original.build);
+  trace: for (const segment of original.segments) {
+    if (terminal(run)) break;
+    if (segment.releaseBefore) {
+      releaseInputs(run);
+      recordRelease(recorder);
+    }
+    for (let tick = 0; tick < segment.ticks; tick++) {
+      if (terminal(run)) break trace;
+      const before = run.tick;
+      recordInput(recorder, segment.input);
+      stepRun(run, segment.input, FIXED_DT);
+      assert.equal(run.tick, before + 1, 'Each consumed command must advance one native tick');
+    }
+  }
+  assert(terminal(run), 'Original input trace ended before a natural terminal outcome');
+  if (original.releaseAfter && run.tick === original.ticks) {
+    releaseInputs(run);
+    recordRelease(recorder);
+  }
+  const replay = exportReplay(recorder, run);
+  for (const key of ['version', 'build', 'ruleset', 'level', 'options'])
+    assert.deepEqual(replay[key], original[key], `Candidate changes ${key}`);
+  assert(replay.ticks > 0 && replay.ticks <= original.ticks && replay.ticks <= MAX_REPLAY_TICKS);
+  const metrics = qualify(replay);
+  assert(
+    ['won', 'lost'].includes(metrics.outcome) && metrics.captures > 0 && metrics.capturedCells > 0,
+  );
+  assert.equal(metrics.ticks, replay.ticks);
+  assert.equal(metrics.diagnostics.inputTraceIdentity, demoInputTraceIdentity(replay));
+  assert.equal(metrics.diagnostics.checkpoints.length, Math.floor(replay.ticks / 600));
+  metrics.diagnostics.checkpoints.forEach((checkpoint, index) =>
+    assert.equal(checkpoint.tick, (index + 1) * 600),
+  );
+  const sameTrace = demoInputTraceIdentity(replay) === descriptor.inputTraceIdentity;
+  if (sameTrace) {
+    for (const key of ['segments', 'ticks', 'releaseAfter'])
+      assert.deepEqual(replay[key], original[key], `Same-trace candidate changes ${key}`);
+    assert.equal(replay.ticks / 120, descriptor.durationSeconds);
+  }
+  return {
+    replay,
+    metrics,
+    classification: sameTrace
+      ? 'same-input-variant-candidate'
+      : 'independent-performance-candidate',
+    sourceInputTraceIdentity: demoInputTraceIdentity(original),
+    inputTraceIdentity: demoInputTraceIdentity(replay),
+    sourceTicks: original.ticks,
+    consumedTicks: replay.ticks,
+    consumedTrace: replay.ticks === original.ticks ? 'full' : 'prefix',
+    automaticallyAdmitted: false,
+  };
+}
+
+/** One owned thread; success requires its normal exit, not merely a message.
+ * Cancellation/timeout terminates that thread and waits for cleanup. */
+export async function runSoloCandidateWorker(
+  data,
+  {
+    timeoutMs = WORKER_MS,
+    cleanupMs = 2000,
+    signal,
+    createWorker = (value) =>
+      new Worker(new URL(import.meta.url), {
+        workerData: { soloNativeCapture: value },
+        resourceLimits: { maxOldGenerationSizeMb: 256 },
+      }),
+  } = {},
+) {
+  assert(Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= WORKER_MS);
+  assert(Number.isFinite(cleanupMs) && cleanupMs > 0 && cleanupMs <= 2000);
+  signal?.throwIfAborted();
+  const worker = createWorker(data);
+  let timer,
+    result,
+    exited = false,
+    abort,
+    onMessage,
+    onError,
+    onExit,
+    primaryFailure;
+  try {
+    return await new Promise((resolve, reject) => {
+      abort = () => reject(signal.reason ?? new Error('Capture cancelled'));
+      onMessage = (value) => {
+        if (result !== undefined) reject(new Error('Worker returned multiple results'));
+        result = value;
+      };
+      onError = reject;
+      onExit = (code) => {
+        exited = true;
+        if (code !== 0 || !result || result.error)
+          reject(new Error(result?.error ?? `Worker exited ${code} without a result`));
+        else resolve(result);
+      };
+      worker.on('message', onMessage);
+      worker.on('error', onError);
+      worker.on('exit', onExit);
+      timer = setTimeout(() => reject(new Error('Native source preparation timed out')), timeoutMs);
+      signal?.addEventListener('abort', abort, { once: true });
+      if (signal?.aborted) abort();
+    });
+  } catch (error) {
+    primaryFailure = error;
+    throw error;
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener('abort', abort);
+    try {
+      if (!exited) {
+        let cleanupTimer;
+        try {
+          await Promise.race([
+            worker.terminate(),
+            new Promise((_, reject) => {
+              cleanupTimer = setTimeout(() => {
+                const error = new Error('Owned native worker cleanup exceeded its deadline');
+                error.code = 'worker-cleanup-failed';
+                reject(error);
+              }, cleanupMs);
+            }),
+          ]);
+        } catch (cause) {
+          const error = new Error(
+            `Owned native worker cleanup failed: ${message(cause)}${
+              primaryFailure ? `; original failure: ${message(primaryFailure)}` : ''
+            }`,
+            { cause },
+          );
+          error.code = 'worker-cleanup-failed';
+          throw error;
+        } finally {
+          clearTimeout(cleanupTimer);
+        }
+      }
+    } finally {
+      // On a failed cleanup the main collection stops and exits unsuccessfully;
+      // this owned thread must not keep that failed diagnostic process alive.
+      worker.unref();
+      worker.off('message', onMessage);
+      worker.off('error', onError);
+      worker.off('exit', onExit);
+      if (!exited) worker.on('error', () => {});
+    }
+  }
+}
+
+function candidates(clip) {
+  return [
+    ...[clip.replayURL, ...(clip.replayVariants ?? [])].map((replayURL) => ({
+      ...clip,
+      replayURL,
+    })),
+    ...(clip.runtimePerformances ?? []).map((performance) => ({ ...clip, ...performance })),
+  ];
+}
+
+async function readRecording(root, descriptor, entry) {
+  assert(/^\.\/demo-data\/[a-z0-9][a-z0-9.-]*\.replay\.json$/.test(descriptor.replayURL));
+  const name = `game/${descriptor.replayURL.slice(2)}`;
+  const file = path.join(root, name);
+  const info = await lstat(file);
+  assert(info.isFile() && !info.isSymbolicLink() && info.size > 0 && info.size <= MAX_REPLAY_BYTES);
+  assert.equal(await realpath(file), file, 'Replay path crosses a symlink');
+  const body = await readFile(file);
+  assert.equal(body.length, info.size);
+  return {
+    replay: assertSoloSourceBinding(body.toString('utf8'), descriptor, entry),
+    input: { path: name, bytes: body.length, sha256: sha(body) },
+  };
+}
+
+async function observeSource({ root, clip, entry, capture }) {
+  const row = {
+    id: clip.id,
+    levelId: clip.levelId,
+    campaignKey: clip.campaignKey,
+    qualified: clip.id.startsWith('solo-qualified-'),
+    strictUsable: false,
+    reviewedCompatibilityUsable: false,
+    attempts: [],
+  };
+  const loaded = [];
+  for (const descriptor of candidates(clip)) {
+    const attempt = { replayURL: descriptor.replayURL };
+    try {
+      const source = await readRecording(root, descriptor, entry);
+      Object.assign(attempt, { input: source.input });
+      loaded.push({ ...source, descriptor });
+      const { diagnostics: _diagnostics, ...metrics } = qualifySoloPerformance(source.replay);
+      if (descriptor.outcome) assert.equal(metrics.outcome, descriptor.outcome);
+      Object.assign(attempt, { strict: true, metrics });
+      row.strictUsable = true;
+    } catch (error) {
+      Object.assign(attempt, { strict: false, failure: message(error) });
+    }
+    row.attempts.push(attempt);
+    if (row.strictUsable) break;
+  }
+  // Preserve the existing reviewed-only last-candidate compatibility boundary.
+  if (!row.strictUsable && !row.qualified) {
+    const last = candidates(clip).at(-1);
+    const source = loaded.find((value) => value.descriptor.replayURL === last.replayURL);
+    if (source) {
+      let player;
+      try {
+        player = await prepareReviewedReplayPlayer(source.replay);
+        assert(['won', 'lost'].includes(player.info.recordedStatus));
+        row.reviewedCompatibilityUsable = true;
+      } catch (error) {
+        row.reviewedCompatibilityFailure = message(error);
+      } finally {
+        await player?.dispose();
+      }
+    }
+  }
+  if (!row.strictUsable && capture) {
+    row.captureAttempts = [];
+    const traces = new Set();
+    for (const source of loaded) {
+      const identity = demoInputTraceIdentity(source.replay);
+      if (traces.has(identity)) continue;
+      traces.add(identity);
+      try {
+        row.candidate = {
+          ...captureSoloInputTrace(source.replay, source.descriptor, entry),
+          originalInput: source.input,
+          originalReplayURL: source.descriptor.replayURL,
+        };
+        // A runtime performance can have its own trace. Generic variants must
+        // match the parent clip, not merely the particular trace used to author it.
+        row.candidate.genericVariantEligible =
+          row.candidate.inputTraceIdentity === clip.inputTraceIdentity &&
+          row.candidate.replay.ticks / 120 === clip.durationSeconds &&
+          row.candidate.replay.options.turnPolicy === clip.turnPolicy;
+        if (!row.candidate.genericVariantEligible)
+          row.candidate.classification = 'independent-performance-candidate';
+        break;
+      } catch (error) {
+        row.captureAttempts.push({ input: source.input, failure: message(error) });
+      }
+    }
+  }
+  return row;
+}
+
+export async function inventorySources(root) {
+  const inventory = await soloDemoInventory();
+  assert(inventory.length > 0 && inventory.length <= 1000, 'Bounded nonempty inventory required');
+  assert.equal(new Set(inventory.map((item) => item.levelKey)).size, inventory.length);
+  const catalogs = await Promise.all(
+    CATALOGS.map(async (name) => {
+      const body = await readFile(path.join(root, name));
+      return {
+        catalog: validateDemoCatalog(JSON.parse(body)),
+        input: { path: name, bytes: body.length, sha256: sha(body) },
+      };
+    }),
+  );
+  const sources = [],
+    missing = [];
+  for (const target of inventory) {
+    const name = target.catalogGroup.startsWith('journey-')
+      ? `game/demo-data/catalog.${target.catalogGroup}.json`
+      : CATALOGS[0];
+    const selected = catalogs.find((value) => value.input.path === name);
+    const clips = resolveDemoCatalog(selected.catalog, [target.entry]).filter(
+      (clip) => clip.levelId === target.levelId,
+    );
+    if (!clips.some((clip) => clip.id === target.id)) missing.push(target.id);
+    for (const clip of clips) sources.push({ clip, entry: target.entry, requiredEntry: target.id });
+  }
+  assert(
+    sources.length <= 1200 && new Set(sources.map(({ clip }) => clip.id)).size === sources.length,
+  );
+  return {
+    requiredEntries: inventory.map(({ id, levelKey }) => ({ id, levelKey })),
+    sources,
+    missing,
+    catalogs: catalogs.map(({ input }) => input),
+  };
+}
+
+function sourceBinding(root, expectedHead) {
+  const git = (...args) =>
+    execFileSync('git', ['-c', 'maintenance.auto=false', '-c', 'gc.auto=0', ...args], {
+      cwd: root,
+      encoding: 'utf8',
+      timeout: 15000,
+      maxBuffer: 8 * 1024 * 1024,
+      env: { ...process.env, GIT_NO_LAZY_FETCH: '1' },
+    });
+  assert.equal(git('rev-parse', 'HEAD').trim(), expectedHead);
+  assert.equal(
+    git('status', '--porcelain', '--untracked-files=no').trim(),
+    '',
+    'Tracked source must be clean',
+  );
+  return {
+    revision: expectedHead,
+    tree: git('rev-parse', 'HEAD^{tree}').trim(),
+    trackedSourceIndexSHA256: sha(
+      git('ls-files', '--stage', '-z', 'game', 'scripts', 'publishing', 'authoring'),
+    ),
+  };
+}
+
+async function main(args) {
+  assert(
+    args.length <= 1 && (!args.length || args[0] === '--capture'),
+    'Only --capture is supported',
+  );
+  const expectedHead = process.env.SOLO_CAPTURE_HEAD_SHA;
+  assert(
+    /^[a-f0-9]{40}$/.test(expectedHead ?? ''),
+    'SOLO_CAPTURE_HEAD_SHA must bind an exact commit',
+  );
+  const root = await realpath(process.cwd());
+  const checkSpace = async (additionalBytes = 0) => {
+    const disk = await statfs(root, { bigint: true });
+    assert(
+      disk.bavail * disk.bsize >= BigInt(FREE_FLOOR_BYTES + REPORT_BYTES + additionalBytes),
+      'Native collection would cross its local free-space floor',
+    );
+  };
+  await checkSpace();
+  const before = sourceBinding(root, expectedHead);
+  const collectorBytes = await readFile(new URL(import.meta.url));
+  const cache = path.join(root, '.cache');
+  await mkdir(cache, { recursive: true });
+  assert.equal(await realpath(cache), cache);
+  const output = path.join(root, OUTPUT);
+  await mkdir(output); // Refuse to overwrite any earlier collection.
+  const controller = new AbortController();
+  let report;
+  const interrupted = () => {
+    controller.abort(new Error('Native candidate collection interrupted'));
+    process.exitCode = 1;
+    if (report) report.complete = false;
+  };
+  process.once('SIGINT', interrupted);
+  process.once('SIGTERM', interrupted);
+  const start = performance.now(),
+    deadline = start + TOTAL_MS;
+  report = {
+    format: 'SoloNativeCandidateCollectionV1',
+    complete: false,
+    scanComplete: false,
+    existingCoveragePassed: false,
+    automaticallyAdmitted: false,
+    started: new Date().toISOString(),
+    sourceBefore: before,
+    collector: {
+      path: path.relative(root, fileURLToPath(import.meta.url)),
+      bytes: collectorBytes.length,
+      sha256: sha(collectorBytes),
+    },
+    environment: {
+      node: process.version,
+      platform: process.platform,
+      arch: process.arch,
+      versions: process.versions,
+    },
+    mode: args.length ? 'scan-and-capture-candidates' : 'scan-only',
+    bounds: {
+      workerMs: WORKER_MS,
+      overallMs: TOTAL_MS,
+      outputBytes: OUTPUT_BYTES,
+      reportBytes: REPORT_BYTES,
+      freeFloorBytes: FREE_FLOOR_BYTES,
+    },
+    sources: [],
+    artifacts: [],
+    limitations: [
+      'Candidates require separate review and catalog adoption. Existing strict admission remains unchanged.',
+      'One terminated worker at a time; cleanup is awaited. Filesystem operations and finalization are not hard-preemptive deadlines.',
+      'Reviewed-only compatibility is reported separately and never used to qualify a new candidate.',
+    ],
+  };
+  let emittedBytes = 0;
+  const persist = async () => {
+    const body = JSON.stringify(report, null, 2) + '\n';
+    assert(Buffer.byteLength(body) <= REPORT_BYTES, 'Report byte budget exceeded');
+    await writeFile(path.join(output, 'report.json'), body);
+  };
+  try {
+    const inventory = await inventorySources(root);
+    Object.assign(report, {
+      requiredEntries: inventory.requiredEntries,
+      requiredSources: inventory.sources.length,
+      missingEntries: inventory.missing,
+      catalogs: inventory.catalogs,
+      sourceOrder: inventory.sources.map(({ clip }) => clip.id),
+    });
+    for (const item of inventory.sources) {
+      controller.signal.throwIfAborted();
+      await checkSpace();
+      const remaining = deadline - performance.now();
+      assert(remaining > 0, 'Overall native collection deadline expired');
+      report.activeSource = item.clip.id;
+      await persist();
+      let row;
+      try {
+        row = await runSoloCandidateWorker(
+          { root, clip: item.clip, entry: item.entry, capture: args.length > 0 },
+          { timeoutMs: Math.min(WORKER_MS, remaining), signal: controller.signal },
+        );
+      } catch (error) {
+        if (error.code === 'worker-cleanup-failed') throw error;
+        row = {
+          id: item.clip.id,
+          requiredEntry: item.requiredEntry,
+          failure: message(error),
+          strictUsable: false,
+        };
+      }
+      if (row.candidate) {
+        const { replay, metrics, ...provenance } = row.candidate;
+        const suffix = `${item.clip.id}.${process.platform}-${process.arch}`;
+        const bodies = [
+          [`${suffix}.replay.json`, JSON.stringify(replay) + '\n'],
+          [`${suffix}.diagnostics.json`, JSON.stringify(metrics.diagnostics) + '\n'],
+        ];
+        const bytes = bodies.reduce((sum, [, body]) => sum + Buffer.byteLength(body), 0);
+        assert(
+          bytes <= MAX_REPLAY_BYTES + 256 * 1024 && emittedBytes + bytes <= OUTPUT_BYTES,
+          'Candidate artifact byte budget exceeded',
+        );
+        await checkSpace(bytes);
+        const artifacts = [];
+        for (const [name, body] of bodies) {
+          await writeFile(path.join(output, name), body, { flag: 'wx' });
+          const readback = await readFile(path.join(output, name));
+          assert.equal(readback.toString(), body);
+          artifacts.push({ path: name, bytes: readback.length, sha256: sha(readback) });
+        }
+        emittedBytes += bytes;
+        const { diagnostics: _diagnostics, ...summary } = metrics;
+        row.candidate = {
+          ...provenance,
+          metrics: summary,
+          artifacts,
+          genericVariantSlotAvailable: (item.clip.replayVariants?.length ?? 0) < 3,
+        };
+        report.artifacts.push(...artifacts);
+      }
+      row.requiredEntry = item.requiredEntry;
+      report.sources.push(row);
+      report.activeSource = null;
+      await persist();
+      console.log(
+        JSON.stringify({
+          id: row.id,
+          strictUsable: row.strictUsable,
+          reviewedCompatibilityUsable: row.reviewedCompatibilityUsable ?? false,
+          candidate: row.candidate?.classification ?? null,
+          failure: row.failure ?? null,
+        }),
+      );
+    }
+    report.scanComplete = report.sources.length === report.requiredSources;
+    report.unusableSources = report.sources.filter((row) => !row.strictUsable).map((row) => row.id);
+    report.runtimeUnusableSources = report.sources
+      .filter((row) => !row.strictUsable && !row.reviewedCompatibilityUsable)
+      .map((row) => row.id);
+    report.unusableEntries = report.requiredEntries
+      .filter(({ id }) => !report.sources.some((row) => row.id === id && row.strictUsable))
+      .map(({ id }) => id);
+    report.candidateCount = report.sources.filter((row) => row.candidate).length;
+    report.existingCoveragePassed =
+      report.scanComplete && !report.missingEntries.length && !report.unusableSources.length;
+    report.complete = report.scanComplete && !report.sources.some((row) => row.failure);
+  } catch (error) {
+    report.failure = message(error);
+  } finally {
+    try {
+      report.sourceAfter = sourceBinding(root, expectedHead);
+      assert.deepEqual(report.sourceAfter, before);
+      assert.equal(sha(await readFile(new URL(import.meta.url))), report.collector.sha256);
+      report.sourceStable = true;
+    } catch (error) {
+      report.complete = false;
+      report.sourceStable = false;
+      report.bindingFailure = message(error);
+    }
+    report.elapsedMs = performance.now() - start;
+    report.unscannedSources = (report.sourceOrder ?? []).filter(
+      (id) => !report.sources.some((row) => row.id === id),
+    );
+    if (controller.signal.aborted || report.elapsedMs >= TOTAL_MS) {
+      report.complete = false;
+      report.interruptedOrDeadlineExceeded = true;
+    }
+    report.finished = new Date().toISOString();
+    report.artifactBytes = emittedBytes;
+    await persist();
+    process.removeListener('SIGINT', interrupted);
+    process.removeListener('SIGTERM', interrupted);
+  }
+  // Captured candidates do not turn a failed existing catalog into a passing one.
+  if (!report.complete || !report.existingCoveragePassed) process.exitCode = 1;
+}
+
+if (!isMainThread && workerData?.soloNativeCapture) {
+  try {
+    parentPort.postMessage(await observeSource(workerData.soloNativeCapture));
+  } catch (error) {
+    parentPort.postMessage({ error: message(error) });
+  }
+} else if (isMainThread && process.argv[1] === fileURLToPath(import.meta.url)) {
+  await main(process.argv.slice(2));
+}

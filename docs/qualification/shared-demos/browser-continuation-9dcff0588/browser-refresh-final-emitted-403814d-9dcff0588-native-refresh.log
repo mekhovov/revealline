@@ -1,0 +1,11 @@
+{"phase":"start","id":"restoration-webkit"}
+{"phase":"finished","id":"restoration-webkit","exit":{"code":0,"signal":null},"complete":true,"browserCloseCompleted":true,"checks":12,"errorCount":0}
+{"phase":"start","id":"restoration-chromium"}
+{"phase":"finished","id":"restoration-chromium","exit":{"code":0,"signal":null},"complete":true,"browserCloseCompleted":true,"checks":12,"errorCount":0}
+{"phase":"start","id":"restoration-firefox"}
+{"phase":"finished","id":"restoration-firefox","exit":{"code":0,"signal":null},"complete":true,"browserCloseCompleted":true,"checks":12,"errorCount":0}
+{"phase":"start","id":"mixed-chromium"}
+{"phase":"finished","id":"mixed-chromium","exit":{"code":0,"signal":null},"complete":true,"browserCloseCompleted":true,"checks":28,"errorCount":0}
+{"phase":"start","id":"mixed-firefox"}
+{"phase":"finished","id":"mixed-firefox","exit":{"code":0,"signal":null},"complete":true,"browserCloseCompleted":true,"checks":27,"errorCount":0}
+{"phase":"start","id":"mixed-webkit"}

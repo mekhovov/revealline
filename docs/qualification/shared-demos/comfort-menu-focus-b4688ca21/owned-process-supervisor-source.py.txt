@@ -1,0 +1,531 @@
+"""One new two-hour emitted-build qualification; never combines partial runs."""
+from pathlib import Path
+import argparse
+import datetime
+import hashlib
+import json
+import os
+import re
+import signal
+import subprocess
+import sys
+import threading
+import time
+
+
+def owned_process_snapshot():
+    """Read identities, not just PIDs: a reused PID must never inherit ownership."""
+    output = subprocess.check_output(
+        ['ps', '-axo', 'pid=,ppid=,pgid=,uid=,lstart=,command='], text=True, timeout=3)
+    result = {}
+    for line in output.splitlines():
+        fields = line.strip().split(None, 9)
+        if len(fields) != 10:
+            continue
+        pid, ppid, pgid, uid = map(int, fields[:4])
+        argv = fields[9]
+        profile = re.search(r'--user-data-dir=(.*?)(?= --[A-Za-z]|$)', argv)
+        result[pid] = {
+            'pid': pid, 'ppid': ppid, 'pgid': pgid, 'uid': uid,
+            'started': ' '.join(fields[4:9]), 'argv': argv,
+            'profile': profile.group(1) if profile else None,
+        }
+    return result
+
+
+def owned_process_identity(row):
+    # PPID/PGID may change when a detached child is orphaned. Its birth time,
+    # effective owner and exact command must still match before any signal.
+    return row['pid'], row['started'], row['uid'], row['argv']
+
+
+class OwnedProcessTree:
+    """Track only this spawned child's observed descendants, including detached ones."""
+
+    def __init__(self, child, snapshot=owned_process_snapshot, send_signal=os.kill,
+                 ownership_limit=256, action_limit=1024):
+        self.child = child
+        self.snapshot = snapshot
+        self.send_signal = send_signal
+        self.ownership_limit = ownership_limit
+        self.action_limit = action_limit
+        self.owned = {}
+        self.observed = []
+        self.observed_count = 0
+        self.actions = []
+        self.action_count = 0
+        self.action_digest = hashlib.sha256()
+        self.root_seen = False
+
+    def record_owner(self, key, row):
+        # Keep every currently live identity for cleanup even when the evidence
+        # cap fails. Dead identities leave this live set on the next capture.
+        self.owned[key] = row
+        self.observed_count += 1
+        if len(self.observed) < self.ownership_limit:
+            self.observed.append(row)
+
+    def record_action(self, action):
+        self.action_count += 1
+        self.action_digest.update(json.dumps(action, sort_keys=True).encode() + b'\n')
+        if len(self.actions) < self.action_limit:
+            self.actions.append(action)
+
+    def limits(self):
+        return {'ownershipLimit': self.ownership_limit, 'ownershipCount': self.observed_count,
+                'actionLimit': self.action_limit, 'actionCount': self.action_count,
+                'exceeded': self.observed_count > self.ownership_limit or self.action_count > self.action_limit}
+
+    def check_limits(self):
+        if self.limits()['exceeded']:
+            raise RuntimeError('Owned-process diagnostic limit exceeded: ' + json.dumps(self.limits()))
+
+    def capture(self):
+        self.child.poll()  # Reap our own exited Node process before reading ps.
+        current = self.snapshot()
+        self.owned = {key: row for key, row in self.owned.items()
+                      if row['pid'] in current and owned_process_identity(current[row['pid']]) == key}
+        proven = {row['pid']: key for key, row in self.owned.items()
+                  if row['pid'] in current}
+        if not self.root_seen and self.child.poll() is None and self.child.pid in current:
+            row = current[self.child.pid]
+            key = owned_process_identity(row)
+            self.record_owner(key, {**row, 'ownership': 'exact newly spawned child',
+                                    'observedAt': datetime.datetime.now(datetime.timezone.utc).isoformat()})
+            proven[row['pid']] = key
+            self.root_seen = True
+        added = True
+        while added:
+            added = False
+            for row in current.values():
+                if row['pid'] in proven or row['ppid'] not in proven:
+                    continue
+                key = owned_process_identity(row)
+                self.record_owner(key, {
+                    **row, 'ownership': 'observed descendant',
+                    'parentIdentity': list(proven[row['ppid']]),
+                    'observedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                })
+                proven[row['pid']] = key
+                added = True
+        return [current[pid] for pid in proven]
+
+    def signal(self, row, signum):
+        current = self.snapshot().get(row['pid'])
+        expected = owned_process_identity(row)
+        action = {'pid': row['pid'], 'signal': signal.Signals(signum).name,
+                  'expectedIdentity': list(expected),
+                  'at': datetime.datetime.now(datetime.timezone.utc).isoformat()}
+        if current is None or owned_process_identity(current) != expected or expected not in self.owned:
+            action['result'] = 'not signalled: exited or identity changed'
+            self.record_action(action)
+            return False
+        action['verifiedBeforeSignal'] = current
+        try:
+            self.send_signal(row['pid'], signum)
+            action['result'] = 'signalled exact owned process'
+        except ProcessLookupError:
+            action['result'] = 'already exited after identity verification'
+        self.record_action(action)
+        return True
+
+    def wait_clear(self, seconds):
+        deadline = time.monotonic() + seconds
+        while True:
+            remaining = self.capture()
+            if not remaining or time.monotonic() >= deadline:
+                return remaining
+            time.sleep(min(0.1, max(0, deadline - time.monotonic())))
+
+    def cleanup(self, grace_seconds=10, term_seconds=3, kill_seconds=3):
+        remaining = self.capture()  # Own descendants before the first termination.
+        root = next((row for row in remaining if row['pid'] == self.child.pid), None)
+        if root:
+            # Let Playwright's normal SIGTERM handler close its own browser first.
+            self.signal(root, signal.SIGTERM)
+            remaining = self.wait_clear(grace_seconds)
+        if remaining:
+            # Playwright starts Chrome in another process group. Signal exact
+            # observed identities, never a broad group or a Chrome name match.
+            for row in remaining:
+                self.signal(row, signal.SIGTERM)
+            remaining = self.wait_clear(term_seconds)
+        deadline = time.monotonic() + kill_seconds
+        while remaining and time.monotonic() < deadline:
+            for row in remaining:
+                self.signal(row, signal.SIGKILL)
+            remaining = self.wait_clear(min(0.2, max(0, deadline - time.monotonic())))
+        return remaining
+
+    def evidence(self, remaining):
+        return {
+            'rootObserved': self.root_seen,
+            'identityFields': ['pid', 'started', 'uid', 'argv'],
+            'scope': 'Only identities observed as this spawned Node child or its descendants. '
+                     'PPID, PGID and any user-data-dir are retained as provenance; every signal '
+                     'rechecks start time, UID and exact argv. No process-group/name-wide signals.',
+            'observationLimits': self.limits(),
+            'observed': self.observed, 'actions': self.actions,
+            'ownershipEvidenceTruncated': self.observed_count > len(self.observed),
+            'actionEvidenceTruncated': self.action_count > len(self.actions),
+            'allActionsSHA256': self.action_digest.hexdigest(),
+            'remaining': None if remaining is None else remaining[:self.ownership_limit],
+            'remainingCount': None if remaining is None else len(remaining),
+            'remainingSHA256': None if remaining is None else hashlib.sha256(
+                json.dumps(remaining, sort_keys=True).encode()).hexdigest(),
+            'remainingEvidenceTruncated': remaining is not None and len(remaining) > self.ownership_limit,
+            'verified': self.root_seen and remaining is not None and not remaining,
+        }
+
+
+class BoundedChildLog:
+    """Drain continuously, retain a finite prefix/tail, and fail explicitly on overflow."""
+
+    def __init__(self, filename, byte_limit=8 * 1024 * 1024, tail_limit=64 * 1024):
+        self.output = filename.open('xb')
+        self.byte_limit = byte_limit
+        self.tail_limit = tail_limit
+        self.total = 0
+        self.written = 0
+        self.tail = bytearray()
+        self.error = None
+        self.complete = False
+        self.thread = None
+        self.lock = threading.Lock()
+
+    def start(self, pipe):
+        def drain():
+            try:
+                while True:
+                    body = pipe.read1(65536)
+                    if not body:
+                        break
+                    with self.lock:
+                        self.total += len(body)
+                        self.tail.extend(body)
+                        del self.tail[:-self.tail_limit]
+                        kept = body[:max(0, self.byte_limit - self.written)] if self.error is None else b''
+                    if kept:
+                        try:
+                            written = self.output.write(kept)
+                            with self.lock:
+                                self.written += written
+                        except BaseException as error:
+                            # Continue draining even when the disk fails. Do
+                            # not hold the evidence lock during filesystem IO.
+                            with self.lock:
+                                self.error = repr(error)
+            except BaseException as error:
+                with self.lock:
+                    self.error = self.error or repr(error)
+            finally:
+                for resource in (self.output, pipe):
+                    try:
+                        resource.close()
+                    except BaseException as error:
+                        with self.lock:
+                            self.error = self.error or repr(error)
+                with self.lock:
+                    self.complete = True
+        self.thread = threading.Thread(target=drain, name='bounded-endurance-log', daemon=True)
+        self.thread.start()
+
+    def evidence(self):
+        with self.lock:
+            tail = bytes(self.tail)
+            return {'byteLimit': self.byte_limit, 'totalBytes': self.total,
+                    'writtenBytes': self.written, 'truncatedBytes': max(0, self.total - self.written),
+                    'tailLimit': self.tail_limit, 'tailBytes': len(tail),
+                    'tailSHA256': hashlib.sha256(tail).hexdigest(),
+                    'tail': tail.decode('utf-8', errors='replace'),
+                    'limitExceeded': self.total > self.byte_limit,
+                    'complete': self.complete, 'error': self.error}
+
+    def check_limits(self):
+        value = self.evidence()
+        if value['error'] or value['limitExceeded']:
+            raise RuntimeError('Child log failed its finite diagnostic bound: ' + json.dumps(
+                {key: value[key] for key in ['byteLimit', 'totalBytes', 'limitExceeded', 'error']}))
+
+    def finish(self):
+        try:
+            if self.thread:
+                self.thread.join(timeout=3)
+                if self.thread.is_alive():
+                    with self.lock:
+                        self.error = self.error or 'Owned child log drain did not finish within 3 seconds.'
+            else:
+                self.output.close()
+        except BaseException as error:
+            with self.lock:
+                self.error = self.error or repr(error)
+        return self.evidence()
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--head', required=True)
+parser.add_argument('--fingerprint', required=True)
+parser.add_argument('--base', required=True)
+parser.add_argument('--emitted-preview', required=True)
+parser.add_argument('--label', required=True)
+parser.add_argument('--port', type=int, default=18773)
+parser.add_argument('--source-declaration', default='docs/qualification/shared-demos/source-freeze-latest.json')
+parser.add_argument('--runtime', default='/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs')
+parser.add_argument('--executable', default='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+args = parser.parse_args()
+assert re.fullmatch(r'[a-f0-9]{40}', args.head)
+assert re.fullmatch(r'[a-f0-9]{40}', args.base)
+assert re.fullmatch(r'[a-f0-9]{64}', args.fingerprint)
+assert re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', args.label)
+assert 1024 < args.port <= 65535
+assert all('=' not in value for value in [args.emitted_preview, args.runtime, args.executable])
+root = Path.cwd().resolve()
+assert root == Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos')
+out = root / 'docs/qualification/shared-demos'
+report = out / f'rotation-chromium-{args.label}-two-hour.json'
+source_report = out / f'endurance-source-{args.label}.json'
+log = root / '.cache' / f'rotation-chromium-{args.label}-two-hour.log'
+wrapper_copy = out / f'endurance-source-{args.label}-wrapper.py.txt'
+assert not any(p.exists() for p in [report, source_report, log, wrapper_copy]), 'Unique new receipt paths are required.'
+
+
+def now():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def sha(body):
+    return hashlib.sha256(body).hexdigest()
+
+
+def head():
+    return subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+
+
+def fingerprint(directories=('game', 'optional-practice', 'publishing')):
+    names = sorted(n for n in subprocess.check_output(['rg', '--files', *directories], text=True).splitlines()
+                   if Path(n).suffix in ['.mjs', '.js', '.json', '.css', '.html']
+                   and '/test/' not in n and not n.endswith('.test.mjs') and not n.endswith('/coverage.json'))
+    digest, size = hashlib.sha256(), 0
+    for name in names:
+        body = (root / name).read_bytes()
+        size += len(body)
+        digest.update(name.encode() + b'\0')
+        digest.update(hashlib.sha256(body).digest())
+    return {'sha256': digest.hexdigest(), 'files': len(names), 'bytes': size}
+
+
+def file_pin(filename):
+    body = filename.read_bytes()
+    return {'path': str(filename.relative_to(root)), 'bytes': len(body), 'sha256': sha(body)}
+
+
+def declaration():
+    filename = (root / args.source_declaration).resolve()
+    value = json.loads(filename.read_bytes())
+    assert value['integrationBase'] == args.base
+    assert value['sourceFingerprint'] == args.fingerprint
+    return {'pin': file_pin(filename), 'value': value}
+
+
+def capture_binding():
+    directory = (root / args.emitted_preview).resolve()
+    directory.relative_to(root)
+    manifest_path = directory / 'manifest.json'
+    body = manifest_path.read_bytes()
+    manifest = json.loads(body)
+    assert manifest['sourceRevision'] == args.head
+    assert manifest['sourceFingerprint'] == before
+    assert manifest['buildInputFingerprint'] == build_before
+    audit_path = (root / manifest['auditReportPath']).resolve()
+    audit_path.relative_to(root)
+    audit = json.loads(audit_path.read_bytes())
+    assert audit['complete'] is True and audit['sourceStable'] is True and audit['headStable'] is True
+    assert audit['sourceRevision'] == args.head
+    assert audit['sourceFingerprint'] == before and audit['buildInputFingerprint'] == build_before
+    assert audit['emittedPreview']['complete'] is True
+    assert audit['emittedPreview']['manifestSHA256'] == sha(body)
+    assert audit['emittedPreview']['inventorySHA256'] == manifest['inventorySHA256']
+    return {
+        'directory': str(directory.relative_to(root)),
+        'manifest': file_pin(manifest_path),
+        'audit': file_pin(audit_path),
+        'inventory': file_pin(audit_path.with_suffix('.inventory.json')),
+        'inventorySHA256': manifest['inventorySHA256'],
+        'sourceRevision': manifest['sourceRevision'],
+        'sourceFingerprint': manifest['sourceFingerprint'],
+        'buildInputFingerprint': manifest['buildInputFingerprint'],
+    }
+
+
+def harness():
+    names = ['scripts/qualify-shared-demo-browser.mjs', 'scripts/shared-demo-browser-report.mjs',
+             'scripts/shared-demo-endurance-progress.mjs',
+             'scripts/serve-production-preview.mjs', 'scripts/emitted-preview.mjs',
+             'scripts/demo-source-fingerprint.mjs', 'scripts/qualify-demo-main-pages.mjs']
+    return {name: sha((root / name).read_bytes()) for name in names}
+
+
+def save():
+    temporary = source_report.with_suffix(f'.{os.getpid()}.tmp')
+    try:
+        with temporary.open('x') as stream:
+            json.dump(receipt, stream, indent=2)
+            stream.write('\n')
+        temporary.replace(source_report)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+assert head() == args.head, 'Held HEAD is required.'
+assert subprocess.check_output(['git', 'merge-base', args.head, args.base], text=True).strip() == args.base
+before = fingerprint()
+assert before['sha256'] == args.fingerprint
+build_before = fingerprint(('scripts', 'authoring'))
+declaration_before = declaration()
+assert before['files'] == declaration_before['value']['files']
+assert before['bytes'] == declaration_before['value']['bytes']
+capture_before = capture_binding()
+wrapper_bytes = Path(__file__).read_bytes()
+wrapper_sha = sha(wrapper_bytes)
+with wrapper_copy.open('xb') as stream:
+    stream.write(wrapper_bytes)
+command = ['node', 'scripts/qualify-shared-demo-browser.mjs', '--runtime=' + args.runtime,
+           '--executable=' + args.executable, '--browser=chromium',
+           '--emitted-preview=' + str((root / args.emitted_preview).resolve()), '--port=' + str(args.port),
+           '--seconds=7201', '--practice=true', '--cycles=12', '--lifecycle=true', '--localeCheck=true',
+           '--report=' + str(report)]
+receipt = {
+    'format': 'SharedDemoEmittedEnduranceSourceV1', 'started': now(), 'complete': False,
+    'sourceRevisionAtStart': args.head, 'integrationBase': args.base,
+    'sourceFingerprintAtStart': before, 'buildInputFingerprintAtStart': build_before,
+    'sourceDeclarationAtStart': declaration_before, 'emittedCaptureAtStart': capture_before,
+    'harnessSha256AtStart': harness(), 'wrapperSha256AtStart': wrapper_sha,
+    'wrapperSource': wrapper_copy.name, 'requestedSeconds': 7201, 'minimumAcceptedSeconds': 7200,
+    'runnerBoundSeconds': 7800, 'report': report.name, 'log': str(log.relative_to(root)), 'command': command,
+    'scope': 'One uninterrupted watching interval of at least 7200 seconds after interaction preflight. Prior partial runs contribute zero time. Exact current emitted-source admission, final persistence/resource checks, strict page diagnostics, browser close and preview close are required.',
+    'limitations': ['Local HTML credentials are an explicit recorded fixture; no offline HTML integrity or public deployment admission is claimed.'],
+}
+save()
+print(json.dumps({'phase': 'started', 'at': receipt['started'], 'source': before,
+                  'buildInputs': build_before, 'capture': capture_before, 'report': str(report)}), flush=True)
+child = None
+owned = None
+child_log = None
+
+
+def interrupt(signum, _frame):
+    raise InterruptedError(f'Runner interrupted by signal {signum}.')
+
+
+signal.signal(signal.SIGTERM, interrupt)
+try:
+    child_log = BoundedChildLog(log)
+    child = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, start_new_session=True)
+    owned = OwnedProcessTree(child)
+    owned.capture()
+    child_log.start(child.stdout)
+    owned.check_limits()
+    receipt['childPID'] = child.pid
+    save()
+    deadline = time.monotonic() + 7800
+    while True:
+        remaining_seconds = deadline - time.monotonic()
+        if remaining_seconds <= 0:
+            raise subprocess.TimeoutExpired(command, 7800)
+        try:
+            # Keep descendant provenance while Node is alive, before any
+            # shutdown can reparent Playwright's detached browser children.
+            receipt['exitCode'] = child.wait(timeout=min(2, remaining_seconds))
+            owned.capture()
+            owned.check_limits()
+            child_log.check_limits()
+            break
+        except subprocess.TimeoutExpired:
+            owned.capture()
+            owned.check_limits()
+            child_log.check_limits()
+except BaseException as error:
+    receipt['runnerError'] = repr(error)
+    if isinstance(error, subprocess.TimeoutExpired):
+        receipt['runnerTimedOut'] = True
+finally:
+    if owned is not None:
+        try:
+            remaining = owned.capture()
+            if remaining:
+                if receipt.get('exitCode') == 0 and not receipt.get('runnerError'):
+                    receipt['runnerError'] = 'Owned descendants survived successful harness exit.'
+                remaining = owned.cleanup()
+            receipt['ownedProcessCleanup'] = owned.evidence(remaining)
+            receipt['ownedChildCleanupVerified'] = receipt['ownedProcessCleanup']['verified']
+            receipt['ownedObservationWithinLimits'] = not owned.limits()['exceeded']
+            if child.poll() is None:
+                receipt['ownedChildCleanupVerified'] = False
+            if not receipt['ownedChildCleanupVerified']:
+                receipt['ownedChildCleanupError'] = 'Owned child/descendant cleanup was not verified.'
+        except BaseException as error:
+            receipt['ownedChildCleanupError'] = repr(error)
+            receipt['ownedChildCleanupVerified'] = False
+            receipt['ownedProcessCleanup'] = owned.evidence(None)
+            receipt['ownedProcessCleanup']['verified'] = False
+    if child_log is not None:
+        receipt['logObservation'] = child_log.finish()
+        receipt['logDrainComplete'] = receipt['logObservation']['complete']
+        receipt['logWithinLimit'] = (not receipt['logObservation']['limitExceeded']
+                                   and not receipt['logObservation']['error'])
+        if not receipt['logWithinLimit'] or not receipt['logDrainComplete']:
+            receipt.setdefault('runnerError', 'Owned child log overflowed or did not drain cleanly.')
+    receipt['ended'] = now()
+    try:
+        receipt['sourceRevisionAtEnd'] = head()
+        receipt['sourceFingerprintAtEnd'] = fingerprint()
+        receipt['buildInputFingerprintAtEnd'] = fingerprint(('scripts', 'authoring'))
+        receipt['sourceDeclarationAtEnd'] = declaration()
+        receipt['emittedCaptureAtEnd'] = capture_binding()
+        receipt['harnessSha256AtEnd'] = harness()
+        receipt['wrapperSha256AtEnd'] = sha(Path(__file__).read_bytes())
+        receipt['sourceRevisionUnchanged'] = receipt['sourceRevisionAtEnd'] == args.head
+        receipt['sourceUnchanged'] = receipt['sourceFingerprintAtEnd'] == before
+        receipt['buildInputsUnchanged'] = receipt['buildInputFingerprintAtEnd'] == build_before
+        receipt['sourceDeclarationUnchanged'] = receipt['sourceDeclarationAtEnd'] == declaration_before
+        receipt['emittedCaptureUnchanged'] = receipt['emittedCaptureAtEnd'] == capture_before
+        receipt['harnessUnchanged'] = receipt['harnessSha256AtEnd'] == receipt['harnessSha256AtStart']
+        receipt['wrapperUnchanged'] = receipt['wrapperSha256AtEnd'] == wrapper_sha
+        if report.exists():
+            body = report.read_bytes()
+            data = json.loads(body)
+            receipt['reportSha256'] = sha(body)
+            receipt['browserComplete'] = data.get('complete')
+            receipt['browserCloseCompleted'] = data.get('browserCloseCompleted')
+            receipt['previewClosed'] = data.get('previewClosed')
+            receipt['pageErrors'] = len(data.get('errors', []))
+            receipt['samples'] = len(data.get('samples', []))
+            receipt['checks'] = len(data.get('checks', []))
+            receipt['enduranceStarted'] = data.get('enduranceStarted')
+            receipt['enduranceFinished'] = data.get('enduranceFinished')
+            preview = data.get('preview', {}).get('emittedPreview', {})
+            receipt['emittedPreviewAdmitted'] = (
+                preview.get('sourceVerified') is True and preview.get('sourceRevision') == args.head
+                and preview.get('sourceFingerprint') == before and preview.get('buildInputFingerprint') == build_before
+                and preview.get('manifestSHA256') == capture_before['manifest']['sha256']
+                and preview.get('inventorySHA256') == capture_before['inventorySHA256'])
+            if data.get('enduranceStarted') and data.get('enduranceFinished'):
+                receipt['enduranceElapsedSeconds'] = (
+                    datetime.datetime.fromisoformat(data['enduranceFinished'].replace('Z', '+00:00')) -
+                    datetime.datetime.fromisoformat(data['enduranceStarted'].replace('Z', '+00:00'))).total_seconds()
+        required = ['sourceRevisionUnchanged', 'sourceUnchanged', 'buildInputsUnchanged',
+                    'sourceDeclarationUnchanged', 'emittedCaptureUnchanged', 'harnessUnchanged', 'wrapperUnchanged',
+                    'browserComplete', 'browserCloseCompleted', 'previewClosed', 'emittedPreviewAdmitted',
+                    'ownedChildCleanupVerified', 'ownedObservationWithinLimits',
+                    'logDrainComplete', 'logWithinLimit']
+        receipt['complete'] = (receipt.get('exitCode') == 0 and not receipt.get('runnerError')
+                               and all(receipt.get(key) is True for key in required)
+                               and receipt.get('pageErrors') == 0
+                               and receipt.get('enduranceElapsedSeconds', 0) >= 7200)
+    except BaseException as error:
+        receipt['finalBindingError'] = repr(error)
+        receipt['complete'] = False
+    try:
+        save()
+    finally:
+        print(json.dumps(receipt), flush=True)
+sys.exit(0 if receipt['complete'] else 1)

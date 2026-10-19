@@ -1,0 +1,83 @@
+{
+  "format": "SharedDemoMenuStartupCPUObservationBindingV1",
+  "started": "2026-10-18T22:28:08.632941+00:00",
+  "head": "f97034cc2f00c5cd2f4d7e58f6f519b1f3e315dd",
+  "manifest": {
+    "created": "2026-10-18T21:24:01.185264+00:00",
+    "integrationBase": "237b405437def3c41b01165fe057af1ab06f618c",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "scope": "Relevant live runtime, durable qualifier and helper files plus exact diagnostic copies. This scoped check is not a full tree recomputation. Root holds production; unrelated CI fixtures were committed before this run.",
+  "before": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": "d671dc455b97a69a6164b645df194b4953fe3c2a5c3a0fbddef86d596b608cb9",
+    "game/app.mjs": "04c1a8594312923bb7ed4eae173e4d87d142464f1cff2675671173b169ef1c35",
+    "game/index.html": "db2b27811a74399e1f1970a68f1c4e0aee6f4f72883f77f451b6a9dea97a3a97",
+    "game/capture-flight-limits.mjs": "913d9f3451193702f5d5764daa6c93deaf03e0f1d51b4b12d5e1450b6fe84c3c",
+    "game/ui/capture-flight-limits.css": "e43d22d98f30f240f1712cd3c75b231be557eab78129aafdcde2f3b377c13dd7",
+    "game/ui/demo-host.mjs": "d6d57b78d4a04ac91df0e19d4a340b8e73d2c526e85d8ab5a37a4951112e2a99",
+    "scripts/qualify-demo-restoration-browser.mjs": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+    "scripts/demo-restoration-observation.mjs": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "scripts/serve-production-preview.mjs": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab",
+    ".cache/observe-demo-menu-237.mjs": "e34047c89e2c69830b1285acfa0786f43d9e36348a3de0e0097fb78faf65f627",
+    ".cache/qualify-menu-startup-cpu-237.mjs": "49a3505ca0bf1db62d389c3fcb98ba0bb4748a2bea07024eea293a463f71efa2"
+  },
+  "reviewableCopies": [
+    {
+      "path": "docs/qualification/shared-demos/observe-demo-menu-237.mjs.txt",
+      "originalPath": ".cache/observe-demo-menu-237.mjs",
+      "sha256": "e34047c89e2c69830b1285acfa0786f43d9e36348a3de0e0097fb78faf65f627"
+    },
+    {
+      "path": "docs/qualification/shared-demos/qualify-menu-startup-cpu-237.mjs.txt",
+      "originalPath": ".cache/qualify-menu-startup-cpu-237.mjs",
+      "sha256": "49a3505ca0bf1db62d389c3fcb98ba0bb4748a2bea07024eea293a463f71efa2"
+    }
+  ],
+  "diagnosticOnly": true,
+  "limitations": [
+    "Same original3000ms click and existing control/watching/practice sequence. CDP CPU sampler starts before navigation; original3s click unchanged. Native profile is bounded2MiB with interval aggregates. Bounded observers/profiler add overhead. No forced click, alternate input, longer click timeout, rejection filter, or production source change. A diagnostic pass is not a replacement qualification pass."
+  ],
+  "command": [
+    "node",
+    ".cache/qualify-menu-startup-cpu-237.mjs",
+    "--browser=chromium",
+    "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+    "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "--report=docs/qualification/shared-demos/menu-startup-cpu-observation-chromium-237.json",
+    "--mode=solo",
+    "--port=8771"
+  ],
+  "exitCode": 0,
+  "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/menu-startup-cpu-observation-chromium-237.json\",\"complete\":true,\"checks\":3,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+  "stderr": "",
+  "finished": "2026-10-18T22:28:40.970956+00:00",
+  "after": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": "d671dc455b97a69a6164b645df194b4953fe3c2a5c3a0fbddef86d596b608cb9",
+    "game/app.mjs": "04c1a8594312923bb7ed4eae173e4d87d142464f1cff2675671173b169ef1c35",
+    "game/index.html": "db2b27811a74399e1f1970a68f1c4e0aee6f4f72883f77f451b6a9dea97a3a97",
+    "game/capture-flight-limits.mjs": "913d9f3451193702f5d5764daa6c93deaf03e0f1d51b4b12d5e1450b6fe84c3c",
+    "game/ui/capture-flight-limits.css": "e43d22d98f30f240f1712cd3c75b231be557eab78129aafdcde2f3b377c13dd7",
+    "game/ui/demo-host.mjs": "d6d57b78d4a04ac91df0e19d4a340b8e73d2c526e85d8ab5a37a4951112e2a99",
+    "scripts/qualify-demo-restoration-browser.mjs": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+    "scripts/demo-restoration-observation.mjs": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "scripts/serve-production-preview.mjs": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab",
+    ".cache/observe-demo-menu-237.mjs": "e34047c89e2c69830b1285acfa0786f43d9e36348a3de0e0097fb78faf65f627",
+    ".cache/qualify-menu-startup-cpu-237.mjs": "49a3505ca0bf1db62d389c3fcb98ba0bb4748a2bea07024eea293a463f71efa2"
+  },
+  "changedFiles": [],
+  "headAfter": "f97034cc2f00c5cd2f4d7e58f6f519b1f3e315dd",
+  "childReport": "docs/qualification/shared-demos/menu-startup-cpu-observation-chromium-237.json",
+  "childReportSHA256": "08ef0ec8ebf90308fcc55b376c5032ac8dabf46ddf9b9e5db3ab0856776ccad2",
+  "functionalComplete": true,
+  "strictDiagnosticGate": true,
+  "browserCloseCompleted": true,
+  "previewClosed": true,
+  "menuAttempts": 2,
+  "failure": null,
+  "sourceUnchanged": true
+}

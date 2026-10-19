@@ -1,0 +1,2219 @@
+{
+  "format": "SurvivalNativeAvailabilityV1",
+  "complete": true,
+  "started": "2026-10-19T10:01:39.459Z",
+  "checks": [
+    {
+      "id": "survival:field-crossing-broken-crossroads:standard",
+      "levelId": "field-crossing-broken-crossroads",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-broken-crossroads.replay.json",
+            "sha256": "bd558dfe9d35b4254e56dbd8325535e90c218ef543786036f887455363b73a7c",
+            "bytes": 161450
+          },
+          "ticks": 19020,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "1815513a5a4aff16",
+            "actualCheckpoint": "466205ed5d87ee91",
+            "reproduced": true
+          },
+          "elapsedMs": 334.29170799999997
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-broken-crossroads.chromium.replay.json",
+            "sha256": "7f6fe966b253ddf7c29038c8619860f48d6c9e86926f4c72f05c0fb9c9b9f284",
+            "bytes": 161505
+          },
+          "ticks": 19020,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "4ef865bb6f755e3f",
+            "actualCheckpoint": "6bb1fa985e259c34",
+            "reproduced": true
+          },
+          "elapsedMs": 86.07504100000006
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-broken-crossroads.firefox.replay.json",
+            "sha256": "84e8a55da8ba1b6641daedcb8327b040626015338e959437346691e4f725ac8a",
+            "bytes": 161450
+          },
+          "ticks": 19020,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "395d537562099031",
+            "actualCheckpoint": "6bb1fa985e259c34",
+            "reproduced": true
+          },
+          "elapsedMs": 82.34004199999981
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-broken-crossroads.webkit.replay.json",
+            "sha256": "c75e76237ca7f377e2b49607c8a37461d1b9b8a9950bd6c3701951d84ecc74ff",
+            "bytes": 161491
+          },
+          "ticks": 19020,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "a5d433edbfc18911",
+            "actualCheckpoint": "6bb1fa985e259c34",
+            "reproduced": true
+          },
+          "elapsedMs": 82.09075000000007
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:field-crossing-shelterbelt-gaps:standard",
+      "levelId": "field-crossing-shelterbelt-gaps",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-shelterbelt-gaps.replay.json",
+            "sha256": "67b4cbc346f84af4c573d2c1d0f57d5473e970345e3c4bccc03fc08835da11de",
+            "bytes": 162768
+          },
+          "ticks": 19208,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "381ae772d62f67c6",
+            "actualCheckpoint": "5aa0208b3eedfbef",
+            "reproduced": true
+          },
+          "elapsedMs": 222.99291700000003
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-shelterbelt-gaps.chromium.replay.json",
+            "sha256": "dfeec5a9cd39ecf99a763820ca2f83d90b6884adf463fdd3ac20a6f438d8e0e2",
+            "bytes": 162841
+          },
+          "ticks": 19208,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "d0d986b63a05bbe2",
+            "actualCheckpoint": "d8371ac9ef585955",
+            "reproduced": true
+          },
+          "elapsedMs": 84.3126249999998
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-shelterbelt-gaps.firefox.replay.json",
+            "sha256": "fdc88bfdacf510e93821880a1f980d003e628df8378d64e94eb3fcba49d739bd",
+            "bytes": 162768
+          },
+          "ticks": 19208,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "4685274dc9c8bd31",
+            "actualCheckpoint": "d8371ac9ef585955",
+            "reproduced": true
+          },
+          "elapsedMs": 85.71670800000015
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-shelterbelt-gaps.webkit.replay.json",
+            "sha256": "55836709f513e9a6daec6fbfdfa09365ec5de153d86db091a663c2ee883d923f",
+            "bytes": 162802
+          },
+          "ticks": 19208,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "6d9f6896dc86971a",
+            "actualCheckpoint": "d8371ac9ef585955",
+            "reproduced": true
+          },
+          "elapsedMs": 82.98358300000018
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:field-crossing-supply-orchard-edge:standard",
+      "levelId": "field-crossing-supply-orchard-edge",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-supply-orchard-edge.replay.json",
+            "sha256": "e37802bb6413fc8f95ca09066c9906b5b248dbfa898ae78ffeb5d277e5e2a59e",
+            "bytes": 164757
+          },
+          "ticks": 19446,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "bdb4b14e4809a4a2",
+            "actualCheckpoint": "5696dc59d9f2dc85",
+            "reproduced": true
+          },
+          "elapsedMs": 243.49337500000001
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-supply-orchard-edge.chromium.replay.json",
+            "sha256": "345dc6309f0f7a4afa66b60f529a76a9afd6f48185c7f58478f3dba433b4b431",
+            "bytes": 164824
+          },
+          "ticks": 19446,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "a6f3913f48e9da83",
+            "actualCheckpoint": "51cac37731049a2b",
+            "reproduced": true
+          },
+          "elapsedMs": 83.50504200000023
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-supply-orchard-edge.firefox.replay.json",
+            "sha256": "b7a6d7acecaa364cb9ef06578eca6fd2b69e7eee3f46219670c19122a365f715",
+            "bytes": 164757
+          },
+          "ticks": 19446,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "dada4c578a121f4b",
+            "actualCheckpoint": "51cac37731049a2b",
+            "reproduced": true
+          },
+          "elapsedMs": 82.04158299999972
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/field-crossing-supply-orchard-edge.webkit.replay.json",
+            "sha256": "3602bb86ce742b8ee5128278c6be1eae944f6e583c19ce8e80fe02729fbec61c",
+            "bytes": 164807
+          },
+          "ticks": 19446,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "7d1f306cbd75e5f8",
+            "actualCheckpoint": "51cac37731049a2b",
+            "reproduced": true
+          },
+          "elapsedMs": 84.58783300000005
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:freight-depot-shunting-yard:standard",
+      "levelId": "freight-depot-shunting-yard",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-shunting-yard.replay.json",
+            "sha256": "e5ce9c14fa56765f2c7b4e76808d5c6253114682ffcd1ca8be27ed13427dd17c",
+            "bytes": 160361
+          },
+          "ticks": 19028,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "8f765a71a2f077bd",
+            "actualCheckpoint": "5842bdf0fde76cbc",
+            "reproduced": true
+          },
+          "elapsedMs": 201.97741599999972
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-shunting-yard.chromium.replay.json",
+            "sha256": "1443cd7a845558f4caf3c0b04a7a7988b8a58da8c0ee21ea442bee846c7120b6",
+            "bytes": 160448
+          },
+          "ticks": 19028,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "00f6b2fe5dc12492",
+            "actualCheckpoint": "e9d5b23b606237bf",
+            "reproduced": true
+          },
+          "elapsedMs": 77.9691670000002
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-shunting-yard.firefox.replay.json",
+            "sha256": "9abf1161b1976417400ced7d47ffbe251d593490e36892d0c2b4e19aa6e9e7ee",
+            "bytes": 160361
+          },
+          "ticks": 19028,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "8f3404dc2d804000",
+            "actualCheckpoint": "e9d5b23b606237bf",
+            "reproduced": true
+          },
+          "elapsedMs": 78.44599999999991
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-shunting-yard.webkit.replay.json",
+            "sha256": "cc527f39615f5c5231a477df3ae78048ed3203b0d3dbd42ad89e79c77da39f84",
+            "bytes": 160454
+          },
+          "ticks": 19028,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "f3085e06ece455ea",
+            "actualCheckpoint": "e9d5b23b606237bf",
+            "reproduced": true
+          },
+          "elapsedMs": 77.21962500000018
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:freight-depot-loading-loop:standard",
+      "levelId": "freight-depot-loading-loop",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-loading-loop.replay.json",
+            "sha256": "ee1bce9ae6030476b1727610f46fbcfe26e3863fdb1c530afeaa60fcc74171fd",
+            "bytes": 167016
+          },
+          "ticks": 19877,
+          "outcome": "won",
+          "checkpoints": 66,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 1500.",
+            "code": "demo-content-mismatch",
+            "tick": 1500
+          },
+          "diagnostic": {
+            "tick": 1500,
+            "phase": "playing",
+            "expectedCheckpoint": "db847be360c2802f",
+            "actualCheckpoint": "4ca8fd94f8e329a8",
+            "reproduced": true
+          },
+          "elapsedMs": 384.4232500000003
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-loading-loop.chromium.replay.json",
+            "sha256": "2be493ca86d6a4c8685707c0ae5aff6c8ae7a74ffa96d437f4dbbe8bcfd961bb",
+            "bytes": 167093
+          },
+          "ticks": 19877,
+          "outcome": "won",
+          "checkpoints": 66,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "97772c39dddb9395",
+            "actualCheckpoint": "60cbe4323bd6e64e",
+            "reproduced": true
+          },
+          "elapsedMs": 96.88020800000004
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-loading-loop.firefox.replay.json",
+            "sha256": "95c2e1d30cd0e6eda4f878c6455b46186e3c7e52d2f2d13928d293e4e80a951b",
+            "bytes": 167016
+          },
+          "ticks": 19877,
+          "outcome": "won",
+          "checkpoints": 66,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "dce1720bb93fa9df",
+            "actualCheckpoint": "60cbe4323bd6e64e",
+            "reproduced": true
+          },
+          "elapsedMs": 85.5472920000002
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-loading-loop.webkit.replay.json",
+            "sha256": "4441e80f6065de26ae7d4d0612fbe9f0935b1c20865c2d9a46dd5c752e008b9e",
+            "bytes": 167092
+          },
+          "ticks": 19877,
+          "outcome": "won",
+          "checkpoints": 66,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "dc080ee4c92d0028",
+            "actualCheckpoint": "60cbe4323bd6e64e",
+            "reproduced": true
+          },
+          "elapsedMs": 86.7667919999999
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:freight-depot-dispatch-junction:standard",
+      "levelId": "freight-depot-dispatch-junction",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-dispatch-junction.replay.json",
+            "sha256": "923366000113acc1e8cd3f3598771692766110de27ecc8dc20b744d4f055171a",
+            "bytes": 165700
+          },
+          "ticks": 19561,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "00446c707e10c7ac",
+            "actualCheckpoint": "4386772945569ec5",
+            "reproduced": true
+          },
+          "elapsedMs": 240.12679100000014
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-dispatch-junction.chromium.replay.json",
+            "sha256": "7d6359920f76de43592d565e7d344e5562eec634c72f57f57332fd09d5be5aa4",
+            "bytes": 165749
+          },
+          "ticks": 19561,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "f6dc7c5f12f153bb",
+            "actualCheckpoint": "2841c4945a822518",
+            "reproduced": true
+          },
+          "elapsedMs": 88.90066600000046
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-dispatch-junction.firefox.replay.json",
+            "sha256": "4c383c2c7a4458c6c65f7e67737c03722ee27938c67ae1a9b21d172fb56a6626",
+            "bytes": 165700
+          },
+          "ticks": 19561,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "f5584106e1e13b6a",
+            "actualCheckpoint": "2841c4945a822518",
+            "reproduced": true
+          },
+          "elapsedMs": 87.16654199999994
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/freight-depot-dispatch-junction.webkit.replay.json",
+            "sha256": "65043ee18b79aefef287f36a3c7213affaa2283cc84aa945adb05f8fb7b25cbc",
+            "bytes": 165752
+          },
+          "ticks": 19561,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "93fb8d79aae42225",
+            "actualCheckpoint": "2841c4945a822518",
+            "reproduced": true
+          },
+          "elapsedMs": 87.71399999999994
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:relay-ruins-antenna-court:standard",
+      "levelId": "relay-ruins-antenna-court",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-antenna-court.replay.json",
+            "sha256": "b4dcdf2ce6fc5c749f717d44e86e5281eab6a840e16e2b99753d3c6b3fdd6413",
+            "bytes": 163421
+          },
+          "ticks": 19188,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "7ba36d9be4c6eb37",
+            "actualCheckpoint": "c400abda3b996c36",
+            "reproduced": true
+          },
+          "elapsedMs": 213.05483400000048
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-antenna-court.chromium.replay.json",
+            "sha256": "685e125ea2de8bd1b63ec96afd15495a33630f2c71948de73de5ab1aaa274124",
+            "bytes": 163496
+          },
+          "ticks": 19188,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "e3ed999cc43e12e0",
+            "actualCheckpoint": "a5c19e8f9cb2d1d3",
+            "reproduced": true
+          },
+          "elapsedMs": 83.3523750000004
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-antenna-court.firefox.replay.json",
+            "sha256": "b909f1de0063d5b545b6b081366915f31f20615f1a61d48ce0ebcd48f1414277",
+            "bytes": 163421
+          },
+          "ticks": 19188,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "c6c6d043674ccbe7",
+            "actualCheckpoint": "a5c19e8f9cb2d1d3",
+            "reproduced": true
+          },
+          "elapsedMs": 82.26379100000031
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-antenna-court.webkit.replay.json",
+            "sha256": "1c3eb0b5fa083f59ddfdb66672ad462b4eb0d7e517aee8bf3fe0637acf07724f",
+            "bytes": 163470
+          },
+          "ticks": 19188,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "c02536c9c43d3a35",
+            "actualCheckpoint": "a5c19e8f9cb2d1d3",
+            "reproduced": true
+          },
+          "elapsedMs": 83.61545800000022
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:relay-ruins-split-compound:standard",
+      "levelId": "relay-ruins-split-compound",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-split-compound.replay.json",
+            "sha256": "3cbc11c29bfa5add71d444293c9be8a4464b6e6edf2f76a1a03c98da8ef081b5",
+            "bytes": 164563
+          },
+          "ticks": 19272,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "ce0f2176b67dc09a",
+            "actualCheckpoint": "15a283fdb0bf9841",
+            "reproduced": true
+          },
+          "elapsedMs": 224.4937920000002
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-split-compound.chromium.replay.json",
+            "sha256": "94a39ef8696169fd72debe9f2ae2fe8e5c197e72053a4294367dba042281b634",
+            "bytes": 163803
+          },
+          "ticks": 19218,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "6b8eb715d4f8e359",
+            "actualCheckpoint": "872ffc6cbf10f408",
+            "reproduced": true
+          },
+          "elapsedMs": 96.02062500000011
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-split-compound.firefox.replay.json",
+            "sha256": "b3f6f0198a26c4d7947d132b1d6599849e480837b77e2cf159856fc0147c733c",
+            "bytes": 164308
+          },
+          "ticks": 19253,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "4232e3b307f472bf",
+            "actualCheckpoint": "872ffc6cbf10f408",
+            "reproduced": true
+          },
+          "elapsedMs": 83.90700000000015
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-split-compound.webkit.replay.json",
+            "sha256": "9d88049e8e449451375e28ed1c025d7f3adc6e850642c3fbfc0fd799b15a22e0",
+            "bytes": 175465
+          },
+          "ticks": 20579,
+          "outcome": "won",
+          "checkpoints": 68,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "cb1c5db5794f1079",
+            "actualCheckpoint": "872ffc6cbf10f408",
+            "reproduced": true
+          },
+          "elapsedMs": 84.40749999999935
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:relay-ruins-receiver-gardens:standard",
+      "levelId": "relay-ruins-receiver-gardens",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-receiver-gardens.replay.json",
+            "sha256": "a252ab6f44ae3ba07905457f1bcebf02e9b3c41b7a606e8d22545f650503f237",
+            "bytes": 166439
+          },
+          "ticks": 19598,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 4200.",
+            "code": "demo-content-mismatch",
+            "tick": 4200
+          },
+          "diagnostic": {
+            "tick": 4200,
+            "phase": "playing",
+            "expectedCheckpoint": "66e34de6096da96a",
+            "actualCheckpoint": "577e0ac4e264bf88",
+            "reproduced": true
+          },
+          "elapsedMs": 1268.0240410000006
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-receiver-gardens.chromium.replay.json",
+            "sha256": "3f76baf6f4de4a7ac72e9b4758ac1563e66b7a20e09aad8b53e93f67d9ee5a32",
+            "bytes": 166511
+          },
+          "ticks": 19598,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "a98edfa8bc8c7bb4",
+            "actualCheckpoint": "01d329746a37d770",
+            "reproduced": true
+          },
+          "elapsedMs": 93.34820899999977
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-receiver-gardens.firefox.replay.json",
+            "sha256": "9bcb7348b1918199387f49f5c112e43760e7e1e14de9545a87abd50a7785d237",
+            "bytes": 166439
+          },
+          "ticks": 19598,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "fe4216a91637e18d",
+            "actualCheckpoint": "01d329746a37d770",
+            "reproduced": true
+          },
+          "elapsedMs": 92.82091700000001
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/relay-ruins-receiver-gardens.webkit.replay.json",
+            "sha256": "35ea557014aeca384ba0fa0cb1040c001ca5eb86d48dbb0d893daf858b7b3e32",
+            "bytes": 166513
+          },
+          "ticks": 19598,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "c2ec503adb8e28ae",
+            "actualCheckpoint": "01d329746a37d770",
+            "reproduced": true
+          },
+          "elapsedMs": 93.8829169999999
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:river-port-pump-apron:standard",
+      "levelId": "river-port-pump-apron",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/river-port-pump-apron.replay.json",
+            "sha256": "65901ce2196b14afc3b66ffab579ffb8bd5f414df8242465c3420e72dda0188d",
+            "bytes": 162559
+          },
+          "ticks": 19130,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "21b17a4308738e07",
+            "actualCheckpoint": "d9a28372b27b3a16",
+            "reproduced": true
+          },
+          "elapsedMs": 231.08737500000007
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/river-port-pump-apron.chromium.replay.json",
+            "sha256": "a47d947b950e56fabd56555dc645d7a03d9bd298e2e42379b1f941ef7c929d3a",
+            "bytes": 162625
+          },
+          "ticks": 19130,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "531a9df3b4c75fff",
+            "actualCheckpoint": "8d43b329c977bdbd",
+            "reproduced": true
+          },
+          "elapsedMs": 87.93787500000053
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/river-port-pump-apron.firefox.replay.json",
+            "sha256": "3b1c738c7c998b9eccbb659365ed989dc3d378017e044f0c8cd7d1e187277620",
+            "bytes": 162559
+          },
+          "ticks": 19130,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "139c8a7cc51d62e8",
+            "actualCheckpoint": "8d43b329c977bdbd",
+            "reproduced": true
+          },
+          "elapsedMs": 90.8993330000003
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/river-port-pump-apron.webkit.replay.json",
+            "sha256": "f1691d4f2e3611887a617a9de5fa9143187a5738911ecf4abd390dfa7ff0e685",
+            "bytes": 162621
+          },
+          "ticks": 19130,
+          "outcome": "won",
+          "checkpoints": 63,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "b4ef7b763fdf9a72",
+            "actualCheckpoint": "86d1d06723393ae3",
+            "reproduced": true
+          },
+          "elapsedMs": 87.72841699999935
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:river-port-twin-docks:standard",
+      "levelId": "river-port-twin-docks",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/river-port-twin-docks.replay.json",
+            "sha256": "0bccafe23f83f6a484d8d6a043368db504a33e2ba7a3392136d5b6b3b6d43c86",
+            "bytes": 165844
+          },
+          "ticks": 19460,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "5afa37f421aa5ba0",
+            "actualCheckpoint": "f56087e326c44287",
+            "reproduced": true
+          },
+          "elapsedMs": 236.3979589999999
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/river-port-twin-docks.chromium.replay.json",
+            "sha256": "4fc264cc70f40f4cc9989060673c6f50e7b729102464a775672a6c2ac7f9fd9d",
+            "bytes": 165901
+          },
+          "ticks": 19460,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "ae979c5ef14b63ca",
+            "actualCheckpoint": "112757e75f91d163",
+            "reproduced": true
+          },
+          "elapsedMs": 89.86899999999969
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/river-port-twin-docks.firefox.replay.json",
+            "sha256": "aec11e9a2d4bb3647b491413d4be2b43b5e24f2e732108a2a6f9e7128b1b2521",
+            "bytes": 165844
+          },
+          "ticks": 19460,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "96c59cdd7b07c2f9",
+            "actualCheckpoint": "112757e75f91d163",
+            "reproduced": true
+          },
+          "elapsedMs": 104.36120800000026
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/river-port-twin-docks.webkit.replay.json",
+            "sha256": "2c9cae7564577476fa8c246046c4297155ab30a3d94a095916fe02dd31707245",
+            "bytes": 165890
+          },
+          "ticks": 19460,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "183e595617768c3a",
+            "actualCheckpoint": "112757e75f91d163",
+            "reproduced": true
+          },
+          "elapsedMs": 92.74179100000038
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:river-port-floodgate-yard:standard",
+      "levelId": "river-port-floodgate-yard",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/river-port-floodgate-yard.replay.json",
+            "sha256": "ce1801ed3865996ff81bc2bb16234ff1b60c844a4038d8d69af64bd78cccd811",
+            "bytes": 165093
+          },
+          "ticks": 19478,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "e15e381f275b1fd3",
+            "actualCheckpoint": "7149fcd42b115ca8",
+            "reproduced": true
+          },
+          "elapsedMs": 285.8165829999998
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/river-port-floodgate-yard.chromium.replay.json",
+            "sha256": "de2811bfb1539fb7eeb528c1a6ee2a837cca7be1031060862a8e2593387dcf23",
+            "bytes": 165166
+          },
+          "ticks": 19478,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "0c442f9711383923",
+            "actualCheckpoint": "0f241c3ea7346822",
+            "reproduced": true
+          },
+          "elapsedMs": 99.9706669999996
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/river-port-floodgate-yard.firefox.replay.json",
+            "sha256": "58efc45373468e5d271b431dad371cbe256cb8e690abb4bbedce8c2aecac9d65",
+            "bytes": 165093
+          },
+          "ticks": 19478,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "61dae0a40212cce8",
+            "actualCheckpoint": "0f241c3ea7346822",
+            "reproduced": true
+          },
+          "elapsedMs": 101.39724999999999
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/river-port-floodgate-yard.webkit.replay.json",
+            "sha256": "b95a436a227b17f646c2d42e2daff9747363f415e7099db50b46e176c32de510",
+            "bytes": 165127
+          },
+          "ticks": 19478,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "d33e7a0af8bd09be",
+            "actualCheckpoint": "0f241c3ea7346822",
+            "reproduced": true
+          },
+          "elapsedMs": 98.72283400000015
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:chalk-quarry-survey-basin:standard",
+      "levelId": "chalk-quarry-survey-basin",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-survey-basin.replay.json",
+            "sha256": "da98b16bce6b2a926a728f092fe8f1c672798cfb28cd4061e2b6fbe35ecc79d0",
+            "bytes": 164016
+          },
+          "ticks": 19357,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "5e1356c630b2294a",
+            "actualCheckpoint": "2c58a7c97a3a1835",
+            "reproduced": true
+          },
+          "elapsedMs": 242.03279199999997
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-survey-basin.chromium.replay.json",
+            "sha256": "c4b3701d012438f429afee122f5ddd91309018eac970b46617dd1ea9044711e7",
+            "bytes": 164078
+          },
+          "ticks": 19357,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "1cf16db7e7d9f523",
+            "actualCheckpoint": "aa8f4eb4ab5223f8",
+            "reproduced": true
+          },
+          "elapsedMs": 95.01741599999878
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-survey-basin.firefox.replay.json",
+            "sha256": "308491927a1357a4699e559dc6a4b6de88604e9190e496f5eb4c162924d83301",
+            "bytes": 164016
+          },
+          "ticks": 19357,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "d8b14fa1009b28a5",
+            "actualCheckpoint": "aa8f4eb4ab5223f8",
+            "reproduced": true
+          },
+          "elapsedMs": 117.16120799999953
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-survey-basin.webkit.replay.json",
+            "sha256": "e5f756d9825faa12c964ea9eed12d30078cb7591c1753dc94c04339c08a347ff",
+            "bytes": 164063
+          },
+          "ticks": 19357,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "b15d5109d9f3a5f5",
+            "actualCheckpoint": "aa8f4eb4ab5223f8",
+            "reproduced": true
+          },
+          "elapsedMs": 99.15945900000042
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:chalk-quarry-haul-switchbacks:standard",
+      "levelId": "chalk-quarry-haul-switchbacks",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-haul-switchbacks.replay.json",
+            "sha256": "01754e9348d8531b652a7e45a7ee2e51854561a045c1ba83370d428a8e0281ad",
+            "bytes": 164064
+          },
+          "ticks": 19598,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "5b0ce698be1b9bfc",
+            "actualCheckpoint": "de013011fff6e62d",
+            "reproduced": true
+          },
+          "elapsedMs": 265.3298330000016
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-haul-switchbacks.chromium.replay.json",
+            "sha256": "52562f76cce3c1e0426a5241b79ec1cc166bd61271e468b8818c806e27f33181",
+            "bytes": 164138
+          },
+          "ticks": 19598,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "23337916b1949d62",
+            "actualCheckpoint": "ae379a918dab05bd",
+            "reproduced": true
+          },
+          "elapsedMs": 103.47154199999932
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-haul-switchbacks.firefox.replay.json",
+            "sha256": "4576e3859e5dd8784971f1ec47a3078928e5fbc06b7ac8f8b4e62091836af094",
+            "bytes": 164064
+          },
+          "ticks": 19598,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "77cc925a76416bf6",
+            "actualCheckpoint": "ae379a918dab05bd",
+            "reproduced": true
+          },
+          "elapsedMs": 99.78629099999853
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-haul-switchbacks.webkit.replay.json",
+            "sha256": "b4bc68efa12ac2b22fa1b64c81e3123a484c161eff9ac6d13d2de60a5259ea72",
+            "bytes": 164105
+          },
+          "ticks": 19598,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "234aa2d3e8c8ad5f",
+            "actualCheckpoint": "ae379a918dab05bd",
+            "reproduced": true
+          },
+          "elapsedMs": 101.25849999999991
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:chalk-quarry-reclaimer-court:standard",
+      "levelId": "chalk-quarry-reclaimer-court",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-reclaimer-court.replay.json",
+            "sha256": "a26c0659cdcc315b46bcbd7118da3d6b0dd18ae570c9bfd7838186b06c4745f1",
+            "bytes": 163348
+          },
+          "ticks": 19274,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "e8b63640977bd6d4",
+            "actualCheckpoint": "0ad33bab58608f27",
+            "reproduced": true
+          },
+          "elapsedMs": 263.42504199999894
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-reclaimer-court.chromium.replay.json",
+            "sha256": "c8ff36df6ffcfeed091111de8c95278bbf3d29243ac677c59a7e755f4b4855bb",
+            "bytes": 163403
+          },
+          "ticks": 19274,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "f9bb379afe48d48e",
+            "actualCheckpoint": "140f102fb5a41c33",
+            "reproduced": true
+          },
+          "elapsedMs": 100.17083300000013
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-reclaimer-court.firefox.replay.json",
+            "sha256": "8904e6d6fca0df2dfe387c43d10d37b71a787ffecc8d43c93ba011de62051e5f",
+            "bytes": 163348
+          },
+          "ticks": 19274,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "f2c7f7ea6f509fee",
+            "actualCheckpoint": "140f102fb5a41c33",
+            "reproduced": true
+          },
+          "elapsedMs": 102.19416699999965
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/chalk-quarry-reclaimer-court.webkit.replay.json",
+            "sha256": "0195f83aaaf1008072b184d463a5d96351353073b7fff7af4b1fba814bd2c290",
+            "bytes": 163391
+          },
+          "ticks": 19274,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "45ea60b9e3c46c05",
+            "actualCheckpoint": "140f102fb5a41c33",
+            "reproduced": true
+          },
+          "elapsedMs": 99.78654099999949
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "levelId": "orchard-strongpoint-harvest-clearing",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-harvest-clearing.replay.json",
+            "sha256": "28427fdde90d9c385baf243f338d0d9fb7f62acae970c57a553d1bdacde1baac",
+            "bytes": 166257
+          },
+          "ticks": 19604,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "8ed0ee3879c82adc",
+            "actualCheckpoint": "8ca48147c074df73",
+            "reproduced": true
+          },
+          "elapsedMs": 261.0616250000003
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-harvest-clearing.chromium.replay.json",
+            "sha256": "bc1fb8171dce4a5165aa3d62ada4b0d477265cd3913d90b46a91118eb7ed402d",
+            "bytes": 166310
+          },
+          "ticks": 19604,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "0d5783c5474adba1",
+            "actualCheckpoint": "e8469d730b6de487",
+            "reproduced": true
+          },
+          "elapsedMs": 98.9820409999993
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-harvest-clearing.firefox.replay.json",
+            "sha256": "8bedea4d823b15ded1e50c16aa5c8b8f2de5a4c7bfeb385b8c6a6a665613863c",
+            "bytes": 166257
+          },
+          "ticks": 19604,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "788bcea476725c20",
+            "actualCheckpoint": "e8469d730b6de487",
+            "reproduced": true
+          },
+          "elapsedMs": 97.15670800000044
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-harvest-clearing.webkit.replay.json",
+            "sha256": "f1022eeff8d5ddf94ca91f00ef3eb3460189bfbbbf7a627afcb3f82d921ec003",
+            "bytes": 166281
+          },
+          "ticks": 19604,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "48b52a60b6a2695c",
+            "actualCheckpoint": "e8469d730b6de487",
+            "reproduced": true
+          },
+          "elapsedMs": 99.28954199999862
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:orchard-strongpoint-irrigation-courts:standard",
+      "levelId": "orchard-strongpoint-irrigation-courts",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-irrigation-courts.replay.json",
+            "sha256": "0bc8970508f0b2baa5295e2509262f3c674c4f84f2da6a441fd6d863d8142bf6",
+            "bytes": 164681
+          },
+          "ticks": 19526,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "d2a81f776920a423",
+            "actualCheckpoint": "c600aae33b61f207",
+            "reproduced": true
+          },
+          "elapsedMs": 261.3456249999999
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-irrigation-courts.chromium.replay.json",
+            "sha256": "a128438d6159b170e7eb3d974eb0d04197a48d9fca33dd4187b9aba67a345bf6",
+            "bytes": 164756
+          },
+          "ticks": 19526,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "f7d7781388418c1f",
+            "actualCheckpoint": "773ecd79b906743d",
+            "reproduced": true
+          },
+          "elapsedMs": 102.47004099999867
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-irrigation-courts.firefox.replay.json",
+            "sha256": "62b4e6e6cddba2d077467319c0e6076a2580b92dbb3b6b0f627d0522d48e4d9d",
+            "bytes": 164681
+          },
+          "ticks": 19526,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "d89e214f94e7b863",
+            "actualCheckpoint": "773ecd79b906743d",
+            "reproduced": true
+          },
+          "elapsedMs": 100.48000000000138
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-irrigation-courts.webkit.replay.json",
+            "sha256": "ff61d3dd34a335fa8c6328b21d1e8374af0fcce6b8b2051a7adcea0acd44d969",
+            "bytes": 164748
+          },
+          "ticks": 19526,
+          "outcome": "won",
+          "checkpoints": 65,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "2cc733666f84eada",
+            "actualCheckpoint": "773ecd79b906743d",
+            "reproduced": true
+          },
+          "elapsedMs": 101.86308300000019
+        }
+      ],
+      "available": false,
+      "matches": []
+    },
+    {
+      "id": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+      "levelId": "orchard-strongpoint-glasshouse-ruins",
+      "attempts": [
+        {
+          "variant": "default",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.replay.json",
+            "sha256": "5e381c0348a8e8db865ba4c7cc3e0f734bed96b19ff51085cdcf5e655c390ecd",
+            "bytes": 164313
+          },
+          "ticks": 19454,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 900.",
+            "code": "demo-content-mismatch",
+            "tick": 900
+          },
+          "diagnostic": {
+            "tick": 900,
+            "phase": "playing",
+            "expectedCheckpoint": "58c5e27c99a161a8",
+            "actualCheckpoint": "c722db00f1653bd4",
+            "reproduced": true
+          },
+          "elapsedMs": 268.16200000000026
+        },
+        {
+          "variant": "chromium",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.chromium.replay.json",
+            "sha256": "6afa4424cb06dc391865bb692cb9dccbad7c9cdd5b739972feddfa2d2a3828c4",
+            "bytes": 164383
+          },
+          "ticks": 19454,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "80bdfd7b7802d30f",
+            "actualCheckpoint": "d91a35694f61b645",
+            "reproduced": true
+          },
+          "elapsedMs": 99.49404200000026
+        },
+        {
+          "variant": "firefox",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.firefox.replay.json",
+            "sha256": "e18dfd05e941a1f62e829d0b6213d49ad374eb6958e61a1448d91f77645faf7c",
+            "bytes": 164313
+          },
+          "ticks": 19454,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "ee360ada1f434db6",
+            "actualCheckpoint": "d91a35694f61b645",
+            "reproduced": true
+          },
+          "elapsedMs": 102.8580409999995
+        },
+        {
+          "variant": "webkit",
+          "file": {
+            "path": "game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.webkit.replay.json",
+            "sha256": "33006be35fbc37fb4198770168481593a55e15c486c3fe71dd3d8f0350777e73",
+            "bytes": 164381
+          },
+          "ticks": 19454,
+          "outcome": "won",
+          "checkpoints": 64,
+          "match": false,
+          "error": {
+            "name": "Error",
+            "message": "Survival demonstration first mismatching checkpoint at tick 300.",
+            "code": "demo-content-mismatch",
+            "tick": 300
+          },
+          "diagnostic": {
+            "tick": 300,
+            "phase": "playing",
+            "expectedCheckpoint": "a77efdb98767af05",
+            "actualCheckpoint": "d91a35694f61b645",
+            "reproduced": true
+          },
+          "elapsedMs": 111.23054199999933
+        }
+      ],
+      "available": false,
+      "matches": []
+    }
+  ],
+  "errors": [],
+  "scope": "Read-only full verification of each committed default/browser native Survival body. No generation or mutation, no Linux claim. Completion records all attempts, including strict mismatches; availability is reported separately.",
+  "sourceScope": [
+    "game/overflight",
+    "game/demo-modes",
+    "game/demo-data/survival"
+  ],
+  "environment": {
+    "version": "v22.13.1",
+    "platform": "darwin",
+    "arch": "x64",
+    "versions": {
+      "node": "22.13.1",
+      "acorn": "8.14.0",
+      "ada": "2.9.2",
+      "amaro": "0.2.0",
+      "ares": "1.34.4",
+      "brotli": "1.1.0",
+      "cjs_module_lexer": "1.4.1",
+      "cldr": "46.0",
+      "icu": "76.1",
+      "llhttp": "9.2.1",
+      "modules": "127",
+      "napi": "9",
+      "nbytes": "0.1.1",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.64.0",
+      "nghttp3": "1.6.0",
+      "ngtcp2": "1.9.1",
+      "openssl": "3.0.15+quic",
+      "simdjson": "3.10.1",
+      "simdutf": "5.6.4",
+      "sqlite": "3.47.2",
+      "tz": "2024b",
+      "undici": "6.21.1",
+      "unicode": "16.0",
+      "uv": "1.49.2",
+      "uvwasi": "0.0.21",
+      "v8": "12.4.254.21-node.22",
+      "zlib": "1.3.0.1-motley-82a5fec"
+    },
+    "executable": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    }
+  },
+  "headBefore": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceBefore": {
+    "sha256": "6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3",
+    "files": 166,
+    "bytes": 13259406
+  },
+  "observerSHA256": "d0e2870edbb6b9dc175863d1a962784bdca018b8352f21937c997406fb67098f",
+  "supplementalBefore": [
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594
+    },
+    {
+      "path": "game/demo-preparation.mjs",
+      "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+      "bytes": 3500
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+      "bytes": 987
+    },
+    {
+      "path": "scripts/demo-source-fingerprint.mjs",
+      "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+      "bytes": 1064
+    }
+  ],
+  "simulationIdentity": "e5f65192cdc4fd239d231b8e01f71233925dcb1a4e25ec749aeb0fc8390ab01f",
+  "nativeBindings": [
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594
+    },
+    {
+      "path": "game/overflight/battlefields.mjs",
+      "sha256": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4",
+      "bytes": 23483
+    },
+    {
+      "path": "game/overflight/combat-profile.mjs",
+      "sha256": "b089532e22f8048c1e79120c2d390e9f6a28d7df472d01a1b8a73263e93253df",
+      "bytes": 5230
+    },
+    {
+      "path": "game/overflight/coordinated-movement.mjs",
+      "sha256": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0",
+      "bytes": 10388
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "71113544a38bcc1d890ae2239a369217e93b6862df89a34173ee073bc8f1461e",
+      "bytes": 76564
+    },
+    {
+      "path": "game/overflight/defeat-feed.mjs",
+      "sha256": "8c8415abfecff6728c95c751e9bd0f346dbe649f1e7c12387ebb2cd386d500c8",
+      "bytes": 1157
+    },
+    {
+      "path": "game/overflight/flight-profile.mjs",
+      "sha256": "2d59a8e49674779e9eb0f088efa118aa704be5ecca5b22ee83f93c98cd016af7",
+      "bytes": 1583
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ce19d6b3417a9429695c98bef669cc7cb35963210acc751fc434a9b06a4ae650",
+      "bytes": 5916
+    },
+    {
+      "path": "game/overflight/motion.mjs",
+      "sha256": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153",
+      "bytes": 2361
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "2b41f5859479ef1bf8a5363b0469683850b88fd635b4f11929a21a92923ca410",
+      "bytes": 19666
+    },
+    {
+      "path": "game/overflight/tactics.mjs",
+      "sha256": "b260abe4451b853c677208b11eff8a6dddadbe1066f1f7c5c159114544042c93",
+      "bytes": 17296
+    },
+    {
+      "path": "game/overflight/terrain.mjs",
+      "sha256": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+      "bytes": 16421
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee",
+      "bytes": 18500
+    },
+    {
+      "path": "game/overflight/world-layout-presentation.mjs",
+      "sha256": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3",
+      "bytes": 11298
+    },
+    {
+      "path": "game/overflight/worlds.mjs",
+      "sha256": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c",
+      "bytes": 18852
+    },
+    {
+      "path": "game/presentation/overflight-world-slots.mjs",
+      "sha256": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94",
+      "bytes": 2754
+    }
+  ],
+  "counts": {
+    "entries": 18,
+    "attempts": 72,
+    "available": 0,
+    "strictMatches": 0
+  },
+  "headAfter": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceAfter": {
+    "sha256": "6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3",
+    "files": 166,
+    "bytes": 13259406
+  },
+  "supplementalAfter": [
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594
+    },
+    {
+      "path": "game/demo-preparation.mjs",
+      "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+      "bytes": 3500
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+      "bytes": 987
+    },
+    {
+      "path": "scripts/demo-source-fingerprint.mjs",
+      "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+      "bytes": 1064
+    }
+  ],
+  "observerSHA256After": "d0e2870edbb6b9dc175863d1a962784bdca018b8352f21937c997406fb67098f",
+  "sourceUnchanged": true,
+  "finished": "2026-10-19T10:01:50.811Z"
+}

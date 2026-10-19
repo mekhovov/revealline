@@ -1,0 +1,379 @@
+{
+  "format": "SharedDemoSoloTimeoutReadonlyAnalysisV1",
+  "createdAt": "2026-10-19T07:14:45.552827+00:00",
+  "scope": "Read-only analysis of one event during still-active frozen endurance; no reproduction, browser, build, test, source edit, or final endurance verdict.",
+  "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "sourceFingerprint": {
+    "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+    "files": 9997,
+    "bytes": 404447584
+  },
+  "buildInputFingerprint": {
+    "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+    "files": 9406,
+    "bytes": 348396513
+  },
+  "captureManifestSHA256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+  "receiptSnapshot": {
+    "path": "docs/qualification/shared-demos/rotation-chromium-emitted-1efd2b31f-final-two-hour.json",
+    "sha256": "de3addcd3eb05ce6538f203fbfc0d477db7b2cff3274c447df67ce81eb0160d8",
+    "complete": false,
+    "sampleCount": 474,
+    "mutableWhileRunActive": true
+  },
+  "event": {
+    "event": "failed",
+    "sourceId": "solo-qualified-0cf6a5512cf875ec",
+    "modeId": "solo",
+    "at": 1792391853421,
+    "loadingMs": 22256.299999998882,
+    "preparation": {
+      "status": "failed",
+      "stage": "source",
+      "elapsedMs": 22256.1,
+      "durationsMs": {
+        "preparation": 0.09999999962747097,
+        "prefetch": 0,
+        "retirement": 4.5,
+        "adapter": 0,
+        "source": 22251.5,
+        "payload": 0,
+        "verification": 0,
+        "scene-import": 0,
+        "artwork": 0,
+        "renderer": 0,
+        "mount": 0
+      },
+      "candidates": []
+    },
+    "code": "demo-load-timeout",
+    "message": "Demo preparation exceeded its loading deadline.",
+    "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+  },
+  "firstObservedSampleIndex": 255,
+  "adjacentSamples": [
+    {
+      "index": 254,
+      "at": "2026-10-19T06:37:21.761Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "",
+      "phase": "loading",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792391394966,
+        "loadingMs": 15520.199999999255,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15520,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 4.199999999254942,
+            "retirement": 0.09999999962747097,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15515.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 17520,
+              "totalTicks": 19478,
+              "elapsedMs": 15515.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-operation-ricochet-quarry:standard",
+        "modeId": "snake",
+        "at": 1792391799854,
+        "loadingMs": 860.8000000007451,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 860.8,
+          "durationsMs": {
+            "preparation": 33.30000000074506,
+            "prefetch": 0,
+            "retirement": 416.59999999962747,
+            "adapter": 0,
+            "source": 410.90000000037253,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level\u2026",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "index": 255,
+      "at": "2026-10-19T06:37:33.435Z",
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-support-corridor:standard",
+      "phase": "playing",
+      "failure": "solo-qualified-0cf6a5512cf875ec demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "solo-qualified-0cf6a5512cf875ec",
+        "modeId": "solo",
+        "at": 1792391853421,
+        "loadingMs": 22256.299999998882,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 22256.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 0,
+            "retirement": 4.5,
+            "adapter": 0,
+            "source": 22251.5,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-snake-support-corridor:standard",
+        "modeId": "snake",
+        "at": 1792391853429,
+        "loadingMs": 7.599999999627471,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 7.6,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 1.199999999254942,
+            "adapter": 0,
+            "source": 6.300000000745058,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.1
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo \u00b7 Passing Corridor",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "index": 256,
+      "at": "2026-10-19T06:37:43.443Z",
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-support-corridor:standard",
+      "phase": "playing",
+      "failure": "solo-qualified-0cf6a5512cf875ec demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "solo-qualified-0cf6a5512cf875ec",
+        "modeId": "solo",
+        "at": 1792391853421,
+        "loadingMs": 22256.299999998882,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 22256.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 0,
+            "retirement": 4.5,
+            "adapter": 0,
+            "source": 22251.5,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-snake-support-corridor:standard",
+        "modeId": "snake",
+        "at": 1792391853429,
+        "loadingMs": 7.599999999627471,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 7.6,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 1.199999999254942,
+            "adapter": 0,
+            "source": 6.300000000745058,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.1
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "56",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo \u00b7 Passing Corridor",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "sourcePins": {
+    "game/demo-loading.mjs": {
+      "workingTreeSHA256": "2f9ab4efe38398cfe08dba89c328cacec2cae559c591d6e85770f5bfce744ba4",
+      "emittedSHA256": "2f9ab4efe38398cfe08dba89c328cacec2cae559c591d6e85770f5bfce744ba4",
+      "byteEqual": true
+    },
+    "game/demo-preparation.mjs": {
+      "workingTreeSHA256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+      "emittedSHA256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+      "byteEqual": true
+    },
+    "game/demo-director.mjs": {
+      "workingTreeSHA256": "f057b24ec7e878b5a8013a5aba26ab1398067e4aabcd14b8871f432f259f5b66",
+      "emittedSHA256": "f057b24ec7e878b5a8013a5aba26ab1398067e4aabcd14b8871f432f259f5b66",
+      "byteEqual": true
+    },
+    "game/ui/demo-host.mjs": {
+      "workingTreeSHA256": "7f2d09118885feef5614bfa906c206ab099964f943a692264187a97e1be87b3d",
+      "emittedSHA256": "0c1900655063016153261faaa5046d03046a24796c61c68dd8a97bd3ce5765c6",
+      "byteEqual": false
+    },
+    "game/demo-modes/solo.mjs": {
+      "workingTreeSHA256": "bd3914625c4152c5a73ebf3cda0b09d6c1ef23705853c95df6dc0ca0a63798d2",
+      "emittedSHA256": "bd3914625c4152c5a73ebf3cda0b09d6c1ef23705853c95df6dc0ca0a63798d2",
+      "byteEqual": true
+    },
+    "game/demo-sources.mjs": {
+      "workingTreeSHA256": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+      "emittedSHA256": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+      "byteEqual": true
+    },
+    "game/demo-catalog.mjs": {
+      "workingTreeSHA256": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+      "emittedSHA256": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+      "byteEqual": true
+    },
+    "game/replay-player.mjs": {
+      "workingTreeSHA256": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+      "emittedSHA256": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+      "byteEqual": true
+    },
+    "game/replay.mjs": {
+      "workingTreeSHA256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+      "emittedSHA256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+      "byteEqual": true
+    }
+  },
+  "emittedHostVerified": true,
+  "findings": [
+    {
+      "claim": "Timer callback was already late; the observed7.256s overshoot is not explained by synchronous abort cleanup.",
+      "evidence": "Timer stack game/demo-loading.mjs:51:43, byte-identical to capture. First preparation abort listener froze elapsedMs22256.1, catch recorded22256.3: only~0.2ms after notification. Director binds this listener before preparation/owner cleanup."
+    },
+    {
+      "claim": "The source stage cannot locate the delay within Solo preparation.",
+      "evidence": "Actual emitted host forwards only signal after marking source; soloAdapter.prepare includes replay creation, actor/presentation preparation, setLevel, setLook, picture resolution. No per-Solo candidate/progress/artwork substage exists in this receipt."
+    },
+    {
+      "claim": "Verification yielding is cooperative, not hard preemption.",
+      "evidence": "replay.mjs:884 initializes synchronously before first yield;948-955 check elapsed after each8ticks;967 finishes synchronously. No timing trace identifies these as this event cause."
+    },
+    {
+      "claim": "Inspected expiry/ownership paths reject overdue adoption and retain cleanup ownership.",
+      "evidence": "demo-loading checks monotonic expiry on returned values and retires late results. Director checks overall deadline after preparation before adoption. Solo immediately releases existing owners on abort, tracks release once per owner and reports retirement to the host barrier; replay preparation checks abort before player return."
+    },
+    {
+      "claim": "Verified Snake fallback resumed rotation.",
+      "evidence": "Failure at1792391853421; Snake Passing Corridor ready at1792391853429 with7.6ms preparation and later playing samples. Snapshots are not a complete transition trace."
+    }
+  ],
+  "unknowns": [
+    "No long-task, browser/OS scheduling, memory/GC or per-Solo-substage trace identifies what delayed servicing this timer.",
+    "The17,271byte/4,663tick recording does not locate the delay or establish cause.",
+    "Snapshots do not certify all transitions below30seconds, hardwall15second termination, device behavior or final endurance cleanup/pass."
+  ],
+  "decision": {
+    "concreteNewRuntimeBugProven": false,
+    "requiredSpeculativeFix": false,
+    "recommendedAction": "Preserve and disclose late timer with recovered rotation; complete held interval and cleanup. Do not change abort/deadline behavior based solely on this event. If recurring stalls need investigation, separate observational Solo substage/long-task timing would identify a cause before selecting a code change.",
+    "acceptanceBoundary": "15second source and30second recovery timers are cooperative event-loop deadlines; monotonic expiry prevents adopting overdue results after JavaScript resumes, but cannot forcibly preempt synchronous/native work or browser suspension."
+  }
+}

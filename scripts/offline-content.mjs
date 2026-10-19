@@ -17,6 +17,12 @@ import { validateInstalledSelection } from '../game/installed-app.mjs';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
 import { readFileSync } from 'node:fs';
 import { addOfflineExperiences } from './offline-experiences.mjs';
+import {
+  DEMO_CATALOG_PATHS,
+  classicDemoSourcePaths,
+  journeyDemoSourcePaths,
+  simDemoSourcePaths,
+} from './demo-native-dependencies.mjs';
 
 const contentMessages = JSON.parse(
   readFileSync(new URL('../game/locales/en/content.json', import.meta.url), 'utf8'),
@@ -373,6 +379,17 @@ export async function buildOfflineContent(
   // Hosted extras are not shared runtime dependencies. Keep them selectable
   // without charging every starter/chapter download for their optional bodies.
   const extraPaths = new Set();
+  const demoSourcePaths = new Set([
+    ...DEMO_CATALOG_PATHS,
+    ...classicDemoSourcePaths(entries),
+    ...(await journeyDemoSourcePaths(entries)),
+  ]);
+  const simDemoPaths = simDemoSourcePaths(entries);
+  if (simDemoPaths.size && !bundledPackages.some((item) => item.packageId === 'fpv-worlds'))
+    throw new Error('SIM demo offline recordings need the named simulator package.');
+  for (const name of simDemoPaths)
+    if (!files.some((file) => file.path === name))
+      throw new Error(`SIM demo dependency must remain an optional download: ${name}`);
   if (teamImportManifests.length) {
     const owned = teamImportManifests.map((entry) => entry.name);
     owned.forEach((name) => extraPaths.add(name));
@@ -395,7 +412,10 @@ export async function buildOfflineContent(
     [
       'demo',
       'Optional Demo recordings',
-      (name) => name.startsWith('game/demo-data/') && name.endsWith('.replay.json'),
+      (name) =>
+        (name.startsWith('game/demo-data/') && name.endsWith('.replay.json')) ||
+        demoSourcePaths.has(name) ||
+        simDemoPaths.has(name),
     ],
     [
       'menu-art',
@@ -424,7 +444,7 @@ export async function buildOfflineContent(
       category: 'extra',
       current: false,
       modes: [],
-      requires: ['shared'],
+      requires: ['shared', ...(id === 'demo' && simDemoPaths.size ? ['extras:sim-fpv'] : [])],
       files: owned,
     });
   }

@@ -1,0 +1,800 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 7200,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T05:14:13.705Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:beginner-32-acro-9e197dcf42162e29",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Wide corner, tight exit",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Використайте широкий перший поворот, щоб вирівнятися перед вузьким виходом."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-7ff2d0d3f752cf2b",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Bank the crossing",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-operation-citadel-dispatch:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Citadel Dispatch",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Оберіть маршрут патруля через відновлений машинний двір. Доставте після першого перехоплення й оберіть вихід через інше коло."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "pause",
+      "mode": "snake"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:woodland-04-self-level-816eb9ccbee739d6",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quiet hover",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:relay-ruins-antenna-court:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Antenna Court",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-crossing-orders:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Crossing Orders",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-ee5ba3df09bda042",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Two districts",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-26-acro-616326c6a2c3dcc6",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Your first solo Acro route",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-first-baffle:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · First Baffle",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-1c903081aa79df1e",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Two ways home",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-shelterbelt-gaps:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Shelterbelt Gaps",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-pressure-elbow:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Pressure Elbow",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-04-acro-bbce5a92237477b8",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Turn the nose: yaw",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:relay-ruins-split-compound:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Split Compound",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-11133b7849422018",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Two bays",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    }
+  ],
+  "samples": [
+    {
+      "at": "2026-10-18T05:15:34.507Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-11133b7849422018",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1200",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Two bays",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:15:44.523Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-11133b7849422018",
+      "phase": "complete",
+      "failureDetails": null,
+      "tick": "1755",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Two bays",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:15:54.549Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "",
+      "phase": "loading",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:16:04.558Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "180",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 23
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:16:14.562Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "780",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 46
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:16:24.570Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1289",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 98
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:16:34.585Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1799",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 162
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:16:44.602Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2398",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 223
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:16:54.612Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2968",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 308
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:17:04.620Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3477",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 340
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:17:14.691Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3986",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 362
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:17:24.703Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "4586",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 393
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:17:34.713Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5186",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 398
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:17:44.721Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5786",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 515
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:17:54.729Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "6295",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 563
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:18:04.737Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "6895",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 591
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:18:14.749Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "7495",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 606
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:18:24.760Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "8095",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 620
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:18:34.785Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "8603",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 620
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:18:44.792Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "9204",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 673
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:18:54.801Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "9804",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 677
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:19:04.813Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "10404",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 783
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "complete": false,
+  "enduranceStarted": "2026-10-18T05:15:24.500Z",
+  "failure": "page.waitForTimeout: Target page, context or browser has been closed\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:286:16",
+  "finished": "2026-10-18T05:19:05.088Z"
+}

@@ -1,0 +1,152 @@
+{
+  "format": "SurvivalNativeAdoptionProposalV1",
+  "created": "2026-10-19T10:15:29.613371+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "capture": {
+    "path": ".cache/survival-node22131-x64-capture-3f84.json",
+    "sha256": "f2fc7ba2d3ab1e14b969d230fcc67e596a8caf03a85d7a036efb1eec4461d2af"
+  },
+  "scope": "Add existing strict-verified bodies and append one fallback suffix; preserve all committed recordings, candidate order, source count, native format and verifier.",
+  "bodies": [
+    {
+      "id": "survival:field-crossing-broken-crossroads:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/field-crossing-broken-crossroads.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/field-crossing-broken-crossroads.node22131-x64.replay.json",
+      "sha256": "f7d5f443063f3b71ac54efa04f081569cd99a41fbfde44968188846e9ea5e669",
+      "bytes": 161450
+    },
+    {
+      "id": "survival:field-crossing-shelterbelt-gaps:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/field-crossing-shelterbelt-gaps.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/field-crossing-shelterbelt-gaps.node22131-x64.replay.json",
+      "sha256": "9b0f9b78ff7590b9273172d10b34fbe89c2cb3dafb7415e202fc66a2caf9128a",
+      "bytes": 162768
+    },
+    {
+      "id": "survival:field-crossing-supply-orchard-edge:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/field-crossing-supply-orchard-edge.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/field-crossing-supply-orchard-edge.node22131-x64.replay.json",
+      "sha256": "5ede98fa4e3f051a49f319374c693a0eff0b05f32af0d46f71ef57b9afb3e338",
+      "bytes": 164757
+    },
+    {
+      "id": "survival:freight-depot-shunting-yard:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/freight-depot-shunting-yard.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/freight-depot-shunting-yard.node22131-x64.replay.json",
+      "sha256": "bb9145e7845345687b49af615f124dd904ef63739d98eb447561a56589b2c673",
+      "bytes": 160361
+    },
+    {
+      "id": "survival:freight-depot-loading-loop:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/freight-depot-loading-loop.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/freight-depot-loading-loop.node22131-x64.replay.json",
+      "sha256": "5d58d8a733a6a5184f3ed95d2fbc2825b8c7fa7c03fda1cd8aea3d4b9900dd0d",
+      "bytes": 167016
+    },
+    {
+      "id": "survival:freight-depot-dispatch-junction:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/freight-depot-dispatch-junction.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/freight-depot-dispatch-junction.node22131-x64.replay.json",
+      "sha256": "6d4a7008b1c07e290b31d63382e9ef8849457ce0ae00057f3df98859cd98a4d4",
+      "bytes": 165700
+    },
+    {
+      "id": "survival:relay-ruins-antenna-court:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/relay-ruins-antenna-court.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/relay-ruins-antenna-court.node22131-x64.replay.json",
+      "sha256": "ebb6982d148c9a1a07705cee4785469e9538f46862da0b3881851a100f2ecb76",
+      "bytes": 163421
+    },
+    {
+      "id": "survival:relay-ruins-split-compound:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/relay-ruins-split-compound.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/relay-ruins-split-compound.node22131-x64.replay.json",
+      "sha256": "170142ccdc9b5e1019dc6ffe9b1d71f58bd509fd864ff214a2123bdd1ca99954",
+      "bytes": 164563
+    },
+    {
+      "id": "survival:relay-ruins-receiver-gardens:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/relay-ruins-receiver-gardens.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/relay-ruins-receiver-gardens.node22131-x64.replay.json",
+      "sha256": "2f7bca7daa6483ca9f0ba3d381b9a0c49f7364c7ffd110c35d7dfca715e926b0",
+      "bytes": 166439
+    },
+    {
+      "id": "survival:river-port-pump-apron:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/river-port-pump-apron.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/river-port-pump-apron.node22131-x64.replay.json",
+      "sha256": "ece032a213abfb469f4b282d0242f01aefabbc28585ec3af2bfa4a4241e3c843",
+      "bytes": 162559
+    },
+    {
+      "id": "survival:river-port-twin-docks:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/river-port-twin-docks.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/river-port-twin-docks.node22131-x64.replay.json",
+      "sha256": "270caaf551e5f21036c6a392d35935f99cb04ade674d6789b886aa64b9de4fed",
+      "bytes": 165844
+    },
+    {
+      "id": "survival:river-port-floodgate-yard:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/river-port-floodgate-yard.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/river-port-floodgate-yard.node22131-x64.replay.json",
+      "sha256": "744f1c683659b85ece90a218442d6c5389b9bddeca1642ed26bd10c42b086283",
+      "bytes": 165093
+    },
+    {
+      "id": "survival:chalk-quarry-survey-basin:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/chalk-quarry-survey-basin.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/chalk-quarry-survey-basin.node22131-x64.replay.json",
+      "sha256": "c9b3f80f68669f4e57896e852793654d9bcbba68a5a4745b27f509b21d01ad40",
+      "bytes": 164016
+    },
+    {
+      "id": "survival:chalk-quarry-haul-switchbacks:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/chalk-quarry-haul-switchbacks.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/chalk-quarry-haul-switchbacks.node22131-x64.replay.json",
+      "sha256": "46c427ee1bfea2f30919489e6e5a61d95a9f06a24fcae11aa7195c2c952a2d33",
+      "bytes": 164064
+    },
+    {
+      "id": "survival:chalk-quarry-reclaimer-court:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/chalk-quarry-reclaimer-court.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/chalk-quarry-reclaimer-court.node22131-x64.replay.json",
+      "sha256": "ae5232f47b9c56bf0e3e2db15d118d4a24f0182e9bce5001e2b765bed399ebde",
+      "bytes": 163348
+    },
+    {
+      "id": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/orchard-strongpoint-harvest-clearing.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/orchard-strongpoint-harvest-clearing.node22131-x64.replay.json",
+      "sha256": "7c23674ee8f258cedc718435d02fd1716111a7c9c3e330f90501ca22741fa26c",
+      "bytes": 166257
+    },
+    {
+      "id": "survival:orchard-strongpoint-irrigation-courts:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/orchard-strongpoint-irrigation-courts.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/orchard-strongpoint-irrigation-courts.node22131-x64.replay.json",
+      "sha256": "275982a4a091deb7033037d96cbaf07e324c9b217001fd2b66073424bd016d2f",
+      "bytes": 164681
+    },
+    {
+      "id": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+      "source": ".cache/survival-node22131-x64-capture-3f84-candidates/orchard-strongpoint-glasshouse-ruins.node22131-x64.replay.json",
+      "target": "game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.node22131-x64.replay.json",
+      "sha256": "5f5d740e6004f11f6050968ec9dd819209bc24fe19e00b30ae19284cc6a2ba1b",
+      "bytes": 164313
+    }
+  ],
+  "variants": {
+    "path": "game/demo-modes/survival-runtime-variants.mjs",
+    "beforeSHA256": "1b3506374d14911c6834fada5672dceae81dbddb7c2008c1c39ad5ea198d87ad",
+    "afterContents": "// Generated only after complete native authoring and independent verification.\nexport const SURVIVAL_DEMO_RUNTIME_VARIANTS = [\n  'chromium',\n  'firefox',\n  'webkit',\n  'node22131-x64',\n];\n",
+    "afterSHA256": "ad4abcea2c87b2146e48ec1742f6e1dc88c4b00bb5d85fd051c18e40d2679564"
+  },
+  "totalBodyBytes": 2956650,
+  "limitations": [
+    "Actual macOS x64 Node22.13.1 capture; Linux Node22.13.1 and20.19.6 coverage must be established separately.",
+    "Browser defaults/preference remain unchanged; existing browser receipts retain their original source/build scopes."
+  ],
+  "adopted": "2026-10-19T10:15:42.129080+00:00",
+  "complete": true,
+  "proposalSHA256": "bf945fa28bd0afbc11a2a5682a31acf71b459a421099b75d0ccb31d1b1959538"
+}

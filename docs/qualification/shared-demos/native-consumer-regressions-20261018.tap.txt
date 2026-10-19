@@ -1,0 +1,404 @@
+TAP version 13
+# Subtest: runtime indentation preserves executable tokens, comments, line breaks and literal values
+ok 1 - runtime indentation preserves executable tokens, comments, line breaks and literal values
+  ---
+  duration_ms: 8.876458
+  ...
+# Subtest: all admitted engine JavaScript retains lexical and line-termination parity when compacted
+ok 2 - all admitted engine JavaScript retains lexical and line-termination parity when compacted
+  ---
+  duration_ms: 6957.057916
+  ...
+# Subtest: standalone branding projects only the image fallback to an approved selected logo
+ok 3 - standalone branding projects only the image fallback to an approved selected logo
+  ---
+  duration_ms: 6.117667
+  ...
+# Subtest: support page closure retains navigation without authoring sample media or manual fixtures
+ok 4 - support page closure retains navigation without authoring sample media or manual fixtures
+  ---
+  duration_ms: 2978.305375
+  ...
+# Subtest: edition recording inventory follows validated catalogue additions and runtime variants
+ok 5 - edition recording inventory follows validated catalogue additions and runtime variants
+  ---
+  duration_ms: 39.472458
+  ...
+# Subtest: compiled edition rotation skips absent engines without fetching or installing a package
+ok 6 - compiled edition rotation skips absent engines without fetching or installing a package
+  ---
+  duration_ms: 14.729333
+  ...
+# Subtest: standalone and public offline menus retain every dynamically attached panel stylesheet
+ok 7 - standalone and public offline menus retain every dynamically attached panel stylesheet
+  ---
+  duration_ms: 428.255583
+  ...
+# Subtest: the shared Snake launcher delivers the complete shared board-art provider offline
+ok 8 - the shared Snake launcher delivers the complete shared board-art provider offline
+  ---
+  duration_ms: 3312.292792
+  ...
+# Subtest: actual company host closure retains explicit Demo dependencies and preserves optional artwork
+ok 9 - actual company host closure retains explicit Demo dependencies and preserves optional artwork
+  ---
+  duration_ms: 5311.73825
+  ...
+# Subtest: standalone menu projection preserves selected profile data and fallback without unrelated images
+ok 10 - standalone menu projection preserves selected profile data and fallback without unrelated images
+  ---
+  duration_ms: 50.052625
+  ...
+# Subtest: multi-edition menu builds retain their neutral FPV fallback and every selected scene
+ok 11 - multi-edition menu builds retain their neutral FPV fallback and every selected scene
+  ---
+  duration_ms: 8.119958
+  ...
+# Subtest: DroneAid aggregate uses only its lossless derivative while retaining original source files
+ok 12 - DroneAid aggregate uses only its lossless derivative while retaining original source files
+  ---
+  duration_ms: 8.195375
+  ...
+# Subtest: shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+ok 13 - shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+  ---
+  duration_ms: 16.855083
+  ...
+# Subtest: common host import projection closes over committed adapters without visiting historical registries
+ok 14 - common host import projection closes over committed adapters without visiting historical registries
+  ---
+  duration_ms: 123.265542
+  ...
+# Subtest: dynamic boot entry is explicit and unknown host JSON requests fail closed
+ok 15 - dynamic boot entry is explicit and unknown host JSON requests fail closed
+  ---
+  duration_ms: 1.620041
+  ...
+# Subtest: declared canonical navigation and data requests must exist in the artifact
+ok 16 - declared canonical navigation and data requests must exist in the artifact
+  ---
+  duration_ms: 1.372291
+  ...
+# Subtest: shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+ok 17 - shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+  ---
+  duration_ms: 112.99325
+  ...
+# Subtest: artwork update offers explicit exact-snapshot recovery and Continue retains the original save
+    # Subtest: save the earlier presentation
+    ok 1 - save the earlier presentation
+      ---
+      duration_ms: 1146.768292
+      ...
+    # Subtest: new source never silently rewrites the previous flight
+    ok 2 - new source never silently rewrites the previous flight
+      ---
+      duration_ms: 308.988625
+      ...
+    # Subtest: read-only artwork departure explains shared progress in either language without hiding save risk
+    ok 3 - read-only artwork departure explains shared progress in either language without hiding save risk
+      ---
+      duration_ms: 936.952875
+      ...
+    # Subtest: the same host reconstructs and resumes the exact earlier source
+    ok 4 - the same host reconstructs and resumes the exact earlier source
+      ---
+      duration_ms: 1147.564667
+      ...
+    1..4
+ok 18 - artwork update offers explicit exact-snapshot recovery and Continue retains the original save
+  ---
+  duration_ms: 3734.496458
+  ...
+# Subtest: edition chrome and retained-artwork recovery switch locale without remounting controls
+ok 19 - edition chrome and retained-artwork recovery switch locale without remounting controls
+  ---
+  duration_ms: 542.544584
+  ...
+# Subtest: edition switch retains the paused attempt and offers Stay before verified departure
+ok 20 - edition switch retains the paused attempt and offers Stay before verified departure
+  ---
+  duration_ms: 1101.828958
+  ...
+# Subtest: edition switch retains the paused attempt and offers Stay before quota departure
+ok 21 - edition switch retains the paused attempt and offers Stay before quota departure
+  ---
+  duration_ms: 960.762834
+  ...
+# Subtest: edition switch retains the paused attempt and offers Stay before occupied departure
+ok 22 - edition switch retains the paused attempt and offers Stay before occupied departure
+  ---
+  duration_ms: 779.360417
+  ...
+# Subtest: edition switch cancellation retires pending retention and cannot navigate after a late completion
+ok 23 - edition switch cancellation retires pending retention and cannot navigate after a late completion
+  ---
+  duration_ms: 770.401958
+  ...
+# Subtest: edition switch permits only its company destinations and does not prompt when no flight exists
+ok 24 - edition switch permits only its company destinations and does not prompt when no flight exists
+  ---
+  duration_ms: 361.313375
+  ...
+# Subtest: a forged cross-company selection cannot save, replace or leave the current attempt
+ok 25 - a forged cross-company selection cannot save, replace or leave the current attempt
+  ---
+  duration_ms: 846.321583
+  ...
+# Subtest: retained edition chrome does not borrow a newly adopted logo outside its saved asset closure
+ok 26 - retained edition chrome does not borrow a newly adopted logo outside its saved asset closure
+  ---
+  duration_ms: 344.725167
+  ...
+# Subtest: edition runs the complete Solo host with canonical rules, settings and mission library
+ok 27 - edition runs the complete Solo host with canonical rules, settings and mission library
+  ---
+  duration_ms: 875.838125
+  ...
+# Subtest: edition display controls retain the shared preferences without changing a paused flight or its exact receipt
+ok 28 - edition display controls retain the shared preferences without changing a paused flight or its exact receipt
+  ---
+  duration_ms: 764.253291
+  ...
+# Subtest: edition keyboard steers through actual launch and settings focus without accepting a held menu key
+ok 29 - edition keyboard steers through actual launch and settings focus without accepting a held menu key
+  ---
+  duration_ms: 1057.94125
+  ...
+# Subtest: edition keyboard recovers after window blur and an unobserved keyup
+ok 30 - edition keyboard recovers after window blur and an unobserved keyup
+  ---
+  duration_ms: 932.088416
+  ...
+# Subtest: edition keyboard recovers after visibility change without blur and an unobserved keyup
+ok 31 - edition keyboard recovers after visibility change without blur and an unobserved keyup
+  ---
+  duration_ms: 886.448208
+  ...
+# Subtest: edition Continue preserves a matching receipt and rejects a same-ID changed palette without overwriting recovery
+    # Subtest: save the accepted appearance
+    ok 1 - save the accepted appearance
+      ---
+      duration_ms: 687.125666
+      ...
+    # Subtest: matching edition resumes
+    ok 2 - matching edition resumes
+      ---
+      duration_ms: 637.399667
+      ...
+    # Subtest: palette
+    ok 3 - palette
+      ---
+      duration_ms: 315.592833
+      ...
+    # Subtest: missing receipt
+    ok 4 - missing receipt
+      ---
+      duration_ms: 335.898708
+      ...
+    1..4
+ok 32 - edition Continue preserves a matching receipt and rejects a same-ID changed palette without overwriting recovery
+  ---
+  duration_ms: 1977.211291
+  ...
+# Subtest: edition pause keeps canonical Skip confirmation and Watch first cut actions reachable
+ok 33 - edition pause keeps canonical Skip confirmation and Watch first cut actions reachable
+  ---
+  duration_ms: 4430.8925
+  ...
+# Subtest: edition First Flight uses shared course rules and returns to its own company
+ok 34 - edition First Flight uses shared course rules and returns to its own company
+  ---
+  duration_ms: 291.704916
+  ...
+# Subtest: edition controller practice reconstructs only its selected mission without shared Playground storage
+ok 35 - edition controller practice reconstructs only its selected mission without shared Playground storage
+  ---
+  duration_ms: 299.162625
+  ...
+# Subtest: reward-enabled controller practice boots without a Journey authority and cannot earn discoveries
+ok 36 - reward-enabled controller practice boots without a Journey authority and cannot earn discoveries
+  ---
+  duration_ms: 654.724333
+  ...
+# Subtest: official DroneAid wordmark belongs only to the aggregate landing and keeps a text fallback
+    # Subtest: droneaid
+    ok 1 - droneaid
+      ---
+      duration_ms: 3528.600209
+      ...
+    # Subtest: droneaid-nl-workshop-lights
+    ok 2 - droneaid-nl-workshop-lights
+      ---
+      duration_ms: 1063.067958
+      ...
+    1..2
+ok 37 - official DroneAid wordmark belongs only to the aggregate landing and keeps a text fallback
+  ---
+  duration_ms: 4592.426708
+  ...
+# Subtest: every declared edition boots and starts through the canonical Solo host
+    # Subtest: social-drone-ua
+    ok 1 - social-drone-ua
+      ---
+      duration_ms: 2687.509666
+      ...
+    # Subtest: victory-drones
+    ok 2 - victory-drones
+      ---
+      duration_ms: 2288.360708
+      ...
+    # Subtest: ukraine-culture
+    ok 3 - ukraine-culture
+      ---
+      duration_ms: 5549.323959
+      ...
+    # Subtest: fpv-learning
+    ok 4 - fpv-learning
+      ---
+      duration_ms: 6401.626667
+      ...
+    # Subtest: coupa-all
+    ok 5 - coupa-all
+      ---
+      duration_ms: 3774.605959
+      ...
+    # Subtest: coupa-adventure
+    ok 6 - coupa-adventure
+      ---
+      duration_ms: 1785.860333
+      ...
+    # Subtest: coupa-culture
+    ok 7 - coupa-culture
+      ---
+      duration_ms: 1260.01825
+      ...
+    # Subtest: coupa-foundations
+    ok 8 - coupa-foundations
+      ---
+      duration_ms: 1649.152125
+      ...
+    # Subtest: coupa-operations
+    ok 9 - coupa-operations
+      ---
+      duration_ms: 1308.740625
+      ...
+    # Subtest: coupa-developers
+    ok 10 - coupa-developers
+      ---
+      duration_ms: 1945.316875
+      ...
+    # Subtest: droneaid-community
+    ok 11 - droneaid-community
+      ---
+      duration_ms: 1159.102125
+      ...
+    # Subtest: droneaid-nl-community
+    ok 12 - droneaid-nl-community
+      ---
+      duration_ms: 4778.736666
+      ...
+    # Subtest: droneaid-nl-workshop-lights
+    ok 13 - droneaid-nl-workshop-lights
+      ---
+      duration_ms: 1417.28825
+      ...
+    # Subtest: droneaid-nl-parts-in-motion
+    ok 14 - droneaid-nl-parts-in-motion
+      ---
+      duration_ms: 1084.329834
+      ...
+    # Subtest: droneaid-nl-makers-together
+    ok 15 - droneaid-nl-makers-together
+      ---
+      duration_ms: 1329.380792
+      ...
+    # Subtest: droneaid-nl-careful-handoff
+    ok 16 - droneaid-nl-careful-handoff
+      ---
+      duration_ms: 1195.39925
+      ...
+    # Subtest: droneaid-nl-signals-of-support
+    ok 17 - droneaid-nl-signals-of-support
+      ---
+      duration_ms: 1188.477458
+      ...
+    # Subtest: droneaid-nl-shared-horizon
+    ok 18 - droneaid-nl-shared-horizon
+      ---
+      duration_ms: 1159.434458
+      ...
+    1..18
+ok 38 - every declared edition boots and starts through the canonical Solo host
+  ---
+  duration_ms: 41965.991625
+  ...
+# Subtest: same-origin installed creator campaign cannot inject missions into a selected edition
+ok 39 - same-origin installed creator campaign cannot inject missions into a selected edition
+  ---
+  duration_ms: 845.61625
+  ...
+# Subtest: edition home keeps play primary while Settings retains localized world choice and context
+ok 40 - edition home keeps play primary while Settings retains localized world choice and context
+  ---
+  duration_ms: 368.471042
+  ...
+# Subtest: demo Ready handoffs retain exact authored Solo route ownership
+ok 41 - demo Ready handoffs retain exact authored Solo route ownership
+  ---
+  duration_ms: 2.761792
+  ...
+# Subtest: fixed destinations preserve release prefix across every current/destination mode
+ok 42 - fixed destinations preserve release prefix across every current/destination mode
+  ---
+  duration_ms: 0.712792
+  ...
+# Subtest: HTTP and file deployments retain their own directories and encoded identifiers
+ok 43 - HTTP and file deployments retain their own directories and encoded identifiers
+  ---
+  duration_ms: 0.114625
+  ...
+# Subtest: builder admits only known authored routes, explicit Legacy and supported host modes
+ok 44 - builder admits only known authored routes, explicit Legacy and supported host modes
+  ---
+  duration_ms: 3.070667
+  ...
+# Subtest: opaque query reader distinguishes absent, malformed and duplicate requests
+ok 45 - opaque query reader distinguishes absent, malformed and duplicate requests
+  ---
+  duration_ms: 0.376417
+  ...
+# Subtest: session state is stable across releases, isolated by host mode and touches only its key
+ok 46 - session state is stable across releases, isolated by host mode and touches only its key
+  ---
+  duration_ms: 0.443709
+  ...
+# Subtest: failed storage retains an in-memory copy and malformed data never deletes other content
+ok 47 - failed storage retains an in-memory copy and malformed data never deletes other content
+  ---
+  duration_ms: 0.276166
+  ...
+# Subtest: Archive browsing survives a page return without rewriting legacy session records or progress
+ok 48 - Archive browsing survives a page return without rewriting legacy session records or progress
+  ---
+  duration_ms: 0.446416
+  ...
+# Subtest: a failed newer write cannot be replaced by older readable storage
+ok 49 - a failed newer write cannot be replaced by older readable storage
+  ---
+  duration_ms: 0.161417
+  ...
+# Subtest: select-only Versus mode links keep exact identity without upgrading malformed intent to Play
+ok 50 - select-only Versus mode links keep exact identity without upgrading malformed intent to Play
+  ---
+  duration_ms: 0.82675
+  ...
+1..50
+# tests 78
+# suites 0
+# pass 78
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 77740.205625

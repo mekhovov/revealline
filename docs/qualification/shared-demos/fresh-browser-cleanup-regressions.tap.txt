@@ -1,0 +1,20 @@
+TAP version 13
+# Subtest: survival Fresh CLI closes its browser and saves one failed receipt when context setup fails
+ok 1 - survival Fresh CLI closes its browser and saves one failed receipt when context setup fails
+  ---
+  duration_ms: 199.808542
+  ...
+# Subtest: sim Fresh CLI closes its browser and saves one failed receipt when context setup fails
+ok 2 - sim Fresh CLI closes its browser and saves one failed receipt when context setup fails
+  ---
+  duration_ms: 224.652916
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 463.461

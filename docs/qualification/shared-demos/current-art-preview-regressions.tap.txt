@@ -1,0 +1,55 @@
+TAP version 13
+# Subtest: trusted locator mapping remains fresh for 209 exact owners including 56 FPV owners
+ok 1 - trusted locator mapping remains fresh for 209 exact owners including 56 FPV owners
+  ---
+  duration_ms: 50431.600792
+  ...
+# Subtest: lookup and construction are lazy and never accept URLs or uploaded owner locators
+ok 2 - lookup and construction are lazy and never accept URLs or uploaded owner locators
+  ---
+  duration_ms: 2.666875
+  ...
+# Subtest: procedural previews use the exact registered scene renderer, theme, level and labelled seed
+ok 3 - procedural previews use the exact registered scene renderer, theme, level and labelled seed
+  ---
+  duration_ms: 1.742
+  ...
+# Subtest: an exact source PNG is loaded once on request and closed with its owner
+ok 4 - an exact source PNG is loaded once on request and closed with its owner
+  ---
+  duration_ms: 711.233542
+  ...
+# Subtest: only a missing source PNG falls back to the exact bounded embedded pack
+ok 5 - only a missing source PNG falls back to the exact bounded embedded pack
+  ---
+  duration_ms: 2330.897708
+  ...
+# Subtest: external source previews keep external owners distinct without installing or fetching the full chapter
+ok 6 - external source previews keep external owners distinct without installing or fetching the full chapter
+  ---
+  duration_ms: 541.957417
+  ...
+# Subtest: source failures, redirects, truncated bytes and bad decoded dimensions never become previews
+ok 7 - source failures, redirects, truncated bytes and bad decoded dimensions never become previews
+  ---
+  duration_ms: 575.783917
+  ...
+# Subtest: newer requests cancel and dispose late decoded originals without affecting the replacement
+ok 8 - newer requests cancel and dispose late decoded originals without affecting the replacement
+  ---
+  duration_ms: 613.884083
+  ...
+# Subtest: abort cancels a pending response stream and a closed loader performs no new IO
+ok 9 - abort cancels a pending response stream and a closed loader performs no new IO
+  ---
+  duration_ms: 1.225208
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 55602.26325

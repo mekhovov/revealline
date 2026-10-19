@@ -1,0 +1,82 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, stat, mkdir } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { createRun, stepRun, releaseInputs, FIXED_DT } from '../game/core/index.mjs';
+import { createRecorder, recordInput, recordRelease, exportReplay, verifyReplay, authoritativeCheckpoint, snapshotReplay } from '../game/replay.mjs';
+import { prepareReplayPlayer } from '../game/replay-player.mjs';
+import { demoInputTraceIdentity } from '../game/demo-catalog.mjs';
+import { fingerprintDemoSources } from '../scripts/demo-source-fingerprint.mjs';
+const args=Object.fromEntries(process.argv.slice(2).map(arg=>arg.replace(/^--/,'').split('=')));
+assert.equal(process.version,'v22.13.1');assert.equal(process.arch,'x64');assert.equal(process.platform,'darwin');
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const pin=async path=>{const body=await readFile(path);return {path,sha256:sha(body),bytes:body.length};};
+async function qualify(proof){
+ const verified=verifyReplay(proof);assert.equal(verified.match,true,JSON.stringify(verified.diagnostics));
+ const player=await prepareReplayPlayer(proof,{chunkTicks:1200});
+ try{
+  const initial=player.state.claimedCount;let captures=0,advances=0;player.play();
+  while(player.phase==='playing'){
+   const tick=player.state.tick;captures+=player.advance(0.25).events.filter(event=>event.type==='cut.closed').length;
+   assert.ok(++advances<=Math.ceil(proof.ticks/30)+2);assert.ok(player.state.tick>tick||player.phase!=='playing');
+  }
+  assert.equal(player.phase,'complete');assert.equal(player.state.tick,proof.ticks);assert.equal(player.state.status,proof.summary.status);
+  assert.deepEqual(authoritativeCheckpoint(player.state),proof.checkpoint);assert.ok(captures>0);assert.ok(player.state.claimedCount-initial>0);
+  return {match:verified.match,actual:verified.actual,phase:player.phase,captures,capturedCells:player.state.claimedCount-initial,ticks:player.state.tick,outcome:player.state.status};
+ }finally{await player.dispose();}
+}
+if(args.mode==='verify-child'){
+ const proof=snapshotReplay(await readFile(args.candidate,'utf8'));
+ const result=await qualify(proof);
+ process.stdout.write(JSON.stringify({environment:{version:process.version,platform:process.platform,arch:process.arch},candidate:await pin(args.candidate),...result})+'\n');
+}else{
+ assert.equal(args.run,'approved');
+ const head=()=>execFileSync('/usr/bin/arch',['-arm64','/usr/bin/git','rev-parse','HEAD'],{encoding:'utf8'}).trim();
+ const script=await readFile(new URL(import.meta.url));
+ for(const name of [args.report,args.report.replace(/\.json$/,'.mjs.txt')]){try{await stat(name);throw Error(`Refusing existing ${name}`);}catch(error){if(error.code!=='ENOENT')throw error;}}
+ const report={format:'SharedDemoNativeSoloCandidateCaptureV1',complete:false,started:new Date().toISOString(),checks:[],errors:[],
+  environment:{version:process.version,platform:process.platform,arch:process.arch,versions:process.versions,executable:await pin(process.execPath)},
+  headBefore:head(),sourceBefore:await fingerprintDemoSources(process.cwd()),buildInputsBefore:await fingerprintDemoSources(process.cwd(),['scripts','authoring']),observerSHA256:sha(script),
+  scope:'Ignored authoring candidates from original normal simulation inputs, createRecorder/recordInput/exportReplay, five-second checkpoints, same-process fullverification and a separate exactNode child strictverification+playerterminalplayback. No production/catalog write, no compatibility relaxation, and no Linux qualification claim.'};
+ assert.equal(report.headBefore,args.head);assert.equal(report.sourceBefore.sha256,args.fingerprint);
+ const directory=args.report.replace(/\.json$/,'-candidates');await mkdir(directory,{recursive:false,mode:0o700});report.directory=directory;
+ try{
+  const catalog=JSON.parse(await readFile('game/demo-data/catalog.json','utf8'));
+  for(const id of ['solo-qualified-478808a96f4fbf5e','solo-qualified-d0257fa131665b79','solo-qualified-cc8994b6f3d0482f']){
+   const clip=catalog.clips.find(row=>row.id===id);assert.ok(clip);
+   const sourcePath='game/'+clip.replayURL.replace(/^\.\//,'');const source=snapshotReplay(await readFile(sourcePath,'utf8'));
+   const run=createRun(source.level,source.options),recorder=createRecorder(source.level,source.options,source.build),checkpoints=[];
+   const initial=run.claimedCount;let captures=0;
+   trace:for(const segment of source.segments){
+    if(['won','lost'].includes(run.status))break;
+    if(segment.releaseBefore){releaseInputs(run);recordRelease(recorder);}
+    for(let tick=0;tick<segment.ticks;tick++){
+     if(['won','lost'].includes(run.status))break trace;
+     recordInput(recorder,segment.input);stepRun(run,segment.input,FIXED_DT);captures+=run.events.filter(event=>event.type==='cut.closed').length;
+     if(run.tick%600===0)checkpoints.push({tick:run.tick,...authoritativeCheckpoint(run)});
+    }
+   }
+   if(source.releaseAfter&&run.tick===source.ticks){releaseInputs(run);recordRelease(recorder);}
+   const row={id,levelId:clip.levelId,source:await pin(sourcePath),natural:{status:run.status,tick:run.tick,captures,capturedCells:run.claimedCount-initial,sourceTicks:source.ticks}};
+   if(!['won','lost'].includes(run.status)||captures<=0||run.claimedCount<=initial){row.eligible=false;row.reason='Original input trace does not reach a terminal outcome with meaningful progress in this native runtime.';report.checks.push(row);continue;}
+   const proof=snapshotReplay(exportReplay(recorder,run));
+   for(const key of ['version','ruleset','build','level','options'])assert.deepEqual(proof[key],source[key],`${id} changes ${key}`);
+   const exactTrace=['segments','ticks','releaseAfter'].every(key=>JSON.stringify(proof[key])===JSON.stringify(source[key]));
+   const traceIdentity=demoInputTraceIdentity(proof);row.genericVariantEligible=exactTrace&&traceIdentity===clip.inputTraceIdentity&&proof.ticks/120===clip.durationSeconds&&proof.options.turnPolicy===clip.turnPolicy;
+   row.trace={source:clip.inputTraceIdentity,actual:traceIdentity,exactTrace,sourceTicks:source.ticks,actualTicks:proof.ticks,sourceOutcome:source.summary.status,actualOutcome:proof.summary.status};
+   const first=verifyReplay(proof);assert.equal(first.match,true,JSON.stringify(first.diagnostics));row.authoringVerification={match:first.match,actual:first.actual};
+   const replayPath=directory+'/'+id+'.node22131-x64.replay.json',diagnosticPath=replayPath.replace(/\.replay\.json$/,'.diagnostics.json');
+   const diagnostic={format:'SoloDemoDiagnosticsV1',inputTraceIdentity:traceIdentity,checkpoints};assert.equal(checkpoints.length,Math.floor(proof.ticks/600));
+   await writeFile(replayPath,JSON.stringify(proof)+'\n',{flag:'wx'});await writeFile(diagnosticPath,JSON.stringify(diagnostic)+'\n',{flag:'wx'});
+   row.candidate=await pin(replayPath);row.diagnostic=await pin(diagnosticPath);
+   const output=execFileSync(process.execPath,[new URL(import.meta.url).pathname,'--mode=verify-child','--candidate='+replayPath],{encoding:'utf8',timeout:45000,maxBuffer:1024*1024,env:{...process.env,NODE_DISABLE_COMPILE_CACHE:'1'}});
+   row.independent=JSON.parse(output);assert.deepEqual(row.independent.candidate,row.candidate);assert.equal(row.independent.actual.checkpoint.hash,proof.checkpoint.hash);
+   row.eligible=true;report.checks.push(row);console.log(JSON.stringify({id,natural:row.natural,trace:row.trace,genericVariantEligible:row.genericVariantEligible,verified:row.independent.match,phase:row.independent.phase}));
+  }
+  report.complete=report.checks.length===3&&report.checks.every(row=>row.eligible===true);
+ }catch(error){report.complete=false;report.failure=String(error.stack??error);}
+ finally{
+  try{report.headAfter=head();report.sourceAfter=await fingerprintDemoSources(process.cwd());report.buildInputsAfter=await fingerprintDemoSources(process.cwd(),['scripts','authoring']);report.observerSHA256After=sha(await readFile(new URL(import.meta.url)));assert.equal(report.headBefore,report.headAfter);assert.deepEqual(report.sourceBefore,report.sourceAfter);assert.deepEqual(report.buildInputsBefore,report.buildInputsAfter);assert.equal(report.observerSHA256,report.observerSHA256After);report.sourceUnchanged=true;}catch(error){report.complete=false;report.sourceUnchanged=false;report.bindingFailure=String(error.stack??error);}
+  report.finished=new Date().toISOString();await writeFile(args.report.replace(/\.json$/,'.mjs.txt'),script,{flag:'wx'});await writeFile(args.report,JSON.stringify(report,null,2)+'\n',{flag:'wx'});if(!report.complete)process.exitCode=1;
+ }
+}

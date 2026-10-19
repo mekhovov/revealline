@@ -1,0 +1,77 @@
+{
+  "format": "SharedDemoSourceFailureDiagnosticsV1",
+  "startedAt": "2026-10-19T07:58:04.110081+00:00",
+  "completedAt": "2026-10-19T07:58:05.577779+00:00",
+  "sourceHeadBefore": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "sourceHeadAfter": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-reporter=tap",
+    "--test-name-pattern=^actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily$",
+    "game/test/demo-sources.test.mjs"
+  ],
+  "elapsedSeconds": 1.482,
+  "exitCode": 0,
+  "sourcePinsBefore": {
+    "game/test/demo-sources.test.mjs": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/demo-catalog.mjs": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+    "game/demo-runtime.mjs": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/replay.mjs": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+    "game/demo-data/catalog.json": "2dcb1597df76c9a7401b37d22cc963fcf15984222a9bda88cad823efcd7d4f0b",
+    "game/content/campaign.json": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718",
+    "game/content/classes.json": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84",
+    "game/content/packs/fpv-arcade-r5.json": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+  },
+  "sourcePinsAfter": {
+    "game/test/demo-sources.test.mjs": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/demo-catalog.mjs": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+    "game/demo-runtime.mjs": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/replay.mjs": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+    "game/demo-data/catalog.json": "2dcb1597df76c9a7401b37d22cc963fcf15984222a9bda88cad823efcd7d4f0b",
+    "game/content/campaign.json": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718",
+    "game/content/classes.json": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84",
+    "game/content/packs/fpv-arcade-r5.json": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+  },
+  "sourceStable": true,
+  "originalTestSHA256": "5ffc5b64508c7a8387f2498774abfecd2ef5d04c6fb45763f7731c6318d3dcf4",
+  "readProof": {
+    "path": ".cache/demo-source-admission-22.22.2-1efd2b31f.json",
+    "sha256": "dd3e1591bb2c9cacac6dfa58b21c629d306e45891a3553a0eff2e4fee8361ca7",
+    "passed": true,
+    "replayCount": 17,
+    "unchangedProductionPins": true,
+    "durablePath": "docs/qualification/shared-demos/demo-source-failure-diagnostics-1efd2b31f/source-probe-node22.json"
+  },
+  "changes": "Only first-case create failure adds bounded source/level/campaign/attemptURL/error.diagnostics JSON and rethrows the same error. Existing source creation, assertions, compatibility and recordings are unchanged.",
+  "limits": {
+    "diagnosticBytes": 4096,
+    "diagnosticNodes": 128,
+    "diagnosticDepth": 5,
+    "diagnosticArray": 16,
+    "diagnosticString": 512,
+    "urlCount": 16,
+    "urlChars": 512
+  },
+  "validation": {
+    "focusedCase": "PASS",
+    "formatter": "PASS unchanged",
+    "actualReplayCount": 17,
+    "countEvidence": "Same source enumeration and complete create loop; all production source pins match the prior17-source proof.",
+    "lint": "PASS",
+    "diffCheck": "PASS"
+  },
+  "limitations": [
+    "Local macOS Node22.22.2 does not reproduce hosted Node22.13.1/Linux; hosted failure source/cause remains unidentified.",
+    "The failure branch was not reached during this green source replay test."
+  ],
+  "tap": {
+    "path": "docs/qualification/shared-demos/demo-source-failure-diagnostics-1efd2b31f/focused.tap.txt",
+    "bytes": 402,
+    "sha256": "9b37aee3aa76fbbf31789ef92832aeb20e1fddb29c4bc9b1f8d05a438555f4d9"
+  }
+}

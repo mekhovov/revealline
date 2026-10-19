@@ -1,0 +1,567 @@
+{
+  "format": "SharedDemoSignal08X86SupervisionV1",
+  "complete": true,
+  "started": "2026-10-19T09:21:12.289730+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    ".cache/probe-signal08-x86-emitted.mjs",
+    "--run=approved",
+    "--head=b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "--fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "--emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined",
+    "--report=.cache/signal08-x86-native-emitted-b4688ca21.json",
+    "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+    "--executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh"
+  ],
+  "timeoutSeconds": 300,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21",
+  "before": {
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "runtime": {
+      "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+      "files": 10000,
+      "bytes": 404485348
+    },
+    "buildInputs": {
+      "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+      "files": 9406,
+      "bytes": 348401321
+    },
+    "helpers": {
+      ".cache/probe-signal08-x86-emitted.mjs": {
+        "sha256": "4026d4523f43448694b0969359e63ba6754d3b325dad0d37b1aef503fd042629",
+        "bytes": 10605
+      },
+      ".cache/qualify-demo-menu-focus-emitted.mjs": {
+        "sha256": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb",
+        "bytes": 14455
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      ".cache/demo-probe-evidence.mjs": {
+        "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+        "bytes": 2632
+      },
+      "scripts/shared-demo-listener-probe.mjs": {
+        "sha256": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea",
+        "bytes": 5642
+      },
+      "scripts/serve-production-preview.mjs": {
+        "sha256": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+        "bytes": 13598
+      },
+      "scripts/shared-demo-browser-report.mjs": {
+        "sha256": "395200ee9930991de4cf5774005eac84a9c40fcbea925a999159bad8f71fcbc0",
+        "bytes": 4072
+      },
+      "scripts/emitted-preview.mjs": {
+        "sha256": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+        "bytes": 11434
+      },
+      "docs/qualification/shared-demos/source-freeze-latest.json": {
+        "sha256": "05cb055569df7fda6b9a26a7ac3767345e62846a3bea3bea7f91f364b2b78d88",
+        "bytes": 423
+      },
+      ".cache/chrome-x86-signal08.sh": {
+        "sha256": "7a95c11219d4b021a50c891ced4f5bed4c12ec15d04178365cd7315e038e4800",
+        "bytes": 105
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "emitted": {
+      ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined/manifest.json": {
+        "sha256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+        "bytes": 1305172
+      },
+      "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json": {
+        "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba",
+        "bytes": 2067388
+      },
+      "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.inventory.json": {
+        "sha256": "c54228729e1b24e9ee49de79463b47629aecf557fa1dccd2e04b666abca3062d",
+        "bytes": 941657
+      }
+    },
+    "supervisor": {
+      "sha256": "85699d9b43fc222aac07eede79fb98447e98814257ecfd144a8569278cc5799d",
+      "bytes": 12737
+    }
+  },
+  "limitations": [
+    "Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 360 seconds.",
+    "Read-only x86_64 macOS observation under Rosetta; not Linux proof. A completed observation may contain strictly rejected replays."
+  ],
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 20,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 53336,
+        "ppid": 53316,
+        "pgid": 53336,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:12 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/probe-signal08-x86-emitted.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined --report=.cache/signal08-x86-native-emitted-b4688ca21.json --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T09:21:12.339323+00:00"
+      },
+      {
+        "pid": 53379,
+        "ppid": 53336,
+        "pgid": 53336,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:13 2026",
+        "argv": "(rg)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53336,
+          "Mon Oct 19 11:21:12 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/probe-signal08-x86-emitted.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined --report=.cache/signal08-x86-native-emitted-b4688ca21.json --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh"
+        ],
+        "observedAt": "2026-10-19T09:21:13.939131+00:00"
+      },
+      {
+        "pid": 53386,
+        "ppid": 53336,
+        "pgid": 53336,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:15 2026",
+        "argv": "/usr/bin/uname -m",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53336,
+          "Mon Oct 19 11:21:12 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/probe-signal08-x86-emitted.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined --report=.cache/signal08-x86-native-emitted-b4688ca21.json --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh"
+        ],
+        "observedAt": "2026-10-19T09:21:15.492926+00:00"
+      },
+      {
+        "pid": 53429,
+        "ppid": 53336,
+        "pgid": 53336,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:16 2026",
+        "argv": "(rg)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53336,
+          "Mon Oct 19 11:21:12 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/probe-signal08-x86-emitted.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined --report=.cache/signal08-x86-native-emitted-b4688ca21.json --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh"
+        ],
+        "observedAt": "2026-10-19T09:21:17.036743+00:00"
+      },
+      {
+        "pid": 53439,
+        "ppid": 53336,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:18 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window",
+        "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53336,
+          "Mon Oct 19 11:21:12 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/probe-signal08-x86-emitted.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined --report=.cache/signal08-x86-native-emitted-b4688ca21.json --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh"
+        ],
+        "observedAt": "2026-10-19T09:21:18.586059+00:00"
+      },
+      {
+        "pid": 53446,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:19 2026",
+        "argv": "/usr/bin/profiles status -type enrollment",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:19.088438+00:00"
+      },
+      {
+        "pid": 53483,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:22 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (GPU).app/Contents/MacOS/Google Chrome Helper (GPU) --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-breakpad --headless --enable-unsafe-swiftshader --noerrdialogs --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --gpu-preferences=WAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA= --shared-files --field-trial-handle=1718379636,r,5922246029209907362,12523616796093516438,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,11720469886224875515,6878291763853409775,4 --trace-process-track-uuid=3190708988185955192",
+        "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:23.177476+00:00"
+      },
+      {
+        "pid": 53485,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:22 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --no-sandbox --mute-audio --noerrdialogs --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --shared-files --field-trial-handle=1718379636,r,5922246029209907362,12523616796093516438,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,11720469886224875515,6878291763853409775,4 --trace-process-track-uuid=3190708989122997041",
+        "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:23.177512+00:00"
+      },
+      {
+        "pid": 53487,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:23 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=service --no-sandbox --mute-audio --noerrdialogs --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --shared-files --field-trial-handle=1718379636,r,5922246029209907362,12523616796093516438,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,11720469886224875515,6878291763853409775,4 --trace-process-track-uuid=3190708990060038890",
+        "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:23.177514+00:00"
+      },
+      {
+        "pid": 53488,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:23 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (Alerts).app/Contents/MacOS/Google Chrome Helper (Alerts) --type=utility --utility-sub-type=mac_notifications.mojom.MacNotificationProvider --lang=en-US --service-sandbox-type=none --no-sandbox --mute-audio --message-loop-type-ui --noerrdialogs --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --shared-files --field-trial-handle=1718379636,r,5922246029209907362,12523616796093516438,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,11720469886224875515,6878291763853409775,4 --trace-process-track-uuid=3190708990997080739",
+        "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:23.177516+00:00"
+      },
+      {
+        "pid": 53488,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:23 2026",
+        "argv": "<defunct>",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:23.689517+00:00"
+      },
+      {
+        "pid": 53495,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:24 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --top-chrome-webui --noerrdialogs --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=6 --launch-time-ticks=21897169282 --shared-files --field-trial-handle=1718379636,r,5922246029209907362,12523616796093516438,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,11720469886224875515,6878291763853409775,4 --trace-process-track-uuid=3190708991934122588",
+        "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:24.232843+00:00"
+      },
+      {
+        "pid": 53499,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:24 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --noerrdialogs --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=8 --launch-time-ticks=21897335704 --shared-files --field-trial-handle=1718379636,r,5922246029209907362,12523616796093516438,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,11720469886224875515,6878291763853409775,4 --trace-process-track-uuid=3190708993808206286",
+        "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:24.504474+00:00"
+      },
+      {
+        "pid": 53500,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:24 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --noerrdialogs --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=7 --launch-time-ticks=21897336501 --shared-files --field-trial-handle=1718379636,r,5922246029209907362,12523616796093516438,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,11720469886224875515,6878291763853409775,4 --trace-process-track-uuid=3190708992871164437",
+        "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:24.504510+00:00"
+      },
+      {
+        "pid": 53516,
+        "ppid": 53336,
+        "pgid": 53336,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:26 2026",
+        "argv": "/usr/bin/sample 53439 1 10 -file .cache/signal08-x86-native-emitted-b4688ca21.browser.sample.txt",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53336,
+          "Mon Oct 19 11:21:12 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/probe-signal08-x86-emitted.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined --report=.cache/signal08-x86-native-emitted-b4688ca21.json --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh"
+        ],
+        "observedAt": "2026-10-19T09:21:26.859217+00:00"
+      },
+      {
+        "pid": 53551,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:28 2026",
+        "argv": "(Google Chrome He)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:28.720868+00:00"
+      },
+      {
+        "pid": 53558,
+        "ppid": 53336,
+        "pgid": 53336,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:29 2026",
+        "argv": "/usr/bin/sample 53499 1 10 -file .cache/signal08-x86-native-emitted-b4688ca21.renderer.sample.txt",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53336,
+          "Mon Oct 19 11:21:12 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/probe-signal08-x86-emitted.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined --report=.cache/signal08-x86-native-emitted-b4688ca21.json --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh"
+        ],
+        "observedAt": "2026-10-19T09:21:29.251660+00:00"
+      },
+      {
+        "pid": 53495,
+        "ppid": 53439,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:24 2026",
+        "argv": "(Google Chrome He)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53439,
+          "Mon Oct 19 11:21:18 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T09:21:32.213609+00:00"
+      },
+      {
+        "pid": 53439,
+        "ppid": 53336,
+        "pgid": 53439,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:18 2026",
+        "argv": "(Google Chrome)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53336,
+          "Mon Oct 19 11:21:12 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/probe-signal08-x86-emitted.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined --report=.cache/signal08-x86-native-emitted-b4688ca21.json --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh"
+        ],
+        "observedAt": "2026-10-19T09:21:32.764507+00:00"
+      },
+      {
+        "pid": 53617,
+        "ppid": 53336,
+        "pgid": 53336,
+        "uid": 502,
+        "started": "Mon Oct 19 11:21:34 2026",
+        "argv": "(rg)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          53336,
+          "Mon Oct 19 11:21:12 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/probe-signal08-x86-emitted.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined --report=.cache/signal08-x86-native-emitted-b4688ca21.json --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh"
+        ],
+        "observedAt": "2026-10-19T09:21:34.310860+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/signal08-x86-native-emitted-b4688ca21.log",
+    "byteLimit": 1048576,
+    "totalBytes": 1984,
+    "writtenBytes": 1984,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 1984,
+    "tailSHA256": "f12269a9adbeef45609b8ca064c118f86351e41d5768047eecda9514ef0ff6b5",
+    "tail": "Sampling process 53439 for 1 second with 10 milliseconds of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 53439 written to file .cache/signal08-x86-native-emitted-b4688ca21.browser.sample.txt\nSampling process 53499 for 1 second with 10 milliseconds of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 53499 written to file .cache/signal08-x86-native-emitted-b4688ca21.renderer.sample.txt\n{\"engine\":\"primary\",\"match\":false,\"diagnostics\":[{\"code\":\"state-mismatch\",\"section\":\"enemies\",\"message\":\"Authoritative enemies differs.\",\"expected\":\"28fc2e7ba2c0539c\",\"actual\":\"5d5f527833603614\"}],\"diagnostic\":{\"code\":\"diagnostic-checkpoint-mismatch\",\"firstMismatchingCheckpointTick\":600,\"expected\":\"67078d401c4d6b47\",\"actual\":\"2de4810180a47587\"},\"linux\":[false,true,true]}\n{\"engine\":\"chromium\",\"match\":true,\"diagnostics\":[],\"diagnostic\":null,\"linux\":[false,true,true]}\n{\"engine\":\"firefox\",\"match\":false,\"diagnostics\":[{\"code\":\"state-mismatch\",\"section\":\"enemies\",\"message\":\"Authoritative enemies differs.\",\"expected\":\"d7b102f8a9128e95\",\"actual\":\"5d5f527833603614\"},{\"code\":\"state-mismatch\",\"section\":\"clock\",\"message\":\"Authoritative clock differs.\",\"expected\":\"9e232cdb3132c194\",\"actual\":\"83be6483dc2b7278\"}],\"diagnostic\":{\"code\":\"diagnostic-checkpoint-mismatch\",\"firstMismatchingCheckpointTick\":600,\"expected\":\"a693a2b0126e2de9\",\"actual\":\"2de4810180a47587\"},\"linux\":[false,true,true]}\n{\"engine\":\"webkit\",\"match\":false,\"diagnostics\":[{\"code\":\"state-mismatch\",\"section\":\"enemies\",\"message\":\"Authoritative enemies differs.\",\"expected\":\"ed391a595d4e2fb9\",\"actual\":\"5d5f527833603614\"},{\"code\":\"state-mismatch\",\"section\":\"clock\",\"message\":\"Authoritative clock differs.\",\"expected\":\"ca39e0a04aa6d20e\",\"actual\":\"83be6483dc2b7278\"}],\"diagnostic\":{\"code\":\"diagnostic-checkpoint-mismatch\",\"firstMismatchingCheckpointTick\":600,\"expected\":\"a693a2b0126e2de9\",\"actual\":\"2de4810180a47587\"},\"linux\":[false,true,true]}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "after": {
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "runtime": {
+      "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+      "files": 10000,
+      "bytes": 404485348
+    },
+    "buildInputs": {
+      "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+      "files": 9406,
+      "bytes": 348401321
+    },
+    "helpers": {
+      ".cache/probe-signal08-x86-emitted.mjs": {
+        "sha256": "4026d4523f43448694b0969359e63ba6754d3b325dad0d37b1aef503fd042629",
+        "bytes": 10605
+      },
+      ".cache/qualify-demo-menu-focus-emitted.mjs": {
+        "sha256": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb",
+        "bytes": 14455
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      ".cache/demo-probe-evidence.mjs": {
+        "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+        "bytes": 2632
+      },
+      "scripts/shared-demo-listener-probe.mjs": {
+        "sha256": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea",
+        "bytes": 5642
+      },
+      "scripts/serve-production-preview.mjs": {
+        "sha256": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+        "bytes": 13598
+      },
+      "scripts/shared-demo-browser-report.mjs": {
+        "sha256": "395200ee9930991de4cf5774005eac84a9c40fcbea925a999159bad8f71fcbc0",
+        "bytes": 4072
+      },
+      "scripts/emitted-preview.mjs": {
+        "sha256": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+        "bytes": 11434
+      },
+      "docs/qualification/shared-demos/source-freeze-latest.json": {
+        "sha256": "05cb055569df7fda6b9a26a7ac3767345e62846a3bea3bea7f91f364b2b78d88",
+        "bytes": 423
+      },
+      ".cache/chrome-x86-signal08.sh": {
+        "sha256": "7a95c11219d4b021a50c891ced4f5bed4c12ec15d04178365cd7315e038e4800",
+        "bytes": 105
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "emitted": {
+      ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined/manifest.json": {
+        "sha256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+        "bytes": 1305172
+      },
+      "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json": {
+        "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba",
+        "bytes": 2067388
+      },
+      "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.inventory.json": {
+        "sha256": "c54228729e1b24e9ee49de79463b47629aecf557fa1dccd2e04b666abca3062d",
+        "bytes": 941657
+      }
+    },
+    "supervisor": {
+      "sha256": "85699d9b43fc222aac07eede79fb98447e98814257ecfd144a8569278cc5799d",
+      "bytes": 12737
+    }
+  },
+  "bindingsStable": true,
+  "result": {
+    "path": ".cache/signal08-x86-native-emitted-b4688ca21.json",
+    "sha256": "809a1e97f9d6cc3de7eb284a5af534772d3acaba84268e19156c55f830debf03",
+    "complete": true,
+    "checks": 4,
+    "pageErrors": 0,
+    "failure": null,
+    "browserClosed": true,
+    "previewClosed": true
+  },
+  "elapsedSeconds": 26.31160829199871,
+  "finished": "2026-10-19T09:21:38.601505+00:00"
+}

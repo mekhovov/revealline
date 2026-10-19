@@ -1,3 +1,4 @@
+import { demonstrationEntry, resolveFlightDemonstration } from './demonstration-resolver.mjs';
 import { getLocale, setLocale } from '../../game/i18n/index.mjs';
 import { exportJSONFile, onNativeInactive } from '../../game/platform.mjs';
 import {
@@ -43,6 +44,7 @@ import {
   createFlightGamepad,
   keyboardFlightPreset,
   keyboardFlightHelp,
+  gamepadFlightHelp,
   KEYBOARD_PRESET_KEY,
 } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
@@ -96,6 +98,7 @@ import {
   DEFAULT_RESPONSE,
   createFlightProfileStore,
   responseIdentity,
+  validateFlightResponse,
   STICK_LAYOUTS,
   neutralFlightInput,
 } from './radio-profile.mjs';
@@ -1001,6 +1004,7 @@ export function mountWorldApp({
   window: win = globalThis.window,
   document: doc = globalThis.document,
   rendererFactory = createFlightRenderer,
+  industrialPreparationFactory = prepareNativeIndustrialAttempt,
   globalToolsFactory = mountSimGlobalTools,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
@@ -1075,6 +1079,10 @@ export function mountWorldApp({
     courseScopeProject = null;
   const courseScopes = new Map();
   let renderer = null,
+    demoHost = null,
+    demoActive = false,
+    demoDeparture = false,
+    lastDemoTime = null,
     flight = null,
     recorder = null,
     current = null,
@@ -1268,6 +1276,7 @@ export function mountWorldApp({
     camera: { tilt: Number($('world-tilt').value), verticalFov: Number($('world-fov').value) },
   });
   const savePreferences = () => {
+    if (demoActive && !demoDeparture) return;
     try {
       const preferences = Object.fromEntries(
         preferenceIds
@@ -1306,91 +1315,16 @@ export function mountWorldApp({
   };
   const label = (entry) => entry.course.locales[locale].title;
   let demonstrationCache = new WeakMap();
-  function demonstrationEntry(entry) {
-    const course =
-      entry.appearanceCourse === entry.course ? (entry.sourceCourse ?? entry.course) : entry.course;
-    return {
-      ...entry,
-      course,
-      sourceCourse: course,
-      appearanceCourse: course,
-      presentation: undefined,
-    };
-  }
   function demonstrationFor(entry, mode) {
     if (!entry || entry.regional) return null;
     entry = demonstrationEntry(entry);
     const cache = demonstrationCache.get(entry.course) ?? new Map(),
       cacheKey = `${entry.projectId ?? ''}:${entry.packIdentity}:${mode}`;
     if (cache.has(cacheKey)) return cache.get(cacheKey);
-    if (!entry.legacy) {
-      const source = validateWorldCourse(entry.course),
-        sourceIdentity = dataIdentity(source);
-      const matchesRuntime = (proof) => {
-        try {
-          return (
-            proof?.format ===
-              (source.format === 'FlightCourse.v3' ? 'FlightAttempt.v3' : 'FlightAttempt.v2') &&
-            proof.session === 'demonstration' &&
-            proof.responseIdentity === responseIdentity(proof.response) &&
-            Object.entries(
-              worldFlightIdentity({ course: source, mode, response: proof.response }),
-            ).every(([key, value]) => proof[key] === value)
-          );
-        } catch {
-          return false;
-        }
-      };
-      let candidate =
-        !entry.projectId &&
-        WORLD_DEMONSTRATIONS.find(
-          (item) =>
-            item.proof.course === entry.id &&
-            item.proof.mode === mode &&
-            item.sourceIdentity === sourceIdentity,
-        );
-      if (!candidate && (!entry.projectId || /^fpv-pack:[a-f0-9]{64}$/.test(entry.packIdentity))) {
-        const saved = records.find((r) => {
-          if (
-            r.status !== 'verified' ||
-            r.diagnostic !== 'complete' ||
-            r.packIdentity !== entry.packIdentity ||
-            r.proof.course !== entry.id ||
-            r.proof.mode !== mode ||
-            r.proof.session !== 'demonstration'
-          )
-            return false;
-          try {
-            return (
-              dataIdentity(validateWorldCourse(r.course)) === sourceIdentity &&
-              matchesRuntime(r.proof)
-            );
-          } catch {
-            return false;
-          }
-        });
-        if (saved) candidate = { sourceIdentity, proof: saved.proof };
-      }
-      const proof = candidate?.proof;
-      // Catalogue availability must not initialize a physics world. The full
-      // normalized source fingerprint binds this data to the exact revision;
-      // the shared resolver checks the exact runtime contract without physics;
-      // replayWorldFlight verifies the final state before play.
-      const match =
-        matchesRuntime(proof) && candidate.sourceIdentity === sourceIdentity ? proof : null;
-      cache.set(cacheKey, match);
-      demonstrationCache.set(entry.course, cache);
-      return match;
-    }
-    const proof = FLIGHT_DEMONSTRATIONS.find(
-      (candidate) => candidate.course === entry.id && candidate.mode === mode,
-    );
-    if (!proof || proof.format !== 'FlightAttempt.v1' || proof.session !== 'demonstration')
-      return null;
-    const { identity } = createFlight({ course: entry.course, mode, response: proof.response });
-    const match = Object.entries(identity).every(([key, value]) => proof[key] === value)
-      ? proof
-      : null;
+    const match = resolveFlightDemonstration({
+      entry, mode, worldDemonstrations: WORLD_DEMONSTRATIONS,
+      flightDemonstrations: FLIGHT_DEMONSTRATIONS, records,
+    });
     cache.set(cacheKey, match);
     demonstrationCache.set(entry.course, cache);
     return match;
@@ -2051,11 +1985,7 @@ export function mountWorldApp({
     if (flight) updateHUD(flight.snapshot());
     (open ? $('world-flight-close-menu') : $('world-flight-resume')).focus({ preventScroll: true });
   }
-  const gamepadHelp = () =>
-    txt(
-      'A / Cross: arm · Y / Triangle: reset · Menu / B: pause · R3: camera. Left stick: yaw and throttle adjustment; centre to hold throttle. Right stick / D-pad: tilt. LB/RB: yaw · LT/RT: less/more throttle · X/Square: fire. Steam Input: use a Gamepad layout.',
-      'A / Cross: увімкнути · Y / Triangle: скинути · Menu / B: пауза · R3: камера. Лівий стік: поворот і зміна газу; центр утримує газ. Правий стік / D-pad: нахил. LB/RB: поворот · LT/RT: менше/більше газу · X/Square: вогонь. Steam Input: розкладка Gamepad.',
-    );
+  const gamepadHelp = () => gamepadFlightHelp(locale);
   function gamepadScope() {
     if (
       !flight ||
@@ -4515,6 +4445,7 @@ export function mountWorldApp({
 
   async function saveRecovery() {
     if (
+      (demoActive && !demoDeparture) ||
       !recordStore ||
       preview ||
       !flight ||
@@ -5940,6 +5871,18 @@ export function mountWorldApp({
     }
   }
   function advanceFrame(now) {
+    const demoElapsed = lastDemoTime === null ? 0 : Math.max(0, (now - lastDemoTime) / 1000);
+    lastDemoTime = now;
+    demoHost?.update(demoElapsed);
+    if (demoHost?.active) {
+      let gamepads = [];
+      try { gamepads = win.navigator.getGamepads?.() ?? []; } catch { /* Keyboard and touch remain available. */ }
+      demoHost.controller({ gamepads, now });
+      lastTime = null;
+      lastExecutionTime = win.performance?.now?.() ?? now;
+      accumulator = 0;
+      return;
+    }
     const executedAt = win.performance?.now?.() ?? now,
       executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
     lastExecutionTime = executedAt;
@@ -6525,6 +6468,9 @@ export function mountWorldApp({
     }
   }
   async function startFlight(entry, options = {}) {
+    const demonstratedResponse = options.demonstratedResponse
+      ? validateFlightResponse(clone(options.demonstratedResponse))
+      : null;
     if (!options.tuningDraft) {
       tuning?.endDraftTest();
       activeTuningDraft = null;
@@ -6594,7 +6540,8 @@ export function mountWorldApp({
     if (!entry.legacy) await initWorldRuntime();
     if (!ownsLaunch()) return;
     const retained = Boolean(
-      options.recover ||
+      demonstratedResponse ||
+        options.recover ||
         options.replayProof ||
         options.checkpoint?.proof ||
         entry.course.world?.themeProfile?.format === 'ThemeProfile.v3',
@@ -6614,7 +6561,7 @@ export function mountWorldApp({
       const controller = new AbortController();
       industrialPreparation = controller;
       try {
-        acceptedEnvironment = await prepareNativeIndustrialAttempt({
+        acceptedEnvironment = await industrialPreparationFactory({
           entry: { ...entry, course: sourceCourse },
           mode: requestedMode,
           presentation: acceptedAppearance,
@@ -6623,14 +6570,20 @@ export function mountWorldApp({
           signal: controller.signal,
         });
       } catch (error) {
-        if (disposed || token !== flightToken || controller.signal.aborted) return;
+        if (!ownsLaunch() || controller.signal.aborted) {
+          controller.abort();
+          return;
+        }
         sceneReady = priorSceneReady;
         if (flight) updateHUD(flight.snapshot());
         throw error;
       } finally {
         if (industrialPreparation === controller) industrialPreparation = null;
       }
-      if (disposed || token !== flightToken) return;
+      if (!ownsLaunch()) {
+        controller.abort();
+        return;
+      }
     }
     if (acceptedEnvironment) {
       entry = {
@@ -6705,6 +6658,7 @@ export function mountWorldApp({
         practice: Boolean(options.recover),
         replay: Boolean(options.replayProof || checkpointRequest?.watch),
         practiceAircraftName:
+          !demonstratedResponse &&
           !options.replayProof &&
           !checkpointRequest &&
           selectedSetup?.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
@@ -6912,12 +6866,19 @@ export function mountWorldApp({
     } else {
       tuningStore.refresh();
       const baselineConfiguration = options.tuningDraft ?? tuningStore.effective();
-      const tuningConfiguration = !replayProof && baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
-        ? prepareAircraftChallenge(baselineConfiguration, options.challenge)
-        : baselineConfiguration;
+      const tuningConfiguration = demonstratedResponse
+        ? {
+            ...baselineConfiguration,
+            response: demonstratedResponse,
+            advanced: null,
+            challenge: undefined,
+          }
+        : !replayProof && baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
+          ? prepareAircraftChallenge(baselineConfiguration, options.challenge)
+          : baselineConfiguration;
       const physicalAircraft =
         !replayProof && tuningConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
-      if ((!learning || physicalAircraft) && !replayProof) {
+      if ((demonstratedResponse || !learning || physicalAircraft) && !replayProof) {
         response = clone(tuningConfiguration.response);
         $('world-fov').value = String(tuningConfiguration.camera.verticalFov);
         $('world-tilt').value = String(tuningConfiguration.camera.tilt);
@@ -6951,7 +6912,9 @@ export function mountWorldApp({
           capacityAh: tuningConfiguration.advanced.aircraft.battery.capacityAh,
         });
       aircraftAttemptConfiguration = physicalAircraft ? clone(baselineConfiguration) : null;
-      workbenchAttemptConfiguration = clone(baselineConfiguration);
+      workbenchAttemptConfiguration = clone(
+        demonstratedResponse ? tuningConfiguration : baselineConfiguration,
+      );
       activeTuningDraft = options.tuningDraft ? clone(tuningConfiguration) : null;
       recorder =
         physicalAircraft || modePractice || entry.freeFlight
@@ -7122,6 +7085,7 @@ export function mountWorldApp({
     }
     if (
       !replayProof &&
+      !demonstratedResponse &&
       ownsLaunch() &&
       !options.paused &&
       !options.preview &&
@@ -9434,6 +9398,123 @@ export function mountWorldApp({
       })
       .catch(reportError);
   void cloneChallenge(catalogue.find((e) => !e.legacy)).catch(reportError);
+  // The standalone optional package remains independent of the main-game shell.
+  // Its same-build installation may add the shared demo host without fetching or
+  // installing another package when it is absent.
+  void import('../../game/ui/demo-entry.mjs')
+    .then(async ({ installDemoEntry, demoLaunchURL, resolveSimDemoLaunch }) => {
+      if (disposed) return;
+      if (requested.has('demo-source')) {
+        const request = new AbortController();
+        const timeout = win.setTimeout(() => request.abort(), 15000);
+        void resolveSimDemoLaunch(win.location.href, { signal: request.signal })
+          .then(async (source) => {
+            if (!source)
+              throw new Error(txt(
+                'This demonstration setup is no longer available.',
+                'Налаштування цієї демонстрації більше недоступні.',
+              ));
+            await ready;
+            if (!disposed)
+              await startFlight(source.entry, {
+                mode: source.variantId,
+                demonstratedResponse: source.demonstratedResponse,
+              });
+          })
+          .catch(reportError)
+          .finally(() => win.clearTimeout(timeout));
+      }
+      const host = await installDemoEntry({
+        document: doc,
+        modeId: 'sim',
+        parent: playShell.elements.content.home.querySelector('.mode-play-main-menu'),
+        registerActions: (nodes) => playShell.addHomeActions(nodes),
+        audio: {
+          snapshot: () => ({
+            ...audio.masterSnapshot(),
+            playbackAvailable: false,
+            desired: false,
+            status: 'idle',
+            queue: [],
+            track: null,
+          }),
+          subscribe: (listener) => audio.subscribeMaster(listener),
+          wake: () => audio.resume(),
+          setMuted: (muted) =>
+            Promise.all([audio.setEnabled(!muted), presentation.setSoundEnabled(!muted)]),
+          setVolume: (value) => audio.setMasterVolume(value),
+        },
+        getContext: () => ({
+          locale,
+          simKeyboardPreset: $('flight-keyboard-preset').value,
+          simRadio: radio.status(),
+        }),
+        canOpen: () =>
+          !disposed &&
+          !doc.hidden &&
+          doc.hasFocus?.() !== false &&
+          !$('world-radio-dialog').open &&
+          !$('sim-settings').open &&
+          !proofImport &&
+          !industrialPreparation &&
+          !checkpointPreparation &&
+          !regionalPreparing &&
+          !doc.querySelector(
+            'dialog[open]:not(#flight-dialog):not(#demo-dialog):not(#worlds-shell-home-dialog)',
+          ),
+        canAutoStart: () =>
+          !disposed &&
+          !doc.hidden &&
+          doc.hasFocus?.() !== false &&
+          !doc.querySelector('dialog[open]:not(#worlds-shell-home-dialog)') &&
+          !industrialPreparation &&
+          !checkpointPreparation,
+        onEnter: () => {
+          demoActive = true;
+          pauseFlight();
+          presentation.pause();
+        },
+        onExit: () => {
+          pauseFlight();
+          demoActive = false;
+          demoDeparture = false;
+          lastTime = lastDemoTime = null;
+          accumulator = 0;
+        },
+        clearInput: () => {
+          input.clear();
+          fire = false;
+          keyboardFireKey = null;
+        },
+        onFreshStart: async (source, isCurrent) => {
+          if (!isCurrent()) return false;
+          demoDeparture = true;
+          try {
+            if (source.modeId === 'sim') {
+              await startFlight(source.entry, {
+                mode: source.variantId,
+                demonstratedResponse: source.demonstratedResponse,
+                isCurrent,
+              });
+              return isCurrent();
+            }
+            if (source.launchURL) {
+              await saveRecovery();
+              if (isCurrent()) win.location.assign(demoLaunchURL(source));
+              return isCurrent();
+            }
+            return false;
+          } finally {
+            demoDeparture = false;
+          }
+        },
+      });
+      if (disposed) host?.destroy();
+      else demoHost = host;
+    })
+    .catch(() => {
+      /* A standalone SIM package may not include the main-game demo host. */
+    });
   raf = win.requestAnimationFrame(frame);
   return {
     ready,
@@ -9544,6 +9625,7 @@ export function mountWorldApp({
           displayPreferences.dispose();
           modeSettingsView?.destroy();
           menuHint.remove();
+          demoHost?.destroy();
           input.dispose();
           gamepad.dispose();
           radioSetup?.dispose();

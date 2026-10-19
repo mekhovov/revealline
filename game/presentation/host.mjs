@@ -578,7 +578,10 @@ export function createPresentationHost({
           .run(
             'main',
             () => {
-              result = work();
+              result = Promise.resolve(work());
+              // Own native rejection while admission settles; the same promise
+              // still delivers its result or error to the load's existing owner.
+              void result.catch(() => {});
               submitted = true;
             },
             admission,

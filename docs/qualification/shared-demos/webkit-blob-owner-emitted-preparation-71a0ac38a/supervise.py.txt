@@ -1,0 +1,86 @@
+"""Bound the diagnostic child using the already reviewed identity-aware owner, not broad process killing."""
+from pathlib import Path
+import ast, datetime, hashlib, json, os, signal, subprocess, sys, threading, time
+
+here = Path(__file__).resolve().parent
+root = Path.cwd()
+arguments = dict(item[2:].split('=', 1) for item in sys.argv[1:])
+assert arguments.get('run') == 'approved'
+assert arguments.get('node') and arguments.get('report')
+report_path = Path(arguments['report']).resolve()
+supervision_path = report_path.with_suffix('.supervision.json')
+assert not supervision_path.exists()
+assert not report_path.exists()
+owner_path = root / '.cache/run-endurance-emitted-final.py'
+owner_bytes = owner_path.read_bytes()
+tree = ast.parse(owner_bytes, filename=str(owner_path))
+names = {'owned_process_snapshot', 'owned_process_identity', 'OwnedProcessTree'}
+selected = [node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.ClassDef)) and node.name in names]
+assert {node.name for node in selected} == names
+scope = dict(globals())
+import re
+scope['re'] = re
+exec(compile(ast.Module(body=selected, type_ignores=[]), str(owner_path), 'exec'), scope)
+OwnedProcessTree = scope['OwnedProcessTree']
+report = {'format': 'SharedDemoOwnerObserverSupervisionV1', 'complete': False, 'started': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'ownerSource': {'path': str(owner_path.relative_to(root)), 'sha256': hashlib.sha256(owner_bytes).hexdigest()},
+          'supervisorSHA256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+          'scope': 'Identity-aware observed descendants only; exact source owner reused by AST selection. This does not change native browser diagnostics or qualification assertions.'}
+node_args = [value for value in sys.argv[1:] if not value.startswith('--node=')]
+child = subprocess.Popen([arguments['node'], str(here / 'run.mjs'), *node_args], cwd=root,
+                         env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'}, start_new_session=True)
+owned = OwnedProcessTree(child)
+remaining = None
+def interrupt(signum, _frame):
+    report['interruptedSignal'] = signal.Signals(signum).name
+    report['complete'] = False
+    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    raise InterruptedError(f'Owner observation interrupted by {signal.Signals(signum).name}')
+signal.signal(signal.SIGTERM, interrupt)
+signal.signal(signal.SIGINT, interrupt)
+try:
+    deadline = time.monotonic() + 330
+    while child.poll() is None:
+        owned.capture()
+        owned.check_limits()
+        if time.monotonic() >= deadline:
+            report['watchdogExpired'] = True
+            break
+        time.sleep(0.2)
+    if child.poll() is None:
+        remaining = owned.cleanup()
+    else:
+        remaining = owned.wait_clear(3)
+        if remaining:
+            report['cleanupNeededAfterNodeExit'] = True
+            remaining = owned.cleanup()
+    report['childExit'] = child.poll()
+    report['ownedProcesses'] = owned.evidence(remaining)
+    owned.check_limits()
+    report['ownerSourceUnchanged'] = owner_path.read_bytes() == owner_bytes
+    if report_path.exists():
+        body = report_path.read_bytes()
+        result = json.loads(body)
+        report['observerReport'] = {'path': str(report_path), 'sha256': hashlib.sha256(body).hexdigest(),
+                                    'complete': result.get('complete'), 'collectionComplete': result.get('collectionComplete')}
+        report['complete'] = (result.get('complete') is True and child.returncode == 0 and
+                              report['ownedProcesses']['verified'] and report['ownerSourceUnchanged'] and
+                              not report.get('watchdogExpired') and not report.get('interruptedSignal'))
+except BaseException as error:
+    report['failure'] = repr(error)
+finally:
+    if remaining is None:
+        try:
+            remaining = owned.cleanup()
+            report['ownedProcesses'] = owned.evidence(remaining)
+        except BaseException as error:
+            report['cleanupFailure'] = repr(error)
+    report['finished'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    with supervision_path.open('x') as output:
+        json.dump(report, output, indent=2)
+        output.write('\n')
+    print(json.dumps({'supervision': str(supervision_path), 'complete': report['complete'],
+                      'childExit': report.get('childExit'),
+                      'ownedProcessesVerified': report.get('ownedProcesses', {}).get('verified')}))
+sys.exit(0 if report['complete'] else 1)

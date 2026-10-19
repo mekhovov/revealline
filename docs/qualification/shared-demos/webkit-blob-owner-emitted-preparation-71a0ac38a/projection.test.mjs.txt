@@ -1,0 +1,338 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import vm from 'node:vm';
+import { projectHost, projectApp, installFinalOwnerObserver, replaceOnce, observationCollectionComplete } from './projection.mjs';
+const root = process.cwd();
+
+function fixture({ brokenConsole = false } = {}) {
+  const messages = [], listeners = new Map();
+  const oldDocument = { readyState: 'complete' };
+  const sandbox = {
+    performance: { timeOrigin: 17, now: () => 5 }, Date, Math,
+    document: oldDocument, location: { href: 'http://fixture/game/' },
+    console: { debug(value) { if (brokenConsole) throw Error('observer transport'); messages.push(value); } },
+    addEventListener(name, callback) { listeners.set(name, callback); },
+  };
+  sandbox.window = sandbox; sandbox.top = sandbox;
+  vm.createContext(sandbox);
+  vm.runInContext('(' + installFinalOwnerObserver.toString() + ')()', sandbox);
+  return { sandbox, observer: sandbox.__demoFinalOwnerObserver, oldDocument, messages, listeners,
+    rows: () => messages.map(s => JSON.parse(s.slice('DEMO_FINAL_OWNER:'.length))) };
+}
+test('request, existing catches and final app sink share exact object/document identities', () => {
+  const f = fixture(), signal = { aborted: false }, error = new TypeError('Load failed');
+  const host = f.observer.host('full');
+  host.load(signal); host.request(signal, 'http://fixture/game/presentation/compiled/a.png');
+  host.caught('load', signal, error, { closed: false });
+  host.caught('load-rethrow-after-dispose', signal, error, { closed: false });
+  f.observer.appCatch('enter', error); f.observer.appCatch('complete-fallback', error);
+  const rows = f.rows(), catches = rows.filter(r => ['host-catch', 'app-catch'].includes(r.kind));
+  assert.equal(new Set(catches.map(r => r.errorId)).size, 1);
+  assert.equal(new Set(catches.map(r => r.documentIdentity)).size, 1);
+  assert.equal(catches[0].pendingRequests[0].url, 'http://fixture/game/presentation/compiled/a.png');
+  assert.equal(catches[0].aborted, false);
+  assert.equal(catches[0].name, 'TypeError');
+});
+test('late observer retains original document, and distinct errors cannot be falsely merged', () => {
+  const f = fixture(), owner = f.observer, first = Error('same'), second = Error('same');
+  owner.appCatch('enter', first);
+  f.sandbox.document = { readyState: 'loading' };
+  f.oldDocument.readyState = 'complete';
+  owner.appCatch('complete-fallback', first);
+  owner.appCatch('enter', second);
+  const rows = f.rows().filter(r => r.kind === 'app-catch');
+  assert.equal(rows[0].errorId, rows[1].errorId);
+  assert.notEqual(rows[1].errorId, rows[2].errorId);
+  assert.ok(rows.every(r => r.readyState === 'complete'));
+  assert.equal(new Set(rows.map(r => r.documentIdentity)).size, 1);
+});
+test('observer transport failure never throws through application and is counted', () => {
+  const f = fixture({ brokenConsole: true }), original = Error('native');
+  assert.doesNotThrow(() => f.observer.appCatch('enter', original));
+  assert.ok(f.observer.snapshot().observerFailures > 0);
+  assert.equal(original.message, 'native');
+});
+test('two pending requests remain explicit ambiguity; delivered response removes only its candidate', () => {
+  const f = fixture(), host = f.observer.host('full'), signal = {};
+  const a = host.request(signal, 'http://fixture/a');
+  host.request(signal, 'http://fixture/b');
+  host.caught('load', signal, Error('failed'));
+  assert.equal(f.rows().at(-1).pendingRequests.length, 2);
+  host.response(a, 200); host.caught('load', signal, Error('failed'));
+  assert.deepEqual(f.rows().at(-1).pendingRequests.map(r => r.url), ['http://fixture/b']);
+});
+test('real source projection preserves native call and promise owner counts; anchors fail closed', async () => {
+  const host = await readFile(root + '/game/presentation/host.mjs', 'utf8');
+  const app = await readFile(root + '/game/app.mjs', 'utf8');
+  const h = projectHost(host), a = projectApp(app);
+  for (const token of ['await fetcher(', 'Promise.resolve(work())', 'throw error;', '.catch('])
+    assert.equal(h.split(token).length, host.split(token).length, token);
+  for (const token of ['.load({ onStatus: presentationFeedback.update })', '.catch(', 'return null;', "painter.onAsset('');"])
+    assert.equal(a.split(token).length, app.split(token).length, token);
+  assert.throws(() => replaceOnce('x x', 'x', 'y'));
+  assert.throws(() => projectHost(host.replace('void result.catch(() => {});', 'void result;')));
+});
+test('actual projected final app catch preserves return, fallback and original throw', async () => {
+  const app = await readFile(root + '/game/app.mjs', 'utf8'), projected = projectApp(app);
+  const pattern = /        \.catch\(\(error\) => \{[\s\S]*?          painter\.onAsset\(''\);[\s\S]*?          return null;\n        \}\);/;
+  const before = app.match(pattern)?.[0], after = projected.match(pattern)?.[0];
+  assert.ok(before && after);
+  const make = (source, thrown) => {
+    const calls = [], seen = [], scope = {
+      presentationFeedback: { update: v => calls.push(['status', v.status]) },
+      painter: { onAsset: v => { calls.push(['asset', v]); if (thrown) throw thrown; } },
+      t: v => v, compiledPresentationWarning: null,
+      __presentationOwner: { appCatch: (phase, error) => seen.push({ phase, error }) },
+      receiver: { catch: fn => fn },
+    };
+    vm.createContext(scope);
+    const callback = vm.runInContext('receiver' + source.trim().replace(/;$/, ''), scope);
+    return { calls, seen, callback };
+  };
+  for (const name of ['AbortError', 'TypeError']) {
+    const error = Object.assign(Error('same native value'), { name }), original = make(before), observed = make(after);
+    assert.equal(original.callback(error), null);
+    assert.equal(observed.callback(error), null);
+    assert.deepEqual(observed.calls, original.calls);
+    assert.equal(observed.seen[0].error, error);
+    assert.equal(observed.seen.at(-1).error, error);
+  }
+  const thrown = Error('fallback itself failed'), observed = make(after, thrown);
+  assert.throws(() => observed.callback(new TypeError('load')), error => error === thrown);
+  assert.deepEqual(observed.seen.map(r => r.phase), ['enter']);
+});
+
+test('derived durable qualifier keeps gameplay functions/deadlines and parses without execution', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const { pathToFileURL, fileURLToPath } = await import('node:url');
+  const path = (await import('node:path')).default;
+  const { createHash } = await import('node:crypto');
+  const runner = await readFile(new URL('./run.mjs', import.meta.url), 'utf8');
+  const body = runner.slice(runner.indexOf('const harnessPath ='), runner.indexOf('const childPath ='));
+  assert.ok(body.startsWith('const harnessPath =') && body.includes('replaceOnce'));
+  const factory = new (Object.getPrototypeOf(async function () {}).constructor)(
+    'root', 'readFile', 'path', 'pathToFileURL', 'fileURLToPath', 'observerModuleURL',
+    'replaceOnce', 'projections', 'pin', 'artifacts',
+    body.replaceAll('import.meta.url', 'observerModuleURL') + '\nreturn derived;',
+  );
+  const pin = async name => ({ path: name, sha256: createHash('sha256').update(await readFile(name)).digest('hex') });
+  const derived = await factory(root, readFile, path, pathToFileURL, fileURLToPath,
+    new URL('./run.mjs', import.meta.url).href, replaceOnce, [], pin, '/unused-fixture');
+  const durable = await readFile(root + '/scripts/qualify-demo-restoration-browser.mjs', 'utf8');
+  const functions = source => source.slice(source.indexOf('async function ordinaryEntry'), source.indexOf('\ntry {\n  preview ='));
+  assert.equal(functions(derived), functions(durable));
+  for (const gate of ['{ timeout: 30000 }', '{ timeout: 3000 }', '{ timeout: 31000 }', '{ timeout: 15000 }', '}, 240000);'])
+    assert.equal(derived.split(gate).length, durable.split(gate).length, gate);
+  execFileSync(process.execPath, ['--input-type=module', '--check'], { input: derived, timeout: 3000, maxBuffer: 1024 * 1024 });
+});
+
+test('request metadata has a fixed bound and excessive instrumentation fails explicitly', () => {
+  const f = fixture(), host = f.observer.host('full'), signal = {};
+  for (let i = 0; i < 1000; i++) assert.ok(host.request(signal, 'http://fixture/' + i));
+  assert.equal(host.request(signal, 'http://fixture/overflow'), undefined);
+  assert.equal(f.observer.snapshot().observerFailures, 1);
+});
+
+
+function completedCollection({ strictFailure = false } = {}) {
+  const code = strictFailure ? 1 : 0;
+  return {
+    report: { childExit: { code, signal: null },
+      streamClosure: { complete: true, code, signal: null },
+      bindingsUnchanged: true, protocolOverflow: 0, parseFailures: 0 },
+    result: { complete: !strictFailure, functionalComplete: true,
+      strictDiagnosticGate: !strictFailure, browserCloseCompleted: true,
+      previewClosed: true, observationPrefixComplete: true },
+  };
+}
+test('fully drained successful child permits completed diagnostic collection', () => {
+  const { report, result } = completedCollection();
+  assert.equal(observationCollectionComplete(report, result), true);
+});
+test('fully collected strict failure stays failed while its collection may be complete', () => {
+  const { report, result } = completedCollection({ strictFailure: true });
+  assert.equal(observationCollectionComplete(report, result), true);
+  assert.equal(result.complete, false);
+  assert.equal(result.strictDiagnosticGate, false);
+  assert.equal(report.childExit.code, 1);
+});
+test('undrained, killed, timed out, inconsistent or abnormally exited children cannot complete collection', () => {
+  const changes = [
+    report => { report.streamClosure.complete = false; },
+    report => { delete report.streamClosure; },
+    report => { report.childExit = { code: null, signal: 'SIGTERM' }; },
+    report => { report.childExit.error = 'spawn failed'; },
+    report => { report.streamClosure.signal = 'SIGKILL'; },
+    report => { report.streamClosure.code = 1; },
+    report => { report.childExit.code = 2; report.streamClosure.code = 2; },
+    report => { report.watchdogExpired = true; },
+    report => { report.terminationError = 'termination failed'; },
+    report => { report.bindingsUnchanged = false; },
+    report => { report.protocolOverflow = 1; },
+    report => { report.parseFailures = 1; },
+  ];
+  for (const change of changes) {
+    const { report, result } = completedCollection();
+    change(report);
+    assert.equal(observationCollectionComplete(report, result), false, change.toString());
+  }
+});
+test('exit one is admitted only for completed behavior with an explicit preserved strict failure', () => {
+  for (const change of [
+    result => { result.complete = true; },
+    result => { result.functionalComplete = false; },
+    result => { delete result.functionalComplete; },
+    result => { result.strictDiagnosticGate = true; },
+    result => { delete result.strictDiagnosticGate; },
+    result => { result.browserCloseCompleted = false; },
+    result => { result.previewClosed = false; },
+    result => { result.observationPrefixComplete = false; },
+  ]) {
+    const { report, result } = completedCollection({ strictFailure: true });
+    change(result);
+    assert.equal(observationCollectionComplete(report, result), false, change.toString());
+  }
+});
+
+test('decode submission and existing catch retain asset and exact DOM error ownership', () => {
+  const f = fixture(), host = f.observer.host('full'), signal = { aborted: false };
+  const error = new TypeError('Cannot load blob:http://fixture/internal-native-url due to access control checks.');
+  const operation = host.operation(signal, { kind: 'decode-image', route: 'host-direct', assetHash: 'abc', slot: 'icon.player', blobSize: 100, blobType: 'image/png' });
+  host.submitted(operation, signal);
+  f.listeners.get('error')({ error, message: error.message, filename: 'host.mjs', lineno: 156, colno: 36 });
+  host.caught('main', signal, error, { operation });
+  host.caught('load', signal, error);
+  f.observer.appCatch('complete-fallback', error);
+  const rows = f.rows(), caught = rows.filter(row => ['dom-error', 'host-catch', 'app-catch'].includes(row.kind));
+  assert.equal(new Set(caught.map(row => row.errorId)).size, 1);
+  assert.equal(caught[0].hasErrorObject, true);
+  assert.equal(caught[1].operation.assetHash, 'abc');
+  assert.equal(caught[1].operation.operation, operation.operation);
+  assert.equal(rows.find(row => row.kind === 'operation-submitted').operation, operation.operation);
+  assert.ok(!Object.hasOwn(operation, 'blobURL'), 'Never invent a native internal Blob URL mapping.');
+  f.listeners.get('error')({ message: error.message });
+  assert.equal(f.rows().at(-1).hasErrorObject, false);
+  assert.equal(f.rows().at(-1).errorId, null);
+});
+
+test('unhandled rejection listener observes the existing reason without cancelling its event', () => {
+  const f = fixture(), error = Error('native');
+  f.listeners.get('unhandledrejection')({ reason: error, preventDefault() { assert.fail('Observation must not cancel native diagnostics'); } });
+  f.observer.appCatch('enter', error);
+  assert.equal(f.rows().at(-2).errorId, f.rows().at(-1).errorId);
+});
+
+test('actual main projection preserves native call count, promise value, rejection and synchronous throw', async () => {
+  const source = await readFile(root + '/game/presentation/host.mjs', 'utf8');
+  const projected = projectHost(source);
+  assert.equal(projected.split('codecSignalAbortedAtQueue:').length - 1, 2);
+  assert.ok(!projected.includes('codecSignalAbortedAtCall:'));
+  const extract = text => text.slice(text.indexOf('      const main = '), text.indexOf('      const fetchBytes = '));
+  const make = (text, preparation, observer) => new Function('preparation', 'controller', '__owner', 'admission', extract(text) + '\nreturn main;')(preparation, { signal: {} }, observer, {});
+  const calls = [], operation = { operation: 1 };
+  const observer = { operation: () => operation, submitted: value => calls.push(['submitted', value]), caught: (...args) => calls.push(['caught', ...args]) };
+  const detail = { kind: 'decode-image' }, value = { bitmap: true }, error = Error('native original');
+  for (const preparation of [null, { run: (_queue, submit) => { submit(); return Promise.resolve(); } }, { run: (_queue, submit) => { submit(); return Promise.reject(Error('admission cancelled')); } }]) {
+    const original = make(source, preparation), observed = make(projected, preparation, observer);
+    let beforeCalls = 0, afterCalls = 0;
+    assert.equal(await original(() => { beforeCalls++; return value; }), value);
+    assert.equal(await observed(() => { afterCalls++; return value; }, detail), value);
+    assert.equal(beforeCalls, 1); assert.equal(afterCalls, 1);
+    await assert.rejects(original(() => Promise.reject(error)), thrown => thrown === error);
+    await assert.rejects(observed(() => Promise.reject(error), detail), thrown => thrown === error);
+    assert.throws(() => original(() => { throw error; }), thrown => thrown === error);
+    assert.throws(() => observed(() => { throw error; }, detail), thrown => thrown === error);
+  }
+  const unchangedPromise = Promise.resolve(value);
+  assert.equal(make(projected, null, observer)(() => unchangedPromise, detail), unchangedPromise);
+  assert.ok(calls.some(row => row[0] === 'caught' && row[3] === error && row[4].operation === operation));
+  for (const token of ['decodeImage(blob, { signal })', 'decodeImage(blob, { signal: controller.signal })', 'globalThis.createImageBitmap(blob)', '.catch(', '.then('])
+    assert.equal(projected.split(token).length, source.split(token).length, token);
+});
+
+test('decode operation metadata is bounded and overflow fails observation explicitly', () => {
+  const f = fixture(), host = f.observer.host('full'), signal = {};
+  for (let i = 0; i < 500; i++) assert.ok(host.operation(signal, { kind: 'decode-image', assetHash: String(i) }));
+  assert.equal(host.operation(signal, { kind: 'decode-image' }), undefined);
+  assert.equal(f.observer.snapshot().observerFailures, 1);
+});
+
+test('actual admitted emitted host/app bytes project uniquely and parse before any browser starts', async () => {
+  const { createHash } = await import('node:crypto');
+  const { execFileSync } = await import('node:child_process');
+  const { openEmittedPreview } = await import('../../scripts/emitted-preview.mjs');
+  const metadata = JSON.parse(await readFile(new URL('./emitted-fixtures.json', import.meta.url)));
+  const provider = await openEmittedPreview(metadata.capture, { root, verifySource: false });
+  assert.equal(provider.manifestSHA256, metadata.manifestSHA256);
+  assert.equal(provider.manifest.sourceRevision, metadata.sourceRevision);
+  assert.equal(provider.manifest.inventorySHA256, metadata.inventorySHA256);
+  for (const fixture of metadata.fixtures) {
+    const bytes = await readFile(root + '/' + fixture.file);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), fixture.sha256);
+    assert.equal(bytes.length, fixture.bytes);
+    assert.deepEqual(await provider.read(fixture.name), bytes);
+    const source = bytes.toString(), transform = fixture.name.endsWith('/host.mjs') ? projectHost : projectApp;
+    const projected = transform(source);
+    assert.notEqual(projected, source);
+    execFileSync(process.execPath, ['--input-type=module', '--check'], { input: projected, timeout: 3000, maxBuffer: 1024 * 1024 });
+    for (const token of ['.catch(', '.then(', 'throw error;', 'return null;', 'globalThis.createImageBitmap(', 'Promise.resolve(work())'])
+      assert.equal(projected.split(token).length, source.split(token).length, fixture.name + ': ' + token);
+    assert.throws(() => transform(projected), 'A projection cannot be applied twice or silently accepted.');
+  }
+});
+
+test('actual emitted main preserves decode values/errors, submission count and cancellation ownership', async () => {
+  const source = await readFile(new URL('./game__presentation__host.mjs.emitted.txt', import.meta.url), 'utf8');
+  const projected = projectHost(source);
+  const extract = text => text.slice(text.indexOf('const main='), text.indexOf('const fetchBytes='));
+  const calls = [], operation = { operation: 1 };
+  const observer = { operation: () => operation, submitted: value => calls.push(['submitted', value]), caught: (...args) => calls.push(['caught', ...args]) };
+  const make = (text, preparation) => new Function('preparation', 'controller', '__owner', 'admission', extract(text) + '\nreturn main;')(preparation, { signal: {} }, observer, {});
+  const error = Error('native unchanged'), value = { bitmap: true }, detail = { kind: 'decode-image' };
+  for (const preparation of [null, { run: (_queue, submit) => { submit(); return Promise.resolve(); } }, { run: (_queue, submit) => { submit(); return Promise.reject(Error('cancelled admission')); } }]) {
+    const before = make(source, preparation), after = make(projected, preparation);
+    let beforeCalls = 0, afterCalls = 0;
+    assert.equal(await before(() => { beforeCalls++; return value; }), value);
+    assert.equal(await after(() => { afterCalls++; return value; }, detail), value);
+    assert.equal(beforeCalls, 1); assert.equal(afterCalls, 1);
+    await assert.rejects(before(() => Promise.reject(error)), found => found === error);
+    await assert.rejects(after(() => Promise.reject(error), detail), found => found === error);
+    assert.throws(() => before(() => { throw error; }), found => found === error);
+    assert.throws(() => after(() => { throw error; }, detail), found => found === error);
+  }
+  assert.ok(calls.some(row => row[0] === 'caught' && row[3] === error && row[4].operation === operation));
+  const promise = Promise.resolve(value);
+  assert.equal(make(projected, null)(() => promise, detail), promise);
+  assert.equal(projected.split('codecSignalAbortedAtQueue:').length - 1, 2);
+});
+
+test('actual emitted final app catch keeps fallback result and original fallback throws', async () => {
+  const source = await readFile(new URL('./game__app.mjs.emitted.txt', import.meta.url), 'utf8');
+  const projected = projectApp(source);
+  const extract = text => {
+    const start = text.indexOf('.catch((error)=>{', text.indexOf('presentationReady=presentationHost'));
+    const end = text.indexOf('\n});\n}catch{', start);
+    assert.ok(start > 0 && end > start);
+    return text.slice(start, end + 4);
+  };
+  const make = (text, thrown) => {
+    const calls = [], seen = [];
+    const scope = { receiver: { catch: callback => callback },
+      __presentationOwner: { appCatch: (phase, error) => seen.push({ phase, error }) },
+      presentationFeedback: { update: value => calls.push(['status', value.status]) },
+      painter: { onAsset: value => { calls.push(['asset', value]); if (thrown) throw thrown; } },
+      t: value => value, compiledPresentationWarning: null };
+    vm.createContext(scope);
+    return { callback: vm.runInContext('receiver' + extract(text).replace(/;$/, ''), scope), calls, seen };
+  };
+  for (const name of ['AbortError', 'TypeError']) {
+    const error = Object.assign(Error('native'), { name }), before = make(source), after = make(projected);
+    assert.equal(before.callback(error), null); assert.equal(after.callback(error), null);
+    assert.deepEqual(after.calls, before.calls);
+    assert.equal(after.seen[0].error, error); assert.equal(after.seen.at(-1).error, error);
+  }
+  const thrown = Error('fallback failed'), after = make(projected, thrown);
+  assert.throws(() => after.callback(Error('load')), found => found === thrown);
+  assert.deepEqual(after.seen.map(row => row.phase), ['enter']);
+});

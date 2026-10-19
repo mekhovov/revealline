@@ -1,0 +1,151 @@
+{
+  "format": "revealline-demo-final-build-validation.v2",
+  "started": "2026-10-18T21:33:34.807Z",
+  "expected": {
+    "head": "e78c5812f8bf3da6975c75221924239666a2e9ed",
+    "base": "237b405437def3c41b01165fe057af1ab06f618c",
+    "runtime": {
+      "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+      "files": 9996,
+      "bytes": 404376334
+    }
+  },
+  "sourceRevision": "e78c5812f8bf3da6975c75221924239666a2e9ed",
+  "runtimeFingerprint": {
+    "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "buildInputFingerprint": {
+    "sha256": "cf608652b81a7fafd76ce4b97ba135d7d4e9b4bc22f5ab5fe9eed35e4d696825",
+    "files": 9393,
+    "bytes": 348276454
+  },
+  "wrapper": {
+    "path": ".cache/run-final-build-237.mjs",
+    "sha256": "6f95a065410a3542b924e14e98804aa00b237518fbf6c8cf16653294376000f0"
+  },
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "d671dc455b97a69a6164b645df194b4953fe3c2a5c3a0fbddef86d596b608cb9",
+    "created": "2026-10-18T21:24:01.185264+00:00",
+    "integrationBase": "237b405437def3c41b01165fe057af1ab06f618c",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "materializedBuild": false,
+  "deploymentAdmission": false,
+  "complete": true,
+  "stages": [
+    {
+      "name": "main-pages",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-main-pages.mjs",
+        "--report=docs/qualification/shared-demos/main-pages-demo-final-237-e78c5812f.json"
+      ],
+      "started": "2026-10-18T21:33:34.809Z",
+      "logPath": "docs/qualification/shared-demos/final-main-pages-237-e78c5812f.log.txt",
+      "receivedLogBytes": 14627,
+      "availableDiskBeforeBytes": 2053062656,
+      "pid": 59058,
+      "minimumObservedDiskBytes": 1814183936,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 359447,
+      "retainedLogBytes": 14627,
+      "logTruncated": false,
+      "logSHA256": "04cf033338e391485548e28c770d99cbe22b091ac1304eef61bc31140c23ed78",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-237-e78c5812f.json",
+        "sha256": "d4a9fe13f0c97483cb0ab3fd45f76cec34de3a0fdcc6e835a0553a05e65f992c",
+        "complete": true
+      }
+    },
+    {
+      "name": "full-packaging",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-packaging.mjs",
+        "--report=docs/qualification/shared-demos/shared-demos-packaging-237-e78c5812f.json"
+      ],
+      "started": "2026-10-18T21:39:34.259Z",
+      "logPath": "docs/qualification/shared-demos/final-full-packaging-237-e78c5812f.log.txt",
+      "receivedLogBytes": 2341,
+      "availableDiskBeforeBytes": 1818144768,
+      "pid": 71843,
+      "minimumObservedDiskBytes": 1771945984,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 363275,
+      "retainedLogBytes": 2341,
+      "logTruncated": false,
+      "logSHA256": "ceb5afc307345bcbab5e32435b5f044271c74ae1b5e21d1207e6120235219dd4",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/shared-demos-packaging-237-e78c5812f.json",
+        "sha256": "f8f709e39ac43cc96176192ce503b7059be9ef9fe1972f9e54758f3b75e14e35",
+        "complete": true
+      }
+    },
+    {
+      "name": "validate",
+      "command": [
+        "npm",
+        "run",
+        "validate"
+      ],
+      "started": "2026-10-18T21:45:37.537Z",
+      "logPath": "docs/qualification/shared-demos/final-validate-237-e78c5812f.log.txt",
+      "receivedLogBytes": 3932,
+      "availableDiskBeforeBytes": 1775419392,
+      "pid": 79881,
+      "minimumObservedDiskBytes": 1712594944,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 333230,
+      "retainedLogBytes": 3932,
+      "logTruncated": false,
+      "logSHA256": "0be804bcb6823d3029e501033f0c4a0a9e0f47aef68fa6133295d6bfeb6bb4b8"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "started": "2026-10-18T21:51:10.769Z",
+      "logPath": "docs/qualification/shared-demos/final-lint-237-e78c5812f.log.txt",
+      "receivedLogBytes": 196,
+      "availableDiskBeforeBytes": 1717190656,
+      "pid": 95754,
+      "minimumObservedDiskBytes": 1701793792,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 32372,
+      "retainedLogBytes": 196,
+      "logTruncated": false,
+      "logSHA256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c"
+    }
+  ],
+  "limits": {
+    "logBytesPerStage": 524288,
+    "stopIfAvailableDiskBelowBytes": 209715200,
+    "stageTimeoutMs": 1200000
+  },
+  "updated": "2026-10-18T21:51:50.933Z",
+  "finalSourceRevision": "e78c5812f8bf3da6975c75221924239666a2e9ed",
+  "finalRuntimeFingerprint": {
+    "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "finalBuildInputFingerprint": {
+    "sha256": "cf608652b81a7fafd76ce4b97ba135d7d4e9b4bc22f5ab5fe9eed35e4d696825",
+    "files": 9393,
+    "bytes": 348276454
+  },
+  "sourceStable": true
+}

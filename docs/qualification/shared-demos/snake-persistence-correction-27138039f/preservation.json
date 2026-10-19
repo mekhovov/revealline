@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": ".cache/snake-demo-ratings-delayed-original-red.tap.txt",
+      "bytes": 35758,
+      "sha256": "78a1be3d98c04e60c27f31b0b1d759857f63d0c8d80900f6fdd25791189f0218",
+      "preservedPath": "snake-demo-ratings-delayed-original-red.tap.txt"
+    },
+    {
+      "path": ".cache/snake-demo-persistence-focused.tap.txt",
+      "bytes": 38821,
+      "sha256": "3becd6372329bc42478cf594df59a9ecd3dd48290ee760542e29ab810d90997d",
+      "preservedPath": "snake-demo-persistence-focused.tap.txt"
+    },
+    {
+      "path": ".cache/snake-demo-persistence-full.tap.txt",
+      "bytes": 41565,
+      "sha256": "fd33e7acae6ccac44f14c5553368e0b1d13a6747bbf61abd44a5aa8528d5c040",
+      "preservedPath": "snake-demo-persistence-full.tap.txt"
+    },
+    {
+      "path": ".cache/snake-demo-persistence.patch",
+      "bytes": 15498,
+      "sha256": "843499ba0ad48a775ad1c0482aee13f54c683692d47d2787891d98820d058b7f",
+      "preservedPath": "snake-demo-persistence.patch"
+    }
+  ],
+  "sourceHashesVerified": true,
+  "originalsUnmodified": true
+}

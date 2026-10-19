@@ -1,3 +1,5 @@
+import { installDemoEntry, demoLaunchURL } from '../ui/demo-entry.mjs';
+import { createDemoMusicTransport } from '../ui/demo-music-transport.mjs';
 import { classicOperationStatus } from './classic-operation-status.mjs';
 import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from './classic-campaign.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from './classic-worlds.mjs';
@@ -181,9 +183,20 @@ const environmentCandidate = await prepareClassicEnvironments(CLASSIC_SNAKE_LEVE
 });
 let sessionWriter = await claimProfileWriter(globalThis.navigator.locks, `${SAVE_KEY}:writer`);
 let writerRelease = Promise.resolve(),
-  writerEpoch = 0;
+  writerEpoch = 0,
+  departingWriteLease = null,
+  demoHost = null,
+  disposed = false,
+  pageDeparted = false;
+// Async ordinary saves must recheck ownership at the storage boundary. An
+// explicitly ordinary departure may finish its pending work under that lease;
+// destroying a demo must never grant the departing page write authority again.
+const canWritePlayerProgress = () =>
+  sessionWriter.writable &&
+  !demoHost?.active &&
+  ((!disposed && !pageDeparted) || departingWriteLease === sessionWriter);
 const pageActive = () => !doc.hidden && (typeof doc.hasFocus !== 'function' || doc.hasFocus());
-const enemyStats = createEnemyStats({ canWrite: () => sessionWriter.writable });
+const enemyStats = createEnemyStats({ canWrite: canWritePlayerProgress });
 let statsAttempt = null,
   liveProvenance = 'live';
 const statsViews = [];
@@ -247,8 +260,7 @@ let playShell = null,
   menuController = null,
   boardLayoutObserver = null,
   music = null,
-  audioInactive = false,
-  disposed = false;
+  audioInactive = false;
 let match,
   runs = [],
   boards = [],
@@ -257,8 +269,7 @@ let match,
   paused = true,
   previousFrame = null,
   importEpoch = 0,
-  pendingImports = 0,
-  pageDeparted = false;
+  pendingImports = 0;
 let offerSavedContinue = !params.has('level');
 let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
   saveNotice = '',
@@ -347,6 +358,7 @@ const acceptedLevel = () => prepareClassicSnakeLevel(entry, settings());
 const result = () => match?.result ?? null;
 let ratings = null;
 const records = createClassicSnakeRecords({
+  canWrite: canWritePlayerProgress,
   ...(installedContent ? { contentPack: installedContent.pack } : {}),
   onChange: () => {
     if (match) {
@@ -363,7 +375,7 @@ const records = createClassicSnakeRecords({
 });
 ratings = createClassicSnakeRatings({
   records,
-  canWrite: () => sessionWriter.writable,
+  canWrite: canWritePlayerProgress,
   onWarning: () => {},
 });
 let touchControllers = [],
@@ -464,8 +476,8 @@ function session() {
     appearance: snapshotAttemptAppearance(acceptedAppearance),
   };
 }
-function save() {
-  if (ready) return;
+function save({ demoDeparture = false } = {}) {
+  if (ready || (demoHost?.active && !demoDeparture)) return;
   try {
     const raw = JSON.stringify(session());
     if (sessionWriter.writable) globalThis.localStorage.setItem(SAVE_KEY, raw);
@@ -480,6 +492,7 @@ function save() {
   $('continue').hidden = !savedRound;
 }
 function remember() {
+  if (demoHost?.active) return;
   if (!match || recordedMatch === match || liveProvenance === 'import') return;
   if (result()) recordedMatch = match;
   try {
@@ -528,6 +541,7 @@ function pause({ showMenu = true } = {}) {
   if (showMenu && !playShell?.topDialog()) playShell?.open('pause');
 }
 function start() {
+  if (demoHost?.active) return;
   if (result() || !pageActive()) return;
   libraryInfo?.close();
   if (missionChooser?.elements.dialog.open) missionChooser.close({ retune: false });
@@ -864,6 +878,7 @@ function installTransitionControls() {
   };
 }
 function turn(player, direction) {
+  if (demoHost?.active) return;
   if (result() || playShell?.topDialog()) return;
   if (ready) start();
   if (paused) return;
@@ -1603,6 +1618,10 @@ function navigationContext() {
 }
 function refresh() {
   if (!match) return;
+  for (const id of ['demo-button', 'demo-all-button']) {
+    const action = $(id);
+    if (action) action.hidden = mode !== 'solo' || !!communityIdentity;
+  }
   const nextTarget = runs[0].targets?.find((actor) => actor.role !== 'bonus') ?? runs[0].target;
   if (nextTarget) {
     const guide = actorFieldGuide(
@@ -2216,7 +2235,7 @@ doc.addEventListener(
   true,
 );
 doc.addEventListener('keydown', (event) => {
-  if (event.defaultPrevented || music?.root() || playShell?.topDialog()) return;
+  if (demoHost?.active || event.defaultPrevented || music?.root() || playShell?.topDialog()) return;
   if (event.key === 'Escape' && !event.repeat) {
     event.preventDefault();
     pause();
@@ -2266,6 +2285,42 @@ doc.addEventListener('keydown', (event) => {
 function pollGamepads() {
   const pads = Array.from(globalThis.navigator.getGamepads?.() ?? []).filter(Boolean),
     present = new Set();
+  if (demoHost?.active) {
+    const pad = pads[0];
+    const previous = pad ? gamepadState.get(pad.index) : null;
+    const buttons = pad
+      ? [
+          pad.buttons[12]?.pressed || pad.axes[1] < -0.55,
+          pad.buttons[15]?.pressed || pad.axes[0] > 0.55,
+          pad.buttons[13]?.pressed || pad.axes[1] > 0.55,
+          pad.buttons[14]?.pressed || pad.axes[0] < -0.55,
+          pad.buttons[9]?.pressed,
+          pad.buttons[0]?.pressed,
+          pad.buttons[1]?.pressed,
+        ]
+      : [];
+    if (pad) gamepadState.set(pad.index, buttons);
+    const direction =
+      ['up', 'right', 'down', 'left'][buttons.slice(0, 4).findIndex(Boolean)] ?? null;
+    demoHost.controller({
+      gamepads: pads,
+      now: performance.now(),
+      flight: { direction, pause: !!buttons[4] && !!previous && !previous[4] },
+      ui: {
+        direction:
+          direction && previous && !previous[['up', 'right', 'down', 'left'].indexOf(direction)]
+            ? direction
+            : null,
+        confirm: !!buttons[5] && !!previous && !previous[5],
+        back: !!buttons[6] && !!previous && !previous[6],
+        menu: !!buttons[4] && !!previous && !previous[4],
+      },
+      status: { code: pad && previous ? 'connected' : 'waiting' },
+      disconnected: !pad && gamepadState.size > 0,
+    });
+    if (!pad) gamepadState.clear();
+    return;
+  }
   for (const pad of pads) {
     present.add(pad.index);
     if (!gamepadSeats.has(pad.index)) {
@@ -2338,6 +2393,10 @@ doc
   );
 function suspendAudio() {
   if (disposed || audioInactive) return;
+  if (demoHost?.backgroundAudio) {
+    demoHost.foregroundLost();
+    return;
+  }
   audioInactive = true;
   pause();
   if (music) music.suspend();
@@ -2366,6 +2425,9 @@ landscapeControls?.addEventListener('change', () => {
   footprint?.refresh();
 });
 globalThis.addEventListener('pagehide', (event) => {
+  const demoWasActive = demoHost?.active;
+  const departingWriter = sessionWriter;
+  if (!pageDeparted && !disposed && !demoWasActive) departingWriteLease = departingWriter;
   pageDeparted = true;
   importEpoch++;
   writerEpoch++;
@@ -2375,6 +2437,7 @@ globalThis.addEventListener('pagehide', (event) => {
   classicAudio.reset();
   if (!event.persisted) {
     disposed = true;
+    demoHost?.destroy();
     music?.dispose();
     classicAudio.dispose();
     disposeTouchControls();
@@ -2386,9 +2449,12 @@ globalThis.addEventListener('pagehide', (event) => {
     audioPreferences.dispose?.();
     audioMaster.dispose?.();
   }
-  save();
-  const departingWriter = sessionWriter;
-  writerRelease = enemyStats.flush().finally(() => departingWriter.release());
+  if (!demoWasActive) save();
+  const pendingRecords = departingWriteLease === departingWriter ? records.read() : null;
+  writerRelease = Promise.all([enemyStats.flush(), pendingRecords]).finally(() => {
+    if (departingWriteLease === departingWriter) departingWriteLease = null;
+    departingWriter.release();
+  });
 });
 globalThis.addEventListener('pageshow', async (event) => {
   footprint?.refresh();
@@ -2404,7 +2470,7 @@ globalThis.addEventListener('pageshow', async (event) => {
   pageDeparted = false;
   // A different tab may have advanced the saved attempt while this document
   // was frozen. Retain this board's counts, but isolate its future live events.
-  if (statsAttempt) {
+  if (statsAttempt && !demoHost?.active) {
     const saved = forkEnemyStatsSession(enemyStats.session(statsAttempt));
     enemyStats.finishAttempt(statsAttempt);
     statsAttempt = enemyStats.beginAttempt({
@@ -2431,6 +2497,11 @@ function frame(now) {
   const elapsed = previousFrame === null ? 0 : Math.max(0, now - previousFrame);
   previousFrame = now;
   pollGamepads();
+  demoHost?.update(elapsed / 1000);
+  if (demoHost?.active) {
+    globalThis.requestAnimationFrame(frame);
+    return;
+  }
   if (!ready && !paused && !result()) {
     if (elapsed > 1000 || !pageActive()) pause();
     else {
@@ -2842,9 +2913,86 @@ menuController = attachControllerNavigation({
     libraryBack() ||
     (snakeModeChoices?.simulatorRoot() ? snakeModeChoices.closeSimulator() : playShell.back()),
 });
+demoHost = await installDemoEntry({
+  document: doc,
+  modeId: 'snake',
+  audio: createDemoMusicTransport({ music, audioMaster, audioPreferences }),
+  audioMaster,
+  parent: playShell.elements.content.home.querySelector('.mode-play-main-menu'),
+  registerActions: (nodes) => playShell.addHomeActions(nodes),
+  getContext: () => ({ reduced: isReduced(), touchSettings: touch.snapshot() }),
+  canOpen: () =>
+    !disposed &&
+    !pageDeparted &&
+    pageActive() &&
+    !pendingImports &&
+    !communityIdentity &&
+    mode === 'solo' &&
+    (ready || paused || !!result()),
+  canAutoStart: () =>
+    !disposed &&
+    !pageDeparted &&
+    pageActive() &&
+    !pendingImports &&
+    !communityIdentity &&
+    mode === 'solo' &&
+    (ready || paused || !!result()) &&
+    ['home', 'help'].includes(playShell?.topDialog()?.dataset.modeSurface) &&
+    !music?.root() &&
+    !snakeGlobalTools.root(),
+  clearInput: clearTouch,
+  onEnter: () => {
+    // Demo entry is a transient pause: normal pause() saves the live attempt.
+    // Keep that persistence boundary reserved for ordinary gameplay actions.
+    clearTouch();
+    paused = true;
+    previousFrame = null;
+    sound.gameplayPaused = true;
+    classicAudio.reset();
+    reactions.suspend();
+    refresh();
+  },
+  onExit: ({ origin }) => {
+    previousFrame = null;
+    clearTouch();
+    refresh();
+    if (origin?.isConnected) origin.focus({ preventScroll: true });
+  },
+  onFreshStart: async (source, current) => {
+    if (!current()) return false;
+    if (source.modeId !== 'snake') {
+      if (!source.launchURL) return false;
+      const target = demoLaunchURL(source);
+      save({ demoDeparture: true });
+      globalThis.location.assign(target);
+      return true;
+    }
+    const destination = OFFICIAL_LEVELS.find((item) => item.id === source.levelId);
+    if (!destination) return false;
+    // Validate before retiring the originating round, as launchMission does.
+    const level = prepareClassicSnakeLevel(destination);
+    createClassicSnakeMatch(level, {
+      mode: 'solo',
+      seed: 17,
+      ...(classicSnakeUsesVariableHazards(level) ? { hazardSeed: 17 } : {}),
+    });
+    if (!current()) return false;
+    save({ demoDeparture: true });
+    entry = destination;
+    mode = 'solo';
+    pace = 'normal';
+    format = 'campaign';
+    targetRules = 'authored';
+    preset = 'classic';
+    seed = 17;
+    prepare({ hazardSeed: classicSnakeUsesVariableHazards(level) ? 17 : undefined });
+    playShell.enterPlay();
+    return true;
+  },
+});
 installTransitionControls();
 refresh();
 footprint.refresh();
-if (params.has('level') || communityIdentity) start();
+if ((params.has('level') || communityIdentity) && params.get('ready') !== '1') start();
 globalThis.RevealLineToolLaunch?.attached?.();
 globalThis.requestAnimationFrame(frame);

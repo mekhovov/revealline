@@ -1,0 +1,22 @@
+{
+  "format": "revealline-demo-main-pages-projection-correction.v1",
+  "finished": "2026-10-18T20:02:40.388Z",
+  "scope": "Qualification-only correction. Prior complete measurement remains preserved as failed evidence; final qualification is pending a fresh run. The emitted mission index exactly matches the existing production lossless compaction helper.",
+  "previousMeasurement": "main-pages-demo-final-05c795fdc.json",
+  "path": "game/content/mission-library-index.json",
+  "sourceSHA256": "7ce7ab10b1a135489e0f80b35495701cd7e2e9daf64edc1a28b9b144d872570d",
+  "expectedEmittedSHA256": "148537593f974acfce264d95d1be3d8b6a429b0199661d064bf788cf36ddd9a4",
+  "actualEmittedSHA256": "148537593f974acfce264d95d1be3d8b6a429b0199661d064bf788cf36ddd9a4",
+  "tests": 6,
+  "files": [
+    {
+      "path": "scripts/qualify-demo-main-pages.mjs",
+      "sha256": "1367c2c59007acb1b2761b1aa1311df33293f16147d16abffcc0f6a9875d02e3"
+    },
+    {
+      "path": "scripts/test-qualify-demo-main-pages.mjs",
+      "sha256": "a3fe2c19c93aa205466dc001e5a810df1bdcc1837becebb80440b22cb8690fad"
+    }
+  ],
+  "runtimeChanged": false
+}

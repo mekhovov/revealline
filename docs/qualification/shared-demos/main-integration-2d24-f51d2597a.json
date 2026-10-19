@@ -1,0 +1,83 @@
+{
+  "format": "SharedDemoFiniteMainIntegrationV1",
+  "started": "2026-10-19T08:08:27.087Z",
+  "base": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+  "sourceBefore": {
+    "head": "f51d2597a3bcc711c229bbc51445e7150bfee1db",
+    "runtime": {
+      "sha256": "cdbdf02b451cdc43625ed6a3b0f2ae07b4ce0ac9e83f79e302da7d4c8ee7427e",
+      "files": 10000,
+      "bytes": 404483828
+    },
+    "buildInput": {
+      "sha256": "f70379ab5ac387314acc20a59f3ec8f6d23fdd9cf943850a6a62791d2cbcae2d",
+      "files": 9406,
+      "bytes": 348396568
+    }
+  },
+  "wrapperSHA256": "b0504856db7f4c99f7f111bd5e58c831fa9783e0f0ef52bc557f22a55d7cc2fd",
+  "nodeVersion": "v20.19.5",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/classic-snake-ui.test.mjs",
+    "game/test/comfort-presets.test.mjs",
+    "game/test/creator-player-menu.test.mjs",
+    "game/test/display-preferences-host.test.mjs",
+    "game/test/display-preferences.test.mjs",
+    "game/test/fpv-flight-ui.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/global-settings-view.test.mjs",
+    "game/test/menu-animation-preferences.test.mjs",
+    "game/test/menu-scenes.test.mjs",
+    "game/test/mission-library-search-recovery.test.mjs",
+    "game/test/native-global-settings.test.mjs",
+    "game/test/overflight-host.test.mjs",
+    "game/test/sim-mission-library-projection.test.mjs",
+    "game/test/team-discovery-preview-host.test.mjs",
+    "game/test/team-navigation-context-host.test.mjs",
+    "game/test/demo-sources.test.mjs",
+    "game/test/demo-timeout-fallback.test.mjs",
+    "game/test/demo-native-host.test.mjs",
+    "game/test/demo-back-host.test.mjs",
+    "game/test/demo-settings.test.mjs",
+    "game/test/demo-shared.test.mjs",
+    "game/test/demo-sim-input.test.mjs"
+  ],
+  "complete": false,
+  "logPath": ".cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-2d24-f51d2597a.tap.txt",
+  "scope": "Incoming menu/comfort/mission-search/settings owners plus existing demo integration and loading checks; native simulation/corpus scopes are independently compared.",
+  "exit": {
+    "code": 1,
+    "signal": null
+  },
+  "timedOut": false,
+  "overflow": false,
+  "totals": {
+    "tests": 628,
+    "suites": 0,
+    "pass": 623,
+    "fail": 5,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "logBytes": 157360,
+  "logSHA256": "4d76a7d6fb17a6e3471b798d34a8d90cd20052dab2437c711142ecdcfaa799a8",
+  "sourceAfter": {
+    "head": "f51d2597a3bcc711c229bbc51445e7150bfee1db",
+    "runtime": {
+      "sha256": "cdbdf02b451cdc43625ed6a3b0f2ae07b4ce0ac9e83f79e302da7d4c8ee7427e",
+      "files": 10000,
+      "bytes": 404483828
+    },
+    "buildInput": {
+      "sha256": "f70379ab5ac387314acc20a59f3ec8f6d23fdd9cf943850a6a62791d2cbcae2d",
+      "files": 9406,
+      "bytes": 348396568
+    }
+  },
+  "sourceStable": true,
+  "finished": "2026-10-19T08:11:36.254Z"
+}

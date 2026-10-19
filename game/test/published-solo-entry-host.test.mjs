@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { register } from 'node:module';
+import { createHash } from 'node:crypto';
+import { createJourneyCatalog } from '../journey/catalog.mjs';
+import { libraryMissionId } from '../mission-library/library.mjs';
 import { addAuthoredRuntimeSnapshots } from '../../scripts/authored-runtime-snapshots.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
@@ -28,8 +31,28 @@ const entries = [
   },
 ];
 const generated = await addAuthoredRuntimeSnapshots(entries);
+// Preserve an exact older navigation shape without changing any mission data.
+// Both variants still pass the real byte/hash admission in route-snapshot.
+const legacyPublished = structuredClone(generated.published);
+delete legacyPublished.navigation.supplemental;
+const legacyNavigationBytes = Buffer.from(JSON.stringify(legacyPublished));
+const legacyDescriptor = {
+  ...generated.navigationDescriptor,
+  bytes: legacyNavigationBytes.length,
+  sha256: createHash('sha256').update(legacyNavigationBytes).digest('hex'),
+};
+const loader = entries[0].bytes.toString();
+assert(loader.includes(JSON.stringify(generated.navigationDescriptor)));
+const loaderObservation = new Int32Array(new SharedArrayBuffer(2 * Int32Array.BYTES_PER_ELEMENT));
 register(new URL('./helpers/published-solo-loader.mjs', import.meta.url), {
-  data: { loader: entries[0].bytes.toString() },
+  data: {
+    loader,
+    legacy: loader.replace(
+      JSON.stringify(generated.navigationDescriptor),
+      JSON.stringify(legacyDescriptor),
+    ),
+    state: loaderObservation.buffer,
+  },
 });
 const { soloPage, memoryStorage } = await import('./helpers/solo-dom.mjs');
 const starter = generated.chapters.find((chapter) => chapter.descriptor.core);
@@ -82,14 +105,23 @@ const runtimePath = (value) => {
 };
 async function setup(
   t,
-  { storage = memoryStorage(), caches = committedCaches(), offline = false } = {},
+  {
+    storage = memoryStorage(),
+    caches = committedCaches(),
+    offline = false,
+    search = '',
+    legacySnapshot = false,
+  } = {},
 ) {
+  Atomics.store(loaderObservation, 0, Number(legacySnapshot));
+  Atomics.store(loaderObservation, 1, 0);
+  t.after(() => Atomics.store(loaderObservation, 0, 0));
   const runtimeReads = [];
   await (
     await caches.open('fixture-core')
   ).put('http://localhost/offline-content.json', Response.json(catalogue));
   const page = await soloPage(t, {
-    search: '',
+    search,
     storage,
     titleScreen: true,
     waitForPictures: false,
@@ -132,7 +164,11 @@ async function setup(
           if (offline) throw new Error('Network blocked for optional chapter runtime.');
         }
         assert(shipped.has(runtime), `Published fixture must include ${runtime}`);
-        return new Response(shipped.get(runtime));
+        return new Response(
+          legacySnapshot && runtime === `game/content-design/${generated.navigationDescriptor.path}`
+            ? legacyNavigationBytes
+            : shipped.get(runtime),
+        );
       }
       if (String(path).includes('/content-design/assets/')) {
         const file = [...files.values()].find((item) => String(path).endsWith(item.path));
@@ -153,7 +189,9 @@ async function setup(
   await waitFor(
     () =>
       page.$('boot-status').hidden &&
-      page.$('shell-home').open &&
+      (search.includes('library-mission=')
+        ? page.doc.documentElement.dataset.bootState === 'ready'
+        : page.$('shell-home').open) &&
       [...page.doc.querySelectorAll('[data-boot-inert]')].every((node) => !node.inert) &&
       typeof page.$('shell-play').onclick === 'function' &&
       typeof page.$('shell-title-versus').onclick === 'function',
@@ -170,6 +208,12 @@ async function setup(
     throw error;
   });
   assert.deepEqual(page.errors, [], 'The complete published title boots without an error.');
+  if (!legacySnapshot)
+    assert.equal(
+      Atomics.load(loaderObservation, 1),
+      0,
+      'Complete metadata never imports native expedition compilers.',
+    );
   async function prepare(groupId) {
     const group = groups.find((item) => item.id === groupId);
     const cache = await caches.open(OFFICIAL_CACHE);
@@ -191,6 +235,7 @@ async function setup(
     page,
     caches,
     runtimeReads,
+    nativeExpeditionImports: () => Atomics.load(loaderObservation, 1),
     prepare,
     store: createOfficialDownloads({
       caches,
@@ -447,4 +492,93 @@ test('ordinary mode departure opens Versus without offline preparation', async (
   assert.equal(new URL(globalThis.location.href).pathname, '/game/couch/');
   assert.equal(h.$('install-offline-dialog')?.open ?? false, false);
   assert.equal(h.runtimeReads.length, 2, 'The departing host does not execute Versus content.');
+});
+
+async function visibleSupplementalOwners(page, mode) {
+  page.$('journey-lifecycle').value = '';
+  page.$('journey-lifecycle').emit('change');
+  page.$('journey-mode').value = mode;
+  page.$('journey-mode').emit('change');
+  const cards = [...page.$('journey-cards').children];
+  return new Map(cards.map((card) => [JSON.parse(card.dataset.missionId)[0], card]));
+}
+
+test('complete published Missions retains both Hunt owners and expeditions without native catalogue imports', async (t) => {
+  const h = await setup(t);
+  await openMissionLibrary(h.page, 'shell-play');
+  for (const [mode, owners] of [
+    ['versus', ['journey:humanoid-hunt-v1', 'journey:duel-expedition-v1']],
+    ['team', ['team-journey:humanoid-hunt-v1', 'journey:team-expedition-v1']],
+  ]) {
+    const visible = await visibleSupplementalOwners(h.page, mode);
+    for (const owner of owners) {
+      assert(visible.has(owner), `${owner} remains visible in ordinary ${mode} Missions.`);
+      assert.equal(
+        visible.get(owner).disabled,
+        false,
+        'Published navigation retains ordinary availability.',
+      );
+    }
+  }
+  assert.equal(h.nativeExpeditionImports(), 0);
+  assert.equal(h.runtimeReads.length, 2, 'Metadata browsing does not materialize remote gameplay.');
+  assert.deepEqual(await h.store.states(), [], 'Browsing never installs an optional package.');
+  assert.deepEqual(h.errors, []);
+});
+
+test('published incoming Ready handoff and page reopen finish the exact paused mission without native expedition imports', async (t) => {
+  const catalog = createJourneyCatalog(generated.published.navigation.views.solo.campaigns);
+  const selected = catalog.missions.find((item) => item.levelId === mission.id);
+  assert(selected);
+  const handoff = libraryMissionId({
+    owner: `journey:${generated.route.id}`,
+    edition: generated.route.id,
+    campaign: JSON.stringify([selected.source, selected.packId, selected.campaignId]),
+    mission: selected.id,
+  });
+  const search = `?${new URLSearchParams({ journey: generated.route.id, 'library-mission': handoff, 'library-ready': '1' })}`;
+  const storage = memoryStorage();
+  let saved;
+  for (const phase of ['incoming', 'reopened'])
+    await t.test(phase, async (stage) => {
+      const h = await setup(stage, { storage, search });
+      h.frame(0);
+      assert.equal(h.doc.documentElement.dataset.bootState, 'ready');
+      assert.equal(h.rendered.run.levelId, selected.levelId);
+      assert.equal(h.rendered.run.tick, 0);
+      assert.equal(h.rendered.paused, true);
+      assert.equal(h.doc.body.dataset.flightState, 'briefing');
+      assert.equal(h.$('game-overlay').dataset.kind, 'ready');
+      assert.equal(h.$('journey-chooser')?.open ?? false, false);
+      assert.equal(h.nativeExpeditionImports(), 0);
+      assert.deepEqual(await h.store.states(), [], 'Ready never installs an optional package.');
+      assert.equal(h.$('install-offline-dialog')?.open ?? false, false);
+      saved ??= [...storage.map];
+      assert.deepEqual(
+        [...storage.map],
+        saved,
+        'Reopening a Ready mission preserves saved preferences and progress.',
+      );
+      assert.deepEqual(h.errors, []);
+    });
+});
+
+test('an older published snapshot without supplemental views keeps the real native fallback', async (t) => {
+  const h = await setup(t, { legacySnapshot: true });
+  await openMissionLibrary(h.page, 'shell-play');
+  assert.equal(
+    h.nativeExpeditionImports(),
+    1,
+    'Missing optional metadata still invokes the native fallback.',
+  );
+  for (const [mode, owners] of [
+    ['versus', ['journey:humanoid-hunt-v1', 'journey:duel-expedition-v1']],
+    ['team', ['journey:team-expedition-v1']],
+  ]) {
+    const visible = await visibleSupplementalOwners(h.page, mode);
+    for (const owner of owners)
+      assert(visible.has(owner), `${owner} survives older snapshot fallback.`);
+  }
+  assert.deepEqual(await h.store.states(), []);
+  assert.deepEqual(h.errors, []);
 });

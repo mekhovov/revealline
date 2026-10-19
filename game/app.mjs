@@ -28,6 +28,7 @@ import {
   animateRewardArrival,
 } from './ui/reward-arrival.mjs';
 import { loadCompanyStartup } from './ui/company-startup.mjs';
+import { demoSettingsKey } from './demo-settings.mjs';
 import { createStudioPreviewSession } from './studio-preview-session.mjs';
 import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
 import { mountEditionSoloUI } from './ui/edition-solo.mjs';
@@ -197,8 +198,13 @@ import { attachFullscreen } from './ui/fullscreen.mjs';
 import { editionThemeLabel } from './ui/edition-theme-label.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
 import { attachDemoHost } from './ui/demo-host.mjs';
+import { demoLaunchURL } from './demo-launch.mjs';
 import { createDemoLibrary } from './demo-library.mjs';
 import { loadDemoSources } from './demo-sources.mjs';
+import {
+  loadBuiltinSoloDemoSources,
+  mergeBuiltinSoloDemoSources,
+} from './demo-modes/solo-builtins.mjs';
 import { demoIdentity } from './demo-catalog.mjs';
 import { emitDemoEvents, updateDemoFeedback } from './demo-audio-feedback.mjs';
 import { authoredModeDestinations } from './ui/authored-mode-routes.mjs';
@@ -2229,7 +2235,9 @@ try {
       if (typeof audioElement.play !== 'function')
         throw new Error(t('interface:thisBrowserDoesNotProvideFileAudioPlaybackBuiltIn'));
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
-      const localRecordingIds = await localOfficialRecordingIds(catalogue);
+      const localRecordingIds = await localOfficialRecordingIds(catalogue, {
+        signal: soundtrackLoad.signal,
+      });
       await sound.mediaPreparation.run(
         'main',
         () => {
@@ -4213,6 +4221,7 @@ try {
     ...(librarySourceReturn ? { [librarySourceReturn.mode]: librarySourceDestination } : {}),
     catalogue: catalogueHref,
     library: './',
+    demo: './',
   });
   for (const kind of ['versus', 'team'])
     for (const id of [`shell-title-${kind}`, `shell-${kind}`])
@@ -4230,7 +4239,7 @@ try {
         ? t('interface:soloDeparture.currentArtwork')
         : t('interface:soloDeparture.retainedArtwork')
       : (destinationLabel ??
-        (kind === 'library'
+        (kind === 'library' || kind === 'demo'
           ? t('interface:selectedMission')
           : kind === 'catalogue'
             ? catalogueLabel()
@@ -4503,6 +4512,7 @@ try {
       libraryReady = false,
       editionId = null,
       presentationId = undefined,
+      demoSource = null,
     } = {},
   ) {
     if (
@@ -4539,11 +4549,14 @@ try {
       (kind !== 'catalogue' || !destinationEdition || editionId === runtimeContent.editionId)
     )
       return false;
-    const destinationHref = destinationEdition
-      ? runtimeContent.href({ edition: editionId, presentation: null })
-      : presentationChange
-        ? runtimeContent.href({ presentation: presentationId })
-        : null;
+    const destinationHref =
+      kind === 'demo'
+        ? demoLaunchURL(demoSource)
+        : destinationEdition
+          ? runtimeContent.href({ edition: editionId, presentation: null })
+          : presentationChange
+            ? runtimeContent.href({ presentation: presentationId })
+            : null;
     const destinationLabel = destinationEdition?.name ?? null;
     if (
       kind === 'library' &&
@@ -11779,6 +11792,8 @@ try {
       ) {
         demoHost.controller({
           ...sampledFrame,
+          gamepads: controller.gamepads,
+          now: controllerTime,
           ui: { ...sampledFrame.ui, confirm: false },
         });
         demoHost.update(elapsed);
@@ -13459,7 +13474,10 @@ try {
     }
     update(now) {
       if (practiceRenderFailure.failed) return;
-      if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
+      if (
+        globalThis.RevealLineBoot &&
+        !['interactive', 'ready'].includes(document.documentElement.dataset.bootState)
+      )
         return;
       const workStart = performance.now();
       if (this.failedPreparationRun !== run || !paused) this.failedPreparationRun = null;
@@ -13835,9 +13853,28 @@ try {
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
     };
     assertIntent();
-    const entry = executionEntries().find(
-      (item) => campaignKey(item.campaign) === campaignKey(source.entry.campaign),
-    );
+    const entry = source.entry?.campaign
+      ? executionEntries().find(
+          (item) => campaignKey(item.campaign) === campaignKey(source.entry.campaign),
+        )
+      : null;
+    if (
+      (source.modeId && source.modeId !== 'solo') ||
+      source.journeyContext ||
+      (!entry && source.modeId === 'solo' && source.launchURL)
+    ) {
+      // Built-in demos may read an authored pack without installing it. Its
+      // exact ordinary chooser owns installation and progression on departure.
+      let handedOff = false;
+      const current = () => handedOff || isCurrent();
+      const result = await requestModeDeparture('demo', { preventDefault() {} }, $('shell-demo'), {
+        origin: 'solo-title',
+        isCurrent: current,
+        demoSource: source,
+      });
+      handedOff = result !== false && modeDeparture?.kind === 'demo';
+      return handedOff;
+    }
     const level = entry?.campaign.levels.find((item) => item.id === source.levelId);
     if (!level || demoIdentity(level, entry.classRecipes) !== source.identity)
       throw new Error(t('interface:thatExactInstalledCampaignIsNoLongerAvailable'));
@@ -14181,7 +14218,7 @@ try {
             ...teamSources,
           ];
         }
-        if (!runtimeContent) {
+        if (!runtimeContent && !views?.supplemental) {
           const [
             { duelExpeditionLibrarySources, teamExpeditionLibrarySource },
             { TEAM_EXPANSION_ROUTE },
@@ -15169,12 +15206,32 @@ try {
       touchSettings: touchPreferences.snapshot(),
       tapSteering: $('tap-steering').checked,
     }),
-    loadSources: ({ signal }) =>
-      loadDemoSources({ entries: executionEntries(), library: demoLibrary, turnPolicy, signal }),
+    loadSources: async ({ signal }) => {
+      const [existing, builtin] = await Promise.all([
+        loadDemoSources({ entries: executionEntries(), library: demoLibrary, turnPolicy, signal }),
+        runtimeContent ? [] : loadBuiltinSoloDemoSources({ signal }),
+      ]);
+      return mergeBuiltinSoloDemoSources(existing, builtin);
+    },
     readMedia: async (options) =>
       createSessionPictureView(await pictureMedia(options), sessionPictures),
-    getJourneyPictureContext: ({ entry, level }) => {
-      if (!candidateHost?.owns(entry)) return null;
+    getJourneyPictureContext: ({ entry, level, journeyContext }) => {
+      if (!candidateHost?.owns(entry)) {
+        if (journeyContext?.editionId !== authoredRoute?.id) return journeyContext ?? null;
+        // A lazily compiled demo has its own entry objects. Only the exact
+        // active route's native mission identity may borrow its earned-art view.
+        const native = candidateHost?.catalog.missions.find(
+          (mission) => mission.id === journeyContext.missionId,
+        );
+        return native
+          ? {
+              ...journeyContext,
+              entries: [...candidateHost.entries, entry],
+              profile: journeyProfile.snapshot(),
+              pictures: journeyProfile.pictures(),
+            }
+          : journeyContext;
+      }
       const index = entry.campaign.levels.findIndex((item) => item.id === level.id);
       return {
         editionId: authoredRoute.id,
@@ -15264,7 +15321,7 @@ try {
       return controllerConfirmGuard.owned();
     },
     canWrite: () => writer.writable && persistenceReady && !backupBusy,
-    settingsKey: `revealline.demo.${channel}.v1`,
+    settingsKey: demoSettingsKey({ channel }),
     setCollect: (enabled) => demoLibrary.setEnabled(enabled),
     clearRecordings: () => demoLibrary.clear(),
   });
@@ -15292,7 +15349,8 @@ try {
     }
   }
   $('demo-keep').onclick = () => void retainDemoRun(true);
-  $('shell-demo').hidden = practiceSession;
+  $('shell-demo').hidden = practiceSession || !!courseSession;
+  $('shell-demo-all').hidden = practiceSession || !!courseSession;
   $('demo-button').hidden = practiceSession;
   for (const id of ['shell-catalogue', 'missions-catalogue']) {
     const link = $(id);
@@ -15418,50 +15476,58 @@ try {
     });
   const bootHome = controllerDialog() === $('shell-home');
   const bootFocus = document.activeElement;
-  if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.ready();
+  // Controls remain available to cancel incoming navigation, but readiness
+  // belongs to the completed or retired handoff below.
+  if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.reveal?.();
   else {
     document.querySelectorAll('[data-boot-inert]').forEach((element) => {
       element.inert = false;
-      element.removeAttribute('aria-busy');
+      element.setAttribute('aria-busy', 'true');
     });
-    $('boot-status').hidden = true;
+    $('boot-screen').hidden = true;
+    document.documentElement.dataset.bootState = 'interactive';
   }
   if (libraryHandoff && !practiceSession) {
     const revision = ++unifiedOpenRevision;
     const incomingRun = run,
       incomingStarted = started,
       incomingPrewarm = picturePrewarm?.promise;
-    const opening = trackMissionLibraryOpening({
-      onRetire: () => {
-        if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
-      },
+    let resolveRetirement;
+    const retirement = new Promise((resolve) => {
+      resolveRetirement = resolve;
     });
-    // Finish this owned incoming selection before normal boot focus runs. The
-    // opening lease still retires on genuinely newer input or lost foreground.
-    await (async () => {
+    const releaseOpening = () => {
+      opening.dispose();
+      if (cancelUnifiedOpening === cancel) cancelUnifiedOpening = null;
+    };
+    const cancel = () => {
+      if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
+      releaseOpening();
+      resolveRetirement();
+    };
+    const opening = trackMissionLibraryOpening({ onRetire: cancel });
+    cancelUnifiedOpening = cancel;
+    const incomingCurrent = () =>
+      revision === unifiedOpenRevision &&
+      opening.current() &&
+      run === incomingRun &&
+      started === incomingStarted &&
+      paused &&
+      !document.hidden &&
+      document.hasFocus?.() !== false;
+    // Finish this owned incoming selection before normal boot focus runs. A
+    // retired waiter must not hold boot behind shared metadata or picture work.
+    const incoming = (async () => {
       try {
-        const host = await getUnifiedMissionLibrary(
-          () =>
-            revision === unifiedOpenRevision &&
-            opening.current() &&
-            run === incomingRun &&
-            started === incomingStarted,
-        );
+        const host = await getUnifiedMissionLibrary(incomingCurrent);
+        if (!incomingCurrent()) return;
         // The boot picture may still own a media-generation write. Finish it
         // before the requested mission prepares its distinct exact original.
         // Its failure is not authority to replace or reject the requested art.
         await incomingPrewarm?.catch(() => {});
-        opening.dispose();
-        if (
-          revision !== unifiedOpenRevision ||
-          !opening.current() ||
-          run !== incomingRun ||
-          started !== incomingStarted ||
-          !paused ||
-          document.hidden ||
-          document.hasFocus?.() === false
-        )
-          return;
+        if (!incomingCurrent()) return;
+        // The accepted launch below owns its own checked activation context.
+        releaseOpening();
         const row = host.library.find(libraryHandoff);
         if (!row || !row.modes.includes('solo'))
           throw new Error(t('interface:thisExactMissionEditionIsNotAvailableInSoloNo'));
@@ -15490,9 +15556,12 @@ try {
             }),
           );
       } finally {
-        opening.dispose();
+        releaseOpening();
       }
     })();
+    // Keep late completion and failure observed without cancelling a shared
+    // producer or granting it authority after its incoming intent retires.
+    await Promise.race([incoming, retirement]);
   }
   if (
     exactReturn &&
@@ -15503,6 +15572,14 @@ try {
     // This selector is lazy. Await its owned opening so normal boot focus does
     // not retire it; a real newer focus/visibility choice still cancels it.
     await openUnifiedMissions($('shell-play'), { returnLabel: t('interface:backToMenu2') });
+  }
+  if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.ready();
+  else {
+    document.querySelectorAll('[data-boot-inert]').forEach((element) => {
+      element.removeAttribute('aria-busy');
+    });
+    $('boot-status').hidden = true;
+    document.documentElement.dataset.bootState = 'ready';
   }
   const workshopReturn = readWorkshopReturn(location.search);
   const ownedWorkshopBootFocus =

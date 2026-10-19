@@ -1,0 +1,213 @@
+{
+  "started": "2026-10-19T01:09:17.926Z",
+  "complete": true,
+  "checks": [
+    {
+      "type": "menu-owns-remapped-key",
+      "origin": "snake",
+      "mode": "snake"
+    },
+    {
+      "type": "fresh-remapped-key-practice",
+      "origin": "snake",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "complete",
+      "tick": "3",
+      "practice": true,
+      "hint": "Directions: I · ↓ / S · ← / A · → / D · Pause: P · Esc: back to home"
+    },
+    {
+      "type": "fresh-remapped-pad-practice",
+      "origin": "snake",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "tick": "2",
+      "practice": true,
+      "hint": "Controller: stick or Right stick press · D-pad down · D-pad left · D-pad right · Pause: Menu / start"
+    },
+    {
+      "type": "menu-owns-remapped-key",
+      "origin": "snake",
+      "mode": "solo"
+    },
+    {
+      "type": "fresh-remapped-key-practice",
+      "origin": "snake",
+      "mode": "solo",
+      "source": "solo-qualified-9f1b8ec355af25b9",
+      "phase": "playing",
+      "tick": "42",
+      "practice": true,
+      "hint": "Directions: I · ↓ / S · ← / A · → / D · Pause: P · Esc: back to home"
+    },
+    {
+      "type": "fresh-remapped-pad-practice",
+      "origin": "snake",
+      "mode": "solo",
+      "source": "solo-qualified-9f1b8ec355af25b9",
+      "phase": "playing",
+      "tick": "122",
+      "practice": true,
+      "hint": "Controller: stick or Right stick press · D-pad down · D-pad left · D-pad right · Pause: Menu / start"
+    },
+    {
+      "type": "isolated-preferences-and-persistence",
+      "origin": "snake"
+    },
+    {
+      "type": "menu-owns-remapped-key",
+      "origin": "survival",
+      "mode": "solo"
+    },
+    {
+      "type": "fresh-remapped-key-practice",
+      "origin": "survival",
+      "mode": "solo",
+      "source": "solo-qualified-67de5079eb3bf92d",
+      "phase": "playing",
+      "tick": "121",
+      "practice": true,
+      "hint": "Directions: I · ↓ / S · ← / A · → / D · Pause: P · Esc: back to home"
+    },
+    {
+      "type": "fresh-remapped-pad-practice",
+      "origin": "survival",
+      "mode": "solo",
+      "source": "solo-qualified-67de5079eb3bf92d",
+      "phase": "playing",
+      "tick": "122",
+      "practice": true,
+      "hint": "Controller: stick or Right stick press · D-pad down · D-pad left · D-pad right · Pause: Menu / start"
+    },
+    {
+      "type": "isolated-preferences-and-persistence",
+      "origin": "survival"
+    },
+    {
+      "type": "native-SIM-controller-and-classic-preset-hints",
+      "mode": "sim",
+      "source": "sim:beginner-15-self-level-451ad6d46ab40e85",
+      "phase": "playing",
+      "tick": "1",
+      "practice": false,
+      "keyHint": "↑ / ↓ throttle · Q / E yaw · W / S pitch forward/back · A / D roll · Shift fine control · Space fire",
+      "padHint": "A / Cross: arm · Menu / B: pause. Left stick: yaw and throttle adjustment; centre to hold throttle. Right stick / D-pad: tilt. LB/RB: yaw · LT/RT: less/more throttle · X/Square: fire. Steam Input: use a Gamepad layout."
+    },
+    {
+      "type": "isolated-preferences-and-persistence",
+      "origin": "sim"
+    }
+  ],
+  "errors": [],
+  "headBefore": "693947ed1373db7a265def126a5eede2bf875013",
+  "sourceBefore": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "buildInputsBefore": {
+    "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+    "files": 9398,
+    "bytes": 348357907
+  },
+  "observerSHA256": "ab7bd873cd7a0f9e7cd8fd67ea040215380b92032bb78f7566ec28241349a89d",
+  "scope": "Actual native pages with seeded isolated shared preferences and a virtual standard gamepad. No runtime module or response routing. The preview changes access credentials only. Physical controllers remain a separate human check.",
+  "preview": {
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1",
+      "manifestSHA256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474",
+      "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+      "files": 5952,
+      "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+      "sourceFingerprint": {
+        "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+        "files": 9996,
+        "bytes": 404392393
+      },
+      "buildInputFingerprint": {
+        "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+        "files": 9398,
+        "bytes": 348357907
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "693947ed1373db7a265def126a5eede2bf875013",
+        "runtime": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInput": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/snake/play.html",
+        "original": {
+          "bytes": 17647,
+          "sha256": "4621069238ed1fa74544623ca83e3119a0e2d1ac21aa99c4dbd3ffccfe9a2741"
+        },
+        "served": {
+          "bytes": 17621,
+          "sha256": "43e0761d95a2575f3d04f92812c39f075e47497748eea1172ee808e8b4bd6b54"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      },
+      {
+        "path": "game/overflight/play.html",
+        "original": {
+          "bytes": 17529,
+          "sha256": "2d89f9f7f13dc55b6c2b9b6d776e82028bbcda6a5f07e2331abe6487369a60cd"
+        },
+        "served": {
+          "bytes": 17503,
+          "sha256": "07845a5463411ffc00c20ec535bce308a560c1c0621c75918e51900ae672fe92"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      },
+      {
+        "path": "optional-practice/fpv-worlds/index.html",
+        "original": {
+          "bytes": 49494,
+          "sha256": "f36752ecf688965c81db7828c0702fe4e41a3d2115602b8e6fd70ec8d085fe10"
+        },
+        "served": {
+          "bytes": 49468,
+          "sha256": "c793a25b5482c55229f65c9aafd7f784063063f71b0d9b5122a24ab2efd6d138"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "seededProfileKey": "revealline.library.release-0.151.1.v1",
+  "limitations": [
+    "Emitted bytes are verified against the held source; only local HTML access credentials differ. No offline HTML integrity or physical-controller claim."
+  ],
+  "headAfter": "693947ed1373db7a265def126a5eede2bf875013",
+  "sourceAfter": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "buildInputsAfter": {
+    "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+    "files": 9398,
+    "bytes": 348357907
+  },
+  "observerSHA256After": "ab7bd873cd7a0f9e7cd8fd67ea040215380b92032bb78f7566ec28241349a89d",
+  "sourceUnchanged": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T01:09:55.785Z",
+  "previewClosed": true
+}

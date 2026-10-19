@@ -1,0 +1,4140 @@
+{
+  "format": "revealline-demo-catalog.v1",
+  "clips": [
+    {
+      "id": "solo-qualified-44273034491a74e4",
+      "campaignId": "prologue",
+      "campaignKey": "prologue/candidate-0c4cf7c80e14e652/6f01dc674575e8bb",
+      "levelId": "first-return",
+      "levelRevision": "pressure-v2-36e60a42b78b4f1b",
+      "identity": "b3eb13c1bfbf8a97",
+      "recordingIdentity": "3baca20065b4e3a1",
+      "inputTraceIdentity": "fa93e180a5040427",
+      "title": "First return",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 5.266666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-44273034491a74e4.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "3baca20065b4e3a1",
+          "replayURL": "./demo-data/solo-qualified-44273034491a74e4.chromium.replay.json",
+          "inputTraceIdentity": "fa93e180a5040427",
+          "durationSeconds": 5.266666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "3baca20065b4e3a1",
+          "replayURL": "./demo-data/solo-qualified-44273034491a74e4.webkit.replay.json",
+          "inputTraceIdentity": "fa93e180a5040427",
+          "durationSeconds": 5.266666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d1a5994b174c9108",
+      "campaignId": "prologue",
+      "campaignKey": "prologue/candidate-0c4cf7c80e14e652/6f01dc674575e8bb",
+      "levelId": "choose-your-share",
+      "levelRevision": "pressure-v2-22994d37ea0a7a23",
+      "identity": "664044ba0086d2f6",
+      "recordingIdentity": "a97ea6823950c156",
+      "inputTraceIdentity": "2fcaa68140a14141",
+      "title": "Choose your share",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 9.016666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d1a5994b174c9108.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "a97ea6823950c156",
+          "replayURL": "./demo-data/solo-qualified-d1a5994b174c9108.chromium.replay.json",
+          "inputTraceIdentity": "2fcaa68140a14141",
+          "durationSeconds": 9.016666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "a97ea6823950c156",
+          "replayURL": "./demo-data/solo-qualified-d1a5994b174c9108.webkit.replay.json",
+          "inputTraceIdentity": "2fcaa68140a14141",
+          "durationSeconds": 9.016666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b669b6afe477abbb",
+      "campaignId": "prologue",
+      "campaignKey": "prologue/candidate-0c4cf7c80e14e652/6f01dc674575e8bb",
+      "levelId": "two-keepers",
+      "levelRevision": "pressure-v2-716a50f78f604234",
+      "identity": "813acf6f4204cc7f",
+      "recordingIdentity": "8187729db6e057bf",
+      "inputTraceIdentity": "31ad862e1cfeb9e0",
+      "title": "Two keepers",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 14.366666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-b669b6afe477abbb.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "8187729db6e057bf",
+          "replayURL": "./demo-data/solo-qualified-b669b6afe477abbb.chromium.replay.json",
+          "inputTraceIdentity": "31ad862e1cfeb9e0",
+          "durationSeconds": 14.366666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "8187729db6e057bf",
+          "replayURL": "./demo-data/solo-qualified-b669b6afe477abbb.firefox.replay.json",
+          "inputTraceIdentity": "31ad862e1cfeb9e0",
+          "durationSeconds": 14.366666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "8187729db6e057bf",
+          "replayURL": "./demo-data/solo-qualified-b669b6afe477abbb.webkit.replay.json",
+          "inputTraceIdentity": "31ad862e1cfeb9e0",
+          "durationSeconds": 14.366666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-c0d8a5252aaa7f39",
+      "campaignId": "horizon-school",
+      "campaignKey": "horizon-school/candidate-e7982836ad7325ac/9308eb2d2120c5ad",
+      "levelId": "nearby-shore",
+      "levelRevision": "early-cultural-routes-1",
+      "identity": "d7a97ff50199e68f",
+      "recordingIdentity": "e3a185f3fa8a56e7",
+      "inputTraceIdentity": "06508a730ce26d0d",
+      "title": "Nearby shore",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 26.241666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-c0d8a5252aaa7f39.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "e3a185f3fa8a56e7",
+          "replayURL": "./demo-data/solo-qualified-c0d8a5252aaa7f39.firefox.replay.json",
+          "inputTraceIdentity": "06508a730ce26d0d",
+          "durationSeconds": 26.241666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "e3a185f3fa8a56e7",
+          "replayURL": "./demo-data/solo-qualified-c0d8a5252aaa7f39.webkit.replay.json",
+          "inputTraceIdentity": "06508a730ce26d0d",
+          "durationSeconds": 26.241666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-1d64e506d5980412",
+      "campaignId": "horizon-school",
+      "campaignKey": "horizon-school/candidate-e7982836ad7325ac/9308eb2d2120c5ad",
+      "levelId": "island-outpost",
+      "levelRevision": "horizon-cultural-joins-1",
+      "identity": "2c60aa8968f7f4ae",
+      "recordingIdentity": "3d0a3fd7cf2bf081",
+      "inputTraceIdentity": "f98b95d2342fe189",
+      "title": "Island outpost",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 46.583333333333336,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-1d64e506d5980412.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "3d0a3fd7cf2bf081",
+          "replayURL": "./demo-data/solo-qualified-1d64e506d5980412.chromium.replay.json",
+          "inputTraceIdentity": "f98b95d2342fe189",
+          "durationSeconds": 46.583333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "3d0a3fd7cf2bf081",
+          "replayURL": "./demo-data/solo-qualified-1d64e506d5980412.firefox.replay.json",
+          "inputTraceIdentity": "f98b95d2342fe189",
+          "durationSeconds": 46.583333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "3d0a3fd7cf2bf081",
+          "replayURL": "./demo-data/solo-qualified-1d64e506d5980412.webkit.replay.json",
+          "inputTraceIdentity": "f98b95d2342fe189",
+          "durationSeconds": 46.583333333333336,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-1d64e506d5980412.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-4ac90773fa58369b",
+      "campaignId": "horizon-school",
+      "campaignKey": "horizon-school/candidate-e7982836ad7325ac/9308eb2d2120c5ad",
+      "levelId": "stepping-stones",
+      "levelRevision": "cultural-spatial-triptych-1",
+      "identity": "87942b6d82eedd0a",
+      "recordingIdentity": "5e2e42d89ecfeaa2",
+      "inputTraceIdentity": "0da95263f03e204f",
+      "title": "Stepping stones",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 57.266666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-4ac90773fa58369b.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "5e2e42d89ecfeaa2",
+          "replayURL": "./demo-data/solo-qualified-4ac90773fa58369b.chromium.replay.json",
+          "inputTraceIdentity": "0da95263f03e204f",
+          "durationSeconds": 57.266666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "5e2e42d89ecfeaa2",
+          "replayURL": "./demo-data/solo-qualified-4ac90773fa58369b.firefox.replay.json",
+          "inputTraceIdentity": "0da95263f03e204f",
+          "durationSeconds": 57.266666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "5e2e42d89ecfeaa2",
+          "replayURL": "./demo-data/solo-qualified-4ac90773fa58369b.webkit.replay.json",
+          "inputTraceIdentity": "0da95263f03e204f",
+          "durationSeconds": 57.266666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-11133b7849422018",
+      "campaignId": "horizon-school",
+      "campaignKey": "horizon-school/candidate-e7982836ad7325ac/9308eb2d2120c5ad",
+      "levelId": "two-bays",
+      "levelRevision": "early-cultural-routes-1",
+      "identity": "61536febaed26373",
+      "recordingIdentity": "6f2265019b7b7111",
+      "inputTraceIdentity": "845842d8145def08",
+      "title": "Two bays",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 14.625,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-11133b7849422018.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "6f2265019b7b7111",
+          "replayURL": "./demo-data/solo-qualified-11133b7849422018.chromium.replay.json",
+          "inputTraceIdentity": "845842d8145def08",
+          "durationSeconds": 14.625,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "6f2265019b7b7111",
+          "replayURL": "./demo-data/solo-qualified-11133b7849422018.firefox.performance.replay.json",
+          "inputTraceIdentity": "845842d8145def08",
+          "durationSeconds": 14.625,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "6f2265019b7b7111",
+          "replayURL": "./demo-data/solo-qualified-11133b7849422018.webkit.replay.json",
+          "inputTraceIdentity": "845842d8145def08",
+          "durationSeconds": 14.625,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-11133b7849422018.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-be318c73458f4900",
+      "campaignId": "horizon-school",
+      "campaignKey": "horizon-school/candidate-e7982836ad7325ac/9308eb2d2120c5ad",
+      "levelId": "courtyard-return",
+      "levelRevision": "courtyard-spatial-1",
+      "identity": "991d4b16f3c94b88",
+      "recordingIdentity": "6939af353126656d",
+      "inputTraceIdentity": "91676898d90f591d",
+      "title": "Courtyard return",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 53.958333333333336,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-be318c73458f4900.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "6939af353126656d",
+          "replayURL": "./demo-data/solo-qualified-be318c73458f4900.chromium.replay.json",
+          "inputTraceIdentity": "91676898d90f591d",
+          "durationSeconds": 53.958333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "6939af353126656d",
+          "replayURL": "./demo-data/solo-qualified-be318c73458f4900.firefox.replay.json",
+          "inputTraceIdentity": "91676898d90f591d",
+          "durationSeconds": 53.958333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "6939af353126656d",
+          "replayURL": "./demo-data/solo-qualified-be318c73458f4900.webkit.replay.json",
+          "inputTraceIdentity": "91676898d90f591d",
+          "durationSeconds": 53.958333333333336,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-5678d483da29e23a",
+      "campaignId": "horizon-school",
+      "campaignKey": "horizon-school/candidate-e7982836ad7325ac/9308eb2d2120c5ad",
+      "levelId": "long-way-home",
+      "levelRevision": "horizon-cultural-joins-1",
+      "identity": "65d6cee3412a3d54",
+      "recordingIdentity": "159eea929dba6db2",
+      "inputTraceIdentity": "c31eb19df1296035",
+      "title": "Long way home",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 57.71666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-5678d483da29e23a.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "159eea929dba6db2",
+          "replayURL": "./demo-data/solo-qualified-5678d483da29e23a.chromium.performance.replay.json",
+          "inputTraceIdentity": "c31eb19df1296035",
+          "durationSeconds": 57.71666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "159eea929dba6db2",
+          "replayURL": "./demo-data/solo-qualified-5678d483da29e23a.firefox.performance.replay.json",
+          "inputTraceIdentity": "c31eb19df1296035",
+          "durationSeconds": 57.71666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "159eea929dba6db2",
+          "replayURL": "./demo-data/solo-qualified-5678d483da29e23a.webkit.performance.replay.json",
+          "inputTraceIdentity": "c31eb19df1296035",
+          "durationSeconds": 57.71666666666667,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-5678d483da29e23a.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-965c3d07edf7944d",
+      "campaignId": "border-bloom",
+      "campaignKey": "border-bloom/candidate-ee8246509ac9a486/b6877d13d0dd82d3",
+      "levelId": "behind-the-patrol",
+      "levelRevision": "early-cultural-routes-1",
+      "identity": "db16d6bab8581cac",
+      "recordingIdentity": "58739b0b28522428",
+      "inputTraceIdentity": "e7884d434a82762a",
+      "title": "Behind the patrol",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 29.45,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-965c3d07edf7944d.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "58739b0b28522428",
+          "replayURL": "./demo-data/solo-qualified-965c3d07edf7944d.chromium.replay.json",
+          "inputTraceIdentity": "e7884d434a82762a",
+          "durationSeconds": 29.45,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "58739b0b28522428",
+          "replayURL": "./demo-data/solo-qualified-965c3d07edf7944d.firefox.replay.json",
+          "inputTraceIdentity": "e7884d434a82762a",
+          "durationSeconds": 29.45,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "58739b0b28522428",
+          "replayURL": "./demo-data/solo-qualified-965c3d07edf7944d.webkit.replay.json",
+          "inputTraceIdentity": "e7884d434a82762a",
+          "durationSeconds": 29.45,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f7181f0af9511fcc",
+      "campaignId": "border-bloom",
+      "campaignKey": "border-bloom/candidate-ee8246509ac9a486/b6877d13d0dd82d3",
+      "levelId": "second-landing",
+      "levelRevision": "border-cultural-routes-1",
+      "identity": "860a4ad71e26adc4",
+      "recordingIdentity": "e38d2cbca0ee701d",
+      "inputTraceIdentity": "b122f7c79ad71a49",
+      "title": "Second landing",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 42.25,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-f7181f0af9511fcc.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "e38d2cbca0ee701d",
+          "replayURL": "./demo-data/solo-qualified-f7181f0af9511fcc.chromium.replay.json",
+          "inputTraceIdentity": "b122f7c79ad71a49",
+          "durationSeconds": 42.25,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "e38d2cbca0ee701d",
+          "replayURL": "./demo-data/solo-qualified-f7181f0af9511fcc.firefox.replay.json",
+          "inputTraceIdentity": "b122f7c79ad71a49",
+          "durationSeconds": 42.25,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "e38d2cbca0ee701d",
+          "replayURL": "./demo-data/solo-qualified-f7181f0af9511fcc.webkit.replay.json",
+          "inputTraceIdentity": "b122f7c79ad71a49",
+          "durationSeconds": 42.25,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0e6f0bf3f5775703",
+      "campaignId": "border-bloom",
+      "campaignKey": "border-bloom/candidate-ee8246509ac9a486/b6877d13d0dd82d3",
+      "levelId": "long-rail",
+      "levelRevision": "border-cultural-routes-1",
+      "identity": "cc1b2407f3c7e041",
+      "recordingIdentity": "44fc91499d7e0b1a",
+      "inputTraceIdentity": "0a319d94fa624fc9",
+      "title": "Long rail",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 52.80833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-0e6f0bf3f5775703.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "44fc91499d7e0b1a",
+          "replayURL": "./demo-data/solo-qualified-0e6f0bf3f5775703.chromium.replay.json",
+          "inputTraceIdentity": "0a319d94fa624fc9",
+          "durationSeconds": 52.80833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "44fc91499d7e0b1a",
+          "replayURL": "./demo-data/solo-qualified-0e6f0bf3f5775703.firefox.replay.json",
+          "inputTraceIdentity": "0a319d94fa624fc9",
+          "durationSeconds": 52.80833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "44fc91499d7e0b1a",
+          "replayURL": "./demo-data/solo-qualified-0e6f0bf3f5775703.webkit.replay.json",
+          "inputTraceIdentity": "0a319d94fa624fc9",
+          "durationSeconds": 52.80833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-728dc5622c493506",
+      "campaignId": "border-bloom",
+      "campaignKey": "border-bloom/candidate-ee8246509ac9a486/b6877d13d0dd82d3",
+      "levelId": "new-frontier",
+      "levelRevision": "border-cultural-routes-1",
+      "identity": "715cdc9114fe643a",
+      "recordingIdentity": "bf8e86b683fc3a42",
+      "inputTraceIdentity": "c63eca93071c28ea",
+      "title": "New frontier",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 35.74166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-728dc5622c493506.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "bf8e86b683fc3a42",
+          "replayURL": "./demo-data/solo-qualified-728dc5622c493506.chromium.replay.json",
+          "inputTraceIdentity": "c63eca93071c28ea",
+          "durationSeconds": 35.74166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "bf8e86b683fc3a42",
+          "replayURL": "./demo-data/solo-qualified-728dc5622c493506.firefox.replay.json",
+          "inputTraceIdentity": "c63eca93071c28ea",
+          "durationSeconds": 35.74166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "bf8e86b683fc3a42",
+          "replayURL": "./demo-data/solo-qualified-728dc5622c493506.webkit.replay.json",
+          "inputTraceIdentity": "c63eca93071c28ea",
+          "durationSeconds": 35.74166666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-3996626042c502db",
+      "campaignId": "border-bloom",
+      "campaignKey": "border-bloom/candidate-ee8246509ac9a486/b6877d13d0dd82d3",
+      "levelId": "turn-the-corner",
+      "levelRevision": "pressure-v2-66214242c4dff4fe",
+      "identity": "2847e37d2601b1a7",
+      "recordingIdentity": "8b86b4ea22a781b7",
+      "inputTraceIdentity": "92d27f537d8acd23",
+      "title": "Turn the corner",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 18.633333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-3996626042c502db.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "8b86b4ea22a781b7",
+          "replayURL": "./demo-data/solo-qualified-3996626042c502db.chromium.performance.replay.json",
+          "inputTraceIdentity": "92d27f537d8acd23",
+          "durationSeconds": 18.633333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "8b86b4ea22a781b7",
+          "replayURL": "./demo-data/solo-qualified-3996626042c502db.firefox.replay.json",
+          "inputTraceIdentity": "92d27f537d8acd23",
+          "durationSeconds": 18.633333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "8b86b4ea22a781b7",
+          "replayURL": "./demo-data/solo-qualified-3996626042c502db.webkit.performance.replay.json",
+          "inputTraceIdentity": "92d27f537d8acd23",
+          "durationSeconds": 18.633333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b7b6ea7705c422d5",
+      "campaignId": "border-bloom",
+      "campaignKey": "border-bloom/candidate-ee8246509ac9a486/b6877d13d0dd82d3",
+      "levelId": "return-pocket",
+      "levelRevision": "cultural-spatial-triptych-1",
+      "identity": "3bbb77fa8e204d1a",
+      "recordingIdentity": "92b2974bb7fa3fd5",
+      "inputTraceIdentity": "c3c9c42e8424e238",
+      "title": "Return pocket",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 49.266666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-b7b6ea7705c422d5.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "92b2974bb7fa3fd5",
+          "replayURL": "./demo-data/solo-qualified-b7b6ea7705c422d5.chromium.performance.replay.json",
+          "inputTraceIdentity": "c3c9c42e8424e238",
+          "durationSeconds": 49.266666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "92b2974bb7fa3fd5",
+          "replayURL": "./demo-data/solo-qualified-b7b6ea7705c422d5.firefox.replay.json",
+          "inputTraceIdentity": "c3c9c42e8424e238",
+          "durationSeconds": 49.266666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "92b2974bb7fa3fd5",
+          "replayURL": "./demo-data/solo-qualified-b7b6ea7705c422d5.webkit.replay.json",
+          "inputTraceIdentity": "c3c9c42e8424e238",
+          "durationSeconds": 49.266666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-70a708ee64355d75",
+      "campaignId": "signal-gardens",
+      "campaignKey": "signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96",
+      "levelId": "soft-crossing",
+      "levelRevision": "signal-cultural-routes-1",
+      "identity": "14fbb51bf2830e9e",
+      "recordingIdentity": "01537fc12b6cb8fa",
+      "inputTraceIdentity": "c81888b48044f881",
+      "title": "Soft crossing",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 32.88333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-70a708ee64355d75.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "01537fc12b6cb8fa",
+          "replayURL": "./demo-data/solo-qualified-70a708ee64355d75.chromium.replay.json",
+          "inputTraceIdentity": "c81888b48044f881",
+          "durationSeconds": 32.88333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "01537fc12b6cb8fa",
+          "replayURL": "./demo-data/solo-qualified-70a708ee64355d75.firefox.replay.json",
+          "inputTraceIdentity": "c81888b48044f881",
+          "durationSeconds": 32.88333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "01537fc12b6cb8fa",
+          "replayURL": "./demo-data/solo-qualified-70a708ee64355d75.webkit.replay.json",
+          "inputTraceIdentity": "c81888b48044f881",
+          "durationSeconds": 32.88333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d87dc7be0d62a2b1",
+      "campaignId": "signal-gardens",
+      "campaignKey": "signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96",
+      "levelId": "dry-spine",
+      "levelRevision": "border-signal-cultural-routes-1",
+      "identity": "b7cd13fe9ef25284",
+      "recordingIdentity": "a7f5e27313e3cc49",
+      "inputTraceIdentity": "228636dc6e701988",
+      "title": "Dry spine",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 82.31666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d87dc7be0d62a2b1.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "a7f5e27313e3cc49",
+          "replayURL": "./demo-data/solo-qualified-d87dc7be0d62a2b1.chromium.replay.json",
+          "inputTraceIdentity": "228636dc6e701988",
+          "durationSeconds": 82.31666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "a7f5e27313e3cc49",
+          "replayURL": "./demo-data/solo-qualified-d87dc7be0d62a2b1.firefox.replay.json",
+          "inputTraceIdentity": "228636dc6e701988",
+          "durationSeconds": 82.31666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "a7f5e27313e3cc49",
+          "replayURL": "./demo-data/solo-qualified-d87dc7be0d62a2b1.webkit.replay.json",
+          "inputTraceIdentity": "228636dc6e701988",
+          "durationSeconds": 82.31666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-7b3a3b7248f976ce",
+      "campaignId": "signal-gardens",
+      "campaignKey": "signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96",
+      "levelId": "wide-approach",
+      "levelRevision": "border-signal-cultural-routes-1",
+      "identity": "c4d5832a38156073",
+      "recordingIdentity": "57e9427e5b54ae32",
+      "inputTraceIdentity": "bd568efde0fc0dac",
+      "title": "Wide approach",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 68.55833333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-7b3a3b7248f976ce.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "57e9427e5b54ae32",
+          "replayURL": "./demo-data/solo-qualified-7b3a3b7248f976ce.chromium.replay.json",
+          "inputTraceIdentity": "bd568efde0fc0dac",
+          "durationSeconds": 68.55833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "57e9427e5b54ae32",
+          "replayURL": "./demo-data/solo-qualified-7b3a3b7248f976ce.firefox.replay.json",
+          "inputTraceIdentity": "bd568efde0fc0dac",
+          "durationSeconds": 68.55833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "57e9427e5b54ae32",
+          "replayURL": "./demo-data/solo-qualified-7b3a3b7248f976ce.webkit.replay.json",
+          "inputTraceIdentity": "bd568efde0fc0dac",
+          "durationSeconds": 68.55833333333334,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-7b3a3b7248f976ce.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-a06599f68a914d16",
+      "campaignId": "signal-gardens",
+      "campaignKey": "signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96",
+      "levelId": "cool-the-crossing",
+      "levelRevision": "signal-cultural-routes-1",
+      "identity": "bf35c0197815cfe5",
+      "recordingIdentity": "a87f8aa10e07e8f0",
+      "inputTraceIdentity": "698900e033c8b3e5",
+      "title": "Cool the crossing",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 14.541666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-a06599f68a914d16.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "a87f8aa10e07e8f0",
+          "replayURL": "./demo-data/solo-qualified-a06599f68a914d16.chromium.replay.json",
+          "inputTraceIdentity": "698900e033c8b3e5",
+          "durationSeconds": 14.541666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "a87f8aa10e07e8f0",
+          "replayURL": "./demo-data/solo-qualified-a06599f68a914d16.firefox.replay.json",
+          "inputTraceIdentity": "698900e033c8b3e5",
+          "durationSeconds": 14.541666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "a87f8aa10e07e8f0",
+          "replayURL": "./demo-data/solo-qualified-a06599f68a914d16.webkit.replay.json",
+          "inputTraceIdentity": "698900e033c8b3e5",
+          "durationSeconds": 14.541666666666666,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-a06599f68a914d16.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-9dddcc84f7d60f65",
+      "campaignId": "signal-gardens",
+      "campaignKey": "signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96",
+      "levelId": "garden-refuges",
+      "levelRevision": "pressure-v2-d50749dbd97c78b0",
+      "identity": "ccf25f09db9c0b70",
+      "recordingIdentity": "74995b97e4bd599a",
+      "inputTraceIdentity": "e844296396bf9203",
+      "title": "Garden refuges",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 12.583333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-9dddcc84f7d60f65.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "74995b97e4bd599a",
+          "replayURL": "./demo-data/solo-qualified-9dddcc84f7d60f65.chromium.replay.json",
+          "inputTraceIdentity": "e844296396bf9203",
+          "durationSeconds": 12.583333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "74995b97e4bd599a",
+          "replayURL": "./demo-data/solo-qualified-9dddcc84f7d60f65.firefox.replay.json",
+          "inputTraceIdentity": "e844296396bf9203",
+          "durationSeconds": 12.583333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "74995b97e4bd599a",
+          "replayURL": "./demo-data/solo-qualified-9dddcc84f7d60f65.webkit.replay.json",
+          "inputTraceIdentity": "e844296396bf9203",
+          "durationSeconds": 12.583333333333334,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-9dddcc84f7d60f65.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-9aa30fcd0b3c8281",
+      "campaignId": "signal-gardens",
+      "campaignKey": "signal-gardens/candidate-c81835e96ec55181/f7fe35ee3d954b96",
+      "levelId": "neutral-ground",
+      "levelRevision": "cultural-spatial-triptych-1",
+      "identity": "2e049d7046c0beb5",
+      "recordingIdentity": "2df046eb19a02b49",
+      "inputTraceIdentity": "9c3dc6e4338ae358",
+      "title": "Neutral ground",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 65.075,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-9aa30fcd0b3c8281.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "2df046eb19a02b49",
+          "replayURL": "./demo-data/solo-qualified-9aa30fcd0b3c8281.chromium.performance.replay.json",
+          "inputTraceIdentity": "9c3dc6e4338ae358",
+          "durationSeconds": 65.075,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "2df046eb19a02b49",
+          "replayURL": "./demo-data/solo-qualified-9aa30fcd0b3c8281.firefox.performance.replay.json",
+          "inputTraceIdentity": "9c3dc6e4338ae358",
+          "durationSeconds": 65.075,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "2df046eb19a02b49",
+          "replayURL": "./demo-data/solo-qualified-9aa30fcd0b3c8281.webkit.performance.replay.json",
+          "inputTraceIdentity": "9c3dc6e4338ae358",
+          "durationSeconds": 65.075,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-9aa30fcd0b3c8281.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-f1f91fa91991d51b",
+      "campaignId": "neon-contours",
+      "campaignKey": "neon-contours/candidate-a904a9907d403af6/584714fbd981ed3c",
+      "levelId": "folded-corner",
+      "levelRevision": "neon-cultural-routes-1",
+      "identity": "1644a579f84c5a26",
+      "recordingIdentity": "a2ee21125c417799",
+      "inputTraceIdentity": "f2140f18b8e31429",
+      "title": "Folded corner",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 36.6,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-f1f91fa91991d51b.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "a2ee21125c417799",
+          "replayURL": "./demo-data/solo-qualified-f1f91fa91991d51b.chromium.replay.json",
+          "inputTraceIdentity": "f2140f18b8e31429",
+          "durationSeconds": 36.6,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "a2ee21125c417799",
+          "replayURL": "./demo-data/solo-qualified-f1f91fa91991d51b.firefox.replay.json",
+          "inputTraceIdentity": "f2140f18b8e31429",
+          "durationSeconds": 36.6,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "a2ee21125c417799",
+          "replayURL": "./demo-data/solo-qualified-f1f91fa91991d51b.webkit.replay.json",
+          "inputTraceIdentity": "f2140f18b8e31429",
+          "durationSeconds": 36.6,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-f1f91fa91991d51b.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-dd5c4beb661682f0",
+      "campaignId": "neon-contours",
+      "campaignKey": "neon-contours/candidate-a904a9907d403af6/584714fbd981ed3c",
+      "levelId": "inside-out",
+      "levelRevision": "neon-cultural-routes-1",
+      "identity": "ee95e3f49e00b911",
+      "recordingIdentity": "1677d46209dd8f82",
+      "inputTraceIdentity": "ede89f137543140b",
+      "title": "Inside out",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 56.13333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-dd5c4beb661682f0.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "1677d46209dd8f82",
+          "replayURL": "./demo-data/solo-qualified-dd5c4beb661682f0.chromium.replay.json",
+          "inputTraceIdentity": "ede89f137543140b",
+          "durationSeconds": 56.13333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "1677d46209dd8f82",
+          "replayURL": "./demo-data/solo-qualified-dd5c4beb661682f0.firefox.replay.json",
+          "inputTraceIdentity": "ede89f137543140b",
+          "durationSeconds": 56.13333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "1677d46209dd8f82",
+          "replayURL": "./demo-data/solo-qualified-dd5c4beb661682f0.webkit.performance.replay.json",
+          "inputTraceIdentity": "ede89f137543140b",
+          "durationSeconds": 56.13333333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-dd5c4beb661682f0.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-bbd69e7ccb5526d9",
+      "campaignId": "neon-contours",
+      "campaignKey": "neon-contours/candidate-a904a9907d403af6/584714fbd981ed3c",
+      "levelId": "four-quarters",
+      "levelRevision": "pressure-v2-c72422008b206370",
+      "identity": "234a9aac8fb470c0",
+      "recordingIdentity": "252baa3867f65d8c",
+      "inputTraceIdentity": "e4c315e751b47b0b",
+      "title": "Four quarters",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 42.5,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-bbd69e7ccb5526d9.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "252baa3867f65d8c",
+          "replayURL": "./demo-data/solo-qualified-bbd69e7ccb5526d9.chromium.replay.json",
+          "inputTraceIdentity": "e4c315e751b47b0b",
+          "durationSeconds": 42.5,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "252baa3867f65d8c",
+          "replayURL": "./demo-data/solo-qualified-bbd69e7ccb5526d9.firefox.replay.json",
+          "inputTraceIdentity": "e4c315e751b47b0b",
+          "durationSeconds": 42.5,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "252baa3867f65d8c",
+          "replayURL": "./demo-data/solo-qualified-bbd69e7ccb5526d9.webkit.replay.json",
+          "inputTraceIdentity": "e4c315e751b47b0b",
+          "durationSeconds": 42.5,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-bbd69e7ccb5526d9.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-484de1d1d425f0c5",
+      "campaignId": "neon-contours",
+      "campaignKey": "neon-contours/candidate-a904a9907d403af6/584714fbd981ed3c",
+      "levelId": "side-door-bays",
+      "levelRevision": "neon-cultural-routes-1",
+      "identity": "c27880a81a7f6935",
+      "recordingIdentity": "1fd7e5cebea07eaa",
+      "inputTraceIdentity": "c381fcc30d0f3114",
+      "title": "Side-door bays",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 29.05,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-484de1d1d425f0c5.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "1fd7e5cebea07eaa",
+          "replayURL": "./demo-data/solo-qualified-484de1d1d425f0c5.chromium.performance.replay.json",
+          "inputTraceIdentity": "c381fcc30d0f3114",
+          "durationSeconds": 29.05,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "1fd7e5cebea07eaa",
+          "replayURL": "./demo-data/solo-qualified-484de1d1d425f0c5.firefox.performance.replay.json",
+          "inputTraceIdentity": "c381fcc30d0f3114",
+          "durationSeconds": 29.05,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "1fd7e5cebea07eaa",
+          "replayURL": "./demo-data/solo-qualified-484de1d1d425f0c5.webkit.performance.replay.json",
+          "inputTraceIdentity": "c381fcc30d0f3114",
+          "durationSeconds": 29.05,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0eafd68dc70ee8a8",
+      "campaignId": "neon-contours",
+      "campaignKey": "neon-contours/candidate-a904a9907d403af6/584714fbd981ed3c",
+      "levelId": "dogleg-return",
+      "levelRevision": "neon-cultural-routes-2",
+      "identity": "dd35007aebf429d8",
+      "recordingIdentity": "c75c9a6701131625",
+      "inputTraceIdentity": "25321f954d488cc2",
+      "title": "Dogleg return",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 49.025,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-0eafd68dc70ee8a8.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "c75c9a6701131625",
+          "replayURL": "./demo-data/solo-qualified-0eafd68dc70ee8a8.chromium.replay.json",
+          "inputTraceIdentity": "25321f954d488cc2",
+          "durationSeconds": 49.025,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "c75c9a6701131625",
+          "replayURL": "./demo-data/solo-qualified-0eafd68dc70ee8a8.firefox.replay.json",
+          "inputTraceIdentity": "25321f954d488cc2",
+          "durationSeconds": 49.025,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "c75c9a6701131625",
+          "replayURL": "./demo-data/solo-qualified-0eafd68dc70ee8a8.webkit.replay.json",
+          "inputTraceIdentity": "25321f954d488cc2",
+          "durationSeconds": 49.025,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-0eafd68dc70ee8a8.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-821bba1882552b03",
+      "campaignId": "neon-contours",
+      "campaignKey": "neon-contours/candidate-a904a9907d403af6/584714fbd981ed3c",
+      "levelId": "staggered-circuit",
+      "levelRevision": "neon-cultural-routes-2",
+      "identity": "6a2345c7d0038ae3",
+      "recordingIdentity": "970de858f70cd57d",
+      "inputTraceIdentity": "129270b1e24a4826",
+      "title": "Staggered circuit",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 39.00833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-821bba1882552b03.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "970de858f70cd57d",
+          "replayURL": "./demo-data/solo-qualified-821bba1882552b03.chromium.replay.json",
+          "inputTraceIdentity": "129270b1e24a4826",
+          "durationSeconds": 39.00833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "970de858f70cd57d",
+          "replayURL": "./demo-data/solo-qualified-821bba1882552b03.firefox.replay.json",
+          "inputTraceIdentity": "129270b1e24a4826",
+          "durationSeconds": 39.00833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "970de858f70cd57d",
+          "replayURL": "./demo-data/solo-qualified-821bba1882552b03.webkit.replay.json",
+          "inputTraceIdentity": "129270b1e24a4826",
+          "durationSeconds": 39.00833333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-821bba1882552b03.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-bbe0c5897adb725d",
+      "campaignId": "rover-yard",
+      "campaignKey": "rover-yard/candidate-df7f9272e9369311/16adfa82b8f9194b",
+      "levelId": "wake-the-yard",
+      "levelRevision": "rover-cultural-routes-1",
+      "identity": "87f9239318ea0f60",
+      "recordingIdentity": "b44542a784dc9ada",
+      "inputTraceIdentity": "d3b62ac4f08448f2",
+      "title": "Wake the yard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 51.18333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-bbe0c5897adb725d.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "b44542a784dc9ada",
+          "replayURL": "./demo-data/solo-qualified-bbe0c5897adb725d.chromium.replay.json",
+          "inputTraceIdentity": "d3b62ac4f08448f2",
+          "durationSeconds": 51.18333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "b44542a784dc9ada",
+          "replayURL": "./demo-data/solo-qualified-bbe0c5897adb725d.firefox.replay.json",
+          "inputTraceIdentity": "d3b62ac4f08448f2",
+          "durationSeconds": 51.18333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "b44542a784dc9ada",
+          "replayURL": "./demo-data/solo-qualified-bbe0c5897adb725d.webkit.replay.json",
+          "inputTraceIdentity": "d3b62ac4f08448f2",
+          "durationSeconds": 51.18333333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-bbe0c5897adb725d.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-dc59e6e76ae9df8b",
+      "campaignId": "rover-yard",
+      "campaignKey": "rover-yard/candidate-df7f9272e9369311/16adfa82b8f9194b",
+      "levelId": "split-berths",
+      "levelRevision": "pressure-v2-d5a17a3114309b16",
+      "identity": "139212f381f4bbd1",
+      "recordingIdentity": "f99af0418ac3f10e",
+      "inputTraceIdentity": "05c99ad3a9ef8ad4",
+      "title": "Split berths",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 23.341666666666665,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-dc59e6e76ae9df8b.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "f99af0418ac3f10e",
+          "replayURL": "./demo-data/solo-qualified-dc59e6e76ae9df8b.chromium.replay.json",
+          "inputTraceIdentity": "05c99ad3a9ef8ad4",
+          "durationSeconds": 23.341666666666665,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "f99af0418ac3f10e",
+          "replayURL": "./demo-data/solo-qualified-dc59e6e76ae9df8b.firefox.replay.json",
+          "inputTraceIdentity": "05c99ad3a9ef8ad4",
+          "durationSeconds": 23.341666666666665,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "f99af0418ac3f10e",
+          "replayURL": "./demo-data/solo-qualified-dc59e6e76ae9df8b.webkit.replay.json",
+          "inputTraceIdentity": "05c99ad3a9ef8ad4",
+          "durationSeconds": 23.341666666666665,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-dc59e6e76ae9df8b.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-08bfbce48d50a5c0",
+      "campaignId": "rover-yard",
+      "campaignKey": "rover-yard/candidate-df7f9272e9369311/16adfa82b8f9194b",
+      "levelId": "stepped-return",
+      "levelRevision": "pressure-v2-c277d7550e40d65d",
+      "identity": "a886ef9eca88efd6",
+      "recordingIdentity": "bd27c267db3591a4",
+      "inputTraceIdentity": "6b81e4f4a5796b42",
+      "title": "Stepped return",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 41.916666666666664,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-08bfbce48d50a5c0.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "bd27c267db3591a4",
+          "replayURL": "./demo-data/solo-qualified-08bfbce48d50a5c0.chromium.replay.json",
+          "inputTraceIdentity": "6b81e4f4a5796b42",
+          "durationSeconds": 41.916666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "bd27c267db3591a4",
+          "replayURL": "./demo-data/solo-qualified-08bfbce48d50a5c0.firefox.replay.json",
+          "inputTraceIdentity": "6b81e4f4a5796b42",
+          "durationSeconds": 41.916666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "bd27c267db3591a4",
+          "replayURL": "./demo-data/solo-qualified-08bfbce48d50a5c0.webkit.replay.json",
+          "inputTraceIdentity": "6b81e4f4a5796b42",
+          "durationSeconds": 41.916666666666664,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-08bfbce48d50a5c0.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-614567e280b3c780",
+      "campaignId": "rover-yard",
+      "campaignKey": "rover-yard/candidate-df7f9272e9369311/16adfa82b8f9194b",
+      "levelId": "between-the-rows",
+      "levelRevision": "rover-cultural-routes-1",
+      "identity": "240b9d735f8b078e",
+      "recordingIdentity": "07eddc379330a3c7",
+      "inputTraceIdentity": "c08a51f3d6ddbb14",
+      "title": "Between the rows",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 63.00833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-614567e280b3c780.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "07eddc379330a3c7",
+          "replayURL": "./demo-data/solo-qualified-614567e280b3c780.chromium.performance.replay.json",
+          "inputTraceIdentity": "c08a51f3d6ddbb14",
+          "durationSeconds": 63.00833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "07eddc379330a3c7",
+          "replayURL": "./demo-data/solo-qualified-614567e280b3c780.firefox.performance.replay.json",
+          "inputTraceIdentity": "c08a51f3d6ddbb14",
+          "durationSeconds": 63.00833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "07eddc379330a3c7",
+          "replayURL": "./demo-data/solo-qualified-614567e280b3c780.webkit.performance.replay.json",
+          "inputTraceIdentity": "c08a51f3d6ddbb14",
+          "durationSeconds": 63.00833333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-614567e280b3c780.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-2df382183e2f00d6",
+      "campaignId": "rover-yard",
+      "campaignKey": "rover-yard/candidate-df7f9272e9369311/16adfa82b8f9194b",
+      "levelId": "broken-yard",
+      "levelRevision": "pressure-v2-c72bd0e186275a9f",
+      "identity": "3f7cf708ad45b038",
+      "recordingIdentity": "9fd35f8ec940f70a",
+      "inputTraceIdentity": "ae485892674cf864",
+      "title": "Broken yard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 33.49166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-2df382183e2f00d6.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "9fd35f8ec940f70a",
+          "replayURL": "./demo-data/solo-qualified-2df382183e2f00d6.chromium.replay.json",
+          "inputTraceIdentity": "ae485892674cf864",
+          "durationSeconds": 33.49166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "9fd35f8ec940f70a",
+          "replayURL": "./demo-data/solo-qualified-2df382183e2f00d6.firefox.replay.json",
+          "inputTraceIdentity": "ae485892674cf864",
+          "durationSeconds": 33.49166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "9fd35f8ec940f70a",
+          "replayURL": "./demo-data/solo-qualified-2df382183e2f00d6.webkit.replay.json",
+          "inputTraceIdentity": "ae485892674cf864",
+          "durationSeconds": 33.49166666666667,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-2df382183e2f00d6.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-7e1cae99ddeff5f9",
+      "campaignId": "rover-yard",
+      "campaignKey": "rover-yard/candidate-df7f9272e9369311/16adfa82b8f9194b",
+      "levelId": "sorting-yard",
+      "levelRevision": "sorting-spatial-1",
+      "identity": "4829986ed6a844c7",
+      "recordingIdentity": "cba62a88ed3877c8",
+      "inputTraceIdentity": "2ea19d83131b2b2f",
+      "title": "Sorting yard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 32.666666666666664,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-7e1cae99ddeff5f9.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "cba62a88ed3877c8",
+          "replayURL": "./demo-data/solo-qualified-7e1cae99ddeff5f9.chromium.replay.json",
+          "inputTraceIdentity": "2ea19d83131b2b2f",
+          "durationSeconds": 32.666666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "cba62a88ed3877c8",
+          "replayURL": "./demo-data/solo-qualified-7e1cae99ddeff5f9.firefox.replay.json",
+          "inputTraceIdentity": "2ea19d83131b2b2f",
+          "durationSeconds": 32.666666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "cba62a88ed3877c8",
+          "replayURL": "./demo-data/solo-qualified-7e1cae99ddeff5f9.webkit.replay.json",
+          "inputTraceIdentity": "2ea19d83131b2b2f",
+          "durationSeconds": 32.666666666666664,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-7e1cae99ddeff5f9.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-2d3df26570caee45",
+      "campaignId": "fractured-grid",
+      "campaignKey": "fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3",
+      "levelId": "first-fracture",
+      "levelRevision": "fracture-cultural-routes-1",
+      "identity": "e62ed7254b73702f",
+      "recordingIdentity": "249aa5ae8b086fb5",
+      "inputTraceIdentity": "1bda96324293837e",
+      "title": "First fracture",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 45.425,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-2d3df26570caee45.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "249aa5ae8b086fb5",
+          "replayURL": "./demo-data/solo-qualified-2d3df26570caee45.chromium.replay.json",
+          "inputTraceIdentity": "1bda96324293837e",
+          "durationSeconds": 45.425,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "249aa5ae8b086fb5",
+          "replayURL": "./demo-data/solo-qualified-2d3df26570caee45.firefox.replay.json",
+          "inputTraceIdentity": "1bda96324293837e",
+          "durationSeconds": 45.425,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "249aa5ae8b086fb5",
+          "replayURL": "./demo-data/solo-qualified-2d3df26570caee45.webkit.replay.json",
+          "inputTraceIdentity": "1bda96324293837e",
+          "durationSeconds": 45.425,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-10d16d94f297eb0c",
+      "campaignId": "fractured-grid",
+      "campaignKey": "fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3",
+      "levelId": "island-reserve",
+      "levelRevision": "pressure-v2-db86ecdd3a684028",
+      "identity": "7be82084e2ee7248",
+      "recordingIdentity": "3481f431e72d3e16",
+      "inputTraceIdentity": "4870a2aa7e9e135c",
+      "title": "Island reserve",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 87.275,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-10d16d94f297eb0c.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "3481f431e72d3e16",
+          "replayURL": "./demo-data/solo-qualified-10d16d94f297eb0c.chromium.replay.json",
+          "inputTraceIdentity": "4870a2aa7e9e135c",
+          "durationSeconds": 87.275,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "3481f431e72d3e16",
+          "replayURL": "./demo-data/solo-qualified-10d16d94f297eb0c.firefox.replay.json",
+          "inputTraceIdentity": "4870a2aa7e9e135c",
+          "durationSeconds": 87.275,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "3481f431e72d3e16",
+          "replayURL": "./demo-data/solo-qualified-10d16d94f297eb0c.webkit.replay.json",
+          "inputTraceIdentity": "4870a2aa7e9e135c",
+          "durationSeconds": 87.275,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-10d16d94f297eb0c.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-8f766bd89a83be7e",
+      "campaignId": "fractured-grid",
+      "campaignKey": "fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3",
+      "levelId": "two-districts",
+      "levelRevision": "fracture-cultural-routes-1",
+      "identity": "e3cdf5f7c5d36615",
+      "recordingIdentity": "6c8830a1d3e29724",
+      "inputTraceIdentity": "9036b29175195002",
+      "title": "Two districts",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 53.25833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-8f766bd89a83be7e.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "6c8830a1d3e29724",
+          "replayURL": "./demo-data/solo-qualified-8f766bd89a83be7e.chromium.performance.replay.json",
+          "inputTraceIdentity": "9036b29175195002",
+          "durationSeconds": 53.25833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "6c8830a1d3e29724",
+          "replayURL": "./demo-data/solo-qualified-8f766bd89a83be7e.firefox.replay.json",
+          "inputTraceIdentity": "9036b29175195002",
+          "durationSeconds": 53.25833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "6c8830a1d3e29724",
+          "replayURL": "./demo-data/solo-qualified-8f766bd89a83be7e.webkit.performance.replay.json",
+          "inputTraceIdentity": "9036b29175195002",
+          "durationSeconds": 53.25833333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-8f766bd89a83be7e.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-7ff2d0d3f752cf2b",
+      "campaignId": "fractured-grid",
+      "campaignKey": "fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3",
+      "levelId": "bank-the-crossing",
+      "levelRevision": "pressure-v2-5a621ad3a49293ab",
+      "identity": "291b8baba6ceaf82",
+      "recordingIdentity": "1323901ab898100d",
+      "inputTraceIdentity": "8f05769c02255e7b",
+      "title": "Bank the crossing",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 23.433333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-7ff2d0d3f752cf2b.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "1323901ab898100d",
+          "replayURL": "./demo-data/solo-qualified-7ff2d0d3f752cf2b.chromium.replay.json",
+          "inputTraceIdentity": "8f05769c02255e7b",
+          "durationSeconds": 23.433333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "1323901ab898100d",
+          "replayURL": "./demo-data/solo-qualified-7ff2d0d3f752cf2b.webkit.replay.json",
+          "inputTraceIdentity": "8f05769c02255e7b",
+          "durationSeconds": 23.433333333333334,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-7ff2d0d3f752cf2b.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-bcc2b9ca5521a87d",
+      "campaignId": "fractured-grid",
+      "campaignKey": "fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3",
+      "levelId": "five-anchors",
+      "levelRevision": "pressure-v2-a6e288969816db68",
+      "identity": "189ca2b33bcef838",
+      "recordingIdentity": "ca483cc7896a56c2",
+      "inputTraceIdentity": "1b893d2118fa78d4",
+      "title": "Five landings",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 93.65,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-bcc2b9ca5521a87d.replay.json"
+    },
+    {
+      "id": "solo-qualified-86af557da6e8a323",
+      "campaignId": "fractured-grid",
+      "campaignKey": "fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3",
+      "levelId": "staggered-reserve",
+      "levelRevision": "pressure-v2-afee56f1409e728b",
+      "identity": "3a1b9925d5802778",
+      "recordingIdentity": "f1d5f699680437cc",
+      "inputTraceIdentity": "74286c3c9384c7a8",
+      "title": "Staggered reserve",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 25.4,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-86af557da6e8a323.replay.json"
+    },
+    {
+      "id": "solo-qualified-f223736d7f7b47b2",
+      "campaignId": "phaseworks",
+      "campaignKey": "phaseworks/candidate-17a5501cf502ab8a/0cf9719aedac6257",
+      "levelId": "return-in-reserve",
+      "levelRevision": "phaseworks-cultural-routes-1",
+      "identity": "75814eaa0f1c84bb",
+      "recordingIdentity": "93cb7f04d2710bc1",
+      "inputTraceIdentity": "251362f7736fedac",
+      "title": "A return in reserve",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 40.55833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-f223736d7f7b47b2.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "93cb7f04d2710bc1",
+          "replayURL": "./demo-data/solo-qualified-f223736d7f7b47b2.chromium.replay.json",
+          "inputTraceIdentity": "251362f7736fedac",
+          "durationSeconds": 40.55833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "93cb7f04d2710bc1",
+          "replayURL": "./demo-data/solo-qualified-f223736d7f7b47b2.firefox.replay.json",
+          "inputTraceIdentity": "251362f7736fedac",
+          "durationSeconds": 40.55833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "93cb7f04d2710bc1",
+          "replayURL": "./demo-data/solo-qualified-f223736d7f7b47b2.webkit.replay.json",
+          "inputTraceIdentity": "251362f7736fedac",
+          "durationSeconds": 40.55833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-1c903081aa79df1e",
+      "campaignId": "phaseworks",
+      "campaignKey": "phaseworks/candidate-17a5501cf502ab8a/0cf9719aedac6257",
+      "levelId": "two-ways-home",
+      "levelRevision": "phaseworks-cultural-routes-1",
+      "identity": "68537fe915be029b",
+      "recordingIdentity": "a2cc7e008d88c0f9",
+      "inputTraceIdentity": "c82bf0cf01daf943",
+      "title": "Two ways home",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 75.075,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-1c903081aa79df1e.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "a2cc7e008d88c0f9",
+          "replayURL": "./demo-data/solo-qualified-1c903081aa79df1e.chromium.replay.json",
+          "inputTraceIdentity": "c82bf0cf01daf943",
+          "durationSeconds": 75.075,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "a2cc7e008d88c0f9",
+          "replayURL": "./demo-data/solo-qualified-1c903081aa79df1e.firefox.replay.json",
+          "inputTraceIdentity": "c82bf0cf01daf943",
+          "durationSeconds": 75.075,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "a2cc7e008d88c0f9",
+          "replayURL": "./demo-data/solo-qualified-1c903081aa79df1e.webkit.replay.json",
+          "inputTraceIdentity": "c82bf0cf01daf943",
+          "durationSeconds": 75.075,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-30038742a961b399",
+      "campaignId": "phaseworks",
+      "campaignKey": "phaseworks/candidate-17a5501cf502ab8a/0cf9719aedac6257",
+      "levelId": "pressure-ladder",
+      "levelRevision": "pressure-arcs-1",
+      "identity": "081b44da2818b327",
+      "recordingIdentity": "6cb8b5cc387064f4",
+      "inputTraceIdentity": "2b2608f17c801ae2",
+      "title": "Pressure ladder",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 11.65,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-30038742a961b399.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "6cb8b5cc387064f4",
+          "replayURL": "./demo-data/solo-qualified-30038742a961b399.chromium.replay.json",
+          "inputTraceIdentity": "2b2608f17c801ae2",
+          "durationSeconds": 11.65,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "6cb8b5cc387064f4",
+          "replayURL": "./demo-data/solo-qualified-30038742a961b399.webkit.replay.json",
+          "inputTraceIdentity": "2b2608f17c801ae2",
+          "durationSeconds": 11.65,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-bfae960cf9bf13c8",
+      "campaignId": "relay-labyrinth",
+      "campaignKey": "relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85",
+      "levelId": "spiral-stores",
+      "levelRevision": "pressure-v2-2fbca650e94eeb44",
+      "identity": "8915e59235159348",
+      "recordingIdentity": "239e184cbb8c80cb",
+      "inputTraceIdentity": "726b82df9789ac61",
+      "title": "Spiral stores",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 14.516666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-bfae960cf9bf13c8.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "239e184cbb8c80cb",
+          "replayURL": "./demo-data/solo-qualified-bfae960cf9bf13c8.chromium.replay.json",
+          "inputTraceIdentity": "726b82df9789ac61",
+          "durationSeconds": 14.516666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "239e184cbb8c80cb",
+          "replayURL": "./demo-data/solo-qualified-bfae960cf9bf13c8.firefox.performance.replay.json",
+          "inputTraceIdentity": "726b82df9789ac61",
+          "durationSeconds": 14.516666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "239e184cbb8c80cb",
+          "replayURL": "./demo-data/solo-qualified-bfae960cf9bf13c8.webkit.performance.replay.json",
+          "inputTraceIdentity": "726b82df9789ac61",
+          "durationSeconds": 14.516666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b03217288edf527a",
+      "campaignId": "relay-labyrinth",
+      "campaignKey": "relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85",
+      "levelId": "nested-relays",
+      "levelRevision": "pressure-v2-294babdd423d9a56",
+      "identity": "f1cb3225627e6705",
+      "recordingIdentity": "5ed7a588e30f9c9c",
+      "inputTraceIdentity": "a7e8d1223af5f3b6",
+      "title": "Nested relays",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 50.333333333333336,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-b03217288edf527a.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "5ed7a588e30f9c9c",
+          "replayURL": "./demo-data/solo-qualified-b03217288edf527a.chromium.replay.json",
+          "inputTraceIdentity": "a7e8d1223af5f3b6",
+          "durationSeconds": 50.333333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "5ed7a588e30f9c9c",
+          "replayURL": "./demo-data/solo-qualified-b03217288edf527a.firefox.replay.json",
+          "inputTraceIdentity": "a7e8d1223af5f3b6",
+          "durationSeconds": 50.333333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "5ed7a588e30f9c9c",
+          "replayURL": "./demo-data/solo-qualified-b03217288edf527a.webkit.replay.json",
+          "inputTraceIdentity": "a7e8d1223af5f3b6",
+          "durationSeconds": 50.333333333333336,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-b03217288edf527a.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-72dfbcf032b5ad25",
+      "campaignId": "relay-labyrinth",
+      "campaignKey": "relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85",
+      "levelId": "watchpost-exchange",
+      "levelRevision": "pressure-v2-5cd620c547e71b8b",
+      "identity": "e62771233793524c",
+      "recordingIdentity": "0472d6bb35f7b7a5",
+      "inputTraceIdentity": "f04f6533092bcda7",
+      "title": "Watchpost exchange",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 34.141666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-72dfbcf032b5ad25.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "0472d6bb35f7b7a5",
+          "replayURL": "./demo-data/solo-qualified-72dfbcf032b5ad25.chromium.replay.json",
+          "inputTraceIdentity": "f04f6533092bcda7",
+          "durationSeconds": 34.141666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "0472d6bb35f7b7a5",
+          "replayURL": "./demo-data/solo-qualified-72dfbcf032b5ad25.firefox.replay.json",
+          "inputTraceIdentity": "f04f6533092bcda7",
+          "durationSeconds": 34.141666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "0472d6bb35f7b7a5",
+          "replayURL": "./demo-data/solo-qualified-72dfbcf032b5ad25.webkit.replay.json",
+          "inputTraceIdentity": "f04f6533092bcda7",
+          "durationSeconds": 34.141666666666666,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-72dfbcf032b5ad25.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-4a4987306df02c59",
+      "campaignId": "crosswind-array",
+      "campaignKey": "crosswind-array/candidate-57fa89b6d8d43ff8/1d7778a087fb8a9e",
+      "levelId": "survey-markers",
+      "levelRevision": "pressure-v2-55318b92004c0b18",
+      "identity": "f1485e13f2b087ec",
+      "recordingIdentity": "08292183429546a0",
+      "inputTraceIdentity": "93e7f6356043cb89",
+      "title": "Survey markers",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 52.025,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-4a4987306df02c59.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "08292183429546a0",
+          "replayURL": "./demo-data/solo-qualified-4a4987306df02c59.chromium.replay.json",
+          "inputTraceIdentity": "93e7f6356043cb89",
+          "durationSeconds": 52.025,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "08292183429546a0",
+          "replayURL": "./demo-data/solo-qualified-4a4987306df02c59.firefox.replay.json",
+          "inputTraceIdentity": "93e7f6356043cb89",
+          "durationSeconds": 52.025,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "08292183429546a0",
+          "replayURL": "./demo-data/solo-qualified-4a4987306df02c59.webkit.replay.json",
+          "inputTraceIdentity": "93e7f6356043cb89",
+          "durationSeconds": 52.025,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-2d68ede8fad57f5b",
+      "campaignId": "crosswind-array",
+      "campaignKey": "crosswind-array/candidate-57fa89b6d8d43ff8/1d7778a087fb8a9e",
+      "levelId": "compass-array",
+      "levelRevision": "pressure-v2-20937f2f34f38dd2",
+      "identity": "2a95412a38f521d8",
+      "recordingIdentity": "7a8c9b7100009faf",
+      "inputTraceIdentity": "3bd1a4708a6377fb",
+      "title": "Compass array",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 41.975,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-2d68ede8fad57f5b.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "7a8c9b7100009faf",
+          "replayURL": "./demo-data/solo-qualified-2d68ede8fad57f5b.chromium.replay.json",
+          "inputTraceIdentity": "3bd1a4708a6377fb",
+          "durationSeconds": 41.975,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "7a8c9b7100009faf",
+          "replayURL": "./demo-data/solo-qualified-2d68ede8fad57f5b.firefox.replay.json",
+          "inputTraceIdentity": "3bd1a4708a6377fb",
+          "durationSeconds": 41.975,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "7a8c9b7100009faf",
+          "replayURL": "./demo-data/solo-qualified-2d68ede8fad57f5b.webkit.replay.json",
+          "inputTraceIdentity": "3bd1a4708a6377fb",
+          "durationSeconds": 41.975,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-4301d76f85efb491",
+      "campaignId": "crosswind-array",
+      "campaignKey": "crosswind-array/candidate-57fa89b6d8d43ff8/1d7778a087fb8a9e",
+      "levelId": "outer-loop",
+      "levelRevision": "pressure-v2-6ef77871f1d9017c",
+      "identity": "dd15a1b31b79443e",
+      "recordingIdentity": "33f6a1f5b97bf97f",
+      "inputTraceIdentity": "7fa056a85af01fb4",
+      "title": "Outer loop",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 46.95,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-4301d76f85efb491.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "33f6a1f5b97bf97f",
+          "replayURL": "./demo-data/solo-qualified-4301d76f85efb491.chromium.performance.replay.json",
+          "inputTraceIdentity": "7fa056a85af01fb4",
+          "durationSeconds": 46.95,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "33f6a1f5b97bf97f",
+          "replayURL": "./demo-data/solo-qualified-4301d76f85efb491.firefox.replay.json",
+          "inputTraceIdentity": "7fa056a85af01fb4",
+          "durationSeconds": 46.95,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "33f6a1f5b97bf97f",
+          "replayURL": "./demo-data/solo-qualified-4301d76f85efb491.webkit.replay.json",
+          "inputTraceIdentity": "7fa056a85af01fb4",
+          "durationSeconds": 46.95,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-4301d76f85efb491.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-20e853301cb3ac52",
+      "campaignId": "apex-aurora",
+      "campaignKey": "apex-aurora/candidate-9f5e5d9722f41311/5ba17ccdb30a323f",
+      "levelId": "final-broadcast",
+      "levelRevision": "erosion-counterplay-1",
+      "identity": "eb9cc3f4f63da1dc",
+      "recordingIdentity": "17ea7ba792af41ca",
+      "inputTraceIdentity": "0e98cc968fb2b62e",
+      "title": "Final broadcast",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 28.991666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-20e853301cb3ac52.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "17ea7ba792af41ca",
+          "replayURL": "./demo-data/solo-qualified-20e853301cb3ac52.chromium.performance.replay.json",
+          "inputTraceIdentity": "0e98cc968fb2b62e",
+          "durationSeconds": 28.991666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "17ea7ba792af41ca",
+          "replayURL": "./demo-data/solo-qualified-20e853301cb3ac52.firefox.performance.replay.json",
+          "inputTraceIdentity": "0e98cc968fb2b62e",
+          "durationSeconds": 28.991666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "17ea7ba792af41ca",
+          "replayURL": "./demo-data/solo-qualified-20e853301cb3ac52.webkit.replay.json",
+          "inputTraceIdentity": "0e98cc968fb2b62e",
+          "durationSeconds": 28.991666666666667,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-20e853301cb3ac52.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-11ac088d9288363c",
+      "campaignId": "workshop-routing",
+      "campaignKey": "workshop-routing/candidate-7af9fbd437eae602/4be93703fa67cf4f",
+      "levelId": "twin-lens-chambers",
+      "levelRevision": "cultural-pressure-1",
+      "identity": "2746be7669e8e5b8",
+      "recordingIdentity": "a6a40fde1ba258f2",
+      "inputTraceIdentity": "15f53164309b3a46",
+      "title": "Twin lens chambers",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 30.383333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-11ac088d9288363c.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "a6a40fde1ba258f2",
+          "replayURL": "./demo-data/solo-qualified-11ac088d9288363c.chromium.replay.json",
+          "inputTraceIdentity": "15f53164309b3a46",
+          "durationSeconds": 30.383333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "a6a40fde1ba258f2",
+          "replayURL": "./demo-data/solo-qualified-11ac088d9288363c.firefox.replay.json",
+          "inputTraceIdentity": "15f53164309b3a46",
+          "durationSeconds": 30.383333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "a6a40fde1ba258f2",
+          "replayURL": "./demo-data/solo-qualified-11ac088d9288363c.webkit.replay.json",
+          "inputTraceIdentity": "15f53164309b3a46",
+          "durationSeconds": 30.383333333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-11ac088d9288363c.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-a99c5711c5c1839d",
+      "campaignId": "phaseworks",
+      "campaignKey": "phaseworks/candidate-17a5501cf502ab8a/0cf9719aedac6257",
+      "levelId": "dogleg-transfer",
+      "levelRevision": "phaseworks-cultural-routes-1",
+      "identity": "20eb9ced8b4dbf8b",
+      "recordingIdentity": "ea640ceb8ea6b82c",
+      "inputTraceIdentity": "e7e2a0589d8f510e",
+      "title": "Dogleg transfer",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 90.06666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-a99c5711c5c1839d.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "ea640ceb8ea6b82c",
+          "replayURL": "./demo-data/solo-qualified-a99c5711c5c1839d.chromium.replay.json",
+          "inputTraceIdentity": "e7e2a0589d8f510e",
+          "durationSeconds": 90.06666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "ea640ceb8ea6b82c",
+          "replayURL": "./demo-data/solo-qualified-a99c5711c5c1839d.firefox.replay.json",
+          "inputTraceIdentity": "e7e2a0589d8f510e",
+          "durationSeconds": 90.06666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "ea640ceb8ea6b82c",
+          "replayURL": "./demo-data/solo-qualified-a99c5711c5c1839d.webkit.replay.json",
+          "inputTraceIdentity": "e7e2a0589d8f510e",
+          "durationSeconds": 90.06666666666666,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-a99c5711c5c1839d.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-f96b30d71b0716cf",
+      "campaignId": "phaseworks",
+      "campaignKey": "phaseworks/candidate-17a5501cf502ab8a/0cf9719aedac6257",
+      "levelId": "crossed-bands",
+      "levelRevision": "pressure-arcs-1",
+      "identity": "9353fef2e20fd967",
+      "recordingIdentity": "6085e1abddafade4",
+      "inputTraceIdentity": "603888109050fb19",
+      "title": "Crossed bands",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 57.833333333333336,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-f96b30d71b0716cf.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "6085e1abddafade4",
+          "replayURL": "./demo-data/solo-qualified-f96b30d71b0716cf.chromium.replay.json",
+          "inputTraceIdentity": "603888109050fb19",
+          "durationSeconds": 57.833333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "6085e1abddafade4",
+          "replayURL": "./demo-data/solo-qualified-f96b30d71b0716cf.firefox.replay.json",
+          "inputTraceIdentity": "603888109050fb19",
+          "durationSeconds": 57.833333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "6085e1abddafade4",
+          "replayURL": "./demo-data/solo-qualified-f96b30d71b0716cf.webkit.replay.json",
+          "inputTraceIdentity": "603888109050fb19",
+          "durationSeconds": 57.833333333333336,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-8812ad38e87d1a3e",
+      "campaignId": "phaseworks",
+      "campaignKey": "phaseworks/candidate-17a5501cf502ab8a/0cf9719aedac6257",
+      "levelId": "signal-channels",
+      "levelRevision": "pressure-arcs-1",
+      "identity": "12bb0603f40b8943",
+      "recordingIdentity": "6101cf22b54a213a",
+      "inputTraceIdentity": "cc90636057a7d22a",
+      "title": "Signal channels",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 82.91666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-8812ad38e87d1a3e.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "6101cf22b54a213a",
+          "replayURL": "./demo-data/solo-qualified-8812ad38e87d1a3e.chromium.performance.replay.json",
+          "inputTraceIdentity": "cc90636057a7d22a",
+          "durationSeconds": 82.91666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "6101cf22b54a213a",
+          "replayURL": "./demo-data/solo-qualified-8812ad38e87d1a3e.firefox.replay.json",
+          "inputTraceIdentity": "cc90636057a7d22a",
+          "durationSeconds": 82.91666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "6101cf22b54a213a",
+          "replayURL": "./demo-data/solo-qualified-8812ad38e87d1a3e.webkit.replay.json",
+          "inputTraceIdentity": "cc90636057a7d22a",
+          "durationSeconds": 82.91666666666667,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-8812ad38e87d1a3e.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-2e72fe1d788ce165",
+      "campaignId": "livewire-foundry",
+      "campaignKey": "livewire-foundry/candidate-ace18ecbeb730751/70575f8d5aa3394a",
+      "levelId": "read-the-lock",
+      "levelRevision": "livewire-cultural-routes-1",
+      "identity": "665e83c4ec7d70dd",
+      "recordingIdentity": "daa8d453f516d576",
+      "inputTraceIdentity": "5b261717e760289c",
+      "title": "Read the lock",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 66.35,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-2e72fe1d788ce165.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "daa8d453f516d576",
+          "replayURL": "./demo-data/solo-qualified-2e72fe1d788ce165.chromium.replay.json",
+          "inputTraceIdentity": "5b261717e760289c",
+          "durationSeconds": 66.35,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "daa8d453f516d576",
+          "replayURL": "./demo-data/solo-qualified-2e72fe1d788ce165.firefox.replay.json",
+          "inputTraceIdentity": "5b261717e760289c",
+          "durationSeconds": 66.35,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "daa8d453f516d576",
+          "replayURL": "./demo-data/solo-qualified-2e72fe1d788ce165.webkit.replay.json",
+          "inputTraceIdentity": "5b261717e760289c",
+          "durationSeconds": 66.35,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-2e72fe1d788ce165.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-e32d403f3f492be1",
+      "campaignId": "livewire-foundry",
+      "campaignKey": "livewire-foundry/candidate-ace18ecbeb730751/70575f8d5aa3394a",
+      "levelId": "switchyard",
+      "levelRevision": "livewire-cultural-routes-1",
+      "identity": "7becaa748c630dcf",
+      "recordingIdentity": "d99e2bcb7fb12d85",
+      "inputTraceIdentity": "4f6e4cf3c8657e3c",
+      "title": "Switchyard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 66.06666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-e32d403f3f492be1.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "d99e2bcb7fb12d85",
+          "replayURL": "./demo-data/solo-qualified-e32d403f3f492be1.chromium.replay.json",
+          "inputTraceIdentity": "4f6e4cf3c8657e3c",
+          "durationSeconds": 66.06666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "d99e2bcb7fb12d85",
+          "replayURL": "./demo-data/solo-qualified-e32d403f3f492be1.firefox.replay.json",
+          "inputTraceIdentity": "4f6e4cf3c8657e3c",
+          "durationSeconds": 66.06666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "d99e2bcb7fb12d85",
+          "replayURL": "./demo-data/solo-qualified-e32d403f3f492be1.webkit.replay.json",
+          "inputTraceIdentity": "4f6e4cf3c8657e3c",
+          "durationSeconds": 66.06666666666666,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-e32d403f3f492be1.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-205560abb7070791",
+      "campaignId": "relay-labyrinth",
+      "campaignKey": "relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85",
+      "levelId": "first-link",
+      "levelRevision": "relay-cultural-routes-1",
+      "identity": "5abcec3e040d9b25",
+      "recordingIdentity": "e9d895057d172a39",
+      "inputTraceIdentity": "10073d6d891ffe6d",
+      "title": "First link",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 86.575,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-205560abb7070791.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "e9d895057d172a39",
+          "replayURL": "./demo-data/solo-qualified-205560abb7070791.chromium.replay.json",
+          "inputTraceIdentity": "10073d6d891ffe6d",
+          "durationSeconds": 86.575,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "e9d895057d172a39",
+          "replayURL": "./demo-data/solo-qualified-205560abb7070791.firefox.replay.json",
+          "inputTraceIdentity": "10073d6d891ffe6d",
+          "durationSeconds": 86.575,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "e9d895057d172a39",
+          "replayURL": "./demo-data/solo-qualified-205560abb7070791.webkit.replay.json",
+          "inputTraceIdentity": "10073d6d891ffe6d",
+          "durationSeconds": 86.575,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-205560abb7070791.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-0a95463cda39b995",
+      "campaignId": "relay-labyrinth",
+      "campaignKey": "relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85",
+      "levelId": "second-approach",
+      "levelRevision": "relay-cultural-routes-1",
+      "identity": "3e66211f1f6f3f47",
+      "recordingIdentity": "8999719fdcf88e4c",
+      "inputTraceIdentity": "89f64aaa86a65e88",
+      "title": "Second approach",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 67.45,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-0a95463cda39b995.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "8999719fdcf88e4c",
+          "replayURL": "./demo-data/solo-qualified-0a95463cda39b995.chromium.replay.json",
+          "inputTraceIdentity": "89f64aaa86a65e88",
+          "durationSeconds": 67.45,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "8999719fdcf88e4c",
+          "replayURL": "./demo-data/solo-qualified-0a95463cda39b995.firefox.replay.json",
+          "inputTraceIdentity": "89f64aaa86a65e88",
+          "durationSeconds": 67.45,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "8999719fdcf88e4c",
+          "replayURL": "./demo-data/solo-qualified-0a95463cda39b995.webkit.replay.json",
+          "inputTraceIdentity": "89f64aaa86a65e88",
+          "durationSeconds": 67.45,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d5027ee8cc9ab251",
+      "campaignId": "relay-labyrinth",
+      "campaignKey": "relay-labyrinth/candidate-dc7d0127e5c3b9a9/fb780b9a5d6c3d85",
+      "levelId": "three-compounds",
+      "levelRevision": "relay-cultural-routes-1",
+      "identity": "7dcd7963456bce26",
+      "recordingIdentity": "98d4d11df6071676",
+      "inputTraceIdentity": "53fec4de9f8bd55e",
+      "title": "Three compounds",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 85.75,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d5027ee8cc9ab251.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "98d4d11df6071676",
+          "replayURL": "./demo-data/solo-qualified-d5027ee8cc9ab251.chromium.replay.json",
+          "inputTraceIdentity": "53fec4de9f8bd55e",
+          "durationSeconds": 85.75,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "98d4d11df6071676",
+          "replayURL": "./demo-data/solo-qualified-d5027ee8cc9ab251.firefox.replay.json",
+          "inputTraceIdentity": "53fec4de9f8bd55e",
+          "durationSeconds": 85.75,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "98d4d11df6071676",
+          "replayURL": "./demo-data/solo-qualified-d5027ee8cc9ab251.webkit.replay.json",
+          "inputTraceIdentity": "53fec4de9f8bd55e",
+          "durationSeconds": 85.75,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-d5027ee8cc9ab251.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-d4d010be74f4ff34",
+      "campaignId": "crosswind-array",
+      "campaignKey": "crosswind-array/candidate-57fa89b6d8d43ff8/1d7778a087fb8a9e",
+      "levelId": "read-the-arrows",
+      "levelRevision": "crosswind-cultural-routes-1",
+      "identity": "f69222419a3c86a2",
+      "recordingIdentity": "a2f04fe73dd43ec4",
+      "inputTraceIdentity": "826786493ea87bb5",
+      "title": "Read the arrows",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 64.125,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d4d010be74f4ff34.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "a2f04fe73dd43ec4",
+          "replayURL": "./demo-data/solo-qualified-d4d010be74f4ff34.chromium.replay.json",
+          "inputTraceIdentity": "826786493ea87bb5",
+          "durationSeconds": 64.125,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "a2f04fe73dd43ec4",
+          "replayURL": "./demo-data/solo-qualified-d4d010be74f4ff34.firefox.replay.json",
+          "inputTraceIdentity": "826786493ea87bb5",
+          "durationSeconds": 64.125,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "a2f04fe73dd43ec4",
+          "replayURL": "./demo-data/solo-qualified-d4d010be74f4ff34.webkit.replay.json",
+          "inputTraceIdentity": "826786493ea87bb5",
+          "durationSeconds": 64.125,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-d4d010be74f4ff34.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-99b7fe8c6c02e8f5",
+      "campaignId": "crosswind-array",
+      "campaignKey": "crosswind-array/candidate-57fa89b6d8d43ff8/1d7778a087fb8a9e",
+      "levelId": "windbreak-weave",
+      "levelRevision": "crosswind-cultural-routes-1",
+      "identity": "4f3c1e2e0634241b",
+      "recordingIdentity": "9b65c53cbd60f142",
+      "inputTraceIdentity": "709e7dcf1a8cce14",
+      "title": "Windbreak weave",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 57.24166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-99b7fe8c6c02e8f5.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "9b65c53cbd60f142",
+          "replayURL": "./demo-data/solo-qualified-99b7fe8c6c02e8f5.chromium.replay.json",
+          "inputTraceIdentity": "709e7dcf1a8cce14",
+          "durationSeconds": 57.24166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "9b65c53cbd60f142",
+          "replayURL": "./demo-data/solo-qualified-99b7fe8c6c02e8f5.firefox.replay.json",
+          "inputTraceIdentity": "709e7dcf1a8cce14",
+          "durationSeconds": 57.24166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "9b65c53cbd60f142",
+          "replayURL": "./demo-data/solo-qualified-99b7fe8c6c02e8f5.webkit.replay.json",
+          "inputTraceIdentity": "709e7dcf1a8cce14",
+          "durationSeconds": 57.24166666666667,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-99b7fe8c6c02e8f5.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-86e49440668d32eb",
+      "campaignId": "crosswind-array",
+      "campaignKey": "crosswind-array/candidate-57fa89b6d8d43ff8/1d7778a087fb8a9e",
+      "levelId": "long-wave",
+      "levelRevision": "crosswind-cultural-routes-1",
+      "identity": "7d60f933035cc98e",
+      "recordingIdentity": "b1f7ecf6d0e292cc",
+      "inputTraceIdentity": "066d6cd4c49d80ee",
+      "title": "Long wave",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 66.81666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-86e49440668d32eb.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "b1f7ecf6d0e292cc",
+          "replayURL": "./demo-data/solo-qualified-86e49440668d32eb.chromium.replay.json",
+          "inputTraceIdentity": "066d6cd4c49d80ee",
+          "durationSeconds": 66.81666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "b1f7ecf6d0e292cc",
+          "replayURL": "./demo-data/solo-qualified-86e49440668d32eb.firefox.replay.json",
+          "inputTraceIdentity": "066d6cd4c49d80ee",
+          "durationSeconds": 66.81666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "b1f7ecf6d0e292cc",
+          "replayURL": "./demo-data/solo-qualified-86e49440668d32eb.webkit.replay.json",
+          "inputTraceIdentity": "066d6cd4c49d80ee",
+          "durationSeconds": 66.81666666666666,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-86e49440668d32eb.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-1045a071c392b17f",
+      "campaignId": "sentinel-crown",
+      "campaignKey": "sentinel-crown/candidate-a022a0a6b5972e71/4431545b1c079801",
+      "levelId": "first-relay",
+      "levelRevision": "sentinel-cultural-routes-1",
+      "identity": "89c15632cfd652ba",
+      "recordingIdentity": "d483de779675a1bd",
+      "inputTraceIdentity": "225eb5c949284997",
+      "title": "First relay",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 60.45,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-1045a071c392b17f.replay.json"
+    },
+    {
+      "id": "solo-qualified-26c083d6a304753c",
+      "campaignId": "sentinel-crown",
+      "campaignKey": "sentinel-crown/candidate-a022a0a6b5972e71/4431545b1c079801",
+      "levelId": "twin-receivers",
+      "levelRevision": "receiver-spatial-1",
+      "identity": "3527dbd5c8758c17",
+      "recordingIdentity": "7af475f5b1526c89",
+      "inputTraceIdentity": "04f2669ad0e8b7ff",
+      "title": "Twin receivers",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 83.33333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-26c083d6a304753c.replay.json"
+    },
+    {
+      "id": "solo-qualified-03e90b310d2bc700",
+      "campaignId": "sentinel-crown",
+      "campaignKey": "sentinel-crown/candidate-a022a0a6b5972e71/4431545b1c079801",
+      "levelId": "relay-perimeter",
+      "levelRevision": "sentinel-cultural-routes-1",
+      "identity": "de577219256b7464",
+      "recordingIdentity": "76ee3a877da06cb1",
+      "inputTraceIdentity": "14dc9be6b7490f3e",
+      "title": "Relay perimeter",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 46.46666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-03e90b310d2bc700.replay.json"
+    },
+    {
+      "id": "solo-qualified-9bd405709d380bb7",
+      "campaignId": "sentinel-crown",
+      "campaignKey": "sentinel-crown/candidate-a022a0a6b5972e71/4431545b1c079801",
+      "levelId": "crown-audience",
+      "levelRevision": "sentinel-cultural-routes-1",
+      "identity": "171fd26eb86495a2",
+      "recordingIdentity": "bb9ee6e270893801",
+      "inputTraceIdentity": "1b890c01d473a72b",
+      "title": "Crown audience",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 69.15833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-9bd405709d380bb7.replay.json"
+    },
+    {
+      "id": "solo-qualified-fe13ae38e227f3d4",
+      "campaignId": "apex-aurora",
+      "campaignKey": "apex-aurora/candidate-9f5e5d9722f41311/5ba17ccdb30a323f",
+      "levelId": "crossing-complete",
+      "levelRevision": "apex-cultural-routes-1",
+      "identity": "359a21de3a333ed5",
+      "recordingIdentity": "99f8f60f86668c47",
+      "inputTraceIdentity": "61259560da1f6070",
+      "title": "Crossing complete",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 88.33333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-fe13ae38e227f3d4.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "99f8f60f86668c47",
+          "replayURL": "./demo-data/solo-qualified-fe13ae38e227f3d4.chromium.replay.json",
+          "inputTraceIdentity": "61259560da1f6070",
+          "durationSeconds": 88.33333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "99f8f60f86668c47",
+          "replayURL": "./demo-data/solo-qualified-fe13ae38e227f3d4.firefox.replay.json",
+          "inputTraceIdentity": "61259560da1f6070",
+          "durationSeconds": 88.33333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "99f8f60f86668c47",
+          "replayURL": "./demo-data/solo-qualified-fe13ae38e227f3d4.webkit.replay.json",
+          "inputTraceIdentity": "61259560da1f6070",
+          "durationSeconds": 88.33333333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-fe13ae38e227f3d4.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-9b61f76591ea319f",
+      "campaignId": "apex-aurora",
+      "campaignKey": "apex-aurora/candidate-9f5e5d9722f41311/5ba17ccdb30a323f",
+      "levelId": "returning-light",
+      "levelRevision": "apex-cultural-routes-1",
+      "identity": "5aa7bb76586775c7",
+      "recordingIdentity": "5874d7332eb39015",
+      "inputTraceIdentity": "e577efdd887634f1",
+      "title": "Returning light",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 96.36666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-9b61f76591ea319f.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "5874d7332eb39015",
+          "replayURL": "./demo-data/solo-qualified-9b61f76591ea319f.chromium.performance.replay.json",
+          "inputTraceIdentity": "e577efdd887634f1",
+          "durationSeconds": 96.36666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "5874d7332eb39015",
+          "replayURL": "./demo-data/solo-qualified-9b61f76591ea319f.firefox.performance.replay.json",
+          "inputTraceIdentity": "e577efdd887634f1",
+          "durationSeconds": 96.36666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "5874d7332eb39015",
+          "replayURL": "./demo-data/solo-qualified-9b61f76591ea319f.webkit.performance.replay.json",
+          "inputTraceIdentity": "e577efdd887634f1",
+          "durationSeconds": 96.36666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b8a409de0207c16a",
+      "campaignId": "apex-aurora",
+      "campaignKey": "apex-aurora/candidate-9f5e5d9722f41311/5ba17ccdb30a323f",
+      "levelId": "home-signal",
+      "levelRevision": "apex-cultural-routes-1",
+      "identity": "809eb036ba0c5275",
+      "recordingIdentity": "353e79f850ca41ac",
+      "inputTraceIdentity": "6a62726301c45c45",
+      "title": "Home signal",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 60.3,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-b8a409de0207c16a.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "353e79f850ca41ac",
+          "replayURL": "./demo-data/solo-qualified-b8a409de0207c16a.chromium.replay.json",
+          "inputTraceIdentity": "6a62726301c45c45",
+          "durationSeconds": 60.3,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "353e79f850ca41ac",
+          "replayURL": "./demo-data/solo-qualified-b8a409de0207c16a.firefox.replay.json",
+          "inputTraceIdentity": "6a62726301c45c45",
+          "durationSeconds": 60.3,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "353e79f850ca41ac",
+          "replayURL": "./demo-data/solo-qualified-b8a409de0207c16a.webkit.replay.json",
+          "inputTraceIdentity": "6a62726301c45c45",
+          "durationSeconds": 60.3,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-b8a409de0207c16a.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-9a05e4f32fe3e8c3",
+      "campaignId": "horizon-remixes",
+      "campaignKey": "horizon-remixes/candidate-c5634d38e3ef2458/da89bec6f777ecfa",
+      "levelId": "horizon-remix",
+      "levelRevision": "horizon-cultural-joins-1",
+      "identity": "e27ed18ef57d9b2b",
+      "recordingIdentity": "18343c3103722ee5",
+      "inputTraceIdentity": "62d8602be0d63d21",
+      "title": "Islands in concert",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 76.975,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-9a05e4f32fe3e8c3.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "18343c3103722ee5",
+          "replayURL": "./demo-data/solo-qualified-9a05e4f32fe3e8c3.chromium.replay.json",
+          "inputTraceIdentity": "62d8602be0d63d21",
+          "durationSeconds": 76.975,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "18343c3103722ee5",
+          "replayURL": "./demo-data/solo-qualified-9a05e4f32fe3e8c3.firefox.replay.json",
+          "inputTraceIdentity": "62d8602be0d63d21",
+          "durationSeconds": 76.975,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "18343c3103722ee5",
+          "replayURL": "./demo-data/solo-qualified-9a05e4f32fe3e8c3.webkit.replay.json",
+          "inputTraceIdentity": "62d8602be0d63d21",
+          "durationSeconds": 76.975,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-9a05e4f32fe3e8c3.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-6066cc64f5796336",
+      "campaignId": "border-remixes",
+      "campaignKey": "border-remixes/candidate-aa3e06eea6881c31/39e3bdfaee3f723b",
+      "levelId": "border-remix",
+      "levelRevision": "border-signal-cultural-routes-1",
+      "identity": "ababe8d83d3702a0",
+      "recordingIdentity": "ed18af98aae5e525",
+      "inputTraceIdentity": "76d866fb68acf044",
+      "title": "Living border",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 58.025,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6066cc64f5796336.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "ed18af98aae5e525",
+          "replayURL": "./demo-data/solo-qualified-6066cc64f5796336.chromium.replay.json",
+          "inputTraceIdentity": "76d866fb68acf044",
+          "durationSeconds": 58.025,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "ed18af98aae5e525",
+          "replayURL": "./demo-data/solo-qualified-6066cc64f5796336.firefox.replay.json",
+          "inputTraceIdentity": "76d866fb68acf044",
+          "durationSeconds": 58.025,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "ed18af98aae5e525",
+          "replayURL": "./demo-data/solo-qualified-6066cc64f5796336.webkit.replay.json",
+          "inputTraceIdentity": "76d866fb68acf044",
+          "durationSeconds": 58.025,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-6066cc64f5796336.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-f420d6e14fbac1ed",
+      "campaignId": "signal-remixes",
+      "campaignKey": "signal-remixes/candidate-51ae41835a74c221/e5d0373e9829da11",
+      "levelId": "signal-remix",
+      "levelRevision": "signal-cultural-routes-1",
+      "identity": "279f2f4745161b42",
+      "recordingIdentity": "868b25e27f4e781a",
+      "inputTraceIdentity": "ca25750b1af3b860",
+      "title": "Winding channels",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 84.88333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-f420d6e14fbac1ed.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "868b25e27f4e781a",
+          "replayURL": "./demo-data/solo-qualified-f420d6e14fbac1ed.chromium.replay.json",
+          "inputTraceIdentity": "ca25750b1af3b860",
+          "durationSeconds": 84.88333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "868b25e27f4e781a",
+          "replayURL": "./demo-data/solo-qualified-f420d6e14fbac1ed.firefox.replay.json",
+          "inputTraceIdentity": "ca25750b1af3b860",
+          "durationSeconds": 84.88333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "868b25e27f4e781a",
+          "replayURL": "./demo-data/solo-qualified-f420d6e14fbac1ed.webkit.replay.json",
+          "inputTraceIdentity": "ca25750b1af3b860",
+          "durationSeconds": 84.88333333333334,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-f420d6e14fbac1ed.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-45ff8eaac10d989c",
+      "campaignId": "neon-remixes",
+      "campaignKey": "neon-remixes/candidate-813e2383263556bf/c26638870237e2b3",
+      "levelId": "neon-remix",
+      "levelRevision": "neon-cultural-routes-2",
+      "identity": "6bab8bc8b94c9b9c",
+      "recordingIdentity": "d9704b540636a0a3",
+      "inputTraceIdentity": "c84d719ac3327c79",
+      "title": "Three open circuits",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 76.425,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-45ff8eaac10d989c.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "d9704b540636a0a3",
+          "replayURL": "./demo-data/solo-qualified-45ff8eaac10d989c.chromium.replay.json",
+          "inputTraceIdentity": "c84d719ac3327c79",
+          "durationSeconds": 76.425,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "d9704b540636a0a3",
+          "replayURL": "./demo-data/solo-qualified-45ff8eaac10d989c.firefox.replay.json",
+          "inputTraceIdentity": "c84d719ac3327c79",
+          "durationSeconds": 76.425,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "d9704b540636a0a3",
+          "replayURL": "./demo-data/solo-qualified-45ff8eaac10d989c.webkit.replay.json",
+          "inputTraceIdentity": "c84d719ac3327c79",
+          "durationSeconds": 76.425,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-45ff8eaac10d989c.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-d658e2bd3c0d5c7e",
+      "campaignId": "rover-remixes",
+      "campaignKey": "rover-remixes/candidate-c7ddd1098a01ecc0/d899d7af234077f3",
+      "levelId": "rover-remix",
+      "levelRevision": "rover-cultural-routes-1",
+      "identity": "707275d6f242a1d0",
+      "recordingIdentity": "c821b61ccc04340d",
+      "inputTraceIdentity": "5496540afeea41b2",
+      "title": "Open frequency",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 64.75,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d658e2bd3c0d5c7e.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "c821b61ccc04340d",
+          "replayURL": "./demo-data/solo-qualified-d658e2bd3c0d5c7e.chromium.replay.json",
+          "inputTraceIdentity": "5496540afeea41b2",
+          "durationSeconds": 64.75,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "c821b61ccc04340d",
+          "replayURL": "./demo-data/solo-qualified-d658e2bd3c0d5c7e.firefox.replay.json",
+          "inputTraceIdentity": "5496540afeea41b2",
+          "durationSeconds": 64.75,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "c821b61ccc04340d",
+          "replayURL": "./demo-data/solo-qualified-d658e2bd3c0d5c7e.webkit.replay.json",
+          "inputTraceIdentity": "5496540afeea41b2",
+          "durationSeconds": 64.75,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-fabdfb2541546426",
+      "campaignId": "fracture-remixes",
+      "campaignKey": "fracture-remixes/candidate-ba1fd2d4c731bc62/5f432f8cf317cdaf",
+      "levelId": "fracture-remix",
+      "levelRevision": "fracture-cultural-routes-1",
+      "identity": "f3fc6b6e1cc021d4",
+      "recordingIdentity": "95b6e3808b86669f",
+      "inputTraceIdentity": "c8f9d7ed06dfc206",
+      "title": "Keep the network",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 70.68333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-fabdfb2541546426.replay.json"
+    },
+    {
+      "id": "solo-qualified-acd938abf093e19a",
+      "campaignId": "phase-remixes",
+      "campaignKey": "phase-remixes/candidate-9dac2e76cdc545d6/7dc48283201fb202",
+      "levelId": "phase-remix",
+      "levelRevision": "pressure-v2-802f493432b44fd3",
+      "identity": "5d1b55f37ae54403",
+      "recordingIdentity": "6d03c1658df4a40b",
+      "inputTraceIdentity": "44a5dc2deebe7f55",
+      "title": "Close the circuit",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 50.24166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-acd938abf093e19a.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "6d03c1658df4a40b",
+          "replayURL": "./demo-data/solo-qualified-acd938abf093e19a.chromium.performance.replay.json",
+          "inputTraceIdentity": "44a5dc2deebe7f55",
+          "durationSeconds": 50.24166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "6d03c1658df4a40b",
+          "replayURL": "./demo-data/solo-qualified-acd938abf093e19a.firefox.performance.replay.json",
+          "inputTraceIdentity": "44a5dc2deebe7f55",
+          "durationSeconds": 50.24166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "6d03c1658df4a40b",
+          "replayURL": "./demo-data/solo-qualified-acd938abf093e19a.webkit.performance.replay.json",
+          "inputTraceIdentity": "44a5dc2deebe7f55",
+          "durationSeconds": 50.24166666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-ab4de59fa240aa05",
+      "campaignId": "livewire-remixes",
+      "campaignKey": "livewire-remixes/candidate-606267410737baa4/364f731e0a1d2c34",
+      "levelId": "livewire-remix",
+      "levelRevision": "pressure-v2-cdbc4ede98c9acc9",
+      "identity": "4f5839594b3c5139",
+      "recordingIdentity": "4ad8ba984504f384",
+      "inputTraceIdentity": "8ee6c956bfc04f34",
+      "title": "Windows in the wire",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 50.43333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-ab4de59fa240aa05.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "4ad8ba984504f384",
+          "replayURL": "./demo-data/solo-qualified-ab4de59fa240aa05.firefox.replay.json",
+          "inputTraceIdentity": "8ee6c956bfc04f34",
+          "durationSeconds": 50.43333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "4ad8ba984504f384",
+          "replayURL": "./demo-data/solo-qualified-ab4de59fa240aa05.webkit.replay.json",
+          "inputTraceIdentity": "8ee6c956bfc04f34",
+          "durationSeconds": 50.43333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f8e0d67f3ee24811",
+      "campaignId": "relay-remixes",
+      "campaignKey": "relay-remixes/candidate-6b5080b9382dc5da/cbca8e329392d400",
+      "levelId": "relay-remix",
+      "levelRevision": "pressure-v2-dbd55adc4e3d6a89",
+      "identity": "8e9ebf08b67a0a54",
+      "recordingIdentity": "5ffdd00eca50f579",
+      "inputTraceIdentity": "e4a573ec80ab152f",
+      "title": "Switchback exchange",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 67.20833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-f8e0d67f3ee24811.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "5ffdd00eca50f579",
+          "replayURL": "./demo-data/solo-qualified-f8e0d67f3ee24811.chromium.replay.json",
+          "inputTraceIdentity": "e4a573ec80ab152f",
+          "durationSeconds": 67.20833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "5ffdd00eca50f579",
+          "replayURL": "./demo-data/solo-qualified-f8e0d67f3ee24811.firefox.replay.json",
+          "inputTraceIdentity": "e4a573ec80ab152f",
+          "durationSeconds": 67.20833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "5ffdd00eca50f579",
+          "replayURL": "./demo-data/solo-qualified-f8e0d67f3ee24811.webkit.replay.json",
+          "inputTraceIdentity": "e4a573ec80ab152f",
+          "durationSeconds": 67.20833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-17b6edccaf82b693",
+      "campaignId": "sentinel-remixes",
+      "campaignKey": "sentinel-remixes/candidate-c3431c586fdb2dfc/0ae7f6508d0cf585",
+      "levelId": "sentinel-remix",
+      "levelRevision": "pressure-v2-258944070c5af148",
+      "identity": "bab941dda3ba0641",
+      "recordingIdentity": "fc292b58e0a9d37b",
+      "inputTraceIdentity": "8f8f7aaa59aa07b0",
+      "title": "Rings of return",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 41.13333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-17b6edccaf82b693.replay.json"
+    },
+    {
+      "id": "solo-qualified-512b66c5e6a7ca41",
+      "campaignId": "apex-remixes",
+      "campaignKey": "apex-remixes/candidate-6721e3fedfbb301a/9dbddf9aff5d0f71",
+      "levelId": "apex-remix",
+      "levelRevision": "erosion-counterplay-1",
+      "identity": "0de165502eea3afd",
+      "recordingIdentity": "4ac387b6ee08ce19",
+      "inputTraceIdentity": "31bb27345808d40c",
+      "title": "Dawn circuit",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 91.23333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-512b66c5e6a7ca41.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "4ac387b6ee08ce19",
+          "replayURL": "./demo-data/solo-qualified-512b66c5e6a7ca41.chromium.replay.json",
+          "inputTraceIdentity": "31bb27345808d40c",
+          "durationSeconds": 91.23333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "4ac387b6ee08ce19",
+          "replayURL": "./demo-data/solo-qualified-512b66c5e6a7ca41.firefox.replay.json",
+          "inputTraceIdentity": "31bb27345808d40c",
+          "durationSeconds": 91.23333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "4ac387b6ee08ce19",
+          "replayURL": "./demo-data/solo-qualified-512b66c5e6a7ca41.webkit.replay.json",
+          "inputTraceIdentity": "31bb27345808d40c",
+          "durationSeconds": 91.23333333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-512b66c5e6a7ca41.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-d775783a12234789",
+      "campaignId": "ornament-crossings",
+      "campaignKey": "ornament-crossings/candidate-69aa2345cf57c0af/af2e6e8e9e5c8d95",
+      "levelId": "cross-stitch-crossings",
+      "levelRevision": "cultural-pressure-1",
+      "identity": "565abbe458426264",
+      "recordingIdentity": "b9d9e82ef7e90c6e",
+      "inputTraceIdentity": "e91b2b7d4f95e4ce",
+      "title": "Cross-stitch crossings",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 72.44166666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d775783a12234789.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "b9d9e82ef7e90c6e",
+          "replayURL": "./demo-data/solo-qualified-d775783a12234789.chromium.replay.json",
+          "inputTraceIdentity": "e91b2b7d4f95e4ce",
+          "durationSeconds": 72.44166666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "b9d9e82ef7e90c6e",
+          "replayURL": "./demo-data/solo-qualified-d775783a12234789.firefox.replay.json",
+          "inputTraceIdentity": "e91b2b7d4f95e4ce",
+          "durationSeconds": 72.44166666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "b9d9e82ef7e90c6e",
+          "replayURL": "./demo-data/solo-qualified-d775783a12234789.webkit.replay.json",
+          "inputTraceIdentity": "e91b2b7d4f95e4ce",
+          "durationSeconds": 72.44166666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-56165d770d83ee1e",
+      "campaignId": "ornament-crossings",
+      "campaignKey": "ornament-crossings/candidate-69aa2345cf57c0af/af2e6e8e9e5c8d95",
+      "levelId": "rushnyk-bands",
+      "levelRevision": "cultural-pressure-1",
+      "identity": "45bb213c82849113",
+      "recordingIdentity": "1009902f56c27f16",
+      "inputTraceIdentity": "4687f35f574303cf",
+      "title": "Rushnyk bands",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 70.99166666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-56165d770d83ee1e.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "1009902f56c27f16",
+          "replayURL": "./demo-data/solo-qualified-56165d770d83ee1e.chromium.replay.json",
+          "inputTraceIdentity": "4687f35f574303cf",
+          "durationSeconds": 70.99166666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "1009902f56c27f16",
+          "replayURL": "./demo-data/solo-qualified-56165d770d83ee1e.firefox.replay.json",
+          "inputTraceIdentity": "4687f35f574303cf",
+          "durationSeconds": 70.99166666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "1009902f56c27f16",
+          "replayURL": "./demo-data/solo-qualified-56165d770d83ee1e.webkit.replay.json",
+          "inputTraceIdentity": "4687f35f574303cf",
+          "durationSeconds": 70.99166666666666,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-56165d770d83ee1e.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-6bd31868bd8f9091",
+      "campaignId": "ornament-crossings",
+      "campaignKey": "ornament-crossings/candidate-69aa2345cf57c0af/af2e6e8e9e5c8d95",
+      "levelId": "pysanka-sections",
+      "levelRevision": "cultural-pressure-1",
+      "identity": "f7a6cc173fcef766",
+      "recordingIdentity": "484560ed4ad9aa0f",
+      "inputTraceIdentity": "563b91bec806a0b0",
+      "title": "Pysanka sections",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 35.858333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6bd31868bd8f9091.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "484560ed4ad9aa0f",
+          "replayURL": "./demo-data/solo-qualified-6bd31868bd8f9091.chromium.replay.json",
+          "inputTraceIdentity": "563b91bec806a0b0",
+          "durationSeconds": 35.858333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "484560ed4ad9aa0f",
+          "replayURL": "./demo-data/solo-qualified-6bd31868bd8f9091.firefox.replay.json",
+          "inputTraceIdentity": "563b91bec806a0b0",
+          "durationSeconds": 35.858333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "484560ed4ad9aa0f",
+          "replayURL": "./demo-data/solo-qualified-6bd31868bd8f9091.webkit.replay.json",
+          "inputTraceIdentity": "563b91bec806a0b0",
+          "durationSeconds": 35.858333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-a13b85ddde0f9663",
+      "campaignId": "ornament-crossings",
+      "campaignKey": "ornament-crossings/candidate-69aa2345cf57c0af/af2e6e8e9e5c8d95",
+      "levelId": "dnipro-crossings",
+      "levelRevision": "spatial-2-art-r1",
+      "identity": "c3733a7c56442147",
+      "recordingIdentity": "d26f06cfad71cca7",
+      "inputTraceIdentity": "b76587df10d3843c",
+      "title": "Dnipro crossings",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 97.03333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-a13b85ddde0f9663.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "d26f06cfad71cca7",
+          "replayURL": "./demo-data/solo-qualified-a13b85ddde0f9663.chromium.replay.json",
+          "inputTraceIdentity": "b76587df10d3843c",
+          "durationSeconds": 97.03333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "d26f06cfad71cca7",
+          "replayURL": "./demo-data/solo-qualified-a13b85ddde0f9663.firefox.replay.json",
+          "inputTraceIdentity": "b76587df10d3843c",
+          "durationSeconds": 97.03333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "d26f06cfad71cca7",
+          "replayURL": "./demo-data/solo-qualified-a13b85ddde0f9663.webkit.replay.json",
+          "inputTraceIdentity": "b76587df10d3843c",
+          "durationSeconds": 97.03333333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-a13b85ddde0f9663.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-22874d7656ce6c3e",
+      "campaignId": "workshop-routing",
+      "campaignKey": "workshop-routing/candidate-7af9fbd437eae602/4be93703fa67cf4f",
+      "levelId": "four-motor-landings",
+      "levelRevision": "cultural-pressure-1",
+      "identity": "ea2e118969cf62c0",
+      "recordingIdentity": "8c1c6b16fd3776f4",
+      "inputTraceIdentity": "66e82f07d5036ae5",
+      "title": "Four motor landings",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 93.75833333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-22874d7656ce6c3e.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "8c1c6b16fd3776f4",
+          "replayURL": "./demo-data/solo-qualified-22874d7656ce6c3e.chromium.replay.json",
+          "inputTraceIdentity": "66e82f07d5036ae5",
+          "durationSeconds": 93.75833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "8c1c6b16fd3776f4",
+          "replayURL": "./demo-data/solo-qualified-22874d7656ce6c3e.firefox.replay.json",
+          "inputTraceIdentity": "66e82f07d5036ae5",
+          "durationSeconds": 93.75833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "8c1c6b16fd3776f4",
+          "replayURL": "./demo-data/solo-qualified-22874d7656ce6c3e.webkit.replay.json",
+          "inputTraceIdentity": "66e82f07d5036ae5",
+          "durationSeconds": 93.75833333333334,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-22874d7656ce6c3e.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-dd80d3e78efbf350",
+      "campaignId": "workshop-routing",
+      "campaignKey": "workshop-routing/candidate-7af9fbd437eae602/4be93703fa67cf4f",
+      "levelId": "circuit-lanes",
+      "levelRevision": "cultural-pressure-1",
+      "identity": "93640586d251eb40",
+      "recordingIdentity": "2661f9d91ca58e94",
+      "inputTraceIdentity": "cc2f81270d4002a8",
+      "title": "Circuit lanes",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 91.3,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-dd80d3e78efbf350.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "2661f9d91ca58e94",
+          "replayURL": "./demo-data/solo-qualified-dd80d3e78efbf350.chromium.replay.json",
+          "inputTraceIdentity": "cc2f81270d4002a8",
+          "durationSeconds": 91.3,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "2661f9d91ca58e94",
+          "replayURL": "./demo-data/solo-qualified-dd80d3e78efbf350.firefox.replay.json",
+          "inputTraceIdentity": "cc2f81270d4002a8",
+          "durationSeconds": 91.3,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "2661f9d91ca58e94",
+          "replayURL": "./demo-data/solo-qualified-dd80d3e78efbf350.webkit.replay.json",
+          "inputTraceIdentity": "cc2f81270d4002a8",
+          "durationSeconds": 91.3,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-dd80d3e78efbf350.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-c258ed926a320cc2",
+      "campaignId": "workshop-routing",
+      "campaignKey": "workshop-routing/candidate-7af9fbd437eae602/4be93703fa67cf4f",
+      "levelId": "toolbench-weave",
+      "levelRevision": "greybox-1-art-r1",
+      "identity": "dc946bcb89cd83f2",
+      "recordingIdentity": "71c95f5fac8f2f9b",
+      "inputTraceIdentity": "2f736556a41a8964",
+      "title": "Toolbench weave",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 64.40833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-c258ed926a320cc2.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "71c95f5fac8f2f9b",
+          "replayURL": "./demo-data/solo-qualified-c258ed926a320cc2.chromium.replay.json",
+          "inputTraceIdentity": "2f736556a41a8964",
+          "durationSeconds": 64.40833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "71c95f5fac8f2f9b",
+          "replayURL": "./demo-data/solo-qualified-c258ed926a320cc2.firefox.replay.json",
+          "inputTraceIdentity": "2f736556a41a8964",
+          "durationSeconds": 64.40833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "71c95f5fac8f2f9b",
+          "replayURL": "./demo-data/solo-qualified-c258ed926a320cc2.webkit.replay.json",
+          "inputTraceIdentity": "2f736556a41a8964",
+          "durationSeconds": 64.40833333333333,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-c258ed926a320cc2.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-86ee84d48134b04b",
+      "campaignId": "livewire-foundry",
+      "campaignKey": "livewire-foundry/candidate-ace18ecbeb730751/70575f8d5aa3394a",
+      "levelId": "cross-the-afterglow",
+      "levelRevision": "afterglow-spatial-1",
+      "identity": "4f7b469b6ade8967",
+      "recordingIdentity": "4a573ca21631d8c3",
+      "inputTraceIdentity": "8992ac0d1473197e",
+      "title": "Cross the afterglow",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 49.81666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-86ee84d48134b04b.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "4a573ca21631d8c3",
+          "replayURL": "./demo-data/solo-qualified-86ee84d48134b04b.chromium.replay.json",
+          "inputTraceIdentity": "8992ac0d1473197e",
+          "durationSeconds": 49.81666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "4a573ca21631d8c3",
+          "replayURL": "./demo-data/solo-qualified-86ee84d48134b04b.firefox.replay.json",
+          "inputTraceIdentity": "8992ac0d1473197e",
+          "durationSeconds": 49.81666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "4a573ca21631d8c3",
+          "replayURL": "./demo-data/solo-qualified-86ee84d48134b04b.webkit.replay.json",
+          "inputTraceIdentity": "8992ac0d1473197e",
+          "durationSeconds": 49.81666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-ead64a471b9edd54",
+      "campaignId": "livewire-foundry",
+      "campaignKey": "livewire-foundry/candidate-ace18ecbeb730751/70575f8d5aa3394a",
+      "levelId": "split-junction",
+      "levelRevision": "livewire-cultural-routes-1",
+      "identity": "ee2df818b2a754a6",
+      "recordingIdentity": "cfdc87e61f83ca69",
+      "inputTraceIdentity": "b6fbe2545b853658",
+      "title": "Split junction",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 39.625,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-ead64a471b9edd54.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "cfdc87e61f83ca69",
+          "replayURL": "./demo-data/solo-qualified-ead64a471b9edd54.chromium.replay.json",
+          "inputTraceIdentity": "b6fbe2545b853658",
+          "durationSeconds": 39.625,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "cfdc87e61f83ca69",
+          "replayURL": "./demo-data/solo-qualified-ead64a471b9edd54.firefox.performance.replay.json",
+          "inputTraceIdentity": "b6fbe2545b853658",
+          "durationSeconds": 39.625,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "cfdc87e61f83ca69",
+          "replayURL": "./demo-data/solo-qualified-ead64a471b9edd54.webkit.performance.replay.json",
+          "inputTraceIdentity": "b6fbe2545b853658",
+          "durationSeconds": 39.625,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-cd19eddd5888061f",
+      "campaignId": "livewire-foundry",
+      "campaignKey": "livewire-foundry/candidate-ace18ecbeb730751/70575f8d5aa3394a",
+      "levelId": "crossbar-depot",
+      "levelRevision": "pressure-v2-91214756b7526326",
+      "identity": "c988c2c206a8baa4",
+      "recordingIdentity": "2fa4884bb4d0a10e",
+      "inputTraceIdentity": "e9107126b9918f46",
+      "title": "Crossbar depot",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 54.3,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-cd19eddd5888061f.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "2fa4884bb4d0a10e",
+          "replayURL": "./demo-data/solo-qualified-cd19eddd5888061f.chromium.replay.json",
+          "inputTraceIdentity": "e9107126b9918f46",
+          "durationSeconds": 54.3,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "2fa4884bb4d0a10e",
+          "replayURL": "./demo-data/solo-qualified-cd19eddd5888061f.firefox.replay.json",
+          "inputTraceIdentity": "e9107126b9918f46",
+          "durationSeconds": 54.3,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "2fa4884bb4d0a10e",
+          "replayURL": "./demo-data/solo-qualified-cd19eddd5888061f.webkit.replay.json",
+          "inputTraceIdentity": "e9107126b9918f46",
+          "durationSeconds": 54.3,
+          "turnPolicy": "immediate"
+        }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-cd19eddd5888061f.node22131-x64.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-84debdfc44a43699",
+      "campaignId": "livewire-foundry",
+      "campaignKey": "livewire-foundry/candidate-ace18ecbeb730751/70575f8d5aa3394a",
+      "levelId": "cooling-loop",
+      "levelRevision": "erosion-counterplay-1",
+      "identity": "c935d5c9010f6a14",
+      "recordingIdentity": "127ab8a071f51a67",
+      "inputTraceIdentity": "edc7954054a97950",
+      "title": "Cooling loop",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 23.258333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-84debdfc44a43699.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "127ab8a071f51a67",
+          "replayURL": "./demo-data/solo-qualified-84debdfc44a43699.chromium.replay.json",
+          "inputTraceIdentity": "edc7954054a97950",
+          "durationSeconds": 23.258333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "127ab8a071f51a67",
+          "replayURL": "./demo-data/solo-qualified-84debdfc44a43699.firefox.replay.json",
+          "inputTraceIdentity": "edc7954054a97950",
+          "durationSeconds": 23.258333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "127ab8a071f51a67",
+          "replayURL": "./demo-data/solo-qualified-84debdfc44a43699.webkit.replay.json",
+          "inputTraceIdentity": "edc7954054a97950",
+          "durationSeconds": 23.258333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-4f9aec8fe9b37c0d",
+      "campaignId": "crosswind-remixes",
+      "campaignKey": "crosswind-remixes/candidate-21d70fdbf7e7a856/b1e165d208d3f781",
+      "levelId": "crosswind-remix",
+      "levelRevision": "erosion-counterplay-1",
+      "identity": "89c7d26c0d4b0250",
+      "recordingIdentity": "e4d3be94daba94a2",
+      "inputTraceIdentity": "5be29d1937efd817",
+      "title": "Return currents",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 83.70833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-4f9aec8fe9b37c0d.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "e4d3be94daba94a2",
+          "replayURL": "./demo-data/solo-qualified-4f9aec8fe9b37c0d.chromium.replay.json",
+          "inputTraceIdentity": "5be29d1937efd817",
+          "durationSeconds": 83.70833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "e4d3be94daba94a2",
+          "replayURL": "./demo-data/solo-qualified-4f9aec8fe9b37c0d.firefox.replay.json",
+          "inputTraceIdentity": "5be29d1937efd817",
+          "durationSeconds": 83.70833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "e4d3be94daba94a2",
+          "replayURL": "./demo-data/solo-qualified-4f9aec8fe9b37c0d.webkit.replay.json",
+          "inputTraceIdentity": "5be29d1937efd817",
+          "durationSeconds": 83.70833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    }
+  ]
+}

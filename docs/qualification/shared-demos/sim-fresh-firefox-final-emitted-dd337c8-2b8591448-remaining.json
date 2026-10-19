@@ -1,0 +1,31 @@
+{
+  "engine": "firefox",
+  "started": "2026-10-19T00:22:20.205Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "native-pursuit-runner-court",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "e498cea230650845",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "courtyard-06",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "8ece3dcb19a7bc02",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T00:22:31.264Z"
+}

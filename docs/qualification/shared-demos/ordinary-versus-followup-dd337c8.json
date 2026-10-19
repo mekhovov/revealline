@@ -1,0 +1,48 @@
+{
+  "format": "SharedDemoOrdinaryVersusFollowupV1",
+  "started": "2026-10-18T23:26:47.595836+00:00",
+  "finished": "2026-10-18T23:28:37.595649+00:00",
+  "command": [
+    "node",
+    "--test",
+    "game/test/mode-return-versus-host.test.mjs"
+  ],
+  "before": {
+    "head": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+    "runtime": {
+      "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "tests": {
+      "game/test/mode-return-versus-host.test.mjs": "863b13a9c248731129b10ee8f36546d2e1e0710acbd7fc098c981ef9bd419e33",
+      "game/test/helpers/mode-return-host-cases.mjs": "6ddb91fd191dbea7a6879eebab16ff2636f9c550027162ea9043839861ab90c7",
+      "game/test/helpers/solo-dom.mjs": "3d2fb5ffdbad7edffca39e2606eddbbabc4757b390c56b44497edfe679071a29",
+      "game/test/helpers/wait-for.mjs": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6"
+    }
+  },
+  "after": {
+    "head": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+    "runtime": {
+      "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "tests": {
+      "game/test/mode-return-versus-host.test.mjs": "863b13a9c248731129b10ee8f36546d2e1e0710acbd7fc098c981ef9bd419e33",
+      "game/test/helpers/mode-return-host-cases.mjs": "6ddb91fd191dbea7a6879eebab16ff2636f9c550027162ea9043839861ab90c7",
+      "game/test/helpers/solo-dom.mjs": "3d2fb5ffdbad7edffca39e2606eddbbabc4757b390c56b44497edfe679071a29",
+      "game/test/helpers/wait-for.mjs": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6"
+    }
+  },
+  "sourceStable": true,
+  "elapsedSeconds": 109.99981784820557,
+  "exitCode": 0,
+  "complete": true,
+  "log": "ordinary-versus-followup-dd337c8.tap.txt",
+  "logSHA256": "b72f37fce0e84815bfd38fc9c3dcebe9d325f2ec027c05769e3a2ecb4230155e",
+  "limits": [
+    "One unmodified whole-file follow-up; no diagnostic loader or changed five-second action deadline.",
+    "Earlier broader109/111 remains failed and cause unknown."
+  ]
+}

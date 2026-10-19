@@ -1,0 +1,334 @@
+{
+  "format": "SurvivalPreparationStageProbeV1",
+  "started": "2026-10-18T06:40:54.074Z",
+  "head": "4f68b924ee74c1a02fa340b1d17ddadf5ffa2c3f",
+  "sources": [
+    {
+      "path": "game/demo-modes/survival-replay.mjs",
+      "sha256": "03d17e5513c56ebf86cf22e1fabfefb9bb7b2cdfcce01253af3a2813c1e0324f"
+    },
+    {
+      "path": "game/overflight/renderer.mjs",
+      "sha256": "c488268b60b87f8a800e45a1379f88c6a5cbdcfd6222722c42b626dd76b0d725"
+    },
+    {
+      "path": "game/presentation/host.mjs",
+      "sha256": "b13a7d44a136550fc74bc12fff19555586b4f36143f22b493a599b398b1d0d64"
+    },
+    {
+      "path": "game/demo-modes/survival.mjs",
+      "sha256": "3345b3d98c3bd1bda7550c6db716abc895e3585a22b597b4d705c12aade500f1"
+    },
+    {
+      "path": "game/demo-modes/survival-catalog.mjs",
+      "sha256": "367696d7f800bf098bab9013f5273443b06c7b3109679816d44bc758d12047f3"
+    },
+    {
+      "path": "game/demo-modes/survival-simulation-identity.mjs",
+      "sha256": "5a58cade4365e9b109def17491580aaa903304d09f1be585228cb4b3c11e6b0f"
+    },
+    {
+      "path": "game/demo-modes/survival-runtime-variants.mjs",
+      "sha256": "1b3506374d14911c6834fada5672dceae81dbddb7c2008c1c39ad5ea198d87ad"
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df"
+    },
+    {
+      "path": "game/demo-prefetch.mjs",
+      "sha256": "f350a9a13e7a97dbf9a1f2efba2651abfa2e0a4318fca5e39be60cacccfdb724"
+    },
+    {
+      "path": "game/demo-director.mjs",
+      "sha256": "71cb2035b08b58c26b3830b07a7a038810c0e1c5c5cf99d5d17b4613a85a5a00"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "sha256": "3d02aeee7d7257e80c1bafd78f5af959737c20824e81033bfcbc93c61925827b"
+    },
+    {
+      "path": "game/overflight/atlas.mjs",
+      "sha256": "3c9b45f73960f5e8076c238c43694d332a90f15a18fcac4b0e683b20e4283348"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "sha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3"
+    },
+    {
+      "path": "game/demo-data/survival/freight-depot-loading-loop.chromium.replay.json",
+      "sha256": "2be493ca86d6a4c8685707c0ae5aff6c8ae7a74ffa96d437f4dbbe8bcfd961bb"
+    },
+    {
+      "path": "game/demo-data/survival/field-crossing-shelterbelt-gaps.chromium.replay.json",
+      "sha256": "dfeec5a9cd39ecf99a763820ca2f83d90b6884adf463fdd3ac20a6f438d8e0e2"
+    }
+  ],
+  "baseURL": "http://127.0.0.1:8769",
+  "engine": "chromium",
+  "results": [
+    {
+      "levelId": "freight-depot-loading-loop",
+      "engineHint": "chromium",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "baseline": {
+        "canvases": 0,
+        "actorPool": {
+          "limit": 67108864,
+          "reservedBytes": 0,
+          "decodedBytes": 0,
+          "entries": 0,
+          "leases": 0
+        }
+      },
+      "payloadMs": 1.7000000029802322,
+      "payloadBytes": 167093,
+      "sourceCreateMs": 3685.0999999940395,
+      "mountSceneMs": 241.09999999403954,
+      "preparedMs": 3929.2999999970198,
+      "rendererResources": {
+        "alive": 0,
+        "visible": 0,
+        "rendered": 0,
+        "effects": 0,
+        "pickups": 0,
+        "warnings": 0,
+        "behaviorCues": 0,
+        "remains": {
+          "stored": 0,
+          "capacity": 1024,
+          "sequence": 0,
+          "evicted": 0,
+          "missed": 0
+        },
+        "defeats": 0,
+        "quads": 13,
+        "allocatedSprites": 7,
+        "atlasBytes": 28467840,
+        "contextLosses": 0,
+        "contextRestores": 0
+      },
+      "active": {
+        "canvases": 1,
+        "actorPool": {
+          "limit": 67108864,
+          "reservedBytes": 245760,
+          "decodedBytes": 245760,
+          "entries": 24,
+          "leases": 24
+        },
+        "tick": 0,
+        "phase": "paused"
+      },
+      "ok": true,
+      "screenshot": ".cache/survival-preparation-loading-loop.png",
+      "cleanupMs": 1.5,
+      "retired": {
+        "canvases": 0,
+        "actorPool": {
+          "limit": 67108864,
+          "reservedBytes": 0,
+          "decodedBytes": 0,
+          "entries": 0,
+          "leases": 0
+        },
+        "remainingChildren": 0
+      },
+      "stages": [
+        {
+          "stage": "strict-verification",
+          "start": 136,
+          "end": 3802.0999999940395,
+          "elapsedMs": 3666.0999999940395
+        },
+        {
+          "stage": "artwork",
+          "start": 3858.5,
+          "end": 3938.0999999940395,
+          "elapsedMs": 79.59999999403954
+        },
+        {
+          "stage": "renderer",
+          "start": 3938.2000000029802,
+          "end": 4050.5999999940395,
+          "elapsedMs": 112.3999999910593
+        }
+      ],
+      "recordingCandidates": [
+        "/game/demo-data/survival/freight-depot-loading-loop.chromium.replay.json"
+      ],
+      "asyncErrors": [],
+      "workersAfter": 0,
+      "requestSummary": {
+        "count": 35,
+        "failed": [],
+        "recordingRequests": [
+          {
+            "url": "/game/demo-data/survival/freight-depot-loading-loop.chromium.replay.json",
+            "started": 122.5,
+            "status": 200,
+            "headersMs": 1.5
+          }
+        ],
+        "presentationImageCount": 33
+      },
+      "resourceTimingSummary": {
+        "recording": {
+          "count": 1,
+          "sumDurationMs": 1.0999999940395355,
+          "maximumDurationMs": 1.0999999940395355,
+          "transferBytes": 167393
+        },
+        "presentation": {
+          "count": 34,
+          "sumDurationMs": 33.90000003576279,
+          "maximumDurationMs": 4.700000002980232,
+          "transferBytes": 1286532
+        },
+        "rendererScript": {
+          "count": 1,
+          "sumDurationMs": 4.299999997019768,
+          "maximumDurationMs": 4.299999997019768,
+          "transferBytes": 1376276
+        }
+      }
+    },
+    {
+      "levelId": "field-crossing-shelterbelt-gaps",
+      "engineHint": "chromium",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "baseline": {
+        "canvases": 0,
+        "actorPool": {
+          "limit": 67108864,
+          "reservedBytes": 0,
+          "decodedBytes": 0,
+          "entries": 0,
+          "leases": 0
+        }
+      },
+      "payloadMs": 2.5,
+      "payloadBytes": 162841,
+      "sourceCreateMs": 3426.6000000089407,
+      "mountSceneMs": 113.79999999701977,
+      "preparedMs": 3543.300000011921,
+      "rendererResources": {
+        "alive": 0,
+        "visible": 0,
+        "rendered": 0,
+        "effects": 0,
+        "pickups": 0,
+        "warnings": 0,
+        "behaviorCues": 0,
+        "remains": {
+          "stored": 0,
+          "capacity": 1024,
+          "sequence": 0,
+          "evicted": 0,
+          "missed": 0
+        },
+        "defeats": 0,
+        "quads": 13,
+        "allocatedSprites": 7,
+        "atlasBytes": 28467840,
+        "contextLosses": 0,
+        "contextRestores": 0
+      },
+      "active": {
+        "canvases": 1,
+        "actorPool": {
+          "limit": 67108864,
+          "reservedBytes": 245760,
+          "decodedBytes": 245760,
+          "entries": 24,
+          "leases": 24
+        },
+        "tick": 0,
+        "phase": "paused"
+      },
+      "ok": true,
+      "cleanupMs": 0.7999999970197678,
+      "retired": {
+        "canvases": 0,
+        "actorPool": {
+          "limit": 67108864,
+          "reservedBytes": 0,
+          "decodedBytes": 0,
+          "entries": 0,
+          "leases": 0
+        },
+        "remainingChildren": 0
+      },
+      "stages": [
+        {
+          "stage": "strict-verification",
+          "start": 4404.4000000059605,
+          "end": 7817.5999999940395,
+          "elapsedMs": 3413.199999988079
+        },
+        {
+          "stage": "artwork",
+          "start": 7824.5,
+          "end": 7905.0999999940395,
+          "elapsedMs": 80.59999999403954
+        },
+        {
+          "stage": "renderer",
+          "start": 7905.0999999940395,
+          "end": 7938,
+          "elapsedMs": 32.900000005960464
+        }
+      ],
+      "recordingCandidates": [
+        "/game/demo-data/survival/field-crossing-shelterbelt-gaps.chromium.replay.json"
+      ],
+      "asyncErrors": [],
+      "workersAfter": 0,
+      "requestSummary": {
+        "count": 35,
+        "failed": [],
+        "recordingRequests": [
+          {
+            "url": "/game/demo-data/survival/field-crossing-shelterbelt-gaps.chromium.replay.json",
+            "started": 4395.0999999940395,
+            "status": 200,
+            "headersMs": 1.9000000059604645
+          }
+        ],
+        "presentationImageCount": 33
+      },
+      "resourceTimingSummary": {
+        "recording": {
+          "count": 1,
+          "sumDurationMs": 2,
+          "maximumDurationMs": 2,
+          "transferBytes": 163141
+        },
+        "presentation": {
+          "count": 34,
+          "sumDurationMs": 36.20000001788139,
+          "maximumDurationMs": 5.5999999940395355,
+          "transferBytes": 1286532
+        },
+        "rendererScript": {
+          "count": 0,
+          "sumDurationMs": 0,
+          "maximumDurationMs": 0,
+          "transferBytes": 0
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "context": "One new headless browser context, one blank test page, one native scene at a time; Loading Loop first, then Shelterbelt Gaps control. A separate existing two-hour soak continued. No production edits. Three module responses were wrapped only in this isolated context to timestamp strict verification, presentation load, and renderer creation. Original served module hashes were checked before wrapping. This probe does not reproduce the full paused originating game or establish long-run/low-memory performance.",
+  "browserVersion": "155.0.8059.85",
+  "finished": "2026-10-18T06:41:03.290Z",
+  "instrumentationNote": "An initial instrumentation attempt failed before mounting because a Proxy wrapped a frozen host target. It is retained only in .cache/survival-preparation-instrumentation-failure.json and is not a production failure or a performance qualification. This receipt is the corrected, completed two-scene probe.",
+  "interpretation": "Both sources prepared successfully below15seconds in this new isolated context, using exactly one Chromium candidate each. Strict replay verification dominated measured startup. This does not reproduce the active mixed-host long-run context, and it does not identify the cause of its repeated timeouts.",
+  "limitations": [
+    "Test-only response routing and a fresh browser context can change cache and scheduling behavior relative to the integrated long-running host.",
+    "The blank fixture intentionally omits ordinary Solo UI and shared demo controls/CSS; the screenshot documents the native renderer at tick zero, not the integrated demo interface.",
+    "No causal attribution for the separate soak timeouts follows from this successful short probe."
+  ]
+}

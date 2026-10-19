@@ -1,0 +1,1627 @@
+{
+  "format": "SharedDemoScopedMainIntegrationV1",
+  "complete": true,
+  "started": "2026-10-19T09:40:01.406017+00:00",
+  "before": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa",
+      "files": 10011,
+      "bytes": 404639350
+    },
+    "buildInputs": {
+      "sha256": "b2a70eb2815b4b64acf0bf9d341ddab7044fa61ebed7f1b8a328d68f5d4e7634",
+      "files": 9408,
+      "bytes": 348406839
+    },
+    "tests": {
+      "game/test/offline.test.mjs": {
+        "sha256": "b3c74e930e8def13bb65d68b7cebb5959b1d963ffc112c89640994c25b55f457",
+        "bytes": 98575
+      },
+      "game/test/overflight-checkpoint.test.mjs": {
+        "sha256": "c7435ac9d28ab5226e599f3493a25347db4ec503473f4b9f80e8dedf144c22e5",
+        "bytes": 7279
+      },
+      "game/test/overflight-host.test.mjs": {
+        "sha256": "918ab1b71f0f9074f96f5e4ba6bb223b7c61f96e3c39e86e7949d5cc58d5e110",
+        "bytes": 46264
+      },
+      "game/test/overflight-records.test.mjs": {
+        "sha256": "a54e40635d12c439d03ee02a954c7309c360fc9670758c9fa2d28a648d890fcc",
+        "bytes": 6458
+      },
+      "game/test/overflight-suspend-host.test.mjs": {
+        "sha256": "8d828e65bd09521421fe77aefbc742ac6c89be4f9c9a6112f3bb5662d57a2335",
+        "bytes": 9536
+      },
+      "game/test/overflight-suspend-package.test.mjs": {
+        "sha256": "775f9a69681f6e3ad8a6b456f55abf6e6460bca243524f9977385eb65b332901",
+        "bytes": 6264
+      },
+      "game/test/overflight-suspend-process.test.mjs": {
+        "sha256": "563f3053956a0b20945ef6fa5f917706f4386cbcb141a142f38fdee44cd41a82",
+        "bytes": 2273
+      },
+      "game/test/overflight-suspend-view.test.mjs": {
+        "sha256": "ee7d4fd1e6133ae963290f8f531051d1acfcf3e6e5dd6b63a91cb0b483f0bbe4",
+        "bytes": 7649
+      },
+      "game/test/overflight-suspend.test.mjs": {
+        "sha256": "074dfc8bfbb0f2c1dc3dfaf5b18648d85ec60a6fc552d3e98bb8daffe7fe1397",
+        "bytes": 11445
+      },
+      "game/test/profile-storage-receipts.test.mjs": {
+        "sha256": "f7264c2563562598182f6677d98fb6bebe359059ee72f327e30f6040db8cf571",
+        "bytes": 6473
+      },
+      "scripts/test-offline-startup.mjs": {
+        "sha256": "685c09a713c5a293cff33421811df914ea0e78fbdc8b0c2e9711aed2dfe8fa52",
+        "bytes": 2688
+      },
+      "game/test/demo-survival-fresh.test.mjs": {
+        "sha256": "92d437660071c3f97a16c75257f548f76d46816bd9fa29d377ce431e4f654544",
+        "bytes": 12511
+      },
+      "game/test/demo-survival.test.mjs": {
+        "sha256": "16d8aae7b72753b97479be5cf75a134ba7ec8ab7015b40fe4426c399e7d4fdf9",
+        "bytes": 15195
+      },
+      "game/test/demo-native-host.test.mjs": {
+        "sha256": "b4d083c54b04faf131c291f21be0326ec67c2ec947bf47e84f05acb31dccf0f4",
+        "bytes": 15942
+      },
+      "game/test/demo-back-host.test.mjs": {
+        "sha256": "5e52d3a4f68aa9d2fcda320f94ad44d9ee76b47ab670d875855d9cfdd8a1200c",
+        "bytes": 5711
+      },
+      "game/test/demo-shared.test.mjs": {
+        "sha256": "d0e5b3053f85007209a2269d69fa8bc29a612f3e7bce15f8618a71bd5cbb9422",
+        "bytes": 11908
+      },
+      "game/test/offline-art-fallback.test.mjs": {
+        "sha256": "adc607405e45a1c732f4377be232f515413e028652fb7009706cabb395654d9c",
+        "bytes": 10386
+      },
+      "game/test/offline-navigation-recovery.test.mjs": {
+        "sha256": "f5f6c83a29bbc19334e7aafd9c2d62574b0b49f03170c6afcfd8e2511c3d2b75",
+        "bytes": 6572
+      },
+      "scripts/test-offline-core-closure.mjs": {
+        "sha256": "6d1352c70dccd4d0fe4cbe39ec9d6c396b400f8754c858202727b02a118cf1ba",
+        "bytes": 28440
+      },
+      "scripts/test-main-pages-source-originals.mjs": {
+        "sha256": "b8838ce4ec104c542a31b388c203435c31cdc5b038cf81a87b97b6132da7c494",
+        "bytes": 8463
+      }
+    },
+    "testHelpers": {
+      "game/test/helpers/actor-appearance-transport.mjs": {
+        "sha256": "596cd9d7298ddf3dc9bb97832ebfddf0983a35134086834139974ac88161d89a",
+        "bytes": 3096
+      },
+      "game/test/helpers/apex-field-route.mjs": {
+        "sha256": "bdb555f0960398e5f6b2054ce4e45fadcdeb8f0e59c63f884b7a55b1e9259ce0",
+        "bytes": 6198
+      },
+      "game/test/helpers/apex-goal.mjs": {
+        "sha256": "4b3840358a04b7ca9a93d528e7f75cb4baa40013a0e437d62a7397c80da53ae3",
+        "bytes": 3487
+      },
+      "game/test/helpers/apex-spatial-route.mjs": {
+        "sha256": "4afe94fda83418a8ded5c91a508d66e684eefc701a1d7e8144511ba3171f08f5",
+        "bytes": 5412
+      },
+      "game/test/helpers/audio-view-writes.mjs": {
+        "sha256": "d40b8e3c08141b4e936dac34455ff1ea75dcc4544accbf2d9bc4f2748c23244f",
+        "bytes": 1747
+      },
+      "game/test/helpers/backup-preflight.mjs": {
+        "sha256": "9e4f093f1fa8775f8388b2dc216d1b19bba24264fbde7a891e95e0103a8b0dd9",
+        "bytes": 632
+      },
+      "game/test/helpers/backup-review-readiness.mjs": {
+        "sha256": "4e6458a70f88c2278688145cc3e3f33c5197da7fa1b66692b2c00b8632dd75df",
+        "bytes": 2364
+      },
+      "game/test/helpers/backup-set-fixture.mjs": {
+        "sha256": "43983c59cfc1a70c105aa0ee375b0058a137ab7d82acd279941f6bc0bea18a4d",
+        "bytes": 5662
+      },
+      "game/test/helpers/candidate-team-picture-transport.mjs": {
+        "sha256": "6a6a42b83d113a6e5db96335b7f5bec040d7ee331b9c781b23fa53d7c399d754",
+        "bytes": 1315
+      },
+      "game/test/helpers/chapter-install-wait.mjs": {
+        "sha256": "764f39fc341ed6197ea5d0f30126cb2ac1365345a27f1e975178374f7f16f968",
+        "bytes": 1563
+      },
+      "game/test/helpers/classic-snake-v4-playthrough.mjs": {
+        "sha256": "d0752ccb884e52e36e0d5f139f98ee9dcaa38c9d11f41a8feef83257f6a76f0f",
+        "bytes": 101
+      },
+      "game/test/helpers/combat-fixture.mjs": {
+        "sha256": "a2c22fd9fae8a416e2d4e610ed23c119d58686f41358b6997b3117a02480948c",
+        "bytes": 1962
+      },
+      "game/test/helpers/combat-route-evidence.mjs": {
+        "sha256": "9cbacd318bbce09fc64d10b4355360a26ddd864c4e56ba5f50692c888dd08066",
+        "bytes": 1834
+      },
+      "game/test/helpers/committed-caches.mjs": {
+        "sha256": "21e7ad378283825915bd8c3d3d5232a44bb017d2cfacb1813019d69bfed2c763",
+        "bytes": 1027
+      },
+      "game/test/helpers/coop-host.mjs": {
+        "sha256": "2b59cce7aeea73e487754754ad95e066c5df596da2ab08b60120732d95cbcbdf",
+        "bytes": 14868
+      },
+      "game/test/helpers/coop-import-win.mjs": {
+        "sha256": "5f5656dd59a57b7e250d9b90f83a9c4f4e21959e98bef95c288c7b9f7166455f",
+        "bytes": 5425
+      },
+      "game/test/helpers/coop-presentation-fixture.mjs": {
+        "sha256": "480934679b354208d3fb9f7a893a6e90f4ac6f4a4e0fbad47edb3f5ba25bac51",
+        "bytes": 4630
+      },
+      "game/test/helpers/coop-route-search.mjs": {
+        "sha256": "6455903fc25131a355ca56d3d3dacc20f2d6549621cd9a829f74828b7450070f",
+        "bytes": 9197
+      },
+      "game/test/helpers/coop-win.mjs": {
+        "sha256": "d62a398996d395584df460bca5e088b66a982e70ee80e82ff47416e596f322b8",
+        "bytes": 6386
+      },
+      "game/test/helpers/couch-dom.mjs": {
+        "sha256": "63e5281b573f58da58c87708f0477bc92b51dfae701dafd6e187b6a5a99a34c9",
+        "bytes": 20230
+      },
+      "game/test/helpers/couch-host.mjs": {
+        "sha256": "7bdf0d7724b22ac891b7a63e5ea695624a574c97d0b3298a977e3fc0b3d8db96",
+        "bytes": 10258
+      },
+      "game/test/helpers/crosswind-goal.mjs": {
+        "sha256": "7924a4d5f3c6b96c9a9e7b6c0c82b0721c71c6402c60a42c32ead3af1e3f828f",
+        "bytes": 3493
+      },
+      "game/test/helpers/current-team-route.mjs": {
+        "sha256": "7f0fb633d61a7cd68ced61ef10e122655dbc2cb67eb0d1121eb3522646cc80f6",
+        "bytes": 3433
+      },
+      "game/test/helpers/demo-host-fixture.mjs": {
+        "sha256": "fae1e6fd7d355f527379697be17cd9de57ef9267523fd899d8a5a07ca1e636bd",
+        "bytes": 5157
+      },
+      "game/test/helpers/demo-loading-clock.mjs": {
+        "sha256": "32a09efefe9c3261b5fbfb5f872bcdd7e11a389c315b46dc53d0f26a1202121e",
+        "bytes": 1005
+      },
+      "game/test/helpers/earned-picture-fixture.mjs": {
+        "sha256": "4c8eeecd9b3209414ff2e082a06f421517a1e3332fc5d403f095ae12e1b1291f",
+        "bytes": 2528
+      },
+      "game/test/helpers/edition-provider-fixture.mjs": {
+        "sha256": "d28e3c7185a7b0287f517888e5d80fffb54696d1540e3d29d59a2b532d947482",
+        "bytes": 3399
+      },
+      "game/test/helpers/external-current-host-route.mjs": {
+        "sha256": "1007a0be58c5372e0c5660b88fe0f7788c8d1e2a36fcbf4aabd843d46e8a2cbe",
+        "bytes": 6778
+      },
+      "game/test/helpers/fpv-advanced-qualification.mjs": {
+        "sha256": "118adfa7f7bc27ff455a636ee0b960d98b781afa332204c5c899e57463f242b5",
+        "bytes": 13152
+      },
+      "game/test/helpers/fpv-advanced-regional-qualification.mjs": {
+        "sha256": "34e844c1cbf25221dbf3b5135466497baa7693093fddf771ce49a8b6f1cfde68",
+        "bytes": 9404
+      },
+      "game/test/helpers/fpv-aircraft-flight-qualification.mjs": {
+        "sha256": "0f6a19e022dfcc72a1597218421a93ab300010cd983da5d740ff48451d718b43",
+        "bytes": 6452
+      },
+      "game/test/helpers/fpv-aircraft-qualification.mjs": {
+        "sha256": "97391d3264c4e8b8402964b31058ecb4c2dc80b20bd7c65a8c832c0581d7136c",
+        "bytes": 9107
+      },
+      "game/test/helpers/fpv-aircraft-sustained-qualification.mjs": {
+        "sha256": "2b0d3290411c25dde735757e2a2597efa13c36c961dd48839c1763c93966c6e6",
+        "bytes": 16672
+      },
+      "game/test/helpers/fpv-portability.mjs": {
+        "sha256": "5d240e8cd065ef1c01f0bada60e984d7a9335fb0d94ec220bc214f34a2ebdfe0",
+        "bytes": 6422
+      },
+      "game/test/helpers/fpv-regional-real-geometry.mjs": {
+        "sha256": "85e52e017b02d2dbf4773448691eac3415eee46e93a9876bb42a0e35555c4414",
+        "bytes": 2515
+      },
+      "game/test/helpers/fracture-goal.mjs": {
+        "sha256": "ffc8b94f193e89c27d30aeabc67dd0c92f3230d69f7567bd707b0f983dfa74aa",
+        "bytes": 2734
+      },
+      "game/test/helpers/global-tools-fixture.mjs": {
+        "sha256": "dccfaac00e3ef98d3f7329a05fc45f0076ee9f162c2c9808250d65c4230af8e1",
+        "bytes": 862
+      },
+      "game/test/helpers/host-action.mjs": {
+        "sha256": "04594d07c2b574a23cf6a09517cadf0333dfdcf3cc32d953eaf9fa86c69c7b7e",
+        "bytes": 1343
+      },
+      "game/test/helpers/immutable-presentation-fixture.mjs": {
+        "sha256": "3f161f0ccb6b1b9a9d50fed8a1a9f336081388ed64ef738107f92258e8669dd1",
+        "bytes": 5985
+      },
+      "game/test/helpers/jpeg-image.mjs": {
+        "sha256": "a7576a36f0906468433d54bc905c9c67d3dd6e7a35ba9bfd596a14e487be80e3",
+        "bytes": 669
+      },
+      "game/test/helpers/keyboard-route.mjs": {
+        "sha256": "1e445422192044e9cbe114c09cf026a97cbd711b8225a0cc75c27f27fea114fa",
+        "bytes": 3017
+      },
+      "game/test/helpers/library-selection.mjs": {
+        "sha256": "dfeff564ef1061a58df395c7e72c85296f1ba85ec2496dbd1fa7af89b51798b1",
+        "bytes": 1812
+      },
+      "game/test/helpers/livewire-goal.mjs": {
+        "sha256": "d5ed378f9d3e8d8e641aae5926a281515a15d5c5d0edf21461539f13d59e1af8",
+        "bytes": 2404
+      },
+      "game/test/helpers/managed-idb.mjs": {
+        "sha256": "387d5f8bc31ffec0de6584b7919d38cc1253a32e19bdee0b3ba73bea20f078a5",
+        "bytes": 7733
+      },
+      "game/test/helpers/media-fixtures.mjs": {
+        "sha256": "1189b0885583cd075c63b46d48b493a61c8bf72ebe9f235a003691c3fc5931a2",
+        "bytes": 3271
+      },
+      "game/test/helpers/middle-pressure-evidence.mjs": {
+        "sha256": "3cc08c89a47c85b7387637859e4127872d48c88a89a2bdf0e4d8ba32379bd472",
+        "bytes": 4037
+      },
+      "game/test/helpers/mode-return-host-cases.mjs": {
+        "sha256": "6ddb91fd191dbea7a6879eebab16ff2636f9c550027162ea9043839861ab90c7",
+        "bytes": 25727
+      },
+      "game/test/helpers/mount-html.mjs": {
+        "sha256": "4bb218c075fe54c1110365bbd497355f07f1abb0dd721557cc0b7b358e792e68",
+        "bytes": 1789
+      },
+      "game/test/helpers/multiplayer-expansion-checkpoint.mjs": {
+        "sha256": "f8db8c221d0c57c00a01028603d7bbea0a3b0532df5bae8c64ee144dd8c857d9",
+        "bytes": 1573
+      },
+      "game/test/helpers/multiplayer-finale-qualification.mjs": {
+        "sha256": "869d6e6ca15c230e98a3454b465171346d358d1d8c990147692c1687082f3fc6",
+        "bytes": 6044
+      },
+      "game/test/helpers/multiplayer-studio-fixture.mjs": {
+        "sha256": "1f2394337dcebbf42db61ae109601d4af69198be4cd0cb7ff1a5484d49cfade3",
+        "bytes": 4264
+      },
+      "game/test/helpers/neon-goal.mjs": {
+        "sha256": "dd342696add24a0191099e86c33da9f940227f2ca4e21a1f3e0060162703d6e4",
+        "bytes": 3471
+      },
+      "game/test/helpers/official-caches.mjs": {
+        "sha256": "cd1a865c625a0bf222ed091f3198e9e8edb5a518e994192dc7ef34304a08790e",
+        "bytes": 833
+      },
+      "game/test/helpers/opening-boundary-observations.mjs": {
+        "sha256": "bfb6af5c1dbbe43e0602425adca5859af2ebc469231b8799afe70a7d677240c6",
+        "bytes": 2593
+      },
+      "game/test/helpers/opening-route-observations.mjs": {
+        "sha256": "738ea26a11cd53f099c5d2a5990020631f176f9356530930e1f563eda4e766d0",
+        "bytes": 2567
+      },
+      "game/test/helpers/pcm-wave.mjs": {
+        "sha256": "3715c9d4d7b496149b02bb4b8dd66e885caca1b2568fe703e1686c3e8dfbe842",
+        "bytes": 1379
+      },
+      "game/test/helpers/phase-goal.mjs": {
+        "sha256": "96df7272191a8fecc185517e0a7d07f532f58602a6cc89383482b6b84386adcb",
+        "bytes": 2806
+      },
+      "game/test/helpers/png-image.mjs": {
+        "sha256": "bdd88771548acce9266a085c29e5ea2351bf765ce12a39dcc0e7d09c209e9c24",
+        "bytes": 1471
+      },
+      "game/test/helpers/profile-channel-idb.mjs": {
+        "sha256": "7be33c6deaea2d85506f4108997269c5cebed72ad80c179b1e65528313c9d3c8",
+        "bytes": 3511
+      },
+      "game/test/helpers/published-replay-loader.mjs": {
+        "sha256": "31d5dadd980ccb518063ee9d160fe9990c9a68bc547490c28ac61f3f69723949",
+        "bytes": 628
+      },
+      "game/test/helpers/published-solo-loader.mjs": {
+        "sha256": "8ba636006ae81ae1754fbaba47bfb5e1518803bc3f8f53bc4da398dbf9c6d5b2",
+        "bytes": 1780
+      },
+      "game/test/helpers/raster-fixtures.mjs": {
+        "sha256": "10af8d805084718fd8d1fa826d8aaab1ab83d831483edb5676a62a868fd0ea45",
+        "bytes": 600
+      },
+      "game/test/helpers/raster-image.mjs": {
+        "sha256": "eab7e854639c38c93cf6ccf6f881b607a75695e70ea266ea1402e228e745af86",
+        "bytes": 1969
+      },
+      "game/test/helpers/recovery-media-idb.mjs": {
+        "sha256": "1a5315e74c8c8ee35425dccfaa9a9df5dd7f96f26fcb78751bcc63961a5e65b2",
+        "bytes": 4041
+      },
+      "game/test/helpers/relay-goal.mjs": {
+        "sha256": "bb38db22d3209f753efcf010b261e148e29248ffbd28a95912037daeea1392b3",
+        "bytes": 3313
+      },
+      "game/test/helpers/released-original.mjs": {
+        "sha256": "b3cf77e7172a2c4e1b67ced3d1e9d1eaf377603d3c8e1afa37b76aa484a1607e",
+        "bytes": 1401
+      },
+      "game/test/helpers/retained-edition-fixture.mjs": {
+        "sha256": "16953b8e11f7d5fa420cf235ce975c84bc6a8e672c7699bf32f16b79297214ef",
+        "bytes": 3110
+      },
+      "game/test/helpers/reward-audio-fixture.mjs": {
+        "sha256": "d1a70193c515c729b00d1894acf68e6b7718c91ba521eeb782d777c4ec542e89",
+        "bytes": 732
+      },
+      "game/test/helpers/room-service-http-fixture.mjs": {
+        "sha256": "24ac173ef6b81a7318e056cdb2f8b182aeb5ee0c04a2776bcd566c715b05c7f3",
+        "bytes": 6302
+      },
+      "game/test/helpers/route-evidence.mjs": {
+        "sha256": "e9f813c4485ac5ab4f7ddf8c15e9f2bc10a64fddd0ae5ca91ab2c156c4365bcb",
+        "bytes": 3337
+      },
+      "game/test/helpers/route-module-probe.mjs": {
+        "sha256": "f7d48e2eede0b6a64b716468abda7b13c8d870599cd7ef384e6bb0684c34577b",
+        "bytes": 534
+      },
+      "game/test/helpers/rover-goal.mjs": {
+        "sha256": "91ad8086609f7bf9bb692579b0fbd685e6200ea98a7f6268cffced1a074aa8a1",
+        "bytes": 3498
+      },
+      "game/test/helpers/sentinel-goal.mjs": {
+        "sha256": "37d457ab2b72c4985ec3a01c5f2691e99ef8abea4a3dbc38f5c2a4c795a06dae",
+        "bytes": 3261
+      },
+      "game/test/helpers/sentinel-project.mjs": {
+        "sha256": "15a2fbbc08728ed20f15d78aacfff94f47e7d2c0b03cffcf558d418358e00d4d",
+        "bytes": 977
+      },
+      "game/test/helpers/signal-goal.mjs": {
+        "sha256": "7f2cdea05fe689b262fd665437c0e98c5b45dc4ab585039af20d8041b61f93cc",
+        "bytes": 2403
+      },
+      "game/test/helpers/solo-dom.mjs": {
+        "sha256": "3d2fb5ffdbad7edffca39e2606eddbbabc4757b390c56b44497edfe679071a29",
+        "bytes": 35098
+      },
+      "game/test/helpers/solo-opening-win.mjs": {
+        "sha256": "12c38963932148a06b6c573191e0bde62ba6df88605a7cb92b11d7f3901ca86d",
+        "bytes": 1781
+      },
+      "game/test/helpers/sorting-goal.mjs": {
+        "sha256": "dfa6d623359ddf760bae5515e029efb7f94aca9e9aef1a8191cc471546070044",
+        "bytes": 2129
+      },
+      "game/test/helpers/soundtrack-albums.mjs": {
+        "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+        "bytes": 1805
+      },
+      "game/test/helpers/soundtrack-audio.mjs": {
+        "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+        "bytes": 3039
+      },
+      "game/test/helpers/soundtrack-fixtures.mjs": {
+        "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+        "bytes": 2032
+      },
+      "game/test/helpers/soundtrack-public-catalogue.mjs": {
+        "sha256": "baf4ce9fc18d111140d3bdf229ada66b0a92c03a7b0e014c4b8396a240c5eef6",
+        "bytes": 1866
+      },
+      "game/test/helpers/still-workshop.mjs": {
+        "sha256": "432fcb1feee330994a3865666402e81057155adadc82f1f5bde527822728137e",
+        "bytes": 4791
+      },
+      "game/test/helpers/survival-roundtrip.mjs": {
+        "sha256": "301b8e9a0b138b7d3a0c55e935054e87f2c83c5fd3cebf365712e535991af13c",
+        "bytes": 6240
+      },
+      "game/test/helpers/survival-suspend-process.mjs": {
+        "sha256": "5720a1e4326be80d9c96d9f4f10ace55a2c319de9e1cc2b0c48cb7b3964d57ce",
+        "bytes": 5528
+      },
+      "game/test/helpers/team-edition-host-route.mjs": {
+        "sha256": "d0797f927604b1361ca92840cd5d97600e914cd2a9643bf5eeca0b38d33fda3f",
+        "bytes": 5150
+      },
+      "game/test/helpers/team-foundation-goal.mjs": {
+        "sha256": "b1734dbb91feb354adf3b2268a59471ac5743d2a865fcb56a8bad05d3d5fae04",
+        "bytes": 3414
+      },
+      "game/test/helpers/team-foundation-route.mjs": {
+        "sha256": "0e526a0bbada12790a82ec6cdc971b64386f34671ecf5222c783841c19997adc",
+        "bytes": 2112
+      },
+      "game/test/helpers/team-material-goal.mjs": {
+        "sha256": "92f3a70585f8f6d9d93a41d90a0ec333e2080a2db36f5df813f251f1e02f79c5",
+        "bytes": 1363
+      },
+      "game/test/helpers/team-partner-return.mjs": {
+        "sha256": "b9b8420e36d990da0da713b0086bd0ddfe482218b7979dfb87bbddb1eeb1b4c7",
+        "bytes": 3635
+      },
+      "game/test/helpers/team-pressure-fixtures.mjs": {
+        "sha256": "1488f743e71f53ad6369248d36ee08900df3041fbcb2079e8ec3c51b2daaa5dc",
+        "bytes": 1233
+      },
+      "game/test/helpers/team-roamer-goal.mjs": {
+        "sha256": "e6b3eda8fc7a5c3dc799bb3de1a00d5c1b87a7518738f4e3e67485c8e8d926f3",
+        "bytes": 1345
+      },
+      "game/test/helpers/team-roamer-spatial-evidence.mjs": {
+        "sha256": "f3529cff589bfeafcb7a0382b11c12e418a115353280faf07c97e67607f7b8a5",
+        "bytes": 5752
+      },
+      "game/test/helpers/team-spatial-host-route.mjs": {
+        "sha256": "1b38ce7884831aa3c60645e3e7c2135e7109ac0d4499c67d406896693f9204b4",
+        "bytes": 4705
+      },
+      "game/test/helpers/team-specialized-host-route.mjs": {
+        "sha256": "5e8add72931a2b3bda4a758bb287c6a083c5acf147424d930fc9586504fe099f",
+        "bytes": 16255
+      },
+      "game/test/helpers/team-timed-route.mjs": {
+        "sha256": "535a116a6f8a740b333da364930fa62723d0b3d29ae483a849dcc2cf36e61e35",
+        "bytes": 7108
+      },
+      "game/test/helpers/timed-taking-evidence.mjs": {
+        "sha256": "33e8fa9320f0d9cc2dff99cf27f5dc2dba0581b42f641f9c47c2763af10cf955",
+        "bytes": 4073
+      },
+      "game/test/helpers/variety-routes.mjs": {
+        "sha256": "fa22834f6387c2d03d772d1983dbba2146c2d7c7189961aa95218699d6b3eb6b",
+        "bytes": 1426
+      },
+      "game/test/helpers/victory-story-fixture.mjs": {
+        "sha256": "7e4d1737e6fdabb98ce4c5b639c466b60f48d1a3a326eff7d977e81861cb545f",
+        "bytes": 3413
+      },
+      "game/test/helpers/wait-for.mjs": {
+        "sha256": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6",
+        "bytes": 714
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "sha256": "5c899797c4eb8f1db5563eea56538342ddb3e9276ee1b04a5a1f0f1023d2b011",
+      "bytes": 112989184
+    },
+    "owner": {
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+      "bytes": 26055
+    },
+    "helper": {
+      "sha256": "121dbc105c5d40f254c093d4b0efb469574d53dda9da2db00c62812208794018",
+      "bytes": 9329
+    }
+  },
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "game/test/offline.test.mjs",
+    "game/test/overflight-checkpoint.test.mjs",
+    "game/test/overflight-host.test.mjs",
+    "game/test/overflight-records.test.mjs",
+    "game/test/overflight-suspend-host.test.mjs",
+    "game/test/overflight-suspend-package.test.mjs",
+    "game/test/overflight-suspend-process.test.mjs",
+    "game/test/overflight-suspend-view.test.mjs",
+    "game/test/overflight-suspend.test.mjs",
+    "game/test/profile-storage-receipts.test.mjs",
+    "scripts/test-offline-startup.mjs",
+    "game/test/demo-survival-fresh.test.mjs",
+    "game/test/demo-survival.test.mjs",
+    "game/test/demo-native-host.test.mjs",
+    "game/test/demo-back-host.test.mjs",
+    "game/test/demo-shared.test.mjs",
+    "game/test/offline-art-fallback.test.mjs",
+    "game/test/offline-navigation-recovery.test.mjs",
+    "scripts/test-offline-core-closure.mjs",
+    "scripts/test-main-pages-source-originals.mjs"
+  ],
+  "nodeVersion": "v22.22.2",
+  "platform": "darwin",
+  "tmpdir": ".cache/integration-403-20261019T113958-tmp",
+  "timeoutSeconds": 900,
+  "cleanupGraceSeconds": 16,
+  "localStorage": {
+    "freeFloorBytes": 209715200,
+    "allocationCapBytes": 33554432,
+    "freeBeforeBytes": 264810496,
+    "minimumObservedFreeBytes": 247701504,
+    "maximumObservedFixtureBytes": 3760128,
+    "freeAfterBytes": 255246336,
+    "tmpEntriesAfter": 0
+  },
+  "limitations": [
+    "No full build or browser execution. Scope is the20 named existing integration files. Test fixtures are in memory except small suspend-process JSON files.",
+    "Child execution and exact owned cleanup are bounded. Synchronous filesystem finalization is not preemptible; validation after960seconds revokes completion."
+  ],
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 30,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 70190,
+        "ppid": 69896,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:01 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T09:40:01.466774+00:00"
+      },
+      {
+        "pid": 70192,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:01 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/demo-back-host.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:01.510950+00:00"
+      },
+      {
+        "pid": 71790,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:18 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/demo-native-host.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:18.486468+00:00"
+      },
+      {
+        "pid": 71818,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:18 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:18.742156+00:00"
+      },
+      {
+        "pid": 71848,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:18 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:19.006499+00:00"
+      },
+      {
+        "pid": 71867,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:18 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/demo-survival.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:19.276063+00:00"
+      },
+      {
+        "pid": 71867,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:18 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:43.480258+00:00"
+      },
+      {
+        "pid": 73036,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:43 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/offline-art-fallback.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:43.738703+00:00"
+      },
+      {
+        "pid": 73066,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:49 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:49.538050+00:00"
+      },
+      {
+        "pid": 73068,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:49 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/offline.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:49.794435+00:00"
+      },
+      {
+        "pid": 73070,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:40:50 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-checkpoint.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:40:50.059214+00:00"
+      },
+      {
+        "pid": 73512,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:30 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-host.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:30.619173+00:00"
+      },
+      {
+        "pid": 73520,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:31 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-records.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:31.379784+00:00"
+      },
+      {
+        "pid": 73523,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:31 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:31.884683+00:00"
+      },
+      {
+        "pid": 73525,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:31 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:32.148537+00:00"
+      },
+      {
+        "pid": 73527,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:32 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:32.411778+00:00"
+      },
+      {
+        "pid": 73528,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:32 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/survival-suspend-process.mjs /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/integration-403-20261019T113958-tmp/survival-reopen-PjoR1e/seed.json seed",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:32.411814+00:00"
+      },
+      {
+        "pid": 73530,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:32 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/survival-suspend-process.mjs /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/integration-403-20261019T113958-tmp/survival-reopen-PjoR1e/journal.json interrupt journal",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:32.678328+00:00"
+      },
+      {
+        "pid": 73543,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:33 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/survival-suspend-process.mjs /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/integration-403-20261019T113958-tmp/survival-reopen-PjoR1e/journal.json recover",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:33.476669+00:00"
+      },
+      {
+        "pid": 73546,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:33 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/survival-suspend-process.mjs /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/integration-403-20261019T113958-tmp/survival-reopen-PjoR1e/journal.json consumed",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:34.029683+00:00"
+      },
+      {
+        "pid": 73548,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:34 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/survival-suspend-process.mjs /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/integration-403-20261019T113958-tmp/survival-reopen-PjoR1e/records.json interrupt records",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:34.307116+00:00"
+      },
+      {
+        "pid": 73629,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:34 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/survival-suspend-process.mjs /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/integration-403-20261019T113958-tmp/survival-reopen-PjoR1e/records.json recover",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:35.067543+00:00"
+      },
+      {
+        "pid": 73629,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:34 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:35.594310+00:00"
+      },
+      {
+        "pid": 73634,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:35 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/survival-suspend-process.mjs /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/integration-403-20261019T113958-tmp/survival-reopen-PjoR1e/mastery.json interrupt mastery",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:35.862694+00:00"
+      },
+      {
+        "pid": 73639,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:36 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/survival-suspend-process.mjs /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/integration-403-20261019T113958-tmp/survival-reopen-PjoR1e/mastery.json recover",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:36.650543+00:00"
+      },
+      {
+        "pid": 73639,
+        "ppid": 73527,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:36 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          73527,
+          "Mon Oct 19 11:41:32 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-process.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:37.180510+00:00"
+      },
+      {
+        "pid": 73644,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:37 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend-view.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:37.438792+00:00"
+      },
+      {
+        "pid": 73646,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:37 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/overflight-suspend.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:37.708907+00:00"
+      },
+      {
+        "pid": 73684,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:42 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-main-pages-source-originals.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:43.008310+00:00"
+      },
+      {
+        "pid": 73686,
+        "ppid": 70190,
+        "pgid": 70190,
+        "uid": 502,
+        "started": "Mon Oct 19 11:41:43 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-offline-core-closure.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          70190,
+          "Mon Oct 19 11:40:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/offline.test.mjs game/test/overflight-checkpoint.test.mjs game/test/overflight-host.test.mjs game/test/overflight-records.test.mjs game/test/overflight-suspend-host.test.mjs game/test/overflight-suspend-package.test.mjs game/test/overflight-suspend-process.test.mjs game/test/overflight-suspend-view.test.mjs game/test/overflight-suspend.test.mjs game/test/profile-storage-receipts.test.mjs scripts/test-offline-startup.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-survival.test.mjs game/test/demo-native-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-shared.test.mjs game/test/offline-art-fallback.test.mjs game/test/offline-navigation-recovery.test.mjs scripts/test-offline-core-closure.mjs scripts/test-main-pages-source-originals.mjs"
+        ],
+        "observedAt": "2026-10-19T09:41:43.270349+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/integration-403-20261019T113958.tap.txt",
+    "byteLimit": 4194304,
+    "totalBytes": 58736,
+    "writtenBytes": 58736,
+    "truncatedBytes": 0,
+    "tailLimit": 32768,
+    "tailBytes": 32768,
+    "tailSHA256": "eb279208de1923c3fae31382d60d12a9c3a6653010333e8b2f0abec194739cd6",
+    "tail": " without discarding other scopes\nok 106 - explicit prepare repairs an evicted file after reconnection without discarding other scopes\n  ---\n  duration_ms: 1.386166\n  type: 'test'\n  ...\n# Subtest: network bodies are consumed once without cloning and reconstructed with decoded headers\nok 107 - network bodies are consumed once without cloning and reconstructed with decoded headers\n  ---\n  duration_ms: 1.49825\n  type: 'test'\n  ...\n# Subtest: stream overruns are cancelled before copying and malformed bodies never create a cache\nok 108 - stream overruns are cancelled before copying and malformed bodies never create a cache\n  ---\n  duration_ms: 2.527084\n  type: 'test'\n  ...\n# Subtest: generated byte and file budgets reject malformed inventory before body allocation or fetch\nok 109 - generated byte and file budgets reject malformed inventory before body allocation or fetch\n  ---\n  duration_ms: 4.089042\n  type: 'test'\n  ...\n# Subtest: redirects, opaque/error and non-cacheable network responses remain rejected\nok 110 - redirects, opaque/error and non-cacheable network responses remain rejected\n  ---\n  duration_ms: 2.246334\n  type: 'test'\n  ...\n# Subtest: valid empty 200, 204 and 205 bodies retain status and an accurate zero length\nok 111 - valid empty 200, 204 and 205 bodies retain status and an accurate zero length\n  ---\n  duration_ms: 2.469917\n  type: 'test'\n  ...\n# Subtest: actual illustrated Workshop bytes survive both install and missing-file repair\nok 112 - actual illustrated Workshop bytes survive both install and missing-file repair\n  ---\n  duration_ms: 55.771167\n  type: 'test'\n  ...\n# Subtest: native fetch gzip and brotli decoding produces cacheable owned payloads with preserved policy\nok 113 - native fetch gzip and brotli decoding produces cacheable owned payloads with preserved policy\n  ---\n  duration_ms: 14.35625\n  type: 'test'\n  ...\n# Subtest: all downloads finish before a new cache exists and the older build stays exact until activation\nok 114 - all downloads finish before a new cache exists and the older build stays exact until activation\n  ---\n  duration_ms: 2.729583\n  type: 'test'\n  ...\n# Subtest: installation overlaps at most four downloads and publishes in inventory order only after every body verifies\nok 115 - installation overlaps at most four downloads and publishes in inventory order only after every body verifies\n  ---\n  duration_ms: 2.538125\n  type: 'test'\n  ...\n# Subtest: a failed parallel download aborts active requests, stops the queue and preserves the previous cache\nok 116 - a failed parallel download aborts active requests, stops the queue and preserves the previous cache\n  ---\n  duration_ms: 1.037542\n  type: 'test'\n  ...\n# Subtest: simultaneous prepare requests share one install and can retry after a failed download\nok 117 - simultaneous prepare requests share one install and can retry after a failed download\n  ---\n  duration_ms: 1.389792\n  type: 'test'\n  ...\n# Subtest: native streaming downloads abort after another file fails verification\nok 118 - native streaming downloads abort after another file fails verification\n  ---\n  duration_ms: 4.5105\n  type: 'test'\n  ...\n# Subtest: asset and marker cache-write failures clean only the partial build and never claim clients\nok 119 - asset and marker cache-write failures clean only the partial build and never claim clients\n  ---\n  duration_ms: 1.86475\n  type: 'test'\n  ...\n# Subtest: repair cache-write failure still serves verified online bytes and keeps existing entries\nok 120 - repair cache-write failure still serves verified online bytes and keeps existing entries\n  ---\n  duration_ms: 0.87625\n  type: 'test'\n  ...\n# Subtest: published pack growth does not inherit the old twelve imported-pack slot limit\nok 121 - published pack growth does not inherit the old twelve imported-pack slot limit\n  ---\n  duration_ms: 0.194583\n  type: 'test'\n  ...\n# Subtest: optional pack preparation and verification explicitly distinguish core cache from already-installed device packs\nok 122 - optional pack preparation and verification explicitly distinguish core cache from already-installed device packs\n  ---\n  duration_ms: 0.654541\n  type: 'test'\n  ...\n# Subtest: optional Journey artwork never receives a core-offline readiness claim\nok 123 - optional Journey artwork never receives a core-offline readiness claim\n  ---\n  duration_ms: 0.487708\n  type: 'test'\n  ...\n# Subtest: a measured installing-worker download survives more than sixty seconds and separates downloaded, verified and saved work\nok 124 - a measured installing-worker download survives more than sixty seconds and separates downloaded, verified and saved work\n  ---\n  duration_ms: 24.578375\n  type: 'test'\n  ...\n# Subtest: an installation observation timeout is recoverable; reopening and two tabs rejoin the same download\nok 125 - an installation observation timeout is recoverable; reopening and two tabs rejoin the same download\n  ---\n  duration_ms: 14.481958\n  type: 'test'\n  ...\n# Subtest: closing an observer aborts only that caller; background installation completes and cached reopening does not fetch\nok 126 - closing an observer aborts only that caller; background installation completes and cached reopening does not fetch\n  ---\n  duration_ms: 7.680542\n  type: 'test'\n  ...\n# Subtest: separate report timeout and cancellation during cached verification preserve storage and do not start preparation\nok 127 - separate report timeout and cancellation during cached verification preserve storage and do not start preparation\n  ---\n  duration_ms: 14.904708\n  type: 'test'\n  ...\n# Subtest: a historical terminal-only worker remains compatible while a silent old install times out truthfully\nok 128 - a historical terminal-only worker remains compatible while a silent old install times out truthfully\n  ---\n  duration_ms: 7.073042\n  type: 'test'\n  ...\n# Subtest: versioned progress rejects mismatched build or scope before downloads and ignores a stale request completion\nok 129 - versioned progress rejects mismatched build or scope before downloads and ignores a stale request completion\n  ---\n  duration_ms: 7.824666\n  type: 'test'\n  ...\n# Subtest: a changed or redundant worker cannot publish success to an old observation\nok 130 - a changed or redundant worker cannot publish success to an old observation\n  ---\n  duration_ms: 20.582458\n  type: 'test'\n  ...\n# Subtest: streamed integrity, missing-file and quota failures remain real failures with no ready claim\nok 131 - streamed integrity, missing-file and quota failures remain real failures with no ready claim\n  ---\n  duration_ms: 2.788667\n  type: 'test'\n  ...\n# Subtest: versioned subscribers release on detach, completion, expiry and capacity while shared install keeps running\nok 132 - versioned subscribers release on detach, completion, expiry and capacity while shared install keeps running\n  ---\n  duration_ms: 8.274167\n  type: 'test'\n  ...\n# Subtest: aborting while registration is pending detaches promptly and never unregisters the eventual worker\nok 133 - aborting while registration is pending detaches promptly and never unregisters the eventual worker\n  ---\n  duration_ms: 0.570583\n  type: 'test'\n  ...\n# Subtest: prepare joins a pending cached inspection before repair and final verification uses the repaired bytes\nok 134 - prepare joins a pending cached inspection before repair and final verification uses the repaired bytes\n  ---\n  duration_ms: 7.459833\n  type: 'test'\n  ...\n# Subtest: fresh installed PWA serves all 18 real layouts in all five operations and their new native resources offline\nok 135 - fresh installed PWA serves all 18 real layouts in all five operations and their new native resources offline\n  ---\n  duration_ms: 130.857375\n  type: 'test'\n  ...\n# Subtest: interrupted coordinated-movement update preserves prior native resources and retry commits the exact expanded sortie bytes\nok 136 - interrupted coordinated-movement update preserves prior native resources and retry commits the exact expanded sortie bytes\n  ---\n  duration_ms: 28.905\n  type: 'test'\n  ...\n# Subtest: production checkpoint preserves the complete paused state {\"legacy\":true,\"seed\":7}\nok 137 - production checkpoint preserves the complete paused state {\"legacy\":true,\"seed\":7}\n  ---\n  duration_ms: 448.770542\n  type: 'test'\n  ...\n# Subtest: production checkpoint preserves the complete paused state {\"rulesVersion\":2,\"seed\":42}\nok 138 - production checkpoint preserves the complete paused state {\"rulesVersion\":2,\"seed\":42}\n  ---\n  duration_ms: 379.044834\n  type: 'test'\n  ...\n# Subtest: production checkpoint preserves the complete paused state {\"rulesVersion\":3,\"seed\":7,\"world\":\"field-crossing\"}\nok 139 - production checkpoint preserves the complete paused state {\"rulesVersion\":3,\"seed\":7,\"world\":\"field-crossing\"}\n  ---\n  duration_ms: 418.129875\n  type: 'test'\n  ...\n# Subtest: production checkpoint preserves the complete paused state {\"rulesVersion\":4,\"seed\":7,\"world\":\"freight-depot\",\"difficulty\":\"relaxed\"}\nok 140 - production checkpoint preserves the complete paused state {\"rulesVersion\":4,\"seed\":7,\"world\":\"freight-depot\",\"difficulty\":\"relaxed\"}\n  ---\n  duration_ms: 434.740792\n  type: 'test'\n  ...\n# Subtest: pending offers and reroll history restore without redrafting\nok 141 - pending offers and reroll history restore without redrafting\n  ---\n  duration_ms: 400.996792\n  type: 'test'\n  ...\n# Subtest: all V4 worlds retain late-run movement, terrain, rewards and inactive pool state\nok 142 - all V4 worlds retain late-run movement, terrain, rewards and inactive pool state\n  ---\n  duration_ms: 24511.454583\n  type: 'test'\n  ...\n# Subtest: a legal completed flight can round-trip only for durable result recovery\nok 143 - a legal completed flight can round-trip only for durable result recovery\n  ---\n  duration_ms: 11736.633375\n  type: 'test'\n  ...\n# Subtest: untrusted checkpoint rejection does not mutate the active run\nok 144 - untrusted checkpoint rejection does not mutate the active run\n  ---\n  duration_ms: 1918.236458\n  type: 'test'\n  ...\n# Subtest: writer refuses mismatched handling settings instead of silently rebinding the active craft\nok 145 - writer refuses mismatched handling settings instead of silently rebinding the active craft\n  ---\n  duration_ms: 36.382625\n  type: 'test'\n  ...\n# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults\nok 146 - review provenance and pilot inputs share the selected route without changing prior defaults\n  ---\n  duration_ms: 1.079333\n  type: 'test'\n  ...\n# Subtest: native entry forwards an explicit review route through both wrappers and records that same route\nok 147 - native entry forwards an explicit review route through both wrappers and records that same route\n  ---\n  duration_ms: 26.148792\n  type: 'test'\n  ...\n# Subtest: native variant mission picker queries progress only for supported installed projects\nok 148 - native variant mission picker queries progress only for supported installed projects\n  ---\n  duration_ms: 37.328875\n  type: 'test'\n  ...\n# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds\nok 149 - completed-frame trials include explicitly requested native Survivor and Riy review builds\n  ---\n  duration_ms: 13.721125\n  type: 'test'\n  ...\n# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations\nok 150 - native catalogue exposes all eighteen compiled layouts for all five operations\n  ---\n  duration_ms: 209.750458\n  type: 'test'\n  ...\n# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run\nok 151 - one fixed clock scales every simulation system and keeps paused time out of the run\n  ---\n  duration_ms: 0.392708\n  type: 'test'\n  ...\n# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause\nok 152 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause\n  ---\n  duration_ms: 0.061084\n  type: 'test'\n  ...\n# Subtest: modal actions wait for release while held steering stays responsive\nok 153 - modal actions wait for release while held steering stays responsive\n  ---\n  duration_ms: 0.108\n  type: 'test'\n  ...\n# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press\nok 154 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press\n  ---\n  duration_ms: 0.244\n  type: 'test'\n  ...\n# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt\nok 155 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt\n  ---\n  duration_ms: 1.512791\n  type: 'test'\n  ...\n# Subtest: the shared audio adapter emits bounded semantic cues once per tick\nok 156 - the shared audio adapter emits bounded semantic cues once per tick\n  ---\n  duration_ms: 0.536333\n  type: 'test'\n  ...\n# Subtest: native Overflight interface has matching English and Ukrainian coverage\nok 157 - native Overflight interface has matching English and Ukrainian coverage\n  ---\n  duration_ms: 0.110833\n  type: 'test'\n  ...\n# Subtest: the 750 ms resume ramp integrates exactly at different display cadences\nok 158 - the 750 ms resume ramp integrates exactly at different display cadences\n  ---\n  duration_ms: 0.127375\n  type: 'test'\n  ...\n# Subtest: ten retries keep one renderer and context restoration requires explicit resume\nok 159 - ten retries keep one renderer and context restoration requires explicit resume\n  ---\n  duration_ms: 6.54475\n  type: 'test'\n  ...\n# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer\nok 160 - appearance replacement retires the old atlas first and teardown retires a pending renderer\n  ---\n  duration_ms: 1.045833\n  type: 'test'\n  ...\n# Subtest: native music context is accepted by the shared soundtrack schema\nok 161 - native music context is accepted by the shared soundtrack schema\n  ---\n  duration_ms: 0.447208\n  type: 'test'\n  ...\n# Subtest: Studio project messages require the exact same-origin embedding parent\nok 162 - Studio project messages require the exact same-origin embedding parent\n  ---\n  duration_ms: 0.069583\n  type: 'test'\n  ...\n# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed\nok 163 - an accepted evolution has one audio cue even when no simulation tick elapsed\n  ---\n  duration_ms: 0.190625\n  type: 'test'\n  ...\n# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner\nok 164 - a failed renderer is replaced on Retry while healthy retries retain their owner\n  ---\n  duration_ms: 0.09925\n  type: 'test'\n  ...\n# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps\nok 165 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps\n  ---\n  duration_ms: 0.207\n  type: 'test'\n  ...\n# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time\nok 166 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time\n  ---\n  duration_ms: 0.104208\n  type: 'test'\n  ...\n# Subtest: ordinary manual play never invokes review input or automatic upgrade selection\nok 167 - ordinary manual play never invokes review input or automatic upgrade selection\n  ---\n  duration_ms: 0.030416\n  type: 'test'\n  ...\n# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs\nok 168 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs\n  ---\n  duration_ms: 0.3935\n  type: 'test'\n  ...\n# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks\nok 169 - oversize and unsupported review capture fail without retaining chunks or active tracks\n  ---\n  duration_ms: 1.774375\n  type: 'test'\n  ...\n# Subtest: native Marathon continuation retains its run when next-sortie settings change\nok 170 - native Marathon continuation retains its run when next-sortie settings change\n  ---\n  duration_ms: 7.007333\n  type: 'test'\n  ...\n# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build\nok 171 - review stop checkpoints are bounded and require an explicit diagnostic build\n  ---\n  duration_ms: 0.084875\n  type: 'test'\n  ...\n# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts\nok 172 - review stop immediately releases all actions, survives replacements, and keeps earned drafts\n  ---\n  duration_ms: 0.087334\n  type: 'test'\n  ...\n# Subtest: native Settings initialization preserves operation cards and navigation on Home\nok 173 - native Settings initialization preserves operation cards and navigation on Home\n  ---\n  duration_ms: 15.856125\n  type: 'test'\n  ...\n# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation\nok 174 - a selected demonstration remains manual until opt-in, and takeover stops all automation\n  ---\n  duration_ms: 0.118417\n  type: 'test'\n  ...\n# Subtest: opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state\nok 175 - opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state\n  ---\n  duration_ms: 75.840584\n  type: 'test'\n  ...\n# Subtest: finished review download captures terminal state instead of an older inspector snapshot\nok 176 - finished review download captures terminal state instead of an older inspector snapshot\n  ---\n  duration_ms: 6.282042\n  type: 'test'\n  ...\n# Subtest: record retention preserves the current result within the existing aggregate byte budget\nok 177 - record retention preserves the current result within the existing aggregate byte budget\n  ---\n  duration_ms: 74.32125\n  type: 'test'\n  ...\n# Subtest: Survivor records separate fastest victories, most cleared, failure details and chosen branches\nok 178 - Survivor records separate fastest victories, most cleared, failure details and chosen branches\n  ---\n  duration_ms: 0.721791\n  type: 'test'\n  ...\n# Subtest: mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not\nok 179 - mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not\n  ---\n  duration_ms: 0.800458\n  type: 'test'\n  ...\n# Subtest: storage failures retain session achievements and recover without dropping a stronger record\nok 180 - storage failures retain session achievements and recover without dropping a stronger record\n  ---\n  duration_ms: 0.563\n  type: 'test'\n  ...\n# Subtest: record captures result before asynchronous profile access or retry changes the run\nok 181 - record captures result before asynchronous profile access or retry changes the run\n  ---\n  duration_ms: 0.271167\n  type: 'test'\n  ...\n# Subtest: invalid and review results cannot overwrite records; disposal closes access\nok 182 - invalid and review results cannot overwrite records; disposal closes access\n  ---\n  duration_ms: 0.410292\n  type: 'test'\n  ...\n# Subtest: actual native preparation adopts the admitted paused state and never launches it\nok 183 - actual native preparation adopts the admitted paused state and never launches it\n  ---\n  duration_ms: 10.203708\n  type: 'test'\n  ...\n# Subtest: actual native preparation rejects changed appearance before retiring the current renderer or adopting settings\nok 184 - actual native preparation rejects changed appearance before retiring the current renderer or adopting settings\n  ---\n  duration_ms: 11.025625\n  type: 'test'\n  ...\n# Subtest: native save entry is scoped to player Single Drone and requires retained appearance before adoption\nok 185 - native save entry is scoped to player Single Drone and requires retained appearance before adoption\n  ---\n  duration_ms: 1.464375\n  type: 'test'\n  ...\n# Subtest: native result ownership reuses one durable journal promise across label refreshes\nok 186 - native result ownership reuses one durable journal promise across label refreshes\n  ---\n  duration_ms: 0.26675\n  type: 'test'\n  ...\n# Subtest: renderer preparation failure keeps the old run and setup while exposing existing graphics recovery\nok 187 - renderer preparation failure keeps the old run and setup while exposing existing graphics recovery\n  ---\n  duration_ms: 9.993042\n  type: 'test'\n  ...\n# Subtest: admission hashes real fetched manifest and exact runtime member bytes, bound to the visible build\nok 188 - admission hashes real fetched manifest and exact runtime member bytes, bound to the visible build\n  ---\n  duration_ms: 16.532375\n  type: 'test'\n  ...\n# Subtest: missing development identity and unavailable storage package remain honestly unavailable\nok 189 - missing development identity and unavailable storage package remain honestly unavailable\n  ---\n  duration_ms: 2.697583\n  type: 'test'\n  ...\n# Subtest: package mismatch, mixed host bytes, invalid manifest and oversized response all reject\nok 190 - package mismatch, mixed host bytes, invalid manifest and oversized response all reject\n  ---\n  duration_ms: 25.861916\n  type: 'test'\n  ...\n# Subtest: caller cancellation including a final digest cannot return an admitted identity\nok 191 - caller cancellation including a final digest cannot return an admitted identity\n  ---\n  duration_ms: 4.262917\n  type: 'test'\n  ...\n# Subtest: the declared verified closure includes every static dependency of state and durable result owners\nok 192 - the declared verified closure includes every static dependency of state and durable result owners\n  ---\n  duration_ms: 55.989458\n  type: 'test'\n  ...\n# Subtest: separate processes restore production bytes and settle each interrupted result exactly once\nok 193 - separate processes restore production bytes and settle each interrupted result exactly once\n  ---\n  duration_ms: 5183.434584\n  type: 'test'\n  ...\n# Subtest: saved flight uses explicit replace/restore confirmation, Cancel keeps flight and native Close returns focus\nok 194 - saved flight uses explicit replace/restore confirmation, Cancel keeps flight and native Close returns focus\n  ---\n  duration_ms: 3.198333\n  type: 'test'\n  ...\n# Subtest: pending result recovery disables replacement and refreshes Ukrainian labels without replaying actions\nok 195 - pending result recovery disables replacement and refreshes Ukrainian labels without replaying actions\n  ---\n  duration_ms: 0.651833\n  type: 'test'\n  ...\n# Subtest: unavailable package stays recoverable with Check again and never exposes active save actions\nok 196 - unavailable package stays recoverable with Check again and never exposes active save actions\n  ---\n  duration_ms: 0.571708\n  type: 'test'\n  ...\n# Subtest: busy writes cannot be double submitted or dismissed as cancelled before their result is known\nok 197 - busy writes cannot be double submitted or dismissed as cancelled before their result is known\n  ---\n  duration_ms: 0.582458\n  type: 'test'\n  ...\n# Subtest: a failed initial terminal journal still exposes result retry without restoring an older position\nok 198 - a failed initial terminal journal still exposes result retry without restoring an older position\n  ---\n  duration_ms: 0.370625\n  type: 'test'\n  ...\n# Subtest: the Home action participates in controller navigation and returns focus without resuming the paused flight\nok 199 - the Home action participates in controller navigation and returns focus without resuming the paused flight\n  ---\n  duration_ms: 4.0445\n  type: 'test'\n  ...\n# Subtest: explicit replacement, exact-package admission and reopen retain the previous paused state\nok 200 - explicit replacement, exact-package admission and reopen retain the previous paused state\n  ---\n  duration_ms: 845.977083\n  type: 'test'\n  ...\n# Subtest: durable completion cannot be replayed or change its previous comparison after reopen\nok 201 - durable completion cannot be replayed or change its previous comparison after reopen\n  ---\n  duration_ms: 463.587\n  type: 'test'\n  ...\n# Subtest: interruption after journal retains durable ownership and retries after reopen\nok 202 - interruption after journal retains durable ownership and retries after reopen\n  ---\n  duration_ms: 862.082667\n  type: 'test'\n  ...\n# Subtest: interruption after records retains durable ownership and retries after reopen\nok 203 - interruption after records retains durable ownership and retries after reopen\n  ---\n  duration_ms: 877.681834\n  type: 'test'\n  ...\n# Subtest: interruption after mastery retains durable ownership and retries after reopen\nok 204 - interruption after mastery retains durable ownership and retries after reopen\n  ---\n  duration_ms: 841.593375\n  type: 'test'\n  ...\n# Subtest: storage rejection and lost writer never mutate the active flight or replace the old slot\nok 205 - storage rejection and lost writer never mutate the active flight or replace the old slot\n  ---\n  duration_ms: 218.024791\n  type: 'test'\n  ...\n# Subtest: a full records profile can finish, recover after its receipt commits, and save the next flight\nok 206 - a full records profile can finish, recover after its receipt commits, and save the next flight\n  ---\n  duration_ms: 1043.282083\n  type: 'test'\n  ...\n# Subtest: receipt and original schema commit atomically, deduplicate after reopen, and preserve old readers\nok 207 - receipt and original schema commit atomically, deduplicate after reopen, and preserve old readers\n  ---\n  duration_ms: 6.751959\n  type: 'test'\n  ...\n# Subtest: simultaneous connections serialize duplicate ownership without double update\nok 208 - simultaneous connections serialize duplicate ownership without double update\n  ---\n  duration_ms: 1.11\n  type: 'test'\n  ...\n# Subtest: abort after queued put 1 rolls back both receipt and profile\nok 209 - abort after queued put 1 rolls back both receipt and profile\n  ---\n  duration_ms: 1.218458\n  type: 'test'\n  ...\n# Subtest: abort after queued put 2 rolls back both receipt and profile\nok 210 - abort after queued put 2 rolls back both receipt and profile\n  ---\n  duration_ms: 1.168584\n  type: 'test'\n  ...\n# Subtest: cancellation, validation failure and a lost writer preserve both prior values\nok 211 - cancellation, validation failure and a lost writer preserve both prior values\n  ---\n  duration_ms: 1.259792\n  type: 'test'\n  ...\n# Subtest: main-pages removes only a registered redundant original and retains offline fallback ownership\nok 212 - main-pages removes only a registered redundant original and retains offline fallback ownership\n  ---\n  duration_ms: 3.644708\n  type: 'test'\n  ...\n# Subtest: complete releases keep authored originals and original download groups untouched\nok 213 - complete releases keep authored originals and original download groups untouched\n  ---\n  duration_ms: 0.200916\n  type: 'test'\n  ...\n# Subtest: other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals\nok 214 - other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals\n  ---\n  duration_ms: 1.718\n  type: 'test'\n  ...\n# Subtest: all native owners must retain an exact fallback before a shared original may be omitted\nok 215 - all native owners must retain an exact fallback before a shared original may be omitted\n  ---\n  duration_ms: 0.280375\n  type: 'test'\n  ...\n# Subtest: emitted source catalog parsing admits static metadata and never evaluates executable expressions\nok 216 - emitted source catalog parsing admits static metadata and never evaluates executable expressions\n  ---\n  duration_ms: 0.748417\n  type: 'test'\n  ...\n# Subtest: retained authoring registers cannot lose their original without the shared native reader\nok 217 - retained authoring registers cannot lose their original without the shared native reader\n  ---\n  duration_ms: 0.421542\n  type: 'test'\n  ...\n# Subtest: an image pin cannot redirect the original identity or use the omitted original as fallback\nok 218 - an image pin cannot redirect the original identity or use the omitted original as fallback\n  ---\n  duration_ms: 0.293625\n  type: 'test'\n  ...\n# Subtest: omitted-original callback reports only actual admitted removals and is absent for complete releases\nok 219 - omitted-original callback reports only actual admitted removals and is absent for complete releases\n  ---\n  duration_ms: 0.30075\n  type: 'test'\n  ...\n# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount\nok 220 - main home keeps the static encounter-host dependency needed before any mode can mount\n  ---\n  duration_ms: 87.318791\n  type: 'test'\n  ...\n# Subtest: native Overflight source stays in player core while its linked Studio remains optional\nok 221 - native Overflight source stays in player core while its linked Studio remains optional\n  ---\n  duration_ms: 85.891667\n  type: 'test'\n  ...\n# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core\nok 222 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core\n  ---\n  duration_ms: 87.466625\n  type: 'test'\n  ...\n# Subtest: actual native menu imports and styles remain in each mode offline closure\nok 223 - actual native menu imports and styles remain in each mode offline closure\n  ---\n  duration_ms: 157.143333\n  type: 'test'\n  ...\n# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount\nok 224 - main home keeps the static encounter-host dependency needed before any mode can mount\n  ---\n  duration_ms: 29.13175\n  type: 'test'\n  ...\n# Subtest: native Overflight source stays in player core while its linked Studio remains optional\nok 225 - native Overflight source stays in player core while its linked Studio remains optional\n  ---\n  duration_ms: 61.8675\n  type: 'test'\n  ...\n# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core\nok 226 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core\n  ---\n  duration_ms: 84.203291\n  type: 'test'\n  ...\n# Subtest: Solo startup graph retains boot styles and production assets while mode hosts stay separate\nok 227 - Solo startup graph retains boot styles and production assets while mode hosts stay separate\n  ---\n  duration_ms: 0.889417\n  type: 'test'\n  ...\n# Subtest: catalogue references never pull selected chapter or soundtrack bytes back into core\nok 228 - catalogue references never pull selected chapter or soundtrack bytes back into core\n  ---\n  duration_ms: 0.257958\n  type: 'test'\n  ...\n# Subtest: public community entries own their shared loader offline without opting into creator tools or company artwork\nok 229 - public community entries own their shared loader offline without opting into creator tools or company artwork\n  ---\n  duration_ms: 0.535709\n  type: 'test'\n  ...\n# Subtest: decorative menu rasters and the icon source stay optional without dropping runtime or install icons\nok 230 - decorative menu rasters and the icon source stay optional without dropping runtime or install icons\n  ---\n  duration_ms: 0.455542\n  type: 'test'\n  ...\n# Subtest: effect bank and metadata stay core while WAV bodies remain an optional hosted pack\nok 231 - effect bank and metadata stay core while WAV bodies remain an optional hosted pack\n  ---\n  duration_ms: 0.111083\n  type: 'test'\n  ...\n# Subtest: radio redistribution metadata stays core while source recordings remain selectable\nok 232 - radio redistribution metadata stays core while source recordings remain selectable\n  ---\n  duration_ms: 0.098625\n  type: 'test'\n  ...\n# Subtest: Riy operation keeps its dynamic runtime and authored package graph in offline core\nok 233 - Riy operation keeps its dynamic runtime and authored package graph in offline core\n  ---\n  duration_ms: 47.949542\n  type: 'test'\n  ...\n# Subtest: six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure\nok 234 - six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure\n  ---\n  duration_ms: 43.754208\n  type: 'test'\n  ...\n# Subtest: startup guards follow the static entry graph without requiring tools, media or another mode\nok 235 - startup guards follow the static entry graph without requiring tools, media or another mode\n  ---\n  duration_ms: 4.41975\n  type: 'test'\n  ...\n# Subtest: nested mode guards resolve local imports and terminate cycles\nok 236 - nested mode guards resolve local imports and terminate cycles\n  ---\n  duration_ms: 0.396708\n  type: 'test'\n  ...\n1..236\n# tests 242\n# suites 0\n# pass 242\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 102483.222875\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "after": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa",
+      "files": 10011,
+      "bytes": 404639350
+    },
+    "buildInputs": {
+      "sha256": "b2a70eb2815b4b64acf0bf9d341ddab7044fa61ebed7f1b8a328d68f5d4e7634",
+      "files": 9408,
+      "bytes": 348406839
+    },
+    "tests": {
+      "game/test/offline.test.mjs": {
+        "sha256": "b3c74e930e8def13bb65d68b7cebb5959b1d963ffc112c89640994c25b55f457",
+        "bytes": 98575
+      },
+      "game/test/overflight-checkpoint.test.mjs": {
+        "sha256": "c7435ac9d28ab5226e599f3493a25347db4ec503473f4b9f80e8dedf144c22e5",
+        "bytes": 7279
+      },
+      "game/test/overflight-host.test.mjs": {
+        "sha256": "918ab1b71f0f9074f96f5e4ba6bb223b7c61f96e3c39e86e7949d5cc58d5e110",
+        "bytes": 46264
+      },
+      "game/test/overflight-records.test.mjs": {
+        "sha256": "a54e40635d12c439d03ee02a954c7309c360fc9670758c9fa2d28a648d890fcc",
+        "bytes": 6458
+      },
+      "game/test/overflight-suspend-host.test.mjs": {
+        "sha256": "8d828e65bd09521421fe77aefbc742ac6c89be4f9c9a6112f3bb5662d57a2335",
+        "bytes": 9536
+      },
+      "game/test/overflight-suspend-package.test.mjs": {
+        "sha256": "775f9a69681f6e3ad8a6b456f55abf6e6460bca243524f9977385eb65b332901",
+        "bytes": 6264
+      },
+      "game/test/overflight-suspend-process.test.mjs": {
+        "sha256": "563f3053956a0b20945ef6fa5f917706f4386cbcb141a142f38fdee44cd41a82",
+        "bytes": 2273
+      },
+      "game/test/overflight-suspend-view.test.mjs": {
+        "sha256": "ee7d4fd1e6133ae963290f8f531051d1acfcf3e6e5dd6b63a91cb0b483f0bbe4",
+        "bytes": 7649
+      },
+      "game/test/overflight-suspend.test.mjs": {
+        "sha256": "074dfc8bfbb0f2c1dc3dfaf5b18648d85ec60a6fc552d3e98bb8daffe7fe1397",
+        "bytes": 11445
+      },
+      "game/test/profile-storage-receipts.test.mjs": {
+        "sha256": "f7264c2563562598182f6677d98fb6bebe359059ee72f327e30f6040db8cf571",
+        "bytes": 6473
+      },
+      "scripts/test-offline-startup.mjs": {
+        "sha256": "685c09a713c5a293cff33421811df914ea0e78fbdc8b0c2e9711aed2dfe8fa52",
+        "bytes": 2688
+      },
+      "game/test/demo-survival-fresh.test.mjs": {
+        "sha256": "92d437660071c3f97a16c75257f548f76d46816bd9fa29d377ce431e4f654544",
+        "bytes": 12511
+      },
+      "game/test/demo-survival.test.mjs": {
+        "sha256": "16d8aae7b72753b97479be5cf75a134ba7ec8ab7015b40fe4426c399e7d4fdf9",
+        "bytes": 15195
+      },
+      "game/test/demo-native-host.test.mjs": {
+        "sha256": "b4d083c54b04faf131c291f21be0326ec67c2ec947bf47e84f05acb31dccf0f4",
+        "bytes": 15942
+      },
+      "game/test/demo-back-host.test.mjs": {
+        "sha256": "5e52d3a4f68aa9d2fcda320f94ad44d9ee76b47ab670d875855d9cfdd8a1200c",
+        "bytes": 5711
+      },
+      "game/test/demo-shared.test.mjs": {
+        "sha256": "d0e5b3053f85007209a2269d69fa8bc29a612f3e7bce15f8618a71bd5cbb9422",
+        "bytes": 11908
+      },
+      "game/test/offline-art-fallback.test.mjs": {
+        "sha256": "adc607405e45a1c732f4377be232f515413e028652fb7009706cabb395654d9c",
+        "bytes": 10386
+      },
+      "game/test/offline-navigation-recovery.test.mjs": {
+        "sha256": "f5f6c83a29bbc19334e7aafd9c2d62574b0b49f03170c6afcfd8e2511c3d2b75",
+        "bytes": 6572
+      },
+      "scripts/test-offline-core-closure.mjs": {
+        "sha256": "6d1352c70dccd4d0fe4cbe39ec9d6c396b400f8754c858202727b02a118cf1ba",
+        "bytes": 28440
+      },
+      "scripts/test-main-pages-source-originals.mjs": {
+        "sha256": "b8838ce4ec104c542a31b388c203435c31cdc5b038cf81a87b97b6132da7c494",
+        "bytes": 8463
+      }
+    },
+    "testHelpers": {
+      "game/test/helpers/actor-appearance-transport.mjs": {
+        "sha256": "596cd9d7298ddf3dc9bb97832ebfddf0983a35134086834139974ac88161d89a",
+        "bytes": 3096
+      },
+      "game/test/helpers/apex-field-route.mjs": {
+        "sha256": "bdb555f0960398e5f6b2054ce4e45fadcdeb8f0e59c63f884b7a55b1e9259ce0",
+        "bytes": 6198
+      },
+      "game/test/helpers/apex-goal.mjs": {
+        "sha256": "4b3840358a04b7ca9a93d528e7f75cb4baa40013a0e437d62a7397c80da53ae3",
+        "bytes": 3487
+      },
+      "game/test/helpers/apex-spatial-route.mjs": {
+        "sha256": "4afe94fda83418a8ded5c91a508d66e684eefc701a1d7e8144511ba3171f08f5",
+        "bytes": 5412
+      },
+      "game/test/helpers/audio-view-writes.mjs": {
+        "sha256": "d40b8e3c08141b4e936dac34455ff1ea75dcc4544accbf2d9bc4f2748c23244f",
+        "bytes": 1747
+      },
+      "game/test/helpers/backup-preflight.mjs": {
+        "sha256": "9e4f093f1fa8775f8388b2dc216d1b19bba24264fbde7a891e95e0103a8b0dd9",
+        "bytes": 632
+      },
+      "game/test/helpers/backup-review-readiness.mjs": {
+        "sha256": "4e6458a70f88c2278688145cc3e3f33c5197da7fa1b66692b2c00b8632dd75df",
+        "bytes": 2364
+      },
+      "game/test/helpers/backup-set-fixture.mjs": {
+        "sha256": "43983c59cfc1a70c105aa0ee375b0058a137ab7d82acd279941f6bc0bea18a4d",
+        "bytes": 5662
+      },
+      "game/test/helpers/candidate-team-picture-transport.mjs": {
+        "sha256": "6a6a42b83d113a6e5db96335b7f5bec040d7ee331b9c781b23fa53d7c399d754",
+        "bytes": 1315
+      },
+      "game/test/helpers/chapter-install-wait.mjs": {
+        "sha256": "764f39fc341ed6197ea5d0f30126cb2ac1365345a27f1e975178374f7f16f968",
+        "bytes": 1563
+      },
+      "game/test/helpers/classic-snake-v4-playthrough.mjs": {
+        "sha256": "d0752ccb884e52e36e0d5f139f98ee9dcaa38c9d11f41a8feef83257f6a76f0f",
+        "bytes": 101
+      },
+      "game/test/helpers/combat-fixture.mjs": {
+        "sha256": "a2c22fd9fae8a416e2d4e610ed23c119d58686f41358b6997b3117a02480948c",
+        "bytes": 1962
+      },
+      "game/test/helpers/combat-route-evidence.mjs": {
+        "sha256": "9cbacd318bbce09fc64d10b4355360a26ddd864c4e56ba5f50692c888dd08066",
+        "bytes": 1834
+      },
+      "game/test/helpers/committed-caches.mjs": {
+        "sha256": "21e7ad378283825915bd8c3d3d5232a44bb017d2cfacb1813019d69bfed2c763",
+        "bytes": 1027
+      },
+      "game/test/helpers/coop-host.mjs": {
+        "sha256": "2b59cce7aeea73e487754754ad95e066c5df596da2ab08b60120732d95cbcbdf",
+        "bytes": 14868
+      },
+      "game/test/helpers/coop-import-win.mjs": {
+        "sha256": "5f5656dd59a57b7e250d9b90f83a9c4f4e21959e98bef95c288c7b9f7166455f",
+        "bytes": 5425
+      },
+      "game/test/helpers/coop-presentation-fixture.mjs": {
+        "sha256": "480934679b354208d3fb9f7a893a6e90f4ac6f4a4e0fbad47edb3f5ba25bac51",
+        "bytes": 4630
+      },
+      "game/test/helpers/coop-route-search.mjs": {
+        "sha256": "6455903fc25131a355ca56d3d3dacc20f2d6549621cd9a829f74828b7450070f",
+        "bytes": 9197
+      },
+      "game/test/helpers/coop-win.mjs": {
+        "sha256": "d62a398996d395584df460bca5e088b66a982e70ee80e82ff47416e596f322b8",
+        "bytes": 6386
+      },
+      "game/test/helpers/couch-dom.mjs": {
+        "sha256": "63e5281b573f58da58c87708f0477bc92b51dfae701dafd6e187b6a5a99a34c9",
+        "bytes": 20230
+      },
+      "game/test/helpers/couch-host.mjs": {
+        "sha256": "7bdf0d7724b22ac891b7a63e5ea695624a574c97d0b3298a977e3fc0b3d8db96",
+        "bytes": 10258
+      },
+      "game/test/helpers/crosswind-goal.mjs": {
+        "sha256": "7924a4d5f3c6b96c9a9e7b6c0c82b0721c71c6402c60a42c32ead3af1e3f828f",
+        "bytes": 3493
+      },
+      "game/test/helpers/current-team-route.mjs": {
+        "sha256": "7f0fb633d61a7cd68ced61ef10e122655dbc2cb67eb0d1121eb3522646cc80f6",
+        "bytes": 3433
+      },
+      "game/test/helpers/demo-host-fixture.mjs": {
+        "sha256": "fae1e6fd7d355f527379697be17cd9de57ef9267523fd899d8a5a07ca1e636bd",
+        "bytes": 5157
+      },
+      "game/test/helpers/demo-loading-clock.mjs": {
+        "sha256": "32a09efefe9c3261b5fbfb5f872bcdd7e11a389c315b46dc53d0f26a1202121e",
+        "bytes": 1005
+      },
+      "game/test/helpers/earned-picture-fixture.mjs": {
+        "sha256": "4c8eeecd9b3209414ff2e082a06f421517a1e3332fc5d403f095ae12e1b1291f",
+        "bytes": 2528
+      },
+      "game/test/helpers/edition-provider-fixture.mjs": {
+        "sha256": "d28e3c7185a7b0287f517888e5d80fffb54696d1540e3d29d59a2b532d947482",
+        "bytes": 3399
+      },
+      "game/test/helpers/external-current-host-route.mjs": {
+        "sha256": "1007a0be58c5372e0c5660b88fe0f7788c8d1e2a36fcbf4aabd843d46e8a2cbe",
+        "bytes": 6778
+      },
+      "game/test/helpers/fpv-advanced-qualification.mjs": {
+        "sha256": "118adfa7f7bc27ff455a636ee0b960d98b781afa332204c5c899e57463f242b5",
+        "bytes": 13152
+      },
+      "game/test/helpers/fpv-advanced-regional-qualification.mjs": {
+        "sha256": "34e844c1cbf25221dbf3b5135466497baa7693093fddf771ce49a8b6f1cfde68",
+        "bytes": 9404
+      },
+      "game/test/helpers/fpv-aircraft-flight-qualification.mjs": {
+        "sha256": "0f6a19e022dfcc72a1597218421a93ab300010cd983da5d740ff48451d718b43",
+        "bytes": 6452
+      },
+      "game/test/helpers/fpv-aircraft-qualification.mjs": {
+        "sha256": "97391d3264c4e8b8402964b31058ecb4c2dc80b20bd7c65a8c832c0581d7136c",
+        "bytes": 9107
+      },
+      "game/test/helpers/fpv-aircraft-sustained-qualification.mjs": {
+        "sha256": "2b0d3290411c25dde735757e2a2597efa13c36c961dd48839c1763c93966c6e6",
+        "bytes": 16672
+      },
+      "game/test/helpers/fpv-portability.mjs": {
+        "sha256": "5d240e8cd065ef1c01f0bada60e984d7a9335fb0d94ec220bc214f34a2ebdfe0",
+        "bytes": 6422
+      },
+      "game/test/helpers/fpv-regional-real-geometry.mjs": {
+        "sha256": "85e52e017b02d2dbf4773448691eac3415eee46e93a9876bb42a0e35555c4414",
+        "bytes": 2515
+      },
+      "game/test/helpers/fracture-goal.mjs": {
+        "sha256": "ffc8b94f193e89c27d30aeabc67dd0c92f3230d69f7567bd707b0f983dfa74aa",
+        "bytes": 2734
+      },
+      "game/test/helpers/global-tools-fixture.mjs": {
+        "sha256": "dccfaac00e3ef98d3f7329a05fc45f0076ee9f162c2c9808250d65c4230af8e1",
+        "bytes": 862
+      },
+      "game/test/helpers/host-action.mjs": {
+        "sha256": "04594d07c2b574a23cf6a09517cadf0333dfdcf3cc32d953eaf9fa86c69c7b7e",
+        "bytes": 1343
+      },
+      "game/test/helpers/immutable-presentation-fixture.mjs": {
+        "sha256": "3f161f0ccb6b1b9a9d50fed8a1a9f336081388ed64ef738107f92258e8669dd1",
+        "bytes": 5985
+      },
+      "game/test/helpers/jpeg-image.mjs": {
+        "sha256": "a7576a36f0906468433d54bc905c9c67d3dd6e7a35ba9bfd596a14e487be80e3",
+        "bytes": 669
+      },
+      "game/test/helpers/keyboard-route.mjs": {
+        "sha256": "1e445422192044e9cbe114c09cf026a97cbd711b8225a0cc75c27f27fea114fa",
+        "bytes": 3017
+      },
+      "game/test/helpers/library-selection.mjs": {
+        "sha256": "dfeff564ef1061a58df395c7e72c85296f1ba85ec2496dbd1fa7af89b51798b1",
+        "bytes": 1812
+      },
+      "game/test/helpers/livewire-goal.mjs": {
+        "sha256": "d5ed378f9d3e8d8e641aae5926a281515a15d5c5d0edf21461539f13d59e1af8",
+        "bytes": 2404
+      },
+      "game/test/helpers/managed-idb.mjs": {
+        "sha256": "387d5f8bc31ffec0de6584b7919d38cc1253a32e19bdee0b3ba73bea20f078a5",
+        "bytes": 7733
+      },
+      "game/test/helpers/media-fixtures.mjs": {
+        "sha256": "1189b0885583cd075c63b46d48b493a61c8bf72ebe9f235a003691c3fc5931a2",
+        "bytes": 3271
+      },
+      "game/test/helpers/middle-pressure-evidence.mjs": {
+        "sha256": "3cc08c89a47c85b7387637859e4127872d48c88a89a2bdf0e4d8ba32379bd472",
+        "bytes": 4037
+      },
+      "game/test/helpers/mode-return-host-cases.mjs": {
+        "sha256": "6ddb91fd191dbea7a6879eebab16ff2636f9c550027162ea9043839861ab90c7",
+        "bytes": 25727
+      },
+      "game/test/helpers/mount-html.mjs": {
+        "sha256": "4bb218c075fe54c1110365bbd497355f07f1abb0dd721557cc0b7b358e792e68",
+        "bytes": 1789
+      },
+      "game/test/helpers/multiplayer-expansion-checkpoint.mjs": {
+        "sha256": "f8db8c221d0c57c00a01028603d7bbea0a3b0532df5bae8c64ee144dd8c857d9",
+        "bytes": 1573
+      },
+      "game/test/helpers/multiplayer-finale-qualification.mjs": {
+        "sha256": "869d6e6ca15c230e98a3454b465171346d358d1d8c990147692c1687082f3fc6",
+        "bytes": 6044
+      },
+      "game/test/helpers/multiplayer-studio-fixture.mjs": {
+        "sha256": "1f2394337dcebbf42db61ae109601d4af69198be4cd0cb7ff1a5484d49cfade3",
+        "bytes": 4264
+      },
+      "game/test/helpers/neon-goal.mjs": {
+        "sha256": "dd342696add24a0191099e86c33da9f940227f2ca4e21a1f3e0060162703d6e4",
+        "bytes": 3471
+      },
+      "game/test/helpers/official-caches.mjs": {
+        "sha256": "cd1a865c625a0bf222ed091f3198e9e8edb5a518e994192dc7ef34304a08790e",
+        "bytes": 833
+      },
+      "game/test/helpers/opening-boundary-observations.mjs": {
+        "sha256": "bfb6af5c1dbbe43e0602425adca5859af2ebc469231b8799afe70a7d677240c6",
+        "bytes": 2593
+      },
+      "game/test/helpers/opening-route-observations.mjs": {
+        "sha256": "738ea26a11cd53f099c5d2a5990020631f176f9356530930e1f563eda4e766d0",
+        "bytes": 2567
+      },
+      "game/test/helpers/pcm-wave.mjs": {
+        "sha256": "3715c9d4d7b496149b02bb4b8dd66e885caca1b2568fe703e1686c3e8dfbe842",
+        "bytes": 1379
+      },
+      "game/test/helpers/phase-goal.mjs": {
+        "sha256": "96df7272191a8fecc185517e0a7d07f532f58602a6cc89383482b6b84386adcb",
+        "bytes": 2806
+      },
+      "game/test/helpers/png-image.mjs": {
+        "sha256": "bdd88771548acce9266a085c29e5ea2351bf765ce12a39dcc0e7d09c209e9c24",
+        "bytes": 1471
+      },
+      "game/test/helpers/profile-channel-idb.mjs": {
+        "sha256": "7be33c6deaea2d85506f4108997269c5cebed72ad80c179b1e65528313c9d3c8",
+        "bytes": 3511
+      },
+      "game/test/helpers/published-replay-loader.mjs": {
+        "sha256": "31d5dadd980ccb518063ee9d160fe9990c9a68bc547490c28ac61f3f69723949",
+        "bytes": 628
+      },
+      "game/test/helpers/published-solo-loader.mjs": {
+        "sha256": "8ba636006ae81ae1754fbaba47bfb5e1518803bc3f8f53bc4da398dbf9c6d5b2",
+        "bytes": 1780
+      },
+      "game/test/helpers/raster-fixtures.mjs": {
+        "sha256": "10af8d805084718fd8d1fa826d8aaab1ab83d831483edb5676a62a868fd0ea45",
+        "bytes": 600
+      },
+      "game/test/helpers/raster-image.mjs": {
+        "sha256": "eab7e854639c38c93cf6ccf6f881b607a75695e70ea266ea1402e228e745af86",
+        "bytes": 1969
+      },
+      "game/test/helpers/recovery-media-idb.mjs": {
+        "sha256": "1a5315e74c8c8ee35425dccfaa9a9df5dd7f96f26fcb78751bcc63961a5e65b2",
+        "bytes": 4041
+      },
+      "game/test/helpers/relay-goal.mjs": {
+        "sha256": "bb38db22d3209f753efcf010b261e148e29248ffbd28a95912037daeea1392b3",
+        "bytes": 3313
+      },
+      "game/test/helpers/released-original.mjs": {
+        "sha256": "b3cf77e7172a2c4e1b67ced3d1e9d1eaf377603d3c8e1afa37b76aa484a1607e",
+        "bytes": 1401
+      },
+      "game/test/helpers/retained-edition-fixture.mjs": {
+        "sha256": "16953b8e11f7d5fa420cf235ce975c84bc6a8e672c7699bf32f16b79297214ef",
+        "bytes": 3110
+      },
+      "game/test/helpers/reward-audio-fixture.mjs": {
+        "sha256": "d1a70193c515c729b00d1894acf68e6b7718c91ba521eeb782d777c4ec542e89",
+        "bytes": 732
+      },
+      "game/test/helpers/room-service-http-fixture.mjs": {
+        "sha256": "24ac173ef6b81a7318e056cdb2f8b182aeb5ee0c04a2776bcd566c715b05c7f3",
+        "bytes": 6302
+      },
+      "game/test/helpers/route-evidence.mjs": {
+        "sha256": "e9f813c4485ac5ab4f7ddf8c15e9f2bc10a64fddd0ae5ca91ab2c156c4365bcb",
+        "bytes": 3337
+      },
+      "game/test/helpers/route-module-probe.mjs": {
+        "sha256": "f7d48e2eede0b6a64b716468abda7b13c8d870599cd7ef384e6bb0684c34577b",
+        "bytes": 534
+      },
+      "game/test/helpers/rover-goal.mjs": {
+        "sha256": "91ad8086609f7bf9bb692579b0fbd685e6200ea98a7f6268cffced1a074aa8a1",
+        "bytes": 3498
+      },
+      "game/test/helpers/sentinel-goal.mjs": {
+        "sha256": "37d457ab2b72c4985ec3a01c5f2691e99ef8abea4a3dbc38f5c2a4c795a06dae",
+        "bytes": 3261
+      },
+      "game/test/helpers/sentinel-project.mjs": {
+        "sha256": "15a2fbbc08728ed20f15d78aacfff94f47e7d2c0b03cffcf558d418358e00d4d",
+        "bytes": 977
+      },
+      "game/test/helpers/signal-goal.mjs": {
+        "sha256": "7f2cdea05fe689b262fd665437c0e98c5b45dc4ab585039af20d8041b61f93cc",
+        "bytes": 2403
+      },
+      "game/test/helpers/solo-dom.mjs": {
+        "sha256": "3d2fb5ffdbad7edffca39e2606eddbbabc4757b390c56b44497edfe679071a29",
+        "bytes": 35098
+      },
+      "game/test/helpers/solo-opening-win.mjs": {
+        "sha256": "12c38963932148a06b6c573191e0bde62ba6df88605a7cb92b11d7f3901ca86d",
+        "bytes": 1781
+      },
+      "game/test/helpers/sorting-goal.mjs": {
+        "sha256": "dfa6d623359ddf760bae5515e029efb7f94aca9e9aef1a8191cc471546070044",
+        "bytes": 2129
+      },
+      "game/test/helpers/soundtrack-albums.mjs": {
+        "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+        "bytes": 1805
+      },
+      "game/test/helpers/soundtrack-audio.mjs": {
+        "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+        "bytes": 3039
+      },
+      "game/test/helpers/soundtrack-fixtures.mjs": {
+        "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+        "bytes": 2032
+      },
+      "game/test/helpers/soundtrack-public-catalogue.mjs": {
+        "sha256": "baf4ce9fc18d111140d3bdf229ada66b0a92c03a7b0e014c4b8396a240c5eef6",
+        "bytes": 1866
+      },
+      "game/test/helpers/still-workshop.mjs": {
+        "sha256": "432fcb1feee330994a3865666402e81057155adadc82f1f5bde527822728137e",
+        "bytes": 4791
+      },
+      "game/test/helpers/survival-roundtrip.mjs": {
+        "sha256": "301b8e9a0b138b7d3a0c55e935054e87f2c83c5fd3cebf365712e535991af13c",
+        "bytes": 6240
+      },
+      "game/test/helpers/survival-suspend-process.mjs": {
+        "sha256": "5720a1e4326be80d9c96d9f4f10ace55a2c319de9e1cc2b0c48cb7b3964d57ce",
+        "bytes": 5528
+      },
+      "game/test/helpers/team-edition-host-route.mjs": {
+        "sha256": "d0797f927604b1361ca92840cd5d97600e914cd2a9643bf5eeca0b38d33fda3f",
+        "bytes": 5150
+      },
+      "game/test/helpers/team-foundation-goal.mjs": {
+        "sha256": "b1734dbb91feb354adf3b2268a59471ac5743d2a865fcb56a8bad05d3d5fae04",
+        "bytes": 3414
+      },
+      "game/test/helpers/team-foundation-route.mjs": {
+        "sha256": "0e526a0bbada12790a82ec6cdc971b64386f34671ecf5222c783841c19997adc",
+        "bytes": 2112
+      },
+      "game/test/helpers/team-material-goal.mjs": {
+        "sha256": "92f3a70585f8f6d9d93a41d90a0ec333e2080a2db36f5df813f251f1e02f79c5",
+        "bytes": 1363
+      },
+      "game/test/helpers/team-partner-return.mjs": {
+        "sha256": "b9b8420e36d990da0da713b0086bd0ddfe482218b7979dfb87bbddb1eeb1b4c7",
+        "bytes": 3635
+      },
+      "game/test/helpers/team-pressure-fixtures.mjs": {
+        "sha256": "1488f743e71f53ad6369248d36ee08900df3041fbcb2079e8ec3c51b2daaa5dc",
+        "bytes": 1233
+      },
+      "game/test/helpers/team-roamer-goal.mjs": {
+        "sha256": "e6b3eda8fc7a5c3dc799bb3de1a00d5c1b87a7518738f4e3e67485c8e8d926f3",
+        "bytes": 1345
+      },
+      "game/test/helpers/team-roamer-spatial-evidence.mjs": {
+        "sha256": "f3529cff589bfeafcb7a0382b11c12e418a115353280faf07c97e67607f7b8a5",
+        "bytes": 5752
+      },
+      "game/test/helpers/team-spatial-host-route.mjs": {
+        "sha256": "1b38ce7884831aa3c60645e3e7c2135e7109ac0d4499c67d406896693f9204b4",
+        "bytes": 4705
+      },
+      "game/test/helpers/team-specialized-host-route.mjs": {
+        "sha256": "5e8add72931a2b3bda4a758bb287c6a083c5acf147424d930fc9586504fe099f",
+        "bytes": 16255
+      },
+      "game/test/helpers/team-timed-route.mjs": {
+        "sha256": "535a116a6f8a740b333da364930fa62723d0b3d29ae483a849dcc2cf36e61e35",
+        "bytes": 7108
+      },
+      "game/test/helpers/timed-taking-evidence.mjs": {
+        "sha256": "33e8fa9320f0d9cc2dff99cf27f5dc2dba0581b42f641f9c47c2763af10cf955",
+        "bytes": 4073
+      },
+      "game/test/helpers/variety-routes.mjs": {
+        "sha256": "fa22834f6387c2d03d772d1983dbba2146c2d7c7189961aa95218699d6b3eb6b",
+        "bytes": 1426
+      },
+      "game/test/helpers/victory-story-fixture.mjs": {
+        "sha256": "7e4d1737e6fdabb98ce4c5b639c466b60f48d1a3a326eff7d977e81861cb545f",
+        "bytes": 3413
+      },
+      "game/test/helpers/wait-for.mjs": {
+        "sha256": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6",
+        "bytes": 714
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "sha256": "5c899797c4eb8f1db5563eea56538342ddb3e9276ee1b04a5a1f0f1023d2b011",
+      "bytes": 112989184
+    },
+    "owner": {
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+      "bytes": 26055
+    },
+    "helper": {
+      "sha256": "121dbc105c5d40f254c093d4b0efb469574d53dda9da2db00c62812208794018",
+      "bytes": 9329
+    }
+  },
+  "bindingsStable": true,
+  "stats": {
+    "tests": 242,
+    "pass": 242,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "elapsedSeconds": 105.50697879200015,
+  "finished": "2026-10-19T09:41:46.923834+00:00"
+}

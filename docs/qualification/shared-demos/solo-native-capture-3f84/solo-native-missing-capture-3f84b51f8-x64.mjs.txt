@@ -1,0 +1,43 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, mkdir, statfs } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { inventorySources, runSoloCandidateWorker } from './linux-capture-draft/scripts/capture-solo-native-candidates.mjs';
+const args=Object.fromEntries(process.argv.slice(2).map(v=>v.replace(/^--/,'').split('=')));
+assert.equal(args.run,'approved');assert.equal(process.version,'v22.13.1');assert.equal(process.arch,'x64');assert.equal(process.platform,'darwin');
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const head=()=>execFileSync('/usr/bin/arch',['-arm64','/usr/bin/git','-c','maintenance.auto=false','-c','gc.auto=0','rev-parse','HEAD'],{encoding:'utf8',timeout:15000,env:{...process.env,GIT_NO_LAZY_FETCH:'1'}}).trim();
+const pin=async path=>{const b=await readFile(path);return {path,bytes:b.length,sha256:sha(b)};};
+const manifestName='.cache/solo-native-capture-3f84b51f8-inputs.json',manifestBody=await readFile(manifestName),manifest=JSON.parse(manifestBody);
+const checkInputs=async()=>{assert.equal(head(),args.head);for(const expected of manifest.pins)assert.deepEqual(await pin(expected.path),expected);return {manifest:await pin(manifestName),files:manifest.files,bytes:manifest.bytes,sha256:manifest.sha256};};
+const rawPath='.cache/solo-native-inventory-3f84b51f8-x64.json',rawBody=await readFile(rawPath),raw=JSON.parse(rawBody);
+assert.equal(sha(rawBody),'d800a59a7b4825c745eeb831d1a588f7a983bc5aacf8c070cb48929902e53172');assert(raw.complete&&raw.sourceUnchanged);
+const original=await readFile(new URL(import.meta.url)),before=await checkInputs(),start=performance.now();
+const output=args.report.replace(/\.json$/,'-candidates');await mkdir(output);
+const controller=new AbortController(),timer=setTimeout(()=>controller.abort(Error('Missing-source capture exceeded15-minute budget')),900000);
+const report={format:'SoloNativeMissingCandidateCaptureV1',complete:false,automaticallyAdmitted:false,started:new Date().toISOString(),headBefore:head(),nativeInputsBefore:before,
+ observerSHA256:sha(original),environment:{node:process.version,platform:process.platform,arch:process.arch,versions:process.versions,executable:await pin(process.execPath)},
+ originalScan:{path:rawPath,bytes:rawBody.length,sha256:sha(rawBody)},inputScope:manifest.method,sources:[],errors:[],
+ limitations:['Darwin x64 Node22.13.1 only; not Linux qualification. Candidate artifacts are not admitted or catalog changes.','Native import closure and JSON source inputs are held. Unrelated UI/Couch and tests may change; this is not a whole-tree/build freeze.','Per-source worker60s, collection900s, output128MiB, report8MiB, freefloor200MiB. Filesystem I/O is not hard-preemptive.']};
+const interrupt=()=>{controller.abort(Error('Candidate capture interrupted'));report.complete=false;process.exitCode=1;};process.once('SIGINT',interrupt);process.once('SIGTERM',interrupt);
+let emittedBytes=0;
+const persist=async()=>{const b=JSON.stringify(report,null,2)+'\n';assert(Buffer.byteLength(b)<=8*1024**2);await writeFile(args.report,b);};
+const space=async additional=>{const d=await statfs('.',{bigint:true});assert(d.bavail*d.bsize>=BigInt(208*1024**2+additional),'Local free-space guard');};
+try{
+ const inventory=await inventorySources(process.cwd());assert.deepEqual(inventory.catalogs,raw.catalogs);assert.deepEqual(inventory.requiredEntries,raw.requiredEntries);assert.deepEqual(inventory.sources.map(({clip})=>clip.id),raw.sourceOrder);
+ const missing=new Set(raw.sources.filter(r=>!r.strictUsable).map(r=>r.id));const selected=inventory.sources.filter(({clip})=>missing.has(clip.id));assert.equal(selected.length,missing.size);
+ report.requiredSources=selected.length;report.sourceOrder=selected.map(({clip})=>clip.id);report.requiredEntries=inventory.requiredEntries;await persist();
+ for(const item of selected){controller.signal.throwIfAborted();await space(0);const remaining=900000-(performance.now()-start);assert(remaining>0);report.activeSource=item.clip.id;await persist();let row;
+  try{row=await runSoloCandidateWorker({root:process.cwd(),clip:item.clip,entry:item.entry,capture:true},{timeoutMs:Math.min(60000,remaining),signal:controller.signal});}
+  catch(error){if(error.code==='worker-cleanup-failed')throw error;row={id:item.clip.id,strictUsable:false,failure:String(error.stack??error).slice(0,4096)};}
+  assert.equal(row.id,item.clip.id);row.requiredEntry=item.requiredEntry;
+  if(row.candidate){const {replay,metrics,...provenance}=row.candidate;const prefix=`${item.clip.id}.darwin-x64`;const bodies=[[`${prefix}.replay.json`,JSON.stringify(replay)+'\n'],[`${prefix}.diagnostics.json`,JSON.stringify(metrics.diagnostics)+'\n']];const bytes=bodies.reduce((n,[,b])=>n+Buffer.byteLength(b),0);assert(bytes<=33*1024**2&&emittedBytes+bytes<=128*1024**2);await space(bytes);const artifacts=[];
+   for(const [name,b]of bodies){const file=`${output}/${name}`;await writeFile(file,b,{flag:'wx'});assert.equal((await readFile(file)).toString(),b);artifacts.push(await pin(file));}emittedBytes+=bytes;const {diagnostics,...summary}=metrics;row.candidate={...provenance,metrics:summary,artifacts,genericVariantSlotAvailable:(item.clip.replayVariants?.length??0)<3,runtimePerformanceSlotsUsed:item.clip.runtimePerformances?.length??0};
+  }
+  report.sources.push(row);report.activeSource=null;report.artifactBytes=emittedBytes;await persist();console.log(JSON.stringify({finished:report.sources.length,required:report.requiredSources,id:row.id,candidate:row.candidate?.classification??null,generic:row.candidate?.genericVariantEligible??false,failure:row.failure??null}));
+ }
+ report.counts={sources:report.sources.length,candidates:report.sources.filter(r=>r.candidate).length,sameInput:report.sources.filter(r=>r.candidate?.genericVariantEligible).length,independent:report.sources.filter(r=>r.candidate&&!r.candidate.genericVariantEligible).length,noCandidate:report.sources.filter(r=>!r.candidate).length,workerFailures:report.sources.filter(r=>r.failure).length};
+ report.complete=report.sources.length===report.requiredSources&&!report.counts.workerFailures&&!controller.signal.aborted;
+}catch(error){report.complete=false;report.failure=String(error.stack??error).slice(0,8192);}
+finally{clearTimeout(timer);try{report.headAfter=head();report.nativeInputsAfter=await checkInputs();assert.deepEqual(report.nativeInputsAfter,before);assert.equal(sha(await readFile(manifestName)),sha(manifestBody));report.observerSHA256After=sha(await readFile(new URL(import.meta.url)));assert.equal(report.observerSHA256After,report.observerSHA256);report.sourceUnchanged=true;}catch(error){report.complete=false;report.sourceUnchanged=false;report.bindingFailure=String(error.stack??error).slice(0,4096);}
+ report.elapsedMs=performance.now()-start;if(report.elapsedMs>=900000||controller.signal.aborted)report.complete=false;report.unscannedSources=(report.sourceOrder??[]).filter(id=>!report.sources.some(r=>r.id===id));report.finished=new Date().toISOString();await writeFile(args.report.replace(/\.json$/,'.mjs.txt'),original,{flag:'wx'});await persist();process.removeListener('SIGINT',interrupt);process.removeListener('SIGTERM',interrupt);if(!report.complete)process.exitCode=1;}

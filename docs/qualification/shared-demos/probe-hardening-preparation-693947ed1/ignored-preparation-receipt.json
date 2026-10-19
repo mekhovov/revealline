@@ -1,0 +1,72 @@
+{
+  "format": "IgnoredDemoProbeHardeningV1",
+  "preparedAt": "2026-10-19T00:44:24.295636+00:00",
+  "head": "693947ed1373db7a265def126a5eede2bf875013",
+  "declaredRuntimeFingerprint": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+  "files": [
+    {
+      "path": ".cache/qualify-demo-actual-discard-237.mjs",
+      "bytes": 31524,
+      "sha256": "e4410c02ae706cdc082b57aee898e30b164c5590d99d5ae1b9c47f3bc55f799a"
+    },
+    {
+      "path": ".cache/demo-offline-browser/probe.mjs",
+      "bytes": 21038,
+      "sha256": "40abb8885786ca993b90d1502451e66b86af0b67e563c613de634cb6eb95bfc7"
+    },
+    {
+      "path": ".cache/demo-probe-evidence.mjs",
+      "bytes": 2632,
+      "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9"
+    },
+    {
+      "path": ".cache/demo-probe-evidence.test.mjs",
+      "bytes": 4794,
+      "sha256": "aa250dacfe8110583d683b31cf4c07938d2b5703d27c0d10f542b31e556cede9"
+    },
+    {
+      "path": ".cache/demo-probe-evidence-tests.tap.txt",
+      "bytes": 1258,
+      "sha256": "f95f3aa5ad507ba281ff1ae50cc5eab5ba929ca4509e28f7eae1344ab972fdce"
+    },
+    {
+      "path": ".cache/demo-offline-browser/full-core-probe.mjs",
+      "bytes": 33210,
+      "sha256": "2c5e86b48865535929578416e658141dacf59837603180b55d00e32bfcb0fb09"
+    }
+  ],
+  "changes": {
+    "discard": "Adds before/after canonical scripts+authoring buildInput identity and exact capture manifest, audit and inventory byte identities. The strict preview provider still validates admission, its returned pins/source identities must equal these preflight values. Existing full runtime, scoped helper, HEAD and probe checks remain.",
+    "offline": "After bounded browser shutdown, close the preview with a2000ms bound; record attempted/completed/error/elapsed, preserve primaryfailure and save receipt even if serverclose fails."
+  },
+  "scope": "Canonical scripts/authoring scope is the same full selected producer-input scope verified by openEmittedPreview: sorted rg --files scripts authoring, .mjs/.js/.json/.css/.html excluding /test/, *.test.mjs and */coverage.json, SHA256(path + NUL + raw SHA256(bytes)). No claim that unselected binaries or every repository file are included. The ignored evidence helper and probe are additionally pinned.",
+  "checks": {
+    "syntax": "3/3 pass",
+    "tinyFixtures": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "durationMs": 113.157,
+      "actualTAP": ".cache/demo-probe-evidence-tests.tap.txt"
+    },
+    "browserLaunched": false,
+    "buildLaunched": false,
+    "productionOrDurableHarnessChanges": false,
+    "fullCoreProbeChanged": false,
+    "independentReadOnlyReview": {
+      "agent": "snake_adapter",
+      "result": "No blocker; strict provider admission is supplemented by exact before/after evidence pins; server close remains bounded after browser close, preserves primary failure, and is itself pinned.",
+      "executedTestsOrBrowser": false
+    }
+  },
+  "invocations": {
+    "discard": "node .cache/qualify-demo-actual-discard-237.mjs --browser=chromium --head=693947ed1373db7a265def126a5eede2bf875013 --fingerprint=b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0 --emitted-preview=<fresh-final-capture-directory> --port=18771 --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --report=docs/qualification/shared-demos/actual-discard-<new-unique-suffix>.json",
+    "offline": "node .cache/demo-offline-browser/probe.mjs --audit=<successful-final-audit.json> --emitted-preview=<fresh-final-capture-directory> --head=693947ed1373db7a265def126a5eede2bf875013 --fingerprint=b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0 --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --report=docs/qualification/shared-demos/representative-offline-<new-unique-suffix>.json"
+  },
+  "limitations": [
+    "Preparation grants no browser qualification credit. Await final capture and explicit browser-slot release.",
+    "Binding samples before and after detect boundary changes, not transient edits reverted between samples.",
+    "An elapsed server-close deadline is a strict failure even if a late callback eventually completes. No timeout is relaxed."
+  ],
+  "released": true
+}

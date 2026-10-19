@@ -1,0 +1,174 @@
+{
+  "format": "SharedDemoSignal08X86ObservationV1",
+  "started": "2026-10-19T09:19:10.529Z",
+  "complete": false,
+  "checks": [],
+  "errors": [],
+  "errorOverflow": 0,
+  "headBefore": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceBefore": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsBefore": {
+    "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256": "712832af005866e89e485a76b335e4f660a46740b1cb4edee8ec4c7aeea531d6",
+  "originalNativeProbeSHA256": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb",
+  "emittedBefore": {
+    "manifest": {
+      "path": ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined/manifest.json",
+      "bytes": 1305172,
+      "sha256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+      "bytes": 2067388,
+      "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.inventory.json",
+      "bytes": 941657,
+      "sha256": "c54228729e1b24e9ee49de79463b47629aecf557fa1dccd2e04b666abca3062d"
+    },
+    "identity": {
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      }
+    }
+  },
+  "launcher": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh",
+    "sha256": "7a95c11219d4b021a50c891ced4f5bed4c12ec15d04178365cd7315e038e4800",
+    "text": "#!/bin/sh\nexec /usr/bin/arch -x86_64 \"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" \"$@\"\n"
+  },
+  "rosettaUname": "x86_64",
+  "scope": "Read-only original four published signal-08 replay payloads in installed universal Chrome forced x86_64 on macOS under Rosetta, using exact held emitted modules. Observation completion is not replay admission or Linux qualification. No generated recording or checkpoint mutation.",
+  "preview": {
+    "url": "http://127.0.0.1:61679/",
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-2d24aee-b4688ca21-combined",
+      "manifestSHA256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "files": 5956,
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+        "runtime": {
+          "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+          "files": 10000,
+          "bytes": 404485348
+        },
+        "buildInput": {
+          "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+          "files": 9406,
+          "bytes": 348401321
+        }
+      }
+    }
+  },
+  "browserVersion": "155.0.8059.85",
+  "userAgent": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "platform": "MacIntel",
+    "highEntropy": {
+      "architecture": "arm",
+      "bitness": "64",
+      "brands": [
+        {
+          "brand": "Google Chrome",
+          "version": "155"
+        },
+        {
+          "brand": "Chromium",
+          "version": "155"
+        },
+        {
+          "brand": "Not(A:Brand",
+          "version": "24"
+        }
+      ],
+      "mobile": false,
+      "platform": "macOS"
+    }
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'arm' !== 'x86'\n\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/probe-signal08-x86-emitted.mjs:45:10",
+  "browserCloseCompleted": true,
+  "serverCleanup": {
+    "attempted": true,
+    "complete": true,
+    "timeoutMs": 3000,
+    "elapsedMs": 0.2632090000042808,
+    "finished": "2026-10-19T09:19:47.785Z"
+  },
+  "serverClosed": true,
+  "previewClosed": true,
+  "headAfter": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceAfter": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsAfter": {
+    "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256After": "712832af005866e89e485a76b335e4f660a46740b1cb4edee8ec4c7aeea531d6",
+  "emittedAfter": {
+    "manifest": {
+      "path": ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined/manifest.json",
+      "bytes": 1305172,
+      "sha256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+      "bytes": 2067388,
+      "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.inventory.json",
+      "bytes": 941657,
+      "sha256": "c54228729e1b24e9ee49de79463b47629aecf557fa1dccd2e04b666abca3062d"
+    },
+    "identity": {
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      }
+    }
+  },
+  "sourceUnchanged": true,
+  "finished": "2026-10-19T09:19:50.831Z"
+}

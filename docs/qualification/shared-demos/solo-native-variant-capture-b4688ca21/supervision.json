@@ -1,0 +1,225 @@
+{
+  "format": "SharedDemoNativeSoloCaptureSupervisionV1",
+  "complete": true,
+  "started": "2026-10-19T09:32:50.631407+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+    ".cache/capture-solo-node22131-x64.mjs",
+    "--run=approved",
+    "--head=b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "--fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "--report=.cache/solo-node22131-x64-capture-b4688ca21.json"
+  ],
+  "timeoutSeconds": 300,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21",
+  "before": {
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "runtime": {
+      "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+      "files": 10000,
+      "bytes": 404485348
+    },
+    "buildInputs": {
+      "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+      "files": 9406,
+      "bytes": 348401321
+    },
+    "helpers": {
+      ".cache/capture-solo-node22131-x64.mjs": {
+        "sha256": "be5c3421e72e03f6fa15f04fd2cc3fc81b794f620a2d202a608fe739641b155f",
+        "bytes": 8672
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-sources.test.mjs": {
+        "sha256": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+        "bytes": 26080
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "634341992e47b9c1b15531767314609f1dcc9328a166ff1bba21e53570c041d4",
+      "bytes": 10725
+    }
+  },
+  "limitations": [
+    "Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 360 seconds.",
+    "Read-only installed macOS x64 Node22.13.1 observation under Rosetta; not Linux proof. Completion may include strict replay rejections."
+  ],
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 4,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 63356,
+        "ppid": 63338,
+        "pgid": 63356,
+        "uid": 502,
+        "started": "Mon Oct 19 11:32:50 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-solo-node22131-x64.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --report=.cache/solo-node22131-x64-capture-b4688ca21.json",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T09:32:50.687120+00:00"
+      },
+      {
+        "pid": 63444,
+        "ppid": 63356,
+        "pgid": 63356,
+        "uid": 502,
+        "started": "Mon Oct 19 11:32:55 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-solo-node22131-x64.mjs --mode=verify-child --candidate=.cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          63356,
+          "Mon Oct 19 11:32:50 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-solo-node22131-x64.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --report=.cache/solo-node22131-x64-capture-b4688ca21.json"
+        ],
+        "observedAt": "2026-10-19T09:32:55.868639+00:00"
+      },
+      {
+        "pid": 63452,
+        "ppid": 63356,
+        "pgid": 63356,
+        "uid": 502,
+        "started": "Mon Oct 19 11:32:56 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-solo-node22131-x64.mjs --mode=verify-child --candidate=.cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-d0257fa131665b79.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          63356,
+          "Mon Oct 19 11:32:50 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-solo-node22131-x64.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --report=.cache/solo-node22131-x64-capture-b4688ca21.json"
+        ],
+        "observedAt": "2026-10-19T09:32:56.933651+00:00"
+      },
+      {
+        "pid": 63461,
+        "ppid": 63356,
+        "pgid": 63356,
+        "uid": 502,
+        "started": "Mon Oct 19 11:32:58 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-solo-node22131-x64.mjs --mode=verify-child --candidate=.cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          63356,
+          "Mon Oct 19 11:32:50 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-solo-node22131-x64.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --report=.cache/solo-node22131-x64-capture-b4688ca21.json"
+        ],
+        "observedAt": "2026-10-19T09:32:58.791442+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/solo-node22131-x64-capture-b4688ca21.log",
+    "byteLimit": 1048576,
+    "totalBytes": 1102,
+    "writtenBytes": 1102,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 1102,
+    "tailSHA256": "2036f4d19b85a07cd3b6d7f328e288290155704741f53ac346ec91dde3440688",
+    "tail": "{\"id\":\"solo-qualified-478808a96f4fbf5e\",\"natural\":{\"status\":\"won\",\"tick\":7322,\"captures\":12,\"capturedCells\":1183,\"sourceTicks\":7322},\"trace\":{\"source\":\"353aaa5366229bfa\",\"actual\":\"353aaa5366229bfa\",\"exactTrace\":true,\"sourceTicks\":7322,\"actualTicks\":7322,\"sourceOutcome\":\"won\",\"actualOutcome\":\"won\"},\"genericVariantEligible\":true,\"verified\":true,\"phase\":\"complete\"}\n{\"id\":\"solo-qualified-d0257fa131665b79\",\"natural\":{\"status\":\"lost\",\"tick\":10731,\"captures\":15,\"capturedCells\":1171,\"sourceTicks\":10731},\"trace\":{\"source\":\"7cc26937cd6ebd85\",\"actual\":\"7cc26937cd6ebd85\",\"exactTrace\":true,\"sourceTicks\":10731,\"actualTicks\":10731,\"sourceOutcome\":\"lost\",\"actualOutcome\":\"lost\"},\"genericVariantEligible\":true,\"verified\":true,\"phase\":\"complete\"}\n{\"id\":\"solo-qualified-cc8994b6f3d0482f\",\"natural\":{\"status\":\"won\",\"tick\":8274,\"captures\":10,\"capturedCells\":1722,\"sourceTicks\":8274},\"trace\":{\"source\":\"68eae2229dbec184\",\"actual\":\"68eae2229dbec184\",\"exactTrace\":true,\"sourceTicks\":8274,\"actualTicks\":8274,\"sourceOutcome\":\"won\",\"actualOutcome\":\"won\"},\"genericVariantEligible\":true,\"verified\":true,\"phase\":\"complete\"}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "after": {
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "runtime": {
+      "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+      "files": 10000,
+      "bytes": 404485348
+    },
+    "buildInputs": {
+      "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+      "files": 9406,
+      "bytes": 348401321
+    },
+    "helpers": {
+      ".cache/capture-solo-node22131-x64.mjs": {
+        "sha256": "be5c3421e72e03f6fa15f04fd2cc3fc81b794f620a2d202a608fe739641b155f",
+        "bytes": 8672
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-sources.test.mjs": {
+        "sha256": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+        "bytes": 26080
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "634341992e47b9c1b15531767314609f1dcc9328a166ff1bba21e53570c041d4",
+      "bytes": 10725
+    }
+  },
+  "bindingsStable": true,
+  "result": {
+    "path": ".cache/solo-node22131-x64-capture-b4688ca21.json",
+    "sha256": "da4698832c55f3e712482b38868aa31a958d2be27dcf8385deda9989f4b265b3",
+    "complete": true,
+    "checks": 3,
+    "pageErrors": 0,
+    "failure": null,
+    "counts": null
+  },
+  "elapsedSeconds": 15.943340083002113,
+  "finished": "2026-10-19T09:33:06.575024+00:00"
+}

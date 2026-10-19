@@ -1,0 +1,164 @@
+{
+  "format": "SharedDemoHostedBrowserFallbackAssessmentV1",
+  "observedAt": "2026-10-19T11:24:38.107850+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "assessmentOnly": true,
+  "noBrowserBuildInstallWorkflowOrSourceMutation": true,
+  "pins": {
+    ".github/workflows/appearance-preview.yml": {
+      "bytes": 59546,
+      "sha256": "cbdb72e7c93bc3ce268caa5641f87c94f566e3297b74a8dff6a8ed02dd44fa6f"
+    },
+    ".github/workflows/solo-native-candidates.yml": {
+      "bytes": 6977,
+      "sha256": "dfda7a500e07fbf2e9298c359b07abdab9ba0eb2e5c59c5fe95db0f5efaa546f"
+    },
+    "package.json": {
+      "bytes": 10213,
+      "sha256": "ff422332810d4247928cb64a029cc16c41c2cb30c92960a299ac31804c268b2e"
+    },
+    "package-lock.json": {
+      "bytes": 40069,
+      "sha256": "3f3658479a210da64b4797b34645cdb583457d2b3a380a3217b01a18ea46c3f1"
+    },
+    "scripts/qualify-demo-main-pages.mjs": {
+      "bytes": 33067,
+      "sha256": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a"
+    },
+    "scripts/emitted-preview.mjs": {
+      "bytes": 11434,
+      "sha256": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81"
+    },
+    "scripts/serve-production-preview.mjs": {
+      "bytes": 13598,
+      "sha256": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a"
+    },
+    "scripts/qualify-demo-restoration-browser.mjs": {
+      "bytes": 23633,
+      "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83"
+    },
+    "scripts/qualify-shared-demo-browser.mjs": {
+      "bytes": 18020,
+      "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97"
+    },
+    "scripts/qualify-shared-demo-listeners.mjs": {
+      "bytes": 14755,
+      "sha256": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762"
+    },
+    "scripts/qualify-sim-fresh-browser.mjs": {
+      "bytes": 7317,
+      "sha256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53"
+    },
+    "scripts/qualify-survival-fresh-browser.mjs": {
+      "bytes": 8317,
+      "sha256": "f24e6402be41868fb54cfc9da288673168b3b7a525482c0e57540f2553ee33dc"
+    },
+    "scripts/qualify-solo-browser.mjs": {
+      "bytes": 18228,
+      "sha256": "03f1eb36169cc8dd7e3d82f2562fc30f1588bddd2309a66194f592c26618f972"
+    },
+    "publishing/pages-controller/optional-packages.json": {
+      "bytes": 79,
+      "sha256": "b25818471d0de123d0ca2701cf7ab3d0d5b02f2f8f39e07fd27f80a772381e2c"
+    },
+    ".cache/run-final-demo-refresh-owned.mjs": {
+      "bytes": 16059,
+      "sha256": "3da84ad80c5aa679ed6fcc43192b0d5e8e82f01a08dbcff5f508effa50516730"
+    },
+    ".cache/reverify-affected-emitted.mjs": {
+      "bytes": 15380,
+      "sha256": "bed681930ea1a014e97b1fb76ddea2dde4b59708e8b4951f80c7c82a67a5b7eb"
+    },
+    ".cache/run-endurance-emitted-final.py": {
+      "bytes": 26055,
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+    },
+    ".cache/demo-offline-browser/full-core-external-probe.mjs": {
+      "bytes": 37288,
+      "sha256": "852994a4724add5d48e17c32f34e5e2d56c94f071a1f83b9f42b851278c3e402"
+    }
+  },
+  "recommendation": "If the separately reviewed local mounted capture cannot be admitted, add one dedicated read-only Ubuntu24.04/Node22.13.1 PR browser job and a portable runner that invokes the existing qualifiers. Do not lengthen or repurpose the existing19-minute native demo_admission job.",
+  "sourceReferences": [
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "line": 405,
+      "finding": "Existing demo_admission is Node-only, exact PR head,19-minute limit; npm ci at439."
+    },
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "line": 257,
+      "finding": "Per-PR concurrency cancels older appearance workflows on a matching new push; adding tracked fallback scripts/workflow creates a new source candidate. No bypass or CI mutation performed."
+    },
+    {
+      "path": ".github/workflows/solo-native-candidates.yml",
+      "line": 15,
+      "finding": "Existing dedicated read-only exact-head workflow is the suitable action-pin/environment/artifact pattern. Its native matrix does not provide browser evidence."
+    },
+    {
+      "path": "scripts/qualify-demo-main-pages.mjs",
+      "line": 248,
+      "finding": "Canonical capture accepts new report/preview paths; bindings at668-686 include exactHEAD/runtime/build inputs. Default historic baseline files32-35 remain required."
+    },
+    {
+      "path": "scripts/qualify-demo-main-pages.mjs",
+      "line": 452,
+      "finding": "Frozen publication overlay refuses network release downloads. Current selector releases[] needs no deployed package credentials."
+    },
+    {
+      "path": "scripts/qualify-demo-restoration-browser.mjs",
+      "line": 26,
+      "finding": "Restoration explicitly requires runtime AND executable. Derive Linux executable via playwright[engine].executablePath(); do not omit or hardcode macOS paths."
+    },
+    {
+      "path": ".cache/run-final-demo-refresh-owned.mjs",
+      "line": 9,
+      "finding": "Local matrix hardcodes root/runtime/browser executables. Job list and exact emitted-provider/assertion semantics can be reused, paths cannot."
+    },
+    {
+      "path": ".cache/run-endurance-emitted-final.py",
+      "line": 16,
+      "finding": "Owned process parsing uses ps lstart/UID/argv and has only macOS execution evidence. Linux cleanup parsing/signalling needs a focused actual Linux guard before reuse."
+    }
+  ],
+  "dependencies": {
+    "repository": "npm ci with root package-lock; do not omit dev dependencies. A read-only Acorn scan of372 literal local JS imports from canonical main-pages and preview found bare acorn,lz-string,parse5,prettier. Dynamic imports were reported separately; this is not a claim every branch is executed.",
+    "rootDeclaredRuntime": [
+      "i18next26.4.2",
+      "mediabunny1.59.1",
+      "phaser4.2.1"
+    ],
+    "playwright": {
+      "version": "1.62.1",
+      "coreVersion": "1.62.1",
+      "installedModulePackageSha256": "ca170ec143a88ed3043ac953eb3b2377b2b97304104f4e1e23316684ce2c35af",
+      "browserManifestSha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99",
+      "browserRevisions": {
+        "chromium": "1234",
+        "firefox": "1538",
+        "webkit": "2336"
+      },
+      "note": "Root package does not declare Playwright. Install the exact tooling package in fresh RUNNER_TEMP, never modify repository package/lock; retain installed package/browser manifest hashes. Registry provisioning is not attempted by this assessment."
+    },
+    "browserProvisioning": "Existing installed1.62.1 CLI help confirms install --with-deps chromium firefox webkit. Ubuntu24.04 support and Linux download targets appear in its installed coreBundle. Set PLAYWRIGHT_BROWSERS_PATH to fresh runner-owned temp; use the runtime absolute module plus derived executable paths for every qualifier.",
+    "noAuthoringInstallRequiredByIdentifiedCapturePath": "The capture uses root-lock build dependencies and tracked generated world bodies; no bare authoring/fpv-worlds dependency appeared in the inspected literal closure. Existing separate appearance authoring-source validation may still require its own npm ci; do not conflate those jobs."
+  },
+  "minimalRunner": {
+    "source": "exact github.event.pull_request.head.sha, persist-credentials:false, contents:read, pinned existing checkout/setup-node/upload-artifact actions; no secrets, deploy or PR writes",
+    "captureCommand": "node scripts/qualify-demo-main-pages.mjs --report=.cache/hosted-demo-browser/main-pages.json --preview-output=.cache/hosted-demo-browser/emitted",
+    "captureAdmission": "Require complete,headStable,sourceStable and exact source/runtime/build/capture identities. Source capture stays physically inside checkout. Refuse existing output; preserve original failed evidence.",
+    "jobs": "Reuse exact11 existing matrix jobs; then3 SurvivalFresh plus2 reviewedSolo clips in each engine; then actual generated-worker offline scenario. Reports are unique, immutable and carry source/capture/child hashes. Reviewed Solo compatibility remains explicitly scoped; no strict-only claim.",
+    "ports": "127.0.0.1 only; retain18773/18774/8771 distinct existing providers and exact HTML fixture exceptions. Offline provider must retain original HTML/worker with no response rewriting.",
+    "bounds": "Fresh runner-owned TMP/profile; unchanged200MiB live source floor and derived complete offline reservation. Outer job timeout90minutes; independent finite setup/capture/group limits (existing30minute matrix,30minute additional,10minute offline). Retain bounded logs/artifacts even after failure; a time budget is a failure bound, not an ETA.",
+    "cleanup": "Reuse strict browser/provider close reports, add verified Linux-specific owner guard for child/descendant cleanup and deferred interruption handling. Do not claim the existing Mac ps observer is already Linux-qualified. Stop later jobs when cleanup is unverified.",
+    "offlineAdaptation": "The exact actual-worker scenario exists only in ignored local helpers. Promote/review a portable observer with original installation selection and current audit-derived cap; do not reuse old500MiB cap. Current selection526999829bytes, observercap603979776bytes, profile reservation2080374784bytes; recompute from the new Linux audit. Linux runner uses ordinary local tmp rather than SMB identities.",
+    "artifacts": "always upload compact audit/inventory/manifest, runtime/browser/tool identity, all immutable reports/log tails/failure screenshots and wrapper hashes. No need to upload bulk500MiB installed profile or entire capture; artifact upload must not make failed qualification pass."
+  },
+  "limitations": [
+    "No hosted workflow or runner has been authored, committed, launched or installed by this assessment.",
+    "A new tracked runner/workflow changes the exact candidate/build-input binding; fresh emitted capture and exact-head results are required. It cannot retroactively qualify9dcff.",
+    "Linux browser results supplement retained macOS/source-specific evidence. They do not complete physical controller, phone/tablet, audible or unfamiliar-human checks.",
+    "Provisioning/network/hosted queue timing is unknown. No reliable elapsed ETA can be asserted before a hosted runner begins.",
+    "The in-progress fresh local volume approach remains preferred because it can finish current9dcff qualification without changing source."
+  ]
+}

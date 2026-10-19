@@ -1,0 +1,31 @@
+{
+  "engine": "firefox",
+  "started": "2026-10-19T09:04:32.156Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "snake-hunt-heights-02",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "8c6dfd6d32a5b94e",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "stadium-08",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "348185605415817c",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T09:04:44.839Z"
+}

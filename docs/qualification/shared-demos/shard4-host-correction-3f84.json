@@ -1,0 +1,100 @@
+{
+  "format": "SharedDemoShard4CorrectionRetentionV1",
+  "observedAt": "2026-10-19T10:08:18.242270+00:00",
+  "files": [
+    {
+      "original": ".cache/shard4-host-correction-3f84b51f8.json",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-host-correction-3f84b51f8.json",
+      "bytes": 3983,
+      "sha256": "da0a531f7ff68cc5bd133dd7203baee6ea3c2b048ad4933e689f0d58d2ba874e"
+    },
+    {
+      "original": ".cache/hosted-focused-shards-b4688ca21-triage.json",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/hosted-focused-shards-b4688ca21-triage.json",
+      "bytes": 29700,
+      "sha256": "2c64ee9ff39cd27e3363c21099a5a2bc570a5ac63f56be09c5032b770c43ebbf"
+    },
+    {
+      "original": ".cache/hosted-b4688ca21-job-117982924058.log.txt",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/hosted-b4688ca21-job-117982924058.log.txt",
+      "bytes": 549658,
+      "sha256": "4ce353a474497c9638f91cf607b4999c3235af5e2b0bd6c239acd47a7ad035fa"
+    },
+    {
+      "original": ".cache/shard4-targeted-red-20261019T115634.json",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-targeted-red-20261019T115634.json",
+      "bytes": 51096,
+      "sha256": "65b449447dd5a13074810f958a8b3651a5afb2f6870c5491bb9623477a1d01e0"
+    },
+    {
+      "original": ".cache/shard4-targeted-red-20261019T115634.tap.txt",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-targeted-red-20261019T115634.tap.txt",
+      "bytes": 8925,
+      "sha256": "bb2f51575142284de669fabb0e40b9287e2968a87cba5cdccfbf235e02d6748d"
+    },
+    {
+      "original": ".cache/shard4-targeted-red-20261019T115634.py.txt",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-targeted-red-20261019T115634.py.txt",
+      "bytes": 8836,
+      "sha256": "74f74dd5e57effabd4d51e85e9999dd64eae66ca076dc2f678bfc951d86a9896"
+    },
+    {
+      "original": ".cache/shard4-targeted-fix-20261019T115925.json",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-targeted-fix-20261019T115925.json",
+      "bytes": 43951,
+      "sha256": "5ccf8e4656221fb8122554d303b68492abd258894c3fa44d8ed59aec9e90f683"
+    },
+    {
+      "original": ".cache/shard4-targeted-fix-20261019T115925.tap.txt",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-targeted-fix-20261019T115925.tap.txt",
+      "bytes": 1892,
+      "sha256": "dc9ebb5053b60303bd2e145ebd666a536171dec2450cc1f375a282d1e3836e8d"
+    },
+    {
+      "original": ".cache/shard4-targeted-fix-20261019T115925.py.txt",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-targeted-fix-20261019T115925.py.txt",
+      "bytes": 8836,
+      "sha256": "8fa63c037511ca642a50f6de665a761c3f369d62ea6e8e65053e38cd2b7fd28e"
+    },
+    {
+      "original": ".cache/shard4-full-fix-20261019T120028.json",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-full-fix-20261019T120028.json",
+      "bytes": 50140,
+      "sha256": "1188bb746e18cfd15d954395e30665dcf518f3c3844192adaa009fe0482125ae"
+    },
+    {
+      "original": ".cache/shard4-full-fix-20261019T120028.tap.txt",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-full-fix-20261019T120028.tap.txt",
+      "bytes": 8774,
+      "sha256": "f3a2c6441195ce905782eaa92b66b27fe03b083f545eb2fa0ba10f8ed59bb20b"
+    },
+    {
+      "original": ".cache/shard4-full-fix-20261019T120028.py.txt",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-full-fix-20261019T120028.py.txt",
+      "bytes": 8666,
+      "sha256": "0b0b3fe0b71cda95cb68c201076c786daf642406736c094d8cedfb18d366f893"
+    },
+    {
+      "original": ".cache/shard4-classic-fixture-fix-20261019T120352.json",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-classic-fixture-fix-20261019T120352.json",
+      "bytes": 43023,
+      "sha256": "0a1777ead798c1d7fb0fd44cbc88caca9c9d83fc864837507efd93433455587d"
+    },
+    {
+      "original": ".cache/shard4-classic-fixture-fix-20261019T120352.tap.txt",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-classic-fixture-fix-20261019T120352.tap.txt",
+      "bytes": 749,
+      "sha256": "209eb7df19a3606c9adae6e6c9a376df451cc0d1193080aa9d6e8cd32d78b94a"
+    },
+    {
+      "original": ".cache/shard4-classic-fixture-fix-20261019T120352.py.txt",
+      "retained": "docs/qualification/shared-demos/shard4-host-correction-3f84/shard4-classic-fixture-fix-20261019T120352.py.txt",
+      "bytes": 8758,
+      "sha256": "6a33ffff0e604bb8e6b2e9b3ebab921bd9f3e77ce345fc8c78058eaca0e18183"
+    }
+  ],
+  "limitations": [
+    "Exact original failures are retained; the final correction has scoped2case verification, not a fresh full27case result.",
+    "Other two hosted shard originals remain ignored with hashes in triage; this folder retains the complete original hosted shard4 log."
+  ]
+}

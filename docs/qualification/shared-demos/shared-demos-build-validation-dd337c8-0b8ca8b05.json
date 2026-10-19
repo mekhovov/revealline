@@ -1,0 +1,88 @@
+{
+  "format": "revealline-demo-final-build-validation.v2",
+  "started": "2026-10-18T23:40:14.318Z",
+  "expected": {
+    "head": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+    "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "runtime": {
+      "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+      "files": 9996,
+      "bytes": 404389524
+    }
+  },
+  "sourceRevision": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+  "runtimeFingerprint": {
+    "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+    "files": 9996,
+    "bytes": 404389524
+  },
+  "buildInputFingerprint": {
+    "sha256": "252b9ce1d9dc0522414d68b13b3c31935a7df266e7e93bde18a19594e67a1355",
+    "files": 9398,
+    "bytes": 348353698
+  },
+  "wrapper": {
+    "path": ".cache/run-final-build-current.mjs",
+    "sha256": "0a671b079d8592cd9d1170afcc27bc52794953299d24b6ebfada39e775624068"
+  },
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "2ea299f2fc622dde0b13237ea4d7c889a41d17b4268412f5b16ac24a4760d195",
+    "created": "2026-10-18T23:36:01.411649+00:00",
+    "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+    "files": 9996,
+    "bytes": 404389524
+  },
+  "materializedBuild": false,
+  "deploymentAdmission": false,
+  "complete": false,
+  "stages": [
+    {
+      "name": "main-pages",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-main-pages.mjs",
+        "--report=docs/qualification/shared-demos/main-pages-demo-final-dd337c8-0b8ca8b05.json",
+        "--preview-output=.cache/shared-demos-emitted-dd337c8-0b8ca8b05"
+      ],
+      "started": "2026-10-18T23:40:14.319Z",
+      "logPath": "docs/qualification/shared-demos/final-main-pages-dd337c8-0b8ca8b05.log.txt",
+      "receivedLogBytes": 14890,
+      "availableDiskBeforeBytes": 2761519104,
+      "pid": 81250,
+      "minimumObservedDiskBytes": 2693640192,
+      "exitCode": 1,
+      "exitSignal": null,
+      "elapsedMs": 397641,
+      "retainedLogBytes": 14890,
+      "logTruncated": false,
+      "logSHA256": "fb8fea294638d36b0635f832c304d5003569052f7f44a55d8ed418f83ddaee7b",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-0b8ca8b05.json",
+        "sha256": "ad7f6b928a308d1c65a20ceecadb29552b0e4d323d3ee2682486705f5c56528a",
+        "complete": false
+      }
+    }
+  ],
+  "limits": {
+    "logBytesPerStage": 524288,
+    "stopIfAvailableDiskBelowBytes": 209715200,
+    "stageTimeoutMs": 1200000
+  },
+  "updated": "2026-10-18T23:46:55.147Z",
+  "failure": "AssertionError [ERR_ASSERTION]: main-pages failed; preserved docs/qualification/shared-demos/final-main-pages-dd337c8-0b8ca8b05.log.txt\n\n1 !== 0\n\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/run-final-build-current.mjs:110:12",
+  "finalSourceRevision": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+  "finalRuntimeFingerprint": {
+    "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+    "files": 9996,
+    "bytes": 404389524
+  },
+  "finalBuildInputFingerprint": {
+    "sha256": "252b9ce1d9dc0522414d68b13b3c31935a7df266e7e93bde18a19594e67a1355",
+    "files": 9398,
+    "bytes": 348353698
+  },
+  "sourceStable": true
+}

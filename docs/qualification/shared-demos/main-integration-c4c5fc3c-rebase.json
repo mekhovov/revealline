@@ -1,0 +1,347 @@
+{
+  "started": "2026-10-19T02:21:10.524076+00:00",
+  "originalHead": "8cdda61f3abac4306adb4cc5d62036b007f8e1bd",
+  "originalBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "targetMain": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "sparseWorktree": ".cache/main-integration-sparse-c4c5fc3c",
+  "availableDiskBeforeBytes": 414580736,
+  "backupBranch": "codex/shared-demos-before-c4c5fc3c",
+  "complete": true,
+  "initialRebaseExitCode": 1,
+  "currentTemporaryHead": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "rebasedHead": "f4c86112ceca20b2e720590bd217d77f3b05ce65",
+  "commitCount": 32,
+  "commitMapping": [
+    {
+      "old": "794568397b679a00ac9faccf2407057b0a940b0b",
+      "rebased": "4a397e1398c351fd70ae9114ac25a0bf6bc25f10"
+    },
+    {
+      "old": "449b76850c07f5289a07e412e9813f300b09da66",
+      "rebased": "5e5e29160e3044566a9303f4fd075ae48a150cd7"
+    },
+    {
+      "old": "1b1957d6099de74b42b8af4e6ca0e4943c09aa7e",
+      "rebased": "3ede7848a0b45b8bd2c0add228dc1c1a8cdd5c3b"
+    },
+    {
+      "old": "d4095854dac263339abc8ac16923b94f31192233",
+      "rebased": "20c2a66d612aabad1ef6db7beff95d761f66f880"
+    },
+    {
+      "old": "717b9fe9b70084d30879bd083663e99d874d5048",
+      "rebased": "506250c2e892da4e6690f6e3189f13d405f35db6"
+    },
+    {
+      "old": "c81ec5357470d15eb485681e89209d73d56155b1",
+      "rebased": "e60028357a81ed637eb34b15bfc19eea7d427269"
+    },
+    {
+      "old": "35c2aeea2a156cffe27265973a5dbfbfe8ed86a7",
+      "rebased": "03e770105e2c5af722ebbbb28152eb67593412e5"
+    },
+    {
+      "old": "c2b29e1556c91074ab7caaa09ed67c9089bdd57c",
+      "rebased": "4bae334b2ecb8ead403ea68711150abe09d2eb06"
+    },
+    {
+      "old": "87111d733cde2b2391418e845b74f93fa9ce4582",
+      "rebased": "d4ce9b4d29ef387343999e44b8fe86c7ad78f1f2"
+    },
+    {
+      "old": "24359c7fd6f3068701241ad4bf8be236551439dc",
+      "rebased": "56ae5e98fb727ad0a683b03831e81ebd39d87568"
+    },
+    {
+      "old": "afbaf066882d4999f4ebf24f3db9dc2cbc67a51d",
+      "rebased": "301b9660115de0d79c7c3db9e1f626b9322613a5"
+    },
+    {
+      "old": "3fe4995f9ddd1e4fc6deaf686fd081edbbeab6d3",
+      "rebased": "db27128a2a6420ed85ee841273f5e04a6ada2dcf"
+    },
+    {
+      "old": "eba9c0c2e8e2c6e76cb879dc3ba3fb2c6f99b9e8",
+      "rebased": "a5d2ddea956760b1d96ac9e786a4db46cbf3bfd1"
+    },
+    {
+      "old": "d01f87e58621a373b63eaf72a5665c419edb0581",
+      "rebased": "720140945d0379142d45d19fe46ba83555d2322b"
+    },
+    {
+      "old": "7701301c873faf1046b7f7b6c6df09632e707c49",
+      "rebased": "2fc9c4f83f0694eea2051453ed998be5a3e3f43d"
+    },
+    {
+      "old": "a9b48b1dbf2c928e38a1567b5558f8eac9b6b4b6",
+      "rebased": "829a5f1a2dd88a0bb5391b2c43ec7bc8ed084b03"
+    },
+    {
+      "old": "ba19a2f8ce3ccc2fe72e9bd03915398eeda2e0ab",
+      "rebased": "92d6ce5fd37cd116356718d5f311d15c09f3626f"
+    },
+    {
+      "old": "87183e59eda765b30e0fcecbb65d427469cd4d7a",
+      "rebased": "3bcea47ecc827ceccd86884396290a406f40eec4"
+    },
+    {
+      "old": "7842f896331253656abfd448e57e2110ccb17b9b",
+      "rebased": "ba7df329a6f180d85ba276e91d0f4ea2201ee26b"
+    },
+    {
+      "old": "6694b8fe29a0cda09d02495a587e86bc48f3dbbe",
+      "rebased": "d63376217439baa5bcf42cc41d9407dd6b886014"
+    },
+    {
+      "old": "61eecdfe417f84880ca8751133d3e4bef73f25aa",
+      "rebased": "d719c0f18fda48dc0af93d288c0decb6ef3df7cd"
+    },
+    {
+      "old": "9cc7083ab3c60fa25b83b461b7827529edc59824",
+      "rebased": "f4a6eb74389baf3ffc51492974fe824467254955"
+    },
+    {
+      "old": "edc6e5f51a114ba7b668e80fc234eba4b5249b92",
+      "rebased": "be88e7868f83ecf63701f946a28d59be6113716a"
+    },
+    {
+      "old": "b5b80094ee84f366afd0ea9098e36f4362c5fe75",
+      "rebased": "ad1a68a9cb59346dec1c6ae694ed32d563f0966a"
+    },
+    {
+      "old": "33290126287c8131ebe286b5b14dee1aaa72201a",
+      "rebased": "b77abd2991da640e229b69f7d0eaffc669ec93a3"
+    },
+    {
+      "old": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+      "rebased": "5718046e8d89a01a50ade9339bf48b2fa8f2a6e8"
+    },
+    {
+      "old": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+      "rebased": "8590fc5af64db459c0045e81604f0a32c30882da"
+    },
+    {
+      "old": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+      "rebased": "62bb9b4496b3712822a66e67caf47f7c3c931637"
+    },
+    {
+      "old": "693947ed1373db7a265def126a5eede2bf875013",
+      "rebased": "312e27de40a9b0a0772ac394319c6356475bf1a5"
+    },
+    {
+      "old": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+      "rebased": "b39ae89d23f2262fb87c0e378fa929f261af0c99"
+    },
+    {
+      "old": "ef30abcd27e7a0c292ca5e03cbb29299e6536234",
+      "rebased": "b91161279755c06ede69bac1d90e5f7f3b705746"
+    },
+    {
+      "old": "8cdda61f3abac4306adb4cc5d62036b007f8e1bd",
+      "rebased": "f4c86112ceca20b2e720590bd217d77f3b05ce65"
+    }
+  ],
+  "authorAndMessageOrderPreserved": true,
+  "tipDeltaExactlyIncomingPaths": true,
+  "tipDeltaPaths": [
+    "authoring/fpv-worlds/library-listing/README.md",
+    "authoring/fpv-worlds/library-listing/contract.mjs",
+    "authoring/fpv-worlds/library-listing/harness.mjs",
+    "authoring/fpv-worlds/library-listing/index.html.template",
+    "authoring/fpv-worlds/library-listing/prepare.mjs",
+    "authoring/fpv-worlds/library-listing/style.css",
+    "authoring/fpv-worlds/library-listing/verify-prepare.mjs",
+    "authoring/fpv-worlds/library-listing/verify.mjs",
+    "docs/evidence/fpv-library-listing-native-20261016/README.md",
+    "docs/evidence/fpv-library-listing-native-20261016/combined-qualification-complete-receipt.json",
+    "docs/evidence/fpv-library-listing-native-20261016/company-original-members-receipt.json",
+    "docs/evidence/fpv-library-listing-native-20261016/evidence-inventory.json",
+    "docs/evidence/fpv-library-listing-native-20261016/http-identity-receipt.json",
+    "docs/evidence/fpv-library-listing-native-20261016/identity.json",
+    "docs/evidence/fpv-library-listing-native-20261016/independent-helper-review-20261016.json",
+    "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-pass.tap",
+    "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-red.tap.gz",
+    "docs/evidence/fpv-library-listing-native-20261016/independent-prepared-stage-safety.tap",
+    "docs/evidence/fpv-library-listing-native-20261016/native-listing-first-report.json",
+    "docs/evidence/fpv-library-listing-native-20261016/native-listing-first.png",
+    "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-console.json",
+    "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-report.json",
+    "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen.png",
+    "docs/evidence/fpv-library-listing-native-20261016/native-receipt.json",
+    "docs/evidence/fpv-library-listing-native-20261016/native-reconciliation-20261016.json",
+    "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-identity.json",
+    "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-safety-tests.tap",
+    "docs/evidence/fpv-library-listing-native-20261016/public-deployment-marker.json",
+    "docs/evidence/fpv-library-listing-native-20261016/public-http-identity.json",
+    "docs/evidence/fpv-library-listing-native-20261016/qualification-receipt.json",
+    "docs/evidence/fpv-library-listing-native-20261016/reproducible-prepare-tests.tap",
+    "docs/evidence/fpv-library-listing-native-20261016/safety-checks.tap",
+    "docs/evidence/fpv-library-listing-native-20261016/source-preservation.json",
+    "docs/fpv-continuous-delivery.md",
+    "docs/fpv-large-worlds-delivery-plan.md",
+    "docs/survival-suspend-assessment.md",
+    "game/app.mjs",
+    "game/couch/couch-music-host.mjs",
+    "game/couch/couch.mjs",
+    "game/i18n/catalogs.mjs",
+    "game/index.html",
+    "game/locales/en/interface.json",
+    "game/locales/uk/interface.json",
+    "game/snake/classic-app.mjs",
+    "game/test/capture-navigation-context-host.test.mjs",
+    "game/test/classic-snake-ui.test.mjs",
+    "game/test/continuous-play-preferences.test.mjs",
+    "game/test/couch-audio-catalogue-demand.test.mjs",
+    "game/test/duel-navigation-context-host.test.mjs",
+    "game/test/edition-solo-host.test.mjs",
+    "game/test/first-flight-home-host.test.mjs",
+    "game/test/first-flight-view.test.mjs",
+    "game/test/global-settings-tools.test.mjs",
+    "game/test/helpers/survival-roundtrip.mjs",
+    "game/test/native-landing-structure.test.mjs",
+    "game/test/overflight-suspend-assessment.test.mjs",
+    "game/test/solo-soundtrack-admission-host.test.mjs",
+    "game/test/soundtrack-host.test.mjs",
+    "game/test/soundtrack-panel.test.mjs",
+    "game/ui/continuous-play.mjs",
+    "game/ui/first-flight-view.mjs",
+    "game/ui/game-shell.css",
+    "game/ui/game-shell.mjs",
+    "game/ui/global-settings-tools.mjs",
+    "game/ui/global-settings-view.css",
+    "game/ui/global-settings-view.mjs",
+    "game/ui/journey-chooser.mjs",
+    "game/ui/mission-library-browser.mjs",
+    "game/ui/native-menu.css",
+    "game/ui/native-menus.mjs",
+    "game/ui/soundtrack-panel.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.css",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+    "optional-practice/civilian-fpv/style.css"
+  ],
+  "nonoverlappingIncomingBlobsExact": true,
+  "catalogConflictOriginalCommits": [
+    "794568397b",
+    "eba9c0c2e8"
+  ],
+  "catalogResolution": "Official catalogBundle(readCatalogs(sparseRoot)), preserving combined namespaces and source locales.",
+  "sparseTreeBytesAfter": 4577842,
+  "adoptedAt": "2026-10-19T02:23:43.886998+00:00",
+  "originalCheckoutSparse": "false",
+  "availableDiskAfterBytes": 394821632,
+  "sparseWorktreeRemovedAt": "2026-10-19T02:28:26.518303+00:00",
+  "sparseWorktreeRemoved": true,
+  "format": "revealline-demo-sparse-main-integration.v1",
+  "completedAt": "2026-10-19T02:32:34.630477+00:00",
+  "source": {
+    "head": "f4c86112ceca20b2e720590bd217d77f3b05ce65",
+    "runtime": {
+      "sha256": "35b8b966b926324557effeea0e9f54d93348d5617fea4e054f9fc0e7ea3859f4",
+      "files": 9996,
+      "bytes": 404409496
+    },
+    "buildInput": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    }
+  },
+  "exactNativeObjects": [
+    {
+      "path": "game/demo-data",
+      "gitObject": "fe4780393e107e63ee14d122ce1d59024b8ae731"
+    },
+    {
+      "path": "game/demo-modes",
+      "gitObject": "4e192209366eeb31de526b38ea9a7dc3790008a0"
+    },
+    {
+      "path": "game/content",
+      "gitObject": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764"
+    },
+    {
+      "path": "game/content-design",
+      "gitObject": "d42a21d20b3ad8f748c905c1a49cd839930dd535"
+    },
+    {
+      "path": "game/core",
+      "gitObject": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d"
+    },
+    {
+      "path": "game/overflight",
+      "gitObject": "2d82f2788d2d0ed78e2774d69646ca42d09b7f20"
+    },
+    {
+      "path": "game/replay.mjs",
+      "gitObject": "fa473c568bec333395636541cc82fe3dd8b597f6"
+    },
+    {
+      "path": "game/snake/classic-core.mjs",
+      "gitObject": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5"
+    },
+    {
+      "path": "game/snake/classic-match.mjs",
+      "gitObject": "cd47d4660228b5e8968d6aef3d3d7700b48d432c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-data",
+      "gitObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "gitObject": "e9ee1383ebe909ce7993da499f07b33d486c9605"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "gitObject": "fa254c168037003881a41f881f270465a09d8f05"
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/shared-demos-generated",
+      "gitObject": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179"
+    }
+  ],
+  "scope": "Completed Git integration and generated-file consistency; tests and emitted/browser qualification have separate receipts.",
+  "independentReview": {
+    "reviewer": "sim_adapter",
+    "result": "pass",
+    "scope": "Actual rebased priority overlaps: audio demand and demo cancellation, native-menu placements, generated FPV mirror, published metadata guard and incoming-opening retirement. Read-only; no independent test run."
+  },
+  "generation": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "i18n:build"
+      ],
+      "started": "2026-10-19T02:24:55.751780+00:00",
+      "exitCode": 0,
+      "log": "main-integration-c4c5fc3c-generated-0.log.txt",
+      "elapsedSeconds": 134.76096,
+      "logSHA256": "af8be498ad386a41613cc112e293caf4d7be3b63a8320b6689723ea88dfd4542"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/refresh-fpv-play-shell.mjs"
+      ],
+      "started": "2026-10-19T02:27:10.513071+00:00",
+      "exitCode": 0,
+      "log": "main-integration-c4c5fc3c-generated-1.log.txt",
+      "elapsedSeconds": 0.504872,
+      "logSHA256": "0888428699f0df18c89429f0deecf8a38d28ce8dafc22d81ce2f10e31d831c2e"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/refresh-demo-shell.mjs",
+        "--check"
+      ],
+      "started": "2026-10-19T02:27:11.018137+00:00",
+      "exitCode": 0,
+      "log": "main-integration-c4c5fc3c-generated-2.log.txt",
+      "elapsedSeconds": 0.182163,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "generationChangedTrackedFiles": false
+}

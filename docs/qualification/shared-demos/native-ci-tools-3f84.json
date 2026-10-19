@@ -1,0 +1,82 @@
+{
+  "format": "SharedDemoNativeCIToolPromotionV1",
+  "observedAt": "2026-10-19T10:09:37.631812+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "originals": [
+    {
+      "path": ".cache/linux-capture-draft/scripts/capture-solo-native-candidates.mjs",
+      "bytes": 22895,
+      "sha256": "fcc8313b1a2bae95c28ab1988e3dff53c20f77a7793ab98e7de185dbfb98e5f4"
+    },
+    {
+      "path": ".cache/linux-capture-draft/scripts/test-capture-solo-native-candidates.mjs",
+      "bytes": 11103,
+      "sha256": "b020f5878c8e3195c7bbc86a5da89aa3b2b7c142224d587c5ab53c52a6aba6d3"
+    }
+  ],
+  "source": [
+    {
+      "path": "scripts/capture-solo-native-candidates.mjs",
+      "bytes": 22948,
+      "sha256": "714061bbb34d3758a1e0dd28280045c6d828ba395bf75e5b7c42825e712558d9"
+    },
+    {
+      "path": "scripts/test-capture-solo-native-candidates.mjs",
+      "bytes": 11114,
+      "sha256": "29161366a8b098f0abeacfc8e88dabb89a540ed1db647b18597c5c09d4130c13"
+    },
+    {
+      "path": ".github/workflows/solo-native-candidates.yml",
+      "bytes": 4472,
+      "sha256": "91af6363398aa9c4e895295add19f49dfbdc46e15c5c877d5a45bbe696faef67"
+    }
+  ],
+  "retained": [
+    {
+      "original": ".cache/native-ci-guard-verification-20261019T120844.json",
+      "retained": "docs/qualification/shared-demos/native-ci-tools-3f84/native-ci-guard-verification-20261019T120844.json",
+      "bytes": 46215,
+      "sha256": "1da0c4f7e95c58c94bc9788337d5a87f508f1f6bdb8fe1ba7a15696149e2c43a"
+    },
+    {
+      "original": ".cache/native-ci-guard-verification-20261019T120844.tap.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-tools-3f84/native-ci-guard-verification-20261019T120844.tap.txt",
+      "bytes": 4834,
+      "sha256": "3399720ebf5983fc20c28b27597c84d2f97a74f251f010697530b60682175c8e"
+    },
+    {
+      "original": ".cache/native-ci-guard-verification-20261019T120844.py.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-tools-3f84/native-ci-guard-verification-20261019T120844.py.txt",
+      "bytes": 8839,
+      "sha256": "9b582eb73bb501947f27c297af00530d8f2d12a273a8534783e1212c9cfcd743"
+    }
+  ],
+  "guards": {
+    "actualTests": 21,
+    "passed": 21,
+    "failed": 0,
+    "nativeCollectorGuards": 12,
+    "existingWorkflowChecks": 9,
+    "node": "22.22.2",
+    "platform": "darwin",
+    "arch": "arm64",
+    "sourceStable": true,
+    "cleanupVerified": true
+  },
+  "syntax": {
+    "yaml": "Prettier parsed and formatted",
+    "bash": "Actual multiline workflow command passed bash -n",
+    "node": "Actual embedded result validator passed node --check"
+  },
+  "lint": "Both new scripts passed ESLint with zero warnings",
+  "scope": "New tracked copies were formatted; active ignored capture helper and tests remain byte-identical. No collector CLI/full scan executed by this promotion.",
+  "pending": [
+    "Final shared Survival native checker step and budget will be added when its interface is ready.",
+    "Hosted Node20.19.6 and22.13.1 Linux execution remains required; this is tooling validation only."
+  ],
+  "workflowSafety": [
+    "Exact PR head checkout, contents:read only, no persisted credentials",
+    "No --capture in CI command; no generation, adoption or deployment",
+    "Version/head/attempt artifact identity and bounded partial failure evidence"
+  ]
+}

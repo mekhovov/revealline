@@ -1,0 +1,184 @@
+"""Lightweight process fixtures for the ignored endurance wrapper; no browsers."""
+import ast
+import json
+import os
+from pathlib import Path
+import selectors
+import signal
+import subprocess
+import sys
+import tempfile
+import unittest
+
+
+WRAPPER = Path(__file__).with_name('run-endurance-emitted-final.py')
+tree = ast.parse(WRAPPER.read_text())
+names = {'owned_process_snapshot', 'owned_process_identity', 'OwnedProcessTree', 'BoundedChildLog'}
+nodes = [node for node in tree.body if isinstance(node, (ast.Import, ast.ImportFrom))
+         or isinstance(node, (ast.FunctionDef, ast.ClassDef)) and node.name in names]
+scope = {}
+exec(compile(ast.Module(body=nodes, type_ignores=[]), str(WRAPPER), 'exec'), scope)
+OwnedProcessTree = scope['OwnedProcessTree']
+snapshot = scope['owned_process_snapshot']
+identity = scope['owned_process_identity']
+BoundedChildLog = scope['BoundedChildLog']
+
+
+class OwnershipTests(unittest.TestCase):
+    def test_detached_descendants_are_retired_without_touching_unrelated_process(self):
+        loop = 'import signal,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);time.sleep(60)'
+        with tempfile.TemporaryDirectory(prefix='endurance-process-fixture-') as directory:
+            owned_profile = directory + '/owned-profile'
+            unrelated = subprocess.Popen([sys.executable, '-c', loop, '--user-data-dir=' + directory + '/unrelated'],
+                                         start_new_session=True)
+            child_code = (
+                'import json,os,signal,subprocess,sys,time;'
+                'signal.signal(signal.SIGTERM,signal.SIG_IGN);'
+                'leaf=subprocess.Popen([sys.executable,"-c",' + repr(loop) + ',sys.argv[1]],start_new_session=True);'
+                'print(json.dumps({"child":os.getpid(),"leaf":leaf.pid}),flush=True);time.sleep(60)')
+            root_code = (
+                'import signal,subprocess,sys,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);'
+                'child=subprocess.Popen([sys.executable,"-c",' + repr(child_code) +
+                ',sys.argv[1]],start_new_session=True);time.sleep(60)')
+            root = subprocess.Popen([sys.executable, '-c', root_code, '--user-data-dir=' + owned_profile],
+                                    stdout=subprocess.PIPE, text=True, start_new_session=True)
+            owner = OwnedProcessTree(root)
+            fixture_rows = []
+            try:
+                with selectors.DefaultSelector() as ready:
+                    ready.register(root.stdout, selectors.EVENT_READ)
+                    self.assertTrue(ready.select(timeout=5), 'Owned fixture startup must be bounded.')
+                    children = json.loads(root.stdout.readline())
+                fixture_rows = owner.capture()
+                expected = {root.pid, children['child'], children['leaf']}
+                self.assertEqual({row['pid'] for row in fixture_rows}, expected)
+                self.assertNotIn(unrelated.pid, expected)
+                self.assertEqual(len({row['pgid'] for row in fixture_rows}), 3,
+                                 'The fixture must really cross detached process groups.')
+                remaining = owner.cleanup(grace_seconds=0.15, term_seconds=0.15, kill_seconds=3)
+                evidence = owner.evidence(remaining)
+                self.assertTrue(evidence['verified'], evidence)
+                self.assertTrue(any(action['signal'] == 'SIGKILL' for action in evidence['actions']))
+                self.assertTrue(all(action['pid'] in expected for action in evidence['actions']))
+                self.assertTrue(all(action.get('verifiedBeforeSignal') for action in evidence['actions']
+                                    if action['result'] == 'signalled exact owned process'))
+                self.assertIsNone(unrelated.poll(), 'An unrelated process must remain alive.')
+                root.wait(timeout=3)
+            finally:
+                # Fixture-only fallback: retain and recheck the exact identities,
+                # never search by Python name or signal any process group.
+                for row in fixture_rows:
+                    current = snapshot().get(row['pid'])
+                    if current and identity(current) == identity(row):
+                        try:
+                            os.kill(row['pid'], signal.SIGKILL)
+                        except ProcessLookupError:
+                            pass
+                if root.poll() is None:
+                    root.kill()
+                root.wait(timeout=3)
+                root.stdout.close()
+                if unrelated.poll() is None:
+                    unrelated.kill()
+                unrelated.wait(timeout=3)
+
+    def test_reused_pid_or_changed_argv_is_not_signalled(self):
+        class Child:
+            pid = 42
+
+            def poll(self):
+                return None
+
+        row = {'pid': 42, 'ppid': 1, 'pgid': 42, 'uid': 501,
+               'started': 'Mon Oct 19 12:00:00 2026', 'argv': 'owned-node', 'profile': None}
+        current = {42: dict(row)}
+        signals = []
+        owner = OwnedProcessTree(Child(), snapshot=lambda: current,
+                                 send_signal=lambda *args: signals.append(args))
+        owner.capture()
+        for changed in ({**row, 'started': 'Mon Oct 19 12:00:01 2026'},
+                        {**row, 'argv': 'unrelated-user-browser'}, {**row, 'uid': 502}):
+            current[42] = changed
+            self.assertFalse(owner.signal(row, signal.SIGKILL))
+        self.assertEqual(signals, [])
+        self.assertEqual(len(owner.actions), 3)
+
+    def test_normal_child_exit_requires_no_signal(self):
+        child = subprocess.Popen([sys.executable, '-c', 'import time;time.sleep(0.15)'])
+        owner = OwnedProcessTree(child)
+        try:
+            owner.capture()
+            child.wait(timeout=3)
+            remaining = owner.capture()
+            self.assertTrue(owner.evidence(remaining)['verified'])
+            self.assertEqual(owner.actions, [])
+        finally:
+            if child.poll() is None:
+                child.kill()
+                child.wait(timeout=3)
+
+    def test_evidence_cap_fails_but_retains_every_live_cleanup_identity(self):
+        rows = {pid: {'pid': pid, 'ppid': pid - 1, 'pgid': pid, 'uid': 501,
+                      'started': 'Mon Oct 19 12:00:00 2026', 'argv': f'owned-{pid}', 'profile': None}
+                for pid in (42, 43, 44)}
+
+        class Child:
+            pid = 42
+
+            def poll(self):
+                return None if self.pid in rows else 0
+
+        signalled = []
+
+        def retire(pid, signum):
+            signalled.append(pid)
+            del rows[pid]
+
+        owner = OwnedProcessTree(Child(), snapshot=lambda: dict(rows), send_signal=retire,
+                                 ownership_limit=1, action_limit=1)
+        owner.capture()
+        self.assertEqual(len(owner.owned), 3, 'Evidence cap must never drop a live cleanup target.')
+        self.assertEqual(len(owner.observed), 1)
+        with self.assertRaisesRegex(RuntimeError, 'diagnostic limit exceeded'):
+            owner.check_limits()
+        remaining = owner.cleanup(grace_seconds=0, term_seconds=0, kill_seconds=0.1)
+        self.assertEqual(remaining, [])
+        self.assertEqual(signalled, [42, 43, 44])
+        value = owner.evidence(remaining)
+        self.assertTrue(value['verified'], 'Cleanup itself still completes after evidence overflow.')
+        self.assertTrue(value['observationLimits']['exceeded'], 'The run must remain failed.')
+        self.assertEqual(value['observationLimits']['ownershipCount'], 3)
+        self.assertEqual(value['observationLimits']['actionCount'], 3)
+        self.assertEqual(len(value['actions']), 1)
+
+    def test_log_overflow_continues_draining_and_retains_truthful_prefix_and_tail(self):
+        with tempfile.TemporaryDirectory(prefix='endurance-log-fixture-') as directory:
+            filename = Path(directory) / 'bounded.log'
+            writer = subprocess.Popen(
+                [sys.executable, '-c', 'import sys;sys.stdout.buffer.write(b"a"*200000+b"FINAL-TAIL");sys.stdout.flush()'],
+                stdout=subprocess.PIPE)
+            drain = BoundedChildLog(filename, byte_limit=4096, tail_limit=128)
+            drain.start(writer.stdout)
+            try:
+                self.assertEqual(writer.wait(timeout=5), 0, 'Overflow must not block the child pipe.')
+                value = drain.finish()
+                self.assertTrue(value['complete'])
+                self.assertTrue(value['limitExceeded'])
+                self.assertEqual(value['totalBytes'], 200010)
+                self.assertEqual(value['writtenBytes'], 4096)
+                self.assertEqual(value['truncatedBytes'], 200010 - 4096)
+                self.assertEqual(filename.stat().st_size, 4096)
+                self.assertEqual(filename.read_bytes(), b'a' * 4096)
+                self.assertEqual(value['tailBytes'], 128)
+                self.assertTrue(value['tail'].endswith('FINAL-TAIL'))
+                with self.assertRaisesRegex(RuntimeError, 'finite diagnostic bound'):
+                    drain.check_limits()
+            finally:
+                if writer.poll() is None:
+                    writer.kill()
+                    writer.wait(timeout=3)
+                drain.finish()
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

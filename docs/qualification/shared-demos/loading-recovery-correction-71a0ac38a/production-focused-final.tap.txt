@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: a source timeout prefers verified Snake and preserves the unvisited mode for the next transition
+ok 1 - a source timeout prefers verified Snake and preserves the unvisited mode for the next transition
+  ---
+  duration_ms: 2.600792
+  ...
+# Subtest: a verified fallback still shares the original thirty-second recovery deadline
+ok 2 - a verified fallback still shares the original thirty-second recovery deadline
+  ---
+  duration_ms: 0.686
+  ...
+# Subtest: timeout recovery cannot reuse a verified source after demo-playback-failed
+ok 3 - timeout recovery cannot reuse a verified source after demo-playback-failed
+  ---
+  duration_ms: 0.679834
+  ...
+# Subtest: timeout recovery cannot reuse a verified source after demo-renderer-unavailable
+ok 4 - timeout recovery cannot reuse a verified source after demo-renderer-unavailable
+  ---
+  duration_ms: 0.437709
+  ...
+# Subtest: cancelling a preferred verified fallback retires its late player without adoption
+ok 5 - cancelling a preferred verified fallback retires its late player without adoption
+  ---
+  duration_ms: 0.7295
+  ...
+# Subtest: initial catalog time does not shorten the next transition or its verified fallback
+ok 6 - initial catalog time does not shorten the next transition or its verified fallback
+  ---
+  duration_ms: 0.473458
+  ...
+# Subtest: the initial attempt still respects the catalog-subtracted startup remainder
+ok 7 - the initial attempt still respects the catalog-subtracted startup remainder
+  ---
+  duration_ms: 0.8825
+  ...
+# Subtest: Retry after startup exhaustion receives a fresh budget without changing the source deadline
+ok 8 - Retry after startup exhaustion receives a fresh budget without changing the source deadline
+  ---
+  duration_ms: 0.60325
+  ...
+# Subtest: a configured per-attempt cap still limits later transitions and Retry
+ok 9 - a configured per-attempt cap still limits later transitions and Retry
+  ---
+  duration_ms: 0.526916
+  ...
+# Subtest: cancelling initial preparation does not restore its startup deduction on resume
+ok 10 - cancelling initial preparation does not restore its startup deduction on resume
+  ---
+  duration_ms: 0.472041
+  ...
+# Subtest: timeout recovery prepares the quickest verified mode again without retaining another world
+ok 11 - timeout recovery prepares the quickest verified mode again without retaining another world
+  ---
+  duration_ms: 0.421292
+  ...
+# Subtest: a retained source uses its latest successful cost after becoming slower
+ok 12 - a retained source uses its latest successful cost after becoming slower
+  ---
+  duration_ms: 0.3085
+  ...
+# Subtest: each mode retains its quicker candidate when the second level costs 50ms
+ok 13 - each mode retains its quicker candidate when the second level costs 50ms
+  ---
+  duration_ms: 0.262417
+  ...
+# Subtest: each mode retains its quicker candidate when the second level costs 500ms
+ok 14 - each mode retains its quicker candidate when the second level costs 500ms
+  ---
+  duration_ms: 0.365291
+  ...
+# Subtest: timeout ranking excludes the quickest source after demo-playback-failed
+ok 15 - timeout ranking excludes the quickest source after demo-playback-failed
+  ---
+  duration_ms: 0.231208
+  ...
+# Subtest: timeout ranking excludes the quickest source after demo-renderer-unavailable
+ok 16 - timeout ranking excludes the quickest source after demo-renderer-unavailable
+  ---
+  duration_ms: 0.201959
+  ...
+# Subtest: timeout recovery after bot exhaustion keeps the required replay kind
+ok 17 - timeout recovery after bot exhaustion keeps the required replay kind
+  ---
+  duration_ms: 0.7385
+  ...
+# Subtest: equal measured costs choose the first retained mode consistently
+ok 18 - equal measured costs choose the first retained mode consistently
+  ---
+  duration_ms: 0.275708
+  ...
+# Subtest: fastest recovery still enforces the individual and total loading deadlines
+ok 19 - fastest recovery still enforces the individual and total loading deadlines
+  ---
+  duration_ms: 0.241125
+  ...
+# Subtest: quick verified sources do not bias ordinary mode/level rotation or its one-payload prefetch
+ok 20 - quick verified sources do not bias ordinary mode/level rotation or its one-payload prefetch
+  ---
+  duration_ms: 1.399583
+  ...
+# Subtest: a kind-ineligible quickest bot preserves the most recent verified replay fallback
+ok 21 - a kind-ineligible quickest bot preserves the most recent verified replay fallback
+  ---
+  duration_ms: 0.285792
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 51.018541

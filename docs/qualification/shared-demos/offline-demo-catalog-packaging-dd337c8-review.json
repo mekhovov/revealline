@@ -1,0 +1,84 @@
+{
+  "format": "revealline-offline-demo-catalog-packaging-review.v1",
+  "sourceRevision": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+  "sourceHashes": {
+    "scripts/qualify-demo-packaging.mjs": "fdcd21070af2d65363e0753e9f0f809199d28ced2c15377f003938f2cc21c95c",
+    "scripts/demo-native-dependencies.mjs": "9a126a95fd643e4312c115d6382649961ab6e8c1250036989bb2f1ecf24db624",
+    "scripts/test-qualify-demo-packaging.mjs": "17883655bf490359c8c4e36d7132ee28698556c2aee13743209f03fa9a22cf7a",
+    "scripts/qualify-demo-main-pages.mjs": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a",
+    "scripts/test-qualify-demo-main-pages.mjs": "fac70ecb6bc6614f13d3bbcc60381853de66c5cfca4bd36830364493e83f0bf2"
+  },
+  "scope": "Follow-up reuse of the same six primary catalogs in the full packaging verifier; all Solo loading and admission limits unchanged. No production build or browser run.",
+  "steps": [
+    {
+      "name": "regressions",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "scripts/test-qualify-demo-packaging.mjs",
+        "scripts/test-qualify-demo-main-pages.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.444,
+      "log": "docs/qualification/shared-demos/offline-demo-catalog-packaging-dd337c8-regressions.tap.txt"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "node_modules/.bin/eslint",
+        "scripts/qualify-demo-packaging.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.226,
+      "log": "docs/qualification/shared-demos/offline-demo-catalog-packaging-dd337c8-lint.log.txt"
+    },
+    {
+      "name": "format",
+      "command": [
+        "node_modules/.bin/prettier",
+        "--check",
+        "scripts/qualify-demo-packaging.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.186,
+      "log": "docs/qualification/shared-demos/offline-demo-catalog-packaging-dd337c8-format.log.txt"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "scripts/qualify-demo-packaging.mjs",
+        "scripts/demo-native-dependencies.mjs",
+        "scripts/test-qualify-demo-packaging.mjs",
+        "scripts/qualify-demo-main-pages.mjs",
+        "scripts/test-qualify-demo-main-pages.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.077,
+      "log": "docs/qualification/shared-demos/offline-demo-catalog-packaging-dd337c8-diff.log.txt"
+    }
+  ],
+  "finalSourceHashes": {
+    "scripts/qualify-demo-packaging.mjs": "fdcd21070af2d65363e0753e9f0f809199d28ced2c15377f003938f2cc21c95c",
+    "scripts/demo-native-dependencies.mjs": "9a126a95fd643e4312c115d6382649961ab6e8c1250036989bb2f1ecf24db624",
+    "scripts/test-qualify-demo-packaging.mjs": "17883655bf490359c8c4e36d7132ee28698556c2aee13743209f03fa9a22cf7a",
+    "scripts/qualify-demo-main-pages.mjs": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a",
+    "scripts/test-qualify-demo-main-pages.mjs": "fac70ecb6bc6614f13d3bbcc60381853de66c5cfca4bd36830364493e83f0bf2"
+  },
+  "finalRevision": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+  "sourceStable": true,
+  "headStable": true,
+  "complete": true,
+  "assertions": {
+    "tests": 17,
+    "pass": 17,
+    "fail": 0,
+    "skipped": 0
+  }
+}

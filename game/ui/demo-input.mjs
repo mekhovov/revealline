@@ -9,6 +9,7 @@ const UI_CONTROL = 'button,a,input,select,textarea,[role="button"],[data-demo-ui
 export function attachDemoInput({
   root,
   canvas,
+  touchSurface = canvas,
   active,
   watching,
   takeoverAvailable = watching,
@@ -29,6 +30,8 @@ export function attachDemoInput({
   onHangar = () => {},
 }) {
   const view = root.ownerDocument.defaultView;
+  const onCanvas = (target) =>
+    target === canvas || (touchSurface !== canvas && touchSurface.contains?.(target));
   const win = typeof view?.addEventListener === 'function' ? view : globalThis.window;
   const held = new Set(),
     actions = new Map(),
@@ -200,7 +203,7 @@ export function attachDemoInput({
         releaseForUI();
         return;
       }
-      if (takeoverAvailable() && event.target === canvas && !canvasGesture)
+      if (takeoverAvailable() && onCanvas(event.target) && !canvasGesture)
         canvasGesture = { id: event.pointerId, x: event.clientX, y: event.clientY, moved: false };
       const button = event.target?.closest?.('[data-demo-move]');
       const action = event.target?.closest?.('[data-demo-action]');
@@ -233,7 +236,7 @@ export function attachDemoInput({
     true,
   );
   const touch = attachTouchSteering({
-    arena: canvas,
+    arena: touchSurface,
     window: win,
     getSettings: getTouchSettings,
     active: () => !busy() && (takeoverAvailable() || practice()),
@@ -308,7 +311,7 @@ export function attachDemoInput({
           if (
             type === 'pointerup' &&
             !tap.moved &&
-            event.target === canvas &&
+            onCanvas(event.target) &&
             Math.hypot(event.clientX - tap.x, event.clientY - tap.y) < 10 &&
             takeoverAvailable()
           ) {
@@ -356,7 +359,7 @@ export function attachDemoInput({
       if (
         (takeoverAvailable() || busy()) &&
         event.detail === 0 &&
-        (move || action || event.target === canvas)
+        (move || action || onCanvas(event.target))
       ) {
         consume(event);
         const intent = intentForAction(move?.dataset.demoMove || action?.dataset.demoAction);

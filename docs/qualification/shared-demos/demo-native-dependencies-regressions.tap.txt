@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: demo ownership retains exact native archive sources without exposing or installing archives
+ok 1 - demo ownership retains exact native archive sources without exposing or installing archives
+  ---
+  duration_ms: 552.937791
+  ...
+# Subtest: native dependency matching rejects missing, ambiguous, altered and unavailable source identities
+ok 2 - native dependency matching rejects missing, ambiguous, altered and unavailable source identities
+  ---
+  duration_ms: 0.481125
+  ...
+# Subtest: recordings without the ordinary demo catalog do not invent native dependencies
+ok 3 - recordings without the ordinary demo catalog do not invent native dependencies
+  ---
+  duration_ms: 0.094417
+  ...
+# Subtest: current reviewed and qualified catalogs resolve the exact authored native pack inventory
+ok 4 - current reviewed and qualified catalogs resolve the exact authored native pack inventory
+  ---
+  duration_ms: 4555.147167
+  ...
+# Subtest: main Pages keeps current content and omits archive and exclusive unused artwork
+ok 5 - main Pages keeps current content and omits archive and exclusive unused artwork
+  ---
+  duration_ms: 1.350875
+  ...
+# Subtest: ordinary builds keep the full optional-artwork contract
+ok 6 - ordinary builds keep the full optional-artwork contract
+  ---
+  duration_ms: 0.079666
+  ...
+# Subtest: publication profiles fail closed
+ok 7 - publication profiles fail closed
+  ---
+  duration_ms: 0.22575
+  ...
+# Subtest: all official missions have gameplay-only closure and soundtrack groups exactly match Audio settings
+ok 8 - all official missions have gameplay-only closure and soundtrack groups exactly match Audio settings
+  ---
+  duration_ms: 553.866
+  ...
+# Subtest: hosted extras stay selectable without entering shared or all-current gameplay downloads
+ok 9 - hosted extras stay selectable without entering shared or all-current gameplay downloads
+  ---
+  duration_ms: 520.664459
+  ...
+# Subtest: publisher copies only the frozen lightweight launcher and points at the immutable edition
+ok 10 - publisher copies only the frozen lightweight launcher and points at the immutable edition
+  ---
+  duration_ms: 206.80175
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5530.125333

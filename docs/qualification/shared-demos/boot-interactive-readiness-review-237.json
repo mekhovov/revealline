@@ -1,0 +1,180 @@
+{
+  "format": "SharedDemoBootReadinessReviewV1",
+  "created": "2026-10-18T23:03:35.906492+00:00",
+  "head": "3c1a17b58658b2adf22659d0fd0acec9885f3834",
+  "scope": "Four product files and four actual-host/API test files. Source hashes below are scoped final bytes; this is not a whole-tree browser freeze. No game simulation, replay identity, authored content, qualification deadline, or durable browser harness changed.",
+  "sourceHashes": {
+    "game/app.mjs": {
+      "sha256": "aa410bb50dbd494e7e1dc2821f1e0e70c32702b0eeca9a59a1fa9b6fd870016b",
+      "bytes": 622067
+    },
+    "game/boot.mjs": {
+      "sha256": "8878502452d618a47e8a7ab51c5b60356804147afe4a80c40b31e8c2cf45be61",
+      "bytes": 11755
+    },
+    "game/boot.css": {
+      "sha256": "d2ce4bb6c8ed57a650bbf00d116dc0b8b3c1557d8929bf7073cd7357adf1553e",
+      "bytes": 5392
+    },
+    "game/index.html": {
+      "sha256": "b5210ae95967a24bb849ffb859e4934e31a983e88427f69640aff4d451bbf07c",
+      "bytes": 143757
+    },
+    "game/test/boot.test.mjs": {
+      "sha256": "05d1e614f1fbad8d71f45c64703360c3941c3f19265cc81792014db904edc7c3",
+      "bytes": 23925
+    },
+    "game/test/initial-focus-host.test.mjs": {
+      "sha256": "0d8a652d92f4dde48cb049762c23d8da6a2e3f0e6a2e6cbe419e78a793849c36",
+      "bytes": 6400
+    },
+    "game/test/mission-library-return-intent-host.test.mjs": {
+      "sha256": "508b6474738a51323ec227c933e28bdb1ea744c48eb7831996aa834d30472f18",
+      "bytes": 24866
+    },
+    "game/test/helpers/mode-return-host-cases.mjs": {
+      "sha256": "6ddb91fd191dbea7a6879eebab16ff2636f9c550027162ea9043839861ab90c7",
+      "bytes": 25727
+    }
+  },
+  "problem": "Solo declared public boot readiness before awaiting its incoming mission-library handoff or checked return. Optional current-mission sharing can add that handoff to the URL before a later reload. A captured profile identifies this incoming branch as the unified-catalog caller. This establishes premature readiness during owned work, not the exact owner of the historical 4,013 ms task.",
+  "implementation": [
+    "RevealLineBoot.reveal exposes ordinary controls as interactive with aria-busy while preserving startup failure ownership; ready alone retains its prior behavior.",
+    "Solo reveals before incoming owned navigation, then calls ready only after incoming handoff/exact return settles. Deliberate newer focus and foreground loss still retire incoming ownership.",
+    "The inline visibility guard and boot stylesheet permit the interactive state; the native Scene update gate also permits this state so ordinary input and paused preparation can continue.",
+    "Boot keyboard/controller navigation yields during interactive state. Loading timer retires at reveal; final ready retires boot resources. Resource/import/missing-ready failures during interactive state restore the inert recovery screen.",
+    "The fallback path without RevealLineBoot retains the same two public states. No other native app caller needs to adopt reveal."
+  ],
+  "tests": [
+    {
+      "path": "docs/qualification/shared-demos/boot-interactive-api-237.tap.txt",
+      "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test game/test/boot.test.mjs",
+      "exitCode": 0,
+      "sha256": "aec8bb11c1cd753f0ab12ddd5d939ae900bb653e5c8770f1af795b62795c815e",
+      "bytes": 5126,
+      "tests": 22,
+      "pass": 22,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 316.867583
+    },
+    {
+      "path": "docs/qualification/shared-demos/boot-interactive-handoff-final-237.tap.txt",
+      "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test --test-name-pattern='native.*Solo|native boot completes' game/test/mission-library-return-intent-host.test.mjs",
+      "exitCode": 0,
+      "sha256": "8e9631defd4c201939ef3d6fa99614c954de3b14e80b1864b1027bfa09143baa",
+      "bytes": 4337,
+      "tests": 16,
+      "pass": 3,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 13,
+      "durationMs": 19686.434333
+    },
+    {
+      "path": "docs/qualification/shared-demos/boot-interactive-host-regressions-final-237.tap.txt",
+      "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test --test-concurrency=1 game/test/boot.test.mjs game/test/boot-host.test.mjs game/test/initial-focus-host.test.mjs game/test/solo-share-link-host.test.mjs game/test/published-solo-entry-host.test.mjs game/test/mode-return-host.test.mjs game/test/mode-return-team-recovery-host.test.mjs game/test/mode-return-versus-host.test.mjs game/test/mode-return-versus-recovery-host.test.mjs",
+      "exitCode": 1,
+      "sha256": "b46b71f46a9496d3a7f200ecd903e15878c23ea0016a071e6f4f710231d3839c",
+      "bytes": 26078,
+      "tests": 111,
+      "pass": 109,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 602132.051875
+    },
+    {
+      "path": "docs/qualification/shared-demos/boot-interactive-versus-start-diagnostic-237.tap.txt",
+      "command": "NODE_DISABLE_COMPILE_CACHE=1 node --experimental-loader ./.cache/boot-return-start-diagnostic-loader-237.mjs --test --test-name-pattern='actual paused cut Missions' game/test/mode-return-versus-host.test.mjs",
+      "exitCode": 0,
+      "sha256": "f6fd96a9b97fd79ae01430d2744d0af0511592962dbeff7f374320e98a2bb055",
+      "bytes": 3092,
+      "tests": 11,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 6,
+      "durationMs": 24016.449875
+    }
+  ],
+  "broaderFailure": {
+    "classification": "One independent precondition timeout plus one dependent assertion; not two independent runtime failures.",
+    "primary": "The paused-cut Versus return case timed out at its initial ordinary Start, before any departure or incoming return. The original five-second bound and original failed full TAP are retained.",
+    "secondary": "The parent case then compared a null saved slot with its unassigned expected variable because the earlier nested setup never reached the save step.",
+    "targetedSample": "One targeted sample passed the complete paused-cut Versus round trip: 5 passed test counts (parent+4children), 6 unrelated skipped. A diagnostic-only Node loader used the existing waitUntilRunning failure observer, with the same predicate, host-frame pump, and five-second bound. No runtime or tracked fixture mutation was made for this sample.",
+    "limitation": "The original Start timeout did not recur. Its cause remains unknown; the isolated pass does not retroactively pass the broader run or establish an environmental cause."
+  },
+  "staleAssertionBaseline": {
+    "path": "docs/qualification/shared-demos/boot-interactive-handoff-baseline-237.tap.txt",
+    "sha256": "e0fce3582ff9b3cfe1fd6dafd99af64e36ee46bbe81b35249c467a6754071c46",
+    "bytes": 5810,
+    "baselineAppHead": "3c1a17b58658b2adf22659d0fd0acec9885f3834",
+    "baselineApp": {
+      "sha256": "f55498d8c0d05543153019815b5fa01fa7e0982360a95d36c71a1074ca5f7db2",
+      "bytes": 621514
+    },
+    "loader": {
+      "sha256": "b48847743284016b6f8860451f156a1946ad3330b8eaf73ed417eefb18a200a0",
+      "bytes": 320
+    },
+    "finding": "An app-only Node loader served the exact committed pre-readiness app. The old automatic-running assertion failed identically:ready,briefing,choose-your-share,paused=true,no app errors. Existing choose launch already requires a fresh Start. The corrected final test asserts that exact briefing before explicitly starting.",
+    "limits": "This is an app-only baseline contrast with the finite native focus mock, not a clean-tree browser run. Its pre-correction assertion included a failure-only existing-state dump; final test source is different."
+  },
+  "cancellationAssertions": "Held metadata reports interactive, exposes cancellable ordinary controls, and retains aria-busy. Focus/hidden cancellation produces final ready, no open chooser (uncreated is valid), unchanged native first-return at tick0/paused after foreground return, unchanged local-storage bytes, and no focus steal.",
+  "diagnosticOverlay": {
+    "loader": {
+      "sha256": "0659fd6494b61e6940943358add4ee9af05b3cd7f9fab055c432318e052d748f",
+      "bytes": 364
+    },
+    "helper": {
+      "sha256": "2bf2b3020a96eb8c7f24c09e18592a1e3eb998cb5ce1d1a3be24b6f601b7dad3",
+      "bytes": 25736
+    },
+    "difference": "Only await settle(() => h.doc.body.dataset.flightState === 'running') becomes await h.waitUntilRunning('checked Versus return: initial ordinary Start'). Both call the same helper settle with the same five-second bound and host frame pump; the latter adds failure-only read-only state diagnostics.",
+    "originalHelper": "6ddb91fd191dbea7a6879eebab16ff2636f9c550027162ea9043839861ab90c7"
+  },
+  "lint": {
+    "command": "NODE_DISABLE_COMPILE_CACHE=1 node node_modules/eslint/bin/eslint.js game/app.mjs game/boot.mjs game/test/boot.test.mjs game/test/initial-focus-host.test.mjs game/test/mission-library-return-intent-host.test.mjs game/test/helpers/mode-return-host-cases.mjs --max-warnings 0",
+    "exitCode": 0,
+    "log": "docs/qualification/shared-demos/boot-interactive-lint-final-237.log.txt"
+  },
+  "diffWhitespace": {
+    "command": "git diff --check -- game/app.mjs game/boot.mjs game/boot.css game/index.html game/test/boot.test.mjs game/test/initial-focus-host.test.mjs game/test/mission-library-return-intent-host.test.mjs game/test/helpers/mode-return-host-cases.mjs",
+    "exitCode": 0
+  },
+  "preservedDraftFailures": [
+    {
+      "path": "docs/qualification/shared-demos/boot-interactive-handoff-focused-237.tap.txt",
+      "sha256": "5d67da785d27488b4af8a7918c3b3a7e8b79a934df4ad5ea0836a7b30ab0e982",
+      "bytes": 6443
+    },
+    {
+      "path": "docs/qualification/shared-demos/boot-interactive-handoff-focused-fixed-237.tap.txt",
+      "sha256": "8d79a8dd319b29e004e2da5dedebd1316f3718456288accf43525a7d76c80c04",
+      "bytes": 6445
+    },
+    {
+      "path": "docs/qualification/shared-demos/boot-interactive-handoff-diagnostic-237.tap.txt",
+      "sha256": "98e309e9c217cfab58304f8ceb7422e21b509b3db136bf2e73e95af4821c7035",
+      "bytes": 5047
+    },
+    {
+      "path": "docs/qualification/shared-demos/boot-interactive-handoff-start-diagnostic-237.tap.txt",
+      "sha256": "622c1973f5580401933d8ec90d8cc6a67973bcf319fdf7910754ab74952f2b28",
+      "bytes": 5425
+    }
+  ],
+  "limitations": [
+    "Node host tests use real app, content, persistence and action code with finite browser/Phaser boundaries; they make no actual layout, GPU, physical input or audio claim.",
+    "The broad 111-test run remains failed 109/111 despite the later targeted pass. Boot API counts also appear inside that broader run; do not sum them as unique coverage.",
+    "The historical 4,013 ms main-thread task owner remains unproven. This fixes an independently confirmed premature readiness boundary; current browser restoration and performance checks still need a fresh source freeze.",
+    "Actual Chromium discard qualification is prepared but has not run. No browser or endurance credit is claimed by this receipt."
+  ],
+  "formatCheck": {
+    "command": "NODE_DISABLE_COMPILE_CACHE=1 node node_modules/prettier/bin/prettier.cjs --check game/app.mjs game/boot.mjs game/boot.css game/index.html game/test/boot.test.mjs game/test/initial-focus-host.test.mjs game/test/mission-library-return-intent-host.test.mjs game/test/helpers/mode-return-host-cases.mjs",
+    "exitCode": 0,
+    "log": "docs/qualification/shared-demos/boot-interactive-format-final-237.log.txt"
+  }
+}

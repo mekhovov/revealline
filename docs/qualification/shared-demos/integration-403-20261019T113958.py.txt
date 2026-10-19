@@ -1,0 +1,110 @@
+"""Bound the scoped incoming-main/demo integration suite, with exact owned-process cleanup."""
+from pathlib import Path
+import ast, datetime, hashlib, json, os, re, signal, subprocess, sys, threading, time
+root=Path.cwd().resolve()
+os.environ['GIT_NO_LAZY_FETCH']='1'
+tests=[
+'game/test/offline.test.mjs','game/test/overflight-checkpoint.test.mjs','game/test/overflight-host.test.mjs','game/test/overflight-records.test.mjs',
+'game/test/overflight-suspend-host.test.mjs','game/test/overflight-suspend-package.test.mjs','game/test/overflight-suspend-process.test.mjs','game/test/overflight-suspend-view.test.mjs','game/test/overflight-suspend.test.mjs',
+'game/test/profile-storage-receipts.test.mjs','scripts/test-offline-startup.mjs',
+'game/test/demo-survival-fresh.test.mjs','game/test/demo-survival.test.mjs','game/test/demo-native-host.test.mjs','game/test/demo-back-host.test.mjs','game/test/demo-shared.test.mjs',
+'game/test/offline-art-fallback.test.mjs','game/test/offline-navigation-recovery.test.mjs','scripts/test-offline-core-closure.mjs','scripts/test-main-pages-source-originals.mjs']
+assert len(tests)==20 and len(set(tests))==20
+assert all((root/name).is_file() for name in tests)
+node='/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node'
+label='integration-403-'+datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
+parent=root/'.cache'
+assert parent.resolve(strict=True)==parent and parent.is_dir() and parent.stat().st_uid==os.getuid()
+parent_identity=(parent.stat().st_dev,parent.stat().st_ino)
+scratch=parent/(label+'-tmp');scratch.mkdir(mode=0o700)
+report_path=parent/(label+'.json');log_path=parent/(label+'.tap.txt')
+assert not report_path.exists() and not log_path.exists()
+owner_name='.cache/run-endurance-emitted-final.py';owner=(root/owner_name).read_bytes()
+assert hashlib.sha256(owner).hexdigest()=='0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c'
+helper=Path(__file__).read_bytes()
+sha=lambda data:hashlib.sha256(data).hexdigest()
+def pin(name):
+ data=(root/name).read_bytes();return {'sha256':sha(data),'bytes':len(data)}
+def fingerprint(directories):
+ names=sorted(name for name in subprocess.check_output(['rg','--files',*directories],text=True,timeout=15).splitlines() if Path(name).suffix in {'.mjs','.js','.json','.css','.html'} and '/test/' not in name and not name.endswith('.test.mjs') and not name.endswith('/coverage.json'))
+ digest=hashlib.sha256();count=0
+ for name in names:
+  body=(root/name).read_bytes();count+=len(body);digest.update(name.encode()+b'\0');digest.update(hashlib.sha256(body).digest())
+ return {'sha256':digest.hexdigest(),'files':len(names),'bytes':count}
+def bindings():
+ return {'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True,timeout=5).strip(),
+  'runtime':fingerprint(['game','optional-practice','publishing']),'buildInputs':fingerprint(['scripts','authoring']),
+  'tests':{name:pin(name) for name in tests},'testHelpers':{name:pin(name) for name in sorted(subprocess.check_output(['rg','--files','game/test/helpers'],text=True,timeout=5).splitlines()) if name.endswith('.mjs')},
+  'node':{'path':node,**pin(node)},'owner':pin(owner_name),'helper':{'sha256':sha(Path(__file__).read_bytes()),'bytes':len(Path(__file__).read_bytes())}}
+def free_bytes():
+ info=os.statvfs(parent);return info.f_bavail*info.f_frsize
+free_floor=200*1024*1024;allocation_cap=32*1024*1024
+assert free_bytes()>free_floor
+before=bindings()
+names={'owned_process_snapshot','owned_process_identity','OwnedProcessTree','BoundedChildLog'}
+selected=[item for item in ast.parse(owner,filename=owner_name).body if isinstance(item,(ast.FunctionDef,ast.ClassDef)) and item.name in names]
+assert {item.name for item in selected}==names
+scope=dict(globals());exec(compile(ast.Module(body=selected,type_ignores=[]),owner_name,'exec'),scope)
+OwnedProcessTree,BoundedChildLog=scope['OwnedProcessTree'],scope['BoundedChildLog']
+command=[node,'--test','--test-concurrency=1','--test-reporter=tap',*tests]
+report={'format':'SharedDemoScopedMainIntegrationV1','complete':False,'started':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+ 'before':before,'command':command,'nodeVersion':subprocess.check_output([node,'--version'],text=True).strip(),'platform':sys.platform,
+ 'tmpdir':str(scratch.relative_to(root)),'timeoutSeconds':900,'cleanupGraceSeconds':16,
+ 'localStorage':{'freeFloorBytes':free_floor,'allocationCapBytes':allocation_cap,'freeBeforeBytes':free_bytes(),'minimumObservedFreeBytes':free_bytes(),'maximumObservedFixtureBytes':0},
+ 'limitations':['No full build or browser execution. Scope is the20 named existing integration files. Test fixtures are in memory except small suspend-process JSON files.',
+ 'Child execution and exact owned cleanup are bounded. Synchronous filesystem finalization is not preemptible; validation after960seconds revokes completion.']}
+log=BoundedChildLog(log_path,byte_limit=4*1024*1024,tail_limit=32768)
+child=owned=remaining=None;deferred={'active':False,'pending':None};started=time.monotonic()
+def interrupt(signum,_frame):
+ if deferred['active']:deferred['pending']=signum;return
+ report['interruptedSignal']=signal.Signals(signum).name
+ signal.signal(signal.SIGTERM,signal.SIG_IGN);signal.signal(signal.SIGINT,signal.SIG_IGN)
+ raise InterruptedError(report['interruptedSignal'])
+signal.signal(signal.SIGTERM,interrupt);signal.signal(signal.SIGINT,interrupt)
+try:
+ deferred['active']=True
+ try:
+  child=subprocess.Popen(command,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,start_new_session=True,env={**os.environ,'TMPDIR':str(scratch),'TMP':str(scratch),'TEMP':str(scratch),'NODE_DISABLE_COMPILE_CACHE':'1'})
+  owned=OwnedProcessTree(child);owned.capture();log.start(child.stdout)
+ finally:
+  deferred['active']=False;pending=deferred['pending'];deferred['pending']=None
+  if pending is not None:interrupt(pending,None)
+ next_allocation_check=0
+ while child.poll() is None:
+  owned.capture();owned.check_limits();log.check_limits()
+  assert (parent.stat().st_dev,parent.stat().st_ino)==parent_identity,'Scratch root changed'
+  free=free_bytes();report['localStorage']['minimumObservedFreeBytes']=min(free,report['localStorage']['minimumObservedFreeBytes'])
+  assert free>free_floor,'Local free-space floor reached'
+  if time.monotonic()>=next_allocation_check:
+   size=int(subprocess.check_output(['du','-sk',str(scratch)],text=True,timeout=3).split()[0])*1024
+   report['localStorage']['maximumObservedFixtureBytes']=max(size,report['localStorage']['maximumObservedFixtureBytes']);assert size<allocation_cap,'Fixture allocation cap reached'
+   next_allocation_check=time.monotonic()+3
+  if time.monotonic()-started>=report['timeoutSeconds']:report['watchdogExpired']=True;raise TimeoutError('Integration child exceeded900seconds')
+  time.sleep(.2)
+ remaining=owned.wait_clear(3)
+ if remaining:report['cleanupNeededAfterExit']=True;remaining=owned.cleanup()
+except BaseException as error:report['failure']=repr(error)
+finally:
+ def final_interrupt(signum,_frame):
+  report.setdefault('interruptedSignal',signal.Signals(signum).name);report['complete']=False
+ signal.signal(signal.SIGTERM,final_interrupt);signal.signal(signal.SIGINT,final_interrupt)
+ if owned is not None:
+  if remaining is None:
+   try:remaining=owned.cleanup()
+   except BaseException as error:report['cleanupFailure']=repr(error)
+  report['ownedProcesses']=owned.evidence(remaining)
+ log.finish();report['log']={'path':str(log_path.relative_to(root)),**log.evidence()};report['childExit']=child.poll() if child else None
+ try:report['after']=bindings();report['bindingsStable']=report['after']==before
+ except BaseException as error:report['bindingsFailure']=repr(error);report['bindingsStable']=False
+ try:
+  text=log_path.read_text();report['stats']={key:int(value) for key,value in re.findall(r'^# (tests|pass|fail|cancelled|skipped|todo) (\d+)$',text,re.M)}
+  report['complete']=(report['childExit']==0 and report['bindingsStable'] is True and report.get('stats',{}).get('tests',0)>0 and report['stats'].get('fail')==0 and report['stats'].get('cancelled')==0 and report.get('ownedProcesses',{}).get('verified') is True and not report['ownedProcesses']['observationLimits']['exceeded'] and report['log']['complete'] and not report['log']['error'] and not report['log']['limitExceeded'] and not any(report.get(key) for key in ['failure','cleanupFailure','bindingsFailure','watchdogExpired','cleanupNeededAfterExit','interruptedSignal']))
+ except BaseException as error:report['resultFailure']=repr(error);report['complete']=False
+ report['elapsedSeconds']=time.monotonic()-started
+ if report['elapsedSeconds']>=960:report['finalBudgetExceeded']=True;report['complete']=False
+ report['localStorage']['freeAfterBytes']=free_bytes();report['localStorage']['tmpEntriesAfter']=len(list(scratch.iterdir()))
+ report['finished']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+ with report_path.with_suffix('.py.txt').open('xb') as output:output.write(helper)
+ with report_path.open('x') as output:json.dump(report,output,indent=2);output.write('\n')
+ print(json.dumps({'report':str(report_path.relative_to(root)),'complete':report['complete'],'childExit':report['childExit'],'stats':report.get('stats'),'bindingsStable':report['bindingsStable']}),flush=True)
+sys.exit(0 if report['complete'] else 1)

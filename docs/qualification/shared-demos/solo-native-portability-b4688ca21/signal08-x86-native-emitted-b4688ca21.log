@@ -1,0 +1,10 @@
+Sampling process 53439 for 1 second with 10 milliseconds of run time between samples
+Sampling completed, processing symbols...
+Sample analysis of process 53439 written to file .cache/signal08-x86-native-emitted-b4688ca21.browser.sample.txt
+Sampling process 53499 for 1 second with 10 milliseconds of run time between samples
+Sampling completed, processing symbols...
+Sample analysis of process 53499 written to file .cache/signal08-x86-native-emitted-b4688ca21.renderer.sample.txt
+{"engine":"primary","match":false,"diagnostics":[{"code":"state-mismatch","section":"enemies","message":"Authoritative enemies differs.","expected":"28fc2e7ba2c0539c","actual":"5d5f527833603614"}],"diagnostic":{"code":"diagnostic-checkpoint-mismatch","firstMismatchingCheckpointTick":600,"expected":"67078d401c4d6b47","actual":"2de4810180a47587"},"linux":[false,true,true]}
+{"engine":"chromium","match":true,"diagnostics":[],"diagnostic":null,"linux":[false,true,true]}
+{"engine":"firefox","match":false,"diagnostics":[{"code":"state-mismatch","section":"enemies","message":"Authoritative enemies differs.","expected":"d7b102f8a9128e95","actual":"5d5f527833603614"},{"code":"state-mismatch","section":"clock","message":"Authoritative clock differs.","expected":"9e232cdb3132c194","actual":"83be6483dc2b7278"}],"diagnostic":{"code":"diagnostic-checkpoint-mismatch","firstMismatchingCheckpointTick":600,"expected":"a693a2b0126e2de9","actual":"2de4810180a47587"},"linux":[false,true,true]}
+{"engine":"webkit","match":false,"diagnostics":[{"code":"state-mismatch","section":"enemies","message":"Authoritative enemies differs.","expected":"ed391a595d4e2fb9","actual":"5d5f527833603614"},{"code":"state-mismatch","section":"clock","message":"Authoritative clock differs.","expected":"ca39e0a04aa6d20e","actual":"83be6483dc2b7278"}],"diagnostic":{"code":"diagnostic-checkpoint-mismatch","firstMismatchingCheckpointTick":600,"expected":"a693a2b0126e2de9","actual":"2de4810180a47587"},"linux":[false,true,true]}

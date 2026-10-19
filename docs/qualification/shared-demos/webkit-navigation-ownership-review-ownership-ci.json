@@ -1,0 +1,122 @@
+{
+  "format": "SharedDemoWebKitNavigationOwnershipReviewV1",
+  "created": "2026-10-18T19:20:00.931870+00:00",
+  "status": "One native fetch diagnostic matched to an owned old-document rejection; Context is stopped remains unclassified. Strict diagnostic gate remains failed.",
+  "declaredSource": {
+    "created": "2026-10-18T18:59:08.330364+00:00",
+    "integrationBase": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+    "files": 9991,
+    "bytes": 404326765
+  },
+  "actualFileHashes": {
+    "game/presentation/host.mjs": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2",
+    "game/app.mjs": "aabdf3b7fdee28fdf7911fda86be8fd54fab29d005e5396b4789816aaafd0da8",
+    "game/ui/demo-clock.mjs": "839214720356f03438daa90ed0acea923d765b0ce38a311d55bef57c980bc03a",
+    "game/ui/demo-host.mjs": "d6d57b78d4a04ac91df0e19d4a340b8e73d2c526e85d8ab5a37a4951112e2a99"
+  },
+  "instrumentedReceipt": {
+    "path": "docs/qualification/shared-demos/webkit-ordinary-reload-owner-diagnostic-ownership-ci.json",
+    "sha256": "eb5662bc0c26eb227498271a90cdc2190bf9b2d3077bf83c099c1b1880d68875",
+    "functionalChecksPassed": 4,
+    "functionalComplete": true,
+    "strictDiagnosticGate": false,
+    "complete": false,
+    "browserCloseCompleted": true,
+    "previewClosed": true,
+    "sourceOverrides": [
+      {
+        "path": "/game/presentation/host.mjs",
+        "originalSHA256": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2",
+        "candidateSHA256": "bc48d550a3ba47d3c9e89289cd9f442e9d38a1f1030cde2f1bc96084966454d1",
+        "candidatePath": ".cache/webkit-owner-observation/host.mjs",
+        "scope": "Temporary server-only instrumentation. Existing main/load rejection handlers log; fetch catch records then rethrows the same error. No production files modified."
+      }
+    ]
+  },
+  "instrumentation": {
+    "probe": ".cache/qualify-webkit-owner-observation.mjs",
+    "probeSHA256": "6b4400d585c3a9660b34161e817b85288313d74147a5b12402b406522badfbf6",
+    "description": "Separate fixture server serves one exact hashed host variant. Existing main rejection ownership and load catch log operation IDs; the fetch catch records and rethrows the identical error. Lifecycle logs retain per-document identities. No Playwright request routing, published runtime, or stable qualification script changed.",
+    "limits": "The temporary instrumentation can affect scheduling. It proves only the recorded variant/event; it does not retroactively classify all unchanged-production errors or upgrade their failed receipts. Per-document observer initialization also runs in child frames; classification below uses the main document ID verified by the prior successful ordinary-entry snapshot."
+  },
+  "events": [
+    {
+      "diagnostic": "Fetch API access-control failure for cc1bc2077c62d4cea9aeba86c00d0185b3c93f7c7dfceaede414dc105859196f.png",
+      "classified": "Matched old-document fetch rejection with an existing load owner during ordinary navigation.",
+      "documentId": "1792351042513-0.1146623201585818",
+      "host": 1,
+      "operation": 114,
+      "timelineUTC": [
+        {
+          "time": "19:17:32.777",
+          "event": "Old document beforeunload"
+        },
+        {
+          "time": "19:17:32.779",
+          "event": "Native fetch starts for the exact URL; AbortSignal is not aborted"
+        },
+        {
+          "time": "19:17:32.780",
+          "event": "Playwright receives the native access-control pageerror for that URL"
+        },
+        {
+          "time": "19:17:32.782",
+          "event": "Fetch rejects with TypeError: Load failed; catch records then rethrows same error; existing load catch receives operation114"
+        },
+        {
+          "time": "19:17:32.801",
+          "event": "Old document pagehide, persisted=false"
+        },
+        {
+          "time": "19:17:32.817",
+          "event": "Existing host.close runs; no pending load remains"
+        },
+        {
+          "time": "19:17:32.822",
+          "event": "Next main document initialized"
+        }
+      ],
+      "interpretation": "The application had not reached its pagehide cleanup when this already-owned optional artwork load failed. The matching native request failure propagates through the existing load catch, whose cleanup executes before rethrow. Static app.mjs:2544 catch consumes the load chain and chooses the existing artwork fallback; this final app catch was not separately instrumented. The fresh page enters ordinary mode with unchanged observed persistence.",
+      "notClaimed": "No proof that every access-control diagnostic has this cause, no error suppression, no claim that beforeunload cancellation semantics should replace ordinary pagehide cleanup."
+    },
+    {
+      "diagnostic": "Context is stopped",
+      "receivedAt": "2026-10-18T19:17:32.820Z",
+      "classified": "Unresolved native/JavaScript diagnostic during the old-document teardown interval.",
+      "observed": "Received after the old document host.close and before next document initialization. It has no stack, matching host operation, or delivered DOM error/unhandledrejection event in this sample.",
+      "notClaimed": "Temporal association and absent DOM events are insufficient to prove harmless cancellation or to exempt the error. The strict failure remains."
+    }
+  ],
+  "additionalObservations": [
+    "Reloads1 and4 logged native createImageBitmap InvalidStateError rejections in the pre-existing main rejection handler and load catch after beforeunload, without a corresponding pageerror. Therefore native rejection and pageerror are not equivalent observables.",
+    "The receipt also retains ordinary source-preview build-info404 and external soundtrack CSP console diagnostics separately. These are not silently dropped or classified as the native pageerrors."
+  ],
+  "primarySources": [
+    {
+      "url": "https://github.com/microsoft/playwright/blob/v1.62.1/browser_patches/webkit/UPSTREAM_CONFIG.sh",
+      "finding": "Installed Playwright1.62.1 uses WebKit revision2336/browser26.5; pinned upstream base is343e13bf22dca9d0ec227801419aab0f9001a32f."
+    },
+    {
+      "url": "https://github.com/microsoft/playwright/blob/v1.62.1/packages/playwright-core/src/server/webkit/wkPage.ts",
+      "local": "Installed playwright-core/lib/coreBundle.js:49556-49591",
+      "finding": "An error-level console message in the JavaScript source category is converted to pageerror. This transport does not require a DOM error or unhandledrejection event."
+    },
+    {
+      "url": "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/loader/ThreadableLoader.cpp",
+      "finding": "The native loader creates the observed fetch/blob access-control message and logs it in the JavaScript error console category independently of application promise handling."
+    },
+    {
+      "url": "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/loader/DocumentThreadableLoader.cpp",
+      "finding": "logErrorAndFail logs the native loader error before notifying the client of request failure, consistent with this observed ordering."
+    },
+    {
+      "url": "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/Modules/fetch/FetchResponse.cpp",
+      "finding": "The exact Context is stopped text occurs when JSON-response construction or response cloning lacks a context global object. Those possible sites do not establish this event\u2019s actual origin; no direct corresponding use was found in the observed host/app chain. The inspected file set is not an exhaustive WebKit source search."
+    }
+  ],
+  "nextStep": "No production remediation is justified by the classified fetch event. If full per-event classification is required, capture bounded raw WebKit console/protocol source and document/target lifetime alongside the existing app-level rejection sink, retaining the unresolved Context is stopped error. Do not broaden an error exemption or move ordinary navigation cleanup solely to obtain a clean diagnostic count.",
+  "preservedFailure": "docs/qualification/shared-demos/webkit-ordinary-reload-no-routing-ownership-ci-final.json",
+  "processes": "The diagnostic browser and task-owned preview server completed cleanup; no diagnostic process remains."
+}

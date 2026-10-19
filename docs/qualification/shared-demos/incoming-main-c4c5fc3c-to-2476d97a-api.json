@@ -1,0 +1,622 @@
+{
+  "observedAt": "2026-10-19T03:04:46.960432+00:00",
+  "scope": "GitHub API pinned comparisons and object IDs only; no local Git object reads or fetch.",
+  "base": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "incoming": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+  "featureHead": "575c10a31287b7ae086bcf373ef4ab3ecbf613a3",
+  "status": "ahead",
+  "aheadBy": 41,
+  "behindBy": 0,
+  "mergeBase": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "incomingPathCount": 49,
+  "exactFeatureOverlapCount": 11,
+  "paths": [
+    {
+      "path": "docs/accessibility/critical-cues-2026-10-18.json",
+      "status": "added",
+      "changes": 1076,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "0364bd8b70d06416c47a135a88ce96a1a3b8936e",
+      "overlap": false
+    },
+    {
+      "path": "docs/accessibility/critical-cues-2026-10-18.md",
+      "status": "added",
+      "changes": 113,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "692b2350bbb2560e984aaf06deab8e9697098d58",
+      "overlap": false
+    },
+    {
+      "path": "docs/fpv-aircraft-mission-adapter-qualification.json",
+      "status": "added",
+      "changes": 1196,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "3db63236c073781c4b573f189a47e226612a48d3",
+      "overlap": false
+    },
+    {
+      "path": "docs/fpv-aircraft-presets.md",
+      "status": "modified",
+      "changes": 44,
+      "baseBlob": "7d80c33f49938cca7873d4e972d2bc77d85c160a",
+      "featureBlob": "7d80c33f49938cca7873d4e972d2bc77d85c160a",
+      "incomingBlob": "7cf4b9121078b84438cbb1d78a02acf00c70d603",
+      "overlap": false
+    },
+    {
+      "path": "docs/performance/solo-performance-followup-plan.md",
+      "status": "modified",
+      "changes": 203,
+      "baseBlob": "010366adf8e77eaee60f61510bd1d82ec207dae7",
+      "featureBlob": "010366adf8e77eaee60f61510bd1d82ec207dae7",
+      "incomingBlob": "23cb5332f0146bbfda27c781bfea1c82ad16d292",
+      "overlap": false
+    },
+    {
+      "path": "docs/time-attack-medal-goals.md",
+      "status": "added",
+      "changes": 39,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "23b7509db91f50ae765349c8c7d76e6167b6bc17",
+      "overlap": false
+    },
+    {
+      "path": "game/app.mjs",
+      "status": "modified",
+      "changes": 34,
+      "baseBlob": "0ed1950df2bc62e9c72000454cae37cc1dc44a5a",
+      "featureBlob": "d23d7038b709d92f672bed827a733567c23f9d36",
+      "incomingBlob": "c8cd13bd7eb123069b193a7d6a2db0cf3ebacb73",
+      "overlap": true
+    },
+    {
+      "path": "game/content-design/team-entry.mjs",
+      "status": "modified",
+      "changes": 24,
+      "baseBlob": "962b77b22ae64cf0354ea4da097466b3c36e4031",
+      "featureBlob": "962b77b22ae64cf0354ea4da097466b3c36e4031",
+      "incomingBlob": "2275f68282dbd3bff8fdccd5013ba64efffb1fe8",
+      "overlap": false
+    },
+    {
+      "path": "game/content-design/team-timed-entry.mjs",
+      "status": "modified",
+      "changes": 8,
+      "baseBlob": "10ca2ac1fdce3fbbc68d9ca636c6f4a33590ca18",
+      "featureBlob": "10ca2ac1fdce3fbbc68d9ca636c6f4a33590ca18",
+      "incomingBlob": "18074de77036b4d83f70ee210bab476eb574dab7",
+      "overlap": false
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "status": "modified",
+      "changes": 10,
+      "baseBlob": "98a69d5e65188ad45ceb1f15e8fa24737b751fa7",
+      "featureBlob": "98a69d5e65188ad45ceb1f15e8fa24737b751fa7",
+      "incomingBlob": "f9f8ffb6a1e9ed66f91b28bdcd6a673f30cb6269",
+      "overlap": false
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "status": "modified",
+      "changes": 1,
+      "baseBlob": "3f6af7b9b8a75a37f48b78d17a4b58bb3a3e94c2",
+      "featureBlob": "3f6af7b9b8a75a37f48b78d17a4b58bb3a3e94c2",
+      "incomingBlob": "355127740c664eca7e23fb703b67ffad4c044475",
+      "overlap": false
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "status": "modified",
+      "changes": 34,
+      "baseBlob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+      "featureBlob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+      "incomingBlob": "0705d4db72b6401771d8ddd357f758b7c4f6428d",
+      "overlap": false
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "status": "modified",
+      "changes": 2,
+      "baseBlob": "1126df4a073262353d0c73de5fed15b561b1075c",
+      "featureBlob": "bd0ae25ce54b5210ac17d6be73ce68d1d19aea5b",
+      "incomingBlob": "91d7785333613613ec2570d9b76e42c52371aafc",
+      "overlap": true
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "status": "modified",
+      "changes": 11,
+      "baseBlob": "8f07f59d71e1d44f0532eefc1c9161bb76d0f9b5",
+      "featureBlob": "8f07f59d71e1d44f0532eefc1c9161bb76d0f9b5",
+      "incomingBlob": "620e393385c1ed7855238273cc7876afc7a76691",
+      "overlap": false
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "status": "modified",
+      "changes": 11,
+      "baseBlob": "772095b830769472d547ff8c0a82cdc8f576391d",
+      "featureBlob": "772095b830769472d547ff8c0a82cdc8f576391d",
+      "incomingBlob": "ce56b68fe22355a53e64c925b4e4ec3f16c519a8",
+      "overlap": false
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "status": "modified",
+      "changes": 1,
+      "baseBlob": "4a7d1c5051aad3cc50c7488835804fb257b1c6dd",
+      "featureBlob": "2b164b7b4947ea958df19d12402c42ba5eb56629",
+      "incomingBlob": "fea637ec6925408fc2461b75c688f9f50c49457c",
+      "overlap": true
+    },
+    {
+      "path": "game/overflight/copy.mjs",
+      "status": "modified",
+      "changes": 2,
+      "baseBlob": "c1efb449d4648c1f237300eade4cbb1197103b70",
+      "featureBlob": "c1efb449d4648c1f237300eade4cbb1197103b70",
+      "incomingBlob": "be2ae749848cee1d48747d19ffc465fa45355211",
+      "overlap": false
+    },
+    {
+      "path": "game/overflight/play.html",
+      "status": "modified",
+      "changes": 8,
+      "baseBlob": "9cad6b0ee77426f8b22a7e2a49b5ae09d65d6b1a",
+      "featureBlob": "9cad6b0ee77426f8b22a7e2a49b5ae09d65d6b1a",
+      "incomingBlob": "968a965104b6195bc5bc64d6855d8276eba984e8",
+      "overlap": false
+    },
+    {
+      "path": "game/overflight/raid-variants.mjs",
+      "status": "modified",
+      "changes": 103,
+      "baseBlob": "f65538f99e997bdb10bc79a07520e37690fe5fdb",
+      "featureBlob": "f65538f99e997bdb10bc79a07520e37690fe5fdb",
+      "incomingBlob": "95e399b9ca0e90144c6a00029ca30eab8a6aad00",
+      "overlap": false
+    },
+    {
+      "path": "game/overflight/raid.html",
+      "status": "modified",
+      "changes": 8,
+      "baseBlob": "2620ba69913a7d70f77128d1222f6d97317130e5",
+      "featureBlob": "2620ba69913a7d70f77128d1222f6d97317130e5",
+      "incomingBlob": "f5e34aa68035d013408f2e88f71dae00cf51f1ca",
+      "overlap": false
+    },
+    {
+      "path": "game/overflight/style.css",
+      "status": "modified",
+      "changes": 7,
+      "baseBlob": "5d47beb0d5f613c9f462d5414470420557ba574a",
+      "featureBlob": "5d47beb0d5f613c9f462d5414470420557ba574a",
+      "incomingBlob": "2bea9f12a273eac3811e6bcab46551af258a888f",
+      "overlap": false
+    },
+    {
+      "path": "game/snake/classic-app.mjs",
+      "status": "modified",
+      "changes": 24,
+      "baseBlob": "7e305d25efd222aa9b9487d99c2400e9ba38560a",
+      "featureBlob": "d530f6e59650a3e75a583dfffaa65da4590490e8",
+      "incomingBlob": "ed79b7c441a146341d13f66799331322bdd19724",
+      "overlap": true
+    },
+    {
+      "path": "game/snake/classic-copy.mjs",
+      "status": "modified",
+      "changes": 6,
+      "baseBlob": "4b91e7cb075abf3a5e0e4f08656aac5f00065830",
+      "featureBlob": "4b91e7cb075abf3a5e0e4f08656aac5f00065830",
+      "incomingBlob": "f94ec860d96a9d8529f84d737222249f869d0106",
+      "overlap": false
+    },
+    {
+      "path": "game/test/capture-navigation-context-host.test.mjs",
+      "status": "modified",
+      "changes": 49,
+      "baseBlob": "656de185d92bc71e710237127ecea4bbdcd6ca11",
+      "featureBlob": "656de185d92bc71e710237127ecea4bbdcd6ca11",
+      "incomingBlob": "d59ff61a82b031b78b54ca7f518391ff0841df46",
+      "overlap": false
+    },
+    {
+      "path": "game/test/classic-snake-ui.test.mjs",
+      "status": "modified",
+      "changes": 101,
+      "baseBlob": "cf74f38f92f60300a7de7d839d18095bb1072749",
+      "featureBlob": "9972f405e6957d23bdc187bd0133747c7440e4e9",
+      "incomingBlob": "6e33a0ac64a8399a0f9dea06c7b942dae081a45e",
+      "overlap": true
+    },
+    {
+      "path": "game/test/duel-navigation-context-host.test.mjs",
+      "status": "modified",
+      "changes": 9,
+      "baseBlob": "3f6924fab80e4c48fba2d4bb544bf142c38c2e1e",
+      "featureBlob": "3f6924fab80e4c48fba2d4bb544bf142c38c2e1e",
+      "incomingBlob": "a677060b61bd577c77c6348cf224dfeebaf7d54b",
+      "overlap": false
+    },
+    {
+      "path": "game/test/fixtures/fpv-aircraft-mission-v1.json",
+      "status": "added",
+      "changes": 90,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "c762d35a3424cb82ce8095658b95eaa56c28ae54",
+      "overlap": false
+    },
+    {
+      "path": "game/test/fixtures/fpv-nazgul-revision1.json",
+      "status": "added",
+      "changes": 1003,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "3ad98c4efd8964c90e68ebdcde23131111bb75ce",
+      "overlap": false
+    },
+    {
+      "path": "game/test/fpv-aircraft-mission-adapter.test.mjs",
+      "status": "added",
+      "changes": 432,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "506111c85d8050f68673269bfea2835adf4b7628",
+      "overlap": false
+    },
+    {
+      "path": "game/test/fpv-aircraft-presets.test.mjs",
+      "status": "modified",
+      "changes": 10,
+      "baseBlob": "51f7893bb7b1a602df8edbfa975ddbe693d027c5",
+      "featureBlob": "51f7893bb7b1a602df8edbfa975ddbe693d027c5",
+      "incomingBlob": "03d33f5b5e0276c1dead18674e6d5c44650e614f",
+      "overlap": false
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "status": "modified",
+      "changes": 119,
+      "baseBlob": "e3c1957a5dd4bdef2452d607ad3c7e7770f6f090",
+      "featureBlob": "e3c1957a5dd4bdef2452d607ad3c7e7770f6f090",
+      "incomingBlob": "234c3eea8b51986c9179f93c51a8c063cfeb147d",
+      "overlap": false
+    },
+    {
+      "path": "game/test/fpv-nazgul-diameter.test.mjs",
+      "status": "added",
+      "changes": 183,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "252f1cb258eb6055fa9365cd9b5c7b8624c6e440",
+      "overlap": false
+    },
+    {
+      "path": "game/test/fpv-tuning-ui.test.mjs",
+      "status": "modified",
+      "changes": 133,
+      "baseBlob": "05cae79b4d9f854d7d3af8efbd66f8da01388743",
+      "featureBlob": "05cae79b4d9f854d7d3af8efbd66f8da01388743",
+      "incomingBlob": "a3819cd37e0be6672acca412aa7fc58043d61764",
+      "overlap": false
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "status": "modified",
+      "changes": 205,
+      "baseBlob": "834bcb46deb4c05a368bc885e28f215467eed48c",
+      "featureBlob": "7f76639ed8b2774da97febdccc779caca0a1e5cb",
+      "incomingBlob": "2f440a402b32a120e9ff9e8d89a9f3c7acb15fd0",
+      "overlap": true
+    },
+    {
+      "path": "game/test/mode-play-shell.test.mjs",
+      "status": "modified",
+      "changes": 2,
+      "baseBlob": "8a51c762d21a82299232ec88fba82b44352be38c",
+      "featureBlob": "693de3ff5905f09a778e88d4811e199dfd26d042",
+      "incomingBlob": "082933ca4a75aa799f3c7f15c3ad12660af460ec",
+      "overlap": true
+    },
+    {
+      "path": "game/test/native-landing-structure.test.mjs",
+      "status": "modified",
+      "changes": 4,
+      "baseBlob": "f806a9efc35d0bc22789a09be008f33541570073",
+      "featureBlob": "f806a9efc35d0bc22789a09be008f33541570073",
+      "incomingBlob": "8039b1b05eebad2bcfff2782ad659d8dc7d9e0aa",
+      "overlap": false
+    },
+    {
+      "path": "game/test/overflight-reroll-disclosure.test.mjs",
+      "status": "added",
+      "changes": 219,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "7e4e27bb639401c127cf62245ecb58a54821e038",
+      "overlap": false
+    },
+    {
+      "path": "game/test/overflight-time-attack-medal-goal.test.mjs",
+      "status": "added",
+      "changes": 233,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "a19ccb3add116fa0e58821ce5a88df48fa183b1c",
+      "overlap": false
+    },
+    {
+      "path": "game/test/reading-prompts-host.test.mjs",
+      "status": "modified",
+      "changes": 59,
+      "baseBlob": "8309523265f4ac3c482bdd669fdeb71b046e7072",
+      "featureBlob": "8309523265f4ac3c482bdd669fdeb71b046e7072",
+      "incomingBlob": "9b9628ca3e48659e640b9c184cae64eb5f207b64",
+      "overlap": false
+    },
+    {
+      "path": "game/test/team-navigation-context-host.test.mjs",
+      "status": "added",
+      "changes": 215,
+      "baseBlob": null,
+      "featureBlob": null,
+      "incomingBlob": "49337fd1e58b9516c1ce50e782b2103eb67d6ee6",
+      "overlap": false
+    },
+    {
+      "path": "game/ui/mode-play-shell.mjs",
+      "status": "modified",
+      "changes": 7,
+      "baseBlob": "6d1fe9d06d7303da86a87c080be62561e22f3620",
+      "featureBlob": "2bf8838124033eadb5862cbeef24ac2cd901b109",
+      "incomingBlob": "7a7375cb180654984702132072810c1513d3e518",
+      "overlap": true
+    },
+    {
+      "path": "game/ui/native-menus.mjs",
+      "status": "modified",
+      "changes": 1,
+      "baseBlob": "fd7d7d4ba5f8d4fc93ec72eff767642d5b65a741",
+      "featureBlob": "25ff1a6288bc75e863b7b9f37bda9bc523d3c7be",
+      "incomingBlob": "9a340b306f1e6bb595b8b2a0f2fbdb66abc1f7c0",
+      "overlap": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-challenge.mjs",
+      "status": "modified",
+      "changes": 4,
+      "baseBlob": "b62cae752d11ac7e19ee5bcbb32662836a39ae26",
+      "featureBlob": "b62cae752d11ac7e19ee5bcbb32662836a39ae26",
+      "incomingBlob": "1b61deceded34c51b8febcc03674ae5dbfaf06e6",
+      "overlap": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+      "status": "modified",
+      "changes": 89,
+      "baseBlob": "b052ef8e2e5723a42e94391439a688a7e853552f",
+      "featureBlob": "b052ef8e2e5723a42e94391439a688a7e853552f",
+      "incomingBlob": "d6422c39cf80d2dd17633f065b2641363f35cec4",
+      "overlap": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-presets.mjs",
+      "status": "modified",
+      "changes": 28,
+      "baseBlob": "bd733eb328732ff4960089d5f7b9a254d3b3af4f",
+      "featureBlob": "bd733eb328732ff4960089d5f7b9a254d3b3af4f",
+      "incomingBlob": "be3c7599ca3b416e8de7464db5e991c887be5dc9",
+      "overlap": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "status": "modified",
+      "changes": 4,
+      "baseBlob": "27356d3639ed7c9b383da856bf4227f8d67eb5b1",
+      "featureBlob": "27356d3639ed7c9b383da856bf4227f8d67eb5b1",
+      "incomingBlob": "43c269a4671708ddc5e6e6f8cabe02f6a5ce3335",
+      "overlap": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "status": "modified",
+      "changes": 9,
+      "baseBlob": "e29ba9c538d80da47d79932b4d873e68f56118ef",
+      "featureBlob": "b766f0a11719b9e7c224209f022b4d92c2849fa0",
+      "incomingBlob": "51d2a78a55f479b7903998ee05cfcfecc14f7eff",
+      "overlap": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "status": "modified",
+      "changes": 26,
+      "baseBlob": "2c2e284d0cd7f75b0e8eab9567b2c2055f56a250",
+      "featureBlob": "2c2e284d0cd7f75b0e8eab9567b2c2055f56a250",
+      "incomingBlob": "d1a11b1f5aaa1ab27570ac15fc3b2ed689819741",
+      "overlap": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "status": "modified",
+      "changes": 7,
+      "baseBlob": "f33bf1d79022d539b2994eae25c51a25d7cde6c9",
+      "featureBlob": "fa2bca45fb78cd846efc2d85834a22b5c5208496",
+      "incomingBlob": "8df267f282d928f7d8370081a3d924432cc9483d",
+      "overlap": true
+    }
+  ],
+  "commits": [
+    {
+      "sha": "4b17aa2faf5fc12865e9f2eb4450b5b3e71c0528",
+      "subject": "docs(performance): update release progress and remaining qualification"
+    },
+    {
+      "sha": "fc9aa5cf3b652dada47591c9446f866a9f0e4abc",
+      "subject": "docs: record live release, source repairs and remaining qualification priorities"
+    },
+    {
+      "sha": "86837a8a56fd74bf459ba32b65bf9f67e78d879e",
+      "subject": "docs: update remaining priorities and retain latest validation outcomes"
+    },
+    {
+      "sha": "5cb7dee244474b6cbd098d2e55d8362f9f571aaf",
+      "subject": "docs(perf): update published failures, corrected checks and priorities"
+    },
+    {
+      "sha": "418e0bab39e8e802f0bc8e7480ca5310360620c1",
+      "subject": "docs(performance): record release checks and remaining qualification priorities"
+    },
+    {
+      "sha": "5f414549afd588c1eb811c2050ac53e3b3cf6b5c",
+      "subject": "Inventory critical cue alternatives and scoped evidence"
+    },
+    {
+      "sha": "e64c9c08cdf6cc9c41a0026a0ec7d4d7a517ede1",
+      "subject": "Point Team support evidence at actual role geometry"
+    },
+    {
+      "sha": "70bf8f0a42e4a6a1a64747c55f05caaf6419b658",
+      "subject": "docs(performance): record current admission evidence and release priorities"
+    },
+    {
+      "sha": "5aeeb58f176f545b6ebe3ad9035f25b2ea3965e0",
+      "subject": "docs(performance): record deployed build and combined qualification progress"
+    },
+    {
+      "sha": "6918bc84901dfc0267ed1c39d3dbd95f3e560627",
+      "subject": "Record scoped sound-off Capture browser evidence"
+    },
+    {
+      "sha": "15e629492b898cfe73d572d8960162c78fa6750c",
+      "subject": "fix(fpv): correct Nazgul F5 diameter in new preset revision"
+    },
+    {
+      "sha": "b4a2d6d6c5b889a2fee2df21db4c5e9ba1fd7a2b",
+      "subject": "fix(fpv): version authored floor support for lesson practice"
+    },
+    {
+      "sha": "33eeedb77d103d113d498561b691c2f3e4a34db1",
+      "subject": "test(fpv): qualify lesson landing with every aircraft preset"
+    },
+    {
+      "sha": "73bf49bb7d80121b2991535fa57b97babe22149e",
+      "subject": "fix(fpv): reset editor selection after library restore"
+    },
+    {
+      "sha": "35ae4985c0bec6277a45b9331efc0c0332aa165a",
+      "subject": "fix(fpv): keep applied setup restarts unarmed"
+    },
+    {
+      "sha": "b6b56b86d36041fe1362e5ab0a12c6b5af462528",
+      "subject": "Update performance priorities, exact-source gates and measurement limits"
+    },
+    {
+      "sha": "86067c7cf265c2917335b20501ca99bc91beac4f",
+      "subject": "docs(perf): update release progress and remaining qualification priorities"
+    },
+    {
+      "sha": "0d863e896568bf22704cde98c6858c140c45b0b8",
+      "subject": "Show current Snake mode and activity in navigation"
+    },
+    {
+      "sha": "a1c0795f2bf8aa4758f377ac1d37ef1c591106a3",
+      "subject": "Match Snake navigation captions to Duel mode labels"
+    },
+    {
+      "sha": "153b13445a5c32f3aa6b63113b56fb3c11a008cc",
+      "subject": "Update Solo performance priorities, draft admissions and remaining evidence"
+    },
+    {
+      "sha": "a5481c0cb83e76f6dff68c1a2764d2261c5f019f",
+      "subject": "Show Team mission context without changing launch ownership"
+    },
+    {
+      "sha": "0f1cf7fe03ab64867c7416a0860e015c3ea88eb4",
+      "subject": "Keep Team navigation labels concise and source-owned"
+    },
+    {
+      "sha": "478eb991a0866bfee93151c1b25c9beec9af1d6b",
+      "subject": "Show authoritative Hunt context in Solo and Duel"
+    },
+    {
+      "sha": "28e63d1f4a316a5d80ee4f7a604609321ea0c39a",
+      "subject": "Show the active Simulator host on Home"
+    },
+    {
+      "sha": "bd1a8f1b26e96f03902720e387780c67c68cc0c9",
+      "subject": "Update Solo performance priorities after playback ownership review"
+    },
+    {
+      "sha": "d39385ca9cb6bec083a1bb84b97d257416be182e",
+      "subject": "Localize Solo reading return hints through shared prompts"
+    },
+    {
+      "sha": "653afd1282cc8753d220ee0dcdbe32ec68d635a6",
+      "subject": "docs: update release progress, Worlds diagnostics and lifecycle priorities"
+    },
+    {
+      "sha": "9332a5931f4cc3673bfbc2d1f334b8a6798a8a3b",
+      "subject": "Explain the next Time Attack medal without rounding eligibility"
+    },
+    {
+      "sha": "6eeb58923d7bc7b1bb29c501c4efa48758135394",
+      "subject": "Explain reroll cost and possible repeated cards"
+    },
+    {
+      "sha": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+      "subject": "docs: update gameplay repair admission and outstanding qualification"
+    },
+    {
+      "sha": "987b5197b4ba5b598b993aa13a39f49333c93972",
+      "subject": "Merge pull request #1681 from mekhovov/codex/f15a-solo-reading-locale"
+    },
+    {
+      "sha": "bc09cf4baea666fd904da82bc7791f841bc743e7",
+      "subject": "Merge pull request #1656 from mekhovov/codex/f07-critical-cue-inventory"
+    },
+    {
+      "sha": "aa3a235c8514b1389b522bbfd379bba6f01a0093",
+      "subject": "Merge pull request #1648 from mekhovov/codex/f01e-hunt-context"
+    },
+    {
+      "sha": "6afefac998dc8e1520da36753de39498ea72652f",
+      "subject": "Merge pull request #1623 from mekhovov/codex/solo-performance-status-20261018-late"
+    },
+    {
+      "sha": "bfbc569cfabe29ec0c7a2661504aa2f77c3e1960",
+      "subject": "Merge pull request #1643 from mekhovov/codex/f01d-team-context"
+    },
+    {
+      "sha": "595f31a3b40f70f8ba7bb59ed9cd318ad7880aa9",
+      "subject": "Merge pull request #1684 from mekhovov/codex/f23-time-attack-medal-gap"
+    },
+    {
+      "sha": "c169b21ef2af58e9916d947ab1e70435861da65d",
+      "subject": "Merge pull request #1687 from mekhovov/codex/f19c-reroll-disclosure"
+    },
+    {
+      "sha": "ceaacccf7cf4d96b036fd1deb141d1c675b8d204",
+      "subject": "Merge main into Snake navigation context while preserving locale isolation"
+    },
+    {
+      "sha": "6b05de03e2b72af57e9d88b3c556a291c84a3ca0",
+      "subject": "Merge pull request #1637 from mekhovov/codex/f01b-snake-context"
+    },
+    {
+      "sha": "1b4928f05fdfeb36918f6de161ad63bcac2e4cb2",
+      "subject": "Merge pull request #1652 from mekhovov/codex/f01f-sim-context"
+    },
+    {
+      "sha": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+      "subject": "Merge pull request #1665 from mekhovov/codex/fpv-aircraft-lesson-followup-20261018"
+    }
+  ]
+}

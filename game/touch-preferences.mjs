@@ -2,6 +2,17 @@ import { resolveTouchControls } from './touch-controls.mjs';
 
 export const TOUCH_PREFERENCES_KEY = 'revealline.touch.v1';
 
+/** Read the canonical shared choice without owning listeners or persistence. */
+export function readStoredTouchControls(storage) {
+  try {
+    const raw = storage?.getItem(TOUCH_PREFERENCES_KEY);
+    if (raw && raw.length <= 512) return resolveTouchControls(JSON.parse(raw));
+  } catch {
+    // Invalid/denied storage leaves the caller's valid fallback intact.
+  }
+  return null;
+}
+
 /** Shared presentation preference only. Never writes a campaign/profile or changes rules. */
 export function createTouchPreferences({
   storage,
@@ -23,14 +34,10 @@ export function createTouchPreferences({
     sessionOnly = false,
     warning = '';
   const read = () => {
-    try {
-      const raw = storage?.getItem(TOUCH_PREFERENCES_KEY);
-      if (raw && raw.length <= 512) {
-        value = resolveTouchControls(JSON.parse(raw));
-        stored = true;
-      }
-    } catch {
-      /* Invalid/denied storage leaves this visit's valid choice intact. */
+    const next = readStoredTouchControls(storage);
+    if (next) {
+      value = next;
+      stored = true;
     }
   };
   read();

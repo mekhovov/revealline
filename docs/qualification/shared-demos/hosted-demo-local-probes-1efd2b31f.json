@@ -1,0 +1,46 @@
+{
+  "format": "SharedDemoHostedFailureLocalComparisonV1",
+  "created": "2026-10-19T07:56:39.223268+00:00",
+  "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "scope": "Source-tagged existing installed Standard/Gentle catalogue creation and assertions on two local Node versions. No browser or Linux claim.",
+  "probe": {
+    "path": "docs/qualification/shared-demos/demo-source-admission-probe-1efd2b31f.mjs.txt",
+    "sha256": "ffaca53ac80a8ca9d12a06d099c805397cc87a188af9e005210447fc81602096"
+  },
+  "runs": [
+    {
+      "path": "docs/qualification/shared-demos/demo-source-admission-22.22.2-1efd2b31f.json",
+      "sha256": "dd3e1591bb2c9cacac6dfa58b21c629d306e45891a3553a0eff2e4fee8361ca7",
+      "runtime": {
+        "node": "v22.22.2",
+        "v8": "12.4.254.21-node.39",
+        "platform": "darwin",
+        "arch": "arm64",
+        "userAgent": "Node.js/22"
+      },
+      "passedSources": 17,
+      "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+      "endingHead": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b"
+    },
+    {
+      "path": "docs/qualification/shared-demos/demo-source-admission-20.19.5-1efd2b31f.json",
+      "sha256": "ead6cf2d03a43a161797e2d47d704ac229331a2b1988b584fd19295e700603aa",
+      "runtime": {
+        "node": "v20.19.5",
+        "v8": "11.3.244.8-node.30",
+        "platform": "darwin",
+        "arch": "arm64",
+        "userAgent": null
+      },
+      "passedSources": 17,
+      "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+      "endingHead": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b"
+    }
+  ],
+  "hostedFailureStillOpen": true,
+  "limitations": [
+    "Both local macOS runs pass all 17 sources; neither reproduces Node22.13.1/Linux x64.",
+    "The hosted log did not identify the failing source or full mismatch. A diagnostic-only test improvement is required before assigning a cause.",
+    "No recording, compatibility gate, native simulation, or source selection was changed."
+  ]
+}

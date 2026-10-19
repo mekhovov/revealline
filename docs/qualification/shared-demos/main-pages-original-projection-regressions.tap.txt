@@ -1,0 +1,75 @@
+TAP version 13
+# Subtest: demo ownership retains exact native archive sources without exposing or installing archives
+ok 1 - demo ownership retains exact native archive sources without exposing or installing archives
+  ---
+  duration_ms: 768.917167
+  ...
+# Subtest: native dependency matching rejects missing, ambiguous, altered and unavailable source identities
+ok 2 - native dependency matching rejects missing, ambiguous, altered and unavailable source identities
+  ---
+  duration_ms: 0.702125
+  ...
+# Subtest: recordings without the ordinary demo catalog do not invent native dependencies
+ok 3 - recordings without the ordinary demo catalog do not invent native dependencies
+  ---
+  duration_ms: 0.124291
+  ...
+# Subtest: current reviewed and qualified catalogs resolve the exact authored native pack inventory
+ok 4 - current reviewed and qualified catalogs resolve the exact authored native pack inventory
+  ---
+  duration_ms: 5516.79525
+  ...
+# Subtest: main Pages keeps current content and omits archive and exclusive unused artwork
+ok 5 - main Pages keeps current content and omits archive and exclusive unused artwork
+  ---
+  duration_ms: 2.514541
+  ...
+# Subtest: ordinary builds keep the full optional-artwork contract
+ok 6 - ordinary builds keep the full optional-artwork contract
+  ---
+  duration_ms: 0.138166
+  ...
+# Subtest: publication profiles fail closed
+ok 7 - publication profiles fail closed
+  ---
+  duration_ms: 0.304875
+  ...
+# Subtest: main-pages removes only a registered redundant original and retains offline fallback ownership
+ok 8 - main-pages removes only a registered redundant original and retains offline fallback ownership
+  ---
+  duration_ms: 5.6595
+  ...
+# Subtest: complete releases keep authored originals and original download groups untouched
+ok 9 - complete releases keep authored originals and original download groups untouched
+  ---
+  duration_ms: 0.30575
+  ...
+# Subtest: other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals
+ok 10 - other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals
+  ---
+  duration_ms: 3.020416
+  ...
+# Subtest: all native owners must retain an exact fallback before a shared original may be omitted
+ok 11 - all native owners must retain an exact fallback before a shared original may be omitted
+  ---
+  duration_ms: 0.636541
+  ...
+# Subtest: emitted source catalog parsing admits static metadata and never evaluates executable expressions
+ok 12 - emitted source catalog parsing admits static metadata and never evaluates executable expressions
+  ---
+  duration_ms: 1.194125
+  ...
+# Subtest: retained authoring registers cannot lose their original without the shared native reader
+ok 13 - retained authoring registers cannot lose their original without the shared native reader
+  ---
+  duration_ms: 0.859583
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6914.3385

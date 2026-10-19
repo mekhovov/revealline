@@ -1,0 +1,61 @@
+{
+  "format": "SharedDemoHostedPreflightFailureV1",
+  "observedAt": "2026-10-19T11:59:31.270676+00:00",
+  "head": "443542a94d424187b9397c09773ab9d8eb6df6bd",
+  "runId": 39247977730,
+  "jobId": 118044483500,
+  "workflowURL": "https://github.com/mekhovov/revealline/actions/runs/39247977730",
+  "qualificationComplete": false,
+  "outcome": "failure-before-capture",
+  "cause": "Canonical fingerprint helper could not spawn ripgrep: spawnSync rg ENOENT. No game/browser scenario ran.",
+  "completed": {
+    "pinnedNodePlaywrightAndBrowsersInstalled": true,
+    "javascriptGuardsPassed": 13,
+    "pythonGuardsPassed": 17,
+    "actualLinuxLifetimeGuardsPassed": 9,
+    "skippedPythonGuards": 0,
+    "pythonDurationSeconds": 2.989
+  },
+  "pythonSource": [
+    {
+      "path": "scripts/qualify-shared-demo-hosted-browser.py",
+      "sha256": "185373074ebf52bf67150dac5dfe0001d5989c0f466eb4c3eee260120d0b5065"
+    },
+    {
+      "path": "scripts/test-qualify-shared-demo-hosted-browser.py",
+      "sha256": "fdfc592ca6cad920a2ee268970a24900e5cac3684181126fed87c84c652a584e"
+    }
+  ],
+  "correction": "Provision ripgrep explicitly in a separate bounded step after browser system dependencies; retain version and bounded install log. No source matcher, identity rule, scenario, game or test timeout changes.",
+  "files": [
+    {
+      "path": "job.json",
+      "source": ".cache/hosted-browser-443542a94-job-1156.json",
+      "bytes": 4028,
+      "sha256": "e710daaee3af015eb79c8d42994e698984acc2e68e5e6ee3c59a2cc70b105084"
+    },
+    {
+      "path": "job.original.log.txt",
+      "source": ".cache/hosted-browser-443542a94-job.raw.log.txt",
+      "bytes": 44069,
+      "sha256": "7fbf3de2ed8db78bfcb14b505be630afc3b650496cc2a19eded937bd6913842b"
+    },
+    {
+      "path": "browser-install.original.log.txt",
+      "source": ".cache/hosted-browser-443542a94-artifact/hosted-demo-browser/browser-install.log",
+      "bytes": 90637,
+      "sha256": "a6b23c48b3ab43ccdd01306922cac62404ee54a127548ea2f4f21e1fd80dbbd1"
+    },
+    {
+      "path": "storage-before.txt",
+      "source": ".cache/hosted-browser-443542a94-artifact/hosted-demo-browser/storage-before.txt",
+      "bytes": 162,
+      "sha256": "30230f96c5adf62a296e037c31cedf2ab6b7d4a7b2388da840d34d222ec14449"
+    }
+  ],
+  "limits": [
+    "Original failed workflow remains failed.",
+    "No fresh capture, playback, offline or physical-device qualification is claimed.",
+    "Source-bound Linux cleanup guard passes do not substitute for browser cleanup observations."
+  ]
+}

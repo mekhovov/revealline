@@ -1,0 +1,2938 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 7200,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T21:09:26.212Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:adventure-quarry-05-acro-a7cbbf241ab8c431",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Spire and ledge",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Облетіть скелю через позначені ворота, сядьте на західному уступі й поверніться."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-1317cbb34f9f263d",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Neon Channels",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-expedition-tail-workshop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Tail Workshop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Зберігайте обидва двори для поворотів. Котушка звільнить короткий шлях; броньовану ціль ловіть під час відпочинку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "pause",
+      "mode": "snake"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-24be1e733257dfcf",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Neon Switchboard",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-58-acro-b11704875488ce3a",
+      "phase": "playing",
+      "failure": "survival:freight-depot-dispatch-junction:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:freight-depot-dispatch-junction:standard",
+        "modeId": "survival",
+        "at": 1792357805886,
+        "loadingMs": 15208.900000000373,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15208.9,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 3,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0,
+            "payload": 0,
+            "verification": 15205.8,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 19440,
+              "totalTicks": 19561,
+              "elapsedMs": 15205.8
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Master flight",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 206,
+          "materials": 185,
+          "textures": 33,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 10,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-boundary-detour:standard",
+      "phase": "playing",
+      "failure": "survival:freight-depot-dispatch-junction:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:freight-depot-dispatch-junction:standard",
+        "modeId": "survival",
+        "at": 1792357805886,
+        "loadingMs": 15208.900000000373,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15208.9,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 3,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0,
+            "payload": 0,
+            "verification": 15205.8,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 19440,
+              "totalTicks": 19561,
+              "elapsedMs": 15205.8
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Boundary Detour",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-26c083d6a304753c",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Twin receivers",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-shared-detour:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Shared Detour",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-loops-06-acro-86f62172427c11a0",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Double circuit",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 287,
+          "materials": 251,
+          "textures": 29,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 6,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-orchard-forks:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Orchard Forks",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-approach-windows-low-roof-window-self-level-c493212fc881f7ea",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low Roof Window",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 287,
+          "materials": 176,
+          "textures": 26,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 11,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-9bd405709d380bb7",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Crown audience",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:river-port-pump-apron:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Pump Apron",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-harbor-window:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Harbor Window",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "narrow-controls"
+    }
+  ],
+  "samples": [
+    {
+      "at": "2026-10-18T21:11:13.580Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "660",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 38
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:11:23.585Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "1168",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 63
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:11:33.590Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "1739",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 146
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:11:43.596Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "2277",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 212
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:11:53.601Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "2830",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 268
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:12:03.609Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "3294",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 328
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:12:13.630Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "3895",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 391
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:12:23.636Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "4402",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 424
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:12:33.642Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "5003",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 455
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:12:43.647Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "5602",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 509
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:12:53.653Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "6202",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 557
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:13:03.662Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "6712",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 596
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:13:13.669Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "7312",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 615
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:13:23.674Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "7911",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 615
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:13:33.681Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "8420",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 629
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:13:43.687Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "9021",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 669
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:13:53.694Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "9621",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 784
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:14:03.699Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "10130",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 784
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:14:13.710Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "10730",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 849
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:14:23.719Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "11238",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 866
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:14:33.726Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "11838",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 985
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:14:43.731Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "12346",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 988
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:14:53.740Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "12946",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 997
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:15:03.745Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "13547",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1016
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:15:13.751Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "14146",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1016
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:15:23.758Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "14746",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1049
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:15:33.763Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "15346",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1088
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:15:43.768Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "15946",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1088
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:15:53.773Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "16546",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1182
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:16:03.778Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "17146",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1475
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:16:13.784Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "17746",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1475
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:16:23.790Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "18346",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1475
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:16:33.795Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "18946",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1475
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:16:43.803Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-supply-orchard-edge:standard",
+      "phase": "complete",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "19446",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Supply Orchard Edge",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1654
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T21:16:53.816Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "",
+      "phase": "loading",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792357822856,
+        "loadingMs": 15331.5,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15331.5,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 5,
+            "retirement": 0,
+            "adapter": 0.09999999962747097,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15326.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18240,
+              "totalTicks": 19454,
+              "elapsedMs": 15326.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "errors": [],
+  "complete": false,
+  "enduranceStarted": "2026-10-18T21:11:03.573Z",
+  "failure": "page.waitForTimeout: Target page, context or browser has been closed\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:309:16",
+  "secondaryDiagnostics": [
+    {
+      "stage": "failure-body-text",
+      "error": "locator.innerText: Target page, context or browser has been closed\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:75:48\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:18:12)\n    at async diagnoseQualificationFailure (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:75:7)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:357:3"
+    },
+    {
+      "stage": "failure-screenshot",
+      "error": "page.screenshot: Target page, context or browser has been closed\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:81:30\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:18:12)\n    at async diagnoseQualificationFailure (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:81:5)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:357:3"
+    }
+  ],
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T21:16:59.625Z"
+}

@@ -150,6 +150,40 @@ async function setup(
   return { page, audio, db, original };
 }
 
+test('Solo page retirement stops a pending official recording scan before creating its player', async (t) => {
+  let release;
+  const pending = new Promise((resolve) => (release = resolve)),
+    calls = [],
+    audio = audioHarness();
+  const page = await soloPage(t, {
+    campaign,
+    audio,
+    browserSetup({ globals }) {
+      globals.caches = {
+        async open() {
+          calls.push('open');
+          return {
+            async match() {
+              calls.push('match');
+              await pending;
+              return undefined;
+            },
+          };
+        },
+      };
+    },
+  });
+  await settle(() => calls.includes('match'), 'Ordinary soundtrack discovery starts');
+  assert.equal(page.doc.getElementById('soundtrack-dialog'), null);
+  const before = [...calls];
+  page.win.emit('pagehide', { persisted: false });
+  release();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(calls, before, 'Retired Solo cannot inspect the next recording.');
+  assert.equal(page.doc.getElementById('soundtrack-dialog'), null);
+  assert.deepEqual(page.errors, []);
+});
+
 for (const zeroVolume of [false, true]) {
   test(`silent Solo Start defers native audio until ${zeroVolume ? 'volume rises' : 'unmute'} in its control gesture`, async (t) => {
     let constructions = 0;

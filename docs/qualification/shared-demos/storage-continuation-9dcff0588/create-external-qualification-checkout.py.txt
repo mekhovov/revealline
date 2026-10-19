@@ -1,0 +1,53 @@
+from pathlib import Path
+import ast,datetime,hashlib,json,os,re,signal,subprocess,sys,threading,time
+root=Path.cwd();preflight=json.loads((root/'.cache/external-qualification-checkout-9dcff0588-preflight.json').read_text());target=Path(preflight['target']);parent=target.parent;head=preflight['head'];assert preflight['complete'] and not target.exists()
+owner_name='.cache/run-endurance-emitted-final.py';owner_body=(root/owner_name).read_bytes();assert hashlib.sha256(owner_body).hexdigest()=='0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c'
+names={'owned_process_snapshot','owned_process_identity','OwnedProcessTree','BoundedChildLog'};nodes=[x for x in ast.parse(owner_body).body if isinstance(x,(ast.FunctionDef,ast.ClassDef)) and x.name in names];assert {x.name for x in nodes}==names;scope=dict(globals());exec(compile(ast.Module(body=nodes,type_ignores=[]),owner_name,'exec'),scope);OwnedProcessTree,BoundedChildLog=scope['OwnedProcessTree'],scope['BoundedChildLog']
+report_path=root/'.cache/external-qualification-checkout-9dcff0588-create.json';log_path=report_path.with_suffix('.log.txt');assert not report_path.exists() and not log_path.exists()
+env={**os.environ,'GIT_NO_LAZY_FETCH':'1','GIT_TERMINAL_PROMPT':'0','GIT_OPTIONAL_LOCKS':'0','GIT_LFS_SKIP_SMUDGE':'1'};command=['git','-c','maintenance.auto=false','-c','gc.auto=0','-c','core.hooksPath=/dev/null','worktree','add','--detach',str(target),head]
+report={'format':'SharedDemoExternalCheckoutCreationV1','complete':False,'started':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':head,'originalCheckout':str(root),'target':str(target),'externalParent':preflight['externalParent'],'command':command,'timeoutSeconds':900,'cleanupGraceSeconds':16,'limitations':['Only a fresh owned detached worktree is created. The original checkout, source, capture and real Git packs remain unchanged.','The exact local commit and available objects are used; lazy fetch, network prompts, automatic maintenance and hooks are disabled.','Synchronous SMB/system calls can delay polling; no hard end-to-end timeout is claimed. Failure preserves the partial checkout for review.']}
+log=BoundedChildLog(log_path,byte_limit=1024*1024,tail_limit=16384);child=owned=remaining=None;deferred={'active':False,'pending':None};started=time.monotonic()
+def parent_stable():
+ s=parent.lstat();p=preflight['externalParent'];assert parent.resolve()==parent and parent.is_dir() and not parent.is_symlink() and s.st_dev==p['device'] and s.st_ino==p['inode'] and s.st_uid==p['uid']
+def interrupt(signum,frame):
+ if deferred['active']:deferred['pending']=signum;return
+ report['interruptedSignal']=signal.Signals(signum).name;signal.signal(signal.SIGTERM,signal.SIG_IGN);signal.signal(signal.SIGINT,signal.SIG_IGN);raise InterruptedError(report['interruptedSignal'])
+signal.signal(signal.SIGTERM,interrupt);signal.signal(signal.SIGINT,interrupt)
+try:
+ parent_stable();assert subprocess.check_output(['git','rev-parse','HEAD'],env=env,text=True,timeout=10).strip()==head
+ deferred['active']=True
+ try:
+  child=subprocess.Popen(command,cwd=root,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,start_new_session=True);owned=OwnedProcessTree(child);owned.capture();log.start(child.stdout)
+ finally:
+  deferred['active']=False;pending=deferred['pending'];deferred['pending']=None
+  if pending is not None:interrupt(pending,None)
+ next_storage=0
+ while child.poll() is None:
+  owned.capture();owned.check_limits();log.check_limits()
+  if time.monotonic()-started>=900:report['watchdogExpired']=True;raise TimeoutError('External checkout materialization exceeded900seconds.')
+  if time.monotonic()>=next_storage:parent_stable();next_storage=time.monotonic()+5
+  time.sleep(.25)
+ remaining=owned.wait_clear(3)
+ if remaining:report['cleanupNeeded']=True;remaining=owned.cleanup()
+except BaseException as error:report['failure']=repr(error)
+finally:
+ def finish_interrupt(signum,frame):report.setdefault('interruptedSignal',signal.Signals(signum).name);report['complete']=False
+ signal.signal(signal.SIGTERM,finish_interrupt);signal.signal(signal.SIGINT,finish_interrupt)
+ if owned is not None:
+  if remaining is None:
+   try:remaining=owned.cleanup()
+   except BaseException as error:report['cleanupFailure']=repr(error)
+  report['ownedProcesses']=owned.evidence(remaining)
+ log.finish();report['log']={'path':str(log_path.relative_to(root)),**log.evidence()};report['childExit']=child.poll() if child else None
+ try:
+  parent_stable();report['originalHeadAfter']=subprocess.check_output(['git','rev-parse','HEAD'],env=env,text=True,timeout=10).strip();assert report['originalHeadAfter']==head
+  if report['childExit']==0:
+   assert target.resolve()==target and target.is_dir() and not target.is_symlink();s=target.stat();assert s.st_uid==502 and s.st_dev==preflight['externalParent']['device'];report['targetIdentity']={'device':s.st_dev,'inode':s.st_ino,'uid':s.st_uid,'mode':s.st_mode}
+   report['targetHead']=subprocess.check_output(['git','-C',str(target),'rev-parse','HEAD'],env=env,text=True,timeout=10).strip();assert report['targetHead']==head
+   branch=subprocess.run(['git','-C',str(target),'symbolic-ref','-q','HEAD'],env=env,capture_output=True,text=True,timeout=10);assert branch.returncode==1 and not branch.stdout;report['detached']=True
+  report['complete']=(report['childExit']==0 and report.get('detached') is True and report.get('ownedProcesses',{}).get('verified') is True and not report['ownedProcesses']['observationLimits']['exceeded'] and report['log']['complete'] and not report['log']['error'] and not report['log']['limitExceeded'] and not any(report.get(k) for k in ['failure','cleanupFailure','cleanupNeeded','watchdogExpired','interruptedSignal']))
+ except BaseException as error:report['verificationFailure']=repr(error);report['complete']=False
+ report['elapsedSeconds']=time.monotonic()-started
+ if report['elapsedSeconds']>=930:report['finalDeadlineExceeded']=True;report['complete']=False
+ report['finished']=datetime.datetime.now(datetime.timezone.utc).isoformat();report_path.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'receipt':str(report_path.relative_to(root)),'complete':report['complete'],'childExit':report['childExit'],'elapsedSeconds':report['elapsedSeconds'],'failure':report.get('failure'),'target':str(target)}))
+sys.exit(0 if report['complete'] else 1)

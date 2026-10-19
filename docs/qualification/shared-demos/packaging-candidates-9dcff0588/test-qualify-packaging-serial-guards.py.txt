@@ -1,0 +1,53 @@
+"""Pure tests of the actual supervisor functions; no subprocesses, packages or disk artifacts."""
+from pathlib import Path
+import ast, hashlib, json, time
+from types import SimpleNamespace
+source=Path('.cache/qualify-packaging-serial.py').read_bytes()
+main=next(x for x in ast.parse(source).body if isinstance(x,ast.FunctionDef) and x.name=='main')
+selected=[x for x in main.body if isinstance(x,ast.FunctionDef) and x.name in {'interrupt','run_job'}]
+assert len(selected)==2
+class Signal:
+ SIGTERM=15;SIGINT=2;SIG_IGN=1
+ def signal(self,*args):pass
+ def Signals(self,value):return SimpleNamespace(name='SIGTERM' if value==15 else 'SIGINT')
+class Child:
+ def poll(self): return 0
+class Log:
+ def __init__(self,*a,**kw):pass
+ def start(self,pipe):events.append('log-start')
+ def finish(self):pass
+ def evidence(self):return {'complete':True,'error':None,'limitExceeded':False}
+class Owner:
+ def __init__(self,child):events.append('owner-attached')
+ def capture(self):events.append('owner-captured')
+ def cleanup(self):events.append('cleanup');return []
+ def wait_clear(self,n):return []
+ def evidence(self,r):return {'verified':r==[],'observationLimits':{'exceeded':False}}
+def require(v,m):
+ if not v:raise RuntimeError(m)
+counts=0
+for signum in (2,15):
+ events=[]; report={'jobs':[]}
+ scope={'signal':Signal(),'report':report,'deferred_signal':{'active':False,'pending':None},'stamp':lambda:'now',
+        'root':Path('/source'),'output':Path('/external/owned'),'node':Path('/node'),'env':{},'before':{'sourceRevision':'pin'},
+        'binding':lambda:{'sourceRevision':'pin'},'stable_external':lambda:None,'require':require,'time':time,
+        'args':SimpleNamespace(company_child_seconds=30,optional_child_seconds=30,base_path='/revealline/'),
+        'BoundedChildLog':Log,'OwnedProcessTree':Owner,'json':json}
+ def popen(*a,**kw):
+  events.append('spawned');scope['interrupt'](signum,None);events.append('spawn-returned');return SimpleNamespace(stdout=None,poll=lambda:0)
+ scope['subprocess']=SimpleNamespace(Popen=popen,PIPE=1,STDOUT=2)
+ exec(compile(ast.Module(body=selected,type_ignores=[]),'actual-wrapper-functions','exec'),scope)
+ try:scope['run_job']('company','fixture',time.monotonic()+30)
+ except RuntimeError as e:assert 'did not finish cleanly' in str(e)
+ else:raise AssertionError('Interrupted job must fail')
+ assert events==['spawned','spawn-returned','owner-attached','owner-captured','log-start','cleanup'],events
+ assert report['jobs'][0]['ownedProcesses']['verified'] is True
+ assert not report['jobs'][0]['complete'] and report['interruptedSignal'] in ['SIGTERM','SIGINT']
+ counts+=1
+# The post-validation deadline check prevents a last job from reporting success after the group budget.
+run=next(x for x in selected if x.name=='run_job')
+body=ast.unparse(run)
+assert "validate_result(job, destination, kind, identifier)\n    require(time.monotonic() < group_deadline" in body
+assert 'pthread_sigmask' not in source.decode(), 'The spawned child must not inherit blocked handled signals.'
+counts+=2
+print(json.dumps({'pureGuards':'PASS','checks':counts,'supervisorSHA256':hashlib.sha256(source).hexdigest()}))

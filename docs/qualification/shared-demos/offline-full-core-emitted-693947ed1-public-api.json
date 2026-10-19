@@ -1,0 +1,699 @@
+{
+  "format": "SharedDemoActualFullCoreInstalledOfflineV1",
+  "started": "2026-10-19T01:17:59.361Z",
+  "complete": true,
+  "checks": [
+    {
+      "label": "Actual generated full core and complete selected packages installed and verified",
+      "ids": [
+        "extras:demo"
+      ],
+      "requires": [
+        "shared",
+        "extras:sim-fpv"
+      ],
+      "coreFiles": 1742,
+      "coreBytes": 70486383,
+      "selectedFiles": 2915,
+      "selectedBytes": 450460300,
+      "installedBodyUpperBound": 520946683,
+      "accounting": "Full core sum plus SHA-deduplicated selected package sum; cross-cache duplicates are conservatively counted twice."
+    },
+    {
+      "label": "Cold document loaded from actual generated worker offline",
+      "normalEntry": true,
+      "ordinaryPlaying": "false",
+      "playerStorageUnchanged": true
+    },
+    {
+      "label": "Offline current Snake recording advances",
+      "open": true,
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "tick": "5",
+      "practice": false,
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {}
+      },
+      "nativeSurfaces": 1,
+      "ordinaryPlaying": "false"
+    },
+    {
+      "label": "Offline Snake practice returns to its recording",
+      "open": true,
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "tick": "10",
+      "practice": false,
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {}
+      },
+      "nativeSurfaces": 1,
+      "ordinaryPlaying": "false"
+    },
+    {
+      "label": "Offline mixed performance 1",
+      "open": true,
+      "mode": "sim",
+      "source": "sim:beginner-15-self-level-451ad6d46ab40e85",
+      "phase": "playing",
+      "tick": "2",
+      "practice": false,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {}
+      },
+      "nativeSurfaces": 1,
+      "ordinaryPlaying": "false"
+    },
+    {
+      "label": "Offline mixed performance 2",
+      "open": true,
+      "mode": "survival",
+      "source": "survival:relay-ruins-split-compound:standard",
+      "phase": "playing",
+      "tick": "60",
+      "practice": false,
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {
+          "allocatedSprites": 14
+        }
+      },
+      "nativeSurfaces": 1,
+      "ordinaryPlaying": "false"
+    },
+    {
+      "label": "Offline mixed performance 3",
+      "open": true,
+      "mode": "solo",
+      "source": "stone-lanes-detour",
+      "phase": "playing",
+      "tick": "122",
+      "practice": false,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {}
+      },
+      "nativeSurfaces": 0,
+      "ordinaryPlaying": "false"
+    },
+    {
+      "label": "Offline mixed performance 4",
+      "open": true,
+      "mode": "snake",
+      "source": "snake:classic-living-refuge-bays:standard",
+      "phase": "playing",
+      "tick": "5",
+      "practice": false,
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {}
+      },
+      "nativeSurfaces": 1,
+      "ordinaryPlaying": "false"
+    },
+    {
+      "label": "Demo isolation after complete actual installation",
+      "playerWrites": 0,
+      "storageSHA256": "8989e0783e8c8ff738a099247986df4df1de9475aef42b671cbe4c2aaf6c6dca",
+      "cacheInventorySHA256": "1108518a17a81d555630980284b517c634f027fa73c64d28d8ef826104a76051",
+      "managedMediaEvents": 0
+    },
+    {
+      "label": "Original paused native match preserved exactly",
+      "sha256": "14bc5c39000f429656fc010bdb3cbed7743ed6ff653ed3323f4983e0546ec6e1"
+    },
+    {
+      "label": "Actual installed bytes still verify offline; no network responses and transient workers retire",
+      "core": "ready",
+      "selectedReady": true,
+      "pageWorkers": 0,
+      "network": {
+        "serverRequests": 4997,
+        "serverResponses": 4997,
+        "activeServerRequests": 0,
+        "offlineRequests": [],
+        "offlineResponses": [],
+        "browserOfflineResponses": 650,
+        "browserOfflineNonWorkerResponses": []
+      }
+    }
+  ],
+  "errors": [],
+  "events": [
+    {
+      "stage": "ordinary-online-entry",
+      "documentId": "1792372705672-0.17430336849258687",
+      "at": 1792372707754,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline-enemy-stats.v1:writer",
+      "absentRemoval": false
+    },
+    {
+      "stage": "ordinary-online-entry",
+      "documentId": "1792372705672-0.17430336849258687",
+      "at": 1792372707767,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.classic-snake.setup.v2",
+      "absentRemoval": false
+    },
+    {
+      "stage": "ordinary-online-entry",
+      "documentId": "1792372705672-0.17430336849258687",
+      "at": 1792372707940,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "stage": "ordinary-online-entry",
+      "documentId": "1792372705672-0.17430336849258687",
+      "at": 1792372708053,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "stage": "ordinary-online-entry",
+      "documentId": "1792372705672-0.17430336849258687",
+      "at": 1792372708079,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "stage": "cold-offline-reload",
+      "documentId": "1792372753372-0.42052741016344564",
+      "at": 1792372753784,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.classic-snake.setup.v2",
+      "absentRemoval": false
+    },
+    {
+      "stage": "cold-offline-reload",
+      "documentId": "1792372753372-0.42052741016344564",
+      "at": 1792372753872,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "stage": "cold-offline-reload",
+      "documentId": "1792372753372-0.42052741016344564",
+      "at": 1792372754002,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "stage": "cold-offline-reload",
+      "documentId": "1792372753372-0.42052741016344564",
+      "at": 1792372754013,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "stage": "explicit-ordinary-play-then-pause",
+      "documentId": "1792372753372-0.42052741016344564",
+      "at": 1792372754426,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "stage": "explicit-ordinary-play-then-pause",
+      "documentId": "1792372753372-0.42052741016344564",
+      "at": 1792372754447,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "stage": "explicit-ordinary-play-then-pause",
+      "documentId": "1792372753372-0.42052741016344564",
+      "at": 1792372754804,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.classic-snake.round.tactical-remaster-1",
+      "absentRemoval": false
+    },
+    {
+      "stage": "explicit-ordinary-play-then-pause",
+      "documentId": "1792372753372-0.42052741016344564",
+      "at": 1792372754854,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "stage": "explicit-ordinary-play-then-pause",
+      "documentId": "1792372753372-0.42052741016344564",
+      "at": 1792372754858,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    }
+  ],
+  "source": {
+    "expectedHead": "693947ed1373db7a265def126a5eede2bf875013",
+    "expectedRuntimeFingerprint": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "before": {
+      "head": "693947ed1373db7a265def126a5eede2bf875013",
+      "runtime": {
+        "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+        "files": 9996,
+        "bytes": 404392393
+      },
+      "buildInput": {
+        "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+        "files": 9398,
+        "bytes": 348357907
+      },
+      "auxiliary": {
+        ".cache/demo-offline-browser/full-core-probe.mjs": "a9ba68eb1b607942a75922fe3b6e4bc879b9018e813a0f4772bceaa30ae594b1",
+        "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+        "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+        "scripts/qualify-demo-main-pages.mjs": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a",
+        "scripts/qualify-demo-packaging.mjs": "fdcd21070af2d65363e0753e9f0f809199d28ced2c15377f003938f2cc21c95c",
+        "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+        "scripts/shared-demo-download.mjs": "d0f32ea1b0ebf47fa129038e42a61b50eba144b829dc272decdae82c849e7a8d",
+        "scripts/demo-restoration-observation.mjs": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749",
+        "game/offline/service-worker.template.js": "0d475aec4a09f9347f329da219e54cf4d20c366d6d11ffea706c4d9a6c66e188",
+        "game/download-catalogue.mjs": "ea47c830901de0db5121657f9f1700386e1e263bb7527665a74b21fbf73f776c",
+        "game/official-downloads.mjs": "11b7010c75f52ebc03504017aed4bc5f896cbb4cdeec01cbada17c1d0c96c607",
+        "game/offline.mjs": "0e522b848534421dc6a66a9e8170562fb9c7a052d18f50e0657239c6cf5f5fee"
+      }
+    },
+    "after": {
+      "head": "693947ed1373db7a265def126a5eede2bf875013",
+      "runtime": {
+        "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+        "files": 9996,
+        "bytes": 404392393
+      },
+      "buildInput": {
+        "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+        "files": 9398,
+        "bytes": 348357907
+      },
+      "auxiliary": {
+        ".cache/demo-offline-browser/full-core-probe.mjs": "a9ba68eb1b607942a75922fe3b6e4bc879b9018e813a0f4772bceaa30ae594b1",
+        "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+        "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+        "scripts/qualify-demo-main-pages.mjs": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a",
+        "scripts/qualify-demo-packaging.mjs": "fdcd21070af2d65363e0753e9f0f809199d28ced2c15377f003938f2cc21c95c",
+        "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+        "scripts/shared-demo-download.mjs": "d0f32ea1b0ebf47fa129038e42a61b50eba144b829dc272decdae82c849e7a8d",
+        "scripts/demo-restoration-observation.mjs": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749",
+        "game/offline/service-worker.template.js": "0d475aec4a09f9347f329da219e54cf4d20c366d6d11ffea706c4d9a6c66e188",
+        "game/download-catalogue.mjs": "ea47c830901de0db5121657f9f1700386e1e263bb7527665a74b21fbf73f776c",
+        "game/official-downloads.mjs": "11b7010c75f52ebc03504017aed4bc5f896cbb4cdeec01cbada17c1d0c96c607",
+        "game/offline.mjs": "0e522b848534421dc6a66a9e8170562fb9c7a052d18f50e0657239c6cf5f5fee"
+      }
+    }
+  },
+  "scope": "Unmodified actual emitted Snake HTML and generated worker; complete real core plus the normal extras:demo selection and its required SIM package. Cold offline ordinary Snake entry, one current-mode performance and one four-mode mixed cycle, Snake practice and return, complete native paused-match export comparison, and player-persistence isolation after installation.",
+  "limits": {
+    "installedBodyBytes": 524288000,
+    "minimumFreeBytes": 1073741824,
+    "totalBrowserMs": 360000,
+    "explicitInstallMs": 180000
+  },
+  "limitations": [
+    "This is one ordinary entry and five observed performances, not browser playback of all 890 required entries. The complete selected dependency closure remains bound to the emitted audit.",
+    "Uses normal core/package installation APIs directly; it does not assert the downloads-screen or stable-launcher activation UI.",
+    "The fresh isolated profile receives only the original access-gate verifier through its existing storage contract. No HTML, worker, config, catalog, module, response, or password verifier is rewritten.",
+    "The browser uses reduced motion, so default automatic idle entry stays off without a demo-settings seed.",
+    "Player mutation observers cover Storage and IndexedDB write APIs, with the four exact managed-media stores classified separately. They are not an exhaustive browser-internal storage audit.",
+    "No actual browser discard, physical input hardware, audio listening, or unfamiliar-human review is claimed."
+  ],
+  "audit": {
+    "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.json",
+    "sha256": "7d46a578c3b0ca2b208e58cba99c151bf4889ec850bdc176da1030875baa7532",
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.inventory.json",
+      "sha256": "49a076bea7fa4402f33de1e07415f5095a0a95cbd11218f8c8593d8bcf93ab0a"
+    }
+  },
+  "capture": {
+    "directory": ".cache/shared-demos-emitted-dd337c8-693947ed1",
+    "manifestSHA256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474",
+    "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd"
+  },
+  "selection": {
+    "ids": [
+      "extras:demo"
+    ],
+    "requires": [
+      "shared",
+      "extras:sim-fpv"
+    ],
+    "coreFiles": 1742,
+    "coreBytes": 70486383,
+    "selectedFiles": 2915,
+    "selectedBytes": 450460300,
+    "installedBodyUpperBound": 520946683,
+    "accounting": "Full core sum plus SHA-deduplicated selected package sum; cross-cache duplicates are conservatively counted twice."
+  },
+  "productPins": [
+    {
+      "path": "service-worker.js",
+      "bytes": 1050799,
+      "sha256": "f95653915d3e5a42f25636938fa8856f3b39c6a81c3faa66c3db37a0f86be2b4"
+    },
+    {
+      "path": "offline-cache.json",
+      "bytes": 1029513,
+      "sha256": "b3c5891fc648147081d48cb8e21f920e2f58be9ec77efb77bba28c9d5ac7bbe7"
+    },
+    {
+      "path": "offline-content.json",
+      "bytes": 1728711,
+      "sha256": "49effea1669ffb7c80e71af1875df482cfd308e7ca6111f0da10fe77b7cf8fab"
+    },
+    {
+      "path": "game/snake/play.html",
+      "bytes": 17647,
+      "sha256": "4621069238ed1fa74544623ca83e3119a0e2d1ac21aa99c4dbd3ffccfe9a2741"
+    },
+    {
+      "path": "game/build-info.json",
+      "bytes": 143,
+      "sha256": "4cc85d2293f4ff6573154d8c5d75644219be2ba58379370b967f523e684d1b4c"
+    }
+  ],
+  "diskBeforeProfile": {
+    "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/",
+    "availableBytes": 1596157952
+  },
+  "storageSeed": {
+    "kind": "Existing original credential-session contract only",
+    "key": "revealline.access.revealline.v1",
+    "valueSHA256": "403ed86e91a2ca9caa7fd015eb1ad8e4ac056dcd0b181164c70c19bce677ad40",
+    "sourceHTMLSHA256": "4621069238ed1fa74544623ca83e3119a0e2d1ac21aa99c4dbd3ffccfe9a2741",
+    "demoPreferenceSeed": false,
+    "playerProgressSeed": false
+  },
+  "server": {
+    "url": "http://127.0.0.1:56978/",
+    "mode": "generated-build",
+    "fixtureAccess": false,
+    "cache": "policy",
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1",
+      "manifestSHA256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474",
+      "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+      "files": 5952,
+      "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+      "sourceFingerprint": {
+        "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+        "files": 9996,
+        "bytes": 404392393
+      },
+      "buildInputFingerprint": {
+        "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+        "files": 9398,
+        "bytes": 348357907
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "693947ed1373db7a265def126a5eede2bf875013",
+        "runtime": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInput": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    }
+  },
+  "profile": {
+    "directory": ".cache/demo-offline-browser/full-core-profile-DG5M09",
+    "fresh": true,
+    "removed": true
+  },
+  "browserVersion": "155.0.8059.85",
+  "diskBeforeInstall": {
+    "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/demo-offline-browser/full-core-profile-DG5M09",
+    "availableBytes": 1585602560
+  },
+  "installation": {
+    "prepared": {
+      "status": "ready",
+      "buildId": "f22377799b07fb917b1b85ed86a6706da347150711920dfbeeb9ef3304bc7ae4"
+    },
+    "core": {
+      "status": "ready",
+      "buildId": "f22377799b07fb917b1b85ed86a6706da347150711920dfbeeb9ef3304bc7ae4"
+    },
+    "selected": {
+      "ready": true,
+      "files": 2915,
+      "totalBytes": 450460300
+    },
+    "controller": "http://127.0.0.1:56978/service-worker.js",
+    "checkpoint": [
+      {
+        "edition": "http://127.0.0.1:56978/",
+        "group": "gameplay",
+        "selection": [
+          "extras:demo"
+        ],
+        "allGameplay": false,
+        "complete": true,
+        "hashes": 2915
+      }
+    ]
+  },
+  "persistenceAfterInstall": {
+    "sha256": "055c924a974c84d17a6ace5039fa396d245f2d891ecc5cc137362d91353f85d6",
+    "keys": {
+      "localStorage": [
+        "revealline-enemy-stats.v1:writer",
+        "revealline.access.revealline.v1",
+        "revealline.classic-snake.setup.v2"
+      ],
+      "sessionStorage": []
+    }
+  },
+  "serverClosed": true,
+  "offlineNetworkBoundary": {
+    "method": "Browser context offline plus confirmed stopped exact-owned preview server and closed connections",
+    "browserOffline": true,
+    "serverStoppedBeforeColdNavigation": true,
+    "serverURL": "http://127.0.0.1:56978/",
+    "closedAt": "2026-10-19T01:19:13.348Z",
+    "closeElapsedMs": 0.2289580000069691,
+    "closeTimeoutMs": 3000,
+    "serverRequestsAtBoundary": 4997,
+    "serverResponsesAtBoundary": 4997,
+    "offlineRequests": [],
+    "offlineResponses": [],
+    "unselectedRequestRejected": true,
+    "serverStillStoppedAtCleanup": true
+  },
+  "origin": {
+    "method": "Existing native export control, fully completed real browser download",
+    "sha256": "14bc5c39000f429656fc010bdb3cbed7743ed6ff653ed3323f4983e0546ec6e1",
+    "levelId": "classic-snake-open-loop",
+    "elapsedMs": 583.2,
+    "checkpoint": "22488b684fc348df",
+    "nativeSummary": {
+      "version": "classic-snake-match.v1",
+      "mode": "solo",
+      "policy": "mission",
+      "status": "running",
+      "result": null,
+      "elapsedMs": 583.2,
+      "remainingMs": null,
+      "boards": [
+        {
+          "version": "classic-snake-core.v1",
+          "levelId": "classic-snake-open-loop",
+          "levelIdentity": "5f286bbd6eb04450",
+          "mode": "solo",
+          "seed": 17,
+          "tick": 2,
+          "elapsedMs": 400,
+          "status": "running",
+          "catches": 0,
+          "goal": 8,
+          "score": 0,
+          "lengths": [
+            4
+          ],
+          "playerCatches": [
+            0
+          ],
+          "stepMs": 200,
+          "failure": null,
+          "finished": false,
+          "result": null,
+          "catchRemainingMs": null
+        }
+      ]
+    }
+  },
+  "persistenceBeforeDemos": {
+    "sha256": "8989e0783e8c8ff738a099247986df4df1de9475aef42b671cbe4c2aaf6c6dca",
+    "keys": {
+      "localStorage": [
+        "revealline-enemy-stats.v1:writer",
+        "revealline.access.revealline.v1",
+        "revealline.classic-snake.round.tactical-remaster-1",
+        "revealline.classic-snake.setup.v2"
+      ],
+      "sessionStorage": []
+    }
+  },
+  "cacheBeforeDemos": {
+    "entries": 4705,
+    "sha256": "1108518a17a81d555630980284b517c634f027fa73c64d28d8ef826104a76051"
+  },
+  "network": {
+    "serverRequests": 4997,
+    "serverResponses": 4997,
+    "activeServerRequests": 0,
+    "offlineRequests": [],
+    "offlineResponses": [],
+    "browserOfflineResponses": 650,
+    "browserOfflineNonWorkerResponses": []
+  },
+  "demoRetiredBeforeCleanup": {
+    "open": false,
+    "mode": "snake",
+    "source": "snake:classic-living-refuge-bays:standard",
+    "phase": "playing",
+    "tick": "5",
+    "practice": false,
+    "resources": {
+      "ownedNativeScenes": 0,
+      "practiceWorlds": 0,
+      "ownedHostListeners": 32,
+      "renderer": {}
+    },
+    "nativeSurfaces": 0,
+    "ordinaryPlaying": "false"
+  },
+  "storageCleanup": {
+    "unregistered": [
+      true
+    ],
+    "deleted": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "remainingRegistrations": 0,
+    "remainingCaches": []
+  },
+  "ownedProcessesBeforeClose": [
+    {
+      "pid": 80406,
+      "ppid": 77733,
+      "kind": "browser"
+    },
+    {
+      "pid": 80470,
+      "ppid": 80406,
+      "kind": "gpu-process"
+    },
+    {
+      "pid": 80471,
+      "ppid": 80406,
+      "kind": "utility"
+    },
+    {
+      "pid": 80484,
+      "ppid": 80406,
+      "kind": "utility"
+    },
+    {
+      "pid": 80511,
+      "ppid": 80406,
+      "kind": "renderer"
+    },
+    {
+      "pid": 80512,
+      "ppid": 80406,
+      "kind": "renderer"
+    },
+    {
+      "pid": 80513,
+      "ppid": 80406,
+      "kind": "renderer"
+    },
+    {
+      "pid": 85491,
+      "ppid": 80406,
+      "kind": "utility"
+    }
+  ],
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T01:19:46.024Z",
+  "ownedProcessesAfterClose": [],
+  "diskAfterCleanup": {
+    "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/",
+    "availableBytes": 1583923200
+  }
+}

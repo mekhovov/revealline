@@ -26,6 +26,33 @@
   const officialFiles = new Map(
     (CONFIG.downloadFiles || []).map((file) => [new URL(file.path, scope).href, file]),
   );
+  // Only the build's admitted, deliberately omitted source PNGs may produce a
+  // local 404. All other unknown URLs retain ordinary network/error behavior.
+  const omittedSourceOriginals = new Set();
+  const omitted = CONFIG.omittedSourceOriginals ?? [];
+  if (!Array.isArray(omitted) || omitted.length > 256)
+    throw new Error('Invalid omitted source-original inventory');
+  for (const relative of omitted) {
+    if (
+      typeof relative !== 'string' ||
+      relative.length > 512 ||
+      !relative.startsWith('authoring/') ||
+      !relative.endsWith('.png') ||
+      relative.split('/').some((part) => !part || part === '.' || part === '..') ||
+      /[\\%?#:\u0000-\u0020\u007f]/.test(relative)
+    )
+      throw new Error('Invalid omitted source-original path');
+    const url = new URL(relative, scope);
+    if (
+      url.origin !== scope.origin ||
+      !url.href.startsWith(scope.href) ||
+      omittedSourceOriginals.has(url.href) ||
+      files.has(url.href) ||
+      officialFiles.has(url.href)
+    )
+      throw new Error('Conflicting omitted source-original path');
+    omittedSourceOriginals.add(url.href);
+  }
   const officialKey = (hash) => new URL(`/.revealline-official/sha256/${hash}`, scope.origin).href;
   const sameScope = (url) => url.origin === scope.origin && url.pathname.startsWith(scope.pathname);
   const recoveryPath = new URL('.offline-recovery.mjs', scope).pathname;
@@ -573,6 +600,10 @@ navigator.serviceWorker?.addEventListener?.('controllerchange', () => {
           return fetch(event.request);
         })(),
       );
+      return;
+    }
+    if (omittedSourceOriginals.has(url.href)) {
+      event.respondWith(Promise.resolve(new Response(null, { status: 404 })));
       return;
     }
     const file = files.get(url.href);

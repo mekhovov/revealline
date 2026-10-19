@@ -6,7 +6,8 @@ import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { createDemoDirector } from '../demo-director.mjs';
 import { createDemoLibrary } from '../demo-library.mjs';
 import { collectBuildFiles } from '../../scripts/game-cli.mjs';
-import { demoIdentity } from '../demo-catalog.mjs';
+import { campaignKey } from '../library.mjs';
+import { demoIdentity, resolveDemoCatalog } from '../demo-catalog.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { verifyReplay } from '../replay.mjs';
 import { demoLoadingClock, settleDemoLoading } from './helpers/demo-loading-clock.mjs';
@@ -14,6 +15,7 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { createSoloRouteHost } from '../content-design/solo-route-host.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { loadEditionBootstrap } from '../editions/bootstrap.mjs';
+import { boundedJSON } from '../data-json.mjs';
 
 const json = async (relative) =>
   JSON.parse(await readFile(new URL(relative, import.meta.url), 'utf8'));
@@ -27,6 +29,16 @@ const base = { campaign, classRecipes },
     classRecipes: pack.classRecipes,
   };
 const entries = createExecutionCatalog([base, installed]).entries;
+const bundledCatalog = await json('../demo-data/catalog.json');
+const eligibleClips = (entries) => resolveDemoCatalog(bundledCatalog, entries);
+const eligibleKeys = (entries) =>
+  new Set(
+    entries
+      .filter((entry) => entry.difficulty === 'standard')
+      .flatMap((entry) =>
+        entry.campaign.levels.map((level) => `${campaignKey(entry.campaign)}/${level.id}`),
+      ),
+  );
 const emptyLibrary = { list: async () => [] };
 class LazyWorker {
   constructor() {
@@ -35,7 +47,7 @@ class LazyWorker {
 }
 const assetFetch = async (url) => ({ ok: true, text: async () => readFile(url, 'utf8') });
 
-test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily', async () => {
+test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily', async (t) => {
   const requests = [];
   const sources = await loadDemoSources({
     entries,
@@ -46,15 +58,53 @@ test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and
       return assetFetch(url);
     },
   });
-  assert.equal(sources.filter((source) => source.kind === 'replay').length, 10);
+  assert.equal(
+    sources.filter((source) => source.kind === 'replay').length,
+    eligibleClips(entries).length,
+  );
   assert.equal(sources.filter((source) => source.kind === 'bot').length, 6);
-  assert.equal(sources.filter((source) => source.kind === 'improv').length, 5);
-  assert.equal(new Set(sources.map((source) => source.id)).size, 21);
+  assert.deepEqual(new Set(sources.map((source) => source.levelKey)), eligibleKeys(entries));
+  assert.equal(new Set(sources.map((source) => source.id)).size, sources.length);
   assert.equal(requests.length, 1, 'Only the bundled catalogue loads before a scene is chosen.');
   assert.ok(requests[0].endsWith('/game/demo-data/catalog.json'));
   assert.equal(sources.filter((source) => source.approachable).length, 1);
+  assert.ok(sources.every((source) => source.variantId === 'standard'));
   for (const source of sources.filter((candidate) => candidate.kind === 'replay')) {
-    const player = await source.create({ signal: new AbortController().signal });
+    const requestOffset = requests.length;
+    let player;
+    try {
+      player = await source.create({ signal: new AbortController().signal });
+    } catch (error) {
+      try {
+        let diagnostics;
+        try {
+          diagnostics = boundedJSON(error.diagnostics ?? null, {
+            maxBytes: 4096,
+            maxNodes: 128,
+            maxDepth: 5,
+            maxArray: 16,
+            maxString: 512,
+          });
+        } catch {
+          diagnostics = { omitted: 'Unavailable or outside diagnostic bounds.' };
+        }
+        const attempts = requests.slice(requestOffset);
+        t.diagnostic(
+          JSON.stringify({
+            sourceId: source.id.slice(0, 128),
+            levelId: source.levelId.slice(0, 128),
+            campaignId: source.campaignId.slice(0, 128),
+            campaignKey: source.campaignKey.slice(0, 256),
+            attemptedURLs: attempts.slice(0, 16).map((url) => url.slice(0, 512)),
+            omittedURLs: Math.max(0, attempts.length - 16),
+            diagnostics,
+          }),
+        );
+      } catch {
+        // Diagnostic formatting must never replace the original verifier failure.
+      }
+      throw error;
+    }
     assert.equal(player.info.levelId, source.levelId);
     assert.equal(player.state.tick, 0);
     assert.equal(player.phase, 'paused');
@@ -123,7 +173,7 @@ test('current main Journey host adds every installed Journey level without prete
       .flatMap((entry) =>
         entry.campaign.levels.map((level) => `${entry.executionKey}/${level.id}`),
       );
-  assert.equal(reviewed.length, 10);
+  assert.equal(reviewed.length, eligibleClips(createExecutionCatalog([base]).entries).length);
   assert.ok(reviewed.every((source) => source.campaignId === base.campaign.id));
   assert.ok(reviewed.every((source) => !host.owns(source.entry)));
   const journeyImprovised = improvised.filter((source) => host.owns(source.entry));
@@ -132,7 +182,7 @@ test('current main Journey host adds every installed Journey level without prete
     new Set(journeyImprovised.map((source) => source.levelKey)),
     new Set(journeyLevels),
   );
-  assert.equal(improvised.length, journeyLevels.length + 4);
+  assert.equal(improvised.length, journeyLevels.length);
 });
 
 test('actual public company editions expose only their own isolated installed levels', async () => {
@@ -214,9 +264,9 @@ test('missing Worker and uninstalled content filter sources without downloading 
     fetch: fetcher,
     WorkerClass: LazyWorker,
   });
-  assert.equal(sources.length, 7);
+  assert.equal(sources.length, eligibleClips(onlyInstalled).length + 6);
   assert.equal(sources.filter((source) => source.kind === 'bot').length, 6);
-  assert.equal(sources.filter((source) => source.kind === 'improv').length, 1);
+  assert.deepEqual(new Set(sources.map((source) => source.levelKey)), eligibleKeys(onlyInstalled));
   assert.ok(requested.every((url) => url.endsWith('/game/demo-data/catalog.json')));
 });
 
@@ -245,8 +295,32 @@ test('manually kept local recordings join the catalogue without enabling automat
   library.dispose();
 });
 
+test('personal recording rotation metadata preserves its admitted difficulty identity', async () => {
+  const entry = entries.find((entry) => entry.difficulty === 'gentle');
+  const level = entry.campaign.levels[0];
+  const [source] = await loadDemoSources({
+    entries: [entry],
+    catalogs: [],
+    WorkerClass: null,
+    library: {
+      list: async () => [
+        {
+          id: 'local-gentle',
+          source: 'local',
+          entry,
+          level,
+          campaignKey: campaignKey(entry.campaign),
+          levelId: level.id,
+        },
+      ],
+    },
+  });
+  assert.equal(source.variantId, 'gentle');
+  assert.equal(source.entry, entry);
+  assert.equal(source.levelKey, `${campaignKey(entry.campaign)}/${level.id}`);
+});
+
 test('uncached optional bundled replays fall back to a retained recording or stay unavailable offline', async () => {
-  const catalog = await json('../demo-data/catalog.json');
   const recording = await json('../demo-data/first-signal-left.replay.json');
   // A fresh main installation has the base owner, without an installed bot pack.
   // The catalogue remains available offline; its optional recording bodies do not.
@@ -279,26 +353,34 @@ test('uncached optional bundled replays fall back to a retained recording or sta
           throw new TypeError('Failed to fetch: optional recording is not cached offline.');
         },
       });
-      assert.equal(allSources.filter((source) => source.kind === 'improv').length, 4);
+      assert.equal(allSources.filter((source) => source.kind === 'improv').length, 0);
       const sources = allSources.filter((source) => source.kind === 'replay');
       const bundled = sources.filter((source) => source.source !== 'local');
-      assert.equal(bundled.length, catalog.clips.length);
+      assert.equal(bundled.length, eligibleClips(installedEntries).length);
       assert.ok(sources.every((source) => source.kind === 'replay'));
       director = createDemoDirector({ sources, random: () => 0, loading: clock.options });
       assert.equal(await director.start(), retained);
       assert.deepEqual(
-        director.failedSourceIds,
-        bundled.map((source) => source.id),
+        new Set(director.failedSourceIds),
+        new Set(bundled.map((source) => source.id)),
       );
       assert.deepEqual(
-        requested,
-        [
+        new Set(requested),
+        new Set([
           new URL('../demo-data/catalog.json', import.meta.url).href,
-          ...catalog.clips.map(
-            (clip) => new URL(`../${clip.replayURL.slice(2)}`, import.meta.url).href,
+          ...bundled.flatMap((clip) =>
+            [
+              clip.replayURL,
+              ...(clip.id.startsWith('solo-qualified-')
+                ? [
+                    ...(clip.replayVariants ?? []),
+                    ...(clip.runtimePerformances ?? []).map((performance) => performance.replayURL),
+                  ]
+                : []),
+            ].map((url) => new URL(`../${url.slice(2)}`, import.meta.url).href),
           ),
-        ],
-        'Each unavailable bundled source is attempted once; no variant, pack or media download is attempted.',
+        ]),
+        'Each bounded recording candidate is attempted once; no pack or media download is attempted.',
       );
       const requestCount = requested.length;
       if (retained) {
@@ -383,7 +465,7 @@ test('frozen variants stay strict and reviewed routes qualify only an enemy chec
   const catalog = await json('../demo-data/catalog.json');
   const clip = catalog.clips[0];
   const candidates = await Promise.all(
-    [clip.replayURL, ...clip.replayVariants].map(async (url) => ({
+    [clip.replayURL, ...(clip.replayVariants ?? [])].map(async (url) => ({
       url,
       replay: await json(`../${url.slice(2)}`),
     })),
@@ -484,7 +566,11 @@ test('the ordinary game build includes every dynamic demo asset and Worker modul
     'game/demo-data/catalog.json',
     'game/demo-data/variant-provenance.json',
     ...catalog.clips.flatMap((clip) =>
-      [clip.replayURL, ...clip.replayVariants].map((url) => `game/${url.slice(2)}`),
+      [
+        clip.replayURL,
+        ...(clip.replayVariants ?? []),
+        ...(clip.runtimePerformances ?? []).map((performance) => performance.replayURL),
+      ].map((url) => `game/${url.slice(2)}`),
     ),
   ])
     assert.ok(
@@ -518,8 +604,11 @@ test('a personal cache that never settles times out without discarding bundled s
   clock.advance(15000);
   const sources = await pending;
   assert.equal(sources.length, 17);
-  assert.equal(sources.filter((source) => source.kind === 'replay').length, 10);
-  assert.equal(sources.filter((source) => source.kind === 'improv').length, 7);
+  assert.equal(
+    sources.filter((source) => source.kind === 'replay').length,
+    eligibleClips(entries).length,
+  );
+  assert.equal(sources.filter((source) => source.kind === 'improv').length, 0);
   assert.equal(librarySignal.aborted, true);
   assert.equal(clock.pending, 0);
 });

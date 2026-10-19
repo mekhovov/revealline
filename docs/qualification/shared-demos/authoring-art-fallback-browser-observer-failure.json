@@ -1,0 +1,32 @@
+{
+  "format": "revealline-authoring-art-fallback-browser.v1",
+  "started": "2026-10-18T19:40:07.116Z",
+  "scope": "Real Chromium authoring pages on task-owned production-policy fixture server. Exact original PNG404 injected at HTTP server, native retained pack/media served from exact producer payloads. Synthetic pagehide exercises owned gallery cleanup; no pixel aesthetic approval.",
+  "checks": [],
+  "errors": [],
+  "browserClosed": true,
+  "serverClosed": true,
+  "sourceBefore": {
+    "authoring/production/preview.mjs": "ed87903a7466f94f1cf4e26afd05296775642a14e0cac9e13f6d5eaeb97de733",
+    "authoring/design-atlas/reveal-audit.mjs": "62a09cbd23fd4a8b1ce404f46c5d2d11b13114c30a19eec9071aad7e4355782f",
+    "authoring/design-atlas/reveal-audit-thumbnails.mjs": "f4bf0be703f8fac98261a2af5eb725b839b8d90bfffec46ae2ad83e0aecb32ad",
+    "authoring/design-atlas/reveal-audit-viewer.mjs": "55921be8c4bb686ce77ab9929fdd778647326cbcd02f83a8f2474d970da34744",
+    "game/presentation/current-art.mjs": "a687bfd589db1bdb1375c5b940ae719ef33d7fe785471224f9628b482e96beab",
+    "game/presentation/current-art-sources.mjs": "85ebf1bc2762e3a9363173569ab0623cfc273f52bdd53aea5c8bb16e441b665b"
+  },
+  "complete": false,
+  "failure": {
+    "message": "locator.evaluate: TypeError: Failed to fetch\n    at eval (eval at evaluate (:311:30), <anonymous>:1:144)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+    "stack": "locator.evaluate: TypeError: Failed to fetch\n    at eval (eval at evaluate (:311:30), <anonymous>:1:144)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at imagePin (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-authoring-art-fallback.mjs:50:50)\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-authoring-art-fallback.mjs:55:25"
+  },
+  "sourceAfter": {
+    "authoring/production/preview.mjs": "ed87903a7466f94f1cf4e26afd05296775642a14e0cac9e13f6d5eaeb97de733",
+    "authoring/design-atlas/reveal-audit.mjs": "62a09cbd23fd4a8b1ce404f46c5d2d11b13114c30a19eec9071aad7e4355782f",
+    "authoring/design-atlas/reveal-audit-thumbnails.mjs": "f4bf0be703f8fac98261a2af5eb725b839b8d90bfffec46ae2ad83e0aecb32ad",
+    "authoring/design-atlas/reveal-audit-viewer.mjs": "55921be8c4bb686ce77ab9929fdd778647326cbcd02f83a8f2474d970da34744",
+    "game/presentation/current-art.mjs": "a687bfd589db1bdb1375c5b940ae719ef33d7fe785471224f9628b482e96beab",
+    "game/presentation/current-art-sources.mjs": "85ebf1bc2762e3a9363173569ab0623cfc273f52bdd53aea5c8bb16e441b665b"
+  },
+  "sourceUnchanged": true,
+  "finished": "2026-10-18T19:40:10.769Z"
+}

@@ -1,0 +1,22 @@
+{
+  "format": "SurvivalVariantFormattingEquivalenceV1",
+  "created": "2026-10-19T10:24:56.171814+00:00",
+  "path": "game/demo-modes/survival-runtime-variants.mjs",
+  "beforeSHA256": "ad4abcea2c87b2146e48ec1742f6e1dc88c4b00bb5d85fd051c18e40d2679564",
+  "afterSHA256": "066751a50ba1aa8284bcf02140e69a68635a3fcbfee82bcba65b6c5a915dbca7",
+  "valuesBefore": [
+    "chromium",
+    "firefox",
+    "webkit",
+    "node22131-x64"
+  ],
+  "valuesAfter": [
+    "chromium",
+    "firefox",
+    "webkit",
+    "node22131-x64"
+  ],
+  "onlyChange": "Prettier collapses the same literal array into one line; all values and order unchanged.",
+  "priorRun": ".cache/survival-native-admission-3f84.json",
+  "priorRunComplete": false
+}

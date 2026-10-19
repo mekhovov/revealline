@@ -1,0 +1,274 @@
+{
+  "format": "SharedDemoResourceReview.v1",
+  "reviewedAt": "2026-10-18T06:52:25.000607+00:00",
+  "scope": "Read-only source ownership and bounded-retention audit, plus the separately tested retirement-result correction. No new browser or heap profiling was performed for this receipt.",
+  "finalCodeFingerprint": {
+    "path": "source-freeze.json",
+    "head": "4f68b924ee74c1a02fa340b1d17ddadf5ffa2c3f",
+    "sha256": "62b52bf97812977626ec294eebbae2ab26b02de2b55fccd62fe4106ca9febb31"
+  },
+  "enduranceVersion": {
+    "path": "source-freeze-before-retirement-fix.json",
+    "sha256": "65607ce7d465474cbae486775a20bddbdca9b0c22b3c886a20e92f88e3873e53",
+    "note": "The running two-hour browser loaded the earlier host and CSS. It does not qualify the final two corrections; focused tests and separate browser receipts do."
+  },
+  "confirmedFinding": {
+    "status": "fixed",
+    "reference": {
+      "path": "game/ui/demo-host.mjs",
+      "sha256": "3d02aeee7d7257e80c1bafd78f5af959737c20824e81033bfcbc93c61925827b",
+      "line": 388
+    },
+    "before": "The page-owned retirement promise resolved to Promise.allSettled results containing the previous retirement result. Each retirement retained another nested result array, creating unbounded bookkeeping history over successive scenes and modal closes.",
+    "after": "Promise.allSettled([...]).then(() => undefined) preserves completion and rejection isolation while discarding settled result values.",
+    "ownershipPreserved": "All owned cleanup attempts still run independently. The host keeps the same barrier across close/reopen and waits before preparing either Solo or a native scene; a cleanup deadline does not authorize mounting over the unresolved old renderer.",
+    "limits": "This finding establishes an unbounded result-history retention path, not that retired graphics assets were retained by those result values or that this history explains the observed process RSS.",
+    "guards": [
+      {
+        "path": "game/ui/demo-host.mjs",
+        "line": 755
+      },
+      {
+        "path": "game/ui/demo-host.mjs",
+        "line": 802
+      },
+      {
+        "path": "game/ui/demo-host.mjs",
+        "line": 978
+      }
+    ]
+  },
+  "ownedResourceRetirement": [
+    {
+      "owner": "Shared native scene",
+      "reference": {
+        "path": "game/ui/demo-host.mjs",
+        "sha256": "3d02aeee7d7257e80c1bafd78f5af959737c20824e81033bfcbc93c61925827b",
+        "line": 813
+      },
+      "finding": "Input, renderer and player each receive cleanup through allSettled; the surface and tracked owner are removed afterward. Canceled late scene/fork results are also disposed."
+    },
+    {
+      "owner": "Solo scene",
+      "reference": {
+        "path": "game/demo-modes/solo.mjs",
+        "sha256": "bd3914625c4152c5a73ebf3cda0b09d6c1ef23705853c95df6dc0ca0a63798d2",
+        "line": 48
+      },
+      "finding": "Player, picture, painter, actor lease and presentation lease are independently retired. Late-acquired assets join the same host retirement barrier. Its local cleanup result chain is bounded by this fixed set of scene owners, unlike the corrected page-lifetime history."
+    },
+    {
+      "owner": "Solo painter/view",
+      "references": [
+        {
+          "path": "game/ui/render.mjs",
+          "sha256": "ce86a96a38d9fc636ef11bd4cb7ff469b7592d8b25f0c695f646ebfbcb9f1798",
+          "line": 310
+        },
+        {
+          "path": "game/demo-modes/solo-view.mjs",
+          "sha256": "1bcf82b9a12b8d174c81c0803f555c4303b4321c75b441f4a992718ae6545bac",
+          "line": 38
+        }
+      ],
+      "finding": "Painter disposal invalidates layers, cancels pending artwork, releases image/enemy leases and resets retained presentation state. View reset drops its last-paint and context references."
+    },
+    {
+      "owner": "Snake",
+      "reference": {
+        "path": "game/demo-modes/snake.mjs",
+        "sha256": "d16f500ae01ff2382f7db2fc97ed60df1657b4857655a57922c9bbac83b1f67e",
+        "line": 308
+      },
+      "finding": "Demo board rendering disables the document-wide terrain cache. Disposal shrinks the canvas to 1×1 and removes it."
+    },
+    {
+      "owner": "SIM",
+      "references": [
+        {
+          "path": "game/demo-modes/sim.mjs",
+          "sha256": "0f95e638006b3e7a2fa8a3e2a53049be0f34294851fb3b83469ec1abb814ad9e",
+          "line": 175
+        },
+        {
+          "path": "optional-practice/civilian-fpv/renderer.mjs",
+          "sha256": "4309077ce7cdf033e1e79bb07c9e93817fc5bd11226807aa64c50f7f74743075",
+          "line": 4220
+        }
+      ],
+      "finding": "Adapter removes its canvas and abort listener. Native renderer clears registered scene resources, disposes Three renderer resources and requests context loss."
+    },
+    {
+      "owner": "Survival",
+      "references": [
+        {
+          "path": "game/demo-modes/survival.mjs",
+          "sha256": "3345b3d98c3bd1bda7550c6db716abc895e3585a22b597b4d705c12aade500f1",
+          "line": 198
+        },
+        {
+          "path": "game/overflight/renderer.mjs",
+          "sha256": "c488268b60b87f8a800e45a1379f88c6a5cbdcfd6222722c42b626dd76b0d725",
+          "line": 1084
+        }
+      ],
+      "finding": "Adapter awaits renderer destruction before artwork/surface release. Native renderer removes listeners, waits for Phaser DESTROY, disposes its atlas, clears texture/frame maps and drops current state."
+    }
+  ],
+  "boundedRetainedData": [
+    {
+      "reference": {
+        "path": "game/demo-prefetch.mjs",
+        "sha256": "f350a9a13e7a97dbf9a1f2efba2651abfa2e0a4318fca5e39be60cacccfdb724",
+        "line": 11
+      },
+      "bound": "One immutable next payload slot; replacing or clearing it aborts its predecessor. It does not prepare a second world or renderer."
+    },
+    {
+      "reference": {
+        "path": "game/demo-modes/solo-builtins.mjs",
+        "sha256": "8631718c08544053e4550383028a032fd1eb2e1d8542045c23cdb1732ad783f2",
+        "line": 42
+      },
+      "bound": "Each finite authored Journey source retains its latest compiled entry/level after admission; at most the current 139 built-in Journey source identities, rather than a new entry per rotation. This retained source data is not an active renderer."
+    },
+    {
+      "reference": {
+        "path": "game/demo-modes/sim.mjs",
+        "sha256": "0f95e638006b3e7a2fa8a3e2a53049be0f34294851fb3b83469ec1abb814ad9e",
+        "line": 10
+      },
+      "bound": "Adapter retains its latest player/proof reference plus imported modules, replacing that reference on the next SIM source. Disposed physics ownership is distinct from retained replay/state data."
+    },
+    {
+      "reference": {
+        "path": "game/presentation/actor-art-pool.mjs",
+        "sha256": "023e7c36ef80810cb0e958ecd4546b2bf5a8117414cf2c540b6949f83926a029",
+        "line": 3
+      },
+      "bound": "Page-owned actor image reservations are capped at 64MiB, or 32MiB for the compact pool, including unfinished decodes. Leases release entries when decoding settles."
+    },
+    {
+      "reference": {
+        "path": "game/ui/render.mjs",
+        "sha256": "ce86a96a38d9fc636ef11bd4cb7ff469b7592d8b25f0c695f646ebfbcb9f1798",
+        "line": 197
+      },
+      "bound": "Legacy painter images have a 16×1024×1024-pixel retained/reserved budget; painter board layers have a 4×1024×1024-pixel allocation budget at line571."
+    },
+    {
+      "reference": {
+        "path": "game/ui/enemy-body-assets.mjs",
+        "sha256": "6ceee4e3f253cf9702fc40f1e4e05f86ce7c5b1befb7d8492da60bd16a215ff0",
+        "line": 233
+      },
+      "bound": "Shared enemy image pool admits at most 7 entries; scene leases are released on painter disposal."
+    },
+    {
+      "reference": {
+        "path": "game/demo-director.mjs",
+        "sha256": "71cb2035b08b58c26b3830b07a7a038810c0e1c5c5cf99d5d17b4613a85a5a00",
+        "line": 40
+      },
+      "bound": "Diagnostics retain at most 128 entries with bounded message/stack strings. The paused originating game and shared host display canvas intentionally remain owned by their normal page."
+    }
+  ],
+  "verification": {
+    "focusedTests": {
+      "reference": {
+        "path": "docs/qualification/shared-demos/resource-retirement-tests.tap.txt",
+        "sha256": "3c0de44243ad0ba245755a4a3ef2863fdcfd246045900449e779da3f75663846"
+      },
+      "command": "node --test --test-concurrency=1 game/test/demo-native-host.test.mjs game/test/demo-shared.test.mjs game/test/demo-director.test.mjs game/test/demo-solo-adapter.test.mjs game/test/demo-loading-host.test.mjs",
+      "tests": 42,
+      "passed": 42,
+      "failed": 0
+    },
+    "specificRegressions": [
+      {
+        "reference": {
+          "path": "game/test/demo-native-host.test.mjs",
+          "sha256": "318e8681ff7b71610925943545a30557818e42b3135b251fa8385c735b80d4b8",
+          "line": 285
+        },
+        "result": "Quick close/reopen cannot mount a second renderer until old async cleanup resolves; the completed barrier resolves to undefined."
+      },
+      {
+        "path": "game/test/demo-native-host.test.mjs",
+        "line": 303,
+        "result": "Six close/reopen cycles with throwing renderer disposal still retire every player, remove every surface and resolve cleanup to undefined."
+      },
+      {
+        "reference": {
+          "path": "game/test/demo-solo-adapter.test.mjs",
+          "sha256": "0ba01803ad31bdf110b6edef44cada0fa32a4481c63f5a5716c9841a8cef65ed",
+          "line": 67
+        },
+        "result": "Async replacement, independent cleanup after synchronous/asynchronous errors, and late assets following cancellation all pass."
+      },
+      {
+        "reference": {
+          "path": "game/test/demo-shared.test.mjs",
+          "sha256": "d0e5b3053f85007209a2269d69fa8bc29a612f3e7bce15f8618a71bd5cbb9422",
+          "line": 267
+        },
+        "result": "Replacement and fallback both await asynchronous cleanup; total recovery deadline tests also pass."
+      }
+    ],
+    "postBarrierBrowser": {
+      "reference": {
+        "path": "docs/qualification/shared-demos/mixed-chromium-retirement-final.json",
+        "sha256": "b88675822604f49acb86f2fc9d8abb7a2bfe54283b429219e52cf717348b0def"
+      },
+      "note": "Separate Chromium interaction/resource retirement check after the barrier correction and before the CSS centering correction; not a second two-hour run."
+    },
+    "finalLayout": {
+      "reference": {
+        "path": "docs/qualification/shared-demos/native-layout-final.json",
+        "sha256": "b6c0c0e4987225fadc471a59388cf89595fe9da75fc9e6f8917e669787284d23"
+      },
+      "note": "Final CSS verified separately in Chromium: Snake, SIM and Survival at 390×844 and 1280×800, centered visible canvases, no overflow, accessible controls, no page errors."
+    },
+    "formatChecks": "Focused host/director changes passed lint, formatting and diff checks when released. Final CSS passed Prettier and both demo-layout tests."
+  },
+  "coarseProcessObservations": {
+    "path": "endurance-process-observations.jsonl",
+    "observationsAvailableAtReview": [
+      {
+        "at": "2026-10-18T06:32:48.170468+00:00",
+        "rootPid": 23370,
+        "processes": 8,
+        "rssMiB": 2559.0,
+        "rssMiBByRole": {
+          "renderer": 1729.8,
+          "harness": 147.7,
+          "browser": 259.5,
+          "gpu-process": 230.4,
+          "utility": 191.6
+        },
+        "note": "Coarse resident-set snapshot; shared pages can be counted more than once. Collection starts during the run, not at process launch."
+      },
+      {
+        "at": "2026-10-18T06:46:50.966307+00:00",
+        "rootPid": 23370,
+        "processes": 8,
+        "rssMiB": 2465.8,
+        "rssMiBByRole": {
+          "renderer": 1636.9,
+          "harness": 138.7,
+          "browser": 259.4,
+          "gpu-process": 239.2,
+          "utility": 191.6
+        },
+        "note": "Coarse resident-set snapshot; shared pages can be counted more than once. Collection starts during the run, not at process launch."
+      }
+    ],
+    "interpretation": "These snapshots were collected approximately 44 and 58 minutes into the pre-correction run, not from process launch. The file may gain later observations. Values are RSS observations, not final maxima or exact JavaScript heap/GPU allocation measurements; shared pages may be counted more than once."
+  },
+  "limitations": [
+    "The inspected cleanup paths and focused tests support resource ownership claims, but do not prove that the complete application, browser or graphics driver has no memory leak.",
+    "Decoded assets, finite source catalogs, the paused origin, browser caches and garbage-collection timing can contribute to working-set size independently of active demo scene counts.",
+    "Observed renderer/worker/practice counters cover registered owners. Worker termination requests do not prove immediate native thread exit, and unknown GPU/browser allocations are not zero.",
+    "No initial RSS baseline, forced-GC heap comparison, allocation timeline or exhaustive third-party native-memory audit was available. The coarse snapshots alone support neither a leak diagnosis nor a no-leak conclusion."
+  ]
+}

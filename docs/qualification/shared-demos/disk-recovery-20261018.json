@@ -1,0 +1,43 @@
+{
+  "recorded": "2026-10-18T18:17:54.525759+00:00",
+  "scope": "Only recognizable regenerable Codex HTTP/code cache entry files; settings, sessions, user files, worktrees and qualification evidence untouched.",
+  "method": "Names match [0-9a-f]{16}_[0-9]+, modification age at least one hour, excludes every lsof-observed open path; only named cache directories considered.",
+  "removedEntries": 7492,
+  "removedBytes": 1047177256,
+  "roots": [
+    {
+      "path": "Library/Caches/Codex/Default/Cache/Cache_Data",
+      "entries": 200,
+      "bytes": 497185604
+    },
+    {
+      "path": "Library/Caches/Codex/Default/Partitions/codex-browser-app/Cache/Cache_Data",
+      "entries": 3160,
+      "bytes": 220197024
+    },
+    {
+      "path": "Library/Caches/Codex/Default/Partitions/codex-browser-app/Code Cache/js",
+      "entries": 4110,
+      "bytes": 188648472
+    },
+    {
+      "path": "Library/Caches/Codex/Default/Partitions/codex-browser-app/Code Cache/wasm",
+      "entries": 22,
+      "bytes": 141146156
+    }
+  ],
+  "observation": "Shell here-document creation failed with ENOSPC immediately before this cleanup; df showed approximately1.0GiB afterward. Concurrent consumption remains volatile. Earlier cache-only cleanup reclaimed an additional563497573bytes. No claim that disk pressure is permanently resolved.",
+  "gitTemporaryRecovery": {
+    "at": "2026-10-18T18:21:33.802127+00:00",
+    "removedBytes": 2713059328,
+    "files": [
+      "tmp_pack_7WfixE",
+      "tmp_pack_X6MK4E",
+      "tmp_pack_aih7Fs",
+      "tmp_pack_b26NfC",
+      "tmp_pack_yRHqDg"
+    ],
+    "guards": "Git identified these exact files as garbage; no Git/pack/index/fetch processes active, none open in lsof, each unchanged and older than120seconds, nlink1. Real pack/index/ref files untouched. HEAD still resolves.",
+    "freeSpaceAfter": "4.5GiB"
+  }
+}

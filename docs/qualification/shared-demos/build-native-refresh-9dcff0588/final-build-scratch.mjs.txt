@@ -1,0 +1,81 @@
+import assert from 'node:assert/strict';
+import * as nativeFS from 'node:fs/promises';
+import path from 'node:path';
+
+export function resolveBuildScratch(root, directory) {
+  if (directory === undefined) return null;
+  assert.equal(typeof directory, 'string');
+  const parts = directory.split('/');
+  assert.ok(parts.length >= 2 && parts[0] === '.cache' && directory.length <= 1024
+    && parts.slice(1).every(part => /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/.test(part)),
+  'Scratch must be an explicit safe relative directory beneath .cache.');
+  assert.ok(path.isAbsolute(root));
+  const target = path.resolve(root, directory);
+  assert.ok(target.startsWith(root + path.sep), 'Scratch must stay inside the source root.');
+  return target;
+}
+
+const available = (value) => {
+  const bytes = value.bavail * value.bsize;
+  assert.ok(Number.isSafeInteger(bytes) && bytes >= 0, 'Invalid filesystem capacity observation.');
+  return bytes;
+};
+export function requireBuildScratchSpace(bytes, minimum) {
+  assert.ok(Number.isSafeInteger(minimum) && minimum > 0);
+  assert.ok(bytes >= minimum, `Scratch has ${bytes} available bytes, below its ${minimum}-byte floor.`);
+}
+
+async function mountIdentity(root, directory, { fs, uid }) {
+  assert.equal(await fs.realpath(root), root, 'Source root must have its exact real path.');
+  const target = resolveBuildScratch(root, directory);
+  let current = root;
+  for (const part of directory.split('/')) {
+    current = path.join(current, part);
+    const info = await fs.lstat(current);
+    assert.ok(info.isDirectory() && !info.isSymbolicLink(), 'Scratch ancestors must be real directories.');
+  }
+  assert.equal(await fs.realpath(target), target, 'Scratch cannot resolve through a symbolic link.');
+  const [source, scratch] = await Promise.all([fs.lstat(root), fs.lstat(target)]);
+  assert.notEqual(scratch.dev, source.dev, 'Scratch is not mounted on a different filesystem; refusing local fallback.');
+  assert.equal(scratch.uid, uid, 'Scratch must belong to the current user.');
+  return { root, directory, path: target, sourceDevice: source.dev, device: scratch.dev, inode: scratch.ino, ownerUid: uid };
+}
+async function privateDirectory(file, mount, fs) {
+  const info = await fs.lstat(file);
+  assert.ok(info.isDirectory() && !info.isSymbolicLink(), 'Scratch child must be a real directory.');
+  assert.equal(await fs.realpath(file), file, 'Scratch child cannot resolve through a symbolic link.');
+  assert.equal(info.dev, mount.device, 'Scratch child left the owned filesystem.');
+  assert.equal(info.uid, mount.ownerUid, 'Scratch child must belong to the current user.');
+  assert.equal(info.mode & 0o077, 0, 'Scratch children must be private (mode 0700).');
+}
+
+export async function inspectBuildScratch(mount, { fs = nativeFS, uid = process.getuid() } = {}) {
+  const current = await mountIdentity(mount.root, mount.directory, { fs, uid });
+  assert.deepEqual(current, Object.fromEntries(Object.keys(current).map(key => [key, mount[key]])),
+    'Scratch mount identity changed.');
+  await privateDirectory(mount.tmp, mount, fs);
+  await privateDirectory(mount.captures, mount, fs);
+  return { availableBytes: available(await fs.statfs(mount.path)), device: mount.device, inode: mount.inode };
+}
+
+export async function prepareBuildScratch({ root, directory, minimumFreeBytes }, { fs = nativeFS, uid = process.getuid() } = {}) {
+  if (directory === undefined) return null;
+  // Admit the existing mount before creating anything. Never create a missing
+  // mount path or silently replace an unavailable mount with a local directory.
+  const mount = await mountIdentity(root, directory, { fs, uid });
+  assert.ok(available(await fs.statfs(root)) >= minimumFreeBytes, 'Source volume is below the unchanged disk floor.');
+  requireBuildScratchSpace(available(await fs.statfs(mount.path)), minimumFreeBytes);
+  for (const name of ['tmp', 'captures']) {
+    // Recheck mount identity immediately before every owned child creation.
+    const current = await mountIdentity(root, directory, { fs, uid });
+    assert.deepEqual(current, Object.fromEntries(Object.keys(current).map(key => [key, mount[key]]))); 
+    const file = path.join(mount.path, name);
+    try { await fs.mkdir(file, { mode: 0o700 }); }
+    catch (error) { if (error.code !== 'EEXIST') throw error; }
+    await privateDirectory(file, mount, fs);
+    mount[name] = file;
+  }
+  const check = await inspectBuildScratch(mount, { fs, uid });
+  requireBuildScratchSpace(check.availableBytes, minimumFreeBytes);
+  return { ...mount, availableBytesAtAdmission: check.availableBytes };
+}

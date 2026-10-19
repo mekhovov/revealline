@@ -1,0 +1,105 @@
+TAP version 13
+# Subtest: actual Title Missions → versus → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 14005.88825
+      ...
+    # Subtest: actual Versus host returns through the fixed own link
+    ok 2 - actual Versus host returns through the fixed own link
+      ---
+      duration_ms: 2940.360791
+      ...
+    # Subtest: receiving Solo opens exact Missions focus, with no flight resume
+    ok 3 - receiving Solo opens exact Missions focus, with no flight resume
+      ---
+      duration_ms: 10019.498792
+      ...
+    # Subtest: the same return query is consumed, not replayed
+    ok 4 - the same return query is consumed, not replayed
+      ---
+      duration_ms: 1271.172959
+      ...
+    1..4
+ok 1 - actual Title Missions → versus → Back restores exact menu without adoption
+  ---
+  duration_ms: 28238.735417
+  ...
+# Subtest: actual paused cut Missions → versus → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 10098.621833
+      ...
+    # Subtest: actual Versus host returns through the fixed own link
+    ok 2 - actual Versus host returns through the fixed own link
+      ---
+      duration_ms: 2203.040667
+      ...
+    # Subtest: receiving Solo opens exact Missions focus, with no flight resume
+    ok 3 - receiving Solo opens exact Missions focus, with no flight resume
+      ---
+      duration_ms: 10328.681
+      ...
+    # Subtest: the same return query is consumed, not replayed
+    ok 4 - the same return query is consumed, not replayed
+      ---
+      duration_ms: 1220.9155
+      ...
+    1..4
+ok 2 - actual paused cut Missions → versus → Back restores exact menu without adoption
+  ---
+  duration_ms: 23851.906166
+  ...
+# Subtest: failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+    # Subtest: preserve an externally changed slot through Leave and pagehide
+    ok 1 - preserve an externally changed slot through Leave and pagehide
+      ---
+      duration_ms: 10163.456041
+      ...
+    1..1
+ok 3 - failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+  ---
+  duration_ms: 10163.65775
+  ...
+# Subtest: storage failure after a successful check requires another deliberate Leave with truthful warning
+ok 4 - storage failure after a successful check requires another deliberate Leave with truthful warning
+  ---
+  duration_ms: 10904.889042
+  ...
+# Subtest: unavailable return storage preserves ready title with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 10145.566667
+      ...
+    1..1
+ok 5 - unavailable return storage preserves ready title with an explicit fixed fallback
+  ---
+  duration_ms: 10145.858875
+  ...
+# Subtest: unavailable return storage preserves verified flight with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 11649.754666
+      ...
+    1..1
+ok 6 - unavailable return storage preserves verified flight with an explicit fixed fallback
+  ---
+  duration_ms: 11649.904917
+  ...
+# Subtest: Stay cancels a pending verified-save wait and late completion cannot navigate or write
+ok 7 - Stay cancels a pending verified-save wait and late completion cannot navigate or write
+  ---
+  duration_ms: 11776.585709
+  ...
+1..7
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 107538.782792

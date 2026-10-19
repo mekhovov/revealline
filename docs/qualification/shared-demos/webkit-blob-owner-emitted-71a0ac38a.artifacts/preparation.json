@@ -1,0 +1,138 @@
+{
+  "before": {
+    "head": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+    "runtime": {
+      "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+      "files": 9997,
+      "bytes": 404446327
+    },
+    "buildInputs": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    },
+    "declaration": {
+      "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+      "bytes": 417,
+      "sha256": "b77e5252c304e310b420bb297fd99d80adc4106795d53887abddf7a295f81b46"
+    },
+    "emitted": {
+      "manifest": {
+        "path": ".cache/shared-demos-emitted-16ebd7b-71a0ac38a/manifest.json",
+        "bytes": 1304587,
+        "sha256": "dc5b83bb9c0f3ca8ba6fc656cb8a06b25d3b5905a72aa8ac2e880ceaaba6ac2f"
+      },
+      "audit": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-16ebd7b-71a0ac38a.json",
+        "bytes": 2065677,
+        "sha256": "824217d6db6695749598a53b816b3cfba03bc741c9dd605d022240a3c2d4bdf1"
+      },
+      "inventory": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-16ebd7b-71a0ac38a.inventory.json",
+        "bytes": 941265,
+        "sha256": "4b2e2a56a47e0f63117b40186dd650e96862adb55a176e02378db90f26bbe46c"
+      },
+      "identity": {
+        "inventorySHA256": "7d436362db5ad2408fd1f1a8811404d4918b90473a001344551fa4961f0cdbba",
+        "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+        "sourceFingerprint": {
+          "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+          "files": 9997,
+          "bytes": 404446327
+        },
+        "buildInputFingerprint": {
+          "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+          "files": 9406,
+          "bytes": 348394334
+        }
+      }
+    },
+    "helpers": [
+      {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/run.mjs",
+        "bytes": 17594,
+        "sha256": "656758af24dcee68cb3ff80aa80f17865c7fe8b3b3fbf62dec65f177085524b5"
+      },
+      {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/projection.mjs",
+        "bytes": 15733,
+        "sha256": "8f409ef6d51bac28bcb9a94b5aec9a87261cd4bab8ef27466d1fe55340e1b617"
+      },
+      {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/supervise.py",
+        "bytes": 4597,
+        "sha256": "9e23c4e610dc21281132fe513856a6d21ae7df23be600f5e43c94a344539c2c0"
+      },
+      {
+        "path": ".cache/run-endurance-emitted-final.py",
+        "bytes": 26055,
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+      },
+      {
+        "path": ".cache/demo-probe-evidence.mjs",
+        "bytes": 2632,
+        "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9"
+      }
+    ]
+  },
+  "harness": {
+    "path": "scripts/qualify-demo-restoration-browser.mjs",
+    "bytes": 23633,
+    "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83"
+  },
+  "derived": {
+    "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/derived-qualifier.mjs",
+    "bytes": 30854,
+    "sha256": "36250bd6d5b0e304b71d2e3c404fc37cc325d9cd11a80837038a021d0882a29e"
+  },
+  "projections": [
+    {
+      "name": "game/presentation/host.mjs",
+      "original": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/game__presentation__host.mjs.original.txt",
+        "bytes": 29538,
+        "sha256": "ae0ee1270b586807f0c96987988f970c0048c1844a085d748efe31e4de43b623"
+      },
+      "projected": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/game__presentation__host.mjs.projected.mjs",
+        "bytes": 30826,
+        "sha256": "1fbc71672ff1b3d8702b2e77c8d9f6ebd46e415cafeb0b6cc1698b71d1e6f2ec"
+      },
+      "absolute": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/game__presentation__host.mjs.projected.mjs",
+      "syntaxVerified": true
+    },
+    {
+      "name": "game/app.mjs",
+      "original": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/game__app.mjs.original.txt",
+        "bytes": 492495,
+        "sha256": "8110efdf57db9a88236c0c293451db4ac3e4ea9369036bd538d15164f51d8ba7"
+      },
+      "projected": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/game__app.mjs.projected.mjs",
+        "bytes": 492717,
+        "sha256": "a73cb60cae926cd7809e3a0d04d7e3faec7b9a11cab1ef7f3157bfa5cfd3637b"
+      },
+      "absolute": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/game__app.mjs.projected.mjs",
+      "syntaxVerified": true
+    }
+  ],
+  "scope": "One existing Solo ordinary/watch/practice restoration sequence; unchanged 30s entry, 3s action and 240s suite gates. No BFCache/all-mode claim.",
+  "providerIdentity": {
+    "manifestSHA256": "dc5b83bb9c0f3ca8ba6fc656cb8a06b25d3b5905a72aa8ac2e880ceaaba6ac2f",
+    "inventorySHA256": "7d436362db5ad2408fd1f1a8811404d4918b90473a001344551fa4961f0cdbba",
+    "sourceVerification": {
+      "head": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+      "runtime": {
+        "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+        "files": 9997,
+        "bytes": 404446327
+      },
+      "buildInput": {
+        "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+        "files": 9406,
+        "bytes": 348394334
+      }
+    }
+  }
+}

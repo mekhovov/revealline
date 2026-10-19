@@ -1,0 +1,1090 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T10:50:28.566Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "survival:field-crossing-broken-crossroads:standard",
+        "modeId": "survival",
+        "at": 1792407036619,
+        "loadingMs": 2410.800000000745,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 2410.8,
+          "durationsMs": {
+            "preparation": 0.20000000298023224,
+            "prefetch": 0,
+            "retirement": 1.3999999985098839,
+            "adapter": 0.10000000149011612,
+            "source": 0,
+            "payload": 4.599999997764826,
+            "verification": 2266.400000002235,
+            "scene-import": 7.800000000745058,
+            "artwork": 89.69999999925494,
+            "renderer": 40.4,
+            "mount": 0.19999999925494194
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "verified",
+              "code": null,
+              "tick": 19020,
+              "totalTicks": 19020,
+              "elapsedMs": 2271
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:snake-hunt-ground-routes-freight-slalom-acro-2b037eb18b810f1f",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:snake-hunt-ground-routes-freight-slalom-acro-2b037eb18b810f1f",
+        "modeId": "sim",
+        "at": 1792407039549,
+        "loadingMs": 730.1999999992549,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 730.2,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 1.3999999985098839,
+            "retirement": 0.10000000149011612,
+            "adapter": 0,
+            "source": 410.30000000074506,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 318.4
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Freight Slalom",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Патрулі проходять три довгі проходи. Перелітайте низький ряд вантажів, щоб перехопити ціль без кожного повороту."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-operation-stone-cable:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-operation-stone-cable:standard",
+        "modeId": "snake",
+        "at": 1792407040035,
+        "loadingMs": 73.59999999776483,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 73.6,
+          "durationsMs": {
+            "preparation": 0.09999999776482582,
+            "prefetch": 0,
+            "retirement": 0.8000000007450581,
+            "adapter": 0,
+            "source": 72.5,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.2
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Stone Cable",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Утримувані двері й пролом дають два різні короткі шляхи. Пронесіть вантаж одним, зберігаючи інший для повернення довгого кабелю."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-b48891e1132779ca",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "solo-qualified-b48891e1132779ca",
+        "modeId": "solo",
+        "at": 1792407044739,
+        "loadingMs": 2571.599999997765,
+        "preparation": {
+          "status": "ready",
+          "stage": "source",
+          "elapsedMs": 2571.6,
+          "durationsMs": {
+            "preparation": 0.09999999776482582,
+            "prefetch": 0,
+            "retirement": 0.8000000007450581,
+            "adapter": 0,
+            "source": 2570.7,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Neon Hearts",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:river-port-pump-apron:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "survival:river-port-pump-apron:standard",
+        "modeId": "survival",
+        "at": 1792407061058,
+        "loadingMs": 10880.300000000745,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 10880.3,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 5.599999997764826,
+            "retirement": 0.10000000149011612,
+            "adapter": 0,
+            "source": 0.10000000149011612,
+            "payload": 0,
+            "verification": 10590.699999999255,
+            "scene-import": 8.5,
+            "artwork": 172.59999999776483,
+            "renderer": 102.6,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19130,
+              "totalTicks": 19130,
+              "elapsedMs": 10590.8
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Pump Apron",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-cd19eddd5888061f",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "solo-qualified-cd19eddd5888061f",
+        "modeId": "solo",
+        "at": 1792407066886,
+        "loadingMs": 5757.800000000745,
+        "preparation": {
+          "status": "ready",
+          "stage": "source",
+          "elapsedMs": 5757.8,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 4.800000000745058,
+            "adapter": 0,
+            "source": 5753,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Crossbar depot",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-living-supply-flanks:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-living-supply-flanks:standard",
+        "modeId": "snake",
+        "at": 1792407067225,
+        "loadingMs": 216.30000000074506,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 216.3,
+          "durationsMs": {
+            "preparation": 0.09999999776482582,
+            "prefetch": 4.100000001490116,
+            "retirement": 0.10000000149011612,
+            "adapter": 0,
+            "source": 211.69999999925494,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.3
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Supply Flanks",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-orchard-01-acro-39243be8ab62510e",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:adventure-orchard-01-acro-39243be8ab62510e",
+        "modeId": "sim",
+        "at": 1792407068418,
+        "loadingMs": 1124.5,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 1124.5,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 4.5,
+            "retirement": 0.10000000149011612,
+            "adapter": 0,
+            "source": 693.6999999992549,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 426.2
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Meet the orchard guide",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 145,
+          "materials": 203,
+          "textures": 31,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 9,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-fork-and-warning:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-snake-fork-and-warning:standard",
+        "modeId": "snake",
+        "at": 1792407068577,
+        "loadingMs": 33.899999998509884,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 34,
+          "durationsMs": {
+            "preparation": 0.09999999776482582,
+            "prefetch": 4.700000002980232,
+            "retirement": 0,
+            "adapter": 0.09999999776482582,
+            "source": 28.699999999254942,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.4
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Moving Fork",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:flight-06-acro-80e5b607f33f1a75",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:flight-06-acro-80e5b607f33f1a75",
+        "modeId": "sim",
+        "at": 1792407068883,
+        "loadingMs": 256.69999999925494,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 256.7,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 3.699999999254942,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 37,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 216
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Fly a square",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:relay-ruins-split-compound:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "survival:relay-ruins-split-compound:standard",
+        "modeId": "survival",
+        "at": 1792407082745,
+        "loadingMs": 13786,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 13786.1,
+          "durationsMs": {
+            "preparation": 0.09999999776482582,
+            "prefetch": 2.699999999254942,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 13452.60000000149,
+            "scene-import": 7.399999998509884,
+            "artwork": 148.5,
+            "renderer": 174.8,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19218,
+              "totalTicks": 19218,
+              "elapsedMs": 13452.4
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Split Compound",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-81e24a32328f7a3c",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "solo-qualified-81e24a32328f7a3c",
+        "modeId": "solo",
+        "at": 1792407088948,
+        "loadingMs": 6123.699999999255,
+        "preparation": {
+          "status": "ready",
+          "stage": "source",
+          "elapsedMs": 6123.7,
+          "durationsMs": {
+            "preparation": 0.09999999776482582,
+            "prefetch": 0,
+            "retirement": 3.100000001490116,
+            "adapter": 0,
+            "source": 6120.5,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Staggered circuit",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-fork-and-warning:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792407104495,
+        "loadingMs": 15421.300000000745,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15421.2,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 2.899999998509884,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 15418.3,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18720,
+              "totalTicks": 19478,
+              "elapsedMs": 15418.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-snake-fork-and-warning:standard",
+        "modeId": "snake",
+        "at": 1792407104694,
+        "loadingMs": 196.89999999850988,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 196.9,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 4.799999997019768,
+            "adapter": 0,
+            "source": 191.60000000149012,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.4
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Moving Fork",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:woodland-04-self-level-816eb9ccbee739d6",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792407104495,
+        "loadingMs": 15421.300000000745,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15421.2,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 2.899999998509884,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 15418.3,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18720,
+              "totalTicks": 19478,
+              "elapsedMs": 15418.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:woodland-04-self-level-816eb9ccbee739d6",
+        "modeId": "sim",
+        "at": 1792407105542,
+        "loadingMs": 783.1999999992549,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 783.2,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 2.5,
+            "adapter": 0,
+            "source": 231,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 549.7
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quiet hover",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-fork-and-warning:standard",
+      "phase": "playing",
+      "failure": "solo-qualified-6fb14628da57d097 demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "solo-qualified-6fb14628da57d097",
+        "modeId": "solo",
+        "at": 1792407121432,
+        "loadingMs": 15710.60000000149,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 15710.2,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 4.100000001490116,
+            "adapter": 0,
+            "source": 15706.1,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-snake-fork-and-warning:standard",
+        "modeId": "snake",
+        "at": 1792407121461,
+        "loadingMs": 27,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 27,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 4.5,
+            "adapter": 0,
+            "source": 22.100000001490116,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.3
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Moving Fork",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-shunting-yard:standard",
+      "phase": "playing",
+      "failure": "solo-qualified-6fb14628da57d097 demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "solo-qualified-6fb14628da57d097",
+        "modeId": "solo",
+        "at": 1792407121432,
+        "loadingMs": 15710.60000000149,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 15710.2,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 4.100000001490116,
+            "adapter": 0,
+            "source": 15706.1,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "survival:freight-depot-shunting-yard:standard",
+        "modeId": "survival",
+        "at": 1792407130789,
+        "loadingMs": 9235.300000000745,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 9235.3,
+          "durationsMs": {
+            "preparation": 0.19999999925494194,
+            "prefetch": 3.699999999254942,
+            "retirement": 0.10000000149011612,
+            "adapter": 0,
+            "source": 0.10000000149011612,
+            "payload": 0,
+            "verification": 8958.199999999255,
+            "scene-import": 7.5,
+            "artwork": 149.69999999925494,
+            "renderer": 115.8,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19028,
+              "totalTicks": 19028,
+              "elapsedMs": 8958.3
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Shunting Yard",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh",
+      "manifestSHA256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3",
+      "inventorySHA256": "20e51e1ae9bfd6b9916b86978e0a3b212c40724d81612b376a38ccd944621279",
+      "files": 6229,
+      "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "sourceFingerprint": {
+        "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+        "files": 10273,
+        "bytes": 410435495
+      },
+      "buildInputFingerprint": {
+        "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+        "files": 9411,
+        "bytes": 348449477
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+        "runtime": {
+          "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+          "files": 10273,
+          "bytes": 410435495
+        },
+        "buildInput": {
+          "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+          "files": 9411,
+          "bytes": 348449477
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "5612b0450f58e1f3d19f60d2d3509737424f5f837d40e55aebdaa7f72206efa9"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "282789ae93daeb36060ca7de9b294caae44a796e49f53302369c23127e05ef85"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "enduranceStarted": "2026-10-19T10:52:11.883Z",
+  "enduranceFinalObservation": {
+    "finalObservationGapMs": 0
+  },
+  "enduranceFinished": "2026-10-19T10:52:11.883Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T10:52:12.526Z",
+  "previewClosed": true
+}

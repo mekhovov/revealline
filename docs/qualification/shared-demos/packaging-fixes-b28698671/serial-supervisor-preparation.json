@@ -1,0 +1,27 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "headAtPreparation": "f51d2597a3bcc711c229bbc51445e7150bfee1db",
+  "helper": ".cache/qualify-packaging-serial.py",
+  "sha256": "40cec0f2d26b26bfb6563e5ca48a37c0f07fdc428615fcaf7e632b68f5582f88",
+  "bytes": 20317,
+  "checks": {
+    "separate_cli_per_id": true,
+    "external_filesystem_guard": true,
+    "expected_clean_head": true,
+    "canonical_clis": true,
+    "bounded_cleanup_reuse": true,
+    "source_archive_counts": true,
+    "no_publisher": true,
+    "ast_valid": true,
+    "spawnInterruptionsDeferredUntilOwned": true,
+    "postValidationGroupDeadline": true,
+    "synchronousIOLimitationExplicit": true
+  },
+  "notes": "Static syntax/guard review and CLI --help only. No artifacts built. Actual clean committed HEAD supplied at release.",
+  "pureGuardChecks": {
+    "checks": 4,
+    "status": "PASS",
+    "script": ".cache/test-qualify-packaging-serial-guards.py",
+    "sha256": "197553d86dd0c249896111abb8d7c9b8298739279a75cbc9795a43e46ae83ae2"
+  }
+}

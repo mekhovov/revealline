@@ -1,0 +1,41 @@
+{
+  "format": "SharedDemoHostedOptionalPackageFailureV1",
+  "observedAt": "2026-10-19T09:20:24.865651+00:00",
+  "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "jobId": 117964156839,
+  "runId": 39223515756,
+  "jobURL": "https://github.com/mekhovov/revealline/actions/runs/39223515756/job/117964156839",
+  "strictComplete": false,
+  "counts": {
+    "tests": 1296,
+    "pass": 1294,
+    "fail": 2,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "log": {
+    "path": ".cache/hosted-b4688ca21-job-117964156839.log.txt",
+    "sha256": "9f219cba6fce3b3e413865c1999a62890c3420f784aa1f9cf28750bbe51719a9",
+    "bytes": 533022
+  },
+  "failures": [
+    {
+      "test": "actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets",
+      "path": "scripts/test-optional-fpv-package.mjs",
+      "line": 339,
+      "expected": 148,
+      "actual": 147
+    },
+    {
+      "test": "explicit FPV package remains independently reproducible with complete pinned runtime and source closures",
+      "path": "scripts/test-optional-fpv-package.mjs",
+      "line": 478,
+      "expected": 148,
+      "actual": 147
+    }
+  ],
+  "limits": [
+    "Exact hosted mismatch retained; underlying closure difference is not yet diagnosed.",
+    "Not the prior211-versus210 budget failure; no change to limits or test assertions made by this review."
+  ]
+}

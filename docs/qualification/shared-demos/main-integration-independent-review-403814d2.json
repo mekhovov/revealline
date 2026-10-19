@@ -1,0 +1,135 @@
+{
+  "format": "MainIntegrationIndependentReviewV1",
+  "reviewedAt": "2026-10-19T09:40:27.649449+00:00",
+  "complete": true,
+  "oldHead": "384659397c4724fbe616f8be535977098dcec0a2",
+  "oldBase": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+  "newBase": "403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+  "rebasedHead": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "rootReceipt": {
+    "path": ".cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-403814d2-state.json",
+    "sha256": "494dfeac0ccb4b93b50d1536cec756c17934d395a306b2cf329ba012436437e3",
+    "bytes": 357668
+  },
+  "commitCount": 44,
+  "authorsMessagesOrderIndependentlyMatched": true,
+  "exactIncomingDeltaPaths": [
+    "docs/offline-pwa/startup-recovery.md",
+    "docs/survival-suspend.md",
+    "game/offline/service-worker.template.js",
+    "game/overflight/app.mjs",
+    "game/overflight/checkpoint-schema.mjs",
+    "game/overflight/checkpoint.mjs",
+    "game/overflight/copy.mjs",
+    "game/overflight/mastery.mjs",
+    "game/overflight/records.mjs",
+    "game/overflight/style.css",
+    "game/overflight/suspend-package.mjs",
+    "game/overflight/suspend-view.mjs",
+    "game/overflight/suspend.mjs",
+    "game/profile-storage.mjs",
+    "game/test/helpers/survival-suspend-process.mjs",
+    "game/test/offline.test.mjs",
+    "game/test/overflight-checkpoint.test.mjs",
+    "game/test/overflight-host.test.mjs",
+    "game/test/overflight-records.test.mjs",
+    "game/test/overflight-suspend-host.test.mjs",
+    "game/test/overflight-suspend-package.test.mjs",
+    "game/test/overflight-suspend-process.test.mjs",
+    "game/test/overflight-suspend-view.test.mjs",
+    "game/test/overflight-suspend.test.mjs",
+    "game/test/profile-storage-receipts.test.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+    "scripts/game-cli.mjs",
+    "scripts/offline-startup.mjs",
+    "scripts/test-offline-startup.mjs"
+  ],
+  "nonoverlapObjectsMatchMain": true,
+  "nativeObjectsUnchanged": [
+    {
+      "path": "game/demo-data",
+      "gitObject": "fe4780393e107e63ee14d122ce1d59024b8ae731"
+    },
+    {
+      "path": "game/demo-modes",
+      "gitObject": "4e192209366eeb31de526b38ea9a7dc3790008a0"
+    },
+    {
+      "path": "game/content",
+      "gitObject": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764"
+    },
+    {
+      "path": "game/content-design/assets",
+      "gitObject": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183"
+    },
+    {
+      "path": "game/replay.mjs",
+      "gitObject": "fa473c568bec333395636541cc82fe3dd8b597f6"
+    },
+    {
+      "path": "game/snake/classic-core.mjs",
+      "gitObject": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5"
+    },
+    {
+      "path": "game/snake/classic-match.mjs",
+      "gitObject": "cd47d4660228b5e8968d6aef3d3d7700b48d432c"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "gitObject": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6"
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "gitObject": "c87f15cdc632a1bfd7592e8075974558d776fb88"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-data",
+      "gitObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "gitObject": "e9ee1383ebe909ce7993da499f07b33d486c9605"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "gitObject": "fa254c168037003881a41f881f270465a09d8f05"
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/shared-demos-generated",
+      "gitObject": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179"
+    },
+    {
+      "path": "game/core",
+      "gitObject": "bf56faec341bd33c7633cd707decc5c86783763b"
+    }
+  ],
+  "overlaps": [
+    {
+      "path": "game/offline/service-worker.template.js",
+      "gitObject": "8e877aacd1903615ffea69727a8519ee8760698a",
+      "sha256": "222265dc0a58ef2f870ea7c390d5fe3f80f53a4ad464b1b25920f2cf01387108",
+      "matchesIndependentPreview": true
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "gitObject": "899f70bbcd071baf973d2afe4778f571aefe5d5c",
+      "sha256": "806f4b0e32013375f6e6841eb49222003b13371b0787b52c9a6ef505c1dfbf95",
+      "matchesIndependentPreview": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "gitObject": "cda493440b4d4c955ee425bf2aee4947d6710fcf",
+      "sha256": "47eb8faff8aeb9e858bf5d5721e8ab8d9798311e949ef7df784ba3038262404f",
+      "matchesIndependentPreview": true
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "gitObject": "43fb607e7633ffc75ca516971f365b808bb8ef70",
+      "sha256": "413deb28ff195b102d76b23138a8295fce402572435bb7dde7da3c5d5b02cdd7",
+      "matchesIndependentPreview": true
+    }
+  ],
+  "resolution": "The sole conflict combines isCurrent cancellation with restoreOptions, expectedAppearance and restoreAuthored. Actual rebased bytes equal the independently prepared preview plus this exact union.",
+  "scope": "Git objects, commit metadata and semantic overlap review only; no new build/browser or regression-test claim. Candidate additions after this rebased commit are a separate change.",
+  "findings": []
+}

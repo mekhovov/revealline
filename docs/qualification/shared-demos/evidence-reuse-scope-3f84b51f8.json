@@ -1,0 +1,2168 @@
+{
+  "format": "SharedDemoEvidenceReuseScopeReviewV1",
+  "observedAt": "2026-10-19T10:22:54.930030+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "publishedComparison": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "enduranceComparison": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "soloCorpusComparison": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+  "reviewOnly": true,
+  "sharedModules": [
+    {
+      "path": "game/demo-audio-feedback.mjs",
+      "workingGitBlob": "ce83aa68233ea832dd33afbe1bd11d05c2d6854e",
+      "sha256": "3b685ae8bfa0459fbdb72fab80833328c71f151ad0cefe2032c844bb8b0015d9",
+      "bytes": 609,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "ce83aa68233ea832dd33afbe1bd11d05c2d6854e",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "ce83aa68233ea832dd33afbe1bd11d05c2d6854e",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-bot-player.mjs",
+      "workingGitBlob": "4f504983b55ef31510935b00af676072b62125e6",
+      "sha256": "af8e1575f00aff278b9771debe69bc12582217842482e1bb1466be9a1544cd8d",
+      "bytes": 14648,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "4f504983b55ef31510935b00af676072b62125e6",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "4f504983b55ef31510935b00af676072b62125e6",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-bot-worker.mjs",
+      "workingGitBlob": "773345bbf9ee4c0ea4c22fd4b633289445cedcb5",
+      "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837",
+      "bytes": 530,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "773345bbf9ee4c0ea4c22fd4b633289445cedcb5",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "773345bbf9ee4c0ea4c22fd4b633289445cedcb5",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-bot.mjs",
+      "workingGitBlob": "56e7ada9954f9fa7844456aea1d7d853ed69424c",
+      "sha256": "5bbfcd22246253d9f02c95d8fa0dbd58e5c9f8404ab3c7f06042aa1b49eb0a58",
+      "bytes": 18414,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "56e7ada9954f9fa7844456aea1d7d853ed69424c",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "56e7ada9954f9fa7844456aea1d7d853ed69424c",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-catalog.mjs",
+      "workingGitBlob": "f792e3774940a103e79c058d958e4ccdbf8a5460",
+      "sha256": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+      "bytes": 11812,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "f792e3774940a103e79c058d958e4ccdbf8a5460",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "f792e3774940a103e79c058d958e4ccdbf8a5460",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-director.mjs",
+      "workingGitBlob": "1749e8d1a3976695c61febdd87cbf5778e07e78f",
+      "sha256": "f057b24ec7e878b5a8013a5aba26ab1398067e4aabcd14b8871f432f259f5b66",
+      "bytes": 14542,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "1749e8d1a3976695c61febdd87cbf5778e07e78f",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "1749e8d1a3976695c61febdd87cbf5778e07e78f",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-experience.mjs",
+      "workingGitBlob": "0998190f64f97d7142f2e551c01f1f416aa630f4",
+      "sha256": "068cca14e2e80259c0b8bd05daf1f3f3f6d360bfdb398a8a8305b2bd74074364",
+      "bytes": 3014,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "0998190f64f97d7142f2e551c01f1f416aa630f4",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "0998190f64f97d7142f2e551c01f1f416aa630f4",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-improv-player.mjs",
+      "workingGitBlob": "cbb6fcdbee7a3a64e0220a1779000b7c2f4118d3",
+      "sha256": "bee3ed46cc92ea690dd52c971323e296ab63073b267372598ef39397760413f2",
+      "bytes": 3267,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "cbb6fcdbee7a3a64e0220a1779000b7c2f4118d3",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "cbb6fcdbee7a3a64e0220a1779000b7c2f4118d3",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-launch.mjs",
+      "workingGitBlob": "9f44cf2025f8e2fbe26ea46dccc85a9e3b351a3c",
+      "sha256": "5211e603ab5d4f69f8aa4c2b5cb45d018ae6268634ecff1b2e193c8dab78b124",
+      "bytes": 769,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "9f44cf2025f8e2fbe26ea46dccc85a9e3b351a3c",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "9f44cf2025f8e2fbe26ea46dccc85a9e3b351a3c",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-library.mjs",
+      "workingGitBlob": "fe6d4c783472a0413f1f48ab733274ee64a4dab8",
+      "sha256": "ec66b663a8d12e067ae50c3b88da4cb0ed206943a411738aab1965ac6651d220",
+      "bytes": 16340,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "fe6d4c783472a0413f1f48ab733274ee64a4dab8",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "fe6d4c783472a0413f1f48ab733274ee64a4dab8",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-loading.mjs",
+      "workingGitBlob": "51cfabbb81233fd06df1549a3690ed42357d9ae3",
+      "sha256": "2f9ab4efe38398cfe08dba89c328cacec2cae559c591d6e85770f5bfce744ba4",
+      "bytes": 2665,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "51cfabbb81233fd06df1549a3690ed42357d9ae3",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "51cfabbb81233fd06df1549a3690ed42357d9ae3",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/sim.mjs",
+      "workingGitBlob": "5ce730be3f7cb56a5865482838183cc784774500",
+      "sha256": "0f95e638006b3e7a2fa8a3e2a53049be0f34294851fb3b83469ec1abb814ad9e",
+      "bytes": 10536,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "5ce730be3f7cb56a5865482838183cc784774500",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "5ce730be3f7cb56a5865482838183cc784774500",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/snake-authoring.mjs",
+      "workingGitBlob": "b37beaf8c45e9ac978456f6099ab9081ca75b659",
+      "sha256": "ddedd0f0f3c1696d771b469a396b8eb494dbc1bc86b4792f1e7af476011ff860",
+      "bytes": 10104,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "b37beaf8c45e9ac978456f6099ab9081ca75b659",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "b37beaf8c45e9ac978456f6099ab9081ca75b659",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/snake-recording.mjs",
+      "workingGitBlob": "daf793ddc158fc64d7fa82d9e1c7ff8bb80bac17",
+      "sha256": "3eea2928b52a802059997366a5d23ae9afdff77effbb29007f2a23c69d28095c",
+      "bytes": 6284,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "daf793ddc158fc64d7fa82d9e1c7ff8bb80bac17",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "daf793ddc158fc64d7fa82d9e1c7ff8bb80bac17",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/snake.mjs",
+      "workingGitBlob": "a348fa724a5af1a31cd4c069a7b751081c0f062e",
+      "sha256": "d16f500ae01ff2382f7db2fc97ed60df1657b4857655a57922c9bbac83b1f67e",
+      "bytes": 11703,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "a348fa724a5af1a31cd4c069a7b751081c0f062e",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "a348fa724a5af1a31cd4c069a7b751081c0f062e",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-authoring.mjs",
+      "workingGitBlob": "79c84a958bb156a768a5564845de42e7efe3d787",
+      "sha256": "0e88b465e1e79c796f201a01775a9e43326652a145f638acdb23fb4079334e9f",
+      "bytes": 11263,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "79c84a958bb156a768a5564845de42e7efe3d787",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "79c84a958bb156a768a5564845de42e7efe3d787",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-builtins-index.mjs",
+      "workingGitBlob": "f26b7a07dd34e2ad561fb4125ad57537386b412e",
+      "sha256": "6257cdd0dce4ca1de0b8c9afbd11410ca6e182d2371e440afcc542050965fcef",
+      "bytes": 87204,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "f26b7a07dd34e2ad561fb4125ad57537386b412e",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "f26b7a07dd34e2ad561fb4125ad57537386b412e",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-builtins.mjs",
+      "workingGitBlob": "19cfa3c3576768848b13e4d5f5fc013c69a7af70",
+      "sha256": "1aad4c9e8f50cae6dcbc3a2d3303a94d9fc85e5c6642f75a2340804fb6b95ac8",
+      "bytes": 6483,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "19cfa3c3576768848b13e4d5f5fc013c69a7af70",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "19cfa3c3576768848b13e4d5f5fc013c69a7af70",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-captions.mjs",
+      "workingGitBlob": "920380a21e5ddc2715aaeadf080ad64e1c6e1df1",
+      "sha256": "6c15255bce4f8d73dbfadc58969d330b6197205f56fa630da2a1412101c89825",
+      "bytes": 1053,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "920380a21e5ddc2715aaeadf080ad64e1c6e1df1",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "920380a21e5ddc2715aaeadf080ad64e1c6e1df1",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-catalog.mjs",
+      "workingGitBlob": "2da830b66bd2f8aff082de6a7af9c4bbaffa2d7f",
+      "sha256": "847fc44a3a5588e0c5e1707974a8743494da35ed46ad8527e0559967c46cea42",
+      "bytes": 4765,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "2da830b66bd2f8aff082de6a7af9c4bbaffa2d7f",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "2da830b66bd2f8aff082de6a7af9c4bbaffa2d7f",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-classic-builtins.mjs",
+      "workingGitBlob": "6ecdf78084b2f6a00cebc0f81bf139d2c968aef3",
+      "sha256": "748eb0a5200a20bdb42688c15490767d0cbbea9657e38fa17b5be9e48027a680",
+      "bytes": 8290,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "6ecdf78084b2f6a00cebc0f81bf139d2c968aef3",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "6ecdf78084b2f6a00cebc0f81bf139d2c968aef3",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-classic-launch.mjs",
+      "workingGitBlob": "1984731d153e6f4714f72e36e70a766c028019de",
+      "sha256": "acdabcdddae9ff37881a5b50979f872a7b4d95d0b6605b8ba3a75277f9f77652",
+      "bytes": 681,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "1984731d153e6f4714f72e36e70a766c028019de",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "1984731d153e6f4714f72e36e70a766c028019de",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-practice.mjs",
+      "workingGitBlob": "380426197fd43796f6c60c6033fc81385eed0727",
+      "sha256": "914352234d8d5e906a3551022c615ede879714c73bad58dd20a7a8d5a89d3ac3",
+      "bytes": 2706,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "380426197fd43796f6c60c6033fc81385eed0727",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "380426197fd43796f6c60c6033fc81385eed0727",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-source-owner.mjs",
+      "workingGitBlob": "ab2e1ed7e7ccf4ee00d0a54e5dcb5ffb68263a3e",
+      "sha256": "c0122c017ed20f672e82ce57a5f1a82b7a3e05b47fe6e4f2e0b821a4deb397d6",
+      "bytes": 1959,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "ab2e1ed7e7ccf4ee00d0a54e5dcb5ffb68263a3e",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "ab2e1ed7e7ccf4ee00d0a54e5dcb5ffb68263a3e",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo-view.mjs",
+      "workingGitBlob": "8f4ad17b549a3e95de517b46e85d6f5da5a18700",
+      "sha256": "1bcf82b9a12b8d174c81c0803f555c4303b4321c75b441f4a992718ae6545bac",
+      "bytes": 6767,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "8f4ad17b549a3e95de517b46e85d6f5da5a18700",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "8f4ad17b549a3e95de517b46e85d6f5da5a18700",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/solo.mjs",
+      "workingGitBlob": "0619d1b82378baa68445ebba7f773b927017545d",
+      "sha256": "bd3914625c4152c5a73ebf3cda0b09d6c1ef23705853c95df6dc0ca0a63798d2",
+      "bytes": 6899,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "0619d1b82378baa68445ebba7f773b927017545d",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "0619d1b82378baa68445ebba7f773b927017545d",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/survival-authoring.mjs",
+      "workingGitBlob": "06b26b26df2e9d842e17ab5ddf78b5cc6f6c1501",
+      "sha256": "94479660e89784f3a42f274db15679c6bd687cb1ddab41e0063c980fc799c967",
+      "bytes": 2576,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "06b26b26df2e9d842e17ab5ddf78b5cc6f6c1501",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "06b26b26df2e9d842e17ab5ddf78b5cc6f6c1501",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/survival-catalog.mjs",
+      "workingGitBlob": "856b79cba42dabc0046efca7ee4d254ab5db4085",
+      "sha256": "367696d7f800bf098bab9013f5273443b06c7b3109679816d44bc758d12047f3",
+      "bytes": 2473,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "856b79cba42dabc0046efca7ee4d254ab5db4085",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "856b79cba42dabc0046efca7ee4d254ab5db4085",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/survival-replay.mjs",
+      "workingGitBlob": "d29d1daa9628c8835e5bb6ebf960a6199f62838f",
+      "sha256": "4a2bbdc38fcd55551c7a9221b3d7bf05bb87896a140efcd870107f8bebb3ac0e",
+      "bytes": 13902,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "d29d1daa9628c8835e5bb6ebf960a6199f62838f",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "d29d1daa9628c8835e5bb6ebf960a6199f62838f",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/survival-runtime-variants.mjs",
+      "workingGitBlob": "1388fd92222d63342146bf05f16f3ca57d86a847",
+      "sha256": "ad4abcea2c87b2146e48ec1742f6e1dc88c4b00bb5d85fd051c18e40d2679564",
+      "bytes": 189,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "d68f0c6c477cb400a25fe4ee5fb6dafcd0144b99",
+          "unchanged": false
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "d68f0c6c477cb400a25fe4ee5fb6dafcd0144b99",
+          "unchanged": false
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/survival-simulation-identity.mjs",
+      "workingGitBlob": "18ce0a22d6b64540c563b002d459926cde964ff2",
+      "sha256": "5a58cade4365e9b109def17491580aaa903304d09f1be585228cb4b3c11e6b0f",
+      "bytes": 210,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "18ce0a22d6b64540c563b002d459926cde964ff2",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "18ce0a22d6b64540c563b002d459926cde964ff2",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-modes/survival.mjs",
+      "workingGitBlob": "50f505310ea1ac3de72691ebd980e38707080d33",
+      "sha256": "44fa423bb6e154d196cf17fd29fc812180f2bca9f4648fb08763f5b4c16b49b1",
+      "bytes": 19953,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "50f505310ea1ac3de72691ebd980e38707080d33",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "50f505310ea1ac3de72691ebd980e38707080d33",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-prefetch.mjs",
+      "workingGitBlob": "2487dd7579249c9e3d17f0891ceff7e7a47ff478",
+      "sha256": "f350a9a13e7a97dbf9a1f2efba2651abfa2e0a4318fca5e39be60cacccfdb724",
+      "bytes": 1423,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "2487dd7579249c9e3d17f0891ceff7e7a47ff478",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "2487dd7579249c9e3d17f0891ceff7e7a47ff478",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-preparation.mjs",
+      "workingGitBlob": "32521faeea38fac5ab5f698b895a73126b5a1bc5",
+      "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+      "bytes": 3500,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "32521faeea38fac5ab5f698b895a73126b5a1bc5",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "32521faeea38fac5ab5f698b895a73126b5a1bc5",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-registry.mjs",
+      "workingGitBlob": "a7f12f6866cd9087009f0ab855ef6c06d226b473",
+      "sha256": "64f0c959cd4026385dc68ba6e6bd2402e9418b682bb1576f285a3035eea6101a",
+      "bytes": 4512,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "a7f12f6866cd9087009f0ab855ef6c06d226b473",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "a7f12f6866cd9087009f0ab855ef6c06d226b473",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-replay-diagnostics.mjs",
+      "workingGitBlob": "f4d643ab5789fdc062ab5b22b52c43b130f8c206",
+      "sha256": "c213fc37a6270fc5b6ed4f467f8730e04835acdba8ba94c2be20b8ff27dc4145",
+      "bytes": 2103,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "f4d643ab5789fdc062ab5b22b52c43b130f8c206",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "f4d643ab5789fdc062ab5b22b52c43b130f8c206",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-rotation.mjs",
+      "workingGitBlob": "113aebdd5c55ea541da36277666a3bc91bbb686f",
+      "sha256": "48d4e542335137e54bc78a3a5f498e686ed51248e9c44b5f1f685887b0c8f37c",
+      "bytes": 3102,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "113aebdd5c55ea541da36277666a3bc91bbb686f",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "113aebdd5c55ea541da36277666a3bc91bbb686f",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "workingGitBlob": "99d3a9f8f2482391d2d43c787d3f3672c42de684",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+      "bytes": 987,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "99d3a9f8f2482391d2d43c787d3f3672c42de684",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "99d3a9f8f2482391d2d43c787d3f3672c42de684",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-settings.mjs",
+      "workingGitBlob": "7d906e6588b4543f71a5ac203558cc478bf03940",
+      "sha256": "015d8bd720cd13e1cccce721b2b013dd38d4703e1fb1fae4b2297251fe355dec",
+      "bytes": 4337,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "7d906e6588b4543f71a5ac203558cc478bf03940",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "7d906e6588b4543f71a5ac203558cc478bf03940",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-source-metadata.mjs",
+      "workingGitBlob": "06b93da5f33878226b6a6bec763b52cf9831dfe9",
+      "sha256": "17593a7b72173a3b299b39f4461a98ec7c4401aec38017eeb402f3f6755ca061",
+      "bytes": 315,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "06b93da5f33878226b6a6bec763b52cf9831dfe9",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "06b93da5f33878226b6a6bec763b52cf9831dfe9",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/demo-sources.mjs",
+      "workingGitBlob": "ee94d0d8a7ae06c4da77cb8e0388a23c88384d52",
+      "sha256": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+      "bytes": 8049,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "ee94d0d8a7ae06c4da77cb8e0388a23c88384d52",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "ee94d0d8a7ae06c4da77cb8e0388a23c88384d52",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/editions/standalone/demo-builtins.mjs",
+      "workingGitBlob": "bccb03d2de042bf56eeabd597ef984b17304c5ca",
+      "sha256": "05634a42bf2e0afc6403d96622aeb92d0857c8fb7f3514d36ab04f07934bcb92",
+      "bytes": 303,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "bccb03d2de042bf56eeabd597ef984b17304c5ca",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "bccb03d2de042bf56eeabd597ef984b17304c5ca",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-audio.mjs",
+      "workingGitBlob": "3fa462ff6628d4d591eb55b7d31f9ae5023c3e6d",
+      "sha256": "0f70da15264c77cf72e569acc38646a28bbea8b8da94ac91b7669f2bedd2b05d",
+      "bytes": 9602,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "3fa462ff6628d4d591eb55b7d31f9ae5023c3e6d",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "3fa462ff6628d4d591eb55b7d31f9ae5023c3e6d",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-clock.mjs",
+      "workingGitBlob": "85b10788bdf08e6954121bfbc74f70a98d5be7c6",
+      "sha256": "839214720356f03438daa90ed0acea923d765b0ce38a311d55bef57c980bc03a",
+      "bytes": 7534,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "85b10788bdf08e6954121bfbc74f70a98d5be7c6",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "85b10788bdf08e6954121bfbc74f70a98d5be7c6",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-controller.mjs",
+      "workingGitBlob": "e52d85b79c3719c851c0aef497270af26042ebd8",
+      "sha256": "8e336a4a8a71344ae53d4f1822f6b5e28dc108d91b3d394de5545fd7d60df8a3",
+      "bytes": 5277,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "e52d85b79c3719c851c0aef497270af26042ebd8",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "e52d85b79c3719c851c0aef497270af26042ebd8",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-entry.mjs",
+      "workingGitBlob": "1edd6b5dd5366f1621d759e59e9cf68b0b3c5345",
+      "sha256": "4360f3efd28ff1be05369582b75ab9bbeb93138bc9c5dc37450aca948d60d19a",
+      "bytes": 3720,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "1edd6b5dd5366f1621d759e59e9cf68b0b3c5345",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "1edd6b5dd5366f1621d759e59e9cf68b0b3c5345",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-fullscreen.mjs",
+      "workingGitBlob": "63e2f928c1b3a0d4fcaa3929efc24f71db2d0b8e",
+      "sha256": "782c010720c0ea25deedccd175e5118cd17dd798373a4cc396aee983ee7b831a",
+      "bytes": 3371,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "63e2f928c1b3a0d4fcaa3929efc24f71db2d0b8e",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "63e2f928c1b3a0d4fcaa3929efc24f71db2d0b8e",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "workingGitBlob": "410dec47b09a9afeb841029bf2597a96bce61b9c",
+      "sha256": "7f2d09118885feef5614bfa906c206ab099964f943a692264187a97e1be87b3d",
+      "bytes": 57022,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "410dec47b09a9afeb841029bf2597a96bce61b9c",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "410dec47b09a9afeb841029bf2597a96bce61b9c",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-input.mjs",
+      "workingGitBlob": "49d8150ce9e10ac2a6aca56f035774f2ba6d32b7",
+      "sha256": "d8f13e0c3cd75de44ffa1eed944eb2236740ea44d6059239d692d6b43ea93072",
+      "bytes": 15689,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "49d8150ce9e10ac2a6aca56f035774f2ba6d32b7",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "49d8150ce9e10ac2a6aca56f035774f2ba6d32b7",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-journey-picture.mjs",
+      "workingGitBlob": "ee892e61dd53416da976e448bf9872188255313e",
+      "sha256": "32252eacecc89367880344254a767a3382cb0e0beecf60f6542e375ad7008e5f",
+      "bytes": 4649,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "ee892e61dd53416da976e448bf9872188255313e",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "ee892e61dd53416da976e448bf9872188255313e",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-layout.mjs",
+      "workingGitBlob": "62bb3fa8c86ddcd1c51b13a82ace998969c5877c",
+      "sha256": "28f3b34e58e4de51a4a8b490bfcc4d822e66eba5d82261c0be601599fa2ea41e",
+      "bytes": 2327,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "62bb3fa8c86ddcd1c51b13a82ace998969c5877c",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "62bb3fa8c86ddcd1c51b13a82ace998969c5877c",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-music-transport.mjs",
+      "workingGitBlob": "261f94fd5c142273dfee62fb7414cd256f0e80d6",
+      "sha256": "241b35b9cde949e9dabf907adc809c1c1b5c659d531c5158d8098ac66f50ee01",
+      "bytes": 898,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "261f94fd5c142273dfee62fb7414cd256f0e80d6",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "261f94fd5c142273dfee62fb7414cd256f0e80d6",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-picture.mjs",
+      "workingGitBlob": "bdb8aa55acf2dd985fb384ce268200ff010c778b",
+      "sha256": "43033e5c2bd35d5d7d894df25854c904db2f9810b2063d614564957b9d3e677f",
+      "bytes": 15665,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "bdb8aa55acf2dd985fb384ce268200ff010c778b",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "bdb8aa55acf2dd985fb384ce268200ff010c778b",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-reward.mjs",
+      "workingGitBlob": "ebfb09f4ad02d8a9cb6e6210aa49780a1a8f6f8b",
+      "sha256": "269ecfdaff6c8eddc6327b8696cfd5b5a65b39f547cafd3338ca4ff7c44cdcd5",
+      "bytes": 4538,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "ebfb09f4ad02d8a9cb6e6210aa49780a1a8f6f8b",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "ebfb09f4ad02d8a9cb6e6210aa49780a1a8f6f8b",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-scene-transition.mjs",
+      "workingGitBlob": "e81408dade30b380966dd9aeeb3cdede4725db1e",
+      "sha256": "c0ac0c7de72919bb389480556f620896666df2446910b5e3c05550f973d11961",
+      "bytes": 2324,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "e81408dade30b380966dd9aeeb3cdede4725db1e",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "e81408dade30b380966dd9aeeb3cdede4725db1e",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo-shell.mjs",
+      "workingGitBlob": "d463bcc27e8da20be2acf46f805639c45456c988",
+      "sha256": "d2bbfa216c2106a062a63ea6f4a90710522bf7ed9c448f857526cb168de3fffe",
+      "bytes": 7846,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "d463bcc27e8da20be2acf46f805639c45456c988",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "d463bcc27e8da20be2acf46f805639c45456c988",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "game/ui/demo.css",
+      "workingGitBlob": "9f49321190719e5fd5c86efdf2cbc4d974098a0e",
+      "sha256": "687704956eb1c0a448be9313919b48bbf1651756492a57a86d162653f8061b90",
+      "bytes": 18861,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "9f49321190719e5fd5c86efdf2cbc4d974098a0e",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "9f49321190719e5fd5c86efdf2cbc4d974098a0e",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-input.mjs",
+      "workingGitBlob": "44691d4797e5d297b15dee45acc5ba7c7ed54b7d",
+      "sha256": "3cba4c5b9916aeee3a4c89f34d95270a7717e43523b7f1d8bfac9a65e5bb04f1",
+      "bytes": 15722,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "44691d4797e5d297b15dee45acc5ba7c7ed54b7d",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "44691d4797e5d297b15dee45acc5ba7c7ed54b7d",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-inventory.mjs",
+      "workingGitBlob": "7cbf18f90ae61d0163ed8d4ce27d24bbbf9b9119",
+      "sha256": "18b72d6ec810d85c77ca10392ad73b1d0706a9ba144f0545b32c1a117c19b511",
+      "bytes": 1219,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "7cbf18f90ae61d0163ed8d4ce27d24bbbf9b9119",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "7cbf18f90ae61d0163ed8d4ce27d24bbbf9b9119",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-payload.mjs",
+      "workingGitBlob": "24a3194ab5bc38ad59c537a92d7e5cbd81b30e02",
+      "sha256": "79319462d19d3d4f62d70876254bb3346b24128907dece8917fe4b3a9fdd6443",
+      "bytes": 1559,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "24a3194ab5bc38ad59c537a92d7e5cbd81b30e02",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "24a3194ab5bc38ad59c537a92d7e5cbd81b30e02",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-player.mjs",
+      "workingGitBlob": "ff878bc67a963636b9c241c99810dc44b47a8fd9",
+      "sha256": "b3912919d434149e92987d2a930f1e0a4bcd809e7be6750d3a5491efe568d4cd",
+      "bytes": 11383,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "ff878bc67a963636b9c241c99810dc44b47a8fd9",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "ff878bc67a963636b9c241c99810dc44b47a8fd9",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstration-resolver.mjs",
+      "workingGitBlob": "661b07fa7bbf5a6e4867ddd2ac3cfae4a49878cf",
+      "sha256": "f9a7af1273412134180030076f003a56ec02749a47c1f21d4d5fe1417a36a8b5",
+      "bytes": 3285,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "661b07fa7bbf5a6e4867ddd2ac3cfae4a49878cf",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "661b07fa7bbf5a6e4867ddd2ac3cfae4a49878cf",
+          "unchanged": true
+        }
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "workingGitBlob": "9e18e76e8b04ca8a82ef85d8e03eb7cc0f83c246",
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+      "bytes": 221646,
+      "comparison": {
+        "b4688ca2199c01fe9a063a7260946bc42c3642f4": {
+          "gitBlob": "9e18e76e8b04ca8a82ef85d8e03eb7cc0f83c246",
+          "unchanged": true
+        },
+        "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b": {
+          "gitBlob": "9e18e76e8b04ca8a82ef85d8e03eb7cc0f83c246",
+          "unchanged": true
+        }
+      }
+    }
+  ],
+  "sharedCounts": {
+    "total": 63,
+    "unchangedFromPublished": 62,
+    "unchangedFromEndurance": 62
+  },
+  "historicalNativeScopes": [
+    {
+      "path": "game/demo-data",
+      "publishedGitObject": "fe4780393e107e63ee14d122ce1d59024b8ae731",
+      "trackedChanges": [
+        "game/demo-data/catalog.journey-archive.json",
+        "game/demo-data/catalog.journey-current.json",
+        "game/demo-data/catalog.json",
+        "game/demo-data/variant-provenance.json"
+      ],
+      "untrackedAdditions": 268,
+      "unchanged": false
+    },
+    {
+      "path": "game/demo-modes",
+      "publishedGitObject": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+      "trackedChanges": [
+        "game/demo-modes/survival-runtime-variants.mjs"
+      ],
+      "untrackedAdditions": 0,
+      "unchanged": false
+    },
+    {
+      "path": "game/content",
+      "publishedGitObject": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "game/content-design/assets",
+      "publishedGitObject": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "game/replay.mjs",
+      "publishedGitObject": "fa473c568bec333395636541cc82fe3dd8b597f6",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "game/snake/classic-core.mjs",
+      "publishedGitObject": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "game/snake/classic-match.mjs",
+      "publishedGitObject": "cd47d4660228b5e8968d6aef3d3d7700b48d432c",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "publishedGitObject": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "publishedGitObject": "c87f15cdc632a1bfd7592e8075974558d776fb88",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-data",
+      "publishedGitObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "publishedGitObject": "e9ee1383ebe909ce7993da499f07b33d486c9605",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "publishedGitObject": "fa254c168037003881a41f881f270465a09d8f05",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/shared-demos-generated",
+      "publishedGitObject": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    },
+    {
+      "path": "game/core",
+      "publishedGitObject": "bf56faec341bd33c7633cd707decc5c86783763b",
+      "trackedChanges": [],
+      "untrackedAdditions": 0,
+      "unchanged": true
+    }
+  ],
+  "nativeScopeCounts": {
+    "total": 14,
+    "unchanged": 12
+  },
+  "additionalRendererReplayClock": [
+    {
+      "path": "game/replay-player.mjs",
+      "sha256": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+      "bytes": 10545,
+      "unchangedFromPublished": true,
+      "unchangedFromEndurance": true
+    },
+    {
+      "path": "game/snake/classic-scenes.mjs",
+      "sha256": "43753e9b365b0a82040c0d9e07721ef3bbacdcf300026671456d3fb57fe8496b",
+      "bytes": 26749,
+      "unchangedFromPublished": true,
+      "unchangedFromEndurance": true
+    },
+    {
+      "path": "game/overflight/renderer.mjs",
+      "sha256": "cfb9a5c5239d51c5b50f621a556cfa9117c932e3f745bc803f59606f0678d4e0",
+      "bytes": 39220,
+      "unchangedFromPublished": true,
+      "unchangedFromEndurance": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "sha256": "e4df4176a35b62f2cbc457302b0d9ce23c62d7712dc15e2ac3f5164ee0482115",
+      "bytes": 164842,
+      "unchangedFromPublished": true,
+      "unchangedFromEndurance": true
+    },
+    {
+      "path": "game/presentation/host.mjs",
+      "sha256": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2",
+      "bytes": 38242,
+      "unchangedFromPublished": true,
+      "unchangedFromEndurance": true
+    },
+    {
+      "path": "game/ui/scene-clock.mjs",
+      "sha256": "7b7169b39ec3c56dc366aacf4837393c216384dfcd247a025f021452c70bb0be",
+      "bytes": 1190,
+      "unchangedFromPublished": true,
+      "unchangedFromEndurance": true
+    }
+  ],
+  "soloCatalogs": [
+    {
+      "path": "game/demo-data/catalog.json",
+      "sha256": "871912c169fb553479019460f2615248f81c644652605c33ab3b5bd4ba3cfca6",
+      "bytes": 172076,
+      "clips": 103,
+      "clipIDsOrderAndAllNonVariantFieldsUnchanged": true,
+      "changed": [
+        {
+          "id": "first-signal-right",
+          "added": "./demo-data/first-signal-right.node22131-x64.replay.json",
+          "reviewed": true,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": true
+        },
+        {
+          "id": "hidden-frequency-search",
+          "added": "./demo-data/hidden-frequency-search.node22131-x64.replay.json",
+          "reviewed": true,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": true
+        },
+        {
+          "id": "solo-qualified-478808a96f4fbf5e",
+          "added": "./demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-d0257fa131665b79",
+          "added": "./demo-data/solo-qualified-d0257fa131665b79.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-cc8994b6f3d0482f",
+          "added": "./demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-c8ea742b75efcef6",
+          "added": "./demo-data/solo-qualified-c8ea742b75efcef6.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-ab845a60c1777460",
+          "added": "./demo-data/solo-qualified-ab845a60c1777460.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-ede2a5c11f561acc",
+          "added": "./demo-data/solo-qualified-ede2a5c11f561acc.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-57d61f78dee61bd0",
+          "added": "./demo-data/solo-qualified-57d61f78dee61bd0.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-1317cbb34f9f263d",
+          "added": "./demo-data/solo-qualified-1317cbb34f9f263d.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-6d6735f53cea772c",
+          "added": "./demo-data/solo-qualified-6d6735f53cea772c.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-b48891e1132779ca",
+          "added": "./demo-data/solo-qualified-b48891e1132779ca.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-a6bd03461640ac1f",
+          "added": "./demo-data/solo-qualified-a6bd03461640ac1f.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-eb610c93d32ff955",
+          "added": "./demo-data/solo-qualified-eb610c93d32ff955.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-fc70762275c737c3",
+          "added": "./demo-data/solo-qualified-fc70762275c737c3.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-85b7fe2bd59f4ce6",
+          "added": "./demo-data/solo-qualified-85b7fe2bd59f4ce6.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-357575c079f7c22a",
+          "added": "./demo-data/solo-qualified-357575c079f7c22a.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-67de5079eb3bf92d",
+          "added": "./demo-data/solo-qualified-67de5079eb3bf92d.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-958579fbf73ab1f3",
+          "added": "./demo-data/solo-qualified-958579fbf73ab1f3.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-11bae25f26fd63b2",
+          "added": "./demo-data/solo-qualified-11bae25f26fd63b2.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-2d795f9b60e1e9ea",
+          "added": "./demo-data/solo-qualified-2d795f9b60e1e9ea.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-6fc96345c2385275",
+          "added": "./demo-data/solo-qualified-6fc96345c2385275.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-ed2912770fa96724",
+          "added": "./demo-data/solo-qualified-ed2912770fa96724.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-1b7c6f1b1a4d7efd",
+          "added": "./demo-data/solo-qualified-1b7c6f1b1a4d7efd.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-1d6d571646ea58e8",
+          "added": "./demo-data/solo-qualified-1d6d571646ea58e8.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-317c68e1e84b012b",
+          "added": "./demo-data/solo-qualified-317c68e1e84b012b.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-3edb8b3d29afe4e4",
+          "added": "./demo-data/solo-qualified-3edb8b3d29afe4e4.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-6f9d15c9f157385c",
+          "added": "./demo-data/solo-qualified-6f9d15c9f157385c.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-63cbda0ed7ddb858",
+          "added": "./demo-data/solo-qualified-63cbda0ed7ddb858.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-014fa419dd4cee2b",
+          "added": "./demo-data/solo-qualified-014fa419dd4cee2b.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-e546fded69fb9336",
+          "added": "./demo-data/solo-qualified-e546fded69fb9336.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-ae4fe97bb5a844f3",
+          "added": "./demo-data/solo-qualified-ae4fe97bb5a844f3.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-b420aacc8400ae19",
+          "added": "./demo-data/solo-qualified-b420aacc8400ae19.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-9f0dd1a83a873b3a",
+          "added": "./demo-data/solo-qualified-9f0dd1a83a873b3a.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-209dd22e35205b41",
+          "added": "./demo-data/solo-qualified-209dd22e35205b41.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-5fe1b2d2833db1f9",
+          "added": "./demo-data/solo-qualified-5fe1b2d2833db1f9.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-58fa121c41ee9a76",
+          "added": "./demo-data/solo-qualified-58fa121c41ee9a76.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-8c5a7d940162231c",
+          "added": "./demo-data/solo-qualified-8c5a7d940162231c.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-ec7912cb8caf199d",
+          "added": "./demo-data/solo-qualified-ec7912cb8caf199d.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-01c45eb2a92b2a48",
+          "added": "./demo-data/solo-qualified-01c45eb2a92b2a48.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-906d14f392635406",
+          "added": "./demo-data/solo-qualified-906d14f392635406.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-7cf943719a6391a9",
+          "added": "./demo-data/solo-qualified-7cf943719a6391a9.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-8a91659e300e8ed3",
+          "added": "./demo-data/solo-qualified-8a91659e300e8ed3.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-d98ec8cfe4477b6c",
+          "added": "./demo-data/solo-qualified-d98ec8cfe4477b6c.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-6884a9c1bc511396",
+          "added": "./demo-data/solo-qualified-6884a9c1bc511396.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-1365c63c29f6f7b0",
+          "added": "./demo-data/solo-qualified-1365c63c29f6f7b0.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-0a838d0c1691b31f",
+          "added": "./demo-data/solo-qualified-0a838d0c1691b31f.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-539f1ca4cc7249a8",
+          "added": "./demo-data/solo-qualified-539f1ca4cc7249a8.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-9f55f7092af5ad15",
+          "added": "./demo-data/solo-qualified-9f55f7092af5ad15.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-34436b9f24286344",
+          "added": "./demo-data/solo-qualified-34436b9f24286344.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-5107ade9c5d366bb",
+          "added": "./demo-data/solo-qualified-5107ade9c5d366bb.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-9f1b8ec355af25b9",
+          "added": "./demo-data/solo-qualified-9f1b8ec355af25b9.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-609112f5d34480ec",
+          "added": "./demo-data/solo-qualified-609112f5d34480ec.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-6e585d1b8ae71b58",
+          "added": "./demo-data/solo-qualified-6e585d1b8ae71b58.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-508a8b6278a54af2",
+          "added": "./demo-data/solo-qualified-508a8b6278a54af2.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-6831f1fd6349b2be",
+          "added": "./demo-data/solo-qualified-6831f1fd6349b2be.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-d03c65948bb71da1",
+          "added": "./demo-data/solo-qualified-d03c65948bb71da1.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-13346d4f3775859d",
+          "added": "./demo-data/solo-qualified-13346d4f3775859d.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-0a05fdf1d370e239",
+          "added": "./demo-data/solo-qualified-0a05fdf1d370e239.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-a1ce0aac4a4ba375",
+          "added": "./demo-data/solo-qualified-a1ce0aac4a4ba375.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-f85650a2f81b67ed",
+          "added": "./demo-data/solo-qualified-f85650a2f81b67ed.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-6a03bb8315594257",
+          "added": "./demo-data/solo-qualified-6a03bb8315594257.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-14d1e5097d455385",
+          "added": "./demo-data/solo-qualified-14d1e5097d455385.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        }
+      ]
+    },
+    {
+      "path": "game/demo-data/catalog.journey-current.json",
+      "sha256": "0c35179ef88057aa57ac85c6bdb8f0f5d0b19ef53b2b8d35f38a3756b96cc652",
+      "bytes": 154890,
+      "clips": 91,
+      "clipIDsOrderAndAllNonVariantFieldsUnchanged": true,
+      "changed": [
+        {
+          "id": "solo-qualified-1d64e506d5980412",
+          "added": "./demo-data/solo-qualified-1d64e506d5980412.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-11133b7849422018",
+          "added": "./demo-data/solo-qualified-11133b7849422018.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-5678d483da29e23a",
+          "added": "./demo-data/solo-qualified-5678d483da29e23a.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-7b3a3b7248f976ce",
+          "added": "./demo-data/solo-qualified-7b3a3b7248f976ce.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-a06599f68a914d16",
+          "added": "./demo-data/solo-qualified-a06599f68a914d16.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-9dddcc84f7d60f65",
+          "added": "./demo-data/solo-qualified-9dddcc84f7d60f65.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-9aa30fcd0b3c8281",
+          "added": "./demo-data/solo-qualified-9aa30fcd0b3c8281.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-f1f91fa91991d51b",
+          "added": "./demo-data/solo-qualified-f1f91fa91991d51b.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-dd5c4beb661682f0",
+          "added": "./demo-data/solo-qualified-dd5c4beb661682f0.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-bbd69e7ccb5526d9",
+          "added": "./demo-data/solo-qualified-bbd69e7ccb5526d9.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-0eafd68dc70ee8a8",
+          "added": "./demo-data/solo-qualified-0eafd68dc70ee8a8.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-821bba1882552b03",
+          "added": "./demo-data/solo-qualified-821bba1882552b03.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-bbe0c5897adb725d",
+          "added": "./demo-data/solo-qualified-bbe0c5897adb725d.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-dc59e6e76ae9df8b",
+          "added": "./demo-data/solo-qualified-dc59e6e76ae9df8b.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-08bfbce48d50a5c0",
+          "added": "./demo-data/solo-qualified-08bfbce48d50a5c0.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-614567e280b3c780",
+          "added": "./demo-data/solo-qualified-614567e280b3c780.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-2df382183e2f00d6",
+          "added": "./demo-data/solo-qualified-2df382183e2f00d6.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-7e1cae99ddeff5f9",
+          "added": "./demo-data/solo-qualified-7e1cae99ddeff5f9.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-10d16d94f297eb0c",
+          "added": "./demo-data/solo-qualified-10d16d94f297eb0c.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-8f766bd89a83be7e",
+          "added": "./demo-data/solo-qualified-8f766bd89a83be7e.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-7ff2d0d3f752cf2b",
+          "added": "./demo-data/solo-qualified-7ff2d0d3f752cf2b.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-b03217288edf527a",
+          "added": "./demo-data/solo-qualified-b03217288edf527a.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-72dfbcf032b5ad25",
+          "added": "./demo-data/solo-qualified-72dfbcf032b5ad25.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-4301d76f85efb491",
+          "added": "./demo-data/solo-qualified-4301d76f85efb491.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-20e853301cb3ac52",
+          "added": "./demo-data/solo-qualified-20e853301cb3ac52.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-11ac088d9288363c",
+          "added": "./demo-data/solo-qualified-11ac088d9288363c.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-a99c5711c5c1839d",
+          "added": "./demo-data/solo-qualified-a99c5711c5c1839d.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-8812ad38e87d1a3e",
+          "added": "./demo-data/solo-qualified-8812ad38e87d1a3e.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-2e72fe1d788ce165",
+          "added": "./demo-data/solo-qualified-2e72fe1d788ce165.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-e32d403f3f492be1",
+          "added": "./demo-data/solo-qualified-e32d403f3f492be1.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-205560abb7070791",
+          "added": "./demo-data/solo-qualified-205560abb7070791.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-d5027ee8cc9ab251",
+          "added": "./demo-data/solo-qualified-d5027ee8cc9ab251.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-d4d010be74f4ff34",
+          "added": "./demo-data/solo-qualified-d4d010be74f4ff34.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-99b7fe8c6c02e8f5",
+          "added": "./demo-data/solo-qualified-99b7fe8c6c02e8f5.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-86e49440668d32eb",
+          "added": "./demo-data/solo-qualified-86e49440668d32eb.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-fe13ae38e227f3d4",
+          "added": "./demo-data/solo-qualified-fe13ae38e227f3d4.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-b8a409de0207c16a",
+          "added": "./demo-data/solo-qualified-b8a409de0207c16a.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-9a05e4f32fe3e8c3",
+          "added": "./demo-data/solo-qualified-9a05e4f32fe3e8c3.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-6066cc64f5796336",
+          "added": "./demo-data/solo-qualified-6066cc64f5796336.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-f420d6e14fbac1ed",
+          "added": "./demo-data/solo-qualified-f420d6e14fbac1ed.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-45ff8eaac10d989c",
+          "added": "./demo-data/solo-qualified-45ff8eaac10d989c.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-512b66c5e6a7ca41",
+          "added": "./demo-data/solo-qualified-512b66c5e6a7ca41.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-56165d770d83ee1e",
+          "added": "./demo-data/solo-qualified-56165d770d83ee1e.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-a13b85ddde0f9663",
+          "added": "./demo-data/solo-qualified-a13b85ddde0f9663.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-22874d7656ce6c3e",
+          "added": "./demo-data/solo-qualified-22874d7656ce6c3e.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-dd80d3e78efbf350",
+          "added": "./demo-data/solo-qualified-dd80d3e78efbf350.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-c258ed926a320cc2",
+          "added": "./demo-data/solo-qualified-c258ed926a320cc2.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-cd19eddd5888061f",
+          "added": "./demo-data/solo-qualified-cd19eddd5888061f.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        }
+      ]
+    },
+    {
+      "path": "game/demo-data/catalog.journey-archive.json",
+      "sha256": "f537aafe89073bc99c9ba6d1ed27dff675118a53f2359a240c983227e10c016f",
+      "bytes": 81625,
+      "clips": 48,
+      "clipIDsOrderAndAllNonVariantFieldsUnchanged": true,
+      "changed": [
+        {
+          "id": "solo-qualified-5bd37fe7b93c3853",
+          "added": "./demo-data/solo-qualified-5bd37fe7b93c3853.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-5307e5f38725a0e3",
+          "added": "./demo-data/solo-qualified-5307e5f38725a0e3.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-5aa8f6bd6fb84df2",
+          "added": "./demo-data/solo-qualified-5aa8f6bd6fb84df2.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-8fbfa21663542ea1",
+          "added": "./demo-data/solo-qualified-8fbfa21663542ea1.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-93ffe1fc5a201d2e",
+          "added": "./demo-data/solo-qualified-93ffe1fc5a201d2e.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-d3260fe50e480049",
+          "added": "./demo-data/solo-qualified-d3260fe50e480049.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-9695696535e4ee17",
+          "added": "./demo-data/solo-qualified-9695696535e4ee17.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-3ab81dea52f12ba3",
+          "added": "./demo-data/solo-qualified-3ab81dea52f12ba3.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-3e2c476ed99d280e",
+          "added": "./demo-data/solo-qualified-3e2c476ed99d280e.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-08205883fcfeb6de",
+          "added": "./demo-data/solo-qualified-08205883fcfeb6de.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-29078bd0c9992bd0",
+          "added": "./demo-data/solo-qualified-29078bd0c9992bd0.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-33e6a62cdaa16aaa",
+          "added": "./demo-data/solo-qualified-33e6a62cdaa16aaa.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-8cfed8cf70713745",
+          "added": "./demo-data/solo-qualified-8cfed8cf70713745.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        },
+        {
+          "id": "solo-qualified-27223f09fed82eb2",
+          "added": "./demo-data/solo-qualified-27223f09fed82eb2.node22131-x64.replay.json",
+          "reviewed": false,
+          "oldCandidateOrderPreserved": true,
+          "reviewedCompatibilityCandidateStillLast": null
+        }
+      ]
+    }
+  ],
+  "survivalVariantList": {
+    "path": "game/demo-modes/survival-runtime-variants.mjs",
+    "sha256": "ad4abcea2c87b2146e48ec1742f6e1dc88c4b00bb5d85fd051c18e40d2679564",
+    "bytes": 189,
+    "change": "Append node22131-x64 after the three existing browser names. Browser stable-partition selection still prefers its existing matching browser body first."
+  },
+  "recommendedRefresh": [
+    {
+      "priority": "P0",
+      "scope": "11 existing emitted matrix jobs",
+      "reason": "Combined catalog additions and incoming ordinary host/profile integration need current emitted entry, reload, mixed takeover, restoration, graphics loss and listener ownership coverage.",
+      "jobs": [
+        "restoration-webkit",
+        "restoration-chromium",
+        "restoration-firefox",
+        "mixed-chromium",
+        "mixed-firefox",
+        "mixed-webkit",
+        "sim-fresh-chromium",
+        "sim-fresh-firefox",
+        "sim-fresh-webkit",
+        "graphics-chromium",
+        "listeners-chromium"
+      ]
+    },
+    {
+      "priority": "P0",
+      "scope": "One actual emitted full-core installed-offline Chromium probe",
+      "existingObserver": "docs/qualification/shared-demos/offline-full-core-emitted-693947ed1-public-api.mjs.txt",
+      "reason": "Incoming worker startup-closure/recovery logic and new payload selection invalidate current-build transfer of the old offline proof. Use original generated worker and normal install APIs, cold offline entry after owned server shutdown, representative all-mode playback/practice, unchanged cache/player stores and complete cleanup. A constructed subset worker alone would not cover the changed worker."
+    },
+    {
+      "priority": "P1",
+      "scope": "Existing Survival Fresh handoff in Chromium, Firefox and WebKit",
+      "script": "scripts/qualify-survival-fresh-browser.mjs",
+      "reason": "The ordinary overflight host prepare/restore/retirement path changed with saved flights. The11-job matrix reloads this host but does not execute its demo Play from beginning path. Preserve Ready/zero-tick/standard setup, saved settings and guarded same-page/cross-page launch assertions."
+    },
+    {
+      "priority": "P1",
+      "scope": "Two reviewed Solo clips through runtime selector in each browser",
+      "script": "scripts/qualify-solo-browser.mjs",
+      "ids": [
+        "first-signal-right",
+        "hidden-frequency-search"
+      ],
+      "arguments": [
+        "--reviewed=true",
+        "--runtime-sources=true",
+        "--only=<id>"
+      ],
+      "alternative": "Run all10 reviewed clips in three jobs to amortize browser startup; this remains a narrow reviewed subset, not a new full242-corpus claim.",
+      "reason": "These two reviewed candidates are inserted before the unchanged final compatibility candidate, whereas qualified sources retain matching-browser preference. Tiny targeted replay-to-terminal refresh demonstrates the actual changed candidate chain; do not rerun unchanged232 strict bodies solely for added generic fallbacks."
+    }
+  ],
+  "reuseLimits": [
+    "The previous all890 authored-entry native browser proofs retain their original source/binary versions. Snake240 and SIM392 content, recordings and physics are unchanged. Existing Solo and Survival browser bodies/strict verification remain unchanged; new generic native bodies are separately qualified and still require both hosted Linux Node versions.",
+    "The 7201.006-second endurance interval is valid only on1efd2b31f. The shared scheduler/director/loading/resource/disposal implementations and native physics remain unchanged, supporting reuse of that exercised implementation scope plus fresh mixed/listener checks. It does not measure current newly added candidate costs or the new ordinary Survival suspend host. No fresh two-hour result is claimed or demanded solely for additive candidate data.",
+    "Current source is62of63 matching historical shared demo modules, not63of63. Two of14 historical native object scopes are changed trees: demo-data and demo-modes. Those are not evidence of changed simulation.",
+    "Incoming main integration already has independently source-bound242/242 tests. Keep those results distinct from proposed browser refresh; no blanket rerun of unrelated integration tests, core replay corpus, physical checks or every artwork."
+  ],
+  "survivalHelperReview": {
+    "files": {
+      "scripts/qualify-survival-native.mjs": {
+        "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+        "bytes": 7832
+      },
+      "game/test/demo-survival.test.mjs": {
+        "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+        "bytes": 15602
+      },
+      "scripts/test-demo-tick-survival.mjs": {
+        "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+        "bytes": 5367
+      },
+      "scripts/generate-survival-browser-demos.mjs": {
+        "sha256": "fc13fbb45a4a1a14e5692204aadf6eb0c3a161003144baee58de9fe137b5d0fd",
+        "bytes": 4525
+      }
+    },
+    "findings": [],
+    "assessment": "The helper calls production adapter source.create with engineHint null and filesystem reads, returns only a fully verified selected body, and disposes its paused player in finally. Fixtures clone actual current-runtime proofs then retain corruption/checkpoint/cancellation/isolation/terminal assertions; metadata inventory still reads originals. Generator preserves all admitted suffixes/order instead of dropping non-browser suffixes. No verification relaxation or retained player found."
+  },
+  "limitations": [
+    "Read-only semantic/object/data review only; no browser, replay simulation, test suite, build or hosted job was run. Working-tree candidate additions were present and source-specific pins are included; recheck final declaration after commit."
+  ]
+}

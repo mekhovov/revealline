@@ -1,0 +1,122 @@
+TAP version 13
+# Subtest: installed startup retains a plain update link when optional modules and renderer fail
+ok 1 - installed startup retains a plain update link when optional modules and renderer fail
+  ---
+  duration_ms: 17.595167
+  ...
+# Subtest: native wrapper startup never resolves a web updater under its custom protocol
+ok 2 - native wrapper startup never resolves a web updater under its custom protocol
+  ---
+  duration_ms: 2.183125
+  ...
+# Subtest: downloaded file shows usable native launch options without importing or redirecting
+ok 3 - downloaded file shows usable native launch options without importing or redirecting
+  ---
+  duration_ms: 1.716083
+  ...
+# Subtest: early renderer or stylesheet errors retain inert controls and close partially opened dialogs
+ok 4 - early renderer or stylesheet errors retain inert controls and close partially opened dialogs
+  ---
+  duration_ms: 3.012084
+  ...
+# Subtest: missing renderer does not expose legacy controls or request an app startup
+ok 5 - missing renderer does not expose legacy controls or request an app startup
+  ---
+  duration_ms: 8.123333
+  ...
+# Subtest: app import rejection has an actual caught promise path and stays concealed
+ok 6 - app import rejection has an actual caught promise path and stays concealed
+  ---
+  duration_ms: 9.145833
+  ...
+# Subtest: delayed required styles keep the static launch active and report an actionable failure
+ok 7 - delayed required styles keep the static launch active and report an actionable failure
+  ---
+  duration_ms: 5.275625
+  ...
+# (node:98468) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: cached and delayed styles both finish before app initialization is admitted
+ok 8 - cached and delayed styles both finish before app initialization is admitted
+  ---
+  duration_ms: 16.103916
+  ...
+# Subtest: resolved legacy app cannot substitute hidden status for the ready handshake
+ok 9 - resolved legacy app cannot substitute hidden status for the ready handshake
+  ---
+  duration_ms: 7.978709
+  ...
+# Subtest: pending top-level await keeps loading and real ready succeeds before import completion
+ok 10 - pending top-level await keeps loading and real ready succeeds before import completion
+  ---
+  duration_ms: 10.76875
+  ...
+# Subtest: rejected real app import restores its hidden status and retains the import error
+ok 11 - rejected real app import restores its hidden status and retains the import error
+  ---
+  duration_ms: 5.534167
+  ...
+# Subtest: interactive reveal preserves cancellable controls and failure ownership until final ready
+ok 12 - interactive reveal preserves cancellable controls and failure ownership until final ready
+  ---
+  duration_ms: 25.253167
+  ...
+# Subtest: interactive preparation retains resource failure instead of reporting ready
+ok 13 - interactive preparation retains resource failure instead of reporting ready
+  ---
+  duration_ms: 16.935459
+  ...
+# Subtest: interactive preparation retains rejection failure instead of reporting ready
+ok 14 - interactive preparation retains rejection failure instead of reporting ready
+  ---
+  duration_ms: 5.565583
+  ...
+# Subtest: interactive preparation retains missing-ready failure instead of reporting ready
+ok 15 - interactive preparation retains missing-ready failure instead of reporting ready
+  ---
+  duration_ms: 8.99025
+  ...
+# Subtest: ready alone reveals the game and shuts down boot scheduling/listeners
+ok 16 - ready alone reveals the game and shuts down boot scheduling/listeners
+  ---
+  duration_ms: 1.072625
+  ...
+# Subtest: boot keyboard and controller navigation requires fresh input and yields after pointer use
+ok 17 - boot keyboard and controller navigation requires fresh input and yields after pointer use
+  ---
+  duration_ms: 2.760125
+  ...
+# Subtest: public root enters the native game within source, Pages and frozen prefixes with exact queries
+ok 18 - public root enters the native game within source, Pages and frozen prefixes with exact queries
+  ---
+  duration_ms: 4.341333
+  ...
+# Subtest: public launcher retains its own script URL while access remains pending
+ok 19 - public launcher retains its own script URL while access remains pending
+  ---
+  duration_ms: 1.58325
+  ...
+# Subtest: file launch and a cross-origin script never automatically leave the current document
+ok 20 - file launch and a cross-origin script never automatically leave the current document
+  ---
+  duration_ms: 3.356083
+  ...
+# Subtest: static launch markup survives disabled JS and excludes decorative fake controls
+ok 21 - static launch markup survives disabled JS and excludes decorative fake controls
+  ---
+  duration_ms: 8.271958
+  ...
+# Subtest: password-delayed startup waits for deferred scripts after DOMContentLoaded has passed
+ok 22 - password-delayed startup waits for deferred scripts after DOMContentLoaded has passed
+  ---
+  duration_ms: 0.751208
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 316.867583

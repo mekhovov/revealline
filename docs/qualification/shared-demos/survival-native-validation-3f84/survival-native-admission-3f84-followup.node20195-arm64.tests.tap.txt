@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: Survival sources lazily cover exactly the ordinary authored mission inventory
+ok 1 - Survival sources lazily cover exactly the ordinary authored mission inventory
+  ---
+  duration_ms: 52.807458
+  ...
+# Subtest: verified native playback pauses, forks exactly, and practice cannot mutate the performance
+ok 2 - verified native playback pauses, forks exactly, and practice cannot mutate the performance
+  ---
+  duration_ms: 7350.537292
+  ...
+# Subtest: sparse diagnostics report the first differing checkpoint and reject stale content
+ok 3 - sparse diagnostics report the first differing checkpoint and reject stale content
+  ---
+  duration_ms: 44.348833
+  ...
+# Subtest: cancelled preparation cannot adopt a Survival player
+ok 4 - cancelled preparation cannot adopt a Survival player
+  ---
+  duration_ms: 7.400208
+  ...
+# Subtest: one prefetched payload can fall back only to another fully verified runtime performance
+ok 5 - one prefetched payload can fall back only to another fully verified runtime performance
+  ---
+  duration_ms: 3690.003167
+  ...
+# Subtest: a failed preparation diagnostic observer cannot alter native verification
+ok 6 - a failed preparation diagnostic observer cannot alter native verification
+  ---
+  duration_ms: 3524.617792
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback
+ok 7 - the browser-preferred Survival recording is strictly checked before fallback
+  ---
+  duration_ms: 7546.685041
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback with prefetch
+ok 8 - the browser-preferred Survival recording is strictly checked before fallback with prefetch
+  ---
+  duration_ms: 7523.608458
+  ...
+# Subtest: fresh keyboard or neutral-then-moved controller input is required for takeover
+ok 9 - fresh keyboard or neutral-then-moved controller input is required for takeover
+  ---
+  duration_ms: 0.655334
+  ...
+# Subtest: fresh movement resumes paused native practice through the shared host
+ok 10 - fresh movement resumes paused native practice through the shared host
+  ---
+  duration_ms: 0.162042
+  ...
+# Subtest: the initiating key remains owned through host handoff and its release stops movement
+ok 11 - the initiating key remains owned through host handoff and its release stops movement
+  ---
+  duration_ms: 0.170958
+  ...
+# Subtest: a takeover touch keeps its origin through reconstruction and releases normally
+ok 12 - a takeover touch keeps its origin through reconstruction and releases normally
+  ---
+  duration_ms: 0.227375
+  ...
+# Subtest: release during reconstruction updates movement and retains only the initiating action
+ok 13 - release during reconstruction updates movement and retains only the initiating action
+  ---
+  duration_ms: 0.118666
+  ...
+# Subtest: foreground loss fully clears a handoff gesture even during the synchronous interrupt
+ok 14 - foreground loss fully clears a handoff gesture even during the synchronous interrupt
+  ---
+  duration_ms: 0.165083
+  ...
+# Subtest: practice consumes the initiating boost once despite controller samples before its first tick
+ok 15 - practice consumes the initiating boost once despite controller samples before its first tick
+  ---
+  duration_ms: 20.116625
+  ...
+# Subtest: Survival exact trace independently verifies and observes every native tick, upgrade and reroll
+ok 16 - Survival exact trace independently verifies and observes every native tick, upgrade and reroll
+  ---
+  duration_ms: 233700.440417
+  ...
+# Subtest: a rejected five-second checkpoint still emits the actual advanced boundary tick
+ok 17 - a rejected five-second checkpoint still emits the actual advanced boundary tick
+  ---
+  duration_ms: 2044.048583
+  ...
+# Subtest: a rejected upgrade does not fabricate a tick after its failed action
+ok 18 - a rejected upgrade does not fabricate a tick after its failed action
+  ---
+  duration_ms: 9839.984167
+  ...
+# Subtest: the observer is awaited and cancellation retires observation before another native tick
+ok 19 - the observer is awaited and cancellation retires observation before another native tick
+  ---
+  duration_ms: 25.064084
+  ...
+# Subtest: a comparator failure at a checkpoint boundary remains the exact observer failure
+ok 20 - a comparator failure at a checkpoint boundary remains the exact observer failure
+  ---
+  duration_ms: 2008.522417
+  ...
+# Subtest: tick diagnosis rejects stale content, unknown missions and nonstandard variants
+ok 21 - tick diagnosis rejects stale content, unknown missions and nonstandard variants
+  ---
+  duration_ms: 24.617083
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 281672.313416

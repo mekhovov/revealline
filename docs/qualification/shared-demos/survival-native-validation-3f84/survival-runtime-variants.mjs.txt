@@ -1,0 +1,2 @@
+// Generated only after complete native authoring and independent verification.
+export const SURVIVAL_DEMO_RUNTIME_VARIANTS = ['chromium', 'firefox', 'webkit', 'node22131-x64'];

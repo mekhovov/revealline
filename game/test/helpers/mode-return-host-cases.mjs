@@ -12,14 +12,14 @@ import { readVersusSoloReturnToken } from '../../mode-return-v2.mjs';
 import { couchPage } from './couch-host.mjs';
 import { openMissionLibrary } from './library-selection.mjs';
 
-// Native boot CSS prevents focus before ready; exercise the actual app handoff.
+// Native boot CSS permits focus only after reveal; exercise the actual app handoff.
 async function host(t, options) {
   const original = Object.getOwnPropertyDescriptor(globalThis, 'RevealLineBoot');
   const focus = SoloElement.prototype.focus;
-  let ready = false;
+  let interactive = false;
   t.mock.method(SoloElement.prototype, 'focus', function (...args) {
     if (
-      ready &&
+      interactive &&
       !this.disabled &&
       !this.closest('[hidden],[inert]') &&
       this.getClientRects().length
@@ -31,12 +31,20 @@ async function host(t, options) {
     fail(error) {
       throw error;
     },
+    reveal() {
+      interactive = true;
+      globalThis.document.documentElement.dataset.bootState = 'interactive';
+      for (const element of globalThis.document.querySelectorAll('[data-boot-inert]')) {
+        element.inert = false;
+        element.setAttribute('aria-busy', 'true');
+      }
+      globalThis.document.getElementById('boot-screen').hidden = true;
+    },
     ready() {
-      ready = true;
+      if (!interactive) this.reveal();
       globalThis.document.documentElement.dataset.bootState = 'ready';
       for (const element of globalThis.document.querySelectorAll('[data-boot-inert]'))
-        element.inert = false;
-      globalThis.document.getElementById('boot-screen').hidden = true;
+        element.removeAttribute('aria-busy');
     },
   };
   t.after(() =>

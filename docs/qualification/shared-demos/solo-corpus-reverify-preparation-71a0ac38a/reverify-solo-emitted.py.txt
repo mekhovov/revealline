@@ -1,0 +1,103 @@
+"""Bound the unchanged Solo qualifier jobs via the existing identity-aware process owner."""
+from pathlib import Path
+import ast, datetime, hashlib, json, os, re, signal, subprocess, sys, threading, time
+
+arguments = dict(item[2:].split('=', 1) for item in sys.argv[1:])
+assert arguments.get('run') == 'approved', 'Await explicit browser/CPU release.'
+assert arguments.get('node') and arguments.get('report') and arguments.get('tmpdir')
+root = Path.cwd()
+report_path = Path(arguments['report']).resolve()
+assert report_path.suffix == '.json'
+supervision_path = report_path.with_suffix('.supervision.json')
+log_path = report_path.with_suffix('.log')
+for file in (report_path, supervision_path, log_path):
+    assert not file.exists(), f'Refusing existing evidence: {file}'
+tmpdir = Path(arguments['tmpdir']).resolve(strict=True)
+assert tmpdir.is_dir()
+assert Path(os.environ.get('TMPDIR', '')).resolve(strict=True) == tmpdir
+owner_path = root / '.cache/run-endurance-emitted-final.py'
+owner_bytes = owner_path.read_bytes()
+names = {'owned_process_snapshot', 'owned_process_identity', 'OwnedProcessTree', 'BoundedChildLog'}
+selected = [item for item in ast.parse(owner_bytes, filename=str(owner_path)).body
+            if isinstance(item, (ast.FunctionDef, ast.ClassDef)) and item.name in names]
+assert {item.name for item in selected} == names
+scope = dict(globals())
+exec(compile(ast.Module(body=selected, type_ignores=[]), str(owner_path), 'exec'), scope)
+OwnedProcessTree, BoundedChildLog = scope['OwnedProcessTree'], scope['BoundedChildLog']
+node_args = [item for item in sys.argv[1:] if not item.startswith('--node=')]
+command = [arguments['node'], '.cache/reverify-solo-emitted.mjs', *node_args]
+report = {'format': 'SoloEmittedReverificationSupervisionV1', 'complete': False,
+          'started': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'command': command, 'timeoutSeconds': 2700, 'tmpdir': str(tmpdir),
+          'ownerSource': {'path': str(owner_path.relative_to(root)), 'sha256': hashlib.sha256(owner_bytes).hexdigest()},
+          'supervisorSHA256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+log = BoundedChildLog(log_path)
+child = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                         env={**os.environ, 'SOLO_REVERIFY_SUPERVISED': '1', 'NODE_DISABLE_COMPILE_CACHE': '1'},
+                         start_new_session=True)
+owned = OwnedProcessTree(child)
+log.start(child.stdout)
+remaining = None
+def interrupt(signum, _frame):
+    report['interruptedSignal'] = signal.Signals(signum).name
+    # Allow the one bounded cleanup to finish if cancellation is repeated.
+    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    raise InterruptedError(f'Solo qualification interrupted by {signal.Signals(signum).name}')
+signal.signal(signal.SIGTERM, interrupt)
+signal.signal(signal.SIGINT, interrupt)
+try:
+    deadline = time.monotonic() + report['timeoutSeconds']
+    while child.poll() is None:
+        owned.capture()
+        owned.check_limits()
+        log.check_limits()
+        if time.monotonic() >= deadline:
+            report['watchdogExpired'] = True
+            break
+        time.sleep(0.2)
+    if child.poll() is None:
+        remaining = owned.cleanup()
+    else:
+        remaining = owned.wait_clear(3)
+        if remaining:
+            report['cleanupNeededAfterNodeExit'] = True
+            remaining = owned.cleanup()
+    report['childExit'] = child.poll()
+    report['ownedProcesses'] = owned.evidence(remaining)
+    owned.check_limits()
+    report['ownerSourceUnchanged'] = owner_path.read_bytes() == owner_bytes
+except BaseException as error:
+    report['failure'] = repr(error)
+finally:
+    if remaining is None:
+        try:
+            remaining = owned.cleanup()
+            report['ownedProcesses'] = owned.evidence(remaining)
+        except BaseException as error:
+            report['cleanupFailure'] = repr(error)
+    log.finish()
+    report['log'] = {'path': str(log_path), **log.evidence()}
+    report['childExit'] = child.poll()
+    if report_path.exists():
+        try:
+            body = report_path.read_bytes()
+            result = json.loads(body)
+            report['result'] = {'path': str(report_path), 'sha256': hashlib.sha256(body).hexdigest(), 'complete': result.get('complete')}
+            report['complete'] = (result.get('complete') is True and result.get('bindingsStable') is True and
+                                  result.get('serverClosed') is True and child.returncode == 0 and
+                                  report.get('ownedProcesses', {}).get('verified') is True and
+                                  report.get('ownerSourceUnchanged') is True and
+                                  report['log']['complete'] is True and not report['log']['error'] and
+                                  not report['log']['limitExceeded'] and not report.get('watchdogExpired') and
+                                  not report.get('interruptedSignal') and
+                                  not report.get('cleanupNeededAfterNodeExit') and not report.get('failure') and
+                                  not report.get('cleanupFailure'))
+        except BaseException as error:
+            report['resultFailure'] = repr(error)
+    report['finished'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    with supervision_path.open('x') as output:
+        json.dump(report, output, indent=2)
+        output.write('\n')
+    print(json.dumps({'supervision': str(supervision_path), 'complete': report['complete'], 'childExit': report['childExit']}))
+sys.exit(0 if report['complete'] else 1)

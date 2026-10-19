@@ -1,0 +1,44 @@
+[
+  {
+    "source": ".cache/qualify-emitted-library-stage-observer.mjs",
+    "reviewCopy": "docs/qualification/shared-demos/emitted-library-stage-dd337c8-2b8591448/qualify-emitted-library-stage-observer.mjs",
+    "bytes": 28664,
+    "sha256": "2440c7f111cc5c86ae51121246719c40ccd3210cef06d257848d02ee90dc5ece"
+  },
+  {
+    "source": ".cache/prepare-emitted-library-observer.py",
+    "reviewCopy": "docs/qualification/shared-demos/emitted-library-stage-dd337c8-2b8591448/prepare-emitted-library-observer.py",
+    "bytes": 10506,
+    "sha256": "a53bd619662b4993c3a178967f93afce9416beb3671a27ce785ea0c606fa147c"
+  },
+  {
+    "source": ".cache/emitted-library-stage-observer/preparation.json",
+    "reviewCopy": "docs/qualification/shared-demos/emitted-library-stage-dd337c8-2b8591448/preparation.json",
+    "bytes": 2308,
+    "sha256": "0e97103c63d270bcfae39718b0e3f8c33b2e7364630aeeaae3a014db404888bc"
+  },
+  {
+    "source": ".cache/emitted-library-stage-observer/read-only-audit.json",
+    "reviewCopy": "docs/qualification/shared-demos/emitted-library-stage-dd337c8-2b8591448/read-only-audit.json",
+    "bytes": 6682,
+    "sha256": "1d776f6d5bf6aa454523b5cbe05262ac5aacdcfa9cce85809feb8c1e47a25436"
+  },
+  {
+    "source": ".cache/emitted-library-stage-observer/game__app.mjs",
+    "reviewCopy": "docs/qualification/shared-demos/emitted-library-stage-dd337c8-2b8591448/game__app.mjs",
+    "bytes": 491986,
+    "sha256": "9938667adbfc47c6c1d3e743be145eea9b36c2b44f70ba8d153f31513694a05e"
+  },
+  {
+    "source": ".cache/emitted-library-stage-observer/game__mission-library__multiplayer-expeditions.mjs",
+    "reviewCopy": "docs/qualification/shared-demos/emitted-library-stage-dd337c8-2b8591448/game__mission-library__multiplayer-expeditions.mjs",
+    "bytes": 5712,
+    "sha256": "88f4b9481df0db7469d22e5b0e5af82fba4c5e17f0ac3b1f077199350de0b90e"
+  },
+  {
+    "source": ".cache/emitted-library-stage-observer/game__mission-library__supplemental-hunt.mjs",
+    "reviewCopy": "docs/qualification/shared-demos/emitted-library-stage-dd337c8-2b8591448/game__mission-library__supplemental-hunt.mjs",
+    "bytes": 3223,
+    "sha256": "0a6a5fd84ce97f981a4070a103482abc5818bb7ce5218709cb8c6e85418de3d7"
+  }
+]

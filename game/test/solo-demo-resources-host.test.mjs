@@ -39,6 +39,9 @@ test('manual resource export requires real Demo Pause and retains closed display
     for (let i = 0; i < 10; i++) assert.deepEqual(exportReport().resources.demo, paused);
     assert.deepEqual(authoritativeCheckpoint(page.demoFrame.run), checkpoint);
     page.$('demo-back').click();
+    // The shared host awaits independent asynchronous engine retirement. Its
+    // snapshot must report the real owners until that cleanup has completed.
+    await waitFor(() => exportReport().resources.demo.scenes === 0);
     const closed = exportReport().resources.demo;
     assert.equal(closed.active, false);
     assert.equal(closed.scenes, 0);

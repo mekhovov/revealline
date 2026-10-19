@@ -1,0 +1,29 @@
+{
+  "started": "2026-10-19T04:32:41.332205+00:00",
+  "target": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "base": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+  "sourceHeadBefore": "b691aee66f875ec83477e161841362665b618f22",
+  "lazyFetchEnabled": false,
+  "command": [
+    "git",
+    "-c",
+    "gc.auto=0",
+    "-c",
+    "maintenance.auto=false",
+    "fetch",
+    "--filter=blob:none",
+    "--no-tags",
+    "--no-write-fetch-head",
+    "--no-auto-maintenance",
+    "origin",
+    "16ebd7b51984387c39622380a8e51a60e745152e"
+  ],
+  "availableBefore": 2701197312,
+  "complete": true,
+  "exitCode": 0,
+  "log": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-16ebd7b-metadata-fetch.log.txt",
+  "logTail": "",
+  "sourceHeadAfter": "b691aee66f875ec83477e161841362665b618f22",
+  "headUnchanged": true,
+  "finished": "2026-10-19T04:32:47.079167+00:00"
+}

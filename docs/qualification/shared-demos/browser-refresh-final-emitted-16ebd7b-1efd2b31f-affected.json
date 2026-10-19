@@ -1,0 +1,493 @@
+{
+  "format": "SharedDemoFinalBrowserRefreshV1",
+  "started": "2026-10-19T05:48:15.637Z",
+  "complete": true,
+  "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "30553b327df9dd2671b6dc904ea3c986c84dc1e2effa34919cea836eeeaec78a",
+    "created": "2026-10-19T05:24:08.887821+00:00",
+    "integrationBase": "16ebd7b51984387c39622380a8e51a60e745152e",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+    "files": 9997,
+    "bytes": 404447584
+  },
+  "authoritative": {
+    "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+    "base": "16ebd7b51984387c39622380a8e51a60e745152e",
+    "fingerprint": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+    "files": 9997,
+    "bytes": 404447584
+  },
+  "emittedPreviewDirectory": ".cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+  "wrapper": {
+    "path": ".cache/run-final-demo-refresh-emitted.mjs",
+    "sha256": "856f7669a0baa761ad036dbd4a6d8ca096d8dc4a51b589a222433d55d7516776"
+  },
+  "hashScope": {
+    "runtime": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "harness": "Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers."
+  },
+  "selected": [
+    "restoration-webkit",
+    "mixed-chromium",
+    "mixed-firefox",
+    "mixed-webkit"
+  ],
+  "jobs": [
+    {
+      "id": "restoration-webkit",
+      "scriptSHA256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+      "reportPath": "docs/qualification/shared-demos/restoration-webkit-final-emitted-16ebd7b-1efd2b31f-affected.json",
+      "started": "2026-10-19T05:48:17.294Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-webkit-final-emitted-16ebd7b-1efd2b31f-affected.json\",\"complete\":true,\"checks\":12,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--emitted-preview=.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+        "--report=docs/qualification/shared-demos/restoration-webkit-final-emitted-16ebd7b-1efd2b31f-affected.json",
+        "--port=8771"
+      ],
+      "pid": 61434,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "childClosedAt": "2026-10-19T05:49:15.840Z",
+      "reportSHA256": "74bb875c6c29a6591e74fe6a30867acc9f1ec716480173ce494837e2cefbe49c",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0,
+      "failure": null,
+      "provider": {
+        "owner": "child-qualifier",
+        "port": 8771,
+        "cache": "revalidate",
+        "mode": "generated-build",
+        "headers": "generated _headers (verified)",
+        "fixtureAccess": true,
+        "emittedPreview": {
+          "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+          "manifestSHA256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+          "inventorySHA256": "db7b1e402eb450bb608480502e600669484d7dac8f66b429605138ea72642a90",
+          "files": 5953,
+          "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+          "sourceFingerprint": {
+            "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+            "files": 9997,
+            "bytes": 404447584
+          },
+          "buildInputFingerprint": {
+            "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+            "files": 9406,
+            "bytes": 348396513
+          },
+          "sourceVerified": true,
+          "sourceVerification": {
+            "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+            "runtime": {
+              "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+              "files": 9997,
+              "bytes": 404447584
+            },
+            "buildInput": {
+              "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+              "files": 9406,
+              "bytes": 348396513
+            }
+          }
+        },
+        "observedCacheControl": "public, max-age=0, must-revalidate",
+        "fixtureResponses": [
+          {
+            "path": "game/index.html",
+            "original": {
+              "bytes": 148811,
+              "sha256": "c3f5605cdcd10d1042c85ce71a283ecc23eb7dd7de45a9fcac1d712b4b975b51"
+            },
+            "served": {
+              "bytes": 148785,
+              "sha256": "9fc04822a3c597a0b04fcac2bae67997f1cd0736829ce92e7bed0944e4dc214c"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          },
+          {
+            "path": "game/snake/play.html",
+            "original": {
+              "bytes": 17647,
+              "sha256": "d03ad7f887085a3f04b30f6650ca88ff715864665a47ec05c5a429c39162b449"
+            },
+            "served": {
+              "bytes": 17621,
+              "sha256": "33a6d5116ef0524b1ed6dc8f109e3d4361ecc88419c1b70536391ea57851ad04"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          },
+          {
+            "path": "optional-practice/fpv-worlds/index.html",
+            "original": {
+              "bytes": 49494,
+              "sha256": "f36752ecf688965c81db7828c0702fe4e41a3d2115602b8e6fd70ec8d085fe10"
+            },
+            "served": {
+              "bytes": 49468,
+              "sha256": "c793a25b5482c55229f65c9aafd7f784063063f71b0d9b5122a24ab2efd6d138"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          },
+          {
+            "path": "game/overflight/play.html",
+            "original": {
+              "bytes": 17685,
+              "sha256": "7bf3f8f42207cb456666d6ef0e9ac8af8836cc6e748768c333ef44a2c9c1559b"
+            },
+            "served": {
+              "bytes": 17659,
+              "sha256": "948720e824437a294dbd3ed6c67bb9da703a2a2d838d10926d250918434ba73d"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          }
+        ],
+        "closeCompleted": true
+      },
+      "finished": "2026-10-19T05:49:15.841Z"
+    },
+    {
+      "id": "mixed-chromium",
+      "scriptSHA256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+      "reportPath": "docs/qualification/shared-demos/mixed-chromium-final-emitted-16ebd7b-1efd2b31f-affected.json",
+      "started": "2026-10-19T05:49:15.842Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/mixed-chromium-final-emitted-16ebd7b-1efd2b31f-affected.json\",\"complete\":true,\"checks\":28,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--emitted-preview=.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+        "--port=18773",
+        "--report=docs/qualification/shared-demos/mixed-chromium-final-emitted-16ebd7b-1efd2b31f-affected.json",
+        "--practice=true",
+        "--localeCheck=true",
+        "--lifecycle=true",
+        "--cycles=12"
+      ],
+      "pid": 61883,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "childClosedAt": "2026-10-19T05:50:55.818Z",
+      "reportSHA256": "b871e9497f8de3067d685ee88a013f698e97abedcfd3243c34734a690d22eee6",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 28,
+      "errorCount": 0,
+      "failure": null,
+      "provider": {
+        "owner": "child-qualifier",
+        "url": "http://127.0.0.1:18773/",
+        "mode": "generated-build",
+        "headers": "generated _headers (verified)",
+        "cache": "revalidate",
+        "fixtureAccess": true,
+        "emittedPreview": {
+          "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+          "manifestSHA256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+          "inventorySHA256": "db7b1e402eb450bb608480502e600669484d7dac8f66b429605138ea72642a90",
+          "files": 5953,
+          "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+          "sourceFingerprint": {
+            "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+            "files": 9997,
+            "bytes": 404447584
+          },
+          "buildInputFingerprint": {
+            "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+            "files": 9406,
+            "bytes": 348396513
+          },
+          "sourceVerified": true,
+          "sourceVerification": {
+            "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+            "runtime": {
+              "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+              "files": 9997,
+              "bytes": 404447584
+            },
+            "buildInput": {
+              "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+              "files": 9406,
+              "bytes": 348396513
+            }
+          }
+        },
+        "fixtureResponses": [
+          {
+            "path": "game/index.html",
+            "original": {
+              "bytes": 148811,
+              "sha256": "c3f5605cdcd10d1042c85ce71a283ecc23eb7dd7de45a9fcac1d712b4b975b51"
+            },
+            "served": {
+              "bytes": 148785,
+              "sha256": "9fc04822a3c597a0b04fcac2bae67997f1cd0736829ce92e7bed0944e4dc214c"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          }
+        ],
+        "closeCompleted": true
+      },
+      "finished": "2026-10-19T05:50:55.819Z"
+    },
+    {
+      "id": "mixed-firefox",
+      "scriptSHA256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+      "reportPath": "docs/qualification/shared-demos/mixed-firefox-final-emitted-16ebd7b-1efd2b31f-affected.json",
+      "started": "2026-10-19T05:50:55.820Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/mixed-firefox-final-emitted-16ebd7b-1efd2b31f-affected.json\",\"complete\":true,\"checks\":27,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--emitted-preview=.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+        "--port=18773",
+        "--report=docs/qualification/shared-demos/mixed-firefox-final-emitted-16ebd7b-1efd2b31f-affected.json",
+        "--practice=true",
+        "--localeCheck=true",
+        "--lifecycle=true",
+        "--cycles=12"
+      ],
+      "pid": 63072,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "childClosedAt": "2026-10-19T05:51:45.938Z",
+      "reportSHA256": "03b9e7b46ac1c6b89b6c41ebb966f8dfd2dc2bb7235ba4bd1b438ce9b00de824",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 27,
+      "errorCount": 0,
+      "failure": null,
+      "provider": {
+        "owner": "child-qualifier",
+        "url": "http://127.0.0.1:18773/",
+        "mode": "generated-build",
+        "headers": "generated _headers (verified)",
+        "cache": "revalidate",
+        "fixtureAccess": true,
+        "emittedPreview": {
+          "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+          "manifestSHA256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+          "inventorySHA256": "db7b1e402eb450bb608480502e600669484d7dac8f66b429605138ea72642a90",
+          "files": 5953,
+          "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+          "sourceFingerprint": {
+            "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+            "files": 9997,
+            "bytes": 404447584
+          },
+          "buildInputFingerprint": {
+            "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+            "files": 9406,
+            "bytes": 348396513
+          },
+          "sourceVerified": true,
+          "sourceVerification": {
+            "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+            "runtime": {
+              "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+              "files": 9997,
+              "bytes": 404447584
+            },
+            "buildInput": {
+              "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+              "files": 9406,
+              "bytes": 348396513
+            }
+          }
+        },
+        "fixtureResponses": [
+          {
+            "path": "game/index.html",
+            "original": {
+              "bytes": 148811,
+              "sha256": "c3f5605cdcd10d1042c85ce71a283ecc23eb7dd7de45a9fcac1d712b4b975b51"
+            },
+            "served": {
+              "bytes": 148785,
+              "sha256": "9fc04822a3c597a0b04fcac2bae67997f1cd0736829ce92e7bed0944e4dc214c"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          }
+        ],
+        "closeCompleted": true
+      },
+      "finished": "2026-10-19T05:51:45.939Z"
+    },
+    {
+      "id": "mixed-webkit",
+      "scriptSHA256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+      "reportPath": "docs/qualification/shared-demos/mixed-webkit-final-emitted-16ebd7b-1efd2b31f-affected.json",
+      "started": "2026-10-19T05:51:45.940Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/mixed-webkit-final-emitted-16ebd7b-1efd2b31f-affected.json\",\"complete\":true,\"checks\":27,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--emitted-preview=.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+        "--port=18773",
+        "--report=docs/qualification/shared-demos/mixed-webkit-final-emitted-16ebd7b-1efd2b31f-affected.json",
+        "--practice=true",
+        "--localeCheck=true",
+        "--lifecycle=true",
+        "--cycles=12"
+      ],
+      "pid": 63472,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "childClosedAt": "2026-10-19T05:52:48.657Z",
+      "reportSHA256": "2ca7b73c6287e0fdcb18e6e912e49251fa3ad32c94b9028c2b345e1fdb8bc7c5",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 27,
+      "errorCount": 0,
+      "failure": null,
+      "provider": {
+        "owner": "child-qualifier",
+        "url": "http://127.0.0.1:18773/",
+        "mode": "generated-build",
+        "headers": "generated _headers (verified)",
+        "cache": "revalidate",
+        "fixtureAccess": true,
+        "emittedPreview": {
+          "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+          "manifestSHA256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+          "inventorySHA256": "db7b1e402eb450bb608480502e600669484d7dac8f66b429605138ea72642a90",
+          "files": 5953,
+          "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+          "sourceFingerprint": {
+            "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+            "files": 9997,
+            "bytes": 404447584
+          },
+          "buildInputFingerprint": {
+            "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+            "files": 9406,
+            "bytes": 348396513
+          },
+          "sourceVerified": true,
+          "sourceVerification": {
+            "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+            "runtime": {
+              "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+              "files": 9997,
+              "bytes": 404447584
+            },
+            "buildInput": {
+              "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+              "files": 9406,
+              "bytes": 348396513
+            }
+          }
+        },
+        "fixtureResponses": [
+          {
+            "path": "game/index.html",
+            "original": {
+              "bytes": 148811,
+              "sha256": "c3f5605cdcd10d1042c85ce71a283ecc23eb7dd7de45a9fcac1d712b4b975b51"
+            },
+            "served": {
+              "bytes": 148785,
+              "sha256": "9fc04822a3c597a0b04fcac2bae67997f1cd0736829ce92e7bed0944e4dc214c"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          }
+        ],
+        "closeCompleted": true
+      },
+      "finished": "2026-10-19T05:52:48.659Z"
+    }
+  ],
+  "failedJobs": [],
+  "limitations": [
+    "All jobs receive the same verified emitted capture. Shared and restoration qualifiers own their preview. SIM Fresh and listeners use a per-job strict preview on port8774 with fixtureAccess:false; their unchanged document routing rewrites only local HTML access salt, verifier and id. This is an explicit browser fixture exception, not an offline HTML integrity proof.",
+    "Existing durable qualifiers only, sequential isolated browsers. No production or harness changes are made by this wrapper. Each selected job runs once; a strict failure remains failed while later independent jobs may proceed only after confirmed browser/server cleanup.",
+    "Some durable qualifiers retain empty-stack pageerrors as empty strings; any pageerror still fails their strict count. Raw/name diagnostics require a separate bounded probe after preserving such a failed receipt.",
+    "This refresh covers shared controls, Solo readiness/cache ownership and incoming SIM guidance. Full native corpus retains unchanged-content evidence. Representative emitted-offline, control-remap and native discard checks run separately.",
+    "The two-hour actual-wall-time rotation and outstanding physical-device/human review checks remain separate."
+  ],
+  "emittedManifest": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry/manifest.json",
+    "sha256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+    "bytes": 1304601
+  },
+  "before": {
+    "runtime": {
+      "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+      "files": 9997,
+      "bytes": 404447584
+    },
+    "harness": {
+      "sha256": "d57332f70380724831afd1a428902103022a4b5184fe3073eb86be63a0082ecb",
+      "files": 933,
+      "bytes": 11156920
+    }
+  },
+  "emittedPreview": {
+    "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+    "manifestSHA256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+    "inventorySHA256": "db7b1e402eb450bb608480502e600669484d7dac8f66b429605138ea72642a90",
+    "files": 5953,
+    "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+    "sourceFingerprint": {
+      "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+      "files": 9997,
+      "bytes": 404447584
+    },
+    "buildInputFingerprint": {
+      "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+      "files": 9406,
+      "bytes": 348396513
+    }
+  },
+  "after": {
+    "runtime": {
+      "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+      "files": 9997,
+      "bytes": 404447584
+    },
+    "harness": {
+      "sha256": "d57332f70380724831afd1a428902103022a4b5184fe3073eb86be63a0082ecb",
+      "files": 933,
+      "bytes": 11156920
+    }
+  },
+  "changedFiles": {
+    "runtime": [],
+    "harness": []
+  },
+  "emittedManifestUnchanged": true,
+  "finished": "2026-10-19T05:52:50.294Z"
+}

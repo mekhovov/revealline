@@ -1,0 +1,65 @@
+{
+  "format": "SerialPackagingNativeRefreshPreparationV1",
+  "prepared": true,
+  "launched": false,
+  "createdAt": "2026-10-19T10:25:58.498695+00:00",
+  "head": null,
+  "requiresRootCommittedHeadAndCleanSource": true,
+  "externalParent": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "device": 905969668,
+    "inode": 37530202,
+    "uid": 502,
+    "freeBytes": 45056000000,
+    "writablePermission": true
+  },
+  "proposedOutput": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25",
+  "supervisor": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-packaging-serial.py",
+    "sha256": "40cec0f2d26b26bfb6563e5ca48a37c0f07fdc428615fcaf7e632b68f5582f88"
+  },
+  "owner": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/run-endurance-emitted-final.py",
+    "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+  },
+  "limits": {
+    "companyJobs": 18,
+    "optionalJobs": 3,
+    "companyChildSeconds": 300,
+    "companyTotalSeconds": 3600,
+    "optionalChildSeconds": 300,
+    "optionalTotalSeconds": 900,
+    "childLogBytes": 1048576
+  },
+  "argumentsTemplate": [
+    "python3",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-packaging-serial.py",
+    "--run=approved",
+    "--head=<ROOT_PINNED_CLEAN_COMMIT>",
+    "--node=/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--out=/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25",
+    "--report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/serial-packaging-native-refresh.json"
+  ],
+  "limitations": [
+    "Read-only external identity/capacity/permission preflight; no output created and no write probe executed. Runner rechecks identity before each child.",
+    "Bulk archives/temp files/logs remain external. Small supervision receipt remains local. Synchronous SMB I/O is not a hard deadline; late validation fails.",
+    "Current internal free323MB does not support unconditionally launching a simultaneous fresh local build."
+  ],
+  "node": {
+    "path": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "version": "v22.22.2",
+    "bytes": 112989184,
+    "sha256": "5c899797c4eb8f1db5563eea56538342ddb3e9276ee1b04a5a1f0f1023d2b011"
+  },
+  "priorQualification": {
+    "path": "docs/qualification/shared-demos/packaging-candidates-b4688ca219.json",
+    "sha256": "2e072f523441704f78d8aeab9064984a56c02c0091f6d7207d6e35f3bef1b543",
+    "complete": true,
+    "jobs": 21
+  },
+  "policyPins": {
+    "game/editions/package-budget.mjs": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+    "publishing/optional-package-policy.mjs": "d617d8105a6cbf25c691c0ffd1cc0a5f6dcfc0ef40982c83fdd22f26dd3267b3"
+  },
+  "policyBytesUnchangedFromPrior": true
+}

@@ -1,0 +1,64 @@
+{
+  "head": "e78c5812f8bf3da6975c75221924239666a2e9ed",
+  "results": [
+    {
+      "name": "tests",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=2",
+        "scripts/test-game-cli.mjs",
+        "scripts/test-inspect-default-build.mjs",
+        "scripts/test-soundtrack-distribution.mjs"
+      ],
+      "startedAt": "2026-10-18T22:19:03.144484+00:00",
+      "elapsedSeconds": 27.546,
+      "timeoutSeconds": 300,
+      "timedOut": false,
+      "exitCode": 0,
+      "childPID": 41602,
+      "ownedChildReaped": true,
+      "log": "docs/qualification/shared-demos/fixture-closure-237-e78c5812-tests.log.txt",
+      "logSHA256": "5bd3987e8b9a82fbd60e4af8e846fa3b54b6c44384b4b184bb109e0d11d4c2c2"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "node",
+        "node_modules/eslint/bin/eslint.js",
+        "scripts/test-game-cli.mjs",
+        "scripts/test-inspect-default-build.mjs",
+        "scripts/test-soundtrack-distribution.mjs"
+      ],
+      "startedAt": "2026-10-18T22:19:30.688173+00:00",
+      "elapsedSeconds": 0.717,
+      "timeoutSeconds": 120,
+      "timedOut": false,
+      "exitCode": 0,
+      "childPID": 43868,
+      "ownedChildReaped": true,
+      "log": "docs/qualification/shared-demos/fixture-closure-237-e78c5812-lint.log.txt",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "format",
+      "command": [
+        "node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "scripts/test-game-cli.mjs",
+        "scripts/test-inspect-default-build.mjs",
+        "scripts/test-soundtrack-distribution.mjs"
+      ],
+      "startedAt": "2026-10-18T22:19:31.405724+00:00",
+      "elapsedSeconds": 0.67,
+      "timeoutSeconds": 120,
+      "timedOut": false,
+      "exitCode": 0,
+      "childPID": 43883,
+      "ownedChildReaped": true,
+      "log": "docs/qualification/shared-demos/fixture-closure-237-e78c5812-format.log.txt",
+      "logSHA256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  ]
+}

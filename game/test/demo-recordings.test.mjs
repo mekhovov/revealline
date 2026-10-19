@@ -29,13 +29,14 @@ const campaign = await json('../content/campaign.json'),
 campaign.classRecipes = classRecipes;
 const entry = { campaign, classRecipes };
 const catalog = await json('../demo-data/catalog.json');
+const reviewedClips = catalog.clips.filter((clip) => !clip.id.startsWith('solo-qualified-'));
 
 test('curated complete routes reproduce current Standard tuning without scripted reversal excerpts', async () => {
   const generated = await buildDemoRecordings();
   assert.equal(generated.length, 10);
   assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 8);
   assert.deepEqual(
-    catalog.clips,
+    reviewedClips,
     generated.map(({ descriptor }) => descriptor),
   );
   for (const { replay, descriptor, metrics } of generated) {
@@ -58,7 +59,7 @@ test('curated complete routes reproduce current Standard tuning without scripted
     const frozen = candidates.find((candidate) => verifyReplay(candidate).match);
     assert.ok(
       frozen,
-      'At least one independently frozen strict recording must match this runtime.',
+      `${descriptor.id}: at least one independently frozen strict recording must match this runtime.`,
     );
     assert.ok(demoReplayMatchesEntry(replay, entry));
     const mistake = descriptor.tags.includes('failure');
@@ -172,12 +173,12 @@ test('personal replay compatibility reconstructs tuning from installed originals
   player.dispose();
 });
 
-test('frozen browser variants preserve the exact reviewed trace and every non-enemy outcome', async () => {
+test('frozen runtime variants preserve the exact reviewed trace and every non-enemy outcome', async () => {
   const provenance = await json('../demo-data/variant-provenance.json');
   assert.equal(provenance.format, 'revealline-demo-runtime-variants.v1');
   assert.equal(
     provenance.variants.length,
-    catalog.clips.reduce((count, clip) => count + clip.replayVariants.length, 0),
+    reviewedClips.reduce((count, clip) => count + clip.replayVariants.length, 0),
   );
   for (const id of [
     'first-signal-left',
@@ -215,7 +216,10 @@ test('frozen browser variants preserve the exact reviewed trace and every non-en
 });
 
 test('catalogue admits only matching installed content and local bundled replay URLs', async () => {
-  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 10);
+  assert.equal(
+    resolveDemoCatalog(catalog, [entry]).length,
+    catalog.clips.filter((clip) => clip.campaignId === campaign.id).length,
+  );
   assert.equal(resolveDemoCatalog(catalog, []).length, 0);
   const changed = structuredClone(entry);
   changed.campaign.levels[0].rules.moveSpeed++;

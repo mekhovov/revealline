@@ -1,0 +1,45 @@
+{
+  "started": "2026-10-19T01:50:41.403919+00:00",
+  "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+  "scope": "Working-tree timeout fallback and strict endurance observation correction; not emitted-browser qualification.",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=2",
+    "game/test/demo-director.test.mjs",
+    "game/test/demo-loading.test.mjs",
+    "game/test/demo-shared.test.mjs",
+    "game/test/demo-host.test.mjs",
+    "game/test/demo-loading-host.test.mjs",
+    "game/test/demo-scene-transition.test.mjs",
+    "game/test/solo-demo-resources-host.test.mjs",
+    "game/test/demo-timeout-fallback.test.mjs",
+    "scripts/test-shared-demo-browser-report.mjs",
+    "scripts/test-shared-demo-endurance-progress.mjs"
+  ],
+  "before": {
+    "game/demo-director.mjs": "1b405ab46db490097fb61832cf099bdc6e760e140dc4cac54a74ac4c9baab42f",
+    "game/demo-rotation.mjs": "48d4e542335137e54bc78a3a5f498e686ed51248e9c44b5f1f685887b0c8f37c",
+    "game/demo-loading.mjs": "2f9ab4efe38398cfe08dba89c328cacec2cae559c591d6e85770f5bfce744ba4",
+    "game/demo-prefetch.mjs": "f350a9a13e7a97dbf9a1f2efba2651abfa2e0a4318fca5e39be60cacccfdb724",
+    "game/test/demo-timeout-fallback.test.mjs": "4c3e1127ce8771e0d43c2557a519744c7c8c09d54c06897d8ca729f71085ffd9",
+    "scripts/qualify-shared-demo-browser.mjs": "159529e4bf00f7d6cad0a9ed8ecbf725535c3a3c560cd40fb2968b5e700a7675",
+    "scripts/shared-demo-endurance-progress.mjs": "1424182b8c2386043155517afab422df3df33d73ce20347e905d80b83ca0bcec",
+    "scripts/test-shared-demo-endurance-progress.mjs": "ca50547d86e339fda750e06966415e57afd7e6ec188b2ebe5406971b027c5d7e"
+  },
+  "exitCode": 0,
+  "elapsedSeconds": 102.43005362500116,
+  "after": {
+    "game/demo-director.mjs": "1b405ab46db490097fb61832cf099bdc6e760e140dc4cac54a74ac4c9baab42f",
+    "game/demo-rotation.mjs": "48d4e542335137e54bc78a3a5f498e686ed51248e9c44b5f1f685887b0c8f37c",
+    "game/demo-loading.mjs": "2f9ab4efe38398cfe08dba89c328cacec2cae559c591d6e85770f5bfce744ba4",
+    "game/demo-prefetch.mjs": "f350a9a13e7a97dbf9a1f2efba2651abfa2e0a4318fca5e39be60cacccfdb724",
+    "game/test/demo-timeout-fallback.test.mjs": "4c3e1127ce8771e0d43c2557a519744c7c8c09d54c06897d8ca729f71085ffd9",
+    "scripts/qualify-shared-demo-browser.mjs": "159529e4bf00f7d6cad0a9ed8ecbf725535c3a3c560cd40fb2968b5e700a7675",
+    "scripts/shared-demo-endurance-progress.mjs": "1424182b8c2386043155517afab422df3df33d73ce20347e905d80b83ca0bcec",
+    "scripts/test-shared-demo-endurance-progress.mjs": "ca50547d86e339fda750e06966415e57afd7e6ec188b2ebe5406971b027c5d7e"
+  },
+  "unchanged": true,
+  "complete": true,
+  "stdout": "timeout-recovery-693947ed1.tap.txt"
+}

@@ -1,0 +1,165 @@
+{
+  "format": "revealline-demo-final-build-validation.v2",
+  "started": "2026-10-19T08:46:18.056Z",
+  "expected": {
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "base": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+    "runtime": {
+      "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+      "files": 10000,
+      "bytes": 404485348
+    }
+  },
+  "attempt": "combined",
+  "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "runtimeFingerprint": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputFingerprint": {
+    "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "wrapper": {
+    "path": ".cache/run-final-build-current.mjs",
+    "sha256": "dfbcb74bbff73b4a50af80e35cbbec8e99da7748abb41d83d55ad8d592f4c56d"
+  },
+  "wrapperHelper": {
+    "path": ".cache/final-build-wrapper-support.mjs",
+    "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e"
+  },
+  "scratchHelper": {
+    "path": ".cache/final-build-scratch.mjs",
+    "sha256": "1c8c537e0e9c68a57a5d568fccd641b6c26a7c5458115755c2125afd4546d6e7"
+  },
+  "scratch": null,
+  "previewOutput": ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "05cb055569df7fda6b9a26a7ac3767345e62846a3bea3bea7f91f364b2b78d88",
+    "created": "2026-10-19T08:31:26.187982+00:00",
+    "integrationBase": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "materializedBuild": false,
+  "deploymentAdmission": false,
+  "complete": true,
+  "stages": [
+    {
+      "name": "main-pages",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-main-pages.mjs",
+        "--report=docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+        "--preview-output=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined"
+      ],
+      "started": "2026-10-19T08:46:18.057Z",
+      "logPath": "docs/qualification/shared-demos/final-main-pages-2d24aee-b4688ca21-combined.log.txt",
+      "receivedLogBytes": 1280514,
+      "availableDiskBeforeBytes": 865583104,
+      "pid": 27610,
+      "minimumObservedDiskBytes": 854147072,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 265872,
+      "retainedLogBytes": 1280514,
+      "logTruncated": false,
+      "logSHA256": "ed7ff21370a8f41872a32759a790dfae4b8c7eaa08c0983c96e3c3d9911608de",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+        "bytes": 2067388,
+        "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba",
+        "complete": true
+      }
+    },
+    {
+      "name": "full-packaging",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-packaging.mjs",
+        "--report=docs/qualification/shared-demos/shared-demos-packaging-2d24aee-b4688ca21-combined.json"
+      ],
+      "started": "2026-10-19T08:50:43.952Z",
+      "logPath": "docs/qualification/shared-demos/final-full-packaging-2d24aee-b4688ca21-combined.log.txt",
+      "receivedLogBytes": 2344,
+      "availableDiskBeforeBytes": 707407872,
+      "pid": 30521,
+      "minimumObservedDiskBytes": 705638400,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 257983,
+      "retainedLogBytes": 2344,
+      "logTruncated": false,
+      "logSHA256": "5df79302fd257d62865f94a6ef9625de3850c23b23295ab93be985466ae6c82c",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/shared-demos-packaging-2d24aee-b4688ca21-combined.json",
+        "bytes": 704893,
+        "sha256": "585a8f79f8c27fd91ae727e77c15f89d659a00d1e035e8f5322f2a6ec7b5ec8d",
+        "complete": true
+      }
+    },
+    {
+      "name": "validate",
+      "command": [
+        "npm",
+        "run",
+        "validate"
+      ],
+      "started": "2026-10-19T08:55:01.937Z",
+      "logPath": "docs/qualification/shared-demos/final-validate-2d24aee-b4688ca21-combined.log.txt",
+      "receivedLogBytes": 3932,
+      "availableDiskBeforeBytes": 711524352,
+      "pid": 38190,
+      "minimumObservedDiskBytes": 703795200,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 170142,
+      "retainedLogBytes": 3932,
+      "logTruncated": false,
+      "logSHA256": "769c0f439ae7c5287b8253ab24f9d08d439c656cf47211f775824caecbcf9c03"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "started": "2026-10-19T08:57:52.080Z",
+      "logPath": "docs/qualification/shared-demos/final-lint-2d24aee-b4688ca21-combined.log.txt",
+      "receivedLogBytes": 196,
+      "availableDiskBeforeBytes": 701739008,
+      "pid": 38831,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 16946,
+      "retainedLogBytes": 196,
+      "logTruncated": false,
+      "logSHA256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c"
+    }
+  ],
+  "limits": {
+    "logBytesPerStage": 2097152,
+    "stopIfAvailableDiskBelowBytes": 209715200,
+    "stopIfScratchAvailableBelowBytes": 209715200,
+    "stageTimeoutMs": 1200000
+  },
+  "updated": "2026-10-19T08:58:11.752Z",
+  "finalSourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "finalRuntimeFingerprint": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "finalBuildInputFingerprint": {
+    "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "sourceStable": true
+}

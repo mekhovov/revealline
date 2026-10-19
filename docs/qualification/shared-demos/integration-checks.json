@@ -1,0 +1,174 @@
+{
+  "format": "SharedDemoIntegrationChecksV1",
+  "generatedAt": "2026-10-18T05:35:04.945447+00:00",
+  "head": "7e9575053aa59d366785de5b383f43e49a4a5c58",
+  "workingTreeChanges": true,
+  "sourceFingerprint": "source-freeze-7e9575053.json",
+  "suites": [
+    {
+      "tests": 719,
+      "pass": 719,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "command": "node --test --test-concurrency=2 game/test/demo-*.test.mjs game/test/snake-demo.test.mjs game/test/solo-demo-*.test.mjs",
+      "log": ".cache/integrated-final-all-demo-tests.log",
+      "complete": true,
+      "durableLog": "integrated-final-all-demo-tests.tap.txt"
+    },
+    {
+      "tests": 130,
+      "pass": 130,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "command": "node --test shared framework, director, experience, runtime, clock, audio, library, replay and player suites",
+      "log": ".cache/integrated-framework-tests.log",
+      "complete": true,
+      "durableLog": "integrated-framework-tests.tap.txt"
+    },
+    {
+      "tests": 140,
+      "pass": 140,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "command": "node --test controller router, bindings, mapping, native menus, mode shell and demo controller suites",
+      "log": ".cache/integrated-input-menu-tests.log",
+      "complete": true,
+      "durableLog": "integrated-input-menu-tests.tap.txt"
+    },
+    {
+      "tests": 240,
+      "pass": 240,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "command": "node --test overflight-host, classic-snake-ui, fpv-workbench input/host and flight-ui suites",
+      "log": ".cache/integrated-ordinary-regressions.log",
+      "complete": true,
+      "durableLog": "integrated-ordinary-regressions.tap.txt"
+    },
+    {
+      "tests": 26,
+      "pass": 26,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "command": "node --test picture settings, background, Confirm and retained-presentation host regressions",
+      "log": ".cache/demo-final-host-regressions.log",
+      "complete": true,
+      "durableLog": "demo-final-host-regressions.tap.txt"
+    }
+  ],
+  "nativeCoverage": {
+    "solo": 240,
+    "snake": 240,
+    "sim": 392,
+    "survival": 18,
+    "total": 890,
+    "note": "Derived inventory; exact mode receipts are linked from README.md."
+  },
+  "lint": {
+    "command": "npm run lint",
+    "passed": true,
+    "log": ".cache/integrated-frozen-lint.log",
+    "durableLog": "integrated-frozen-lint.txt"
+  },
+  "validation": {
+    "command": "npm run validate",
+    "status": "passed",
+    "log": ".cache/integrated-frozen-validate.log",
+    "exitCode": 0,
+    "durableLog": "integrated-frozen-validate.txt"
+  },
+  "limitations": [
+    "Suite counts overlap and must not be summed as distinct tests.",
+    "Physical input, audible output, mobile hardware and unfamiliar-player checks are not performed.",
+    "Build and browser endurance are separate receipts."
+  ],
+  "resolvedRegressionSnapshot": {
+    "tests": 713,
+    "passed": 708,
+    "failed": 5,
+    "note": "Initial integration found one stale picture-setting label and obsolete hidden-readout/focus test expectations. All corrected cases pass focused and final whole-suite reruns."
+  },
+  "note": "These suites ran before the subsequent 12-line upstream ordinary SIM paused-recovery fix. Focused final-base regression checks are recorded separately.",
+  "finalBaseFollowUp": {
+    "head": "4f68b924ee74c1a02fa340b1d17ddadf5ffa2c3f",
+    "tests": 30,
+    "passed": true,
+    "receipt": "sim-main-4f68b924-regressions.json",
+    "browserFresh": "shared-demo-fresh-sim-4f68b924.json",
+    "validation": {
+      "command": "npm run validate",
+      "passed": true,
+      "log": ".cache/integrated-4f-validate.log",
+      "durableLog": "integrated-4f-validate.txt"
+    },
+    "lint": {
+      "scope": "only changed runtime module: optional-practice/civilian-fpv/world-app.mjs",
+      "passed": true,
+      "log": ".cache/integrated-4f-lint.log",
+      "durableLog": "integrated-4f-lint.txt"
+    }
+  },
+  "retirementHistoryFollowUp": {
+    "productionFile": "game/ui/demo-host.mjs",
+    "change": "Resolve the allSettled retirement barrier to undefined, avoiding recursively retained previous result arrays. Cleanup wait and rejection isolation are preserved.",
+    "tests": 42,
+    "passed": true,
+    "log": ".cache/demo-retirement-barrier-regressions.log",
+    "suites": [
+      "demo-native-host",
+      "demo-shared",
+      "demo-director",
+      "demo-solo-adapter",
+      "demo-loading-host"
+    ],
+    "lint": true,
+    "format": true,
+    "sourceFingerprint": "source-freeze.json",
+    "enduranceSourceFingerprint": "source-freeze-before-retirement-fix.json",
+    "browserReceipt": "mixed-chromium-retirement-final.json"
+  },
+  "nativeLayoutFollowUp": {
+    "productionFile": "game/ui/demo.css",
+    "change": "Center native canvases in the shared demo surface; preserve native sizing.",
+    "tests": 2,
+    "passed": true,
+    "browserReceipt": "native-layout-final.json",
+    "engines": [
+      "chromium"
+    ],
+    "modes": [
+      "snake",
+      "sim",
+      "survival"
+    ],
+    "viewports": [
+      "390x844",
+      "1280x800"
+    ],
+    "format": true,
+    "sourceFingerprint": "source-freeze.json"
+  },
+  "finalBrowserFollowUp": {
+    "sourceFingerprint": "source-freeze.json",
+    "chromium": {
+      "interactionReceipt": "mixed-chromium-retirement-final.json",
+      "note": "Final cleanup host; native-layout-final.json additionally checks final CSS in all three native modes at two widths.",
+      "layoutReceipt": "native-layout-final.json"
+    },
+    "firefox": {
+      "receipt": "mixed-firefox-final-code.json",
+      "checks": 27,
+      "passed": true
+    },
+    "webkit": {
+      "receipt": "mixed-webkit-final-code.json",
+      "checks": 27,
+      "passed": true
+    }
+  }
+}

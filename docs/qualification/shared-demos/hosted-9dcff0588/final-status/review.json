@@ -1,0 +1,81 @@
+{
+  "format": "SharedDemoFinalHostedSnapshotV1",
+  "observedAt": "2026-10-19T11:25:13.353042+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "allRegisteredChecksSettled": true,
+  "registeredChecks": 28,
+  "conclusions": {
+    "SUCCESS": 23,
+    "FAILURE": 3,
+    "SKIPPED": 2
+  },
+  "mergeable": "MERGEABLE",
+  "mergeStateStatus": "UNSTABLE",
+  "newlyCompletedJobs": [
+    {
+      "id": 118017659238,
+      "run_id": 39239035820,
+      "run_attempt": 1,
+      "head_sha": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "name": "preview",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-19T10:46:21Z",
+      "completed_at": "2026-10-19T11:25:07Z",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39239035820/job/118017659238"
+    },
+    {
+      "id": 118015087523,
+      "run_id": 39239035791,
+      "run_attempt": 1,
+      "head_sha": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "name": "candidate",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-19T10:39:43Z",
+      "completed_at": "2026-10-19T11:06:50Z",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39239035791/job/118015087523"
+    }
+  ],
+  "failed": [
+    {
+      "name": "focused_shards (1)",
+      "workflowName": "Validate source for continuous main",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024521796"
+    },
+    {
+      "name": "focused",
+      "workflowName": "Validate source for continuous main",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118025237119"
+    },
+    {
+      "name": "release-ready",
+      "workflowName": "Validate source for continuous main",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118025285739"
+    }
+  ],
+  "policySkipped": [
+    {
+      "name": "test",
+      "workflowName": "Validate source for continuous main",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024523445"
+    },
+    {
+      "name": "build",
+      "workflowName": "Validate source for continuous main",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024523319"
+    }
+  ],
+  "limits": [
+    "Exact9dcff jobs only. No prior-head result is inherited as current proof.",
+    "Skipped conditional build/test jobs are policy skips, not functional passes.",
+    "The focused chain remains failed; original Fresh timeout is unresolved, and single retry failed before tests because the attempt2 inventory artifact was absent.",
+    "Appearance and Company statuses are exact job API results; this summary does not independently inspect their package contents.",
+    "Monitor ended after21 polls/1237.917s with no further job actions; no monitor process remains."
+  ]
+}

@@ -1,0 +1,602 @@
+{
+  "format": "SharedDemoActualChromiumNativeDiscardWithObservedHTMLV1",
+  "engine": "chromium",
+  "started": "2026-10-19T01:48:21.110Z",
+  "complete": false,
+  "source": {
+    "binding": "This probe independently recomputes the canonical full runtime fingerprint before browser launch and after browser/preview cleanup, checks hash/file count/byte count against the pinned argument and manifest, and retains scoped source and unchanged-HEAD checks. It also binds the canonical complete scripts/authoring build-input scope and exact emitted capture/audit/inventory bytes before and after.",
+    "head": "693947ed1373db7a265def126a5eede2bf875013",
+    "manifestPath": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "created": "2026-10-19T00:33:50.857423+00:00",
+    "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "probe": {
+    "path": ".cache/qualify-demo-actual-discard-native-emitted.mjs",
+    "sha256": "76664f9597613e21aa065645a8aa287b3ac606df6d3838c647062ca3eb89263e",
+    "helperSHA256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+  },
+  "functionalComplete": false,
+  "strictDiagnosticGate": true,
+  "checks": [],
+  "errors": [],
+  "actualDiscards": [
+    {
+      "mode": "solo",
+      "stateName": "ordinary",
+      "started": "2026-10-19T01:48:46.674Z",
+      "targetURL": "http://127.0.0.1:18775/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+      "before": {
+        "documentId": "c2df0b48-9215-40e0-9728-31c68f90722c",
+        "wasDiscarded": false,
+        "resources": null,
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": "briefing",
+        "dialogs": [
+          "shell-home"
+        ],
+        "nativeSurfaces": 0,
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false,
+            "hidden": false,
+            "wasDiscarded": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "navigate",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "windowId": 230280791,
+      "hiddenBeforeDiscard": true,
+      "lastObservedOldDocumentPrefix": {
+        "label": "solo:ordinary:before-detach",
+        "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+        "cutoff": 6,
+        "overflow": 0,
+        "transportRejected": 0,
+        "observerFailures": 0,
+        "at": "2026-10-19T01:48:46.724Z"
+      },
+      "observedWorkerTargets": [],
+      "detachedAt": "2026-10-19T01:48:46.736Z",
+      "workerTargetsImmediatelyAfterDetach": [],
+      "detachedTargetInfo": [
+        {
+          "targetId": "503F8527711D50A27F46E63D8846E127",
+          "type": "page",
+          "title": "FPV / LINE",
+          "url": "http://127.0.0.1:18775/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+          "attached": false,
+          "canAccessOpener": false,
+          "browserContextId": "FC9A4D18093F90F8130CC80C598C966B"
+        },
+        {
+          "targetId": "0EFE5FCC2432E74BFF0206379799C14F",
+          "type": "page",
+          "title": "Discards",
+          "url": "chrome://discards/",
+          "attached": true,
+          "canAccessOpener": false,
+          "browserContextId": "FC9A4D18093F90F8130CC80C598C966B"
+        }
+      ],
+      "beforeCells": [
+        "1",
+        "3.0",
+        "\n            \n              \n              \n              FPV / LINE\n            \n          ",
+        "http://127.0.0.1:18775/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+        "hidden",
+        "loaded",
+        "hidden",
+        "\n            ✘️\n            \n              [View Reason]\n              Tab is recently visible,Tab has form interactions,The user has edited the tab's content\n            \n          ",
+        "\n            ✘️\n            \n              [View Reason]\n              recently visible,holding Web Lock,loading,most recently used\n            \n          ",
+        "0",
+        "\n            ✔\n            \n              [Toggle]\n            \n          ",
+        "\n            just now\n          ",
+        "\n            \n              [Load]\n            \n            \n              [Urgent Discard]\n            \n            \n              [Proactive Discard]\n            \n            \n              [Freeze]\n            \n          "
+      ],
+      "actionTabId": "1",
+      "lastNativeRow": {
+        "tables": 1,
+        "matches": 1,
+        "actions": 1,
+        "cells": [
+          "1",
+          "3.0",
+          "\n            \n              \n              \n              FPV / LINE\n            \n          ",
+          "http://127.0.0.1:18775/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+          "hidden",
+          "loaded",
+          "hidden",
+          "\n            ✘️\n            \n              [View Reason]\n              Tab is recently visible,Tab has form interactions,The user has edited the tab's content\n            \n          ",
+          "\n            ✘️\n            \n              [View Reason]\n              recently visible,holding Web Lock,most recently used\n            \n          ",
+          "0",
+          "\n            ✔\n            \n              [Toggle]\n            \n          ",
+          "\n            just now\n          ",
+          "\n            \n              [Load]\n            \n            \n              [Urgent Discard]\n            \n            \n              [Proactive Discard]\n            \n            \n              [Freeze]\n            \n          "
+        ],
+        "disabled": false,
+        "tabId": "1",
+        "rect": {
+          "x": 947.671875,
+          "y": 134,
+          "width": 71.046875,
+          "height": 22
+        },
+        "viewport": {
+          "width": 1024,
+          "height": 681
+        }
+      }
+    }
+  ],
+  "beforeHashes": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c",
+    "game/app.mjs": "4a6c4fbaeb036de62697cf47755b3d4162793c250f274192e1ad812b35640eab",
+    "game/ui/demo-host.mjs": "fe775bf8636e29d1cedc84fba62f8be47d233c267296fd245bdcc53b83c03d61",
+    "game/snake/classic-app.mjs": "913443706767cd1d16bfffdbe90b9cfb86da3cf1ff88251577b71ce0088af542",
+    "game/overflight/app.mjs": "fc415ae0525f22639ecc6c9ec06381ad176ec79638014f816c2622cd38f218cf",
+    "optional-practice/civilian-fpv/world-app.mjs": "28fddbd86ca7101ea40e4adee7c60b4a918488cab65cd31ddd25f7e7d77c529d",
+    "scripts/qualify-demo-restoration-browser.mjs": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+    "scripts/demo-restoration-observation.mjs": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+    "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+    "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+    ".cache/demo-probe-evidence.mjs": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+    ".cache/demo-native-discard-environment.mjs": "49a0e1adaed091f78b6de483004dd01ea6c4c7b483983410988269290c88d604",
+    ".cache/demo-discard-observation-fixture.mjs": "60b974bed05b34ef59f9867edfe332b055faefad6ad862afe3570c2744c6b863",
+    ".cache/demo-discard-observer-browser.js": "e25d3ffb75dfcfaf18d895d28941e58c6fcc9d2c2777987defe93649916087b4"
+  },
+  "runtimeBinding": {
+    "scope": "Sorted rg --files game optional-practice publishing; .mjs/.js/.json/.css/.html; excludes /test/, *.test.mjs and */coverage.json; SHA256(path + NUL + raw SHA256(file bytes)).",
+    "before": {
+      "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+      "files": 9996,
+      "bytes": 404392393
+    },
+    "after": {
+      "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+      "files": 9996,
+      "bytes": 404392393
+    },
+    "beforeVerified": true,
+    "afterVerified": true
+  },
+  "buildInputBinding": {
+    "scope": "Sorted rg --files scripts authoring; .mjs/.js/.json/.css/.html; excludes /test/, *.test.mjs and */coverage.json; SHA256(path + NUL + raw SHA256(file bytes)).",
+    "before": {
+      "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+      "files": 9398,
+      "bytes": 348357907
+    },
+    "after": {
+      "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+      "files": 9398,
+      "bytes": 348357907
+    },
+    "beforeVerified": true,
+    "afterVerified": true
+  },
+  "emittedEvidenceBinding": {
+    "before": {
+      "manifest": {
+        "path": ".cache/shared-demos-emitted-dd337c8-693947ed1/manifest.json",
+        "bytes": 1304395,
+        "sha256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474"
+      },
+      "audit": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.json",
+        "bytes": 2057403,
+        "sha256": "7d46a578c3b0ca2b208e58cba99c151bf4889ec850bdc176da1030875baa7532"
+      },
+      "inventory": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.inventory.json",
+        "bytes": 941134,
+        "sha256": "49a076bea7fa4402f33de1e07415f5095a0a95cbd11218f8c8593d8bcf93ab0a"
+      },
+      "identity": {
+        "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+        "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+        "sourceFingerprint": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInputFingerprint": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "after": {
+      "manifest": {
+        "path": ".cache/shared-demos-emitted-dd337c8-693947ed1/manifest.json",
+        "bytes": 1304395,
+        "sha256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474"
+      },
+      "audit": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.json",
+        "bytes": 2057403,
+        "sha256": "7d46a578c3b0ca2b208e58cba99c151bf4889ec850bdc176da1030875baa7532"
+      },
+      "inventory": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.inventory.json",
+        "bytes": 941134,
+        "sha256": "49a076bea7fa4402f33de1e07415f5095a0a95cbd11218f8c8593d8bcf93ab0a"
+      },
+      "identity": {
+        "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+        "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+        "sourceFingerprint": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInputFingerprint": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "beforeVerified": true,
+    "afterVerified": true
+  },
+  "references": [
+    "https://developer.chrome.com/docs/web-platform/page-lifecycle-api",
+    "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/resources/discards/discards_tab.ts"
+  ],
+  "instrumentation": "A declared synchronous HTML fixture loads a pinned read-only observer before app scripts. It wraps Storage/IndexedDB calls without changing native arguments/results, retains a bounded per-document buffer, and reports to a same-origin collector independent of Playwright. A separate task-owned preview serves the verified emitted inventory with fixture credentials and public,max-age=0,must-revalidate headers. No Playwright routing is installed. The declared diagnostic HTML fixture and bounded event collector are served by this test-only server.",
+  "nativeEnvironments": [
+    {
+      "mode": "solo",
+      "actions": [
+        {
+          "at": "2026-10-19T01:48:40.789Z",
+          "type": "attach-exact-owned-native-browser",
+          "pid": 45184,
+          "profile": "/tmp/codex-native-discard-owned-s1IMKW",
+          "endpoint": "http://127.0.0.1:61518",
+          "noDefaults": true
+        },
+        {
+          "at": "2026-10-19T01:48:41.761Z",
+          "type": "native-debug-ui-enabled"
+        }
+      ],
+      "errors": [],
+      "launchEnvironment": [
+        "--headless",
+        "--enable-automation",
+        "--remote-debugging-port=0",
+        "--remote-debugging-address=127.0.0.1",
+        "--user-data-dir=/tmp/codex-native-discard-owned-s1IMKW",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--no-startup-window",
+        "--window-size=1024,768",
+        "--disable-background-networking",
+        "--disk-cache-size=1048576",
+        "--media-cache-size=1048576"
+      ],
+      "ownedProcess": {
+        "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "profile": "/tmp/codex-native-discard-owned-s1IMKW",
+        "detachedProcessGroup": true,
+        "pid": 45184,
+        "stderr": "\nDevTools listening on ws://127.0.0.1:61518/devtools/browser/44b48ec3-0bf4-4864-9002-4244471ff1b0\n[45202:3417197:1019/034840.895732:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034840.896084:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\nTrying to load the allocator multiple times. This is *not* supported.\n[45202:3417197:1019/034841.169731:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034841.169806:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034841.177646:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034841.177709:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034841.178254:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034841.178283:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034841.178647:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034841.178737:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034841.181182:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034841.181231:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45184:3417044:1019/034841.400205:ERROR:chrome/browser/ui/webui/ntp/new_tab_ui.cc:54] Requested load of chrome://newtab/ for incorrect profile type.\n[45202:3417197:1019/034842.493082:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034842.493151:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034843.586453:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034843.586523:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034843.711548:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034843.711615:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034843.761134:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034843.761213:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034843.878346:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034843.878407:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45184:3417179:1019/034843.891895:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n[45184:3417179:1019/034843.898779:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n[45184:3417179:1019/034843.923122:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n[45202:3417197:1019/034843.953404:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034843.953469:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034844.373580:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034844.373675:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417197:1019/034845.053077:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45202:3417272:1019/034845.053157:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[45184:3417044:1019/034846.402175:ERROR:components/policy/core/browser/policy_conversions_client.cc:306] CloudProfileReportingEnabled has an error of type: Ignored because the policy can only be set as a cloud user policy.\n[45184:3417179:1019/034846.775884:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n[45184:3417179:1019/034846.776000:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n[45184:3417179:1019/034846.776213:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\nCreated TensorFlow Lite XNNPACK delegate for CPU.\n",
+        "exit": {
+          "code": 0,
+          "signal": null,
+          "at": "2026-10-19T01:48:57.808Z"
+        }
+      },
+      "browserVersion": "155.0.8059.85",
+      "commandLineOwnedProfileVerified": true,
+      "remainingOwnedProcesses": [],
+      "childExitConfirmed": true,
+      "profileRemoved": true,
+      "cleanupComplete": true
+    }
+  ],
+  "observationLimit": "Saved local/session values must be identical. Mutation assertions cover observed top-document events and no new observed startup mutation signatures; they do not prove equal write volume, persisted IndexedDB values, or absence of an undelivered old-document tail after detachment. Restored startup must reconcile its complete retained buffer. Native inspector-only diagnostics during the detached interval are not claimed.",
+  "limitations": [
+    "The preview serves the verified emitted inventory after verifying its captured source identity against the current checkout. The local HTML access fixture and additional hashed synchronous observation script tag are declared. This is not offline HTML integrity proof; service workers are not blocked or unregistered.",
+    "Actual urgent discard is requested only for the exact owned game tab through chrome://discards UI; no user browser, extension, crash, synthetic wasDiscarded override, or page.reload fallback is used.",
+    "Every accepted case requires the native UI to report discarded, a new document identity, and native document.wasDiscarded=true after tab activation.",
+    "Fresh profiles cover ordinary entry plus watching/practice in each selected mode; existing saved-flight checkpoint tests remain complementary.",
+    "Storage API observers preserve native return values; managed media asset-cache writes are recorded separately from player persistence, following the existing restoration helper.",
+    "Resource assertions cover no restored demo surface/owned scene and absence of exactly observed dedicated-worker native target IDs after confirmed discard. They do not measure browser-internal GPU/process memory.",
+    "The canonical full runtime scope excludes tests, coverage reports, documentation, binary assets and ignored files. The canonical scripts/authoring build-input scope uses the same file selection rules and is independently bound before/after; relevant helpers, this probe, and its ignored evidence helper are also pinned. This is not a hash of every repository file.",
+    "The before/after fingerprints detect changes at those boundaries, not transient edits reverted during the run. The parent must keep the declared source freeze and exclusive browser slot held.",
+    "Invocation requires an exact newly frozen HEAD/runtime; this preparation script itself grants no browser or discard credit until all strict checks complete."
+  ],
+  "preview": {
+    "port": 18775,
+    "cache": "revalidate",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1",
+      "manifestSHA256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474",
+      "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+      "files": 5952,
+      "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+      "sourceFingerprint": {
+        "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+        "files": 9996,
+        "bytes": 404392393
+      },
+      "buildInputFingerprint": {
+        "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+        "files": 9398,
+        "bytes": 348357907
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "693947ed1373db7a265def126a5eede2bf875013",
+        "runtime": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInput": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "observedCacheControl": "public, max-age=0, must-revalidate",
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148313,
+          "sha256": "418f56ea11a419120e53fc1cd8dceaad5c10c394dad39e0922623aa2b9d6edc6"
+        },
+        "served": {
+          "bytes": 148287,
+          "sha256": "f7b9763619eb424bf737ee3e676695b5e364c45164deb5178aa91b9294b6ccac"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "browserVersion": "155.0.8059.85",
+  "failure": "AssertionError [ERR_ASSERTION]: Native urgent discard was not confirmed; eligibility protections remain authoritative.\n    at Object.discard (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/demo-native-discard-environment.mjs:290:14)\n    at async actualDiscard (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-demo-actual-discard-native-emitted.mjs:301:31)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-demo-actual-discard-native-emitted.mjs:416:21",
+  "activeStage": {
+    "mode": "solo",
+    "stage": "ordinary-control-discard"
+  },
+  "events": [
+    {
+      "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+      "seq": 1,
+      "mode": "solo",
+      "stage": "boot",
+      "path": "/game/",
+      "at": 1792374521789,
+      "kind": "observer-installed"
+    },
+    {
+      "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+      "seq": 2,
+      "mode": "solo",
+      "stage": "boot",
+      "path": "/game/",
+      "at": 1792374521843,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false,
+      "hidden": false,
+      "wasDiscarded": false
+    },
+    {
+      "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+      "seq": 3,
+      "mode": "solo",
+      "stage": "boot",
+      "path": "/game/",
+      "at": 1792374521937,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.access.revealline.v1",
+      "absentRemoval": false
+    },
+    {
+      "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+      "seq": 4,
+      "mode": "solo",
+      "stage": "boot",
+      "path": "/game/",
+      "at": 1792374524492,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+      "seq": 5,
+      "mode": "solo",
+      "stage": "boot",
+      "path": "/game/",
+      "at": 1792374526236,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+      "seq": 6,
+      "mode": "solo",
+      "stage": "ordinary-control-discard",
+      "path": "/game/",
+      "at": 1792374526710,
+      "kind": "lifecycle",
+      "type": "visibilitychange",
+      "persisted": null,
+      "hidden": true,
+      "wasDiscarded": false
+    }
+  ],
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T01:48:57.978Z",
+  "previewClosed": true,
+  "observationFixture": {
+    "observer": {
+      "bytes": 4723,
+      "sha256": "e25d3ffb75dfcfaf18d895d28941e58c6fcc9d2c2777987defe93649916087b4"
+    },
+    "collectorPath": "/__discard-observer-0a9530db-fb41-4333-b6a4-8d78a1cfcf1e/events",
+    "eventCount": 6,
+    "reconciliations": [
+      {
+        "label": "solo:boot:snapshot",
+        "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+        "cutoff": 5,
+        "overflow": 0,
+        "transportRejected": 0,
+        "observerFailures": 0,
+        "at": "2026-10-19T01:48:46.649Z"
+      },
+      {
+        "label": "solo:boot:storage",
+        "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+        "cutoff": 5,
+        "overflow": 0,
+        "transportRejected": 0,
+        "observerFailures": 0,
+        "at": "2026-10-19T01:48:46.657Z"
+      },
+      {
+        "label": "solo:boot:stage-end",
+        "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+        "cutoff": 5,
+        "overflow": 0,
+        "transportRejected": 0,
+        "observerFailures": 0,
+        "at": "2026-10-19T01:48:46.665Z"
+      },
+      {
+        "label": "solo:ordinary-control-discard:snapshot",
+        "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+        "cutoff": 5,
+        "overflow": 0,
+        "transportRejected": 0,
+        "observerFailures": 0,
+        "at": "2026-10-19T01:48:46.669Z"
+      },
+      {
+        "label": "solo:ordinary:before-detach",
+        "id": "c2df0b48-9215-40e0-9728-31c68f90722c",
+        "cutoff": 6,
+        "overflow": 0,
+        "transportRejected": 0,
+        "observerFailures": 0,
+        "at": "2026-10-19T01:48:46.724Z"
+      }
+    ],
+    "html": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148313,
+          "sha256": "418f56ea11a419120e53fc1cd8dceaad5c10c394dad39e0922623aa2b9d6edc6"
+        },
+        "credentialFixture": {
+          "bytes": 148287,
+          "sha256": "f7b9763619eb424bf737ee3e676695b5e364c45164deb5178aa91b9294b6ccac"
+        },
+        "addedTag": "<script src=\"/__discard-observer-0a9530db-fb41-4333-b6a4-8d78a1cfcf1e.js\" data-collector=\"/__discard-observer-0a9530db-fb41-4333-b6a4-8d78a1cfcf1e/events\" data-mode=\"preflight\" data-stage=\"boot\"></script>",
+        "observer": {
+          "bytes": 4723,
+          "sha256": "e25d3ffb75dfcfaf18d895d28941e58c6fcc9d2c2777987defe93649916087b4"
+        },
+        "served": {
+          "bytes": 148491,
+          "sha256": "0f13a5f5212a3fb703fa309933fab5d86c5a734726279fe940c8cb64bb52c30c"
+        }
+      },
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148313,
+          "sha256": "418f56ea11a419120e53fc1cd8dceaad5c10c394dad39e0922623aa2b9d6edc6"
+        },
+        "credentialFixture": {
+          "bytes": 148287,
+          "sha256": "f7b9763619eb424bf737ee3e676695b5e364c45164deb5178aa91b9294b6ccac"
+        },
+        "addedTag": "<script src=\"/__discard-observer-0a9530db-fb41-4333-b6a4-8d78a1cfcf1e.js\" data-collector=\"/__discard-observer-0a9530db-fb41-4333-b6a4-8d78a1cfcf1e/events\" data-mode=\"solo\" data-stage=\"boot\"></script>",
+        "observer": {
+          "bytes": 4723,
+          "sha256": "e25d3ffb75dfcfaf18d895d28941e58c6fcc9d2c2777987defe93649916087b4"
+        },
+        "served": {
+          "bytes": 148486,
+          "sha256": "709e286e02ecb5352a7d8b9d6976244b3060047ca72e5094b6e2b9b4154982db"
+        }
+      }
+    ],
+    "limits": "Top-document buffer and acknowledged collector prefixes only. The old document may have an undelivered tail between final reconciliation and native destruction. Restored startup is reconciled from its surviving in-memory buffer. Native inspector-only diagnostics during detachment and unobserved frames/workers are outside this observer.",
+    "htmlException": "A synchronous same-origin observer script tag is inserted immediately after head, before access/app scripts. Exact emitted HTML pins, credential-only bytes, observer bytes, and final served bytes are recorded. This diagnostic fixture is not byte-identical HTML or offline-integrity qualification.",
+    "errors": [],
+    "errorOverflow": 0,
+    "artifacts": {
+      "directory": "docs/qualification/shared-demos/actual-discard-native-emitted-693947ed1-fixture",
+      "originals": {
+        "game/index.html": "original-0.html.txt"
+      },
+      "servedVariants": 2
+    }
+  },
+  "sourceUnchanged": true,
+  "afterHashes": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c",
+    "game/app.mjs": "4a6c4fbaeb036de62697cf47755b3d4162793c250f274192e1ad812b35640eab",
+    "game/ui/demo-host.mjs": "fe775bf8636e29d1cedc84fba62f8be47d233c267296fd245bdcc53b83c03d61",
+    "game/snake/classic-app.mjs": "913443706767cd1d16bfffdbe90b9cfb86da3cf1ff88251577b71ce0088af542",
+    "game/overflight/app.mjs": "fc415ae0525f22639ecc6c9ec06381ad176ec79638014f816c2622cd38f218cf",
+    "optional-practice/civilian-fpv/world-app.mjs": "28fddbd86ca7101ea40e4adee7c60b4a918488cab65cd31ddd25f7e7d77c529d",
+    "scripts/qualify-demo-restoration-browser.mjs": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+    "scripts/demo-restoration-observation.mjs": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+    "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+    "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+    ".cache/demo-probe-evidence.mjs": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+    ".cache/demo-native-discard-environment.mjs": "49a0e1adaed091f78b6de483004dd01ea6c4c7b483983410988269290c88d604",
+    ".cache/demo-discard-observation-fixture.mjs": "60b974bed05b34ef59f9867edfe332b055faefad6ad862afe3570c2744c6b863",
+    ".cache/demo-discard-observer-browser.js": "e25d3ffb75dfcfaf18d895d28941e58c6fcc9d2c2777987defe93649916087b4"
+  },
+  "headAfter": "693947ed1373db7a265def126a5eede2bf875013",
+  "finalObservationGate": {
+    "checkedAfterBrowserAndServerCleanup": true,
+    "passed": true
+  }
+}

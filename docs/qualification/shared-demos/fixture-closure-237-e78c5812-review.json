@@ -1,0 +1,168 @@
+{
+  "format": "shared-demo-fixture-closure-review.v1",
+  "recordedAt": "2026-10-18T22:20:11.379612+00:00",
+  "status": "complete",
+  "head": "e78c5812f8bf3da6975c75221924239666a2e9ed",
+  "integrationBase": "237b405437def3c41b01165fe057af1ab06f618c",
+  "originalCI": {
+    "workflow": "Company edition candidates",
+    "runId": 39168360968,
+    "jobId": 117796218679,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39168360968/job/117796218679",
+    "step": "Run focused company, persistence, offline and artifact tests",
+    "tests": 1365,
+    "passed": 1363,
+    "failed": 2,
+    "failures": [
+      {
+        "test": "real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source",
+        "file": "scripts/test-game-cli.mjs",
+        "cause": "Archived real builder import failed: scripts/main-pages-source-originals.mjs was not copied into the fixture."
+      },
+      {
+        "test": "committed inspector CLI writes only exact nonpromotable metadata and never overwrites it",
+        "file": "scripts/test-inspect-default-build.mjs",
+        "cause": "Committed real CLI import failed: scripts/main-pages-source-originals.mjs was not copied into the fixture."
+      }
+    ],
+    "rawLogSHA256": "3f5bad1f93bb6ba38b6cce0334a6024be19b9c85cd13fd41745fb0080bf48a96",
+    "exactFailureExcerpt": "docs/qualification/shared-demos/fixture-closure-237-e78c5812-original-ci-failures.log.txt",
+    "excerptSHA256": "4966d95ebca692e6533087f1158836b5d72ac9a9df0cb2e28b3364f6f5e77d96",
+    "originalFailurePreserved": true
+  },
+  "fix": {
+    "scope": "Three test fixtures only; no product or build implementation changes.",
+    "files": [
+      {
+        "path": "scripts/test-game-cli.mjs",
+        "originalSHA256": "ed7686d827c199c8ecc2bf77f0bcd4da36f315b2613e2f7e676ccf9bf08b7224",
+        "proposedSHA256": "e44ac58f1e8005d22c7d5c71ffc7b92b5e88ce2878280524b3ef08bff6c9a457",
+        "appliedSHA256": "e44ac58f1e8005d22c7d5c71ffc7b92b5e88ce2878280524b3ef08bff6c9a457"
+      },
+      {
+        "path": "scripts/test-inspect-default-build.mjs",
+        "originalSHA256": "9e8fe9e08fa001fc17315687e9ff7c0dcff5d10fbe21da36822b50380a92045d",
+        "proposedSHA256": "a99b693df9666293aae2804bc6f925fe2a0347555f37b440cb9a5286e218f0dc",
+        "appliedSHA256": "a99b693df9666293aae2804bc6f925fe2a0347555f37b440cb9a5286e218f0dc"
+      },
+      {
+        "path": "scripts/test-soundtrack-distribution.mjs",
+        "originalSHA256": "c258b822bfbdb06e29184809fbffbea0d8c6f6979844ddd716256bfd0b0fee03",
+        "proposedSHA256": "e1d79db2021595f1715c3df3774ee9af0cfdc3b255f8985f884d7d5c6f8a28c8",
+        "appliedSHA256": "e1d79db2021595f1715c3df3774ee9af0cfdc3b255f8985f884d7d5c6f8a28c8"
+      }
+    ],
+    "approvedPatchSHA256": "7dee05f57c3c7e4d9bd320ab38667e14bdf80a080620db008654f975d660f5c2",
+    "relatedOlderFixture": {
+      "path": "scripts/test-soundtrack-distribution.mjs",
+      "test": "real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies",
+      "notOneOfHostedJobFailures": true,
+      "olderOmissions": [
+        "scripts/build-entry-writer.mjs",
+        "publishing/vendor/acorn-8.18.0.mjs",
+        "game/mission-library/included-bundled-pack.mjs",
+        "scripts/offline-core-closure.mjs"
+      ],
+      "realCopiedDependencies": [
+        "scripts/build-entry-writer.mjs",
+        "scripts/main-pages-source-originals.mjs",
+        "publishing/vendor/acorn-8.18.0.mjs",
+        "publishing/vendor/acorn-LICENSE.txt",
+        "game/mission-library/included-bundled-pack.mjs"
+      ],
+      "scopeRepair": "Exclude only this archive test's unused game/offline.mjs sentinel, preserving all original soundtrack, archive/hash, no-node_modules and clean-checkout assertions. Other tests keep the shared fixture's offline sentinel.",
+      "boundedHistoricalAdapter": "The existing first-two-fixture convention supplies only the two unused offline media predicates. The sentinel absence makes them unable to affect this build; an added archive assertion verifies that premise.",
+      "avoidedUnrelatedPipeline": "The unused sentinel otherwise triggers missing default-runtime-metadata, optional-practice builder and launcher exports plus bare parser/codec packages. These are older fixture omissions, not a new game behavior defect.",
+      "parentApproval": "Parent explicitly approved the narrower historical-fixture option while preserving meaningful assertions."
+    },
+    "meaningfulAssertionsRemoved": false
+  },
+  "verification": {
+    "wholeFiles": 3,
+    "tests": 53,
+    "passed": 53,
+    "failed": 0,
+    "skipped": 0,
+    "checks": [
+      {
+        "name": "tests",
+        "command": [
+          "node",
+          "--test",
+          "--test-concurrency=2",
+          "scripts/test-game-cli.mjs",
+          "scripts/test-inspect-default-build.mjs",
+          "scripts/test-soundtrack-distribution.mjs"
+        ],
+        "startedAt": "2026-10-18T22:19:03.144484+00:00",
+        "elapsedSeconds": 27.546,
+        "timeoutSeconds": 300,
+        "timedOut": false,
+        "exitCode": 0,
+        "childPID": 41602,
+        "ownedChildReaped": true,
+        "log": "docs/qualification/shared-demos/fixture-closure-237-e78c5812-tests.log.txt",
+        "logSHA256": "5bd3987e8b9a82fbd60e4af8e846fa3b54b6c44384b4b184bb109e0d11d4c2c2"
+      },
+      {
+        "name": "lint",
+        "command": [
+          "node",
+          "node_modules/eslint/bin/eslint.js",
+          "scripts/test-game-cli.mjs",
+          "scripts/test-inspect-default-build.mjs",
+          "scripts/test-soundtrack-distribution.mjs"
+        ],
+        "startedAt": "2026-10-18T22:19:30.688173+00:00",
+        "elapsedSeconds": 0.717,
+        "timeoutSeconds": 120,
+        "timedOut": false,
+        "exitCode": 0,
+        "childPID": 43868,
+        "ownedChildReaped": true,
+        "log": "docs/qualification/shared-demos/fixture-closure-237-e78c5812-lint.log.txt",
+        "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "format",
+        "command": [
+          "node",
+          "node_modules/prettier/bin/prettier.cjs",
+          "--check",
+          "scripts/test-game-cli.mjs",
+          "scripts/test-inspect-default-build.mjs",
+          "scripts/test-soundtrack-distribution.mjs"
+        ],
+        "startedAt": "2026-10-18T22:19:31.405724+00:00",
+        "elapsedSeconds": 0.67,
+        "timeoutSeconds": 120,
+        "timedOut": false,
+        "exitCode": 0,
+        "childPID": 43883,
+        "ownedChildReaped": true,
+        "log": "docs/qualification/shared-demos/fixture-closure-237-e78c5812-format.log.txt",
+        "logSHA256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      }
+    ]
+  },
+  "sourceBinding": {
+    "canonicalFingerprintRecomputed": true,
+    "algorithm": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+    "files": 9996,
+    "bytes": 404376334,
+    "matchesHeldFreeze": true,
+    "runtimeMutated": false,
+    "declaredFreeze": "docs/qualification/shared-demos/source-freeze-latest.json"
+  },
+  "processOwnership": {
+    "allCommandChildrenReaped": true,
+    "browserLaunched": false,
+    "gitMutation": false
+  },
+  "limits": [
+    "Focused local validation repairs the hosted test-fixture failure; hosted CI must rerun on the new committed head.",
+    "The related soundtrack fixture had older missing imports in addition to the new helper; its separate offline distribution tests still ran in the whole-file pass.",
+    "No claim that this focused run replaces complete company CI, browser acceptance, or endurance."
+  ]
+}

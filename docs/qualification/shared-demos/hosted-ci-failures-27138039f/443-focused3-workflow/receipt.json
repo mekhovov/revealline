@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-10-19T12:03:55.277974+00:00",
+  "head": "443542a94d424187b9397c09773ab9d8eb6df6bd",
+  "job": 118044611483,
+  "name": "focused_shards (3)",
+  "conclusion": "cancelled",
+  "startedAt": "2026-10-19T11:54:23Z",
+  "completedAt": "2026-10-19T12:01:43Z",
+  "issueLines": [
+    "2026-10-19T11:56:54.8739846Z not ok 164 - pull-request admission workflows do not require GitHub Pages",
+    "2026-10-19T11:56:54.8889250Z   name: 'AssertionError'",
+    "2026-10-19T11:57:07.4917487Z # fail 1",
+    "2026-10-19T11:57:34.4949422Z # fail 0"
+  ],
+  "issueLinesDropped": 0,
+  "files": [
+    {
+      "path": ".cache/hosted-443542a94-focused3-cancelled/job.json",
+      "bytes": 3948,
+      "sha256": "084ffdcd5906af19a46f126fec6ac5461192aa866b69a447c5796c8d0cba07b4"
+    },
+    {
+      "path": ".cache/hosted-443542a94-focused3-cancelled/original.log.txt",
+      "bytes": 561279,
+      "sha256": "f5c185a0cf1ccc6f66dc5d9fbfed72a4be5411afad13eb80e3f2d92ab6ece92d"
+    }
+  ]
+}

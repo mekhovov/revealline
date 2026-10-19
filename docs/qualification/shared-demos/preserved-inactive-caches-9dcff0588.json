@@ -1,0 +1,69 @@
+{
+  "format": "SharedDemoPreservedInactiveCachesRetirementV1",
+  "complete": true,
+  "started": "20261019T104616Z",
+  "authorization": "Root explicitly authorized exactly the two preflight directories after independent provenance review.",
+  "preflight": {
+    "path": ".cache/owned-inactive-storage-9dcff0588-preflight.json",
+    "sha256": "9fc617177948ef0d604b709a1343a44b9029334f889534a06678e7519a7c2fe4"
+  },
+  "externalParent": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "device": 905969668,
+    "inode": 37530202,
+    "uid": 502
+  },
+  "items": [
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/admission-inventory-draft/live",
+      "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-admission-inventory-draft-20261019T104616Z-068cdc8f",
+      "sourceRootIdentity": {
+        "device": 16777235,
+        "inode": 146980140,
+        "uid": 502,
+        "mode": 16877,
+        "size": 352,
+        "mtimeNs": 1792349447654595344
+      },
+      "externalProof": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-admission-inventory-draft-20261019T104616Z-068cdc8f.preservation.json",
+        "sha256": "cb8622c81dc9c73bee6cdf8e4f6faa019fa0665eed2258dfc2a8987777268038"
+      },
+      "fileCount": 9,
+      "fileBytes": 28533567,
+      "copyVerified": true,
+      "retired": true,
+      "availableBytesAfter": 298393600
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/webkit-context-source",
+      "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-webkit-context-source-20261019T104616Z-1245bb39",
+      "sourceRootIdentity": {
+        "device": 16777235,
+        "inode": 147076749,
+        "uid": 502,
+        "mode": 16877,
+        "size": 4192,
+        "mtimeNs": 1792353232190830568
+      },
+      "externalProof": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-webkit-context-source-20261019T104616Z-1245bb39.preservation.json",
+        "sha256": "f68cf44a8bce0b50c3c1e3faf2d5b4bf076fdcad71a5056a9e7d202991b427a4"
+      },
+      "fileCount": 129,
+      "fileBytes": 6882069,
+      "copyVerified": true,
+      "retired": true,
+      "availableBytesAfter": 308449280
+    }
+  ],
+  "limitations": [
+    "Only the enumerated ordinary files and directories are retired; broader parents, source and other evidence are untouched.",
+    "File timestamps were requested at original precision; exact observed before/after inventories are retained.",
+    "Observed free-space differences can include unrelated concurrent changes."
+  ],
+  "availableBytesBefore": 270082048,
+  "finished": "2026-10-19T10:46:49.421770+00:00",
+  "availableBytesAfter": 308449280,
+  "observedFreeDifferenceBytes": 38367232
+}

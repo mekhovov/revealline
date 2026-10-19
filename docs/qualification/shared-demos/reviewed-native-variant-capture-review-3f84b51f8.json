@@ -1,0 +1,480 @@
+{
+  "format": "ReviewedSoloNativeCaptureReviewV1",
+  "reviewedAt": "2026-10-19T09:47:11.983745+00:00",
+  "complete": true,
+  "result": "Two genuine generic variant candidates ready for root review and admission. No production files changed by this task.",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "runtime": {
+    "sha256": "64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa",
+    "files": 10011,
+    "bytes": 404639350
+  },
+  "buildInputs": {
+    "sha256": "b2a70eb2815b4b64acf0bf9d341ddab7044fa61ebed7f1b8a328d68f5d4e7634",
+    "files": 9408,
+    "bytes": 348406839
+  },
+  "environment": {
+    "version": "v22.13.1",
+    "platform": "darwin",
+    "arch": "x64",
+    "executable": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    }
+  },
+  "counts": {
+    "reviewed": 10,
+    "committedCandidates": 20,
+    "existingStrictMatches": 8,
+    "newCandidates": 2
+  },
+  "matrix": [
+    {
+      "id": "first-signal-left",
+      "existingStrictMatch": "./demo-data/first-signal-left.replay.json",
+      "attempts": [
+        {
+          "replayURL": "./demo-data/first-signal-left.replay.json",
+          "match": true,
+          "diagnostics": []
+        },
+        {
+          "replayURL": "./demo-data/first-signal-left.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "71a8354812281008",
+              "actual": "b0361fc010857401"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "first-signal-right",
+      "existingStrictMatch": null,
+      "attempts": [
+        {
+          "replayURL": "./demo-data/first-signal-right.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "745dd1e7f36f494f",
+              "actual": "ae5b37c639e6c7a7"
+            }
+          ]
+        },
+        {
+          "replayURL": "./demo-data/first-signal-right.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "8d0d04919b16043a",
+              "actual": "ae5b37c639e6c7a7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "relay-orchard-loop",
+      "existingStrictMatch": "./demo-data/relay-orchard-loop.replay.json",
+      "attempts": [
+        {
+          "replayURL": "./demo-data/relay-orchard-loop.replay.json",
+          "match": true,
+          "diagnostics": []
+        },
+        {
+          "replayURL": "./demo-data/relay-orchard-loop.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "6b9bd22e7b6c656d",
+              "actual": "895994456621b495"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "relay-orchard-stairs",
+      "existingStrictMatch": "./demo-data/relay-orchard-stairs.replay.json",
+      "attempts": [
+        {
+          "replayURL": "./demo-data/relay-orchard-stairs.replay.json",
+          "match": true,
+          "diagnostics": []
+        },
+        {
+          "replayURL": "./demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "c7bb3eb2e44c24f4",
+              "actual": "f6093f7568531f12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crosswind-openings",
+      "existingStrictMatch": "./demo-data/crosswind-openings.replay.json",
+      "attempts": [
+        {
+          "replayURL": "./demo-data/crosswind-openings.replay.json",
+          "match": true,
+          "diagnostics": []
+        },
+        {
+          "replayURL": "./demo-data/crosswind-openings.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "7a4d767160c13575",
+              "actual": "a643864a6889266a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "night-patrol-loop",
+      "existingStrictMatch": "./demo-data/night-patrol-loop.replay.json",
+      "attempts": [
+        {
+          "replayURL": "./demo-data/night-patrol-loop.replay.json",
+          "match": true,
+          "diagnostics": []
+        },
+        {
+          "replayURL": "./demo-data/night-patrol-loop.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "842e7ccd7fbd55a1",
+              "actual": "6f7b287617f5cdd6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stone-lanes-detour",
+      "existingStrictMatch": "./demo-data/stone-lanes-detour.replay.json",
+      "attempts": [
+        {
+          "replayURL": "./demo-data/stone-lanes-detour.replay.json",
+          "match": true,
+          "diagnostics": []
+        },
+        {
+          "replayURL": "./demo-data/stone-lanes-detour.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "be5c50b02c10b1ed",
+              "actual": "26eeff55b6a53e2c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hidden-frequency-search",
+      "existingStrictMatch": null,
+      "attempts": [
+        {
+          "replayURL": "./demo-data/hidden-frequency-search.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "293f700030b26b13",
+              "actual": "7e389b3f85dc1d92"
+            }
+          ]
+        },
+        {
+          "replayURL": "./demo-data/hidden-frequency-search.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "d4286585d162aa21",
+              "actual": "7e389b3f85dc1d92"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "the-crossing-windows",
+      "existingStrictMatch": "./demo-data/the-crossing-windows.replay.json",
+      "attempts": [
+        {
+          "replayURL": "./demo-data/the-crossing-windows.replay.json",
+          "match": true,
+          "diagnostics": []
+        },
+        {
+          "replayURL": "./demo-data/the-crossing-windows.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "12475c36917eb912",
+              "actual": "d93e9ed894e02801"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signal-garden-route",
+      "existingStrictMatch": "./demo-data/signal-garden-route.replay.json",
+      "attempts": [
+        {
+          "replayURL": "./demo-data/signal-garden-route.replay.json",
+          "match": true,
+          "diagnostics": []
+        },
+        {
+          "replayURL": "./demo-data/signal-garden-route.chromium-macos.replay.json",
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "be2a05c6da1619e7",
+              "actual": "055fe7cbbff3e584"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "additions": [
+    {
+      "id": "first-signal-right",
+      "replayURL": "./demo-data/first-signal-right.node22131-x64.replay.json",
+      "insertBefore": "./demo-data/first-signal-right.chromium-macos.replay.json",
+      "candidate": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/first-signal-right.node22131-x64.replay.json",
+        "sha256": "e8c63af3440feff2d430b02d93f26c86c58acd94e135f92affcf44bc9c54f22a",
+        "bytes": 6966
+      },
+      "diagnostic": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/first-signal-right.node22131-x64.diagnostics.json",
+        "sha256": "be92f9682131a82a0c5f1185d98b425284fbd86b7903a12e808fe483af4e8134",
+        "bytes": 2730
+      },
+      "provenance": {
+        "id": "first-signal-right",
+        "replayURL": "./demo-data/first-signal-right.node22131-x64.replay.json",
+        "inputTraceIdentity": "0d05c1be36470add",
+        "sourceCheckpoint": "2451aa6bc58d0614",
+        "checkpoint": "9b66591b55769ea8",
+        "recordedIn": {
+          "createdAt": "2026-10-19T09:44:56.261Z",
+          "runtime": "Node.js",
+          "version": "v22.13.1",
+          "v8": "12.4.254.21-node.22",
+          "platform": "darwin",
+          "arch": "x64",
+          "executableSHA256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+          "mathWitness": {
+            "sin": 0.6831007735084312,
+            "hypot": 0.7615773105863908,
+            "sinInput": 0.752,
+            "hypotInputs": [
+              0.3,
+              0.7
+            ]
+          }
+        }
+      },
+      "natural": {
+        "status": "won",
+        "tick": 3829,
+        "captures": 4,
+        "capturedCells": 793
+      },
+      "trace": {
+        "inputTraceIdentity": "0d05c1be36470add",
+        "durationSeconds": 31.908333333333335,
+        "exactTrace": true,
+        "exactSummary": true,
+        "allNonEnemySectionsUnchanged": true
+      },
+      "sidecarCheckpoints": 6
+    },
+    {
+      "id": "hidden-frequency-search",
+      "replayURL": "./demo-data/hidden-frequency-search.node22131-x64.replay.json",
+      "insertBefore": "./demo-data/hidden-frequency-search.chromium-macos.replay.json",
+      "candidate": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/hidden-frequency-search.node22131-x64.replay.json",
+        "sha256": "dac59e429e2e95214f46b3e52059d880d8fab24a3b1697ad5bf7d28395705369",
+        "bytes": 7370
+      },
+      "diagnostic": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/hidden-frequency-search.node22131-x64.diagnostics.json",
+        "sha256": "576c3d46a73c1f0707c8cdee03dffe5be9801ae7ceae83b16198a4d30f2b2ea6",
+        "bytes": 3610
+      },
+      "provenance": {
+        "id": "hidden-frequency-search",
+        "replayURL": "./demo-data/hidden-frequency-search.node22131-x64.replay.json",
+        "inputTraceIdentity": "806c350fdb164271",
+        "sourceCheckpoint": "1bd018399cd068be",
+        "checkpoint": "4014a9351894e345",
+        "recordedIn": {
+          "createdAt": "2026-10-19T09:44:56.261Z",
+          "runtime": "Node.js",
+          "version": "v22.13.1",
+          "v8": "12.4.254.21-node.22",
+          "platform": "darwin",
+          "arch": "x64",
+          "executableSHA256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+          "mathWitness": {
+            "sin": 0.6831007735084312,
+            "hypot": 0.7615773105863908,
+            "sinInput": 0.752,
+            "hypotInputs": [
+              0.3,
+              0.7
+            ]
+          }
+        }
+      },
+      "natural": {
+        "status": "won",
+        "tick": 5327,
+        "captures": 5,
+        "capturedCells": 1328
+      },
+      "trace": {
+        "inputTraceIdentity": "806c350fdb164271",
+        "durationSeconds": 44.391666666666666,
+        "exactTrace": true,
+        "exactSummary": true,
+        "allNonEnemySectionsUnchanged": true
+      },
+      "sidecarCheckpoints": 8
+    }
+  ],
+  "supervision": {
+    "complete": true,
+    "exit": 0,
+    "sourceBindingsStable": true,
+    "streamsDrained": true,
+    "ownedProcessesRemaining": 0,
+    "cleanupSignals": 0,
+    "elapsedSeconds": 14.570167083998967
+  },
+  "preservedFailure": {
+    "complete": false,
+    "reason": "Outer supervisor detected concurrent demo-sources.test.mjs fixture edit. Native runtime, build inputs, capture helper and candidate bodies remained stable; the original failed supervision receipt is retained.",
+    "changedBindings": [
+      "game/test/demo-sources.test.mjs"
+    ]
+  },
+  "generatorChangeRequired": false,
+  "candidateOrdering": "Insert each provenance row before its matching existing chromium-macos row and its URL before the same last catalog variant. Keep every old replay, trace and relative order. The generator already reads this manifest order; preserve the last-candidate legacy gate. Direct reviewed metadata adoption is needed because --extend intentionally requires old variants as an unchanged prefix.",
+  "evidence": [
+    {
+      "path": "docs/qualification/shared-demos/reviewed-native-variant-capture-3f84b51f8/binding-failed.json",
+      "sha256": "d3813431b588131ca5041063d6212d964c20b4d39a15f954dc5440811785415e",
+      "bytes": 88738,
+      "originalPath": ".cache/reviewed-node22131-x64-capture-3f84b51f8.json"
+    },
+    {
+      "path": "docs/qualification/shared-demos/reviewed-native-variant-capture-3f84b51f8/binding-failed.supervision.json",
+      "sha256": "df27c01a50d3196f9cacd29881184979c4445f93aa34007e87e311882cf3e09c",
+      "bytes": 12220,
+      "originalPath": ".cache/reviewed-node22131-x64-capture-3f84b51f8.supervision.json"
+    },
+    {
+      "path": "docs/qualification/shared-demos/reviewed-native-variant-capture-3f84b51f8/binding-failed.log.txt",
+      "sha256": "a413bc1451c0e7c1ca378f3c7cbdc4940343266cda5e679f76314d92658ba4b8",
+      "bytes": 1495,
+      "originalPath": ".cache/reviewed-node22131-x64-capture-3f84b51f8.log"
+    },
+    {
+      "path": "docs/qualification/shared-demos/reviewed-native-variant-capture-3f84b51f8/stable.json",
+      "sha256": "d24deafca67557a9eff491a90449318934017717cd008e21b846884ba5b9bc8d",
+      "bytes": 88801,
+      "originalPath": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable.json"
+    },
+    {
+      "path": "docs/qualification/shared-demos/reviewed-native-variant-capture-3f84b51f8/stable.supervision.json",
+      "sha256": "d11e50c36cefc1d3993f8dcfadf747fd87ef54037eb17f72ac0aecb529f0bd8a",
+      "bytes": 13138,
+      "originalPath": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable.supervision.json"
+    },
+    {
+      "path": "docs/qualification/shared-demos/reviewed-native-variant-capture-3f84b51f8/stable.log.txt",
+      "sha256": "89d9c0565f8621bb1c4659df77a999b2ac35e2f46bfa7f48988a1f43c2a5104f",
+      "bytes": 1509,
+      "originalPath": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable.log"
+    },
+    {
+      "path": "docs/qualification/shared-demos/reviewed-native-variant-capture-3f84b51f8/capture.mjs.txt",
+      "sha256": "ce0208f2f25750b326ed40eb9af141dc179e93c7b2a6b03cc103e9f52339df64",
+      "bytes": 10859,
+      "originalPath": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable.mjs.txt"
+    },
+    {
+      "path": "docs/qualification/shared-demos/reviewed-native-variant-capture-3f84b51f8/supervisor.py.txt",
+      "sha256": "7584dbe91794b0fd37a089097db138066d23f770a6b022b8e775028833d2dc48",
+      "bytes": 10738,
+      "originalPath": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable.supervisor.py.txt"
+    },
+    {
+      "path": "docs/qualification/shared-demos/reviewed-native-variant-capture-3f84b51f8/metadata-proposal.json",
+      "sha256": "99c07358f83a11dbe044b6c9ce3b4d663db0a4f093070ff31603e07b8c29d610",
+      "bytes": 5202,
+      "originalPath": ".cache/reviewed-node22131-metadata-proposal.json"
+    }
+  ],
+  "limits": [
+    "This is Node22.13.1 macOS x64 under Rosetta, not hosted Linux or browser qualification.",
+    "The working runtime includes the previously adopted three qualified candidates; HEAD alone does not describe this runtime snapshot.",
+    "Existing strict verifier, non-enemy assertions and reviewed-only compatibility gate remain unchanged. Sidecars supplement full verification."
+  ]
+}

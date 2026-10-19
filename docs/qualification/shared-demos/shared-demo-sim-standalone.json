@@ -1,0 +1,17 @@
+{
+  "engine": "chromium",
+  "started": "2026-10-18T04:29:48.277Z",
+  "checks": [
+    {
+      "type": "missing-core-demo-bridge",
+      "demoControls": 0,
+      "ordinaryFlight": "active",
+      "ticks": 3,
+      "course": "flight-01"
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "finished": "2026-10-18T04:29:52.458Z"
+}

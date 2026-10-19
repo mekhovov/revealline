@@ -1,0 +1,70 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "current",
+  "idleEntry": true,
+  "started": "2026-10-18T04:43:24.434Z",
+  "checks": [
+    {
+      "type": "idle-current-mode-entry",
+      "elapsedMs": 61302
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:snake-hunt-ground-routes-low-pass-depot-self-level-ebc583128e1cc807",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "77",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low Pass Depot",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 25,
+        "renderer": {
+          "geometries": 258,
+          "materials": 149,
+          "textures": 25,
+          "gpuGeometries": 257,
+          "gpuTextures": 28,
+          "gpuPrograms": 16,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Перехопіть повільний патруль біля низьких ящиків. Перетніть депо навпростець замість руху по колу."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "pause",
+      "mode": "sim"
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 25,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T04:44:35.707Z",
+  "enduranceFinished": "2026-10-18T04:44:35.707Z",
+  "finished": "2026-10-18T04:44:36.325Z"
+}

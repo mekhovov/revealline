@@ -1,0 +1,67 @@
+{
+  "allocatedBytesBefore": 143523840,
+  "backupDirectoryIdentity": {
+    "device": 905969668,
+    "inode": 37561280,
+    "links": 1,
+    "mode": 16832,
+    "mtimeNs": 1792397252621386200,
+    "size": 16384,
+    "uid": 502
+  },
+  "backupEveryPathSizeAndHashVerified": true,
+  "complete": true,
+  "completedAt": "2026-10-19T08:07:52.565981+00:00",
+  "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-capture-71a0ac38a-20261019T080559Z-7df8f520",
+  "externalParentIdentity": {
+    "device": 905969668,
+    "inode": 37530202,
+    "links": 1,
+    "mode": 16832,
+    "mtimeNs": 1792397160146482700,
+    "size": 16384,
+    "uid": 502
+  },
+  "fileInventorySHA256": "30c0c03fcf29cd0c84d0bbfbcbfcd988d9be1ff3186f415fc6e1994c718dd984",
+  "format": "shared-demo-preserved-generated-capture.v1",
+  "freeBytesAfter": 738709504,
+  "freeBytesBefore": 638230528,
+  "inventorySHA256": "7d436362db5ad2408fd1f1a8811404d4918b90473a001344551fa4961f0cdbba",
+  "limitations": [
+    "SMB free-space and fsync semantics are those reported by the mounted filesystem."
+  ],
+  "logicalBytes": 142906562,
+  "manifestSHA256": "dc5b83bb9c0f3ca8ba6fc656cb8a06b25d3b5905a72aa8ac2e880ceaaba6ac2f",
+  "noOpenHandlesBefore": {
+    "returnCode": 1,
+    "stderrEmpty": true,
+    "stdoutEmpty": true
+  },
+  "noOpenHandlesBeforeRemoval": {
+    "returnCode": 1,
+    "stderrEmpty": true,
+    "stdoutEmpty": true
+  },
+  "observedFreeBytesChange": 100478976,
+  "phase": "complete",
+  "proofPath": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-capture-71a0ac38a-20261019T080559Z-7df8f520.file-proof.json",
+  "proofSHA256": "1093291d98eeb26774aeaaec8dff359f85e671e3e4e89492b3bfc1dbe61c3fdb",
+  "regularFiles": 287,
+  "removedOnlyVerifiedGeneratedCapture": true,
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+  "sourceAudit": "docs/qualification/shared-demos/main-pages-demo-final-16ebd7b-71a0ac38a.json",
+  "sourceAuditSHA256": "824217d6db6695749598a53b816b3cfba03bc741c9dd605d022240a3c2d4bdf1",
+  "sourceIdentity": {
+    "device": 16777235,
+    "inode": 148158460,
+    "links": 4,
+    "mode": 16877,
+    "mtimeNs": 1792385330391862798,
+    "size": 128,
+    "uid": 502
+  },
+  "sourceRemoved": true,
+  "sourceUnchangedDuringCopy": true,
+  "startedAt": "2026-10-19T08:05:59.497163+00:00",
+  "verifiedAt": "2026-10-19T08:07:51.457173+00:00"
+}

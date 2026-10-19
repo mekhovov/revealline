@@ -1,0 +1,75 @@
+{
+  "format": "SharedDemoReadinessDiagnosticBindingV1",
+  "started": "2026-10-18T23:18:28.330875+00:00",
+  "before": {
+    "head": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+    "runtime": {
+      "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "harness": {
+      "sha256": "66f5bf742b5b0875402f00a634ea01230bbbe4752e6a58a468ea944a192ac5ae",
+      "files": 928,
+      "bytes": 11106150
+    },
+    "manifestSHA256": "fe13322c9fb02b37215af9015be666615cad433e9894991fdede9c37e1bb0924",
+    "manifest": {
+      "created": "2026-10-18T23:07:40.544951+00:00",
+      "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "sourceFingerprint": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "cloneSHA256": "ac6a3396d6ebdcd7923cbc394f331c7bc83707daf5a7582df15c127f90f0fd54",
+    "wrapperSHA256": "05d3aab1e95cc8819c370fa1ef8249af0b4e84c24eb7c527524a517607b96802"
+  },
+  "command": [
+    "node",
+    ".cache/qualify-readiness-webkit-dd337c8.mjs",
+    "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+    "--browser=webkit",
+    "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+    "--port=8771",
+    "--mode=solo",
+    "--reload=false",
+    "--report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/readiness-webkit-diagnostic-dd337c8.json"
+  ],
+  "report": "docs/qualification/shared-demos/readiness-webkit-diagnostic-dd337c8.json",
+  "scope": "One observation-only Solo ordinary entry/reload sample. Original readiness predicate and30-second gate,3-second click and240-second qualification timer unchanged. Extra DOM/boot snapshots may perturb timing. No broad error filtering or runtime changes. This is not replacement browser qualification.",
+  "exitCode": 1,
+  "finished": "2026-10-18T23:19:17.679409+00:00",
+  "after": {
+    "head": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+    "runtime": {
+      "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "harness": {
+      "sha256": "66f5bf742b5b0875402f00a634ea01230bbbe4752e6a58a468ea944a192ac5ae",
+      "files": 928,
+      "bytes": 11106150
+    },
+    "manifestSHA256": "fe13322c9fb02b37215af9015be666615cad433e9894991fdede9c37e1bb0924",
+    "manifest": {
+      "created": "2026-10-18T23:07:40.544951+00:00",
+      "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "sourceFingerprint": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "cloneSHA256": "ac6a3396d6ebdcd7923cbc394f331c7bc83707daf5a7582df15c127f90f0fd54",
+    "wrapperSHA256": "05d3aab1e95cc8819c370fa1ef8249af0b4e84c24eb7c527524a517607b96802"
+  },
+  "bindingComplete": true,
+  "reportSHA256": "10699151d53f353da597a8c009c483bc2a1817ef1337c402be47a63647355c44",
+  "checks": 0,
+  "errors": 0,
+  "browserCloseCompleted": true,
+  "previewClosed": true,
+  "failure": "page.waitForFunction: Timeout 30000ms exceeded.\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-readiness-webkit-dd337c8.mjs:183:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-readiness-webkit-dd337c8.mjs:405:23",
+  "complete": false
+}

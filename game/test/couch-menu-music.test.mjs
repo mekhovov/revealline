@@ -113,6 +113,45 @@ async function setup(
   };
 }
 
+test('native music host disposal retires both host and panel recording scans', async (t) => {
+  let release;
+  const pending = new Promise((resolve) => (release = resolve)),
+    calls = [];
+  const caches = {
+    async open() {
+      calls.push('open');
+      await pending;
+      return {
+        async match() {
+          calls.push('match');
+          return undefined;
+        },
+      };
+    },
+  };
+  for (const [key, value] of Object.entries({
+    caches,
+    location: new URL('https://game.example/game/'),
+    navigator: { locks: {} },
+  })) {
+    const original = Object.getOwnPropertyDescriptor(globalThis, key);
+    Object.defineProperty(globalThis, key, { configurable: true, value });
+    t.after(() => {
+      if (original) Object.defineProperty(globalThis, key, original);
+      else delete globalThis[key];
+    });
+  }
+  const h = await setup(t, { ready: false });
+  assert.equal(calls.length, 2, 'The native host and its soundtrack panel each start a scan.');
+  const before = [...calls];
+  h.host.dispose();
+  const retired = h.host.session.snapshot();
+  release();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(calls, before);
+  assert.deepEqual(h.host.session.snapshot(), retired);
+});
+
 for (const prefix of ['race', 'coop']) {
   test(`${prefix}: effects fader controls the existing soundscape without changing shared master sound`, async (t) => {
     const f = await setup(t, { prefix });

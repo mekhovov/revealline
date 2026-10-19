@@ -1,0 +1,165 @@
+{
+  "format": "SharedDemoIncomingIntegrationFollowupV1",
+  "started": "2026-10-18T21:31:00.051170+00:00",
+  "finished": "2026-10-18T21:31:45.191853+00:00",
+  "head": "f14fc786c09fd2b9fcbc7e5b00142e3d07ec7ca6",
+  "headAfter": "f14fc786c09fd2b9fcbc7e5b00142e3d07ec7ca6",
+  "upstream": "237b405437def3c41b01165fe057af1ab06f618c",
+  "initialAttempt": {
+    "path": "docs/qualification/shared-demos/integration-focused-237b4054.json",
+    "sha256": "178f4a1eae4f5678c393b2c924bc7acb9f0f5728f2b7a9403380638ec2a3cefa",
+    "retainedComplete": false,
+    "testResult": {
+      "tests": 325,
+      "pass": 324,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "failure": "fpv-world-appearance-ui.test.mjs failed during module loading because fake-indexeddb was unavailable on its resolution path; no test assertions in that file ran.",
+    "localization": "Declared120-second npm run i18n:check bound expired. Remains unqualified; no successful exit was observed.",
+    "fingerprintClarification": "runtimeBefore/runtimeAfter.sha256 in this initial receipt use hexadecimal file digest text: SHA256(sorted path UTF-8 + NUL + lowercase hex SHA256(filebytes)). They establish before/after stability but are not the canonical raw-digest source-freeze identifier.",
+    "ownedLocalizationCleanup": {
+      "pid": 45963,
+      "observedOrphanAfterParentTimeout": true,
+      "eventualAbsenceConfirmed": true,
+      "terminationSignalSentByReviewer": false,
+      "remainingOwnedProcesses": false
+    }
+  },
+  "canonicalRuntime": {
+    "algorithm": "SHA256(sorted path UTF-8 + NUL + raw SHA256(filebytes)); same included files as initial scope",
+    "duringInitialTests": {
+      "observedAt": "2026-10-18T21:26:00.497570+00:00",
+      "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+      "files": 9996,
+      "bytes": 404376334
+    },
+    "beforeRetry": {
+      "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+      "files": 9996,
+      "bytes": 404376334
+    },
+    "afterRetry": {
+      "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+      "files": 9996,
+      "bytes": 404376334
+    }
+  },
+  "retry": {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "game/test/fpv-world-appearance-ui.test.mjs"
+    ],
+    "environment": {
+      "NODE_PATH": "/Users/oleksandr.mekhovov/work/my_projects/go_test/authoring/fpv-worlds/node_modules"
+    },
+    "installedDependency": {
+      "name": "fake-indexeddb",
+      "version": "6.2.5",
+      "manifest": "/Users/oleksandr.mekhovov/work/my_projects/go_test/authoring/fpv-worlds/node_modules/fake-indexeddb/package.json",
+      "manifestSHA256": "399966a1e2ed0a9ea31436530f51f5d9c5bea0834e7e502352b9a2ec096e747c",
+      "lockfile": "authoring/fpv-worlds/package-lock.json",
+      "lockfileSHA256": "9c9acded2d86889e2822e293d28c940994646744874ba45b873f9a2d50d58b03",
+      "matchingPinnedVersion": true,
+      "packageIntegrityRevalidated": false
+    },
+    "log": "docs/qualification/shared-demos/integration-world-appearance-237b4054-dependency-retry.tap.txt",
+    "logSHA256": "98ac804dba9bf20e14f481dcd01b963d235ef2cc1b31bb2e6bf0212a71ca5511",
+    "durationSeconds": 45.14,
+    "exitCode": 0,
+    "timedOut": false,
+    "stats": {
+      "tests": 90,
+      "pass": 90,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "processClosed": true
+  },
+  "nativeIdentityImpact": {
+    "unchangedGitObjects": [
+      {
+        "path": "game/core",
+        "gitObject": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/snake",
+        "gitObject": "0d7660625f69e4cf623e09af7fef69d6ff80afd2",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/overflight",
+        "gitObject": "48dbc4d19564db9e3d4bfaae5291a1add70df1ea",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/demo-data",
+        "gitObject": "fe4780393e107e63ee14d122ce1d59024b8ae731",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/demo-modes",
+        "gitObject": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/replay.mjs",
+        "gitObject": "fa473c568bec333395636541cc82fe3dd8b597f6",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/demo-data",
+        "gitObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/model.mjs",
+        "gitObject": "4751b15e9028d6f6f62bce561566170ad52e127c",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-model.mjs",
+        "gitObject": "39005d767a81a050d3389d702f6c3e94a196d5ea",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-response.mjs",
+        "gitObject": "13da60e812d47477c2570304468fb4ab8ecde6eb",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+        "gitObject": "46c37f29faade02c6f2a7cf5837d7aa4619eb236",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/catalogue.mjs",
+        "gitObject": "87cb9a45ffed9ca4fc8ab7c3400948e2ac4717ea",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+        "gitObject": "7e6ce5d5909fa35ac7f16c6c8955c59f0c48b8d6",
+        "sameAsPrevious": true
+      }
+    ],
+    "pathsInScopes": 2679,
+    "changedPaths": [],
+    "meaning": "Exact unchanged committed simulation/core, replay bodies, adapters, authored native catalogs and response-identity source. This is change-impact binding, not a new full replay qualification. Incoming aircraft catalog presets are outside the standard authored-demo variants."
+  },
+  "sourceUnchanged": true,
+  "focusedTestsComplete": true,
+  "allRequestedChecksComplete": false,
+  "remaining": [
+    "i18n:check requires separately bounded final validation; initial timed-out attempt is not a pass.",
+    "Browser refresh, emitted packaging and uninterrupted final-source endurance remain separate gates."
+  ],
+  "scope": "One dependency-resolution retry of the previously unstarted native-host test file only. Initial324passing tests were not repeated. No production, dependency installation, script, test or Git edits."
+}

@@ -1,0 +1,3628 @@
+TAP version 13
+# Subtest: demo routes the same full event batch and run context as ordinary gameplay
+ok 1 - demo routes the same full event batch and run context as ordinary gameplay
+  ---
+  duration_ms: 0.88875
+  ...
+# Subtest: actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+ok 2 - actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+  ---
+  duration_ms: 2345.71725
+  ...
+# Subtest: actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+ok 3 - actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+  ---
+  duration_ms: 3499.008291
+  ...
+# Subtest: actual shared media progress defers unchanged and hidden Demo controls without changing admission or playback
+ok 4 - actual shared media progress defers unchanged and hidden Demo controls without changing admission or playback
+  ---
+  duration_ms: 3025.428459
+  ...
+# Subtest: ordinary Solo playback leaves closed Demo views untouched while the public transport keeps playing
+ok 5 - ordinary Solo playback leaves closed Demo views untouched while the public transport keeps playing
+  ---
+  duration_ms: 3332.2585
+  ...
+# Subtest: demo audio controls share transport and never own a global keyboard shortcut
+ok 6 - demo audio controls share transport and never own a global keyboard shortcut
+  ---
+  duration_ms: 7.327458
+  ...
+# Subtest: sound toggle and volume preserve the independent paused music intent
+ok 7 - sound toggle and volume preserve the independent paused music intent
+  ---
+  duration_ms: 3.052583
+  ...
+# Subtest: style selection stays a draft until explicit Play style and preserves every supported mode
+ok 8 - style selection stays a draft until explicit Play style and preserves every supported mode
+  ---
+  duration_ms: 1.124
+  ...
+# Subtest: game sounds choice changes only the demo mode, with no transport or mute mutation
+ok 9 - game sounds choice changes only the demo mode, with no transport or mute mutation
+  ---
+  duration_ms: 0.738458
+  ...
+# Subtest: credits are text-only and source links reject unsafe schemes and credentials
+ok 10 - credits are text-only and source links reject unsafe schemes and credentials
+  ---
+  duration_ms: 2.113042
+  ...
+# Subtest: blocked audio retries inside activation and unavailable audio remains usable UI
+ok 11 - blocked audio retries inside activation and unavailable audio remains usable UI
+  ---
+  duration_ms: 1.702584
+  ...
+# Subtest: new commands and close/reset suppress stale asynchronous errors
+ok 12 - new commands and close/reset suppress stale asynchronous errors
+  ---
+  duration_ms: 1.450167
+  ...
+# Subtest: current command errors surface once and disposal removes subscriptions and handlers
+ok 13 - current command errors surface once and disposal removes subscriptions and handlers
+  ---
+  duration_ms: 1.031
+  ...
+# Subtest: inactive view cannot change shared listening state
+ok 14 - inactive view cannot change shared listening state
+  ---
+  duration_ms: 0.622209
+  ...
+# Subtest: missing playback capability retains master sound controls without offering inert music actions
+ok 15 - missing playback capability retains master sound controls without offering inert music actions
+  ---
+  duration_ms: 4.850333
+  ...
+# Subtest: demo credits select creator resources rather than licence or provenance and retain their link node
+ok 16 - demo credits select creator resources rather than licence or provenance and retain their link node
+  ---
+  duration_ms: 1.06375
+  ...
+# Subtest: closed Demo ignores the real subscribed audio updates and refreshes current state on public-owner render
+ok 17 - closed Demo ignores the real subscribed audio updates and refreshes current state on public-owner render
+  ---
+  duration_ms: 1.035958
+  ...
+# Subtest: Demo progress-only notifications do not rewrite unchanged controls or credits
+ok 18 - Demo progress-only notifications do not rewrite unchanged controls or credits
+  ---
+  duration_ms: 0.906209
+  ...
+# Subtest: hidden active Demo retains pending command failure and current locale until visible return
+ok 19 - hidden active Demo retains pending command failure and current locale until visible return
+  ---
+  duration_ms: 1.224625
+  ...
+# Subtest: explicit action and manual rendering repair native control drafts even when the model did not change
+ok 20 - explicit action and manual rendering repair native control drafts even when the model did not change
+  ---
+  duration_ms: 0.886166
+  ...
+# Subtest: actual loading Demo Back owns Enter through restored Home and releases fresh input
+ok 21 - actual loading Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1697.549417
+  ...
+# Subtest: actual watching Demo Back owns Enter through restored Home and releases fresh input
+ok 22 - actual watching Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1639.179417
+  ...
+# Subtest: actual practice Demo Back owns Enter through restored Home and releases fresh input
+ok 23 - actual practice Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 2073.606542
+  ...
+# Subtest: actual returned Demo Back owns Enter through restored Home and releases fresh input
+ok 24 - actual returned Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 2659.347083
+  ...
+# Subtest: actual loading Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 25 - actual loading Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1911.733542
+  ...
+# Subtest: actual watching Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 26 - actual watching Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1850.335042
+  ...
+# Subtest: actual practice Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 27 - actual practice Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1811.769792
+  ...
+# Subtest: actual returned Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 28 - actual returned Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1670.867041
+  ...
+# Subtest: actual loading Demo Back owns Space through restored Home and releases fresh input
+ok 29 - actual loading Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1164.88375
+  ...
+# Subtest: actual watching Demo Back owns Space through restored Home and releases fresh input
+ok 30 - actual watching Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1623.081917
+  ...
+# Subtest: actual practice Demo Back owns Space through restored Home and releases fresh input
+ok 31 - actual practice Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1534.519375
+  ...
+# Subtest: actual returned Demo Back owns Space through restored Home and releases fresh input
+ok 32 - actual returned Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1523.482375
+  ...
+# Subtest: actual Demo audio UI retains native keyboard activation and range editing
+ok 33 - actual Demo audio UI retains native keyboard activation and range editing
+  ---
+  duration_ms: 1564.104083
+  ...
+# Subtest: visible unfocused watch advances independently and close retires its clock without changing an ordinary cut
+ok 34 - visible unfocused watch advances independently and close retires its clock without changing an ordinary cut
+  ---
+  duration_ms: 2979.840708
+  ...
+# Subtest: hidden timer wake consumes bounded elapsed replay time exactly and return paints the current tick
+ok 35 - hidden timer wake consumes bounded elapsed replay time exactly and return paints the current tick
+  ---
+  duration_ms: 1720.574125
+  ...
+# Subtest: explicit watch pause survives hidden time, blur and return until Keep watching
+ok 36 - explicit watch pause survives hidden time, blur and return until Keep watching
+  ---
+  duration_ms: 1713.695834
+  ...
+# Subtest: hidden playback completes a real recorded level, retains its recap and adopts the next scene without RAF
+ok 37 - hidden playback completes a real recorded level, retains its recap and adopts the next scene without RAF
+  ---
+  duration_ms: 4721.210667
+  ...
+# Subtest: blur during pending watch source loading preserves adoption and continuous playback
+ok 38 - blur during pending watch source loading preserves adoption and continuous playback
+  ---
+  duration_ms: 1535.231416
+  ...
+# Subtest: withheld visible RAF recovers real replay completion and rotation while preserving explicit pause and the ordinary save
+ok 39 - withheld visible RAF recovers real replay completion and rotation while preserving explicit pause and the ordinary save
+  ---
+  duration_ms: 13372.595625
+  ...
+# Subtest: live whitelist pins actual standard maps, rules and roster while allowing translated names
+ok 40 - live whitelist pins actual standard maps, rules and roster while allowing translated names
+  ---
+  duration_ms: 4.050167
+  ...
+# Subtest: orchard-crossing/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+ok 41 - orchard-crossing/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+  ---
+  duration_ms: 4795.406834
+  ...
+# {"seed":1,"ticks":3540,"status":"running","coverage":0.514505119453925,"captures":5,"bends":7,"endReason":"no-safe-macro","maxPlanningMs":354}
+# {"seed":2,"ticks":3770,"status":"won","coverage":0.8528156996587031,"captures":4,"bends":5,"endReason":null,"maxPlanningMs":296}
+# {"seed":3,"ticks":3919,"status":"running","coverage":0.47696245733788395,"captures":5,"bends":6,"endReason":"no-safe-macro","maxPlanningMs":285}
+# Subtest: orchard-crossing/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+ok 42 - orchard-crossing/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+  ---
+  duration_ms: 7424.963042
+  ...
+# {"seed":1,"ticks":6311,"status":"won","coverage":0.7892491467576792,"captures":10,"bends":13,"endReason":null,"maxPlanningMs":348}
+# {"seed":2,"ticks":6139,"status":"won","coverage":0.7039249146757679,"captures":9,"bends":10,"endReason":null,"maxPlanningMs":353}
+# {"seed":3,"ticks":5346,"status":"won","coverage":0.7414675767918089,"captures":6,"bends":10,"endReason":null,"maxPlanningMs":389}
+# Subtest: courtyard-exits/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+ok 43 - courtyard-exits/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+  ---
+  duration_ms: 5411.783875
+  ...
+# {"seed":1,"ticks":3837,"status":"won","coverage":0.7707612456747405,"captures":6,"bends":5,"endReason":null,"maxPlanningMs":338}
+# {"seed":2,"ticks":5799,"status":"won","coverage":0.740484429065744,"captures":9,"bends":12,"endReason":null,"maxPlanningMs":328}
+# {"seed":3,"ticks":2256,"status":"running","coverage":0.45501730103806226,"captures":3,"bends":2,"endReason":"no-safe-macro","maxPlanningMs":320}
+# Subtest: courtyard-exits/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+ok 44 - courtyard-exits/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+  ---
+  duration_ms: 7923.886666
+  ...
+# {"seed":1,"ticks":5969,"status":"won","coverage":0.7768166089965398,"captures":10,"bends":13,"endReason":null,"maxPlanningMs":317}
+# {"seed":2,"ticks":6246,"status":"won","coverage":0.8209342560553633,"captures":11,"bends":15,"endReason":null,"maxPlanningMs":406}
+# {"seed":3,"ticks":4687,"status":"running","coverage":0.6384083044982699,"captures":6,"bends":7,"endReason":"no-safe-macro","maxPlanningMs":409}
+# Subtest: planning is deterministic and declines an exposed cut without changing it
+ok 45 - planning is deterministic and declines an exposed cut without changing it
+  ---
+  duration_ms: 547.063625
+  ...
+# Subtest: actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+ok 46 - actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+  ---
+  duration_ms: 3474.317875
+  ...
+# Subtest: background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+ok 47 - background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+  ---
+  duration_ms: 623.416792
+  ...
+# Subtest: background budget releases a rejected stale result to the unchanged fault boundary
+ok 48 - background budget releases a rejected stale result to the unchanged fault boundary
+  ---
+  duration_ms: 364.871625
+  ...
+# Subtest: background budget never bypasses the existing planning watchdog
+ok 49 - background budget never bypasses the existing planning watchdog
+  ---
+  duration_ms: 347.454125
+  ...
+# Subtest: missing Worker, abort and planning watchdog fail closed and release every worker
+ok 50 - missing Worker, abort and planning watchdog fail closed and release every worker
+  ---
+  duration_ms: 11.74325
+  ...
+# Subtest: future search exhaustion ends only after the current safe macro, never runs an old heading
+ok 51 - future search exhaustion ends only after the current safe macro, never runs an old heading
+  ---
+  duration_ms: 350.419583
+  ...
+# Subtest: a stale future plan remains a fault, not a successful exhaustion handoff
+ok 52 - a stale future plan remains a fault, not a successful exhaustion handoff
+  ---
+  duration_ms: 333.966333
+  ...
+# Subtest: live playback crosses the old 60 second cutoff without claiming completion
+ok 53 - live playback crosses the old 60 second cutoff without claiming completion
+  ---
+  duration_ms: 363.92575
+  ...
+# Subtest: full live admission rejects an exhausted route before display and resets a completed seed
+ok 54 - full live admission rejects an exhausted route before display and resets a completed seed
+  ---
+  duration_ms: 5734.192583
+  ...
+# Subtest: resource diagnostic observes Worker lifetime before initial preparation resolves
+ok 55 - resource diagnostic observes Worker lifetime before initial preparation resolves
+  ---
+  duration_ms: 2.1775
+  ...
+# Subtest: resource diagnostic callbacks cannot alter Worker watchdog or cleanup
+ok 56 - resource diagnostic callbacks cannot alter Worker watchdog or cleanup
+  ---
+  duration_ms: 16.132334
+  ...
+# Subtest: demo and takeover use current ordinary gore, remains, grid and font settings
+ok 57 - demo and takeover use current ordinary gore, remains, grid and font settings
+  ---
+  duration_ms: 1976.031584
+  ...
+# Subtest: Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 58 - Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 1605.618417
+  ...
+# Subtest: Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 59 - Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 4410.235333
+  ...
+# Subtest: the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+    # Subtest: save from Settings
+    ok 1 - save from Settings
+      ---
+      duration_ms: 1219.702667
+      ...
+    # Subtest: restore in the next app instance
+    ok 2 - restore in the next app instance
+      ---
+      duration_ms: 1541.063833
+      ...
+    1..2
+ok 60 - the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+  ---
+  duration_ms: 2761.059042
+  ...
+# Subtest: visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+ok 61 - visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+  ---
+  duration_ms: 1.2355
+  ...
+# Subtest: withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+ok 62 - withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+  ---
+  duration_ms: 2.378375
+  ...
+# Subtest: frame wins the visible wake once and retires its queued sibling
+ok 63 - frame wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.19225
+  ...
+# Subtest: timer wins the visible wake once and retires its queued sibling
+ok 64 - timer wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.225625
+  ...
+# Subtest: visible timer recovery preserves explicit pause and pumps audio without stale effects
+ok 65 - visible timer recovery preserves explicit pause and pumps audio without stale effects
+  ---
+  duration_ms: 0.277042
+  ...
+# Subtest: reset invalidates both pending visible callbacks
+ok 66 - reset invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.1965
+  ...
+# Subtest: visibilitychange invalidates both pending visible callbacks
+ok 67 - visibilitychange invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.114875
+  ...
+# Subtest: freeze invalidates both pending visible callbacks
+ok 68 - freeze invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.081125
+  ...
+# Subtest: stop invalidates both pending visible callbacks
+ok 69 - stop invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.174208
+  ...
+# Subtest: destroy invalidates both pending visible callbacks
+ok 70 - destroy invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.144584
+  ...
+# Subtest: 1000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 71 - 1000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.165416
+  ...
+# Subtest: 60000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 72 - 60000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.123375
+  ...
+# Subtest: visibility switches invalidate stale RAF and message callbacks without double stepping
+ok 73 - visibility switches invalidate stale RAF and message callbacks without double stepping
+  ---
+  duration_ms: 0.144041
+  ...
+# Subtest: explicit pause stops catch-up while audio and visible painting continue until close
+ok 74 - explicit pause stops catch-up while audio and visible painting continue until close
+  ---
+  duration_ms: 0.110541
+  ...
+# Subtest: loading and freeze discard debt; resume preserves paused intent and resets timestamps
+ok 75 - loading and freeze discard debt; resume preserves paused intent and resets timestamps
+  ---
+  duration_ms: 0.080792
+  ...
+# Subtest: planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+ok 76 - planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+  ---
+  duration_ms: 0.069917
+  ...
+# Subtest: fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+ok 77 - fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+  ---
+  duration_ms: 0.066625
+  ...
+# Subtest: close during an advance cancels the remaining burst and does not schedule another owner
+ok 78 - close during an advance cancels the remaining burst and does not schedule another owner
+  ---
+  duration_ms: 0.147583
+  ...
+# Subtest: clock samples never move its elapsed origin backward
+ok 79 - clock samples never move its elapsed origin backward
+  ---
+  duration_ms: 0.068
+  ...
+# Subtest: two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+ok 80 - two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+  ---
+  duration_ms: 21.488666
+  ...
+# Subtest: quality samples only ordinary native frame work without changing admitted simulation
+ok 81 - quality samples only ordinary native frame work without changing admitted simulation
+  ---
+  duration_ms: 0.431042
+  ...
+# Subtest: quality sampling excludes fallback, catch-up and hidden or unfocused transport
+ok 82 - quality sampling excludes fallback, catch-up and hidden or unfocused transport
+  ---
+  duration_ms: 0.264125
+  ...
+# Subtest: quality observation cannot cross owner, pause or generation boundaries
+ok 83 - quality observation cannot cross owner, pause or generation boundaries
+  ---
+  duration_ms: 0.171458
+  ...
+# Subtest: watching Demo Back commits a pure Gamepad tap or five-second hold only on release
+ok 84 - watching Demo Back commits a pure Gamepad tap or five-second hold only on release
+  ---
+  duration_ms: 2297.552083
+  ...
+# Subtest: watching Demo Back release does not send a simultaneous UI edge into Home
+ok 85 - watching Demo Back release does not send a simultaneous UI edge into Home
+  ---
+  duration_ms: 1982.973125
+  ...
+# Subtest: practice Demo Back commits a pure Gamepad tap or five-second hold only on release
+ok 86 - practice Demo Back commits a pure Gamepad tap or five-second hold only on release
+  ---
+  duration_ms: 2289.771584
+  ...
+# Subtest: practice Demo Back release does not send a simultaneous UI edge into Home
+ok 87 - practice Demo Back release does not send a simultaneous UI edge into Home
+  ---
+  duration_ms: 2355.490083
+  ...
+# Subtest: watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 88 - watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 2988.282792
+  ...
+# Subtest: watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 89 - watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 3011.608875
+  ...
+# Subtest: practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 90 - practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 3727.052834
+  ...
+# Subtest: practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 91 - practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 3380.140167
+  ...
+# Subtest: native-first watching Demo Back stays the winner after Home restores and A is held for five seconds
+ok 92 - native-first watching Demo Back stays the winner after Home restores and A is held for five seconds
+  ---
+  duration_ms: 2031.79025
+  ...
+# Subtest: native-first practice Demo Back stays the winner after Home restores and A is held for five seconds
+ok 93 - native-first practice Demo Back stays the winner after Home restores and A is held for five seconds
+  ---
+  duration_ms: 2213.092125
+  ...
+# Subtest: touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+ok 94 - touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+  ---
+  duration_ms: 1977.286083
+  ...
+# Subtest: watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 95 - watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 3387.029
+  ...
+# Subtest: watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 96 - watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 3396.695542
+  ...
+# Subtest: practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 97 - practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 3445.461208
+  ...
+# Subtest: practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 98 - practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 3112.986834
+  ...
+# Subtest: native-first watching Demo Back stays the winner after Settings restores and A is held for five seconds
+ok 99 - native-first watching Demo Back stays the winner after Settings restores and A is held for five seconds
+  ---
+  duration_ms: 2096.029166
+  ...
+# Subtest: native-first practice Demo Back stays the winner after Settings restores and A is held for five seconds
+ok 100 - native-first practice Demo Back stays the winner after Settings restores and A is held for five seconds
+  ---
+  duration_ms: 2082.155083
+  ...
+# Subtest: touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+ok 101 - touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+  ---
+  duration_ms: 1920.30325
+  ...
+# Subtest: display loss freezes spectator authority and restoration repaints once before explicit Resume
+ok 102 - display loss freezes spectator authority and restoration repaints once before explicit Resume
+  ---
+  duration_ms: 1946.695125
+  ...
+# Subtest: practice loses held input on owned layer loss and needs restoration plus a fresh command
+ok 103 - practice loses held input on owned layer loss and needs restoration plus a fresh command
+  ---
+  duration_ms: 1641.408083
+  ...
+# Subtest: multiple surface losses and real painter retirement cannot recursively repaint or clear display loss
+ok 104 - multiple surface losses and real painter retirement cannot recursively repaint or clear display loss
+  ---
+  duration_ms: 1720.870334
+  ...
+# Subtest: display loss survives closing and reopening the same canvas until its actual restoration
+ok 105 - display loss survives closing and reopening the same canvas until its actual restoration
+  ---
+  duration_ms: 1953.258791
+  ...
+# Subtest: retired painter losses cannot interrupt a successor or restore a successor loss
+ok 106 - retired painter losses cannot interrupt a successor or restore a successor loss
+  ---
+  duration_ms: 2034.281292
+  ...
+# Subtest: a loss during real painter preparation is retained until that surface restores after adoption
+ok 107 - a loss during real painter preparation is retained until that surface restores after adoption
+  ---
+  duration_ms: 1549.084458
+  ...
+# Subtest: fresh main-game handoff remains available with an independently lost Demo display
+ok 108 - fresh main-game handoff remains available with an independently lost Demo display
+  ---
+  duration_ms: 12328.908167
+  ...
+# Subtest: independent Fresh preparation after Demo loss retires on hidden
+ok 109 - independent Fresh preparation after Demo loss retires on hidden
+  ---
+  duration_ms: 1561.954125
+  ...
+# Subtest: independent Fresh preparation after Demo loss retires on blur
+ok 110 - independent Fresh preparation after Demo loss retires on blur
+  ---
+  duration_ms: 1557.599
+  ...
+# Subtest: independent Fresh preparation after Demo loss retires on Back
+ok 111 - independent Fresh preparation after Demo loss retires on Back
+  ---
+  duration_ms: 1580.235
+  ...
+# Subtest: hidden restoration and later visibility, resize and fullscreen changes repaint the stopped paused spectator
+ok 112 - hidden restoration and later visibility, resize and fullscreen changes repaint the stopped paused spectator
+  ---
+  duration_ms: 1524.423042
+  ...
+# Subtest: restoring a reopened display releases real required preparation without starting spectator playback
+ok 113 - restoring a reopened display releases real required preparation without starting spectator playback
+  ---
+  duration_ms: 1953.24725
+  ...
+# Subtest: sim-origin captured pads enter solo practice only after fresh movement
+ok 114 - sim-origin captured pads enter solo practice only after fresh movement
+  ---
+  duration_ms: 3.260833
+  ...
+# Subtest: sim-origin captured pads enter snake practice only after fresh movement
+ok 115 - sim-origin captured pads enter snake practice only after fresh movement
+  ---
+  duration_ms: 0.659708
+  ...
+# Subtest: sim-origin captured pads enter survival practice only after fresh movement
+ok 116 - sim-origin captured pads enter survival practice only after fresh movement
+  ---
+  duration_ms: 1.131667
+  ...
+# Subtest: snake-origin captured pads enter solo practice only after fresh movement
+ok 117 - snake-origin captured pads enter solo practice only after fresh movement
+  ---
+  duration_ms: 0.727041
+  ...
+# Subtest: snake-origin captured pads enter snake practice only after fresh movement
+ok 118 - snake-origin captured pads enter snake practice only after fresh movement
+  ---
+  duration_ms: 0.746917
+  ...
+# Subtest: snake-origin captured pads enter survival practice only after fresh movement
+ok 119 - snake-origin captured pads enter survival practice only after fresh movement
+  ---
+  duration_ms: 0.827292
+  ...
+# Subtest: raw samples retain configured actions, menu edges, and clear their release gate without persistence
+ok 120 - raw samples retain configured actions, menu edges, and clear their release gate without persistence
+  ---
+  duration_ms: 0.772375
+  ...
+# Subtest: authoritative Solo frames retain mapped controls and the native Confirm owner
+ok 121 - authoritative Solo frames retain mapped controls and the native Confirm owner
+  ---
+  duration_ms: 0.509458
+  ...
+# Subtest: Survival-origin frames share exact bindings while retaining analog movement and Confirm release
+ok 122 - Survival-origin frames share exact bindings while retaining analog movement and Confirm release
+  ---
+  duration_ms: 1.864625
+  ...
+# Subtest: SIM receives its original raw frame for native throttle and verified radio handling
+ok 123 - SIM receives its original raw frame for native throttle and verified radio handling
+  ---
+  duration_ms: 0.143042
+  ...
+# Subtest: rotation begins approachable and avoids consecutive same-level replay/bot scenes
+ok 124 - rotation begins approachable and avoids consecutive same-level replay/bot scenes
+  ---
+  duration_ms: 3.357875
+  ...
+# Subtest: failed sources are skipped once for this director session
+ok 125 - failed sources are skipped once for this director session
+  ---
+  duration_ms: 1.488042
+  ...
+# Subtest: late cancelled preparation cannot replace a newer player and releases its ownership
+ok 126 - late cancelled preparation cannot replace a newer player and releases its ownership
+  ---
+  duration_ms: 0.841208
+  ...
+# Subtest: suspension cancels loading and requires an explicit play gesture after lifecycle return
+ok 127 - suspension cancels loading and requires an explicit play gesture after lifecycle return
+  ---
+  duration_ms: 0.647291
+  ...
+# Subtest: completion remains available for a host-owned dwell, pause survives asynchronous load
+ok 128 - completion remains available for a host-owned dwell, pause survives asynchronous load
+  ---
+  duration_ms: 0.172167
+  ...
+# Subtest: visible stalls skip spectator time and repeated completed scenes keep rotating without input
+ok 129 - visible stalls skip spectator time and repeated completed scenes keep rotating without input
+  ---
+  duration_ms: 1.981333
+  ...
+# Subtest: empty or wholly unavailable rotation has a stable terminal state
+ok 130 - empty or wholly unavailable rotation has a stable terminal state
+  ---
+  duration_ms: 0.476709
+  ...
+# Subtest: source exceptions during playback skip only that source and preserve next-source ownership
+ok 131 - source exceptions during playback skip only that source and preserve next-source ownership
+  ---
+  duration_ms: 3.659542
+  ...
+# Subtest: expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+ok 132 - expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+  ---
+  duration_ms: 0.417833
+  ...
+# Subtest: a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+ok 133 - a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+  ---
+  duration_ms: 0.628584
+  ...
+# (node:98079) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+ok 134 - the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+  ---
+  duration_ms: 590.122708
+  ...
+# Subtest: no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+ok 135 - no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+  ---
+  duration_ms: 1.248709
+  ...
+# Subtest: preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+ok 136 - preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+  ---
+  duration_ms: 0.35525
+  ...
+# Subtest: Next cancels a preparation which never returns and retains only its newer owner
+ok 137 - Next cancels a preparation which never returns and retains only its newer owner
+  ---
+  duration_ms: 0.349542
+  ...
+# Subtest: dispose settles preparation immediately and disposes its ignored-abort late adapter once
+ok 138 - dispose settles preparation immediately and disposes its ignored-abort late adapter once
+  ---
+  duration_ms: 0.139166
+  ...
+# Subtest: wholly timed-out recordings end unavailable after one bounded attempt per source
+ok 139 - wholly timed-out recordings end unavailable after one bounded attempt per source
+  ---
+  duration_ms: 0.229583
+  ...
+# Subtest: mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+    # Subtest: ordinary Ready materializes the release still without an assignment
+    ok 1 - ordinary Ready materializes the release still without an assignment
+      ---
+      duration_ms: 1432.193209
+      ...
+    # Subtest: standard host: earned original stays clear during takeover and completed playback
+    ok 2 - standard host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 2299.996042
+      ...
+    # Subtest: gentle host: earned original stays clear during takeover and completed playback
+    ok 3 - gentle host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 1708.036584
+      ...
+    # Subtest: picture privacy replaces an earned original only inside demo and practice
+    ok 4 - picture privacy replaces an earned original only inside demo and practice
+      ---
+      duration_ms: 1463.982625
+      ...
+    # Subtest: another unearned level stays obscured in fresh practice despite the existing receipt
+    ok 5 - another unearned level stays obscured in fresh practice despite the existing receipt
+      ---
+      duration_ms: 1591.595292
+      ...
+    1..5
+ok 140 - mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+  ---
+  duration_ms: 8600.3485
+  ...
+# Subtest: idle countdown counts only contiguous eligible foreground frames
+ok 141 - idle countdown counts only contiguous eligible foreground frames
+  ---
+  duration_ms: 0.853542
+  ...
+# Subtest: reduced-motion default is manual; malformed preferences fail safely
+ok 142 - reduced-motion default is manual; malformed preferences fail safely
+  ---
+  duration_ms: 0.391
+  ...
+# Subtest: demo sound preference is opt-in and preserves existing v1 settings
+ok 143 - demo sound preference is opt-in and preserves existing v1 settings
+  ---
+  duration_ms: 0.085292
+  ...
+# Subtest: demo picture privacy is opt-in and survives existing v1 settings
+ok 144 - demo picture privacy is opt-in and survives existing v1 settings
+  ---
+  duration_ms: 0.121292
+  ...
+# Subtest: clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+ok 145 - clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+  ---
+  duration_ms: 0.081792
+  ...
+# Subtest: malformed clear-picture preferences fail closed without coercion
+ok 146 - malformed clear-picture preferences fail closed without coercion
+  ---
+  duration_ms: 0.1715
+  ...
+# Subtest: practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+ok 147 - practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+  ---
+  duration_ms: 8.14125
+  ...
+# Subtest: direct takeover applies its initiating action once at the first real tick without inventing steering
+ok 148 - direct takeover applies its initiating action once at the first real tick without inventing steering
+  ---
+  duration_ms: 13.260042
+  ...
+# Subtest: captions use emitted core events and maintain a six-second reading interval
+ok 149 - captions use emitted core events and maintain a six-second reading interval
+  ---
+  duration_ms: 0.450833
+  ...
+# Subtest: captions distinguish a real scan from other equipment without claiming a revealed objective
+ok 150 - captions distinguish a real scan from other equipment without claiming a revealed objective
+  ---
+  duration_ms: 0.736334
+  ...
+# Subtest: same-tick real cut and relay capture keep distinct captions in order until scene reset
+ok 151 - same-tick real cut and relay capture keep distinct captions in order until scene reset
+  ---
+  duration_ms: 15.369083
+  ...
+# Subtest: signal captions require an actual slowing or blocked-equipment event
+ok 152 - signal captions require an actual slowing or blocked-equipment event
+  ---
+  duration_ms: 1.600334
+  ...
+# Subtest: signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+ok 153 - signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+  ---
+  duration_ms: 3.5385
+  ...
+# Subtest: an accessible demo on an idle Legacy host prepares the same level without automatic Start
+ok 154 - an accessible demo on an idle Legacy host prepares the same level without automatic Start
+  ---
+  duration_ms: 11814.289875
+  ...
+# Subtest: an authored Journey demo starts normal play through its exact Ready handoff
+    # Subtest: the Legacy host leaves its paused game untouched
+    ok 1 - the Legacy host leaves its paused game untouched
+      ---
+      duration_ms: 2838.169417
+      ...
+    # Subtest: the native Journey owner prepares the requested mission at tick zero
+    ok 2 - the native Journey owner prepares the requested mission at tick zero
+      ---
+      duration_ms: 9161.143875
+      ...
+    1..2
+ok 155 - an authored Journey demo starts normal play through its exact Ready handoff
+  ---
+  duration_ms: 11999.647209
+  ...
+# Subtest: default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+    # Subtest: the Journey host requests its verified destination without adopting a Legacy run
+    ok 1 - the Journey host requests its verified destination without adopting a Legacy run
+      ---
+      duration_ms: 9972.935417
+      ...
+    # Subtest: the receiving Legacy host prepares exact art and remains at tick zero
+    ok 2 - the receiving Legacy host prepares exact art and remains at tick zero
+      ---
+      duration_ms: 10492.639375
+      ...
+    # Subtest: a Ready hint cannot authorize an unearned locked Legacy mission
+    ok 3 - a Ready hint cannot authorize an unearned locked Legacy mission
+      ---
+      duration_ms: 9106.77125
+      ...
+    1..3
+ok 156 - default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+  ---
+  duration_ms: 29572.805667
+  ...
+# Subtest: demo fullscreen is explicit, targets the document and follows enter/exit state
+ok 157 - demo fullscreen is explicit, targets the document and follows enter/exit state
+  ---
+  duration_ms: 2.494792
+  ...
+# Subtest: unsupported and rejected fullscreen retain the open viewport demo and a retryable control
+ok 158 - unsupported and rejected fullscreen retain the open viewport demo and a retryable control
+  ---
+  duration_ms: 0.789959
+  ...
+# Subtest: demo closure releases only the fullscreen session it owns
+ok 159 - demo closure releases only the fullscreen session it owns
+  ---
+  duration_ms: 0.666375
+  ...
+# Subtest: pending entry is deduplicated and cleaned up if the demo closes or is disposed before completion
+ok 160 - pending entry is deduplicated and cleaned up if the demo closes or is disposed before completion
+  ---
+  duration_ms: 0.338042
+  ...
+# Subtest: browser Escape or a replaced fullscreen owner is never mistaken for demo ownership
+ok 161 - browser Escape or a replaced fullscreen owner is never mistaken for demo ownership
+  ---
+  duration_ms: 0.423625
+  ...
+# Subtest: rejected exit keeps the truthful Exit control and permits an explicit retry
+ok 162 - rejected exit keeps the truthful Exit control and permits an explicit retry
+  ---
+  duration_ms: 0.286917
+  ...
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 163 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 2642.728875
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 164 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 2329.191
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 165 - actual idle home entry resets on activity and does not write game data
+  ---
+  duration_ms: 1972.6165
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 166 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+  ---
+  duration_ms: 11719.834709
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 167 - leaving a Journey demo restores exactly one truthful title action without saving
+  ---
+  duration_ms: 5001.985167
+  ...
+# Subtest: fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+ok 168 - fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+  ---
+  duration_ms: 1835.899292
+  ...
+# Subtest: takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+ok 169 - takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+  ---
+  duration_ms: 2008.25375
+  ...
+# Subtest: controller gameplay action takes over while preserving one hardware read per frame
+ok 170 - controller gameplay action takes over while preserving one hardware read per frame
+  ---
+  duration_ms: 1663.456667
+  ...
+# Subtest: a single remaining source prepares a new painter on repetition without reusing disposed media
+ok 171 - a single remaining source prepares a new painter on repetition without reusing disposed media
+  ---
+  duration_ms: 3122.856667
+  ...
+# Subtest: unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+ok 172 - unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+  ---
+  duration_ms: 9140.201125
+  ...
+# Subtest: fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+ok 173 - fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+  ---
+  duration_ms: 1987.295833
+  ...
+# Subtest: a replay fork completing after blur cannot arm hidden practice or replace its current owner
+ok 174 - a replay fork completing after blur cannot arm hidden practice or replace its current owner
+  ---
+  duration_ms: 1630.389458
+  ...
+# Subtest: locked Fresh handoff cancelled by blur remains paused until another explicit choice
+ok 175 - locked Fresh handoff cancelled by blur remains paused until another explicit choice
+  ---
+  duration_ms: 1689.696583
+  ...
+# Subtest: locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+ok 176 - locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+  ---
+  duration_ms: 1601.961542
+  ...
+# Subtest: a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+ok 177 - a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+  ---
+  duration_ms: 9593.751375
+  ...
+# Subtest: accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+ok 178 - accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+  ---
+  duration_ms: 10606.967083
+  ...
+# Subtest: demo control hints show the saved keyboard bindings in the actual app
+ok 179 - demo control hints show the saved keyboard bindings in the actual app
+  ---
+  duration_ms: 1605.2355
+  ...
+# Subtest: spectator information and play invitation stay visible while details remain optional
+ok 180 - spectator information and play invitation stay visible while details remain optional
+  ---
+  duration_ms: 1592.606584
+  ...
+# Subtest: demo guide respects the shared character-reactions preference without hiding teaching captions
+ok 181 - demo guide respects the shared character-reactions preference without hiding teaching captions
+  ---
+  duration_ms: 1898.021209
+  ...
+# Subtest: immediate: purposeful routes vary, close cuts and only lose to believable hazards
+ok 182 - immediate: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 8107.3405
+  ...
+# {"seed":123,"captures":10,"losses":3,"causes":["enemy-trail","boss-lane","boss-lane"],"bends":14,"ticks":6126}
+# {"seed":987654321,"captures":8,"losses":3,"causes":["enemy-trail","enemy-trail","boss-lane"],"bends":13,"ticks":4792}
+# Subtest: grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+ok 183 - grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 10143.619
+  ...
+# {"seed":123,"captures":5,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":10,"ticks":4888}
+# {"seed":987654321,"captures":23,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":24,"ticks":13418}
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 184 - improvised preparation respects cancellation before it owns a player
+  ---
+  duration_ms: 0.751417
+  ...
+# Subtest: cancellation during route planning stops before publishing a recording
+ok 185 - cancellation during route planning stops before publishing a recording
+  ---
+  duration_ms: 38.411166
+  ...
+# Subtest: practice handoff requires every observed keyboard key to become neutral before fresh steering
+ok 186 - practice handoff requires every observed keyboard key to become neutral before fresh steering
+  ---
+  duration_ms: 2.109
+  ...
+# Subtest: blur: an unobservable outside key release cannot permanently block practice
+ok 187 - blur: an unobservable outside key release cannot permanently block practice
+  ---
+  duration_ms: 0.290667
+  ...
+# Subtest: hidden: an unobservable outside key release cannot permanently block practice
+ok 188 - hidden: an unobservable outside key release cannot permanently block practice
+  ---
+  duration_ms: 0.238958
+  ...
+# Subtest: ability: a quick keyboard or pointer impulse survives release until consumed once
+ok 189 - ability: a quick keyboard or pointer impulse survives release until consumed once
+  ---
+  duration_ms: 0.305209
+  ...
+# Subtest: pickup: a quick keyboard or pointer impulse survives release until consumed once
+ok 190 - pickup: a quick keyboard or pointer impulse survives release until consumed once
+  ---
+  duration_ms: 0.339792
+  ...
+# Subtest: releasing either Boost key or a separate touch cannot release another physical Boost owner
+ok 191 - releasing either Boost key or a separate touch cannot release another physical Boost owner
+  ---
+  duration_ms: 0.281083
+  ...
+# Subtest: tap-steering toggles pointer Boost while keyboard Boost stays Hold, and lifecycle clear retires the latch
+ok 192 - tap-steering toggles pointer Boost while keyboard Boost stays Hold, and lifecycle clear retires the latch
+  ---
+  duration_ms: 0.324208
+  ...
+# Subtest: click-only assistive Boost toggles without a release event and preserves independent keyboard Hold
+ok 193 - click-only assistive Boost toggles without a release event and preserves independent keyboard Hold
+  ---
+  duration_ms: 0.497708
+  ...
+# Subtest: cancelling the active touch Boost toggle clears it while an unrelated finger cannot
+ok 194 - cancelling the active touch Boost toggle clears it while an unrelated finger cannot
+  ---
+  duration_ms: 0.219917
+  ...
+# Subtest: stick: capture failure, outside release, cancellation and stale moves preserve one touch owner
+ok 195 - stick: capture failure, outside release, cancellation and stale moves preserve one touch owner
+  ---
+  duration_ms: 0.459792
+  ...
+# Subtest: swipe: capture failure, outside release, cancellation and stale moves preserve one touch owner
+ok 196 - swipe: capture failure, outside release, cancellation and stale moves preserve one touch owner
+  ---
+  duration_ms: 0.178417
+  ...
+# Subtest: deliberate clear retires a captured steering finger before late capture notifications
+ok 197 - deliberate clear retires a captured steering finger before late capture notifications
+  ---
+  duration_ms: 0.154875
+  ...
+# Subtest: a fresh configured keyboard direction takes over once, survives async clear, and never leaks to ordinary input
+ok 198 - a fresh configured keyboard direction takes over once, survives async clear, and never leaks to ordinary input
+  ---
+  duration_ms: 0.907792
+  ...
+# Subtest: Back exits watching on pointerdown and consumes its trailing PointerEvent click after Home restores
+ok 199 - Back exits watching on pointerdown and consumes its trailing PointerEvent click after Home restores
+  ---
+  duration_ms: 0.130083
+  ...
+# Subtest: Back exits watching on pointerdown and consumes its trailing MouseEvent click after Home restores
+ok 200 - Back exits watching on pointerdown and consumes its trailing MouseEvent click after Home restores
+  ---
+  duration_ms: 0.135959
+  ...
+# Subtest: Back inside Demo UI exits watching on Enter and consumes repeats, release and click after focus moves Home
+ok 201 - Back inside Demo UI exits watching on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.130291
+  ...
+# Subtest: Back inside Demo UI exits loading on Enter and consumes repeats, release and click after focus moves Home
+ok 202 - Back inside Demo UI exits loading on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.072084
+  ...
+# Subtest: Back inside Demo UI exits practice on Enter and consumes repeats, release and click after focus moves Home
+ok 203 - Back inside Demo UI exits practice on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.104125
+  ...
+# Subtest: Back inside Demo UI exits watching on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 204 - Back inside Demo UI exits watching on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.109792
+  ...
+# Subtest: Back inside Demo UI exits loading on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 205 - Back inside Demo UI exits loading on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.069291
+  ...
+# Subtest: Back inside Demo UI exits practice on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 206 - Back inside Demo UI exits practice on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.067166
+  ...
+# Subtest: Back inside Demo UI exits watching on Space and consumes repeats, release and click after focus moves Home
+ok 207 - Back inside Demo UI exits watching on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.103292
+  ...
+# Subtest: Back inside Demo UI exits loading on Space and consumes repeats, release and click after focus moves Home
+ok 208 - Back inside Demo UI exits loading on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.064459
+  ...
+# Subtest: Back inside Demo UI exits practice on Space and consumes repeats, release and click after focus moves Home
+ok 209 - Back inside Demo UI exits practice on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.140208
+  ...
+# Subtest: Back reports only an actual fresh unmodified native activation to the Confirm owner
+ok 210 - Back reports only an actual fresh unmodified native activation to the Confirm owner
+  ---
+  duration_ms: 0.140959
+  ...
+# Subtest: teardown removes keyboard, pointer and lifecycle observers
+ok 211 - teardown removes keyboard, pointer and lifecycle observers
+  ---
+  duration_ms: 0.220791
+  ...
+# Subtest: PointerEvent click: another finger cannot duplicate the first play action
+ok 212 - PointerEvent click: another finger cannot duplicate the first play action
+  ---
+  duration_ms: 0.199042
+  ...
+# Subtest: MouseEvent click: another finger cannot duplicate the first play action
+ok 213 - MouseEvent click: another finger cannot duplicate the first play action
+  ---
+  duration_ms: 0.1785
+  ...
+# Subtest: fresh keyboard ability takes over with exactly one retained semantic action
+ok 214 - fresh keyboard ability takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.130875
+  ...
+# Subtest: fresh keyboard pickup takes over with exactly one retained semantic action
+ok 215 - fresh keyboard pickup takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.078791
+  ...
+# Subtest: fresh keyboard boost takes over with exactly one retained semantic action
+ok 216 - fresh keyboard boost takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.089208
+  ...
+# Subtest: fresh keyboard hangar takes over with exactly one retained semantic action
+ok 217 - fresh keyboard hangar takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.090583
+  ...
+# Subtest: keyboard auto-repeat, held entry keys, IME and modified shortcuts cannot take over
+ok 218 - keyboard auto-repeat, held entry keys, IME and modified shortcuts cannot take over
+  ---
+  duration_ms: 0.202375
+  ...
+# Subtest: stick: watch touch waits for a recognized direction and forwards it once
+ok 219 - stick: watch touch waits for a recognized direction and forwards it once
+  ---
+  duration_ms: 0.319458
+  ...
+# Subtest: swipe: watch touch waits for a recognized direction and forwards it once
+ok 220 - swipe: watch touch waits for a recognized direction and forwards it once
+  ---
+  duration_ms: 0.291917
+  ...
+# Subtest: a deliberate canvas tap takes over without inventing a direction; cancellation and dragging do not
+ok 221 - a deliberate canvas tap takes over without inventing a direction; cancellation and dragging do not
+  ---
+  duration_ms: 0.224834
+  ...
+# Subtest: pointer: explicit movement and action buttons take over once
+ok 222 - pointer: explicit movement and action buttons take over once
+  ---
+  duration_ms: 0.13
+  ...
+# Subtest: assistive: explicit movement and action buttons take over once
+ok 223 - assistive: explicit movement and action buttons take over once
+  ---
+  duration_ms: 0.067042
+  ...
+# Subtest: fullscreen, next and menu buttons activate normally through pointer, keyboard and assistive clicks
+ok 224 - fullscreen, next and menu buttons activate normally through pointer, keyboard and assistive clicks
+  ---
+  duration_ms: 0.175458
+  ...
+# Subtest: KeyP opens the watching menu while Escape exits
+ok 225 - KeyP opens the watching menu while Escape exits
+  ---
+  duration_ms: 0.097292
+  ...
+# Subtest: KeyX opens the watching menu while Escape exits
+ok 226 - KeyX opens the watching menu while Escape exits
+  ---
+  duration_ms: 0.082042
+  ...
+# Subtest: controller menu/back remain separate from gameplay takeover and pending preparation cannot navigate
+ok 227 - controller menu/back remain separate from gameplay takeover and pending preparation cannot navigate
+  ---
+  duration_ms: 0.103834
+  ...
+# Subtest: real controller router: analog takes over only after join/neutral and a fresh deliberate edge
+ok 228 - real controller router: analog takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 2.468916
+  ...
+# Subtest: real controller router: dpad takes over only after join/neutral and a fresh deliberate edge
+ok 229 - real controller router: dpad takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.427292
+  ...
+# Subtest: real controller router: ability takes over only after join/neutral and a fresh deliberate edge
+ok 230 - real controller router: ability takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.474375
+  ...
+# Subtest: real controller router: pickup takes over only after join/neutral and a fresh deliberate edge
+ok 231 - real controller router: pickup takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.288417
+  ...
+# Subtest: real controller router: boost takes over only after join/neutral and a fresh deliberate edge
+ok 232 - real controller router: boost takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.5865
+  ...
+# Subtest: real controller router: hangar takes over only after join/neutral and a fresh deliberate edge
+ok 233 - real controller router: hangar takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.208667
+  ...
+# Subtest: controller disconnect/reconnect and held controls do not interrupt watching or auto-takeover
+ok 234 - controller disconnect/reconnect and held controls do not interrupt watching or auto-takeover
+  ---
+  duration_ms: 0.112625
+  ...
+# Subtest: spectator menu canvas gameplay keys take over; owned UI and lifecycle suspension do not
+ok 235 - spectator menu canvas gameplay keys take over; owned UI and lifecycle suspension do not
+  ---
+  duration_ms: 0.152417
+  ...
+# Subtest: watching: audio controls and source links keep native activation and editing
+ok 236 - watching: audio controls and source links keep native activation and editing
+  ---
+  duration_ms: 0.288625
+  ...
+# Subtest: practice: audio controls and source links keep native activation and editing
+ok 237 - practice: audio controls and source links keep native activation and editing
+  ---
+  duration_ms: 0.154708
+  ...
+# Subtest: focused audio UI owns controller navigation until a new gameplay edge after leaving it
+ok 238 - focused audio UI owns controller navigation until a new gameplay edge after leaving it
+  ---
+  duration_ms: 0.092875
+  ...
+# Subtest: practice audio focus retires held keyboard and multi-touch actions before the next frame
+ok 239 - practice audio focus retires held keyboard and multi-touch actions before the next frame
+  ---
+  duration_ms: 0.313375
+  ...
+# Subtest: audio ownership clears queued practice impulses even before a focus or controller event
+ok 240 - audio ownership clears queued practice impulses even before a focus or controller event
+  ---
+  duration_ms: 0.125416
+  ...
+# Subtest: touching audio UI retires a held practice action even when the browser keeps canvas focus
+ok 241 - touching audio UI retires a held practice action even when the browser keeps canvas focus
+  ---
+  duration_ms: 0.1105
+  ...
+# Subtest: held controller boost cannot return from audio navigation as a practice action
+ok 242 - held controller boost cannot return from audio navigation as a practice action
+  ---
+  duration_ms: 0.11175
+  ...
+# Subtest: spectator router preserves configured back with flight input and no duplicate gameplay action
+ok 243 - spectator router preserves configured back with flight input and no duplicate gameplay action
+  ---
+  duration_ms: 0.392167
+  ...
+# Subtest: spectator router preserves configured menu with flight input and no duplicate gameplay action
+ok 244 - spectator router preserves configured menu with flight input and no duplicate gameplay action
+  ---
+  duration_ms: 0.246334
+  ...
+# Subtest: spectator Back follows remapped menu binding, while ordinary flight retains its original pickup
+ok 245 - spectator Back follows remapped menu binding, while ordinary flight retains its original pickup
+  ---
+  duration_ms: 0.593542
+  ...
+# Subtest: spectator hold Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+ok 246 - spectator hold Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+  ---
+  duration_ms: 0.627042
+  ...
+# Subtest: spectator toggle Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+ok 247 - spectator toggle Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+  ---
+  duration_ms: 0.272125
+  ...
+# Subtest: an exact earned Journey original is clear, owns the actual candidate image, and never changes progress
+ok 248 - an exact earned Journey original is clear, owns the actual candidate image, and never changes progress
+  ---
+  duration_ms: 7.718458
+  ...
+# Subtest: the retained first-earned original survives a later legitimate win and another installed difficulty
+ok 249 - the retained first-earned original survives a later legitimate win and another installed difficulty
+  ---
+  duration_ms: 4.466875
+  ...
+# Subtest: missing, malformed, foreign and wrong-mode receipts retain the current image but cannot reveal it
+ok 250 - missing, malformed, foreign and wrong-mode receipts retain the current image but cannot reveal it
+  ---
+  duration_ms: 34.253292
+  ...
+# Subtest: a foreign company cannot authorize the same exact asset through a matching historical campaign
+ok 251 - a foreign company cannot authorize the same exact asset through a matching historical campaign
+  ---
+  duration_ms: 4.210291
+  ...
+# Subtest: a current replacement original supplies the concealed backdrop without inheriting the old earned receipt
+ok 252 - a current replacement original supplies the concealed backdrop without inheriting the old earned receipt
+  ---
+  duration_ms: 48.870958
+  ...
+# Subtest: unowned entries, changed levels, foreign mission context and unavailable backgrounds fail before acquisition
+ok 253 - unowned entries, changed levels, foreign mission context and unavailable backgrounds fail before acquisition
+  ---
+  duration_ms: 6.623041
+  ...
+# Subtest: acquisition failures and bindings owned by another display never become clear or steal ownership
+ok 254 - acquisition failures and bindings owned by another display never become clear or steal ownership
+  ---
+  duration_ms: 6.666083
+  ...
+# Subtest: cancellation releases a late verified decode once and does not display an earned original
+ok 255 - cancellation releases a late verified decode once and does not display an earned original
+  ---
+  duration_ms: 3.681375
+  ...
+# Subtest: information fits only in unused image margins across map and viewport shapes
+ok 256 - information fits only in unused image margins across map and viewport shapes
+  ---
+  duration_ms: 0.819458
+  ...
+# Subtest: resize, scene changes and details update layout; disposal releases both observers
+ok 257 - resize, scene changes and details update layout; disposal releases both observers
+  ---
+  duration_ms: 0.212333
+  ...
+# Subtest: production cache adapter persists across owned connections without opening another database
+ok 258 - production cache adapter persists across owned connections without opening another database
+  ---
+  duration_ms: 1.694834
+  ...
+# Subtest: two production connections serialize read-modify-write updates without losing either recording
+ok 259 - two production connections serialize read-modify-write updates without losing either recording
+  ---
+  duration_ms: 0.505458
+  ...
+# Subtest: abort before opening or while writing rejects and rolls back without retaining signal listeners
+ok 260 - abort before opening or while writing rejects and rolls back without retaining signal listeners
+  ---
+  duration_ms: 0.588542
+  ...
+# Subtest: a cancelled queued update never transforms or overwrites the preceding transaction
+ok 261 - a cancelled queued update never transforms or overwrites the preceding transaction
+  ---
+  duration_ms: 0.285542
+  ...
+# Subtest: quota, invalid documents and transform errors preserve the exact previous cache
+ok 262 - quota, invalid documents and transform errors preserve the exact previous cache
+  ---
+  duration_ms: 0.421666
+  ...
+# Subtest: cancellation after the commit boundary reports the committed result and cleans listeners
+ok 263 - cancellation after the commit boundary reports the committed result and cleans listeners
+  ---
+  duration_ms: 0.296333
+  ...
+# Subtest: closing during initial open rejects late adoption and releases its connection
+ok 264 - closing during initial open rejects late adoption and releases its connection
+  ---
+  duration_ms: 0.101458
+  ...
+# Subtest: versionchange releases the old connection and refuses to downgrade a newer cache schema
+ok 265 - versionchange releases the old connection and refuses to downgrade a newer cache schema
+  ---
+  duration_ms: 0.26875
+  ...
+# Subtest: verified Keep/list/clear uses the production cache, retains exact owners and enforces capacity after reopen
+ok 266 - verified Keep/list/clear uses the production cache, retains exact owners and enforces capacity after reopen
+  ---
+  duration_ms: 639.568042
+  ...
+# Subtest: optional Demo write aborts before library inspection when Start wins the real IDB read callback
+ok 267 - optional Demo write aborts before library inspection when Start wins the real IDB read callback
+  ---
+  duration_ms: 314.713792
+  ...
+# Subtest: storage callback guard preserves default transaction and committed-result semantics
+ok 268 - storage callback guard preserves default transaction and committed-result semantics
+  ---
+  duration_ms: 0.353792
+  ...
+# Subtest: real UTF-8 bytes evict the oldest valid replay before the twelve-recording limit
+ok 269 - real UTF-8 bytes evict the oldest valid replay before the twelve-recording limit
+  ---
+  duration_ms: 2535.888875
+  ...
+# {"limit":33554432,"ticks":21462,"replayBytes":2705443,"initialBytes":33548899,"candidateBytes":33554507,"candidateCodeUnits":33553907}
+# Subtest: one oversized library document of valid replays is rejected without any storage mutation
+ok 270 - one oversized library document of valid replays is rejected without any storage mutation
+  ---
+  duration_ms: 681.208916
+  ...
+# Subtest: concurrent production-library writers both survive and every commit obeys the byte cap
+ok 271 - concurrent production-library writers both survive and every commit obeys the byte cap
+  ---
+  duration_ms: 3037.130167
+  ...
+# Subtest: manual retention does not opt into automatic collection; saved clips remain available after disabling
+ok 272 - manual retention does not opt into automatic collection; saved clips remain available after disabling
+  ---
+  duration_ms: 144.373792
+  ...
+# Subtest: practice, incomplete, tampered and stale runs never enter the demo cache
+ok 273 - practice, incomplete, tampered and stale runs never enter the demo cache
+  ---
+  duration_ms: 40.598667
+  ...
+# Subtest: verified local recordings deduplicate, evict oldest beyond twelve, and are owned snapshots
+ok 274 - verified local recordings deduplicate, evict oldest beyond twelve, and are owned snapshots
+  ---
+  duration_ms: 624.876625
+  ...
+# Subtest: retention cancellation, opt-out during verification, and storage failure preserve prior bytes
+ok 275 - retention cancellation, opt-out during verification, and storage failure preserve prior bytes
+  ---
+  duration_ms: 83.017292
+  ...
+# Subtest: quality filtering rejects long idle and short straight-line performances
+ok 276 - quality filtering rejects long idle and short straight-line performances
+  ---
+  duration_ms: 0.219959
+  ...
+# Subtest: missing IndexedDB reports unavailable instead of touching another storage system
+ok 277 - missing IndexedDB reports unavailable instead of touching another storage system
+  ---
+  duration_ms: 0.18875
+  ...
+# Subtest: a pending scene picture releases its painter on deadline before the decoder settles
+ok 278 - a pending scene picture releases its painter on deadline before the decoder settles
+  ---
+  duration_ms: 2074.565084
+  ...
+# Subtest: a pending scene picture releases its painter on Back before the decoder settles
+ok 279 - a pending scene picture releases its painter on Back before the decoder settles
+  ---
+  duration_ms: 1834.251916
+  ...
+# Subtest: catalogue fetch which ignores abort still has a finite total loading deadline
+ok 280 - catalogue fetch which ignores abort still has a finite total loading deadline
+  ---
+  duration_ms: 1.19375
+  ...
+# Subtest: catalogue body which ignores abort still has a finite total loading deadline
+ok 281 - catalogue body which ignores abort still has a finite total loading deadline
+  ---
+  duration_ms: 0.167459
+  ...
+# Subtest: fetch and body share a budget; success retires timers and caller listeners
+ok 282 - fetch and body share a budget; success retires timers and caller listeners
+  ---
+  duration_ms: 0.422708
+  ...
+# Subtest: replay body timeout and parent cancellation settle before an uncooperative body returns
+ok 283 - replay body timeout and parent cancellation settle before an uncooperative body returns
+  ---
+  duration_ms: 0.500667
+  ...
+# Subtest: cancelled late fetch cancels its body without starting text parsing
+ok 284 - cancelled late fetch cancels its body without starting text parsing
+  ---
+  duration_ms: 0.195416
+  ...
+# Subtest: loading cleans up synchronous failure, early abort, late rejection and failing late disposal
+ok 285 - loading cleans up synchronous failure, early abort, late rejection and failing late disposal
+  ---
+  duration_ms: 0.276042
+  ...
+# Subtest: slow fetch cannot restart the body deadline and all cancellation listeners are retired
+ok 286 - slow fetch cannot restart the body deadline and all cancellation listeners are retired
+  ---
+  duration_ms: 0.276042
+  ...
+# Subtest: native watching advances without Solo effects and practice resumes on its visible surface
+ok 287 - native watching advances without Solo effects and practice resumes on its visible surface
+  ---
+  duration_ms: 20.093
+  ...
+# Subtest: native readouts use shared playback time when the engine exposes no time field
+ok 288 - native readouts use shared playback time when the engine exposes no time field
+  ---
+  duration_ms: 5.085125
+  ...
+# Subtest: raw SIM-origin controller samples reach Snake practice through the mounted shared host
+ok 289 - raw SIM-origin controller samples reach Snake practice through the mounted shared host
+  ---
+  duration_ms: 11.438917
+  ...
+# Subtest: a quick close and reopen awaits asynchronous scene disposal
+ok 290 - a quick close and reopen awaits asynchronous scene disposal
+  ---
+  duration_ms: 5.634375
+  ...
+# Subtest: renderer disposal failure still retires physics and removes the owned surface
+ok 291 - renderer disposal failure still retires physics and removes the owned surface
+  ---
+  duration_ms: 2.399
+  ...
+# Subtest: a practice world returned after cancellation is disposed exactly once
+ok 292 - a practice world returned after cancellation is disposed exactly once
+  ---
+  duration_ms: 3.010375
+  ...
+# Subtest: graphics loss retires the native engine and publishes its bounded diagnostic
+ok 293 - graphics loss retires the native engine and publishes its bounded diagnostic
+  ---
+  duration_ms: 9.500167
+  ...
+# Subtest: an earned release original stays clear when its retained history has no persistent assignment
+ok 294 - an earned release original stays clear when its retained history has no persistent assignment
+  ---
+  duration_ms: 216.291459
+  ...
+# Subtest: earned-original fallback fails concealed and releases mismatched or cancelled acquisitions
+ok 295 - earned-original fallback fails concealed and releases mismatched or cancelled acquisitions
+  ---
+  duration_ms: 174.174417
+  ...
+# Subtest: earned session originals use their combined view adapter while explicit acquisition overrides stay authoritative
+ok 296 - earned session originals use their combined view adapter while explicit acquisition overrides stay authoritative
+  ---
+  duration_ms: 161.922875
+  ...
+# Subtest: only the exact earned assignment reveals a picture, including shared Standard/Gentle identity
+ok 297 - only the exact earned assignment reveals a picture, including shared Standard/Gentle identity
+  ---
+  duration_ms: 65.158875
+  ...
+# Subtest: a later current assignment stays blurred even when its map has an earned older original
+ok 298 - a later current assignment stays blurred even when its map has an earned older original
+  ---
+  duration_ms: 118.845667
+  ...
+# Subtest: implicit earned legacy originals use the retained art seed and exact installed owner
+ok 299 - implicit earned legacy originals use the retained art seed and exact installed owner
+  ---
+  duration_ms: 49.902292
+  ...
+# Subtest: read failures, foreign pins and invalid earned receipts never authorize clear artwork
+ok 300 - read failures, foreign pins and invalid earned receipts never authorize clear artwork
+  ---
+  duration_ms: 57.961042
+  ...
+# Subtest: preview eligibility requires installed identity and verified art without granting an earned picture
+ok 301 - preview eligibility requires installed identity and verified art without granting an earned picture
+  ---
+  duration_ms: 66.191709
+  ...
+# Subtest: cancelled late acquisition releases its bitmap, and resolved ownership disposes once
+ok 302 - cancelled late acquisition releases its bitmap, and resolved ownership disposes once
+  ---
+  duration_ms: 68.906542
+  ...
+# Subtest: blur reduces real high-frequency detail without modifying its source pixels
+ok 303 - blur reduces real high-frequency detail without modifying its source pixels
+  ---
+  duration_ms: 1.679167
+  ...
+# Subtest: the box blur preserves analytic edge-clamped averages with wide kernels and repeated passes
+ok 304 - the box blur preserves analytic edge-clamped averages with wide kernels and repeated passes
+  ---
+  duration_ms: 0.218542
+  ...
+# Subtest: the weak signal retains subdued scene composition while obscuring original fine detail
+ok 305 - the weak signal retains subdued scene composition while obscuring original fine detail
+  ---
+  duration_ms: 42.978041
+  ...
+# Subtest: different scene compositions produce different recognizable signal impressions
+ok 306 - different scene compositions produce different recognizable signal impressions
+  ---
+  duration_ms: 43.65175
+  ...
+# Subtest: muted broad color distinguishes warm and cool pictures without restoring full chroma
+ok 307 - muted broad color distinguishes warm and cool pictures without restoring full chroma
+  ---
+  duration_ms: 3.83775
+  ...
+# Subtest: equally lit pictures keep distinct subdued palettes, not only different brightness
+ok 308 - equally lit pictures keep distinct subdued palettes, not only different brightness
+  ---
+  duration_ms: 5.257833
+  ...
+# Subtest: transparent picture silhouettes cannot survive through the concealed alpha channel
+ok 309 - transparent picture silhouettes cannot survive through the concealed alpha channel
+  ---
+  duration_ms: 2.517625
+  ...
+# Subtest: concealment supports tiny and nondivisible images and rejects invalid pixel bounds
+ok 310 - concealment supports tiny and nondivisible images and rejects invalid pixel bounds
+  ---
+  duration_ms: 207.833
+  ...
+# Subtest: filter caches one bounded blurred source and fails closed for undecoded/unreadable replacements
+ok 311 - filter caches one bounded blurred source and fails closed for undecoded/unreadable replacements
+  ---
+  duration_ms: 49.449208
+  ...
+# Subtest: an unreadable source is quarantined until replacement or explicit cache reset
+ok 312 - an unreadable source is quarantined until replacement or explicit cache reset
+  ---
+  duration_ms: 0.255542
+  ...
+# Subtest: the cached picture filter presents concealed pixels while clear pictures retain their original
+ok 313 - the cached picture filter presents concealed pixels while clear pictures retain their original
+  ---
+  duration_ms: 13.084458
+  ...
+# Subtest: receiver snow is monochrome with localized horizontal impulse streaks
+ok 314 - receiver snow is monochrome with localized horizontal impulse streaks
+  ---
+  duration_ms: 18.854708
+  ...
+# Subtest: animated snow reuses its bitmap, freezes by time and keeps concealed geometry across frames
+ok 315 - animated snow reuses its bitmap, freezes by time and keeps concealed geometry across frames
+  ---
+  duration_ms: 11.139792
+  ...
+# Subtest: demo noise evolves independently for pictures with different broad palettes
+ok 316 - demo noise evolves independently for pictures with different broad palettes
+  ---
+  duration_ms: 6.389375
+  ...
+# Subtest: muted color never restores source chromatic detail, including by averaging animated frames
+ok 317 - muted color never restores source chromatic detail, including by averaging animated frames
+  ---
+  duration_ms: 8.950042
+  ...
+# Subtest: actual painter protects first frame, late backdrop, victory and gallery while leaving the player sharp
+ok 318 - actual painter protects first frame, late backdrop, victory and gallery while leaving the player sharp
+  ---
+  duration_ms: 290.38625
+  ...
+# Subtest: disposing a painter clears its blur cache and rejects late setLook asset adoption
+ok 319 - disposing a painter clears its blur cache and rejects late setLook asset adoption
+  ---
+  duration_ms: 36.429708
+  ...
+# Subtest: demo offers only the story receipt for its exact already-earned picture
+ok 320 - demo offers only the story receipt for its exact already-earned picture
+  ---
+  duration_ms: 73.803167
+  ...
+# Subtest: lost demo concealment fails closed and reconstructs identical protected pixels after restoration
+ok 321 - lost demo concealment fails closed and reconstructs identical protected pixels after restoration
+  ---
+  duration_ms: 1.035125
+  ...
+# Subtest: curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+ok 322 - curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+  ---
+  duration_ms: 1885.733833
+  ...
+# Subtest: personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+ok 323 - personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+  ---
+  duration_ms: 38.007583
+  ...
+# Subtest: frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+ok 324 - frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+  ---
+  duration_ms: 7.477834
+  ...
+# Subtest: catalogue admits only matching installed content and local bundled replay URLs
+ok 325 - catalogue admits only matching installed content and local bundled replay URLs
+  ---
+  duration_ms: 31.546958
+  ...
+# Subtest: immediate: practice forks match all four core branches and own every mutable value
+ok 326 - immediate: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 449.777542
+  ...
+# Subtest: grid-center: practice forks match all four core branches and own every mutable value
+ok 327 - grid-center: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 709.44825
+  ...
+# Subtest: practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+ok 328 - practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+  ---
+  duration_ms: 64.05575
+  ...
+# Subtest: practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+ok 329 - practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+  ---
+  duration_ms: 33.529875
+  ...
+# Subtest: disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+ok 330 - disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+  ---
+  duration_ms: 33.78425
+  ...
+# Subtest: a takeover retains both hangar loadouts, a live support field and impact recovery timing
+ok 331 - a takeover retains both hangar loadouts, a live support field and impact recovery timing
+  ---
+  duration_ms: 50.311167
+  ...
+# Subtest: immediate: staged encounter takeover preserves warning, active and transition authority
+ok 332 - immediate: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 80.215791
+  ...
+# Subtest: grid-center: staged encounter takeover preserves warning, active and transition authority
+ok 333 - grid-center: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 63.611
+  ...
+# Subtest: practice advances between throttled diagnostic readout updates
+ok 334 - practice advances between throttled diagnostic readout updates
+  ---
+  duration_ms: 1955.300041
+  ...
+# Subtest: paused Demo retains its board and controls, invalidates on visible changes, and resumes normally
+ok 335 - paused Demo retains its board and controls, invalidates on visible changes, and resumes normally
+  ---
+  duration_ms: 1579.196958
+  ...
+# Subtest: Demo takeover has one native paint owner and preserves the recorded spectator state
+ok 336 - Demo takeover has one native paint owner and preserves the recorded spectator state
+  ---
+  duration_ms: 1579.871791
+  ...
+# Subtest: mounted ordinary restored win is kept manually without enabling automatic collection
+ok 337 - mounted ordinary restored win is kept manually without enabling automatic collection
+  ---
+  duration_ms: 5043.632166
+  ...
+# Subtest: mounted ordinary restored win is retained automatically only after the real Settings opt-in
+ok 338 - mounted ordinary restored win is retained automatically only after the real Settings opt-in
+  ---
+  duration_ms: 5075.317
+  ...
+# Subtest: earned terminal parent callbacks cannot reopen active Demo media admission
+ok 339 - earned terminal parent callbacks cannot reopen active Demo media admission
+  ---
+  duration_ms: 6302.131917
+  ...
+# Subtest: demo video waits for the image hold and never acquires hidden/unearned or reduced media
+ok 340 - demo video waits for the image hold and never acquires hidden/unearned or reduced media
+  ---
+  duration_ms: 3.376333
+  ...
+# Subtest: Next, hide media and Pause cancel pending preparation without late autoplay
+ok 341 - Next, hide media and Pause cancel pending preparation without late autoplay
+  ---
+  duration_ms: 0.8965
+  ...
+# Subtest: scene departure retains only a decoded, displayed reward video frame
+ok 342 - scene departure retains only a decoded, displayed reward video frame
+  ---
+  duration_ms: 0.829125
+  ...
+# Subtest: resource diagnostic preserves canceled reward acquisition until actual settlement
+ok 343 - resource diagnostic preserves canceled reward acquisition until actual settlement
+  ---
+  duration_ms: 0.709417
+  ...
+# Subtest: resource diagnostic distinguishes the reward poster from unavailable media inspection
+ok 344 - resource diagnostic distinguishes the reward poster from unavailable media inspection
+  ---
+  duration_ms: 0.434208
+  ...
+# Subtest: runtime hints distinguish engine identities without treating iOS browser brands as engines
+ok 345 - runtime hints distinguish engine identities without treating iOS browser brands as engines
+  ---
+  duration_ms: 0.701917
+  ...
+# Subtest: preferred engine partition preserves bounded alternatives and their relative fallback order
+ok 346 - preferred engine partition preserves bounded alternatives and their relative fallback order
+  ---
+  duration_ms: 0.372375
+  ...
+# Subtest: loading fades only the displayed frame and holds darkness until a prepared scene arrives
+ok 347 - loading fades only the displayed frame and holds darkness until a prepared scene arrives
+  ---
+  duration_ms: 0.771125
+  ...
+# Subtest: fast scene loading still finishes departure; privacy clearing discards the snapshot
+ok 348 - fast scene loading still finishes departure; privacy clearing discards the snapshot
+  ---
+  duration_ms: 0.076458
+  ...
+# Subtest: Next during arrival preserves its dimming and accepts the displayed reward frame
+ok 349 - Next during arrival preserves its dimming and accepts the displayed reward frame
+  ---
+  duration_ms: 0.103875
+  ...
+# Subtest: settled arrival and loading hold do not keep rewriting opacity
+ok 350 - settled arrival and loading hold do not keep rewriting opacity
+  ---
+  duration_ms: 0.169792
+  ...
+# Subtest: resource diagnostic retains only the currently allocated transition surface
+ok 351 - resource diagnostic retains only the currently allocated transition surface
+  ---
+  duration_ms: 0.737542
+  ...
+# Subtest: Solo and native entries share dev settings without writes until an explicit change
+ok 352 - Solo and native entries share dev settings without writes until an explicit change
+  ---
+  duration_ms: 22.049792
+  ...
+# Subtest: Solo and native entries share release-0.145.0 settings without writes until an explicit change
+ok 353 - Solo and native entries share release-0.145.0 settings without writes until an explicit change
+  ---
+  duration_ms: 14.841208
+  ...
+# Subtest: native small metadata agrees with Solo edition and release channel isolation
+ok 354 - native small metadata agrees with Solo edition and release channel isolation
+  ---
+  duration_ms: 0.525333
+  ...
+# Subtest: legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+ok 355 - legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+  ---
+  duration_ms: 0.176542
+  ...
+# Subtest: denied storage uses reduced-motion defaults and explicit changes stay session-only
+ok 356 - denied storage uses reduced-motion defaults and explicit changes stay session-only
+  ---
+  duration_ms: 0.796
+  ...
+# Subtest: stalled and oversized metadata cannot hold startup or change the settings channel
+ok 357 - stalled and oversized metadata cannot hold startup or change the settings channel
+  ---
+  duration_ms: 6.505708
+  ...
+# Subtest: a delayed optional catalog cannot starve available modes or freeze localization
+ok 358 - a delayed optional catalog cannot starve available modes or freeze localization
+  ---
+  duration_ms: 1.246292
+  ...
+# Subtest: prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+ok 359 - prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+  ---
+  duration_ms: 0.496125
+  ...
+# Subtest: the next prefetched recording is consumed once and never creates a second player early
+ok 360 - the next prefetched recording is consumed once and never creates a second player early
+  ---
+  duration_ms: 0.880125
+  ...
+# Subtest: modes and level variants have equal performance weight despite duplicate recordings
+ok 361 - modes and level variants have equal performance weight despite duplicate recordings
+  ---
+  duration_ms: 1.820208
+  ...
+# Subtest: an unavailable graphics engine is attempted once, not once per authored level
+ok 362 - an unavailable graphics engine is attempted once, not once per authored level
+  ---
+  duration_ms: 1.511667
+  ...
+# Subtest: a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+ok 363 - a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+  ---
+  duration_ms: 0.882416
+  ...
+# Subtest: a deferred mode returns with its next recording while healthy mode cycles keep progressing
+ok 364 - a deferred mode returns with its next recording while healthy mode cycles keep progressing
+  ---
+  duration_ms: 0.340333
+  ...
+# Subtest: duplicate bad recordings cannot hold the next level behind repeated verified fallback
+ok 365 - duplicate bad recordings cannot hold the next level behind repeated verified fallback
+  ---
+  duration_ms: 0.302958
+  ...
+# Subtest: all fallback attempts together stop at thirty seconds
+ok 366 - all fallback attempts together stop at thirty seconds
+  ---
+  duration_ms: 1.561875
+  ...
+# Subtest: replacement waits for asynchronous graphics disposal
+ok 367 - replacement waits for asynchronous graphics disposal
+  ---
+  duration_ms: 0.240334
+  ...
+# Subtest: fallback waits for cleanup of a source rejected after preparation
+ok 368 - fallback waits for cleanup of a source rejected after preparation
+  ---
+  duration_ms: 0.287958
+  ...
+# Subtest: captions retain five explanations, stay six seconds, and discard stale warnings
+ok 369 - captions retain five explanations, stay six seconds, and discard stale warnings
+  ---
+  duration_ms: 0.285
+  ...
+# Subtest: caption history translates observed events without replaying or dropping their reading interval
+ok 370 - caption history translates observed events without replaying or dropping their reading interval
+  ---
+  duration_ms: 0.072417
+  ...
+# Subtest: natural completion retains the last explanation and the recap for six seconds each
+ok 371 - natural completion retains the last explanation and the recap for six seconds each
+  ---
+  duration_ms: 0.122
+  ...
+# Subtest: SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+ok 372 - SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+  ---
+  duration_ms: 4.029208
+  ...
+# Subtest: SIM foreground loss pauses practice and requires a fresh keyboard edge
+ok 373 - SIM foreground loss pauses practice and requires a fresh keyboard edge
+  ---
+  duration_ms: 0.990958
+  ...
+# Subtest: SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+ok 374 - SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+  ---
+  duration_ms: 1.382167
+  ...
+# Subtest: SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+ok 375 - SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+  ---
+  duration_ms: 1.1125
+  ...
+# Subtest: SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+ok 376 - SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+  ---
+  duration_ms: 2.347041
+  ...
+# Subtest: SIM required inventory distinguishes exact revisions and covers every authored allowed variant
+ok 377 - SIM required inventory distinguishes exact revisions and covers every authored allowed variant
+  ---
+  duration_ms: 1.852959
+  ...
+# Subtest: SIM enumeration loads metadata only and identities match the native resolver
+ok 378 - SIM enumeration loads metadata only and identities match the native resolver
+  ---
+  duration_ms: 749.402666
+  ...
+# Subtest: SIM Fresh URL resolves only an exact authored source and its admitted response
+ok 379 - SIM Fresh URL resolves only an exact authored source and its admitted response
+  ---
+  duration_ms: 2388.586375
+  ...
+# Subtest: SIM complete playback and takeover use the same exact native prefix without persistence
+ok 380 - SIM complete playback and takeover use the same exact native prefix without persistence
+  ---
+  duration_ms: 33.936875
+  ...
+# Subtest: SIM admission rejects stale identity, invalid bodies and non-progressing performances
+ok 381 - SIM admission rejects stale identity, invalid bodies and non-progressing performances
+  ---
+  duration_ms: 1.498583
+  ...
+# Subtest: SIM reports its first divergent diagnostic checkpoint without weakening full verification
+ok 382 - SIM reports its first divergent diagnostic checkpoint without weakening full verification
+  ---
+  duration_ms: 18.754459
+  ...
+# Subtest: legacy Academy practice forwards only the four native axes
+ok 383 - legacy Academy practice forwards only the four native axes
+  ---
+  duration_ms: 25.783208
+  ...
+# Subtest: missing SIM metadata is classified as unavailable without probing individual recordings
+ok 384 - missing SIM metadata is classified as unavailable without probing individual recordings
+  ---
+  duration_ms: 0.321834
+  ...
+# Subtest: SIM semantic captions retain identity while current and historical text follow locale
+ok 385 - SIM semantic captions retain identity while current and historical text follow locale
+  ---
+  duration_ms: 0.304292
+  ...
+# Subtest: SIM full verification failures diagnose the first mismatching checkpoint and remain rejected
+ok 386 - SIM full verification failures diagnose the first mismatching checkpoint and remain rejected
+  ---
+  duration_ms: 25.088792
+  ...
+# Subtest: Solo replacement waits for async disposal and repeated disposal shares its promise
+ok 387 - Solo replacement waits for async disposal and repeated disposal shares its promise
+  ---
+  duration_ms: 5.826
+  ...
+# Subtest: Solo independently releases every owner after synchronous and asynchronous cleanup failures
+ok 388 - Solo independently releases every owner after synchronous and asynchronous cleanup failures
+  ---
+  duration_ms: 0.524459
+  ...
+# Subtest: abort publishes immediate cleanup and joins a late asset release before preparation settles
+ok 389 - abort publishes immediate cleanup and joins a late asset release before preparation settles
+  ---
+  duration_ms: 1.076417
+  ...
+# Subtest: cross-mode Solo enumerates exact installed authored packs without downloading or writing
+ok 390 - cross-mode Solo enumerates exact installed authored packs without downloading or writing
+  ---
+  duration_ms: 1163.240042
+  ...
+# Subtest: built-in Journey sources enumerate bounded metadata and prepare only the selected native owner
+ok 391 - built-in Journey sources enumerate bounded metadata and prepare only the selected native owner
+  ---
+  duration_ms: 1659.759834
+  ...
+# Subtest: locked or unavailable installed inventory retains base Solo without repairing storage
+ok 392 - locked or unavailable installed inventory retains base Solo without repairing storage
+  ---
+  duration_ms: 14.424209
+  ...
+# Subtest: Solo required coverage comes from base, active and archived authored catalogs
+ok 393 - Solo required coverage comes from base, active and archived authored catalogs
+  ---
+  duration_ms: 31473.422541
+  ...
+# Subtest: Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification
+ok 394 - Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification
+  ---
+  duration_ms: 894.995333
+  ...
+# Subtest: independent browser performances bind their own exact trace and cannot relax native verification
+ok 395 - independent browser performances bind their own exact trace and cannot relax native verification
+  ---
+  duration_ms: 712.629334
+  ...
+# Subtest: browser engine hints only prioritize fully verified qualified performances and retain fallbacks
+ok 396 - browser engine hints only prioritize fully verified qualified performances and retain fallbacks
+  ---
+  duration_ms: 722.029042
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 397 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 2125.685667
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 398 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 41.801084
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 399 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 2608.711291
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 400 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 2444.506875
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 401 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 35.415625
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 402 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 107.911583
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 403 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 145.047541
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 404 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 15.396792
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 405 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.394375
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 406 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 329.102375
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 407 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 781.166542
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 408 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 20.587625
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 409 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.48075
+  ...
+# Subtest: resource diagnostic reaches live source rehearsal before its player can be returned
+ok 410 - resource diagnostic reaches live source rehearsal before its player can be returned
+  ---
+  duration_ms: 14.522875
+  ...
+# Subtest: Survival Fresh marker admits only finite authored standard setups
+ok 411 - Survival Fresh marker admits only finite authored standard setups
+  ---
+  duration_ms: 7.20175
+  ...
+# Subtest: native Survival Fresh success preserves saved preferences and guarded ownership
+ok 412 - native Survival Fresh success preserves saved preferences and guarded ownership
+  ---
+  duration_ms: 10.834916
+  ...
+# Subtest: native Survival Fresh refused preserves saved preferences and guarded ownership
+ok 413 - native Survival Fresh refused preserves saved preferences and guarded ownership
+  ---
+  duration_ms: 2.828208
+  ...
+# Subtest: native Survival Fresh failed preserves saved preferences and guarded ownership
+ok 414 - native Survival Fresh failed preserves saved preferences and guarded ownership
+  ---
+  duration_ms: 7.242666
+  ...
+# Subtest: native Survival Fresh cancelled preserves saved preferences and guarded ownership
+ok 415 - native Survival Fresh cancelled preserves saved preferences and guarded ownership
+  ---
+  duration_ms: 4.610166
+  ...
+# Subtest: Survival Fresh loses ownership during theme readiness and restores its paused run
+ok 416 - Survival Fresh loses ownership during theme readiness and restores its paused run
+  ---
+  duration_ms: 10.571042
+  ...
+# Subtest: Survival Fresh loses ownership during world readiness and restores its paused run
+ok 417 - Survival Fresh loses ownership during world readiness and restores its paused run
+  ---
+  duration_ms: 7.824959
+  ...
+# Subtest: Survival Fresh loses ownership during renderer readiness and restores its paused run
+ok 418 - Survival Fresh loses ownership during renderer readiness and restores its paused run
+  ---
+  duration_ms: 8.982583
+  ...
+# Subtest: a cancelled Fresh restoration cannot replace a newer ordinary preparation
+ok 419 - a cancelled Fresh restoration cannot replace a newer ordinary preparation
+  ---
+  duration_ms: 6.877292
+  ...
+# Subtest: a failed renderer restoration retains the paused run behind explicit recovery state
+ok 420 - a failed renderer restoration retains the paused run behind explicit recovery state
+  ---
+  duration_ms: 7.267125
+  ...
+# Subtest: Survival sources lazily cover exactly the ordinary authored mission inventory
+ok 421 - Survival sources lazily cover exactly the ordinary authored mission inventory
+  ---
+  duration_ms: 65.217959
+  ...
+# Subtest: verified native playback pauses, forks exactly, and practice cannot mutate the performance
+ok 422 - verified native playback pauses, forks exactly, and practice cannot mutate the performance
+  ---
+  duration_ms: 4086.989084
+  ...
+# Subtest: sparse diagnostics report the first differing checkpoint and reject stale content
+ok 423 - sparse diagnostics report the first differing checkpoint and reject stale content
+  ---
+  duration_ms: 41.2695
+  ...
+# Subtest: cancelled preparation cannot adopt a Survival player
+ok 424 - cancelled preparation cannot adopt a Survival player
+  ---
+  duration_ms: 8.640583
+  ...
+# Subtest: one prefetched payload can fall back only to another fully verified runtime performance
+ok 425 - one prefetched payload can fall back only to another fully verified runtime performance
+  ---
+  duration_ms: 4306.183542
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback
+ok 426 - the browser-preferred Survival recording is strictly checked before fallback
+  ---
+  duration_ms: 8133.204375
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback with prefetch
+ok 427 - the browser-preferred Survival recording is strictly checked before fallback with prefetch
+  ---
+  duration_ms: 7928.258709
+  ...
+# Subtest: fresh keyboard or neutral-then-moved controller input is required for takeover
+ok 428 - fresh keyboard or neutral-then-moved controller input is required for takeover
+  ---
+  duration_ms: 0.560167
+  ...
+# Subtest: fresh movement resumes paused native practice through the shared host
+ok 429 - fresh movement resumes paused native practice through the shared host
+  ---
+  duration_ms: 0.218625
+  ...
+# Subtest: the initiating key remains owned through host handoff and its release stops movement
+ok 430 - the initiating key remains owned through host handoff and its release stops movement
+  ---
+  duration_ms: 0.215625
+  ...
+# Subtest: a takeover touch keeps its origin through reconstruction and releases normally
+ok 431 - a takeover touch keeps its origin through reconstruction and releases normally
+  ---
+  duration_ms: 0.208958
+  ...
+# Subtest: release during reconstruction updates movement and retains only the initiating action
+ok 432 - release during reconstruction updates movement and retains only the initiating action
+  ---
+  duration_ms: 0.14975
+  ...
+# Subtest: foreground loss fully clears a handoff gesture even during the synchronous interrupt
+ok 433 - foreground loss fully clears a handoff gesture even during the synchronous interrupt
+  ---
+  duration_ms: 0.134542
+  ...
+# Subtest: practice consumes the initiating boost once despite controller samples before its first tick
+ok 434 - practice consumes the initiating boost once despite controller samples before its first tick
+  ---
+  duration_ms: 21.321791
+  ...
+# Subtest: demo uses the selected world character theme unless the real level pins one
+ok 435 - demo uses the selected world character theme unless the real level pins one
+  ---
+  duration_ms: 0.631459
+  ...
+# Subtest: demo theme fallback remains deterministic when an old preference is unavailable
+ok 436 - demo theme fallback remains deterministic when an old preference is unavailable
+  ---
+  duration_ms: 0.055708
+  ...
+# Subtest: scene transition modifies only the already concealed picture and releases its bounded cache
+ok 437 - scene transition modifies only the already concealed picture and releases its bounded cache
+  ---
+  duration_ms: 31.819416
+  ...
+# Subtest: reduced effects and invalid transition inputs skip transition work, and failed filtering cannot expose raw art
+ok 438 - reduced effects and invalid transition inputs skip transition work, and failed filtering cannot expose raw art
+  ---
+  duration_ms: 14.5415
+  ...
+# Subtest: clear previews cannot disable active gameplay jammers; protected images retain the same mechanic
+ok 439 - clear previews cannot disable active gameplay jammers; protected images retain the same mechanic
+  ---
+  duration_ms: 5.588875
+  ...
+# Subtest: active Demo cannot calibrate the main ready baseline from its loaded callbacks
+ok 440 - active Demo cannot calibrate the main ready baseline from its loaded callbacks
+  ---
+  duration_ms: 1761.429875
+  ...
+# Subtest: foreground Demo irregular delivery reduces decoration while exact replay and paused parent remain unchanged
+ok 441 - foreground Demo irregular delivery reduces decoration while exact replay and paused parent remain unchanged
+  ---
+  duration_ms: 1591.611666
+  ...
+# Subtest: Demo practice uses the existing full Phaser submission cost once and preserves parent ownership
+ok 442 - Demo practice uses the existing full Phaser submission cost once and preserves parent ownership
+  ---
+  duration_ms: 1663.298583
+  ...
+# Subtest: Demo caches stable display geometry and invalidates on resize and explicit layout changes
+ok 443 - Demo caches stable display geometry and invalidates on resize and explicit layout changes
+  ---
+  duration_ms: 1414.732125
+  ...
+# Subtest: paused Demo honors the user reduced preference immediately without advancing its recording
+ok 444 - paused Demo honors the user reduced preference immediately without advancing its recording
+  ---
+  duration_ms: 1421.383334
+  ...
+# Subtest: mounted observer exports bounded incomplete checkpoints with hashes and recovers without starting or steering
+ok 445 - mounted observer exports bounded incomplete checkpoints with hashes and recovers without starting or steering
+  ---
+  duration_ms: 17.495459
+  ...
+# Subtest: finalization detects changed sources and stores the finalized report separately from its preliminary checkpoint
+ok 446 - finalization detects changed sources and stores the finalized report separately from its preliminary checkpoint
+  ---
+  duration_ms: 8.698459
+  ...
+# Subtest: cancelling source preparation aborts ownership without creating or replacing saved evidence
+ok 447 - cancelling source preparation aborts ownership without creating or replacing saved evidence
+  ---
+  duration_ms: 3.22975
+  ...
+# Subtest: quota failure is bounded and leaves current DOM/download observation available
+ok 448 - quota failure is bounded and leaves current DOM/download observation available
+  ---
+  duration_ms: 3.234375
+  ...
+# Subtest: disabled IndexedDB and a failed terminal inventory never prevent export or imply completion
+ok 449 - disabled IndexedDB and a failed terminal inventory never prevent export or imply completion
+  ---
+  duration_ms: 3.575875
+  ...
+# Subtest: store enforces serialized byte budget before opening and closes late opens after timeout
+ok 450 - store enforces serialized byte budget before opening and closes late opens after timeout
+  ---
+  duration_ms: 2.041292
+  ...
+# Subtest: disposal during preparation aborts the source request and detaches listeners without a late start
+ok 451 - disposal during preparation aborts the source request and detaches listeners without a late start
+  ---
+  duration_ms: 1.014417
+  ...
+# Subtest: a slow checkpoint cannot drop the queued final report, and pending clear cannot erase a newly started run
+ok 452 - a slow checkpoint cannot drop the queued final report, and pending clear cannot erase a newly started run
+  ---
+  duration_ms: 5.543
+  ...
+# Subtest: Snake catalog coverage: classic-snake-open-loop
+ok 453 - Snake catalog coverage: classic-snake-open-loop
+  ---
+  duration_ms: 21.694291
+  ...
+# Subtest: Snake catalog coverage: classic-snake-two-landings
+ok 454 - Snake catalog coverage: classic-snake-two-landings
+  ---
+  duration_ms: 7.491083
+  ...
+# Subtest: Snake catalog coverage: classic-snake-first-baffle
+ok 455 - Snake catalog coverage: classic-snake-first-baffle
+  ---
+  duration_ms: 6.872375
+  ...
+# Subtest: Snake catalog coverage: classic-snake-offset-docks
+ok 456 - Snake catalog coverage: classic-snake-offset-docks
+  ---
+  duration_ms: 6.265375
+  ...
+# Subtest: Snake catalog coverage: classic-snake-room-to-follow
+ok 457 - Snake catalog coverage: classic-snake-room-to-follow
+  ---
+  duration_ms: 5.888208
+  ...
+# Subtest: Snake catalog coverage: classic-snake-first-circuit
+ok 458 - Snake catalog coverage: classic-snake-first-circuit
+  ---
+  duration_ms: 6.334667
+  ...
+# Subtest: Snake catalog coverage: classic-snake-open-elbow
+ok 459 - Snake catalog coverage: classic-snake-open-elbow
+  ---
+  duration_ms: 5.872209
+  ...
+# Subtest: Snake catalog coverage: classic-snake-u-turn-yard
+ok 460 - Snake catalog coverage: classic-snake-u-turn-yard
+  ---
+  duration_ms: 8.77425
+  ...
+# Subtest: Snake catalog coverage: classic-snake-staggered-elbows
+ok 461 - Snake catalog coverage: classic-snake-staggered-elbows
+  ---
+  duration_ms: 6.072709
+  ...
+# Subtest: Snake catalog coverage: classic-snake-turning-pockets
+ok 462 - Snake catalog coverage: classic-snake-turning-pockets
+  ---
+  duration_ms: 7.405459
+  ...
+# Subtest: Snake catalog coverage: classic-snake-s-bend
+ok 463 - Snake catalog coverage: classic-snake-s-bend
+  ---
+  duration_ms: 6.08625
+  ...
+# Subtest: Snake catalog coverage: classic-snake-elbow-exchange
+ok 464 - Snake catalog coverage: classic-snake-elbow-exchange
+  ---
+  duration_ms: 7.359417
+  ...
+# Subtest: Snake catalog coverage: classic-snake-long-island
+ok 465 - Snake catalog coverage: classic-snake-long-island
+  ---
+  duration_ms: 4.552
+  ...
+# Subtest: Snake catalog coverage: classic-snake-split-islands
+ok 466 - Snake catalog coverage: classic-snake-split-islands
+  ---
+  duration_ms: 5.607291
+  ...
+# Subtest: Snake catalog coverage: classic-snake-bent-causeway
+ok 467 - Snake catalog coverage: classic-snake-bent-causeway
+  ---
+  duration_ms: 4.989667
+  ...
+# Subtest: Snake catalog coverage: classic-snake-three-detours
+ok 468 - Snake catalog coverage: classic-snake-three-detours
+  ---
+  duration_ms: 6.711042
+  ...
+# Subtest: Snake catalog coverage: classic-snake-inner-or-outer
+ok 469 - Snake catalog coverage: classic-snake-inner-or-outer
+  ---
+  duration_ms: 4.545875
+  ...
+# Subtest: Snake catalog coverage: classic-snake-long-circuit
+ok 470 - Snake catalog coverage: classic-snake-long-circuit
+  ---
+  duration_ms: 6.5065
+  ...
+# Subtest: Snake catalog coverage: classic-snake-forked-chase
+ok 471 - Snake catalog coverage: classic-snake-forked-chase
+  ---
+  duration_ms: 6.1165
+  ...
+# Subtest: Snake catalog coverage: classic-snake-parallel-paths
+ok 472 - Snake catalog coverage: classic-snake-parallel-paths
+  ---
+  duration_ms: 6.564209
+  ...
+# Subtest: Snake catalog coverage: classic-snake-crossroads
+ok 473 - Snake catalog coverage: classic-snake-crossroads
+  ---
+  duration_ms: 6.187917
+  ...
+# Subtest: Snake catalog coverage: classic-snake-broken-divider
+ok 474 - Snake catalog coverage: classic-snake-broken-divider
+  ---
+  duration_ms: 5.9305
+  ...
+# Subtest: Snake catalog coverage: classic-snake-runner-triangle
+ok 475 - Snake catalog coverage: classic-snake-runner-triangle
+  ---
+  duration_ms: 7.105959
+  ...
+# Subtest: Snake catalog coverage: classic-snake-cutoff-network
+ok 476 - Snake catalog coverage: classic-snake-cutoff-network
+  ---
+  duration_ms: 8.161542
+  ...
+# Subtest: Snake catalog coverage: classic-snake-keep-the-tail
+ok 477 - Snake catalog coverage: classic-snake-keep-the-tail
+  ---
+  duration_ms: 5.908708
+  ...
+# Subtest: Snake catalog coverage: classic-snake-lighten-at-home
+ok 478 - Snake catalog coverage: classic-snake-lighten-at-home
+  ---
+  duration_ms: 6.680791
+  ...
+# Subtest: Snake catalog coverage: classic-snake-banking-steps
+ok 479 - Snake catalog coverage: classic-snake-banking-steps
+  ---
+  duration_ms: 5.507958
+  ...
+# Subtest: Snake catalog coverage: classic-snake-persistent-hub
+ok 480 - Snake catalog coverage: classic-snake-persistent-hub
+  ---
+  duration_ms: 6.742792
+  ...
+# Subtest: Snake catalog coverage: classic-snake-two-return-rhythm
+ok 481 - Snake catalog coverage: classic-snake-two-return-rhythm
+  ---
+  duration_ms: 4.784709
+  ...
+# Subtest: Snake catalog coverage: classic-snake-return-weave
+ok 482 - Snake catalog coverage: classic-snake-return-weave
+  ---
+  duration_ms: 6.804708
+  ...
+# Subtest: Snake catalog coverage: classic-snake-one-warning
+ok 483 - Snake catalog coverage: classic-snake-one-warning
+  ---
+  duration_ms: 6.329
+  ...
+# Subtest: Snake catalog coverage: classic-snake-warning-courtyard
+ok 484 - Snake catalog coverage: classic-snake-warning-courtyard
+  ---
+  duration_ms: 7.878
+  ...
+# Subtest: Snake catalog coverage: classic-snake-crossed-sightlines
+ok 485 - Snake catalog coverage: classic-snake-crossed-sightlines
+  ---
+  duration_ms: 5.742875
+  ...
+# Subtest: Snake catalog coverage: classic-snake-screened-approach
+ok 486 - Snake catalog coverage: classic-snake-screened-approach
+  ---
+  duration_ms: 7.219291
+  ...
+# Subtest: Snake catalog coverage: classic-snake-guarded-returns
+ok 487 - Snake catalog coverage: classic-snake-guarded-returns
+  ---
+  duration_ms: 5.177209
+  ...
+# Subtest: Snake catalog coverage: classic-snake-garden-crossfire
+ok 488 - Snake catalog coverage: classic-snake-garden-crossfire
+  ---
+  duration_ms: 6.201792
+  ...
+# Subtest: Snake catalog coverage: classic-snake-opposite-arrivals
+ok 489 - Snake catalog coverage: classic-snake-opposite-arrivals
+  ---
+  duration_ms: 5.30625
+  ...
+# Subtest: Snake catalog coverage: classic-snake-crossing-schedule
+ok 490 - Snake catalog coverage: classic-snake-crossing-schedule
+  ---
+  duration_ms: 7.395791
+  ...
+# Subtest: Snake catalog coverage: classic-snake-paired-loops
+ok 491 - Snake catalog coverage: classic-snake-paired-loops
+  ---
+  duration_ms: 5.443375
+  ...
+# Subtest: Snake catalog coverage: classic-snake-shared-detour
+ok 492 - Snake catalog coverage: classic-snake-shared-detour
+  ---
+  duration_ms: 7.991167
+  ...
+# Subtest: Snake catalog coverage: classic-snake-support-corridor
+ok 493 - Snake catalog coverage: classic-snake-support-corridor
+  ---
+  duration_ms: 5.53175
+  ...
+# Subtest: Snake catalog coverage: classic-snake-shared-circuit
+ok 494 - Snake catalog coverage: classic-snake-shared-circuit
+  ---
+  duration_ms: 7.78425
+  ...
+# Subtest: Snake catalog coverage: classic-snake-long-opening
+ok 495 - Snake catalog coverage: classic-snake-long-opening
+  ---
+  duration_ms: 6.898625
+  ...
+# Subtest: Snake catalog coverage: classic-snake-fork-and-warning
+ok 496 - Snake catalog coverage: classic-snake-fork-and-warning
+  ---
+  duration_ms: 7.870625
+  ...
+# Subtest: Snake catalog coverage: classic-snake-ordered-islands
+ok 497 - Snake catalog coverage: classic-snake-ordered-islands
+  ---
+  duration_ms: 5.590833
+  ...
+# Subtest: Snake catalog coverage: classic-snake-last-shedding-bank
+ok 498 - Snake catalog coverage: classic-snake-last-shedding-bank
+  ---
+  duration_ms: 9.623625
+  ...
+# Subtest: Snake catalog coverage: classic-snake-woven-gauntlet
+ok 499 - Snake catalog coverage: classic-snake-woven-gauntlet
+  ---
+  duration_ms: 7.006041
+  ...
+# Subtest: Snake catalog coverage: classic-snake-final-weave
+ok 500 - Snake catalog coverage: classic-snake-final-weave
+  ---
+  duration_ms: 10.361667
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-oval-intercept
+ok 501 - Snake catalog coverage: classic-pursuit-oval-intercept
+  ---
+  duration_ms: 59.418084
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-split-yard
+ok 502 - Snake catalog coverage: classic-pursuit-split-yard
+  ---
+  duration_ms: 49.497375
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-island-clock
+ok 503 - Snake catalog coverage: classic-pursuit-island-clock
+  ---
+  duration_ms: 30.928792
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-passing-bays
+ok 504 - Snake catalog coverage: classic-pursuit-passing-bays
+  ---
+  duration_ms: 73.251959
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-crossroads
+ok 505 - Snake catalog coverage: classic-pursuit-crossroads
+  ---
+  duration_ms: 102.080167
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-inner-shortcut
+ok 506 - Snake catalog coverage: classic-pursuit-inner-shortcut
+  ---
+  duration_ms: 80.382
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-open-intercept
+ok 507 - Snake catalog coverage: classic-pursuit-open-intercept
+  ---
+  duration_ms: 65.217708
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-blind-corner
+ok 508 - Snake catalog coverage: classic-pursuit-blind-corner
+  ---
+  duration_ms: 87.603083
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-zigzag-exit
+ok 509 - Snake catalog coverage: classic-pursuit-zigzag-exit
+  ---
+  duration_ms: 118.762083
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-broken-ring
+ok 510 - Snake catalog coverage: classic-pursuit-broken-ring
+  ---
+  duration_ms: 131.439042
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-border-cutoff
+ok 511 - Snake catalog coverage: classic-pursuit-border-cutoff
+  ---
+  duration_ms: 124.104375
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-three-way-escape
+ok 512 - Snake catalog coverage: classic-pursuit-three-way-escape
+  ---
+  duration_ms: 133.288916
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-first-dash
+ok 513 - Snake catalog coverage: classic-pursuit-first-dash
+  ---
+  duration_ms: 73.130666
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-corner-pause
+ok 514 - Snake catalog coverage: classic-pursuit-corner-pause
+  ---
+  duration_ms: 124.796083
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-alternating-straights
+ok 515 - Snake catalog coverage: classic-pursuit-alternating-straights
+  ---
+  duration_ms: 126.757334
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-staggered-cover
+ok 516 - Snake catalog coverage: classic-pursuit-staggered-cover
+  ---
+  duration_ms: 91.996958
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-crossing-bursts
+ok 517 - Snake catalog coverage: classic-pursuit-crossing-bursts
+  ---
+  duration_ms: 86.8515
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-long-way-round
+ok 518 - Snake catalog coverage: classic-pursuit-long-way-round
+  ---
+  duration_ms: 158.194833
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-first-shutter
+ok 519 - Snake catalog coverage: classic-pursuit-first-shutter
+  ---
+  duration_ms: 120.13825
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-split-corridor
+ok 520 - Snake catalog coverage: classic-pursuit-split-corridor
+  ---
+  duration_ms: 90.763708
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-offset-windows
+ok 521 - Snake catalog coverage: classic-pursuit-offset-windows
+  ---
+  duration_ms: 124.530917
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-clockwork-ring
+ok 522 - Snake catalog coverage: classic-pursuit-clockwork-ring
+  ---
+  duration_ms: 144.755459
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-boundary-detour
+ok 523 - Snake catalog coverage: classic-pursuit-boundary-detour
+  ---
+  duration_ms: 151.112041
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-return-junction
+ok 524 - Snake catalog coverage: classic-pursuit-return-junction
+  ---
+  duration_ms: 153.153875
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-first-pulse
+ok 525 - Snake catalog coverage: classic-pursuit-first-pulse
+  ---
+  duration_ms: 145.582958
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-cable-service
+ok 526 - Snake catalog coverage: classic-pursuit-cable-service
+  ---
+  duration_ms: 161.667459
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-choose-the-detour
+ok 527 - Snake catalog coverage: classic-pursuit-choose-the-detour
+  ---
+  duration_ms: 125.519791
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-courier-crossing
+ok 528 - Snake catalog coverage: classic-pursuit-courier-crossing
+  ---
+  duration_ms: 176.282375
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-shared-supply
+ok 529 - Snake catalog coverage: classic-pursuit-shared-supply
+  ---
+  duration_ms: 158.060875
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-last-offer
+ok 530 - Snake catalog coverage: classic-pursuit-last-offer
+  ---
+  duration_ms: 161.703167
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-patrol-into-sprint
+ok 531 - Snake catalog coverage: classic-pursuit-patrol-into-sprint
+  ---
+  duration_ms: 166.741875
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-runner-at-the-window
+ok 532 - Snake catalog coverage: classic-pursuit-runner-at-the-window
+  ---
+  duration_ms: 179.29375
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-border-relay
+ok 533 - Snake catalog coverage: classic-pursuit-border-relay
+  ---
+  duration_ms: 123.550875
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-forked-interception
+ok 534 - Snake catalog coverage: classic-pursuit-forked-interception
+  ---
+  duration_ms: 168.611084
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-supply-circuit
+ok 535 - Snake catalog coverage: classic-pursuit-supply-circuit
+  ---
+  duration_ms: 192.646875
+  ...
+# Subtest: Snake catalog coverage: classic-pursuit-final-airfield
+ok 536 - Snake catalog coverage: classic-pursuit-final-airfield
+  ---
+  duration_ms: 258.294041
+  ...
+# Subtest: Snake catalog coverage: classic-living-refuge-bays
+ok 537 - Snake catalog coverage: classic-living-refuge-bays
+  ---
+  duration_ms: 67.34275
+  ...
+# Subtest: Snake catalog coverage: classic-living-switchback-yard
+ok 538 - Snake catalog coverage: classic-living-switchback-yard
+  ---
+  duration_ms: 119.56825
+  ...
+# Subtest: Snake catalog coverage: classic-living-rendezvous-crossing
+ok 539 - Snake catalog coverage: classic-living-rendezvous-crossing
+  ---
+  duration_ms: 107.888958
+  ...
+# Subtest: Snake catalog coverage: classic-living-cable-cutoff
+ok 540 - Snake catalog coverage: classic-living-cable-cutoff
+  ---
+  duration_ms: 107.396583
+  ...
+# Subtest: Snake catalog coverage: classic-living-return-pincer
+ok 541 - Snake catalog coverage: classic-living-return-pincer
+  ---
+  duration_ms: 75.744125
+  ...
+# Subtest: Snake catalog coverage: classic-living-twin-intercepts
+ok 542 - Snake catalog coverage: classic-living-twin-intercepts
+  ---
+  duration_ms: 120.160208
+  ...
+# Subtest: Snake catalog coverage: classic-living-shield-window
+ok 543 - Snake catalog coverage: classic-living-shield-window
+  ---
+  duration_ms: 72.346125
+  ...
+# Subtest: Snake catalog coverage: classic-living-brace-break
+ok 544 - Snake catalog coverage: classic-living-brace-break
+  ---
+  duration_ms: 107.161833
+  ...
+# Subtest: Snake catalog coverage: classic-living-shutter-flank
+ok 545 - Snake catalog coverage: classic-living-shutter-flank
+  ---
+  duration_ms: 68.899
+  ...
+# Subtest: Snake catalog coverage: classic-living-frozen-opening
+ok 546 - Snake catalog coverage: classic-living-frozen-opening
+  ---
+  duration_ms: 77.385
+  ...
+# Subtest: Snake catalog coverage: classic-living-supply-flanks
+ok 547 - Snake catalog coverage: classic-living-supply-flanks
+  ---
+  duration_ms: 105.59925
+  ...
+# Subtest: Snake catalog coverage: classic-living-living-airfield
+ok 548 - Snake catalog coverage: classic-living-living-airfield
+  ---
+  duration_ms: 172.418583
+  ...
+# Subtest: Snake catalog coverage: classic-field-signal-check
+ok 549 - Snake catalog coverage: classic-field-signal-check
+  ---
+  duration_ms: 57.452375
+  ...
+# Subtest: Snake catalog coverage: classic-field-quiet-return
+ok 550 - Snake catalog coverage: classic-field-quiet-return
+  ---
+  duration_ms: 95.132875
+  ...
+# Subtest: Snake catalog coverage: classic-field-lane-window
+ok 551 - Snake catalog coverage: classic-field-lane-window
+  ---
+  duration_ms: 59.460333
+  ...
+# Subtest: Snake catalog coverage: classic-field-two-returns
+ok 552 - Snake catalog coverage: classic-field-two-returns
+  ---
+  duration_ms: 51.977791
+  ...
+# Subtest: Snake catalog coverage: classic-field-relay-key
+ok 553 - Snake catalog coverage: classic-field-relay-key
+  ---
+  duration_ms: 34.065042
+  ...
+# Subtest: Snake catalog coverage: classic-field-linked-courts
+ok 554 - Snake catalog coverage: classic-field-linked-courts
+  ---
+  duration_ms: 44.986542
+  ...
+# Subtest: Snake catalog coverage: classic-field-broadcast-check
+ok 555 - Snake catalog coverage: classic-field-broadcast-check
+  ---
+  duration_ms: 67.014625
+  ...
+# Subtest: Snake catalog coverage: classic-field-quiet-channel
+ok 556 - Snake catalog coverage: classic-field-quiet-channel
+  ---
+  duration_ms: 107.726083
+  ...
+# Subtest: Snake catalog coverage: classic-field-signal-crossing
+ok 557 - Snake catalog coverage: classic-field-signal-crossing
+  ---
+  duration_ms: 101.379333
+  ...
+# Subtest: Snake catalog coverage: classic-field-relay-airfield
+ok 558 - Snake catalog coverage: classic-field-relay-airfield
+  ---
+  duration_ms: 111.656208
+  ...
+# Subtest: Snake catalog coverage: classic-field-border-watch
+ok 559 - Snake catalog coverage: classic-field-border-watch
+  ---
+  duration_ms: 74.711375
+  ...
+# Subtest: Snake catalog coverage: classic-field-border-cutoff
+ok 560 - Snake catalog coverage: classic-field-border-cutoff
+  ---
+  duration_ms: 170.721625
+  ...
+# Subtest: Snake catalog coverage: classic-field-contour-orbit
+ok 561 - Snake catalog coverage: classic-field-contour-orbit
+  ---
+  duration_ms: 41.865417
+  ...
+# Subtest: Snake catalog coverage: classic-field-contour-transfer
+ok 562 - Snake catalog coverage: classic-field-contour-transfer
+  ---
+  duration_ms: 149.928375
+  ...
+# Subtest: Snake catalog coverage: classic-field-wake-watch
+ok 563 - Snake catalog coverage: classic-field-wake-watch
+  ---
+  duration_ms: 53.349917
+  ...
+# Subtest: Snake catalog coverage: classic-field-wake-courtyard
+ok 564 - Snake catalog coverage: classic-field-wake-courtyard
+  ---
+  duration_ms: 162.9915
+  ...
+# Subtest: Snake catalog coverage: classic-field-ricochet-line
+ok 565 - Snake catalog coverage: classic-field-ricochet-line
+  ---
+  duration_ms: 58.075458
+  ...
+# Subtest: Snake catalog coverage: classic-field-ricochet-yard
+ok 566 - Snake catalog coverage: classic-field-ricochet-yard
+  ---
+  duration_ms: 133.849583
+  ...
+# Subtest: Snake catalog coverage: classic-field-open-seam
+ok 567 - Snake catalog coverage: classic-field-open-seam
+  ---
+  duration_ms: 29.647
+  ...
+# Subtest: Snake catalog coverage: classic-field-seam-return
+ok 568 - Snake catalog coverage: classic-field-seam-return
+  ---
+  duration_ms: 65.047834
+  ...
+# Subtest: Snake catalog coverage: classic-field-guard-line
+ok 569 - Snake catalog coverage: classic-field-guard-line
+  ---
+  duration_ms: 44.118709
+  ...
+# Subtest: Snake catalog coverage: classic-field-guard-return
+ok 570 - Snake catalog coverage: classic-field-guard-return
+  ---
+  duration_ms: 86.880416
+  ...
+# Subtest: Snake catalog coverage: classic-field-field-links
+ok 571 - Snake catalog coverage: classic-field-field-links
+  ---
+  duration_ms: 74.270208
+  ...
+# Subtest: Snake catalog coverage: classic-field-field-finale
+ok 572 - Snake catalog coverage: classic-field-field-finale
+  ---
+  duration_ms: 151.368792
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-orchard-fork
+ok 573 - Snake catalog coverage: classic-expedition-orchard-fork
+  ---
+  duration_ms: 47.676375
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-switchback-courts
+ok 574 - Snake catalog coverage: classic-expedition-switchback-courts
+  ---
+  duration_ms: 107.20425
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-opposite-platforms
+ok 575 - Snake catalog coverage: classic-expedition-opposite-platforms
+  ---
+  duration_ms: 68.218
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-boundary-exchange
+ok 576 - Snake catalog coverage: classic-expedition-boundary-exchange
+  ---
+  duration_ms: 52.226959
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-mirror-returns
+ok 577 - Snake catalog coverage: classic-expedition-mirror-returns
+  ---
+  duration_ms: 107.218792
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-inner-outer-transfer
+ok 578 - Snake catalog coverage: classic-expedition-inner-outer-transfer
+  ---
+  duration_ms: 84.1905
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-shutter-split
+ok 579 - Snake catalog coverage: classic-expedition-shutter-split
+  ---
+  duration_ms: 89.312084
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-pulse-detour
+ok 580 - Snake catalog coverage: classic-expedition-pulse-detour
+  ---
+  duration_ms: 136.297083
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-tail-workshop
+ok 581 - Snake catalog coverage: classic-expedition-tail-workshop
+  ---
+  duration_ms: 151.67425
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-courier-overpass
+ok 582 - Snake catalog coverage: classic-expedition-courier-overpass
+  ---
+  duration_ms: 161.004375
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-breaking-bridge
+ok 583 - Snake catalog coverage: classic-expedition-breaking-bridge
+  ---
+  duration_ms: 62.552083
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-clockwork-intercepts
+ok 584 - Snake catalog coverage: classic-expedition-clockwork-intercepts
+  ---
+  duration_ms: 121.419917
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-edge-of-reception
+ok 585 - Snake catalog coverage: classic-expedition-edge-of-reception
+  ---
+  duration_ms: 115.75425
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-blind-bend
+ok 586 - Snake catalog coverage: classic-expedition-blind-bend
+  ---
+  duration_ms: 67.756417
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-moving-shadow
+ok 587 - Snake catalog coverage: classic-expedition-moving-shadow
+  ---
+  duration_ms: 75.400958
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-quiet-relay
+ok 588 - Snake catalog coverage: classic-expedition-quiet-relay
+  ---
+  duration_ms: 110.585541
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-clear-ground
+ok 589 - Snake catalog coverage: classic-expedition-clear-ground
+  ---
+  duration_ms: 87.543167
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-radio-chase
+ok 590 - Snake catalog coverage: classic-expedition-radio-chase
+  ---
+  duration_ms: 154.440875
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-outpost-circuit
+ok 591 - Snake catalog coverage: classic-expedition-outpost-circuit
+  ---
+  duration_ms: 152.646792
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-crosswind-gates
+ok 592 - Snake catalog coverage: classic-expedition-crosswind-gates
+  ---
+  duration_ms: 127.72275
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-relay-islands
+ok 593 - Snake catalog coverage: classic-expedition-relay-islands
+  ---
+  duration_ms: 132.405875
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-waking-junction
+ok 594 - Snake catalog coverage: classic-expedition-waking-junction
+  ---
+  duration_ms: 91.786167
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-signal-workshop
+ok 595 - Snake catalog coverage: classic-expedition-signal-workshop
+  ---
+  duration_ms: 104.663917
+  ...
+# Subtest: Snake catalog coverage: classic-expedition-four-routes-home
+ok 596 - Snake catalog coverage: classic-expedition-four-routes-home
+  ---
+  duration_ms: 175.718625
+  ...
+# Subtest: Snake catalog coverage: classic-operation-first-dispatch
+ok 597 - Snake catalog coverage: classic-operation-first-dispatch
+  ---
+  duration_ms: 57.293958
+  ...
+# Subtest: Snake catalog coverage: classic-operation-long-and-short
+ok 598 - Snake catalog coverage: classic-operation-long-and-short
+  ---
+  duration_ms: 107.866708
+  ...
+# Subtest: Snake catalog coverage: classic-operation-platform-cut
+ok 599 - Snake catalog coverage: classic-operation-platform-cut
+  ---
+  duration_ms: 86.370916
+  ...
+# Subtest: Snake catalog coverage: classic-operation-courier-gap
+ok 600 - Snake catalog coverage: classic-operation-courier-gap
+  ---
+  duration_ms: 117.235166
+  ...
+# Subtest: Snake catalog coverage: classic-operation-twin-dispatch
+ok 601 - Snake catalog coverage: classic-operation-twin-dispatch
+  ---
+  duration_ms: 111.493
+  ...
+# Subtest: Snake catalog coverage: classic-operation-edge-express
+ok 602 - Snake catalog coverage: classic-operation-edge-express
+  ---
+  duration_ms: 147.181875
+  ...
+# Subtest: Snake catalog coverage: classic-operation-shutter-transfer
+ok 603 - Snake catalog coverage: classic-operation-shutter-transfer
+  ---
+  duration_ms: 48.190917
+  ...
+# Subtest: Snake catalog coverage: classic-operation-last-departure
+ok 604 - Snake catalog coverage: classic-operation-last-departure
+  ---
+  duration_ms: 110.117084
+  ...
+# Subtest: Snake catalog coverage: classic-operation-first-pressure
+ok 605 - Snake catalog coverage: classic-operation-first-pressure
+  ---
+  duration_ms: 74.826334
+  ...
+# Subtest: Snake catalog coverage: classic-operation-near-and-far
+ok 606 - Snake catalog coverage: classic-operation-near-and-far
+  ---
+  duration_ms: 123.884375
+  ...
+# Subtest: Snake catalog coverage: classic-operation-pressure-elbow
+ok 607 - Snake catalog coverage: classic-operation-pressure-elbow
+  ---
+  duration_ms: 81.474084
+  ...
+# Subtest: Snake catalog coverage: classic-operation-double-pressure
+ok 608 - Snake catalog coverage: classic-operation-double-pressure
+  ---
+  duration_ms: 157.159042
+  ...
+# Subtest: Snake catalog coverage: classic-operation-heavy-crossing
+ok 609 - Snake catalog coverage: classic-operation-heavy-crossing
+  ---
+  duration_ms: 124.946667
+  ...
+# Subtest: Snake catalog coverage: classic-operation-runner-valve
+ok 610 - Snake catalog coverage: classic-operation-runner-valve
+  ---
+  duration_ms: 75.729916
+  ...
+# Subtest: Snake catalog coverage: classic-operation-edge-pressure
+ok 611 - Snake catalog coverage: classic-operation-edge-pressure
+  ---
+  duration_ms: 164.151875
+  ...
+# Subtest: Snake catalog coverage: classic-operation-assembly-return
+ok 612 - Snake catalog coverage: classic-operation-assembly-return
+  ---
+  duration_ms: 251.504792
+  ...
+# Subtest: Snake catalog coverage: classic-operation-orchard-post
+ok 613 - Snake catalog coverage: classic-operation-orchard-post
+  ---
+  duration_ms: 80.158709
+  ...
+# Subtest: Snake catalog coverage: classic-operation-split-delivery
+ok 614 - Snake catalog coverage: classic-operation-split-delivery
+  ---
+  duration_ms: 200.610916
+  ...
+# Subtest: Snake catalog coverage: classic-operation-glasshouse-elbow
+ok 615 - Snake catalog coverage: classic-operation-glasshouse-elbow
+  ---
+  duration_ms: 109.585583
+  ...
+# Subtest: Snake catalog coverage: classic-operation-two-harvests
+ok 616 - Snake catalog coverage: classic-operation-two-harvests
+  ---
+  duration_ms: 139.413209
+  ...
+# Subtest: Snake catalog coverage: classic-operation-refuge-cargo
+ok 617 - Snake catalog coverage: classic-operation-refuge-cargo
+  ---
+  duration_ms: 128.246917
+  ...
+# Subtest: Snake catalog coverage: classic-operation-irrigation-shortcut
+ok 618 - Snake catalog coverage: classic-operation-irrigation-shortcut
+  ---
+  duration_ms: 160.827584
+  ...
+# Subtest: Snake catalog coverage: classic-operation-border-harvest
+ok 619 - Snake catalog coverage: classic-operation-border-harvest
+  ---
+  duration_ms: 173.116375
+  ...
+# Subtest: Snake catalog coverage: classic-operation-harvest-rendezvous
+ok 620 - Snake catalog coverage: classic-operation-harvest-rendezvous
+  ---
+  duration_ms: 193.755917
+  ...
+# Subtest: Snake catalog coverage: classic-operation-harbor-clearances
+ok 621 - Snake catalog coverage: classic-operation-harbor-clearances
+  ---
+  duration_ms: 78.483792
+  ...
+# Subtest: Snake catalog coverage: classic-operation-seam-parcels
+ok 622 - Snake catalog coverage: classic-operation-seam-parcels
+  ---
+  duration_ms: 133.327708
+  ...
+# Subtest: Snake catalog coverage: classic-operation-north-south
+ok 623 - Snake catalog coverage: classic-operation-north-south
+  ---
+  duration_ms: 80.671083
+  ...
+# Subtest: Snake catalog coverage: classic-operation-offset-quays
+ok 624 - Snake catalog coverage: classic-operation-offset-quays
+  ---
+  duration_ms: 131.172916
+  ...
+# Subtest: Snake catalog coverage: classic-operation-tidal-door
+ok 625 - Snake catalog coverage: classic-operation-tidal-door
+  ---
+  duration_ms: 115.272542
+  ...
+# Subtest: Snake catalog coverage: classic-operation-quay-dispatch
+ok 626 - Snake catalog coverage: classic-operation-quay-dispatch
+  ---
+  duration_ms: 55.5935
+  ...
+# Subtest: Snake catalog coverage: classic-operation-lighten-at-sea
+ok 627 - Snake catalog coverage: classic-operation-lighten-at-sea
+  ---
+  duration_ms: 144.414542
+  ...
+# Subtest: Snake catalog coverage: classic-operation-horizon-relay
+ok 628 - Snake catalog coverage: classic-operation-horizon-relay
+  ---
+  duration_ms: 159.445167
+  ...
+# Subtest: Snake catalog coverage: classic-operation-furnace-permit
+ok 629 - Snake catalog coverage: classic-operation-furnace-permit
+  ---
+  duration_ms: 76.421417
+  ...
+# Subtest: Snake catalog coverage: classic-operation-coolant-cargo
+ok 630 - Snake catalog coverage: classic-operation-coolant-cargo
+  ---
+  duration_ms: 167.353292
+  ...
+# Subtest: Snake catalog coverage: classic-operation-watch-the-aim
+ok 631 - Snake catalog coverage: classic-operation-watch-the-aim
+  ---
+  duration_ms: 102.259875
+  ...
+# Subtest: Snake catalog coverage: classic-operation-pressure-flank
+ok 632 - Snake catalog coverage: classic-operation-pressure-flank
+  ---
+  duration_ms: 152.4575
+  ...
+# Subtest: Snake catalog coverage: classic-operation-crossing-orders
+ok 633 - Snake catalog coverage: classic-operation-crossing-orders
+  ---
+  duration_ms: 76.499167
+  ...
+# Subtest: Snake catalog coverage: classic-operation-guarded-transfer
+ok 634 - Snake catalog coverage: classic-operation-guarded-transfer
+  ---
+  duration_ms: 156.818167
+  ...
+# Subtest: Snake catalog coverage: classic-operation-furnace-switch
+ok 635 - Snake catalog coverage: classic-operation-furnace-switch
+  ---
+  duration_ms: 69.204584
+  ...
+# Subtest: Snake catalog coverage: classic-operation-works-clearance
+ok 636 - Snake catalog coverage: classic-operation-works-clearance
+  ---
+  duration_ms: 159.500708
+  ...
+# Subtest: Snake catalog coverage: classic-operation-dock-permission
+ok 637 - Snake catalog coverage: classic-operation-dock-permission
+  ---
+  duration_ms: 91.602
+  ...
+# Subtest: Snake catalog coverage: classic-operation-two-landings
+ok 638 - Snake catalog coverage: classic-operation-two-landings
+  ---
+  duration_ms: 218.96725
+  ...
+# Subtest: Snake catalog coverage: classic-operation-pump-return
+ok 639 - Snake catalog coverage: classic-operation-pump-return
+  ---
+  duration_ms: 185.0275
+  ...
+# Subtest: Snake catalog coverage: classic-operation-loading-dispatch
+ok 640 - Snake catalog coverage: classic-operation-loading-dispatch
+  ---
+  duration_ms: 136.727458
+  ...
+# Subtest: Snake catalog coverage: classic-operation-harbor-window
+ok 641 - Snake catalog coverage: classic-operation-harbor-window
+  ---
+  duration_ms: 165.102833
+  ...
+# Subtest: Snake catalog coverage: classic-operation-relay-load
+ok 642 - Snake catalog coverage: classic-operation-relay-load
+  ---
+  duration_ms: 107.368208
+  ...
+# Subtest: Snake catalog coverage: classic-operation-outbound-inbound
+ok 643 - Snake catalog coverage: classic-operation-outbound-inbound
+  ---
+  duration_ms: 120.053125
+  ...
+# Subtest: Snake catalog coverage: classic-operation-harbor-homecoming
+ok 644 - Snake catalog coverage: classic-operation-harbor-homecoming
+  ---
+  duration_ms: 252.974208
+  ...
+# Subtest: Snake catalog coverage: classic-operation-silent-parcel
+ok 645 - Snake catalog coverage: classic-operation-silent-parcel
+  ---
+  duration_ms: 169.304667
+  ...
+# Subtest: Snake catalog coverage: classic-operation-ridge-reception
+ok 646 - Snake catalog coverage: classic-operation-ridge-reception
+  ---
+  duration_ms: 80.595958
+  ...
+# Subtest: Snake catalog coverage: classic-operation-broadcast-freight
+ok 647 - Snake catalog coverage: classic-operation-broadcast-freight
+  ---
+  duration_ms: 101.091667
+  ...
+# Subtest: Snake catalog coverage: classic-operation-unseen-dispatch
+ok 648 - Snake catalog coverage: classic-operation-unseen-dispatch
+  ---
+  duration_ms: 106.35225
+  ...
+# Subtest: Snake catalog coverage: classic-operation-clear-side-channel
+ok 649 - Snake catalog coverage: classic-operation-clear-side-channel
+  ---
+  duration_ms: 163.968083
+  ...
+# Subtest: Snake catalog coverage: classic-operation-pulse-rendezvous
+ok 650 - Snake catalog coverage: classic-operation-pulse-rendezvous
+  ---
+  duration_ms: 165.7855
+  ...
+# Subtest: Snake catalog coverage: classic-operation-receiver-bridge
+ok 651 - Snake catalog coverage: classic-operation-receiver-bridge
+  ---
+  duration_ms: 116.79825
+  ...
+# Subtest: Snake catalog coverage: classic-operation-summit-blackbird
+ok 652 - Snake catalog coverage: classic-operation-summit-blackbird
+  ---
+  duration_ms: 132.07025
+  ...
+# Subtest: Snake catalog coverage: classic-operation-first-notch
+ok 653 - Snake catalog coverage: classic-operation-first-notch
+  ---
+  duration_ms: 92.508584
+  ...
+# Subtest: Snake catalog coverage: classic-operation-loaded-excavation
+ok 654 - Snake catalog coverage: classic-operation-loaded-excavation
+  ---
+  duration_ms: 183.303292
+  ...
+# Subtest: Snake catalog coverage: classic-operation-stepped-masonry
+ok 655 - Snake catalog coverage: classic-operation-stepped-masonry
+  ---
+  duration_ms: 126.530083
+  ...
+# Subtest: Snake catalog coverage: classic-operation-survey-seam
+ok 656 - Snake catalog coverage: classic-operation-survey-seam
+  ---
+  duration_ms: 193.753333
+  ...
+# Subtest: Snake catalog coverage: classic-operation-temporary-permanent
+ok 657 - Snake catalog coverage: classic-operation-temporary-permanent
+  ---
+  duration_ms: 98.82475
+  ...
+# Subtest: Snake catalog coverage: classic-operation-ricochet-quarry
+ok 658 - Snake catalog coverage: classic-operation-ricochet-quarry
+  ---
+  duration_ms: 139.544375
+  ...
+# Subtest: Snake catalog coverage: classic-operation-restored-arch
+ok 659 - Snake catalog coverage: classic-operation-restored-arch
+  ---
+  duration_ms: 159.82425
+  ...
+# Subtest: Snake catalog coverage: classic-operation-garden-breaches
+ok 660 - Snake catalog coverage: classic-operation-garden-breaches
+  ---
+  duration_ms: 164.466292
+  ...
+# Subtest: Snake catalog coverage: classic-operation-glasshouse-intentions
+ok 661 - Snake catalog coverage: classic-operation-glasshouse-intentions
+  ---
+  duration_ms: 111.535458
+  ...
+# Subtest: Snake catalog coverage: classic-operation-orchard-forks
+ok 662 - Snake catalog coverage: classic-operation-orchard-forks
+  ---
+  duration_ms: 113.94625
+  ...
+# Subtest: Snake catalog coverage: classic-operation-paired-shelters
+ok 663 - Snake catalog coverage: classic-operation-paired-shelters
+  ---
+  duration_ms: 101.829292
+  ...
+# Subtest: Snake catalog coverage: classic-operation-held-hedge
+ok 664 - Snake catalog coverage: classic-operation-held-hedge
+  ---
+  duration_ms: 155.316292
+  ...
+# Subtest: Snake catalog coverage: classic-operation-seedling-spiral
+ok 665 - Snake catalog coverage: classic-operation-seedling-spiral
+  ---
+  duration_ms: 268.089625
+  ...
+# Subtest: Snake catalog coverage: classic-operation-garden-seam
+ok 666 - Snake catalog coverage: classic-operation-garden-seam
+  ---
+  duration_ms: 143.643
+  ...
+# Subtest: Snake catalog coverage: classic-operation-quiet-conservatory
+ok 667 - Snake catalog coverage: classic-operation-quiet-conservatory
+  ---
+  duration_ms: 157.220125
+  ...
+# Subtest: Snake catalog coverage: classic-operation-three-garden-returns
+ok 668 - Snake catalog coverage: classic-operation-three-garden-returns
+  ---
+  duration_ms: 254.614584
+  ...
+# Subtest: Snake catalog coverage: classic-operation-pulse-loading-bay
+ok 669 - Snake catalog coverage: classic-operation-pulse-loading-bay
+  ---
+  duration_ms: 161.91475
+  ...
+# Subtest: Snake catalog coverage: classic-operation-reel-before-return
+ok 670 - Snake catalog coverage: classic-operation-reel-before-return
+  ---
+  duration_ms: 244.214375
+  ...
+# Subtest: Snake catalog coverage: classic-operation-cold-window
+ok 671 - Snake catalog coverage: classic-operation-cold-window
+  ---
+  duration_ms: 128.988
+  ...
+# Subtest: Snake catalog coverage: classic-operation-radio-spares
+ok 672 - Snake catalog coverage: classic-operation-radio-spares
+  ---
+  duration_ms: 188.100917
+  ...
+# Subtest: Snake catalog coverage: classic-operation-short-cable-long-door
+ok 673 - Snake catalog coverage: classic-operation-short-cable-long-door
+  ---
+  duration_ms: 204.298042
+  ...
+# Subtest: Snake catalog coverage: classic-operation-freight-flank
+ok 674 - Snake catalog coverage: classic-operation-freight-flank
+  ---
+  duration_ms: 114.527375
+  ...
+# Subtest: Snake catalog coverage: classic-operation-two-offers-one-route
+ok 675 - Snake catalog coverage: classic-operation-two-offers-one-route
+  ---
+  duration_ms: 170.484166
+  ...
+# Subtest: Snake catalog coverage: classic-operation-last-train-home
+ok 676 - Snake catalog coverage: classic-operation-last-train-home
+  ---
+  duration_ms: 144.342541
+  ...
+# Subtest: Snake catalog coverage: classic-operation-shared-manifest
+ok 677 - Snake catalog coverage: classic-operation-shared-manifest
+  ---
+  duration_ms: 125.589583
+  ...
+# Subtest: Snake catalog coverage: classic-operation-opposed-levers
+ok 678 - Snake catalog coverage: classic-operation-opposed-levers
+  ---
+  duration_ms: 90.860916
+  ...
+# Subtest: Snake catalog coverage: classic-operation-two-held-doors
+ok 679 - Snake catalog coverage: classic-operation-two-held-doors
+  ---
+  duration_ms: 174.02125
+  ...
+# Subtest: Snake catalog coverage: classic-operation-opposite-loads
+ok 680 - Snake catalog coverage: classic-operation-opposite-loads
+  ---
+  duration_ms: 260.996958
+  ...
+# Subtest: Snake catalog coverage: classic-operation-shared-frequency
+ok 681 - Snake catalog coverage: classic-operation-shared-frequency
+  ---
+  duration_ms: 113.636042
+  ...
+# Subtest: Snake catalog coverage: classic-operation-staggered-rendezvous
+ok 682 - Snake catalog coverage: classic-operation-staggered-rendezvous
+  ---
+  duration_ms: 165.239125
+  ...
+# Subtest: Snake catalog coverage: classic-operation-relay-partners
+ok 683 - Snake catalog coverage: classic-operation-relay-partners
+  ---
+  duration_ms: 149.750125
+  ...
+# Subtest: Snake catalog coverage: classic-operation-summit-coordination
+ok 684 - Snake catalog coverage: classic-operation-summit-coordination
+  ---
+  duration_ms: 104.9305
+  ...
+# Subtest: Snake catalog coverage: classic-operation-citadel-dispatch
+ok 685 - Snake catalog coverage: classic-operation-citadel-dispatch
+  ---
+  duration_ms: 134.341917
+  ...
+# Subtest: Snake catalog coverage: classic-operation-stone-cable
+ok 686 - Snake catalog coverage: classic-operation-stone-cable
+  ---
+  duration_ms: 168.064542
+  ...
+# Subtest: Snake catalog coverage: classic-operation-citadel-reception
+ok 687 - Snake catalog coverage: classic-operation-citadel-reception
+  ---
+  duration_ms: 196.938666
+  ...
+# Subtest: Snake catalog coverage: classic-operation-furnace-terrace
+ok 688 - Snake catalog coverage: classic-operation-furnace-terrace
+  ---
+  duration_ms: 125.748792
+  ...
+# Subtest: Snake catalog coverage: classic-operation-border-citadel
+ok 689 - Snake catalog coverage: classic-operation-border-citadel
+  ---
+  duration_ms: 249.143791
+  ...
+# Subtest: Snake catalog coverage: classic-operation-garden-machinery
+ok 690 - Snake catalog coverage: classic-operation-garden-machinery
+  ---
+  duration_ms: 138.012666
+  ...
+# Subtest: Snake catalog coverage: classic-operation-three-court-delivery
+ok 691 - Snake catalog coverage: classic-operation-three-court-delivery
+  ---
+  duration_ms: 209.686083
+  ...
+# Subtest: Snake catalog coverage: classic-operation-living-citadel-finale
+ok 692 - Snake catalog coverage: classic-operation-living-citadel-finale
+  ---
+  duration_ms: 199.540083
+  ...
+# Subtest: Snake source enumeration reads only authored metadata and defers recording bodies
+ok 693 - Snake source enumeration reads only authored metadata and defers recording bodies
+  ---
+  duration_ms: 7.18925
+  ...
+# Subtest: Snake practice reproduces the displayed prefix and owns all later mutations
+ok 694 - Snake practice reproduces the displayed prefix and owns all later mutations
+  ---
+  duration_ms: 5.447667
+  ...
+# Subtest: Snake preparation cancellation, stale content and diagnostics are explicit failures
+ok 695 - Snake preparation cancellation, stale content and diagnostics are explicit failures
+  ---
+  duration_ms: 3.989042
+  ...
+# Subtest: Snake native labels, goals, launch locale and captions follow current language
+ok 696 - Snake native labels, goals, launch locale and captions follow current language
+  ---
+  duration_ms: 4.270417
+  ...
+# Subtest: Demo retains the covered Solo canvas while continuing controller polls and restores rendering on close
+ok 697 - Demo retains the covered Solo canvas while continuing controller polls and restores rendering on close
+  ---
+  duration_ms: 1746.67625
+  ...
+# Subtest: Demo owns shared media admission independently of gameSounds=false and mute
+ok 698 - Demo owns shared media admission independently of gameSounds=false and mute
+  ---
+  duration_ms: 2631.845958
+  ...
+# Subtest: Demo owns shared media admission independently of gameSounds=true and mute
+ok 699 - Demo owns shared media admission independently of gameSounds=true and mute
+  ---
+  duration_ms: 2449.196416
+  ...
+# Subtest: background spectator keeps required transport but parks bulk work while hidden
+ok 700 - background spectator keeps required transport but parks bulk work while hidden
+  ---
+  duration_ms: 1625.884584
+  ...
+# Subtest: background spectator keeps required transport but parks bulk work while unfocused
+ok 701 - background spectator keeps required transport but parks bulk work while unfocused
+  ---
+  duration_ms: 1619.106541
+  ...
+# Subtest: practice suspends all shared preparation while hidden until an explicit safe transition
+ok 702 - practice suspends all shared preparation while hidden until an explicit safe transition
+  ---
+  duration_ms: 1660.021
+  ...
+# Subtest: practice suspends all shared preparation while unfocused until an explicit safe transition
+ok 703 - practice suspends all shared preparation while unfocused until an explicit safe transition
+  ---
+  duration_ms: 1688.056125
+  ...
+# Subtest: Demo loading admits visible preparation, then preserves background demand and explicit handoff cancellation
+ok 704 - Demo loading admits visible preparation, then preserves background demand and explicit handoff cancellation
+  ---
+  duration_ms: 1717.009375
+  ...
+# Subtest: manual resource export requires real Demo Pause and retains closed display across reopen
+ok 705 - manual resource export requires real Demo Pause and retains closed display across reopen
+  ---
+  duration_ms: 2215.813167
+  ...
+# Subtest: closed Demo retains unsettled scene reservation until ignored decode actually completes
+ok 706 - closed Demo retains unsettled scene reservation until ignored decode actually completes
+  ---
+  duration_ms: 1305.454709
+  ...
+# Subtest: manual resource export rejects advancing practice despite the retained interrupted spectator flag
+ok 707 - manual resource export rejects advancing practice despite the retained interrupted spectator flag
+  ---
+  duration_ms: 1504.886959
+  ...
+1..707
+# tests 719
+# suites 0
+# pass 719
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 261529.701083

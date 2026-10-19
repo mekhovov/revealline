@@ -1,0 +1,44 @@
+{
+  "observedAt": "2026-10-19T12:24:31.218289+00:00",
+  "head": "27138039f30d759aaf10d0b8c80564757bc9e905",
+  "job": 118047836366,
+  "name": "focused_shards (1)",
+  "conclusion": "failure",
+  "startedAt": "2026-10-19T12:02:32Z",
+  "completedAt": "2026-10-19T12:24:03Z",
+  "issueLines": [
+    "2026-10-19T12:05:25.7344609Z # fail 0",
+    "2026-10-19T12:05:26.8466470Z # fail 0",
+    "2026-10-19T12:05:33.6222286Z # fail 0",
+    "2026-10-19T12:05:40.1820653Z # fail 0",
+    "2026-10-19T12:06:18.4583896Z # fail 0",
+    "2026-10-19T12:07:02.8444756Z not ok 1 - an accessible demo on an idle Legacy host prepares the same level without automatic Start",
+    "2026-10-19T12:07:02.8703971Z   name: 'AssertionError'",
+    "2026-10-19T12:07:02.9002834Z # {\"format\":\"DemoHostFailureV1\",\"phase\":\"Fresh exact mission preparation on the Legacy owner\",\"timeoutMs\":30000,\"page\":{\"hidden\":false,\"focused\":true,\"connected\":true,\"documentOwned\":true,\"windowOwned\":true,\"activeId\":\"demo-fresh\",\"flight\":\"briefing\",\"picture\":\"ready\",\"overlayKind\":\"ready\"},\"lastOrdinaryRender\":{\"level\":\"signal-01\",\"tick\":0,\"status\":\"running\",\"paused\":true},\"demo\":{\"open\":true,\"scene\":\"loading\",\"mode\":\"solo\",\"source\":\"first-signal-left\",\"phase\":\"paused\",\"tick\":\"0\",\"status\":\"Preparing a real level\u2026\",\"availability\":\"\",\"preparationDetailsText\":\"{\\\\\"event\\\\\":\\\\\"ready\\\\\",\\\\\"sourceId\\\\\":\\\\\"first-signal-left\\\\\",\\\\\"modeId\\\\\":\\\\\"solo\\\\\",\\\\\"at\\\\\":1792411587208,\\\\\"loadingMs\\\\\":0,\\\\\"preparation\\\\\":{\\\\\"status\\\\\":\\\\\"ready\\\\\",\\\\\"stage\\\\\":\\\\\"source\\\\\",\\\\\"elapsedMs\\\\\":0,\\\\\"durationsMs\\\\\":{\\\\\"preparation\\\\\":0,\\\\\"prefetch\\\\\":0,\\\\\"retirement\\\\\":0,\\\\\"adapter\\\\\":0,\\\\\"source\\\\\":0,\\\\\"payload\\\\\":0,\\\\\"verification\\\\\":0,\\\\\"scene-import\\\\\":0,\\\\\"artwork\\\\\":0,\\\\\"renderer\\\\\":0,\\\\\"mount\\\\\":0},\\\\\"candidates\\\\\":[]},\\\\\"code\\\\\":null,\\\\\"message\\\\\":null,\\\\\"stack\\\\\":null}\",\"failureDetailsText\":null,\"freshDisabled\":true,\"resumeDisabled\":true,\"watchPauseDisabled\":true,\"actionsHidden\":false,\"panelHidden\":false},\"preparation\":[{\"id\":\"flight-preparation-status\",\"hidden\":true,\"state\":null,\"stage\":null,\"message\":\"\"},{\"id\":\"presentation-preparation-status\",\"hidden\":true,\"state\":\"ready\",\"stage\":\"decoding\",\"message\":\"\"},{\"id\":\"theme-preparation-status\",\"hidden\":true,\"state\":null,\"stage\":null,\"message\":\"\"},{\"id\":\"craft-preparation-status\",\"hidden\":false,\"state\":\"error\",\"stage\":\"decoding\",\"message\":\"Some artwork is unavailable; a clear fallback is shown.\"}],\"errors\":[],\"omittedErrors\":0}",
+    "2026-10-19T12:09:33.5243428Z # fail 1",
+    "2026-10-19T12:09:35.1472362Z # fail 0",
+    "2026-10-19T12:10:42.5487548Z # fail 0",
+    "2026-10-19T12:10:43.2863751Z # fail 0",
+    "2026-10-19T12:10:46.2683987Z # fail 0",
+    "2026-10-19T12:10:47.4024191Z # fail 0",
+    "2026-10-19T12:12:59.5183852Z # fail 0",
+    "2026-10-19T12:21:37.5702575Z # fail 0",
+    "2026-10-19T12:21:43.1131347Z # fail 0",
+    "2026-10-19T12:22:48.8840325Z # fail 0",
+    "2026-10-19T12:23:01.5605711Z # fail 0",
+    "2026-10-19T12:23:20.2905649Z # fail 0"
+  ],
+  "issueLinesDropped": 0,
+  "files": [
+    {
+      "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/hosted-evidence-814ab0c330a341618d949c5218443db0/hosted-27138039f-focused1-failure/job.json",
+      "bytes": 3944,
+      "sha256": "8300acbebd0fe791c3e00480acae557e4148bc156a3425129e1cf762a9c4cac0"
+    },
+    {
+      "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/hosted-evidence-814ab0c330a341618d949c5218443db0/hosted-27138039f-focused1-failure/original.log.txt",
+      "bytes": 1093626,
+      "sha256": "95bb1d0f0628e464eb7511ab9c0cd6c36d9767eeff896dea8e6d22a345344ba9"
+    }
+  ]
+}

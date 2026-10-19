@@ -503,6 +503,7 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'world-zip.mjs',
         'beginner-coach.mjs',
         'world-demonstrations.mjs',
+        'demonstration-resolver.mjs',
         'world-assets.mjs',
         'world-editor.mjs',
         'content-definitions.mjs',
@@ -678,6 +679,10 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                   from: 'optional-practice/civilian-fpv/sim-presentation.mjs',
                   source: '../../game/ui/global-settings-tools.mjs',
                 }),
+                Object.freeze({
+                  from: 'optional-practice/civilian-fpv/world-app.mjs',
+                  source: '../../game/ui/demo-entry.mjs',
+                }),
                 // Only a verified iOS stage supplies this bridge. Web packages
                 // retain browser exports and never evaluate the iOS import.
                 Object.freeze({
@@ -781,7 +786,6 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                 ]
               : []),
             'optional-practice/guide.mjs',
-            'optional-practice/navigation.mjs',
             'game/ui/menu-navigation-groups.mjs',
             'game/ui/art/identity/fpv-line/wordmark.png',
             'game/ui/art/menu-scenes/fpv.webp',
@@ -801,6 +805,12 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
     ]),
   ),
 );
+
+// Canonical inputs used only by the generated launcher. Keep the full source
+// module at its runtime alias, with its committed input hash bound separately.
+export const OPTIONAL_SOURCE_INPUT_ALIASES = Object.freeze({
+  'optional-practice/navigation.mjs': 'launcher/navigation.mjs',
+});
 
 export function optionalRuntimePaths(policy, { launcher = false } = {}) {
   return [

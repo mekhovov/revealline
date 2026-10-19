@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-10-18T04:48:54.644Z",
+  "runs": [
+    {
+      "command": "node --test --test-concurrency=2 game/test/demo*.test.mjs game/test/edition*.test.mjs",
+      "source": ".cache/demo-edition-final-tests.tap",
+      "tests": 638,
+      "pass": 637,
+      "fail": 1,
+      "duration_ms": 615126.424125,
+      "note": "637 passed; the sole failure was an obsolete edition title assertion expecting only the mission name, before the shared mode prefix. The full affected module was rerun after correcting that assertion."
+    },
+    {
+      "command": "node --test game/test/edition-solo-host.test.mjs",
+      "source": ".cache/edition-solo-final-tests.tap",
+      "tests": 51,
+      "pass": 51,
+      "fail": 0,
+      "duration_ms": 89725.935667,
+      "note": "All51 tests passed after asserting the localized mode prefix and exact edition mission name."
+    },
+    {
+      "command": "node --test game/test/demo-solo-coverage.test.mjs game/test/demo-sources.test.mjs game/test/edition-runtime.test.mjs game/test/demo-survival-fresh.test.mjs",
+      "source": ".cache/demo-final-followup-tests.tap",
+      "tests": 39,
+      "pass": 39,
+      "fail": 0,
+      "duration_ms": 44199.257375,
+      "note": "Final source ordering, strict fallback, finite edition closure and Survival Fresh rollback checks."
+    }
+  ],
+  "allAffectedChecksPass": true
+}

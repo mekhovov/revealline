@@ -1,6 +1,10 @@
 import { editionJSON, editionDescriptor } from './edition-candidate.mjs';
 import { createEditionZip } from './edition-zip.mjs';
-import { OPTIONAL_PACKAGE_POLICIES, optionalRuntimePaths } from './optional-package-policy.mjs';
+import {
+  OPTIONAL_PACKAGE_POLICIES,
+  OPTIONAL_SOURCE_INPUT_ALIASES,
+  optionalRuntimePaths,
+} from './optional-package-policy.mjs';
 import { validatePublicSourceEligibility } from './edition-admission.mjs';
 
 const inventory = (files) =>
@@ -25,6 +29,13 @@ export function createOptionalPackageCandidate({ built, version, sourceRevision,
   const manifestBytes = runtime.get('optional-package.json');
   const selectedSource = new Map(runtime);
   selectedSource.delete('optional-package.json');
+  for (const [input, output] of Object.entries(OPTIONAL_SOURCE_INPUT_ALIASES))
+    if (
+      !runtime.has(output) ||
+      !inputs.has(input) ||
+      !Buffer.from(runtime.get(output)).equals(Buffer.from(inputs.get(input)))
+    )
+      throw new Error('Optional launcher source alias differs from its canonical input.');
   selectedSource.set(policy.template, inputs.get(policy.template));
   selectedSource.set(policy.launcherTemplate, inputs.get(policy.launcherTemplate));
   selectedSource.set(policy.root + 'app.webmanifest', inputs.get(policy.root + 'app.webmanifest'));
@@ -57,6 +68,11 @@ export function createOptionalPackageCandidate({ built, version, sourceRevision,
         output: editionDescriptor('game/i18n/catalogs.mjs', runtime.get('game/i18n/catalogs.mjs')),
         inputs: policy.localeInputs,
       },
+      ...Object.entries(OPTIONAL_SOURCE_INPUT_ALIASES).map(([input, output]) => ({
+        kind: 'shared-launcher-source',
+        output: editionDescriptor(output, runtime.get(output)),
+        inputs: [input],
+      })),
     ],
     generated: [
       ...['worker.js', 'icons/icon-192.png', 'icons/icon-512.png'].map(

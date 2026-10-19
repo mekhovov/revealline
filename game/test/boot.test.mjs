@@ -323,7 +323,7 @@ test(
     const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
     assert.match(
       html,
-      /html:not\(\[data-boot-state='ready'\]\)\s+body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)\s*\{\s*display: none !important;/,
+      /html:not\(\[data-boot-state='ready'\]\):not\(\[data-boot-state='interactive'\]\)\s+body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)\s*\{\s*display: none !important;/,
       'the actual inline guard conceals failed gameplay even if an older app removed inert',
     );
   },
@@ -391,7 +391,95 @@ test(
   },
 );
 
-test('only successful ready reveals the game and shuts down boot scheduling/listeners', () => {
+test('interactive reveal preserves cancellable controls and failure ownership until final ready', async (t) => {
+  let release;
+  const held = new Promise((resolve) => {
+    release = resolve;
+  });
+  t.after(() => release());
+  const page = await moduleBoundary(t, async (current) => {
+    assert.equal(current.context.RevealLineBoot.reveal(), true);
+    await held;
+    current.context.RevealLineBoot.ready();
+  });
+  page.run();
+  await page.mount();
+  await page.appStarted;
+  await settle();
+  assert.equal(page.document.documentElement.dataset.bootState, 'interactive');
+  assert.equal(page.screen.hidden, true);
+  assert.equal(page.game.inert, false);
+  assert.equal(page.game.getAttribute('aria-busy'), 'true');
+  assert.equal(page.timers.size, 0, 'The loading-screen timer retires after reveal.');
+  const button = page.make('button', 'owned-cancel', page.game);
+  button.focus();
+  let prevented = false;
+  page.document.emit('keydown', {
+    key: 'ArrowDown',
+    preventDefault() {
+      prevented = true;
+    },
+  });
+  page.control();
+  page.control({ axis: 1 });
+  assert.equal(prevented, false, 'Boot keyboard ownership yields to the interactive app.');
+  assert.equal(page.document.activeElement, button, 'Hidden boot controls cannot take focus.');
+  assert.equal(
+    page.context.RevealLineBoot.reveal(),
+    false,
+    'Repeated reveal cannot reopen ownership.',
+  );
+  release();
+  await page.appSettled;
+  await settle();
+  assert.equal(page.document.documentElement.dataset.bootState, 'ready');
+  assert.equal(page.game.hasAttribute('aria-busy'), false);
+  assert.equal(page.frames.size, 0);
+  assert.equal(page.timers.size, 0);
+});
+
+for (const failure of ['resource', 'rejection', 'missing-ready'])
+  test(`interactive preparation retains ${failure} failure instead of reporting ready`, async (t) => {
+    let release;
+    const held = new Promise((resolve) => {
+      release = resolve;
+    });
+    t.after(() => release());
+    const page = await moduleBoundary(t, async (current) => {
+      current.context.RevealLineBoot.reveal();
+      await held;
+      if (failure === 'rejection') throw new Error('Owned handoff rejected');
+    });
+    page.run();
+    await page.mount();
+    await page.appStarted;
+    await settle();
+    assert.equal(page.document.documentElement.dataset.bootState, 'interactive');
+    page.dialog.open = true;
+    if (failure === 'resource') page.events.emit('error', { target: { id: 'boot-phaser' } });
+    release();
+    await page.appSettled;
+    await settle();
+    assert.equal(page.document.documentElement.dataset.bootState, 'failed');
+    assert.equal(page.screen.hidden, false);
+    assert.equal(page.game.inert, true);
+    assert.equal(page.dialog.open, false);
+    assert.equal(page.document.activeElement, page.retry);
+    assert.equal(page.context.RevealLineBoot.ready(), false);
+    assert.equal(page.context.RevealLineBoot.reveal(), false);
+    assert.match(
+      page.document.getElementById('boot-detail').textContent,
+      failure === 'resource'
+        ? /renderer did not load/
+        : failure === 'rejection'
+          ? /Owned handoff rejected/
+          : /did not confirm startup/,
+    );
+    page.document.emit('keydown', { key: 'ArrowDown' });
+    assert.equal(page.document.activeElement, page.online, 'Failure recovery regains boot input.');
+  });
+
+test('ready alone reveals the game and shuts down boot scheduling/listeners', () => {
   const page = boundary();
   page.run();
   assert.equal(page.game.inert, true);

@@ -1,0 +1,131 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T22:14:04.395Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:river-port-twin-docks:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Twin Docks",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:flight-10-acro-17c60cf6ab703346",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Slalom",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-f1f91fa91991d51b",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Folded corner",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "real-webgl-loss-recovery",
+      "mode": "survival",
+      "source": "survival:river-port-pump-apron:standard",
+      "phase": "playing",
+      "failure": "sim:snake-hunt-ground-routes-crossing-arrivals-acro-22dfa2bb72ff1f5b demo-mode-unavailable: SIM graphics context was lost.",
+      "failureDetails": {
+        "event": "playback-failed",
+        "sourceId": "sim:snake-hunt-ground-routes-crossing-arrivals-acro-22dfa2bb72ff1f5b",
+        "modeId": "sim",
+        "at": 1792361664511,
+        "loadingMs": null,
+        "preparation": null,
+        "code": "demo-mode-unavailable",
+        "message": "SIM graphics context was lost.",
+        "stack": "Error: SIM graphics context was lost.\n    at failMode (http://127.0.0.1:8769/game/demo-modes/sim.mjs:3:17)\n    at onContextLost (http://127.0.0.1:8769/game/demo-modes/sim.mjs:156:23)\n    at HTMLCanvasElement.lost (http://127.0.0.1:8769/optional-practice/civilian-fpv/renderer.mjs:3555:5)"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Pump Apron",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "pause",
+      "mode": "survival"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T22:14:28.991Z",
+  "enduranceFinished": "2026-10-18T22:14:28.991Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T22:14:30.366Z"
+}

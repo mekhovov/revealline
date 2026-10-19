@@ -1,0 +1,43 @@
+{
+  "format": "SharedDemoWebKitNavigationInvestigationV1",
+  "created": "2026-10-19T01:00:07.131755+00:00",
+  "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+  "gameReceipt": {
+    "path": "docs/qualification/shared-demos/restoration-webkit-final-emitted-dd337c8-693947ed1.json",
+    "sha256": "43a6a0d539c15484a220e8acb8012479fd2fd6093e38287297a1ed1ad0f36324",
+    "functionalComplete": true,
+    "strictDiagnosticGate": false,
+    "checks": 12,
+    "pageErrors": 1
+  },
+  "fixtureReceipt": {
+    "path": "docs/qualification/shared-demos/webkit-engine-navigation-693947ed1.json",
+    "sha256": "7b100cd4c544299b6a6ccd957f6c2ef7fe5edfa43ea6360b47ea9a35395dad65",
+    "complete": true,
+    "outcome": "target-not-reproduced",
+    "browserVersion": "26.5",
+    "sourceStable": true,
+    "browserClosed": true,
+    "serverClosed": true
+  },
+  "observed": [
+    "The no-game control performs three owned same-origin Fetch operations, all200, three server requests and no native/DOM errors.",
+    "With replacement response held after server receipt, the same old-document owner catches allthree Fetch rejections; no asset request reaches the server. Two native access-control pageerrors occur, with no DOM error/unhandledrejection event.",
+    "The declared reproduction predicate required exactlythree native errors, so the original outcome remains target-not-reproduced. The cause of its two-versus-three event count is unestablished; no retry or predicate change was made.",
+    "The emitted game run passes all12functional restoration checks; its one native error occurs during ordinary reload, before old pagehide. It remains a strict failed receipt."
+  ],
+  "externalReference": {
+    "url": "https://github.com/microsoft/playwright/issues/43120",
+    "reviewed": "2026-10-19",
+    "summary": "Playwright maintainers confirm that WebKit can misclassify new same-origin loads during document replacement as access-control errors and expose them as pageerror events. Their reproduced case uses XHR on Linux. The fix belongs in WebKit; that report does not establish the exact installed macOS build or clear this game receipt."
+  },
+  "conclusion": "The installed-engine fixture demonstrates that handled navigation-time Fetch refusals can produce this native diagnostic without game code. It supports a browser-lifecycle explanation for the game signature, but does not prove every historical native diagnostic shares that cause. No game workaround, browser-error exemption, deadline increase, strict-pass relabeling or new upstream issue/comment was made. Continue independent automated qualification; retain WebKit strict diagnostic gate as unresolved.",
+  "narrowVisualReview": {
+    "files": [
+      "mixed-chromium-final-emitted-dd337c8-693947ed1-narrow.png",
+      "mixed-firefox-final-emitted-dd337c8-693947ed1-narrow.png",
+      "mixed-webkit-final-emitted-dd337c8-693947ed1-narrow.png"
+    ],
+    "result": "Root visually inspected the actual three captures: visible controls, goal captions and footer text stay within the narrow viewport; Solo board keeps aspect-ratio letterboxing. This is not a physical-mobile check."
+  }
+}

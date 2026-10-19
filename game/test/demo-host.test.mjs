@@ -7,13 +7,13 @@ import {
   DEMO_HOST_READY_TIMEOUT_MS,
 } from './helpers/demo-host-fixture.mjs';
 import { memoryStorage, settle } from './helpers/solo-dom.mjs';
-import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 import { authoritativeCheckpoint, verifyReplay, MAX_REPLAY_TICKS } from '../replay.mjs';
 import { FIXED_DT } from '../core/index.mjs';
 import { REWARD_BOARD_SECONDS, REWARD_STORY_SECONDS } from '../ui/reward-arrival.mjs';
 import { emptyLibrary, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { KEY_BINDING_PRESETS } from '../key-bindings.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 
 const frames = (page, count, ms = 16) => {
   for (let i = 0; i < count; i++) page.frame(ms);
@@ -501,7 +501,18 @@ test('a failed saved-flight write keeps Fresh behind replacement review and Stay
       timeoutMs: 30000,
       message: 'Failed-save handoff must remain behind the ordinary checked replacement review.',
     },
-  );
+  ).catch((error) => {
+    error.message += JSON.stringify({
+      demoOpen: page.$('demo-dialog').open,
+      demoStatus: page.$('demo-status').textContent,
+      availability: page.$('demo-availability').textContent,
+      replacementOpen: page.$('mission-replace-dialog').open,
+      replacementPending: page.$('mission-replace-confirm').disabled,
+      replacementStatus: page.$('mission-replace-status').textContent,
+      errors: page.errors.map((value) => String(value?.stack ?? value)),
+    });
+    throw error;
+  });
   assert.equal(page.$('demo-dialog').open, false);
   assert.equal(page.$('demo-practice-controls').hidden, true);
   assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);

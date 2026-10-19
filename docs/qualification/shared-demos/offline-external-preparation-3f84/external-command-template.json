@@ -1,0 +1,24 @@
+{
+  "format": "ExternalOfflineCommandPreparationV1",
+  "preflightArgv": [
+    "python3",
+    ".cache/demo-offline-browser/supervise-external.py",
+    "--run=preflight",
+    "--node=/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--head=<FINAL_HEAD>",
+    "--fingerprint=<FINAL_RUNTIME_SHA256>",
+    "--emitted-preview=<FRESH_INTERNAL_CANONICAL_CAPTURE>",
+    "--audit=<FRESH_MAIN_PAGES_AUDIT_JSON>",
+    "--report=docs/qualification/shared-demos/offline-full-core-external-<UNIQUE_SUFFIX>.json",
+    "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+    "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  ],
+  "approvedExecution": "After fresh source/capture admission and parent release, use exactly the same arguments with --run=approved. Preflight creates no profile or browser.",
+  "unresolvedInputs": [
+    "fresh committed HEAD/runtime/source declaration",
+    "fresh main-pages audit+semantic inventory+internal emitted capture",
+    "unused unique report path"
+  ],
+  "originalScenarioMatchesPreservedHistoricalObserver": true,
+  "browserLaunched": false
+}

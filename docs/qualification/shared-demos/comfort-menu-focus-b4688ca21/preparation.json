@@ -1,0 +1,79 @@
+{
+  "format": "SharedDemoComfortFocusPreparationV1",
+  "preparedAt": "2026-10-19T08:55:06.985679+00:00",
+  "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "capture": ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined",
+  "browserLaunched": false,
+  "checks": [
+    "JavaScript syntax valid under Node22.22.2",
+    "Python AST parses",
+    "Original native menu function is byte-identical",
+    "Explicit display fields and session/persistence comparisons present",
+    "Existing exact owner reused with deferred signal registration and final readback budget"
+  ],
+  "expectedChecks": 20,
+  "newSoloChecks": 6,
+  "existingNativeChecks": 14,
+  "paths": {
+    ".cache/qualify-demo-menu-focus-emitted.mjs": {
+      "sha256": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb",
+      "bytes": 14455
+    },
+    ".cache/qualify-comfort-menu-focus-emitted.mjs": {
+      "sha256": "47d23dc2c0eb3ef27f32aabf0b30492537196d78fa783324172d021659ed1c75",
+      "bytes": 24599
+    },
+    ".cache/qualify-comfort-menu-focus-emitted.py": {
+      "sha256": "bebc3654d166cd871db977b228260e84cffc67962c2369786e9c87a51445c629",
+      "bytes": 12664
+    }
+  },
+  "scope": "Preparation and static guards only; no browser pass is claimed. Apply/Undo use ordinary guarded preference writers. Demo entry/Back asserts exact post-action local/session storage and ordinary checkpoint.",
+  "pending": "Root release after11-job matrix; prepared probe has not been run in a browser.",
+  "purePersistenceGuards": {
+    "passed": 8,
+    "failed": 0,
+    "node": "v22.22.2",
+    "browserLaunched": false,
+    "path": ".cache/test-comfort-focus-persistence-guards.mjs",
+    "sha256": "e7a282cacd20b3c67bf87e91158dacfe41102ee8c41aef75a739d7fb92007775",
+    "scope": "Actual extracted helper assertion accepts explicit Apply/restored profile envelope and rejects session, savedflight, unrelated preference, generation, corrupt profile and wrongmenu changes."
+  },
+  "finalizationSignalGuards": {
+    "format": "ComfortFocusFinalizationSignalGuardV1",
+    "passed": 2,
+    "failed": 0,
+    "browserLaunched": false,
+    "supervisorSHA256": "bebc3654d166cd871db977b228260e84cffc67962c2369786e9c87a51445c629",
+    "scope": "Actual AST-extracted finalization handler receives interruption after simulated successful completion and before receipt write; revokes success and retains first signal on repeated cancellation."
+  },
+  "preflight": {
+    "complete": true,
+    "browserLaunched": false,
+    "path": ".cache/comfort-focus-preflight-b4688ca219.json",
+    "sha256": "479007bb4d44f3f99fa159f0b6c1442c3e6a303cade8269605c075ce3fa417bf",
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "runtime": {
+      "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+      "files": 10000,
+      "bytes": 404485348
+    },
+    "buildInputs": {
+      "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+      "files": 9406,
+      "bytes": 348401321
+    }
+  },
+  "supervisorIndependentReview": {
+    "reviewer": "/root/storage_audit",
+    "complete": true,
+    "sourceSHA256": "bebc3654d166cd871db977b228260e84cffc67962c2369786e9c87a51445c629",
+    "findingCorrected": "Finalization cancellation now immediately revokes complete. No remaining actionable cleanup or false-success finding."
+  },
+  "uiIndependentReview": {
+    "reviewer": "/root/webkit_review",
+    "complete": true,
+    "sourceSHA256": "47d23dc2c0eb3ef27f32aabf0b30492537196d78fa783324172d021659ed1c75",
+    "finding": "No concrete sequencing or false-success/false-failure finding. Original native function byte-identical; real UI and ordinary profile contract confirmed read-only."
+  }
+}

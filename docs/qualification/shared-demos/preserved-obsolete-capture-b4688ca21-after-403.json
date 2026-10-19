@@ -1,0 +1,41 @@
+{
+  "format": "OwnedObsoleteEmittedCapturePreservationV1",
+  "complete": true,
+  "preservedAt": "2026-10-19T09:42:11.143188+00:00",
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-2d24aee-b4688ca21-combined",
+  "sourceIdentity": {
+    "device": 16777235,
+    "inode": 148247023,
+    "uid": 502,
+    "mode": 16877,
+    "bytes": 128,
+    "mtimeNs": 1792399841001289231
+  },
+  "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-capture-b4688ca21-20261019T094115Z-dc3ca202",
+  "files": 287,
+  "logicalBytes": 142908790,
+  "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "runtimeSHA256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+  "manifestSHA256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+  "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+  "audit": {
+    "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+    "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba",
+    "preservedInPlace": true
+  },
+  "fullProof": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-capture-b4688ca21-20261019T094115Z-dc3ca202.file-proof.json",
+    "sha256": "8401bd3f2a66a7e005a7dd7f4924117dcd5387aca0f6c8e0cdc4dcda1ea89c3e",
+    "bytes": 108545
+  },
+  "everySourceAndDestinationFileHashVerified": true,
+  "sourceUnchangedBeforeRetirement": true,
+  "noOpenHandlesBeforeRetirement": true,
+  "retiredOnlyExactGeneratedCapture": true,
+  "freeBeforeBytes": 257392640,
+  "freeAfterBytes": 399781888,
+  "scope": "No browser/preview owned this supersededb468 capture at root release. Native tests read source only. Audit, qualification receipts, active binaries, drafts, Git objects and external backups preserved.",
+  "limitations": [
+    "Observed free-space change includes concurrent activity. Historical build/browser evidence remains bound to its originalb468 runtime and cannot qualify new403 presentation changes."
+  ]
+}

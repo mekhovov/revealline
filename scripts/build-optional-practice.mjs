@@ -9,7 +9,10 @@ import { installPracticeWorker } from '../optional-practice/civilian-flight/work
 import { installPracticeWorker as installPackageWorker } from '../optional-practice/worker-template.mjs';
 
 import { buildOptionalLauncher } from './optional-launcher.mjs';
-import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
+import {
+  OPTIONAL_PACKAGE_POLICIES,
+  OPTIONAL_SOURCE_INPUT_ALIASES,
+} from '../publishing/optional-package-policy.mjs';
 import { isOptionalNativeBridgeImport } from '../publishing/optional-import-capabilities.mjs';
 import { validatePracticeDescription } from '../game/optional-practice-details.mjs';
 export const OPTIONAL_PRACTICE_ROOT = OPTIONAL_PACKAGE_POLICIES['civilian-flight'].root;
@@ -334,6 +337,15 @@ export async function buildOptionalPractice(
     pending.push(...optionalModuleDependencies(name, bytes, policy, !!vendor));
     pending.push(...resourceReferences(name, bytes));
   }
+  // Discovery builds also supply the complete inputs for a later frozen build.
+  // Validate these canonical bytes without emitting a duplicate runtime module.
+  const launcherInputs = new Map();
+  for (const [input, output] of Object.entries(OPTIONAL_SOURCE_INPUT_ALIASES)) {
+    const bytes = await readInput(input);
+    for (const dependency of optionalModuleDependencies(output, bytes, policy))
+      requireValid(entries.has(dependency), 'Optional launcher source dependency is not admitted');
+    launcherInputs.set(output, bytes);
+  }
   let installation;
   validatePracticeDescription(
     entries.get(packageRoot + 'package-info.json').toString('utf8'),
@@ -363,6 +375,7 @@ export async function buildOptionalPractice(
       basePath,
       entries,
       contextSource: inputs.get('optional-practice/install-context.mjs'),
+      navigationSource: launcherInputs.get('launcher/navigation.mjs'),
       installWorker,
     });
   }

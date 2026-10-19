@@ -1,0 +1,113 @@
+{
+  "format": "SharedDemoHostedShard4CorrectionV1",
+  "observedAt": "2026-10-19T10:05:43.862655+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "hostedFailingHead": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "source": [
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 290944,
+      "sha256": "d9b8d640167a8b7766514b90546e52f67a0cf79a3b77e565cf4063275bbfc529"
+    },
+    {
+      "path": "game/test/localization-couch-host.test.mjs",
+      "bytes": 5543,
+      "sha256": "dab6f4a10801861ae24e6ee3bbc4c1f886f12f5c7b16d063224e21b37d9c15a8"
+    },
+    {
+      "path": "game/test/mission-library-return-intent-host.test.mjs",
+      "bytes": 29665,
+      "sha256": "e51a46ddfa0e3973ca45129c93bcf0b68fd85d16d912c8d3957673ef3512ae3a"
+    }
+  ],
+  "verification": [
+    {
+      "path": ".cache/shard4-targeted-red-20261019T115634.json",
+      "bytes": 51096,
+      "sha256": "65b449447dd5a13074810f958a8b3651a5afb2f6870c5491bb9623477a1d01e0",
+      "complete": false,
+      "stats": {
+        "tests": 7,
+        "pass": 0,
+        "fail": 7,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 37.95144304100177,
+      "cleanupVerified": true
+    },
+    {
+      "path": ".cache/shard4-targeted-fix-20261019T115925.json",
+      "bytes": 43951,
+      "sha256": "5ccf8e4656221fb8122554d303b68492abd258894c3fa44d8ed59aec9e90f683",
+      "complete": true,
+      "stats": {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 47.103207957999985,
+      "cleanupVerified": true
+    },
+    {
+      "path": ".cache/shard4-full-fix-20261019T120028.json",
+      "bytes": 50140,
+      "sha256": "1188bb746e18cfd15d954395e30665dcf518f3c3844192adaa009fe0482125ae",
+      "complete": false,
+      "stats": {
+        "tests": 27,
+        "pass": 25,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 164.39847745800216,
+      "cleanupVerified": true
+    },
+    {
+      "path": ".cache/shard4-classic-fixture-fix-20261019T120352.json",
+      "bytes": 43023,
+      "sha256": "0a1777ead798c1d7fb0fd44cbc88caca9c9d83fc864837507efd93433455587d",
+      "complete": true,
+      "stats": {
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 12.394258457999968,
+      "cleanupVerified": true
+    }
+  ],
+  "result": "All27 affected actual cases have passing scoped evidence:25passed in fullrun, remaining2passed after final fixture-only correction. Not a single fresh27/27 run.",
+  "corrections": [
+    "Team retained localization resolves controls through owning document after page retirement.",
+    "Mission-return fixtures use actual visible Missions action and exact authored Team source owner.",
+    "Exact24simulationtick cut is reached with bounded frames, independent of frame clock rebase.",
+    "Late selected mission must expose paused zero-tick Ready then explicit visible Start before running.",
+    "Classic destinations retain original separate Journey Expert assertion; no Classic difficulty label invented."
+  ],
+  "assertionsPreserved": [
+    "Exact destination/source mission IDs",
+    "Saved preferences and progress bytes",
+    "Guarded unfinished-flight departure and Stay/Leave behavior",
+    "Focus and paused retained checkpoint restoration",
+    "Recording-verification links and locale refresh after retirement"
+  ],
+  "checks": {
+    "prettier": "passed all3changedfiles",
+    "eslint": "passed all3changedfiles"
+  },
+  "limitations": [
+    "Local Node22.22.2arm64 only; hosted Linux matrix remains necessary.",
+    "Third targeted report contains2real matching cases plusoneempty filtered file TAP wrapper; it is not counted as3behaviorchecks.",
+    "Original7-failure reproduction and25/27intermediate run retained unchanged."
+  ]
+}

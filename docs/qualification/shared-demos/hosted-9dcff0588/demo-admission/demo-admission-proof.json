@@ -1,0 +1,39 @@
+{
+  "format": "AppearanceAdmissionProofV1",
+  "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "sourceTree": "73d06a4f8878c9b79271d454e87c1547b7aacfca",
+  "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39239035820",
+  "node": "v22.13.1",
+  "testPolicy": {
+    "policyMode": "required",
+    "mode": "required",
+    "runTests": "true",
+    "qualification": "tests-required",
+    "forced": false,
+    "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+    "policy": {
+      "format": "revealline-release-test-policy.v1",
+      "mode": "required",
+      "authorization": "explicit-user-request-20261004",
+      "scope": "automated-test-suites",
+      "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+      "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+    }
+  },
+  "result": "passed",
+  "executed": true,
+  "command": "node --test --test-concurrency=1",
+  "files": [
+    "game/test/demo-scene-transition.test.mjs",
+    "game/test/victory-story-ui.test.mjs",
+    "game/test/demo-bot.test.mjs",
+    "game/test/demo-sources.test.mjs",
+    "game/test/solo-demo-resources-host.test.mjs",
+    "game/test/demo-loading-host.test.mjs"
+  ],
+  "output": {
+    "path": "demo-admission-tests.tap",
+    "bytes": 21180,
+    "sha256": "f837e4ac8a1e6d63cc2b065f7ea30283289f014e5e1a4ce6c8a8670d72ac1d53"
+  }
+}

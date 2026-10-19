@@ -1,0 +1,49 @@
+{
+  "format": "SharedDemoWorkflowCaptureContractIndependentReviewV1",
+  "createdAt": "2026-10-19T12:09:01.508077+00:00",
+  "parentHead": "27138039f30d759aaf10d0b8c80564757bc9e905",
+  "complete": true,
+  "sourceChanged": "publishing/source-workflow.test.mjs",
+  "runtimeChanged": false,
+  "independentReview": {
+    "reviewer": "storage_audit",
+    "result": "clean",
+    "scope": [
+      "Generic deployment bans remain for all applicable workflows.",
+      "Only three exact local canonical capture paths are normalized in the named workflow.",
+      "PR-head, read-only authority, bounded supervised phases and always-retained diagnostics remain required.",
+      "Eight negative mutations exercise deployment and qualification boundaries."
+    ]
+  },
+  "validation": {
+    "wholeFileTests": 10,
+    "passed": 10,
+    "failed": 0,
+    "lint": "pass",
+    "formatting": "pass"
+  },
+  "files": [
+    {
+      "source": ".cache/source-workflow-demo-capture-guard.json",
+      "path": "original-local-receipt.json",
+      "bytes": 2184,
+      "sha256": "6bf860f2e8f763baebe3598abe14cd3b3a32b19948f6115c20f99bf8dd69f5f6"
+    },
+    {
+      "source": ".cache/source-workflow-demo-capture-guard.patch",
+      "path": "original-change.patch",
+      "bytes": 5668,
+      "sha256": "7c0c5685b39362c8b8e82f0ca9621518548f19945b2b590b5adfa1b7e7e7116b"
+    },
+    {
+      "source": ".cache/source-workflow-demo-capture-guard.tap.txt",
+      "path": "original-tests.tap.txt",
+      "bytes": 2139,
+      "sha256": "4d1a6066f67e9be9829a9daa5ecb276d7d4d1e7874c21684879abaaf03c612a6"
+    }
+  ],
+  "limits": [
+    "Original hosted assertion failure remains failed; this is a local test-contract correction.",
+    "No hosted result is inferred from local tests."
+  ]
+}

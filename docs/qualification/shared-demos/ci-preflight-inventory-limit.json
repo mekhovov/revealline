@@ -1,0 +1,16 @@
+{
+  "observedAt": "2026-10-18T18:37:03.433232+00:00",
+  "headSha": "e8f6f0ebd01f342d6a9b937f740e15a9bdb75f16",
+  "baseSha": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+  "workflowRevision": "6d05d1df44357a7d57ceee5ac8e8c8ca2c69679b",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/1615",
+  "jobUrl": "https://github.com/mekhovov/revealline/actions/runs/39154009782/job/117753338754",
+  "changedFiles": 3069,
+  "documentedApiFileLimit": 3000,
+  "documentation": "https://docs.github.com/en/rest/pulls/pulls#list-pull-requests-files",
+  "failure": "Incomplete changed-file inventory.",
+  "failedBeforeCodeChecks": true,
+  "logSha256": "58dfbe3fd3163158d2310bd499493112472a4f9bb5fedc618a8d1313cd4098d5",
+  "resolution": "pending complete-inventory support; admission not bypassed",
+  "complete": false
+}

@@ -1,0 +1,166 @@
+{
+  "requestedAt": "2026-10-19T11:03:50.688788+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "originalAttempt": 1,
+  "targetJob": {
+    "completedAt": "2026-10-19T10:58:44Z",
+    "conclusion": "failure",
+    "databaseId": 118015194690,
+    "name": "focused_shards (1)",
+    "startedAt": "2026-10-19T10:40:01Z",
+    "status": "completed",
+    "steps": [
+      {
+        "completedAt": "2026-10-19T10:40:03Z",
+        "conclusion": "success",
+        "name": "Set up job",
+        "number": 1,
+        "startedAt": "2026-10-19T10:40:02Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:41:44Z",
+        "conclusion": "success",
+        "name": "Check out exact pull-request source",
+        "number": 2,
+        "startedAt": "2026-10-19T10:40:03Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:41:45Z",
+        "conclusion": "success",
+        "name": "Check out trusted focused-gate automation",
+        "number": 3,
+        "startedAt": "2026-10-19T10:41:44Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:41:52Z",
+        "conclusion": "success",
+        "name": "Set up Node.js",
+        "number": 4,
+        "startedAt": "2026-10-19T10:41:45Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:41:53Z",
+        "conclusion": "success",
+        "name": "Download the immutable preflight path inventory",
+        "number": 5,
+        "startedAt": "2026-10-19T10:41:52Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:41:53Z",
+        "conclusion": "success",
+        "name": "Capture the reviewed changed-path set",
+        "number": 6,
+        "startedAt": "2026-10-19T10:41:53Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:41:54Z",
+        "conclusion": "success",
+        "name": "Select the fail-closed focused gate",
+        "number": 7,
+        "startedAt": "2026-10-19T10:41:53Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:42:33Z",
+        "conclusion": "success",
+        "name": "Verify exact tracked source before commands",
+        "number": 8,
+        "startedAt": "2026-10-19T10:41:54Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:42:35Z",
+        "conclusion": "success",
+        "name": "Install dependencies once for selected focused gates",
+        "number": 9,
+        "startedAt": "2026-10-19T10:42:33Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:42:36Z",
+        "conclusion": "success",
+        "name": "Install pinned authoring dependencies for selected focused gates",
+        "number": 10,
+        "startedAt": "2026-10-19T10:42:35Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:58:00Z",
+        "conclusion": "failure",
+        "name": "Run selected focused gates",
+        "number": 11,
+        "startedAt": "2026-10-19T10:42:36Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:58:39Z",
+        "conclusion": "success",
+        "name": "Verify exact tracked source after commands",
+        "number": 12,
+        "startedAt": "2026-10-19T10:58:00Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:58:41Z",
+        "conclusion": "success",
+        "name": "Retain available focused shard evidence",
+        "number": 13,
+        "startedAt": "2026-10-19T10:58:39Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:58:41Z",
+        "conclusion": "skipped",
+        "name": "Post Set up Node.js",
+        "number": 24,
+        "startedAt": "2026-10-19T10:58:41Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:58:41Z",
+        "conclusion": "success",
+        "name": "Post Check out trusted focused-gate automation",
+        "number": 25,
+        "startedAt": "2026-10-19T10:58:41Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:58:41Z",
+        "conclusion": "success",
+        "name": "Post Check out exact pull-request source",
+        "number": 26,
+        "startedAt": "2026-10-19T10:58:41Z",
+        "status": "completed"
+      },
+      {
+        "completedAt": "2026-10-19T10:58:41Z",
+        "conclusion": "success",
+        "name": "Complete job",
+        "number": 27,
+        "startedAt": "2026-10-19T10:58:41Z",
+        "status": "completed"
+      }
+    ],
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118015194690"
+  },
+  "command": [
+    "gh",
+    "run",
+    "rerun",
+    "39239035764",
+    "--repo",
+    "mekhovov/revealline",
+    "--job",
+    "118015194690"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "scope": "Exactly one explicitly authorized job retry, including GitHub-managed dependency behavior. No source edits/timeouts changed; original failed receipt retained."
+}

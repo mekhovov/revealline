@@ -1,0 +1,201 @@
+{
+  "format": "SharedDemoRestorationReviewV1",
+  "created": "2026-10-18T19:10:44.263Z",
+  "status": "Functional reload evidence and precise diagnostics retained; strict WebKit ordinary-navigation diagnostic gate remains failed.",
+  "receipts": [
+    {
+      "path": "docs/qualification/shared-demos/restoration-chromium-461ace.json",
+      "sha256": "9c80ad44b0afc41035d5bc7349f72b2e8405b9be642777aba54aca78f8e5b12c",
+      "complete": true,
+      "functionalComplete": null,
+      "strictDiagnosticGate": null,
+      "checks": 12,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/restoration-firefox-461ace.json",
+      "sha256": "c67f7110634db806aa9aea155b37e55b1ddee5d43fce3a8c212cd842d5058631",
+      "complete": true,
+      "functionalComplete": null,
+      "strictDiagnosticGate": null,
+      "checks": 12,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/restoration-webkit-461ace.json",
+      "sha256": "75e9130bec4b3cdc3916ea6ebd7c8b62c0b0e229f948e6b485252ed99acdd624",
+      "complete": false,
+      "functionalComplete": null,
+      "strictDiagnosticGate": null,
+      "checks": 12,
+      "pageErrors": 1,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/restoration-webkit-observed-461ace.json",
+      "sha256": "4ca40a96260a879b677422ff4afc8c9770029be47a11d3e3f3fa909339203470",
+      "complete": true,
+      "functionalComplete": null,
+      "strictDiagnosticGate": null,
+      "checks": 3,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/bfcache-revalidate-chromium-461ace.json",
+      "sha256": "4ff21d7d8c4f02a034c7483351ee699495477cc6d5533b2ffd38407de3d2201d",
+      "complete": true,
+      "functionalComplete": null,
+      "strictDiagnosticGate": null,
+      "checks": 1,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/bfcache-revalidate-firefox-461ace.json",
+      "sha256": "7dbf181183341cc3f9d007dd444993abe66cc697900cfba58e88eacb426633bc",
+      "complete": true,
+      "functionalComplete": null,
+      "strictDiagnosticGate": null,
+      "checks": 1,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/bfcache-revalidate-webkit-461ace.json",
+      "sha256": "1df2212fcfd4f87d47dcbfe72f890c9ca6861758ec276062d41816487f8bd2bd",
+      "complete": true,
+      "functionalComplete": null,
+      "strictDiagnosticGate": null,
+      "checks": 1,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/webkit-ordinary-reload-repetition-baseline-461ace.json",
+      "sha256": "e441902d84cc8d59aa531304da0836c953d35c8e24c4640c51772a088ad008e1",
+      "complete": false,
+      "functionalComplete": null,
+      "strictDiagnosticGate": null,
+      "checks": 8,
+      "pageErrors": 2,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/webkit-ordinary-reload-candidate-461ace.json",
+      "sha256": "b2f993a9a0227cfe4f6bee98e34cd2d0d517cd24f24283c7a33b94cce3692e9a",
+      "complete": false,
+      "functionalComplete": null,
+      "strictDiagnosticGate": null,
+      "checks": 8,
+      "pageErrors": 3,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+      "sourceOverride": [
+        {
+          "path": "/game/presentation/host.mjs",
+          "originalSHA256": "b13a7d44a136550fc74bc12fff19555586b4f36143f22b493a599b398b1d0d64",
+          "candidatePath": ".cache/presentation-promise-ownership/host.browser-candidate.mjs",
+          "candidateSHA256": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2",
+          "scope": "Only ephemeral browser route; live production files remain unchanged."
+        }
+      ]
+    },
+    {
+      "path": "docs/qualification/shared-demos/webkit-ordinary-reload-no-routing-ownership-ci-final.json",
+      "sha256": "673aa96ba0f09314aab381a98eccc58fcc233b4427979c8043ce17b5acfee421",
+      "complete": false,
+      "functionalComplete": true,
+      "strictDiagnosticGate": false,
+      "checks": 8,
+      "pageErrors": 3,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/webkit-native-reload-minimal-461ace.json",
+      "sha256": "0c30deabd4895a81549ec0b1282e119912e197c1a570cad983511a9fecbab11e",
+      "complete": true,
+      "functionalComplete": true,
+      "strictDiagnosticGate": null,
+      "checks": 15,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": null,
+      "sourceOverride": null
+    },
+    {
+      "path": "docs/qualification/shared-demos/webkit-native-teardown-minimal-461ace.json",
+      "sha256": "8a41cdd5db17849ebcba72132cd83714edc97afab2ea5b3246a06f5f56a4661c",
+      "complete": true,
+      "functionalComplete": true,
+      "strictDiagnosticGate": null,
+      "checks": 15,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "sourceFingerprint": null,
+      "sourceOverride": null
+    }
+  ],
+  "conclusions": [
+    "Historical Chromium and Firefox full matrices each passed12 checks:4 ordinary controls plus watching/practice reload for each of4modes. Historical WebKit passed all12 state/storage assertions but failed its strict pageerror gate. A focused unchanged-runtime Solo retry passed3checks; it does not supersede the failed full matrix.",
+    "Current087ca93f runtime passed8 ordinary Solo reload/state/storage checks under native fixture serving without Playwright routing. It retained3 pageerrors and failed the strict gate. Waiting for actual boot readiness did not remove the diagnostics. No diagnostic is whitelisted.",
+    "The route-only immediate-promise-ownership candidate retained native navigation diagnostics. Its synthetic delayed-admission improvement is independently tested; it is not proved to fix the observed reload issue.",
+    "Independent minimal HTML navigation, reload and beforeunload probes attached native fetch/decode rejection handlers synchronously and produced normally caught failures without pageerrors. These negative controls do not identify the cause of the game diagnostics.",
+    "Actual BFCache admission was observed only in Chromium for Solo watching and practice on a separate revalidate preview. Firefox and WebKit did not admit either state and did not expose a notRestoredReasons detail. No browser discard is claimed."
+  ],
+  "lifecyclePolicy": {
+    "soloNavigation": {
+      "source": "game/app.mjs:3687",
+      "upstreamBase": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "observation": "A playing Solo watch returns paused at the displayed checkpoint after actual BFCache. Solo already explicitly suspends Demo during pagehide, including persisted navigation; pageshow retains ordinary paused/stale-writer behavior. This is not described as resumed watching or preservation of playing intent.",
+      "pageshow": "game/app.mjs:3816"
+    },
+    "freezeResume": {
+      "clock": "game/ui/demo-clock.mjs:190",
+      "host": "game/ui/demo-host.mjs:734",
+      "policy": "Shared document freeze/resume suspends scheduling and rebases time without changing watching intent. Foreground loss pauses practice. This differs from explicit Solo history navigation."
+    },
+    "nativeEntries": "Snake, Survival and SIM retain their ordinary navigation handlers and do not explicitly call Demo suspend during persisted pagehide. Actual BFCache behavior of these originating pages is not qualified here."
+  },
+  "diagnosticMechanism": {
+    "installedPlaywrightVersion": "1.62.1",
+    "installedWebKitRevision": "2336",
+    "browserVersion": "26.5",
+    "upstreamRevision": "343e13bf22dca9d0ec227801419aab0f9001a32f",
+    "sources": [
+      "https://github.com/microsoft/playwright/blob/v1.62.1/browser_patches/webkit/UPSTREAM_CONFIG.sh",
+      "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/loader/ThreadableLoader.cpp#L129-L151",
+      "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/loader/DocumentThreadableLoader.cpp"
+    ],
+    "localTransport": "Installed playwright-core/lib/coreBundle.js:49556-49591",
+    "finding": "The pinned upstream native loader constructs the observed fetch/blob access-control text and sends a JS-category error console message independently of JavaScript promise handling. Installed Playwright maps that category to pageerror. Thus those message forms do not themselves prove an unhandled JavaScript rejection.",
+    "limits": "This mechanism does not establish the precise lifetime/old-document cause of each observed game diagnostic. Context is stopped remains separately unclassified. A missing DOM error or rejection event during teardown is not alone proof that no application error occurred."
+  },
+  "limitations": [
+    "Full matrices use fresh ephemeral profiles and equivalent ordinary startup controls; they do not cover every pre-existing saved-game recovery record.",
+    "Storage comparisons include exact local/session values and observed API mutations. IndexedDB ordinary startup admission compares exact API/store/method/key signatures; it is not a complete byte comparison of every IndexedDB value.",
+    "Source binding records a parent-declared frozen manifest and verifies declaration stability; these probes do not recompute the entire production fingerprint.",
+    "The original minimal-navigation diagnostic receipt has inaccurate browser-close boolean fields because its report helper was called after explicit close without the browser object. Subsequent minimal-reload/teardown receipts correctly record completed browser and server cleanup; the earlier receipt is not used for cleanup acceptance.",
+    "An initial minimal-reload attempt ended from an aborted test event-beacon request in its temporary Node server. The test-only server was hardened, and subsequent attempts completed; no game files changed."
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "format": "SharedDemoNativeReplayAdmissionV1",
+  "complete": false,
+  "started": "2026-10-19T09:39:53.818629+00:00",
+  "headBefore": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceBefore": {
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/demo-catalog.mjs": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+    "game/replay.mjs": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/demo-replay-diagnostics.mjs": "c213fc37a6270fc5b6ed4f467f8730e04835acdba8ba94c2be20b8ff27dc4145",
+    "game/test/demo-sources.test.mjs": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+    "game/test/demo-recordings.test.mjs": "cc89903723f98c60cedef8488ddc732c7bf9c84f4c81e8a74976280bb24a0e2d",
+    "game/demo-data/catalog.json": "9dbec5b1f6d1a02e919d2515f784565cab119db0da0b92a653bec181d6a13421",
+    "game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.diagnostics.json": "ddb54ef6cecb562a3553ef908b67b38d66174971f2db854dbd3014b8a746bbe0",
+    "game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json": "535e03c1b709735d7b785405b08da3f98e543654e11724ec297059fad63c820a",
+    "game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.diagnostics.json": "c735e57fe3fc77c161dfd26bbf0e6f8bf469a22feff5186e1e3fe804269d067e",
+    "game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json": "9236667cf96c04697692dcc7047dd570d9ab0e39cb0ccb5d5cdc373c2f626406",
+    "game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.diagnostics.json": "3a2aa4dd2510602f6b3ce92133b923d2c69bac744b8a5c4517c39a13f2f09f10",
+    "game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.replay.json": "dc5b3eb14c36352bd5e7a7d63ac6da64eb687fe6d33735d2383e8b426c02db44"
+  },
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "--test-timeout=120000",
+    "game/test/demo-sources.test.mjs",
+    "game/test/demo-recordings.test.mjs"
+  ],
+  "nodeVersion": "v22.13.1",
+  "platform": "darwin",
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/solo-node22131-x64-admission-3f84b51f8-20261019T113953-tmp",
+  "timeoutSeconds": 300,
+  "localStorage": {
+    "freeFloorBytes": 209715200,
+    "allocationCapBytes": 314572800,
+    "freeBeforeBytes": 266035200,
+    "minimumObservedFreeBytes": 263811072,
+    "maximumObservedFixtureBytes": 0
+  },
+  "ownerSHA256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+  "wrapperSHA256": "4a00d24b791483835bcd95d8bd6d77e662aaee12c5920599d91b1127f237edd0",
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 3,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 69441,
+        "ppid": 69378,
+        "pgid": 69441,
+        "uid": 502,
+        "started": "Mon Oct 19 11:39:54 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node --test --test-concurrency=1 --test-reporter=tap --test-timeout=120000 game/test/demo-sources.test.mjs game/test/demo-recordings.test.mjs",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T09:39:54.199266+00:00"
+      },
+      {
+        "pid": 69501,
+        "ppid": 69441,
+        "pgid": 69441,
+        "uid": 502,
+        "started": "Mon Oct 19 11:39:54 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node --test-concurrency=1 --test-timeout=120000 game/test/demo-recordings.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          69441,
+          "Mon Oct 19 11:39:54 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node --test --test-concurrency=1 --test-reporter=tap --test-timeout=120000 game/test/demo-sources.test.mjs game/test/demo-recordings.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:39:54.768358+00:00"
+      },
+      {
+        "pid": 69843,
+        "ppid": 69441,
+        "pgid": 69441,
+        "uid": 502,
+        "started": "Mon Oct 19 11:39:58 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node --test-concurrency=1 --test-timeout=120000 game/test/demo-sources.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          69441,
+          "Mon Oct 19 11:39:54 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node --test --test-concurrency=1 --test-reporter=tap --test-timeout=120000 game/test/demo-sources.test.mjs game/test/demo-recordings.test.mjs"
+        ],
+        "observedAt": "2026-10-19T09:39:58.419008+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/solo-node22131-x64-admission-3f84b51f8-20261019T113953.tap.txt",
+    "byteLimit": 4194304,
+    "totalBytes": 10838,
+    "writtenBytes": 10838,
+    "truncatedBytes": 0,
+    "tailLimit": 32768,
+    "tailBytes": 10838,
+    "tailSHA256": "842ffc5ffe5a3aa93f7c42d39ea2e93de760aa2724072a0a3387e81f1e24af2a",
+    "tail": "TAP version 13\n# Subtest: curated complete routes reproduce current Standard tuning without scripted reversal excerpts\nnot ok 1 - curated complete routes reproduce current Standard tuning without scripted reversal excerpts\n  ---\n  duration_ms: 830.12525\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/demo-recordings.test.mjs:34:1'\n  failureType: 'testCodeFailure'\n  error: 'At least one independently frozen strict recording must match this runtime.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  operator: '=='\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/demo-recordings.test.mjs:60:12)\n    async Test.run (node:internal/test_runner/test:932:9)\n    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)\n  ...\n# Subtest: personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes\nok 2 - personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes\n  ---\n  duration_ms: 35.580541\n  ...\n# Subtest: frozen browser variants preserve the exact reviewed trace and every non-enemy outcome\nok 3 - frozen browser variants preserve the exact reviewed trace and every non-enemy outcome\n  ---\n  duration_ms: 9.823958\n  ...\n# Subtest: catalogue admits only matching installed content and local bundled replay URLs\nok 4 - catalogue admits only matching installed content and local bundled replay URLs\n  ---\n  duration_ms: 48.239459\n  ...\n# Subtest: immediate: practice forks match all four core branches and own every mutable value\nok 5 - immediate: practice forks match all four core branches and own every mutable value\n  ---\n  duration_ms: 610.086292\n  ...\n# Subtest: grid-center: practice forks match all four core branches and own every mutable value\nok 6 - grid-center: practice forks match all four core branches and own every mutable value\n  ---\n  duration_ms: 570.511084\n  ...\n# Subtest: practice preparation rejects stale, cancelled, terminal or altered playback and owns exports\nok 7 - practice preparation rejects stale, cancelled, terminal or altered playback and owns exports\n  ---\n  duration_ms: 62.021917\n  ...\n# Subtest: practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause\nok 8 - practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause\n  ---\n  duration_ms: 35.477542\n  ...\n# Subtest: disposing replay playback cancels pending practice and prevents an abandoned player from advancing\nok 9 - disposing replay playback cancels pending practice and prevents an abandoned player from advancing\n  ---\n  duration_ms: 32.283333\n  ...\n# Subtest: a takeover retains both hangar loadouts, a live support field and impact recovery timing\nok 10 - a takeover retains both hangar loadouts, a live support field and impact recovery timing\n  ---\n  duration_ms: 57.981709\n  ...\n# Subtest: immediate: staged encounter takeover preserves warning, active and transition authority\nok 11 - immediate: staged encounter takeover preserves warning, active and transition authority\n  ---\n  duration_ms: 87.42975\n  ...\n# Subtest: grid-center: staged encounter takeover preserves warning, active and transition authority\nok 12 - grid-center: staged encounter takeover preserves warning, active and transition authority\n  ---\n  duration_ms: 55.229834\n  ...\n# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily\nok 13 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily\n  ---\n  duration_ms: 2710.043958\n  ...\n# Subtest: same map IDs in separately installed themed owners do not collide\nok 14 - same map IDs in separately installed themed owners do not collide\n  ---\n  duration_ms: 59.135167\n  ...\n# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey\nok 15 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey\n  ---\n  duration_ms: 3450.124917\n  ...\n# Subtest: actual public company editions expose only their own isolated installed levels\nok 16 - actual public company editions expose only their own isolated installed levels\n  ---\n  duration_ms: 3156.170375\n  ...\n# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs\nok 17 - missing Worker and uninstalled content filter sources without downloading or installing packs\n  ---\n  duration_ms: 46.870958\n  ...\n# Subtest: manually kept local recordings join the catalogue without enabling automatic collection\nok 18 - manually kept local recordings join the catalogue without enabling automatic collection\n  ---\n  duration_ms: 117.204916\n  ...\n# Subtest: personal recording rotation metadata preserves its admitted difficulty identity\nok 19 - personal recording rotation metadata preserves its admitted difficulty identity\n  ---\n  duration_ms: 0.535333\n  ...\n# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline\nnot ok 20 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline\n  ---\n  duration_ms: 114.459541\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/demo-sources.test.mjs:323:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Each bounded recording candidate is attempted once; no pack or media download is attempted.\n    + actual - expected\n    ... Skipped lines\n    \n    + Set(29) {\n    - Set(27) {\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/catalog.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/crosswind-openings.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/first-signal-left.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/first-signal-right.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/hidden-frequency-search.replay.json',\n    ...\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.replay.json',\n    +   'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.chromium.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.firefox.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.replay.json',\n    ...\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.firefox.performance.replay.json',\n    +   'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.webkit.performance.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/stone-lanes-detour.replay.json',\n        'file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/the-crossing-windows.replay.json'\n      }\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual:\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/demo-sources.test.mjs:367:14)\n    async Test.run (node:internal/test_runner/test:932:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:629:7)\n  ...\n# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation\nok 21 - scene creation rejects a valid but wrong bundled recording and respects cancellation\n  ---\n  duration_ms: 23.701875\n  ...\n# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation\nok 22 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation\n  ---\n  duration_ms: 1.091584\n  ...\n# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference\nok 23 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference\n  ---\n  duration_ms: 333.622166\n  ...\n# Subtest: the ordinary game build includes every dynamic demo asset and Worker module\nok 24 - the ordinary game build includes every dynamic demo asset and Worker module\n  ---\n  duration_ms: 820.842042\n  ...\n# Subtest: a personal cache that never settles times out without discarding bundled sources\nok 25 - a personal cache that never settles times out without discarding bundled sources\n  ---\n  duration_ms: 28.389375\n  ...\n# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache\nok 26 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache\n  ---\n  duration_ms: 0.608875\n  ...\n# Subtest: resource diagnostic reaches live source rehearsal before its player can be returned\nok 27 - resource diagnostic reaches live source rehearsal before its player can be returned\n  ---\n  duration_ms: 20.799209\n  ...\n1..27\n# tests 27\n# suites 0\n# pass 25\n# fail 2\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 15357.749583\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 1,
+  "sourceAfter": {
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/demo-catalog.mjs": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+    "game/replay.mjs": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/demo-replay-diagnostics.mjs": "c213fc37a6270fc5b6ed4f467f8730e04835acdba8ba94c2be20b8ff27dc4145",
+    "game/test/demo-sources.test.mjs": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+    "game/test/demo-recordings.test.mjs": "cc89903723f98c60cedef8488ddc732c7bf9c84f4c81e8a74976280bb24a0e2d",
+    "game/demo-data/catalog.json": "9dbec5b1f6d1a02e919d2515f784565cab119db0da0b92a653bec181d6a13421",
+    "game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.diagnostics.json": "ddb54ef6cecb562a3553ef908b67b38d66174971f2db854dbd3014b8a746bbe0",
+    "game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json": "535e03c1b709735d7b785405b08da3f98e543654e11724ec297059fad63c820a",
+    "game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.diagnostics.json": "c735e57fe3fc77c161dfd26bbf0e6f8bf469a22feff5186e1e3fe804269d067e",
+    "game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json": "9236667cf96c04697692dcc7047dd570d9ab0e39cb0ccb5d5cdc373c2f626406",
+    "game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.diagnostics.json": "3a2aa4dd2510602f6b3ce92133b923d2c69bac744b8a5c4517c39a13f2f09f10",
+    "game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.replay.json": "dc5b3eb14c36352bd5e7a7d63ac6da64eb687fe6d33735d2383e8b426c02db44"
+  },
+  "sourceStable": true,
+  "headAfter": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "finished": "2026-10-19T09:40:10.374520+00:00"
+}

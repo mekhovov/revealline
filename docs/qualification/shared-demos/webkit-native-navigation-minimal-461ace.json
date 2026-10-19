@@ -1,0 +1,1177 @@
+{
+  "format": "WebKitNativeNavigationDiagnosticV1",
+  "started": "2026-10-18T18:56:46.986Z",
+  "complete": true,
+  "probe": {
+    "path": ".cache/qualify-webkit-native-navigation.mjs",
+    "sha256": "9cd7d3e5862e93c64edfb4a7bf6e0f38e222eaf2b638a857c1f453973e0fddf4"
+  },
+  "scope": "Independent minimal HTML, native fetch/createImageBitmap, and deliberate navigation. No game modules are imported or executed. Native promises get rejection handlers synchronously before navigation.",
+  "checks": [
+    {
+      "kind": "control",
+      "iteration": 1,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "control",
+      "iteration": 2,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "control",
+      "iteration": 3,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "control",
+      "iteration": 4,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "control",
+      "iteration": 5,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 1,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 2,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 3,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 4,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 5,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 1,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 2,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 3,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 4,
+      "awayReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 5,
+      "awayReached": true,
+      "pageErrors": 0
+    }
+  ],
+  "pageErrors": [],
+  "console": [],
+  "requestsFailed": [
+    {
+      "stage": "control-1",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "control-2",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "control-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "control-4",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "control-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-1",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-1",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-2",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-2",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-4",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-4",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-4",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    }
+  ],
+  "events": [
+    {
+      "receivedAt": "2026-10-18T18:56:48.584Z",
+      "id": "?kind=control&iteration=1",
+      "at": 1792349808578,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:48.649Z",
+      "id": "?kind=control&iteration=1",
+      "at": 1792349808646,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:48.655Z",
+      "id": "?kind=control&iteration=1",
+      "at": 1792349808653,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:48.775Z",
+      "id": "?kind=control&iteration=2",
+      "at": 1792349808771,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:48.830Z",
+      "id": "?kind=control&iteration=2",
+      "at": 1792349808826,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:48.835Z",
+      "id": "?kind=control&iteration=2",
+      "at": 1792349808832,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:48.946Z",
+      "id": "?kind=control&iteration=3",
+      "at": 1792349808942,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.013Z",
+      "id": "?kind=control&iteration=3",
+      "at": 1792349809009,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.017Z",
+      "id": "?kind=control&iteration=3",
+      "at": 1792349809015,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.129Z",
+      "id": "?kind=control&iteration=4",
+      "at": 1792349809124,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.181Z",
+      "id": "?kind=control&iteration=4",
+      "at": 1792349809179,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.184Z",
+      "id": "?kind=control&iteration=4",
+      "at": 1792349809183,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.291Z",
+      "id": "?kind=control&iteration=5",
+      "at": 1792349809287,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.347Z",
+      "id": "?kind=control&iteration=5",
+      "at": 1792349809345,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.351Z",
+      "id": "?kind=control&iteration=5",
+      "at": 1792349809349,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.468Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349809462,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.522Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349809514,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.523Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349809516,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.523Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349809516,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.526Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349809516,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.526Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349809516,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.530Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349809525,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.642Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349809636,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.699Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349809693,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.699Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349809694,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.699Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349809694,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.701Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349809695,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.701Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349809694,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.703Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349809700,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.804Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349809802,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.865Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349809859,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.865Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349809861,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.865Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349809861,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.867Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349809861,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.867Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349809861,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.870Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349809866,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:49.974Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349809970,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.032Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349810029,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.032Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349810029,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.032Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349810026,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.034Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349810029,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.034Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349810029,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.036Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349810033,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.145Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349810139,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.207Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349810199,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.207Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349810199,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.208Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349810197,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.210Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349810199,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.212Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349810199,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.214Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349810209,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.318Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810314,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.364Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810361,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.384Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810382,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.387Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810385,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.390Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810388,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.394Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810391,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.397Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810394,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.399Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810397,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.401Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810399,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.407Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810404,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.407Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349810405,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.515Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810510,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.563Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810560,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.568Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810564,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.570Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810568,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.573Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810571,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.575Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810573,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.579Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810576,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.580Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810578,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.583Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810581,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.589Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810587,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.590Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349810587,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.697Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810692,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.746Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810744,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.749Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810747,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.752Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810750,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.755Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810753,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.758Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810756,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.761Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810759,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.765Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810763,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.768Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810766,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.771Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810769,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.772Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349810770,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.879Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810873,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.929Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810927,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.932Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810930,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.936Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810933,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.938Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810936,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.940Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810939,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.943Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810941,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.946Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810945,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.949Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810947,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.953Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810950,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:50.955Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349810954,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.061Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811056,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.113Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811111,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.116Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811114,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.119Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811117,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.122Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811120,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.125Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811123,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.129Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811127,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.131Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811129,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.137Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811132,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.138Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811135,
+      "type": "resolved-decode"
+    },
+    {
+      "receivedAt": "2026-10-18T18:56:51.139Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349811138,
+      "type": "pagehide",
+      "persisted": false
+    }
+  ],
+  "limitations": [
+    "This proves only the behavior observed in this installed browser and automation transport; it does not identify every diagnostic in the game.",
+    "Document teardown can prevent event delivery. Absence of a delivered error or rejection event alone is not proof of absence.",
+    "No application error is filtered or converted to a success. Functional checks and native diagnostic observations are reported separately."
+  ],
+  "image": {
+    "path": "game/assets/field-kit/sprites/player-scout-compact.png",
+    "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91"
+  },
+  "browserVersion": "26.5",
+  "functionalComplete": true,
+  "observedNativeConsoleDiagnostics": 0,
+  "browserCloseAttempted": false,
+  "browserCloseCompleted": false,
+  "serverClosed": true,
+  "finished": "2026-10-18T18:56:51.243Z"
+}

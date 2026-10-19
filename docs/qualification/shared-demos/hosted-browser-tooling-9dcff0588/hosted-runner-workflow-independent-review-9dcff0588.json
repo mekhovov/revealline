@@ -1,0 +1,37 @@
+{
+  "format": "SharedDemoHostedToolingReadOnlyReviewV1",
+  "reviewedAt": "2026-10-19T11:42:46.585664+00:00",
+  "reviewer": "webkit_review",
+  "sources": [
+    {
+      "path": "scripts/qualify-shared-demo-hosted-browser.mjs",
+      "bytes": 26354,
+      "sha256": "95c450ac55262623f5b2b3450a19f9493016b2b6eb92792acc116945b37be9d8"
+    },
+    {
+      "path": "scripts/test-qualify-shared-demo-hosted-browser.mjs",
+      "bytes": 8401,
+      "sha256": "af9c016e6ddca635caab170bac04124b57f00a3be4dfed7094a675bb2acdb6a2"
+    },
+    {
+      "path": ".github/workflows/shared-demo-browser-qualification.yml",
+      "bytes": 9473,
+      "sha256": "5a2819d9fb51569ff3489bed85647217f9312562b6bc008e9be4662ee8ecb031"
+    }
+  ],
+  "scope": [
+    "Exact clean HEAD, declaration/runtime identity and all emitted capture bodies bound before/after.",
+    "Existing eleven matrix and nine additional jobs retain their original CLI scope and documented credential-fixture exceptions.",
+    "Per-child timeout/cancellation/nonzero/signal, failed leaf result, error-bearing result, source drift and provider cleanup fail closed.",
+    "Reviewed Solo result is explicitly terminal tick/outcome plus meaningful progress correlated to published candidate boundaries, not identification of the selected body or page-error/takeover proof.",
+    "Offline acceptance requires exact source/capture, zero errors, browser/preview closure and exact profile/session retirement.",
+    "Workflow uses pinned actions and Node/Playwright versions, exact PR HEAD checkout, fresh runner directories/capture, bounded logs and always-upload evidence."
+  ],
+  "materialFindings": [],
+  "limits": [
+    "Read-only source review; reviewer did not launch browsers or independently rerun runner guards.",
+    "Python exact-owned process supervisor and its tests remain pending review.",
+    "Ninety-minute workflow failure bound is not an execution ETA; partial attempts cannot establish completion.",
+    "Plan remaining rows reviewed read-only; nine affected jobs is more precise than nine affected checks."
+  ]
+}

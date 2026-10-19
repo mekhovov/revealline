@@ -1,0 +1,94 @@
+{
+  "format": "SharedDemoMenuStartupCPUObservationReviewV1",
+  "created": "2026-10-18T22:30:51.525513+00:00",
+  "head": "f97034cc2f00c5cd2f4d7e58f6f519b1f3e315dd",
+  "declaredRuntimeFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+  "scope": "Read-only postprocessing of the one authorized startup-spanning diagnostic. No production or durable qualifier changed; scoped before/after source hashes and HEAD were unchanged.",
+  "evidence": [
+    {
+      "path": "docs/qualification/shared-demos/menu-startup-cpu-observation-chromium-237.json",
+      "sha256": "08ef0ec8ebf90308fcc55b376c5032ac8dabf46ddf9b9e5db3ab0856776ccad2",
+      "bytes": 149762
+    },
+    {
+      "path": "docs/qualification/shared-demos/menu-startup-cpu-observation-chromium-237-binding.json",
+      "sha256": "a41c0001662f7206be0e8e7649274a4577c5fdf493580939f480ce3a9edee631",
+      "bytes": 5705
+    },
+    {
+      "path": "docs/qualification/shared-demos/menu-startup-cpu-observation-chromium-237-whole-cpu.json",
+      "sha256": "0d7565657e55b9547d99f04e17564402515d5953445b08bdc14a7ef5f18d3822",
+      "bytes": 382114
+    }
+  ],
+  "outcome": {
+    "childExitCode": 0,
+    "functionalChecks": 3,
+    "functionalComplete": true,
+    "strictDiagnosticGate": true,
+    "pageerrors": 0,
+    "browserCloseCompleted": true,
+    "previewClosed": true,
+    "sourceUnchanged": true
+  },
+  "profilingCoverage": {
+    "requestedStartBeforeNavigation": "2026-10-18T22:28:14.638Z",
+    "stopAcknowledged": "2026-10-18T22:28:39.540Z",
+    "returnedProfileStart": "2026-10-18T22:28:36.543341+00:00",
+    "returnedProfileEnd": "2026-10-18T22:28:39.491150+00:00",
+    "returnedDurationMs": 2947.809,
+    "samples": 2221,
+    "clockBracketUncertaintyMs": 4.0,
+    "finding": "The returned profile covers only the final reload-from-practice document interval (about2.948seconds), despite sampling being enabled before initial navigation. It does not cover either menu attempt. The empty crops are actual nonoverlap, not evidence of zero CPU work. This observation is consistent with profiler data resetting across navigation; exact protocol cause was not separately probed.",
+    "clockMappingCorrectionRequired": false,
+    "rawFilenameCaution": "The retained original whole-cpu filename states intended capture scope; its actual coverage is only the returned interval above."
+  },
+  "menuAttempts": [
+    {
+      "stage": "watching",
+      "started": "2026-10-18T22:28:23.327Z",
+      "finished": "2026-10-18T22:28:23.708Z",
+      "clickResolved": true,
+      "wallDurationMs": 381.0,
+      "longTasks": [
+        {
+          "startTime": 4314.599999997765,
+          "duration": 230,
+          "name": "self"
+        }
+      ],
+      "sampleCoverage": false
+    },
+    {
+      "stage": "practice",
+      "started": "2026-10-18T22:28:31.629Z",
+      "finished": "2026-10-18T22:28:32.018Z",
+      "clickResolved": true,
+      "wallDurationMs": 389.0,
+      "longTasks": [
+        {
+          "startTime": 4128.599999997765,
+          "duration": 251,
+          "name": "self"
+        }
+      ],
+      "sampleCoverage": false
+    }
+  ],
+  "finalReloadProfileOnly": {
+    "inclusiveMilliseconds": {
+      "anonymous http://127.0.0.1:8771/game/app.mjs:13976": 1216.05,
+      "createEncounterHost": 1067.731,
+      "compileContentProject": 921.267,
+      "inspectMissionTopology": 641.492,
+      "createCandidateVersusHost": 148.222
+    },
+    "interpretation": "Final ordinary startup contains substantial synchronous mission-catalog compilation. These measured stacks do not identify the owner of the earlier4013ms menu long task; that failure did not recur in this run."
+  },
+  "limits": [
+    "Sampling and bounded DOM observers perturb timing. This diagnostic pass does not replace the failed durable Chromium/Firefox restoration gates.",
+    "No4second task was captured. Earlier4013ms main-thread starvation remains confirmed for one observer run, but its owning stack and Firefox cause remain unproven.",
+    "No retry, click-timeout relaxation, source edit, or pageerror filtering was performed.",
+    "A future profile intended to cover a click should be stopped and retained before the next navigation, or use navigation-aware per-document profiling; no further run is authorized by this receipt."
+  ]
+}

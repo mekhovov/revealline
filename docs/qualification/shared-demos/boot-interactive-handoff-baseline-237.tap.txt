@@ -1,0 +1,106 @@
+TAP version 13
+# (node:9196) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./.cache/boot-readiness-baseline-loader-237.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: native inert boot cannot cancel exact Team-to-Solo handoff with its own fallback focus
+not ok 1 - native inert boot cannot cancel exact Team-to-Solo handoff with its own fallback focus
+  ---
+  duration_ms: 25301.556708
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:148:1'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous test action did not settle.{"boot":"ready","flight":"briefing","level":"choose-your-share","paused":true,"warning":"Choose your route. Open Missions → Mission brief for guidance.","preparation":"","errors":[]}'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/wait-for.mjs:15:12)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:153:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: native incoming Solo handoff still yields to newer focus while metadata waits
+ok 2 - native incoming Solo handoff still yields to newer focus while metadata waits # SKIP test name does not match pattern
+  ---
+  duration_ms: 1.142333
+  ...
+# Subtest: native incoming Solo handoff still yields to newer hidden while metadata waits
+ok 3 - native incoming Solo handoff still yields to newer hidden while metadata waits # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.133875
+  ...
+# Subtest: Team-to-Versus incoming selection finishes before normal lobby focus and starts both exact boards
+ok 4 - Team-to-Versus incoming selection finishes before normal lobby focus and starts both exact boards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.062
+  ...
+# Subtest: Team-to-Versus incoming selection cannot start while hidden after held metadata
+ok 5 - Team-to-Versus incoming selection cannot start while hidden after held metadata # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032292
+  ...
+# Subtest: Solo legacy → selected Team owner retains source route and exact mission
+ok 6 - Solo legacy → selected Team owner retains source route and exact mission # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028458
+  ...
+# Subtest: Solo whole-spatial-v5 → selected Team owner retains source route and exact mission
+ok 7 - Solo whole-spatial-v5 → selected Team owner retains source route and exact mission # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.110917
+  ...
+# Subtest: Solo opening → selected Team owner retains source route and exact mission
+ok 8 - Solo opening → selected Team owner retains source route and exact mission # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029334
+  ...
+# Subtest: Versus legacy Team cards use saved Expert and retain source edition
+ok 9 - Versus legacy Team cards use saved Expert and retain source edition # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.092916
+  ...
+# Subtest: Versus opening Team cards use saved Expert and retain source edition
+ok 10 - Versus opening Team cards use saved Expert and retain source edition # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040625
+  ...
+# Subtest: Legacy Solo → Journey Versus → Solo restores browsing independently of the checked retained runtime
+ok 11 - Legacy Solo → Journey Versus → Solo restores browsing independently of the checked retained runtime # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026
+  ...
+# Subtest: denied library return-token storage needs deliberate warned departure and keeps exact destination/source
+ok 12 - denied library return-token storage needs deliberate warned departure and keeps exact destination/source # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.132375
+  ...
+# Subtest: unfinished Legacy library departure checks its saved attempt before minting the Team return token
+ok 13 - unfinished Legacy library departure checks its saved attempt before minting the Team return token # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.181958
+  ...
+# Subtest: Legacy solo refreshes visible remote preset cards on storage/pageshow without writing or moving focus
+ok 14 - Legacy solo refreshes visible remote preset cards on storage/pageshow without writing or moving focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.048708
+  ...
+# Subtest: Legacy versus refreshes visible remote preset cards on storage/pageshow without writing or moving focus
+ok 15 - Legacy versus refreshes visible remote preset cards on storage/pageshow without writing or moving focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033875
+  ...
+# Subtest: late Classic checked return without saved browse state uses the retained mission as a focus fallback
+ok 16 - late Classic checked return without saved browse state uses the retained mission as a focus fallback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029667
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 15
+# todo 0
+# duration_ms 26014.923458

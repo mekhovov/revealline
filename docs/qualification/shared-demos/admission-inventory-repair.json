@@ -1,0 +1,92 @@
+{
+  "applied": true,
+  "scope": [
+    "publishing/admission-preflight.mjs",
+    "publishing/admission-preflight.test.mjs"
+  ],
+  "tests": 85,
+  "passed": 85,
+  "failed": 0,
+  "patchSha256": "e816e105cdbfea98c28b5cb64e42a4d95f73f49ba5a89b3d6c95443a3cd48439",
+  "patchBytes": 29582,
+  "originalPreflightSha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf",
+  "candidatePreflightSha256": "5f175317fcbf418e95bc5805237b39b9ca765696318b17370331cab24f457c50",
+  "liveProof": {
+    "complete": true,
+    "pr": 1615,
+    "head": "ea2c2fce7d4c4ae9750f3aa796253c309196cc24",
+    "base": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "mergeBase": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "changedFiles": 3079,
+    "pathCount": 3079,
+    "localGitPathCount": 3079,
+    "pathsSha256": "2afc8e8c50cdbb102d3e0aed9e3191ac737645a4cbd8557b7509ca16b286fbf0",
+    "classification": "maintenance",
+    "focusedCommands": 43,
+    "noSourceCheckout": true,
+    "noBlobDownloads": true,
+    "noTokenEnvironment": true,
+    "capturedAt": "2026-10-18T18:44:49.858Z"
+  },
+  "singleCommitProof": {
+    "base": "e8f6f0ebd01f342d6a9b937f740e15a9bdb75f16",
+    "head": "ea2c2fce7d4c4ae9750f3aa796253c309196cc24",
+    "ahead_by": 1,
+    "total_commits": 1,
+    "commitsOnPage": 0,
+    "filesOnPage": 0,
+    "mergeBaseMetadataPresent": true,
+    "complete": true
+  },
+  "validatedAt": "2026-10-18T18:58:24.892696+00:00",
+  "validationHead": "ea2c2fce7d4c4ae9750f3aa796253c309196cc24",
+  "lint": {
+    "passed": true,
+    "scope": [
+      "publishing/admission-preflight.mjs",
+      "publishing/admission-preflight.test.mjs"
+    ],
+    "maxWarnings": 0
+  },
+  "format": {
+    "passed": true,
+    "scope": [
+      "publishing/admission-preflight.mjs",
+      "publishing/admission-preflight.test.mjs"
+    ]
+  },
+  "regressions": {
+    "passed": 85,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 3089.902792,
+    "receipt": "admission-inventory-repair-regressions.tap.txt",
+    "suites": [
+      "publishing/admission-preflight.test.mjs",
+      "publishing/admission-binding.test.mjs",
+      "publishing/source-workflow.test.mjs",
+      "publishing/fastline-merge-controller.test.mjs"
+    ]
+  },
+  "evidence": {
+    "live": "admission-inventory-live-proof.json",
+    "singleCommit": "admission-inventory-single-commit-proof.json",
+    "review": "admission-inventory-repair-review.md"
+  },
+  "limitations": [
+    "Live API proof binds its recorded immutable historical PR head and base only.",
+    "Hosted CI needs to run against the next pushed head.",
+    "Privileged controller and its protected-main policy requirements remain unchanged.",
+    "No two-hour endurance credit is claimed by this repair receipt."
+  ],
+  "appliedFiles": {
+    "publishing/admission-preflight.mjs": {
+      "bytes": 10974,
+      "sha256": "5f175317fcbf418e95bc5805237b39b9ca765696318b17370331cab24f457c50"
+    },
+    "publishing/admission-preflight.test.mjs": {
+      "bytes": 15269,
+      "sha256": "780bf6fc6de6a7b88ace76498a88d362bd55d9feaef673b4dffba7d45bb1cb69"
+    }
+  }
+}

@@ -1,0 +1,423 @@
+{
+  "format": "SharedDemoFinalBrowserRefreshV1",
+  "started": "2026-10-18T22:06:23.875Z",
+  "complete": false,
+  "head": "e78c5812f8bf3da6975c75221924239666a2e9ed",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "d671dc455b97a69a6164b645df194b4953fe3c2a5c3a0fbddef86d596b608cb9",
+    "created": "2026-10-18T21:24:01.185264+00:00",
+    "integrationBase": "237b405437def3c41b01165fe057af1ab06f618c",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "authoritative": {
+    "head": "e78c5812f8bf3da6975c75221924239666a2e9ed",
+    "base": "237b405437def3c41b01165fe057af1ab06f618c",
+    "fingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "wrapper": {
+    "path": ".cache/run-final-demo-refresh-237.mjs",
+    "sha256": "45c959a707acbec16b612a4929efbad59776d97fff22f30a89f01c0af7165c3f"
+  },
+  "hashScope": {
+    "runtime": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "harness": "Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers."
+  },
+  "selected": [
+    "mixed-chromium",
+    "mixed-firefox",
+    "mixed-webkit",
+    "sim-fresh-chromium",
+    "sim-fresh-firefox",
+    "sim-fresh-webkit",
+    "graphics-chromium",
+    "listeners-chromium",
+    "restoration-chromium",
+    "restoration-firefox",
+    "restoration-webkit"
+  ],
+  "jobs": [
+    {
+      "id": "mixed-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/mixed-chromium-final-237-affected.json",
+        "--practice=true",
+        "--localeCheck=true",
+        "--lifecycle=true",
+        "--cycles=12"
+      ],
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "reportPath": "docs/qualification/shared-demos/mixed-chromium-final-237-affected.json",
+      "started": "2026-10-18T22:06:39.395Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/mixed-chromium-final-237-affected.json\",\"complete\":true,\"checks\":28,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:08:48.893Z",
+      "reportSHA256": "65d1278ee282a366f4c277b8e9a64719ba7cb9283ebd5bca0c101bc519bce3a2",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 28,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "mixed-firefox",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/mixed-firefox-final-237-affected.json",
+        "--practice=true",
+        "--localeCheck=true",
+        "--lifecycle=true",
+        "--cycles=12"
+      ],
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "reportPath": "docs/qualification/shared-demos/mixed-firefox-final-237-affected.json",
+      "started": "2026-10-18T22:08:48.900Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/mixed-firefox-final-237-affected.json\",\"complete\":true,\"checks\":27,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:10:33.584Z",
+      "reportSHA256": "203e17f22c6ce93dd6dadb05efd47d256ac4c2a4df9c43478726f2b36c3c7b0b",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 27,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "mixed-webkit",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/mixed-webkit-final-237-affected.json",
+        "--practice=true",
+        "--localeCheck=true",
+        "--lifecycle=true",
+        "--cycles=12"
+      ],
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "reportPath": "docs/qualification/shared-demos/mixed-webkit-final-237-affected.json",
+      "started": "2026-10-18T22:10:33.586Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/mixed-webkit-final-237-affected.json\",\"complete\":true,\"checks\":27,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:12:13.810Z",
+      "reportSHA256": "614ffe4b06445fc766d76268f72bd15294750d9fb2f2a9df46833bd6f9e63460",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 27,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "sim-fresh-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-sim-fresh-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/sim-fresh-chromium-final-237-affected.json"
+      ],
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-chromium-final-237-affected.json",
+      "started": "2026-10-18T22:12:13.818Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/sim-fresh-chromium-final-237-affected.json\",\"complete\":true,\"checks\":2,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:12:50.196Z",
+      "reportSHA256": "2cfe101576652f655c0e8b9e9f4e39059689ed2ed2f1c03d0ccf35b251e0dcf7",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 2,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "sim-fresh-firefox",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-sim-fresh-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/sim-fresh-firefox-final-237-affected.json"
+      ],
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-firefox-final-237-affected.json",
+      "started": "2026-10-18T22:12:50.229Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/sim-fresh-firefox-final-237-affected.json\",\"complete\":true,\"checks\":2,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:13:44.836Z",
+      "reportSHA256": "b2bce900d49b8f6fb40b44d3d8ea6715a2544be575d33dcb8cf444b64cc91019",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 2,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "sim-fresh-webkit",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-sim-fresh-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/sim-fresh-webkit-final-237-affected.json"
+      ],
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-webkit-final-237-affected.json",
+      "started": "2026-10-18T22:13:44.872Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/sim-fresh-webkit-final-237-affected.json\",\"complete\":true,\"checks\":2,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:14:04.336Z",
+      "reportSHA256": "96ad53141b31d23191ba11107b76736dc499aea81f0885e857100d67cf537ac2",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 2,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "graphics-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/graphics-chromium-final-237-affected.json",
+        "--fault=graphics"
+      ],
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "reportPath": "docs/qualification/shared-demos/graphics-chromium-final-237-affected.json",
+      "started": "2026-10-18T22:14:04.340Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/graphics-chromium-final-237-affected.json\",\"complete\":true,\"checks\":7,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:14:30.405Z",
+      "reportSHA256": "2d14a9948c3309aba54fe379e2d73f5d3426fa907a481af34449ee3190aa1667",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 7,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "listeners-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-listeners.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/listeners-chromium-final-237-affected.json",
+        "--fingerprint=71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54"
+      ],
+      "scriptSHA256": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+      "reportPath": "docs/qualification/shared-demos/listeners-chromium-final-237-affected.json",
+      "started": "2026-10-18T22:14:30.413Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/listeners-chromium-final-237-affected.json\",\"complete\":true,\"checks\":4,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:15:27.019Z",
+      "reportSHA256": "6dab23b1e2526a6c44d3140dee6edcdb75767db8b92ee9ff1f4dbc25a390d8c1",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "restoration-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/restoration-chromium-final-237-affected.json",
+        "--port=8771"
+      ],
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "reportPath": "docs/qualification/shared-demos/restoration-chromium-final-237-affected.json",
+      "started": "2026-10-18T22:15:27.023Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-chromium-final-237-affected.json\",\"complete\":false,\"checks\":2,\"failure\":\"locator.click: Timeout 3000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('#shell-menu')\\u001b[22m\\n\\u001b[2m    - locator resolved to <button type=\\\"button\\\" id=\\\"shell-menu\\\" data-menu-label=\\\"MENU\\\" aria-label=\\\"Game menu\\\" data-i18n-aria-label=\\\"interface:gameMenu\\\" data-i18n-data-menu-label=\\\"common:navigation.menu\\\">…</button>\\u001b[22m\\n\\u001b[2m  - attempting click action\\u001b[22m\\n\\u001b[2m    - waiting for element to be visible, enabled and stable\\u001b[22m\\n\\u001b[2m    - element is visible, enabled and stable\\u001b[22m\\n\\u001b[2m    - scrolling into view if needed\\u001b[22m\\n\\u001b[2m    - done scrolling\\u001b[22m\\n\\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:171:32)\\n    at async startDemo (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:185:3)\\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:384:22\",\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:15:50.307Z",
+      "reportSHA256": "d404e31386f92b5cbd69afccea8ca76496fede40269a76ed618ccb3f98d68944",
+      "complete": false,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 2,
+      "errorCount": 0,
+      "failure": "locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#shell-menu')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"shell-menu\" data-menu-label=\"MENU\" aria-label=\"Game menu\" data-i18n-aria-label=\"interface:gameMenu\" data-i18n-data-menu-label=\"common:navigation.menu\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:171:32)\n    at async startDemo (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:185:3)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:384:22"
+    },
+    {
+      "id": "restoration-firefox",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/restoration-firefox-final-237-affected.json",
+        "--port=8771"
+      ],
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "reportPath": "docs/qualification/shared-demos/restoration-firefox-final-237-affected.json",
+      "started": "2026-10-18T22:15:50.314Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-firefox-final-237-affected.json\",\"complete\":false,\"checks\":2,\"failure\":\"locator.click: Timeout 3000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for locator('#shell-menu')\\u001b[22m\\n\\u001b[2m    - locator resolved to <button type=\\\"button\\\" id=\\\"shell-menu\\\" data-menu-label=\\\"MENU\\\" aria-label=\\\"Game menu\\\" data-i18n-aria-label=\\\"interface:gameMenu\\\" data-i18n-data-menu-label=\\\"common:navigation.menu\\\">…</button>\\u001b[22m\\n\\u001b[2m  - attempting click action\\u001b[22m\\n\\u001b[2m    - waiting for element to be visible, enabled and stable\\u001b[22m\\n\\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:171:32)\\n    at async startDemo (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:185:3)\\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:384:22\",\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:16:13.609Z",
+      "reportSHA256": "72919ad299e4247250b5138ee7ceabc4accc0d29d1c018507187e8cc2d09fd4b",
+      "complete": false,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 2,
+      "errorCount": 0,
+      "failure": "locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#shell-menu')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"shell-menu\" data-menu-label=\"MENU\" aria-label=\"Game menu\" data-i18n-aria-label=\"interface:gameMenu\" data-i18n-data-menu-label=\"common:navigation.menu\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:171:32)\n    at async startDemo (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:185:3)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:384:22"
+    },
+    {
+      "id": "restoration-webkit",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/restoration-webkit-final-237-affected.json",
+        "--port=8771"
+      ],
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "reportPath": "docs/qualification/shared-demos/restoration-webkit-final-237-affected.json",
+      "started": "2026-10-18T22:16:13.612Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-webkit-final-237-affected.json\",\"complete\":false,\"checks\":12,\"failure\":\"AssertionError [ERR_ASSERTION]: {\\\"pageErrors\\\":[{\\\"mode\\\":\\\"solo\\\",\\\"stage\\\":\\\"ordinary-control-reload-1\\\",\\\"receivedAt\\\":\\\"2026-10-18T22:16:20.375Z\\\",\\\"message\\\":\\\"Cache API operation failed: Context is stopped\\\"}],\\\"domErrors\\\":[]}\\n\\nfalse !== true\\n\\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:473:10\",\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "finished": "2026-10-18T22:17:46.401Z",
+      "reportSHA256": "0fc3620a6309cc86afd907041c128616f44e88dd0d92c314659761e0e372da71",
+      "complete": false,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 1,
+      "failure": "AssertionError [ERR_ASSERTION]: {\"pageErrors\":[{\"mode\":\"solo\",\"stage\":\"ordinary-control-reload-1\",\"receivedAt\":\"2026-10-18T22:16:20.375Z\",\"message\":\"Cache API operation failed: Context is stopped\"}],\"domErrors\":[]}\n\nfalse !== true\n\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:473:10"
+    }
+  ],
+  "failedJobs": [
+    "restoration-chromium",
+    "restoration-firefox",
+    "restoration-webkit"
+  ],
+  "limitations": [
+    "Existing durable qualifiers only, sequential isolated browsers. No production or harness changes are made by this wrapper. Each selected job runs once; a strict failure remains failed while later independent jobs may proceed only after confirmed browser/server cleanup.",
+    "Some durable qualifiers retain empty-stack pageerrors as empty strings; any pageerror still fails their strict count. Raw/name diagnostics require a separate bounded probe after preserving such a failed receipt.",
+    "This affected refresh covers incoming Solo HUD and SIM ordinary input/renderer integration. Unchanged Classic metadata/full native corpus, Survival Fresh and offline behavior retain prior source-bound evidence; those are not rerun by this sequence.",
+    "The two-hour actual-wall-time rotation and outstanding physical-device/human review checks remain separate."
+  ],
+  "before": {
+    "runtime": {
+      "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+      "files": 9996,
+      "bytes": 404376334
+    },
+    "harness": {
+      "sha256": "996321729b454a1134ecd82d7942c5b1a34cdb8811f71e183ae6adf97598f06b",
+      "files": 926,
+      "bytes": 11068641
+    }
+  },
+  "failure": "Strict qualification failed for: restoration-chromium, restoration-firefox, restoration-webkit. Every failed receipt is preserved; no retry or exemption applied.",
+  "after": {
+    "runtime": {
+      "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+      "files": 9996,
+      "bytes": 404376334
+    },
+    "harness": {
+      "sha256": "996321729b454a1134ecd82d7942c5b1a34cdb8811f71e183ae6adf97598f06b",
+      "files": 926,
+      "bytes": 11068641
+    }
+  },
+  "changedFiles": {
+    "runtime": [],
+    "harness": []
+  },
+  "finished": "2026-10-18T22:17:57.103Z"
+}

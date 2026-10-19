@@ -1,0 +1,165 @@
+{
+  "format": "revealline-demo-final-build-validation.v2",
+  "started": "2026-10-19T04:43:51.637Z",
+  "expected": {
+    "head": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+    "base": "16ebd7b51984387c39622380a8e51a60e745152e",
+    "runtime": {
+      "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+      "files": 9997,
+      "bytes": 404446327
+    }
+  },
+  "attempt": null,
+  "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+  "runtimeFingerprint": {
+    "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+    "files": 9997,
+    "bytes": 404446327
+  },
+  "buildInputFingerprint": {
+    "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+    "files": 9406,
+    "bytes": 348394334
+  },
+  "wrapper": {
+    "path": ".cache/run-final-build-current.mjs",
+    "sha256": "dfbcb74bbff73b4a50af80e35cbbec8e99da7748abb41d83d55ad8d592f4c56d"
+  },
+  "wrapperHelper": {
+    "path": ".cache/final-build-wrapper-support.mjs",
+    "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e"
+  },
+  "scratchHelper": {
+    "path": ".cache/final-build-scratch.mjs",
+    "sha256": "1c8c537e0e9c68a57a5d568fccd641b6c26a7c5458115755c2125afd4546d6e7"
+  },
+  "scratch": null,
+  "previewOutput": ".cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "b77e5252c304e310b420bb297fd99d80adc4106795d53887abddf7a295f81b46",
+    "created": "2026-10-19T04:39:54.115494Z",
+    "integrationBase": "16ebd7b51984387c39622380a8e51a60e745152e",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+    "files": 9997,
+    "bytes": 404446327
+  },
+  "materializedBuild": false,
+  "deploymentAdmission": false,
+  "complete": true,
+  "stages": [
+    {
+      "name": "main-pages",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-main-pages.mjs",
+        "--report=docs/qualification/shared-demos/main-pages-demo-final-16ebd7b-71a0ac38a.json",
+        "--preview-output=.cache/shared-demos-emitted-16ebd7b-71a0ac38a"
+      ],
+      "started": "2026-10-19T04:43:51.638Z",
+      "logPath": "docs/qualification/shared-demos/final-main-pages-16ebd7b-71a0ac38a.log.txt",
+      "receivedLogBytes": 1280192,
+      "availableDiskBeforeBytes": 2171219968,
+      "pid": 24682,
+      "minimumObservedDiskBytes": 1960771584,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 302168,
+      "retainedLogBytes": 1280192,
+      "logTruncated": false,
+      "logSHA256": "0b4a4e3531b71fbc009ba07a723ff7843ce78c17aeb32dcf7ccbfaf59457bb99",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-16ebd7b-71a0ac38a.json",
+        "bytes": 2065677,
+        "sha256": "824217d6db6695749598a53b816b3cfba03bc741c9dd605d022240a3c2d4bdf1",
+        "complete": true
+      }
+    },
+    {
+      "name": "full-packaging",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-packaging.mjs",
+        "--report=docs/qualification/shared-demos/shared-demos-packaging-16ebd7b-71a0ac38a.json"
+      ],
+      "started": "2026-10-19T04:48:53.814Z",
+      "logPath": "docs/qualification/shared-demos/final-full-packaging-16ebd7b-71a0ac38a.log.txt",
+      "receivedLogBytes": 2341,
+      "availableDiskBeforeBytes": 1960042496,
+      "pid": 41677,
+      "minimumObservedDiskBytes": 1892274176,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 299464,
+      "retainedLogBytes": 2341,
+      "logTruncated": false,
+      "logSHA256": "922077b07a7a69f638dda108b709f603124e5a24a08534c9ebac4c12bf5284d6",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/shared-demos-packaging-16ebd7b-71a0ac38a.json",
+        "bytes": 704891,
+        "sha256": "9e0d7d80226c9d769da1cde309b6debc38a3a8f81a9b51a5d9a06b3e2e14e07e",
+        "complete": true
+      }
+    },
+    {
+      "name": "validate",
+      "command": [
+        "npm",
+        "run",
+        "validate"
+      ],
+      "started": "2026-10-19T04:53:53.281Z",
+      "logPath": "docs/qualification/shared-demos/final-validate-16ebd7b-71a0ac38a.log.txt",
+      "receivedLogBytes": 3932,
+      "availableDiskBeforeBytes": 1890148352,
+      "pid": 64197,
+      "minimumObservedDiskBytes": 1875988480,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 194838,
+      "retainedLogBytes": 3932,
+      "logTruncated": false,
+      "logSHA256": "e5ab3b82002d6f051ac3ed4e84ce5444ec4836936e807efb0016d18213d6391c"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "started": "2026-10-19T04:57:08.120Z",
+      "logPath": "docs/qualification/shared-demos/final-lint-16ebd7b-71a0ac38a.log.txt",
+      "receivedLogBytes": 196,
+      "availableDiskBeforeBytes": 1973805056,
+      "pid": 68194,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 18768,
+      "retainedLogBytes": 196,
+      "logTruncated": false,
+      "logSHA256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c"
+    }
+  ],
+  "limits": {
+    "logBytesPerStage": 2097152,
+    "stopIfAvailableDiskBelowBytes": 209715200,
+    "stopIfScratchAvailableBelowBytes": 209715200,
+    "stageTimeoutMs": 1200000
+  },
+  "updated": "2026-10-19T04:57:30.110Z",
+  "finalSourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+  "finalRuntimeFingerprint": {
+    "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+    "files": 9997,
+    "bytes": 404446327
+  },
+  "finalBuildInputFingerprint": {
+    "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+    "files": 9406,
+    "bytes": 348394334
+  },
+  "sourceStable": true
+}

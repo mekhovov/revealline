@@ -1,0 +1,64 @@
+from pathlib import Path
+import datetime,hashlib,json,os,shutil,stat,subprocess,time,uuid
+root=Path.cwd();preflight_path=root/'.cache/owned-inactive-storage-9dcff0588-preflight.json';preflight_bytes=preflight_path.read_bytes();preflight=json.loads(preflight_bytes)
+assert hashlib.sha256(preflight_bytes).hexdigest()=='9fc617177948ef0d604b709a1343a44b9029334f889534a06678e7519a7c2fe4'
+assert [x['path'] for x in preflight['candidates']]==['.cache/admission-inventory-draft/live','.cache/webkit-context-source']
+parent=Path('/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412');ps=parent.lstat();assert parent.resolve()==parent and parent.is_dir() and not parent.is_symlink() and ps.st_uid==502 and ps.st_ino==37530202 and ps.st_dev!=root.stat().st_dev
+parent_identity={'device':ps.st_dev,'inode':ps.st_ino,'uid':ps.st_uid};stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+receipt_path=root/'.cache/preserved-inactive-caches-9dcff0588.json';assert not receipt_path.exists()
+receipt={'format':'SharedDemoPreservedInactiveCachesRetirementV1','complete':False,'started':stamp,'authorization':'Root explicitly authorized exactly the two preflight directories after independent provenance review.','preflight':{'path':str(preflight_path.relative_to(root)),'sha256':hashlib.sha256(preflight_bytes).hexdigest()},'externalParent':{'path':str(parent),**parent_identity},'items':[],'limitations':['Only the enumerated ordinary files and directories are retired; broader parents, source and other evidence are untouched.','File timestamps were requested at original precision; exact observed before/after inventories are retained.','Observed free-space differences can include unrelated concurrent changes.']}
+def digest(p):
+ h=hashlib.sha256()
+ with p.open('rb') as f:
+  while b:=f.read(1024*1024):h.update(b)
+ return h.hexdigest()
+def identity(p):
+ s=p.lstat();return {'device':s.st_dev,'inode':s.st_ino,'uid':s.st_uid,'mode':s.st_mode,'size':s.st_size,'mtimeNs':s.st_mtime_ns}
+def inventory(p):
+ rows=[]
+ for f in [p,*sorted(p.rglob('*'))]:
+  s=f.lstat();assert not f.is_symlink() and s.st_uid==502 and (stat.S_ISDIR(s.st_mode) or stat.S_ISREG(s.st_mode))
+  row={'path':str(f.relative_to(p)),'kind':'file' if f.is_file() else 'directory','identity':identity(f)}
+  if f.is_file():row['sha256']=digest(f)
+  rows.append(row)
+ return rows
+def logical(rows):return [(x['path'],x['kind'],stat.S_IMODE(x['identity']['mode']),x['identity']['size'] if x['kind']=='file' else None,x.get('sha256')) for x in rows]
+def stable_parent():
+ actual=identity(parent);assert parent.resolve()==parent and all(actual[k]==v for k,v in parent_identity.items())
+def free():
+ f=os.statvfs(root);return f.f_bavail*f.f_frsize
+def save():receipt_path.write_text(json.dumps(receipt,indent=2)+'\n')
+receipt['availableBytesBefore']=free();save()
+for entry in preflight['candidates']:
+ source=root/entry['path'];assert source.resolve()==source and identity(source)=={**entry['identity'],'size':source.lstat().st_size}
+ before=inventory(source);by_path={str(source/x['path']):x for x in before if x['kind']=='file'}
+ assert len(by_path)==entry['fileCount']
+ for old in entry['files']:
+  now=by_path[str(root/old['path'])];assert now['sha256']==old['sha256'] and all(now['identity'][k]==old[k] for k in ['device','inode','uid','size','mtimeNs'])
+ stable_parent();destination=parent/f'preserved-{source.parent.name if source.name=="live" else source.name}-{stamp}-{uuid.uuid4().hex[:8]}';destination.mkdir(mode=0o700)
+ for item in before:
+  original=source/item['path'];target=destination/item['path']
+  if item['kind']=='directory':
+   if item['path']!='.':target.mkdir(mode=stat.S_IMODE(item['identity']['mode']))
+   continue
+  with original.open('rb') as src,target.open('xb') as out:
+   shutil.copyfileobj(src,out,1024*1024);out.flush();os.fsync(out.fileno())
+  os.chmod(target,stat.S_IMODE(item['identity']['mode']));os.utime(target,ns=(original.stat().st_atime_ns,item['identity']['mtimeNs']))
+ for item in reversed(before):
+  if item['kind']=='directory':
+   target=destination/item['path'];os.chmod(target,stat.S_IMODE(item['identity']['mode']));os.utime(target,ns=(target.stat().st_atime_ns,item['identity']['mtimeNs']))
+ copied=inventory(destination);assert logical(copied)==logical(before)
+ assert inventory(source)==before;stable_parent()
+ handles=subprocess.run(['/usr/sbin/lsof','-nP','+D',str(source)],capture_output=True,text=True,timeout=15);assert handles.returncode==1 and not handles.stdout and not handles.stderr
+ for item in before:assert identity(source/item['path'])==item['identity']
+ proof={'source':str(source),'destination':str(destination),'sourceBeforeAndFinal':before,'destinationInventory':copied,'everyPathKindModeSizeAndSHA256Matches':True,'sourceUnchanged':True,'openHandles':{'exitCode':1,'stdout':'','stderr':''},'fileBytes':sum(x['identity']['size'] for x in before if x['kind']=='file'),'fileCount':sum(x['kind']=='file' for x in before)}
+ external_proof=parent/f'{destination.name}.preservation.json';external_proof.write_text(json.dumps(proof,indent=2)+'\n')
+ item={'source':str(source),'destination':str(destination),'sourceRootIdentity':before[0]['identity'],'externalProof':{'path':str(external_proof),'sha256':digest(external_proof)},'fileCount':proof['fileCount'],'fileBytes':proof['fileBytes'],'copyVerified':True,'retired':False};receipt['items'].append(item);save()
+ for record in before:
+  if record['kind']=='file':
+   p=source/record['path'];assert identity(p)==record['identity'];p.unlink()
+ for record in sorted((x for x in before if x['kind']=='directory'),key=lambda x:len(Path(x['path']).parts),reverse=True):
+  p=source/record['path'];current=identity(p);assert all(current[k]==record['identity'][k] for k in ['device','inode','uid','mode']);p.rmdir()
+ assert not source.exists();item['retired']=True;item['availableBytesAfter']=free();save()
+receipt['complete']=True;receipt['finished']=datetime.datetime.now(datetime.timezone.utc).isoformat();receipt['availableBytesAfter']=free();receipt['observedFreeDifferenceBytes']=receipt['availableBytesAfter']-receipt['availableBytesBefore'];save()
+print(json.dumps({'complete':True,'receipt':str(receipt_path.relative_to(root)),'items':[{'source':x['source'],'fileBytes':x['fileBytes'],'retired':x['retired']} for x in receipt['items']],'availableBytesBefore':receipt['availableBytesBefore'],'availableBytesAfter':receipt['availableBytesAfter']}))

@@ -1,0 +1,11 @@
+{
+  "command": "npm run validate",
+  "sourceRevision": "e8f6f0ebd01f342d6a9b937f740e15a9bdb75f16",
+  "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+  "started": "2026-10-18T18:31:07.562Z",
+  "finished": "2026-10-18T18:35:42.338Z",
+  "exitCode": 0,
+  "signal": null,
+  "complete": true,
+  "log": "docs/qualification/shared-demos/validate-461ace.log"
+}

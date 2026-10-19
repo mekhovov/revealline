@@ -162,9 +162,18 @@ test('publication writer preserves catalogue values and emits reproducible repos
 });
 test('real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies', async (t) => {
   const f = await fixture(t);
+  // This archive fixture covers soundtrack metadata and formatter isolation.
+  // Its ordinary offline output is exercised separately below; omit that unused
+  // sentinel so this historical archive does not require unrelated launcher tooling.
+  await rm(path.join(f.root, 'game/offline.mjs'));
   for (const name of [
     'scripts/game-cli.mjs',
     'scripts/brand-icons.mjs',
+    'scripts/build-entry-writer.mjs',
+    'scripts/main-pages-source-originals.mjs',
+    'publishing/vendor/acorn-8.18.0.mjs',
+    'publishing/vendor/acorn-LICENSE.txt',
+    'game/mission-library/included-bundled-pack.mjs',
     'game/ui/art/identity/fpv-line/icon-master.png',
     'scripts/offline-content.mjs',
     'scripts/offline-finalize.mjs',
@@ -184,6 +193,12 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
   await f.put(
     'scripts/localization.mjs',
     'export async function validateLocalization() { return { valid: true }; }',
+  );
+  // Match the bounded historical CLI fixtures: with no offline sentinel these
+  // media predicates cannot affect this build or its soundtrack/archive assertions.
+  await f.put(
+    'scripts/offline-core-closure.mjs',
+    'export const isOptionalSpatialAudioBody = () => false;\nexport const isOptionalReactionVoiceBody = () => false;\n',
   );
   await f.put('scripts/offline-launcher.mjs', 'export async function addOfflineLauncher() {}');
   await f.put(
@@ -280,6 +295,7 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
   const archive = await readFile(path.join(output, 'source.tar'));
   const entries = new Map(readTarEntries(archive).map((entry) => [entry.name, entry.bytes]));
   assert(![...entries.keys()].some((name) => name.split('/').includes('node_modules')));
+  assert(!entries.has('game/offline.mjs'));
   assert.deepEqual(
     entries.get('scripts/soundtrack-distribution.mjs'),
     await readFile(path.join(source, 'scripts/soundtrack-distribution.mjs')),

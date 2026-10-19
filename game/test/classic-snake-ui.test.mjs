@@ -1,4 +1,9 @@
-import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from '../snake/classic-campaign.mjs';
+import {
+  CLASSIC_SNAKE_CAMPAIGN_REVISION,
+  CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY,
+} from '../snake/classic-campaign.mjs';
+import { demoLaunchURL } from '../demo-launch.mjs';
+import { createDemoMusicTransport } from '../ui/demo-music-transport.mjs';
 const SAVE_KEY = `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`;
 import { classicOperationStatus } from '../snake/classic-operation-status.mjs';
 import { OPERATION_PROTOTYPES } from './manual/snake-operation-recipes.mjs';
@@ -11,6 +16,7 @@ import {
   mountTouchPresentationSettings,
 } from '../ui/touch-controls-view.mjs';
 import {
+  createClassicSnakeRatings,
   classicSnakeRatingForRecord,
   classicSnakeRatingCriteriaText,
 } from '../snake/classic-ratings.mjs';
@@ -37,6 +43,7 @@ import { Script, createContext } from 'node:vm';
 import { parse as parseModule } from 'acorn';
 import { parse as parseHTML } from 'parse5';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import * as core from '../snake/classic-core.mjs';
 import { nextClassicHazardSeed } from '../snake/classic-attempt-seed.mjs';
@@ -138,6 +145,8 @@ async function harness({
   savedRound = null,
   legacySavedRound = null,
   recordReceipt = { verified: true, saved: true },
+  ratingsIndexedDB = null,
+  flushEnemyStats = null,
   catalogue = CLASSIC_SNAKE_LEVELS,
 } = {}) {
   const document = new Document();
@@ -145,6 +154,7 @@ async function harness({
   const localeListeners = new Set();
   document.hasFocus = () => focused;
   const writerClaims = [];
+  const writeGuards = {};
   document.createElement = (tag) => {
     const node = new Element(document, tag);
     if (tag === 'canvas')
@@ -173,7 +183,7 @@ async function harness({
   mount(parseHTML(html), document.body);
   const window = new Events();
   const pads = [];
-  let tools, offlinePanel, offlineOptions;
+  let tools, offlinePanel, offlineOptions, demoOptions, demoBoundary, ratings;
   const storage = new Map();
   if (savedRound) storage.set(SAVE_KEY, JSON.stringify(savedRound));
   if (legacySavedRound)
@@ -212,6 +222,31 @@ async function harness({
     appearanceActions = [],
     acceptedAppearances = [];
   const context = createContext({
+    // This fixture owns ordinary Snake UI. Shared demo behavior is exercised
+    // through the native-host tests and the real three-browser entry harness.
+    installDemoEntry: async (options) => {
+      demoOptions = options;
+      const actions = ['demo-button', 'demo-all-button'].map((id) => {
+        const button = document.createElement('button');
+        button.id = id;
+        button.type = 'button';
+        options.parent.append(button);
+        return button;
+      });
+      options.registerActions(actions);
+      return (demoBoundary = {
+        active: false,
+        update() {},
+        destroy() {
+          this.active = false;
+        },
+      });
+    },
+    createClassicSnakeCommunityLibrary: () => ({
+      load: async () => ({ entries: [entry], pack: { title: { en: 'Community Snake' } } }),
+    }),
+    demoLaunchURL,
+    createDemoMusicTransport,
     CLASSIC_SNAKE_CAMPAIGN_REVISION,
     classicBoardPreferences,
     isClassicWorldStyle,
@@ -240,6 +275,7 @@ async function harness({
       return lease;
     },
     createEnemyStats: (options) => {
+      writeGuards.statistics = options.canWrite;
       const service = createEnemyStats({
         ...options,
         indexedDB: null,
@@ -251,12 +287,18 @@ async function harness({
       return {
         ...service,
         observe: (attempt, event) => service.observe(attempt, structuredClone(event)),
+        flush: flushEnemyStats ?? service.flush,
       };
     },
     validateEnemyStatsSession,
     forkEnemyStatsSession,
     mountEnemyStats,
-    createClassicSnakeRatings: () => ({ refresh: async () => {}, close() {} }),
+    createClassicSnakeRatings: (options) => {
+      writeGuards.ratings = options.canWrite;
+      return (ratings = ratingsIndexedDB
+        ? createClassicSnakeRatings({ ...options, indexedDB: ratingsIndexedDB })
+        : { refresh: async () => {}, close() {} });
+    },
     classicSnakeRatingForRecord,
     classicSnakeRatingCriteriaText,
     ...replayHelpers,
@@ -499,17 +541,22 @@ async function harness({
       suspend() {}
       encounter() {}
     },
-    createClassicSnakeRecords: () => ({
-      async read() {},
-      async visit() {},
-      async remember() {
-        return recordReceipt;
-      },
-      chapter: () => 0,
-      cleared: () => false,
-      get: () => null,
-      recent: () => null,
-    }),
+    createClassicSnakeRecords: (options) => {
+      writeGuards.records = options.canWrite;
+      return {
+        ratingScope: CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY,
+        async read() {},
+        async visit() {},
+        async remember() {
+          return recordReceipt;
+        },
+        chapter: () => 0,
+        cleared: () => false,
+        get: () => null,
+        recent: () => null,
+        ratingEvidence: () => [],
+      };
+    },
     createHuntDestruction: () => ({ reset() {}, advance() {}, draw() {} }),
     classicCatchMarks: () => [],
     drawClassicBoard(canvas, run, options) {
@@ -579,8 +626,19 @@ async function harness({
     shell,
     optionalEntries,
     pads,
+    ratings,
+    writeGuards,
+    enterDemo() {
+      demoOptions.onEnter();
+      demoBoundary.active = true;
+    },
+    leaveDemo() {
+      demoBoundary.active = false;
+      demoOptions.onExit({});
+    },
     offlinePanel,
     canActivateOffline: () => offlineOptions.canActivate(),
+    canOpenDemo: () => demoOptions.canOpen(),
     disposeTools: () => {
       tools.dispose();
       offlinePanel.dispose();
@@ -600,10 +658,88 @@ async function harness({
   };
 }
 
+test('Snake demo ownership rejects a delayed ordinary rating write and allows later ordinary refresh', async (t) => {
+  const model = managedIndexedDB(),
+    pendingOpens = [];
+  // Delay the real rating backend's open completion after it admitted the
+  // ordinary saving lease. The host remains interactive in the meantime.
+  const delayedIndexedDB = {
+    open(...args) {
+      return new Proxy(model.indexedDB.open(...args), {
+        set(request, key, value) {
+          request[key] =
+            key === 'onsuccess' ? (event) => pendingOpens.push(() => value(event)) : value;
+          return true;
+        },
+      });
+    },
+  };
+  const state = await harness({ directEntry: false, ratingsIndexedDB: delayedIndexedDB });
+  t.after(() => state.ratings.close());
+  await flush();
+  assert.equal(pendingOpens.length, 1, 'Ordinary boot rating storage is still opening.');
+  assert.equal(model.allPuts.length, 0);
+  const storage = new Map(state.storage);
+  const checkpoint = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  state.enterDemo();
+  pendingOpens.shift()();
+  await state.ratings.refresh();
+  state.window.dispatchEvent({ type: 'focus' });
+  await flush();
+  await state.ratings.refresh();
+  assert.equal(model.allPuts.length, 0, 'Neither delayed boot nor focused demo may write ratings.');
+  assert.deepEqual(state.storage, storage);
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    checkpoint,
+  );
+  assert.deepEqual(state.ratings.snapshot().best, {}, 'Derived ratings remain readable in memory.');
+  state.leaveDemo();
+  await state.ratings.refresh();
+  assert.deepEqual(model.allPuts, [
+    [
+      'profiles',
+      `classic-snake-ratings.v1/authored-seed17.v1/${CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY}`,
+    ],
+  ]);
+  assert.deepEqual(state.storage, storage, 'Rating recovery does not save a round or settings.');
+});
+
+for (const demoOrigin of [false, true]) {
+  test(`Snake ${demoOrigin ? 'demo' : 'ordinary'} departure retains only its authorized pending-write lease`, async () => {
+    let finishDrain;
+    const drain = new Promise((resolve) => (finishDrain = resolve));
+    const state = await harness({ directEntry: false, flushEnemyStats: () => drain });
+    const guards = Object.values(state.writeGuards);
+    assert.equal(guards.length, 3);
+    assert.ok(guards.every((canWrite) => canWrite()));
+    if (demoOrigin) {
+      state.enterDemo();
+      assert.ok(guards.every((canWrite) => !canWrite()));
+    }
+    state.window.dispatchEvent({ type: 'pagehide', persisted: false });
+    assert.equal(state.writerClaims[0].writable, true, 'Pending work retains its original lease.');
+    assert.ok(
+      guards.every((canWrite) => canWrite() === !demoOrigin),
+      'Destroying the demo must not restore its departing host write authority.',
+    );
+    finishDrain();
+    await flush();
+    assert.equal(state.writerClaims[0].writable, false);
+    assert.ok(
+      guards.every((canWrite) => !canWrite()),
+      'Every drain allowance ends with its lease.',
+    );
+  });
+}
+
 for (const mode of ['solo', 'versus', 'team']) {
   test(`${mode} Snake can finish offline setup from Ready but defers during a paused flight`, async (t) => {
     const state = await harness({ mode, sharedTools: true, directEntry: false });
     t.after(() => state.disposeTools());
+    assert.equal(state.canOpenDemo(), mode === 'solo', 'Only authored Solo exposes demo entry.');
+    for (const id of ['demo-button', 'demo-all-button'])
+      assert.equal(state.$(id).hidden, mode !== 'solo');
     assert.equal(state.canActivateOffline(), true);
     state.shell.open('settings');
     state.$('snake-menu-settings-tab-content').click();
@@ -1345,6 +1481,31 @@ test('selecting a new library mission launches directly while retaining the olde
     back.searchParams.get('seed'),
     new URL(state.location.href).searchParams.get('seed'),
   );
+});
+
+test('Snake demo actions follow mode changes and stay outside excluded menu navigation', async () => {
+  const state = await harness({ directEntry: false });
+  for (const mode of ['solo', 'team', 'versus', 'solo']) {
+    state.$('mode-tabs').querySelector(`[data-mode="${mode}"]`).click();
+    state.shell.openHome();
+    for (const id of ['demo-button', 'demo-all-button'])
+      assert.equal(state.$(id).hidden, mode !== 'solo', `${mode}: ${id}`);
+    assert.equal(state.canOpenDemo(), mode === 'solo');
+    const settings = state.shell.elements.buttons.settings;
+    settings.focus();
+    settings.emit('keydown', { key: 'ArrowDown', code: 'ArrowDown', repeat: false });
+    assert.equal(
+      state.document.activeElement,
+      mode === 'solo' ? state.$('demo-button') : state.shell.elements.buttons.sound,
+    );
+  }
+});
+
+test('community Snake keeps both demo actions hidden even in Solo', async () => {
+  const state = await harness({ query: '&community=test-pack&ready=1' });
+  state.shell.openHome();
+  assert.equal(state.canOpenDemo(), false);
+  for (const id of ['demo-button', 'demo-all-button']) assert.equal(state.$(id).hidden, true);
 });
 
 test('the shared keyboard navigator moves menu focus without leaking directional input into Snake', async () => {
