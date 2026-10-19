@@ -2,7 +2,16 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import {
+  copyFile,
+  mkdir,
+  mkdtemp,
+  readFile,
+  readdir,
+  rm,
+  symlink,
+  writeFile,
+} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { canonicalJSON, dataIdentity } from '../game/data-json.mjs';
@@ -16,7 +25,10 @@ import {
   createWorldFlight,
   validateWorldCourse,
 } from '../optional-practice/civilian-fpv/world-model.mjs';
-import { verifyAircraftCourseArchive } from '../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
+import {
+  aircraftCourseComparisonEligibility,
+  verifyAircraftCourseArchive,
+} from '../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
 import { validateAircraftCoursePresentation } from '../optional-practice/civilian-fpv/advanced-ghost-path.mjs';
 import { createFlight } from '../optional-practice/civilian-fpv/model.mjs';
 import { BEGINNER_CATALOGUE } from '../optional-practice/civilian-fpv/world-catalogue.mjs';
@@ -33,6 +45,7 @@ import {
   verifyStaticAircraftCourse,
   createStaticCourseInputCursor,
   STATIC_COURSE_SIDECAR_BYTES,
+  auditBuiltinAircraftCourse,
 } from './fpv-static-course-proof.mjs';
 
 await initAdvancedRuntime();
@@ -41,7 +54,12 @@ const copy = structuredClone;
 const hash = (value) => createHash('sha256').update(canonicalJSON(value)).digest('hex');
 const size = (value) => Buffer.byteLength(JSON.stringify(value));
 const lesson = BEGINNER_CATALOGUE.find((entry) => entry.id === 'beginner-01').course;
-function packet(config, identity, segments, { state = 'ended', kind = 'fresh' } = {}) {
+function packet(
+  config,
+  identity,
+  segments,
+  { state = 'ended', kind = 'fresh', host = 'world' } = {},
+) {
   const first = segments[0],
     last = segments.at(-1);
   return {
@@ -49,7 +67,7 @@ function packet(config, identity, segments, { state = 'ended', kind = 'fresh' } 
     manifest: {
       format: 'AircraftSessionArchive.v1',
       id: 'static-course-test',
-      host: 'world',
+      host,
       name: 'Static course test',
       createdAt: 0,
       revision: segments.length + 1,
@@ -76,6 +94,7 @@ async function record({
   model = 'aircraft-course-practice.v2',
   ticks = null,
   input,
+  host = 'world',
   alterOptions = (x) => x,
   alterFrame = (x) => x,
   alterSample = (x) => x,
@@ -156,7 +175,7 @@ async function record({
     session.pause();
     simulation.finalizeArchive(segments.at(-1)?.index ?? -1);
     collect();
-    const archive = packet(simulation.configuration(), simulation.identity, segments);
+    const archive = packet(simulation.configuration(), simulation.identity, segments, { host });
     return {
       archive,
       course,
@@ -669,4 +688,310 @@ test('ordinary stick flight crosses a static gate; misses and reverse direction 
       f.transitions,
     );
   }
+});
+
+// Genuine generated Academy flight: ordinary stick commands, no state corrections.
+const academyFlight = (() => {
+  let pending;
+  return () =>
+    (pending ??= record({
+      course: FLIGHT_COURSES[0],
+      host: 'academy',
+      input: (tick, state) => {
+        const height = state.position.y / 1000,
+          climb = state.velocity.y / 1000,
+          hover = aircraftPerformance(
+            createPresetConfiguration('meteor75-analog-2022').aircraft,
+          ).hoverThrottle;
+        return {
+          ...neutral,
+          throttle:
+            state.step > 0 && (state.grounded || (height < 0.025 && climb < 0.1))
+              ? 0
+              : Math.max(
+                  0,
+                  Math.min(
+                    0.65,
+                    hover + 0.1 * ((state.step === 0 ? 1.8 : -0.06) - height) - 0.12 * climb,
+                  ),
+                ),
+        };
+      },
+    }));
+})();
+
+test('built-in audit resolves full authored Academy content and checks native ownership before copying', async () => {
+  const f = await academyFlight();
+  assert.equal(f.state.step, FLIGHT_COURSES[0].steps['self-level'].length);
+  const before = canonicalJSON(f.archive);
+  const result = await auditBuiltinAircraftCourse(f.archive, 'flight-01', 'r1');
+  assert.equal(result.format, 'AircraftBuiltinCourseAudit.v1');
+  assert.equal(result.course.verified, true);
+  assert.equal(result.ownedProofAssessment.eligible, true);
+  assert.equal(result.ownedProofAssessment.reason, 'compatible-unscored-practice');
+  assert.deepEqual(result.course.referenceIdentity, f.referenceIdentity);
+  assert.deepEqual(result.builtinCourse, {
+    catalogue: 'FLIGHT_COURSES',
+    id: 'flight-01',
+    revision: 'r1',
+  });
+  assert.equal(result.courseSha256, hash(FLIGHT_COURSES[0]));
+  assert.equal(result.archiveSha256, hash(f.archive));
+  assert.equal(result.admission, 'scored-admission-not-enabled');
+  assert.equal(result.scored, false);
+  assert.equal(result.defaultEligible, false);
+  assert.equal(Object.keys(result.selectedSourceSha256).length, 12);
+  assert.match(
+    result.selectedSourceSha256['optional-practice/civilian-fpv/catalogue.mjs'],
+    /^[a-f0-9]{64}$/,
+  );
+  assert.equal(aircraftCourseComparisonEligibility(result, result).eligible, false);
+  assert.equal(aircraftCourseComparisonEligibility(copy(result), copy(result)).eligible, false);
+  assert.equal(isVerifiedStaticCourseProof(result), false);
+  assert.ok(Object.isFrozen(result));
+  assert.ok(Object.isFrozen(result.course.referenceIdentity));
+  assert.ok(Object.isFrozen(result.ownedProofAssessment));
+  assert.equal(canonicalJSON(f.archive), before);
+});
+
+test('built-in audit rejects unknown revisions, altered same-ID courses and supplied authority claims', async () => {
+  const f = await academyFlight();
+  for (const [id, revision, code] of [
+    ['unknown', 'r1', 'unknown-builtin-course'],
+    ['flight-01', 'r2', 'builtin-course-revision-mismatch'],
+  ])
+    await assert.rejects(auditBuiltinAircraftCourse(f.archive, id, revision), { code });
+  for (const key of [
+    'course',
+    'sidecar',
+    'report',
+    'policy',
+    'scored',
+    'defaultEligible',
+    'courseAdapter',
+    'Worker',
+    'workerURL',
+  ]) {
+    await assert.rejects(
+      auditBuiltinAircraftCourse(f.archive, 'flight-01', 'r1', { [key]: {} }),
+      /not supported/i,
+    );
+  }
+  const changed = copy(FLIGHT_COURSES[0]);
+  for (const mode of ['acro', 'self-level']) {
+    changed.steps[mode] = [copy(lesson.steps[mode][0])];
+    changed.steps[mode][0].min.y = -50;
+    changed.steps[mode][0].ticks = 3;
+  }
+  const modified = await record({
+    course: changed,
+    host: 'academy',
+    ticks: 5,
+    input: () => neutral,
+  });
+  assert.equal(
+    (await verifyStaticAircraftCourse(modified.archive, modified.sidecar)).course.verified,
+    true,
+  );
+  await assert.rejects(auditBuiltinAircraftCourse(modified.archive, 'flight-01', 'r1'), {
+    code: 'builtin-course-identity-mismatch',
+  });
+});
+
+test('built-in audit refuses mutable catalogue edits at entry or during either pass', async () => {
+  const f = await academyFlight(),
+    course = FLIGHT_COURSES[0];
+  const original = course.locales.en.title;
+  const change = () => {
+    course.locales.en.title = 'Changed course under the same ID';
+  };
+  try {
+    change();
+    await assert.rejects(auditBuiltinAircraftCourse(f.archive, 'flight-01', 'r1'), {
+      code: 'builtin-catalogue-changed',
+    });
+  } finally {
+    course.locales.en.title = original;
+  }
+  for (const phase of ['physics', 'course']) {
+    try {
+      await assert.rejects(
+        auditBuiltinAircraftCourse(f.archive, 'flight-01', 'r1', {
+          onProgress(progress) {
+            if (progress.phase === phase) change();
+          },
+        }),
+        { code: 'builtin-catalogue-changed' },
+      );
+    } finally {
+      course.locales.en.title = original;
+    }
+  }
+  assert.equal(
+    (await auditBuiltinAircraftCourse(f.archive, 'flight-01', 'r1')).ownedProofAssessment.eligible,
+    true,
+  );
+});
+
+test('built-in audit cancellation and progress failures leave no adopted result', async () => {
+  const f = await academyFlight();
+  const before = new AbortController();
+  before.abort();
+  await assert.rejects(
+    auditBuiltinAircraftCourse(f.archive, 'flight-01', 'r1', { signal: before.signal }),
+    { name: 'AbortError' },
+  );
+  for (const phase of ['physics', 'course']) {
+    const controller = new AbortController();
+    await assert.rejects(
+      auditBuiltinAircraftCourse(f.archive, 'flight-01', 'r1', {
+        signal: controller.signal,
+        onProgress(progress) {
+          if (progress.phase === phase) controller.abort();
+        },
+      }),
+      { name: 'AbortError' },
+    );
+    await assert.rejects(
+      auditBuiltinAircraftCourse(f.archive, 'flight-01', 'r1', {
+        onProgress(progress) {
+          if (progress.phase === phase) throw new Error('progress failed');
+        },
+      }),
+      /progress failed/,
+    );
+  }
+  assert.equal(
+    (await auditBuiltinAircraftCourse(f.archive, 'flight-01', 'r1')).ownedProofAssessment.eligible,
+    true,
+  );
+});
+
+test('built-in audit preserves incomplete and interrupted scope without scored admission', async () => {
+  const f = await record({
+    course: FLIGHT_COURSES[0],
+    host: 'academy',
+    ticks: 8,
+    input: () => neutral,
+  });
+  for (const state of ['ended', 'interrupted']) {
+    const archive = packet(
+      f.archive.manifest.config,
+      f.archive.manifest.identity,
+      f.archive.segments,
+      { state, host: 'academy' },
+    );
+    const result = await auditBuiltinAircraftCourse(archive, 'flight-01', 'r1');
+    assert.equal(result.physics.verified, true);
+    assert.equal(result.course.verified, false);
+    assert.equal(result.ownedProofAssessment.eligible, false);
+    assert.equal(result.scored, false);
+    assert.equal(result.defaultEligible, false);
+    assert.equal(
+      result.physics.verificationScope,
+      state === 'ended' ? 'complete-session' : 'checkpoint-clip',
+    );
+  }
+});
+
+test('built-in CLI resolves revision and writes only a new diagnostic file', async (t) => {
+  const f = await academyFlight(),
+    temp = await mkdtemp(path.join(os.tmpdir(), 'builtin-course-audit-'));
+  t.after(() => rm(temp, { recursive: true, force: true }));
+  const archivePath = path.join(temp, 'archive.json'),
+    reportPath = path.join(temp, 'report.json');
+  await writeFile(archivePath, JSON.stringify(f.archive));
+  const cli = new URL('./fpv-static-course-proof.mjs', import.meta.url).pathname;
+  const args = [cli, 'audit-builtin', archivePath, 'flight-01', 'r1', reportPath];
+  execFileSync(process.execPath, args);
+  const original = await readFile(reportPath, 'utf8'),
+    result = JSON.parse(original);
+  assert.equal(result.ownedProofAssessment.eligible, true);
+  assert.equal(result.scored, false);
+  assert.equal(result.defaultEligible, false);
+  assert.throws(() => execFileSync(process.execPath, args, { stdio: 'pipe' }), /EEXIST/);
+  assert.equal(await readFile(reportPath, 'utf8'), original);
+  for (const extra of [['flight-01', 'r9'], ['unknown', 'r1'], ['flight-01']]) {
+    try {
+      execFileSync(process.execPath, [cli, 'audit-builtin', archivePath, ...extra], {
+        stdio: 'pipe',
+      });
+      assert.fail('Invalid built-in selection accepted');
+    } catch (error) {
+      const failure = JSON.parse(error.stderr.toString());
+      assert.equal(failure.scored, false);
+      assert.equal(failure.defaultEligible, false);
+      assert.equal(error.status, 1);
+    }
+  }
+});
+
+test('built-in audit aborts selected source mutation in a disposable repository only', async (t) => {
+  const f = await academyFlight(),
+    temp = await mkdtemp(path.join(os.tmpdir(), 'builtin-course-source-'));
+  t.after(() => rm(temp, { recursive: true, force: true }));
+  const root = new URL('../', import.meta.url).pathname;
+  await mkdir(path.join(temp, 'scripts'));
+  await mkdir(path.join(temp, 'optional-practice/civilian-fpv'), { recursive: true });
+  // Only these two files are writable copies. All other imports remain read-only inputs.
+  const sources = [
+    'scripts/fpv-static-course-proof.mjs',
+    'optional-practice/civilian-fpv/catalogue.mjs',
+  ];
+  for (const source of sources) await copyFile(path.join(root, source), path.join(temp, source));
+  for (const name of ['game', 'node_modules'])
+    await symlink(path.join(root, name), path.join(temp, name));
+  for (const name of await readdir(path.join(root, 'optional-practice/civilian-fpv'))) {
+    if (name === 'catalogue.mjs') continue;
+    await symlink(
+      path.join(root, 'optional-practice/civilian-fpv', name),
+      path.join(temp, 'optional-practice/civilian-fpv', name),
+    );
+  }
+  const git = (args) => execFileSync('git', args, { cwd: temp, stdio: 'pipe' });
+  git(['init', '--quiet']);
+  git(['add', '--', ...sources]);
+  git([
+    '-c',
+    'user.name=Fixture',
+    '-c',
+    'user.email=fixture@example.invalid',
+    '-c',
+    'commit.gpgsign=false',
+    '-c',
+    'core.hooksPath=/dev/null',
+    'commit',
+    '--quiet',
+    '-m',
+    'Disposable audit fixture',
+  ]);
+  await writeFile(path.join(temp, 'archive.json'), JSON.stringify(f.archive));
+  const before = await Promise.all(sources.map((name) => readFile(path.join(root, name), 'utf8')));
+  const script = `
+    import assert from 'node:assert/strict';
+    import { readFileSync, writeFileSync } from 'node:fs';
+    import { auditBuiltinAircraftCourse } from './scripts/fpv-static-course-proof.mjs';
+    const archive = JSON.parse(readFileSync('archive.json', 'utf8'));
+    const sources = ${JSON.stringify(sources)};
+    for (const name of sources) {
+      const original = readFileSync(name, 'utf8');
+      let changed = false;
+      try {
+        await assert.rejects(auditBuiltinAircraftCourse(archive, 'flight-01', 'r1', {
+          onProgress() { if (!changed) { changed = true; writeFileSync(name, original + '\\n// Disposable mutation.\\n'); } },
+        }), { code: 'evaluator-source-changed' });
+        assert.equal(changed, true);
+      } finally { writeFileSync(name, original); }
+    }
+    assert.equal((await auditBuiltinAircraftCourse(archive, 'flight-01', 'r1')).ownedProofAssessment.eligible, true);
+  `;
+  execFileSync(process.execPath, ['--input-type=module'], {
+    cwd: temp,
+    input: script,
+    stdio: ['pipe', 'pipe', 'pipe'],
+  });
+  assert.deepEqual(
+    await Promise.all(sources.map((name) => readFile(path.join(root, name), 'utf8'))),
+    before,
+  );
 });

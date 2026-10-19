@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys } from '../game/data-json.mjs';
 import { validateFlightCourse } from '../optional-practice/civilian-fpv/model.mjs';
+import { FLIGHT_COURSES } from '../optional-practice/civilian-fpv/catalogue.mjs';
 import {
   validateWorldCourse,
   createWorldFlight,
@@ -18,6 +19,7 @@ import {
 import {
   STATIC_COURSE_VERIFIER,
   aircraftCourseMissionModel as modelFor,
+  aircraftCourseComparisonEligibility,
   verifyAircraftCourseArchive,
 } from '../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
 export {
@@ -73,10 +75,10 @@ function repositorySource() {
     workingTreeChanges: Boolean(git(['status', '--porcelain', '--untracked-files=normal'])),
   };
 }
-async function sourcePins() {
+async function sourcePins(files = sourceFiles) {
   return Object.fromEntries(
     await Promise.all(
-      sourceFiles.map(async (name) => [
+      files.map(async (name) => [
         name,
         createHash('sha256')
           .update(await readFile(path.join(root, name)))
@@ -95,6 +97,58 @@ function courseValue(source) {
   if (value.format === 'FlightCourse.v1') return validateFlightCourse(value);
   if (value.format === 'FlightCourse.v2') return validateWorldCourse(value);
   fail('unsupported-course-format');
+}
+// Module-owned validated copies; a caller cannot supply or alter the audit's rules.
+const builtinCourses = freeze(FLIGHT_COURSES.map(courseValue));
+const builtinSourceFiles = [...sourceFiles, 'optional-practice/civilian-fpv/catalogue.mjs'];
+function unchangedBuiltinCatalogue() {
+  requireValue(same(FLIGHT_COURSES, builtinCourses), 'builtin-catalogue-changed');
+}
+
+/** Offline preparation only: resolve shipped Academy content, never a supplied sidecar. */
+export async function auditBuiltinAircraftCourse(archiveSource, courseId, revision, options = {}) {
+  exactKeys(options, ['signal', 'onProgress'], 'Built-in course audit options');
+  const { signal, onProgress = () => {} } = options;
+  cancelled(signal);
+  unchangedBuiltinCatalogue();
+  const course = builtinCourses.find((entry) => entry.id === courseId);
+  requireValue(course, 'unknown-builtin-course');
+  requireValue(course.revision === revision, 'builtin-course-revision-mismatch');
+  const archive = validateAircraftArchivePackage(archiveSource);
+  requireValue(
+    dataIdentity(course) === archive.manifest.config.configuration?.environment?.course,
+    'builtin-course-identity-mismatch',
+  );
+  const pins = await sourcePins(builtinSourceFiles),
+    repository = repositorySource();
+  cancelled(signal);
+  const result = await verifyAircraftCourseArchive(archive, course, { signal, onProgress });
+  cancelled(signal);
+  // Assess the native owner's exact result before making a diagnostic copy.
+  const ownedProofAssessment = aircraftCourseComparisonEligibility(result, result);
+  unchangedBuiltinCatalogue();
+  requireValue(
+    same(pins, await sourcePins(builtinSourceFiles)) && same(repository, repositorySource()),
+    'evaluator-source-changed',
+  );
+  cancelled(signal);
+  unchangedBuiltinCatalogue();
+  return freeze({
+    ...result,
+    format: 'AircraftBuiltinCourseAudit.v1',
+    evaluator: STATIC_COURSE_VERIFIER,
+    toolingOnly: true,
+    experimental: true,
+    scored: false,
+    defaultEligible: false,
+    admission: 'scored-admission-not-enabled',
+    builtinCourse: { catalogue: 'FLIGHT_COURSES', id: course.id, revision: course.revision },
+    ownedProofAssessment,
+    archiveSha256: sha256(archive),
+    courseSha256: sha256(course),
+    selectedSourceSha256: pins,
+    sourceRepository: repository,
+  });
 }
 export function createStaticCourseSidecar(archiveSource, courseSource) {
   const archive = validateAircraftArchivePackage(archiveSource),
@@ -200,6 +254,31 @@ async function readBounded(file, limit) {
   }
 }
 async function main(args) {
+  if (args[0] === 'audit-builtin') {
+    const [, archivePath, courseId, revision, out, ...rest] = args;
+    requireValue(
+      archivePath && courseId && revision && !rest.length,
+      'usage: audit-builtin ARCHIVE COURSE_ID REVISION [REPORT]',
+    );
+    const abort = new AbortController(),
+      cancel = () => abort.abort();
+    process.once('SIGINT', cancel);
+    try {
+      const report = await auditBuiltinAircraftCourse(
+        await readBounded(archivePath, AIRCRAFT_ARCHIVE_PACKAGE_BYTES),
+        courseId,
+        revision,
+        { signal: abort.signal },
+      );
+      const bytes = JSON.stringify(report, null, 2) + '\n';
+      if (out) await writeFile(out, bytes, { flag: 'wx' });
+      else process.stdout.write(bytes);
+      if (!report.ownedProofAssessment.eligible) process.exitCode = 2;
+    } finally {
+      process.removeListener('SIGINT', cancel);
+    }
+    return;
+  }
   const [command, archivePath, dependencyPath, out, ...rest] = args;
   requireValue(
     ['bind', 'verify'].includes(command) &&
@@ -237,8 +316,12 @@ async function main(args) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   main(process.argv.slice(2)).catch((error) => {
     process.stderr.write(
-      JSON.stringify({ error: error.message, code: error.code ?? error.name, scored: false }) +
-        '\n',
+      JSON.stringify({
+        error: error.message,
+        code: error.code ?? error.name,
+        scored: false,
+        ...(process.argv[2] === 'audit-builtin' ? { defaultEligible: false } : {}),
+      }) + '\n',
     );
     process.exitCode = error.name === 'AbortError' ? 130 : 1;
   });
