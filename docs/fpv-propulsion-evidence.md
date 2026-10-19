@@ -2,6 +2,116 @@
 
 `PropulsionEvidence.v1` stores observations and evaluates one documented path through a bench test. It does not change any aircraft, controller, recording identity or default preset. A static component test is not whole-aircraft flight validation.
 
+## Command × voltage surfaces: non-activating numerical prerequisite
+
+`propulsion-surface.mjs` adds `PropulsionSurface.v1` as a separate source API. It
+composes original `PropulsionEvidence.v1` voltage paths without changing their
+format, validators or behavior. It is deliberately **not imported by the game,
+inspector, aircraft catalog or worker**, and does not add a packaged runtime
+module. R6 remains open: this supplies bounded interpolation and bench-load
+arithmetic, not measured aircraft fitting, flight activation or fidelity evidence.
+
+A surface requires exactly `format`, `id`, `name`, `currentBasis`, `paths`, and
+`cells`. The identifier and name follow the original evidence limits.
+`currentBasis` is explicitly `dc-input-at-recorded-voltage`, `phase-current`, or
+`unknown`; the declaration is not verification of measurement topology. Each
+path retains its own complete source, license, original units, uncertainty and
+samples. All paths must explicitly identify the same motor, propeller, ESC, ESC
+firmware and control protocol, with no unknown component fields. Their complete
+conditions objects must match, including unknown values and notes; the API does
+not infer equivalent test conditions or correct density or installation effects.
+
+Each path must use voltage as its one-dimensional axis, with one fixed observed
+command. Paths are ordered by strictly increasing **canonical** command. Percent
+and normalized commands are compatible; microseconds remain microseconds and
+cannot be mixed with normalized command. Source RPM is an observed output, never
+inferred from command. The common voltage axis is the sorted union of all
+canonical sample voltages in volts. Import limits are 256 KiB, 2–16 paths, 256
+samples in total and 1–256 declared cells, with bounded nesting and strings.
+
+Each cell is `[commandIndex, voltageIndex]`: it joins the adjacent command paths
+and adjacent voltage knots at those indexes. Cells must be unique and sorted by
+command index, then voltage index. All four corners must be original observations,
+and both voltage edges must lie within declared continuous path intervals. A cell
+cannot span a missing corner, intermediate grid knot or path coverage gap.
+Undeclared cells remain holes. Original one-dimensional path coverage is also
+available when the requested command exactly equals that path's command; this
+does not create coverage between paths.
+
+```js
+import {
+  validatePropulsionSurface,
+  createPropulsionSurfaceEvaluator,
+  solvePropulsionSurfaceLoad,
+} from '../optional-practice/civilian-fpv/propulsion-surface.mjs';
+
+const surface = validatePropulsionSurface(suppliedSurfaceJson);
+const evaluator = createPropulsionSurfaceEvaluator(surface);
+const point = evaluator.evaluate({ command: 0.375, voltage: 12 });
+const load = solvePropulsionSurfaceLoad({
+  loads: [{ surface, command: 0.375 }],
+  openVoltage: 12.6,
+  resistance: 0.1,
+  currentLimit: null,
+});
+// The query and battery numbers above illustrate API units only, not a dataset,
+// suitable aircraft settings, or a claim that this operating point is covered.
+```
+
+Evaluation uses deterministic bilinear arithmetic inside admitted cells, with
+exact source knots and linear voltage-path interpolation at exact path commands.
+Shared edges are closed; the first sorted cell wins on a shared voltage edge.
+There is **no epsilon, snapping, triangulation or extrapolation**. A representable
+coordinate just beyond the last covered cell remains unavailable, even when it
+differs by only one floating-point step. An uncovered query returns
+`outside-coverage`, `outside-domain` or `coverage-gap`, with no fabricated values.
+Missing channels or uncertainties remain unavailable when a contributing endpoint
+is missing; endpoints with zero interpolation weight do not mask an exact edge.
+
+The evaluator exposes frozen source data, canonical axes/units, a local content
+identity and diagnostics. Results are detached and retain each contributing
+path's source declaration. Exact samples use `resultKind: 'source-sample'`;
+interpolation uses `calculated`. Neither label verifies a supplied `measured`
+declaration. Interpolated uncertainty values describe only endpoint interpolation,
+not model error or propagated confidence. Different uncertainty declarations are
+not blended; the result reports unavailable uncertainty and retains both source
+interpretations. Negative and nonmonotonic readings are
+preserved and diagnosed. Electrical power and efficiency remain unavailable for
+phase or unknown current basis; shaft power can still be calculated from supplied
+RPM and torque.
+
+`solvePropulsionSurfaceLoad` accepts one to four independently specified commands
+and manual ideal-battery inputs. It makes a covered voltage slice at each command
+and delegates to the existing load kernel. An exact command keeps its original
+path; an interpolated command produces a **calculated** slice with no propagated
+uncertainty and no inferred redistribution permission. Original source metadata
+remains in the wrapper's `sources`; `sliceKinds` distinguishes these two cases.
+Surface and electrical-input identities remain bound to the result.
+
+Unknown/phase current, missing or negative current, nonmonotonic source voltage
+current, unsupported flow/scope, coverage holes and inadequate numerical
+resolution return explicit unavailable results. Nonmonotonic source current
+cannot become eligible through averaging with another path. The existing kernel
+retains its static single-rotor/known-zero-airspeed requirement, common terminal
+voltage, finite circuit-residual check and diagnostic-only current limit. There
+is no current regulation, discharge simulation, interaction model, automatic
+fit, physical-parameter write or new default preset.
+
+Validation uses explicitly invented analytic surfaces, not reference-aircraft
+data: dense bilinear checks, exact and adjacent floating-point edges, sparse
+coverage, missing corners/channels, incompatible components/conditions, units,
+nonmonotonic readings, current basis, independently solved circuit equations,
+immutable provenance, parser bounds and unchanged original path/load tests.
+Run `node --test game/test/fpv-aircraft-propulsion-surface.test.mjs
+game/test/fpv-aircraft-propulsion-evidence.test.mjs
+game/test/fpv-aircraft-propulsion-load.test.mjs`.
+
+On 19 October 2026, Node 22.22.2 passed **50/50** focused checks: 20 new surface
+checks and the 30 existing path/load checks. ESLint, scoped JavaScript/test
+Prettier and `git diff --check` also passed. The new source module remains outside
+the runtime dependency graph; no package, browser, device or physical-fidelity
+qualification is claimed by this receipt.
+
 ## API and example
 
 ```js
