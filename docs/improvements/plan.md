@@ -6,6 +6,8 @@
 
 **Capacity blocker:** free space fell to about115MiB and actual ENOSPC was observed. New tests, builds and source edits are paused pending freed space or explicit mounted-drive authorization. Five completed, reproducible temporary validation source copies were released; exact manifests and archived logs remain, original checkouts and work are untouched. Cleanup recovered only about54MiB because source files shared disk blocks. Full browser, package and device acceptance remains pending.
 
+**Admission review:** all76 feature candidate PRs were rechecked:27 merged,16 open for checks,32 drafts and1 withdrawn. Twelve of the16 non-draft candidates currently conflict with newer main: #1617, #1622, #1624, #1627, #1632, #1638, #1662, #1668, #1669, #1682, #1686 and #1690. Prioritize shared-foundation reconciliation and exact-head checks before promotion. Authoring status is not mergeability; no required checks are bypassed.
+
 ## 1. Summary, priorities and current evidence
 
 Improve the existing game in this order: **reliable controls and recovery → clearer first sessions → accessibility and comfort → practice and social play → creation and content discovery → larger platform investments.**

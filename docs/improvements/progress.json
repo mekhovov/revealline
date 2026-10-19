@@ -15,6 +15,7 @@
   },
   "nextPriority": [
     "P1: restore validation capacity: only about115MiB free and actual ENOSPC observed. New tests/builds/source edits paused pending freed space or mounted-drive authorization.",
+    "P1: reconcile12 currently conflicted non-draft feature PRs with main, starting with shared foundations; preserve original deltas and rerun exact-head required checks.",
     "P1: finish the Team input-test and guide reconciliation to current one-click launch; the withdrawn runtime proposal remains historical evidence",
     "P1: admit the separate Team catalog-test repairs and preserve all original preview, save, focus and controller assertions",
     "P1: reconcile current-main conflicts in reviewed foundations and complete required checks for text compatibility and Survival suspend",
@@ -30,10 +31,7 @@
     "publishedSource": {
       "revision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
       "observedAt": "2026-10-18T22:43:05Z",
-      "includedMergedSlices": [
-        "F83a",
-        "F81"
-      ],
+      "includedMergedSlices": ["F83a", "F81"],
       "evidence": "No-cache public main-deployment.json, game/build-info.json and game/app.mjs all match e440 deployment inventory; receipt /tmp/revealline-public-e440-identity-evidence.json.",
       "run": "https://github.com/mekhovov/revealline/actions/runs/39166266155",
       "behaviorQualification": "not_run"
@@ -1670,7 +1668,8 @@
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim.",
-        "Academy nine-file uncommitted WIP from a76: native red74/82 then green82/82 complete. Actual dependency parser admits two Academy-only modules, existing i18n/platform closure reused; legacy/Worlds admission and caps unchanged. Closure/localization/cohort checks, docs, source audit and independent review pending. No package/browser qualification."
+        "Academy nine-file uncommitted WIP from a76: native red74/82 then green82/82 complete. Actual dependency parser admits two Academy-only modules, existing i18n/platform closure reused; legacy/Worlds admission and caps unchanged. Closure/localization/cohort checks, docs, source audit and independent review pending. No package/browser qualification.",
+        "Root read-only review found Academy terminal playback boundary untested: Settings pauses replay before support capture; paused-first adapter misreports exhausted recording. Preserve recording-ended versus objective-complete semantics. No fix or regression result claimed."
       ],
       "implementationSlices": [
         {
@@ -3969,6 +3968,11 @@
       "date": "2026-10-19",
       "item": "F10/F58/F64/capacity",
       "reason": "Hunt1727 draft published with reading placement followup; Home83a frozen unpublished after incomplete broader run; Academy82/82 native pass remains uncommitted. Actual ENOSPC blocks validation. Completed merged55393 reproducible temporary source copy released; exact manifests and archived evidence retained, original work untouched. Five completed reproducible temporary source copies (55393/f977/b48/4d9/2768) released after archived exact-source audits; all manifests/logs retained, original checkouts untouched. About54MiB recovered; still below reserve."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Admission/F58 review",
+      "reason": "All76 feature candidate PRs rechecked:27 merged/16 ready/32draft/1withdrawn. Twelve non-draft and21 total open candidates conflict with later main. Academy terminal-playback diagnostics need a source correction and native regression. Disk reserve still blocks mutation/validation."
     }
   ],
   "deliveryDependencies": [
@@ -4032,5 +4036,21 @@
     "publishedSourceSlices": 2,
     "hardware": "unavailable",
     "featurePRsClosed": 1
+  },
+  "admissionReview": {
+    "observedDate": "2026-10-19",
+    "scope": "All76 task-referenced feature candidates including withdrawn1718; dependency PRs separate",
+    "counts": {
+      "merged": 27,
+      "ready": 16,
+      "draft": 32,
+      "withdrawn": 1
+    },
+    "conflictedOpenPRs": [
+      1617, 1622, 1624, 1627, 1632, 1638, 1641, 1661, 1662, 1664, 1668, 1669, 1671, 1672, 1682,
+      1686, 1690, 1702, 1704, 1715, 1723
+    ],
+    "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1662, 1668, 1669, 1682, 1686, 1690],
+    "note": "Ready is authoring status, not current mergeability or completed required checks. No manual merges; earlier source passes do not qualify future integration."
   }
 }
