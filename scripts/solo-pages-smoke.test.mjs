@@ -1,3 +1,4 @@
+import { validBackupRecord } from './solo-pages-backup.test.mjs';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { runInNewContext } from 'node:vm';
@@ -16,6 +17,7 @@ import {
   validatePagesSmokePlan,
   pagesDiagnosticScope,
   assertPagesMissionsEvidence,
+  assertPagesBackupEvidence,
   redactPagesText,
   encodePagesReport,
   safePagesURL,
@@ -107,6 +109,7 @@ test('fixed policy and dispatch refuse widened limits, remote inputs and missing
     diagnosticModes: ['none', 'arbitrary'],
     defaultDiagnostic: 'missions',
     missionsDiagnostic: {},
+    backupDiagnostic: {},
   }))
     assert.throws(() => validatePagesSmokePlan({ ...plan, [key]: value }), key);
   validatePagesDispatch(validEnv(), revision, '22.13.1');
@@ -364,7 +367,8 @@ async function observeModel(options = {}) {
   let bindings = 0,
     clock = 0;
   let soloCalls = 0,
-    sharedCalls = 0;
+    sharedCalls = 0,
+    backupCalls = 0;
   const report = await observePagesSmoke({
     expectedRevision: revision,
     engine: options.engine ?? 'chromium',
@@ -378,6 +382,12 @@ async function observeModel(options = {}) {
       return options.deploymentChange && bindings === 2
         ? { ...binding(), changed: true }
         : binding();
+    },
+    backupFlow: async (page, budget, record) => {
+      backupCalls++;
+      assert(budget.deadline - budget.now() <= 570000);
+      if (options.backupFailure) throw new Error('backup control failed ' + secret);
+      Object.assign(record, validBackupRecord());
     },
     soloFlows: async (page) => {
       soloCalls++;
@@ -397,7 +407,7 @@ async function observeModel(options = {}) {
     },
     sharedAssessment: () => ({ status: 'modeled-public-control' }),
   });
-  return { ...model, report, retained, soloCalls, sharedCalls };
+  return { ...model, report, retained, soloCalls, sharedCalls, backupCalls };
 }
 test('fresh observer admits ordinary authentication and closes context before browser', async () => {
   const result = await observeModel();
@@ -821,7 +831,7 @@ test('fixed workflow separates PR source checks from secret-bearing main-only br
   assert.equal((workflow.match(/^    inputs:$/gm) ?? []).length, 1);
   assert.match(
     workflow,
-    /workflow_dispatch:\n    inputs:\n      diagnostic:\n        description: Fixed optional diagnostic scope\n        type: choice\n        required: true\n        default: none\n        options: \[none, missions\]/,
+    /workflow_dispatch:\n    inputs:\n      diagnostic:\n        description: Fixed optional diagnostic scope\n        type: choice\n        required: true\n        default: none\n        options: \[none, missions, backup\]/,
   );
   assert(browser.includes('PAGES_SMOKE_DIAGNOSTIC: ' + '$' + "{{ inputs.diagnostic || 'none' }}"));
   assert(
@@ -1526,4 +1536,77 @@ test('diagnostic URL retains exact document checks at both credential boundaries
     assert.equal(result.calls.includes('click:#access-gate button[type="submit"]'), false);
     assert.equal(result.calls.includes('password.fill'), !options.redirect);
   }
+});
+
+test('optional backup scope uses one fresh page and skips the unchanged broader flow', async () => {
+  const result = await observeModel({ diagnostic: 'backup' });
+  assert.equal(result.report.status, 'passed-controls');
+  assert.equal(result.report.diagnosticScope, 'fresh-profile-progress-backup');
+  assert.equal(result.backupCalls, 1);
+  assert.equal(result.soloCalls, 0);
+  assert.equal(result.sharedCalls, 0);
+  assert.equal(result.pages.length, 1);
+  assert.deepEqual(result.report.stages, [
+    'ordinary-password-accepted',
+    'fresh-profile-progress-backup',
+  ]);
+  assert.equal(result.calls.filter((x) => x === 'password.fill').length, 1);
+  assert.deepEqual(result.calls.slice(-2), ['context.close', 'browser.close']);
+  assert.equal(
+    assessOwnedPagesSmoke(result.report, closed(), revision, 'chromium', 'backup')
+      .performanceExcluded,
+    true,
+  );
+  const normal = await observeModel();
+  assert.equal(normal.backupCalls, 0);
+  assert.equal(normal.soloCalls, 1);
+  assert.equal(normal.sharedCalls, 1);
+});
+test('failed backup remains failure without broad-flow fallback and retains ordinary cleanup', async () => {
+  const result = await observeModel({ diagnostic: 'backup', backupFailure: true });
+  assert.equal(result.report.status, 'failed');
+  assert.match(result.report.failure, /^backup control failed/);
+  assert.equal(result.soloCalls, 0);
+  assert.equal(result.sharedCalls, 0);
+  assert.deepEqual(result.calls.slice(-2), ['context.close', 'browser.close']);
+});
+test('owner independently rejects relabelled backup scope, incomplete discard and extra pages', () => {
+  const good = () => ({
+    ...validReport(),
+    diagnostic: 'backup',
+    diagnosticScope: 'fresh-profile-progress-backup',
+    stages: ['ordinary-password-accepted', 'fresh-profile-progress-backup'],
+    pages: [{ total: 0, overflow: false, events: [] }],
+    backup: validBackupRecord(),
+    backupAssessment: assertPagesBackupEvidence(validBackupRecord()),
+  });
+  assessOwnedPagesSmoke(good(), closed(), revision, 'chromium', 'backup');
+  for (const change of [
+    (r) => {
+      r.diagnostic = 'none';
+    },
+    (r) => {
+      r.diagnosticScope = 'public-critical-flow-smoke';
+    },
+    (r) => {
+      r.backup.downloadDiscarded = false;
+    },
+    (r) => {
+      r.backupAssessment.downloaded = false;
+    },
+    (r) => {
+      r.pages.push({ total: 0, overflow: false, events: [] });
+    },
+    (r) => {
+      r.solo = {};
+    },
+    (r) => {
+      r.shared = {};
+    },
+  ]) {
+    const report = good();
+    change(report);
+    assert.throws(() => assessOwnedPagesSmoke(report, closed(), revision, 'chromium', 'backup'));
+  }
+  assert.throws(() => assessOwnedPagesSmoke(good(), closed(), revision, 'chromium'));
 });
