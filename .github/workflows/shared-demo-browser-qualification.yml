@@ -79,6 +79,20 @@ jobs:
           test "$(wc -c < .cache/hosted-demo-browser/browser-install.log)" -le 4194304
           test "${statuses[0]}" -eq 0
           test "${statuses[1]}" -eq 0
+      - name: Install the canonical source fingerprint dependency
+        timeout-minutes: 2
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Browser provisioning refreshed apt metadata in the preceding step.
+          set +e
+          timeout --signal=TERM --kill-after=10s 90s sudo env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y ripgrep 2>&1 | head -c 262145 > .cache/hosted-demo-browser/fingerprint-dependency-install.log
+          statuses=("${PIPESTATUS[@]}")
+          set -e
+          test "$(wc -c < .cache/hosted-demo-browser/fingerprint-dependency-install.log)" -le 262144
+          test "${statuses[0]}" -eq 0
+          test "${statuses[1]}" -eq 0
+          rg --version > .cache/hosted-demo-browser/ripgrep-version.txt
       - name: Verify supervisor and offline-storage guards
         timeout-minutes: 3
         shell: bash
