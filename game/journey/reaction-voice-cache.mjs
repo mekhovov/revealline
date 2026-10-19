@@ -21,7 +21,9 @@ export async function inspectReactionRecording(
     return Promise.reject(
       new Error('A recording up to 2 MiB and browser media inspection are required.'),
     );
-  const container = inspectRecordingContainer(await blob.arrayBuffer());
+  const bytes = await blob.arrayBuffer();
+  if (signal?.aborted) throw aborted();
+  const container = inspectRecordingContainer(bytes);
   if (signal?.aborted) throw aborted();
   return new Promise((resolve, reject) => {
     const media = document.createElement('audio');
