@@ -253,6 +253,56 @@ test('restoring a saved custom controller keeps its customized gains visible in 
   assert.equal(f.tested[0].advanced.controller.gains.roll.p, savedGain);
 });
 
+for (const recovery of ['Revert draft', 'Undo last edit', 'Use in draft'])
+  test(`${recovery} clears stale PID errors and restores a valid comparison`, async (t) => {
+    const f = await fixture(t, { physical: true, enableBench: true });
+    await f.click('Flight response / PID');
+    const gain = f.field('Roll P (N·m/(rad/s))'),
+      before = f.store.export(),
+      original = f.store.effective().advanced.controller.gains.roll.p,
+      summary = () => f.ui.root.querySelector('.workbench-summary').textContent,
+      bench = f.ui.root.querySelector('.tuning-bench');
+    f.edit('Roll P (N·m/(rad/s))', '');
+    await f.click('Save for next flight');
+    assert.equal(f.store.export(), before);
+    assert.equal(gain.getAttribute('aria-invalid'), 'true');
+    assert.match(summary(), /1 unfinished values.*Draft$/);
+    assert.match(bench.textContent, /Unavailable for this backend/);
+    if (recovery === 'Use in draft') {
+      f.edit('Aircraft preset', 'meteor75-analog-2022', 'select');
+      await f.click('Use in draft');
+    } else await f.click(recovery);
+    assert.equal(gain.getAttribute('aria-invalid'), 'false');
+    assert.equal(f.ui.root.querySelector('[aria-invalid="true"]'), null);
+    if (recovery === 'Use in draft') assert.match(summary(), /1 changes.*Draft$/);
+    else assert.match(summary(), /0 changes.*Saved for next flight$/);
+    assert.doesNotMatch(summary(), /unfinished values/);
+    assert.match(bench.textContent, /Available for this aircraft controller/);
+    await f.click('Run simulation bench', bench);
+    assert.equal(f.workers.length, 1, 'a valid restored controller can start a comparison');
+    assert.equal(f.workers[0].messages[0].request.draft.advanced.controller.gains.roll.p, original);
+    assert.equal(f.store.export(), before, 'restoring validity does not persist a new setup');
+  });
+
+for (const raw of ['', '-', '1001'])
+  test(`refresh preserves genuinely invalid PID text ${JSON.stringify(raw)} and its error`, async (t) => {
+    const f = await fixture(t, { physical: true, enableBench: true });
+    const gain = f.field('Roll P (N·m/(rad/s))'),
+      before = f.store.export();
+    f.edit('Roll P (N·m/(rad/s))', raw);
+    f.ui.refresh();
+    assert.equal(gain.value, raw);
+    assert.equal(gain.getAttribute('aria-invalid'), 'true');
+    assert.match(
+      f.ui.root.querySelector('.workbench-summary').textContent,
+      /1 unfinished values.*Draft$/,
+    );
+    await f.click('Save for next flight');
+    await f.click('Run simulation bench', f.ui.root.querySelector('.tuning-bench'));
+    assert.equal(f.workers.length, 0);
+    assert.equal(f.store.export(), before);
+  });
+
 test('installed battery capacity owns the Expert mirror and the tested configuration', async (t) => {
   const f = await fixture(t, { physical: true });
   const capacity = f.field('Battery capacity (Ah)');

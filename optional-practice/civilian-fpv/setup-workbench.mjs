@@ -206,6 +206,11 @@ export function mountWorkbenchPhysics({
   // Compact text is presentation only; untouched gains retain their exact double.
   const gainText = (value, exact) =>
     value === undefined ? '' : String(exact ? value : Number(value.toPrecision(12)));
+  const validInput = (input) =>
+    input.value.trim() &&
+    Number.isFinite(Number(input.value)) &&
+    Number(input.value) >= Number(input.min) &&
+    Number(input.value) <= Number(input.max);
   for (const axis of ['x', 'y', 'z'])
     fields.push([
       `aircraft.geometry.centerOfMass.${axis}`,
@@ -253,11 +258,7 @@ export function mountWorkbenchPhysics({
     function changed() {
       control.edited = true;
       const value = Number(input.value),
-        valid =
-          input.value.trim() &&
-          Number.isFinite(value) &&
-          value >= Number(input.min) &&
-          value <= Number(input.max);
+        valid = validInput(input);
       input.setAttribute('aria-invalid', valid ? 'false' : 'true');
       row.dataset.customized = String(input.value !== String(get(baseline, path)));
       if (valid) set(configuration, path, value);
@@ -398,6 +399,7 @@ export function mountWorkbenchPhysics({
             : max,
         );
         input.min = String(isPhysical && path.startsWith('aircraft.inertia.') ? 0.0000001 : min);
+        input.setAttribute('aria-invalid', input.disabled || validInput(input) ? 'false' : 'true');
         row.dataset.customized = String(v !== get(saved, path));
       }
       physical.dataset.unavailable = filters.dataset.unavailable = String(!value);
@@ -407,13 +409,7 @@ export function mountWorkbenchPhysics({
     },
     read(commit = true) {
       for (const { input } of controls)
-        if (
-          !input.disabled &&
-          (!input.value.trim() ||
-            !Number.isFinite(Number(input.value)) ||
-            Number(input.value) < Number(input.min) ||
-            Number(input.value) > Number(input.max))
-        ) {
+        if (!input.disabled && !validInput(input)) {
           if (commit) {
             input.setAttribute('aria-invalid', 'true');
             throw new Error(
