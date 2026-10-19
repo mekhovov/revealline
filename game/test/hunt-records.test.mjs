@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createHuntRecords, HUNT_RECORDS_KEY, validateHuntRecords } from '../hunt/records.mjs';
+import {
+  createHuntRecords,
+  HUNT_RECORDS_KEY,
+  validateHuntRecords,
+  runHuntMilestones,
+} from '../hunt/records.mjs';
 
 function storage() {
   const rows = new Map();
@@ -131,4 +136,41 @@ test('Solo record identity pins the attempt and separates chosen class and steer
   run.level = { changedAfterIdentity: true };
   assert.equal(records.best(run).key, original);
   records.dispose();
+});
+
+test('displayed won-attempt milestones use the same existing damage owners as stored milestones', () => {
+  const hunt = { kills: 1, touchKills: 1, captureKills: 0, score: 100 };
+  const definition = { mode: 'hunt', quota: 1, targets: [{ id: 'runner', kind: 'runner' }] };
+  for (const [fields, clean] of [
+    [{ classic: { hunt, livesLost: 0 }, huntDowns: 2 }, true],
+    [{ classic: { hunt, livesLost: 1 }, huntDowns: 0 }, false],
+    [{ huntDowns: 1, metrics: { downs: 0 } }, false],
+    [{ huntDowns: 0, metrics: { downs: 2 } }, true],
+    [{ metrics: { downs: 1 }, stats: { downs: 0 } }, false],
+    [{ stats: { downs: 1 } }, false],
+    [{ runningEnemies: { hunt }, rules: { lives: 3 }, lives: 2 }, false],
+    [{ runningEnemies: { hunt }, rules: { lives: 3 }, lives: 3 }, true],
+    [{}, true],
+  ]) {
+    const run = {
+      status: 'won',
+      time: 7,
+      huntRecordIdentity: 'aaaaaaaaaaaaaaaa',
+      level: { hunt: definition },
+      hunt,
+      ...fields,
+    };
+    const before = structuredClone(run),
+      saved = storage();
+    const records = createHuntRecords({ getStorage: () => saved });
+    const current = runHuntMilestones(run);
+    assert.deepEqual(current, { all: true, contact: true, clean });
+    assert.deepEqual(run, before, 'Reading current facts cannot mutate the attempt.');
+    assert.equal(saved.getItem(HUNT_RECORDS_KEY), null);
+    const stored = records.complete(run);
+    assert.deepEqual({ all: stored.all, contact: stored.contact, clean: stored.clean }, current);
+    records.dispose();
+    run.status = 'lost';
+    assert.equal(runHuntMilestones(run), null);
+  }
 });
