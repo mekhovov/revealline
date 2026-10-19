@@ -279,3 +279,75 @@ test('a native finished Versus draw reports the observed round state without inv
   assert.deepEqual(f.checkpoint(), checkpoint);
   assert.deepEqual(f.storage.writes, writes);
 });
+
+// Model the two fixture window objects at the native window/defaultView boundary.
+function resizeWidth(f, width) {
+  f.win.innerWidth = width;
+  f.doc.defaultView.innerWidth = width;
+  f.doc.documentElement.clientWidth = width;
+  f.doc.defaultView.emit('resize');
+}
+for (const focusOwner of ['data-tab', 'outside'])
+  for (const phase of ['pending', 'prepared'])
+    test(`Versus width breakpoint retires ${phase} Data with unchanged categories and ${focusOwner} focus`, async (t) => {
+      let finish,
+        calls = 0;
+      const held = new Promise((resolve) => {
+        finish = resolve;
+      });
+      const f = await fixture(t, {
+        storageAPI: {
+          persisted: () => (phase === 'pending' && ++calls === 1 ? held : Promise.resolve(false)),
+        },
+      });
+      open(f);
+      resizeWidth(f, 1000);
+      assert.equal(f.$('race-options-panel').getAttribute('data-settings-view'), 'categories');
+      if (phase === 'prepared') await prepare(f);
+      else {
+        f.$('support-summary-prepare').focus();
+        f.$('support-summary-prepare').click();
+        await settle();
+      }
+      const focus = focusOwner === 'data-tab' ? f.$('race-settings-tab-data') : f.doc.body;
+      focus.focus();
+      const reads = f.readCount(),
+        writes = [...f.storage.writes],
+        checkpoint = f.checkpoint();
+      resizeWidth(f, 320);
+      assert.equal(f.$('race-options-panel').getAttribute('data-settings-view'), 'categories');
+      assert.equal(
+        f.$('race-settings-panel-data').hidden,
+        false,
+        'CSS breakpoint, not category hidden/inert, retires this view.',
+      );
+      if (phase === 'prepared')
+        assert.equal(
+          f.$('support-summary-json').textContent,
+          '',
+          'The CSS-hidden prepared view must retire immediately.',
+        );
+      resizeWidth(f, 1000);
+      finish(true);
+      await settle();
+      await settle();
+      assert.equal(
+        f.$('support-summary-json').textContent,
+        '',
+        'Returning wide before completion cannot revive the old visit.',
+      );
+      assert.equal(f.$('support-summary-download').disabled, true);
+      assert.equal(f.doc.activeElement, focus);
+      assert.equal(f.readCount(), reads);
+      assert.deepEqual(f.storage.writes, writes);
+      assert.deepEqual(f.checkpoint(), checkpoint);
+      await prepare(f);
+      const captured = f.$('support-summary-json').textContent;
+      f.$('race-settings-tab-data').focus();
+      resizeWidth(f, 1000);
+      assert.equal(
+        f.$('support-summary-json').textContent,
+        captured,
+        'An unchanged width/category does not retire a fresh report.',
+      );
+    });

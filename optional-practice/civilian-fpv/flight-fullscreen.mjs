@@ -9115,7 +9115,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: cdb740b2c82dd94535fdce5412f3b939a25338d58003f5e6b44f1df51ea9b97b
+// Canonical source sha256: dbb81fb6878bb4368459af287a586bb790a40362697c08874ccd52dcb703519d
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9391,6 +9391,7 @@ generation=0;
 const compact=()=>
 root?.classList?.contains('native-settings')&&
 (doc.defaultView?.innerWidth??doc.documentElement?.clientWidth??Infinity)<=700;
+let previousCompact=compact();
 function view(name){
 if(
 !root?.classList?.contains('native-settings')||
@@ -9471,13 +9472,20 @@ event.stopImmediatePropagation?.();
 };
 root?.addEventListener('click',backClick,true);
 const resize=()=>{
-if(destroyed|| !root?.contains(doc.activeElement))return;
-const changed=current?.panel.contains(doc.activeElement)
+if(destroyed)return;
+// CSS can hide Data at the breakpoint without changing the selected panel
+// or view attribute. That owner change does not depend on current focus.
+const nextCompact=compact(),
+breakpointChanged=nextCompact!==previousCompact;
+previousCompact=nextCompact;
+const viewChanged= !root?.contains(doc.activeElement)
+?false
+:current?.panel.contains(doc.activeElement)
 ?view('panel')
 :list?.contains(doc.activeElement)
 ?view('categories')
 :false;
-if(changed){
+if(breakpointChanged||viewChanged){
 generation++;
 onPresentationChange();
 }

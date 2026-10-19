@@ -83,6 +83,7 @@ export function attachSettingsPanels({
   const compact = () =>
     root?.classList?.contains('native-settings') &&
     (doc.defaultView?.innerWidth ?? doc.documentElement?.clientWidth ?? Infinity) <= 700;
+  let previousCompact = compact();
   function view(name) {
     if (
       !root?.classList?.contains('native-settings') ||
@@ -162,13 +163,20 @@ export function attachSettingsPanels({
   };
   root?.addEventListener('click', backClick, true);
   const resize = () => {
-    if (destroyed || !root?.contains(doc.activeElement)) return;
-    const changed = current?.panel.contains(doc.activeElement)
-      ? view('panel')
-      : list?.contains(doc.activeElement)
-        ? view('categories')
-        : false;
-    if (changed) {
+    if (destroyed) return;
+    // CSS can hide Data at the breakpoint without changing the selected panel
+    // or view attribute. That owner change does not depend on current focus.
+    const nextCompact = compact(),
+      breakpointChanged = nextCompact !== previousCompact;
+    previousCompact = nextCompact;
+    const viewChanged = !root?.contains(doc.activeElement)
+      ? false
+      : current?.panel.contains(doc.activeElement)
+        ? view('panel')
+        : list?.contains(doc.activeElement)
+          ? view('categories')
+          : false;
+    if (breakpointChanged || viewChanged) {
       generation++;
       onPresentationChange();
     }

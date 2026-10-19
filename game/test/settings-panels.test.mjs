@@ -355,3 +355,36 @@ test('a presentation notification that retires settings cannot restore the old p
   assert.equal(panels.select(f.tabs.data.id, { focus: true }), false);
   assert.equal(f.document.activeElement, f.document.body);
 });
+
+test('compact CSS breakpoint changes notify with unchanged categories and outside focus; same-side resizes do not', () => {
+  const f = fixture();
+  f.root.classList.add('native-settings');
+  f.document.defaultView.innerWidth = 1000;
+  const notifications = [];
+  const panels = attachSettingsPanels({
+    ...f,
+    onPresentationChange() {
+      notifications.push({
+        width: f.document.defaultView.innerWidth,
+        view: f.root.getAttribute('data-settings-view'),
+        active: f.document.activeElement,
+      });
+    },
+  });
+  panels.select(f.tabs.data.id);
+  notifications.length = 0;
+  f.document.body.focus();
+  for (const width of [1000, 701, 700, 699, 320, 1000]) {
+    f.document.defaultView.innerWidth = width;
+    f.document.defaultView.emit('resize');
+  }
+  assert.deepEqual(
+    notifications.map(({ width, view }) => ({ width, view })),
+    [
+      { width: 700, view: 'categories' },
+      { width: 1000, view: 'categories' },
+    ],
+  );
+  assert.ok(notifications.every(({ active }) => active === f.document.body));
+  panels.destroy();
+});
