@@ -15,13 +15,13 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Single Drone/Riy scaling: fix the demonstrated critical HUD wrapping, then finish actual compact English/Ukrainian field, touch, reading, upgrade and result review. The initial offscreen Start is corrected; 33 focused cases pass at their recorded scopes.",
+    "P1 · Single Drone/Riy scaling: corrected Start visibility and Single Drone Ukrainian landscape Boost; Riy landscape still clips Focus/Boost and needs a bounded layout correction. Preserve font sizes, complete field and all critical controls; 33 cases pass at recorded scopes.",
     "P1 · Text compatibility #1668: current-main integration passes the complete 456-case cohort, full configured lint, canonical catalogs and both bootstrap checks. Finish full source/package/rendered checks, required CI and admission.",
-    "P1 · Team Home guidance: pure 8/8 and complete new host 13/13 pass; continue the seven existing regression files. Preserve the independently verified current mission route and all progress/launch owners.",
+    "P1 · Team Home guidance: pure8/8 and complete newhost13/13 pass; existing default13/13, navigation11/11, progress8/8 pass. Difficulty3/9 reproduces identically on the unchanged baseline. Next stopped at disk guard with no final summary; briefing/localization Not run. Separate narrow fixture prerequisite in preparation.",
     "P1 · Shared support/recovery and existing drafts: reconcile current-source predecessors and finish required qualification for controller #1731, primary #1661, Worlds #1733 and Rooms #1734.",
     "P2 · Academy language #1742: complete native 78/78 passes, including terminal/replay/reset controls. Actual browser, full source, package and physical gates remain.",
-    "P2 · Private-room invitations F49: implement Copy, native Share and local QR with truthful fallback, cancellation and stale-owner handling; keep transport and room credentials unchanged.",
-    "P1 · Capacity: roughly 2.2 GiB remains. Protect the 2 GiB reserve; stop guarded work if it is breached. Avoid large builds/captures and retain original work and evidence.",
+    "P2 · Private-room invitations F49: nine-path Copy/Share/localQR candidate passes21 pure cases and bounded source review. Add explicit lifecycle/live-status cases, then run complete native/client/content/presentation cohort when disk capacity permits. Browser/native Share/scan/device acceptance remains.",
+    "P1 · Capacity hold: Team Next verification stopped at the protected2GiB floor (2,128,703,488bytes). Native tests, full checks and packages are paused; source/browser review continues. User asked to free at least3GiB. Preserve all original work and failed/incomplete evidence.",
     "P2 · Pause music #1737: complete current-source 28/28 and actual Duel/Team EN/UK browser review pass. Full/package/admission, listening and hardware acceptance remain.",
     "P1 · Review Capture #1729, Duel #1741 and Team repair #1740 with their explicit prerequisites. Source PR counts do not establish whole-feature completion.",
     "Continue all eight phases and retain all 83 feature groups / 113 deliverables. Contextual lessons still require Learn/Demo dependencies; physical iPhone PWA offline and Steam Deck checks remain Not tested."
@@ -980,15 +980,17 @@
           "commit": null,
           "dependency": "Independent Team retained-context repair #1740; existing prepared-picture and Team progress owners, no Learn/Demo dependency for this slice",
           "effort": "1–2d bounded Home slice within F10, plus qualification/review queues",
-          "next": "Corrected complete new host13/13 and pure8/8 pass. Existing default13/13, navigation11/11 and progress8/8 pass; difficulty host3/9 fails and is being attributed on exact baseline. Final Next/briefing/localization files Not run. No aggregate green or feature PR yet.",
+          "next": "P1 · Team Home guidance: pure8/8 and complete newhost13/13 pass; existing default13/13, navigation11/11, progress8/8 pass. Difficulty3/9 reproduces identically on the unchanged baseline. Next stopped at disk guard with no final summary; briefing/localization Not run. Separate narrow fixture prerequisite in preparation.",
           "evidence": [
             "Nine-path presentation-only source on1740 captures reason facts from existing initial/profile selection and accepted picture. Exactready row/pack/level guards; no extra next/initial calls, progress/save/launch owner. Preserve native landing column, ownaria-description token and restoreoriginalparagraphbefore nativeMenu teardown.114originalnamedfunctions byte-identical;5945EN/6057UKoldvalues preserved+3messages/language,18canonicalnamespaces.",
             "Initial complete newhost10/13PASS; earned-clear fixture rejected obsolete route identity before attempting a win, so successor child alsofailed. Current authored/tuned hashes differ from all oldroute rows; not productionred. New-host-only local8segmentcandidate independently replayed twice against exactcurrentTwinlandings rules/seed/recipe:2154legalcommands win, exactfullcheckpointba24c2b8a75347e6cf966ad4464b5e1ed10c0d4b3d2a1b26fead1fce128f87b5. Oldhelper/JSONimmutable; no injectedrun/status/terminal.",
             "Corrected complete newhost13/13PASS26.132s TAP/28.416s wall,peak473.3MiB,zero skips/guards/stderr; source9manifestaff199dbf67c402b088f261f737aaee0c28127b642602088eaacb40703a04aa1 and77sourceaudit unchanged beforeafter. Actual2154hostcommands earnTeamclear, reentryselects exactSteppingexchange/noputs. First2of7existing completefiles pass default13/13/navigation11/11; furtherfilespending, no aggregategreen. Navigation identity-only cases intentionally omit artwork and are not artwork/play proof.",
-            "Existing cohort thirdfile Teamprogress8/8PASS. Fourth complete difficulty-host3pass/6fail9cases16.116s TAP/18.077s wall,peak336.4MiB,no guards/skips/source drift. Fivefailures include existing enemy-stats writerlease in all-storage-write expectations; one hidden-save Retry wait expires. Baseline attribution not established; no expectations/runtime changed. Final3files Notrun. Frozen9featuremanifest unchanged; rootapproved read-only baseline diagnosis before further edits."
+            "Existing cohort thirdfile Teamprogress8/8PASS. Fourth complete difficulty-host3pass/6fail9cases16.116s TAP/18.077s wall,peak336.4MiB,no guards/skips/source drift. Fivefailures include existing enemy-stats writerlease in all-storage-write expectations; one hidden-save Retry wait expires. Baseline attribution not established; no expectations/runtime changed. Final3files Notrun. Frozen9featuremanifest unchanged; rootapproved read-only baseline diagnosis before further edits.",
+            "Unchanged b2b9743d9c38d2b86c8de9d4f8ff216a0d5539e6 baseline difficulty complete9cases reproduces same3pass/6fail at identical assertion lines. Exact five tracked preimages restored finally and all nine aff199dbf67c402b088f261f737aaee0c28127b642602088eaacb40703a04aa1 feature hashes verified. No feature-source or assertion change. Separate test-only prerequisite will retain exact writer identity/no defeat record and real Settings-owned Retry/Back/Start navigation.",
+            "Team Next complete-file attempt stopped at protected2GiB disk floor: sampled2,128,703,488bytes at89.18s; terminal90.95s,peak451.3MiB. Eight emitted subtests pass, including all12 legal clears, but no final TAP summary: FAILED/INCOMPLETE, not a complete-file pass. Briefing and localization files Not run. Native/heavy qualification held pending capacity."
           ],
           "qualification": {
-            "automated": "pure_8_and_complete_new_host_13_pass_regression_in_progress",
+            "automated": "pure_8_new_host_13_pass_three_regression_files_pass_baseline_difficulty_3_of_9_next_incomplete_disk_guard",
             "browser": "not_run",
             "physical": "not_tested"
           }
@@ -2434,7 +2436,7 @@
           "commit": null,
           "dependency": "Compatibility1668 and complete SingleDrone/Riy typography/layout inventory; follow independent width repair",
           "effort": "Within original6–10d totalF09, not a second full estimate",
-          "next": "Current33 feature cases across6 complete files pass at recorded source scopes. Actual compact review found and corrected offscreen initial Start; now improve critical HUD wrapping without reducing font size, then finish EN/UK portrait/landscape/field/touch/upgrade/result review. Full source/package/device gates remain.",
+          "next": "P1 · Single Drone/Riy scaling: corrected Start visibility and Single Drone Ukrainian landscape Boost; Riy landscape still clips Focus/Boost and needs a bounded layout correction. Preserve font sizes, complete field and all critical controls; 33 cases pass at recorded scopes. Full-source/package/native successor qualification held for capacity; no touch-on or physical acceptance.",
           "evidence": [
             "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred.",
             "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed.",
@@ -2442,7 +2444,8 @@
             "Root independently verifies48featurepaths versus currentcompat2e0 foundation, actualsourcehashes and50originalOverflight namedfunctions:49exact; onlysyncUpgrade adds intendedexpandedcomparison. RequirednewsharedAPI opt-in/persistence and currentmainowners retained. Nativefixture uses actualapp/renderer/core with local originalbytes; no CSS/WebGL/hardware claim.",
             "Initial five/view/declaration sequence8/9 emittedcases, one formatting-only declaration membership mismatch. Test-only property+value quote-aware whitespace normalization preserves161expectations/arithmetic/source. Nextcompletefiles declaration2/2/card5/5/preview11/11PASS; native5/7 failed wrongnewPauseResumefixtureID. One-tokencorrect actualpause-resume ID preservesallstate assertions; complete7/7PASS. Historicalfailedruns retained separately.",
             "Actual320x720ExtraLargePlainEN firstHomefocus Start wasoffscreen:rect[16,2023.83,272,65.59], Home304x704/scrollHeight2725/scrollTop0. Screenshot overflight-xl-320-home-primary-offscreen.png. Approvedlocalpresentation reveal keeps existingfocus/DOM/navigationorder with one cancellableframe and stale/dispose/sizeguards. Currentcompleteaffectedview3+native7 pass10/10; unchangedpolicy5/declaration2/card5/preview11 retainexactscopes, total33cases across6completefiles. Manifest55c89ae107d17e3b879e272d6293c137f0f315b39151c520cb6396d8f3adcd2a. Bothgeneratorchecks exact/noaddedslot.",
-            "Actualreload320x720ExtraLargePlainEN at55c89: sameacceptedStartfocus, rect[16,622.33,272,65.59] nowinside704highHome, scrollTop1401.5. Screenshot overflight-xl-320-home-primary-visible.png. ActualpublicStart entersrealgame andlater earnslevel2upgrade with visible NOW/NEXT DOMcomparison; screenshot overflight-xl-320-earned-upgrade.png. BrowseralsofoundthreecolumnHUD splits clockdigits/words at320; two-column/fullwidthtally CSS correction approved butnotyetqualified. Controls-on/touch, UK, landscape, result/save dialogs and fullviewport/device acceptance remain. These are iframeCSSreviews, not device emulation."
+            "Actualreload320x720ExtraLargePlainEN at55c89: sameacceptedStartfocus, rect[16,622.33,272,65.59] nowinside704highHome, scrollTop1401.5. Screenshot overflight-xl-320-home-primary-visible.png. ActualpublicStart entersrealgame andlater earnslevel2upgrade with visible NOW/NEXT DOMcomparison; screenshot overflight-xl-320-earned-upgrade.png. BrowseralsofoundthreecolumnHUD splits clockdigits/words at320; two-column/fullwidthtally CSS correction approved butnotyetqualified. Controls-on/touch, UK, landscape, result/save dialogs and fullviewport/device acceptance remain. These are iframeCSSreviews, not device emulation.",
+            "Actual e66eb738d10ac1bf4f0fcb5dc909f45e53bcaa47c96ca6d07bf19c8fba09b29e manifest:844×390 Extra Large/Plain Ukrainian Single Drone now shows full434.88×244.62 field and Boost bottom at363.79<390; HUD scroll318/client318. Riy at same settings still overflows: HUD453/client318, Focus149.59high and Boost bottom525.38. Red screenshot preserved; further bounded layout correction required. This is same-origin iframe responsive review, not touch/device emulation. Earlier33-case receipts retain their actual source scope; successor CSS format/diff passes only."
           ],
           "blocker": null,
           "candidateCommit": "50c2b888c179bbbe42cabe6979b9c226c194dd77"
@@ -3148,18 +3151,19 @@
       "status": "developing",
       "owner": "lane-c",
       "qualification": {
-        "automated": "not_run",
+        "automated": "pure_component_qr_21_pass_native_not_run_capacity_hold",
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": null,
+      "blocker": "Native/full/package qualification paused after shared disk guard; source review continues.",
       "pr": null,
       "commit": null,
-      "next": "Implement the approved complete private-room invitation Copy/Share/QR slice. Reuse existing canonical invitation ownership and local QR vendor; preserve room transport, Ready, input, records and invitation expiry. Source review and focused/browser qualification follow.",
+      "next": "P2 · Private-room invitations F49: nine-path Copy/Share/localQR candidate passes21 pure cases and bounded source review. Add explicit lifecycle/live-status cases, then run complete native/client/content/presentation cohort when disk capacity permits. Browser/native Share/scan/device acceptance remains.",
       "evidence": [
         "Current private-room UI exposes only readonly invite input. Existing room-content owner builds the accepted invite/content URL without seatcredentials; current room lifecycle retires it on leave/replacement. No existing Copy/Share/QR slice or PR. Phase5 implementation authorized while remaining P1 admission/device work continues.",
         "Nine-path scope reuses localqrcodegen-1.8.0 (45421bytes), no install/service/assets. Clipboard promise success/manualselect fallback, directgesture nativeShare withAbortError cancellation, explicit QR, exactacceptedURL only. Existing native surface notification invalidates stale work across away→back; no duplicated surface/transport state. Keep singlependingjob untilsettled, no tokenlog/storage/telemetry. Existing room-ui textfallback/Rooms1734futurecallback union preserved. Component/QR +real room-client/presentation tests planned; unchangedcontentvalidation remains incohort. No native pass/browser/native-share/scan/device acceptance yet.",
-        "First pure component/localQR file21/21PASS0.378s,peak174256KiB,zero failures/skips/guards/source drift; full5030byte stdout/stderr0. Actualhost/lifecycle/presentation files stillNotrun and sourceunderdevelopment; no browser/native-share/scan/device claim."
+        "First pure component/localQR file21/21PASS0.378s,peak174256KiB,zero failures/skips/guards/source drift; full5030byte stdout/stderr0. Actualhost/lifecycle/presentation files stillNotrun and sourceunderdevelopment; no browser/native-share/scan/device claim.",
+        "Read-only source review of frozen182845e96750b71f3d00333e9db2d54137db8ad8b071fe77fbd3b0b3cf4fea49 finds identical accepted URL polls preserve status/QR text; hidden/pagehide/dispose and native-menu transitions retire pending outcomes while preserving one Share owner. No demonstrated production defect. Explicit deferred Clipboard/Share lifecycle and mutation-count coverage being added source-only; additions unrun. No browser/assistive-technology/OS Share/QR-scan/device claim."
       ]
     },
     {
@@ -4418,6 +4422,11 @@
       "date": "2026-10-19",
       "item": "Current compatibility qualification, Academy draft and next independent phase",
       "reason": "1668currentcomplete456/456/fullconfiguredlintpass; failed sparse-input attempts preserved. Academy1742complete78/78draft. SingleDrone/Riy33cases, actualHomefocusfix and HUDwrapfinding. Teamcurrentlegalroute13/13/regressioncontinues. Phase5F49sharingimplementationstarted.86candidateinventory31merged12ready42draft1withdrawn;113deliverables retained."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Capacity / F09 / F10 / F49",
+      "reason": "Guard-stopped Team Next at2GiB; native/heavy checks paused pending user-freed capacity. Baseline difficulty failures independently confirmed; Single Drone landscape corrected, Riy clipping remains; F49 source review complete with explicit lifecycle coverage in preparation."
     }
   ],
   "deliveryDependencies": [
