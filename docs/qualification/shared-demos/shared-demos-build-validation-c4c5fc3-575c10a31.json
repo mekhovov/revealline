@@ -1,0 +1,114 @@
+{
+  "format": "revealline-demo-final-build-validation.v2",
+  "started": "2026-10-19T02:48:21.353Z",
+  "expected": {
+    "head": "575c10a31287b7ae086bcf373ef4ab3ecbf613a3",
+    "base": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+    "runtime": {
+      "sha256": "35b8b966b926324557effeea0e9f54d93348d5617fea4e054f9fc0e7ea3859f4",
+      "files": 9996,
+      "bytes": 404409496
+    }
+  },
+  "attempt": null,
+  "sourceRevision": "575c10a31287b7ae086bcf373ef4ab3ecbf613a3",
+  "runtimeFingerprint": {
+    "sha256": "35b8b966b926324557effeea0e9f54d93348d5617fea4e054f9fc0e7ea3859f4",
+    "files": 9996,
+    "bytes": 404409496
+  },
+  "buildInputFingerprint": {
+    "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+    "files": 9406,
+    "bytes": 348394334
+  },
+  "wrapper": {
+    "path": ".cache/run-final-build-current.mjs",
+    "sha256": "dfbcb74bbff73b4a50af80e35cbbec8e99da7748abb41d83d55ad8d592f4c56d"
+  },
+  "wrapperHelper": {
+    "path": ".cache/final-build-wrapper-support.mjs",
+    "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e"
+  },
+  "scratchHelper": {
+    "path": ".cache/final-build-scratch.mjs",
+    "sha256": "1c8c537e0e9c68a57a5d568fccd641b6c26a7c5458115755c2125afd4546d6e7"
+  },
+  "scratch": {
+    "root": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos",
+    "directory": ".cache/shared-demo-scratch-c4c5fc3c",
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c",
+    "sourceDevice": 16777231,
+    "device": 16777238,
+    "inode": 2,
+    "ownerUid": 502,
+    "tmp": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp",
+    "captures": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures",
+    "availableBytesAtAdmission": 2000285696
+  },
+  "previewOutput": ".cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-c4c5fc3-575c10a31",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "2574205b51fd94691db6b94368c1f238747384723c72894dd3a3953c77604c0f",
+    "created": "2026-10-19T02:39:31.478198+00:00",
+    "integrationBase": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "35b8b966b926324557effeea0e9f54d93348d5617fea4e054f9fc0e7ea3859f4",
+    "files": 9996,
+    "bytes": 404409496
+  },
+  "materializedBuild": false,
+  "deploymentAdmission": false,
+  "complete": false,
+  "stages": [
+    {
+      "name": "main-pages",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-main-pages.mjs",
+        "--report=docs/qualification/shared-demos/main-pages-demo-final-c4c5fc3-575c10a31.json",
+        "--preview-output=.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-c4c5fc3-575c10a31"
+      ],
+      "started": "2026-10-19T02:48:21.354Z",
+      "logPath": "docs/qualification/shared-demos/final-main-pages-c4c5fc3-575c10a31.log.txt",
+      "receivedLogBytes": 1279749,
+      "availableDiskBeforeBytes": 867172352,
+      "availableScratchBeforeBytes": 2000285696,
+      "pid": 17394,
+      "minimumObservedDiskBytes": 845955072,
+      "minimumObservedScratchBytes": 2000281600,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 325008,
+      "retainedLogBytes": 1279749,
+      "logTruncated": false,
+      "logSHA256": "3333efa03854fc8f13cdbebe57272f41c5c587bda34b0e75b2da0fdbccbd7ffb",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-c4c5fc3-575c10a31.json",
+        "bytes": 2060512,
+        "sha256": "a92b918956a57e8936d6e2cba645e800eb2f1871ad4d29703fa1d90b179a2c14",
+        "complete": true
+      }
+    },
+    {
+      "name": "full-packaging",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-packaging.mjs",
+        "--report=docs/qualification/shared-demos/shared-demos-packaging-c4c5fc3-575c10a31.json"
+      ],
+      "started": "2026-10-19T02:53:46.368Z",
+      "logPath": "docs/qualification/shared-demos/final-full-packaging-c4c5fc3-575c10a31.log.txt",
+      "receivedLogBytes": 0,
+      "availableDiskBeforeBytes": 847384576,
+      "availableScratchBeforeBytes": 1856761856
+    }
+  ],
+  "limits": {
+    "logBytesPerStage": 2097152,
+    "stopIfAvailableDiskBelowBytes": 209715200,
+    "stopIfScratchAvailableBelowBytes": 209715200,
+    "stageTimeoutMs": 1200000
+  },
+  "updated": "2026-10-19T02:53:46.368Z"
+}
