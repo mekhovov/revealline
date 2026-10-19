@@ -15,7 +15,7 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Capture Home: 113 checks pass across nine complete files at the recorded candidate. Isolation prerequisite #1754 is source merged; library-opening failures remain unresolved. Pagination repair #1756 passes its complete438-case file and focused CI; separate presentation failures remain. Diagnostic #1757 is published for exact opening evidence. Then finish source, browser, package and player acceptance.",
+    "P1 · Capture Home: nine complete files / 113 checks pass on its recorded candidate. Resolve library-opening failures with diagnostic #1757; pagination #1756 passes 438 checks and focused CI. Chapter-save #1759 and audio-fixture #1760 are separate published repairs awaiting CI. Historical Journey catalog/profile ownership needs explicit equivalent coverage. Then finish current source, browser, package and player acceptance.",
     "P1 · Single Drone/Riy: 28 checks pass across two complete files; a third is incomplete and 25 have not run. Source is restored. The preparation guard correction passes 10 isolated checks; a fresh attempt stops before source changes because space fell again. Resume the full cohort when capacity permits, then fonts, languages, controls and full player journeys.",
     "P1 · Text compatibility #1668: all 11 configured source checks pass at the recorded source. Reconcile conflicts with newer main, then verify current browser, package and CI.",
     "P1 · Team Home #1747: source now merged. All nine admitted files match the independently reviewed local reconciliation. Prior 11 source checks remain bound to 22c553; finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
@@ -177,9 +177,17 @@
           "allocationRegistryToy": "10of10_pass_separateproof",
           "readerCleanupStubToy": "7of7_pass_noGitprocessspawned",
           "actualApplyOrNative": "not_run",
-          "rootFullSourceSpecificReview": "followupreview_found_failure_receipt_child_lifecycle_context_preflight_gaps",
+          "rootFullSourceSpecificReview": "v4_changed_paths_review_clear_for_three_reported_gaps_only_no_execution_or_campaign_qualification",
           "priorFailuresPreserved": true,
-          "next": "Correct failure-receipt, child-cleanup and context-preflight handling in a new review-only revision, with negative stub checks. Preserve every previous failure. No actual source application or native run authorized at the current capacity."
+          "next": "Review-only v4 passes13 inert checks and changed-path review. Original d34 pins are stale for successor heads; regenerate and review before actual source application. All previous failures remain recorded.",
+          "v4": {
+            "transitionSHA256": "d22e1e5cfe678524e17f2c23ab8c15f283a68aaf70ae258a320f8cfbf9468587",
+            "runnerSHA256": "96eaabe66f6cd9507f8c1bccd61b3f13286b540b8b699ab88c203a8f9251219c",
+            "negativeStubCases": "13/13 pass; no real process/Git/game/source application",
+            "receiptSHA256": "460b0135b272aa576c63ef7a773614568ad2b8050390934575d12c38a5c037c4",
+            "next": "Regenerate and independently review all source/head/tree/donor/input/case pins for a successor candidate before any actual campaign. Fresh 2.55GB prelaunch and continuous 2GiB reserve remain unchanged.",
+            "limits": "Catastrophic I/O or receipt-path poisoning cannot guarantee a persisted receipt; observer failure is explicitly failed/cleanup uncertain. No actual campaign qualification."
+          }
         }
       },
       "limits": "32MiBtask-ownedpreparationbudget;2MiBreceiptreserve;2GiBglobalnativefloorunchanged; fresh2.55GBprelaunch."
@@ -4837,6 +4845,11 @@
       "date": "2026-10-19",
       "item": "Snake support source admission",
       "reason": "External merge #1664 observed at new head f75e1ac / merge d8d5133: 47 merged, 10 open for checks, 31 drafts, 1 withdrawn. Earlier a40/751 checks remain pinned; current native export, remaining variants, source and package acceptance are required."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Separate chapter/audio fixture delivery and guard revision",
+      "reason": "Publish draft1759 chapter-envelope and1760 audio-document contracts, one test file each; source/syntax/format verified, CI queued. Review-onlyguardv4passes13negativeinertchecks and changedpathreview; no realgame/process/sourcecampaign. Preserve originalfailures, catalog/profileownershipdecision and all113originaldeliverables."
     }
   ],
   "deliveryDependencies": [
@@ -5022,6 +5035,34 @@
       "evidence": [
         "Independent reversal restores baselineblob83a6396e byteexact; formattedcandidateb72b26b831734d02f746d0ac6ddf7876e6370509996e9d08f2c0367bd98db9df9480B; Node22syntax/repositoryformat pass. Remoteonefilecommit e155/soleparentd8d/tree692403; everyotherroot/game/testtreeentry exact. OPEN/DRAFT/main/exacthead/onepathverified. No localapp/index/ref/sourcecheckoutmutation or assethydration."
       ]
+    },
+    {
+      "id": "CI-chapter-save-envelope-fixture",
+      "priority": "P1",
+      "status": "draft_ci_pending",
+      "deliveryState": "draft",
+      "pr": "https://github.com/mekhovov/revealline/pull/1759",
+      "commit": "a9387bd2679ef79d4301401ee791ec5d49b3ec57",
+      "observedRemoteHead": "a9387bd2679ef79d4301401ee791ec5d49b3ec57",
+      "scope": "One test file reads native savedAt through the existing Capture adapter, normalizes only that timestamp in a test-owned clone and compares the entire artwork envelope. All five case registrations, 102 assertions, exact raw bytes/write counts/checkpoint/download/retry/offline checks remain.",
+      "next": "Collect complete exact-head hosted file/source results; local native, build and package execution remains held below the reserve. Preserve earlier failures; no full suite/player/device pass.",
+      "evidence": [
+        "Captured main d8d5133. Independent source reversal restores baseline af6e4d38c6549b3fdfff8cbe283f0562c7f128cc; published blob 199daa55735d93d8a54aa80fdef15d31315807cf. Node22 syntax and repository-configured formatting pass. Remote sole-parent commit and root/game/test tree verification prove every other entry unchanged; OPEN/DRAFT/main/exact head/one path verified. No local game/source/index/ref mutations or asset hydration."
+      ]
+    },
+    {
+      "id": "CI-audio-document-fixture",
+      "priority": "P1",
+      "status": "draft_ci_pending",
+      "deliveryState": "draft",
+      "pr": "https://github.com/mekhovov/revealline/pull/1760",
+      "commit": "9fb47caca89e86c9133949bb51a3392c2c899c6c",
+      "observedRemoteHead": "9fb47caca89e86c9133949bb51a3392c2c899c6c",
+      "scope": "One test file supplies local Document.getElementById returning null for absent Settings fields in six cue-only fixtures. Shared Events, every original behavior assertion and all production/audio ownership remain unchanged.",
+      "next": "Collect complete exact-head hosted file/source results; local native, build and package execution remains held below the reserve. Preserve earlier failures; no full suite/player/device pass.",
+      "evidence": [
+        "Captured main d8d5133. Independent source reversal restores baseline 3929ed97ad1c37a958853487bdfd59fc7e3da14a; published blob 54399a91a63200c4f5f293a0c48bf08a3817c5ae. Node22 syntax and repository-configured formatting pass. Remote sole-parent commit and root/game/test tree verification prove every other entry unchanged; OPEN/DRAFT/main/exact head/one path verified. No local game/source/index/ref mutations or asset hydration."
+      ]
     }
   ],
   "deliverySnapshot": {
@@ -5035,7 +5076,7 @@
   },
   "admissionReview": {
     "observedDate": "2026-10-19",
-    "scope": "All89 feature candidates generated from every task, implementation slice and follow-up PR field; eleven separately tracked delivery dependencies and documentation excluded",
+    "scope": "All89 feature candidates generated from every task, implementation slice and follow-up PR field; thirteen separately tracked delivery dependencies and documentation excluded",
     "counts": {
       "merged": 47,
       "ready": 10,
