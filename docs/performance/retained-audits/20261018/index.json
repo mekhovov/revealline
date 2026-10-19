@@ -1082,6 +1082,18 @@
       "blob": "93a7bc576d4a8e375c6d7049c916abef22778b65",
       "bytes": 3296,
       "sha256": "25457f0c374783dbf60fca5f15ccdebff4f8eebebd56b34148e8f81961879d67"
+    },
+    {
+      "path": "plan-publication-worlds-lifecycle-20261019.json",
+      "blob": "4e4cee94bfa93db3d6edcebb36fd7ca40f75cadd",
+      "bytes": 874,
+      "sha256": "4a999cdb2345b3f8708ce7cd69cb3da56db3691198c72cde578d80feb8936927"
+    },
+    {
+      "path": "superseded-worlds-and-plan-report-cleanup.json",
+      "blob": "fd9359099c2409b24fd1ee7b7bfc8c9b2659c782",
+      "bytes": 18672,
+      "sha256": "cf85846e5a7c2247861c58f1473a8a5f22c179b60409305d035c1757b3233852"
     }
   ]
 }
