@@ -74,7 +74,7 @@ history remain. Their disappearance is not diagnosed by this integration. Missin
 changing assertions. Protected public archives remain untouched; R13 is still
 unresolved and its previously denied storage-inspection route remains unused.
 
-**Publication update — 06:13 CEST:** the combined correction is pushed to
+**Publication update — 06:12 CEST:** the combined correction is pushed to
 [PR #1698](https://github.com/mekhovov/revealline/pull/1698) at
 `fba38cb9630113e63ccaaee882e1e8d34f4f39fa`. Its documentation-only successor
 retains all 243 qualified runtime inputs. #1679, #1685 and #1698 are now
@@ -88,16 +88,34 @@ some PID fields. A separate R3 follow-up is investigating display-only
 formatting that preserves untouched values, raw edits and flight identities;
 it does not alter the qualified release while its checks are queued.
 
+**Acceptance continuation — 06:24 CEST:** actual keyboard flights now complete
+both **World-host Flight School / Meet your drone with the saved Nazgul** and
+**Academy / Lift and land with the saved Meteor75**. Their finished archives
+pass native-worker physics/course verification at **14.34 s** and **17.20 s**.
+Both private-owned-proof reference controls become enabled and work after
+explicit selection; flights remain paused and unscored. This supersedes the
+earlier lack of rendered Academy completion and closes the local World-host
+Flight School native-worker acceptance gap. No runtime ownership integration
+was missing: the existing native World path already provides it. The optional
+named-catalog audit, plain World-catalog coverage, local admission policy,
+public deployment acceptance and competitive qualification remain distinct.
+[Exact observations and limits](fpv-native-course-acceptance-20261019.md).
+
+At 06:23 CEST, #1679 and #1685 still had twelve queued checks each; GitHub
+temporarily reported mergeability unknown. No new-head success or deployment
+is inferred. Available disk space is about 2.6 GiB, so follow-ups use targeted
+in-memory package checks without full builds, installs or unrelated cleanup.
+
 ### Current priorities and conditional estimates
 
-| Priority                    | Remaining work                                                                                                                   | Estimate and dependency                                                                                                                                                                          |
-| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **P1 — release**            | Complete the queued exact-head checks, normal integration and deployment; accept flights on that deployed source.                | Capacity repair and local qualification complete; hosted queue ETA unknown. Allow **1–2 working days after a stable deployment** for the shared available-desktop acceptance scope, fixes extra. |
-| **P1 — Firefox**            | Identify a trajectory-preserving remedy from the sampled/minimized reproduction, then requalify the unchanged performance gate.  | Reproduction and sampling complete; fix ETA **unknown**. No timing or performance gate is relaxed.                                                                                               |
-| **P1 — archive incident**   | Account for six protected older records and establish recovery/cause using a permitted diagnostic route.                         | **1–3 investigation days after access**, recovery ETA unknown. No further deletion or public-state mutation.                                                                                     |
-| **P2 — available software** | Native World proof integration, local comparison admission, command mapping/allocation and versioned propulsion preparation.     | Continue independently. Scored local-record/public-competition scope needs explicit definition; **1–2 engineering weeks provisional** after that scope, promotion gates separate.                |
-| **P2 — broader acceptance** | Installed/offline/update behavior, rendered hosts and streamed Regional transitions; actual additional platforms when available. | **3–5 working days** for the accessible agreed matrix; **1–2 days per extra target**, access and fixes extra.                                                                                    |
-| **Evidence-dependent**      | Matched propulsion/aircraft measurements, physical radios/touch, pilot comparison and signed native targets.                     | User deferred radio/pilot evidence. One reference aircraft fit is **5–10 engineering days after suitable matched data**; acquisition/all-aircraft fidelity and signed targets remain undated.    |
+| Priority                    | Remaining work                                                                                                                   | Estimate and dependency                                                                                                                                                                                                        |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **P1 — release**            | Complete the queued exact-head checks, normal integration and deployment; accept flights on that deployed source.                | Capacity repair and local qualification complete; hosted queue ETA unknown. Allow **1–2 working days after a stable deployment** for the shared available-desktop acceptance scope, fixes extra.                               |
+| **P1 — Firefox**            | Identify a trajectory-preserving remedy from the sampled/minimized reproduction, then requalify the unchanged performance gate.  | Reproduction and sampling complete; fix ETA **unknown**. No timing or performance gate is relaxed.                                                                                                                             |
+| **P1 — archive incident**   | Account for six protected older records and establish recovery/cause using a permitted diagnostic route.                         | **1–3 investigation days after access**, recovery ETA unknown. No further deletion or public-state mutation.                                                                                                                   |
+| **P2 — available software** | Exact-value PID readability, local comparison admission, command mapping/allocation and versioned propulsion preparation.        | PID fix and fixed-voltage inverse allocation are in progress independently. Local-record/public-competition scope needs explicit definition; **1–2 engineering weeks provisional** after that scope, promotion gates separate. |
+| **P2 — broader acceptance** | Installed/offline/update behavior, rendered hosts and streamed Regional transitions; actual additional platforms when available. | **3–5 working days** for the accessible agreed matrix; **1–2 days per extra target**, access and fixes extra.                                                                                                                  |
+| **Evidence-dependent**      | Matched propulsion/aircraft measurements, physical radios/touch, pilot comparison and signed native targets.                     | User deferred radio/pilot evidence. One reference aircraft fit is **5–10 engineering days after suitable matched data**; acquisition/all-aircraft fidelity and signed targets remain undated.                                  |
 
 ## Earlier continuation — 19 October, 03:26 CEST
 

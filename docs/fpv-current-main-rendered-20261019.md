@@ -68,3 +68,9 @@ Screenshots remain in the task's local evidence directory:
 The directory is
 `/Users/oleksandr.mekhovov/.codex/visualizations/2026/10/15/01a14160-c3f4-7f50-a9a8-4d14c06417bf/sustained-flight`.
 The final deployed source remains a separate acceptance gate.
+
+Later same-source checks complete and natively verify both an Academy Meteor75
+lesson and a World-host Flight School Nazgul lesson. The earlier unsuccessful
+attempt above is retained as observed; see the separate
+[native-course acceptance receipt](fpv-native-course-acceptance-20261019.md)
+for the successful attempts, exact timings, owned reference controls and limits.
