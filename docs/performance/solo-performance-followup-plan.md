@@ -1,5 +1,7 @@
 # Solo performance: implementation and remaining qualification
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Updated **2026-10-19 05:07:14 UTC**. This current status supersedes older “Current” and “Latest” labels in the retained history below. Original failed outcomes are retained. Source review, authored tests, executed tests, merge, publication and native qualification are separate states.
 
 **The core performance changes from [#1544](https://github.com/mekhovov/revealline/pull/1544) are merged and published. The plan is not complete.** The latest verified public build is `main-dd337c8120fd`, version **0.151.1**. The release blocker combines queued validation with a controller defect: it rejects jobs that were intentionally skipped because their old one-off protocol cannot apply to these PRs. Further native qualification remains held until the relevant fixes are admitted and the exact build is verified.
@@ -75,7 +77,6 @@ All seven trusted policy files remain byte-identical. No workflow triggers, hist
 
 ## Body-backing restoration finding and limits
 
-A weak cache held a Canvas2D mask after restoration had cleared its pixels, leaving an opaque-interior character backing blank. The Coupa flower preset can reach this helper through character rendering in Solo. #1712 tracks lost/dirty surfaces, avoids replacement allocations during loss and rebuilds on the next paint after restoration. Event-supported clean hits avoid native polling, dimension reads and pixel readback; image ownership remains weak. It preserves alpha/pivot/geometry and the existing fill algorithm.
 
 Canvas restoration does not retain prior content. The repair deliberately does not call `preventDefault()` on Canvas2D `contextlost`, because that suppresses automatic restoration. See [the HTML canvas context-loss specification](https://html.spec.whatwg.org/multipage/webappapis.html#concept-canvas-context-lost) and [MDN's restoration example](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas/contextrestored_event).
 

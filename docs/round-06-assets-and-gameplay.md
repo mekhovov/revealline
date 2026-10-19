@@ -1,8 +1,9 @@
 # Round 06 — interchangeable game art and deeper Reloaded evidence
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Latest direction: [Round 07](round-07-motion-and-balance.md) retains compact tiles and detailed props with a hybrid default, adds a smaller FPV motion study, and expands animation guidance. This page records the earlier round.
 
-12 September 2026. The intended game remains a Ukrainian FPV-led territory-reveal arcade, with Ukrainian culture, 80s–90s and Coupa families. This round adds real local asset-authoring tools, a sixth AI skill, sixteen prompt templates, revised FPV artwork and deeper video analysis. The playable engine and visual upload editor remain future implementation.
 
 ## Corrections carried into the assets
 
@@ -44,7 +45,6 @@ The media library and binding authoring exist now. Simulation, compilation into 
 
 | Replaceable item | What an author changes | What remains independent |
 |---|---|---|
-| Player | Drone, bird, arcade craft or approved Navi image; skin and animation source | Position, collider, steering and damage rules |
 | Enemy | Infantry, scout vehicle, drone, storm mote or expense sprite | Movement domain, fill-anchor rule and threat timing |
 | Wall / slow / danger | Concrete, interference equipment, wire, craft material, circuit or paperwork artwork | Actor-specific collision/effect and the full affected cell region |
 | Background collection | New source pictures, optional styled derivatives, captions and gallery ordering | Board geometry, capture result and objective positions |

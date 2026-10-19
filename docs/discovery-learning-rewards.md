@@ -1,5 +1,7 @@
 # Verified learning discoveries
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 A reward may require both explicitly selected mission wins and named lesson
 completions. The lesson reference pins its ID, revision, fixture revision, content
 identity and mission. This optional bonus never controls Next, arcade progression,
@@ -36,22 +38,6 @@ not create a verified lesson completion.
 
 ## Authored pilot: Find the Need
 
-The `coupa-source-to-pay` campaign has an optional bilingual discovery,
-`coupa-source-to-pay-01-learning-discovery@1`. It requires both an accepted
-**Find the Need** mission win and the exact existing **Write the requirement**
-lesson (lesson revision 3, fixture revision 1, with its full content identity).
-Its reward explains the fictional workshop decision and offers a second,
-unscored library requirement puzzle. It neither gates Next nor changes an
-arcade rule, mission identity, or lesson fixture.
-
-The factory in `game/company-campaigns/learning-rewards.mjs` receives only the
-campaign's selected lessons and checked gameplay bindings. The generator emits
-an independent reward sidecar. Only Coupa Foundations and Coupa All select this
-campaign; other audience editions do not load its reward. Those editions advance
-to revisions 7 and 8 respectively. Their exact preceding presentations are
-registered as `*-before-learning-bonus.json`, including previous reward promises
-and lesson bytes. Existing progress can qualify through verified proof hydration;
-no completion is inferred from a displayed lesson or a claimed saved flag.
 
 ## Authored application rewards: aircraft and textiles
 

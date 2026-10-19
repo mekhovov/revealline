@@ -1,5 +1,7 @@
 # Round 04 — a reusable content system
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 12 September 2026. The four theme families and the three motivations—arcade mastery, discovering art, and tactical choices—remain the approved direction. This round turns the authoring requirements into usable skills, prompts, contracts and checks. It does not start the playable game.
 
 ## Recommendation
@@ -17,11 +19,9 @@ These are original proposed chapter directions. Their visual properties and rewa
 | FPV FRONT — main | Daybreak Front: wheat/olive pixel scenes; Night Signal: rain/navy/amber; Steel Horizon: copper rail yards; Winter Signal: snow/charcoal; Field Notebook: drawn military illustrations | Reveal fictional invading Russian military equipment in distinct parts of a scene; capture relay markers; choose between safe coverage and optional objectives; read threats under difficult bright/dark backgrounds |
 | UKRAINE ATLAS | Petrykivka Garden; Carpathian watercolor; Kosiv cream/green/yellow ceramics; a separately researched Örnek chapter; Ukrainian modernist city posters; archival-photo collections with sourced captions | Collect motifs, landmarks and chapter images; calmer exploration or precise timed routes; learn through optional gallery detail |
 | 1994 FOREVER | After-School Desktop; Warm Arcade; FM Space Opera; Cassette Summer; Demoscene Night; DOS Expedition | Collect disks and postcards; chase score and route efficiency; unlock music/art variations and replay an identical challenge with a new presentation |
-| NAVI NETWORK | Paper Circuit; Blue-Hour Supplier City; Savings Garden; Invoice Maze; AI Observatory; Supply Constellation | Capture cost-leak markers, score fictional savings and clear pressure modifiers; reserve genuinely ordered connections and new agent-assistance behavior for explicit extensions |
 
 Petrykivka's floral language and Kosiv's contour/green-yellow ceramic tradition warrant distinct briefs, rather than a generic mixture of motifs. The proposed chapters derive from those documented properties. [UNESCO Petrykivka](https://ich.unesco.org/en/RL/petrykivka-decorative-painting-as-a-phenomenon-of-the-ukrainian-ornamental-folk-art-00893), [UNESCO Kosiv](https://ich.unesco.org/en/RL/tradition-of-kosiv-painted-ceramics-01456?RL=01456).
 
-For Coupa, current company material emphasizes agent building, orchestration and connections; those suggest richer chapter metaphors than collecting money alone. Our game concepts are fictional interpretations, not representations of actual platform outcomes. [Coupa's June 2026 announcement](https://www.prnewswire.com/news-releases/coupas-agentic-momentum-fuels-results-in-q1-fy27-302804904.html).
 
 ## How much flexibility the first contract demonstrates
 

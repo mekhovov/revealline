@@ -1,5 +1,7 @@
 # Xonix, XPOSED RELOADED, and territory-reveal design research
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research date: 12 September 2026. This is a research and discussion artifact, not an implementation specification. Facts below distinguish publisher statements, direct screenshot observations, critic reports, and design hypotheses. No game executable was run and no full gameplay video was watched; all screenshots described were visually inspected through the in-app browser.
 
 > **Round 05 update:** The [direct motion/manual audit](round-05-reloaded-motion-audit.md) and [reinspected six-image gallery](round-05-reloaded-stills.md) supersede earlier uncertainty below about four Reloaded pickup effects, the three special terrain meanings, four documented enemy roles and its Unity loading logo. Sampled gameplay shows both 80% and 90% quotas, 60- and 150-second speed conditions, and internal contour enemies. Its exact fill algorithm remains unverified. The historical text below records the earlier evidence state; use [the latest direction](../round-05-gameplay-direction.md) for current proposals.
@@ -99,11 +101,9 @@ The central risk is **frustration that feels unearned**: accidental reverse inpu
 
 ### A. Classic arcade, with exceptional feel
 
-Preserve one board, orthogonal movement, trail vulnerability and area completion. Add authored terrain patterns, one optional active ability, three mastery medals and a collectible gallery. A Ukrainian drone draws a bright signal trail through interference to reveal beautiful Ukrainian scenes; hostile forces are represented by clear fictionalized military equipment silhouettes. The Coupa version swaps the avatar, enemy vocabulary, scenery, effects and goals while retaining the rules. This is the clearest baseline for testing controls and visual payoff.
 
 ### B. Reclamation, where the picture becomes the level
 
-Each board depicts a place under a graphic interference layer. Enclosing a relay or landmark activates it, changes the local hazard pattern, and reveals part of a narrative scene. Capture order becomes a small strategic puzzle. In the Coupa version, reclaiming zones reconnects customer operations, removes waste, and illuminates a thriving stylized city. This direction has the strongest opportunity for a distinctive identity, but requires more authored content and rules clarity.
 
 ### C. Short arcade expeditions
 

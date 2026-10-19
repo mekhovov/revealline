@@ -1,5 +1,7 @@
 # Round 05: directly inspected territory-capture references
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research date: 12 September 2026. This document records actual visible evidence and proposed design changes. It does not certify a playable build or claim that every video on the web was watched.
 
 ## Inspection scope and method
@@ -133,7 +135,6 @@ The highest-priority unresolved rule remains the **fill policy**. None of these 
 6. Two chambers and an optional double-objective capture: combine learned ideas.
 7. A chapter finale with a familiar enemy family and one new modifier; record speed/survival/route mastery separately.
 
-For FPV FRONT, the scene can reveal a fictional invading Russian military position while capturing signal-control objectives changes live arcade threats. The illustrated vehicles, live enemies and objective icons must remain separate layers. Ukraine Atlas can reveal historically sourced places and crafts; 1994 Forever can reveal rooms, arcades and space-art scenes; Navi Network can reveal a fictional customer operation while captures remove waste or reconnect services. These translations preserve the user's distinct goals rather than flattening all themes into cosmetic recolors.
 
 ## What still requires hands-on testing
 

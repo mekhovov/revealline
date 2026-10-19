@@ -1,5 +1,7 @@
 # RevealLine implementation roadmap
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 **Current priorities and delivery status:** [Delivery priorities](delivery-priorities.md) is the single current register. This page is a historical checkpoint record: its status tables, next steps and pending/latest wording apply only to the recorded editions and dates. Preserve their evidence and versioned contracts; do not execute them as today’s release queue.
 
 Approved for implementation on 2026-09-12. This register tracks the user's **RevealLine — revised implementation plan**. Historical evidence describes its original edition; frozen releases remain immutable. Source verification, network-byte delivery and actual browser startup are separate gates.
@@ -161,7 +163,6 @@ Preserve the working edition on failed import/quota checks. Binary assets, track
 
 Keep frontend-friendly JS/Phaser and deterministic simulation. Add the wide version branch, preserve immutable legacy recipes/readers and score identity. Resolve edition → Arcade/Tactical → difficulty; never convert a live run through settings. Media binds campaign edition/map/theme/revision and never changes score authority. Data packs compose registered primitives, not executable scripts. New primitives require tested code.
 
-Themes: FPV Front, Ukraine Atlas, 1994 Forever, Coupa/spend management. Reauthor all 29 maps, unique 116 pictures, 12 stories (three/theme), 40 reserve pictures, 56 role/detail/theme sets, 24 finished tracks. Use readable abstract game interactions for military-inspired units. Every asset is independently replaceable with bounded manifests, provenance and consistent animations. The approved optional twelve-picture milestone may proceed while human chapter feedback and runtime media integration continue; it does not satisfy the complete production matrix.
 
 Erosion has a fixed coverage denominator, protects border/wall/spawn/required anchors and cannot farm score. Every classic/Tactical behavior gets a demonstration. Gentle/Standard/Expert and advertised mode recipes must all validate. Completion, clean play and speed are distinct reward dimensions. Couch is included; online/cloud/global services are later.
 
