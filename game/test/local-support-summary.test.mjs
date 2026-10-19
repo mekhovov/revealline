@@ -271,3 +271,39 @@ test('refreshing or reopening while a native export waits cannot start a second 
   assert.doesNotMatch(h.$('status').textContent, /Shared with/);
   h.ui.destroy();
 });
+
+test('Team support accepts only its aggregate scalar observation and does not invent readiness or save permission', () => {
+  const value = supportSnapshot(
+    {
+      kind: 'capture-team',
+      state: 'paused',
+      writable: null,
+      controller: {
+        sampledAt: 900,
+        status: 'connected',
+        assigned: true,
+        seats: ['private-seat'],
+        devices: ['private-device'],
+        buttons: [1],
+        axes: [0.2],
+      },
+    },
+    environment(),
+    clock,
+  );
+  assert.equal(value.scope, 'team-game-shell');
+  assert.equal(value.game.host, 'capture-team');
+  assert.equal(value.game.state, 'paused');
+  assert.equal(value.game.saving.writable, null);
+  assert.equal(value.game.saving.reason, 'unavailable');
+  assert.equal(value.controller.assigned, true);
+  assert.equal(value.controller.neutral, null);
+  assert.equal(value.controller.confirmBlocked, null);
+  assert.equal(value.controller.confirmReason, 'unavailable');
+  assert.doesNotMatch(JSON.stringify(value), /private|seats|devices|buttons|axes/);
+  for (const kind of ['solo', 'journey', 'installed-edition', 'practice']) {
+    const primary = supportSnapshot({ kind }, environment(), clock);
+    assert.equal(primary.scope, 'primary-game-shell');
+    assert.equal(primary.game.host, kind);
+  }
+});
