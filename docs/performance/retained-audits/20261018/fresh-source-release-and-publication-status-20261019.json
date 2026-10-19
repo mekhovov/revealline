@@ -1,0 +1,442 @@
+{
+  "schema": "revealline-exact-head-publication-progress.v1",
+  "startedAt": "2026-10-19T01:41:46.083Z",
+  "endedAt": "2026-10-19T01:43:52.079Z",
+  "previousAudit": "d9543a5426dda03081eb27684c07a340029ef808",
+  "scope": "Remote API/log/public metadata reads in RAM only. No local writes, application/test/build execution, reruns, cancellation, merge, dispatch or branch/PR mutation.",
+  "main": {
+    "sha": "c5cf97d87e5ae9c5cfa683d1c4ddaf9bfb7c50af",
+    "tree": "00d574c2b964410a593de7a4bd913db8da566a59",
+    "parents": [
+      "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "938502233be19051f2e5dc196e73166a51eea586"
+    ],
+    "message": "Merge pull request #1639 from mekhovov/codex/f04a-survival-roundtrip\n\nAssess complete Survival checkpoint continuation",
+    "committedAt": "2026-10-19T01:40:31Z",
+    "authorAccount": "mekhovov",
+    "url": "https://github.com/mekhovov/revealline/commit/c5cf97d87e5ae9c5cfa683d1c4ddaf9bfb7c50af",
+    "files": [
+      {
+        "path": "docs/survival-suspend-assessment.md",
+        "status": "added",
+        "gitBlob": "0188b0725a3e33badab40e482208ea9900fb3960",
+        "additions": 123,
+        "deletions": 0
+      },
+      {
+        "path": "game/test/helpers/survival-roundtrip.mjs",
+        "status": "added",
+        "gitBlob": "e4a5ef2ac7d499a914270fff7c045d34ef1b2c56",
+        "additions": 149,
+        "deletions": 0
+      },
+      {
+        "path": "game/test/overflight-suspend-assessment.test.mjs",
+        "status": "added",
+        "gitBlob": "9165d7c69aeba5acaabb2b7d712d61e1736e65fe",
+        "additions": 413,
+        "deletions": 0
+      }
+    ],
+    "compatibility": "Direct first parent is bd158. The complete merge delta is three added Survival assessment doc/test-only files. No runtime, workflow or trusted-policy edit. Source-repair heads remain unchanged; existing source receipts must still be reevaluated against current base by normal release guards."
+  },
+  "prs": [
+    {
+      "number": 1619,
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1619",
+      "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+      "totalChecks": 13,
+      "counts": {
+        "queued": 13
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1620,
+      "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1620",
+      "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+      "totalChecks": 26,
+      "counts": {
+        "success": 23,
+        "skipped": 3
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1621,
+      "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1621",
+      "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+      "totalChecks": 111,
+      "counts": {
+        "success": 17,
+        "skipped": 94
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1628,
+      "head": "62be652ce70b11f840b491c218609d5225374be4",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1628",
+      "base": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "totalChecks": 113,
+      "counts": {
+        "success": 17,
+        "skipped": 96
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1654,
+      "head": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1654",
+      "base": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "totalChecks": 20,
+      "counts": {
+        "success": 18,
+        "skipped": 2
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1674,
+      "head": "98f666a20d133d9a81eb07104076c3147fd165aa",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1674",
+      "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "totalChecks": 15,
+      "counts": {
+        "skipped": 1,
+        "queued": 13,
+        "success": 1
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1675,
+      "head": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1675",
+      "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "totalChecks": 13,
+      "counts": {
+        "queued": 13
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1676,
+      "head": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1676",
+      "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "totalChecks": 25,
+      "counts": {
+        "queued": 2,
+        "skipped": 3,
+        "success": 20
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1693,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1693",
+      "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "totalChecks": 15,
+      "counts": {
+        "queued": 15
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1694,
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1694",
+      "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "totalChecks": 15,
+      "counts": {
+        "queued": 15
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1695,
+      "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1695",
+      "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "totalChecks": 15,
+      "counts": {
+        "queued": 15
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1696,
+      "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1696",
+      "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "totalChecks": 11,
+      "counts": {
+        "queued": 11
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    },
+    {
+      "number": 1699,
+      "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "url": "https://github.com/mekhovov/revealline/pull/1699",
+      "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "totalChecks": 77,
+      "counts": {
+        "skipped": 65,
+        "queued": 12
+      },
+      "failures": [],
+      "newTerminalNonSkipped": [],
+      "completeInventory": true
+    }
+  ],
+  "heapSource": {
+    "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+    "nativeSourceGuard": [
+      {
+        "id": 117847634680,
+        "name": "replay-portability-source",
+        "status": "queued",
+        "conclusion": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39185723029/job/117847634680"
+      }
+    ],
+    "scope": "65 skipped automatic guards are not 65 passes. Twelve real registered jobs remain queued; no heap source execution result."
+  },
+  "publication": {
+    "dd337Run": {
+      "id": 39168765766,
+      "name": "Publish GitHub Pages from main",
+      "path": ".github/workflows/publish-main-pages.yml",
+      "event": "workflow_dispatch",
+      "headSha": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-18T21:38:54Z",
+      "updatedAt": "2026-10-19T01:37:21Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39168765766",
+      "prs": []
+    },
+    "dd337Jobs": [
+      {
+        "id": 117813536487,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "success",
+        "startedAt": "2026-10-18T23:45:54Z",
+        "completedAt": "2026-10-18T23:53:43Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39168765766/job/117813536487"
+      },
+      {
+        "id": 117825738848,
+        "name": "deploy",
+        "status": "completed",
+        "conclusion": "success",
+        "startedAt": "2026-10-19T01:36:54Z",
+        "completedAt": "2026-10-19T01:37:21Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39168765766/job/117825738848"
+      },
+      {
+        "id": 117849023692,
+        "name": "verify",
+        "status": "queued",
+        "conclusion": null,
+        "startedAt": "2026-10-19T01:37:21Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39168765766/job/117849023692"
+      }
+    ],
+    "deployEvidence": {
+      "jobId": 117825738848,
+      "head": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "runId": 39168765766,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-19T01:36:55Z",
+          "completed_at": "2026-10-19T01:36:55Z"
+        },
+        {
+          "name": "Deploy the exact protected main snapshot",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-19T01:36:55Z",
+          "completed_at": "2026-10-19T01:37:20Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-19T01:37:20Z",
+          "completed_at": "2026-10-19T01:37:20Z"
+        }
+      ],
+      "log": {
+        "bytes": 4116,
+        "sha256": "4e82ee4250364361543c33c5625a3fa39007871d46c99e11bdf0a9d43f7f5d04",
+        "text": "﻿2026-10-19T01:36:55.0940057Z Current runner version: '2.337.0'\n2026-10-19T01:36:55.0975802Z ##[group]Runner Image Provisioner\n2026-10-19T01:36:55.0977070Z Hosted Compute Agent\n2026-10-19T01:36:55.0978180Z Version: 20261012.601\n2026-10-19T01:36:55.0979261Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d\n2026-10-19T01:36:55.0980997Z Build Date: 2026-10-12T17:48:21Z\n2026-10-19T01:36:55.0982268Z Worker ID: {d4a308b6-52f1-48cc-b03f-70bddb43c2f0}\n2026-10-19T01:36:55.0983688Z Region: eastus2\n2026-10-19T01:36:55.0984749Z Cloud: Azure\n2026-10-19T01:36:55.0985705Z ##[endgroup]\n2026-10-19T01:36:55.0988996Z ##[group]Operating System\n2026-10-19T01:36:55.0990423Z Ubuntu\n2026-10-19T01:36:55.0991503Z 24.04.5\n2026-10-19T01:36:55.0992946Z LTS\n2026-10-19T01:36:55.0994031Z ##[endgroup]\n2026-10-19T01:36:55.0995092Z ##[group]Runner Image\n2026-10-19T01:36:55.0996345Z Image: ubuntu-24.04\n2026-10-19T01:36:55.0997344Z Version: 20261012.334.1\n2026-10-19T01:36:55.0999516Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md\n2026-10-19T01:36:55.1002543Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334\n2026-10-19T01:36:55.1004603Z ##[endgroup]\n2026-10-19T01:36:55.1006760Z ##[group]GITHUB_TOKEN Permissions\n2026-10-19T01:36:55.1010375Z Contents: read\n2026-10-19T01:36:55.1011341Z Metadata: read\n2026-10-19T01:36:55.1012460Z Pages: write\n2026-10-19T01:36:55.1013374Z ##[endgroup]\n2026-10-19T01:36:55.1016523Z Secret source: Actions\n2026-10-19T01:36:55.1018044Z Cache mode: write\n2026-10-19T01:36:55.1019788Z Prepare workflow directory\n2026-10-19T01:36:55.1601669Z Prepare all required actions\n2026-10-19T01:36:55.1675922Z Getting action download info\n2026-10-19T01:36:55.3159633Z Download action repository 'actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346' (SHA:368f82528645a54fb793d4d04e342629a3f51346)\n2026-10-19T01:36:55.6988887Z Complete job name: deploy\n2026-10-19T01:36:55.7893024Z ##[group]Run actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346\n2026-10-19T01:36:55.7894180Z with:\n2026-10-19T01:36:55.7898085Z   token: ***\n2026-10-19T01:36:55.7898532Z   timeout: 600000\n2026-10-19T01:36:55.7898971Z   error_count: 10\n2026-10-19T01:36:55.7899425Z   reporting_interval: 5000\n2026-10-19T01:36:55.7900323Z   artifact_name: github-pages\n2026-10-19T01:36:55.7900873Z   preview: false\n2026-10-19T01:36:55.7901617Z env:\n2026-10-19T01:36:55.7902069Z   MAX_PUBLISHED_BYTES: 980000000\n2026-10-19T01:36:55.7902590Z ##[endgroup]\n2026-10-19T01:36:55.9911268Z (node:2223) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n2026-10-19T01:36:55.9913977Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-19T01:36:56.0917095Z Fetching artifact metadata for \"github-pages\" in this workflow run\n2026-10-19T01:36:56.1982758Z Found 3 artifact(s)\n2026-10-19T01:36:56.1995849Z Creating Pages deployment with payload:\n2026-10-19T01:36:56.1996944Z {\n2026-10-19T01:36:56.1997461Z \t\"artifact_id\": 12155720479,\n2026-10-19T01:36:56.1998248Z \t\"pages_build_version\": \"dd337c8120fd6f875544c1479713d3aa4299c323\",\n2026-10-19T01:36:56.2045097Z \t\"oidc_token\": \"***\"\n2026-10-19T01:36:56.2045696Z }\n2026-10-19T01:36:56.6238286Z Created deployment for dd337c8120fd6f875544c1479713d3aa4299c323, ID: dd337c8120fd6f875544c1479713d3aa4299c323\n2026-10-19T01:37:02.2843874Z Getting Pages deployment status...\n2026-10-19T01:37:02.4394193Z Current status: deployment_in_progress\n2026-10-19T01:37:10.9562758Z Getting Pages deployment status...\n2026-10-19T01:37:11.1450279Z Current status: syncing_files\n2026-10-19T01:37:20.7289063Z Getting Pages deployment status...\n2026-10-19T01:37:20.9061909Z Reported success!\n2026-10-19T01:37:20.9376765Z Evaluate and set job outputs\n2026-10-19T01:37:20.9386382Z Set output 'page_url'\n2026-10-19T01:37:20.9388317Z Evaluate and set environment url\n2026-10-19T01:37:20.9391445Z Evaluated environment url: https://mekhovov.github.io/revealline/\n2026-10-19T01:37:20.9392472Z Cleaning up orphan processes\n"
+      }
+    },
+    "newAndSuperseded": [
+      {
+        "id": 39186433775,
+        "name": "Publish GitHub Pages from main",
+        "path": ".github/workflows/publish-main-pages.yml",
+        "event": "push",
+        "headSha": "c5cf97d87e5ae9c5cfa683d1c4ddaf9bfb7c50af",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:40:34Z",
+        "updatedAt": "2026-10-19T01:40:35Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39186433775",
+        "prs": []
+      },
+      {
+        "id": 39179553425,
+        "name": "Publish GitHub Pages from main",
+        "path": ".github/workflows/publish-main-pages.yml",
+        "event": "workflow_dispatch",
+        "headSha": "bd15820bee10a33ba64534071d22657fbd7326d3",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T00:10:11Z",
+        "updatedAt": "2026-10-19T01:40:35Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39179553425",
+        "prs": []
+      }
+    ],
+    "publicReadback": {
+      "observedAt": "2026-10-19T01:42:28.767Z",
+      "baseURL": "https://mekhovov.github.io/revealline/",
+      "metadata": [
+        {
+          "path": "main-deployment.json",
+          "status": 200,
+          "bytes": 303,
+          "sha256": "e6e9c13a6053e4685fd8920a0bf5bb51d3a1eafb8d5863477f3eaffc08fc78e4",
+          "value": {
+            "format": "revealline-main-deployment.v1",
+            "channel": "main",
+            "sourceRevision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+            "sourceCommittedAt": "2026-10-18T21:38:52Z",
+            "buildVersion": "main-dd337c8120fd",
+            "play": "game/",
+            "releases": "https://github.com/mekhovov/revealline/releases"
+          }
+        },
+        {
+          "path": "release.json",
+          "status": 200,
+          "bytes": 303,
+          "sha256": "e6e9c13a6053e4685fd8920a0bf5bb51d3a1eafb8d5863477f3eaffc08fc78e4",
+          "value": {
+            "format": "revealline-main-deployment.v1",
+            "channel": "main",
+            "sourceRevision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+            "sourceCommittedAt": "2026-10-18T21:38:52Z",
+            "buildVersion": "main-dd337c8120fd",
+            "play": "game/",
+            "releases": "https://github.com/mekhovov/revealline/releases"
+          }
+        },
+        {
+          "path": "game/build-info.json",
+          "status": 200,
+          "bytes": 143,
+          "sha256": "05bc93bcd2edf5c8ee0be4f580072c11a4609fce85c03ee976f04e27557a3d6b",
+          "value": {
+            "formatVersion": 1,
+            "version": "0.151.1",
+            "sourceRevision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+            "entry": "game/index.html"
+          }
+        }
+      ],
+      "scope": "Three public metadata files consistently bind dd337/0.151.1. No asset-inventory/native/gameplay pass is inferred."
+    }
+  },
+  "findings": [
+    "New mainc5cf97d is external PR1639, doc/test-only. All13 task PR heads and readiness states unchanged and all remain open/unmerged.",
+    "No newly completed non-skipped source check and no current-head failure since the preceding01:32snapshot. No functional log re-download was warranted.",
+    "dd337 deploy succeeded01:37:21; raw log4116bytes confirms reported success and final Pages URL. Automated verification117849023692 remains queued.",
+    "Public metadata moved e440→dd337. Latest mainc5cf publisher39186433775 is pending; priorbd158 publisher39179553425 is cancelled. The observed statuses are retained without attributing cancellation to an actor.",
+    "Overhead source PR admission must continue waiting for the existing heap native-source guard to finish, to preserve its pending concurrency slot. No new dispatch or rerun is justified."
+  ]
+}

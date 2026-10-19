@@ -1322,6 +1322,90 @@
       "blob": "5d334a9d786433e39a6fc9f687377252d9c741c3",
       "bytes": 3349,
       "sha256": "4ab2c50bc28b93a4e608f2e4cc6f07430db19753469ae2b066413cdfbc1578c4"
+    },
+    {
+      "path": "heap-overhead-source-admission-dependency-audit-20261019.json",
+      "blob": "00bed72ac663dcd7660db371d94034fcad6b1aa1",
+      "bytes": 59743,
+      "sha256": "db207e41f6a39507cb937d93e4a9fbb436b3caaf53c10235f726514e41877dc5"
+    },
+    {
+      "path": "retry-heap-fresh-source-integration-peer-review-20261019.json",
+      "blob": "3cb45db4f4f0da5c86070ef6c51806990c805629",
+      "bytes": 919,
+      "sha256": "be7b2b57766419e7a05b84d0f137705e199c56e43eb1bab8ca44998151ccb761"
+    },
+    {
+      "path": "retry-heap-fresh-source-draft-proposal-20261019.json",
+      "blob": "056a21bdcc8ecfb24cc093c27c719ce36b34d710",
+      "bytes": 149796,
+      "sha256": "a7adc21502c35861010cc2d5842b1b4ecba3eaa2f573d67d15cc3c6566bad669"
+    },
+    {
+      "path": "overhead-fresh-main-trace-source-proposal-20261019.json",
+      "blob": "4df2a26d310c908ddd64d65187374a1d5dcdf124",
+      "bytes": 839441,
+      "sha256": "571c7869c7a3bad1ea281d31130f3a87826716eb0f211b87e71b67ac42d7ad6b"
+    },
+    {
+      "path": "overhead-fresh-main-trace-source-peer-review-20261019.json",
+      "blob": "ee0409c4beba1da7548dcd25a51c25a497a9c1c2",
+      "bytes": 25675,
+      "sha256": "2615d5fc9c6638ce59f2161e507da7060c6a2aaccbf2f4dc076ecf0503ca8a36"
+    },
+    {
+      "path": "retry-heap-fresh-source-draft-publication-20261019.json",
+      "blob": "87342439219e6074f0513aebcc6fa7d9b1b16ea6",
+      "bytes": 1108,
+      "sha256": "977ba7a3705d2ebb4cd1b92fbb4e15357fc959c2aa5d24e0bb0824af6bba1877"
+    },
+    {
+      "path": "overhead-current-main-trace-branch-publication-20261019.json",
+      "blob": "30085970356ecab6e783720d5b3193c6f1e3c6d7",
+      "bytes": 936,
+      "sha256": "87b45776409053414ea55749385f00b610a108e42cb6d6d6996c97957df931ad"
+    },
+    {
+      "path": "final-targeted-source-and-release-status-20261019.json",
+      "blob": "d9543a5426dda03081eb27684c07a340029ef808",
+      "bytes": 14863,
+      "sha256": "4ae0e26101adb01cfd85f4947137f213730d2304673eae0cc8326a1d795e8643"
+    },
+    {
+      "path": "pages-and-soundtrack-controller-queue-owners-20261019.json",
+      "blob": "929b8c52743c1b95c243fa4c64a180c1f2e1530e",
+      "bytes": 10997,
+      "sha256": "11501403d6994fb7043872805dfadcd55291c971b7f5e8b3e59c531293d25274"
+    },
+    {
+      "path": "retry-heap-draft-source-guard-queue-20261019.json",
+      "blob": "410934a956739813cafa63808e03112dca005887",
+      "bytes": 717,
+      "sha256": "93ea77b098fa85114afe0382382e5fbfe68309a01d278bbce8fed0b9d4df35f4"
+    },
+    {
+      "path": "redundant-unassigned-soundtrack-controller-cancellation-20261019.json",
+      "blob": "f7194b509f623e5381070b9b92c74b7bb3bd10df",
+      "bytes": 3071,
+      "sha256": "eea38cf2c9997064138ae4733a56a3ae54fcd97e662e409b3aac5285f899017d"
+    },
+    {
+      "path": "soundtrack-controller-coalescing-completion-20261019.json",
+      "blob": "3bbdfdece17c235f4a31c58be5949878598965a5",
+      "bytes": 1393,
+      "sha256": "b5478d0e359601f35a31a8e291d56ede8ed6d29ce3341183e35fc19a08fab672"
+    },
+    {
+      "path": "soundtrack-controller-coalescing-independent-review-20261019.json",
+      "blob": "32d6f322213aec71cc46576d0243d9fd11d99472",
+      "bytes": 7832,
+      "sha256": "b71fb83ded67a53413b6ed0a897ea6cb202b060a532f8214535ec57235f0fdeb"
+    },
+    {
+      "path": "fresh-source-release-and-publication-status-20261019.json",
+      "blob": "a15590f5715881570b3fb3a13f5e134693e6ead9",
+      "bytes": 19086,
+      "sha256": "a46172bd664191cef397f56eb94363cfd39391686f65dab5032071953a982e38"
     }
   ]
 }

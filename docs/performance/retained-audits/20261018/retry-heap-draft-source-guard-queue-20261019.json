@@ -1,0 +1,25 @@
+{
+  "kind": "SoloHeapDraftSourceAdmissionQueueV1",
+  "at": "2026-10-19T01:36:08Z",
+  "run": {
+    "id": 39185723029,
+    "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+    "event": "pull_request",
+    "status": "queued",
+    "conclusion": null,
+    "created_at": "2026-10-19T01:31:13Z",
+    "updated_at": "2026-10-19T01:31:13Z"
+  },
+  "totalJobs": 16,
+  "jobs": [
+    {
+      "id": 117847634680,
+      "name": "replay-portability-source",
+      "status": "queued",
+      "conclusion": null,
+      "runner": 0,
+      "steps": []
+    }
+  ],
+  "qualification": "Only replay-portability-source is queued; native jobs are skipped on PR. No source/native pass claimed. Overhead draft opening remains staggered."
+}

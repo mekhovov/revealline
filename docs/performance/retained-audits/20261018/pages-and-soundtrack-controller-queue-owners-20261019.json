@@ -1,0 +1,217 @@
+{
+  "schema": "revealline.bounded-concurrency-attribution.v1",
+  "observedAt": "2026-10-19T01:34:20.862Z",
+  "scope": "Two exact concurrency groups only, read-only; no repository-wide queue enumeration or mutation.",
+  "workflowBindings": [
+    {
+      "path": ".github/workflows/publish-main-pages.yml",
+      "ownerRevision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "bytes": 9967,
+      "sha256": "d503592aad75dda3d1bc01afef00a33ef44b2ed2880f673975cab14920679f54",
+      "gitBlob": "86328152696e5f5951f45c0e2b3407267b05366c",
+      "sameAsCurrentMain": true
+    },
+    {
+      "path": ".github/workflows/fastline-auto-merge.yml",
+      "ownerRevision": "1df89b62b5f0ddfdad926e1bbd3474b77ed4d716",
+      "bytes": 3061,
+      "sha256": "be28689f2eef8a104f37a85cee0858f3b45ec0c68455e261600b43a5c8264068",
+      "gitBlob": "231cf239370fb69919ffbb3e09e0cbf5f5c0f8b3",
+      "sameAsCurrentMain": true
+    }
+  ],
+  "expressionSources": [
+    {
+      "path": ".github/workflows/publish-main-pages.yml",
+      "bytes": 9967,
+      "sha256": "d503592aad75dda3d1bc01afef00a33ef44b2ed2880f673975cab14920679f54",
+      "gitBlob": "86328152696e5f5951f45c0e2b3407267b05366c",
+      "header": "name: Publish GitHub Pages from main\n\non:\n  push:\n    branches: [main]\n  workflow_dispatch:\n\npermissions:\n  contents: read\n\n# Deployment is separate from pull-request admission. Let an active publication\n# finish so rapid main merges cannot starve Pages; GitHub retains only the newest\n# pending run, which publishes after the active one.\nconcurrency:\n  group: pages-production\n  cancel-in-progress: false\n\nenv:\n  # GitHub Pages has a published-site capacity limit. This guards deployment\n  # capacity only; it is never a required pull-request check. GitHub Pages\n  # permits published sites up to 1 GB; retain a 20 MB deployment margin.\n  MAX_PUBLISHED_BYTES: 980000000\n"
+    },
+    {
+      "path": ".github/workflows/fastline-auto-merge.yml",
+      "bytes": 3061,
+      "sha256": "be28689f2eef8a104f37a85cee0858f3b45ec0c68455e261600b43a5c8264068",
+      "gitBlob": "231cf239370fb69919ffbb3e09e0cbf5f5c0f8b3",
+      "header": "name: Fastline exact-head auto-merge\n\non:\n  workflow_run:\n    # Reconcile when any PR validation workflow completes, including a failure\n    # that must disarm an earlier decision. The controller also waits for every\n    # non-waived exact-head check already registered on the commit.\n    workflows:\n      - Validate source for continuous main\n      - Appearance preview\n      - Industrial feature verification\n      - Company edition candidates\n      - Assemble full-test release evidence\n      - Community hosted acceptance\n      - Community MinIO recovery\n    types: [completed]\n  pull_request:\n    branches: [main]\n    types:\n      [\n        opened,\n        reopened,\n        synchronize,\n        edited,\n        labeled,\n        unlabeled,\n        milestoned,\n        demilestoned,\n        ready_for_review,\n        converted_to_draft,\n      ]\n  pull_request_review:\n    branches: [main]\n    types: [submitted, dismissed]\n\npermissions:\n  contents: write\n  pull-requests: write\n  checks: read\n  actions: write\n\nconcurrency:\n  group: fastline-merge-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || github.run_id }}\n  # Metadata changes are cheap and read current state. Serializing them avoids\n  # cancelled controller checks poisoning GitHub's merge-state rollup.\n  cancel-in-progress: false\n"
+    }
+  ],
+  "groupObservations": [
+    {
+      "group": "pages-production",
+      "response": {
+        "group_name": "pages-production",
+        "group_url": "https://api.github.com/repos/mekhovov/revealline/actions/concurrency_groups/pages-production",
+        "total_count": 2,
+        "group_members": [
+          {
+            "run_id": 39168765766,
+            "run_name": "Publish GitHub Pages from main",
+            "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39168765766",
+            "run_html_url": "https://github.com/mekhovov/revealline/actions/runs/39168765766",
+            "status": "in_progress"
+          },
+          {
+            "run_id": 39179553425,
+            "run_name": "Publish GitHub Pages from main",
+            "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39179553425",
+            "run_html_url": "https://github.com/mekhovov/revealline/actions/runs/39179553425",
+            "status": "pending"
+          }
+        ]
+      }
+    },
+    {
+      "group": "fastline-merge-1619",
+      "response": {
+        "group_name": "fastline-merge-1619",
+        "group_url": "https://api.github.com/repos/mekhovov/revealline/actions/concurrency_groups/fastline-merge-1619",
+        "total_count": 2,
+        "group_members": [
+          {
+            "run_id": 39168628214,
+            "run_name": "Fastline exact-head auto-merge",
+            "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39168628214",
+            "run_html_url": "https://github.com/mekhovov/revealline/actions/runs/39168628214",
+            "status": "in_progress"
+          },
+          {
+            "run_id": 39182301808,
+            "run_name": "Fastline exact-head auto-merge",
+            "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39182301808",
+            "run_html_url": "https://github.com/mekhovov/revealline/actions/runs/39182301808",
+            "status": "pending"
+          }
+        ]
+      }
+    }
+  ],
+  "publisher": {
+    "currentSlotOwner": {
+      "id": 39168765766,
+      "event": "workflow_dispatch",
+      "status": "queued",
+      "head": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "created_at": "2026-10-18T21:38:54Z",
+      "updated_at": "2026-10-18T23:53:45Z"
+    },
+    "deployJob": {
+      "id": 117825738848,
+      "run_id": 39168765766,
+      "workflow_name": "Publish GitHub Pages from main",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39168765766",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAbbvYYYA",
+      "head_sha": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117825738848",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39168765766/job/117825738848",
+      "status": "queued",
+      "conclusion": null,
+      "created_at": "2026-10-18T23:53:44Z",
+      "started_at": "2026-10-18T23:53:44Z",
+      "completed_at": null,
+      "name": "deploy",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117825738848",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 0,
+      "runner_name": "",
+      "runner_group_id": 0,
+      "runner_group_name": ""
+    },
+    "newerPendingRun": 39179553425
+  },
+  "controller": {
+    "selectedPR": 1619,
+    "newEvent": {
+      "id": 39182301808,
+      "event": "pull_request",
+      "status": "pending",
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "pull_requests": [
+        {
+          "url": "https://api.github.com/repos/mekhovov/revealline/pulls/1619",
+          "id": 4911212340,
+          "number": 1619,
+          "head": {
+            "ref": "codex/solo-demanded-soundtrack-catalogue",
+            "sha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+            "repo": {
+              "id": 1367404328,
+              "url": "https://api.github.com/repos/mekhovov/revealline",
+              "name": "revealline"
+            }
+          },
+          "base": {
+            "ref": "main",
+            "sha": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+            "repo": {
+              "id": 1367404328,
+              "url": "https://api.github.com/repos/mekhovov/revealline",
+              "name": "revealline"
+            }
+          }
+        }
+      ],
+      "created_at": "2026-10-19T00:46:42Z"
+    },
+    "currentSlotOwner": {
+      "id": 39168628214,
+      "event": "workflow_run",
+      "status": "pending",
+      "head": "1df89b62b5f0ddfdad926e1bbd3474b77ed4d716",
+      "created_at": "2026-10-18T21:37:01Z",
+      "updated_at": "2026-10-18T21:37:02Z"
+    },
+    "jobs": {
+      "total_count": 1,
+      "jobs": [
+        {
+          "id": 117803071989,
+          "run_id": 39168628214,
+          "workflow_name": "Fastline exact-head auto-merge",
+          "head_branch": "main",
+          "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39168628214",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOUYDvKM8AAAAbbZw59Q",
+          "head_sha": "1df89b62b5f0ddfdad926e1bbd3474b77ed4d716",
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117803071989",
+          "html_url": "https://github.com/mekhovov/revealline/actions/runs/39168628214/job/117803071989",
+          "status": "queued",
+          "conclusion": null,
+          "created_at": "2026-10-18T22:06:07Z",
+          "started_at": "2026-10-18T22:06:07Z",
+          "completed_at": null,
+          "name": "reconcile",
+          "steps": [],
+          "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117803071989",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 0,
+          "runner_name": "",
+          "runner_group_id": 0,
+          "runner_group_name": ""
+        }
+      ]
+    }
+  },
+  "derivation": {
+    "pages": "Literal pages-production from the actual publisher workflow.",
+    "fastline": "Literal fastline-merge- prefix plus actual pull_request.number1619 from the selected new PR event; API returns old and new members. The old workflow_run event payload was not guessed from outer run.pull_requests[]."
+  },
+  "findings": [
+    "Newer bd158 Pages run39179553425 is pending behind identified concurrency-slot owner dd337 run39168765766. The owner deploy job117825738848 is queued with runner_id0, empty runner name and no steps.",
+    "New #1619 controller39182301808 is pending behind identified slot owner39168628214. That owner reconcile117803071989 is queued with runner_id0, empty runner name and no steps.",
+    "Concurrency-group status in_progress denotes slot ownership here; run-level status is queued/pending and must not be presented as actual functional execution.",
+    "The immediate reason for the newer pending runs is identified serialization. The underlying delay assigning runners to owners remains unknown; no account-limit, repository-wide outage or policy/environment-blocker cause is established by this audit."
+  ],
+  "limits": [
+    "No extra group enumeration. In particular this audit does not resolve #1620/#1621/#1628 controller groups.",
+    "No timing guarantee or reliable completion ETA follows from these results.",
+    "Read-only API/source evidence only; no rerun, cancellation, PR mutation, setting change, browser or local test execution."
+  ]
+}

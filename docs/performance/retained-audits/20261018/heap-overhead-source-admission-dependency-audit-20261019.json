@@ -1,0 +1,667 @@
+{
+  "schema": "revealline-draft-diagnostics-source-admission-audit.v1",
+  "reviewedAt": "2026-10-19T01:26:08.936Z",
+  "scope": "Bounded remote read-only source review. No branch/PR/workflow changes, dispatches, native runs, local file writes or functional execution.",
+  "main": {
+    "revision": "bd15820bee10a33ba64534071d22657fbd7326d3",
+    "tree": "11a3e3f847a0ba9424b888f090de369adcd8fae0"
+  },
+  "inputs": {
+    "retry": {
+      "envelope": {
+        "gitBlob": "ac2b707282dc59731c4944e8311dc23c6bdabdb6",
+        "bytes": 189975,
+        "sha256": "8e4a6b29b7795ef50d82c43075de44a1385af9b5eca67cec97bd21e810eee41c"
+      },
+      "expanded": {
+        "bytes": 1541416,
+        "sha256": "411bf03b91d3f9f87ac6b249ac924a9e970d0fac1e94a076e928410f277a0014"
+      },
+      "base": {
+        "revision": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+        "tree": "4bd51f0d0b846063e030372d6873ca029852e697"
+      },
+      "entries": [
+        {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "before": {
+            "bytes": 95469,
+            "sha256": "4a8c22ffd0864996b39f1c9fe91f2edd81c5c70c298f1b16cf082b43b2da0aaa",
+            "gitBlob": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb"
+          },
+          "after": {
+            "bytes": 97262,
+            "sha256": "b19d5fd46b9d1a78f9aa44047ffd8c7f0a7c27586c95f4a30b69c5c7e40ff3e0",
+            "gitBlob": "8e2e4ea2a9365201507e83824403621cd9fd8b9e"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-qualification-heap-retainers.mjs",
+          "before": null,
+          "after": {
+            "bytes": 21983,
+            "sha256": "02729deff751050d5cd3078fa33d3314db8cf2126dbf1b8dc6dbefe370b4b2fb",
+            "gitBlob": "1fb3234a68e9351ca61faabe8c7a3ceda38e83a2"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-qualification-heap-retainers.test.mjs",
+          "before": null,
+          "after": {
+            "bytes": 16740,
+            "sha256": "9c104f76cad6052fe2b8a6c9baac553fa7488ff18a170b2b11c4fd1428509f92",
+            "gitBlob": "8956d110e0ace3545b600834dbe4b7e1b03f5a22"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-remote-sustained.mjs",
+          "before": {
+            "bytes": 107356,
+            "sha256": "ba1d2ee933ff00cea34108c10eb757e036ef63ed8c3eb2cf39f7d1997428d400",
+            "gitBlob": "6fa56e38dd274717bdb406d4a009dc91ff9ea442"
+          },
+          "after": {
+            "bytes": 110675,
+            "sha256": "bdb794a0a133cd664f7c91dc99d32f3e996b507e64dd7ef29534cced76462ec1",
+            "gitBlob": "e04e9e59291a1549c470edf5d653a52e139d0ad5"
+          },
+          "match": true
+        },
+        {
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "before": {
+            "bytes": 438522,
+            "sha256": "7fd13f28c5b780244fcb064d8712bda6b58d4ba9f77764f9d34f7cfeb1f3ba1e",
+            "gitBlob": "0c3ebd54783fe5537c2077199347b584a1fe127c"
+          },
+          "after": {
+            "bytes": 442063,
+            "sha256": "d524cc7241893b54ab7d0a078006ce8356a31809ea28a5d258215a26ef39ac70",
+            "gitBlob": "20da2eb39bb29226cdadd8d5f9cd585e82751b9f"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-retry-heap-retainers-admission.test.mjs",
+          "before": null,
+          "after": {
+            "bytes": 6105,
+            "sha256": "03626104945ae3c2c90bc19e0d0ea793094637fa878efd2ec8ac1a6a7a6975b1",
+            "gitBlob": "2009b4cd9e868d2c80b10c4ed615d9f3f14525b7"
+          },
+          "match": true
+        },
+        {
+          "path": "docs/performance/solo-797-retry-heap-retainers-plan.json",
+          "before": null,
+          "after": {
+            "bytes": 20436,
+            "sha256": "55d3caeb0c8253ab202054ac6f53f85bc6bf2a42bd0153852d609d3a9616abc6",
+            "gitBlob": "50fc1f871b9537cda58417e3f89bd86330173529"
+          },
+          "match": true
+        },
+        {
+          "path": "docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json",
+          "before": null,
+          "after": {
+            "bytes": 244528,
+            "sha256": "a9340d90751a357745895fc399bed951d8c01bb57b5d8a2c545b5bfe061092cf",
+            "gitBlob": "0da4e030e2225d301129b725b44490c86990bfc1"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-readiness-rejoin-declared-source.mjs",
+          "before": {
+            "bytes": 3255,
+            "sha256": "11f9e2a32cc9f865961bfa0110e7578371670abb6edeabc8764601d56eca4dc0",
+            "gitBlob": "8d781fa226e22f85c34164e395ae759cf12adbf6"
+          },
+          "after": {
+            "bytes": 6879,
+            "sha256": "dc3de3d6b9aed8704ac08212d18b77110f3c127eeb718cfbd796e25f041da5b1",
+            "gitBlob": "a8ebf7797b344c2b71b9ccce5f6667b133502885"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+          "before": {
+            "bytes": 10911,
+            "sha256": "27291ddfd96865a87ed124f667802ae0c340b6c91d553788ddb447abdd2680df",
+            "gitBlob": "dfd79590ba03f19b6ae7b3ba5e552a4bdfebc06a"
+          },
+          "after": {
+            "bytes": 14557,
+            "sha256": "1629db98c4f9f79f5c8ac11d02a0a6173e910b601b3a9caaf6d2231649799c73",
+            "gitBlob": "ef3c9a6ad2e6801ab17f99c2a1746b015321a758"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/test-solo-frame-trace-admission.mjs",
+          "before": {
+            "bytes": 21968,
+            "sha256": "647a0aa8fa2c331e06d1502a5da461dbc6ffbf7e28e817becb94fc8502f872b9",
+            "gitBlob": "b9bc1199f2152c9f1777570a8dca6c07987a509a"
+          },
+          "after": {
+            "bytes": 22196,
+            "sha256": "48b29debedcc7e7c93a649e55c34d80db39c99996e69845316e02855ec24b98c",
+            "gitBlob": "3562afc169fe2833a1e9be8b7a352ee3ab2335ae"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+          "before": {
+            "bytes": 11464,
+            "sha256": "d84cb49b4324d688a0922205975657ed0d96c10457fbbcc0ef191639f39757b9",
+            "gitBlob": "a3c787f2450f546542ef6b56a6e2251f03f09ed3"
+          },
+          "after": {
+            "bytes": 11603,
+            "sha256": "c041cacfdd22f221d7afd459d83e5c1b95ac1cc30a4a240b4ce2b5ace123c5df",
+            "gitBlob": "c2ca7f25a689631be186740551f003484e335125"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+          "before": {
+            "bytes": 13158,
+            "sha256": "d2fa2f6d4d517c61f1a100bb8c5e07d62ea013e5a5d7f6908c50b178da2a333e",
+            "gitBlob": "0c88d60746de697e23cf3ebb737ab20e03cbb31a"
+          },
+          "after": {
+            "bytes": 13379,
+            "sha256": "f4f29c0cac37c9fa1e35d32599d07805e21ba2ab450717f1ce81bddb59d5b1bf",
+            "gitBlob": "a6f6404e1d0020fd685fb64270e70e3d8e8ca4ef"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/test-solo-native-consumer-preparation.mjs",
+          "before": {
+            "bytes": 12143,
+            "sha256": "0f61f4f024fa116c3cc76921a02ec06b00577a3a0d8f5f1363978012e341c85e",
+            "gitBlob": "f7001047cfcb78ade870081e8568ee95c07b2828"
+          },
+          "after": {
+            "bytes": 12298,
+            "sha256": "9352ee5a06be149db7c740450fbc0220a95af622383835d218b2defebe34a589",
+            "gitBlob": "0034226330d0e8a924860cb783bb3f27d32cbf40"
+          },
+          "match": true
+        },
+        {
+          "path": "docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json",
+          "before": null,
+          "after": {
+            "bytes": 17005,
+            "sha256": "5b2bc35b2334d9d5585cd8312bef5fae45ee0e9cabaa02ddc379d1d60e920b4b",
+            "gitBlob": "9ee9049eef18f37e7f9cc48653947fb67dc1f98c"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-frame-trace-heap-tooling-admission.test.mjs",
+          "before": null,
+          "after": {
+            "bytes": 5560,
+            "sha256": "36b284f727388d0d850cdb3672cfa8afe4523035ce906e37f9f5c611114d5083",
+            "gitBlob": "04510d22f8705164012c80ef97eb678cae5e757a"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-runtime73-measurement.test.mjs",
+          "before": {
+            "bytes": 3265,
+            "sha256": "2b61866e010c2e7adeefb16d7a59ec16a91f0a30c564cb2c190bd579ce2be518",
+            "gitBlob": "bddf5cb09109bc8a56bfa9e18d1d7e415fadb4c5"
+          },
+          "after": {
+            "bytes": 3329,
+            "sha256": "081c7c144bb92010dc7e5046b34f709cd89e37b482140ec0289473d79fd3a5de",
+            "gitBlob": "f6aa734a68c46bb940fa12839be2465ae9667b5c"
+          },
+          "match": true
+        },
+        {
+          "path": "scripts/solo-native-measurement-consumer.test.mjs",
+          "before": {
+            "bytes": 25189,
+            "sha256": "17421bf9c481b9d4ae174a1949c3a465fedae55fb0dab4faaa08a2083cb861af",
+            "gitBlob": "d4578b4f1d0ddef7cf7c92a649f2269ae44aa79a"
+          },
+          "after": {
+            "bytes": 28221,
+            "sha256": "6426b93e232075d3c75ea7ae5d16a2110afaf8fed5d57e513601642f13975485",
+            "gitBlob": "03c926700c10c5d8b3a96970193a1d5fa3aeb5a5"
+          },
+          "match": true
+        }
+      ],
+      "originalStatus": "HELD-not-published-not-executed",
+      "unexecutedControls": {
+        "heapHelper": 14,
+        "heapAdmission": 5,
+        "historicalWitness": 1,
+        "toolingSuccessor": 4,
+        "newTotal": 24,
+        "status": "unexecuted; parser/format/lint are not functional acceptance"
+      }
+    },
+    "overhead": {
+      "commit": "19b574eb4c57415def724156a75ac7e9b0c23e37",
+      "parents": [
+        "6acfa2fb639fcc4d3b20970faa0972c77d2a7e1a"
+      ],
+      "tree": "58fee50cb6e4821efdfa7a173d2197e7789ebb64",
+      "files": [
+        {
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "status": "modified",
+          "blob": "f87c0b5858b4196181175d443fda295423ac1dbc",
+          "changes": 17
+        },
+        {
+          "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+          "status": "added",
+          "blob": "f4db3ee085da60b4210158af7c6445718350b494",
+          "changes": 175
+        },
+        {
+          "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+          "status": "added",
+          "blob": "6db9e784e0cf28fdacb313035db3009d71eef646",
+          "changes": 13
+        },
+        {
+          "path": "scripts/qualify-solo-diagnostics.mjs",
+          "status": "modified",
+          "blob": "1d8b129a3e643332e93ed393ec39b39f87e450ae",
+          "changes": 18
+        },
+        {
+          "path": "scripts/solo-native-measurement-consumer.test.mjs",
+          "status": "modified",
+          "blob": "0fd59e6020ead2b3a7ad851e917e0ca8632f3ff2",
+          "changes": 2
+        },
+        {
+          "path": "scripts/solo-overhead-acceptance.mjs",
+          "status": "added",
+          "blob": "79eec3717c5c5c416053f93412fa24272cc394a2",
+          "changes": 30
+        },
+        {
+          "path": "scripts/solo-overhead-acceptance.test.mjs",
+          "status": "added",
+          "blob": "3daa44fae18f00b6b20d04ed6d23b93b30f35a8e",
+          "changes": 171
+        },
+        {
+          "path": "scripts/solo-overhead-declared-source.mjs",
+          "status": "added",
+          "blob": "cd74aa4dc4e338ea09c78a3d5a03f5a13206dbe5",
+          "changes": 54
+        },
+        {
+          "path": "scripts/solo-remote-diagnostics.mjs",
+          "status": "modified",
+          "blob": "e3b2b2ee35164a17152cb69098d77b5e1be0bb7d",
+          "changes": 4
+        },
+        {
+          "path": "scripts/test-solo-diagnostics-analysis.mjs",
+          "status": "modified",
+          "blob": "2feb26b495845f97ee74a508ab3ccba26f4de15a",
+          "changes": 71
+        },
+        {
+          "path": "scripts/test-solo-journal-cost-admission.mjs",
+          "status": "modified",
+          "blob": "07508313196ae894e88b088f23640fe130dfbd35",
+          "changes": 4
+        },
+        {
+          "path": "scripts/test-solo-journal-cost-analysis.mjs",
+          "status": "modified",
+          "blob": "3a82111a78548e86f2b0794292c3b52ee5b70369",
+          "changes": 23
+        },
+        {
+          "path": "scripts/test-solo-native-consumer-overhead.mjs",
+          "status": "modified",
+          "blob": "309944ece0a8c0560905aa94fe9297a31c680047",
+          "changes": 29
+        },
+        {
+          "path": "scripts/test-solo-remote-diagnostics.mjs",
+          "status": "modified",
+          "blob": "d7d29304ac88f2e75152e33b805582996ce1b238",
+          "changes": 17
+        }
+      ],
+      "nativeWorkflowPatch": "@@ -2166,6 +2166,7 @@ jobs:\n             /package.json\n             /publishing/vendor/acorn-8.18.0.mjs\n             /scripts/brand-icons.mjs\n+            /scripts/solo-overhead-acceptance.mjs\n             /scripts/build-entry-writer.mjs\n             /scripts/calibrate-solo-performance.mjs\n             /scripts/core-soundtrack-publication.mjs\n@@ -2403,6 +2404,7 @@ jobs:\n             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json\n             /docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json\n             /scripts/solo-readiness-rejoin-declared-source.mjs\n+            /scripts/solo-overhead-acceptance.mjs\n             /.github/workflows/solo-native-package-consumer.yml\n             /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json\n             /.github/workflows/solo-remote-native-touch-temporary.yml\n@@ -2973,6 +2975,7 @@ jobs:\n             /scripts/optional-distribution.mjs\n             /scripts/pack-indexes.mjs\n             /scripts/qualify-solo-diagnostics.mjs\n+            /scripts/solo-overhead-acceptance.mjs\n             /scripts/qualify-solo-runtime.mjs\n             /scripts/reviewed-soundtrack-batches.mjs\n             /scripts/run-solo-remote-correctness.mjs\n@@ -3518,6 +3521,9 @@ jobs:\n             /scripts/pack-indexes.mjs\n             /scripts/published-navigation.mjs\n             /scripts/qualify-solo-diagnostics.mjs\n+            /scripts/solo-overhead-acceptance.mjs\n+            /scripts/solo-overhead-declared-source.mjs\n+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json\n             /scripts/reviewed-soundtrack-batches.mjs\n             /scripts/run-solo-remote-correctness.mjs\n             /scripts/serve-production-preview.mjs\n@@ -4174,6 +4180,9 @@ jobs:\n             /scripts/pack-indexes.mjs\n             /scripts/published-navigation.mjs\n             /scripts/qualify-solo-diagnostics.mjs\n+            /scripts/solo-overhead-acceptance.mjs\n+            /scripts/solo-overhead-declared-source.mjs\n+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json\n             /scripts/qualify-solo-runtime.mjs\n             /scripts/reviewed-soundtrack-batches.mjs\n             /scripts/run-solo-remote-correctness.mjs\n@@ -4856,6 +4865,9 @@ jobs:\n             /scripts/pack-indexes.mjs\n             /scripts/published-navigation.mjs\n             /scripts/qualify-solo-diagnostics.mjs\n+            /scripts/solo-overhead-acceptance.mjs\n+            /scripts/solo-overhead-declared-source.mjs\n+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json\n             /scripts/qualify-solo-runtime.mjs\n             /scripts/reviewed-soundtrack-batches.mjs\n             /scripts/run-solo-remote-correctness.mjs\n@@ -5548,6 +5560,9 @@ jobs:\n             /scripts/pack-indexes.mjs\n             /scripts/published-navigation.mjs\n             /scripts/qualify-solo-diagnostics.mjs\n+            /scripts/solo-overhead-acceptance.mjs\n+            /scripts/solo-overhead-declared-source.mjs\n+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json\n             /scripts/qualify-solo-runtime.mjs\n             /scripts/reviewed-soundtrack-batches.mjs\n             /scripts/run-solo-remote-correctness.mjs\n@@ -7387,6 +7402,8 @@ jobs:\n             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json\n             /docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json\n             /scripts/solo-readiness-rejoin-declared-source.mjs\n+            /scripts/solo-overhead-declared-source.mjs\n+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json\n             /scripts/test-solo-native-consumer-shared-demo.mjs\n             /scripts/solo-native-measurement-consumer.test.mjs\n             /scripts/test-solo-native-consumer-preparation.mjs"
+    }
+  },
+  "sourceEvidence": {
+    "workflows": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "bytes": 19972,
+        "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+        "events": "on:\n  pull_request:\n    branches: [main]\n    # Metadata changes do not alter admission. Gate only source-head lifecycle\n    # events so title, labels, milestones, and draft promotion cannot create\n    # redundant queue work.\n    types: [opened, synchronize, reopened]\n",
+        "concurrency": "concurrency:\n  group: source-gates-${{ github.ref }}\n  # Superseded PR heads cannot qualify the current source; do not queue behind them.\n  # Release routing and manual runs keep their existing serialization.\n  cancel-in-progress: ${{ github.event_name == 'pull_request' }}\n\n"
+      },
+      {
+        "path": ".github/workflows/solo-native-package-consumer.yml",
+        "gitBlob": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6",
+        "bytes": 436631,
+        "sha256": "0d2230c71ec56f256412aefe1fc76a2096f65f666ad7d322d72897ce724af86a",
+        "events": "on:\n  pull_request:\n    types: [opened, synchronize]\n    paths:\n      - 'scripts/solo-replay-portability-diagnostic.mjs'\n      - 'scripts/diagnose-solo-replay-portability.mjs'\n      - 'scripts/solo-replay-portability-diagnostic.test.mjs'\n      - 'docs/performance/fixtures/solo-replay-portability/first-eight-39109911286.json'\n      - 'scripts/run-solo-replay-portability.mjs'\n      - 'scripts/test-solo-replay-portability-hook.mjs'\n      - 'docs/performance/solo-replay-portability-797-plan.json'\n      - '.github/workflows/solo-native-package-consumer.yml'\n      - 'docs/performance/solo-remote-de332-correctness-tooling-plan.json'\n      - 'docs/performance/solo-next-geometric-de332-tooling-plan.json'\n      - 'scripts/test-solo-de332-correctness.mjs'\n      - 'scripts/test-solo-next-de332-admission.mjs'\n      - 'scripts/solo-qualification-next-route.mjs'\n      - 'scripts/solo-remote-sustained.mjs'\n  workflow_dispatch:\n    inputs:\n      lane:\n        description: 'Fixed797 qualification lanes; later phases require reviewed predecessors or separate Cocoa codec control. Review exact source before expansion; no automatic retries.'\n        type: choice\n        required: true\n        default: first-eight\n        options:\n          [\n            first-eight,\n            next,\n            cocoa,\n            raster,\n            hud-cpu,\n            readiness,\n            touch,\n            app-overhead,\n            journal-cost,\n            timing,\n            lifecycle,\n            shared-return,\n            demo-recovery,\n            demo-resources,\n            replay-portability,\n            frame-trace,\n          ]\n\n      phase:\n        description: 'One fixed timing or lifecycle phase; ignored by other lanes. No automatic continuation.'\n        type: choice\n        required: true\n        default: none\n        options:\n          [\n            none,\n            cold-first30,\n            warm-first30,\n            sentry-latency,\n            long-rail-latency,\n            large-capture-erosion,\n            jammer-steering,\n            retry,\n            soak,\n            long29,\n          ]\n",
+        "concurrency": "concurrency:\n  group: solo-native-de332-${{ inputs.lane || 'first-eight' }}\n  cancel-in-progress: false\n\n"
+      },
+      {
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "gitBlob": "231cf239370fb69919ffbb3e09e0cbf5f5c0f8b3",
+        "bytes": 3061,
+        "sha256": "be28689f2eef8a104f37a85cee0858f3b45ec0c68455e261600b43a5c8264068",
+        "events": "on:\n  workflow_run:\n    # Reconcile when any PR validation workflow completes, including a failure\n    # that must disarm an earlier decision. The controller also waits for every\n    # non-waived exact-head check already registered on the commit.\n    workflows:\n      - Validate source for continuous main\n      - Appearance preview\n      - Industrial feature verification\n      - Company edition candidates\n      - Assemble full-test release evidence\n      - Community hosted acceptance\n      - Community MinIO recovery\n    types: [completed]\n  pull_request:\n    branches: [main]\n    types:\n      [\n        opened,\n        reopened,\n        synchronize,\n        edited,\n        labeled,\n        unlabeled,\n        milestoned,\n        demilestoned,\n        ready_for_review,\n        converted_to_draft,\n      ]\n  pull_request_review:\n    branches: [main]\n    types: [submitted, dismissed]\n",
+        "concurrency": "concurrency:\n  group: fastline-merge-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || github.run_id }}\n  # Metadata changes are cheap and read current state. Serializing them avoids\n  # cancelled controller checks poisoning GitHub's merge-state rollup.\n  cancel-in-progress: false\n\n"
+      },
+      {
+        "path": ".github/workflows/industrial-feature-tests.yml",
+        "gitBlob": "30c75fd6d2a961f4eb1e2bf3fee9ced4284c4fc2",
+        "bytes": 2192,
+        "sha256": "08a0d45b61439eac811424e3b0616ee24e89dbd62ab2a8e7ff6de050a74c0cd0",
+        "events": "on:\n  pull_request:\n    paths:\n      - '.github/workflows/industrial-feature-tests.yml'\n      - 'publishing/**'\n      - 'scripts/**'\n      - 'game/**'\n      - 'services/rooms/**'\n      - 'optional-practice/**'\n      - 'authoring/**'\n      - 'package.json'\n      - 'package-lock.json'\n",
+        "concurrency": "concurrency:\n  group: industrial-features-${{ github.event.pull_request.number }}\n  cancel-in-progress: true\n\n"
+      },
+      {
+        "path": ".github/workflows/company-edition-candidate.yml",
+        "gitBlob": "e3578b3b6b18984d0d3af21956a04fdd7aba9ead",
+        "bytes": 9366,
+        "sha256": "8a0398db57717f2fc0109d4b9ec8f11ef14f3f448e1f30fd408dac9f5923d19e",
+        "concurrency": "concurrency:\n  group: company-candidate-${{ github.event.pull_request.number || github.ref }}\n  cancel-in-progress: true\n\n"
+      },
+      {
+        "path": ".github/workflows/measure-pages-candidate.yml",
+        "gitBlob": "033ff674ad852c1e4c735b94c1ef300e1d6dcd42",
+        "bytes": 9527,
+        "sha256": "89cdf42221be73e05bf694311de67f60cd854961ace55c46ab5d7e75e232cf56",
+        "events": "on:\n  workflow_dispatch:\n    inputs:\n      pr_number:\n        description: Same-repository open PR based directly on main\n        required: true\n        type: string\n      main_sha:\n        description: Exact current main and workflow-controller SHA\n        required: true\n        type: string\n      head_sha:\n        description: Exact candidate PR head SHA\n        required: true\n        type: string\n",
+        "concurrency": "concurrency:\n  group: pages-candidate-diagnostic\n  cancel-in-progress: false\n\n"
+      },
+      {
+        "path": ".github/workflows/published-pages-smoke.yml",
+        "gitBlob": "155b08d1f7d353b30244da019afa0234087fec61",
+        "bytes": 19213,
+        "sha256": "cac41781df50d8a187de9173e4fa940fd82f7d94dc1b15ad622e480322479364",
+        "events": "on:\n  pull_request:\n    types: [opened, synchronize, reopened]\n    paths:\n      - '.github/workflows/published-pages-smoke.yml'\n      - 'scripts/solo-pages-smoke*'\n      - 'scripts/run-solo-pages-smoke.mjs'\n      - 'scripts/run-solo-remote-correctness.mjs'\n      - 'scripts/solo-qualification-shared-mode.mjs'\n      - 'docs/performance/solo-published-pages-smoke-plan.json'\n  workflow_dispatch:\n",
+        "concurrency": "concurrency:\n  group: published-pages-smoke-${{ github.event_name }}-${{ github.ref }}\n  cancel-in-progress: false\n\n"
+      },
+      {
+        "path": ".github/workflows/publish-main-pages.yml",
+        "gitBlob": "86328152696e5f5951f45c0e2b3407267b05366c",
+        "bytes": 9967,
+        "sha256": "d503592aad75dda3d1bc01afef00a33ef44b2ed2880f673975cab14920679f54",
+        "events": "on:\n  push:\n    branches: [main]\n  workflow_dispatch:\n",
+        "concurrency": "concurrency:\n  group: pages-production\n  cancel-in-progress: false\n\n"
+      }
+    ],
+    "classification": {
+      "path": "publishing/admission-binding.mjs",
+      "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "lines": [
+        17,
+        50
+      ],
+      "excerpt": "export function dependenciesOf(body = '') {\n  return [\n    ...new Set(\n      [...String(body).matchAll(/(?:depends on|blocked by)\\s+#([1-9][0-9]*)/giu)].map((match) =>\n        Number(match[1]),\n      ),\n    ),\n  ].sort((a, b) => a - b);\n}\n\nexport function classification(_pull, paths) {\n  if (!Array.isArray(paths) || !paths.length) throw new Error('Empty changed-path inventory.');\n  // Queue admission deliberately does not restrict implementation paths. The\n  // exact changed-path inventory remains in the receipt for focused testing;\n  // titles, milestones, and labels cannot alter an admitted PR's class.\n  return 'maintenance';\n}\n\nexport function admissionBinding(pull, { workflowRevision, policyDigest, paths }) {\n  if (\n    !sha(pull.head?.sha) ||\n    !sha(pull.base?.sha) ||\n    !sha(workflowRevision) ||\n    !/^[a-f0-9]{64}$/.test(policyDigest || '')\n  )\n    throw new Error('Exact admission identities required.');\n  return {\n    format: 'revealline-admission.v1',\n    headSha: pull.head.sha,\n    baseSha: pull.base.sha,\n    workflowRevision,\n    policyDigest,\n    classification: classification(pull, paths),\n    dependencies: dependenciesOf(pull.body),"
+    },
+    "changedTestAdmission": {
+      "path": "publishing/focused-tests.mjs",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "lines": [
+        93,
+        122
+      ],
+      "excerpt": "  const commands = [...categories.flatMap((category) => category.commands)];\n  if (unknownRuntime.length && !fallbackHandled) commands.push(...map.fallbackCommands);\n\n  const deferredTests = [];\n  for (const changed of paths) {\n    if (!changed.endsWith('.test.mjs')) continue;\n    if (!/^(game\\/test|publishing(?:\\/pages-controller)?|scripts)\\//u.test(changed)) continue;\n    if (\n      commands.some(\n        (command) =>\n          command.command === 'node' &&\n          command.args[0] === '--test' &&\n          command.args.includes(changed),\n      )\n    )\n      continue;\n    if (\n      categories.some((category) =>\n        category.deferredChangedTestPatterns.some((pattern) => pattern.test(changed)),\n      )\n    ) {\n      deferredTests.push(changed);\n      continue;\n    }\n    commands.push({\n      id: `changed-test:${changed}`,\n      command: 'node',\n      args: ['--test', changed],\n    });\n  }",
+      "deferredPatternsPresent": false,
+      "retryChangedTestPaths": [
+        "scripts/solo-qualification-heap-retainers.test.mjs",
+        "scripts/solo-retry-heap-retainers-admission.test.mjs",
+        "scripts/solo-frame-trace-failure-admission.test.mjs",
+        "scripts/solo-frame-trace-tasks-admission.test.mjs",
+        "scripts/solo-frame-trace-heap-tooling-admission.test.mjs",
+        "scripts/solo-runtime73-measurement.test.mjs",
+        "scripts/solo-native-measurement-consumer.test.mjs"
+      ],
+      "overheadChangedTestPaths": [
+        "scripts/solo-native-measurement-consumer.test.mjs",
+        "scripts/solo-overhead-acceptance.test.mjs"
+      ]
+    },
+    "controller": {
+      "path": "publishing/fastline-merge-controller.mjs",
+      "gitBlob": "a8b71ef43d7afbf18bc169bfc75ff924c634fd93",
+      "bytes": 58466,
+      "sha256": "eee8ca3661f04112f327ccc3d99fee3fe4866e8025dcb0fd8d09d41d2f77a9b4",
+      "lines": [
+        1076,
+        1095
+      ],
+      "excerpt": "  const reason = (() => {\n    if (!/^[0-9a-f]{40}$/u.test(observedHeadSha || \"\"))\n      return \"event has no exact head SHA\";\n    if (pullRequest.head?.sha !== observedHeadSha)\n      return \"head changed after inspection\";\n    if (pullRequest.state !== \"open\") return \"pull request is not open\";\n    if (pullRequest.draft !== false)\n      return \"pull request is draft or draft state is unknown\";\n    if (dependencies.some((dependency) => !dependency.merged_at))\n      return \"declared predecessor is not merged\";\n    if (\n      !requiredCheck ||\n      requiredCheck.status !== \"completed\" ||\n      requiredCheck.conclusion !== \"success\" ||\n      requiredCheck.head_sha !== observedHeadSha\n    )\n      return \"release-ready is not successful on the exact head\";\n    if (requiredCheck.admissionMatches !== true)\n      return \"source or admission metadata changed since the successful gate\";\n    if (!checkInventoryComplete || checkInventory?.complete !== true)"
+    },
+    "nativeJobs": [
+      {
+        "name": "cocoa",
+        "line": 76,
+        "header": "  cocoa:\n    # Explicit separate codec control; never starts from a PR or a Linux lane.\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'cocoa'\n    runs-on: macos-15-intel\n    timeout-minutes: 28"
+      },
+      {
+        "name": "correctness",
+        "line": 374,
+        "header": "  correctness:\n    # Explicit fixed-source manual selection on main; fresh owners remain mandatory.\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'first-eight'\n    runs-on: ubuntu-24.04\n    timeout-minutes: 145"
+      },
+      {
+        "name": "declare",
+        "line": 729,
+        "header": "  declare:\n    # Manual Next only after review of the fresh first-eight result; never automatic continuation.\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'next'\n    runs-on: ubuntu-24.04\n    timeout-minutes: 5"
+      },
+      {
+        "name": "sustained",
+        "line": 998,
+        "header": "  sustained:\n    needs: declare\n    runs-on: ubuntu-24.04\n    timeout-minutes: ${{ matrix.jobMinutes }}\n    strategy:\n      fail-fast: false\n      max-parallel: 6\n      matrix: ${{ fromJSON(needs.declare.outputs.matrix) }}"
+      },
+      {
+        "name": "raster",
+        "line": 1378,
+        "header": "  raster:\n    strategy:\n      fail-fast: false\n      max-parallel: 2\n      matrix:"
+      },
+      {
+        "name": "readiness",
+        "line": 1824,
+        "header": "  readiness:\n    strategy:\n      fail-fast: false\n      max-parallel: 2\n      matrix:"
+      },
+      {
+        "name": "touch",
+        "line": 2379,
+        "header": "  touch:\n    strategy:\n      fail-fast: false\n      max-parallel: 2\n      matrix:"
+      },
+      {
+        "name": "hud-cpu",
+        "line": 2741,
+        "header": "  hud-cpu:\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && (inputs.lane == 'hud-cpu' || inputs.lane == 'frame-trace')\n    runs-on: ubuntu-24.04\n    timeout-minutes: 130\n    env:"
+      },
+      {
+        "name": "app-overhead",
+        "line": 3145,
+        "header": "  app-overhead:\n    # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'app-overhead'\n    name: ${{ matrix.engine }}\n    runs-on: ubuntu-24.04"
+      },
+      {
+        "name": "journal-cost",
+        "line": 3655,
+        "header": "  journal-cost:\n    # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'journal-cost'\n    name: ${{ matrix.engine }}\n    runs-on: ubuntu-24.04"
+      },
+      {
+        "name": "timing",
+        "line": 4335,
+        "header": "  timing:\n    # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'timing' && contains(fromJSON('[\"cold-first30\",\"warm-first30\",\"sentry-latency\",\"long-rail-latency\",\"large-capture-erosion\",\"jammer-steering\"]'), inputs.phase)\n    name: ${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}\n    runs-on: ubuntu-24.04"
+      },
+      {
+        "name": "lifecycle",
+        "line": 5026,
+        "header": "  lifecycle:\n    # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'lifecycle' && contains(fromJSON('[\"retry\",\"soak\",\"long29\"]'), inputs.phase)\n    name: ${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}\n    runs-on: ubuntu-24.04"
+      },
+      {
+        "name": "shared-return",
+        "line": 5714,
+        "header": "  shared-return:\n    strategy:\n      fail-fast: false\n      max-parallel: 2\n      matrix:"
+      },
+      {
+        "name": "demo-recovery",
+        "line": 6259,
+        "header": "  demo-recovery:\n    # Reviewed source73 correctness prerequisite; fixed manual/main diagnostic only:\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'demo-recovery'\n    runs-on: ubuntu-24.04\n    timeout-minutes: 125"
+      },
+      {
+        "name": "demo-resources",
+        "line": 6816,
+        "header": "  demo-resources:\n    # Reviewed source73 correctness prerequisite; fixed manual/main diagnostic only:\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'demo-resources'\n    runs-on: ubuntu-24.04\n    timeout-minutes: 125"
+      },
+      {
+        "name": "replay-portability-source",
+        "line": 7372,
+        "header": "  replay-portability-source:\n    # No native/browser work. PR and manual entry both exercise the exact Node patch.\n    if: github.repository == 'mekhovov/revealline' && ((github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'replay-portability'))\n    runs-on: ubuntu-24.04\n    timeout-minutes: 28"
+      },
+      {
+        "name": "replay-portability",
+        "line": 7721,
+        "header": "  replay-portability:\n    needs: replay-portability-source\n    # Explicit fixed-source manual selection on main; fresh owners remain mandatory.\n    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'replay-portability'\n    runs-on: ubuntu-24.04"
+      }
+    ],
+    "nativePRSourceCommands": [
+      "    # No native/browser work. PR and manual entry both exercise the exact Node patch.",
+      "          ./node_modules/.bin/eslint --max-warnings 0 scripts/solo-replay-portability-diagnostic.mjs scripts/diagnose-solo-replay-portability.mjs scripts/solo-replay-portability-diagnostic.test.mjs scripts/run-solo-replay-portability.mjs scripts/test-solo-replay-portability-hook.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-native-consumer-overhead.mjs scripts/test-solo-native-consumer-preparation.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-native-consumer-shared-demo.mjs",
+      "          ./node_modules/.bin/prettier --check scripts/solo-replay-portability-diagnostic.mjs scripts/diagnose-solo-replay-portability.mjs scripts/solo-replay-portability-diagnostic.test.mjs scripts/run-solo-replay-portability.mjs scripts/test-solo-replay-portability-hook.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-native-consumer-overhead.mjs scripts/test-solo-native-consumer-preparation.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-native-consumer-shared-demo.mjs docs/performance/solo-replay-portability-797-plan.json .github/workflows/solo-native-package-consumer.yml",
+      "          node --test --test-concurrency=1 scripts/solo-replay-portability-diagnostic.test.mjs scripts/test-solo-replay-portability-hook.mjs 2>&1 | head -c 4194304 > \"$RUNNER_TEMP/solo-replay-source/source-controls.tap\""
+    ],
+    "retryWorkflowDiff": "--- a/.github/workflows/solo-native-package-consumer.yml\n+++ b/.github/workflows/solo-native-package-consumer.yml\n@@ -61,6 +61,7 @@\n             large-capture-erosion,\n             jammer-steering,\n             retry,\n+            retry-heap-retainers,\n             soak,\n             long29,\n           ]\n@@ -400,6 +401,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /scripts/solo-frame-trace-executed-source.mjs\n             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json\n             /scripts/solo-shared-owner-declared-source.mjs\n@@ -745,6 +747,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json\n             /scripts/solo-readiness-rejoin-declared-source.mjs\n             /.github/workflows/solo-native-package-consumer.yml\n@@ -1021,6 +1024,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /scripts/solo-frame-trace-executed-source.mjs\n             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json\n             /scripts/solo-shared-owner-declared-source.mjs\n@@ -1404,6 +1408,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /scripts/solo-frame-trace-executed-source.mjs\n             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json\n             /scripts/solo-shared-owner-declared-source.mjs\n@@ -1852,6 +1857,10 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n+            /docs/performance/solo-browser-frame-trace-9d-failure-plan.json\n+            /docs/performance/solo-browser-frame-trace-9d-tasks-plan.json\n+            /docs/performance/solo-browser-frame-trace-warm-plan.json\n             /scripts/solo-frame-trace-executed-source.mjs\n             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json\n             /.github/workflows/solo-native-package-consumer.yml\n@@ -2409,6 +2418,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /scripts/solo-frame-trace-executed-source.mjs\n             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json\n             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json\n@@ -2759,7 +2769,7 @@\n       SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate\n       PYTHONDONTWRITEBYTECODE: 1\n       SOLO_DIAGNOSTIC_LANE: ${{ inputs.lane }}\n-      SOLO_DIAGNOSTIC_OUTPUT: ${{ inputs.lane == 'frame-trace' && 'solo-linux-9d5139-frame-tasks-v2' || 'solo-linux-797e03-hud-cpu' }}\n+      SOLO_DIAGNOSTIC_OUTPUT: ${{ inputs.lane == 'frame-trace' && 'solo-linux-9d5139-frame-tasks-heap-tooling' || 'solo-linux-797e03-hud-cpu' }}\n     steps:\n       - timeout-minutes: 2\n         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5\n@@ -2770,6 +2780,9 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n+            /docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json\n+            /scripts/solo-frame-trace-heap-tooling-admission.test.mjs\n             /docs/performance/solo-browser-frame-trace-9d-tasks-plan.json\n             /scripts/solo-frame-trace-tasks-admission.test.mjs\n             /scripts/solo-frame-trace-executed-source.mjs\n@@ -3104,10 +3117,10 @@\n         shell: bash\n         run: |\n           set -euo pipefail\n-          node --test --test-concurrency=2 scripts/solo-frame-trace-tasks-admission.test.mjs scripts/test-solo-first-victory-cpu-797e03.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-first-victory-cpu-de332.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-final-long-rail-cpu-profile.mjs scripts/test-solo-qualification-replay-identity.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-first-victory-cpu-profile.mjs scripts/test-solo-first-victory-cpu-239.mjs 2>&1 | head -c 4194304 > \"$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap\"\n+          node --test --test-concurrency=2 scripts/solo-frame-trace-heap-tooling-admission.test.mjs scripts/test-solo-first-victory-cpu-797e03.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-first-victory-cpu-de332.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-final-long-rail-cpu-profile.mjs scripts/test-solo-qualification-replay-identity.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-first-victory-cpu-profile.mjs scripts/test-solo-first-victory-cpu-239.mjs 2>&1 | head -c 4194304 > \"$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap\"\n           case \"$SOLO_DIAGNOSTIC_LANE\" in\n             frame-trace)\n-              node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-browser-frame-trace-9d-tasks-plan.json \"$RUNNER_TEMP/solo-cpu-profile-job.json\"\n+              node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json \"$RUNNER_TEMP/solo-cpu-profile-job.json\"\n               ;;\n             hud-cpu)\n               node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-first-victory-cpu-797e03-plan.json \"$RUNNER_TEMP/solo-cpu-profile-job.json\"\n@@ -3693,6 +3706,13 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n+            /docs/performance/solo-797-retry-heap-retainers-plan.json\n+            /docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json\n+            /scripts/solo-frame-trace-heap-tooling-admission.test.mjs\n+            /scripts/solo-qualification-heap-retainers.mjs\n+            /scripts/solo-qualification-heap-retainers.test.mjs\n+            /scripts/solo-retry-heap-retainers-admission.test.mjs\n             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json\n             /scripts/solo-readiness-rejoin-declared-source.mjs\n             /.github/workflows/solo-native-package-consumer.yml\n@@ -4375,6 +4395,13 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n+            /docs/performance/solo-797-retry-heap-retainers-plan.json\n+            /docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json\n+            /scripts/solo-frame-trace-heap-tooling-admission.test.mjs\n+            /scripts/solo-qualification-heap-retainers.mjs\n+            /scripts/solo-qualification-heap-retainers.test.mjs\n+            /scripts/solo-retry-heap-retainers-admission.test.mjs\n             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json\n             /scripts/solo-readiness-rejoin-declared-source.mjs\n             /.github/workflows/solo-native-package-consumer.yml\n@@ -5040,18 +5067,18 @@\n \n   lifecycle:\n     # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.\n-    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'lifecycle' && contains(fromJSON('[\"retry\",\"soak\",\"long29\"]'), inputs.phase)\n+    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'lifecycle' && contains(fromJSON('[\"retry\",\"retry-heap-retainers\",\"soak\",\"long29\"]'), inputs.phase)\n     name: ${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}\n     runs-on: ubuntu-24.04\n-    timeout-minutes: ${{ inputs.phase == 'retry' && 142 || 192 }}\n+    timeout-minutes: ${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 142 || 192 }}\n     strategy:\n       fail-fast: false\n       max-parallel: 1\n       matrix:\n-        engine: [chromium, webkit]\n-        repetition: [1, 2, 3]\n+        engine: ${{ fromJSON(inputs.phase == 'retry-heap-retainers' && '[\"chromium\"]' || '[\"chromium\",\"webkit\"]') }}\n+        repetition: ${{ fromJSON(inputs.phase == 'retry-heap-retainers' && '[1]' || '[1,2,3]') }}\n     env:\n-      SOLO_OUTER_SECONDS: ${{ inputs.phase == 'retry' && 5820 || 8820 }}\n+      SOLO_OUTER_SECONDS: ${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 5820 || 8820 }}\n       SOLO_MEASUREMENT_PHASE: ${{ inputs.phase }}\n       SOLO_TOOLING_REVISION: ${{ github.sha }}\n       SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline\n@@ -5067,6 +5094,13 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n+            /docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json\n+            /scripts/solo-frame-trace-heap-tooling-admission.test.mjs\n+            /docs/performance/solo-797-retry-heap-retainers-plan.json\n+            /scripts/solo-qualification-heap-retainers.mjs\n+            /scripts/solo-qualification-heap-retainers.test.mjs\n+            /scripts/solo-retry-heap-retainers-admission.test.mjs\n             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json\n             /scripts/solo-readiness-rejoin-declared-source.mjs\n             /.github/workflows/solo-native-package-consumer.yml\n@@ -5673,16 +5707,17 @@\n         shell: bash\n         run: |\n           set -euo pipefail\n-          node --test --test-concurrency=2 scripts/solo-de332-diagnostics.test.mjs scripts/solo-de332-timing.test.mjs scripts/solo-de332-lifecycle.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > \"$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap\"\n+          node --test --test-concurrency=2 scripts/solo-retry-heap-retainers-admission.test.mjs scripts/solo-de332-diagnostics.test.mjs scripts/solo-de332-timing.test.mjs scripts/solo-de332-lifecycle.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > \"$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap\"\n           case \"$SOLO_MEASUREMENT_PHASE\" in\n             retry) PLAN=docs/performance/solo-797-lifecycle-retry-plan.json ;;\n+            retry-heap-retainers) PLAN=docs/performance/solo-797-retry-heap-retainers-plan.json ;;\n             soak) PLAN=docs/performance/solo-797-lifecycle-soak-plan.json ;;\n             long29) PLAN=docs/performance/solo-797-lifecycle-long29-plan.json ;;\n             *) echo \"Unsupported fixed measurement phase\" >&2; exit 2 ;;\n           esac\n           node scripts/solo-remote-sustained.mjs bind-plan \"$PLAN\" \"$RUNNER_TEMP/solo-diagnostics-job.json\" '${{ matrix.engine }}' '${{ matrix.repetition }}'\n       - name: Run one fixed diagnostic lifecycle phase with unchanged owners and clocks\n-        timeout-minutes: ${{ inputs.phase == 'retry' && 98 || 148 }}\n+        timeout-minutes: ${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 98 || 148 }}\n         working-directory: tools\n         env:\n           GH_TOKEN: ${{ github.token }}\n@@ -5751,6 +5786,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /scripts/solo-frame-trace-executed-source.mjs\n             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json\n             /docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json\n@@ -6293,6 +6329,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /scripts/solo-frame-trace-executed-source.mjs\n             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json\n             /scripts/solo-demo-close-declared-source.mjs\n@@ -6852,6 +6889,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /scripts/solo-frame-trace-executed-source.mjs\n             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json\n             /scripts/solo-demo-close-declared-source.mjs\n@@ -7405,6 +7443,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /scripts/solo-frame-trace-executed-source.mjs\n             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json\n             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json\n@@ -7771,6 +7810,7 @@\n           fetch-depth: 1\n           sparse-checkout-cone-mode: false\n           sparse-checkout: |\n+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json\n             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json\n             /scripts/solo-readiness-rejoin-declared-source.mjs\n             /eslint.config.mjs\n"
+  },
+  "trustedPolicy": {
+    "identities": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "bytes": 19972,
+        "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8"
+      },
+      {
+        "path": "publishing/admission-binding.mjs",
+        "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+        "bytes": 3561,
+        "sha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214"
+      },
+      {
+        "path": "publishing/admission-preflight.mjs",
+        "gitBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+        "bytes": 2473,
+        "sha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf"
+      },
+      {
+        "path": "publishing/focused-tests.mjs",
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "bytes": 33959,
+        "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669"
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "bytes": 14501,
+        "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479"
+      },
+      {
+        "path": "publishing/test-policy.json",
+        "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+        "bytes": 578,
+        "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2"
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "bytes": 4134,
+        "sha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b"
+      }
+    ],
+    "digest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+    "changedPolicyPaths": [],
+    "finding": "Neither held diagnostics proposal edits any of the seven trusted source-policy paths. A later main policy change still requires a fresh current policy-bound receipt."
+  },
+  "concurrency": {
+    "observedAt": "2026-10-19T01:25:02.456Z",
+    "nonterminalWorkflowQueries": [
+      {
+        "status": "queued",
+        "total_count": 0,
+        "workflow_runs": []
+      },
+      {
+        "status": "pending",
+        "total_count": 0,
+        "workflow_runs": []
+      },
+      {
+        "status": "in_progress",
+        "total_count": 0,
+        "workflow_runs": []
+      },
+      {
+        "status": "waiting",
+        "total_count": 0,
+        "workflow_runs": []
+      }
+    ],
+    "exactGroupRead": {
+      "group": "solo-native-de332-first-eight",
+      "httpStatus": 404,
+      "responseBody": {
+        "message": "Not Found",
+        "documentation_url": "https://docs.github.com/rest/actions/concurrency-groups#get-a-concurrency-group-for-a-repository",
+        "status": "404"
+      }
+    },
+    "sourceGroup": "solo-native-de332-first-eight",
+    "originalTraceGroup": "solo-native-de332-frame-trace",
+    "cancelInProgress": false,
+    "queueOverride": false,
+    "officialGuidance": "https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency",
+    "apiGuidance": "https://docs.github.com/en/rest/actions/concurrency-groups?apiVersion=2026-03-10",
+    "finding": "No queued, pending, in-progress or waiting native-consumer owner was found in this bounded snapshot; exact group was inactive/not found. Running work is not cancelled, but a later same-group run can replace an existing pending run. Stagger the two PR native-source admissions until the previous guard is terminal. This does not serialize their unrelated per-PR Source/Industrial/Company workflows or collide with frame-trace."
+  },
+  "conclusions": {
+    "draftSourceAdmission": "SAFE WITH FRESH SOURCE COMPOSITION AND ORDINARY REVIEW; original trace completion is not a technical prerequisite for draft source checks.",
+    "technicalHold": "MERGE/NATIVE ONLY: Retry changes qualify-solo-runtime, solo-remote-sustained and the frame-trace selector/output to separately named heap-tooling identities. Neither draft source branch changes main or current dispatch bytes. Original trace declarations and its failed/history evidence must remain intact.",
+    "preparationConditions": [
+      "Prepare separate reviewed fresh-main source unions; do not copy a stale complete native workflow over later changes.",
+      "Retry is based on #1621 head4d28 and imports its v2 source files. Carry that reviewed dependency into the draft source tree and declare Depends on #1621; do not edit the ready predecessor head.",
+      "Reconcile current shared reader/archived workflow changes and all before blobs. Source CI must actually execute the new controls and full inherited import closure.",
+      "Keep both PRs drafts, unmerged and without native/manual dispatch; Fastline draft/predecessor guards remain unchanged.",
+      "Admit the two native-consumer source guards sequentially to avoid replacement within their shared first-eight pending slot.",
+      "Record every exact source/tree/base/policy receipt; future base/policy changes require new receipts.",
+      "Retain original #1621 trace-v2 exact-main dispatch and reviewed terminal observation before merging the shared-adapter changes or dispatching their separately named native successors."
+    ],
+    "nonclaims": [
+      "No executed test or performance improvement is inferred.",
+      "No general hosted capacity or ETA is inferred.",
+      "No permission to rewrite historical protocol, weaken gates, mark drafts ready, merge or dispatch is implied."
+    ]
+  }
+}

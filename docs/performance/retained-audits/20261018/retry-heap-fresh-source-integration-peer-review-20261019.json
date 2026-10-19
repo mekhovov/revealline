@@ -1,0 +1,21 @@
+{
+  "kind": "SoloRetryHeapFreshIntegrationIndependentReviewV1",
+  "at": "2026-10-19T01:29:52.866828+00:00",
+  "proposal": "056a21bdcc8ecfb24cc093c27c719ce36b34d710",
+  "main": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "dependency": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+  "verified": {
+    "allEighteenReviewedOutputsUnchanged": true,
+    "bothParentTreesIndependentlyReconstructed": true,
+    "threeWayConflicts": 0,
+    "intermediateTree": "9c271dd7b02403351eb0e85df3731db8d9b0e579",
+    "finalTree": "6fcd523dbc57a86e0f0dd126e4405eaad09036d1",
+    "finalLeaves": 44805,
+    "pathsVersusMain": 32,
+    "trustedPolicyUnchanged": true,
+    "originalTraceDeclarationExact": true
+  },
+  "sourceAdmission": "Clean for isolated draft CI only; 24 new controls unexecuted. Original trace must complete before merge/native. Stagger shared source guards.",
+  "functionalExecution": false,
+  "nativeDispatch": false
+}

@@ -1,0 +1,73 @@
+{
+  "kind": "RedundantUnassignedControllerCancellationV1",
+  "at": "2026-10-19T01:42:38.216675+00:00",
+  "pr": 1619,
+  "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+  "oldRun": 39168628214,
+  "oldOuterHead": "1df89b62b5f0ddfdad926e1bbd3474b77ed4d716",
+  "oldJob": {
+    "id": 117803071989,
+    "run_id": 39168628214,
+    "workflow_name": "Fastline exact-head auto-merge",
+    "head_branch": "main",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39168628214",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAbbZw59Q",
+    "head_sha": "1df89b62b5f0ddfdad926e1bbd3474b77ed4d716",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117803071989",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39168628214/job/117803071989",
+    "status": "queued",
+    "conclusion": null,
+    "created_at": "2026-10-18T22:06:07Z",
+    "started_at": "2026-10-18T22:06:07Z",
+    "completed_at": null,
+    "name": "reconcile",
+    "steps": [],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117803071989",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 0,
+    "runner_name": "",
+    "runner_group_id": 0,
+    "runner_group_name": ""
+  },
+  "replacementRun": 39182301808,
+  "replacementEvent": "pull_request",
+  "replacementHead": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+  "beforeGroup": {
+    "group_name": "fastline-merge-1619",
+    "group_url": "https://api.github.com/repos/mekhovov/revealline/actions/concurrency_groups/fastline-merge-1619",
+    "total_count": 2,
+    "group_members": [
+      {
+        "run_id": 39168628214,
+        "run_name": "Fastline exact-head auto-merge",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39168628214",
+        "run_html_url": "https://github.com/mekhovov/revealline/actions/runs/39168628214",
+        "status": "in_progress"
+      },
+      {
+        "run_id": 39182301808,
+        "run_name": "Fastline exact-head auto-merge",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39182301808",
+        "run_html_url": "https://github.com/mekhovov/revealline/actions/runs/39182301808",
+        "status": "pending"
+      }
+    ]
+  },
+  "autoMergeBefore": null,
+  "action": "normal cancel request accepted",
+  "after": {
+    "id": 39168628214,
+    "status": "in_progress",
+    "conclusion": null,
+    "updated_at": "2026-10-19T01:42:38Z"
+  },
+  "rationale": "Coalesce a redundant unassigned controller into its already pending exact-current-head replacement; normal controller guards remain required. No functional step was running and no auto-merge state needed disarming.",
+  "limits": [
+    "The old event payload and captured PR SHA are unavailable; its outer main SHA is not treated as the captured PR SHA.",
+    "Cancellation is not a merge, readiness change, gate waiver or proof that the replacement has acquired a runner.",
+    "No Pages, functional validation or other controller runs cancelled; no new workflow trigger issued."
+  ]
+}

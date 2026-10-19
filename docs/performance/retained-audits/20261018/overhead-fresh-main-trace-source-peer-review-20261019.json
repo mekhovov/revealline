@@ -1,0 +1,684 @@
+{
+  "schema": "revealline-overhead-integration-peer-review.v1",
+  "reviewedAt": "2026-10-19T01:30:58.349Z",
+  "proposal": {
+    "gitBlob": "4df2a26d310c908ddd64d65187374a1d5dcdf124",
+    "bytes": 839441,
+    "sha256": "571c7869c7a3bad1ea281d31130f3a87826716eb0f211b87e71b67ac42d7ad6b"
+  },
+  "result": "CLEAN source integration review; source qualification only; all new controls remain unexecuted",
+  "parents": {
+    "held": {
+      "head": "19b574eb4c57415def724156a75ac7e9b0c23e37",
+      "tree": "58fee50cb6e4821efdfa7a173d2197e7789ebb64"
+    },
+    "currentMain": {
+      "head": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "tree": "11a3e3f847a0ba9424b888f090de369adcd8fae0"
+    },
+    "trace": {
+      "pr": 1621,
+      "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "tree": "4bd51f0d0b846063e030372d6873ca029852e697",
+      "originalTraceMustCompleteBeforeMergeOrNative": true
+    }
+  },
+  "independentTreeReconstruction": {
+    "method": "Fetch and SHA-1 verify exact nonrecursive Git trees, preserving opaque unchanged subtrees and all modes. Apply complete verified deltas in RAM; no Git objects/commits/refs created for the proposed integration.",
+    "stage1FromMainPlusHeld14": "80ec39960da6e8b6f9fedeec25c409256778633a",
+    "stage1FromHeldPlusCurrentMain27": "80ec39960da6e8b6f9fedeec25c409256778633a",
+    "stage2FromActualTrace22": "50c622f54c9748c1ad695b7885a3164c092e109c",
+    "stage2FromProposal22": "50c622f54c9748c1ad695b7885a3164c092e109c",
+    "matchedProposedTrees": true,
+    "treesVerified": 56
+  },
+  "collisionGuards": {
+    "heldMain": [
+      {
+        "path": ".github/workflows/solo-native-package-consumer.yml",
+        "base": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6",
+        "main": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6",
+        "held": "f87c0b5858b4196181175d443fda295423ac1dbc"
+      },
+      {
+        "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+        "base": null,
+        "main": null,
+        "held": "f4db3ee085da60b4210158af7c6445718350b494"
+      },
+      {
+        "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+        "base": null,
+        "main": null,
+        "held": "6db9e784e0cf28fdacb313035db3009d71eef646"
+      },
+      {
+        "path": "scripts/qualify-solo-diagnostics.mjs",
+        "base": "954d79349078934e4c22ee0f3e26156a9da0196c",
+        "main": "954d79349078934e4c22ee0f3e26156a9da0196c",
+        "held": "1d8b129a3e643332e93ed393ec39b39f87e450ae"
+      },
+      {
+        "path": "scripts/solo-native-measurement-consumer.test.mjs",
+        "base": "d4578b4f1d0ddef7cf7c92a649f2269ae44aa79a",
+        "main": "d4578b4f1d0ddef7cf7c92a649f2269ae44aa79a",
+        "held": "0fd59e6020ead2b3a7ad851e917e0ca8632f3ff2"
+      },
+      {
+        "path": "scripts/solo-overhead-acceptance.mjs",
+        "base": null,
+        "main": null,
+        "held": "79eec3717c5c5c416053f93412fa24272cc394a2"
+      },
+      {
+        "path": "scripts/solo-overhead-acceptance.test.mjs",
+        "base": null,
+        "main": null,
+        "held": "3daa44fae18f00b6b20d04ed6d23b93b30f35a8e"
+      },
+      {
+        "path": "scripts/solo-overhead-declared-source.mjs",
+        "base": null,
+        "main": null,
+        "held": "cd74aa4dc4e338ea09c78a3d5a03f5a13206dbe5"
+      },
+      {
+        "path": "scripts/solo-remote-diagnostics.mjs",
+        "base": "93903085fc95fbfa793d84edd53a48cc0d9a469a",
+        "main": "93903085fc95fbfa793d84edd53a48cc0d9a469a",
+        "held": "e3b2b2ee35164a17152cb69098d77b5e1be0bb7d"
+      },
+      {
+        "path": "scripts/test-solo-diagnostics-analysis.mjs",
+        "base": "42034bf9c1afb24dc4be8009b6af2c5ecc511f49",
+        "main": "42034bf9c1afb24dc4be8009b6af2c5ecc511f49",
+        "held": "2feb26b495845f97ee74a508ab3ccba26f4de15a"
+      },
+      {
+        "path": "scripts/test-solo-journal-cost-admission.mjs",
+        "base": "6e766415b9d7a3d20561c3c895ddc971b505ce08",
+        "main": "6e766415b9d7a3d20561c3c895ddc971b505ce08",
+        "held": "07508313196ae894e88b088f23640fe130dfbd35"
+      },
+      {
+        "path": "scripts/test-solo-journal-cost-analysis.mjs",
+        "base": "75fdaae296b0fc713b81d63f106161aaeb0a4862",
+        "main": "75fdaae296b0fc713b81d63f106161aaeb0a4862",
+        "held": "3a82111a78548e86f2b0794292c3b52ee5b70369"
+      },
+      {
+        "path": "scripts/test-solo-native-consumer-overhead.mjs",
+        "base": "a518a83fd388bacdd3656e7d928ebca6dd1cc929",
+        "main": "a518a83fd388bacdd3656e7d928ebca6dd1cc929",
+        "held": "309944ece0a8c0560905aa94fe9297a31c680047"
+      },
+      {
+        "path": "scripts/test-solo-remote-diagnostics.mjs",
+        "base": "676125ac6dc239e4fe135b3dc819cf84d4ebf791",
+        "main": "676125ac6dc239e4fe135b3dc819cf84d4ebf791",
+        "held": "d7d29304ac88f2e75152e33b805582996ce1b238"
+      }
+    ],
+    "traceMain": [
+      {
+        "path": ".github/workflows/solo-native-package-consumer.yml",
+        "base": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6",
+        "main": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6",
+        "trace": "0c3ebd54783fe5537c2077199347b584a1fe127c"
+      },
+      {
+        "path": "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+        "base": null,
+        "main": null,
+        "trace": "d184dcf1870a15856e029769ddab76fcecb3cb3d"
+      },
+      {
+        "path": "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+        "base": null,
+        "main": null,
+        "trace": "e8c91f7eefb112ac7f16fa5a05ce4a8a00676407"
+      },
+      {
+        "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+        "base": null,
+        "main": null,
+        "trace": "78c4a5f588b13097744746539c078acd9128220d"
+      },
+      {
+        "path": "scripts/qualify-solo-runtime.mjs",
+        "base": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54",
+        "main": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54",
+        "trace": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb"
+      },
+      {
+        "path": "scripts/solo-frame-trace-executed-source.mjs",
+        "base": null,
+        "main": null,
+        "trace": "95953fb727a0e61b04e8ca253af3eb1596ddd0ab"
+      },
+      {
+        "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+        "base": "bba0507688112325c343c8e37248233aea240d7c",
+        "main": "bba0507688112325c343c8e37248233aea240d7c",
+        "trace": "a3c787f2450f546542ef6b56a6e2251f03f09ed3"
+      },
+      {
+        "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+        "base": null,
+        "main": null,
+        "trace": "0c88d60746de697e23cf3ebb737ab20e03cbb31a"
+      },
+      {
+        "path": "scripts/solo-frame-trace.test.mjs",
+        "base": "f895f933a4bf5c7752d0cfb34ac7c8c780af947b",
+        "main": "f895f933a4bf5c7752d0cfb34ac7c8c780af947b",
+        "trace": "5c831aa0c0027391bd7cbdf44d6eeceeb10f9413"
+      },
+      {
+        "path": "scripts/solo-qualification-cpu-profile.mjs",
+        "base": "3c70bfff3d049d7ac7f96f90cfbfb6741d01e93c",
+        "main": "3c70bfff3d049d7ac7f96f90cfbfb6741d01e93c",
+        "trace": "c2ab48d2227b980c33be0e1fc3deb5bc077e770a"
+      },
+      {
+        "path": "scripts/solo-remote-cpu-profile.mjs",
+        "base": "d9b7a184a80505b300f6395610479b4a1fcb5570",
+        "main": "d9b7a184a80505b300f6395610479b4a1fcb5570",
+        "trace": "e9cfbca906a7bf8d7d7b797980c40376a149e8e5"
+      },
+      {
+        "path": "scripts/solo-replay-portability-diagnostic.mjs",
+        "base": "b5ebb3abcc6a65065f92ecd700382c05a541ff1b",
+        "main": "b5ebb3abcc6a65065f92ecd700382c05a541ff1b",
+        "trace": "6b9d1bc93633dcf8fee382a1863812c988b27cc7"
+      },
+      {
+        "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+        "base": "d2f92e251900e4775206aaefe69617d192e8e103",
+        "main": "d2f92e251900e4775206aaefe69617d192e8e103",
+        "trace": "dff524e49090ed3203d1cb15af7b15f98aeb0ead"
+      },
+      {
+        "path": "scripts/solo-runtime73-measurement.test.mjs",
+        "base": "6765b28da00d745808eab8b5310bb1f7ea81a0cd",
+        "main": "6765b28da00d745808eab8b5310bb1f7ea81a0cd",
+        "trace": "bddf5cb09109bc8a56bfa9e18d1d7e415fadb4c5"
+      },
+      {
+        "path": "scripts/solo-shared-owner-declared-source.mjs",
+        "base": "c6216aeb54a4e1fc66667ac73ac8ff7c7501d1cb",
+        "main": "c6216aeb54a4e1fc66667ac73ac8ff7c7501d1cb",
+        "trace": "657c3ae7894525b5e71699313fbcf66c56c871bc"
+      },
+      {
+        "path": "scripts/test-solo-frame-trace-admission.mjs",
+        "base": "01ecb56634efbd5664d16948626c740a6d8b378a",
+        "main": "01ecb56634efbd5664d16948626c740a6d8b378a",
+        "trace": "b9bc1199f2152c9f1777570a8dca6c07987a509a"
+      },
+      {
+        "path": "scripts/test-solo-native-consumer-preparation.mjs",
+        "base": "19ae6e3cfddbfb00fb4a42476cfa734c0703e52f",
+        "main": "19ae6e3cfddbfb00fb4a42476cfa734c0703e52f",
+        "trace": "f7001047cfcb78ade870081e8568ee95c07b2828"
+      },
+      {
+        "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+        "base": "d0b4b0c495f5f3c67a7ec0b662872759a4145cc2",
+        "main": "d0b4b0c495f5f3c67a7ec0b662872759a4145cc2",
+        "trace": "683c8cfb47ffc2e9d2d114328235cae271322c4b"
+      },
+      {
+        "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+        "base": "450eed9ada786f837a577b48cf9e755b435d6d7c",
+        "main": "450eed9ada786f837a577b48cf9e755b435d6d7c",
+        "trace": "dfd79590ba03f19b6ae7b3ba5e552a4bdfebc06a"
+      },
+      {
+        "path": "scripts/test-solo-remote-cpu-profile.mjs",
+        "base": "20d383e4648e77c1cf9170a012ce95abf677358e",
+        "main": "20d383e4648e77c1cf9170a012ce95abf677358e",
+        "trace": "0fe96c6ae2b8a613f16e722dcb84b3122e071984"
+      },
+      {
+        "path": "scripts/test-solo-replay-portability-hook.mjs",
+        "base": "79c5aeae1a9d0abec846cb9346a144ffc6963af2",
+        "main": "79c5aeae1a9d0abec846cb9346a144ffc6963af2",
+        "trace": "7bd6bbe16ad69216de54a85f61dbb0838affb423"
+      },
+      {
+        "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+        "base": "b4ac0fa28ea316f3d79227f8f74196416cbedcbb",
+        "main": "b4ac0fa28ea316f3d79227f8f74196416cbedcbb",
+        "trace": "84cd5bc9c127ea16a8708ca379b77bb6b8982413"
+      }
+    ],
+    "stage1BeforeAfterGuardCount": 27,
+    "stage2BeforeAfterGuardCount": 22
+  },
+  "heldSourceReceipts": [
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "after": {
+        "gitBlob": "1d8b129a3e643332e93ed393ec39b39f87e450ae",
+        "bytes": 18831,
+        "sha256": "b044e21f33fa8b75c99c9907fde34e8c711307ea318f5ca92be66064ca26b5d3"
+      },
+      "held": {
+        "path": "scripts/qualify-solo-diagnostics.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1d8b129a3e643332e93ed393ec39b39f87e450ae"
+      }
+    },
+    {
+      "path": "scripts/solo-remote-diagnostics.mjs",
+      "after": {
+        "gitBlob": "e3b2b2ee35164a17152cb69098d77b5e1be0bb7d",
+        "bytes": 32267,
+        "sha256": "700d711935ccf1f44aebd64c4695586418705bc56b52f0826e7205bcf5b06b47"
+      },
+      "held": {
+        "path": "scripts/solo-remote-diagnostics.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e3b2b2ee35164a17152cb69098d77b5e1be0bb7d"
+      }
+    },
+    {
+      "path": "scripts/test-solo-diagnostics-analysis.mjs",
+      "after": {
+        "gitBlob": "2feb26b495845f97ee74a508ab3ccba26f4de15a",
+        "bytes": 22249,
+        "sha256": "d44a5c095620b79dac1db38b3f42270f9330b2f0bf21e8fa2eb785d56046ee30"
+      },
+      "held": {
+        "path": "scripts/test-solo-diagnostics-analysis.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2feb26b495845f97ee74a508ab3ccba26f4de15a"
+      }
+    },
+    {
+      "path": "scripts/test-solo-journal-cost-analysis.mjs",
+      "after": {
+        "gitBlob": "3a82111a78548e86f2b0794292c3b52ee5b70369",
+        "bytes": 14852,
+        "sha256": "7f385bf8d084f676a7a1d9402a3e23426168cbdca310b9d7278d6a53dc42fe97"
+      },
+      "held": {
+        "path": "scripts/test-solo-journal-cost-analysis.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3a82111a78548e86f2b0794292c3b52ee5b70369"
+      }
+    },
+    {
+      "path": "scripts/test-solo-remote-diagnostics.mjs",
+      "after": {
+        "gitBlob": "d7d29304ac88f2e75152e33b805582996ce1b238",
+        "bytes": 32844,
+        "sha256": "934bf4efff69f00248d1d3e96170b6a411a83d1a81d89700d2677a5a089e5f78"
+      },
+      "held": {
+        "path": "scripts/test-solo-remote-diagnostics.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d7d29304ac88f2e75152e33b805582996ce1b238"
+      }
+    },
+    {
+      "path": "scripts/solo-overhead-acceptance.mjs",
+      "after": {
+        "gitBlob": "79eec3717c5c5c416053f93412fa24272cc394a2",
+        "bytes": 1341,
+        "sha256": "b508ea89e7dccda4ecd638f1e5bd06588a3ccab892b55473eb0b610e0d74fc53"
+      },
+      "held": {
+        "path": "scripts/solo-overhead-acceptance.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "79eec3717c5c5c416053f93412fa24272cc394a2"
+      }
+    },
+    {
+      "path": "scripts/solo-overhead-acceptance.test.mjs",
+      "after": {
+        "gitBlob": "3daa44fae18f00b6b20d04ed6d23b93b30f35a8e",
+        "bytes": 6170,
+        "sha256": "aa1f3976fa7fc4f84cd921b25c65d34d8296a14d2b321c48633dff080dd3cbd7"
+      },
+      "held": {
+        "path": "scripts/solo-overhead-acceptance.test.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3daa44fae18f00b6b20d04ed6d23b93b30f35a8e"
+      }
+    },
+    {
+      "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+      "after": {
+        "gitBlob": "6db9e784e0cf28fdacb313035db3009d71eef646",
+        "bytes": 3207,
+        "sha256": "fa3da66b0a172d684f976f397f3b02c4b2ad51698626c30dc44fed94bb35d324"
+      },
+      "held": {
+        "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6db9e784e0cf28fdacb313035db3009d71eef646"
+      }
+    },
+    {
+      "path": "scripts/test-solo-journal-cost-admission.mjs",
+      "after": {
+        "gitBlob": "07508313196ae894e88b088f23640fe130dfbd35",
+        "bytes": 12792,
+        "sha256": "d1fdb10303d7f8eda411473bebe50b887f364a66249305b9352cd6302d006044"
+      },
+      "held": {
+        "path": "scripts/test-solo-journal-cost-admission.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "07508313196ae894e88b088f23640fe130dfbd35"
+      }
+    },
+    {
+      "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+      "after": {
+        "gitBlob": "f4db3ee085da60b4210158af7c6445718350b494",
+        "bytes": 58143,
+        "sha256": "053b815fbc0b0936a756b3b447f94e47f834220eb45ca3cffb7df8b11dfbef9a"
+      },
+      "held": {
+        "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f4db3ee085da60b4210158af7c6445718350b494"
+      }
+    },
+    {
+      "path": "scripts/solo-overhead-declared-source.mjs",
+      "after": {
+        "gitBlob": "cd74aa4dc4e338ea09c78a3d5a03f5a13206dbe5",
+        "bytes": 2525,
+        "sha256": "1672019df2a808052849bd5afb220f01e8170e48555f9163a6ddccc215075867"
+      },
+      "held": {
+        "path": "scripts/solo-overhead-declared-source.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cd74aa4dc4e338ea09c78a3d5a03f5a13206dbe5"
+      }
+    },
+    {
+      "path": "scripts/test-solo-native-consumer-overhead.mjs",
+      "after": {
+        "gitBlob": "309944ece0a8c0560905aa94fe9297a31c680047",
+        "bytes": 9761,
+        "sha256": "a21429896db4803cd30e969460e1a911dd0fce7a8fc07422170dd6cfe229316e"
+      },
+      "held": {
+        "path": "scripts/test-solo-native-consumer-overhead.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "309944ece0a8c0560905aa94fe9297a31c680047"
+      }
+    },
+    {
+      "path": "scripts/solo-native-measurement-consumer.test.mjs",
+      "after": {
+        "gitBlob": "0fd59e6020ead2b3a7ad851e917e0ca8632f3ff2",
+        "bytes": 25354,
+        "sha256": "c6cf29ba019c2abfdf401aea9c2edd88f2102d12ec0d054bb7817c3d3b6582fd"
+      },
+      "held": {
+        "path": "scripts/solo-native-measurement-consumer.test.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0fd59e6020ead2b3a7ad851e917e0ca8632f3ff2"
+      }
+    },
+    {
+      "path": ".github/workflows/solo-native-package-consumer.yml",
+      "after": {
+        "gitBlob": "1faa02770851a633b6b1bc33ee133a0657d81bb5",
+        "bytes": 439597,
+        "sha256": "f1d18d55ce3df73d4e4748ce655b67f2576b02b2d20fa07a952596537e32b08d"
+      },
+      "held": {
+        "path": ".github/workflows/solo-native-package-consumer.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f87c0b5858b4196181175d443fda295423ac1dbc"
+      }
+    }
+  ],
+  "workflowComposition": {
+    "traceReceipt": {
+      "bytes": 438522,
+      "sha256": "7fd13f28c5b780244fcb064d8712bda6b58d4ba9f77764f9d34f7cfeb1f3ba1e",
+      "gitBlob": "0c3ebd54783fe5537c2077199347b584a1fe127c"
+    },
+    "finalReceipt": {
+      "bytes": 439597,
+      "sha256": "f1d18d55ce3df73d4e4748ce655b67f2576b02b2d20fa07a952596537e32b08d",
+      "gitBlob": "1faa02770851a633b6b1bc33ee133a0657d81bb5"
+    },
+    "addedSparseLines": 17,
+    "removedOriginalLines": 0,
+    "strippingAdditionsRestoresActualTraceBytes": true,
+    "ownerAssignmentsUnchangedFromActualHeldWorkflow": true,
+    "owners": [
+      {
+        "owner": "readiness",
+        "line": "            /scripts/solo-overhead-acceptance.mjs"
+      },
+      {
+        "owner": "touch",
+        "line": "            /scripts/solo-overhead-acceptance.mjs"
+      },
+      {
+        "owner": "hud-cpu",
+        "line": "            /scripts/solo-overhead-acceptance.mjs"
+      },
+      {
+        "owner": "app-overhead",
+        "line": "            /scripts/solo-overhead-acceptance.mjs"
+      },
+      {
+        "owner": "app-overhead",
+        "line": "            /scripts/solo-overhead-declared-source.mjs"
+      },
+      {
+        "owner": "app-overhead",
+        "line": "            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json"
+      },
+      {
+        "owner": "journal-cost",
+        "line": "            /scripts/solo-overhead-acceptance.mjs"
+      },
+      {
+        "owner": "journal-cost",
+        "line": "            /scripts/solo-overhead-declared-source.mjs"
+      },
+      {
+        "owner": "journal-cost",
+        "line": "            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json"
+      },
+      {
+        "owner": "timing",
+        "line": "            /scripts/solo-overhead-acceptance.mjs"
+      },
+      {
+        "owner": "timing",
+        "line": "            /scripts/solo-overhead-declared-source.mjs"
+      },
+      {
+        "owner": "timing",
+        "line": "            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json"
+      },
+      {
+        "owner": "lifecycle",
+        "line": "            /scripts/solo-overhead-acceptance.mjs"
+      },
+      {
+        "owner": "lifecycle",
+        "line": "            /scripts/solo-overhead-declared-source.mjs"
+      },
+      {
+        "owner": "lifecycle",
+        "line": "            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json"
+      },
+      {
+        "owner": "replay-portability-source",
+        "line": "            /scripts/solo-overhead-declared-source.mjs"
+      },
+      {
+        "owner": "replay-portability-source",
+        "line": "            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json"
+      }
+    ]
+  },
+  "preserved": {
+    "policy": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+      },
+      {
+        "path": "publishing/admission-binding.mjs",
+        "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2"
+      },
+      {
+        "path": "publishing/admission-preflight.mjs",
+        "gitBlob": "9750b8dc5aef171f9124563966f726c2cbe15237"
+      },
+      {
+        "path": "publishing/focused-tests.mjs",
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+      },
+      {
+        "path": "publishing/test-policy.json",
+        "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181"
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+      }
+    ],
+    "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+    "archivedWorkflows": [
+      {
+        "path": ".github/workflows/solo-remote-final-app-diagnostics-temporary.yml",
+        "sha": "5a75aa583e0a669c3cce857227009783c8388af8"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-app-diagnostics-v2-temporary.yml",
+        "sha": "961091b908849b08eb4b7e905f56d5569d1c58c5"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-journal-cost-temporary.yml",
+        "sha": "68f0c030626fbcf1a2f8937d76fb06cb16e71c92"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-journal-cost-v2-temporary.yml",
+        "sha": "584312eaaac8c6edfe6760fe62a2317d1914fab3"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+        "sha": "30ddc92c7fc317d36fe1a2e0622605bdf511912e"
+      },
+      {
+        "path": ".github/workflows/solo-remote-first-victory-cpu-239-temporary.yml",
+        "sha": "b6340986804272b8241af6db5b657c38e18f9a7c"
+      },
+      {
+        "path": ".github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml",
+        "sha": "2d61de4b4a08d8001d93a926a208e9dbbc4ba2c9"
+      }
+    ],
+    "historicalDeclarations": [
+      {
+        "path": "docs/performance/solo-797-app-diagnostics-plan.json",
+        "gitBlob": "bc2f61d2e469f37bdf0700adf15ad9ef2cd222e5",
+        "bytes": 9165,
+        "sha256": "e482949eef93c96967db02cd021d8825a776fd5d7531b0d3f7ec40a562f8c8f8"
+      },
+      {
+        "path": "docs/performance/solo-797-journal-cost-plan.json",
+        "gitBlob": "4cf89cba49ccc1239f70a969b7b2d264f90e38bc",
+        "bytes": 12324,
+        "sha256": "940f8e40eda9970d1934f85f629dcb7491459068c630e56c641f37ff2efca23f"
+      },
+      {
+        "path": "docs/performance/solo-de332-app-diagnostics-plan.json",
+        "gitBlob": "cc6059898871eb94144c5886a814b7f9c05c54c3",
+        "bytes": 7755,
+        "sha256": "20bfb45207c67f420ec59a132c821f7b70f1946e7548c3ef423f7fa6ffde66d6"
+      },
+      {
+        "path": "docs/performance/solo-de332-journal-cost-plan.json",
+        "gitBlob": "2785c22ae4a6ee6bfd81d5f0d80ccc2a1e3bf60d",
+        "bytes": 10914,
+        "sha256": "1cb0c8677f7cd12e5adc4c4b8e07b087dbaa52e23ff0ad4241dd716af15fa2b5"
+      },
+      {
+        "path": "docs/performance/solo-final-app-diagnostics-plan.json",
+        "gitBlob": "ebe3e481e0eeb06ff705098aa95acd232f90f378",
+        "bytes": 6192,
+        "sha256": "9e590bb13c4eeba71c18ebd8eaf1ebfc2bbf62c8de246b7649ee2d550bb8c652"
+      },
+      {
+        "path": "docs/performance/solo-final-app-diagnostics-v2-plan.json",
+        "gitBlob": "b734b2e7f6e94069a26d328c4253ede8ef847e68",
+        "bytes": 8575,
+        "sha256": "8aa315786fe2a7eb261b8c368cefd9b456095f4f1a8c7a2ef767db5b6ccb9bec"
+      },
+      {
+        "path": "docs/performance/solo-final-journal-cost-plan.json",
+        "gitBlob": "da183fa0dcec39916e8565bac77a6d7b28b873d6",
+        "bytes": 9350,
+        "sha256": "5d13378669eb2286f94466bbb9a1563dcc91e35d275961d73ce03f8989a9db4a"
+      },
+      {
+        "path": "docs/performance/solo-final-journal-cost-v2-plan.json",
+        "gitBlob": "17bd39e26fffcbe2756b1507a345df729b37563c",
+        "bytes": 11730,
+        "sha256": "81ec136b8296812155321fd41f9063146640a28166ed4410e39251eba3134cf8"
+      },
+      {
+        "path": "docs/performance/solo-remote-sustained-plan.json",
+        "gitBlob": "2395cf716af15d1598ac7e887b39647d7b044546",
+        "bytes": 16542,
+        "sha256": "247dde7c85577e15c37b433881a27a6f37e1d01c049a8eef9eabea5485d6b051"
+      },
+      {
+        "path": "docs/performance/solo-remote-timing-plan.json",
+        "gitBlob": "dcb830246dc0ff3c30607c0c05600e9f0af5bf18",
+        "bytes": 15612,
+        "sha256": "6279551b122d8287a7e8b862352eb383830aaeaea145cfa68a6ab2ec93968ea4"
+      }
+    ],
+    "traceQualifier": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb",
+    "traceCPUAdapter": "e9cfbca906a7bf8d7d7b797980c40376a149e8e5"
+  },
+  "admission": {
+    "sourceOnlyDependencyAudit": "00bed72ac663dcd7660db371d94034fcad6b1aa1",
+    "draftBodyPreservesDependsOn1621": true,
+    "originalTraceMergeAndNativeHoldPreserved": true,
+    "firstEightSourceGuardStaggerRequired": true,
+    "noTrustPolicyChange": true,
+    "requiredCurrentHeadCI": "13 new and five strengthened controls plus inherited suites, sparse import closure and final gates; not yet executed"
+  },
+  "limits": [
+    "This review does not execute tests, builds or application/native code.",
+    "Current-head hosted evidence and final fresh-main/policy checks are still required.",
+    "Do not merge or dispatch this branch before the original trace-v2 terminal observation is retained and reviewed.",
+    "Re-read source refs before publication; do not overwrite later branch or main changes."
+  ]
+}

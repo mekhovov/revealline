@@ -1,0 +1,36 @@
+{
+  "kind": "SoloRetryHeapDraftSourcePublicationV1",
+  "at": "2026-10-19T01:31:11.277543+00:00",
+  "pr": 1699,
+  "url": "https://github.com/mekhovov/revealline/pull/1699",
+  "branch": "codex/solo-retry-heap-retainers",
+  "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+  "tree": "6fcd523dbc57a86e0f0dd126e4405eaad09036d1",
+  "implementationCommit": "e711e957ef9983463ecb8c7320a10ef51f7023d2",
+  "dependency": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+  "main": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "proposal": "056a21bdcc8ecfb24cc093c27c719ce36b34d710",
+  "review": "3cb45db4f4f0da5c86070ef6c51806990c805629",
+  "preAdmissionNativeInventory": [
+    {
+      "status": "queued",
+      "total": 0
+    },
+    {
+      "status": "pending",
+      "total": 0
+    },
+    {
+      "status": "in_progress",
+      "total": 0
+    },
+    {
+      "status": "waiting",
+      "total": 0
+    }
+  ],
+  "draft": true,
+  "functionalExecution": false,
+  "nativeDispatch": false,
+  "hold": "No merge/native before retained original trace outcome; overhead PR waits for this native-source guard to become terminal."
+}

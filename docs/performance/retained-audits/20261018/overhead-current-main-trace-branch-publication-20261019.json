@@ -1,0 +1,20 @@
+{
+  "kind": "SoloOverheadFreshSourceBranchPublicationV1",
+  "at": "2026-10-19T01:32:29.683721+00:00",
+  "branch": "codex/solo-empirical-overhead-acceptance",
+  "previous": "19b574eb4c57415def724156a75ac7e9b0c23e37",
+  "head": "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+  "tree": "50c622f54c9748c1ad695b7885a3164c092e109c",
+  "commits": {
+    "main-integration": "6f3b07378fd00024251576329507423c6c156245",
+    "trace-dependency-integration": "abd2b6c4f340ec968be6f0279aa0afab3a52bd37"
+  },
+  "main": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "dependency": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+  "proposal": "4df2a26d310c908ddd64d65187374a1d5dcdf124",
+  "review": "ee0409c4beba1da7548dcd25a51c25a497a9c1c2",
+  "pullRequestCreated": false,
+  "hold": "Open draft only after heap native-consumer source guard terminal. No merge/native before original trace outcome.",
+  "functionalExecution": false,
+  "nativeDispatch": false
+}

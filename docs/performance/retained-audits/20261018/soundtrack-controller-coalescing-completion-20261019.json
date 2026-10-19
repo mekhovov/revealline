@@ -1,0 +1,43 @@
+{
+  "kind": "ControllerCoalescingCompletionV1",
+  "at": "2026-10-19T01:43:47.526447+00:00",
+  "previousReceipt": "f7194b509f623e5381070b9b92c74b7bb3bd10df",
+  "old": {
+    "id": 39168628214,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "updated_at": "2026-10-19T01:42:38Z"
+  },
+  "replacement": {
+    "id": 39182301808,
+    "status": "queued",
+    "conclusion": null,
+    "head_sha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+    "updated_at": "2026-10-19T01:42:38Z"
+  },
+  "group": {
+    "group_name": "fastline-merge-1619",
+    "group_url": "https://api.github.com/repos/mekhovov/revealline/actions/concurrency_groups/fastline-merge-1619",
+    "total_count": 1,
+    "group_members": [
+      {
+        "run_id": 39182301808,
+        "run_name": "Fastline exact-head auto-merge",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39182301808",
+        "run_html_url": "https://github.com/mekhovov/revealline/actions/runs/39182301808",
+        "status": "in_progress"
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "id": 117850179702,
+      "name": "reconcile",
+      "status": "queued",
+      "conclusion": null,
+      "runner_id": 0,
+      "steps": []
+    }
+  ],
+  "limits": "Normal cancellation completed. Current-head replacement owns the concurrency slot but has no merge/qualification result. No other cancellation or new trigger issued."
+}

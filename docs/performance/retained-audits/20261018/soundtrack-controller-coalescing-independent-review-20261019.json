@@ -1,0 +1,160 @@
+{
+  "schema": "revealline.controller-queue-coalescing-review.v1",
+  "reviewedAt": "2026-10-19T01:43:31.017Z",
+  "reviewScope": "Read-only two-event coalescing assessment; no cancellation or trigger performed by reviewer.",
+  "correctsPriorInterpretation": [
+    "a5cee2ea1a0274797663dba54fb0a5fb9b39e154",
+    "32e47aa6f4225911a1949edb3a5eb3857f3911d9"
+  ],
+  "correction": "The exact old workflow_run payload was not retrieved. Do not claim its captured PR SHA or that parent created0991. Old commit timestamps and nearby gate completion do not prove event-payload identity. Recommendation instead rests on redundant unstarted work and an exact-current replacement.",
+  "observedBeforeParentAction": {
+    "main": "c5cf97d87e5ae9c5cfa683d1c4ddaf9bfb7c50af",
+    "group": {
+      "group": "fastline-merge-1619",
+      "response": {
+        "group_name": "fastline-merge-1619",
+        "group_url": "https://api.github.com/repos/mekhovov/revealline/actions/concurrency_groups/fastline-merge-1619",
+        "total_count": 2,
+        "group_members": [
+          {
+            "run_id": 39168628214,
+            "run_name": "Fastline exact-head auto-merge",
+            "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39168628214",
+            "run_html_url": "https://github.com/mekhovov/revealline/actions/runs/39168628214",
+            "status": "in_progress"
+          },
+          {
+            "run_id": 39182301808,
+            "run_name": "Fastline exact-head auto-merge",
+            "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39182301808",
+            "run_html_url": "https://github.com/mekhovov/revealline/actions/runs/39182301808",
+            "status": "pending"
+          }
+        ]
+      }
+    },
+    "owner": {
+      "id": 39168628214,
+      "event": "workflow_run",
+      "status": "pending",
+      "outerHead": "1df89b62b5f0ddfdad926e1bbd3474b77ed4d716",
+      "jobs": {
+        "total_count": 1,
+        "jobs": [
+          {
+            "id": 117803071989,
+            "run_id": 39168628214,
+            "workflow_name": "Fastline exact-head auto-merge",
+            "head_branch": "main",
+            "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39168628214",
+            "run_attempt": 1,
+            "node_id": "CR_kwDOUYDvKM8AAAAbbZw59Q",
+            "head_sha": "1df89b62b5f0ddfdad926e1bbd3474b77ed4d716",
+            "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117803071989",
+            "html_url": "https://github.com/mekhovov/revealline/actions/runs/39168628214/job/117803071989",
+            "status": "queued",
+            "conclusion": null,
+            "created_at": "2026-10-18T22:06:07Z",
+            "started_at": "2026-10-18T22:06:07Z",
+            "completed_at": null,
+            "name": "reconcile",
+            "steps": [],
+            "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117803071989",
+            "labels": [
+              "ubuntu-latest"
+            ],
+            "runner_id": 0,
+            "runner_name": "",
+            "runner_group_id": 0,
+            "runner_group_name": ""
+          }
+        ]
+      }
+    },
+    "replacement": {
+      "id": 39182301808,
+      "event": "pull_request",
+      "status": "pending",
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "pull_requests": [
+        {
+          "url": "https://api.github.com/repos/mekhovov/revealline/pulls/1619",
+          "id": 4911212340,
+          "number": 1619,
+          "head": {
+            "ref": "codex/solo-demanded-soundtrack-catalogue",
+            "sha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+            "repo": {
+              "id": 1367404328,
+              "url": "https://api.github.com/repos/mekhovov/revealline",
+              "name": "revealline"
+            }
+          },
+          "base": {
+            "ref": "main",
+            "sha": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+            "repo": {
+              "id": 1367404328,
+              "url": "https://api.github.com/repos/mekhovov/revealline",
+              "name": "revealline"
+            }
+          }
+        }
+      ]
+    },
+    "currentPull": {
+      "number": 1619,
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "draft": false,
+      "state": "open",
+      "auto_merge": null
+    }
+  },
+  "sources": [
+    {
+      "path": "publishing/fastline-merge-controller.mjs",
+      "revision": "c5cf97d87e5ae9c5cfa683d1c4ddaf9bfb7c50af",
+      "bytes": 58466,
+      "sha256": "eee8ca3661f04112f327ccc3d99fee3fe4866e8025dcb0fd8d09d41d2f77a9b4",
+      "gitBlob": "a8b71ef43d7afbf18bc169bfc75ff924c634fd93"
+    },
+    {
+      "path": ".github/workflows/fastline-auto-merge.yml",
+      "revision": "c5cf97d87e5ae9c5cfa683d1c4ddaf9bfb7c50af",
+      "bytes": 3061,
+      "sha256": "be28689f2eef8a104f37a85cee0858f3b45ec0c68455e261600b43a5c8264068",
+      "gitBlob": "231cf239370fb69919ffbb3e09e0cbf5f5c0f8b3"
+    }
+  ],
+  "reasoning": [
+    "Both runs occupy the same literal fastline-merge-1619 concurrency group; the older slot owner has only one queued, unassigned job with no executed steps.",
+    "Replacement39182301808 is a pull_request event whose head matches current0991. The same unchanged trusted-main workflow reads current main and PR state, current exact-head check inventory and dependencies, then rechecks before mutations.",
+    "Any stale-event rejection or duplicate current-event decision available to the older owner is covered by the replacement’s normal fresh guard path. A workflow_run failed/cancelled-gate wakeup does not bypass those guards; fresh inventory retains those outcomes.",
+    "Current auto_merge:null means there is no armed merge that relies solely on the older event for protective disarming. Cancelling only redundant unstarted controller work neither cancels a test/build/deploy nor erases its evidence.",
+    "Therefore one guarded normal cancellation is a reasonable queue coalescing action even without asserting whether the old payload is stale or duplicate. It must preserve the existing current replacement and must not add a trigger, skip gates, alter policy, or touch Pages publication."
+  ],
+  "decision": "Support normal cancellation of only39168628214 after fresh unchanged group/job/PR guards; do not infer runner availability or immediate completion.",
+  "parentReportedSubsequentAction": {
+    "receipt": "f7194b509f623e5381070b9b92c74b7bb3bd10df",
+    "acceptedAt": "2026-10-19T01:42:38Z",
+    "description": "Parent reports normal cancellation accepted; processing is not terminal success. Reviewer did not execute it or independently certify completion."
+  },
+  "sourceAdmissionStatus": {
+    "overheadBranch": "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+    "heap": {
+      "pr": 1699,
+      "head": "739a87f6",
+      "nativeSourceGuardJob": 117847634680,
+      "nativeSourceGuardRun": 39185723029,
+      "state": "queued",
+      "basis": "status_checks fresh01:42 peer observation, not a test pass"
+    },
+    "next": "Existing source draft CI may continue independently of original-trace/native holds. Overhead PR admission should remain staggered until heap’s shared first-eight source guard is terminal; the queued guard is currently the concrete sequencing reason. No original-trace requirement for isolated draft source tests. Keep all merge/native holds and exact-head release gates."
+  },
+  "limits": [
+    "No old event payload identity claim.",
+    "No functional/local/native test execution, branch or PR mutation, rerun or trigger.",
+    "No promised ETA: after coalescing, replacement may still wait for a hosted runner.",
+    "This does not authorize cancellation of current tests, a running controller, or the Pages owner with a successful unpublished build."
+  ]
+}
