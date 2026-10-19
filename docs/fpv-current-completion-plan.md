@@ -63,6 +63,13 @@ acceptance continue; release, platform and measurement gates remain explicit.
   during the final rendered check. The results and receipts were saved; one
   optional extra summary write failed. No further builds are started, no user
   files or archives are deleted, and source/evidence commits remain small.
+  The disk subsequently filled before staging the final evidence. Removing only
+  this run's reproducible 18.6 MB World preview directory allowed commit
+  `1fdf54ee43` to complete. A second full-disk write required removing the
+  completed 9dd World offline-update preview too; both frozen sources, receipts,
+  screenshots and browser-saved
+  settings/regions/recordings remain intact. Capacity for further builds is still
+  insufficient; this cleanup does not close the workspace constraint.
 
 | Priority | Remaining result | Estimate / dependency |
 | --- | --- | --- |
