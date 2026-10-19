@@ -24,10 +24,25 @@ import {
   snapshotInstalledTeamPresentation,
 } from '../creator/team-installed.mjs';
 import { stepCoop } from '../coop/core.mjs';
-import { getLocale, setLocale } from '../i18n/index.mjs';
+import { getLocale, setLocale, t } from '../i18n/index.mjs';
 import { page } from './helpers/coop-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
+
+function startPrepared(f, { restoring = false } = {}) {
+  assert.equal(f.$('coop-overlay').hidden, false, 'Selection retains the native briefing.');
+  assert.equal(f.doc.activeElement.id, 'coop-resume');
+  assert.equal(
+    f.$('coop-resume').textContent,
+    t(restoring ? 'interface:resumeTogether' : 'interface:startTogether'),
+  );
+  const clock = f.$('coop-clock').textContent;
+  f.tick(120);
+  assert.equal(f.$('coop-overlay').hidden, false, 'Preparation never advances into play.');
+  assert.equal(f.$('coop-clock').textContent, clock);
+  f.$('coop-resume').click();
+  assert.equal(f.$('coop-overlay').hidden, true);
+}
 
 const storage = () => {
   const values = new Map();
@@ -148,13 +163,10 @@ test('a fresh Team host discovers and launches one exact installed edition', asy
   assert.equal(installed[0].querySelector('.journey-card-action').hidden, true);
   assert.equal(installed[0].querySelector('.journey-card-action').textContent, '');
   await activateMissionCard(installed[0]);
+  startPrepared(f);
   assert.equal(f.$('journey-chooser').open, false);
   assert.equal(f.$('coop-menu').hidden, true);
-  assert.equal(
-    f.$('coop-overlay').hidden,
-    true,
-    'One mission activation starts the accepted arena.',
-  );
+  assert.equal(f.$('coop-overlay').hidden, true, 'Explicit Start activates the accepted arena.');
   assert.equal(f.$('coop-stage').textContent, prepared.pack.levels[0].name.toUpperCase());
   assert.equal(f.$('coop-level').value, prepared.pack.levels[0].id);
   assert.deepEqual(f.visits, []);
@@ -290,17 +302,18 @@ test('a fresh Team host labels and resumes an exactly replayed installed checkpo
   assert(card);
   assert.match(card.textContent, /Resume saved attempt/);
   await activateMissionCard(card);
+  startPrepared(f, { restoring: true });
   assert.equal(
     f.$('coop-overlay').hidden,
     true,
-    'Continue restores the accepted attempt directly.',
+    'Explicit Resume activates the accepted restored attempt.',
   );
   const clock = f.$('coop-clock').textContent;
   f.tick(240);
   assert.notEqual(
     f.$('coop-clock').textContent,
     clock,
-    'The restored simulation advances without another Start.',
+    'The restored simulation advances after explicit Resume.',
   );
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(f.$('coop-level').value, level.id);
@@ -311,8 +324,8 @@ test('a fresh Team host labels and resumes an exactly replayed installed checkpo
 for (const restoring of [false, true])
   test(
     restoring
-      ? 'an installed Hunt resumes directly and retains replayable release journals'
-      : 'a fresh installed Hunt starts directly and saves the released state in both native journals',
+      ? 'an installed Hunt requires explicit Resume and retains replayable release journals'
+      : 'a fresh installed Hunt requires explicit Start and saves the released state in both native journals',
     async (t) => {
       const memory = managedIndexedDB(),
         local = storage(),
@@ -367,23 +380,38 @@ for (const restoring of [false, true])
         );
       });
       assert.ok(card);
+      const beforePreparation = await installer.inventory();
       await activateMissionCard(card);
+      assert.deepEqual(
+        await installer.inventory(),
+        beforePreparation,
+        'A briefing cannot update the durable attempt.',
+      );
+      assert.equal(
+        local.getItem(TEAM_HUNT_ATTEMPT_KEY),
+        null,
+        'The briefing does not arm the Hunt recorder.',
+      );
+      startPrepared(f, { restoring });
       assert.equal(
         f.$('coop-overlay').hidden,
         true,
-        'One mission activation resumes the core and binds its Hunt stores.',
+        'Explicit Start or Resume binds the accepted core to its Hunt stores.',
       );
       if (!restoring) {
         const initialEnvelope = JSON.parse(local.getItem(TEAM_HUNT_ATTEMPT_KEY));
         const initial = snapshotTeamHuntPresentation(initialEnvelope).snapshot;
         assert.deepEqual(
           initial.segments,
-          [],
-          'A fresh direct launch has no prior held core inputs.',
+          [{ release: true }],
+          'Starting the prepared core retains its pre-binding release in the initial journal.',
         );
-        const verified = await restoreTeamHuntAttempt(initialEnvelope, { pack: prepared.pack, level });
+        const verified = await restoreTeamHuntAttempt(initialEnvelope, {
+          pack: prepared.pack,
+          level,
+        });
         assert.equal(verified.run.tick, 0);
-        assert.deepEqual(verified.run.needsNeutral, [false, false]);
+        assert.deepEqual(verified.run.needsNeutral, [true, true]);
       }
       f.$('coop-pause').click();
       const savedEnvelope = JSON.parse(local.getItem(TEAM_HUNT_ATTEMPT_KEY));

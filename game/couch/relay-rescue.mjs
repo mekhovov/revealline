@@ -4491,7 +4491,7 @@ export function bootCoop({
       return false;
     }
     try {
-      const accepted = await activateDiscovery(row, context);
+      const accepted = await activateDiscovery(row, { ...context, briefingOnly: true });
       if (accepted && libraryLaunch === owner && context.isCurrent()) {
         const started = discoveryStarted;
         owner.detach();
