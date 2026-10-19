@@ -1,0 +1,98 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { resolveBuildScratch, prepareBuildScratch, inspectBuildScratch, requireBuildScratchSpace } from './final-build-scratch.mjs';
+
+const root = '/task/source', directory = '.cache/owned-volume', target = `${root}/${directory}`;
+const floor = 200 * 1024 * 1024;
+const info = (dev, ino, options = {}) => ({ dev, ino, uid: 123, mode: 0o40700,
+  isDirectory: () => true, isSymbolicLink: () => false, ...options });
+function fixture() {
+  const nodes = new Map([[root, info(1, 10)], [`${root}/.cache`, info(1, 11)], [target, info(2, 12)]]);
+  const created = [];
+  const capacities = new Map([[root, floor + 1000], [target, 2 * 1024 ** 3]]);
+  const absent = () => Object.assign(new Error('missing'), { code: 'ENOENT' });
+  const fs = {
+    async realpath(file) { if (!nodes.has(file)) throw absent(); return file; },
+    async lstat(file) { if (!nodes.has(file)) throw absent(); return nodes.get(file); },
+    async statfs(file) { if (!nodes.has(file)) throw absent(); return { bavail: capacities.get(file), bsize: 1 }; },
+    async mkdir(file, options) {
+      if (nodes.has(file)) throw Object.assign(new Error('exists'), { code: 'EEXIST' });
+      created.push({ file, options }); nodes.set(file, info(nodes.get(target).dev, 20 + created.length, { mode: 0o40000 | options.mode }));
+    },
+  };
+  return { nodes, created, capacities, fs, options: { fs, uid: 123 } };
+}
+const prepare = f => prepareBuildScratch({ root, directory, minimumFreeBytes: floor }, f.options);
+
+test('valid mounted scratch creates only private owned children and binds mount identity', async () => {
+  const f = fixture(), mount = await prepare(f);
+  assert.equal(mount.device, 2); assert.equal(mount.sourceDevice, 1);
+  assert.deepEqual(f.created.map(value => value.file), [`${target}/tmp`, `${target}/captures`]);
+  assert.ok(f.created.every(value => value.options.mode === 0o700));
+  assert.equal((await inspectBuildScratch(mount, f.options)).availableBytes, 2 * 1024 ** 3);
+  await prepare(f);
+  assert.equal(f.created.length, 2, 'Re-admission validates existing private dirs without replacing them.');
+});
+
+test('unsafe and absent scratch paths cannot create a local fallback', async () => {
+  assert.equal(resolveBuildScratch(root, undefined), null);
+  assert.equal(await prepareBuildScratch({ root, directory: undefined, minimumFreeBytes: floor }), null);
+  for (const invalid of ['', '/external', '.cache', '.cache/../elsewhere', '.cache/a/../../b', '.cache//a', '.cache/a\\b', '.cache/.hidden'])
+    assert.throws(() => resolveBuildScratch(root, invalid));
+  const f = fixture(); f.nodes.delete(target);
+  await assert.rejects(prepare(f), { code: 'ENOENT' });
+  assert.equal(f.created.length, 0);
+});
+
+test('unmounted same-device directory is rejected before any child creation', async () => {
+  const f = fixture(); f.nodes.get(target).dev = 1;
+  await assert.rejects(prepare(f), /not mounted on a different filesystem/);
+  assert.equal(f.created.length, 0);
+});
+
+test('symlink ancestor, redirected realpath and wrong owner all fail closed', async () => {
+  for (const mutate of [
+    f => { f.nodes.get(`${root}/.cache`).isSymbolicLink = () => true; },
+    f => { const before = f.fs.realpath; f.fs.realpath = file => file === target ? '/elsewhere' : before(file); },
+    f => { f.nodes.get(target).uid = 456; },
+  ]) {
+    const f = fixture(); mutate(f);
+    await assert.rejects(prepare(f)); assert.equal(f.created.length, 0);
+  }
+});
+
+test('source and scratch floors reject low space without creating directories', async () => {
+  for (const volume of [root, target]) {
+    const f = fixture(); f.capacities.set(volume, floor - 1);
+    await assert.rejects(prepare(f), /floor/); assert.equal(f.created.length, 0);
+  }
+  assert.doesNotThrow(() => requireBuildScratchSpace(floor, floor));
+  assert.throws(() => requireBuildScratchSpace(floor - 1, floor), /floor/);
+});
+
+test('existing public, foreign, or symlinked child dirs are not silently changed', async () => {
+  for (const options of [{ mode: 0o40755 }, { uid: 456 }, { isSymbolicLink: () => true }, { dev: 3 }]) {
+    const f = fixture(); f.nodes.set(`${target}/tmp`, info(2, 30, options));
+    await assert.rejects(prepare(f)); assert.equal(f.created.length, 0);
+  }
+});
+
+test('monitor rejects unmount, replacement mount and changed private directory', async () => {
+  for (const mutate of [
+    f => { f.nodes.get(target).dev = 1; },
+    f => { f.nodes.get(target).ino++; },
+    f => { f.nodes.get(`${target}/tmp`).mode = 0o40755; },
+    f => { f.nodes.delete(target); },
+  ]) {
+    const f = fixture(), mount = await prepare(f); mutate(f);
+    await assert.rejects(inspectBuildScratch(mount, f.options));
+  }
+});
+
+test('monitor reports current scratch capacity for the unchanged strict floor', async () => {
+  const f = fixture(), mount = await prepare(f);
+  f.capacities.set(target, floor - 1);
+  const current = await inspectBuildScratch(mount, f.options);
+  assert.equal(current.availableBytes, floor - 1);
+  assert.throws(() => requireBuildScratchSpace(current.availableBytes, floor), /floor/);
+});
