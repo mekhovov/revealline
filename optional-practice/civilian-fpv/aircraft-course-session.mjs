@@ -7,6 +7,9 @@ import { relativeFlightTilt } from './flight-support.mjs';
 import { validateAircraftChallengeRules } from './aircraft-challenge.mjs';
 
 const axes = ['x', 'y', 'z'];
+const LEGACY_MISSION_MODEL = 'aircraft-course-practice.v1';
+const CURRENT_MISSION_MODEL = 'aircraft-course-practice.v2';
+const FLOOR_CONTACT_TOLERANCE_METRES = 0.003;
 const copy = (value) => structuredClone(value);
 const point = (value, scale = 1) =>
   Object.fromEntries(axes.map((key) => [key, value[key] * scale]));
@@ -74,7 +77,15 @@ export function aircraftCourseTerrain(course) {
 
 /** Converts COM telemetry to the support-origin convention used by mission goals.
  * The physical solver already resolved contacts; mission rules must not resolve them again. */
-export function aircraftMissionMotion(telemetry, supportHeight) {
+export function aircraftMissionMotion(telemetry, supportHeight, missionAdapter = null) {
+  if (missionAdapter !== null) {
+    exactKeys(missionAdapter, ['format', 'floorHeightMm'], 'Aircraft mission adapter');
+    required(
+      missionAdapter.format === 'AircraftCourseMission.v2' &&
+        Number.isSafeInteger(missionAdapter.floorHeightMm),
+      'Unsupported aircraft mission adapter',
+    );
+  }
   const orientation = ['x', 'y', 'z', 'w'].map((key) => Math.round(telemetry.orientation[key] * Q));
   const position = rounded(telemetry.position, 1000);
   position.y -= Math.round((telemetry.supportHeight ?? supportHeight) * 1000);
@@ -87,6 +98,25 @@ export function aircraftMissionMotion(telemetry, supportHeight) {
         y: position.y,
       }
     : null;
+  // The physics solver retains its original collider IDs and contact position.
+  // Only the versioned mission view names the authored floor and resolves the
+  // solver's small contact tolerance at that verified support surface.
+  if (
+    missionAdapter &&
+    contact.grounded &&
+    contact.support?.id === 'course-boundary-y-min' &&
+    contact.support.normal?.y >= 0.5
+  ) {
+    support.id = '$floor';
+    const supportOriginY = telemetry.position.y - (telemetry.supportHeight ?? supportHeight);
+    if (
+      Math.abs(supportOriginY - missionAdapter.floorHeightMm / 1000) <=
+      FLOOR_CONTACT_TOLERANCE_METRES
+    ) {
+      position.y = missionAdapter.floorHeightMm;
+      support.y = position.y;
+    }
+  }
   return {
     position,
     velocity: rounded(telemetry.velocity, 1000),
@@ -111,9 +141,14 @@ export function aircraftMissionMotion(telemetry, supportHeight) {
 }
 
 export function createAircraftCourseSession(
-  { course, mode, configuration, legacy = false },
+  { course, mode, configuration, legacy = false, model = CURRENT_MISSION_MODEL },
   { createClient = createAdvancedWorkerClient, createMission = createFlight } = {},
 ) {
+  required(
+    [LEGACY_MISSION_MODEL, CURRENT_MISSION_MODEL].includes(model),
+    'Unsupported aircraft mission model',
+  );
+  let activeModel = model;
   const aircraft = copy(configuration.advanced.aircraft);
   const challenge =
     configuration.challenge === undefined
@@ -133,6 +168,10 @@ export function createAircraftCourseSession(
   };
   let mission = createMission(missionOptions);
   const source = mission.course();
+  const missionAdapterFor = (version) =>
+    version === CURRENT_MISSION_MODEL
+      ? { format: 'AircraftCourseMission.v2', floorHeightMm: source.bounds.min.y }
+      : null;
   const tail = mission.physicalTail?.();
   // Spawn the complete hull above the authored floor, including a shifted COM.
   const geometry = aircraft.geometry;
@@ -178,6 +217,12 @@ export function createAircraftCourseSession(
         : []),
     ],
   };
+  const optionsFor = (version) => {
+    const adapter = missionAdapterFor(version);
+    return adapter
+      ? { ...options, configuration: { ...options.configuration, missionAdapter: adapter } }
+      : options;
+  };
   let client = null,
     restoringClient = null,
     ready = false,
@@ -194,8 +239,7 @@ export function createAircraftCourseSession(
     ...value,
     generation: `${archiveGeneration}:${value.generation}`,
   });
-  const identity = Object.freeze({
-    model: 'aircraft-course-practice.v1',
+  const baseIdentity = {
     course: source.id,
     courseIdentity: dataIdentity(source),
     mode,
@@ -205,7 +249,14 @@ export function createAircraftCourseSession(
       response: configuration.response,
       ...(challenge ? { challenge } : {}),
     }),
-  });
+  };
+  const identities = new Map(
+    [LEGACY_MISSION_MODEL, CURRENT_MISSION_MODEL].map((version) => [
+      version,
+      Object.freeze({ model: version, ...baseIdentity }),
+    ]),
+  );
+  const identityFor = (version) => identities.get(version);
   function snapshot() {
     return {
       ...mission.snapshot(),
@@ -230,7 +281,7 @@ export function createAircraftCourseSession(
     if (preparing) return preparing;
     preparing = (async () => {
       client = createClient();
-      const result = await client.initialize(options);
+      const result = await client.initialize(optionsFor(activeModel));
       if (disposed) return snapshot();
       telemetry = result.telemetry;
       const staged = await client.stageTerrainFrame(aircraftCourseTerrain(source));
@@ -294,7 +345,9 @@ export function createAircraftCourseSession(
       // accepted interval once, then preserve the host's paused state.
       const paused = mission.snapshot().status !== 'active';
       if (paused) mission.arm();
-      mission.step(input, { motion: aircraftMissionMotion(telemetry, supportHeight) });
+      mission.step(input, {
+        motion: aircraftMissionMotion(telemetry, supportHeight, missionAdapterFor(activeModel)),
+      });
       if (paused) mission.pause();
       return snapshot();
     })()
@@ -324,7 +377,7 @@ export function createAircraftCourseSession(
       );
       const packet = {
         format: 'AircraftCourseRecovery.v1',
-        identity: copy(identity),
+        identity: copy(identityFor(activeModel)),
         physical,
         mission: progress,
         sequence,
@@ -393,9 +446,11 @@ export function createAircraftCourseSession(
         'Aircraft course recovery',
       );
       const { checksum, ...packet } = saved;
+      const restoredModel = saved.identity?.model;
       required(
         saved.format === 'AircraftCourseRecovery.v1' &&
-          dataIdentity(saved.identity) === dataIdentity(identity) &&
+          [LEGACY_MISSION_MODEL, CURRENT_MISSION_MODEL].includes(restoredModel) &&
+          dataIdentity(saved.identity) === dataIdentity(identityFor(restoredModel)) &&
           checksum === dataIdentity(packet),
         'Aircraft recovery configuration or checksum differs',
       );
@@ -418,11 +473,18 @@ export function createAircraftCourseSession(
         // A recovery resumes its published solver, while every other option
         // still comes from this session. Worker identity checks reject any
         // unrelated aircraft, rates, terrain mode or controller configuration.
-        await candidate.initialize({ ...options, backend: saved.physical?.config?.backend });
+        await candidate.initialize({
+          ...optionsFor(restoredModel),
+          backend: saved.physical?.config?.backend,
+        });
         await candidate.restore(saved.physical);
         const restored = await candidate.telemetry();
         if (signal?.aborted || disposed) throw new Error('Aircraft recovery cancelled');
-        const expected = aircraftMissionMotion(restored, supportHeight);
+        const expected = aircraftMissionMotion(
+          restored,
+          supportHeight,
+          missionAdapterFor(restoredModel),
+        );
         candidateMission = createMission(missionOptions);
         if (progress.state.ticks > 0) {
           for (const field of [
@@ -462,6 +524,7 @@ export function createAircraftCourseSession(
         mission = candidateMission;
         candidateMission = null;
         client = candidate;
+        activeModel = restoredModel;
         archiveGeneration++;
         adopted = true;
         telemetry = restored;
@@ -484,7 +547,9 @@ export function createAircraftCourseSession(
     return checkpointing;
   }
   return {
-    identity,
+    get identity() {
+      return identityFor(activeModel);
+    },
     snapshot,
     prepare,
     step,

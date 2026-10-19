@@ -231,6 +231,7 @@ async function setup(
     callbacks = {},
     open = true,
     settings = false,
+    settingsOwner = false,
     sources = false,
     sourceStore: overrideSourceStore,
   } = {},
@@ -250,6 +251,20 @@ async function setup(
   doc.head = new Element(doc, 'head');
   doc.createElement = (tag) => new Element(doc, tag);
   const settingsRoot = settings ? new Element(doc, 'section') : null;
+  let settingsTab = null;
+  if (settingsRoot && settingsOwner) {
+    settingsRoot.id = 'test-audio-settings';
+    settingsRoot.setAttribute('aria-labelledby', 'test-audio-tab');
+    settingsRoot.hidden = true;
+    settingsRoot.inert = true;
+    settingsRoot.getClientRects = () => (settingsRoot.hidden ? [] : [{}]);
+    settingsTab = new Element(doc, 'button');
+    settingsTab.id = 'test-audio-tab';
+    settingsTab.setAttribute('aria-controls', settingsRoot.id);
+    settingsTab.setAttribute('aria-selected', 'false');
+    doc.body.append(settingsTab, settingsRoot);
+    doc.getElementById = (id) => doc.nodes.get(id) ?? null;
+  }
   const db = memoryIndexedDB(),
     store =
       overrideStore ??
@@ -394,6 +409,7 @@ async function setup(
     urls,
     revoked,
     settingsRoot,
+    settingsTab,
     sourceStore,
   };
 }
@@ -2340,7 +2356,7 @@ test('public archive excludes unknown, missing-licence and review-only rows whil
   assert(selected[1].every((track) => track.rights.license === 'CC BY 4.0 International'));
 });
 
-test('Audio settings expose streamed styles and play a selected style without opening Studio', async (t) => {
+test('closed Audio settings hydrate styles without a catalogue request until explicit playback', async (t) => {
   const catalogue = onlineCatalogueFixture(),
     requests = [];
   const app = await setup(t, {
@@ -2357,12 +2373,11 @@ test('Audio settings expose streamed styles and play a selected style without op
     },
   });
   await settleOnlineCatalogue(
-    () =>
-      requests.length === 1 &&
-      app.node('online-results').children.length === 7 &&
-      !app.node('settings-play-styles').disabled,
-    'the settings catalogue preload',
+    () => !app.node('settings-play-styles').disabled,
+    'the local settings library',
   );
+  assert.deepEqual(requests, [], 'Attaching hidden settings cannot request a public feed');
+  assert.equal(app.panel.isOpen(), false);
   assert.equal(app.settingsRoot.children.length, 1);
   assert.match(app.settingsRoot.textContent, /Music styles/);
   assert.match(app.settingsRoot.textContent, /Ukrainian · UA/);
@@ -2384,6 +2399,9 @@ test('Audio settings expose streamed styles and play a selected style without op
   app.node('online-search').oninput();
   await app.click('settings-play-styles');
 
+  assert.equal(requests.length, 1, 'The explicit Play action owns catalogue demand');
+  assert.equal(requests[0][0], ONLINE_SOUNDTRACK_CATALOGUE_URL);
+  assert.equal(app.panel.isOpen(), false, 'Audio playback does not need to open Studio');
   const streamed = app.calls.findLast(([name]) => name === 'remote');
   assert.deepEqual(
     streamed[1].map((track) => track.title),
@@ -2414,12 +2432,17 @@ test('Audio settings render only the song styles available to the active communi
   });
   await settleOnlineCatalogue(
     () => !app.node('settings-play-styles').disabled,
-    'the community settings catalogue preload',
+    'the community local settings library',
   );
   assert.equal(app.doc.nodes.has('soundtrack-settings-style-fpv'), false);
   assert.equal(app.doc.nodes.has('soundtrack-online-style-fpv'), false);
   assert.equal(app.node('settings-style-ukrainian').checked, false);
   assert.equal(app.node('online-style-ukrainian').checked, false);
+  await app.click('settings-music-sources');
+  await settleOnlineCatalogue(
+    () => app.node('online-results').children.length > 0,
+    'explicit community source browsing',
+  );
   await app.click('settings-styles-all');
   assert.equal(app.node('settings-style-ukrainian').checked, true);
   assert.equal(app.node('online-style-ukrainian').checked, true);
@@ -2427,17 +2450,22 @@ test('Audio settings render only the song styles available to the active communi
 
 test('Audio settings restore a saved streamed-style selection after remount', async (t) => {
   const catalogue = onlineCatalogueFixture();
+  const requests = [];
   const callbacks = {
     catalogue: emptyCatalogue,
     onlineCatalogueDownload: {
-      fetch: async () => onlineCatalogueResponse(catalogue),
+      fetch: async (url) => {
+        requests.push(url);
+        return onlineCatalogueResponse(catalogue);
+      },
     },
   };
   const first = await setup(t, { open: false, settings: true, callbacks });
   await settleOnlineCatalogue(
     () => !first.node('settings-play-styles').disabled,
-    'the first settings catalogue preload',
+    'the first local settings library',
   );
+  assert.deepEqual(requests, []);
   await first.click('settings-styles-none');
   for (const style of ['synth', 'metal']) {
     first.node(`settings-style-${style}`).checked = true;
@@ -2455,7 +2483,7 @@ test('Audio settings restore a saved streamed-style selection after remount', as
   });
   await settleOnlineCatalogue(
     () => !restored.node('settings-play-styles').disabled,
-    'the restored settings catalogue preload',
+    'the restored local settings library',
   );
   for (const style of PUBLIC_SOUNDTRACK_STYLE_IDS)
     assert.equal(
@@ -2464,6 +2492,16 @@ test('Audio settings restore a saved streamed-style selection after remount', as
       `${style} reflects the saved selection`,
     );
   assert.match(restored.node('settings-style-status').textContent, /2 styles selected/);
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL], 'Remount reads saved choices only');
+  await restored.click('settings-play-styles');
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.deepEqual(
+    restored.calls
+      .findLast(([name]) => name === 'remote')[1]
+      .map((track) => track.title)
+      .sort(),
+    ['Dnipro Bells', 'Iron Pulse', 'Night Circuit'],
+  );
 });
 
 test('Audio settings retain an attempted streamed-style selection after a failed save', async (t) => {
@@ -2497,7 +2535,7 @@ test('Audio settings retain an attempted streamed-style selection after a failed
   });
   await settleOnlineCatalogue(
     () => !app.node('settings-play-styles').disabled,
-    'the settings catalogue preload',
+    'the local settings library',
   );
   await app.click('settings-styles-none');
   app.node('settings-style-synth').checked = true;
@@ -2527,14 +2565,19 @@ for (const styles of [
   PUBLIC_SOUNDTRACK_STYLE_IDS,
 ]) {
   test(`Audio settings preserve exact public styles ${styles.join(',')} after save and reload`, async (t) => {
+    const requests = [];
     const callbacks = {
       catalogue: emptyCatalogue,
       onlineCatalogueDownload: {
-        fetch: async () => onlineCatalogueResponse(onlineCatalogueFixture()),
+        fetch: async (url) => {
+          requests.push(url);
+          return onlineCatalogueResponse(onlineCatalogueFixture());
+        },
       },
     };
     const app = await setup(t, { open: false, settings: true, callbacks });
     await settleOnlineCatalogue(() => !app.node('settings-play-styles').disabled, 'initial styles');
+    assert.deepEqual(requests, [], 'Local hydration does not request a public feed');
     await app.click('settings-styles-none');
     for (const id of styles) {
       app.node(`settings-style-${id}`).checked = true;
@@ -2547,7 +2590,9 @@ for (const styles of [
     );
     assert.deepEqual((await app.store.read()).publicStyles, styles);
     assert.equal(app.calls.filter(([kind]) => kind === 'remote').length, 1);
+    assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL], 'Play requests one feed');
     app.panel.dispose();
+    requests.length = 0;
     const reopened = await setup(t, { open: false, settings: true, callbacks, store: app.store });
     await settleOnlineCatalogue(
       () => !reopened.node('settings-play-styles').disabled,
@@ -2557,7 +2602,19 @@ for (const styles of [
       PUBLIC_SOUNDTRACK_STYLE_IDS.filter((id) => reopened.node(`settings-style-${id}`).checked),
       styles,
     );
+    assert.deepEqual(requests, [], 'Remount restores saved styles without requesting their feed');
+    if (styles.includes('fpv'))
+      assert.equal(
+        reopened.node('settings-style-fpv').parentNode.hidden,
+        true,
+        'The checked saved FPV choice survives before its optional feed is discovered',
+      );
     await reopened.click('settings-play-styles');
+    assert.deepEqual(
+      requests,
+      [ONLINE_SOUNDTRACK_CATALOGUE_URL],
+      'Saved-style Play owns one request',
+    );
     assert.deepEqual(reopened.calls.findLast(([kind]) => kind === 'library')[2], {
       publicStyles: styles,
     });
@@ -2778,16 +2835,16 @@ test('a later Pause cancels a delayed Audio style launch without losing its pref
       },
     },
   });
-  await settleOnlineCatalogue(() => requests === 1 && releaseCatalogue, 'the delayed request');
-  app.node('settings-styles-none').disabled = false;
+  await settleOnlineCatalogue(
+    () => !app.node('settings-play-styles').disabled,
+    'the local settings library',
+  );
+  assert.equal(requests, 0);
   await app.click('settings-styles-none');
   app.node('settings-style-synth').checked = true;
   app.node('settings-style-synth').onchange();
-  // Exercise the handler's own pending-catalogue path directly. Native UI
-  // normally disables this action during preload, but a delayed fetch can also
-  // be inherited from a preceding view lifecycle.
-  app.node('settings-play-styles').disabled = false;
   const launching = app.click('settings-play-styles');
+  await settleOnlineCatalogue(() => requests === 1 && releaseCatalogue, 'the demanded request');
   app.player.pause();
   releaseCatalogue();
   await launching;
@@ -4562,14 +4619,19 @@ test('saved custom-only source choices reload without a main request and are rea
     callbacks,
   });
   await settleOnlineCatalogue(
-    () => reopened.node('online-results').children.length === 1,
-    'persisted custom source',
+    () => !reopened.node('source-add').disabled && !reopened.node('settings-play-styles').disabled,
+    'persisted local source preferences',
   );
-  assert.deepEqual(requests, [customSourceURL]);
+  assert.deepEqual(requests, [], 'Restoring source preferences is not a network demand');
   assert.equal(reopened.node('source-enabled-0').checked, false);
   assert.equal(reopened.node('source-enabled-1').checked, true);
   assert.equal(reopened.panel.isOpen(), false);
   await reopened.click('settings-music-sources');
+  await settleOnlineCatalogue(
+    () => reopened.node('online-results').children.length === 1,
+    'explicit source browsing',
+  );
+  assert.deepEqual(requests, [customSourceURL]);
   assert.equal(reopened.panel.isOpen(), true);
   assert.equal(
     reopened.node('advanced-music-sources-toggle').getAttribute('aria-expanded'),
@@ -5069,8 +5131,14 @@ for (const retire of [false, true])
     } else {
       preparation.setPhase('paused');
       await settleOnlineCatalogue(
+        () => preparation.snapshot().queued === 0 && !app.node('source-add').disabled,
+        'safe phase local preference publication',
+      );
+      assert.equal(fetches, 0, 'Resuming optional preparation does not request a public feed');
+      await app.panel.open();
+      await settleOnlineCatalogue(
         () => app.node('online-results').children.length === 2,
-        'safe phase catalogue publication',
+        'explicitly requested catalogue publication',
       );
       assert.ok(created > 0);
       assert.equal(fetches, 1);
@@ -5157,4 +5225,107 @@ test('closing or hiding clears only the transport status view and restores curre
   app.state.preparation = null;
   app.panel.update();
   assert.equal(app.node('loading').hidden, true);
+});
+
+for (const retirement of [
+  'deselected',
+  'disabled tab',
+  'inert panel',
+  'replaced tab',
+  'hidden document',
+  'hidden visibility',
+  'disposed',
+])
+  test(`queued Audio browse refuses a ${retirement} settings owner`, async (t) => {
+    const requests = [];
+    const app = await setup(t, {
+      open: false,
+      settings: true,
+      settingsOwner: true,
+      callbacks: {
+        catalogue: emptyCatalogue,
+        onlineCatalogueDownload: {
+          fetch: async (url) => {
+            requests.push(url);
+            return onlineCatalogueResponse(onlineCatalogueFixture());
+          },
+        },
+      },
+    });
+    await settleOnlineCatalogue(() => !app.node('settings-play-styles').disabled, 'local settings');
+    assert.deepEqual(requests, []);
+    app.settingsRoot.hidden = false;
+    app.settingsRoot.inert = false;
+    app.settingsTab.setAttribute('aria-selected', 'true');
+    app.settingsTab.emit('click');
+    app.settingsTab.emit('focusin');
+    if (retirement === 'deselected') {
+      app.settingsTab.setAttribute('aria-selected', 'false');
+      app.settingsRoot.hidden = true;
+    } else if (retirement === 'disabled tab') {
+      app.settingsTab.disabled = true;
+    } else if (retirement === 'inert panel') {
+      app.settingsRoot.inert = true;
+    } else if (retirement === 'replaced tab') {
+      const replacement = new Element(app.doc, 'button');
+      replacement.id = app.settingsTab.id;
+    } else if (retirement === 'hidden document') {
+      app.doc.hidden = true;
+      app.doc.emit('visibilitychange');
+    } else if (retirement === 'hidden visibility') {
+      app.doc.visibilityState = 'hidden';
+      app.doc.emit('visibilitychange');
+    } else app.panel.dispose();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.deepEqual(requests, [], 'A stale queued selection cannot demand a feed');
+    if (retirement === 'hidden document' || retirement === 'hidden visibility') {
+      app.doc.hidden = false;
+      app.doc.visibilityState = 'visible';
+      app.doc.emit('visibilitychange');
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.deepEqual(requests, [], 'Restoring visibility does not revive retired browse demand');
+      app.settingsTab.emit('focusin');
+      app.settingsTab.emit('click');
+      await settleOnlineCatalogue(
+        () => app.node('online-results').children.length === 7,
+        'fresh foreground Audio browse',
+      );
+      assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+    }
+  });
+
+test('the selected visible Audio owner coalesces focus and click into one demanded catalogue read', async (t) => {
+  const requests = [];
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    settingsOwner: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      onlineCatalogueDownload: {
+        fetch: async (url) => {
+          requests.push(url);
+          return onlineCatalogueResponse(onlineCatalogueFixture());
+        },
+      },
+    },
+  });
+  await settleOnlineCatalogue(() => !app.node('settings-play-styles').disabled, 'local settings');
+  assert.deepEqual(requests, []);
+  app.settingsRoot.hidden = false;
+  app.settingsRoot.inert = false;
+  app.settingsTab.setAttribute('aria-selected', 'true');
+  app.settingsTab.emit('focusin');
+  app.settingsTab.emit('click');
+  await settleOnlineCatalogue(
+    () => app.node('online-results').children.length === 7,
+    'Audio browse',
+  );
+  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(app.node('settings-style-fpv').parentNode.hidden, false);
+  assert.equal(
+    app.calls.some(([name]) => ['remote', 'play', 'volume'].includes(name)),
+    false,
+  );
 });

@@ -7,6 +7,7 @@ import {
   legalOverflightHuntUpgrades,
   applyOverflightHuntUpgrade,
   overflightHuntUpgradeParameters,
+  draftOverflightHuntRefits,
 } from '../overflight/raid-upgrades.mjs';
 import {
   createOverflightHuntUpgradeCard,
@@ -159,6 +160,41 @@ test('Raid localization keys match and preview rejects impossible ranks or syste
   assert.throws(() =>
     overflightHuntPreviewModel({ system: 'strike-width', rank: 2, currentRank: 0 }),
   );
+});
+
+test('field cards without a held count retain original copy and all count options preserve preview commands', () => {
+  const run = {
+    build: createOverflightHuntBuild(),
+    player: { hull: 100, maxHull: 100 },
+    progression: { rerolls: 1 },
+    compiled: { upgrades: { modules: HUNT_UPGRADE_IDS } },
+  };
+  const offer = draftOverflightHuntRefits(run, () => 0.5).find(
+    (item) => item.id === 'field-reroll',
+  );
+  const before = JSON.stringify({ run, offer });
+  for (const locale of ['en', 'uk']) {
+    const previews = [];
+    for (const rerolls of [undefined, 0, 1, 2]) {
+      const document = new Document(),
+        create = document.createElement.bind(document);
+      const { context, calls } = paintContext();
+      document.createElement = (tag) => {
+        const element = create(tag);
+        if (tag === 'canvas') element.getContext = () => context;
+        return element;
+      };
+      const card = createOverflightHuntUpgradeCard({ document, offer, locale, rerolls });
+      card.paintPreview(1.5);
+      previews.push(calls);
+      if (rerolls === undefined) {
+        assert.equal(card.querySelector('.upgrade-description').textContent, offer.next[locale]);
+        assert.ok(card.getAttribute('aria-label').includes(offer.current[locale]));
+      }
+      assert.equal(JSON.stringify({ run, offer }), before);
+    }
+    for (const preview of previews) assert.deepEqual(preview, previews[0]);
+  }
 });
 
 test('boost streaks reflect offensive width only while striking and preserve body size', () => {

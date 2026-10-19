@@ -22,6 +22,7 @@ export function attachJourneyChooser({
   availableCollectionsOnly,
   goalPreferenceOptions,
   description,
+  browsingContext,
   random,
 }) {
   if (library) {
@@ -39,6 +40,7 @@ export function attachJourneyChooser({
       availableCollectionsOnly,
       goalPreferenceOptions,
       description,
+      browsingContext,
       random,
     });
     if (profile) {
