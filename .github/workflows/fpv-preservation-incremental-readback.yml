@@ -1,0 +1,87 @@
+name: FPV preservation incremental readback
+
+on:
+  pull_request:
+    paths:
+      - docs/reports/fpv-development-preservation-20261016/incremental-readback-plans/extra-public-003.json
+      - .github/workflows/fpv-preservation-incremental-readback.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fpv-preservation-extra-public-003-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: >-
+      github.event.pull_request.head.sha == 'bc8afad425e6ae138278d6a0371a7bbbb0518571' &&
+      github.repository == 'mekhovov/revealline' &&
+      github.event.pull_request.number == 1552 &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'codex/fpv-development-preservation-tools-20261016'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write # Required for GET access to the existing draft backup release only.
+    env:
+      PLAN_PATH: docs/reports/fpv-development-preservation-20261016/incremental-readback-plans/extra-public-003.json
+      EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          sparse-checkout: |
+            authoring/fpv-development-preservation
+            docs/reports/fpv-development-preservation-20261016/incremental-readback-plans
+      - name: Verify exact head and readers
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          command -v gh
+          if ! command -v zstd; then
+            sudo apt-get update -qq
+            sudo apt-get install -y zstd
+          fi
+      - name: Require measured space for this single sealed part
+        env:
+          PYTHONPATH: authoring/fpv-development-preservation
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          from verify_published import verify_plan
+          plan = json.loads(Path(os.environ['PLAN_PATH']).read_text())
+          verify_plan(plan)
+          if (plan['sha256'] != 'b536ee45f56151c013bf773070a32479ad8db9b6dcdef99b5c0df107033cb842'
+              or plan['bytes'] != 614442443
+              or len(plan['partManifest']['objects']) != 14504
+              or sum(o['bytes'] for o in plan['partManifest']['objects']) != 889683927):
+              raise SystemExit('This job permits only the exact sealed extra-public-003 part')
+          required = plan['bytes'] + sum(o['bytes'] for o in plan['partManifest']['objects']) + 2 * 1024 ** 3
+          free = shutil.disk_usage(os.environ['RUNNER_TEMP']).free
+          print(json.dumps({'measuredFreeBytes': free, 'requiredBytesIncludingReserve': required}))
+          if free < required:
+              raise SystemExit('Insufficient fresh runner space for this exact part')
+          PY
+      - name: GET the original bytes and restore every sealed object
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mkdir "$RUNNER_TEMP/preservation-receipts"
+          python3 authoring/fpv-development-preservation/verify_published.py \
+            --plan "$PLAN_PATH" \
+            --work "$RUNNER_TEMP/preservation-extra-public-003" \
+            --receipt "$RUNNER_TEMP/preservation-receipts/extra-public-003-verified.json"
+      - name: Retain the small actual readback receipt
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: preservation-extra-public-003-readback
+          path: ${{ runner.temp }}/preservation-receipts/*.json
+          if-no-files-found: warn
+          retention-days: 90

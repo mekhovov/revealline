@@ -139,6 +139,8 @@ import {
 } from '../multiplayer.mjs';
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
+import { createCouchKeyboardPreferences } from './keyboard-preferences.mjs';
+import { mountCouchKeyboardSettings } from './keyboard-settings.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -2770,7 +2772,10 @@ try {
     root: $('race-settings-panel-controls'),
     session: controllerSession,
   });
+  const keyboardPreferences = createCouchKeyboardPreferences();
+  let keyboardSettings = null;
   const input = attachCouchInput({
+    keyboardBindings: keyboardPreferences.snapshot().bindings,
     controllerSession,
     initialSlots: incomingContinuation?.slots ?? [null, null],
     getTouchSettings: () => couchTouch.snapshot(),
@@ -2834,6 +2839,7 @@ try {
     return t('interface:captureNavigation.context', { mode });
   }
   shell = createCouchShell({
+    getKeyboardBindings: () => keyboardPreferences.snapshot().bindings,
     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
       themeId: theme?.id ?? 'fpv',
@@ -2861,6 +2867,9 @@ try {
     getTeamJourneyRoute: () =>
       librarySourceReturn?.mode === 'team' ? librarySourceReturn.journey : null,
     onTransition: ({ to, back = false } = {}) => {
+      keyboardSettings?.cancel();
+      if (to === 'options') keyboardSettings?.refresh();
+      else keyboardPreferences.suspend();
       globalSettingsVisit++;
       ++libraryOpenEpoch;
       cancelLibraryDecision();
@@ -2879,6 +2888,15 @@ try {
       void startRace(roundRecipe.entry, { focusOrigin: $('race-retry') });
     },
   });
+
+  keyboardSettings = mountCouchKeyboardSettings({
+    root: $('race-settings-panel-controls'),
+    preferences: keyboardPreferences,
+    isOpen: () => shell.scope() === 'options' && match?.status !== 'running',
+  });
+  const stopKeyboard = keyboardPreferences.subscribe(({ bindings }) =>
+    input.setKeyboardBindings(bindings),
+  );
 
   function catalogueAttempt() {
     return {
@@ -4574,7 +4592,7 @@ try {
       (element.matches('button[data-theme-preview]') &&
         !!element.closest('[data-theme-controls]')) ||
       !!element.closest(
-        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers',
+        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers, .multiplayer-keyboard',
       ),
     getControlLabels: () => ({
       directions: t('interface:dPadLeftStick'),
@@ -4787,6 +4805,9 @@ try {
     couchTouch.destroy();
     journeyReactions.dispose();
     controllerSetup.dispose();
+    keyboardSettings.dispose();
+    stopKeyboard();
+    keyboardPreferences.dispose();
     controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();

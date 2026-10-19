@@ -1,0 +1,21 @@
+{
+  "format": "ReviewedSmallMainPublicCohortPackingProvenance.v1",
+  "sourceReviewCommit": "60d1608eefda5d9fb06f198634aa4312b40745d2",
+  "manifestSHA256": "63831e6a06f1e92e54c9114bd69cb3b6a84cb81b7b451c6706b506f52d5a4fcd",
+  "clearanceSHA256": "2b8e710517171c8cf433116097039e2ed1a1272f40dcdc5e231565fbd327f967",
+  "logicalFiles": 1467,
+  "logicalBytes": 52468726,
+  "newObjects": 1245,
+  "newObjectRawBytes": 43896978,
+  "newPartCompressedBytes": 40987601,
+  "verifiedNewPartSHA256": "a10ec601bafe5a4ee4a45e8a57d0dca55b28f20a466710b56ee07c18b06c9f5b",
+  "verifiedNewPartAssetId": 646557830,
+  "verifiedNewPartReceiptSHA256": "8dc54e2b16ec72897a4ddc9d8b4622aff3349a47fcf415ff4b49b15ec6a36a81",
+  "sourceSHA256BeforeAfterChecks": 1245,
+  "serverDigestVerified": true,
+  "fullAuthenticatedReadbackVerified": true,
+  "actualAllNewObjectRestoresVerified": true,
+  "fullLogicalPathRestorePerformed": false,
+  "broaderExtraVolumeInputSetFinal": false,
+  "allVolumeComplete": false
+}
