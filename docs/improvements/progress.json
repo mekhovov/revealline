@@ -14,16 +14,16 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1: keep full builds/snapshots paused below2GiB reserve; free space recovered to about1.6GiB. Small source fixes, focused memory-only checks and native browser review have resumed.",
-    "P1: reconcile12 currently conflicted non-draft feature PRs with main, starting with shared foundations; preserve original deltas and rerun exact-head required checks.",
-    "P1: finish the Team input-test and guide reconciliation to current one-click launch; the withdrawn runtime proposal remains historical evidence",
-    "P1: admit the separate Team catalog-test repairs and preserve all original preview, save, focus and controller assertions",
-    "P1: reconcile current-main conflicts in reviewed foundations and complete required checks for text compatibility and Survival suspend",
-    "P1: qualify Capture Home draft1729: independent17/17 passes; complete remaining broader files and native browser/device scope.",
-    "P1: browser controls restored. Review exact-source compact Duel/Team/Worlds, locale and navigation; iPhone/Steam Deck physical checks remain Not tested.",
-    "P1: finish Versus support-summary review, then full checks for Team and Versus when disk space permits; SIM and Rooms adapters remain",
-    "P2: review search recovery and field-card wording in English/Ukrainian; develop the Hunt attempt-versus-achievement slice",
-    "Continue the remaining approved phases and Demo-dependent work; PR counts are not a completion percentage"
+    "P1: resolve the exact51b5 Journey result-supersession asynchronous wait failure without weakening stale-adoption assertions; seven complete files91/91 pass, file8 fails0/1, final two not run.",
+    "P1: publish the bounded controller-observation wording correction only after native checks; actual Academy report proved assignment unknown while old wording claimed assigned disconnection.",
+    "P1: primary support1661 current-main integration frozen for independent review and focused checks; reconcile foundations before dependent Team→Versus→Academy propagation.",
+    "P1: full builds and new source snapshots remain paused below2GiB reserve (about1.1GiB now); small source, focused memory-only checks and browser review continue.",
+    "P1: complete exact-source compact Duel/Team/Worlds browser checks, including touch-control geometry, native EN/UK and scroll/focus. Physical iPhone/PWA/SteamDeck remain Not tested.",
+    "P1: finish full current-head source checks and required admission for compatibility1668, Team/Versus/Academy support, touch recovery and other reviewed drafts when reserve permits.",
+    "P1: implement complete Worlds support adapter after shared observation wording; Rooms adapter remains. Keep original caps, actual Settings and synchronous disposal owners.",
+    "P1: finish current one-click Team input-test/docs and catalog-test reconciliations; withdrawn1718 runtime proposal remains historical.",
+    "P2: finish native search recovery, retained Worlds result language and Hunt result-reading acceptance; preserve exact attempts, achievements and record writes.",
+    "Continue all remaining approved phases and Demo-dependent work. F10 lesson recommendations still requireF25/D; PR counts are not a completion percentage."
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -890,11 +890,11 @@
       "status": "developing",
       "owner": "lane-b",
       "qualification": {
-        "automated": "focused_passed_full_pending",
-        "browser": "partial_desktop_source",
+        "automated": "broader_failure_under_investigation",
+        "browser": "scoped_desktop_and_iframe_passed",
         "physical": "not_tested"
       },
-      "blocker": "Full source reserve; remaining broader/browser acceptance; parent lessons depend on F25/D",
+      "blocker": "Result-supersession wait failure under investigation; full source reserve and lessonF25/D dependencies remain",
       "pr": null,
       "commit": null,
       "next": "Develop one explained Capture-Journey Home recommendation on the existing Start/Continue action. Preserve genuine Resume priority and Browse all. Full lesson/context recommendations remain dependent on the Learn hub and shared demos.",
@@ -911,13 +911,17 @@
           "commit": "83a2d654d3789576934afaebd8ebf6feaa0a86dc",
           "effort": "1–2d bounded Home slice plus independent/source/browser qualification; overall F10 remains partial",
           "dependency": "Existing Journey destination owner and merged FirstFlight1655; future lesson recommendations still requireF25/D",
-          "next": "Complete eight remaining broader files individually, preserve original incomplete cohort, full source checks and compact/browser qualification. Contextual lessons remain F25/D dependent.",
+          "next": "Diagnose complete file8 failure on frozen51b5; do not weaken stale replacement assertions. Seven files91/91 pass, file8 fails0/1, last two not run. Remote1729 remains83a until reviewed successor. Full source and remaining browser gates separate.",
           "evidence": [
             "No new CTA or result action. Explain first mission, exact uncleared cursor, same accepted failed mission, or existing recorded-clear successor only when owned facts support it. Unknown/end/stale ownership produces no fabricated next mission. Unified-library rows are not progression order. Actual compact/landscape acceptance remains pending.",
             "Earlier focused15/15 complete pass. Two added recovery cases passed before broader10-file cohort ended exit7 after30 successes without TAP summary: INCOMPLETE, no aggregate pass or assumed cause. Root read-only review preserves exact original launch/destination policy; independent rerun pending.",
             "Root independent complete two-file run at83a:17/17 pass, zero skipped/cancelled,46.9s. Independent AST review confirms original four launch/progression functions byte-identical;5935EN/6045UK old values preserved, four additions each. Published draft1729; full gates remain pending.",
-            "Actual IAB desktop1280x720 at exact83a: first-mission guidance visible in EN/UK, native Settings Back restores opener, Home after actual launch prioritizes Continue and removes recommendation. Screenshot paths in .cache/improvements-evidence/2026-10-19/capture-home-83a-{uk,resume}-desktop.png. Reload/earned-result/compact checks not yet complete; this is local-source browser evidence, not release/PWA/device acceptance."
-          ]
+            "Actual IAB desktop1280x720 at exact83a: first-mission guidance visible in EN/UK, native Settings Back restores opener, Home after actual launch prioritizes Continue and removes recommendation. Screenshot paths in .cache/improvements-evidence/2026-10-19/capture-home-83a-{uk,resume}-desktop.png. Reload/earned-result/compact checks not yet complete; this is local-source browser evidence, not release/PWA/device acceptance.",
+            "Actual exact83a desktop: reload/saved-flight Home keeps Continue primary with no recommendation; explicit Continue restores real flight. Earned legal win34.3%/8160points/3lives/1:08; Home explains actual Choose your share successor, Browse all→Back retains guidance and openerfocus, existing Continue reaches actual next mission. No fabricated mastery or new progression owner.",
+            "Local51b5 successor changes only one Ukrainian recorded-next sentence, canonical catalogs and scoped review docs; runtime/tests identical83a. Actual iframe CSS viewport reviews320x480/568x320/844x390 use Standard and native Large/Plain, not device emulation. Primary guidance/Start visible; keyboard Tab scrolls Settings into view at320Large with focus. Suspected568clipping was retained scroll: fresh568load shows full guidance; no speculative layout change. PWA/offline/physical acceptance not inferred.",
+            "Serialized exact51b5 per-file checks: seven complete files91tests pass exit0/zero skips. Eighth actual authored result-supersession file fails0/1 exit1 atline86 asynchronous action did not settle. Final two files NOT RUN; diagnosis underway. Earlier incomplete aggregate remains incomplete, no assumed baseline attribution."
+          ],
+          "candidateCommit": "51b5d9d466b32deb6861a2419d264b720321c43d"
         }
       ]
     },
@@ -1666,7 +1670,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Team support is reviewed. Finish full source checks when disk space permits, then native screen/export review. Versus support is developing; SIM and Rooms remain. Reconcile the primary foundation before admission.",
+      "next": "Primary1661 current-main integration reviewed/frozen; focused checks queued. Team1721→Versus1726→Academy1730 remain drafts; correct shared observation wording before Worlds adapter. Full source/export/device acceptance stays scoped.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim.",
@@ -1683,13 +1687,14 @@
             "62 focused/full source gates plus10 independent owner/component/host checks pass. Actual desktop EN/UK preview, refresh, close clearing and929-byte downloaded JSON equality pass. No native export, real controller, paused-flight or hardware browser claim.",
             "Integrated f3c preserves original47c and dd337 ancestry; 5 feature blobs and app/index feature deltas unchanged, main locale values plus51 original keys preserved.91 distinct focused cases have pass evidence across initial90/91 plus unchanged isolated1/1 (2 name-filtered cases excluded); initial authored-Journey preparation timeout retained. Full lint/changed format/uninterrupted validation pass,8 unchanged main format findings. Independent review clear; ready.",
             "Local eec8 candidate: initial59/63 failures and missing-doc format exit2 were sparse-copy failures, retained. Restored556 exact inputs (verified distinct-inode COW or Git blobs); complete63/63 then passes zero skips, all3383 registered input Git blobs verified. Original untracked documents preserved; independent /tmp/revealline-f58-eec8-independent-worlds-review.json. Full gate pending; no new browser claim.",
-            "Current eec8 full gates terminal0,3383 before/after exact Git input blobs and original untracked hashes preserved. Published1661draft, fresh remoteCONFLICTING aftermain advanced again. No current-main successor pass inferred; /tmp/revealline-f58-eec8-full-gates-receipt.json."
+            "Current eec8 full gates terminal0,3383 before/after exact Git input blobs and original untracked hashes preserved. Published1661draft, fresh remoteCONFLICTING aftermain advanced again. No current-main successor pass inferred; /tmp/revealline-f58-eec8-full-gates-receipt.json.",
+            "Root independently reviewed frozen main-e746 integration: exact10 original paths, all7ordinary blobs identicaleec, all5937EN/6049UKmain values plus exact51originalsupport messages/language retained. Agent canonical18/staticlintformatpass; no hydration/native/sourcegate/push yet. Propagate through Team→Versus→Academy deliberately, preserving host/scope/state unions."
           ],
           "deliveryState": "draft",
           "mergeState": "DIRTY",
           "observedRemoteHead": "eec8d4abb08947197a7af2ee5f8b70e21996dde7",
           "candidateCommit": "eec8d4abb08947197a7af2ee5f8b70e21996dde7",
-          "next": "Published eec8 by expectedf3c lease.63/63 complete focused cases, changed gates, independent review, full lint and uninterrupted validation pass; all3383 registered input blobs match before/after. Draft remains for newer-main conflict/admission and dependent host adapters; previous browser scope unchanged."
+          "next": "Frozen eec+e746 integration tree96e31e6d407dfe737535a14859872550180bc74f; root independent preservation/static review pass, focused checks pending. No commit/publication or downstream propagation yet."
         },
         {
           "id": "snake-host",
@@ -1765,6 +1770,45 @@
           },
           "deliveryState": "draft",
           "observedRemoteHead": "a76a5e02a88f9cbc351d6d5e272705943079c7d1"
+        },
+        {
+          "id": "native-academy-host",
+          "priority": "P1",
+          "status": "draft_review",
+          "owner": "lane-c",
+          "pr": "https://github.com/mekhovov/revealline/pull/1730",
+          "commit": "0e9f9e92b22cee2b3234431c0498270a4936970e",
+          "deliveryState": "draft",
+          "observedRemoteHead": "0e9f9e92b22cee2b3234431c0498270a4936970e",
+          "dependency": "PR1726 exacta76; primary→Team→Versus→Academy stack",
+          "effort": "Bounded source slice reviewed; full source/package and actual lifecycle acceptance remain",
+          "next": "Preserve draft1730. Shared observation wording follow-up found by actual browser review is developing separately; full source/package/physical gates pending.",
+          "qualification": {
+            "automated": "scoped_passed_full_pending",
+            "browser": "partial_actual_disarmed_settings",
+            "physical": "not_tested"
+          },
+          "evidence": [
+            "Actual native Academy Settings Data owns report. Aggregate physical observation only ordinary frame; no extra poll/Arm sample; unknown assignment/neutral/Confirm/save lease retained. EOF playback-ended before pause/complete; missing API unavailable. Retire on category/modal/width/away and sync disposal. Academy-only2module+supportSummary admission,210file20MiB caps unchanged; legacy/Worlds remain isolated.",
+            "Final12file236/236 pass after EOF/API correction. Historical red85/88 exposed3intended EOF/API failures before correction. Later lifecycle expansion237/239 had2fixtureerrors; corrected complete native91+collector13=104/104 zero skips. These separate runs are not a fabricated239 aggregate. Changed lint/format/diff pass, generatedSIMprojection byteexact293183bytes; root18namespace/all27722basemessage preservation audit clear. Final12file manifest34d0dca3e0377c5183334645f8c52179ae692141a23253226d8d7488b07911ff.",
+            "Root actual0e9 browser Disarmed→Settings→ProgressData→Prepare verifies scoped facts but discovers shared controller row claims assigned disconnect while exact JSON assignment=null/neutral=null/Confirm=null. Separate bounded shared wording repair underway; no host collector change required. No connected physical controller or native download acceptance claimed."
+          ]
+        },
+        {
+          "id": "controller-observation-wording",
+          "priority": "P1",
+          "status": "developing",
+          "owner": "lane-c",
+          "pr": null,
+          "commit": null,
+          "dependency": "PR1730 exact0e9; separate shared-view correction",
+          "effort": "0.5d bounded copy/branch coverage plus native/browser review",
+          "next": "Six-file candidate frozen: root source and scoped actual EN/UK browser review pass; complete native host cohort after serialized slot release, then commit/review/publish separate dependent draft.",
+          "evidence": [
+            "Connected is ready only when assigned=true,neutral=true,confirmBlocked=false. Otherwise describe observed presence without inferring menu readiness. Disconnected with unknown/falseassignment says no connected controller observed; known assigned-disconnect/stale/unavailable remain unchanged. No raw controller/export/collector facts changed.",
+            "Valid27component RED18pass9fail demonstrates incorrect wording; corrected complete27/27 zero skips. Earlier invalid incomplete-snapshot fixture13pass14fail is excluded as bugproof. EN/UK focus and exactJSONexport preserved,2newkeys/language+canonicalbundle only.",
+            "Root actual frozen candidate at1280x720: EN and UK fresh Prepare use accurate absence wording, Preparefocus retained, gameDisarmed unchanged. Changing category retires summary/disables Download. Screenshots before0e9+afterEN/UK under .cache/improvements-evidence/2026-10-19/academy-controller-observation-*. No physical connected/assigned-controller or download claim."
+          ]
         }
       ]
     },
@@ -2050,14 +2094,14 @@
       "status": "developing",
       "owner": "lane-b",
       "qualification": {
-        "automated": "focused_and_full_source_passed",
+        "automated": "focused_passed_current_full_pending",
         "browser": "sampled_primary_readers_and_result_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1668",
-      "commit": "e216c8aa8ccb948062809dcb40ea97e8d197230d",
-      "next": "Compatibility1668 ready after current439-case/full source qualification. Primary200%1672 remains a dependent draft with recorded scoped browser evidence; current-main admission and other families remain open.",
+      "commit": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33",
+      "next": "Compatibility1668 returned to draft and published bounded main-e746 reconciliationf807:446/446 full feature cohort; current-head full source/package gates pending. Earlier full-source passes remain e216-only.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
         "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
@@ -2066,23 +2110,25 @@
         "Independent review found gym raw desired-size styling; corrected0fa applies effectiveLarge. Actual primary shared preference/parent storage changes, gym UK notice/bodylarge and empty719B legacy import/reload all pass. DownloadSHA87da8775c18b96e873099384064502cb3dd61bc2131d1c6f565081a648431dd4.426originalfocused; corrected449/450 with one unchanged5sStart timeout then affected11case file passes isolated; full source gates pass. No new200% option in compatibilityPR.",
         "Compatibility foundation1668 reconciled onf465 atbeb9db36b4d172383bf8e3bc088062531ebd4bea;457/457 combined cases/full lint/full validation/changed policyformat/C+A source review clear.32original blobs identical, remaining main changes and18 generated namespaces independently retained. Exact-lease remote publication accepted; metadata reconciliation continuing after disk exhaustion. Children remain frozen, no new browser/device claim.",
         "Root independentlyverified40/43 nonlocale/nongenerated feature added/removed deltas unchanged vsbeb9; all5935EN/6045UKmainvalues+3compatibilitykeys/languagepreserved. RootcatalogBundle(current18namespaceJSON) byte-identicaltoactualcompressedcatalog; VMdecode18deep-equal. Receipts/tmp/revealline-f09a-e216-root-independent-review.json and-root-canonical-review.json. Currentfullgatesqueued; historicalbeb457/fullpass staysscopedtooldhead.",
-        "Current e216:439/439 complete14-file cohort, zero skips, after repairing existing fake-indexeddb dependency link; initial339+file-import failure retained,54-case subset not added. Full lint/uninterrupted validation PASS, source clean before/after. Raw formatting check retains4 existing policy findings, canonical18-namespace generation independently identical. Promoted ready; required CI pending."
+        "Current e216:439/439 complete14-file cohort, zero skips, after repairing existing fake-indexeddb dependency link; initial339+file-import failure retained,54-case subset not added. Full lint/uninterrupted validation PASS, source clean before/after. Raw formatting check retains4 existing policy findings, canonical18-namespace generation independently identical. Promoted ready; required CI pending.",
+        "f807 tree959b16ba7d100814083b4586f22ebcd0629876d9 merges exacte746. Root independently preserves all40ordinary deltas,43feature paths, current-main values+3keys/language,18canonical namespaces and original appended host cases. Initial446total440pass/6ENOENTfail and diagnostic130total124pass/6fail retained; only missing unchanged tracked51KB Snake proofJSON restored after blobSHA verification. Final whole14files446/446 zero skips117.11s. PR returned draft before FF push; no bypass/force/manual merge. Current-head full gates pending."
       ],
       "implementationSlices": [
         {
           "id": "compatibility",
-          "status": "ready_for_checks",
+          "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1668",
-          "commit": "e216c8aa8ccb948062809dcb40ea97e8d197230d",
+          "commit": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33",
           "evidence": [
             "All current readers preserve desiredXL/effectiveLarge, including legacy import. Source and actual browser evidence scoped above; old immutable published binaries excluded.",
             "Root independentlyverified40/43 nonlocale/nongenerated feature added/removed deltas unchanged vsbeb9; all5935EN/6045UKmainvalues+3compatibilitykeys/languagepreserved. RootcatalogBundle(current18namespaceJSON) byte-identicaltoactualcompressedcatalog; VMdecode18deep-equal. Receipts/tmp/revealline-f09a-e216-root-independent-review.json and-root-canonical-review.json. Currentfullgatesqueued; historicalbeb457/fullpass staysscopedtooldhead.",
-            "Current e216:439/439 complete14-file cohort, zero skips, after repairing existing fake-indexeddb dependency link; initial339+file-import failure retained,54-case subset not added. Full lint/uninterrupted validation PASS, source clean before/after. Raw formatting check retains4 existing policy findings, canonical18-namespace generation independently identical. Promoted ready; required CI pending."
+            "Current e216:439/439 complete14-file cohort, zero skips, after repairing existing fake-indexeddb dependency link; initial339+file-import failure retained,54-case subset not added. Full lint/uninterrupted validation PASS, source clean before/after. Raw formatting check retains4 existing policy findings, canonical18-namespace generation independently identical. Promoted ready; required CI pending.",
+            "f807 tree959b16ba7d100814083b4586f22ebcd0629876d9 merges exacte746. Root independently preserves all40ordinary deltas,43feature paths, current-main values+3keys/language,18canonical namespaces and original appended host cases. Initial446total440pass/6ENOENTfail and diagnostic130total124pass/6fail retained; only missing unchanged tracked51KB Snake proofJSON restored after blobSHA verification. Final whole14files446/446 zero skips117.11s. PR returned draft before FF push; no bypass/force/manual merge. Current-head full gates pending."
           ],
-          "deliveryState": "ready",
+          "deliveryState": "draft",
           "mergeState": "UNSTABLE",
-          "observedRemoteHead": "e216c8aa8ccb948062809dcb40ea97e8d197230d",
-          "next": "Current e216 passes439/439 across14 complete feature-touched files, full lint and uninterrupted validation; independent delta/locale/catalog review clear. Published by exact lease and promoted ready. Required CI/admission next; children remain separate drafts."
+          "observedRemoteHead": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33",
+          "next": "Compatibility1668 returned to draft and published bounded main-e746 reconciliationf807:446/446 full feature cohort; current-head full source/package gates pending. Earlier full-source passes remain e216-only."
         },
         {
           "id": "primary-200-percent",
@@ -3981,6 +4027,11 @@
       "date": "2026-10-19",
       "item": "F10/F64/resume",
       "reason": "Narrowed disk pause to heavy work: source fixes and memory-only focused checks resumed at144MiB, later space recovered1.6GiB. Root F10 complete17/17 and exact-source review pass; draft1729 published. Browser attachment restored and exact83a desktop Home EN/UK/Resume review started. F64 reading fixad50 published after74/74 and root review. Academy playback/cache fixes under native red/green; full checks remain below reserve."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Academy draft, current-main compatibility, actual observation fix and honest Journey failure",
+      "reason": "1730 published0e9;1668 returneddraftf807 with446pass/currentfullpending; primarymainintegration frozen/rootreviewpass. Actualbrowserproves sharedreportwordingbug, sixfilefix27pass/source+ENUKreview. F10sevenfiles91pass/eighth0of1fail/lasttwoNOTRUN. Counts27merged15ready35draft77active+1withdrawn; all113deliverables retained."
     }
   ],
   "deliveryDependencies": [
@@ -4037,8 +4088,8 @@
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 16,
-    "featurePRsDraft": 33,
+    "featurePRsReady": 15,
+    "featurePRsDraft": 35,
     "deliverablesMerged": 27,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
@@ -4059,6 +4110,6 @@
       1686, 1690, 1702, 1704, 1715, 1723
     ],
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1662, 1668, 1669, 1682, 1686, 1690],
-    "note": "Ready is authoring status, not current mergeability or completed required checks. No manual merges; earlier source passes do not qualify future integration."
+    "note": "Ready is authoring status, not current mergeability or completed required checks. No manual merges; earlier source passes do not qualify future integration. Historical inventory before1730 and1668 draft return; current counts are in deliverySnapshot. New remote-wide inventory pending."
   }
 }
