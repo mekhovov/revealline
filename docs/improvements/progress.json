@@ -1147,11 +1147,12 @@
           "commit": "426923adb1e128a5305c78c6af2b9452d926d27d",
           "effort": "2–3d; review and required checks separate",
           "dependency": "Fresh main; regenerate combined World projections on later F29 integration",
-          "next": "Worlds-only result actions now use normal scroll flow, retaining DOM/action order. Corrected complete serial tests93/93; exactbase reproduces the prior Retry timeout92/93. Formatting/diff and independent source review clear. New browser review blocked by webview attachment; full current-head source gate pending.",
+          "next": "Current426 full lint and uninterrupted validation PASS,93/93 complete serial focused tests and independent source review clear. Draft remains for actual compact result scrolling/browser review.",
           "evidence": [
             "Existing verified Worlds results show time/contacts/grade but omit next target/gap. Native exact tick AND contact caps govern eligibility; no contact-to-time conversion or EPS. Frozen5363 onbd15820 passes134/134 complete cases; test-only locale isolation correction retained. C source review clear; full gates and native browser pending.",
             "Frozen5363 passes134/134 complete cases/full lint/full validation/changedformat/C review;8 old format debts retained. Actual ordinary-key native flight Gold9.70s/0contacts/6903 then currentSilver33.06s/0contacts/6670 verified; nextGold22.48/gap10.58 correct despite prior Gold. NativeMenuSettingsUKResults translates new paragraph; existing result labels retain English, a separate F59 finding. At320 sticky5-action row381px high covers new advice (y360/105px); direct scroll is not hittable. Keep1702draft until readable flow corrected. /tmp/f23d-worlds-5363-result-geometry.json and root-browser-states.json.",
-            "Worlds-only result actions now use normal scroll flow, retaining DOM/action order. Corrected complete serial tests93/93; exactbase reproduces the prior Retry timeout92/93. Formatting/diff and independent source review clear. New browser review blocked by webview attachment; full current-head source gate pending."
+            "Worlds-only result actions now use normal scroll flow, retaining DOM/action order. Corrected complete serial tests93/93; exactbase reproduces the prior Retry timeout92/93. Formatting/diff and independent source review clear. New browser review blocked by webview attachment; full current-head source gate pending.",
+            "A426 full lint and uninterrupted validation PASS exit0; exactHEADverifiedandtrackedclean. Logs/tmp/revealline-f23d-426-full-lint.log and-full-validate.log. Browserwebviewattachmentstillunavailable; no newvisual/deviceclaim."
           ],
           "pr": "https://github.com/mekhovov/revealline/pull/1702",
           "deliveryState": "draft",
@@ -1908,7 +1909,7 @@
       "impact": "H/H",
       "effort": "**3–5d**",
       "featureId": "F09",
-      "status": "developing",
+      "status": "draft_review",
       "owner": "lane-b",
       "qualification": {
         "automated": "focused_and_full_source_passed",
@@ -1917,26 +1918,31 @@
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1668",
-      "commit": "0fa88f0bed68de9730e8619528e712f361d73403",
-      "next": "Await compatibility/current-primary admission; lane B begins remaining-host family inventory under F09b.",
+      "commit": "e216c8aa8ccb948062809dcb40ea97e8d197230d",
+      "next": "Published e216 integrates mainab472;54 complete focused tests,39 changed-JS lint and all18 canonical namespaces pass. Independent review preserves40 exact feature deltas and everymainlocalevalue+3compatkeys. Full current gates running afterWorlds426; draft retained untilqualified.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
         "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
         "Reviewed compatibility scope: fixed extra-large desired enum in existing record/library, derived effective Large on all unsupported hosts, disabled incoming option plus explicit localized fallback, no new selectable size yet. All DOM/canvas/bootstrap/SIM projections preserve intent; Standard/Large and F06 unchanged. Source implementation starts after Snake support review.",
         "Compatibility816dd draft1668 on237b405:426focused/full lint/full validate pass;8format findings byte-unchanged baseline. All current readers and generated SIM preserve desiredextra-large/effectiveLarge. No200%CSS or selectable new option. Immutable older published binaries are outside this compatibility guarantee. Source/browser independent review pending.",
         "Independent review found gym raw desired-size styling; corrected0fa applies effectiveLarge. Actual primary shared preference/parent storage changes, gym UK notice/bodylarge and empty719B legacy import/reload all pass. DownloadSHA87da8775c18b96e873099384064502cb3dd61bc2131d1c6f565081a648431dd4.426originalfocused; corrected449/450 with one unchanged5sStart timeout then affected11case file passes isolated; full source gates pass. No new200% option in compatibilityPR.",
-        "Compatibility foundation1668 reconciled onf465 atbeb9db36b4d172383bf8e3bc088062531ebd4bea;457/457 combined cases/full lint/full validation/changed policyformat/C+A source review clear.32original blobs identical, remaining main changes and18 generated namespaces independently retained. Exact-lease remote publication accepted; metadata reconciliation continuing after disk exhaustion. Children remain frozen, no new browser/device claim."
+        "Compatibility foundation1668 reconciled onf465 atbeb9db36b4d172383bf8e3bc088062531ebd4bea;457/457 combined cases/full lint/full validation/changed policyformat/C+A source review clear.32original blobs identical, remaining main changes and18 generated namespaces independently retained. Exact-lease remote publication accepted; metadata reconciliation continuing after disk exhaustion. Children remain frozen, no new browser/device claim.",
+        "Root independentlyverified40/43 nonlocale/nongenerated feature added/removed deltas unchanged vsbeb9; all5935EN/6045UKmainvalues+3compatibilitykeys/languagepreserved. RootcatalogBundle(current18namespaceJSON) byte-identicaltoactualcompressedcatalog; VMdecode18deep-equal. Receipts/tmp/revealline-f09a-e216-root-independent-review.json and-root-canonical-review.json. Currentfullgatesqueued; historicalbeb457/fullpass staysscopedtooldhead."
       ],
       "implementationSlices": [
         {
           "id": "compatibility",
-          "status": "ready_for_checks",
+          "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1668",
-          "commit": "0fa88f0bed68de9730e8619528e712f361d73403",
-          "evidence": "All current readers preserve desiredXL/effectiveLarge, including legacy import. Source and actual browser evidence scoped above; old immutable published binaries excluded.",
-          "deliveryState": "ready",
-          "mergeState": "UNKNOWN",
-          "observedRemoteHead": "beb9db36b4d172383bf8e3bc088062531ebd4bea"
+          "commit": "e216c8aa8ccb948062809dcb40ea97e8d197230d",
+          "evidence": [
+            "All current readers preserve desiredXL/effectiveLarge, including legacy import. Source and actual browser evidence scoped above; old immutable published binaries excluded.",
+            "Root independentlyverified40/43 nonlocale/nongenerated feature added/removed deltas unchanged vsbeb9; all5935EN/6045UKmainvalues+3compatibilitykeys/languagepreserved. RootcatalogBundle(current18namespaceJSON) byte-identicaltoactualcompressedcatalog; VMdecode18deep-equal. Receipts/tmp/revealline-f09a-e216-root-independent-review.json and-root-canonical-review.json. Currentfullgatesqueued; historicalbeb457/fullpass staysscopedtooldhead."
+          ],
+          "deliveryState": "draft",
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "e216c8aa8ccb948062809dcb40ea97e8d197230d",
+          "next": "Published e216 integrates mainab472;54 complete focused tests,39 changed-JS lint and all18 canonical namespaces pass. Independent review preserves40 exact feature deltas and everymainlocalevalue+3compatkeys. Full current gates running afterWorlds426; draft retained untilqualified."
         },
         {
           "id": "primary-200-percent",
@@ -1961,9 +1967,9 @@
           "observedRemoteHead": "e40b8983c1a94605beb1376fa85741ac5d40bf1c"
         }
       ],
-      "deliveryState": "ready",
-      "mergeState": "UNKNOWN",
-      "observedRemoteHead": "beb9db36b4d172383bf8e3bc088062531ebd4bea"
+      "deliveryState": "draft",
+      "mergeState": "UNSTABLE",
+      "observedRemoteHead": "e216c8aa8ccb948062809dcb40ea97e8d197230d"
     },
     {
       "id": "F09b",
@@ -3740,8 +3746,8 @@
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 20,
-    "featurePRsDraft": 28,
+    "featurePRsReady": 19,
+    "featurePRsDraft": 29,
     "deliverablesMerged": 20,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,

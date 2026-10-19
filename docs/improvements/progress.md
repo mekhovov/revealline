@@ -2,7 +2,7 @@
 
 Updated **19 October 2026** (Europe/Berlin). The [approved plan](plan.md) covers **83 feature groups / 113 deliverables**. Implementation is continuing in three lanes, with independent review and browser qualification in parallel.
 
-**20 merged · 20 feature PRs ready for required checks · 28 draft feature PRs · 2 merged slices confirmed in published source · 0 newly verified live journeys.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
+**20 merged · 19 feature PRs ready for required checks · 29 draft feature PRs · 2 merged slices confirmed in published source · 0 newly verified live journeys.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
 
 ## Current priorities
 
@@ -158,3 +158,5 @@ All113 deliverables remain in the structured tracker. Later practice/social, cre
 **F04b gate completed:** b1cb uninterrupted full validation, canonical projections and full lint now pass after exact sparse-input recovery; all22 nongenerated changed files pass formatting and the generated shell retains unchanged handwritten bytes. PR1663 is ready for required checks. Earlier failures remain recorded. No new package/browser/live/device acceptance is inferred.
 
 **Compact Settings gate completed:** exact55393 tracked-only snapshot full lint and uninterrupted validation pass; all7491 snapshot Git blobs match before/after. PR1707 remains draft for actual browser review. Preserved untracked review fixtures caused the earlier direct-checkout lint failure; they were excluded only from the immutable source snapshot. Worlds426 validation is next; F59 ordinary Worlds retained-result language is developing independently.
+
+**Current-main compatibility admission:** PR1668 temporarily returns to draft with e216 integrated against mainab472. All40 ordinary feature deltas, everymainlocalevalue and threecompatibilitykeys per language are independentlypreserved; all18 generated namespaces are canonical. Its54 focused cases pass; full current checks are running. This is separate from Survival1663 now being ready. Worlds426 full lint and uninterrupted validation now pass; it remains draft for actual browser scrolling review.
