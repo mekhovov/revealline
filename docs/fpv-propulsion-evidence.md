@@ -136,6 +136,109 @@ implementation and pass after these repairs. The updated focused suite passes
 cells, coverage gaps, touching and disjoint windows, mixed source units, diagnostic
 current limits and interpolated power. No runtime or original 1D format changed.
 
+## Static quad forward adapter: non-activating preparation
+
+`propulsion-quad.mjs` exports `evaluateStaticQuadPropulsion()` and introduces
+`StaticQuadPropulsion.v1` input and `StaticQuadPropulsionResult.v1` output. It
+connects four independently specified surfaces to a declared rotor layout and
+calculates a steady body force/torque at their common battery operating point.
+It remains **outside the game, inspector, controller, catalog and worker import
+graphs**. No package admission, existing format, physical identity, saved setup,
+recording or backend behavior changes.
+
+The input requires all of these declarations; there are no implicit frame,
+command-unit or torque interpretations:
+
+- `format: 'StaticQuadPropulsion.v1'`.
+- `frame: 'body-x-right-y-up-z-rear-origin-com'`, with positions relative to COM.
+- `thrustAxis: 'positive-y'`: all four thrust vectors are parallel to body +y.
+- `torqueBasis: 'steady-shaft-reaction-magnitude'`. This is a caller declaration,
+  not verification that the measurement instrument recorded propeller reaction
+  torque. It does not convert electromagnetic or transient motor torque.
+- `units`: exactly `position: 'm'`, `force: 'N'`, `torque: 'N*m'`, `voltage: 'V'`,
+  `current: 'A'`, and `resistance: 'ohm'`. Surface samples retain their original
+  declared units and use the existing canonical conversion.
+- `battery`: explicit `openVoltage`, `resistance`, and nullable `currentLimit`.
+- `rotors`: exactly four records, in caller-supplied order. Each has a unique
+  stable `id`, `position: {x, y, z}` bounded to ±2 m, `reactionDirection` of +1
+  or −1, `command: {value, unit}`, and a complete `PropulsionSurface.v1` object.
+  Reaction direction is the sign of body-y torque, not an inferred CW/CCW label.
+  Command units must equal that surface's canonical `normalized` or `us` unit.
+  Microseconds are never converted to normalized motor speed or RPM.
+
+The boundary accepts bounded JSON data, copies it without invoking getters or
+functions, and reconstructs all evaluators. Four original surface limits remain
+in force, with a combined 1 MiB plus 4 KiB envelope. Input identifiers/order,
+geometry, declarations, commands, battery inputs and surface identities bind the
+result identity. Returned inputs, source receipts and calculated values are
+recursively frozen and independent of subsequent caller edits.
+
+The adapter first delegates the electrical calculation to
+`solvePropulsionSurfaceLoad()`, retaining its current-basis, static single-rotor,
+known-zero-airspeed, coverage, monotonic-current and numerical-resolution rules.
+The adapter compares declared air density, temperature, pressure, humidity and
+installation across the four surfaces. Two different known values make the
+combined wrench unavailable; there is no normalization or equivalence inference.
+Null values remain explicit `unknown-rotor-conditions` warnings and
+`partially-unknown` environment status, including when all four values are
+unknown. Equal known declarations are not independently verified conditions.
+Mixed motor/propeller/ESC sets remain supported, and descriptive notes are inert.
+The load receipt is retained even when these composition checks reject a wrench.
+
+Every rotor is then evaluated at that same voltage. RPM, thrust, torque and
+current must all be available and nonnegative at the operating point. Missing
+or negative admitted channels, an unavailable coordinate, or the existing
+shaft-power inconsistency diagnostic return `status: 'unavailable'` with no
+`wrench` or aggregate `power`. Available point data and original load/source
+receipts remain visible; evidence is neither clamped nor relabeled as measured.
+Invalid source values rejected by the original validators remain input errors.
+This operating-point check does not qualify all other points in a source dataset.
+
+For supported points the body wrench, in N and N·m, is:
+
+```text
+force = (0, Σ thrust, 0)
+torque = (−Σ position.z × thrust,
+           Σ reactionDirection × reactionTorque,
+           Σ position.x × thrust)
+```
+
+These are body coordinates, not the controller's signed roll/pitch/yaw axes.
+The result retains per-rotor values and exposes supply, terminal electrical,
+series-resistance loss and summed shaft power in watts. A current-limit excess
+remains `limit-exceeded` with the original unregulated commands and wrench; it
+is diagnostic data, not current limiting or permission to fly. Every result has
+`resultKind: 'calculated'` and `flightEligible: false`, including successful ones.
+
+The model has no motor transients, battery state/discharge, extra electronic
+loads, wiring asymmetry, rotor interaction, advancing flow, drag, gravity,
+collision or geometry-feasibility validation. It performs no inverse allocation
+and does not choose or alter commands. The existing flight controller produces
+normalized motor-speed requests, applies lag and uses an analytic electrical
+model. Connecting these source-command surfaces to that controller requires a
+separate versioned command mapping, allocator, achieved-torque feedback and
+transient policy; this adapter does not supply those decisions.
+
+Focused tests use invented affine current and bilinear rotor channels. Independent
+closed-form battery-voltage, vector cross-product and power-balance oracles cover
+symmetric and asymmetric layouts/commands, each rotor's reaction direction,
+reordering, declared command units, known-condition conflicts and unknowns,
+coverage gaps, limits, missing/negative
+channels, inconsistent power, parser bounds and immutable inputs/results. They
+establish numerical composition, not measured aircraft behavior or runtime
+performance. Run the new suite alongside the unchanged surface/path/load suites:
+
+```sh
+node --test --test-concurrency=1 game/test/fpv-aircraft-propulsion-quad.test.mjs game/test/fpv-aircraft-propulsion-surface.test.mjs game/test/fpv-aircraft-propulsion-load.test.mjs game/test/fpv-aircraft-propulsion-evidence.test.mjs
+```
+
+On 19 October 2026, Node 20.19.5 passed **64/64** focused checks: twelve adapter
+checks plus the unchanged 52 surface/path/load checks. Scoped ESLint, Prettier and
+`git diff --check` pass. Composition review identified that the initial adapter
+could combine conflicting known environmental declarations; the targeted negative
+reproduces that result before the guard and passes afterward. No game build,
+rendered acceptance, measured fitting or flight qualification is claimed.
+
 ## API and example
 
 ```js
