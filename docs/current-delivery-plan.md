@@ -1,5 +1,11 @@
 # RevealLine: detailed delivery history
 
+> **18 October improvement workstream:** the [approved staged plan](improvements/plan.md)
+> and [live progress board](improvements/progress.md) track F01–F83, current PRs,
+> priorities and remaining qualification. The release coordinator retains version
+> allocation and public-acceptance ownership; this workstream does not replace
+> the historical delivery receipts below.
+
 > **3 October implementation update:** [Unified gameplay and industrial art](unified-industrial-plan.md) records the newly approved priorities, bounded budget increases, implemented scope and remaining art/device gates.
 
 > **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
