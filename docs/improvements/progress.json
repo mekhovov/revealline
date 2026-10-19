@@ -2004,7 +2004,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "P1: resume11 configured source components for3546 after capacity and exact validation copy return;22component cases,lint/format andactual2-caseprimaryhost pass. Then browser/package/replacementdraft and remainingWorlds/Rooms/host gates.",
+      "next": "P1: collect the eight whole-file checks for lifecycle + Snake draft #1762, then current browser/full-source/package acceptance. The separate controller wording candidate passes 22 component and 2 Solo-host cases; its 11 configured source checks remain held. Preserve all existing host evidence and finish each remaining host separately.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim.",
@@ -2049,7 +2049,7 @@
           "deliveryState": "merged",
           "mergeState": "UNKNOWN",
           "observedRemoteHead": "f75e1acabfe0f572aa3048c712adfd22364a3ba2",
-          "next": "Admitted feature/source/locale preservation verified independently. Finish current native export, other Snake variants, source/package/browser acceptance. Review inherited category-away/back report-generation retirement with the shared owner; no speculative polling repair.",
+          "next": "Admitted Snake source and locale preservation verified. Lifecycle follow-up #1762 now awaits eight whole-file checks, followed by current export, all Snake variants, browser/full-source/package acceptance. Remaining host phases stay separate.",
           "lastKnownMergeState": "DIRTY",
           "mergedAt": "2026-10-19T19:14:41Z",
           "mergeCommit": "d8d51335aaa9d84948d5b8e181f8f130cb4da17b"
