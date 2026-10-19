@@ -2,6 +2,7 @@
 // cache identity are unchanged; every unrelated resolution uses Node's loader.
 let port;
 let gate = null;
+let pendingResolutions = 0;
 const panelURL = new URL('../../ui/optional-chapters-panel.mjs', import.meta.url).href;
 const appURL = new URL('../../app.mjs', import.meta.url).href;
 export function initialize({ channel }) {
@@ -25,11 +26,27 @@ export function initialize({ channel }) {
   port.unref();
 }
 export async function resolve(specifier, context, nextResolve) {
-  const result = await nextResolve(specifier, context);
-  if (result.url !== panelURL || context.parentURL?.split('?')[0] !== appURL || !gate)
+  const fromApp = context.parentURL?.split('?')[0] === appURL;
+  let retained = false;
+  // A candidate's delegated resolution can also be asynchronous. Retain the
+  // loader before yielding; an exhausted worker reports a never-settling import.
+  if (fromApp && gate) {
+    retained = true;
+    if (pendingResolutions++ === 0) port.ref();
+  }
+  try {
+    const result = await nextResolve(specifier, context);
+    if (result.url !== panelURL || !fromApp || !gate) return result;
+    // A gate may have been armed while delegated resolution was pending.
+    if (!retained) {
+      retained = true;
+      if (pendingResolutions++ === 0) port.ref();
+    }
+    const current = gate;
+    port.postMessage({ type: 'entered', id: current.id });
+    await new Promise((resolve, reject) => current.requests.push({ resolve, reject }));
     return result;
-  const current = gate;
-  port.postMessage({ type: 'entered', id: current.id });
-  await new Promise((resolve, reject) => current.requests.push({ resolve, reject }));
-  return result;
+  } finally {
+    if (retained && --pendingResolutions === 0) port.unref();
+  }
 }
