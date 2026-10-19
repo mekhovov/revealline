@@ -11,7 +11,7 @@
 | P1       | Versus Home guidance            | New actual-host10/10, pure5/5 and menu27/27 pass; actual EN/UK/directPlay/PauseResume reviewed.                                                       | Test #1735 passes14/14. Extension default10/10 passes, library14/19 fails; continuous/later files Not run. No feature PR yet. |
 | P1       | Single Drone/Riy Settings #1738 | Final scoped CSS gives controls276px at320; actual EN/UK and Riy portrait/landscape scrolling/Back reviewed.                                          | Draft1738 published; full source/admission and complete Single Drone/Riy Extra large group next.                              |
 | P2       | Worlds storage language #1736   | Published5b84; verified disjoint groups cover139/139 cases; actual EN/UK status and Back focus pass.                                                  | This is partitioned coverage, not an uninterrupted full-file pass. Full source/package/admission and devices remain.          |
-| P2       | Shared pause-music language     | Published draft #1737; complete component/music/native28/28 passes after valid red.                                                                   | Corrected browser blocked at local picture loading; full source/package/admission and device gates.                           |
+| P2       | Shared pause-music language     | Published draft #1737; complete component/music/native28/28 passes after valid red.                                                                   | Actual Duel first Pause and EN/UK Back label pass; full source/package/admission and device gates.                            |
 | P1       | Existing foundations/Home       | Primary #1661:81; observation wording #1731:141; compatibility #1668:446 focused checks. Capture #1729 and prerequisite #1732 retain scoped evidence. | Current-head full/source/admission and dependent integration remain explicit.                                                 |
 | P2       | Search #1715                    | Remote source merge confirmed at9566.                                                                                                                 | Source merge does not establish new published/gameplay/device qualification; F77 remains partial.                             |
 
@@ -27,15 +27,15 @@ The live delivery board shows all eight phases and whole-deliverable states. Est
 
 ## Current priorities
 
-- P1 · Home guidance: Capture #1729 and independent Solo prerequisite #1732 retain their gates. Versus new host cases pass; independent fixture #1735 needs a cohesive visible-action/catalogue-contract extension before the remaining native cohort. Full lessons still need Learn/D.
+- P1 · Home guidance: Capture #1729 and independent Solo prerequisite #1732 retain their gates. Versus new host cases pass; independent fixture #1735 extension default10/10 passes; library14/19 failed caption/media assumptions and is being corrected before later native checks. Full lessons still need Learn/D.
 - P1 · Controller report: the wording correction is published as draft #1731 with 141 targeted checks and scoped English/Ukrainian browser review. Complete remaining source/package admission; physical connected-controller behavior remains untested.
 - P1 · Shared foundations: support reconciliation #1661 is published with 81 targeted checks. Complete current-source gates, then preserve all host states while updating dependent Team, Versus and Academy PRs.
 - P1 · Available space: small source changes, bounded focused tests and browser review continue. Full builds/new snapshots require 2 GiB free; about 1.0 GiB is available. No external-drive copy is authorized.
-- P1 · Compact readability: Single Drone/Riy category→controls→Back works; operation context leaves controls cramped at320px. Repair width without changing navigation, then complete their Extra large group. Duel/Team/Worlds acceptance and physical checks stay separate.
+- P1 · Compact readability: Single Drone/Riy draft #1738 restores controls276px wide at320, with sampled EN/UK scrolling/Back acceptance. Complete their whole Extra large text group next. Duel/Team/Worlds acceptance and physical checks stay separate.
 - P1 · Review and admission: complete current-source checks for text compatibility, recovery and the reviewed support adapters when space permits. Required CI and merge admission still apply.
 - P1 · Support hosts: Worlds #1733 passes245 and Rooms #1734 passes152 complete focused checks, with scoped English/Ukrainian native browser review. Both remain drafts for full source/package/admission; live-room and physical acceptance remain open.
 - P1 · Team launch checks: finish the separate test, guide and catalog corrections while preserving the intended one-click native launch. The withdrawn runtime proposal stays closed.
-- P2 · Language and clarity: Worlds storage status #1736 passes partitioned139/139 plus actual EN/UK review. Shared pause-music draft #1737 passes28/28; browser blocked by local starting-picture loading. Hunt, result/card language and remaining terminology continue.
+- P2 · Language and clarity: Worlds storage status #1736 passes partitioned139/139 plus actual EN/UK review. Shared pause-music draft #1737 passes complete28/28 and actual Duel first-Pause/EN/UK return review. Hunt, result/card language and remaining terminology continue.
 - Continue the remaining approved phases. Lesson recommendations still depend on the Learn hub and shared demos; PR inventory does not measure whole-plan completion.
 
 ## Phase picture

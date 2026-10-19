@@ -14,15 +14,15 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Home guidance: Capture #1729 and independent Solo prerequisite #1732 retain their gates. Versus new host cases pass; independent fixture #1735 needs a cohesive visible-action/catalogue-contract extension before the remaining native cohort. Full lessons still need Learn/D.",
+    "P1 · Home guidance: Capture #1729 and independent Solo prerequisite #1732 retain their gates. Versus new host cases pass; independent fixture #1735 extension default10/10 passes; library14/19 failed caption/media assumptions and is being corrected before later native checks. Full lessons still need Learn/D.",
     "P1 · Controller report: the wording correction is published as draft #1731 with 141 targeted checks and scoped English/Ukrainian browser review. Complete remaining source/package admission; physical connected-controller behavior remains untested.",
     "P1 · Shared foundations: support reconciliation #1661 is published with 81 targeted checks. Complete current-source gates, then preserve all host states while updating dependent Team, Versus and Academy PRs.",
     "P1 · Available space: small source changes, bounded focused tests and browser review continue. Full builds/new snapshots require 2 GiB free; about 1.0 GiB is available. No external-drive copy is authorized.",
-    "P1 · Compact readability: Single Drone/Riy category→controls→Back works; operation context leaves controls cramped at320px. Repair width without changing navigation, then complete their Extra large group. Duel/Team/Worlds acceptance and physical checks stay separate.",
+    "P1 · Compact readability: Single Drone/Riy draft #1738 restores controls276px wide at320, with sampled EN/UK scrolling/Back acceptance. Complete their whole Extra large text group next. Duel/Team/Worlds acceptance and physical checks stay separate.",
     "P1 · Review and admission: complete current-source checks for text compatibility, recovery and the reviewed support adapters when space permits. Required CI and merge admission still apply.",
     "P1 · Support hosts: Worlds #1733 passes245 and Rooms #1734 passes152 complete focused checks, with scoped English/Ukrainian native browser review. Both remain drafts for full source/package/admission; live-room and physical acceptance remain open.",
     "P1 · Team launch checks: finish the separate test, guide and catalog corrections while preserving the intended one-click native launch. The withdrawn runtime proposal stays closed.",
-    "P2 · Language and clarity: Worlds storage status #1736 passes partitioned139/139 plus actual EN/UK review. Separate shared pause-music label fix passes component red/green; native checks developing. Hunt, result/card language and remaining terminology continue.",
+    "P2 · Language and clarity: Worlds storage status #1736 passes partitioned139/139 plus actual EN/UK review. Shared pause-music draft #1737 passes complete28/28 and actual Duel first-Pause/EN/UK return review. Hunt, result/card language and remaining terminology continue.",
     "Continue the remaining approved phases. Lesson recommendations still depend on the Learn hub and shared demos; PR inventory does not measure whole-plan completion."
   ],
   "release": {
@@ -2732,7 +2732,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Worlds storage draft1736 retains partitioned139/139 and actual EN/UK review. Shared pause-music draft1737 passes complete28/28; corrected browser blocked at local picture loading, full source/package/device gates pending. Remaining terminology/result/card work continues.",
+      "next": "Worlds storage draft1736 retains partitioned139/139 and actual EN/UK review. Shared pause-music draft1737 passes complete28/28; actual Duel first-pause and retained EN/UK label browser passes, full source/package/device gates pending. Remaining terminology/result/card work continues.",
       "evidence": [
         "Browser review confirms existing singular grammar \"1 rerolls left\" and \"1 замін залишилося\". Track bounded count-aware localization in a later F59 batch; F19c adds disclosure only.",
         "Actual Worlds5363 native language switch after a verified result translates the new medal paragraph and enemy stats but leaves existing result heading, recording status, medal/score and action labels in English. Track bounded retained-result live-locale ownership; do not claim F23 new-paragraph fix covers existing nodes.",
@@ -2844,21 +2844,22 @@
           "status": "draft_review",
           "owner": "lane-c",
           "pr": "https://github.com/mekhovov/revealline/pull/1737",
-          "commit": "7c4dd5205807116b86658cb4c3b641bb5e3d23e0",
+          "commit": "c127c384bfe00569afccd9b5d0d9498f5933b01d",
           "dependency": "Existing shared pauseMusicAction owner; independent captured-main e746 base, not F10 or Worlds stack",
           "effort": "0.5d bounded fix plus focused/native/browser gates; queues excluded",
-          "next": "Published independent draft1737 on capturede746; complete component4/music22/native2 =28/28 passes. Corrected actual browser starts with Retry picture/disabled Start before Pause; investigate local asset failure without changing runtime. Full current-source/package/admission and device gates remain.",
+          "next": "Published draft1737 doc-only successor c127 preserves all28passing code/test blobs. Actual DuelUKmount→nativeENbeforefirstPause→Start/Pause shows Next song; pausedSettingsUK→Back restores translatedlabel/exactSettingsfocus. Full latestmain/package/admission, actualTeam/browsercheckpoint/audibility/device gates remain.",
           "evidence": [
             "ActualF10desktop screenshot shows visible Ukrainian Nextsong in otherwiseEnglishPause afterlocalechangedbeforefirstPause. Source owner pause-menu and bootstrap byte-identical e746, B27bfa and C1736: detached shortcut intentionally skipped by global translation; first legitimate admission needs current-locale refresh.",
             "Valid complete componentRED2existingpass/2newracecoopfail, then approved stable label producer +existinglocalizedText reuse inrefresh; complete4/4GREEN. Earlier wrongUKliteral and stale textnode identity fixture errors corrected separately, not counted as productionred. Actual buttonidentity, subsequenttextnode/focus/order, missing/disabledtransport, oneexplicitNext, destroy/no-revival preserved. No playback/global localization/API change.",
             "Final complete3file cohort28/28, zero skips/cancellations/guards, fresh serialized Node22 and exact24870 before/after manifest. Native2/2 includes actual Display select/change before first Pause in Versus/Team, paused checkpoints and repeated Back focus. Music22/22 preserves exact session/track/queue/preferences/writes/media plays. First broader native1/2 failure was pre-label cached-i18n fixture mounting; correction uses existing public attachLanguageControls via beforeImport and requires actualSELECT, no direct-locale bypass. Earlier failed attempt retained.",
-            "Root independently reviewed stable producer/existing localizedText4line change and all5paths. Draft1737 exact7c4dd52 tree8afdfbc8 parentactuale746, remote head/main/draft/paths verified and attached. Finaldoc-only qualification update does not alter passing production/test blobs. Actual source browser8993 could not reach Pause because defaultFirstreturn picture did not load; this is not corrected-label browser acceptance. No audible/device/offline claim."
+            "Root independently reviewed stable producer/existing localizedText4line change and all5paths. Draft1737 exact7c4dd52 tree8afdfbc8 parentactuale746, remote head/main/draft/paths verified and attached. Finaldoc-only qualification update does not alter passing production/test blobs. Actual source browser8993 could not reach Pause because defaultFirstreturn picture did not load; this is not corrected-label browser acceptance. No audible/device/offline claim.",
+            "Exact missingtrackedFirstreturnPNG404 fixed with ONE2,366,738byte already-local APFSclone, distinctinode/fullSHA3acf496d.. andHEADGitblob94d94509e0bd3fca988e15fc000bc53af091a543 verified, nofetch/build/bulkcopy; runtime/testsourceunchanged. NativeRetry→readyUK, DisplayEN→Back exactSettingsfocus→Start→Escape realPAUSED, Next songEnglish, Resumeprimaryfocus, Bothplayerspaused, soundoff. PausedDisplayUK→Back retainsUKНаступнакомпозиція/exactSettingsfocus. Screenshot pause-music-7c4-duel-uk-mount-en-first-pause.png. NoNextactivation/listening or browsercheckpointbyte/Teamdeviceclaim. Doc-onlyordinaryFFc127/treebe014974 published, original28passingcode/testblobs exact. Latestmain2d24remotecompare11commits/25paths no5pathorbootstrap/music/shellowner overlap, butadjacentnativehost/settingschanged; notlatestintegrationqualification."
           ],
           "deliveryState": "draft",
-          "observedRemoteHead": "7c4dd5205807116b86658cb4c3b641bb5e3d23e0",
+          "observedRemoteHead": "c127c384bfe00569afccd9b5d0d9498f5933b01d",
           "qualification": {
             "automated": "complete_focused_28_pass_full_pending",
-            "browser": "blocked_local_picture_loading",
+            "browser": "actual_duel_first_pause_and_en_uk_back_pass",
             "physical": "not_tested"
           }
         }
