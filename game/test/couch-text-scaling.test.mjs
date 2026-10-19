@@ -348,6 +348,51 @@ test('Duel active and result-review layout contains the actual compact song and 
   // review still measures overflow, readable wrapping and complete board fit.
 });
 
+test('compact enlarged Duel direction rows retain four full-size targets without consuming three board rows', async () => {
+  const sheet = await parsers.css.parse(
+    await readFile(path.join(root, 'game/couch/text-scaling.css'), 'utf8'),
+  );
+  const media = sheet.nodes.find(
+    (node) =>
+      node.type === 'css-atrule' &&
+      node.nodes?.some(
+        (rule) =>
+          rule.type === 'css-rule' &&
+          rule.nodes.some((item) => item.prop === '--duel-direction-size'),
+      ),
+  );
+  assert.equal(
+    media.raws.params.replace(/\s/g, ''),
+    '(max-width:680px)and(orientation:portrait),(max-width:1024px)and(orientation:landscape)and(max-height:600px)',
+  );
+  const rules = media.nodes.filter((node) => node.type === 'css-rule');
+  const value = (rule, prop) => rule.nodes.find((node) => node.prop === prop)?.value.text;
+  const pad = rules.find((rule) => value(rule, '--duel-direction-size') === '52px');
+  const large = rules.find((rule) => value(rule, '--duel-direction-size') === '64px');
+  const cross = rules.find((rule) => value(rule, 'grid-template-columns'));
+  assert.ok(large.raws.selector.includes("[data-touch-size='large']"));
+  assert.equal(value(pad, 'position'), 'static');
+  assert.equal(value(pad, 'grid-row'), '4');
+  assert.ok(pad.raws.selector.endsWith(':not([hidden])'));
+  assert.equal(value(cross, 'grid-template-columns'), 'repeat(4, var(--duel-direction-size))');
+  assert.equal(value(cross, 'grid-template-rows'), 'var(--duel-direction-size)');
+  assert.equal(value(cross, 'block-size'), 'var(--duel-direction-size)');
+  assert.equal(value(cross, 'gap'), '4px');
+  for (const width of [320, 390, 844]) {
+    const seat = width === 844 ? (width - 24) / 2 : width - 16;
+    assert.ok(4 * Number.parseInt(value(large, '--duel-direction-size')) + 12 <= seat);
+  }
+  const buttons = rules.find((rule) => rule.raws.selector.endsWith('button'));
+  assert.equal(value(buttons, 'grid-area'), 'auto', 'Native DOM/keyboard order is retained.');
+  assert.equal(value(buttons, 'box-sizing'), 'border-box');
+  for (const rule of rules) {
+    assert.ok(rule.raws.selector.includes("[data-text-scaling='versus']"));
+    assert.ok(rule.raws.selector.includes("[data-text-size='extra-large']"));
+    assert.ok(rule.raws.selector.includes("[data-touch-mode='dpad']"));
+    assert.ok(rule.nodes.every((node) => !['font-size', 'font', 'transform'].includes(node.prop)));
+  }
+});
+
 test('live theme projection matches the Duel capability and keeps other hosts on Large', async (t) => {
   for (const qualified of [true, false]) {
     const document = new Document(),

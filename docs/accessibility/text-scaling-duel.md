@@ -61,6 +61,24 @@ the normal and Large layouts, font sizes, hidden owners and logical bitmaps stay
 unchanged. Source checks bind these real owners; visual qualification belongs to
 the corrected snapshot, not the earlier overflowing candidate.
 
+The next actual check enabled Direction pad, Large controls and Always for both
+seats at Ukrainian 320px. The inherited tall-phone layout reserved a 192px
+three-row pad below each board and collapsed both board slots. Enlarged compact
+Duel now lays out the same four native direction buttons in one row below each
+board. Regular targets remain 52px; Large targets remain 64px square, with 4px
+gaps. DOM order, keyboard handlers, translated accessible names, text sizes and
+the ordinary Standard/Large cross are unchanged. Equipment retains its existing
+wrapping row and visibility owner.
+
+A row cannot use the old square pad's center-based compass. The couch input owner
+therefore resolves captured points against the actual four button rectangles
+only when the pad is wider than twice its height. The shared gesture owner keeps
+its existing per-finger capture, outside release and cancellation behavior;
+square D-pads, stick and swipe retain their existing direction resolver. Focused
+tests cover every row target, slides, gutters, both seats and stale/failing
+capture. Browser review must still measure both boards, each 64px target and
+usable steering at 320px portrait and 844×390 landscape before qualification.
+
 ## Qualification
 
 Actual-host checks use both real simulations and the real preference owner.

@@ -366,3 +366,59 @@ html[data-text-scaling='versus']
     display: none;
   }
 }
+
+/* A three-row Large direction pad consumes 192px per stacked seat. Keep the
+ * same four native buttons and 64px targets in one row, below each bitmap,
+ * instead of shrinking either the controls or the enlarged readouts. */
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  html[data-text-scaling='versus']
+    body[data-text-size='extra-large'].race-focus
+    .racer[data-player]:has(.race-pad[data-touch-mode='dpad']:not([hidden])) {
+    grid-template-rows: minmax(0, 1fr) auto auto auto;
+  }
+  html[data-text-scaling='versus']
+    body[data-text-size='extra-large'].race-focus
+    .racer[data-player]
+    .race-pad[data-touch-mode='dpad']:not([hidden]) {
+    --duel-direction-size: 52px;
+    position: static;
+    grid-column: 1;
+    grid-row: 4;
+    inline-size: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 4px;
+    margin: 0;
+  }
+  html[data-text-scaling='versus']
+    body[data-text-size='extra-large'].race-focus
+    .race-pad[data-touch-mode='dpad'][data-touch-size='large'] {
+    --duel-direction-size: 64px;
+  }
+  html[data-text-scaling='versus']
+    body[data-text-size='extra-large'].race-focus
+    .race-pad[data-touch-mode='dpad']
+    .race-cross:not([hidden]) {
+    inline-size: calc(4 * var(--duel-direction-size) + 12px);
+    block-size: var(--duel-direction-size);
+    grid-template-columns: repeat(4, var(--duel-direction-size));
+    grid-template-rows: var(--duel-direction-size);
+    gap: 4px;
+  }
+  html[data-text-scaling='versus']
+    body[data-text-size='extra-large'].race-focus
+    .race-pad[data-touch-mode='dpad']
+    .race-cross
+    button {
+    box-sizing: border-box;
+    grid-area: auto;
+  }
+  html[data-text-scaling='versus']
+    body[data-text-size='extra-large'].race-focus
+    .race-pad[data-touch-mode='dpad']
+    .race-cross
+    .cross-center {
+    display: none;
+  }
+}

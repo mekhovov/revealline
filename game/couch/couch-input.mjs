@@ -420,6 +420,24 @@ export function attachCouchInput({
         indicator: pad.querySelector('.touch-indicator'),
         getSettings: () => getTouchSettings(player),
         active: () => !destroyed && active() && !pad.hidden,
+        dpadDirectionAtPoint: (event, cross) => {
+          const rect = cross.getBoundingClientRect();
+          // Enlarged compact Duel uses the same four buttons in one row.
+          // Captured moves must follow their actual hit regions, not the
+          // center-based compass that still owns the ordinary square cross.
+          if (rect.width <= rect.height * 2) return undefined;
+          for (const button of cross.querySelectorAll('[data-direction]')) {
+            const hit = button.getBoundingClientRect();
+            if (
+              event.clientX >= hit.left &&
+              event.clientX < hit.left + hit.width &&
+              event.clientY >= hit.top &&
+              event.clientY < hit.top + hit.height
+            )
+              return button.dataset.direction;
+          }
+          return null;
+        },
         onDirection: (direction, id) =>
           begin(player, direction, `touch:${player}:${id}`, { source: 'touch' }),
         onCancel: pause,
