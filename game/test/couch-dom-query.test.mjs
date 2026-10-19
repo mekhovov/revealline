@@ -197,3 +197,79 @@ test('oversized selector syntax is parsed without retention on every match', () 
     String.prototype.split = split;
   }
 });
+
+test('after connects every supplied section in order and exposes descendants to document lookup', () => {
+  const document = new Document();
+  const anchor = document.createElement('section');
+  const tail = document.createElement('footer');
+  document.body.append(anchor, tail);
+  const sections = ['tracks', 'playlists', 'assignments', 'backup'].map((id) => {
+    const section = document.createElement('section');
+    const control = document.createElement('button');
+    control.id = id;
+    section.append(control);
+    return section;
+  });
+  anchor.after(...sections);
+  assert.deepEqual(document.body.children, [anchor, ...sections, tail]);
+  for (const section of sections) {
+    assert.equal(section.parentNode, document.body);
+    assert.equal(section.isConnected, true);
+    const control = section.firstChild;
+    assert.equal(document.getElementById(control.id), control);
+  }
+});
+
+test('after moves existing siblings once and handles the receiver among its arguments', () => {
+  const document = new Document();
+  const [left, anchor, right, tail] = Array.from({ length: 4 }, () =>
+    document.createElement('section'),
+  );
+  document.body.append(left, anchor, right, tail);
+  anchor.after(right, left, right);
+  assert.deepEqual(document.body.children, [anchor, left, right, tail]);
+  anchor.after(tail, anchor);
+  assert.deepEqual(document.body.children, [tail, anchor, left, right]);
+  for (const node of [left, anchor, right, tail]) assert.equal(node.parentNode, document.body);
+});
+
+test('after inserts text arguments around nodes without reversing their order', () => {
+  const document = new Document();
+  const anchor = document.createElement('section');
+  const tail = document.createElement('footer');
+  const inserted = document.createElement('button');
+  document.body.append(anchor, tail);
+  anchor.after('first', inserted, 'last');
+  const children = document.body.children;
+  assert.equal(children.length, 5);
+  assert.equal(children[0], anchor);
+  assert.equal(children[1].nodeType, 3);
+  assert.equal(children[1].textContent, 'first');
+  assert.equal(children[2], inserted);
+  assert.equal(children[3].nodeType, 3);
+  assert.equal(children[3].textContent, 'last');
+  assert.equal(children[4], tail);
+  assert.equal(children[1].parentNode, document.body);
+  assert.equal(children[3].parentNode, document.body);
+  const originalOrder = [...children];
+  anchor.after(children[1], inserted);
+  assert.deepEqual(
+    document.body.children,
+    originalOrder,
+    'Moving a text sibling retains the next untouched sibling.',
+  );
+});
+
+test('after with no arguments or a detached receiver leaves existing owners untouched', () => {
+  const document = new Document();
+  const anchor = document.createElement('section');
+  const sibling = document.createElement('button');
+  const detached = document.createElement('section');
+  document.body.append(anchor, sibling);
+  anchor.after();
+  assert.deepEqual(document.body.children, [anchor, sibling]);
+  detached.after(sibling, 'uninserted');
+  assert.deepEqual(document.body.children, [anchor, sibling]);
+  assert.equal(sibling.parentNode, document.body);
+  assert.equal(detached.parentNode, null);
+});
