@@ -9298,6 +9298,15 @@ try {
     show('pause-label', kind === 'pause');
     show('overlay-reading', kind !== 'pause');
     show('overlay-footnote', kind !== 'pause');
+    const medalGoalVisible =
+      kind === 'won' &&
+      !practice &&
+      !courseSession &&
+      !recoverGameplayTuning(run.level)?.adminOverride;
+    show('capture-medal-goal', medalGoalVisible);
+    localizedText($('capture-medal-goal'), () =>
+      medalGoalVisible ? captureMedalGoalCopy(run) : '',
+    );
     $('game-overlay').dataset.intro = String(
       kind === 'ready' &&
         !practice &&
@@ -9471,11 +9480,7 @@ try {
         return t('interface:nextMission');
       });
       localizedText($('overlay-footnote'), () =>
-        practice
-          ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks')
-          : recoverGameplayTuning(run.level)?.adminOverride || courseSession
-            ? ''
-            : captureMedalGoalCopy(run),
+        practice ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks') : '',
       );
     }
     if (kind === 'lost') {
