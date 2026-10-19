@@ -1,0 +1,458 @@
+TAP version 13
+# Subtest: live whitelist pins actual standard maps, rules and roster while allowing translated names
+ok 1 - live whitelist pins actual standard maps, rules and roster while allowing translated names
+  ---
+  duration_ms: 3.904448
+  ...
+# Subtest: orchard-crossing/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+ok 2 - orchard-crossing/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+  ---
+  duration_ms: 4804.382156
+  ...
+# {"seed":1,"ticks":3540,"status":"running","coverage":0.514505119453925,"captures":5,"bends":7,"endReason":"no-safe-macro","maxPlanningMs":487}
+# {"seed":2,"ticks":3770,"status":"won","coverage":0.8528156996587031,"captures":4,"bends":5,"endReason":null,"maxPlanningMs":282}
+# {"seed":3,"ticks":3919,"status":"running","coverage":0.47696245733788395,"captures":5,"bends":6,"endReason":"no-safe-macro","maxPlanningMs":230}
+# Subtest: orchard-crossing/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+ok 3 - orchard-crossing/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+  ---
+  duration_ms: 5838.246866
+  ...
+# {"seed":1,"ticks":6311,"status":"won","coverage":0.7892491467576792,"captures":10,"bends":13,"endReason":null,"maxPlanningMs":234}
+# {"seed":2,"ticks":6139,"status":"won","coverage":0.7039249146757679,"captures":9,"bends":10,"endReason":null,"maxPlanningMs":261}
+# {"seed":3,"ticks":5346,"status":"won","coverage":0.7414675767918089,"captures":6,"bends":10,"endReason":null,"maxPlanningMs":329}
+# Subtest: courtyard-exits/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+ok 4 - courtyard-exits/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+  ---
+  duration_ms: 4699.204012
+  ...
+# {"seed":1,"ticks":3837,"status":"won","coverage":0.7707612456747405,"captures":6,"bends":5,"endReason":null,"maxPlanningMs":332}
+# {"seed":2,"ticks":5799,"status":"won","coverage":0.740484429065744,"captures":9,"bends":12,"endReason":null,"maxPlanningMs":270}
+# {"seed":3,"ticks":2256,"status":"running","coverage":0.45501730103806226,"captures":3,"bends":2,"endReason":"no-safe-macro","maxPlanningMs":260}
+# Subtest: courtyard-exits/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+ok 5 - courtyard-exits/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+  ---
+  duration_ms: 6419.26797
+  ...
+# {"seed":1,"ticks":5969,"status":"won","coverage":0.7768166089965398,"captures":10,"bends":13,"endReason":null,"maxPlanningMs":262}
+# {"seed":2,"ticks":6246,"status":"won","coverage":0.8209342560553633,"captures":11,"bends":15,"endReason":null,"maxPlanningMs":246}
+# {"seed":3,"ticks":4687,"status":"running","coverage":0.6384083044982699,"captures":6,"bends":7,"endReason":"no-safe-macro","maxPlanningMs":253}
+# Subtest: planning is deterministic and declines an exposed cut without changing it
+ok 6 - planning is deterministic and declines an exposed cut without changing it
+  ---
+  duration_ms: 437.507433
+  ...
+# Subtest: actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+ok 7 - actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+  ---
+  duration_ms: 3879.977903
+  ...
+# Subtest: background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+ok 8 - background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+  ---
+  duration_ms: 519.476483
+  ...
+# Subtest: background budget releases a rejected stale result to the unchanged fault boundary
+ok 9 - background budget releases a rejected stale result to the unchanged fault boundary
+  ---
+  duration_ms: 283.684563
+  ...
+# Subtest: background budget never bypasses the existing planning watchdog
+ok 10 - background budget never bypasses the existing planning watchdog
+  ---
+  duration_ms: 285.010287
+  ...
+# Subtest: missing Worker, abort and planning watchdog fail closed and release every worker
+ok 11 - missing Worker, abort and planning watchdog fail closed and release every worker
+  ---
+  duration_ms: 13.711448
+  ...
+# Subtest: future search exhaustion ends only after the current safe macro, never runs an old heading
+ok 12 - future search exhaustion ends only after the current safe macro, never runs an old heading
+  ---
+  duration_ms: 281.143837
+  ...
+# Subtest: a stale future plan remains a fault, not a successful exhaustion handoff
+ok 13 - a stale future plan remains a fault, not a successful exhaustion handoff
+  ---
+  duration_ms: 272.568987
+  ...
+# Subtest: live playback crosses the old 60 second cutoff without claiming completion
+ok 14 - live playback crosses the old 60 second cutoff without claiming completion
+  ---
+  duration_ms: 375.554863
+  ...
+# Subtest: full live admission rejects an exhausted route before display and resets a completed seed
+ok 15 - full live admission rejects an exhausted route before display and resets a completed seed
+  ---
+  duration_ms: 5817.463924
+  ...
+# Subtest: resource diagnostic observes Worker lifetime before initial preparation resolves
+ok 16 - resource diagnostic observes Worker lifetime before initial preparation resolves
+  ---
+  duration_ms: 3.066482
+  ...
+# Subtest: resource diagnostic callbacks cannot alter Worker watchdog or cleanup
+ok 17 - resource diagnostic callbacks cannot alter Worker watchdog or cleanup
+  ---
+  duration_ms: 14.500459
+  ...
+# Subtest: a pending scene picture releases its painter on deadline before the decoder settles
+ok 18 - a pending scene picture releases its painter on deadline before the decoder settles
+  ---
+  duration_ms: 2572.904762
+  ...
+# Subtest: a pending scene picture releases its painter on Back before the decoder settles
+ok 19 - a pending scene picture releases its painter on Back before the decoder settles
+  ---
+  duration_ms: 2012.208675
+  ...
+# Subtest: loading fades only the displayed frame and holds darkness until a prepared scene arrives
+ok 20 - loading fades only the displayed frame and holds darkness until a prepared scene arrives
+  ---
+  duration_ms: 0.717792
+  ...
+# Subtest: fast scene loading still finishes departure; privacy clearing discards the snapshot
+ok 21 - fast scene loading still finishes departure; privacy clearing discards the snapshot
+  ---
+  duration_ms: 0.120652
+  ...
+# Subtest: Next during arrival preserves its dimming and accepts the displayed reward frame
+ok 22 - Next during arrival preserves its dimming and accepts the displayed reward frame
+  ---
+  duration_ms: 0.115454
+  ...
+# Subtest: settled arrival and loading hold do not keep rewriting opacity
+ok 23 - settled arrival and loading hold do not keep rewriting opacity
+  ---
+  duration_ms: 0.184788
+  ...
+# Subtest: resource diagnostic retains only the currently allocated transition surface
+ok 24 - resource diagnostic retains only the currently allocated transition surface
+  ---
+  duration_ms: 1.220119
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+not ok 25 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 960.80571
+  location: '/home/runner/work/revealline/revealline/game/test/demo-sources.test.mjs:49:1'
+  failureType: 'testCodeFailure'
+  error: 'Replay verification failed. Its inputs do not reproduce the recorded final state.'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReplayVerificationError'
+  stack: |-
+    preparePlayer (file:///home/runner/work/revealline/revealline/game/replay-player.mjs:71:19)
+    async Object.create (file:///home/runner/work/revealline/revealline/game/demo-sources.mjs:89:26)
+    async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/demo-sources.test.mjs:72:20)
+    async Test.run (node:internal/test_runner/test:932:9)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 26 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 57.198978
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 27 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 3304.832585
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 28 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 3062.296019
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 29 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 47.321729
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 30 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 98.591897
+  ...
+# Subtest: personal recording rotation metadata preserves its admitted difficulty identity
+ok 31 - personal recording rotation metadata preserves its admitted difficulty identity
+  ---
+  duration_ms: 0.409695
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 32 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 134.82996
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 33 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 18.87059
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 34 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.531529
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 35 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 301.844065
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 36 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 1070.292208
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 37 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 30.657652
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 38 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.619754
+  ...
+# Subtest: resource diagnostic reaches live source rehearsal before its player can be returned
+ok 39 - resource diagnostic reaches live source rehearsal before its player can be returned
+  ---
+  duration_ms: 24.58427
+  ...
+# Subtest: manual resource export requires real Demo Pause and retains closed display across reopen
+ok 40 - manual resource export requires real Demo Pause and retains closed display across reopen
+  ---
+  duration_ms: 2889.339561
+  ...
+# Subtest: closed Demo retains unsettled scene reservation until ignored decode actually completes
+ok 41 - closed Demo retains unsettled scene reservation until ignored decode actually completes
+  ---
+  duration_ms: 1663.973753
+  ...
+# Subtest: manual resource export rejects advancing practice despite the retained interrupted spectator flag
+ok 42 - manual resource export rejects advancing practice despite the retained interrupted spectator flag
+  ---
+  duration_ms: 1867.455279
+  ...
+# Subtest: exact poster stays visible through silent preparation; explicit native action starts one segment without reward APIs
+ok 43 - exact poster stays visible through silent preparation; explicit native action starts one segment without reward APIs
+  ---
+  duration_ms: 23.574785
+  ...
+# Subtest: Skip and Replay preserve the same poster, seek the selected start and never mint a new result
+ok 44 - Skip and Replay preserve the same poster, seek the selected start and never mint a new result
+  ---
+  duration_ms: 12.695676
+  ...
+# Subtest: blocked play is truthful, returns music gain and offers a later native retry
+ok 45 - blocked play is truthful, returns music gain and offers a later native retry
+  ---
+  duration_ms: 9.549356
+  ...
+# Subtest: blur pauses pending play and a late successful promise cannot restart audible video
+ok 46 - blur pauses pending play and a late successful promise cannot restart audible video
+  ---
+  duration_ms: 7.425677
+  ...
+# Subtest: inactive-page pause releases hidden focus and needs explicit Resume story
+ok 47 - inactive-page pause releases hidden focus and needs explicit Resume story
+  ---
+  duration_ms: 12.290245
+  ...
+# Subtest: pause during Replay seek cancels its autoplay intent but allows later explicit Play
+ok 48 - pause during Replay seek cancels its autoplay intent but allows later explicit Play
+  ---
+  duration_ms: 5.323861
+  ...
+# Subtest: Skip before metadata keeps the exact poster and never starts after late readiness
+ok 49 - Skip before metadata keeps the exact poster and never starts after late readiness
+  ---
+  duration_ms: 5.427817
+  ...
+# Subtest: reduced motion stays opt-in, and enabling it during playback returns to the exact poster
+ok 50 - reduced motion stays opt-in, and enabling it during playback returns to the exact poster
+  ---
+  duration_ms: 6.117115
+  ...
+# Subtest: cinematic volume is independent and pause releases only this music lease
+ok 51 - cinematic volume is independent and pause releases only this music lease
+  ---
+  duration_ms: 6.979324
+  ...
+# Subtest: stale frame callback cannot clear the newer Replay poll or finish a different play epoch
+ok 52 - stale frame callback cannot clear the newer Replay poll or finish a different play epoch
+  ---
+  duration_ms: 5.263029
+  ...
+# Subtest: finite load, seek and play deadlines preserve poster and release temporary music
+ok 53 - finite load, seek and play deadlines preserve poster and release temporary music
+  ---
+  duration_ms: 17.381785
+  ...
+# Subtest: different playback dimensions or unhonored seek never show video
+ok 54 - different playback dimensions or unhonored seek never show video
+  ---
+  duration_ms: 9.068962
+  ...
+# Subtest: duration mutation and media decode failure stop the player without replacing earned art
+ok 55 - duration mutation and media decode failure stop the player without replacing earned art
+  ---
+  duration_ms: 9.447182
+  ...
+# Subtest: without frame callbacks the current-time observer still ends the selected segment
+ok 56 - without frame callbacks the current-time observer still ends the selected segment
+  ---
+  duration_ms: 4.494931
+  ...
+# Subtest: dispose/pagehide revokes one owned URL, all listeners/timers and late play success
+ok 57 - dispose/pagehide revokes one owned URL, all listeners/timers and late play success
+  ---
+  duration_ms: 4.591277
+  ...
+# Subtest: an external abort before or after opening releases owned media and keeps the caller poster
+ok 58 - an external abort before or after opening releases owned media and keeps the caller poster
+  ---
+  duration_ms: 12.16732
+  ...
+# Subtest: a broken music restoration adapter cannot prevent owned video cleanup and reports its limit
+ok 59 - a broken music restoration adapter cannot prevent owned video cleanup and reports its limit
+  ---
+  duration_ms: 4.916677
+  ...
+# Subtest: failed gain acquisition rolls back only the new lease and never starts media
+ok 60 - failed gain acquisition rolls back only the new lease and never starts media
+  ---
+  duration_ms: 4.761493
+  ...
+# Subtest: premature native end reports truncation instead of claiming the selected segment completed
+ok 61 - premature native end reports truncation instead of claiming the selected segment completed
+  ---
+  duration_ms: 4.515052
+  ...
+# Subtest: native focus follows visible story actions through Play, Pause, end and Replay
+ok 62 - native focus follows visible story actions through Play, Pause, end and Replay
+  ---
+  duration_ms: 6.687785
+  ...
+# Subtest: story completion preserves focus on volume or the enclosing Close action
+ok 63 - story completion preserves focus on volume or the enclosing Close action
+  ---
+  duration_ms: 8.88169
+  ...
+# Subtest: a deliberate focus change during native blur wins over story fallback
+ok 64 - a deliberate focus change during native blur wins over story fallback
+  ---
+  duration_ms: 4.415171
+  ...
+# Subtest: Skip and natural end move a disappearing Skip action to Replay without changing the earned poster
+ok 65 - Skip and natural end move a disappearing Skip action to Replay without changing the earned poster
+  ---
+  duration_ms: 6.002473
+  ...
+# Subtest: closing the presentation during a focus change cannot focus a retired story action
+ok 66 - closing the presentation during a focus change cannot focus a retired story action
+  ---
+  duration_ms: 4.756896
+  ...
+# Subtest: an obsolete play result cannot pause or redock a newer explicit play
+ok 67 - an obsolete play result cannot pause or redock a newer explicit play
+  ---
+  duration_ms: 5.567678
+  ...
+# Subtest: native media interruption releases music and requires explicit story Resume
+ok 68 - native media interruption releases music and requires explicit story Resume
+  ---
+  duration_ms: 4.576354
+  ...
+# Subtest: abort during video allocation cleans the returned unadopted video without loading an original
+ok 69 - abort during video allocation cleans the returned unadopted video without loading an original
+  ---
+  duration_ms: 5.726206
+  ...
+# Subtest: abort during URL allocation revokes the returned unadopted URL exactly once
+ok 70 - abort during URL allocation revokes the returned unadopted URL exactly once
+  ---
+  duration_ms: 4.459118
+  ...
+# Subtest: abort during gain acquisition releases the returned lease without starting video
+ok 71 - abort during gain acquisition releases the returned lease without starting video
+  ---
+  duration_ms: 4.442533
+  ...
+# Subtest: abort during status callback keeps disposed state after pending seek readiness
+ok 72 - abort during status callback keeps disposed state after pending seek readiness
+  ---
+  duration_ms: 4.239316
+  ...
+# Subtest: abort during gain release cannot reopen a disposed story as a static view
+ok 73 - abort during gain release cannot reopen a disposed story as a static view
+  ---
+  duration_ms: 5.444913
+  ...
+# Subtest: cinematic slider remains independent while explicit playback honors master attenuation and mute
+ok 74 - cinematic slider remains independent while explicit playback honors master attenuation and mute
+  ---
+  duration_ms: 5.002196
+  ...
+# Subtest: invalid master controls refuse without changing current cinematic controls
+ok 75 - invalid master controls refuse without changing current cinematic controls
+  ---
+  duration_ms: 4.575544
+  ...
+# Subtest: injected master applies once and synchronously without changing cinematic volume or story transport
+ok 76 - injected master applies once and synchronously without changing cinematic volume or story transport
+  ---
+  duration_ms: 5.312754
+  ...
+# Subtest: master mute survives pending story Play and owned cleanup releases only the story output
+ok 77 - master mute survives pending story Play and owned cleanup releases only the story output
+  ---
+  duration_ms: 5.710894
+  ...
+# Subtest: actual story controls keep modal Tab at Close and Cinematic volume without playing or changing volume
+ok 78 - actual story controls keep modal Tab at Close and Cinematic volume without playing or changing volume
+  ---
+  duration_ms: 7.258605
+  ...
+# Subtest: Ukrainian-first story controls and accepted notices switch without changing playback ownership
+ok 79 - Ukrainian-first story controls and accepted notices switch without changing playback ownership
+  ---
+  duration_ms: 7.701212
+  ...
+# Subtest: earned video starts once after its exact poster is ready, then stays available for replay
+ok 80 - earned video starts once after its exact poster is ready, then stays available for replay
+  ---
+  duration_ms: 5.663582
+  ...
+# Subtest: reduced motion and background cancellation prevent automatic earned-video playback
+ok 81 - reduced motion and background cancellation prevent automatic earned-video playback
+  ---
+  duration_ms: 10.833831
+  ...
+# Subtest: blocked earned autoplay leaves the exact poster and an explicit Play retry
+ok 82 - blocked earned autoplay leaves the exact poster and an explicit Play retry
+  ---
+  duration_ms: 4.649164
+  ...
+# Subtest: cinematic arrival keeps the exact poster through starting and fades only decoded playback
+ok 83 - cinematic arrival keeps the exact poster through starting and fades only decoded playback
+  ---
+  duration_ms: 4.523745
+  ...
+# Subtest: resource diagnostic counts exact native media owners without playing or allocating
+ok 84 - resource diagnostic counts exact native media owners without playing or allocating
+  ---
+  duration_ms: 4.32143
+  ...
+# Subtest: resource diagnostic distinguishes owned play cancellation from unobservable native settlement
+ok 85 - resource diagnostic distinguishes owned play cancellation from unobservable native settlement
+  ---
+  duration_ms: 6.554394
+  ...
+1..85
+# tests 85
+# suites 0
+# pass 84
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 56640.512562

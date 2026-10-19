@@ -1,0 +1,278 @@
+{
+  "format": "SharedDemoInstalledSourceProbeV1",
+  "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "started": "2026-10-19T07:55:22.054Z",
+  "complete": true,
+  "passed": true,
+  "runtime": {
+    "node": "v20.19.5",
+    "v8": "11.3.244.8-node.30",
+    "platform": "darwin",
+    "arch": "arm64",
+    "userAgent": null
+  },
+  "scope": "Same 17 installed replay sources and strict source.create path as demo-sources.test.mjs:49. Diagnostic only; no recordings generated, no compatibility changes, no browser evidence.",
+  "sourcePins": {
+    "game/test/demo-sources.test.mjs": "5ffc5b64508c7a8387f2498774abfecd2ef5d04c6fb45763f7731c6318d3dcf4",
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/demo-catalog.mjs": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+    "game/demo-runtime.mjs": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/replay.mjs": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+    "game/demo-data/catalog.json": "2dcb1597df76c9a7401b37d22cc963fcf15984222a9bda88cad823efcd7d4f0b",
+    "game/content/campaign.json": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718",
+    "game/content/classes.json": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84",
+    "game/content/packs/fpv-arcade-r5.json": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+  },
+  "sources": [
+    {
+      "sourceId": "first-signal-left",
+      "campaignId": "first-signal",
+      "levelId": "signal-01",
+      "identity": "d31dfb37580148ee",
+      "recordingIdentity": "c48b4182e13d1541",
+      "status": "passed",
+      "elapsedMs": 55.967,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/first-signal-left.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "first-signal-right",
+      "campaignId": "first-signal",
+      "levelId": "signal-01",
+      "identity": "d31dfb37580148ee",
+      "recordingIdentity": "c48b4182e13d1541",
+      "status": "passed",
+      "elapsedMs": 36.359,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/first-signal-right.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "relay-orchard-loop",
+      "campaignId": "first-signal",
+      "levelId": "signal-02",
+      "identity": "b89d47ba6cee39e0",
+      "recordingIdentity": "bc9e680741d45c5f",
+      "status": "passed",
+      "elapsedMs": 45.83,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/relay-orchard-loop.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "relay-orchard-stairs",
+      "campaignId": "first-signal",
+      "levelId": "signal-02",
+      "identity": "b89d47ba6cee39e0",
+      "recordingIdentity": "bc9e680741d45c5f",
+      "status": "passed",
+      "elapsedMs": 46.713,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/relay-orchard-stairs.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "crosswind-openings",
+      "campaignId": "first-signal",
+      "levelId": "signal-03",
+      "identity": "6fcd5c0f32ae8df5",
+      "recordingIdentity": "9fbdb29c9a7bab4f",
+      "status": "passed",
+      "elapsedMs": 59.031,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/crosswind-openings.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "night-patrol-loop",
+      "campaignId": "first-signal",
+      "levelId": "signal-05",
+      "identity": "e36556a872307a25",
+      "recordingIdentity": "36805be586d77918",
+      "status": "passed",
+      "elapsedMs": 60.356,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/night-patrol-loop.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "stone-lanes-detour",
+      "campaignId": "first-signal",
+      "levelId": "signal-04",
+      "identity": "2ee023b74e759091",
+      "recordingIdentity": "60e3faec76596c99",
+      "status": "passed",
+      "elapsedMs": 36.419,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/stone-lanes-detour.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "hidden-frequency-search",
+      "campaignId": "first-signal",
+      "levelId": "signal-06",
+      "identity": "4fc5893da6d1c3a1",
+      "recordingIdentity": "54d2d9278ce14a0a",
+      "status": "passed",
+      "elapsedMs": 43.884,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/hidden-frequency-search.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "the-crossing-windows",
+      "campaignId": "first-signal",
+      "levelId": "signal-07",
+      "identity": "38dce72f946c8298",
+      "recordingIdentity": "36c63367fbb33169",
+      "status": "passed",
+      "elapsedMs": 51.008,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/the-crossing-windows.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "signal-garden-route",
+      "campaignId": "first-signal",
+      "levelId": "signal-09",
+      "identity": "96349ac425c435a1",
+      "recordingIdentity": "586f07e8ab4ffd68",
+      "status": "passed",
+      "elapsedMs": 47.867,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/signal-garden-route.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "campaignId": "first-signal",
+      "levelId": "signal-08",
+      "identity": "07559fdb9548f17f",
+      "recordingIdentity": "d1384c3dc6516b24",
+      "status": "passed",
+      "elapsedMs": 115.25,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "solo-qualified-acdacc2c6fce041f",
+      "campaignId": "first-signal",
+      "levelId": "signal-10",
+      "identity": "6c261c7403bd2de5",
+      "recordingIdentity": "38e792b6a12aa0fc",
+      "status": "passed",
+      "elapsedMs": 29.49,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "solo-qualified-365f2ab3bab05af8",
+      "campaignId": "first-signal",
+      "levelId": "signal-11",
+      "identity": "40e2759ce4e5c909",
+      "recordingIdentity": "f52c52d981fab5be",
+      "status": "passed",
+      "elapsedMs": 20.455,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-365f2ab3bab05af8.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "solo-qualified-d0257fa131665b79",
+      "campaignId": "first-signal",
+      "levelId": "signal-12",
+      "identity": "21b01a4b4433411e",
+      "recordingIdentity": "af7a7b92368ea255",
+      "status": "passed",
+      "elapsedMs": 135.68,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.replay.json"
+      ],
+      "recordedStatus": "lost"
+    },
+    {
+      "sourceId": "solo-qualified-6cdffde70fe72fa4",
+      "campaignId": "fpv-pressure-lines",
+      "levelId": "orchard-crossing",
+      "identity": "af346e7e3d400f49",
+      "recordingIdentity": "cef626b614a00d08",
+      "status": "passed",
+      "elapsedMs": 337.309,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-6cdffde70fe72fa4.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "solo-qualified-cc8994b6f3d0482f",
+      "campaignId": "fpv-pressure-lines",
+      "levelId": "courtyard-exits",
+      "identity": "64ac5c0275b0c5db",
+      "recordingIdentity": "de03c86cecd7cab4",
+      "status": "passed",
+      "elapsedMs": 315.58,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.replay.json"
+      ],
+      "recordedStatus": "won"
+    },
+    {
+      "sourceId": "solo-qualified-596ebdf496c9e073",
+      "campaignId": "fpv-pressure-lines",
+      "levelId": "night-crossfire",
+      "identity": "e81d92d4c2d590f8",
+      "recordingIdentity": "d28f195cd3dd220e",
+      "status": "passed",
+      "elapsedMs": 232.561,
+      "requests": [
+        "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-596ebdf496c9e073.replay.json"
+      ],
+      "recordedStatus": "lost"
+    }
+  ],
+  "requests": [
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/catalog.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/first-signal-left.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/first-signal-right.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/relay-orchard-loop.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/relay-orchard-stairs.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/crosswind-openings.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/night-patrol-loop.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/stone-lanes-detour.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/hidden-frequency-search.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/the-crossing-windows.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/signal-garden-route.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-acdacc2c6fce041f.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-365f2ab3bab05af8.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-d0257fa131665b79.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-6cdffde70fe72fa4.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-cc8994b6f3d0482f.replay.json",
+    "file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/demo-data/solo-qualified-596ebdf496c9e073.replay.json"
+  ],
+  "failure": null,
+  "limitations": [
+    "A local macOS/Node22.22.2 or Node20.19.5 result is not reproduction of hosted Node22.13.1/Linux x64."
+  ],
+  "timedOut": false,
+  "finished": "2026-10-19T07:55:23.919Z",
+  "endingHead": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "changedRuntimePaths": []
+}

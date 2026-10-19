@@ -1,0 +1,23 @@
+{
+  "created": "2026-10-19T05:33:59.594751+00:00",
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/objects/pack/tmp_pack_wY9SAM",
+  "backup": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-git-temporary-objects/tmp_pack_wY9SAM-1efd2b31f",
+  "before": {
+    "dev": 16777235,
+    "inode": 148190581,
+    "size": 1612185600,
+    "uid": 502,
+    "mtimeNs": 1792387835188735011,
+    "nlink": 1,
+    "mode": 33060
+  },
+  "sha256": "6b3cf223939aa2e1fca0377fe7cc368f3a5ccedd7c23b082d04bdfe5ad9b07b3",
+  "backupVerified": true,
+  "openHandlesAbsent": true,
+  "removed": true,
+  "freeBefore": 140427264,
+  "gitClassification": "garbage",
+  "observedWriter": "A Git repack and its pack-objects child targeting this common object directory were observed at 05:30:34Z; they exited before preservation. Initiating caller unknown.",
+  "scope": "Inactive unindexed Git temporary pack only; valid packs and user files unchanged.",
+  "freeAfter": 1781448704
+}

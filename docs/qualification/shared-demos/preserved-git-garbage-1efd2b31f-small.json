@@ -1,0 +1,19 @@
+{
+  "created": "2026-10-19T05:31:43.466839+00:00",
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/objects/pack/tmp_pack_xOiDIg",
+  "backup": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-git-temporary-objects/tmp_pack_xOiDIg-1efd2b31f",
+  "before": {
+    "dev": 16777235,
+    "inode": 148190304,
+    "size": 23461888,
+    "uid": 502,
+    "mtimeNs": 1792387717145405707,
+    "nlink": 1,
+    "mode": 33060
+  },
+  "sha256": "599f325fdf1df2fc3d6ac743ace0b4363bd94bb0d7756fbdff3ee3d1ee31c780",
+  "backupVerified": true,
+  "openHandlesAbsent": true,
+  "removed": true,
+  "scope": "Inactive unindexed Git temporary pack only; valid packs and user files unchanged."
+}

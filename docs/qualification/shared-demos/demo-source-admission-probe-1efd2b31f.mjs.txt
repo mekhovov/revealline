@@ -1,0 +1,126 @@
+// Diagnostic only: same installed catalog/create path as demo-sources.test.mjs.
+// Run only after the frozen endurance interval and owned cleanup have finished.
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { dirname, resolve, relative } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const options = Object.fromEntries(process.argv.slice(2).map((argument) => {
+  const match = /^--(head|report)=(.+)$/.exec(argument);
+  if (!match) throw new Error('Use --head=<exact SHA> --report=.cache/<new report>.json');
+  return [match[1], match[2]];
+}));
+assert.match(options.head ?? '', /^[a-f0-9]{40}$/);
+const reportPath = resolve(root, options.report ?? '');
+assert.ok(relative(resolve(root, '.cache'), reportPath) && !relative(resolve(root, '.cache'), reportPath).startsWith('..'));
+const git = (...args) => execFileSync('git', args, {
+  cwd: root, encoding: 'utf8', env: { ...process.env, GIT_NO_LAZY_FETCH: '1' },
+}).trim();
+assert.equal(git('rev-parse', 'HEAD'), options.head);
+assert.equal(git('diff', '--name-only', 'HEAD', '--', 'game', 'optional-practice', 'scripts'), '', 'Runtime/test sources must be unchanged.');
+const loadJSON = async (path) => JSON.parse(await readFile(resolve(root, path), 'utf8'));
+const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const report = {
+  format: 'SharedDemoInstalledSourceProbeV1', sourceRevision: options.head,
+  started: new Date().toISOString(), complete: false, passed: false,
+  runtime: { node: process.version, v8: process.versions.v8, platform: process.platform, arch: process.arch, userAgent: globalThis.navigator?.userAgent ?? null },
+  scope: 'Same 17 installed replay sources and strict source.create path as demo-sources.test.mjs:49. Diagnostic only; no recordings generated, no compatibility changes, no browser evidence.',
+  sourcePins: {}, sources: [], requests: [], failure: null,
+  limitations: ['A local macOS/Node22.22.2 or Node20.19.5 result is not reproduction of hosted Node22.13.1/Linux x64.'],
+};
+for (const path of ['game/test/demo-sources.test.mjs','game/demo-sources.mjs','game/demo-catalog.mjs','game/demo-runtime.mjs','game/replay-player.mjs','game/replay.mjs','game/demo-data/catalog.json','game/content/campaign.json','game/content/classes.json','game/content/packs/fpv-arcade-r5.json'])
+  report.sourcePins[path] = sha256(await readFile(resolve(root, path)));
+let currentController = null;
+let timedOut = false;
+const timer = setTimeout(() => {
+  timedOut = true;
+  currentController?.abort(new DOMException('Source probe exceeded 120 seconds.', 'AbortError'));
+}, 120000);
+try {
+  const module = (path) => import(pathToFileURL(resolve(root, path)).href);
+  const [{ loadDemoSources }, { createExecutionCatalog }, { campaignKey }, { resolveDemoCatalog, demoIdentity }, { applyGameplayTuning, resolveGameplayTuning }] = await Promise.all([
+    module('game/demo-sources.mjs'), module('game/campaign-contexts.mjs'), module('game/library.mjs'), module('game/demo-catalog.mjs'), module('game/gameplay-tuning.mjs'),
+  ]);
+  const campaign = await loadJSON('game/content/campaign.json');
+  const classRecipes = await loadJSON('game/content/classes.json');
+  const pack = await loadJSON('game/content/packs/fpv-arcade-r5.json');
+  campaign.classRecipes = classRecipes;
+  const entries = createExecutionCatalog([
+    { campaign, classRecipes },
+    { campaign: { ...pack.campaigns[0], classRecipes: pack.classRecipes }, classRecipes: pack.classRecipes },
+  ]).entries;
+  const catalog = await loadJSON('game/demo-data/catalog.json');
+  class LazyWorker { constructor() { throw new Error('Source enumeration must not create a Worker.'); } }
+  const sources = await loadDemoSources({
+    entries, library: { list: async () => [] }, WorkerClass: LazyWorker,
+    fetch: async (url) => {
+      assert.ok(report.requests.length < 300, 'Probe request bound exceeded.');
+      report.requests.push(url.href);
+      return { ok: true, text: async () => readFile(url, 'utf8') };
+    },
+  });
+  const replays = sources.filter((source) => source.kind === 'replay');
+  assert.equal(replays.length, 17, 'Probe is scoped to the current 17 installed replay entries.');
+  assert.equal(replays.length, resolveDemoCatalog(catalog, entries).length);
+  assert.equal(sources.filter((source) => source.kind === 'bot').length, 6);
+  assert.deepEqual(new Set(sources.map((source) => source.levelKey)), new Set(entries.filter((entry) => entry.difficulty === 'standard').flatMap((entry) => entry.campaign.levels.map((level) => `${campaignKey(entry.campaign)}/${level.id}`))));
+  assert.equal(new Set(sources.map((source) => source.id)).size, sources.length);
+  assert.equal(report.requests.length, 1);
+  assert.ok(report.requests[0].endsWith('/game/demo-data/catalog.json'));
+  assert.equal(sources.filter((source) => source.approachable).length, 1);
+  assert.ok(sources.every((source) => source.variantId === 'standard'));
+  for (const source of replays) {
+    if (timedOut) throw new Error('Source probe exceeded 120 seconds.');
+    currentController = new AbortController();
+    const firstRequest = report.requests.length;
+    const entry = { sourceId: source.id, campaignId: source.campaignId, levelId: source.levelId, identity: source.identity, recordingIdentity: source.recordingIdentity, status: 'preparing', elapsedMs: null, requests: [] };
+    report.sources.push(entry);
+    const started = performance.now();
+    let player;
+    try {
+      player = await source.create({ signal: currentController.signal });
+      assert.equal(player.info.levelId, source.levelId);
+      assert.equal(player.state.tick, 0);
+      assert.equal(player.phase, 'paused');
+      assert.equal(source.entry.difficulty, 'standard');
+      assert.deepEqual(player.state.level, applyGameplayTuning(source.level, resolveGameplayTuning('standard')));
+      assert.equal(source.identity, demoIdentity(source.level, source.entry.classRecipes));
+      assert.notEqual(source.identity, source.recordingIdentity);
+      entry.status = 'passed';
+      entry.recordedStatus = player.info.recordedStatus;
+    } catch (error) {
+      entry.status = 'failed';
+      entry.error = { name: error?.name, message: error?.message, code: error?.code, diagnostics: error?.diagnostics ?? null, stack: error?.stack };
+      report.failure = { sourceId: source.id, levelId: source.levelId, ...entry.error };
+      throw error;
+    } finally {
+      player?.dispose();
+      entry.elapsedMs = Math.round((performance.now() - started) * 1000) / 1000;
+      entry.requests = report.requests.slice(firstRequest);
+      console.log(JSON.stringify(entry));
+    }
+  }
+  report.passed = !timedOut;
+  report.complete = !timedOut;
+} catch (error) {
+  report.failure ??= { name: error?.name, message: error?.message, code: error?.code, stack: error?.stack };
+  report.complete = !timedOut;
+  process.exitCode = 1;
+} finally {
+  clearTimeout(timer);
+  report.timedOut = timedOut;
+  report.finished = new Date().toISOString();
+  report.endingHead = git('rev-parse', 'HEAD');
+  report.changedRuntimePaths = git('diff', '--name-only', 'HEAD', '--', 'game', 'optional-practice', 'scripts').split('\n').filter(Boolean);
+  if (report.endingHead !== options.head || report.changedRuntimePaths.length || timedOut) {
+    report.complete = report.passed = false;
+    process.exitCode = 1;
+  }
+  const bytes = JSON.stringify(report, null, 2) + '\n';
+  assert.ok(Buffer.byteLength(bytes) < 1024 * 1024, 'Probe report exceeds 1 MiB.');
+  await writeFile(reportPath, bytes, { flag: 'wx' });
+  console.log(JSON.stringify({ report: reportPath, complete: report.complete, passed: report.passed, sourceCount: report.sources.length, sha256: sha256(bytes) }));
+}

@@ -1,0 +1,66 @@
+{
+  "format": "SharedDemoHostedFailureReviewV1",
+  "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "pr": "https://github.com/mekhovov/revealline/pull/1615",
+  "scope": "Read-only exact-head GitHub job metadata and completed job log; no workflow action or local test execution.",
+  "job": {
+    "id": 117904302321,
+    "runId": 39204506104,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39204506104/job/117904302321",
+    "name": "candidate",
+    "workflow": "Company edition candidates",
+    "status": "completed",
+    "conclusion": "failure",
+    "startedAt": "2026-10-19T06:51:21Z",
+    "completedAt": "2026-10-19T06:59:08Z"
+  },
+  "precedingPassedSteps": [
+    "Verify generated source and public media eligibility",
+    "Run focused company, persistence, offline and artifact tests",
+    "Verify both source release formats and edition admission"
+  ],
+  "failedStep": {
+    "number": 9,
+    "name": "Compile twice and inspect original candidate ZIP members",
+    "startedAt": "2026-10-19T06:58:56Z",
+    "completedAt": "2026-10-19T06:59:06Z",
+    "error": "TypeError: Final edition output exceeds 2000 files or 80 MiB (2064 files / 43925281 bytes).",
+    "outputFiles": 2064,
+    "outputBytes": 43925281,
+    "fileLimit": 2000,
+    "byteLimit": 83886080,
+    "fileOverage": 64,
+    "nodeVersion": "22.13.1",
+    "stack": [
+      "assertCompanyPackageBudget (game/editions/package-budget.mjs:27:7)",
+      "compileEdition (scripts/compile-edition.mjs:954:5)",
+      "bundleEditions (scripts/bundle-editions.mjs:119:22)"
+    ]
+  },
+  "log": {
+    "api": "repos/mekhovov/revealline/actions/jobs/117904302321/logs",
+    "bytes": 676964,
+    "sha256": "64f676461307116552c4239834ce9365a532c4c4f7bff21f78b06118606edc74",
+    "lines": 9041,
+    "failureLine": 9018,
+    "failureTimestamp": "2026-10-19T06:59:06.3010514Z",
+    "exitCodeLine": 9028,
+    "retainedHere": "Exact failure details and full downloaded-log digest; full log remains available at the job URL. ANSI sequences were removed only from displayed excerpts."
+  },
+  "concurrentSnapshot": {
+    "headUnchanged": true,
+    "mergeable": "CONFLICTING",
+    "queuedChecks": 10,
+    "inProgressChecks": 1,
+    "successChecks": 1,
+    "failureChecks": 1,
+    "passedJob": "feature (gameplay)",
+    "passedJobCompletedAt": "2026-10-19T06:58:25Z",
+    "inProgressJob": "optional-practice"
+  },
+  "limitations": [
+    "This identifies the violated final-output file limit, not which files caused the overage or whether the issue predates this feature.",
+    "The passing focused steps and gameplay job do not make the failed candidate job or entire hosted qualification pass.",
+    "The local endurance run and its frozen sources were not modified or interrupted."
+  ]
+}

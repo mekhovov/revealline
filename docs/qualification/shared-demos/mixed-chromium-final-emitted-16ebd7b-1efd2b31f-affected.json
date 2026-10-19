@@ -1,0 +1,1328 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T05:49:16.046Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-44273034491a74e4",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "solo-qualified-44273034491a74e4",
+        "modeId": "solo",
+        "at": 1792388968075,
+        "loadingMs": 1378.699999999255,
+        "preparation": {
+          "status": "ready",
+          "stage": "source",
+          "elapsedMs": 1378.6,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 1.700000001117587,
+            "adapter": 0,
+            "source": 1376.9,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · First return",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-field-seam-return:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-field-seam-return:standard",
+        "modeId": "snake",
+        "at": 1792388970296,
+        "loadingMs": 40.399999998509884,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 40.4,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 1.099999999627471,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 39.09999999962747,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.1
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Seam Return",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Два різні позначені проходи змінюють шлях назад. Перехоплюйте рухливу здобич через отвір або користуйтеся довшим обходом."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:container-yard-01-self-level-1bed23119c5fb82b",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:container-yard-01-self-level-1bed23119c5fb82b",
+        "modeId": "sim",
+        "at": 1792388972716,
+        "loadingMs": 294.19999999925494,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 294.2,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0.599999999627471,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 103.20000000111759,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 190.4
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Yard check-in",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Злетіть, стабілізуйтеся в кожному об’ємі та сядьте. Усі завдання відкриті — не поспішайте."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "survival:orchard-strongpoint-harvest-clearing:standard",
+        "modeId": "survival",
+        "at": 1792388976019,
+        "loadingMs": 2939.300000000745,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 2939.3,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0.900000000372529,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 2781.4000000003725,
+            "scene-import": 7.700000001117587,
+            "artwork": 104.29999999888241,
+            "renderer": 44.8,
+            "mount": 0.09999999962747097
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19604,
+              "totalTicks": 19604,
+              "elapsedMs": 2781.3
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "pause",
+      "mode": "survival"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:native-pursuit-armor-windows-self-level-8c8d4d94ea6c2f13",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:native-pursuit-armor-windows-self-level-8c8d4d94ea6c2f13",
+        "modeId": "sim",
+        "at": 1792388982625,
+        "loadingMs": 1188.5,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 1188.5,
+          "durationsMs": {
+            "preparation": 0.19999999925494194,
+            "prefetch": 4.800000000745058,
+            "retirement": 0.09999999962747097,
+            "adapter": 0,
+            "source": 876.6999999992549,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 306.7
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Armor Windows",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 136,
+          "materials": 127,
+          "textures": 26,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 8,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-crossing-bursts:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-pursuit-crossing-bursts:standard",
+        "modeId": "snake",
+        "at": 1792388982931,
+        "loadingMs": 182.80000000074506,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 182.8,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 4.199999999254942,
+            "retirement": 0.10000000149011612,
+            "adapter": 0,
+            "source": 178.2999999988824,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.2
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Crossing Bursts",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-field-seam-return:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792388998048,
+        "loadingMs": 15048.700000001118,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15048.6,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 4,
+            "verification": 15038.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19598,
+              "elapsedMs": 15042.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-field-seam-return:standard",
+        "modeId": "snake",
+        "at": 1792388998305,
+        "loadingMs": 254.5,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 254.6,
+          "durationsMs": {
+            "preparation": 0.2000000011175871,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 248.5,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.2
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Seam Return",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-d87dc7be0d62a2b1",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792388998048,
+        "loadingMs": 15048.700000001118,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15048.6,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 4,
+            "verification": 15038.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19598,
+              "elapsedMs": 15042.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "solo-qualified-d87dc7be0d62a2b1",
+        "modeId": "solo",
+        "at": 1792389005259,
+        "loadingMs": 6897,
+        "preparation": {
+          "status": "ready",
+          "stage": "source",
+          "elapsedMs": 6897,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 3.900000000372529,
+            "adapter": 0,
+            "source": 6893.1,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dry spine",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-32-self-level-9e197dcf42162e29",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792388998048,
+        "loadingMs": 15048.700000001118,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15048.6,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 4,
+            "verification": 15038.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19598,
+              "elapsedMs": 15042.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:beginner-32-self-level-9e197dcf42162e29",
+        "modeId": "sim",
+        "at": 1792389005698,
+        "loadingMs": 306,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 306,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 2.900000000372529,
+            "retirement": 0.09999999962747097,
+            "adapter": 0,
+            "source": 143.09999999962747,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 159.9
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Wide corner, tight exit",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-staggered-rendezvous:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792388998048,
+        "loadingMs": 15048.700000001118,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15048.6,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 4,
+            "verification": 15038.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19598,
+              "elapsedMs": 15042.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-operation-staggered-rendezvous:standard",
+        "modeId": "snake",
+        "at": 1792389006045,
+        "loadingMs": 254.30000000074506,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 254.3,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 3,
+            "retirement": 0.09999999962747097,
+            "adapter": 0,
+            "source": 251.10000000149012,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.1
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Staggered Rendezvous",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-haul-switchbacks:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792388998048,
+        "loadingMs": 15048.700000001118,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15048.6,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 4,
+            "verification": 15038.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19598,
+              "elapsedMs": 15042.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "survival:chalk-quarry-haul-switchbacks:standard",
+        "modeId": "survival",
+        "at": 1792389017774,
+        "loadingMs": 11681.799999998882,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 11681.8,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 2.299999998882413,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.10000000149011612,
+            "payload": 0,
+            "verification": 11350.5,
+            "scene-import": 6.699999999254942,
+            "artwork": 186.69999999925494,
+            "renderer": 135.5,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19598,
+              "totalTicks": 19598,
+              "elapsedMs": 11350.5
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Haul Switchbacks",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-3037b64d2bd5cd52",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792388998048,
+        "loadingMs": 15048.700000001118,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15048.6,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 4,
+            "verification": 15038.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19598,
+              "elapsedMs": 15042.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "solo-qualified-3037b64d2bd5cd52",
+        "modeId": "solo",
+        "at": 1792389025170,
+        "loadingMs": 7329.39999999851,
+        "preparation": {
+          "status": "ready",
+          "stage": "source",
+          "elapsedMs": 7329.4,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 3,
+            "adapter": 0,
+            "source": 7326.4,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Home signal",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-survey-basin:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792388998048,
+        "loadingMs": 15048.700000001118,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15048.6,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 4,
+            "verification": 15038.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19598,
+              "elapsedMs": 15042.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "survival:chalk-quarry-survey-basin:standard",
+        "modeId": "survival",
+        "at": 1792389035724,
+        "loadingMs": 10429.400000000373,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 10429.4,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.300000000745058,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 10168.400000000373,
+            "scene-import": 6.199999999254942,
+            "artwork": 151.09999999962747,
+            "renderer": 100.2,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19357,
+              "totalTicks": 19357,
+              "elapsedMs": 10168.4
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Survey Basin",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-orchard-post:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792388998048,
+        "loadingMs": 15048.700000001118,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15048.6,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 4,
+            "verification": 15038.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19598,
+              "elapsedMs": 15042.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-operation-orchard-post:standard",
+        "modeId": "snake",
+        "at": 1792389035839,
+        "loadingMs": 42.09999999962747,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 42.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 0,
+            "retirement": 4.900000000372529,
+            "adapter": 0,
+            "source": 37.09999999962747,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Orchard Post",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-36-acro-dc42d2fa3d3c4baa",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792388998048,
+        "loadingMs": 15048.700000001118,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15048.6,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 5.699999999254942,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 4,
+            "verification": 15038.6,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19598,
+              "elapsedMs": 15042.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:beginner-36-acro-dc42d2fa3d3c4baa",
+        "modeId": "sim",
+        "at": 1792389036239,
+        "loadingMs": 343.40000000037253,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 343.4,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.199999999254942,
+            "retirement": 0.10000000149011612,
+            "adapter": 0,
+            "source": 152.89999999850988,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 187.1
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · High–low ribbon",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-orchard-post:standard",
+      "phase": "playing",
+      "failure": "solo-qualified-85b7fe2bd59f4ce6 demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "solo-qualified-85b7fe2bd59f4ce6",
+        "modeId": "solo",
+        "at": 1792389053739,
+        "loadingMs": 17383.400000000373,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 17383.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 0,
+            "retirement": 6,
+            "adapter": 0,
+            "source": 17377,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-operation-orchard-post:standard",
+        "modeId": "snake",
+        "at": 1792389053898,
+        "loadingMs": 156.80000000074506,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 156.8,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 4.300000000745058,
+            "adapter": 0.09999999962747097,
+            "source": 152.19999999925494,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.2
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Orchard Post",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+      "manifestSHA256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+      "inventorySHA256": "db7b1e402eb450bb608480502e600669484d7dac8f66b429605138ea72642a90",
+      "files": 5953,
+      "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+      "sourceFingerprint": {
+        "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+        "files": 9997,
+        "bytes": 404447584
+      },
+      "buildInputFingerprint": {
+        "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+        "files": 9406,
+        "bytes": 348396513
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+        "runtime": {
+          "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+          "files": 9997,
+          "bytes": 404447584
+        },
+        "buildInput": {
+          "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+          "files": 9406,
+          "bytes": 348396513
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "c3f5605cdcd10d1042c85ce71a283ecc23eb7dd7de45a9fcac1d712b4b975b51"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "9fc04822a3c597a0b04fcac2bae67997f1cd0736829ce92e7bed0944e4dc214c"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "enduranceStarted": "2026-10-19T05:50:55.040Z",
+  "enduranceFinalObservation": {
+    "finalObservationGapMs": 0
+  },
+  "enduranceFinished": "2026-10-19T05:50:55.040Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T05:50:55.808Z",
+  "previewClosed": true
+}

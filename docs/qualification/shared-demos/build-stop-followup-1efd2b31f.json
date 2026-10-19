@@ -1,0 +1,37 @@
+{
+  "created": "2026-10-19T05:32:49.803788+00:00",
+  "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "complete": false,
+  "originalReceipt": {
+    "path": "docs/qualification/shared-demos/shared-demos-build-validation-16ebd7b-1efd2b31f.json",
+    "sha256": "bf7ed5ce379339c5b5fe38a9b3efb3c47dbbdcbd60c474d440427d8102f73d48",
+    "bytes": 2859
+  },
+  "observedWrapperExitCode": 1,
+  "observedOutput": [
+    "start main-pages with availableDiskBytes1707941888",
+    "stop main-pages: Available disk fell below200MiB.",
+    "final receipt save failed: ENOSPC no space left on device opening shared-demos-build-validation-16ebd7b-1efd2b31f.json"
+  ],
+  "result": "No stage completion established. Original start-only receipt preserved unchanged. Retry requires unique evidence/capture names.",
+  "observedSpaceConsumer": "An inactive temporary Git pack of1562640384 bytes was preserved and removed; a subsequent repo-targeted repack consumed recovered space. Initiating caller remains unknown.",
+  "repositoryLocalMitigation": {
+    "previous": {
+      "maintenance.auto": null,
+      "gc.auto": null
+    },
+    "current": {
+      "maintenance.auto": "false",
+      "gc.auto": "0"
+    },
+    "scope": "Shared repository local config only; all its worktrees. No global change.",
+    "purpose": "Prevent ordinary Git commands from launching automatic maintenance/packing while space is constrained.",
+    "limits": "Does not cancel active work or block explicit/scheduled repack or higher-precedence overrides.",
+    "restore": "When disk capacity is sufficient and current values still match, unset each local key to restore previously unset values."
+  },
+  "qualifications": [
+    "No build/browser pass or endurance credit.",
+    "No valid Git pack or user data deleted.",
+    "Exact backups and hashes are recorded separately."
+  ]
+}
