@@ -10,8 +10,10 @@ import { createOverflightRun, rerollOverflightUpgrades } from '../overflight/cor
 import { draftOverflightUpgrades } from '../overflight/upgrades.mjs';
 import { createOverflightUpgradeCard } from '../overflight/upgrade-card.mjs';
 import { overflightText } from '../overflight/copy.mjs';
+import { t } from '../i18n/index.mjs';
 import { OVERFLIGHT_HUNT_MODE } from '../overflight/raid-mode.mjs';
 import { draftOverflightHuntUpgrades } from '../overflight/raid-upgrades.mjs';
+import { createOverflightRaidVariant } from '../overflight/raid-variants.mjs';
 
 const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
 const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
@@ -76,7 +78,7 @@ function stagedRun(entry, rulesVersion = 4, limited = false) {
   run.phase = 'upgrade';
   return run;
 }
-function host(entry, run) {
+function host(entry, run, { mode = modes[entry], choose = () => {} } = {}) {
   const document = new Document();
   const convert = (node) => {
     if (node.nodeName === '#text') return document.createTextNode(node.value);
@@ -105,7 +107,6 @@ function host(entry, run) {
   const $ = (id) => document.getElementById(id);
   let locale = 'en',
     reviewing = false;
-  const mode = modes[entry];
   const context = {
     run,
     compiled: run.compiled,
@@ -115,11 +116,12 @@ function host(entry, run) {
     offerKey: '',
     getLocale: () => locale,
     text: (key) => mode.text(locale, key),
+    t: (key, values) => t(key, { ...values, lng: locale }),
     review: { active: () => reviewing },
     display: { snapshot: () => ({ effectiveReducedEffects: true }) },
     moduleIcon: () => document.createElement('span'),
     renderer: null,
-    choose: () => {},
+    choose,
     releaseInput: () => {},
     sound: { pause: () => {} },
     commentator: null,
@@ -156,7 +158,10 @@ for (const entry of ['play', 'raid']) {
         'reroll-hint rerolls-left',
       );
       assert.equal(h.$('reroll-upgrades').textContent, modes[entry].text(locale, 'reroll'));
-      assert.equal(h.$('rerolls-left').textContent, `2 ${modes[entry].text(locale, 'rerolls')}`);
+      assert.equal(
+        h.$('rerolls-left').textContent,
+        locale === 'uk' ? 'Залишилося 2 заміни' : '2 rerolls left',
+      );
       assert.equal(h.$('reroll-upgrades').disabled, false);
       assert.equal(JSON.stringify(run), before);
       const first = h.$('upgrade-cards').children[0];
@@ -179,6 +184,7 @@ for (const entry of ['play', 'raid']) {
     h.$('reroll-upgrades').click();
     assert.equal(JSON.stringify(run), JSON.stringify(direct));
     assert.equal(run.progression.rerolls, 1);
+    assert.equal(h.$('rerolls-left').textContent, 'Залишилася 1 заміна');
     assert.equal(run.stats.rerollsUsed, 1);
     assert.equal(run.progression.choices, 0);
     assert.equal(run.phase, 'upgrade');
@@ -190,6 +196,10 @@ for (const entry of ['play', 'raid']) {
     h.$('reroll-upgrades').click();
     assert.equal(JSON.stringify(run), JSON.stringify(direct));
     assert.equal(run.progression.rerolls, 0);
+    assert.equal(h.$('rerolls-left').textContent, 'Залишилося 0 замін');
+    h.render('en');
+    assert.equal(h.$('rerolls-left').textContent, '0 rerolls left');
+    assert.equal(JSON.stringify(run), JSON.stringify(direct));
     assert.equal(h.$('reroll-upgrades').disabled, true);
     const exhausted = JSON.stringify(run);
     h.$('reroll-upgrades').click();
@@ -215,5 +225,149 @@ test('authored primary-only Survival retains a valid all-repeat reroll across le
     assert.equal(run.stats.rerollsUsed, 1);
     assert.equal(run._randomState, encounterRandom);
     assert.equal(JSON.stringify(run), JSON.stringify(direct));
+  }
+});
+
+// These projected counts exercise language boundaries. Values above native caps
+// and fractional counts are not earned tokens or new supported gameplay rules.
+for (const entry of ['play', 'raid']) {
+  test(`${entry}: native upgrade text uses real EN/UK plural forms without changing draft facts or focus`, () => {
+    const run = stagedRun(entry),
+      h = host(entry, run);
+    for (const [count, en, uk] of [
+      [0, '0 rerolls left', 'Залишилося 0 замін'],
+      [1, '1 reroll left', 'Залишилася 1 заміна'],
+      [2, '2 rerolls left', 'Залишилося 2 заміни'],
+      [4, '4 rerolls left', 'Залишилося 4 заміни'],
+      [5, '5 rerolls left', 'Залишилося 5 замін'],
+      [11, '11 rerolls left', 'Залишилося 11 замін'],
+      [21, '21 rerolls left', 'Залишилася 21 заміна'],
+      [22, '22 rerolls left', 'Залишилося 22 заміни'],
+      [25, '25 rerolls left', 'Залишилося 25 замін'],
+      [111, '111 rerolls left', 'Залишилося 111 замін'],
+      [1.5, '1.5 rerolls left', 'Залишилося 1,5 заміни'],
+    ]) {
+      run.progression.rerolls = count;
+      const before = JSON.stringify(run);
+      h.render('en');
+      const card = h.$('upgrade-cards').children[0];
+      card.focus();
+      for (const locale of ['en', 'uk', 'en']) {
+        h.render(locale);
+        assert.equal(h.$('rerolls-left').textContent, locale === 'uk' ? uk : en);
+        assert.equal(JSON.stringify(run), before);
+        assert.equal(h.document.activeElement.dataset.upgradeId, card.dataset.upgradeId);
+        assert.equal(h.$('reroll-upgrades').disabled, count <= 0);
+        assert.equal(run.phase, 'upgrade');
+        assert.equal(run.time, 0);
+        assert.equal(run.tick, 0);
+      }
+    }
+  });
+}
+
+function marathonRefit(count) {
+  const mode = createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE, { variant: 'marathon' });
+  const run = mode.createRun(
+    mode.compileProject(mode.createProject({ seed: 42, rulesVersion: 3 })),
+  );
+  Object.assign(run.build.hunt, {
+    'strike-width': 2,
+    'boost-duration': 2,
+    'boost-cooldown': 2,
+    'chain-window': 2,
+  });
+  run.progression.rerolls = count;
+  run.hunt.pendingChoices = 1;
+  assert.ok(count < run.compiled.combat.supplies.rerollCap);
+  mode.start(run);
+  mode.step(run, {});
+  assert.equal(run.phase, 'upgrade');
+  assert.ok(run.offers.some((offer) => offer.id === 'field-reroll'));
+  return { mode, run };
+}
+
+// Stage a legal native Marathon refit, not a claim of earning it in a browser.
+test('native Recalibrate comparison uses current legal EN/UK counts and preserves locale-rebuild facts and focus', () => {
+  for (const [count, en, uk] of [
+    [0, '0 rerolls', '0 перевиборів'],
+    [1, '1 reroll', '1 перевибір'],
+    [2, '2 rerolls', '2 перевибори'],
+  ]) {
+    const { mode, run } = marathonRefit(count),
+      before = JSON.stringify(run),
+      h = host('raid', run, { mode });
+    h.render('en');
+    const initial = [...h.$('upgrade-cards').children].find(
+      (card) => card.dataset.upgradeId === 'field-reroll',
+    );
+    initial.focus();
+    for (const locale of ['en', 'uk', 'en']) {
+      h.render(locale);
+      const field = [...h.$('upgrade-cards').children].find(
+        (card) => card.dataset.upgradeId === 'field-reroll',
+      );
+      const current = locale === 'uk' ? uk : en;
+      const next = run.offers.find((offer) => offer.id === 'field-reroll').next[locale];
+      assert.equal(field.querySelector('.upgrade-description').textContent, `${current} → ${next}`);
+      assert.ok(field.getAttribute('aria-label').includes(`${current} → ${next}`));
+      if (count === 1)
+        assert.doesNotMatch(field.getAttribute('aria-label'), /1 rerolls|1 перевиборів/);
+      assert.equal(h.document.activeElement.dataset.upgradeId, 'field-reroll');
+      assert.equal(
+        JSON.stringify(run),
+        before,
+        'Rendering cannot change even serialized offer copy',
+      );
+    }
+  }
+});
+
+test('Recalibrate presentation still delegates exactly one native choice and rerolls match direct core transactions', () => {
+  for (const count of [0, 1, 2]) {
+    const { mode, run } = marathonRefit(count),
+      direct = structuredClone(run),
+      h = host('raid', run, { mode, choose: (id) => mode.choose(run, id) });
+    h.render('uk');
+    const field = [...h.$('upgrade-cards').children].find(
+      (card) => card.dataset.upgradeId === 'field-reroll',
+    );
+    assert.equal(mode.choose(direct, 'field-reroll'), true);
+    field.click();
+    assert.equal(JSON.stringify(run), JSON.stringify(direct));
+    assert.equal(run.progression.rerolls, count + 1);
+    assert.equal(run.progression.choices, 1);
+    assert.equal(mode.choose(run, 'field-reroll'), false);
+    assert.equal(JSON.stringify(run), JSON.stringify(direct));
+
+    const staged = marathonRefit(count),
+      rerolled = structuredClone(staged.run),
+      owner = host('raid', staged.run, { mode: staged.mode });
+    owner.render('uk');
+    const accepted = staged.mode.reroll(rerolled);
+    owner.$('reroll-upgrades').click();
+    assert.equal(accepted, count > 0);
+    assert.equal(JSON.stringify(staged.run), JSON.stringify(rerolled));
+    assert.equal(staged.run.progression.choices, 0);
+    assert.equal(staged.run.progression.rerolls, Math.max(0, count - 1));
+    for (const locale of ['en', 'uk']) {
+      owner.render(locale);
+      const field = [...owner.$('upgrade-cards').children].find(
+        (card) => card.dataset.upgradeId === 'field-reroll',
+      );
+      const remaining = Math.max(0, count - 1);
+      const current =
+        locale === 'uk'
+          ? remaining === 1
+            ? '1 перевибір'
+            : '0 перевиборів'
+          : remaining === 1
+            ? '1 reroll'
+            : '0 rerolls';
+      assert.ok(
+        field.querySelector('.upgrade-description').textContent.startsWith(`${current} → `),
+      );
+      assert.equal(JSON.stringify(staged.run), JSON.stringify(rerolled));
+    }
   }
 });

@@ -1,0 +1,37 @@
+{
+  "format": "ExactReviewedSmallArchiveOriginalsCASReuse.v1",
+  "sources": [
+    {
+      "path": "rl-pages-recovery-startup.94zqSi/repo/publishing/pages-controller/delivery/archive51-v0821-staging/evidence/archive-51-v0821/pr-receipts-original.zip",
+      "bytes": 56130,
+      "sha256": "1034f3ef52c60aa245e647e61324946cb0a88d90ee969e2633c19b62c4d8a700",
+      "partMember": "objects/1034f3ef52c60aa245e647e61324946cb0a88d90ee969e2633c19b62c4d8a700",
+      "assetId": 646557830,
+      "partSHA256": "a10ec601bafe5a4ee4a45e8a57d0dca55b28f20a466710b56ee07c18b06c9f5b"
+    },
+    {
+      "path": "rl-pages-recovery-startup.94zqSi/repo/publishing/pages-controller/delivery/archive51-v0821-staging/evidence/archive-51-v0821/deploy-receipts-original.zip",
+      "bytes": 56129,
+      "sha256": "2a21fdc23f35506f827a7c382422675dbaeddd9b368db4dcee3a52e774d030f0",
+      "partMember": "objects/2a21fdc23f35506f827a7c382422675dbaeddd9b368db4dcee3a52e774d030f0",
+      "assetId": 646557830,
+      "partSHA256": "a10ec601bafe5a4ee4a45e8a57d0dca55b28f20a466710b56ee07c18b06c9f5b"
+    },
+    {
+      "path": "work/my_projects/go_test_company_campaigns/docs/verification/journey-main-reconciliation/e1eaf904-production.tar.gz",
+      "bytes": 3824319,
+      "sha256": "ce0a71b49c38225e41e15f7fdbd6f481d89065460b45aa1e83be38b89f813be3",
+      "partMember": "objects/ce0a71b49c38225e41e15f7fdbd6f481d89065460b45aa1e83be38b89f813be3",
+      "assetId": 646557830,
+      "partSHA256": "a10ec601bafe5a4ee4a45e8a57d0dca55b28f20a466710b56ee07c18b06c9f5b"
+    }
+  ],
+  "reviewedPositiveSourceManifestCommit": "60d1608eefda5d9fb06f198634aa4312b40745d2",
+  "reviewedPositiveManifestSHA256": "63831e6a06f1e92e54c9114bd69cb3b6a84cb81b7b451c6706b506f52d5a4fcd",
+  "verifiedCASReceiptSHA256": "8dc54e2b16ec72897a4ddc9d8b4622aff3349a47fcf415ff4b49b15ec6a36a81",
+  "serverDigestAndFullAuthenticatedReadbackVerified": true,
+  "allReferencedActualRestoredObjectSHA256Match": true,
+  "earlierLocalIdentityOnlyAndPendingStatusRetained": true,
+  "logicalFilePathModeTimeRestoreClaimed": false,
+  "allVolumeComplete": false
+}

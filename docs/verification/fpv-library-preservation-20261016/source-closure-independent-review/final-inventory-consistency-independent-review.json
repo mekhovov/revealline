@@ -1,0 +1,107 @@
+{
+  "format": "IndependentFinalCommitInventoryConsistencyReview.v1",
+  "createdUTC": "2026-10-16T05:10:53.394519+00:00",
+  "ownerClosureReceipt": {
+    "file": "all-object-final-inventory-closure.json",
+    "bytes": 4881,
+    "sha256": "7a1a40810df76441a7dc5113cf4dd78b490f53e1c81ca301e02032d700a14d5b",
+    "stableRead": true
+  },
+  "verifiedInputHashes": [
+    {
+      "file": "all-local-commit-object-inventory.json",
+      "bytes": 9269015,
+      "sha256": "45b114600fd7effcc555b8ea74571c83373aa395e5256b9465b87d24c328e24d",
+      "stableRead": true
+    },
+    {
+      "file": "all-object-shadow-retry-reports.json",
+      "bytes": 1219578,
+      "sha256": "aa454407eddb2232d48c1fe3b8dc9358ce66f4c50b2bc55a3d500b27ab26bfa3",
+      "stableRead": true
+    },
+    {
+      "file": "object-store-identity-reconciliation.json",
+      "bytes": 1476290,
+      "sha256": "ae8c6a81c9e5009851606db82b6306b5c8103f3a739b0d92b3b6ed8549133be5",
+      "stableRead": true
+    },
+    {
+      "file": "packed-gap-GitHub-type-classification.json",
+      "bytes": 32880,
+      "sha256": "38405bb1df2d12dc8e723dfe0d708bc4ce1a79a0983d72942e114381c256c804",
+      "stableRead": true
+    },
+    {
+      "file": "all-object-final-commit-reconciliation-preflight.json",
+      "bytes": 10327250,
+      "sha256": "cc83417268deb20042f5e323b9dfbe58b80bbc268be2e0c3d9770e600a8d568b",
+      "stableRead": true
+    },
+    {
+      "file": "complete-local-ancestry.json",
+      "bytes": 1113315,
+      "sha256": "6e277eb42ff8ccbe5c398e5fd419d02d2b620e006712c459590580fbe43d9831",
+      "stableRead": true
+    },
+    {
+      "file": "selected-local-ancestry.json",
+      "bytes": 1077265,
+      "sha256": "ba581b0c53fe893111dd17521c2dc8cb3c8ff1ce47c36446338696ff19c98368",
+      "stableRead": true
+    },
+    {
+      "file": "referenced-annotated-tags-accounting.json",
+      "bytes": 24678,
+      "sha256": "693703aa47409c76fec6fad636e435548ce42fe877b0db2fddb159456cabc914",
+      "stableRead": true
+    }
+  ],
+  "commonStoreCount": 16,
+  "initialCompleteStores": 13,
+  "completeObjectOnlyRetries": 1,
+  "identityMapCompletedStores": 2,
+  "identityCompletionMethod": "Both native retry/map reports retain complete:false. Their remaining97+86 exact packed identities all match the183 GitHub-public Blob/Tree classifications, leaving no additional commit/tag in those gaps. This completes commit-ID classification, not the failed native scan itself.",
+  "originalCommitIdentityUnionCount": 16292,
+  "retryAddedCommitIdentityCount": 26,
+  "finalCommitIdentityUnionCount": 16318,
+  "privateGraphCommitCount": 2792,
+  "remainderPublicClassifiedByOwnerCount": 13526,
+  "selectedSafeGraphCommitCount": 2790,
+  "allDeclaredStoreDispositionsAndUnionSetsConsistent": true,
+  "unclassifiedCommitIdentityCount": 0,
+  "publicTagAccountingRows": 175,
+  "independentTagSamples": [
+    {
+      "sha": "00c2b328c81dc8894186d7971466424cca1ca8b8",
+      "target": "d34e283819376eb43e4942287d9767b22a4f6487",
+      "githubAnnotatedTagReadbackVerified": true
+    },
+    {
+      "sha": "8825d8c21fbb8f26c53d6b59f08cf77e16e7c3ed",
+      "target": "bdd14f5913b4ca64f2fa82f942d22c0dd725a8aa",
+      "githubAnnotatedTagReadbackVerified": true
+    },
+    {
+      "sha": "fe1f350eaca309d740d02ab621fe68395dfb13e4",
+      "target": "adbfcb94037b8a38d49b9650e7f8a83c7face1db",
+      "githubAnnotatedTagReadbackVerified": true
+    }
+  ],
+  "all175TagsIndependentlyReadBack": false,
+  "tagScopeLimitation": "The175 tag-ID accounting covers the complete primary tag map plus checked retry/identity additions. The initial13 native complete inventories retained commit IDs, so dangling/unreferenced tag-message metadata across every other store was not globally enumerated. This explicit limitation is separate from source commit-ID closure.",
+  "packedHeaderGapCount": 183,
+  "packedHeaderGapTypes": {
+    "Blob": 180,
+    "Tree": 3
+  },
+  "privateSourceBodiesRead": false,
+  "sourceMutation": false,
+  "scope": "Hash-verified input and set/count reconciliation, three public annotated-tag metadata samples. No duplicate store scan, full clone, private object body audit or final bundle acceptance.",
+  "historicalTagScopeCorrectionReceipt": {
+    "file": "annotated-tag-inventory-scope-correction.json",
+    "bytes": 9543,
+    "sha256": "c8e3e2c9340727dbfed34bd59820c79b257ae2c9383d2033e8992e3ffdececea"
+  },
+  "additionalTagHeaderEnumerationStatus": "Owner is now attempting the remaining12 stores with bounded no-fetch header-only enumeration at root request; this receipt does not assume that run succeeds."
+}

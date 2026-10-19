@@ -102,6 +102,7 @@ import { publishedRouteViews } from './content-design/published-journey.mjs';
 import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
+import { acquireCandidatePicture } from './content-design/picture.mjs';
 import {
   resolveInstalledMissionTarget,
   installedMissionExecutionIndex,
@@ -179,6 +180,7 @@ import { laneWarningCaption } from './ui/lane-presentation.mjs';
 import { attachFlightInformation } from './ui/flight-information-host.mjs';
 import { attachFlightDetails } from './ui/flight-information-details.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
+import { captureMedalGoalCopy } from './ui/capture-medal-goal.mjs';
 import {
   FIRST_FLIGHT_LESSONS,
   getFirstFlightLesson,
@@ -390,6 +392,7 @@ import {
 } from './ui/offline-tool-navigation.mjs';
 import { offlineAvailability } from './offline.mjs';
 import { attachStorageRetention } from './ui/storage-retention.mjs';
+import { attachLocalSupportSummary } from './ui/local-support-summary.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
   downloadJSON,
@@ -730,6 +733,8 @@ try {
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? await createSoloRouteHost(authoredRoute, {
+        // Main adopts the owned decoded picture, not a portable Studio scenario.
+        serializeArtwork: false,
         getEncounterVariant: () => encounterChoices.snapshot().variant,
         themes:
           runtimeContent?.themes ??
@@ -1489,7 +1494,7 @@ try {
     record: !practiceSession,
   });
   huntResultStatus = attachHuntStatus({
-    container: $('journey-reactions').parentElement,
+    container: $('overlay-reading'),
     mode: 'solo',
     records: huntRecords,
     record: false,
@@ -1914,6 +1919,7 @@ try {
           },
           asset: manifest.background,
           picture: candidatePicture,
+          acquire: (asset, options) => acquireCandidatePicture(asset, { ...options, binary: true }),
         }),
       );
     }
@@ -2994,6 +3000,9 @@ try {
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
+  // One latest observation, with no device identity, input values or history.
+  // Input clearing can retire its actionable frame after a disconnect.
+  const supportController = {};
   let lastControllerModality = '';
   document.body.dataset.inputMode =
     navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
@@ -3951,6 +3960,30 @@ try {
     button: $('storage-retention-button'),
     status: $('storage-retention-status'),
     isOpen: () => $('settings-dialog').open,
+  });
+  attachLocalSupportSummary({
+    getHost: () => {
+      const offline = offlineAvailability();
+      return {
+        version: buildVersion,
+        sourceRevision: buildSourceRevision,
+        packaged: isRelease,
+        kind: practice
+          ? 'practice'
+          : runtimeContent
+            ? 'installed-edition'
+            : journeyEnabled
+              ? 'journey'
+              : 'solo',
+        state: !started ? 'idle' : paused ? 'paused' : run?.status,
+        locale: getLocale(),
+        writable: writer.writable,
+        writerReason: practice ? 'practice' : writer.writable ? 'owned' : writer.reasonCode,
+        platform: nativePlatform() ?? 'browser',
+        offline: offline.available ? 'configured' : offline.messageCode,
+        controller: supportController,
+      };
+    },
   });
   window.addEventListener('pagehide', (event) => {
     storageRetention.close();
@@ -9292,6 +9325,15 @@ try {
     show('pause-label', kind === 'pause');
     show('overlay-reading', kind !== 'pause');
     show('overlay-footnote', kind !== 'pause');
+    const medalGoalVisible =
+      kind === 'won' &&
+      !practice &&
+      !courseSession &&
+      !recoverGameplayTuning(run.level)?.adminOverride;
+    show('capture-medal-goal', medalGoalVisible);
+    localizedText($('capture-medal-goal'), () =>
+      medalGoalVisible ? captureMedalGoalCopy(run) : '',
+    );
     $('game-overlay').dataset.intro = String(
       kind === 'ready' &&
         !practice &&
@@ -9465,11 +9507,7 @@ try {
         return t('interface:nextMission');
       });
       localizedText($('overlay-footnote'), () =>
-        practice
-          ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks')
-          : run.medal === 'gold'
-            ? t('interface:goldFastAndNoLivesLost')
-            : t('interface:tryAnotherClassOrReturnForACleanFasterRoute'),
+        practice ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks') : '',
       );
     }
     if (kind === 'lost') {
@@ -11754,6 +11792,12 @@ try {
         ? demoHost.toggleBoostEligible
         : run?.status === 'running',
     });
+    supportController.sampledAt = controllerTime;
+    supportController.status = controllerFrame.status.code;
+    supportController.assigned = Boolean(controllerFrame.assigned);
+    supportController.neutral = controllerFrame.confirmSnapshot.neutral;
+    supportController.blocked = controllerFrame.confirmSnapshot.blocked;
+    supportController.reason = controllerFrame.confirmSnapshot.reason;
     if (controllerFrame.assigned && !paused && started) observeInput('controller');
     soloRadioSetup.refresh();
     refreshControllerBoostCue();
@@ -11961,6 +12005,8 @@ try {
           controls,
         });
         if (beforeStatus === 'respawning' || run.status === 'respawning') {
+          pendingAction = false;
+          pendingPickup = false;
           input.clear();
           controller.clear();
           controls = { direction: null, boost: false, action: false, pickup: false };
@@ -11971,6 +12017,8 @@ try {
           controller.clear();
           controllerFrame = null;
           controls = { direction: null, boost: false, action: false, pickup: false };
+          pendingAction = false;
+          pendingPickup = false;
           pendingSwitch = null;
         }
         refreshControllerBoostCue();
@@ -11986,9 +12034,13 @@ try {
               message: t('interface:liveGoalTrackingIsUnavailableYourPictureProgressIsKept'),
             };
           }
-        pendingAction = false;
-        pendingPickup = false;
-        if (!resuming) pendingSwitch = null;
+        // A fresh request after accepted Resume waits behind its neutral tick.
+        // Recovery and capture-stop above still retire these pending actions.
+        if (!resuming) {
+          pendingAction = false;
+          pendingPickup = false;
+          pendingSwitch = null;
+        }
         accumulator -= FIXED_DT;
         if (!recordingStopped)
           try {
@@ -13897,10 +13949,13 @@ try {
     assertCurrent();
     return host.refreshInstalled({ assertCurrent });
   }
-  async function getUnifiedMissionLibrary(isCurrent = () => true) {
+  async function getUnifiedMissionLibrary(isCurrent = () => true, trace = null) {
     const callerCurrent = unifiedLibraryGuard(isCurrent);
     callerCurrent();
-    if (unifiedLibrary) return unifiedLibrary;
+    if (unifiedLibrary) {
+      trace?.mark('missions-build-cached');
+      return unifiedLibrary;
+    }
     let attempt = unifiedLibraryLoading;
     if (attempt) {
       // A new explicit owner may join a still-admitted request. A retired
@@ -13921,7 +13976,11 @@ try {
         attempt = null;
       }
     }
-    if (attempt) return attempt.promise;
+    if (attempt) {
+      // Its original observer retains ownership; a joining request does not inherit its stamps.
+      trace?.mark('missions-build-joined');
+      return attempt.promise;
+    }
     const callers = new Set([callerCurrent]);
     const admitted = unifiedLibraryGuard();
     const assertCurrent = () => {
@@ -13944,6 +14003,7 @@ try {
         result = null,
         committed = false;
       try {
+        trace?.mark('missions-imports-begin');
         const [
           { attachJourneyChooser },
           { createInstalledMissionLibrary },
@@ -13957,7 +14017,9 @@ try {
           import('./mission-library/cross-mode-journey.mjs'),
           import('./multiplayer.mjs'),
         ]);
+        trace?.mark('missions-imports-end');
         assertCurrent();
+        trace?.mark('missions-data-begin');
         const index =
           runtimeContent?.missionIndex ??
           (await getJSON('content/mission-library-index.json', assertCurrent));
@@ -13972,12 +14034,15 @@ try {
           runtimeContent?.themes ??
           (await getJSON('content-design/themes.json', assertCurrent)).themes;
         assertCurrent();
+        trace?.mark('missions-data-end');
+        trace?.mark('missions-sources-begin');
         const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
           ? journeyActorThemeCandidates(originalThemes, {
               includeOriginals: route.preserveOriginalThemes === true,
             })
           : originalThemes;
         const views = publishedRouteViews(route);
+        trace?.mark('missions-solo-host-begin');
         const host =
           candidateHost ||
           views?.solo ||
@@ -13991,6 +14056,7 @@ try {
               ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
               : {}),
           }));
+        trace?.mark('missions-solo-host-end');
         if (!candidateHost && !views?.solo) ownedHost = host;
         assertCurrent();
         const profile = candidateHost
@@ -14010,7 +14076,9 @@ try {
                 );
               },
             });
+        trace?.mark('missions-profile-load-begin');
         if (!candidateHost) await profile.load();
+        trace?.mark('missions-profile-load-end');
         assertCurrent();
         const launchSolo = async (mission, context) => {
           if (context.isCurrent?.() === false) return false;
@@ -14101,11 +14169,13 @@ try {
           // combined browsing identity never grants this Solo host Versus ownership.
           const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
           assertCurrent();
+          trace?.mark('missions-versus-host-begin');
           const versusPreview = createCandidateVersusHost(route.source, {
             themes: libraryThemes,
             corePackIds: route.corePackIds,
             optionalCampaignIds: route.optionalCampaignIds,
           });
+          trace?.mark('missions-versus-host-end');
           const manifestFor = (
             mission,
             difficulty = browsingJourneyPreferences.snapshot().difficulty,
@@ -14158,6 +14228,7 @@ try {
             './mission-library/spatial-next-editions.mjs'
           );
           assertCurrent();
+          trace?.mark('missions-prior-editions-begin');
           spatialEditions = await createSpatialNextEditionSources({
             assertCurrent,
             activeRouteId: route.id,
@@ -14165,6 +14236,7 @@ try {
             difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
             launch: departLibraryMission,
           });
+          trace?.mark('missions-prior-editions-end');
           assertCurrent();
           journeySources = [
             combineJourneyLibrarySources([
@@ -14175,7 +14247,9 @@ try {
             ...teamSources,
           ];
         }
+        trace?.mark('missions-sources-end');
         if (!runtimeContent) {
+          trace?.mark('missions-supplemental-imports-begin');
           const [
             { duelExpeditionLibrarySources, teamExpeditionLibrarySource },
             { TEAM_EXPANSION_ROUTE },
@@ -14185,9 +14259,11 @@ try {
             import('./content-design/multiplayer-expansion.mjs'),
             import('./mission-library/team-source.mjs'),
           ]);
+          trace?.mark('missions-supplemental-imports-end');
           assertCurrent();
           const expansionSources = [
             ...duelExpeditionLibrarySources({
+              onStage: trace?.mark,
               themes: originalThemes,
               activeRouteId: route.id,
               launch: departLibraryMission,
@@ -14199,6 +14275,7 @@ try {
               ? []
               : [
                   teamExpeditionLibrarySource({
+                    onStage: trace?.mark,
                     launch: departLibraryMission,
                     difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
                   }),
@@ -14238,6 +14315,7 @@ try {
         };
         const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
         assertCurrent();
+        trace?.mark('missions-installed-begin');
         result = await createInstalledMissionLibrary({
           assertCurrent,
           getProjectSources: async ({ assertCurrent }) => {
@@ -14346,6 +14424,7 @@ try {
               : { state: 'new', bestStars: null };
           },
         });
+        trace?.mark('missions-installed-end');
         assertCurrent();
         const state = createMissionLibrarySessionState({ mode: 'solo' });
         // Checked return restores the retained runtime independently of browsing.
@@ -14368,6 +14447,7 @@ try {
               );
             })
           : null;
+        trace?.mark('missions-chooser-build-begin');
         unifiedChooser = attachJourneyChooser({
           library: result.library,
           profile,
@@ -14441,6 +14521,7 @@ try {
             });
           },
         });
+        trace?.mark('missions-chooser-build-end');
         if (!journeyPreferences)
           browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
         // Keep the native settings and their guarded handlers, but not the old
@@ -14534,9 +14615,60 @@ try {
     const homeWasOpen = $('shell-home').open,
       oldRun = run,
       wasStarted = started;
+    // No trace, closure, payload or extra clock read exists on the ordinary path.
+    // Console delivery is supplementary, best effort evidence: a received begin
+    // survives a later unresponsive page; an undelivered end stays unobserved.
+    const trace = performanceSession
+      ? {
+          sequence: 0,
+          closed: false,
+          generation: performanceRunGeneration,
+          tick: run?.tick ?? 0,
+          build: unifiedBuildRevision,
+          mark(kind) {
+            if (trace.closed) return;
+            if (++trace.sequence >= 64) {
+              kind = 'missions-observer-overflow';
+              trace.closed = true;
+            }
+            let atMs = null;
+            try {
+              atMs = performance.now();
+              if (trace.generation > 0)
+                performanceSession.markEvent(kind, trace.generation, trace.tick, atMs);
+            } catch {
+              // Diagnostics never cancel or admit a library operation.
+            }
+            try {
+              console.debug(
+                'RevealLineMissionsStageV1 ' +
+                  JSON.stringify([
+                    revision,
+                    trace.build,
+                    trace.sequence,
+                    kind,
+                    trace.generation,
+                    trace.tick,
+                    atMs,
+                    performance.timeOrigin,
+                  ]),
+              );
+            } catch {
+              // The retained numeric ring remains independent of console delivery.
+            }
+          },
+          finish(kind) {
+            if (trace.closed) return;
+            trace.mark(kind);
+            trace.closed = true;
+          },
+        }
+      : null;
+    trace?.mark('missions-opening');
     ++unifiedLaunchRevision;
     pause(true);
     clearInput();
+    trace?.mark('missions-after-pause');
     const feedback = document.createElement('span');
     feedback.id = 'mission-library-opening-status';
     feedback.className = 'micro-note';
@@ -14545,6 +14677,7 @@ try {
     (opener?.isConnected ? opener : $('shell-play')).after(feedback);
     let failed = false;
     const cancel = () => {
+      trace?.finish('missions-cancelled');
       if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
       opening.dispose();
       feedback.remove();
@@ -14562,13 +14695,18 @@ try {
       run === oldRun &&
       started === wasStarted;
     try {
-      const host = await getUnifiedMissionLibrary(isCurrent);
+      const host = await getUnifiedMissionLibrary(isCurrent, trace);
       // The installed-card refresh may move focus while it reconciles an owned
       // catalogue. Claim the still-current opener before that internal work;
       // newer input still retires the claim while the state/revision checks
       // below also reject replaced navigation and game state.
-      if (!opening.claim()) return;
+      if (!opening.claim()) {
+        trace?.finish('missions-cancelled');
+        return;
+      }
+      trace?.mark('missions-refresh-begin');
       await refreshUnifiedInstalled(host, isCurrent);
+      trace?.mark('missions-refresh-end');
       const openingCurrent = opening.current();
       opening.dispose();
       if (
@@ -14582,9 +14720,13 @@ try {
         run !== oldRun ||
         started !== wasStarted ||
         !paused
-      )
+      ) {
+        trace?.finish('missions-cancelled');
         return;
-      unifiedChooser.open(opener, options);
+      }
+      trace?.mark('missions-open-begin');
+      unifiedChooser.open(opener, trace ? { ...options, onOpeningStage: trace.mark } : options);
+      trace?.finish('missions-complete');
       if (options?.random) {
         unifiedChooser.playRandom({ resetFilters: true });
         return;
@@ -14599,6 +14741,7 @@ try {
         }
       }
     } catch (error) {
+      trace?.finish(error?.name === 'AbortError' ? 'missions-cancelled' : 'missions-failed');
       if (revision === unifiedOpenRevision) {
         failed = true;
         localizedText(feedback, () => t('interface:missionsCouldNotLoadChooseMissionsToRetry'));
@@ -14933,6 +15076,11 @@ try {
   }
   gameShell = attachGameShell({
     navigationContext: soloNavigationContext,
+    comfortSettings: {
+      display: displayPreferences,
+      setDisplay: changeDisplay,
+      displayWarning: () => $('display-preferences-status').textContent,
+    },
     getAppearanceDefault: () => {
       const pin = currentAppearanceDefault();
       return pin && runtimeContent?.appearanceThemes.length

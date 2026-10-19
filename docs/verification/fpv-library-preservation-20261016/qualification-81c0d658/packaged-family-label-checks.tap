@@ -1,0 +1,52 @@
+TAP version 13
+# file:///Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/i18n/bootstrap.mjs:5
+#   const engine = host.i18next.createInstance();
+#                               ^
+# TypeError: Cannot read properties of undefined (reading 'createInstance')
+#     at file:///Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/i18n/bootstrap.mjs:5:31
+#     at file:///Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/i18n/bootstrap.mjs:341:3
+#     at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+#     at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+# Node.js v20.19.5
+# Subtest: /Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/test/fpv-regional-library-families.test.mjs
+not ok 1 - /Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/test/fpv-regional-library-families.test.mjs
+  ---
+  duration_ms: 1668.642375
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/test/fpv-regional-library-families.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# file:///Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/i18n/bootstrap.mjs:5
+#   const engine = host.i18next.createInstance();
+#                               ^
+# TypeError: Cannot read properties of undefined (reading 'createInstance')
+#     at file:///Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/i18n/bootstrap.mjs:5:31
+#     at file:///Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/i18n/bootstrap.mjs:341:3
+#     at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+#     at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+# Node.js v20.19.5
+# Subtest: /Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/test/fpv-regional-library-labels.test.mjs
+not ok 2 - /Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/test/fpv-regional-library-labels.test.mjs
+  ---
+  duration_ms: 2325.310625
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check/game/test/fpv-regional-library-labels.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2365.575459

@@ -6,6 +6,9 @@ on:
       - '.github/workflows/appearance-preview.yml'
       - 'docs/appearance-preview-testing.md'
       - 'game/app.mjs'
+      - 'game/ui/performance-session.mjs'
+      - 'game/test/performance-session.test.mjs'
+      - 'game/test/mission-library-stage-observation.test.mjs'
       - 'game/couch/couch.mjs'
       - 'game/couch/couch-shell.mjs'
       - 'game/couch/couch-static-pictures.mjs'
@@ -287,6 +290,8 @@ env:
     game/test/library-entry.test.mjs
     game/test/solo-lazy-library-host.test.mjs
     game/test/solo-transition-performance-host.test.mjs
+    game/test/performance-session.test.mjs
+    game/test/mission-library-stage-observation.test.mjs
   APPEARANCE_DEMO_TEST_FILES: >-
     game/test/demo-scene-transition.test.mjs
     game/test/victory-story-ui.test.mjs
