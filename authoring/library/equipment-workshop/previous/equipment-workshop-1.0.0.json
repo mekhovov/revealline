@@ -3,6 +3,7 @@
   "id": "equipment-workshop",
   "version": "1.0.0",
   "name": "Equipment Workshop",
+  "description": "Two original procedural presentations of proven equipment layouts: Ukrainian garden heritage and a 1990s arcade circuit. Optional Steady Thread and Power Circuit seals demonstrate authored goals; every map also supports ordinary clears.",
   "engine": "xonix-core.v2",
   "dependencies": [],
   "metadata": {

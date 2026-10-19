@@ -1195,12 +1195,12 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/equipment-workshop.json",
-        "bytes": 7189661,
-        "sha256": "2259f76efe20683801b1e5cc83a81f0e19886f8abad8197dc31ac3159e1b749f"
+        "bytes": 7189735,
+        "sha256": "bf487870e21443f7246c28a74945583f412f13dd32c1cd09b17fdd0df62bbbd5"
       },
       "packIdentity": {
-        "bytes": 7183944,
-        "sha256": "6c4f85061e7f8deaf1d2290893a3b348b98d3e74dcf2ecdf5bbe0e41f8ccf5ac"
+        "bytes": 7183898,
+        "sha256": "3805b965b9b2b9481f8c4f48cfa1de75b828afd19881a4b2631561644f27881a"
       },
       "packVersion": "1.1.0"
     },
@@ -1233,12 +1233,12 @@
       "difficultiesByMode": { "solo": ["standard", "gentle"], "versus": ["standard"] },
       "sourceFile": {
         "path": "game/content/packs/equipment-workshop.json",
-        "bytes": 7189661,
-        "sha256": "2259f76efe20683801b1e5cc83a81f0e19886f8abad8197dc31ac3159e1b749f"
+        "bytes": 7189735,
+        "sha256": "bf487870e21443f7246c28a74945583f412f13dd32c1cd09b17fdd0df62bbbd5"
       },
       "packIdentity": {
-        "bytes": 7183944,
-        "sha256": "6c4f85061e7f8deaf1d2290893a3b348b98d3e74dcf2ecdf5bbe0e41f8ccf5ac"
+        "bytes": 7183898,
+        "sha256": "3805b965b9b2b9481f8c4f48cfa1de75b828afd19881a4b2631561644f27881a"
       },
       "packVersion": "1.1.0"
     },
