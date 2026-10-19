@@ -1,0 +1,90 @@
+{
+  "sourceCommit": "48373316b65bf14e3731569e9de9296fcdb553d0",
+  "sourceModuleSha256": "9c0321f2565330464c9d059db816a1ae326ed9a31fdb586bfd19f99f5cb998ba",
+  "sourceModule": "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+  "purpose": "Pre-floor-mapping historical v1 mission fixture; normal controls, fixed solver, no injected motion.",
+  "courseId": "beginner-01",
+  "presetId": "meteor75-analog-2022",
+  "mode": "self-level",
+  "identity": {
+    "model": "aircraft-course-practice.v1",
+    "course": "beginner-01",
+    "courseIdentity": "5b7652234b696e5a",
+    "mode": "self-level",
+    "configuration": "bf8c85d839217d1c"
+  },
+  "physicalHash": "c9b9d807",
+  "physicalIdentity": "882bf661f075fe9e",
+  "mission": {
+    "format": "AircraftMissionCheckpoint.v1",
+    "identity": "0ae1c17e7e7ee6a4",
+    "state": {
+      "ticks": 1200,
+      "status": "paused",
+      "position": {
+        "x": 0,
+        "y": -1,
+        "z": 0
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "orientation": [-8, 0, 16, 1000000],
+      "angular": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0
+      },
+      "step": 0,
+      "hold": 0,
+      "contacts": 0,
+      "landingSpeed": 0,
+      "landingTilt": 0,
+      "lastInput": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0,
+        "actions": 0
+      },
+      "heightRange": {
+        "min": -1,
+        "max": 0
+      },
+      "health": 100,
+      "grounded": true,
+      "support": {
+        "id": "course-boundary-y-min",
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        },
+        "y": -1
+      },
+      "cooldown": 0,
+      "contactCooldown": 0,
+      "rng": 700,
+      "nextProjectileId": 1,
+      "projectiles": [],
+      "actors": [],
+      "events": [],
+      "shots": 0,
+      "hits": 0
+    },
+    "feedback": null
+  },
+  "frames": [
+    {
+      "ticks": 1200,
+      "controls": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0
+      }
+    }
+  ]
+}

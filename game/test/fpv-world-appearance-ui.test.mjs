@@ -671,6 +671,52 @@ test('World pre-arm appearance refresh keeps focus on the control the player is 
   );
 });
 
+test('World Home context stays localized with its current flight while browsing and returning', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const context = h.$('worlds-shell-navigation-context');
+  const home = h.$('worlds-shell-home-dialog');
+  assert.equal(context.textContent, 'FPV SIM · Worlds');
+  assert.equal(context.hidden, false);
+  assert.ok(home.querySelector('nav').getAttribute('aria-describedby').includes(context.id));
+  const mission = home.querySelector('.mode-play-mission').textContent;
+  const browse = () => {
+    h.$('worlds-shell-action-missions').focus();
+    h.$('worlds-shell-action-missions').click();
+    assert.equal(h.$('journey-chooser').open, true);
+    assert.ok(
+      h.$('journey-chooser-status').textContent.includes(`${context.textContent} · `),
+      'The chooser keeps the exact localized host context while browsing.',
+    );
+    h.doc.querySelectorAll('.journey-card')[1].focus();
+    h.tick(2);
+    h.$('journey-back').click();
+    assert.equal(home.open, true);
+    assert.ok(
+      h.doc.activeElement === h.$('worlds-shell-action-missions'),
+      `Back must return focus to the mission opener, received ${h.doc.activeElement?.id}`,
+    );
+  };
+  browse();
+  assert.equal(h.app.snapshot().state, undefined, 'focus-only browsing cannot allocate a flight');
+  assert.equal(home.querySelector('.mode-play-mission').textContent, mission);
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-arm').click();
+  h.tick(3);
+  h.$('worlds-shell-action-menu').click();
+  const paused = h.app.snapshot().state;
+  assert.equal(paused.status, 'paused');
+  assert.ok(paused.ticks > 0);
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.equal(context.textContent, 'FPV SIM · Світи');
+  const translatedMission = home.querySelector('.mode-play-mission').textContent;
+  browse();
+  assert.deepEqual(h.app.snapshot().state, paused);
+  assert.equal(home.querySelector('.mode-play-mission').textContent, translatedMission);
+  assert.equal(context.textContent, 'FPV SIM · Світи');
+});
+
 test('World title retains connected catalogue nodes and transfers the common bar into native flight', async (t) => {
   const h = fixture(t);
   await h.app.ready;
@@ -2191,6 +2237,169 @@ class RegionalWorker extends Events {
     this.handler.dispose();
   }
 }
+
+test('Apply & restart waits for explicit Arm after delayed World, Legacy and Regional preparation', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const [{ createEnduranceFixture }, { regionalReviewEntry }, tuning] = await Promise.all([
+    import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+    import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+    import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
+  ]);
+  const { terrain } = await createEnduranceFixture();
+  for (const [host, entry] of [
+    ['World', WORLD_CATALOGUE.find((item) => !item.legacy && item.activity !== 'hunt')],
+    ['Legacy', WORLD_CATALOGUE.find((item) => item.legacy)],
+    ['Regional', regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source })],
+  ])
+    for (const configuration of ['Legacy', 'Actual', 'Meteor75'])
+      await t.test(`${host} / ${configuration}`, async (t) => {
+        const storage = new Map(),
+          blobs = [];
+        let holdPreparation = false,
+          releasePreparation,
+          displayedAircraft;
+        const h = fixture(t, {
+          storage,
+          rendererFactory: () => ({
+            available: true,
+            setPresentation() {},
+            setCourse() {},
+            setQuality() {},
+            setDrone() {},
+            setGhost() {},
+            setPath() {},
+            setRegional() {},
+            setAircraft(aircraft) {
+              displayedAircraft = aircraft;
+            },
+            async loadScene() {},
+            async prepareRegionalFrame() {},
+            async prepare() {
+              if (holdPreparation)
+                await new Promise((resolve) => {
+                  releasePreparation = resolve;
+                });
+              return true;
+            },
+            draw() {},
+            dispose() {},
+          }),
+        });
+        h.win.Worker = RegionalWorker;
+        h.win.URL = {
+          createObjectURL(blob) {
+            blobs.push(blob);
+            return 'blob:apply-restart';
+          },
+          revokeObjectURL() {},
+        };
+        await h.app.ready;
+        await h.app.startFlight(entry, { mode: 'self-level', paused: true });
+        h.$('world-arm').click();
+        const tick = async (count) => {
+          for (let i = 0; i < count; i++) {
+            h.tick();
+            await new Promise((resolve) => setImmediate(resolve));
+          }
+        };
+        await tick(6);
+        assert.ok(h.app.snapshot().state.ticks > 0, 'the original attempt really ran');
+        h.app.pause();
+        await openWorldTuning(h);
+        if (configuration === 'Actual') {
+          const algorithm = worldTuningControl(h, 'Rate algorithm', 'select');
+          algorithm.value = 'actual';
+          algorithm.emit('change');
+        } else if (configuration === 'Meteor75') {
+          const aircraft = worldTuningControl(h, 'Aircraft preset', 'select');
+          aircraft.value = 'meteor75-analog-2022';
+          aircraft.emit('change');
+          await worldTuningClick(h, 'Use in draft');
+        }
+        const camera = worldTuningControl(h, 'Vertical FOV (degrees)');
+        camera.value = '103';
+        camera.emit('input');
+        holdPreparation = true;
+        await worldTuningClick(h, 'Apply & restart');
+        await settleUntil(
+          () => Boolean(releasePreparation),
+          'replacement reaches held graphics preparation',
+        );
+        assert.equal(h.$('world-arm').disabled, true);
+        assert.notEqual(h.app.snapshot().state.status, 'active');
+        assert.equal(h.app.snapshot().state.ticks, 0);
+        holdPreparation = false;
+        releasePreparation();
+        await settleUntil(
+          () => !h.$('world-arm').disabled,
+          'replacement becomes ready for explicit Arm',
+        );
+        await tick(12);
+        assert.notEqual(
+          h.app.snapshot().state.status,
+          'active',
+          'ready cannot mean automatically armed',
+        );
+        assert.equal(
+          h.app.snapshot().state.ticks,
+          0,
+          'animation frames cannot advance the new attempt',
+        );
+        assert.ok(
+          Object.values(h.app.snapshot().state.lastInput).every((value) => value === 0),
+          'all initial controls and any native-world action bits stay neutral',
+        );
+        assert.equal(h.$('world-fov').value, '103');
+        assert.equal(h.$('flight-mode').value, 'self-level');
+        const store = tuning.createTuningLibraryStore({
+          storage: {
+            getItem: (key) => storage.get(key) ?? null,
+            setItem: (key, value) => storage.set(key, value),
+          },
+        });
+        const saved = store.effective();
+        assert.equal(
+          saved.response.format,
+          configuration === 'Legacy' ? 'FlightResponseProfile.v1' : 'FlightResponseProfile.v2',
+        );
+        if (configuration === 'Meteor75') {
+          const initialized = RegionalWorker.instances
+            .at(-1)
+            .messages.find((message) => message.type === 'init').options;
+          assert.deepEqual(initialized.aircraft, saved.advanced.aircraft);
+          assert.deepEqual(initialized.controller, saved.advanced.controller);
+          assert.deepEqual(
+            initialized.response.format === 'AircraftResponse.v1'
+              ? initialized.response.response
+              : initialized.response,
+            saved.response,
+          );
+          assert.deepEqual(displayedAircraft, saved.advanced.aircraft);
+        } else if (host !== 'Regional') {
+          h.$('export-flight').click();
+          await settleUntil(() => blobs.length > 0, 'fresh attempt export');
+          assert.deepEqual(
+            JSON.parse(await blobs[0].text()).records[0].proof.response,
+            saved.response,
+          );
+        }
+        h.$('world-arm').click();
+        await tick(8);
+        assert.equal(h.app.snapshot().state.status, 'active');
+        assert.ok(h.app.snapshot().state.ticks > 0, 'explicit Arm starts the saved configuration');
+        assert.equal(storage.get(tuning.TUNING_LIBRARY_KEY), store.export());
+        if (host !== 'Regional') {
+          await h.app.startFlight(entry, { mode: 'self-level' });
+          assert.equal(
+            h.app.snapshot().state.status,
+            'active',
+            'ordinary launch keeps its deliberate Fly behavior',
+          );
+        }
+      });
+});
 
 test('World and Regional explicit keyboard resume keeps accepted aircraft throttle only', async (t) => {
   const priorLocale = getLocale();

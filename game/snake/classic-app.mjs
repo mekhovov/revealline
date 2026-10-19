@@ -1201,6 +1201,11 @@ function openMissionLibrary() {
       document: doc,
       library: missionLibrary,
       mode,
+      browsingContext: ({ mode: browsedMode }) =>
+        text('browsingContext', {
+          mode: navigationMode(browsedMode),
+          context: navigationContext(),
+        }),
       availableCollectionsOnly: true,
       getCurrentId: () => currentRow()?.id,
       readState: session.read,
@@ -1209,10 +1214,7 @@ function openMissionLibrary() {
         editionId: namespace,
         getStorage: () => globalThis.localStorage,
       },
-      description: () =>
-        locale === 'uk'
-          ? 'Усі місії Snake. Оберіть поле й починайте; розділи допоможуть знайти наступне випробування.'
-          : 'Every Snake mission. Choose a board to play; chapters help you find your next challenge.',
+      description: () => text('browseHint'),
       renderPreview: (options) => {
         const destination = CLASSIC_SNAKE_LEVELS.find((item) => item.id === options.row.runtimeId);
         const previewAppearance = acceptAttemptAppearance(
@@ -1590,6 +1592,19 @@ function renderEncounterGuide() {
   $('encounter-summary').dataset.specialist = String(specialist);
   renderEnemyFieldGuide($('field-guide-cards'), kinds, { locale, cast: currentCast() });
 }
+function navigationMode(selectedMode) {
+  return selectedMode === 'versus' ? t('interface:versus2', { lng: locale }) : text(selectedMode);
+}
+function navigationContext() {
+  return [
+    text('title'),
+    navigationMode(mode),
+    text(format),
+    ...(format === 'endless' && mode === 'versus'
+      ? [text(duel === 'score' ? 'scoreDuel' : duel)]
+      : []),
+  ].join(' · ');
+}
 function refresh() {
   if (!match) return;
   const nextTarget = runs[0].targets?.find((actor) => actor.role !== 'bonus') ?? runs[0].target;
@@ -1614,6 +1629,7 @@ function refresh() {
     phase: outcome ? 'results' : ready ? 'ready' : paused ? 'paused' : 'playing',
     transitionActive: !['idle', 'cancelled'].includes(transition.snapshot().phase),
     missionName: entry.title[locale],
+    navigationContext: navigationContext(),
     summary: readyInstruction(),
     canResume: !outcome && (!ready || (offerSavedContinue && !!savedRound)),
     muted: audioMaster.snapshot().muted,
