@@ -113,6 +113,7 @@ import {
   createClassicSnakeRatings,
   classicSnakeRatingForRecord,
   classicSnakeRatingCriteriaText,
+  classicSnakeRatingResultText,
 } from './classic-ratings.mjs';
 import { createClassicSnakeRecords } from './classic-records.mjs';
 import { resolveClassicSnakeRecipeEntry } from './classic-catalogue-archive.mjs';
@@ -816,7 +817,13 @@ function installTransitionControls() {
   media.append(resultPreview, replayControls);
   const overview = el('div', null, 'snake-result-overview');
   const summary = el('div', null, 'snake-result-summary');
-  summary.append($('result-detail'), $('snake-stars'), $('result-record'), $('result-save-notice'));
+  summary.append(
+    $('result-detail'),
+    $('snake-stars'),
+    $('snake-rating-goal'),
+    $('result-record'),
+    $('result-save-notice'),
+  );
   overview.append(media, summary);
   $('snake-results').prepend(overview);
   for (const [container, variant] of [
@@ -1196,6 +1203,7 @@ function openMissionLibrary() {
       document: doc,
       library: missionLibrary,
       mode,
+      getHostMode: () => mode,
       browsingContext: ({ mode: browsedMode }) =>
         text('browsingContext', {
           mode: navigationMode(browsedMode),
@@ -1823,6 +1831,13 @@ function renderRatings() {
   const starsLabel = grade?.stars ? `${grade.stars} / 3` : starsText;
   if ($('snake-stars').getAttribute('aria-label') !== starsLabel)
     $('snake-stars').setAttribute('aria-label', starsLabel);
+  const goalText =
+    result() === 'won' && liveProvenance !== 'import'
+      ? classicSnakeRatingResultText(grade, runs[0].tick, locale)
+      : '';
+  $('snake-rating-goal').hidden = !goalText;
+  if ($('snake-rating-goal').textContent !== goalText)
+    $('snake-rating-goal').textContent = goalText;
   $('snake-rating-criteria').textContent = ratingCriteriaText(runs[0]);
 }
 function restore(raw, { provenance = 'import' } = {}) {
