@@ -821,6 +821,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   const audioCues = section('gym-audio-cues');
   const stopAudioCues = attachSimMenuAudioSettings(
     {
+      gameplayOutput: audio.gameplayOutput,
       get menuSettings() {
         return presentation.menuSettings;
       },
