@@ -58,6 +58,7 @@ import {
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { versusHomeRecommendation } from '../ui/versus-home-recommendation.mjs';
 import { createMissionStartCue } from './start-cue.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
@@ -852,10 +853,18 @@ try {
   const cursorReceiptId = cursorEntry
     ? (candidateJourney.progressMission?.(cursorEntry)?.id ?? journeyCursor.id)
     : journeyCursor?.id;
-  const initialJourneyMission =
-    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, cursorReceiptId)
-      ? (candidateJourney.next(journeyCursor.id) ?? journeyCursor)
-      : (journeyCursor ?? candidateJourney?.catalog.missions[0]);
+  const journeyCursorCleared =
+    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, cursorReceiptId);
+  const initialJourneyMission = journeyCursorCleared
+    ? (candidateJourney.next(journeyCursor.id) ?? journeyCursor)
+    : (journeyCursor ?? candidateJourney?.catalog.missions[0]);
+  const initialHomeSelection = {
+    destination: initialJourneyMission,
+    cursor: journeyCursor,
+    cursorId: journeyProfile?.snapshot().cursors.versus ?? null,
+    recordedClear: !!journeyCursorCleared,
+  };
+  let initialHomeRecipe = null;
   $('race-level').value = candidateJourney
     ? candidateJourney.row(initialJourneyMission, journeyPreferences.snapshot().difficulty).key
     : maps[0].key;
@@ -4157,7 +4166,10 @@ try {
     onOpen: clear,
     offlinePanel: installOfflinePanel,
   });
-  shell.refreshGlobalSettings?.({ controls: globalTools.controls });
+  shell.refreshGlobalSettings?.({
+    controls: globalTools.controls,
+    comfort: { display: displayPreferences },
+  });
 
   function couchScope() {
     if (globalSettingsToolsRoot(document)) return `couch:${globalSettingsToolsRoot(document).id}`;
@@ -4338,6 +4350,7 @@ try {
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
+      startRecommendation: homeMissionRecommendation,
       summary: () =>
         `${duelNavigationContext()} · ${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
     });
@@ -4360,6 +4373,39 @@ try {
         });
     if ($('race-menu-status').textContent !== text)
       localizedText($('race-menu-status'), () => text);
+  }
+  function homeMissionRecommendation() {
+    if (
+      authoredRoute?.id !== DEFAULT_JOURNEY_ROUTES.versus ||
+      libraryHandoff ||
+      incomingContinuation ||
+      !candidateJourney?.owns(roundRecipe?.entry)
+    )
+      return null;
+    const recommendation = versusHomeRecommendation({
+      catalog: candidateJourney.catalog,
+      mission: roundRecipe.entry.mission,
+      initial: roundRecipe === initialHomeRecipe ? initialHomeSelection : null,
+      ready:
+        match?.status === 'ready' &&
+        contentReady &&
+        !contentBusy &&
+        !contentError &&
+        !nextAttempt &&
+        !libraryContinuation &&
+        !pendingReadyStart,
+    });
+    const key = {
+      first: 'interface:versusHomeRecommendation.first',
+      selected: 'interface:versusHomeRecommendation.selected',
+      recordedNext: 'interface:versusHomeRecommendation.recordedNext',
+    }[recommendation?.kind];
+    return recommendation
+      ? t(key, {
+          mission: contentText(recommendation.mission, 'name'),
+          previous: recommendation.previous ? contentText(recommendation.previous, 'name') : '',
+        })
+      : null;
   }
   localizedText($('race-export-recording'), () => t('interface:recording.exportRound'));
   // Locale bindings can outlive a retired page. Keep verification in the build
@@ -5189,6 +5235,7 @@ try {
   const initialPreparation = prepare(),
     initialMatch = match,
     initialGeneration = generation;
+  initialHomeRecipe = roundRecipe;
   frameId = requestAnimationFrame(frame);
   // Install the usable lobby before waiting for its required picture. Cancel
   // and Back stay reachable; only Start waits for this exact preparation.

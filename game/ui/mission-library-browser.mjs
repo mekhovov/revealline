@@ -44,6 +44,7 @@ export function attachMissionLibraryBrowser({
   document: doc = globalThis.document,
   library,
   mode = 'solo',
+  getHostMode = () => mode,
   onPause,
   onReturn,
   readState = () => null,
@@ -221,7 +222,16 @@ export function attachMissionLibraryBrowser({
   const back = node('button', 'journey-back', localizedMessage('common:navigation.backToGame'));
   back.type = 'button';
   back.className = 'button secondary';
-  footer.append(randomLevel, back);
+  const resetFilters = node(
+    'button',
+    'journey-filters-reset',
+    localizedMessage('interface:missionLibrary.search.resetFilters'),
+  );
+  resetFilters.type = 'button';
+  resetFilters.className = 'button secondary';
+  resetFilters.setAttribute('aria-controls', 'journey-cards');
+  localizedAttribute(resetFilters, 'title', () => t('interface:missionLibrary.search.resetHint'));
+  footer.append(resetFilters, randomLevel, back);
   dialog.append(heading, copy, filters, status, campaignRail, list, footer);
   doc.body.append(dialog);
   const cards = new Map(),
@@ -717,6 +727,42 @@ export function attachMissionLibraryBrowser({
       completion: null,
     };
   }
+  function hostMode() {
+    try {
+      const accepted = getHostMode();
+      if (modes.includes(accepted)) return accepted;
+    } catch {
+      // A retired host callback must not make browse-only recovery unusable.
+    }
+    return mode;
+  }
+  const filtersActive = () =>
+    !!collection.value || modeFilter.value !== hostMode() || lifecycle.value !== 'current';
+  function filterDescription() {
+    return t('interface:missionLibrary.search.filters', {
+      collection: collection.value ? t(LIBRARY_TAG_KEYS[collection.value]) : t('interface:all'),
+      editions:
+        lifecycle.value === 'current'
+          ? t('interface:current')
+          : lifecycle.value === 'archive'
+            ? t('interface:missionLibrary.lifecycle.archive')
+            : t('interface:missionLibrary.lifecycle.all'),
+      mode: modeLabel(modeFilter.value),
+    });
+  }
+  function emptyDescription() {
+    const query = !!search.value.trim();
+    const key = !library.missions.length
+      ? 'emptyLibrary'
+      : query && filtersActive()
+        ? 'emptySearchFilters'
+        : query
+          ? 'emptySearch'
+          : filtersActive()
+            ? 'emptyFilters'
+            : 'emptyView';
+    return t(`interface:missionLibrary.search.${key}`);
+  }
   function render() {
     if (destroyed) return;
     clearSearch.hidden = !search.value;
@@ -736,15 +782,21 @@ export function attachMissionLibraryBrowser({
     randomLevel.disabled = !matches.some(
       (row) => library.availability(row, modeFilter.value).state === 'ready',
     );
-    localizedText(
-      status,
-      () =>
-        `${t('common:counts.missions', { count: matches.length })} · ${browsingContext?.({ mode: modeFilter.value, label: modeLabel(modeFilter.value) }) ?? modeLabel(modeFilter.value)}${message ? ` · ${renderMessage(message)}` : ''}`,
+    resetFilters.hidden = !filtersActive();
+    localizedText(status, () =>
+      [
+        t('common:counts.missions', { count: matches.length }),
+        browsingContext?.({ mode: modeFilter.value, label: modeLabel(modeFilter.value) }) ??
+          modeLabel(modeFilter.value),
+        filtersActive() || !matches.length ? filterDescription() : '',
+        !matches.length ? emptyDescription() : '',
+        message ? renderMessage(message) : '',
+      ]
+        .filter(Boolean)
+        .join(' · '),
     );
-    const filtersActive =
-      !!collection.value || modeFilter.value !== mode || lifecycle.value !== 'current';
     localizedText(filterSummary, () =>
-      filtersActive ? t('interface:filtersActive') : t('interface:filters'),
+      filtersActive() ? t('interface:filtersActive') : t('interface:filters'),
     );
     const campaignChoices = new Map();
     for (const row of railRows)
@@ -1142,9 +1194,16 @@ export function attachMissionLibraryBrowser({
   }
   function open(
     origin = doc.activeElement,
-    { returnLabel = t('common:navigation.backToGame'), retune = true } = {},
+    { returnLabel = t('common:navigation.backToGame'), retune = true, onOpeningStage } = {},
   ) {
     if (destroyed) return;
+    const observe = onOpeningStage
+      ? (kind) => {
+          try {
+            onOpeningStage(kind);
+          } catch {}
+        }
+      : null;
     const changed = !dialog.open;
     const landing = retune && changed ? menuRetuneOrigin(origin) : null;
     retirePendingSelection();
@@ -1157,10 +1216,16 @@ export function attachMissionLibraryBrowser({
     localizedText(back, () => returnLabel);
     onPause?.();
     invalidateDiagrams();
+    observe?.('missions-campaigns-begin');
     rebuildCampaigns();
+    observe?.('missions-campaigns-end');
+    observe?.('missions-render-begin');
     render();
+    observe?.('missions-render-end');
     if (!dialog.open) nativeReturnFocus = doc.activeElement;
+    observe?.('missions-modal-begin');
     dialog.showModal();
+    observe?.('missions-modal-end');
     observeDiagrams();
     restoreSelection();
     if (landing) {
@@ -1206,6 +1271,34 @@ export function attachMissionLibraryBrowser({
     (first ?? (compact ? filterSummary : collection)).focus({
       preventScroll: true,
     });
+    remember();
+  };
+  resetFilters.onclick = () => {
+    if (destroyed || !dialog.open || doc.hidden || doc.hasFocus?.() === false || !filtersActive())
+      return;
+    const ticket = visit,
+      focused = doc.activeElement,
+      acceptedMode = hostMode();
+    collection.value = '';
+    lifecycle.value = 'current';
+    modeFilter.value = acceptedMode;
+    // One ordinary filter event owns retirement/rendering and informs native
+    // hosts which keep remote metadata or preview controls for the browsed mode.
+    const EventType = doc.defaultView?.Event || Event;
+    modeFilter.dispatchEvent(new EventType('change', { bubbles: true }));
+    if (
+      destroyed ||
+      !dialog.open ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      visit !== ticket + 1 ||
+      modeFilter.value !== acceptedMode ||
+      (doc.activeElement !== focused &&
+        !(focused === resetFilters && doc.activeElement === doc.body))
+    )
+      return;
+    const first = [...list.querySelectorAll('.journey-card')].find((button) => !button.disabled);
+    (first ?? search).focus({ preventScroll: true });
     remember();
   };
   campaign.addEventListener('change', () => {
