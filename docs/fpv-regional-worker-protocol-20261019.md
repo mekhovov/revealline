@@ -10,7 +10,7 @@ The two fixed cases are BETAFPV Meteor75 / Self-level and iFlight Nazgul ECO XL5
 - Pause without advancing, checkpoint continuation in a newly initialized worker, complete continuation checkpoint/recording equality, reset, and retained-clip replay.
 - One awaited client request, at most one queued input in every observed checkpoint (including the queued rollback sample), two sequential owners, and at most three retained recording segments within a 2 MiB budget.
 
-The fixture selects the existing recorder's **2 KiB event-byte rotation**. It does not change the production 60-second rotation threshold, accelerate physical time or claim a 60-second flight. The returned replay scope is `checkpoint-clip`; it is not a complete-session archive or scored course proof. Synthetic frame adoption does not exercise regional cell fetching, map-source validation, graphics admission or the complete rendered Regional host.
+The fixture selects the existing recorder's **2 KiB event-byte rotation**. It does not change the production 60-second rotation threshold, accelerate physical time or claim a 60-second flight. The returned replay scope is `checkpoint-clip`; it is not a complete-session archive or scored course proof. Retained-clip replay runs on the caller thread (the page for a browser run), including when verifying a worker-produced recording. Fresh-worker restore uses the native worker protocol; this does not test a separate native `verify-recording` request. Synthetic frame adoption does not exercise regional cell fetching, map-source validation, graphics admission or the complete rendered Regional host.
 
 ## Native browser procedure
 

@@ -315,6 +315,7 @@ export async function runRegionalProtocolCase(
       peakPending,
       maxRetained,
       replayScope: replay.verificationScope,
+      retainedClipReplayExecutor: 'caller-thread',
       retainedFromTick: final.recording.startMissionTick,
       throughTick: ticks,
       owners,
