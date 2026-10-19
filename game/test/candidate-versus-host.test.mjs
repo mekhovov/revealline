@@ -110,7 +110,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.$('race-time-field').hidden, true);
     assert.equal(p.$('race-clock').textContent, 'No countdown');
     assert.equal(p.$('race-clock').dataset.compact, '∞');
-    assert.equal(p.$('race-summary').textContent, 'One race · First return');
+    assert.equal(p.$('race-summary').textContent, 'Capture · Duel · One race · First return');
     assert.match(p.$('race-format-help').textContent, /No race countdown/);
     assert.doesNotMatch(p.$('race-format-help').textContent, /At the time limit/);
     assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
@@ -619,7 +619,7 @@ for (const route of ['opening', 'authored'])
         p.$('versus-journey-pictures').querySelectorAll('.journey-mode-picture-card').length ===
           rows.length,
     );
-    assert.match(p.$('versus-journey-pictures').textContent, /earned Versus originals/);
+    assert.match(p.$('versus-journey-pictures').textContent, /earned Duel originals/);
     assert.doesNotMatch(p.$('versus-journey-pictures').textContent, /earned Solo|earned Team/);
     p.$('versus-journey-pictures').querySelector('header').querySelector('button').click();
     assert.equal(p.doc.activeElement, p.$('race-journey-pictures'));

@@ -1173,6 +1173,19 @@ button:disabled {
   line-height: 1.4;
   margin: 5px 0 12px;
 }
+.overflight-player:not(.overflight-raid) #overflight-settings-dialog .mode-settings-content {
+  flex-direction: column;
+}
+.overflight-player:not(.overflight-raid) #overflight-settings-dialog [data-operation-context] {
+  flex: 0 0 auto;
+}
+.overflight-player:not(.overflight-raid)
+  #overflight-settings-dialog
+  .field-kit-settings-panel
+  > label:not(.overflight-check) {
+  display: grid;
+  gap: 6px;
+}
 .overflight-hud-operation {
   position: absolute;
   bottom: 37px;
