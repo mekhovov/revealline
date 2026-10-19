@@ -1,6 +1,7 @@
 import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { huntText } from '../hunt/copy.mjs';
 import { loadBaseArtwork } from '../base-artwork.mjs';
 import { createEnemyStatsHost } from '../enemy-stats.mjs';
 import { mountEnemyStats } from '../ui/enemy-stats.mjs';
@@ -47,6 +48,7 @@ import { contentText } from '../i18n/content.mjs';
 import {
   t,
   getLocale,
+  onLocaleChange,
   localizedText,
   localizedAttribute,
   localizedOption,
@@ -1029,6 +1031,9 @@ try {
       variant: 'hud',
     }),
   );
+  const stopEnemyStatsLocale = onLocaleChange(() => {
+    enemyStatsViews.forEach((view) => view.refresh());
+  });
   const continuousPlay = createContinuousPlayController({
     isCurrent: (identity) => identity === match && !disposed && match?.status === 'finished',
     isActive: () => !document.hidden && document.hasFocus(),
@@ -2805,6 +2810,20 @@ try {
     getLevels: () => match?.runs?.map((run) => run.level) ?? [],
   });
   let globalSettingsVisit = 0;
+  function duelNavigationContext() {
+    const mode = t('interface:versus2');
+    if (
+      candidateJourney?.owns(roundRecipe?.entry) &&
+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)
+    ) {
+      const name =
+        authoredRoute.id === 'humanoid-hunt-v1'
+          ? huntText('lessons')
+          : contentText(authoredRoute.source, 'name');
+      return `${name} · ${mode}`;
+    }
+    return t('interface:captureNavigation.context', { mode });
+  }
   shell = createCouchShell({
     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
@@ -3763,6 +3782,11 @@ try {
         library: result.library,
         profile,
         mode: 'versus',
+        browsingContext: ({ label }) =>
+          t('interface:captureNavigation.browsing', {
+            mode: label,
+            context: duelNavigationContext(),
+          }),
         getCurrentId: () => {
           if (currentLibrarySelection?.match === match) return currentLibrarySelection.id;
           const entry = roundRecipe.entry;
@@ -4315,7 +4339,7 @@ try {
       contentBusy,
       focusTransition,
       summary: () =>
-        `${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
+        `${duelNavigationContext()} · ${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
     });
     $('race-time-field').hidden = qualifiedVersusEntry(roundRecipe.entry);
     // Reconcile deliberate layout transitions immediately, including browsers
@@ -4688,6 +4712,7 @@ try {
     continuousPlay.dispose();
     flowControls.dispose();
     flowCelebration.dispose();
+    stopEnemyStatsLocale();
     enemyStatsViews.forEach((view) => view.dispose());
     void enemyStatistics.stats.flush().finally(() => enemyStatistics.close());
     document.removeEventListener('pointerdown', cancelContinuousPlay, true);
