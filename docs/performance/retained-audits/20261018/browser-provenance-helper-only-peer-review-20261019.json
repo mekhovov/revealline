@@ -1,0 +1,176 @@
+{
+  "format": "IndependentProvenanceHelperOnlyPeerReviewV1",
+  "createdAt": "2026-10-19T02:30:39.320Z",
+  "proposal": {
+    "gitBlob": "7667880d6de67470c72af90254aea994cabf9e55",
+    "bytes": 50682,
+    "sha256": "2e28fba0c01334563002bb96456d46a1dd16bd7689f3dda6b7be89db2e23f4f3"
+  },
+  "result": "Clean source review for isolated two-file source qualification; no functional acceptance.",
+  "base": {
+    "revision": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+    "tree": "ec0fae168fde07bde94ec3d832b778a2b6553db5"
+  },
+  "expectedTree": {
+    "declared": "5dccfa024fa4b04f3f37e3101ca602c5e2965906",
+    "reproduced": "5dccfa024fa4b04f3f37e3101ca602c5e2965906"
+  },
+  "receipts": [
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "absent": true,
+      "gitBlob": true,
+      "bytes": true,
+      "sha256": true
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.test.mjs",
+      "absent": true,
+      "gitBlob": true,
+      "bytes": true,
+      "sha256": true
+    }
+  ],
+  "unchangedHeldHelper": {
+    "prior": "c443d172be2abc7ad39f7e21c512c4414446576d",
+    "exact": true,
+    "gitBlob": "4bd42945816f21157734195b5e5e9e4910250d35",
+    "priorPeer": "1ed2925b2f5d3760d53a5d0f9c1d4475b5bb70b2"
+  },
+  "testBodies": [
+    {
+      "name": "runtime provenance hashes bounded ELF candidates without claiming loaded-library identity",
+      "exactHeldBody": true
+    },
+    {
+      "name": "runtime provenance reports missing libraries and unsupported layouts explicitly",
+      "exactHeldBody": true
+    },
+    {
+      "name": "runtime provenance rejects an external engine alias and a non-ELF binary",
+      "exactHeldBody": true
+    },
+    {
+      "name": "runtime provenance refuses oversized files before reading and excessive candidate counts",
+      "exactHeldBody": true
+    },
+    {
+      "name": "runtime provenance cancellation cannot produce a complete candidate record",
+      "exactHeldBody": true
+    },
+    {
+      "name": "prepared context captures actual arm flags separately from whitelisted requested settings",
+      "exactHeldBody": true
+    },
+    {
+      "name": "prepared context marks unavailable security fields and refuses active gameplay",
+      "exactHeldBody": true
+    },
+    {
+      "name": "prepared context rejects before evaluation for invalid configuration and bounds a hung RPC",
+      "exactHeldBody": true
+    }
+  ],
+  "imports": [
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "imports": [
+        "node:crypto",
+        "node:fs",
+        "node:fs/promises",
+        "node:path"
+      ]
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.test.mjs",
+      "imports": [
+        "node:assert/strict",
+        "node:crypto",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "node:test",
+        "node:vm",
+        "./solo-qualification-provenance.mjs"
+      ]
+    }
+  ],
+  "sourceAdmission": {
+    "selector": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+    "selectionLines": [
+      98,
+      120
+    ],
+    "changedTest": "scripts/solo-qualification-provenance.test.mjs",
+    "matchedCategories": [],
+    "deferred": false,
+    "unknownRuntimeFallback": "Existing npm run validate remains selected unless handled by required build; no weakening.",
+    "candidateCheckout": {
+      "workflow": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "lines": [
+        114,
+        121
+      ],
+      "fullCandidateCheckout": true,
+      "sourceCommandLines": [
+        197,
+        216
+      ]
+    },
+    "workflowChanges": false
+  },
+  "oldTools": [
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "before": {
+        "path": "scripts/run-solo-remote-correctness.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ce977d2d6c0c2bf58d3357f9276b602542b4312b"
+      },
+      "after": {
+        "path": "scripts/run-solo-remote-correctness.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ce977d2d6c0c2bf58d3357f9276b602542b4312b"
+      }
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "before": {
+        "path": "scripts/observe-solo-performance.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda"
+      },
+      "after": {
+        "path": "scripts/observe-solo-performance.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda"
+      }
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "before": {
+        "path": "scripts/qualify-solo-runtime.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54"
+      },
+      "after": {
+        "path": "scripts/qualify-solo-runtime.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54"
+      }
+    }
+  ],
+  "scopeProof": "Full candidate tree differs from exact c4 only by two previously absent paths. Thus all existing declarations (including the previously inventoried61) and workflow/sparse owners (including17) retain exact bytes; no existing import or caller changes.",
+  "limits": [
+    "Installed Linux WPE candidates explicitly do not attest loaded libraries, timer policy, overhead pass, or any device result.",
+    "15-second setup timer requests abort; it is not a strict bound for non-cancelable filesystem operations. A future caller needs the existing outer owner.",
+    "Snapshot helper owns a bounded one-shot RPC; no caller is wired in this patch. Caller cancellation/placement control stays with held integration.",
+    "Eight tests are unexecuted. No native/browser/app tests, builds, local writes, PR/branch changes, or dispatch occurred."
+  ]
+}

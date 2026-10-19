@@ -1,0 +1,147 @@
+{
+  "format": "revealline.isolated-provenance-helper-peer.v1",
+  "createdAt": "2026-10-19T02:35:09.634Z",
+  "proposal": {
+    "gitBlob": "7667880d6de67470c72af90254aea994cabf9e55",
+    "bytes": 50682,
+    "sha256": "2e28fba0c01334563002bb96456d46a1dd16bd7689f3dda6b7be89db2e23f4f3"
+  },
+  "base": {
+    "revision": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+    "tree": "ec0fae168fde07bde94ec3d832b778a2b6553db5"
+  },
+  "verdict": "Clean source extraction and admission review; all eight controls unexecuted.",
+  "sourceIdentity": [
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "before": null,
+      "after": {
+        "bytes": 10370,
+        "sha256": "fc272d24216627c4422f72b1389a0f8787b187743bbf2dbf2e1ad6ee337017d7",
+        "gitBlob": "4bd42945816f21157734195b5e5e9e4910250d35"
+      }
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.test.mjs",
+      "before": null,
+      "after": {
+        "bytes": 9057,
+        "sha256": "584f4c85ce82d4796279129f69ba14709ab4fdfca3ad195e2168abb6cc3937e9",
+        "gitBlob": "11c3d46c131c4571958c1681ec44c0c1b8203aa3"
+      }
+    }
+  ],
+  "treeChecks": {
+    "bothPathsAbsent": true,
+    "baseRootReproduced": "ec0fae168fde07bde94ec3d832b778a2b6553db5",
+    "baseScriptsReproduced": "499ae2aa6d83468ce0120092d829e17026ef0add",
+    "expectedTree": "5dccfa024fa4b04f3f37e3101ca602c5e2965906",
+    "computedTree": "5dccfa024fa4b04f3f37e3101ca602c5e2965906",
+    "onlyTwoAdditions": true
+  },
+  "priorHeldProposal": "c443d172be2abc7ad39f7e21c512c4414446576d",
+  "helperByteIdentical": true,
+  "controls": [
+    {
+      "name": "runtime provenance hashes bounded ELF candidates without claiming loaded-library identity",
+      "exact": true
+    },
+    {
+      "name": "runtime provenance reports missing libraries and unsupported layouts explicitly",
+      "exact": true
+    },
+    {
+      "name": "runtime provenance rejects an external engine alias and a non-ELF binary",
+      "exact": true
+    },
+    {
+      "name": "runtime provenance refuses oversized files before reading and excessive candidate counts",
+      "exact": true
+    },
+    {
+      "name": "runtime provenance cancellation cannot produce a complete candidate record",
+      "exact": true
+    },
+    {
+      "name": "prepared context captures actual arm flags separately from whitelisted requested settings",
+      "exact": true
+    },
+    {
+      "name": "prepared context marks unavailable security fields and refuses active gameplay",
+      "exact": true
+    },
+    {
+      "name": "prepared context rejects before evaluation for invalid configuration and bounds a hung RPC",
+      "exact": true
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "temporary",
+      "exact": true
+    },
+    {
+      "name": "elf",
+      "exact": true
+    },
+    {
+      "name": "runtimeInstallation",
+      "exact": true
+    },
+    {
+      "name": "preparedPage",
+      "exact": true
+    }
+  ],
+  "imports": {
+    "helper": [
+      "node:crypto",
+      "node:fs",
+      "node:fs/promises",
+      "node:path"
+    ],
+    "test": [
+      "node:assert/strict",
+      "node:crypto",
+      "node:fs/promises",
+      "node:os",
+      "node:path",
+      "node:test",
+      "node:vm",
+      "./solo-qualification-provenance.mjs"
+    ]
+  },
+  "sourceAdmissionGuards": [
+    {
+      "path": "publishing/focused-tests.mjs",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    {
+      "path": "publishing/test-policy.mjs",
+      "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+    },
+    {
+      "path": "package.json",
+      "gitBlob": "03292ddd5d31da1722f32bed186d9127f6628c85"
+    }
+  ],
+  "findings": [
+    "Eight complete existing test statements and four supporting fixture bindings are AST-identical to reviewed c443. No golden/deadline/assertion weakening.",
+    "Existing changed scripts/*.test.mjs admission selects this new standalone path; current manifest has no matching category or deferral, and exact selector/map/policy/workflow/package guards match current base.",
+    "Only Node built-ins plus the new helper are imported. No shared tool, frozen declaration, runtime caller, workflow, or source pin changes are included.",
+    "The ninth caller-placement test and all actual measurement caller changes stay held. Candidate WebKit hashes remain installed candidates, not loaded-library identity; timer-bound/5% qualification remains unavailable."
+  ],
+  "limitations": [
+    "Static source/AST/tree review only; no new helper or test function executed.",
+    "No native run, branch/PR/workflow mutation or local file write.",
+    "Later measured-run integration still requires its own successor/import/frozen-source closure and original-trace ordering."
+  ]
+}

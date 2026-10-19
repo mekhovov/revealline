@@ -1,0 +1,42 @@
+{
+  "format": "WorldsLoaderLifetimeStaticValidationV1",
+  "createdAt": "2026-10-19T02:27:34.316Z",
+  "proposal": {
+    "gitBlob": "50e7e3b08d3f662217d5914fcb5cba83ec54be58",
+    "bytes": 102558,
+    "sha256": "190f0f4096c9ad4fb87ccecebec6efaf10a1a2c9df69f2134d93c75398962ab5"
+  },
+  "boundaries": "RAM parser/formatter/linter only; no application or functional test execution and no filesystem writes.",
+  "eslintConfig": {
+    "gitBlob": "17d276c2e69425947c6a0188e0bf9c408ea850a8",
+    "localSourceVerifiedExact": true
+  },
+  "customRule": {
+    "path": "scripts/eslint-localization.mjs",
+    "gitBlob": "85f636ad913246fa85ad0fdfb5486fb63e73d6d8",
+    "localSourceVerifiedExact": true
+  },
+  "results": [
+    {
+      "path": "game/test/helpers/optional-worlds-loader.mjs",
+      "after": {
+        "gitBlob": "cbf53d1adfc1b026b0c74f691ea7e9d153588c2e",
+        "bytes": 2170,
+        "sha256": "ea7f93f38848a4b2f4fb065c1df546de45f26d4f4ce9231f104a00711b9bd721"
+      },
+      "errorCount": 0,
+      "warningCount": 0
+    },
+    {
+      "path": "game/test/solo-lazy-library-host.test.mjs",
+      "after": {
+        "gitBlob": "ab9f1612a373cae04f132b735436382eec4afe72",
+        "bytes": 27782,
+        "sha256": "e1e1d22907576d2b2edc41b45199317b5622767c6cacc1e618db409121c21140"
+      },
+      "errorCount": 0,
+      "warningCount": 0
+    }
+  ],
+  "unexecutedControls": 5
+}

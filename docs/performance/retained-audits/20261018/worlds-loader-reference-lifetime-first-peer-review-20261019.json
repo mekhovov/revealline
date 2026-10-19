@@ -1,0 +1,91 @@
+{
+  "format": "revealline.worlds-loader-lease-peer-review.v1",
+  "createdAt": "2026-10-19T02:28:25.259Z",
+  "proposal": {
+    "gitBlob": "50e7e3b08d3f662217d5914fcb5cba83ec54be58",
+    "bytes": 102558,
+    "sha256": "190f0f4096c9ad4fb87ccecebec6efaf10a1a2c9df69f2134d93c75398962ab5"
+  },
+  "base": {
+    "head": "98f666a20d133d9a81eb07104076c3147fd165aa",
+    "pr": 1674
+  },
+  "failureAudit": "2b5119729dc2cd5595caebd5b9b088c3c6e39e83",
+  "verdict": "Clean source review; hosted execution required.",
+  "independentVerification": {
+    "receipts": [
+      {
+        "path": "game/test/helpers/optional-worlds-loader.mjs",
+        "before": {
+          "gitBlob": "449c1e5e326dd18e0eea5954e33e42a239ba8edc",
+          "bytes": 1563,
+          "sha256": "9460e492d796c06e42e2035951f649c56cb48f36d699465729b04ed14d0e1f09"
+        },
+        "after": {
+          "gitBlob": "cbf53d1adfc1b026b0c74f691ea7e9d153588c2e",
+          "bytes": 2170,
+          "sha256": "ea7f93f38848a4b2f4fb065c1df546de45f26d4f4ce9231f104a00711b9bd721"
+        },
+        "baseGuard": true
+      },
+      {
+        "path": "game/test/solo-lazy-library-host.test.mjs",
+        "before": {
+          "gitBlob": "3596f20afb950bc1e64f71be801aa79a975c2d82",
+          "bytes": 19054,
+          "sha256": "670e5911834434671562e2465984fe0a4ce006b889b0631bce36307ead97bcaa"
+        },
+        "after": {
+          "gitBlob": "ab9f1612a373cae04f132b735436382eec4afe72",
+          "bytes": 27782,
+          "sha256": "e1e1d22907576d2b2edc41b45199317b5622767c6cacc1e618db409121c21140"
+        },
+        "baseGuard": true
+      }
+    ],
+    "validation": [
+      {
+        "path": "game/test/helpers/optional-worlds-loader.mjs",
+        "parse": true,
+        "beforeStatements": 6,
+        "preservedStatements": 5,
+        "assertionsBefore": 0,
+        "assertionsAfter": 0
+      },
+      {
+        "path": "game/test/solo-lazy-library-host.test.mjs",
+        "parse": true,
+        "beforeStatements": 31,
+        "preservedStatements": 31,
+        "assertionsBefore": 71,
+        "assertionsAfter": 107
+      }
+    ]
+  },
+  "pinnedNodeSources": [
+    {
+      "url": "https://raw.githubusercontent.com/nodejs/node/v22.13.1/lib/internal/modules/esm/worker.js",
+      "bytes": 9291,
+      "sha256": "d8b8520f26e175e5da9be64fea7344801804197d7c4d4b814060a6caee26ce91"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/nodejs/node/v22.13.1/lib/internal/modules/esm/hooks.js",
+      "bytes": 22920,
+      "sha256": "76ea00434afe66a195b5a06c54d6b56e371a998278243cecbe2b8b2af74841d6"
+    }
+  ],
+  "findings": [
+    "The Node22.13.1 loader worker removes its active message handler and unrefs its polling immediate while awaiting a hook; beforeExit sends never-settle for outstanding responses. The proxy maps that status to a permanently pending Promise, consistent with actual entry/release acknowledgements followed by never-completing host actions.",
+    "The held test hook now acquires one counted channel reference before asynchronous delegation for an armed owner. A gate armed during delegation acquires its lease before the held await. Finally releases only when the last retained resolver settles, including rejection and disposal.",
+    "Unrelated targets and parents return the exact delegated result; thrown resolution errors retain identity. Module URLs, production code, action ownership and all original test bodies remain unchanged.",
+    "Five new controls inspect actual MessagePort.hasRef and cover concurrent success/rejection/disposal, stale release/retry, unrelated resolution/errors, and a delayed delegated resolver surviving another completion or disposal.",
+    "All31 original test-file top-level statements remain AST-identical in order, including71 assertions. This is67 pre-diagnostic assertions plus4 diagnostic assertions.20-second host and5-second stage bounds and five-minute workflow limit are unchanged.",
+    "New direct controls operate in the test realm; unchanged existing host cases exercise Node's actual loader worker. Neither set was executed locally."
+  ],
+  "staticLintReceipt": "7c16a17c24a81f773d883178b44f5275a492f4d4",
+  "limits": [
+    "No application/tests/build/browser execution.",
+    "No branch, PR, workflow, or native action.",
+    "Five controls remain unexecuted; no repair pass or universal root-cause guarantee."
+  ]
+}

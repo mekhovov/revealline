@@ -1,0 +1,37 @@
+{
+  "kind": "ProvenanceHelperOnlySourceDraftAdmissionV1",
+  "at": "2026-10-19T02:41:44.165215+00:00",
+  "pr": 1705,
+  "url": "https://github.com/mekhovov/revealline/pull/1705",
+  "branch": "codex/solo-measurement-provenance-helper",
+  "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+  "tree": "3fea842fe395da44705db4e7eb2b4cbf88efd357",
+  "base": {
+    "revision": "c169b21ef2af58e9916d947ab1e70435861da65d",
+    "tree": "1ae99a4ba10a576abdf184e281ab4fbf3cee95ff"
+  },
+  "admissionMainObserved": "6b05de03e2b72af57e9d88b3c556a291c84a3ca0",
+  "laterDisjointMainPaths": [
+    "game/snake/classic-app.mjs",
+    "game/snake/classic-copy.mjs",
+    "game/test/classic-snake-ui.test.mjs",
+    "game/test/mode-play-shell.test.mjs",
+    "game/ui/mode-play-shell.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+  ],
+  "fixedBaselinePreserved": true,
+  "proposal": "88010e570a2af690fc1cb32950f6fff087f526b1",
+  "peer": "451cf6f7ba1dd35e3047d76792f6a3b0562851ae",
+  "paths": [
+    "scripts/solo-qualification-provenance.mjs",
+    "scripts/solo-qualification-provenance.test.mjs"
+  ],
+  "newControls": 8,
+  "heldCallerControls": 1,
+  "existingFilesUnchanged": true,
+  "fullTreeVerified": true,
+  "functionalExecution": false,
+  "loadedIdentityAttested": false,
+  "overheadPass": false,
+  "nativeDispatch": false
+}

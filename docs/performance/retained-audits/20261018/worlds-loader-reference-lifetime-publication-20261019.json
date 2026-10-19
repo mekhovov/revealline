@@ -1,0 +1,20 @@
+{
+  "kind": "WorldsLoaderLifetimePublicationV1",
+  "at": "2026-10-19T02:30:57.087210+00:00",
+  "pr": 1674,
+  "branch": "codex/solo-menu-preparation-split",
+  "previousHead": "98f666a20d133d9a81eb07104076c3147fd165aa",
+  "head": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+  "tree": "2f22ac578938e30618e0fb710f79470dbc604fd0",
+  "proposal": "f892c4f887dce17e23c53bba516685f69f90bb2a",
+  "peer": "726c5a20f666e59fa6ebbc81a14279085b7b5425",
+  "paths": [
+    "game/test/helpers/optional-worlds-loader.mjs",
+    "game/test/solo-lazy-library-host.test.mjs"
+  ],
+  "fullTreeVerified": true,
+  "newControls": 5,
+  "currentAssertionsPreserved": 71,
+  "functionalExecution": false,
+  "productionAndDeadlinesUnchanged": true
+}

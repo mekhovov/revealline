@@ -1,0 +1,262 @@
+{
+  "format": "SoloIndependentProvenanceHelperSourceStageV1",
+  "preparedAt": "2026-10-19T02:32:41.033Z",
+  "status": "reviewable source-only proposal; no files, refs, PRs or tests changed/executed",
+  "repository": "mekhovov/revealline",
+  "base": {
+    "revision": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+    "tree": "ec0fae168fde07bde94ec3d832b778a2b6553db5"
+  },
+  "branchSuggestion": "codex/solo-measurement-provenance-helper",
+  "originalHeldIntegration": {
+    "gitBlob": "c443d172be2abc7ad39f7e21c512c4414446576d",
+    "bytes": 272285,
+    "sha256": "51a1c53c79d3ede42e9a968e4275f134e5a82abef8b2ccd5e3007d7fa19f61a1",
+    "peer": "1ed2925b2f5d3760d53a5d0f9c1d4475b5bb70b2",
+    "blockerAudit": {
+      "bytes": 87561,
+      "sha256": "b9c5bb50b412282746a020f937b14aba33e8b5946b8464d437a41d130c293370",
+      "gitBlob": "080674de7322fc8ca299c3cd7fe9168e8d65cc14"
+    }
+  },
+  "scope": {
+    "addedPaths": [
+      "scripts/solo-qualification-provenance.mjs",
+      "scripts/solo-qualification-provenance.test.mjs"
+    ],
+    "modifiedExistingPaths": [],
+    "helperIdentity": "byte-identical to reviewed held helper; no new caller imports",
+    "testExtraction": "Seven complete test bodies and their helper body are byte-identical to held c443. The eighth body changes only its final assertion description to say no retry or additional evaluation after the deadline; its arguments and behavior are unchanged. Standalone imports/comment and the existing temporary fixture owner close the new test entry.",
+    "callerControlHeld": "prospective call sites collect provenance in setup or preparation, never in an active loop",
+    "independentOfOriginalTrace": "No original trace declaration, shared tool, adapter, selector or workflow changes. Standalone helper source checks can precede the held caller integration.",
+    "claimsNotMade": [
+      "No actual per-arm measurement context has been collected.",
+      "No installed or loaded WebKit binary was measured here. Actual loaded identity remains unavailable.",
+      "No timer error bound, observer-equivalence proof, 5% pass, app regression pass or device qualification."
+    ]
+  },
+  "entries": [
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "mode": "100644",
+      "before": null,
+      "after": {
+        "bytes": 10370,
+        "sha256": "fc272d24216627c4422f72b1389a0f8787b187743bbf2dbf2e1ad6ee337017d7",
+        "gitBlob": "4bd42945816f21157734195b5e5e9e4910250d35"
+      },
+      "afterContent": "import { createHash } from 'node:crypto';\nimport { constants } from 'node:fs';\nimport { lstat, open, opendir, realpath } from 'node:fs/promises';\nimport { basename, dirname, isAbsolute, join, relative, sep } from 'node:path';\n\nconst MiB = 1024 ** 2;\nconst limits = Object.freeze({\n  files: 12,\n  directoryEntries: 256,\n  fileBytes: 512 * MiB,\n  totalBytes: 1024 * MiB,\n});\nconst failure = (error) => String(error?.message ?? error).slice(0, 512);\nconst inside = (root, path) => {\n  const value = relative(root, path);\n  if (!value || value === '..' || value.startsWith('..' + sep) || isAbsolute(value))\n    throw new Error('Runtime candidate escaped the owned browser directory');\n  return value.split(sep).join('/');\n};\n\n// Installed candidates are evidence about bytes, never a claim about the active\n// loader or timer policy. This runs once in setup, before any measured child.\nexport async function captureWebKitRuntimeFiles(\n  executable,\n  { signal, platform = process.platform } = {},\n) {\n  const report = {\n    format: 'SoloInstalledWebKitCandidatesV1',\n    status: 'unavailable',\n    scope:\n      'Fixed Linux WPE installation candidates only; no loaded-library or timer-policy attestation.',\n    actualLoadedIdentity: {\n      status: 'unavailable',\n      reason: 'No preparation-bound loaded-library witness.',\n    },\n    limits,\n    files: [],\n  };\n  if (platform !== 'linux' || basename(executable) !== 'pw_run.sh') {\n    report.reason = 'Unsupported launcher layout; no engine identity inferred.';\n    return report;\n  }\n  const controller = new AbortController();\n  const abort = () => controller.abort(signal?.reason ?? new Error('Runtime provenance aborted'));\n  const timer = setTimeout(\n    () => controller.abort(new Error('Runtime provenance exceeded 15000 ms')),\n    15000,\n  );\n  signal?.addEventListener('abort', abort, { once: true });\n  if (signal?.aborted) abort();\n  let totalBytes = 0;\n  try {\n    controller.signal.throwIfAborted();\n    const root = dirname(executable);\n    if ((await realpath(root)) !== root || !(await lstat(root)).isDirectory())\n      throw new Error('Browser installation root alias or non-directory');\n    if ((await realpath(executable)) !== executable || !(await lstat(executable)).isFile())\n      throw new Error('Launcher alias or non-file');\n    const candidates = [\n      'minibrowser-wpe/bin/MiniBrowser',\n      'minibrowser-wpe/bin/WPEWebProcess',\n      'minibrowser-wpe/bin/WPENetworkProcess',\n    ];\n    // One fixed directory, streamed with a hard entry cap; no recursive search.\n    const libraryDirectory = join(root, 'minibrowser-wpe/lib');\n    if ((await realpath(libraryDirectory)) !== libraryDirectory)\n      throw new Error('Runtime library directory alias');\n    const directory = await opendir(libraryDirectory);\n    try {\n      let entries = 0;\n      for await (const entry of directory) {\n        controller.signal.throwIfAborted();\n        if (++entries > limits.directoryEntries)\n          throw new Error('Runtime library directory entry budget exceeded');\n        if (/^lib(?:WPEWebKit|JavaScriptCore)[A-Za-z0-9._-]*\\.so(?:\\.[0-9]+)*$/.test(entry.name))\n          candidates.push('minibrowser-wpe/lib/' + entry.name);\n        if (candidates.length > limits.files)\n          throw new Error('Runtime candidate file budget exceeded');\n      }\n    } finally {\n      await directory.close().catch((error) => {\n        if (error.code !== 'ERR_DIR_CLOSED') throw error;\n      });\n    }\n    const seen = new Set();\n    for (const candidate of candidates) {\n      controller.signal.throwIfAborted();\n      const requested = join(root, candidate);\n      const resolved = await realpath(requested);\n      const path = inside(root, resolved);\n      if (seen.has(path)) continue;\n      seen.add(path);\n      const handle = await open(resolved, constants.O_RDONLY | constants.O_NOFOLLOW);\n      try {\n        const before = await handle.stat();\n        if (\n          !before.isFile() ||\n          !Number.isSafeInteger(before.size) ||\n          before.size < 4 ||\n          before.size > limits.fileBytes ||\n          totalBytes + before.size > limits.totalBytes\n        )\n          throw new Error('Runtime candidate size/type budget exceeded');\n        const magic = Buffer.alloc(4);\n        if (\n          (await handle.read(magic, 0, 4, 0)).bytesRead !== 4 ||\n          !magic.equals(Buffer.from([0x7f, 0x45, 0x4c, 0x46]))\n        )\n          throw new Error('Runtime candidate is not an ELF file');\n        const hash = createHash('sha256');\n        let bytes = 0;\n        const stream = handle.createReadStream({\n          start: 0,\n          autoClose: false,\n          signal: controller.signal,\n        });\n        try {\n          for await (const chunk of stream) {\n            bytes += chunk.length;\n            if (bytes > before.size || totalBytes + bytes > limits.totalBytes)\n              throw new Error('Runtime candidate grew beyond its admitted byte budget');\n            hash.update(chunk);\n          }\n        } finally {\n          stream.destroy();\n        }\n        const after = await handle.stat();\n        const current = await lstat(resolved);\n        if (\n          bytes !== before.size ||\n          after.dev !== before.dev ||\n          after.ino !== before.ino ||\n          after.size !== before.size ||\n          after.mtimeMs !== before.mtimeMs ||\n          current.dev !== before.dev ||\n          current.ino !== before.ino ||\n          current.size !== before.size ||\n          current.mtimeMs !== before.mtimeMs ||\n          (await realpath(requested)) !== resolved\n        )\n          throw new Error('Runtime candidate changed during readback');\n        totalBytes += bytes;\n        report.files.push({ candidate, path, bytes, sha256: hash.digest('hex') });\n      } finally {\n        await handle.close();\n      }\n    }\n    controller.signal.throwIfAborted();\n    if (!report.files.some((entry) => entry.path.includes('/lib/')))\n      throw new Error('No WebKit or JavaScriptCore library candidate was identified');\n    report.status = 'recorded-candidates';\n    report.totalBytes = totalBytes;\n  } catch (error) {\n    report.status = controller.signal.aborted ? 'aborted' : 'incomplete';\n    report.reason = failure(error);\n    report.totalBytes = totalBytes;\n  } finally {\n    clearTimeout(timer);\n    signal?.removeEventListener('abort', abort);\n  }\n  return report;\n}\n\nexport function requestedMeasurementContext(value) {\n  const modes = ['ephemeral', 'persistent'];\n  if (!modes.includes(value?.mode) || typeof value.headless !== 'boolean')\n    throw new Error('Explicit measurement context mode/headless required');\n  const requested = { mode: value.mode, headless: value.headless };\n  for (const key of [\n    'deviceScaleFactor',\n    'isMobile',\n    'hasTouch',\n    'reducedMotion',\n    'serviceWorkers',\n  ]) {\n    const item = value[key];\n    if (item === undefined) continue;\n    if (\n      (key === 'deviceScaleFactor' && (!Number.isFinite(item) || item <= 0 || item > 10)) ||\n      (['isMobile', 'hasTouch'].includes(key) && typeof item !== 'boolean') ||\n      (key === 'reducedMotion' && !['reduce', 'no-preference'].includes(item)) ||\n      (key === 'serviceWorkers' && !['allow', 'block'].includes(item))\n    )\n      throw new Error('Invalid requested measurement context field: ' + key);\n    requested[key] = item;\n  }\n  if (value.viewport !== undefined) {\n    const { width, height } = value.viewport ?? {};\n    if (![width, height].every((n) => Number.isInteger(n) && n > 0 && n <= 16384))\n      throw new Error('Invalid measurement viewport');\n    requested.viewport = { width, height };\n  }\n  return requested;\n}\n\n// Snapshot once while prepared, before Start or any work probe. The caller must\n// fail its observation on error; it must not start while a timed-out RPC remains.\nexport async function capturePreparedMeasurementContext(\n  page,\n  requested,\n  { timeoutMs = 5000 } = {},\n) {\n  if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 5000)\n    throw new Error('Measurement context deadline must be within 5000 ms');\n  const declared = requestedMeasurementContext(requested);\n  let timer;\n  try {\n    const observed = await Promise.race([\n      page.evaluate(() => {\n        const g = globalThis;\n        const d = g.document;\n        const n = g.navigator;\n        const number = (value) => (Number.isFinite(value) ? value : null);\n        const flag = (value) => (typeof value === 'boolean' ? value : null);\n        const rawPhase = d?.body?.dataset?.flightState;\n        const phase = [\n          'idle',\n          'title',\n          'preparing',\n          'ready',\n          'running',\n          'paused',\n          'results',\n          'hidden',\n        ].includes(rawPhase)\n          ? rawPhase\n          : 'unavailable';\n        if (phase === 'running')\n          throw new Error('Measurement context snapshot requires preparation');\n        return {\n          crossOriginIsolated: flag(g.crossOriginIsolated),\n          isSecureContext: flag(g.isSecureContext),\n          viewport: { width: number(g.innerWidth), height: number(g.innerHeight) },\n          devicePixelRatio: number(g.devicePixelRatio),\n          maxTouchPoints: number(n?.maxTouchPoints),\n          coarsePointer:\n            typeof g.matchMedia === 'function'\n              ? flag(g.matchMedia('(pointer: coarse)').matches)\n              : null,\n          reducedMotion:\n            typeof g.matchMedia === 'function'\n              ? flag(g.matchMedia('(prefers-reduced-motion: reduce)').matches)\n              : null,\n          phase,\n          visibility: ['visible', 'hidden'].includes(d?.visibilityState)\n            ? d.visibilityState\n            : 'unavailable',\n        };\n      }),\n      new Promise((_, reject) => {\n        timer = setTimeout(\n          () => reject(new Error('Prepared measurement context exceeded deadline')),\n          timeoutMs,\n        );\n      }),\n    ]);\n    return {\n      format: 'SoloPreparedMeasurementContextV1',\n      status:\n        observed.crossOriginIsolated === null || observed.isSecureContext === null\n          ? 'unavailable'\n          : 'observed',\n      stage: 'prepared-before-start',\n      requested: declared,\n      observed,\n      scope:\n        'Context observation only; missing values are null, no timer-error or overhead qualification.',\n    };\n  } finally {\n    clearTimeout(timer);\n  }\n}\n",
+      "diff": "--- /dev/null\n+++ b/scripts/solo-qualification-provenance.mjs\n@@ -0,0 +1,272 @@\n+import { createHash } from 'node:crypto';\n+import { constants } from 'node:fs';\n+import { lstat, open, opendir, realpath } from 'node:fs/promises';\n+import { basename, dirname, isAbsolute, join, relative, sep } from 'node:path';\n+\n+const MiB = 1024 ** 2;\n+const limits = Object.freeze({\n+  files: 12,\n+  directoryEntries: 256,\n+  fileBytes: 512 * MiB,\n+  totalBytes: 1024 * MiB,\n+});\n+const failure = (error) => String(error?.message ?? error).slice(0, 512);\n+const inside = (root, path) => {\n+  const value = relative(root, path);\n+  if (!value || value === '..' || value.startsWith('..' + sep) || isAbsolute(value))\n+    throw new Error('Runtime candidate escaped the owned browser directory');\n+  return value.split(sep).join('/');\n+};\n+\n+// Installed candidates are evidence about bytes, never a claim about the active\n+// loader or timer policy. This runs once in setup, before any measured child.\n+export async function captureWebKitRuntimeFiles(\n+  executable,\n+  { signal, platform = process.platform } = {},\n+) {\n+  const report = {\n+    format: 'SoloInstalledWebKitCandidatesV1',\n+    status: 'unavailable',\n+    scope:\n+      'Fixed Linux WPE installation candidates only; no loaded-library or timer-policy attestation.',\n+    actualLoadedIdentity: {\n+      status: 'unavailable',\n+      reason: 'No preparation-bound loaded-library witness.',\n+    },\n+    limits,\n+    files: [],\n+  };\n+  if (platform !== 'linux' || basename(executable) !== 'pw_run.sh') {\n+    report.reason = 'Unsupported launcher layout; no engine identity inferred.';\n+    return report;\n+  }\n+  const controller = new AbortController();\n+  const abort = () => controller.abort(signal?.reason ?? new Error('Runtime provenance aborted'));\n+  const timer = setTimeout(\n+    () => controller.abort(new Error('Runtime provenance exceeded 15000 ms')),\n+    15000,\n+  );\n+  signal?.addEventListener('abort', abort, { once: true });\n+  if (signal?.aborted) abort();\n+  let totalBytes = 0;\n+  try {\n+    controller.signal.throwIfAborted();\n+    const root = dirname(executable);\n+    if ((await realpath(root)) !== root || !(await lstat(root)).isDirectory())\n+      throw new Error('Browser installation root alias or non-directory');\n+    if ((await realpath(executable)) !== executable || !(await lstat(executable)).isFile())\n+      throw new Error('Launcher alias or non-file');\n+    const candidates = [\n+      'minibrowser-wpe/bin/MiniBrowser',\n+      'minibrowser-wpe/bin/WPEWebProcess',\n+      'minibrowser-wpe/bin/WPENetworkProcess',\n+    ];\n+    // One fixed directory, streamed with a hard entry cap; no recursive search.\n+    const libraryDirectory = join(root, 'minibrowser-wpe/lib');\n+    if ((await realpath(libraryDirectory)) !== libraryDirectory)\n+      throw new Error('Runtime library directory alias');\n+    const directory = await opendir(libraryDirectory);\n+    try {\n+      let entries = 0;\n+      for await (const entry of directory) {\n+        controller.signal.throwIfAborted();\n+        if (++entries > limits.directoryEntries)\n+          throw new Error('Runtime library directory entry budget exceeded');\n+        if (/^lib(?:WPEWebKit|JavaScriptCore)[A-Za-z0-9._-]*\\.so(?:\\.[0-9]+)*$/.test(entry.name))\n+          candidates.push('minibrowser-wpe/lib/' + entry.name);\n+        if (candidates.length > limits.files)\n+          throw new Error('Runtime candidate file budget exceeded');\n+      }\n+    } finally {\n+      await directory.close().catch((error) => {\n+        if (error.code !== 'ERR_DIR_CLOSED') throw error;\n+      });\n+    }\n+    const seen = new Set();\n+    for (const candidate of candidates) {\n+      controller.signal.throwIfAborted();\n+      const requested = join(root, candidate);\n+      const resolved = await realpath(requested);\n+      const path = inside(root, resolved);\n+      if (seen.has(path)) continue;\n+      seen.add(path);\n+      const handle = await open(resolved, constants.O_RDONLY | constants.O_NOFOLLOW);\n+      try {\n+        const before = await handle.stat();\n+        if (\n+          !before.isFile() ||\n+          !Number.isSafeInteger(before.size) ||\n+          before.size < 4 ||\n+          before.size > limits.fileBytes ||\n+          totalBytes + before.size > limits.totalBytes\n+        )\n+          throw new Error('Runtime candidate size/type budget exceeded');\n+        const magic = Buffer.alloc(4);\n+        if (\n+          (await handle.read(magic, 0, 4, 0)).bytesRead !== 4 ||\n+          !magic.equals(Buffer.from([0x7f, 0x45, 0x4c, 0x46]))\n+        )\n+          throw new Error('Runtime candidate is not an ELF file');\n+        const hash = createHash('sha256');\n+        let bytes = 0;\n+        const stream = handle.createReadStream({\n+          start: 0,\n+          autoClose: false,\n+          signal: controller.signal,\n+        });\n+        try {\n+          for await (const chunk of stream) {\n+            bytes += chunk.length;\n+            if (bytes > before.size || totalBytes + bytes > limits.totalBytes)\n+              throw new Error('Runtime candidate grew beyond its admitted byte budget');\n+            hash.update(chunk);\n+          }\n+        } finally {\n+          stream.destroy();\n+        }\n+        const after = await handle.stat();\n+        const current = await lstat(resolved);\n+        if (\n+          bytes !== before.size ||\n+          after.dev !== before.dev ||\n+          after.ino !== before.ino ||\n+          after.size !== before.size ||\n+          after.mtimeMs !== before.mtimeMs ||\n+          current.dev !== before.dev ||\n+          current.ino !== before.ino ||\n+          current.size !== before.size ||\n+          current.mtimeMs !== before.mtimeMs ||\n+          (await realpath(requested)) !== resolved\n+        )\n+          throw new Error('Runtime candidate changed during readback');\n+        totalBytes += bytes;\n+        report.files.push({ candidate, path, bytes, sha256: hash.digest('hex') });\n+      } finally {\n+        await handle.close();\n+      }\n+    }\n+    controller.signal.throwIfAborted();\n+    if (!report.files.some((entry) => entry.path.includes('/lib/')))\n+      throw new Error('No WebKit or JavaScriptCore library candidate was identified');\n+    report.status = 'recorded-candidates';\n+    report.totalBytes = totalBytes;\n+  } catch (error) {\n+    report.status = controller.signal.aborted ? 'aborted' : 'incomplete';\n+    report.reason = failure(error);\n+    report.totalBytes = totalBytes;\n+  } finally {\n+    clearTimeout(timer);\n+    signal?.removeEventListener('abort', abort);\n+  }\n+  return report;\n+}\n+\n+export function requestedMeasurementContext(value) {\n+  const modes = ['ephemeral', 'persistent'];\n+  if (!modes.includes(value?.mode) || typeof value.headless !== 'boolean')\n+    throw new Error('Explicit measurement context mode/headless required');\n+  const requested = { mode: value.mode, headless: value.headless };\n+  for (const key of [\n+    'deviceScaleFactor',\n+    'isMobile',\n+    'hasTouch',\n+    'reducedMotion',\n+    'serviceWorkers',\n+  ]) {\n+    const item = value[key];\n+    if (item === undefined) continue;\n+    if (\n+      (key === 'deviceScaleFactor' && (!Number.isFinite(item) || item <= 0 || item > 10)) ||\n+      (['isMobile', 'hasTouch'].includes(key) && typeof item !== 'boolean') ||\n+      (key === 'reducedMotion' && !['reduce', 'no-preference'].includes(item)) ||\n+      (key === 'serviceWorkers' && !['allow', 'block'].includes(item))\n+    )\n+      throw new Error('Invalid requested measurement context field: ' + key);\n+    requested[key] = item;\n+  }\n+  if (value.viewport !== undefined) {\n+    const { width, height } = value.viewport ?? {};\n+    if (![width, height].every((n) => Number.isInteger(n) && n > 0 && n <= 16384))\n+      throw new Error('Invalid measurement viewport');\n+    requested.viewport = { width, height };\n+  }\n+  return requested;\n+}\n+\n+// Snapshot once while prepared, before Start or any work probe. The caller must\n+// fail its observation on error; it must not start while a timed-out RPC remains.\n+export async function capturePreparedMeasurementContext(\n+  page,\n+  requested,\n+  { timeoutMs = 5000 } = {},\n+) {\n+  if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 5000)\n+    throw new Error('Measurement context deadline must be within 5000 ms');\n+  const declared = requestedMeasurementContext(requested);\n+  let timer;\n+  try {\n+    const observed = await Promise.race([\n+      page.evaluate(() => {\n+        const g = globalThis;\n+        const d = g.document;\n+        const n = g.navigator;\n+        const number = (value) => (Number.isFinite(value) ? value : null);\n+        const flag = (value) => (typeof value === 'boolean' ? value : null);\n+        const rawPhase = d?.body?.dataset?.flightState;\n+        const phase = [\n+          'idle',\n+          'title',\n+          'preparing',\n+          'ready',\n+          'running',\n+          'paused',\n+          'results',\n+          'hidden',\n+        ].includes(rawPhase)\n+          ? rawPhase\n+          : 'unavailable';\n+        if (phase === 'running')\n+          throw new Error('Measurement context snapshot requires preparation');\n+        return {\n+          crossOriginIsolated: flag(g.crossOriginIsolated),\n+          isSecureContext: flag(g.isSecureContext),\n+          viewport: { width: number(g.innerWidth), height: number(g.innerHeight) },\n+          devicePixelRatio: number(g.devicePixelRatio),\n+          maxTouchPoints: number(n?.maxTouchPoints),\n+          coarsePointer:\n+            typeof g.matchMedia === 'function'\n+              ? flag(g.matchMedia('(pointer: coarse)').matches)\n+              : null,\n+          reducedMotion:\n+            typeof g.matchMedia === 'function'\n+              ? flag(g.matchMedia('(prefers-reduced-motion: reduce)').matches)\n+              : null,\n+          phase,\n+          visibility: ['visible', 'hidden'].includes(d?.visibilityState)\n+            ? d.visibilityState\n+            : 'unavailable',\n+        };\n+      }),\n+      new Promise((_, reject) => {\n+        timer = setTimeout(\n+          () => reject(new Error('Prepared measurement context exceeded deadline')),\n+          timeoutMs,\n+        );\n+      }),\n+    ]);\n+    return {\n+      format: 'SoloPreparedMeasurementContextV1',\n+      status:\n+        observed.crossOriginIsolated === null || observed.isSecureContext === null\n+          ? 'unavailable'\n+          : 'observed',\n+      stage: 'prepared-before-start',\n+      requested: declared,\n+      observed,\n+      scope:\n+        'Context observation only; missing values are null, no timer-error or overhead qualification.',\n+    };\n+  } finally {\n+    clearTimeout(timer);\n+  }\n+}\n"
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.test.mjs",
+      "mode": "100644",
+      "before": null,
+      "after": {
+        "bytes": 9063,
+        "sha256": "fbd256f2a21f574f6d58247a28be7ec5e6b3d42e50fca330f53cf95d3e22a121",
+        "gitBlob": "32aead6e8a1d723f91e0690fed0d85047e43ce22"
+      },
+      "afterContent": "import assert from 'node:assert/strict';\nimport { createHash } from 'node:crypto';\nimport { mkdtemp, mkdir, realpath, rm, writeFile, symlink, truncate } from 'node:fs/promises';\nimport { tmpdir } from 'node:os';\nimport { join } from 'node:path';\nimport test from 'node:test';\nimport { runInNewContext } from 'node:vm';\nimport {\n  capturePreparedMeasurementContext,\n  captureWebKitRuntimeFiles,\n  requestedMeasurementContext,\n} from './solo-qualification-provenance.mjs';\n\n// Helper contracts only. Caller placement and measured-run provenance remain\n// in the separately held integration proposal. These tests do not attest to\n// a loaded WebKit library, a timer error bound, or overhead qualification.\nconst temporary = async (t) => {\n  const path = await mkdtemp(join(tmpdir(), 'solo-hosted-owner-test-'));\n  t.after(() => rm(path, { recursive: true, force: true }));\n  return path;\n};\n\nconst elf = Buffer.from([0x7f, 0x45, 0x4c, 0x46, 1, 2, 3, 4]);\nasync function runtimeInstallation(t) {\n  // temporary() owns teardown of its original path, even when /var aliases /private/var.\n  const root = await realpath(await temporary(t));\n  await mkdir(join(root, 'minibrowser-wpe/bin'), { recursive: true });\n  await mkdir(join(root, 'minibrowser-wpe/lib'), { recursive: true });\n  await writeFile(join(root, 'pw_run.sh'), '# retained launcher fixture\\n');\n  for (const name of ['MiniBrowser', 'WPEWebProcess', 'WPENetworkProcess'])\n    await writeFile(join(root, 'minibrowser-wpe/bin', name), elf);\n  await writeFile(join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so.1'), elf);\n  return { root, executable: join(root, 'pw_run.sh') };\n}\n\ntest('runtime provenance hashes bounded ELF candidates without claiming loaded-library identity', async (t) => {\n  const { root, executable } = await runtimeInstallation(t);\n  await symlink('libWPEWebKit-2.0.so.1', join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so'));\n  const value = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(value.status, 'recorded-candidates');\n  assert.equal(value.actualLoadedIdentity.status, 'unavailable');\n  assert.equal(value.files.length, 4, 'internal aliases deduplicate by canonical file');\n  assert.equal(value.totalBytes, elf.length * 4);\n  const expected = createHash('sha256').update(elf).digest('hex');\n  for (const file of value.files) {\n    assert.equal(file.sha256, expected);\n    assert.equal(file.bytes, elf.length);\n    assert.equal(file.path.startsWith('/'), false);\n    assert.equal(file.path.includes('..'), false);\n  }\n});\n\ntest('runtime provenance reports missing libraries and unsupported layouts explicitly', async (t) => {\n  const { root, executable } = await runtimeInstallation(t);\n  await rm(join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so.1'));\n  const missing = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(missing.status, 'incomplete');\n  assert.match(missing.reason, /No WebKit or JavaScriptCore/);\n  const unsupported = await captureWebKitRuntimeFiles('/not-accessed/unknown', {\n    platform: 'darwin',\n  });\n  assert.equal(unsupported.status, 'unavailable');\n  assert.deepEqual(unsupported.files, []);\n  assert.equal(unsupported.actualLoadedIdentity.status, 'unavailable');\n});\n\ntest('runtime provenance rejects an external engine alias and a non-ELF binary', async (t) => {\n  const { root, executable } = await runtimeInstallation(t);\n  const external = await temporary(t);\n  await writeFile(join(external, 'engine'), elf);\n  const target = join(root, 'minibrowser-wpe/bin/MiniBrowser');\n  await rm(target);\n  await symlink(join(external, 'engine'), target);\n  const escaped = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(escaped.status, 'incomplete');\n  assert.match(escaped.reason, /escaped/);\n  assert.deepEqual(escaped.files, []);\n  await rm(target);\n  await writeFile(target, 'text cannot attest to an engine');\n  const text = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(text.status, 'incomplete');\n  assert.match(text.reason, /not an ELF/);\n});\n\ntest('runtime provenance refuses oversized files before reading and excessive candidate counts', async (t) => {\n  const { root, executable } = await runtimeInstallation(t);\n  const target = join(root, 'minibrowser-wpe/bin/MiniBrowser');\n  await truncate(target, 512 * 1024 ** 2 + 1);\n  const oversized = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(oversized.status, 'incomplete');\n  assert.match(oversized.reason, /size\\/type budget/);\n  assert.deepEqual(oversized.files, []);\n  await writeFile(target, elf);\n  for (let index = 0; index < 10; index++)\n    await writeFile(\n      join(root, 'minibrowser-wpe/lib', 'libJavaScriptCore-test' + index + '.so'),\n      elf,\n    );\n  const crowded = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(crowded.status, 'incomplete');\n  assert.match(crowded.reason, /file budget/);\n  assert.deepEqual(crowded.files, []);\n});\n\ntest('runtime provenance cancellation cannot produce a complete candidate record', async (t) => {\n  const { executable } = await runtimeInstallation(t);\n  const controller = new AbortController();\n  controller.abort(new Error('owned setup cancelled'));\n  const value = await captureWebKitRuntimeFiles(executable, {\n    platform: 'linux',\n    signal: controller.signal,\n  });\n  assert.equal(value.status, 'aborted');\n  assert.deepEqual(value.files, []);\n  assert.match(value.reason, /owned setup cancelled/);\n});\n\nfunction preparedPage(overrides = {}) {\n  const sandbox = {\n    document: { body: { dataset: { flightState: 'ready' } }, visibilityState: 'visible' },\n    navigator: { maxTouchPoints: 1, userAgent: 'not retained' },\n    crossOriginIsolated: false,\n    isSecureContext: true,\n    innerWidth: 400,\n    innerHeight: 850,\n    devicePixelRatio: 3,\n    matchMedia: (query) => ({ matches: query === '(pointer: coarse)' }),\n    location: { href: 'https://user:secret@example.test/?private=value' },\n    localStorage: { secret: 'not retained' },\n    ...overrides,\n  };\n  return {\n    evaluate: async (fn) =>\n      JSON.parse(JSON.stringify(runInNewContext('(' + fn.toString() + ')()', sandbox))),\n  };\n}\n\ntest('prepared context captures actual arm flags separately from whitelisted requested settings', async () => {\n  const requested = {\n    mode: 'persistent',\n    headless: true,\n    viewport: { width: 400, height: 850 },\n    deviceScaleFactor: 3,\n    isMobile: true,\n    hasTouch: true,\n    serviceWorkers: 'block',\n    ignoredSecret: 'must not escape',\n  };\n  const value = await capturePreparedMeasurementContext(preparedPage(), requested);\n  assert.equal(value.status, 'observed');\n  assert.equal(value.stage, 'prepared-before-start');\n  assert.equal(value.observed.crossOriginIsolated, false);\n  assert.equal(value.observed.isSecureContext, true);\n  assert.deepEqual(value.observed.viewport, { width: 400, height: 850 });\n  assert.equal(value.observed.devicePixelRatio, 3);\n  assert.equal(value.observed.coarsePointer, true);\n  assert.equal(value.requested.mode, 'persistent');\n  requested.viewport.width = 999;\n  assert.equal(\n    value.requested.viewport.width,\n    400,\n    'snapshot does not borrow caller configuration',\n  );\n  const encoded = JSON.stringify(value);\n  for (const forbidden of [\n    'ignoredSecret',\n    'user:secret',\n    'private=value',\n    'localStorage',\n    'userAgent',\n  ])\n    assert.equal(encoded.includes(forbidden), false);\n});\n\ntest('prepared context marks unavailable security fields and refuses active gameplay', async () => {\n  const requested = { mode: 'ephemeral', headless: true };\n  const missing = await capturePreparedMeasurementContext(\n    preparedPage({ crossOriginIsolated: undefined, isSecureContext: undefined }),\n    requested,\n  );\n  assert.equal(missing.status, 'unavailable');\n  assert.equal(missing.observed.crossOriginIsolated, null);\n  assert.equal(missing.observed.isSecureContext, null);\n  await assert.rejects(\n    capturePreparedMeasurementContext(\n      preparedPage({\n        document: { body: { dataset: { flightState: 'running' } }, visibilityState: 'visible' },\n      }),\n      requested,\n    ),\n    /requires preparation/,\n  );\n});\n\ntest('prepared context rejects before evaluation for invalid configuration and bounds a hung RPC', async () => {\n  let calls = 0;\n  const page = {\n    evaluate: () => {\n      calls++;\n      return new Promise(() => {});\n    },\n  };\n  assert.throws(() =>\n    requestedMeasurementContext({\n      mode: 'persistent',\n      headless: true,\n      viewport: { width: Infinity, height: 2 },\n    }),\n  );\n  await assert.rejects(\n    capturePreparedMeasurementContext(page, { mode: 'unknown', headless: true }),\n  );\n  assert.equal(calls, 0);\n  await assert.rejects(\n    capturePreparedMeasurementContext(\n      page,\n      { mode: 'ephemeral', headless: true },\n      { timeoutMs: 10 },\n    ),\n    /exceeded deadline/,\n  );\n  assert.equal(calls, 1, 'no retry or additional evaluation after the stage deadline');\n});\n",
+      "diff": "--- /dev/null\n+++ b/scripts/solo-qualification-provenance.test.mjs\n@@ -0,0 +1,223 @@\n+import assert from 'node:assert/strict';\n+import { createHash } from 'node:crypto';\n+import { mkdtemp, mkdir, realpath, rm, writeFile, symlink, truncate } from 'node:fs/promises';\n+import { tmpdir } from 'node:os';\n+import { join } from 'node:path';\n+import test from 'node:test';\n+import { runInNewContext } from 'node:vm';\n+import {\n+  capturePreparedMeasurementContext,\n+  captureWebKitRuntimeFiles,\n+  requestedMeasurementContext,\n+} from './solo-qualification-provenance.mjs';\n+\n+// Helper contracts only. Caller placement and measured-run provenance remain\n+// in the separately held integration proposal. These tests do not attest to\n+// a loaded WebKit library, a timer error bound, or overhead qualification.\n+const temporary = async (t) => {\n+  const path = await mkdtemp(join(tmpdir(), 'solo-hosted-owner-test-'));\n+  t.after(() => rm(path, { recursive: true, force: true }));\n+  return path;\n+};\n+\n+const elf = Buffer.from([0x7f, 0x45, 0x4c, 0x46, 1, 2, 3, 4]);\n+async function runtimeInstallation(t) {\n+  // temporary() owns teardown of its original path, even when /var aliases /private/var.\n+  const root = await realpath(await temporary(t));\n+  await mkdir(join(root, 'minibrowser-wpe/bin'), { recursive: true });\n+  await mkdir(join(root, 'minibrowser-wpe/lib'), { recursive: true });\n+  await writeFile(join(root, 'pw_run.sh'), '# retained launcher fixture\\n');\n+  for (const name of ['MiniBrowser', 'WPEWebProcess', 'WPENetworkProcess'])\n+    await writeFile(join(root, 'minibrowser-wpe/bin', name), elf);\n+  await writeFile(join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so.1'), elf);\n+  return { root, executable: join(root, 'pw_run.sh') };\n+}\n+\n+test('runtime provenance hashes bounded ELF candidates without claiming loaded-library identity', async (t) => {\n+  const { root, executable } = await runtimeInstallation(t);\n+  await symlink('libWPEWebKit-2.0.so.1', join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so'));\n+  const value = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(value.status, 'recorded-candidates');\n+  assert.equal(value.actualLoadedIdentity.status, 'unavailable');\n+  assert.equal(value.files.length, 4, 'internal aliases deduplicate by canonical file');\n+  assert.equal(value.totalBytes, elf.length * 4);\n+  const expected = createHash('sha256').update(elf).digest('hex');\n+  for (const file of value.files) {\n+    assert.equal(file.sha256, expected);\n+    assert.equal(file.bytes, elf.length);\n+    assert.equal(file.path.startsWith('/'), false);\n+    assert.equal(file.path.includes('..'), false);\n+  }\n+});\n+\n+test('runtime provenance reports missing libraries and unsupported layouts explicitly', async (t) => {\n+  const { root, executable } = await runtimeInstallation(t);\n+  await rm(join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so.1'));\n+  const missing = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(missing.status, 'incomplete');\n+  assert.match(missing.reason, /No WebKit or JavaScriptCore/);\n+  const unsupported = await captureWebKitRuntimeFiles('/not-accessed/unknown', {\n+    platform: 'darwin',\n+  });\n+  assert.equal(unsupported.status, 'unavailable');\n+  assert.deepEqual(unsupported.files, []);\n+  assert.equal(unsupported.actualLoadedIdentity.status, 'unavailable');\n+});\n+\n+test('runtime provenance rejects an external engine alias and a non-ELF binary', async (t) => {\n+  const { root, executable } = await runtimeInstallation(t);\n+  const external = await temporary(t);\n+  await writeFile(join(external, 'engine'), elf);\n+  const target = join(root, 'minibrowser-wpe/bin/MiniBrowser');\n+  await rm(target);\n+  await symlink(join(external, 'engine'), target);\n+  const escaped = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(escaped.status, 'incomplete');\n+  assert.match(escaped.reason, /escaped/);\n+  assert.deepEqual(escaped.files, []);\n+  await rm(target);\n+  await writeFile(target, 'text cannot attest to an engine');\n+  const text = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(text.status, 'incomplete');\n+  assert.match(text.reason, /not an ELF/);\n+});\n+\n+test('runtime provenance refuses oversized files before reading and excessive candidate counts', async (t) => {\n+  const { root, executable } = await runtimeInstallation(t);\n+  const target = join(root, 'minibrowser-wpe/bin/MiniBrowser');\n+  await truncate(target, 512 * 1024 ** 2 + 1);\n+  const oversized = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(oversized.status, 'incomplete');\n+  assert.match(oversized.reason, /size\\/type budget/);\n+  assert.deepEqual(oversized.files, []);\n+  await writeFile(target, elf);\n+  for (let index = 0; index < 10; index++)\n+    await writeFile(\n+      join(root, 'minibrowser-wpe/lib', 'libJavaScriptCore-test' + index + '.so'),\n+      elf,\n+    );\n+  const crowded = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(crowded.status, 'incomplete');\n+  assert.match(crowded.reason, /file budget/);\n+  assert.deepEqual(crowded.files, []);\n+});\n+\n+test('runtime provenance cancellation cannot produce a complete candidate record', async (t) => {\n+  const { executable } = await runtimeInstallation(t);\n+  const controller = new AbortController();\n+  controller.abort(new Error('owned setup cancelled'));\n+  const value = await captureWebKitRuntimeFiles(executable, {\n+    platform: 'linux',\n+    signal: controller.signal,\n+  });\n+  assert.equal(value.status, 'aborted');\n+  assert.deepEqual(value.files, []);\n+  assert.match(value.reason, /owned setup cancelled/);\n+});\n+\n+function preparedPage(overrides = {}) {\n+  const sandbox = {\n+    document: { body: { dataset: { flightState: 'ready' } }, visibilityState: 'visible' },\n+    navigator: { maxTouchPoints: 1, userAgent: 'not retained' },\n+    crossOriginIsolated: false,\n+    isSecureContext: true,\n+    innerWidth: 400,\n+    innerHeight: 850,\n+    devicePixelRatio: 3,\n+    matchMedia: (query) => ({ matches: query === '(pointer: coarse)' }),\n+    location: { href: 'https://user:secret@example.test/?private=value' },\n+    localStorage: { secret: 'not retained' },\n+    ...overrides,\n+  };\n+  return {\n+    evaluate: async (fn) =>\n+      JSON.parse(JSON.stringify(runInNewContext('(' + fn.toString() + ')()', sandbox))),\n+  };\n+}\n+\n+test('prepared context captures actual arm flags separately from whitelisted requested settings', async () => {\n+  const requested = {\n+    mode: 'persistent',\n+    headless: true,\n+    viewport: { width: 400, height: 850 },\n+    deviceScaleFactor: 3,\n+    isMobile: true,\n+    hasTouch: true,\n+    serviceWorkers: 'block',\n+    ignoredSecret: 'must not escape',\n+  };\n+  const value = await capturePreparedMeasurementContext(preparedPage(), requested);\n+  assert.equal(value.status, 'observed');\n+  assert.equal(value.stage, 'prepared-before-start');\n+  assert.equal(value.observed.crossOriginIsolated, false);\n+  assert.equal(value.observed.isSecureContext, true);\n+  assert.deepEqual(value.observed.viewport, { width: 400, height: 850 });\n+  assert.equal(value.observed.devicePixelRatio, 3);\n+  assert.equal(value.observed.coarsePointer, true);\n+  assert.equal(value.requested.mode, 'persistent');\n+  requested.viewport.width = 999;\n+  assert.equal(\n+    value.requested.viewport.width,\n+    400,\n+    'snapshot does not borrow caller configuration',\n+  );\n+  const encoded = JSON.stringify(value);\n+  for (const forbidden of [\n+    'ignoredSecret',\n+    'user:secret',\n+    'private=value',\n+    'localStorage',\n+    'userAgent',\n+  ])\n+    assert.equal(encoded.includes(forbidden), false);\n+});\n+\n+test('prepared context marks unavailable security fields and refuses active gameplay', async () => {\n+  const requested = { mode: 'ephemeral', headless: true };\n+  const missing = await capturePreparedMeasurementContext(\n+    preparedPage({ crossOriginIsolated: undefined, isSecureContext: undefined }),\n+    requested,\n+  );\n+  assert.equal(missing.status, 'unavailable');\n+  assert.equal(missing.observed.crossOriginIsolated, null);\n+  assert.equal(missing.observed.isSecureContext, null);\n+  await assert.rejects(\n+    capturePreparedMeasurementContext(\n+      preparedPage({\n+        document: { body: { dataset: { flightState: 'running' } }, visibilityState: 'visible' },\n+      }),\n+      requested,\n+    ),\n+    /requires preparation/,\n+  );\n+});\n+\n+test('prepared context rejects before evaluation for invalid configuration and bounds a hung RPC', async () => {\n+  let calls = 0;\n+  const page = {\n+    evaluate: () => {\n+      calls++;\n+      return new Promise(() => {});\n+    },\n+  };\n+  assert.throws(() =>\n+    requestedMeasurementContext({\n+      mode: 'persistent',\n+      headless: true,\n+      viewport: { width: Infinity, height: 2 },\n+    }),\n+  );\n+  await assert.rejects(\n+    capturePreparedMeasurementContext(page, { mode: 'unknown', headless: true }),\n+  );\n+  assert.equal(calls, 0);\n+  await assert.rejects(\n+    capturePreparedMeasurementContext(\n+      page,\n+      { mode: 'ephemeral', headless: true },\n+      { timeoutMs: 10 },\n+    ),\n+    /exceeded deadline/,\n+  );\n+  assert.equal(calls, 1, 'no retry or additional evaluation after the stage deadline');\n+});\n"
+    }
+  ],
+  "expectedTree": "b6bcebed62dbdc87e63c3311032d6cee0c97496d",
+  "sourceAdmission": {
+    "status": "static selection proof only; actual hosted execution required",
+    "focusedEntry": "scripts/solo-qualification-provenance.test.mjs",
+    "command": [
+      "node",
+      "--test",
+      "scripts/solo-qualification-provenance.test.mjs"
+    ],
+    "selector": {
+      "path": "publishing/focused-tests.mjs",
+      "bytes": 33959,
+      "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "lines": "98-120",
+      "reason": "The new scripts/*.test.mjs path passes the automatic changed-test rule. No category in the current map matches these new filenames or defers this test."
+    },
+    "map": {
+      "path": "publishing/focused-test-map.json",
+      "bytes": 14501,
+      "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    "workflow": {
+      "path": ".github/workflows/deploy-pages.yml",
+      "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+    },
+    "configurationGuards": [
+      {
+        "path": "publishing/focused-tests.mjs",
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "equalHeldSnapshot": true
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "equalHeldSnapshot": true
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "equalHeldSnapshot": true
+      },
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "equalHeldSnapshot": true
+      },
+      {
+        "path": "package.json",
+        "gitBlob": "03292ddd5d31da1722f32bed186d9127f6628c85",
+        "equalHeldSnapshot": true
+      }
+    ],
+    "fallback": "Existing unknown-runtime validate remains mandatory as selected by source policy; no workflow or policy edits.",
+    "native": "No native/manual workflow change or dispatch. Existing runtime tools do not import the new helper."
+  },
+  "controls": {
+    "count": 8,
+    "names": [
+      "runtime provenance hashes bounded ELF candidates without claiming loaded-library identity",
+      "runtime provenance reports missing libraries and unsupported layouts explicitly",
+      "runtime provenance rejects an external engine alias and a non-ELF binary",
+      "runtime provenance refuses oversized files before reading and excessive candidate counts",
+      "runtime provenance cancellation cannot produce a complete candidate record",
+      "prepared context captures actual arm flags separately from whitelisted requested settings",
+      "prepared context marks unavailable security fields and refuses active gameplay",
+      "prepared context rejects before evaluation for invalid configuration and bounds a hung RPC"
+    ],
+    "bodyBytesPreserved": false,
+    "functionalExecution": "not run",
+    "heldIntegrationControls": 1,
+    "totalOriginalProposalControls": 9,
+    "byteIdenticalBodies": 7,
+    "assertionDescriptionOnly": {
+      "test": "prepared context rejects before evaluation for invalid configuration and bounds a hung RPC",
+      "before": "no retries or continued RPC after the stage deadline",
+      "after": "no retry or additional evaluation after the stage deadline",
+      "reason": "A single evaluation count proves no retry or additional evaluation. The original timed-out RPC may remain pending, as the helper contract already explains."
+    }
+  },
+  "importClosure": [
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "imports": [
+        "node:crypto",
+        "node:fs",
+        "node:fs/promises",
+        "node:path"
+      ]
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.test.mjs",
+      "imports": [
+        "node:assert/strict",
+        "node:crypto",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "node:test",
+        "node:vm",
+        "./solo-qualification-provenance.mjs"
+      ]
+    }
+  ],
+  "limits": {
+    "runtimeCandidateFiles": 12,
+    "perFileBytes": 536870912,
+    "totalBytes": 1073741824,
+    "directoryEntries": 256,
+    "setupAbortRequestMs": 15000,
+    "preparedContextRPCTimeoutMs": 5000,
+    "deadlineCaveat": "The 15-second setup timer requests abortion; synchronous or unabortable filesystem calls are not an absolute 15-second wall-clock guarantee. A future caller retains its outer process owner.",
+    "testFiles": "Temporary fixture paths are owned by t.after cleanup when hosted tests run. This proposal preparation wrote none."
+  },
+  "staticChecks": {
+    "parser": {
+      "name": "acorn",
+      "version": "8.18.0",
+      "files": 2,
+      "status": "syntax parsed without evaluating application/test code"
+    },
+    "format": {
+      "name": "prettier",
+      "version": "3.6.2",
+      "configuration": {
+        "gitBlob": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+        "bytes": 73,
+        "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+      },
+      "results": [
+        {
+          "path": "scripts/solo-qualification-provenance.mjs",
+          "unchanged": true
+        },
+        {
+          "path": "scripts/solo-qualification-provenance.test.mjs",
+          "unchanged": true
+        }
+      ]
+    },
+    "lint": {
+      "name": "eslint",
+      "version": "10.10.0",
+      "configuration": {
+        "gitBlob": "17d276c2e69425947c6a0188e0bf9c408ea850a8",
+        "bytes": 2029,
+        "sha256": "ce9d823ac847931751e88c02ae8528eaebb84b851178361c9eeb1f7b8beb503d"
+      },
+      "rule": {
+        "path": "scripts/eslint-localization.mjs",
+        "gitBlob": "85f636ad913246fa85ad0fdfb5486fb63e73d6d8",
+        "bytes": 1391,
+        "sha256": "02116f89831762c51b6b74101029a86b26cedac197598fdb2c613111c262b1e6"
+      },
+      "appliedRules": [
+        "localization/no-shadowed-translator",
+        "no-undef with typeof:true",
+        "no-unreachable"
+      ],
+      "globals": "globals.nodeBuiltin for scripts/**/*.mjs",
+      "results": [
+        {
+          "path": "scripts/solo-qualification-provenance.mjs",
+          "messages": []
+        },
+        {
+          "path": "scripts/solo-qualification-provenance.test.mjs",
+          "messages": []
+        }
+      ]
+    },
+    "expectedTree": "Reconstructed in RAM from exact c4 full tree plus only the two added blobs; not a server-created tree."
+  },
+  "publicationPrerequisites": [
+    "Independent peer/root review of exact map and imports/source selector.",
+    "Fresh before guards: both paths absent and fixed base source-selection unchanged, or explicitly reviewed normal main integration.",
+    "New exact-head hosted source result must execute all eight controls; no pass is inferred from this static map."
+  ],
+  "draftPullRequest": {
+    "title": "Add isolated measurement provenance helper contracts",
+    "body": "Add a bounded helper for recording installed WebKit candidate files and prepared measurement context, with eight focused source controls. The helper has no production caller in this change.\n\nThis isolates source qualification from the held measurement integration. Existing trace declarations, shared tooling, native workflows and the overhead acceptance repair remain unchanged. The ninth caller-placement control remains with that later integration. Installed candidate identities are explicitly not loaded-library attestation, and this does not establish a timer bound or a 5% overhead pass.\n\nStatic parsing, formatting and linting passed in RAM. The eight functional controls are unexecuted and must pass on the exact hosted candidate before acceptance."
+  },
+  "functionalExecution": false,
+  "localWrites": false,
+  "sourceRefMutation": false,
+  "nativeDispatch": false,
+  "supersedes": {
+    "bytes": 50682,
+    "sha256": "2e28fba0c01334563002bb96456d46a1dd16bd7689f3dda6b7be89db2e23f4f3",
+    "gitBlob": "7667880d6de67470c72af90254aea994cabf9e55",
+    "change": "One assertion description only; no behavioral change.",
+    "priorPeer": {
+      "gitBlob": "4e540aa9523bc2bd7d76eddf1777f8c825cd7d92",
+      "bytes": 5788,
+      "sha256": "97de775b85570f8788bcb141d92f527aaebd503f6985a4314db2210aef2852b2"
+    }
+  }
+}

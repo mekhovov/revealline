@@ -1,0 +1,777 @@
+{
+  "format": "SoloIndependentProvenanceHelperSourceStageV1",
+  "preparedAt": "2026-10-19T02:35:48.389Z",
+  "status": "reviewable source-only proposal; no files, refs, PRs or tests changed/executed",
+  "repository": "mekhovov/revealline",
+  "base": {
+    "revision": "c169b21ef2af58e9916d947ab1e70435861da65d",
+    "tree": "1ae99a4ba10a576abdf184e281ab4fbf3cee95ff"
+  },
+  "branchSuggestion": "codex/solo-measurement-provenance-helper",
+  "originalHeldIntegration": {
+    "gitBlob": "c443d172be2abc7ad39f7e21c512c4414446576d",
+    "bytes": 272285,
+    "sha256": "51a1c53c79d3ede42e9a968e4275f134e5a82abef8b2ccd5e3007d7fa19f61a1",
+    "peer": "1ed2925b2f5d3760d53a5d0f9c1d4475b5bb70b2",
+    "blockerAudit": {
+      "bytes": 87561,
+      "sha256": "b9c5bb50b412282746a020f937b14aba33e8b5946b8464d437a41d130c293370",
+      "gitBlob": "080674de7322fc8ca299c3cd7fe9168e8d65cc14"
+    }
+  },
+  "scope": {
+    "addedPaths": [
+      "scripts/solo-qualification-provenance.mjs",
+      "scripts/solo-qualification-provenance.test.mjs"
+    ],
+    "modifiedExistingPaths": [],
+    "helperIdentity": "byte-identical to reviewed held helper; no new caller imports",
+    "testExtraction": "Seven complete test bodies and their helper body are byte-identical to held c443. The eighth body changes only its final assertion description to say no retry or additional evaluation after the deadline; its arguments and behavior are unchanged. Standalone imports/comment and the existing temporary fixture owner close the new test entry.",
+    "callerControlHeld": "prospective call sites collect provenance in setup or preparation, never in an active loop",
+    "independentOfOriginalTrace": "No original trace declaration, shared tool, adapter, selector or workflow changes. Standalone helper source checks can precede the held caller integration.",
+    "claimsNotMade": [
+      "No actual per-arm measurement context has been collected.",
+      "No installed or loaded WebKit binary was measured here. Actual loaded identity remains unavailable.",
+      "No timer error bound, observer-equivalence proof, 5% pass, app regression pass or device qualification."
+    ]
+  },
+  "entries": [
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "mode": "100644",
+      "before": null,
+      "after": {
+        "bytes": 10370,
+        "sha256": "fc272d24216627c4422f72b1389a0f8787b187743bbf2dbf2e1ad6ee337017d7",
+        "gitBlob": "4bd42945816f21157734195b5e5e9e4910250d35"
+      },
+      "afterContent": "import { createHash } from 'node:crypto';\nimport { constants } from 'node:fs';\nimport { lstat, open, opendir, realpath } from 'node:fs/promises';\nimport { basename, dirname, isAbsolute, join, relative, sep } from 'node:path';\n\nconst MiB = 1024 ** 2;\nconst limits = Object.freeze({\n  files: 12,\n  directoryEntries: 256,\n  fileBytes: 512 * MiB,\n  totalBytes: 1024 * MiB,\n});\nconst failure = (error) => String(error?.message ?? error).slice(0, 512);\nconst inside = (root, path) => {\n  const value = relative(root, path);\n  if (!value || value === '..' || value.startsWith('..' + sep) || isAbsolute(value))\n    throw new Error('Runtime candidate escaped the owned browser directory');\n  return value.split(sep).join('/');\n};\n\n// Installed candidates are evidence about bytes, never a claim about the active\n// loader or timer policy. This runs once in setup, before any measured child.\nexport async function captureWebKitRuntimeFiles(\n  executable,\n  { signal, platform = process.platform } = {},\n) {\n  const report = {\n    format: 'SoloInstalledWebKitCandidatesV1',\n    status: 'unavailable',\n    scope:\n      'Fixed Linux WPE installation candidates only; no loaded-library or timer-policy attestation.',\n    actualLoadedIdentity: {\n      status: 'unavailable',\n      reason: 'No preparation-bound loaded-library witness.',\n    },\n    limits,\n    files: [],\n  };\n  if (platform !== 'linux' || basename(executable) !== 'pw_run.sh') {\n    report.reason = 'Unsupported launcher layout; no engine identity inferred.';\n    return report;\n  }\n  const controller = new AbortController();\n  const abort = () => controller.abort(signal?.reason ?? new Error('Runtime provenance aborted'));\n  const timer = setTimeout(\n    () => controller.abort(new Error('Runtime provenance exceeded 15000 ms')),\n    15000,\n  );\n  signal?.addEventListener('abort', abort, { once: true });\n  if (signal?.aborted) abort();\n  let totalBytes = 0;\n  try {\n    controller.signal.throwIfAborted();\n    const root = dirname(executable);\n    if ((await realpath(root)) !== root || !(await lstat(root)).isDirectory())\n      throw new Error('Browser installation root alias or non-directory');\n    if ((await realpath(executable)) !== executable || !(await lstat(executable)).isFile())\n      throw new Error('Launcher alias or non-file');\n    const candidates = [\n      'minibrowser-wpe/bin/MiniBrowser',\n      'minibrowser-wpe/bin/WPEWebProcess',\n      'minibrowser-wpe/bin/WPENetworkProcess',\n    ];\n    // One fixed directory, streamed with a hard entry cap; no recursive search.\n    const libraryDirectory = join(root, 'minibrowser-wpe/lib');\n    if ((await realpath(libraryDirectory)) !== libraryDirectory)\n      throw new Error('Runtime library directory alias');\n    const directory = await opendir(libraryDirectory);\n    try {\n      let entries = 0;\n      for await (const entry of directory) {\n        controller.signal.throwIfAborted();\n        if (++entries > limits.directoryEntries)\n          throw new Error('Runtime library directory entry budget exceeded');\n        if (/^lib(?:WPEWebKit|JavaScriptCore)[A-Za-z0-9._-]*\\.so(?:\\.[0-9]+)*$/.test(entry.name))\n          candidates.push('minibrowser-wpe/lib/' + entry.name);\n        if (candidates.length > limits.files)\n          throw new Error('Runtime candidate file budget exceeded');\n      }\n    } finally {\n      await directory.close().catch((error) => {\n        if (error.code !== 'ERR_DIR_CLOSED') throw error;\n      });\n    }\n    const seen = new Set();\n    for (const candidate of candidates) {\n      controller.signal.throwIfAborted();\n      const requested = join(root, candidate);\n      const resolved = await realpath(requested);\n      const path = inside(root, resolved);\n      if (seen.has(path)) continue;\n      seen.add(path);\n      const handle = await open(resolved, constants.O_RDONLY | constants.O_NOFOLLOW);\n      try {\n        const before = await handle.stat();\n        if (\n          !before.isFile() ||\n          !Number.isSafeInteger(before.size) ||\n          before.size < 4 ||\n          before.size > limits.fileBytes ||\n          totalBytes + before.size > limits.totalBytes\n        )\n          throw new Error('Runtime candidate size/type budget exceeded');\n        const magic = Buffer.alloc(4);\n        if (\n          (await handle.read(magic, 0, 4, 0)).bytesRead !== 4 ||\n          !magic.equals(Buffer.from([0x7f, 0x45, 0x4c, 0x46]))\n        )\n          throw new Error('Runtime candidate is not an ELF file');\n        const hash = createHash('sha256');\n        let bytes = 0;\n        const stream = handle.createReadStream({\n          start: 0,\n          autoClose: false,\n          signal: controller.signal,\n        });\n        try {\n          for await (const chunk of stream) {\n            bytes += chunk.length;\n            if (bytes > before.size || totalBytes + bytes > limits.totalBytes)\n              throw new Error('Runtime candidate grew beyond its admitted byte budget');\n            hash.update(chunk);\n          }\n        } finally {\n          stream.destroy();\n        }\n        const after = await handle.stat();\n        const current = await lstat(resolved);\n        if (\n          bytes !== before.size ||\n          after.dev !== before.dev ||\n          after.ino !== before.ino ||\n          after.size !== before.size ||\n          after.mtimeMs !== before.mtimeMs ||\n          current.dev !== before.dev ||\n          current.ino !== before.ino ||\n          current.size !== before.size ||\n          current.mtimeMs !== before.mtimeMs ||\n          (await realpath(requested)) !== resolved\n        )\n          throw new Error('Runtime candidate changed during readback');\n        totalBytes += bytes;\n        report.files.push({ candidate, path, bytes, sha256: hash.digest('hex') });\n      } finally {\n        await handle.close();\n      }\n    }\n    controller.signal.throwIfAborted();\n    if (!report.files.some((entry) => entry.path.includes('/lib/')))\n      throw new Error('No WebKit or JavaScriptCore library candidate was identified');\n    report.status = 'recorded-candidates';\n    report.totalBytes = totalBytes;\n  } catch (error) {\n    report.status = controller.signal.aborted ? 'aborted' : 'incomplete';\n    report.reason = failure(error);\n    report.totalBytes = totalBytes;\n  } finally {\n    clearTimeout(timer);\n    signal?.removeEventListener('abort', abort);\n  }\n  return report;\n}\n\nexport function requestedMeasurementContext(value) {\n  const modes = ['ephemeral', 'persistent'];\n  if (!modes.includes(value?.mode) || typeof value.headless !== 'boolean')\n    throw new Error('Explicit measurement context mode/headless required');\n  const requested = { mode: value.mode, headless: value.headless };\n  for (const key of [\n    'deviceScaleFactor',\n    'isMobile',\n    'hasTouch',\n    'reducedMotion',\n    'serviceWorkers',\n  ]) {\n    const item = value[key];\n    if (item === undefined) continue;\n    if (\n      (key === 'deviceScaleFactor' && (!Number.isFinite(item) || item <= 0 || item > 10)) ||\n      (['isMobile', 'hasTouch'].includes(key) && typeof item !== 'boolean') ||\n      (key === 'reducedMotion' && !['reduce', 'no-preference'].includes(item)) ||\n      (key === 'serviceWorkers' && !['allow', 'block'].includes(item))\n    )\n      throw new Error('Invalid requested measurement context field: ' + key);\n    requested[key] = item;\n  }\n  if (value.viewport !== undefined) {\n    const { width, height } = value.viewport ?? {};\n    if (![width, height].every((n) => Number.isInteger(n) && n > 0 && n <= 16384))\n      throw new Error('Invalid measurement viewport');\n    requested.viewport = { width, height };\n  }\n  return requested;\n}\n\n// Snapshot once while prepared, before Start or any work probe. The caller must\n// fail its observation on error; it must not start while a timed-out RPC remains.\nexport async function capturePreparedMeasurementContext(\n  page,\n  requested,\n  { timeoutMs = 5000 } = {},\n) {\n  if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 5000)\n    throw new Error('Measurement context deadline must be within 5000 ms');\n  const declared = requestedMeasurementContext(requested);\n  let timer;\n  try {\n    const observed = await Promise.race([\n      page.evaluate(() => {\n        const g = globalThis;\n        const d = g.document;\n        const n = g.navigator;\n        const number = (value) => (Number.isFinite(value) ? value : null);\n        const flag = (value) => (typeof value === 'boolean' ? value : null);\n        const rawPhase = d?.body?.dataset?.flightState;\n        const phase = [\n          'idle',\n          'title',\n          'preparing',\n          'ready',\n          'running',\n          'paused',\n          'results',\n          'hidden',\n        ].includes(rawPhase)\n          ? rawPhase\n          : 'unavailable';\n        if (phase === 'running')\n          throw new Error('Measurement context snapshot requires preparation');\n        return {\n          crossOriginIsolated: flag(g.crossOriginIsolated),\n          isSecureContext: flag(g.isSecureContext),\n          viewport: { width: number(g.innerWidth), height: number(g.innerHeight) },\n          devicePixelRatio: number(g.devicePixelRatio),\n          maxTouchPoints: number(n?.maxTouchPoints),\n          coarsePointer:\n            typeof g.matchMedia === 'function'\n              ? flag(g.matchMedia('(pointer: coarse)').matches)\n              : null,\n          reducedMotion:\n            typeof g.matchMedia === 'function'\n              ? flag(g.matchMedia('(prefers-reduced-motion: reduce)').matches)\n              : null,\n          phase,\n          visibility: ['visible', 'hidden'].includes(d?.visibilityState)\n            ? d.visibilityState\n            : 'unavailable',\n        };\n      }),\n      new Promise((_, reject) => {\n        timer = setTimeout(\n          () => reject(new Error('Prepared measurement context exceeded deadline')),\n          timeoutMs,\n        );\n      }),\n    ]);\n    return {\n      format: 'SoloPreparedMeasurementContextV1',\n      status:\n        observed.crossOriginIsolated === null || observed.isSecureContext === null\n          ? 'unavailable'\n          : 'observed',\n      stage: 'prepared-before-start',\n      requested: declared,\n      observed,\n      scope:\n        'Context observation only; missing values are null, no timer-error or overhead qualification.',\n    };\n  } finally {\n    clearTimeout(timer);\n  }\n}\n",
+      "diff": "--- /dev/null\n+++ b/scripts/solo-qualification-provenance.mjs\n@@ -0,0 +1,272 @@\n+import { createHash } from 'node:crypto';\n+import { constants } from 'node:fs';\n+import { lstat, open, opendir, realpath } from 'node:fs/promises';\n+import { basename, dirname, isAbsolute, join, relative, sep } from 'node:path';\n+\n+const MiB = 1024 ** 2;\n+const limits = Object.freeze({\n+  files: 12,\n+  directoryEntries: 256,\n+  fileBytes: 512 * MiB,\n+  totalBytes: 1024 * MiB,\n+});\n+const failure = (error) => String(error?.message ?? error).slice(0, 512);\n+const inside = (root, path) => {\n+  const value = relative(root, path);\n+  if (!value || value === '..' || value.startsWith('..' + sep) || isAbsolute(value))\n+    throw new Error('Runtime candidate escaped the owned browser directory');\n+  return value.split(sep).join('/');\n+};\n+\n+// Installed candidates are evidence about bytes, never a claim about the active\n+// loader or timer policy. This runs once in setup, before any measured child.\n+export async function captureWebKitRuntimeFiles(\n+  executable,\n+  { signal, platform = process.platform } = {},\n+) {\n+  const report = {\n+    format: 'SoloInstalledWebKitCandidatesV1',\n+    status: 'unavailable',\n+    scope:\n+      'Fixed Linux WPE installation candidates only; no loaded-library or timer-policy attestation.',\n+    actualLoadedIdentity: {\n+      status: 'unavailable',\n+      reason: 'No preparation-bound loaded-library witness.',\n+    },\n+    limits,\n+    files: [],\n+  };\n+  if (platform !== 'linux' || basename(executable) !== 'pw_run.sh') {\n+    report.reason = 'Unsupported launcher layout; no engine identity inferred.';\n+    return report;\n+  }\n+  const controller = new AbortController();\n+  const abort = () => controller.abort(signal?.reason ?? new Error('Runtime provenance aborted'));\n+  const timer = setTimeout(\n+    () => controller.abort(new Error('Runtime provenance exceeded 15000 ms')),\n+    15000,\n+  );\n+  signal?.addEventListener('abort', abort, { once: true });\n+  if (signal?.aborted) abort();\n+  let totalBytes = 0;\n+  try {\n+    controller.signal.throwIfAborted();\n+    const root = dirname(executable);\n+    if ((await realpath(root)) !== root || !(await lstat(root)).isDirectory())\n+      throw new Error('Browser installation root alias or non-directory');\n+    if ((await realpath(executable)) !== executable || !(await lstat(executable)).isFile())\n+      throw new Error('Launcher alias or non-file');\n+    const candidates = [\n+      'minibrowser-wpe/bin/MiniBrowser',\n+      'minibrowser-wpe/bin/WPEWebProcess',\n+      'minibrowser-wpe/bin/WPENetworkProcess',\n+    ];\n+    // One fixed directory, streamed with a hard entry cap; no recursive search.\n+    const libraryDirectory = join(root, 'minibrowser-wpe/lib');\n+    if ((await realpath(libraryDirectory)) !== libraryDirectory)\n+      throw new Error('Runtime library directory alias');\n+    const directory = await opendir(libraryDirectory);\n+    try {\n+      let entries = 0;\n+      for await (const entry of directory) {\n+        controller.signal.throwIfAborted();\n+        if (++entries > limits.directoryEntries)\n+          throw new Error('Runtime library directory entry budget exceeded');\n+        if (/^lib(?:WPEWebKit|JavaScriptCore)[A-Za-z0-9._-]*\\.so(?:\\.[0-9]+)*$/.test(entry.name))\n+          candidates.push('minibrowser-wpe/lib/' + entry.name);\n+        if (candidates.length > limits.files)\n+          throw new Error('Runtime candidate file budget exceeded');\n+      }\n+    } finally {\n+      await directory.close().catch((error) => {\n+        if (error.code !== 'ERR_DIR_CLOSED') throw error;\n+      });\n+    }\n+    const seen = new Set();\n+    for (const candidate of candidates) {\n+      controller.signal.throwIfAborted();\n+      const requested = join(root, candidate);\n+      const resolved = await realpath(requested);\n+      const path = inside(root, resolved);\n+      if (seen.has(path)) continue;\n+      seen.add(path);\n+      const handle = await open(resolved, constants.O_RDONLY | constants.O_NOFOLLOW);\n+      try {\n+        const before = await handle.stat();\n+        if (\n+          !before.isFile() ||\n+          !Number.isSafeInteger(before.size) ||\n+          before.size < 4 ||\n+          before.size > limits.fileBytes ||\n+          totalBytes + before.size > limits.totalBytes\n+        )\n+          throw new Error('Runtime candidate size/type budget exceeded');\n+        const magic = Buffer.alloc(4);\n+        if (\n+          (await handle.read(magic, 0, 4, 0)).bytesRead !== 4 ||\n+          !magic.equals(Buffer.from([0x7f, 0x45, 0x4c, 0x46]))\n+        )\n+          throw new Error('Runtime candidate is not an ELF file');\n+        const hash = createHash('sha256');\n+        let bytes = 0;\n+        const stream = handle.createReadStream({\n+          start: 0,\n+          autoClose: false,\n+          signal: controller.signal,\n+        });\n+        try {\n+          for await (const chunk of stream) {\n+            bytes += chunk.length;\n+            if (bytes > before.size || totalBytes + bytes > limits.totalBytes)\n+              throw new Error('Runtime candidate grew beyond its admitted byte budget');\n+            hash.update(chunk);\n+          }\n+        } finally {\n+          stream.destroy();\n+        }\n+        const after = await handle.stat();\n+        const current = await lstat(resolved);\n+        if (\n+          bytes !== before.size ||\n+          after.dev !== before.dev ||\n+          after.ino !== before.ino ||\n+          after.size !== before.size ||\n+          after.mtimeMs !== before.mtimeMs ||\n+          current.dev !== before.dev ||\n+          current.ino !== before.ino ||\n+          current.size !== before.size ||\n+          current.mtimeMs !== before.mtimeMs ||\n+          (await realpath(requested)) !== resolved\n+        )\n+          throw new Error('Runtime candidate changed during readback');\n+        totalBytes += bytes;\n+        report.files.push({ candidate, path, bytes, sha256: hash.digest('hex') });\n+      } finally {\n+        await handle.close();\n+      }\n+    }\n+    controller.signal.throwIfAborted();\n+    if (!report.files.some((entry) => entry.path.includes('/lib/')))\n+      throw new Error('No WebKit or JavaScriptCore library candidate was identified');\n+    report.status = 'recorded-candidates';\n+    report.totalBytes = totalBytes;\n+  } catch (error) {\n+    report.status = controller.signal.aborted ? 'aborted' : 'incomplete';\n+    report.reason = failure(error);\n+    report.totalBytes = totalBytes;\n+  } finally {\n+    clearTimeout(timer);\n+    signal?.removeEventListener('abort', abort);\n+  }\n+  return report;\n+}\n+\n+export function requestedMeasurementContext(value) {\n+  const modes = ['ephemeral', 'persistent'];\n+  if (!modes.includes(value?.mode) || typeof value.headless !== 'boolean')\n+    throw new Error('Explicit measurement context mode/headless required');\n+  const requested = { mode: value.mode, headless: value.headless };\n+  for (const key of [\n+    'deviceScaleFactor',\n+    'isMobile',\n+    'hasTouch',\n+    'reducedMotion',\n+    'serviceWorkers',\n+  ]) {\n+    const item = value[key];\n+    if (item === undefined) continue;\n+    if (\n+      (key === 'deviceScaleFactor' && (!Number.isFinite(item) || item <= 0 || item > 10)) ||\n+      (['isMobile', 'hasTouch'].includes(key) && typeof item !== 'boolean') ||\n+      (key === 'reducedMotion' && !['reduce', 'no-preference'].includes(item)) ||\n+      (key === 'serviceWorkers' && !['allow', 'block'].includes(item))\n+    )\n+      throw new Error('Invalid requested measurement context field: ' + key);\n+    requested[key] = item;\n+  }\n+  if (value.viewport !== undefined) {\n+    const { width, height } = value.viewport ?? {};\n+    if (![width, height].every((n) => Number.isInteger(n) && n > 0 && n <= 16384))\n+      throw new Error('Invalid measurement viewport');\n+    requested.viewport = { width, height };\n+  }\n+  return requested;\n+}\n+\n+// Snapshot once while prepared, before Start or any work probe. The caller must\n+// fail its observation on error; it must not start while a timed-out RPC remains.\n+export async function capturePreparedMeasurementContext(\n+  page,\n+  requested,\n+  { timeoutMs = 5000 } = {},\n+) {\n+  if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 5000)\n+    throw new Error('Measurement context deadline must be within 5000 ms');\n+  const declared = requestedMeasurementContext(requested);\n+  let timer;\n+  try {\n+    const observed = await Promise.race([\n+      page.evaluate(() => {\n+        const g = globalThis;\n+        const d = g.document;\n+        const n = g.navigator;\n+        const number = (value) => (Number.isFinite(value) ? value : null);\n+        const flag = (value) => (typeof value === 'boolean' ? value : null);\n+        const rawPhase = d?.body?.dataset?.flightState;\n+        const phase = [\n+          'idle',\n+          'title',\n+          'preparing',\n+          'ready',\n+          'running',\n+          'paused',\n+          'results',\n+          'hidden',\n+        ].includes(rawPhase)\n+          ? rawPhase\n+          : 'unavailable';\n+        if (phase === 'running')\n+          throw new Error('Measurement context snapshot requires preparation');\n+        return {\n+          crossOriginIsolated: flag(g.crossOriginIsolated),\n+          isSecureContext: flag(g.isSecureContext),\n+          viewport: { width: number(g.innerWidth), height: number(g.innerHeight) },\n+          devicePixelRatio: number(g.devicePixelRatio),\n+          maxTouchPoints: number(n?.maxTouchPoints),\n+          coarsePointer:\n+            typeof g.matchMedia === 'function'\n+              ? flag(g.matchMedia('(pointer: coarse)').matches)\n+              : null,\n+          reducedMotion:\n+            typeof g.matchMedia === 'function'\n+              ? flag(g.matchMedia('(prefers-reduced-motion: reduce)').matches)\n+              : null,\n+          phase,\n+          visibility: ['visible', 'hidden'].includes(d?.visibilityState)\n+            ? d.visibilityState\n+            : 'unavailable',\n+        };\n+      }),\n+      new Promise((_, reject) => {\n+        timer = setTimeout(\n+          () => reject(new Error('Prepared measurement context exceeded deadline')),\n+          timeoutMs,\n+        );\n+      }),\n+    ]);\n+    return {\n+      format: 'SoloPreparedMeasurementContextV1',\n+      status:\n+        observed.crossOriginIsolated === null || observed.isSecureContext === null\n+          ? 'unavailable'\n+          : 'observed',\n+      stage: 'prepared-before-start',\n+      requested: declared,\n+      observed,\n+      scope:\n+        'Context observation only; missing values are null, no timer-error or overhead qualification.',\n+    };\n+  } finally {\n+    clearTimeout(timer);\n+  }\n+}\n"
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.test.mjs",
+      "mode": "100644",
+      "before": null,
+      "after": {
+        "bytes": 9063,
+        "sha256": "fbd256f2a21f574f6d58247a28be7ec5e6b3d42e50fca330f53cf95d3e22a121",
+        "gitBlob": "32aead6e8a1d723f91e0690fed0d85047e43ce22"
+      },
+      "afterContent": "import assert from 'node:assert/strict';\nimport { createHash } from 'node:crypto';\nimport { mkdtemp, mkdir, realpath, rm, writeFile, symlink, truncate } from 'node:fs/promises';\nimport { tmpdir } from 'node:os';\nimport { join } from 'node:path';\nimport test from 'node:test';\nimport { runInNewContext } from 'node:vm';\nimport {\n  capturePreparedMeasurementContext,\n  captureWebKitRuntimeFiles,\n  requestedMeasurementContext,\n} from './solo-qualification-provenance.mjs';\n\n// Helper contracts only. Caller placement and measured-run provenance remain\n// in the separately held integration proposal. These tests do not attest to\n// a loaded WebKit library, a timer error bound, or overhead qualification.\nconst temporary = async (t) => {\n  const path = await mkdtemp(join(tmpdir(), 'solo-hosted-owner-test-'));\n  t.after(() => rm(path, { recursive: true, force: true }));\n  return path;\n};\n\nconst elf = Buffer.from([0x7f, 0x45, 0x4c, 0x46, 1, 2, 3, 4]);\nasync function runtimeInstallation(t) {\n  // temporary() owns teardown of its original path, even when /var aliases /private/var.\n  const root = await realpath(await temporary(t));\n  await mkdir(join(root, 'minibrowser-wpe/bin'), { recursive: true });\n  await mkdir(join(root, 'minibrowser-wpe/lib'), { recursive: true });\n  await writeFile(join(root, 'pw_run.sh'), '# retained launcher fixture\\n');\n  for (const name of ['MiniBrowser', 'WPEWebProcess', 'WPENetworkProcess'])\n    await writeFile(join(root, 'minibrowser-wpe/bin', name), elf);\n  await writeFile(join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so.1'), elf);\n  return { root, executable: join(root, 'pw_run.sh') };\n}\n\ntest('runtime provenance hashes bounded ELF candidates without claiming loaded-library identity', async (t) => {\n  const { root, executable } = await runtimeInstallation(t);\n  await symlink('libWPEWebKit-2.0.so.1', join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so'));\n  const value = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(value.status, 'recorded-candidates');\n  assert.equal(value.actualLoadedIdentity.status, 'unavailable');\n  assert.equal(value.files.length, 4, 'internal aliases deduplicate by canonical file');\n  assert.equal(value.totalBytes, elf.length * 4);\n  const expected = createHash('sha256').update(elf).digest('hex');\n  for (const file of value.files) {\n    assert.equal(file.sha256, expected);\n    assert.equal(file.bytes, elf.length);\n    assert.equal(file.path.startsWith('/'), false);\n    assert.equal(file.path.includes('..'), false);\n  }\n});\n\ntest('runtime provenance reports missing libraries and unsupported layouts explicitly', async (t) => {\n  const { root, executable } = await runtimeInstallation(t);\n  await rm(join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so.1'));\n  const missing = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(missing.status, 'incomplete');\n  assert.match(missing.reason, /No WebKit or JavaScriptCore/);\n  const unsupported = await captureWebKitRuntimeFiles('/not-accessed/unknown', {\n    platform: 'darwin',\n  });\n  assert.equal(unsupported.status, 'unavailable');\n  assert.deepEqual(unsupported.files, []);\n  assert.equal(unsupported.actualLoadedIdentity.status, 'unavailable');\n});\n\ntest('runtime provenance rejects an external engine alias and a non-ELF binary', async (t) => {\n  const { root, executable } = await runtimeInstallation(t);\n  const external = await temporary(t);\n  await writeFile(join(external, 'engine'), elf);\n  const target = join(root, 'minibrowser-wpe/bin/MiniBrowser');\n  await rm(target);\n  await symlink(join(external, 'engine'), target);\n  const escaped = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(escaped.status, 'incomplete');\n  assert.match(escaped.reason, /escaped/);\n  assert.deepEqual(escaped.files, []);\n  await rm(target);\n  await writeFile(target, 'text cannot attest to an engine');\n  const text = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(text.status, 'incomplete');\n  assert.match(text.reason, /not an ELF/);\n});\n\ntest('runtime provenance refuses oversized files before reading and excessive candidate counts', async (t) => {\n  const { root, executable } = await runtimeInstallation(t);\n  const target = join(root, 'minibrowser-wpe/bin/MiniBrowser');\n  await truncate(target, 512 * 1024 ** 2 + 1);\n  const oversized = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(oversized.status, 'incomplete');\n  assert.match(oversized.reason, /size\\/type budget/);\n  assert.deepEqual(oversized.files, []);\n  await writeFile(target, elf);\n  for (let index = 0; index < 10; index++)\n    await writeFile(\n      join(root, 'minibrowser-wpe/lib', 'libJavaScriptCore-test' + index + '.so'),\n      elf,\n    );\n  const crowded = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n  assert.equal(crowded.status, 'incomplete');\n  assert.match(crowded.reason, /file budget/);\n  assert.deepEqual(crowded.files, []);\n});\n\ntest('runtime provenance cancellation cannot produce a complete candidate record', async (t) => {\n  const { executable } = await runtimeInstallation(t);\n  const controller = new AbortController();\n  controller.abort(new Error('owned setup cancelled'));\n  const value = await captureWebKitRuntimeFiles(executable, {\n    platform: 'linux',\n    signal: controller.signal,\n  });\n  assert.equal(value.status, 'aborted');\n  assert.deepEqual(value.files, []);\n  assert.match(value.reason, /owned setup cancelled/);\n});\n\nfunction preparedPage(overrides = {}) {\n  const sandbox = {\n    document: { body: { dataset: { flightState: 'ready' } }, visibilityState: 'visible' },\n    navigator: { maxTouchPoints: 1, userAgent: 'not retained' },\n    crossOriginIsolated: false,\n    isSecureContext: true,\n    innerWidth: 400,\n    innerHeight: 850,\n    devicePixelRatio: 3,\n    matchMedia: (query) => ({ matches: query === '(pointer: coarse)' }),\n    location: { href: 'https://user:secret@example.test/?private=value' },\n    localStorage: { secret: 'not retained' },\n    ...overrides,\n  };\n  return {\n    evaluate: async (fn) =>\n      JSON.parse(JSON.stringify(runInNewContext('(' + fn.toString() + ')()', sandbox))),\n  };\n}\n\ntest('prepared context captures actual arm flags separately from whitelisted requested settings', async () => {\n  const requested = {\n    mode: 'persistent',\n    headless: true,\n    viewport: { width: 400, height: 850 },\n    deviceScaleFactor: 3,\n    isMobile: true,\n    hasTouch: true,\n    serviceWorkers: 'block',\n    ignoredSecret: 'must not escape',\n  };\n  const value = await capturePreparedMeasurementContext(preparedPage(), requested);\n  assert.equal(value.status, 'observed');\n  assert.equal(value.stage, 'prepared-before-start');\n  assert.equal(value.observed.crossOriginIsolated, false);\n  assert.equal(value.observed.isSecureContext, true);\n  assert.deepEqual(value.observed.viewport, { width: 400, height: 850 });\n  assert.equal(value.observed.devicePixelRatio, 3);\n  assert.equal(value.observed.coarsePointer, true);\n  assert.equal(value.requested.mode, 'persistent');\n  requested.viewport.width = 999;\n  assert.equal(\n    value.requested.viewport.width,\n    400,\n    'snapshot does not borrow caller configuration',\n  );\n  const encoded = JSON.stringify(value);\n  for (const forbidden of [\n    'ignoredSecret',\n    'user:secret',\n    'private=value',\n    'localStorage',\n    'userAgent',\n  ])\n    assert.equal(encoded.includes(forbidden), false);\n});\n\ntest('prepared context marks unavailable security fields and refuses active gameplay', async () => {\n  const requested = { mode: 'ephemeral', headless: true };\n  const missing = await capturePreparedMeasurementContext(\n    preparedPage({ crossOriginIsolated: undefined, isSecureContext: undefined }),\n    requested,\n  );\n  assert.equal(missing.status, 'unavailable');\n  assert.equal(missing.observed.crossOriginIsolated, null);\n  assert.equal(missing.observed.isSecureContext, null);\n  await assert.rejects(\n    capturePreparedMeasurementContext(\n      preparedPage({\n        document: { body: { dataset: { flightState: 'running' } }, visibilityState: 'visible' },\n      }),\n      requested,\n    ),\n    /requires preparation/,\n  );\n});\n\ntest('prepared context rejects before evaluation for invalid configuration and bounds a hung RPC', async () => {\n  let calls = 0;\n  const page = {\n    evaluate: () => {\n      calls++;\n      return new Promise(() => {});\n    },\n  };\n  assert.throws(() =>\n    requestedMeasurementContext({\n      mode: 'persistent',\n      headless: true,\n      viewport: { width: Infinity, height: 2 },\n    }),\n  );\n  await assert.rejects(\n    capturePreparedMeasurementContext(page, { mode: 'unknown', headless: true }),\n  );\n  assert.equal(calls, 0);\n  await assert.rejects(\n    capturePreparedMeasurementContext(\n      page,\n      { mode: 'ephemeral', headless: true },\n      { timeoutMs: 10 },\n    ),\n    /exceeded deadline/,\n  );\n  assert.equal(calls, 1, 'no retry or additional evaluation after the stage deadline');\n});\n",
+      "diff": "--- /dev/null\n+++ b/scripts/solo-qualification-provenance.test.mjs\n@@ -0,0 +1,223 @@\n+import assert from 'node:assert/strict';\n+import { createHash } from 'node:crypto';\n+import { mkdtemp, mkdir, realpath, rm, writeFile, symlink, truncate } from 'node:fs/promises';\n+import { tmpdir } from 'node:os';\n+import { join } from 'node:path';\n+import test from 'node:test';\n+import { runInNewContext } from 'node:vm';\n+import {\n+  capturePreparedMeasurementContext,\n+  captureWebKitRuntimeFiles,\n+  requestedMeasurementContext,\n+} from './solo-qualification-provenance.mjs';\n+\n+// Helper contracts only. Caller placement and measured-run provenance remain\n+// in the separately held integration proposal. These tests do not attest to\n+// a loaded WebKit library, a timer error bound, or overhead qualification.\n+const temporary = async (t) => {\n+  const path = await mkdtemp(join(tmpdir(), 'solo-hosted-owner-test-'));\n+  t.after(() => rm(path, { recursive: true, force: true }));\n+  return path;\n+};\n+\n+const elf = Buffer.from([0x7f, 0x45, 0x4c, 0x46, 1, 2, 3, 4]);\n+async function runtimeInstallation(t) {\n+  // temporary() owns teardown of its original path, even when /var aliases /private/var.\n+  const root = await realpath(await temporary(t));\n+  await mkdir(join(root, 'minibrowser-wpe/bin'), { recursive: true });\n+  await mkdir(join(root, 'minibrowser-wpe/lib'), { recursive: true });\n+  await writeFile(join(root, 'pw_run.sh'), '# retained launcher fixture\\n');\n+  for (const name of ['MiniBrowser', 'WPEWebProcess', 'WPENetworkProcess'])\n+    await writeFile(join(root, 'minibrowser-wpe/bin', name), elf);\n+  await writeFile(join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so.1'), elf);\n+  return { root, executable: join(root, 'pw_run.sh') };\n+}\n+\n+test('runtime provenance hashes bounded ELF candidates without claiming loaded-library identity', async (t) => {\n+  const { root, executable } = await runtimeInstallation(t);\n+  await symlink('libWPEWebKit-2.0.so.1', join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so'));\n+  const value = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(value.status, 'recorded-candidates');\n+  assert.equal(value.actualLoadedIdentity.status, 'unavailable');\n+  assert.equal(value.files.length, 4, 'internal aliases deduplicate by canonical file');\n+  assert.equal(value.totalBytes, elf.length * 4);\n+  const expected = createHash('sha256').update(elf).digest('hex');\n+  for (const file of value.files) {\n+    assert.equal(file.sha256, expected);\n+    assert.equal(file.bytes, elf.length);\n+    assert.equal(file.path.startsWith('/'), false);\n+    assert.equal(file.path.includes('..'), false);\n+  }\n+});\n+\n+test('runtime provenance reports missing libraries and unsupported layouts explicitly', async (t) => {\n+  const { root, executable } = await runtimeInstallation(t);\n+  await rm(join(root, 'minibrowser-wpe/lib/libWPEWebKit-2.0.so.1'));\n+  const missing = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(missing.status, 'incomplete');\n+  assert.match(missing.reason, /No WebKit or JavaScriptCore/);\n+  const unsupported = await captureWebKitRuntimeFiles('/not-accessed/unknown', {\n+    platform: 'darwin',\n+  });\n+  assert.equal(unsupported.status, 'unavailable');\n+  assert.deepEqual(unsupported.files, []);\n+  assert.equal(unsupported.actualLoadedIdentity.status, 'unavailable');\n+});\n+\n+test('runtime provenance rejects an external engine alias and a non-ELF binary', async (t) => {\n+  const { root, executable } = await runtimeInstallation(t);\n+  const external = await temporary(t);\n+  await writeFile(join(external, 'engine'), elf);\n+  const target = join(root, 'minibrowser-wpe/bin/MiniBrowser');\n+  await rm(target);\n+  await symlink(join(external, 'engine'), target);\n+  const escaped = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(escaped.status, 'incomplete');\n+  assert.match(escaped.reason, /escaped/);\n+  assert.deepEqual(escaped.files, []);\n+  await rm(target);\n+  await writeFile(target, 'text cannot attest to an engine');\n+  const text = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(text.status, 'incomplete');\n+  assert.match(text.reason, /not an ELF/);\n+});\n+\n+test('runtime provenance refuses oversized files before reading and excessive candidate counts', async (t) => {\n+  const { root, executable } = await runtimeInstallation(t);\n+  const target = join(root, 'minibrowser-wpe/bin/MiniBrowser');\n+  await truncate(target, 512 * 1024 ** 2 + 1);\n+  const oversized = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(oversized.status, 'incomplete');\n+  assert.match(oversized.reason, /size\\/type budget/);\n+  assert.deepEqual(oversized.files, []);\n+  await writeFile(target, elf);\n+  for (let index = 0; index < 10; index++)\n+    await writeFile(\n+      join(root, 'minibrowser-wpe/lib', 'libJavaScriptCore-test' + index + '.so'),\n+      elf,\n+    );\n+  const crowded = await captureWebKitRuntimeFiles(executable, { platform: 'linux' });\n+  assert.equal(crowded.status, 'incomplete');\n+  assert.match(crowded.reason, /file budget/);\n+  assert.deepEqual(crowded.files, []);\n+});\n+\n+test('runtime provenance cancellation cannot produce a complete candidate record', async (t) => {\n+  const { executable } = await runtimeInstallation(t);\n+  const controller = new AbortController();\n+  controller.abort(new Error('owned setup cancelled'));\n+  const value = await captureWebKitRuntimeFiles(executable, {\n+    platform: 'linux',\n+    signal: controller.signal,\n+  });\n+  assert.equal(value.status, 'aborted');\n+  assert.deepEqual(value.files, []);\n+  assert.match(value.reason, /owned setup cancelled/);\n+});\n+\n+function preparedPage(overrides = {}) {\n+  const sandbox = {\n+    document: { body: { dataset: { flightState: 'ready' } }, visibilityState: 'visible' },\n+    navigator: { maxTouchPoints: 1, userAgent: 'not retained' },\n+    crossOriginIsolated: false,\n+    isSecureContext: true,\n+    innerWidth: 400,\n+    innerHeight: 850,\n+    devicePixelRatio: 3,\n+    matchMedia: (query) => ({ matches: query === '(pointer: coarse)' }),\n+    location: { href: 'https://user:secret@example.test/?private=value' },\n+    localStorage: { secret: 'not retained' },\n+    ...overrides,\n+  };\n+  return {\n+    evaluate: async (fn) =>\n+      JSON.parse(JSON.stringify(runInNewContext('(' + fn.toString() + ')()', sandbox))),\n+  };\n+}\n+\n+test('prepared context captures actual arm flags separately from whitelisted requested settings', async () => {\n+  const requested = {\n+    mode: 'persistent',\n+    headless: true,\n+    viewport: { width: 400, height: 850 },\n+    deviceScaleFactor: 3,\n+    isMobile: true,\n+    hasTouch: true,\n+    serviceWorkers: 'block',\n+    ignoredSecret: 'must not escape',\n+  };\n+  const value = await capturePreparedMeasurementContext(preparedPage(), requested);\n+  assert.equal(value.status, 'observed');\n+  assert.equal(value.stage, 'prepared-before-start');\n+  assert.equal(value.observed.crossOriginIsolated, false);\n+  assert.equal(value.observed.isSecureContext, true);\n+  assert.deepEqual(value.observed.viewport, { width: 400, height: 850 });\n+  assert.equal(value.observed.devicePixelRatio, 3);\n+  assert.equal(value.observed.coarsePointer, true);\n+  assert.equal(value.requested.mode, 'persistent');\n+  requested.viewport.width = 999;\n+  assert.equal(\n+    value.requested.viewport.width,\n+    400,\n+    'snapshot does not borrow caller configuration',\n+  );\n+  const encoded = JSON.stringify(value);\n+  for (const forbidden of [\n+    'ignoredSecret',\n+    'user:secret',\n+    'private=value',\n+    'localStorage',\n+    'userAgent',\n+  ])\n+    assert.equal(encoded.includes(forbidden), false);\n+});\n+\n+test('prepared context marks unavailable security fields and refuses active gameplay', async () => {\n+  const requested = { mode: 'ephemeral', headless: true };\n+  const missing = await capturePreparedMeasurementContext(\n+    preparedPage({ crossOriginIsolated: undefined, isSecureContext: undefined }),\n+    requested,\n+  );\n+  assert.equal(missing.status, 'unavailable');\n+  assert.equal(missing.observed.crossOriginIsolated, null);\n+  assert.equal(missing.observed.isSecureContext, null);\n+  await assert.rejects(\n+    capturePreparedMeasurementContext(\n+      preparedPage({\n+        document: { body: { dataset: { flightState: 'running' } }, visibilityState: 'visible' },\n+      }),\n+      requested,\n+    ),\n+    /requires preparation/,\n+  );\n+});\n+\n+test('prepared context rejects before evaluation for invalid configuration and bounds a hung RPC', async () => {\n+  let calls = 0;\n+  const page = {\n+    evaluate: () => {\n+      calls++;\n+      return new Promise(() => {});\n+    },\n+  };\n+  assert.throws(() =>\n+    requestedMeasurementContext({\n+      mode: 'persistent',\n+      headless: true,\n+      viewport: { width: Infinity, height: 2 },\n+    }),\n+  );\n+  await assert.rejects(\n+    capturePreparedMeasurementContext(page, { mode: 'unknown', headless: true }),\n+  );\n+  assert.equal(calls, 0);\n+  await assert.rejects(\n+    capturePreparedMeasurementContext(\n+      page,\n+      { mode: 'ephemeral', headless: true },\n+      { timeoutMs: 10 },\n+    ),\n+    /exceeded deadline/,\n+  );\n+  assert.equal(calls, 1, 'no retry or additional evaluation after the stage deadline');\n+});\n"
+    }
+  ],
+  "expectedTree": "3fea842fe395da44705db4e7eb2b4cbf88efd357",
+  "sourceAdmission": {
+    "status": "static selection proof only; actual hosted execution required",
+    "focusedEntry": "scripts/solo-qualification-provenance.test.mjs",
+    "command": [
+      "node",
+      "--test",
+      "scripts/solo-qualification-provenance.test.mjs"
+    ],
+    "selector": {
+      "path": "publishing/focused-tests.mjs",
+      "bytes": 33959,
+      "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "lines": "98-120",
+      "reason": "The new scripts/*.test.mjs path passes the automatic changed-test rule. No category in the current map matches these new filenames or defers this test."
+    },
+    "map": {
+      "path": "publishing/focused-test-map.json",
+      "bytes": 14501,
+      "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    "workflow": {
+      "path": ".github/workflows/deploy-pages.yml",
+      "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+    },
+    "configurationGuards": [
+      {
+        "path": "publishing/focused-tests.mjs",
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "equalHeldSnapshot": true
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "equalHeldSnapshot": true
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "equalHeldSnapshot": true
+      },
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "equalHeldSnapshot": true
+      },
+      {
+        "path": "package.json",
+        "gitBlob": "03292ddd5d31da1722f32bed186d9127f6628c85",
+        "equalHeldSnapshot": true
+      }
+    ],
+    "fallback": "Existing unknown-runtime validate remains mandatory as selected by source policy; no workflow or policy edits.",
+    "native": "No native/manual workflow change or dispatch. Existing runtime tools do not import the new helper."
+  },
+  "controls": {
+    "count": 8,
+    "names": [
+      "runtime provenance hashes bounded ELF candidates without claiming loaded-library identity",
+      "runtime provenance reports missing libraries and unsupported layouts explicitly",
+      "runtime provenance rejects an external engine alias and a non-ELF binary",
+      "runtime provenance refuses oversized files before reading and excessive candidate counts",
+      "runtime provenance cancellation cannot produce a complete candidate record",
+      "prepared context captures actual arm flags separately from whitelisted requested settings",
+      "prepared context marks unavailable security fields and refuses active gameplay",
+      "prepared context rejects before evaluation for invalid configuration and bounds a hung RPC"
+    ],
+    "bodyBytesPreserved": false,
+    "functionalExecution": "not run",
+    "heldIntegrationControls": 1,
+    "totalOriginalProposalControls": 9,
+    "byteIdenticalBodies": 7,
+    "assertionDescriptionOnly": {
+      "test": "prepared context rejects before evaluation for invalid configuration and bounds a hung RPC",
+      "before": "no retries or continued RPC after the stage deadline",
+      "after": "no retry or additional evaluation after the stage deadline",
+      "reason": "A single evaluation count proves no retry or additional evaluation. The original timed-out RPC may remain pending, as the helper contract already explains."
+    }
+  },
+  "importClosure": [
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "imports": [
+        "node:crypto",
+        "node:fs",
+        "node:fs/promises",
+        "node:path"
+      ]
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.test.mjs",
+      "imports": [
+        "node:assert/strict",
+        "node:crypto",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "node:test",
+        "node:vm",
+        "./solo-qualification-provenance.mjs"
+      ]
+    }
+  ],
+  "limits": {
+    "runtimeCandidateFiles": 12,
+    "perFileBytes": 536870912,
+    "totalBytes": 1073741824,
+    "directoryEntries": 256,
+    "setupAbortRequestMs": 15000,
+    "preparedContextRPCTimeoutMs": 5000,
+    "deadlineCaveat": "The 15-second setup timer requests abortion; synchronous or unabortable filesystem calls are not an absolute 15-second wall-clock guarantee. A future caller retains its outer process owner.",
+    "testFiles": "Temporary fixture paths are owned by t.after cleanup when hosted tests run. This proposal preparation wrote none."
+  },
+  "staticChecks": {
+    "parser": {
+      "name": "acorn",
+      "version": "8.18.0",
+      "files": 2,
+      "status": "syntax parsed without evaluating application/test code"
+    },
+    "format": {
+      "name": "prettier",
+      "version": "3.6.2",
+      "configuration": {
+        "gitBlob": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+        "bytes": 73,
+        "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+      },
+      "results": [
+        {
+          "path": "scripts/solo-qualification-provenance.mjs",
+          "unchanged": true
+        },
+        {
+          "path": "scripts/solo-qualification-provenance.test.mjs",
+          "unchanged": true
+        }
+      ]
+    },
+    "lint": {
+      "name": "eslint",
+      "version": "10.10.0",
+      "configuration": {
+        "gitBlob": "17d276c2e69425947c6a0188e0bf9c408ea850a8",
+        "bytes": 2029,
+        "sha256": "ce9d823ac847931751e88c02ae8528eaebb84b851178361c9eeb1f7b8beb503d"
+      },
+      "rule": {
+        "path": "scripts/eslint-localization.mjs",
+        "gitBlob": "85f636ad913246fa85ad0fdfb5486fb63e73d6d8",
+        "bytes": 1391,
+        "sha256": "02116f89831762c51b6b74101029a86b26cedac197598fdb2c613111c262b1e6"
+      },
+      "appliedRules": [
+        "localization/no-shadowed-translator",
+        "no-undef with typeof:true",
+        "no-unreachable"
+      ],
+      "globals": "globals.nodeBuiltin for scripts/**/*.mjs",
+      "results": [
+        {
+          "path": "scripts/solo-qualification-provenance.mjs",
+          "messages": []
+        },
+        {
+          "path": "scripts/solo-qualification-provenance.test.mjs",
+          "messages": []
+        }
+      ]
+    },
+    "expectedTree": "Reconstructed in RAM from exact fixed c169 main plus only the two added blobs, and independently from the previous proposal plus all 27 main-path changes; not a server-created tree."
+  },
+  "publicationPrerequisites": [
+    "Independent peer/root review of exact map and imports/source selector.",
+    "Fresh before guards: both paths absent and fixed base source-selection unchanged, or explicitly reviewed normal main integration.",
+    "New exact-head hosted source result must execute all eight controls; no pass is inferred from this static map."
+  ],
+  "draftPullRequest": {
+    "title": "Add isolated measurement provenance helper contracts",
+    "body": "Add a bounded helper for recording installed WebKit candidate files and prepared measurement context, with eight focused source controls. The helper has no production caller in this change.\n\nThis isolates source qualification from the held measurement integration. Existing trace declarations, shared tooling, native workflows and the overhead acceptance repair remain unchanged. The ninth caller-placement control remains with that later integration. Installed candidate identities are explicitly not loaded-library attestation, and this does not establish a timer bound or a 5% overhead pass.\n\nStatic parsing, formatting and linting passed in RAM. The eight functional controls are unexecuted and must pass on the exact hosted candidate before acceptance."
+  },
+  "functionalExecution": false,
+  "localWrites": false,
+  "sourceRefMutation": false,
+  "nativeDispatch": false,
+  "supersedes": {
+    "bytes": 51816,
+    "sha256": "b27f2c3ccba8ce1f748ae95376f7c548b0c5f9876ad6b309a1cc93446046742b",
+    "gitBlob": "d8bbea170cf773606433670e5fe905e6794be115",
+    "change": "Fixed-main reconciliation only; both proposed file contents remain byte-identical.",
+    "priorPeer": {
+      "gitBlob": "1d6fa40757248cf56f927770679b047e4b996f6c",
+      "bytes": 1103,
+      "sha256": "3cb39b22937243ea171b20fd5b6c39ba8ad63ccdae377f7118dcf8e1548c4a78"
+    }
+  },
+  "freshMainReconciliation": {
+    "previousBase": {
+      "revision": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+      "tree": "ec0fae168fde07bde94ec3d832b778a2b6553db5"
+    },
+    "fixedMain": {
+      "revision": "c169b21ef2af58e9916d947ab1e70435861da65d",
+      "tree": "1ae99a4ba10a576abdf184e281ab4fbf3cee95ff"
+    },
+    "status": "Two independent tree reconstructions agree; no source conflict.",
+    "scope": "One latest-main read fixed c169; no subsequent main chase.",
+    "compare": {
+      "status": "ahead",
+      "aheadBy": 29,
+      "behindBy": 0,
+      "totalCommits": 29,
+      "commits": [
+        {
+          "sha": "4b17aa2faf5fc12865e9f2eb4450b5b3e71c0528",
+          "message": "docs(performance): update release progress and remaining qualification"
+        },
+        {
+          "sha": "fc9aa5cf3b652dada47591c9446f866a9f0e4abc",
+          "message": "docs: record live release, source repairs and remaining qualification priorities"
+        },
+        {
+          "sha": "86837a8a56fd74bf459ba32b65bf9f67e78d879e",
+          "message": "docs: update remaining priorities and retain latest validation outcomes"
+        },
+        {
+          "sha": "5cb7dee244474b6cbd098d2e55d8362f9f571aaf",
+          "message": "docs(perf): update published failures, corrected checks and priorities"
+        },
+        {
+          "sha": "418e0bab39e8e802f0bc8e7480ca5310360620c1",
+          "message": "docs(performance): record release checks and remaining qualification priorities"
+        },
+        {
+          "sha": "5f414549afd588c1eb811c2050ac53e3b3cf6b5c",
+          "message": "Inventory critical cue alternatives and scoped evidence"
+        },
+        {
+          "sha": "e64c9c08cdf6cc9c41a0026a0ec7d4d7a517ede1",
+          "message": "Point Team support evidence at actual role geometry"
+        },
+        {
+          "sha": "70bf8f0a42e4a6a1a64747c55f05caaf6419b658",
+          "message": "docs(performance): record current admission evidence and release priorities"
+        },
+        {
+          "sha": "5aeeb58f176f545b6ebe3ad9035f25b2ea3965e0",
+          "message": "docs(performance): record deployed build and combined qualification progress"
+        },
+        {
+          "sha": "6918bc84901dfc0267ed1c39d3dbd95f3e560627",
+          "message": "Record scoped sound-off Capture browser evidence"
+        },
+        {
+          "sha": "b6b56b86d36041fe1362e5ab0a12c6b5af462528",
+          "message": "Update performance priorities, exact-source gates and measurement limits"
+        },
+        {
+          "sha": "86067c7cf265c2917335b20501ca99bc91beac4f",
+          "message": "docs(perf): update release progress and remaining qualification priorities"
+        },
+        {
+          "sha": "153b13445a5c32f3aa6b63113b56fb3c11a008cc",
+          "message": "Update Solo performance priorities, draft admissions and remaining evidence"
+        },
+        {
+          "sha": "a5481c0cb83e76f6dff68c1a2764d2261c5f019f",
+          "message": "Show Team mission context without changing launch ownership"
+        },
+        {
+          "sha": "0f1cf7fe03ab64867c7416a0860e015c3ea88eb4",
+          "message": "Keep Team navigation labels concise and source-owned"
+        },
+        {
+          "sha": "478eb991a0866bfee93151c1b25c9beec9af1d6b",
+          "message": "Show authoritative Hunt context in Solo and Duel"
+        },
+        {
+          "sha": "bd1a8f1b26e96f03902720e387780c67c68cc0c9",
+          "message": "Update Solo performance priorities after playback ownership review"
+        },
+        {
+          "sha": "d39385ca9cb6bec083a1bb84b97d257416be182e",
+          "message": "Localize Solo reading return hints through shared prompts"
+        },
+        {
+          "sha": "653afd1282cc8753d220ee0dcdbe32ec68d635a6",
+          "message": "docs: update release progress, Worlds diagnostics and lifecycle priorities"
+        },
+        {
+          "sha": "9332a5931f4cc3673bfbc2d1f334b8a6798a8a3b",
+          "message": "Explain the next Time Attack medal without rounding eligibility"
+        },
+        {
+          "sha": "6eeb58923d7bc7b1bb29c501c4efa48758135394",
+          "message": "Explain reroll cost and possible repeated cards"
+        },
+        {
+          "sha": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+          "message": "docs: update gameplay repair admission and outstanding qualification"
+        },
+        {
+          "sha": "987b5197b4ba5b598b993aa13a39f49333c93972",
+          "message": "Merge pull request #1681 from mekhovov/codex/f15a-solo-reading-locale"
+        },
+        {
+          "sha": "bc09cf4baea666fd904da82bc7791f841bc743e7",
+          "message": "Merge pull request #1656 from mekhovov/codex/f07-critical-cue-inventory"
+        },
+        {
+          "sha": "aa3a235c8514b1389b522bbfd379bba6f01a0093",
+          "message": "Merge pull request #1648 from mekhovov/codex/f01e-hunt-context"
+        },
+        {
+          "sha": "6afefac998dc8e1520da36753de39498ea72652f",
+          "message": "Merge pull request #1623 from mekhovov/codex/solo-performance-status-20261018-late"
+        },
+        {
+          "sha": "bfbc569cfabe29ec0c7a2661504aa2f77c3e1960",
+          "message": "Merge pull request #1643 from mekhovov/codex/f01d-team-context"
+        },
+        {
+          "sha": "595f31a3b40f70f8ba7bb59ed9cd318ad7880aa9",
+          "message": "Merge pull request #1684 from mekhovov/codex/f23-time-attack-medal-gap"
+        },
+        {
+          "sha": "c169b21ef2af58e9916d947ab1e70435861da65d",
+          "message": "Merge pull request #1687 from mekhovov/codex/f19c-reroll-disclosure"
+        }
+      ]
+    },
+    "changedMainPaths": [
+      {
+        "path": "docs/performance/solo-performance-followup-plan.md",
+        "before": {
+          "mode": "100644",
+          "sha": "010366adf8e77eaee60f61510bd1d82ec207dae7"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "23cb5332f0146bbfda27c781bfea1c82ad16d292"
+        }
+      },
+      {
+        "path": "game/app.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "0ed1950df2bc62e9c72000454cae37cc1dc44a5a"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "c8cd13bd7eb123069b193a7d6a2db0cf3ebacb73"
+        }
+      },
+      {
+        "path": "game/content-design/team-entry.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "962b77b22ae64cf0354ea4da097466b3c36e4031"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "2275f68282dbd3bff8fdccd5013ba64efffb1fe8"
+        }
+      },
+      {
+        "path": "game/content-design/team-timed-entry.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "10ca2ac1fdce3fbbc68d9ca636c6f4a33590ca18"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "18074de77036b4d83f70ee210bab476eb574dab7"
+        }
+      },
+      {
+        "path": "game/couch/couch.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "98a69d5e65188ad45ceb1f15e8fa24737b751fa7"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "f9f8ffb6a1e9ed66f91b28bdcd6a673f30cb6269"
+        }
+      },
+      {
+        "path": "game/couch/relay-rescue.html",
+        "before": {
+          "mode": "100644",
+          "sha": "3f6af7b9b8a75a37f48b78d17a4b58bb3a3e94c2"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "355127740c664eca7e23fb703b67ffad4c044475"
+        }
+      },
+      {
+        "path": "game/couch/relay-rescue.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "0705d4db72b6401771d8ddd357f758b7c4f6428d"
+        }
+      },
+      {
+        "path": "game/i18n/catalogs.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "1126df4a073262353d0c73de5fed15b561b1075c"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "91d7785333613613ec2570d9b76e42c52371aafc"
+        }
+      },
+      {
+        "path": "game/locales/en/interface.json",
+        "before": {
+          "mode": "100644",
+          "sha": "8f07f59d71e1d44f0532eefc1c9161bb76d0f9b5"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "620e393385c1ed7855238273cc7876afc7a76691"
+        }
+      },
+      {
+        "path": "game/locales/uk/interface.json",
+        "before": {
+          "mode": "100644",
+          "sha": "772095b830769472d547ff8c0a82cdc8f576391d"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "ce56b68fe22355a53e64c925b4e4ec3f16c519a8"
+        }
+      },
+      {
+        "path": "game/overflight/app.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "4a7d1c5051aad3cc50c7488835804fb257b1c6dd"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "fea637ec6925408fc2461b75c688f9f50c49457c"
+        }
+      },
+      {
+        "path": "game/overflight/copy.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "c1efb449d4648c1f237300eade4cbb1197103b70"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "be2ae749848cee1d48747d19ffc465fa45355211"
+        }
+      },
+      {
+        "path": "game/overflight/play.html",
+        "before": {
+          "mode": "100644",
+          "sha": "9cad6b0ee77426f8b22a7e2a49b5ae09d65d6b1a"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "968a965104b6195bc5bc64d6855d8276eba984e8"
+        }
+      },
+      {
+        "path": "game/overflight/raid-variants.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "f65538f99e997bdb10bc79a07520e37690fe5fdb"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "95e399b9ca0e90144c6a00029ca30eab8a6aad00"
+        }
+      },
+      {
+        "path": "game/overflight/raid.html",
+        "before": {
+          "mode": "100644",
+          "sha": "2620ba69913a7d70f77128d1222f6d97317130e5"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "f5e34aa68035d013408f2e88f71dae00cf51f1ca"
+        }
+      },
+      {
+        "path": "game/overflight/style.css",
+        "before": {
+          "mode": "100644",
+          "sha": "5d47beb0d5f613c9f462d5414470420557ba574a"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "2bea9f12a273eac3811e6bcab46551af258a888f"
+        }
+      },
+      {
+        "path": "game/test/capture-navigation-context-host.test.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "656de185d92bc71e710237127ecea4bbdcd6ca11"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "d59ff61a82b031b78b54ca7f518391ff0841df46"
+        }
+      },
+      {
+        "path": "game/test/duel-navigation-context-host.test.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "3f6924fab80e4c48fba2d4bb544bf142c38c2e1e"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "a677060b61bd577c77c6348cf224dfeebaf7d54b"
+        }
+      },
+      {
+        "path": "game/test/native-landing-structure.test.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "f806a9efc35d0bc22789a09be008f33541570073"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "8039b1b05eebad2bcfff2782ad659d8dc7d9e0aa"
+        }
+      },
+      {
+        "path": "game/test/reading-prompts-host.test.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "8309523265f4ac3c482bdd669fdeb71b046e7072"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "9b9628ca3e48659e640b9c184cae64eb5f207b64"
+        }
+      },
+      {
+        "path": "game/ui/native-menus.mjs",
+        "before": {
+          "mode": "100644",
+          "sha": "fd7d7d4ba5f8d4fc93ec72eff767642d5b65a741"
+        },
+        "after": {
+          "mode": "100644",
+          "sha": "9a340b306f1e6bb595b8b2a0f2fbdb66abc1f7c0"
+        }
+      },
+      {
+        "path": "docs/accessibility/critical-cues-2026-10-18.json",
+        "before": null,
+        "after": {
+          "mode": "100644",
+          "sha": "0364bd8b70d06416c47a135a88ce96a1a3b8936e"
+        }
+      },
+      {
+        "path": "docs/accessibility/critical-cues-2026-10-18.md",
+        "before": null,
+        "after": {
+          "mode": "100644",
+          "sha": "692b2350bbb2560e984aaf06deab8e9697098d58"
+        }
+      },
+      {
+        "path": "docs/time-attack-medal-goals.md",
+        "before": null,
+        "after": {
+          "mode": "100644",
+          "sha": "23b7509db91f50ae765349c8c7d76e6167b6bc17"
+        }
+      },
+      {
+        "path": "game/test/overflight-reroll-disclosure.test.mjs",
+        "before": null,
+        "after": {
+          "mode": "100644",
+          "sha": "7e4e27bb639401c127cf62245ecb58a54821e038"
+        }
+      },
+      {
+        "path": "game/test/overflight-time-attack-medal-goal.test.mjs",
+        "before": null,
+        "after": {
+          "mode": "100644",
+          "sha": "a19ccb3add116fa0e58821ce5a88df48fa183b1c"
+        }
+      },
+      {
+        "path": "game/test/team-navigation-context-host.test.mjs",
+        "before": null,
+        "after": {
+          "mode": "100644",
+          "sha": "49337fd1e58b9516c1ce50e782b2103eb67d6ee6"
+        }
+      }
+    ],
+    "newPathsAbsent": [
+      {
+        "path": "scripts/solo-qualification-provenance.mjs",
+        "absent": true
+      },
+      {
+        "path": "scripts/solo-qualification-provenance.test.mjs",
+        "absent": true
+      }
+    ],
+    "unchangedInputs": [
+      {
+        "path": "publishing/focused-tests.mjs",
+        "before": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "after": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "unchanged": true
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "before": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "after": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "unchanged": true
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "before": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "after": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "unchanged": true
+      },
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "before": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "after": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "unchanged": true
+      },
+      {
+        "path": "package.json",
+        "before": "03292ddd5d31da1722f32bed186d9127f6628c85",
+        "after": "03292ddd5d31da1722f32bed186d9127f6628c85",
+        "unchanged": true
+      },
+      {
+        "path": "package-lock.json",
+        "before": "acda9271c2aa2f98d6d80efee8c3a8aca2c192e8",
+        "after": "acda9271c2aa2f98d6d80efee8c3a8aca2c192e8",
+        "unchanged": true
+      },
+      {
+        "path": ".prettierrc.json",
+        "before": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+        "after": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+        "unchanged": true
+      },
+      {
+        "path": "eslint.config.mjs",
+        "before": "17d276c2e69425947c6a0188e0bf9c408ea850a8",
+        "after": "17d276c2e69425947c6a0188e0bf9c408ea850a8",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/eslint-localization.mjs",
+        "before": "85f636ad913246fa85ad0fdfb5486fb63e73d6d8",
+        "after": "85f636ad913246fa85ad0fdfb5486fb63e73d6d8",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/run-solo-remote-correctness.mjs",
+        "before": "ce977d2d6c0c2bf58d3357f9276b602542b4312b",
+        "after": "ce977d2d6c0c2bf58d3357f9276b602542b4312b",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/observe-solo-performance.mjs",
+        "before": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda",
+        "after": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/qualify-solo-runtime.mjs",
+        "before": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54",
+        "after": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54",
+        "unchanged": true
+      },
+      {
+        "path": "scripts/test-solo-remote-correctness.mjs",
+        "before": "0076cbee64b6ecfe41617d04694d25462cfef198",
+        "after": "0076cbee64b6ecfe41617d04694d25462cfef198",
+        "unchanged": true
+      }
+    ],
+    "fullTreeProof": {
+      "originalMainReconstructed": "1ae99a4ba10a576abdf184e281ab4fbf3cee95ff",
+      "fromFixedMainPlusTwoNewFiles": "3fea842fe395da44705db4e7eb2b4cbf88efd357",
+      "fromPreviousProposalPlusEntireMainDelta": "3fea842fe395da44705db4e7eb2b4cbf88efd357",
+      "allLatestMainLeavesRetained": true,
+      "exactlyTwoAddedFiles": true
+    },
+    "limitations": "This is source/tree compatibility and import/admission inspection only, not validation of the newly merged application behavior."
+  }
+}

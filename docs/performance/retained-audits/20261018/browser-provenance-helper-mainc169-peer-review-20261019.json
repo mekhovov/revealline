@@ -1,0 +1,92 @@
+{
+  "format": "IndependentProvenanceHelperFixedMainPeerReviewV1",
+  "createdAt": "2026-10-19T02:38:47.555Z",
+  "proposal": {
+    "gitBlob": "88010e570a2af690fc1cb32950f6fff087f526b1",
+    "bytes": 68852,
+    "sha256": "63f949da39ca472eb12370cb7b6dc8ce8f0ea153575eb62d1a5a72ae7a828db1"
+  },
+  "result": "Clean bounded fixed-main compatibility review.",
+  "fixedBase": {
+    "revision": "c169b21ef2af58e9916d947ab1e70435861da65d",
+    "tree": "1ae99a4ba10a576abdf184e281ab4fbf3cee95ff"
+  },
+  "priorProposal": "d8bbea170cf773606433670e5fe905e6794be115",
+  "priorPeer": {
+    "gitBlob": "1d6fa40757248cf56f927770679b047e4b996f6c",
+    "bytes": 1103,
+    "sha256": "3cb39b22937243ea171b20fd5b6c39ba8ad63ccdae377f7118dcf8e1548c4a78"
+  },
+  "verified": {
+    "actualCommitTreeMatches": true,
+    "mainDeltaGuards": 27,
+    "fullMainTreeReproduced": "1ae99a4ba10a576abdf184e281ab4fbf3cee95ff",
+    "sourceOutputsByteIdentical": true,
+    "bothAddedPathsAbsent": true,
+    "sourceReceiptsExact": true,
+    "fromMainPlusTwoFiles": "3fea842fe395da44705db4e7eb2b4cbf88efd357",
+    "fromPriorProposalPlusMainDelta": "3fea842fe395da44705db4e7eb2b4cbf88efd357",
+    "expectedTree": "3fea842fe395da44705db4e7eb2b4cbf88efd357"
+  },
+  "unchangedInputs": [
+    {
+      "path": "publishing/focused-tests.mjs",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    {
+      "path": "publishing/test-policy.mjs",
+      "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+    },
+    {
+      "path": "package.json",
+      "gitBlob": "03292ddd5d31da1722f32bed186d9127f6628c85"
+    },
+    {
+      "path": "package-lock.json",
+      "gitBlob": "acda9271c2aa2f98d6d80efee8c3a8aca2c192e8"
+    },
+    {
+      "path": ".prettierrc.json",
+      "gitBlob": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "gitBlob": "17d276c2e69425947c6a0188e0bf9c408ea850a8"
+    },
+    {
+      "path": "scripts/eslint-localization.mjs",
+      "gitBlob": "85f636ad913246fa85ad0fdfb5486fb63e73d6d8"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "gitBlob": "ce977d2d6c0c2bf58d3357f9276b602542b4312b"
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "gitBlob": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "gitBlob": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54"
+    },
+    {
+      "path": "scripts/test-solo-remote-correctness.mjs",
+      "gitBlob": "0076cbee64b6ecfe41617d04694d25462cfef198"
+    }
+  ],
+  "sourceAdmission": "Exact focused selector/map/workflow identities remain unchanged; the existing automatic changed scripts/*.test.mjs rule, no matched category deferral, and full candidate checkout proof remain applicable. No added external imports or runtime caller.",
+  "limits": [
+    "Eight controls remain unexecuted; no functional/native/application pass claimed.",
+    "Installed candidates do not identify actual loaded libraries; 15s timer requests abort rather than bounding every filesystem operation.",
+    "Original callers/declarations/workflow owners and trace protocol remain unchanged by these two additions.",
+    "Fixed c169 target only; no subsequent main chase or branch/PR/native mutation."
+  ]
+}

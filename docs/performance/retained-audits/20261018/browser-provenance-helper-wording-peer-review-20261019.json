@@ -1,0 +1,26 @@
+{
+  "format": "ProvenanceHelperWordingSuccessorPeerReviewV1",
+  "createdAt": "2026-10-19T02:33:02.191Z",
+  "proposal": {
+    "gitBlob": "d8bbea170cf773606433670e5fe905e6794be115",
+    "bytes": 51816,
+    "sha256": "b27f2c3ccba8ce1f748ae95376f7c548b0c5f9876ad6b309a1cc93446046742b"
+  },
+  "previousPeer": {
+    "gitBlob": "4e540aa9523bc2bd7d76eddf1777f8c825cd7d92",
+    "bytes": 5788,
+    "sha256": "97de775b85570f8788bcb141d92f527aaebd503f6985a4314db2210aef2852b2"
+  },
+  "result": "Clean narrow source delta review.",
+  "verified": {
+    "helperByteIdentical": true,
+    "onlyTestChange": "Assertion description now says no retry or additional evaluation after the stage deadline.",
+    "afterReceiptsExact": true,
+    "syntaxParsed": true,
+    "tree": "b6bcebed62dbdc87e63c3311032d6cee0c97496d",
+    "treeReproduced": true
+  },
+  "limit": "The original timed-out evaluate Promise may remain pending; one invocation proves no retry/additional evaluation, not RPC cancellation.",
+  "functionalTests": "Eight controls remain unexecuted.",
+  "mutations": "Audit blob only; no source/PR/native changes."
+}

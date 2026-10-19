@@ -1,0 +1,92 @@
+{
+  "format": "IndependentSoundtrackLoaderLifetimePeerReviewV1",
+  "createdAt": "2026-10-19T02:34:15.283Z",
+  "proposal": {
+    "gitBlob": "1b24c2c6c08aa96e2dd47dcf7ff6640ea89f73fd",
+    "bytes": 166837,
+    "sha256": "4e4ecac83028f97e26ef8f012bf65b16ca14b71b8959a8c6e9f0114e508b067c"
+  },
+  "base": {
+    "pr": 1675,
+    "head": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+    "tree": "e1238102f1a57afbdc53d04b3668c12954cf32aa"
+  },
+  "result": "Clean source review; candidate suitable for normal draft hosted source checks after current-head guards.",
+  "changes": [
+    {
+      "path": "game/test/helpers/soundtrack-authoring-loader.mjs",
+      "before": {
+        "gitBlob": "d4675908a823ad3c45defbdb364985f1b7de40bf",
+        "bytes": 1596,
+        "sha256": "5adfcaaaeb9dfebce562e838a3e2db053a11dd0af22284879c9d3d4e0ab8ec8b"
+      },
+      "after": {
+        "gitBlob": "d2fcc1e7f550a3873e86aeae43666f79c602c194",
+        "bytes": 2203,
+        "sha256": "38931f36c742326519d27959995fc54b0153c95ecef502fdd131d0145febb4a6"
+      },
+      "beforeStatements": 6,
+      "preservedInOrder": 5,
+      "beforeAssertions": 0,
+      "afterAssertions": 0
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "before": {
+        "gitBlob": "989b686be3e67c06fbfd2b4bcecaa8335f78fc89",
+        "bytes": 66352,
+        "sha256": "805fd884942c80b239f6e39886bc101d24423e76d59ee1b5a36c5ed022f51ef7"
+      },
+      "after": {
+        "gitBlob": "514e5538769ad80cdcb4b45cdcb5ea5168b094ac",
+        "bytes": 75166,
+        "sha256": "5d99fa160c96236296c207b0bc87a03d5be18f3628de6d085889d4a6cf800281"
+      },
+      "beforeStatements": 77,
+      "preservedInOrder": 77,
+      "beforeAssertions": 325,
+      "afterAssertions": 361
+    }
+  ],
+  "pattern": {
+    "reviewedWorldsProposal": "f892c4f887dce17e23c53bba516685f69f90bb2a",
+    "resolveFunctionByteIdentical": true,
+    "ownershipControlsExactAfterOnlyOwnerNamesAndURLs": true,
+    "cleanup": "Corrected hold-before-rejection-promise construction retained; owned deferred promises finish before bounded cleanup join, then both ports close in finally."
+  },
+  "assertionPreservation": {
+    "originalHostStatements": 77,
+    "preserved": 77,
+    "currentAssertionCallSitesBefore": 325,
+    "after": 361
+  },
+  "admission": {
+    "focusedSelector": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+    "manifest": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+    "matchingCategories": [],
+    "changedTestRule": "game/test/soundtrack-host.test.mjs automatically selected; no matching category defers it.",
+    "appearance": "e6f522d036c74cbbc0e8fe4011ce6d659327d793",
+    "triggerAndFullHostList": [
+      {
+        "line": 215,
+        "text": "      - 'game/test/soundtrack-host.test.mjs'"
+      },
+      {
+        "line": 216,
+        "text": "      - 'game/test/helpers/soundtrack-authoring-loader.mjs'"
+      },
+      {
+        "line": 832,
+        "text": "        game/test/soundtrack-host.test.mjs"
+      }
+    ],
+    "newImports": "One existing Node-only test helper in the existing full candidate/Appearance checkout; no runtime import or new path."
+  },
+  "scope": [
+    "Both before receipts independently matched exact base tree and supplied bytes; both after receipts and syntax verified.",
+    "No production, four prior couch DOM fixture controls, workflow, or existing timeout changes.",
+    "Same source-proven Node loader exposure; no new actual Soundtrack failure claimed.",
+    "Five new ownership controls and current-head functional qualification remain unexecuted.",
+    "No application/test execution, local writes, branch/PR/native mutation."
+  ]
+}

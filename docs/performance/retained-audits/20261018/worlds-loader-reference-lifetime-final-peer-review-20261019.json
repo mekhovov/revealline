@@ -1,0 +1,21 @@
+{
+  "format": "revealline.worlds-loader-lease-final-delta-peer.v1",
+  "createdAt": "2026-10-19T02:29:21.746Z",
+  "proposal": {
+    "gitBlob": "f892c4f887dce17e23c53bba516685f69f90bb2a",
+    "bytes": 103521,
+    "sha256": "3b622fbb60fd938b1dfa9dccb713f34cac7c742730bdbecdc3ad21df465bd302"
+  },
+  "base": "98f666a20d133d9a81eb07104076c3147fd165aa",
+  "supersedes": "50e7e3b08d3f662217d5914fcb5cba83ec54be58",
+  "priorReview": "5fcb5128965d6777ec40996c3faabab703dae441",
+  "verdict": "Clean final source review; no execution.",
+  "checks": [
+    "Exact envelope bytes/SHA read from GitData.",
+    "Loader afterContent byte-identical to the independently reviewed50e7 source.",
+    "Only source delta moves hold acknowledgement before construction/cleanup registration of the rejected delegated Promise; reversing this exact move reproduces entire prior test source.",
+    "If hold acknowledgement fails, the rejectable Promise does not yet exist; cleanup therefore cannot cause its unobserved rejection. Normal action and error assertions unchanged.",
+    "All31 original statements and71 assertions remain preserved;107 candidate assertions. Five new controls remain unexecuted;20s/5s/5min limits unchanged.",
+    "All prior source/lifetime/error/concurrency review findings remain applicable; no app or workflow change."
+  ]
+}

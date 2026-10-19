@@ -1,0 +1,2193 @@
+{
+  "format": "SoloProvenanceBoundedClosureAuditV1",
+  "preparedAt": "2026-10-19T02:26:01.549Z",
+  "status": "source-only blockers; no implementation or test pass",
+  "repository": "mekhovov/revealline",
+  "proposal": {
+    "gitBlob": "c443d172be2abc7ad39f7e21c512c4414446576d",
+    "bytes": 272285,
+    "sha256": "51a1c53c79d3ede42e9a968e4275f134e5a82abef8b2ccd5e3007d7fa19f61a1",
+    "base": {
+      "revision": "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+      "tree": "50c622f54c9748c1ad695b7885a3164c092e109c",
+      "branch": "codex/solo-empirical-overhead-acceptance"
+    },
+    "peer": "1ed2925b2f5d3760d53a5d0f9c1d4475b5bb70b2"
+  },
+  "inspection": {
+    "source": "exact abd2 tree and hash-verified GitData source in RAM; no app, tests or workflow commands executed",
+    "census": {
+      "declarations": 165,
+      "workflows": 105,
+      "soloAndPublishingScripts": 272,
+      "allOtherScripts": "not fully inspected",
+      "newlyStaleDeclarations": 61,
+      "newlyStaleRefs": 66,
+      "refsByTool": {
+        "scripts/run-solo-remote-correctness.mjs": 54,
+        "scripts/observe-solo-performance.mjs": 11,
+        "scripts/qualify-solo-runtime.mjs": 1
+      },
+      "rawSparseOwners": 84,
+      "rawWorkflowFiles": 63
+    },
+    "limits": [
+      "A reference census is not proof that every listed declaration is directly executed by current source CI.",
+      "84 raw sparse owners include archived/frozen workflows; this audit does not authorize editing all of them.",
+      "129 reader search candidates are not a claim that 129 source files need changes."
+    ]
+  },
+  "blockers": [
+    {
+      "id": "immutable-source",
+      "finding": "The current five-file map changes three shared tools and newly stales 66 exact refs in 61 immutable declarations. Original trace-v2 pins both the current qualifier and runner.",
+      "required": "Preserve every old declaration and executed result. Actual caller hookup needs separately named prospective app/journal tooling declarations and a finite test-only predecessor reader. No current runtime admission may silently accept old hashes."
+    },
+    {
+      "id": "sparse-import",
+      "finding": "Static helper imports resolve even when provenance collection is disabled. Confirmed current native consumer has 17 affected sparse owners; published Pages has source and browser owners. Raw all-workflow scan has 84 owner candidates in 63 workflow files.",
+      "required": "For actual shared-tool integration classify current live owners versus byte-bound archives and close imports only in the admitted live source. Preserve archived workflow bytes. Do not call a five-file patch CI-ready."
+    },
+    {
+      "id": "source-selection",
+      "finding": "The changed existing test-solo-remote-correctness.mjs is not a *.test.mjs entry, matches no focused category in the inspected map, and the fallback runs validate rather than its nine tests.",
+      "required": "Use a separately named *.test.mjs entry whose actual hosted TAP confirms execution. Do not infer the nine tests from validation or the replay portability source guard."
+    },
+    {
+      "id": "integration-order",
+      "finding": "The proposed qualifier edit shares a path with the independent heap successor; prospective live workflow composition also overlaps its tooling successor.",
+      "required": "Reconcile exact combined qualifier and frozen tool refs only after original trace outcome. Keep #1703 fourteen-file acceptance repair unchanged; preserve separate draft and source checks."
+    },
+    {
+      "id": "measurement-limits",
+      "finding": "Installed WebKit candidate files remain explicitly distinct from actual loaded engine/library identity. Context records and file hashes provide no finite timer bound or observer-equivalence proof.",
+      "required": "No 5% qualification pass; no timing-target or workload relaxation."
+    }
+  ],
+  "smallestSourceStage": {
+    "status": "design only; implementation newly authorized by parent",
+    "paths": [
+      "scripts/solo-qualification-provenance.mjs",
+      "scripts/solo-qualification-provenance.test.mjs"
+    ],
+    "behavior": "Copy the reviewed helper unchanged and extract its eight independent helper controls into a new focused entry; retain the ninth caller-position test with the held integration proposal.",
+    "unchanged": [
+      "all three shared tools",
+      "existing test-solo-remote-correctness.mjs",
+      "all declarations",
+      "all workflows",
+      "native selectors",
+      "original trace",
+      "accepted overhead repair"
+    ],
+    "claim": "Hosted source controls for the helper only. Caller installation, measurements, loaded-library identity and overhead acceptance stay unimplemented/unqualified."
+  },
+  "laterSuccessor": {
+    "status": "design review required; not a complete code-ready pathset",
+    "steps": [
+      "Choose separately named prospective app and journal tooling declarations for the actual final package; retain every non-tool protocol/workload/cap/threshold field and prove equality in source controls. Do not repin historical declarations.",
+      "Freeze exact predecessor runner, observer and qualifier bodies once with actual immutable declaration-byte identities; route only affected test readers through this finite witness. Keep production current-byte hashing and stale-source refusal unchanged.",
+      "Add negative source controls for changed declaration, unexpected ref, wrong source, missing helper, altered non-tool field and accidental empirical-only pass promotion.",
+      "Classify and close actual selected live sparse/import owners, leaving archived byte-bound workflow sources untouched.",
+      "Compose with the heap qualifier successor and rehash final tool refs; original trace result precedes merge/native use, not standalone helper source tests."
+    ],
+    "openDecisions": [
+      "Prospective final-package identity has not been chosen or declared by this map.",
+      "Exact final historical reader and live sparse edit set remains to be reviewed; the census is intentionally not a broad implementation request."
+    ]
+  },
+  "directlyChangedDeclarations": [
+    {
+      "path": "docs/performance/solo-797-app-diagnostics-plan.json",
+      "blob": "bc2f61d2e469f37bdf0700adf15ad9ef2cd222e5",
+      "bytes": 9165,
+      "sha256": "e482949eef93c96967db02cd021d8825a776fd5d7531b0d3f7ec40a562f8c8f8",
+      "gitBlob": "bc2f61d2e469f37bdf0700adf15ad9ef2cd222e5",
+      "format": "SoloHostedDiagnosticsManifestV1",
+      "sourceCohort": "diagnostics-candidate797-endpoint-box-v1",
+      "refs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-journal-cost-plan.json",
+      "blob": "4cf89cba49ccc1239f70a969b7b2d264f90e38bc",
+      "bytes": 12324,
+      "sha256": "940f8e40eda9970d1934f85f629dcb7491459068c630e56c641f37ff2efca23f",
+      "gitBlob": "4cf89cba49ccc1239f70a969b7b2d264f90e38bc",
+      "format": "SoloHostedDiagnosticsManifestV1",
+      "sourceCohort": "diagnostics-candidate797-endpoint-box-v1",
+      "refs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-long29-plan.json",
+      "blob": "30d08147040254d0d8f1704c49ef06248b563db4",
+      "bytes": 16425,
+      "sha256": "b39c85284534c9a4b8ee1accbe88041ce2fca6b4c77011ed39bcb677a5243f95",
+      "gitBlob": "30d08147040254d0d8f1704c49ef06248b563db4",
+      "format": "SoloHostedSustainedManifestV1",
+      "sourceCohort": "long29-main8b-candidate797-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-retry-plan.json",
+      "blob": "0d214536f1ead31fc546d58b2a210a1aea51acee",
+      "bytes": 18651,
+      "sha256": "89b3d3ae5e1786f1023f4c7163a7628b8512a027b64375d2cfad1bdaddb24b03",
+      "gitBlob": "0d214536f1ead31fc546d58b2a210a1aea51acee",
+      "format": "SoloHostedSustainedManifestV1",
+      "sourceCohort": "retry-main8b-candidate797-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-soak-plan.json",
+      "blob": "2190ae61006def1052037f9a44191821c1d43ff4",
+      "bytes": 17275,
+      "sha256": "39c055fb31662c625d21f736e5bc5ba3fd89d980b6c504ca5a3c39ace617e885",
+      "gitBlob": "2190ae61006def1052037f9a44191821c1d43ff4",
+      "format": "SoloHostedSustainedManifestV1",
+      "sourceCohort": "soak-main8b-candidate797-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-timing-cold-first30-plan.json",
+      "blob": "833e687d43e0c2fc9af3161fd861105397afe850",
+      "bytes": 17470,
+      "sha256": "81ea7ba151d36dd16276c176c045dd337c4db1683a06a3cf29f3f300d98bd627",
+      "gitBlob": "833e687d43e0c2fc9af3161fd861105397afe850",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidate797-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-timing-jammer-steering-plan.json",
+      "blob": "e3d620d2f91c0b802bc7db6561427790d42fad49",
+      "bytes": 16457,
+      "sha256": "e44b54ae61b5afed322b3a2b00ff8d56db44371576ceba3084f71750716c7830",
+      "gitBlob": "e3d620d2f91c0b802bc7db6561427790d42fad49",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidate797-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-timing-large-capture-erosion-plan.json",
+      "blob": "c9a1b6da96ccad4be6e16ae5a30108707fea2050",
+      "bytes": 16477,
+      "sha256": "d775a1cbdaa40fa3304f31bbf2cc0666df9c1d55ffac7b5ea20962f9aebab17c",
+      "gitBlob": "c9a1b6da96ccad4be6e16ae5a30108707fea2050",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidate797-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-timing-long-rail-latency-plan.json",
+      "blob": "79111323bc4017337ab20ac51e83df2e4834631e",
+      "bytes": 16458,
+      "sha256": "48d6a73f9e650e7c51d880b01e85f89005b7c85d8fa920ecf1b5a4709c960380",
+      "gitBlob": "79111323bc4017337ab20ac51e83df2e4834631e",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidate797-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-timing-sentry-latency-plan.json",
+      "blob": "9cc232c97a5df9f1ad1596624be31b903b978353",
+      "bytes": 16444,
+      "sha256": "94c2e76b24bf4099c8419cdf0a78fea8a8abc343d510fed30e582786b19843a3",
+      "gitBlob": "9cc232c97a5df9f1ad1596624be31b903b978353",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidate797-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-797-timing-warm-first30-plan.json",
+      "blob": "5f653baa215ac94864f184e6e6ab5832c4db3093",
+      "bytes": 18898,
+      "sha256": "9d307894368681834637af046c4a15ed7bc5e0b02a71d6a1d391d5e6e794492e",
+      "gitBlob": "5f653baa215ac94864f184e6e6ab5832c4db3093",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidate797-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-browser-frame-trace-9d-failure-plan.json",
+      "blob": "908f18c620702ced9778051b0f899a1933b21f09",
+      "bytes": 15434,
+      "sha256": "3bda5235c0b188596d55f14a4215227ac1b1e0243114e539b5c6702623276da6",
+      "gitBlob": "908f18c620702ced9778051b0f899a1933b21f09",
+      "format": "SoloHostedCpuProfileManifestV1",
+      "sourceCohort": "warm-frame-9d5139-failure-investigation-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 95425,
+          "sha256": "bba8114b4b553e8681ec641d91c45b7270f02e58ccd207385818a13070c98373"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+      "blob": "78c4a5f588b13097744746539c078acd9128220d",
+      "bytes": 17005,
+      "sha256": "21a6c7ea6245bffd3ce6b2d9b42c4cf2c56243823be8cb319ae327a276972bfa",
+      "gitBlob": "78c4a5f588b13097744746539c078acd9128220d",
+      "format": "SoloHostedCpuProfileManifestV1",
+      "sourceCohort": "warm-frame-9d5139-tasks-investigation-v2",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 95469,
+          "sha256": "4a8c22ffd0864996b39f1c9fe91f2edd81c5c70c298f1b16cf082b43b2da0aaa"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 95469,
+          "sha256": "4a8c22ffd0864996b39f1c9fe91f2edd81c5c70c298f1b16cf082b43b2da0aaa"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-browser-frame-trace-warm-plan.json",
+      "blob": "25497ba987e77f4e124ecb7b8a9b62e80e98e704",
+      "bytes": 13941,
+      "sha256": "2da883907291c01706377bcff6bd326cc75e987065a0a6e16f2229e1b21470b0",
+      "gitBlob": "25497ba987e77f4e124ecb7b8a9b62e80e98e704",
+      "format": "SoloHostedCpuProfileManifestV1",
+      "sourceCohort": "warm-frame-9d5139-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 95425,
+          "sha256": "bba8114b4b553e8681ec641d91c45b7270f02e58ccd207385818a13070c98373"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-app-diagnostics-plan.json",
+      "blob": "cc6059898871eb94144c5886a814b7f9c05c54c3",
+      "bytes": 7755,
+      "sha256": "20bfb45207c67f420ec59a132c821f7b70f1946e7548c3ef423f7fa6ffde66d6",
+      "gitBlob": "cc6059898871eb94144c5886a814b7f9c05c54c3",
+      "format": "SoloHostedDiagnosticsManifestV1",
+      "sourceCohort": "diagnostics-candidatede332-endpoint-box-v1",
+      "refs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-journal-cost-plan.json",
+      "blob": "2785c22ae4a6ee6bfd81d5f0d80ccc2a1e3bf60d",
+      "bytes": 10914,
+      "sha256": "1cb0c8677f7cd12e5adc4c4b8e07b087dbaa52e23ff0ad4241dd716af15fa2b5",
+      "gitBlob": "2785c22ae4a6ee6bfd81d5f0d80ccc2a1e3bf60d",
+      "format": "SoloHostedDiagnosticsManifestV1",
+      "sourceCohort": "diagnostics-candidatede332-endpoint-box-v1",
+      "refs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-lifecycle-long29-plan.json",
+      "blob": "7f0e12b2b4968924300c04a13889964ecb5330c6",
+      "bytes": 16000,
+      "sha256": "5faeacfdf1c1c0bee80d3cf3e7a73ed2f5af37983cdbcd7149c1ff28c9a39947",
+      "gitBlob": "7f0e12b2b4968924300c04a13889964ecb5330c6",
+      "format": "SoloHostedSustainedManifestV1",
+      "sourceCohort": "long29-main8b-candidatede332-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-lifecycle-retry-plan.json",
+      "blob": "15f606e5c3465084cdce329bca6526d5bd7d5a08",
+      "bytes": 15970,
+      "sha256": "bc922786de5ac1ed87e95aa7a83e3d0c323e068ef44c1130ae8f1b3ac81b05b7",
+      "gitBlob": "15f606e5c3465084cdce329bca6526d5bd7d5a08",
+      "format": "SoloHostedSustainedManifestV1",
+      "sourceCohort": "retry-main8b-candidatede332-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-lifecycle-soak-plan.json",
+      "blob": "c39e0e887e2c92f5df955f30e7e542edbb6e3d91",
+      "bytes": 15995,
+      "sha256": "ca043aa7adc558be73069e8ada8268d4ffb42f4a82d0b56bf0b7cc6c726461a8",
+      "gitBlob": "c39e0e887e2c92f5df955f30e7e542edbb6e3d91",
+      "format": "SoloHostedSustainedManifestV1",
+      "sourceCohort": "soak-main8b-candidatede332-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-cold-first30-plan.json",
+      "blob": "733faaca3d820ef4366d02563e52a4a3e0a4a2e2",
+      "bytes": 16342,
+      "sha256": "1618ebc1cca309909444ab9309572618a357616fc923fc285d6d801b1ad7584f",
+      "gitBlob": "733faaca3d820ef4366d02563e52a4a3e0a4a2e2",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidatede332-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-jammer-steering-plan.json",
+      "blob": "06d054494d0c06c6e1d5f5e835c9f9b94c9d793b",
+      "bytes": 16362,
+      "sha256": "89aad5e238f7a3c87ec9d0798a6d0ef6c25a13cd4997151e6d150c98f2fe8560",
+      "gitBlob": "06d054494d0c06c6e1d5f5e835c9f9b94c9d793b",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidatede332-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-large-capture-erosion-plan.json",
+      "blob": "790a9d58dd2470eb14d9ba192ffe3804d48a776c",
+      "bytes": 16382,
+      "sha256": "6a26fd4b4b4a0b7e44061431a7bbe8187013a200a90c7e77465aed0f3c0353bd",
+      "gitBlob": "790a9d58dd2470eb14d9ba192ffe3804d48a776c",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidatede332-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-long-rail-latency-plan.json",
+      "blob": "6b719f8d23bb56fcbf06c4db8ab02e48b82c9a34",
+      "bytes": 16363,
+      "sha256": "fcea8265dff9cb666d42fcb3c16bb35e0481c595911db5b83c0d47e2394148e7",
+      "gitBlob": "6b719f8d23bb56fcbf06c4db8ab02e48b82c9a34",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidatede332-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-sentry-latency-plan.json",
+      "blob": "4fbd6d228e2978fbe7615ed0ed63ea66ce4b1d51",
+      "bytes": 16349,
+      "sha256": "8284fb50f1f5d323699e7818d827961fbfbcc2b84a30177842bd1b10f147973d",
+      "gitBlob": "4fbd6d228e2978fbe7615ed0ed63ea66ce4b1d51",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidatede332-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-warm-first30-plan.json",
+      "blob": "8b96773b322bc302e26a71944b15145475589df6",
+      "bytes": 16341,
+      "sha256": "13b0aa40aaf8552ea05fa2de992294b0da85b167f3c4ee764b63df78ae1543d0",
+      "gitBlob": "8b96773b322bc302e26a71944b15145475589df6",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": "timing-main8b-candidatede332-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-demo-recovery-73a345-plan.json",
+      "blob": "5ac6921bfa3c9821ee927d672e8b04bac2a684e1",
+      "bytes": 13115,
+      "sha256": "21c68d6ca47b69b99a661c1cdb5c273321da0e52e0d32b72e829890c718e3298",
+      "gitBlob": "5ac6921bfa3c9821ee927d672e8b04bac2a684e1",
+      "format": "SoloHostedDemoRecoveryPlanV1",
+      "sourceCohort": "demo-runtime73-diagnostic-v1",
+      "refs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json",
+      "blob": "2e866923514bde6dd93596c728d65bf1fc3cd0f0",
+      "bytes": 16331,
+      "sha256": "6f74a98a954f816f0e465e70646f562496f55433051d4c8ed50dfa59fe3baba5",
+      "gitBlob": "2e866923514bde6dd93596c728d65bf1fc3cd0f0",
+      "format": "SoloHostedDemoRecoveryPlanV1",
+      "sourceCohort": "demo-runtime797-diagnostic-v1",
+      "refs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-demo-recovery-797e03-plan.json",
+      "blob": "f59fa87c18b8d8bad8f24c41c36410dd0b882a0f",
+      "bytes": 13879,
+      "sha256": "a006eda738c0193ff42e75477bbfea3b54153850171509e326b4a45d12a67336",
+      "gitBlob": "f59fa87c18b8d8bad8f24c41c36410dd0b882a0f",
+      "format": "SoloHostedDemoRecoveryPlanV1",
+      "sourceCohort": "demo-runtime797-diagnostic-v1",
+      "refs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-demo-recovery-797e03-tooling-plan.json",
+      "blob": "f6dbd5c86aa0af1c00893b32fb42d73f998b1f89",
+      "bytes": 15421,
+      "sha256": "aa979769f282d8f2c3dc9ad965ab0da9b9c45677cef802fef18bb2e617d3998d",
+      "gitBlob": "f6dbd5c86aa0af1c00893b32fb42d73f998b1f89",
+      "format": "SoloHostedDemoRecoveryPlanV1",
+      "sourceCohort": "demo-runtime797-diagnostic-v1",
+      "refs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-demo-resources-73a345-plan.json",
+      "blob": "dd268e63dd3434f14d337beee3d189cadeeb3990",
+      "bytes": 13392,
+      "sha256": "0fc688e063d7140988845e8f337ff6e56c6a4cd56c5c7fe4881a9e587df7d851",
+      "gitBlob": "dd268e63dd3434f14d337beee3d189cadeeb3990",
+      "format": "SoloHostedDemoResourcePlanV1",
+      "sourceCohort": "demo-runtime73-diagnostic-v1",
+      "refs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-demo-resources-797e03-activation-boundary-plan.json",
+      "blob": "4fa919ee055c69763e943fc6d84b09dbacdefdb2",
+      "bytes": 19275,
+      "sha256": "220a967c590759b78aaad70d527fe83f44e80c44d08a357c4a6a375002d55201",
+      "gitBlob": "4fa919ee055c69763e943fc6d84b09dbacdefdb2",
+      "format": "SoloHostedDemoResourcePlanV1",
+      "sourceCohort": "demo-runtime797-diagnostic-v1",
+      "refs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-demo-resources-797e03-close-boundary-plan.json",
+      "blob": "8b25644f19e78d54670c83d6ead08de1850578f0",
+      "bytes": 17042,
+      "sha256": "43af090dbf99828470c9042bf29086bf6d86ba9cdc6af023fecc69f37d892466",
+      "gitBlob": "8b25644f19e78d54670c83d6ead08de1850578f0",
+      "format": "SoloHostedDemoResourcePlanV1",
+      "sourceCohort": "demo-runtime797-diagnostic-v1",
+      "refs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-demo-resources-797e03-plan.json",
+      "blob": "f17c46c52d332f33c6589b7d77f35160b51cee24",
+      "bytes": 14157,
+      "sha256": "bc4ab93edbd9d0903c38b3dc756d655c47f81c079f423c2fb4ed12cfa671edc5",
+      "gitBlob": "f17c46c52d332f33c6589b7d77f35160b51cee24",
+      "format": "SoloHostedDemoResourcePlanV1",
+      "sourceCohort": "demo-runtime797-diagnostic-v1",
+      "refs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-demo-resources-797e03-tooling-plan.json",
+      "blob": "6229685e1306812988f8fe707c2958a13fb11266",
+      "bytes": 15819,
+      "sha256": "41a57f797e87a4d281545e4afd7acd6c15c22dd9e669d857de81476ca1606d3f",
+      "gitBlob": "6229685e1306812988f8fe707c2958a13fb11266",
+      "format": "SoloHostedDemoResourcePlanV1",
+      "sourceCohort": "demo-runtime797-diagnostic-v1",
+      "refs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.0",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-final-app-diagnostics-plan.json",
+      "blob": "ebe3e481e0eeb06ff705098aa95acd232f90f378",
+      "bytes": 6192,
+      "sha256": "9e590bb13c4eeba71c18ebd8eaf1ebfc2bbf62c8de246b7649ee2d550bb8c652",
+      "gitBlob": "ebe3e481e0eeb06ff705098aa95acd232f90f378",
+      "format": "SoloHostedDiagnosticsManifestV1",
+      "sourceCohort": "diagnostics-main8b-candidatea6e",
+      "refs": [
+        {
+          "place": "frozenTools.8",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.12",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 56166,
+          "sha256": "b8203db92c25c688c7e09a2043f6b2e0b0d8e642b6c4aa0a3d2616e4e2eb8bfc"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.8",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-final-app-diagnostics-v2-plan.json",
+      "blob": "b734b2e7f6e94069a26d328c4253ede8ef847e68",
+      "bytes": 8575,
+      "sha256": "8aa315786fe2a7eb261b8c368cefd9b456095f4f1a8c7a2ef767db5b6ccb9bec",
+      "gitBlob": "b734b2e7f6e94069a26d328c4253ede8ef847e68",
+      "format": "SoloHostedDiagnosticsManifestV1",
+      "sourceCohort": "diagnostics-main8b-candidatea6e",
+      "refs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 57545,
+          "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-final-journal-cost-plan.json",
+      "blob": "da183fa0dcec39916e8565bac77a6d7b28b873d6",
+      "bytes": 9350,
+      "sha256": "5d13378669eb2286f94466bbb9a1563dcc91e35d275961d73ce03f8989a9db4a",
+      "gitBlob": "da183fa0dcec39916e8565bac77a6d7b28b873d6",
+      "format": "SoloHostedDiagnosticsManifestV1",
+      "sourceCohort": "diagnostics-main8b-candidatea6e",
+      "refs": [
+        {
+          "place": "frozenTools.8",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.12",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 66337,
+          "sha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f"
+        },
+        {
+          "place": "frozenTools.13",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 56166,
+          "sha256": "b8203db92c25c688c7e09a2043f6b2e0b0d8e642b6c4aa0a3d2616e4e2eb8bfc"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.8",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-final-journal-cost-v2-plan.json",
+      "blob": "17bd39e26fffcbe2756b1507a345df729b37563c",
+      "bytes": 11730,
+      "sha256": "81ec136b8296812155321fd41f9063146640a28166ed4410e39251eba3134cf8",
+      "gitBlob": "17bd39e26fffcbe2756b1507a345df729b37563c",
+      "format": "SoloHostedDiagnosticsManifestV1",
+      "sourceCohort": "diagnostics-main8b-candidatea6e",
+      "refs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 66337,
+          "sha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f"
+        },
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 57545,
+          "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-first-victory-cpu-797e03-plan.json",
+      "blob": "6dd19c5df0bd8ae172ed5e21715e12aaac644e61",
+      "bytes": 13401,
+      "sha256": "30e521b5784bd023762c3c15d0f13bcbd7bcfea373691464ad4861b5c6dcc06d",
+      "gitBlob": "6dd19c5df0bd8ae172ed5e21715e12aaac644e61",
+      "format": "SoloHostedCpuProfileManifestV1",
+      "sourceCohort": "first-victory-797e03-main8b-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-first-victory-cpu-de332-plan.json",
+      "blob": "fa3a5f1d96c43ac741a2637830684b8a7cdd461a",
+      "bytes": 12872,
+      "sha256": "b11bdb1d427e9b6891283447ae38e8c8d211fddbf31063391b87f6171db3b0c6",
+      "gitBlob": "fa3a5f1d96c43ac741a2637830684b8a7cdd461a",
+      "format": "SoloHostedCpuProfileManifestV1",
+      "sourceCohort": "first-victory-de332-main8b-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-native-touch-73a345-plan.json",
+      "blob": "df835b29332c503bd2fb7867c24eb077bb2b5874",
+      "bytes": 12426,
+      "sha256": "b01ab86544922cb57f9213490bb065a355f52e448d972d513f810d8b12934944",
+      "gitBlob": "df835b29332c503bd2fb7867c24eb077bb2b5874",
+      "format": "SoloHostedTouchManifestV1",
+      "sourceCohort": "native-touch-candidate73",
+      "refs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-native-touch-797e03-plan.json",
+      "blob": "05b8a1d37ef46297b0e6f382033cb3044fe38f1f",
+      "bytes": 13487,
+      "sha256": "6671f20292ce1372617828f651c201048e4f00f1c1bdb1acb420a18b785117fe",
+      "gitBlob": "05b8a1d37ef46297b0e6f382033cb3044fe38f1f",
+      "format": "SoloHostedTouchManifestV1",
+      "sourceCohort": "native-touch-candidate797",
+      "refs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-next-geometric-797e03-plan.json",
+      "blob": "882ec4b9698fc78356a2e1f3cbc474b1897213bd",
+      "bytes": 18806,
+      "sha256": "7bded36826b1624bf9d42e193aee2fc537be03e5cf8dea8b8da2fe70f0b6bb8f",
+      "gitBlob": "882ec4b9698fc78356a2e1f3cbc474b1897213bd",
+      "format": "SoloHostedSustainedManifestV1",
+      "sourceCohort": "next-candidate797e03-geometric-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-next-geometric-de332-tooling-plan.json",
+      "blob": "e74c1582ea3e20cfbbc91d48689fc70dd03f4c62",
+      "bytes": 19815,
+      "sha256": "e9bc84af0e8364c2ca58df456a26f98edfeca0548deae1560c3bc15284a19d18",
+      "gitBlob": "e74c1582ea3e20cfbbc91d48689fc70dd03f4c62",
+      "format": "SoloHostedSustainedManifestV1",
+      "sourceCohort": "next-candidatede332-geometric-v1",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.18",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-readiness-preparation-73a345-plan.json",
+      "blob": "c60fdd842b648dac4c8ff0b081ed9f66ba1fd7bc",
+      "bytes": 16445,
+      "sha256": "1e52cd4c44a3b26a2922149a70ae2ae30fd8fa75a66e12fdbbc782554670a433",
+      "gitBlob": "c60fdd842b648dac4c8ff0b081ed9f66ba1fd7bc",
+      "format": "SoloHostedReadinessManifestV1",
+      "sourceCohort": "readiness-preparation-candidate73",
+      "refs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-readiness-preparation-797e03-plan.json",
+      "blob": "7e2fac5c2ff98634959c09d42e36a58e37582655",
+      "bytes": 17507,
+      "sha256": "8b5cff2d83b397ead0c1fa142596f7058b7a4ce0e8eb051d45bdd1b54d125028",
+      "gitBlob": "7e2fac5c2ff98634959c09d42e36a58e37582655",
+      "format": "SoloHostedReadinessManifestV1",
+      "sourceCohort": "readiness-preparation-candidate797",
+      "refs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json",
+      "blob": "7dd9b491f21bdd1dcfe1de57fe04780f5af71dd4",
+      "bytes": 19574,
+      "sha256": "f93036e870280dccf5f7110cd956345e164993d4fc006e92bc073a163d955bde",
+      "gitBlob": "7dd9b491f21bdd1dcfe1de57fe04780f5af71dd4",
+      "format": "SoloHostedReadinessManifestV1",
+      "sourceCohort": "readiness-preparation-candidate797",
+      "refs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 95425,
+          "sha256": "bba8114b4b553e8681ec641d91c45b7270f02e58ccd207385818a13070c98373"
+        },
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.19",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-remote-73a345-correctness-tooling-plan.json",
+      "blob": "c66e729827c64e1c2a500278afc1c0ea0a685b36",
+      "bytes": 21612,
+      "sha256": "f6928efcd9dd88257802b803f1400363644d91be75b0e725aee2d1fa7d418377",
+      "gitBlob": "c66e729827c64e1c2a500278afc1c0ea0a685b36",
+      "format": "SoloHostedCorrectnessPlan.v1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.15",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-remote-73a345-earned-raster-plan.json",
+      "blob": "0b2bf4607dd2c5c479e9892d811fe88e7d5a4ab9",
+      "bytes": 14001,
+      "sha256": "4651e428c6f6d95a765a0d0fe69b4bf29b62f2ad1ae18efafc9caf8e3641f2cf",
+      "gitBlob": "0b2bf4607dd2c5c479e9892d811fe88e7d5a4ab9",
+      "format": "SoloHostedRasterManifestV1",
+      "sourceCohort": "earned-raster-candidate73a345",
+      "refs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-remote-797e03-correctness-plan.json",
+      "blob": "d71b98f403b93f0dc286c59c77f5eeeda9e0b416",
+      "bytes": 22186,
+      "sha256": "e7a2403a260b26196939d15d8108ada7c6a5f22100a4a056f999427cada1fd4d",
+      "gitBlob": "d71b98f403b93f0dc286c59c77f5eeeda9e0b416",
+      "format": "SoloHostedCorrectnessPlan.v1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.15",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-remote-797e03-earned-raster-plan.json",
+      "blob": "290d7792126e2d72d7298ddf317f9743d185053c",
+      "bytes": 16030,
+      "sha256": "29e5dd292611d05141cd8b18aa76e95824ffa66269d50c7c05fe5c2126717f53",
+      "gitBlob": "290d7792126e2d72d7298ddf317f9743d185053c",
+      "format": "SoloHostedRasterManifestV1",
+      "sourceCohort": "earned-raster-candidate797e03",
+      "refs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-remote-9d5139b-correctness-plan.json",
+      "blob": "2750d9bb6ef9e72e7af7ccce156a468703aa7a53",
+      "bytes": 22918,
+      "sha256": "96de01992eee1a674923bc8304d1d6af9a59df1d3ddb5a527b71924a715fc97b",
+      "gitBlob": "2750d9bb6ef9e72e7af7ccce156a468703aa7a53",
+      "format": "SoloHostedCorrectnessPlan.v1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.15",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 95197,
+          "sha256": "54e3da78d657e320be2afaa12859877e55941cf708697c34baa594d9550d28b7"
+        },
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.17",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-remote-cpu-profile-plan.json",
+      "blob": "3f3a55dba6a9961cf56b0eb292eb8b6a4f46be7c",
+      "bytes": 9913,
+      "sha256": "23139ecdc03518fe3989a9f2344c13c6f66ea13b3d05bc9d9035333470f6cf9a",
+      "gitBlob": "3f3a55dba6a9961cf56b0eb292eb8b6a4f46be7c",
+      "format": "SoloHostedCpuProfileManifestV1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.2",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 59605,
+          "sha256": "90db5e035dafe5538d347f3cc1b0c38e8e18ffef3c11db3e7b6f803f4619e01f"
+        },
+        {
+          "place": "frozenTools.12",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 52211,
+          "sha256": "42750c0bb862b5ca28dfb8394b6381694418b0ed9240a70f006652fcfde28235"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.12",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-remote-sustained-plan.json",
+      "blob": "2395cf716af15d1598ac7e887b39647d7b044546",
+      "bytes": 16542,
+      "sha256": "247dde7c85577e15c37b433881a27a6f37e1d01c049a8eef9eabea5485d6b051",
+      "gitBlob": "2395cf716af15d1598ac7e887b39647d7b044546",
+      "format": "SoloHostedSustainedManifestV1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.2",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 66337,
+          "sha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f"
+        },
+        {
+          "place": "frozenTools.12",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 53814,
+          "sha256": "6d00e1ba38cdaf0a468a58a999c803e03ae1a6a59b0dffefc8ec87644fa7c311"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.12",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-remote-timing-plan.json",
+      "blob": "dcb830246dc0ff3c30607c0c05600e9f0af5bf18",
+      "bytes": 15612,
+      "sha256": "6279551b122d8287a7e8b862352eb383830aaeaea145cfa68a6ab2ec93968ea4",
+      "gitBlob": "dcb830246dc0ff3c30607c0c05600e9f0af5bf18",
+      "format": "SoloHostedTimingManifestV1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.2",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 66337,
+          "sha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f"
+        },
+        {
+          "place": "frozenTools.12",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        },
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 53814,
+          "sha256": "6d00e1ba38cdaf0a468a58a999c803e03ae1a6a59b0dffefc8ec87644fa7c311"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.12",
+          "path": "scripts/observe-solo-performance.mjs",
+          "bytes": 19115,
+          "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-73a345-plan.json",
+      "blob": "585bdb4c4ccbcc2c3b182dfe5984655cd3ca0684",
+      "bytes": 9956,
+      "sha256": "e02a55a60fcf86fb25c7d6dadaa058097ff4b59929cd100bf2b214b24e6374c9",
+      "gitBlob": "585bdb4c4ccbcc2c3b182dfe5984655cd3ca0684",
+      "format": "SoloHostedAuxiliaryManifestV1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.10",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json",
+      "blob": "52fbf30e1fa74e082761869301cf9b29d5843664",
+      "bytes": 12118,
+      "sha256": "ae7e97b6b4b57bda989869a3e865dcdecb6f999f1d0ac1248b80bff59281baa5",
+      "gitBlob": "52fbf30e1fa74e082761869301cf9b29d5843664",
+      "format": "SoloHostedAuxiliaryManifestV1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.10",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 95197,
+          "sha256": "54e3da78d657e320be2afaa12859877e55941cf708697c34baa594d9550d28b7"
+        },
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json",
+      "blob": "3484420834abf3f8f40eb2f1a220f147a0779920",
+      "bytes": 12694,
+      "sha256": "eed6fdbd4ec2ed2e9d5cd2e3692a3cfcca4bee9b99b999fa9cdeaed4e0924bcf",
+      "gitBlob": "3484420834abf3f8f40eb2f1a220f147a0779920",
+      "format": "SoloHostedAuxiliaryManifestV1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.10",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 95425,
+          "sha256": "bba8114b4b553e8681ec641d91c45b7270f02e58ccd207385818a13070c98373"
+        },
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-plan.json",
+      "blob": "6354f6edeaa398df14fac9b8b55dda5f2da89390",
+      "bytes": 10343,
+      "sha256": "e9114308e934c7f19ab35b3ae486592c70b28de40896a394702d2ce83c492079",
+      "gitBlob": "6354f6edeaa398df14fac9b8b55dda5f2da89390",
+      "format": "SoloHostedAuxiliaryManifestV1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.10",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json",
+      "blob": "29deaffd2c581ebb7547c8363b3e0a83c8bec0c9",
+      "bytes": 10952,
+      "sha256": "9e07cc1bdefc3697704942b0fd9a1b5f266ae6462925dd452bf2c4aaa34dfc38",
+      "gitBlob": "29deaffd2c581ebb7547c8363b3e0a83c8bec0c9",
+      "format": "SoloHostedAuxiliaryManifestV1",
+      "sourceCohort": null,
+      "refs": [
+        {
+          "place": "frozenTools.10",
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "bytes": 92172,
+          "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+        },
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.11",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/solo-worker-idle-9d5139b-plan.json",
+      "blob": "a84104eb6dfc61334da453212491a9bb1d3754e0",
+      "bytes": 13757,
+      "sha256": "4de45cd5ef7395cb13341f313516604c79cc2fa8e6aaba44bb609e9471c8e9c6",
+      "gitBlob": "a84104eb6dfc61334da453212491a9bb1d3754e0",
+      "format": "SoloHostedWorkerDiagnosticPlanV1",
+      "sourceCohort": "worker-idle-candidate9d5139b",
+      "refs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ],
+      "matchingRefs": [
+        {
+          "place": "frozenTools.16",
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "bytes": 74932,
+          "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+        }
+      ]
+    }
+  ],
+  "sparse": {
+    "nativeWorkflow": {
+      "path": ".github/workflows/solo-native-package-consumer.yml",
+      "bytes": 439597,
+      "sha256": "f1d18d55ce3df73d4e4748ce655b67f2576b02b2d20fa07a952596537e32b08d",
+      "gitBlob": "1faa02770851a633b6b1bc33ee133a0657d81bb5"
+    },
+    "nativeOwners": [
+      "cocoa",
+      "correctness",
+      "declare",
+      "sustained",
+      "raster",
+      "readiness",
+      "touch",
+      "hud-cpu",
+      "app-overhead",
+      "journal-cost",
+      "timing",
+      "lifecycle",
+      "shared-return",
+      "demo-recovery",
+      "demo-resources",
+      "replay-portability-source",
+      "replay-portability"
+    ],
+    "pagesOwners": [
+      {
+        "workflow": ".github/workflows/published-pages-smoke.yml",
+        "job": "source",
+        "line": 174,
+        "entry": "/scripts/run-solo-remote-correctness.mjs"
+      },
+      {
+        "workflow": ".github/workflows/published-pages-smoke.yml",
+        "job": "browser",
+        "line": 401,
+        "entry": "/scripts/run-solo-remote-correctness.mjs"
+      }
+    ],
+    "rawOwners": [
+      ".github/workflows/published-pages-smoke.yml::source",
+      ".github/workflows/published-pages-smoke.yml::browser",
+      ".github/workflows/solo-darwin-exec-observation-temporary.yml::preflight",
+      ".github/workflows/solo-darwin-owner-preflight-kernel-ps-temporary.yml::preflight",
+      ".github/workflows/solo-darwin-owner-preflight-kernel-ps-temporary.yml::cocoa",
+      ".github/workflows/solo-darwin-owner-preflight-temporary.yml::preflight",
+      ".github/workflows/solo-darwin-owner-preflight-temporary.yml::cocoa",
+      ".github/workflows/solo-darwin-owner-preflight-thermald-temporary.yml::preflight",
+      ".github/workflows/solo-darwin-owner-preflight-thermald-temporary.yml::cocoa",
+      ".github/workflows/solo-native-mp3-cocoa-identity-temporary.yml::diagnostic",
+      ".github/workflows/solo-native-mp3-cocoa-identity-v2-temporary.yml::diagnostic",
+      ".github/workflows/solo-native-mp3-cocoa-metal-temporary.yml::diagnostic",
+      ".github/workflows/solo-native-mp3-cocoa-owner397-temporary.yml::diagnostic",
+      ".github/workflows/solo-native-mp3-cocoa-temporary.yml::diagnostic",
+      ".github/workflows/solo-native-package-consumer.yml::cocoa",
+      ".github/workflows/solo-native-package-consumer.yml::correctness",
+      ".github/workflows/solo-native-package-consumer.yml::declare",
+      ".github/workflows/solo-native-package-consumer.yml::sustained",
+      ".github/workflows/solo-native-package-consumer.yml::raster",
+      ".github/workflows/solo-native-package-consumer.yml::readiness",
+      ".github/workflows/solo-native-package-consumer.yml::touch",
+      ".github/workflows/solo-native-package-consumer.yml::hud-cpu",
+      ".github/workflows/solo-native-package-consumer.yml::app-overhead",
+      ".github/workflows/solo-native-package-consumer.yml::journal-cost",
+      ".github/workflows/solo-native-package-consumer.yml::timing",
+      ".github/workflows/solo-native-package-consumer.yml::lifecycle",
+      ".github/workflows/solo-native-package-consumer.yml::shared-return",
+      ".github/workflows/solo-native-package-consumer.yml::demo-recovery",
+      ".github/workflows/solo-native-package-consumer.yml::demo-resources",
+      ".github/workflows/solo-native-package-consumer.yml::replay-portability-source",
+      ".github/workflows/solo-native-package-consumer.yml::replay-portability",
+      ".github/workflows/solo-remote-39774-correctness-temporary.yml::correctness",
+      ".github/workflows/solo-remote-final-app-diagnostics-temporary.yml::auxiliary",
+      ".github/workflows/solo-remote-final-app-diagnostics-v2-temporary.yml::auxiliary",
+      ".github/workflows/solo-remote-final-audio-temporary.yml::auxiliary",
+      ".github/workflows/solo-remote-final-audio-v2-temporary.yml::auxiliary",
+      ".github/workflows/solo-remote-final-correctness-temporary.yml::correctness",
+      ".github/workflows/solo-remote-final-earned-raster-temporary.yml::raster",
+      ".github/workflows/solo-remote-final-earned-raster-v2-temporary.yml::raster",
+      ".github/workflows/solo-remote-final-journal-cost-temporary.yml::auxiliary",
+      ".github/workflows/solo-remote-final-journal-cost-v2-temporary.yml::auxiliary",
+      ".github/workflows/solo-remote-final-large-profile-temporary.yml::preflight",
+      ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml::preflight",
+      ".github/workflows/solo-remote-final-recovery-temporary.yml::auxiliary",
+      ".github/workflows/solo-remote-final-recovery-v2-temporary.yml::auxiliary",
+      ".github/workflows/solo-remote-final-soak-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-soak-v2-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-timing-sentry-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml::sustained",
+      ".github/workflows/solo-remote-final-worker-diagnostic-temporary.yml::worker-diagnostic",
+      ".github/workflows/solo-remote-first-victory-cpu-239-temporary.yml::preflight",
+      ".github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml::preflight",
+      ".github/workflows/solo-remote-native-lifecycle-e1cc-temporary.yml::lifecycle",
+      ".github/workflows/solo-remote-native-lifecycle-temporary.yml::lifecycle",
+      ".github/workflows/solo-remote-native-lifecycle-v2-temporary.yml::lifecycle",
+      ".github/workflows/solo-remote-native-touch-temporary.yml::touch",
+      ".github/workflows/solo-remote-native-touch-v2-temporary.yml::touch",
+      ".github/workflows/solo-remote-next-geometric-39774-temporary.yml::declare",
+      ".github/workflows/solo-remote-next-geometric-39774-temporary.yml::sustained",
+      ".github/workflows/solo-remote-next-geometric-c696-temporary.yml::sustained",
+      ".github/workflows/solo-remote-next-geometric-e1cc-temporary.yml::sustained",
+      ".github/workflows/solo-remote-offline-candidate-temporary.yml::correctness",
+      ".github/workflows/solo-remote-offline-candidate-v2-temporary.yml::correctness",
+      ".github/workflows/solo-remote-offline-candidate-v3-temporary.yml::correctness",
+      ".github/workflows/solo-remote-optional-start-audio-e1cc-temporary.yml::readiness",
+      ".github/workflows/solo-remote-optional-start-audio-e1cc-v2-temporary.yml::readiness",
+      ".github/workflows/solo-remote-optional-start-audio-e1cc-v3-temporary.yml::readiness",
+      ".github/workflows/solo-remote-optional-start-audio-e1cc-v4-temporary.yml::readiness",
+      ".github/workflows/solo-remote-readiness-ab45-temporary.yml::readiness",
+      ".github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml::readiness",
+      ".github/workflows/solo-remote-readiness-diagnosed-239-v2-temporary.yml::readiness",
+      ".github/workflows/solo-remote-readiness-preparation-e1cc-v2-temporary.yml::readiness",
+      ".github/workflows/solo-remote-selected-font-direct-sheet-e1cc-temporary.yml::readiness",
+      ".github/workflows/solo-remote-selected-font-settlement-e1cc-temporary.yml::readiness",
+      ".github/workflows/solo-worker-idle-diagnostic.yml::worker-diagnostic"
+    ]
+  },
+  "sourceReceipts": [
+    {
+      "path": "scripts/solo-overhead-declared-source.mjs",
+      "bytes": 2525,
+      "sha256": "1672019df2a808052849bd5afb220f01e8170e48555f9163a6ddccc215075867",
+      "gitBlob": "cd74aa4dc4e338ea09c78a3d5a03f5a13206dbe5"
+    },
+    {
+      "path": "scripts/solo-readiness-rejoin-declared-source.mjs",
+      "bytes": 3255,
+      "sha256": "11f9e2a32cc9f865961bfa0110e7578371670abb6edeabc8764601d56eca4dc0",
+      "gitBlob": "8d781fa226e22f85c34164e395ae759cf12adbf6"
+    },
+    {
+      "path": "scripts/solo-frame-trace-executed-source.mjs",
+      "bytes": 1421,
+      "sha256": "b8ab4a905cf514dcd3dcf5fcabe5836c7f705f8da50e987fe6d0b000b19b0cb2",
+      "gitBlob": "95953fb727a0e61b04e8ca253af3eb1596ddd0ab"
+    },
+    {
+      "path": "scripts/solo-shared-owner-declared-source.mjs",
+      "bytes": 2640,
+      "sha256": "6ced2962cfcd428a4e57e31f02954f5cfa4fb9c200bbe84bcaa6d525650edab5",
+      "gitBlob": "657c3ae7894525b5e71699313fbcf66c56c871bc"
+    },
+    {
+      "path": "scripts/test-solo-native-consumer-overhead.mjs",
+      "bytes": 9761,
+      "sha256": "a21429896db4803cd30e969460e1a911dd0fce7a8fc07422170dd6cfe229316e",
+      "gitBlob": "309944ece0a8c0560905aa94fe9297a31c680047"
+    },
+    {
+      "path": "scripts/solo-native-measurement-consumer.test.mjs",
+      "bytes": 25354,
+      "sha256": "c6cf29ba019c2abfdf401aea9c2edd88f2102d12ec0d054bb7817c3d3b6582fd",
+      "gitBlob": "0fd59e6020ead2b3a7ad851e917e0ca8632f3ff2"
+    },
+    {
+      "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+      "bytes": 13158,
+      "sha256": "d2fa2f6d4d517c61f1a100bb8c5e07d62ea013e5a5d7f6908c50b178da2a333e",
+      "gitBlob": "0c88d60746de697e23cf3ebb737ab20e03cbb31a"
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "bytes": 33959,
+      "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "bytes": 14501,
+      "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    {
+      "path": "package.json",
+      "bytes": 9969,
+      "sha256": "485da936b2343c10d209c1a44117cf9a8637f65c50393bb308a17d628bb59958",
+      "gitBlob": "03292ddd5d31da1722f32bed186d9127f6628c85"
+    }
+  ],
+  "futureHeapOverlap": {
+    "proposal": "056a21bdcc8ecfb24cc093c27c719ce36b34d710",
+    "directPaths": [
+      {
+        "path": "scripts/qualify-solo-runtime.mjs",
+        "heapAfter": {
+          "bytes": 97262,
+          "sha256": "b19d5fd46b9d1a78f9aa44047ffd8c7f0a7c27586c95f4a30b69c5c7e40ff3e0",
+          "gitBlob": "8e2e4ea2a9365201507e83824403621cd9fd8b9e"
+        },
+        "provenanceAfter": {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "blob": "acf7804984cfb14cf44e2e31df89e24249dc7001",
+          "bytes": 95945,
+          "sha256": "9f91930e45174d389743375db1e0bc982b316db0f3108e3073ad1fb57e57fb2a"
+        }
+      }
+    ],
+    "additionalConditionalPath": ".github/workflows/solo-native-package-consumer.yml"
+  },
+  "localWrites": false,
+  "functionalExecution": false,
+  "branchOrPRMutation": false,
+  "nativeDispatch": false
+}

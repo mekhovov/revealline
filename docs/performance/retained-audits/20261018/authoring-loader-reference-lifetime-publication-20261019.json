@@ -1,0 +1,20 @@
+{
+  "kind": "AuthoringLoaderLifetimePublicationV1",
+  "at": "2026-10-19T02:35:58.006860+00:00",
+  "pr": 1675,
+  "branch": "codex/solo-lazy-soundtrack-authoring",
+  "previousHead": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+  "head": "403753c221913cbe5339d84c22ee368955dcb413",
+  "tree": "822fd9a3a4db2c6ca387c7c22772217ffab090a4",
+  "proposal": "1b24c2c6c08aa96e2dd47dcf7ff6640ea89f73fd",
+  "peer": "b8fcd271d3649a2e8cc0b79b126c31f0a1c920b8",
+  "paths": [
+    "game/test/helpers/soundtrack-authoring-loader.mjs",
+    "game/test/soundtrack-host.test.mjs"
+  ],
+  "fullTreeVerified": true,
+  "newControls": 5,
+  "currentAssertionsPreserved": 325,
+  "functionalExecution": false,
+  "productionAndDeadlinesUnchanged": true
+}

@@ -1,0 +1,1525 @@
+{
+  "format": "SoloFixedMainCohortOverlapAuditV1",
+  "preparedAt": "2026-10-19T02:40:26.035Z",
+  "repository": "mekhovov/revealline",
+  "status": "bounded source/tree compatibility; no functional execution or release approval",
+  "from": {
+    "revision": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+    "tree": "ec0fae168fde07bde94ec3d832b778a2b6553db5"
+  },
+  "fixedMain": {
+    "revision": "c169b21ef2af58e9916d947ab1e70435861da65d",
+    "tree": "1ae99a4ba10a576abdf184e281ab4fbf3cee95ff"
+  },
+  "scope": "One fixed c169 main snapshot and exact six PR heads. No further main chase, refs, PR updates, tests, builds or generator execution.",
+  "mainDelta": {
+    "pathCount": 27,
+    "paths": [
+      {
+        "path": "docs/performance/solo-performance-followup-plan.md",
+        "before": "010366adf8e77eaee60f61510bd1d82ec207dae7",
+        "after": "23cb5332f0146bbfda27c781bfea1c82ad16d292"
+      },
+      {
+        "path": "game/app.mjs",
+        "before": "0ed1950df2bc62e9c72000454cae37cc1dc44a5a",
+        "after": "c8cd13bd7eb123069b193a7d6a2db0cf3ebacb73"
+      },
+      {
+        "path": "game/content-design/team-entry.mjs",
+        "before": "962b77b22ae64cf0354ea4da097466b3c36e4031",
+        "after": "2275f68282dbd3bff8fdccd5013ba64efffb1fe8"
+      },
+      {
+        "path": "game/content-design/team-timed-entry.mjs",
+        "before": "10ca2ac1fdce3fbbc68d9ca636c6f4a33590ca18",
+        "after": "18074de77036b4d83f70ee210bab476eb574dab7"
+      },
+      {
+        "path": "game/couch/couch.mjs",
+        "before": "98a69d5e65188ad45ceb1f15e8fa24737b751fa7",
+        "after": "f9f8ffb6a1e9ed66f91b28bdcd6a673f30cb6269"
+      },
+      {
+        "path": "game/couch/relay-rescue.html",
+        "before": "3f6af7b9b8a75a37f48b78d17a4b58bb3a3e94c2",
+        "after": "355127740c664eca7e23fb703b67ffad4c044475"
+      },
+      {
+        "path": "game/couch/relay-rescue.mjs",
+        "before": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+        "after": "0705d4db72b6401771d8ddd357f758b7c4f6428d"
+      },
+      {
+        "path": "game/i18n/catalogs.mjs",
+        "before": "1126df4a073262353d0c73de5fed15b561b1075c",
+        "after": "91d7785333613613ec2570d9b76e42c52371aafc"
+      },
+      {
+        "path": "game/locales/en/interface.json",
+        "before": "8f07f59d71e1d44f0532eefc1c9161bb76d0f9b5",
+        "after": "620e393385c1ed7855238273cc7876afc7a76691"
+      },
+      {
+        "path": "game/locales/uk/interface.json",
+        "before": "772095b830769472d547ff8c0a82cdc8f576391d",
+        "after": "ce56b68fe22355a53e64c925b4e4ec3f16c519a8"
+      },
+      {
+        "path": "game/overflight/app.mjs",
+        "before": "4a7d1c5051aad3cc50c7488835804fb257b1c6dd",
+        "after": "fea637ec6925408fc2461b75c688f9f50c49457c"
+      },
+      {
+        "path": "game/overflight/copy.mjs",
+        "before": "c1efb449d4648c1f237300eade4cbb1197103b70",
+        "after": "be2ae749848cee1d48747d19ffc465fa45355211"
+      },
+      {
+        "path": "game/overflight/play.html",
+        "before": "9cad6b0ee77426f8b22a7e2a49b5ae09d65d6b1a",
+        "after": "968a965104b6195bc5bc64d6855d8276eba984e8"
+      },
+      {
+        "path": "game/overflight/raid-variants.mjs",
+        "before": "f65538f99e997bdb10bc79a07520e37690fe5fdb",
+        "after": "95e399b9ca0e90144c6a00029ca30eab8a6aad00"
+      },
+      {
+        "path": "game/overflight/raid.html",
+        "before": "2620ba69913a7d70f77128d1222f6d97317130e5",
+        "after": "f5e34aa68035d013408f2e88f71dae00cf51f1ca"
+      },
+      {
+        "path": "game/overflight/style.css",
+        "before": "5d47beb0d5f613c9f462d5414470420557ba574a",
+        "after": "2bea9f12a273eac3811e6bcab46551af258a888f"
+      },
+      {
+        "path": "game/test/capture-navigation-context-host.test.mjs",
+        "before": "656de185d92bc71e710237127ecea4bbdcd6ca11",
+        "after": "d59ff61a82b031b78b54ca7f518391ff0841df46"
+      },
+      {
+        "path": "game/test/duel-navigation-context-host.test.mjs",
+        "before": "3f6924fab80e4c48fba2d4bb544bf142c38c2e1e",
+        "after": "a677060b61bd577c77c6348cf224dfeebaf7d54b"
+      },
+      {
+        "path": "game/test/native-landing-structure.test.mjs",
+        "before": "f806a9efc35d0bc22789a09be008f33541570073",
+        "after": "8039b1b05eebad2bcfff2782ad659d8dc7d9e0aa"
+      },
+      {
+        "path": "game/test/reading-prompts-host.test.mjs",
+        "before": "8309523265f4ac3c482bdd669fdeb71b046e7072",
+        "after": "9b9628ca3e48659e640b9c184cae64eb5f207b64"
+      },
+      {
+        "path": "game/ui/native-menus.mjs",
+        "before": "fd7d7d4ba5f8d4fc93ec72eff767642d5b65a741",
+        "after": "9a340b306f1e6bb595b8b2a0f2fbdb66abc1f7c0"
+      },
+      {
+        "path": "docs/accessibility/critical-cues-2026-10-18.json",
+        "before": null,
+        "after": "0364bd8b70d06416c47a135a88ce96a1a3b8936e"
+      },
+      {
+        "path": "docs/accessibility/critical-cues-2026-10-18.md",
+        "before": null,
+        "after": "692b2350bbb2560e984aaf06deab8e9697098d58"
+      },
+      {
+        "path": "docs/time-attack-medal-goals.md",
+        "before": null,
+        "after": "23b7509db91f50ae765349c8c7d76e6167b6bc17"
+      },
+      {
+        "path": "game/test/overflight-reroll-disclosure.test.mjs",
+        "before": null,
+        "after": "7e4e27bb639401c127cf62245ecb58a54821e038"
+      },
+      {
+        "path": "game/test/overflight-time-attack-medal-goal.test.mjs",
+        "before": null,
+        "after": "a19ccb3add116fa0e58821ce5a88df48fa183b1c"
+      },
+      {
+        "path": "game/test/team-navigation-context-host.test.mjs",
+        "before": null,
+        "after": "49337fd1e58b9516c1ce50e782b2103eb67d6ee6"
+      }
+    ],
+    "relevantBehavior": [
+      {
+        "path": "game/app.mjs",
+        "changes": [
+          "shared localized readingInputPrompt import/function",
+          "source-owned Hunt navigation label"
+        ],
+        "notChangedByThisDelta": [
+          "scene clock",
+          "Resume neutral tick",
+          "pending action/pickup lifecycle",
+          "Missions opening markers/ownership",
+          "MP3 inspection"
+        ]
+      },
+      {
+        "path": "game/couch/couch.mjs",
+        "changes": [
+          "localized authoritative Hunt context using huntText"
+        ],
+        "notChangedByThisDelta": [
+          "Resume clock reset",
+          "neutral action retention",
+          "input.consume"
+        ]
+      },
+      {
+        "path": "game/couch/relay-rescue.mjs",
+        "changes": [
+          "candidateNavigationLabel option",
+          "Missions browsing context label",
+          "teamNavigationContext function and setup label"
+        ],
+        "notChangedByThisDelta": [
+          "fresh Start/Retry clock boundary",
+          "fixed-step input batching",
+          "authoritative run"
+        ]
+      }
+    ],
+    "patchCompleteness": [
+      {
+        "path": "game/app.mjs",
+        "before": {
+          "bytes": 620259,
+          "sha256": "33708f1909af52e9b2c9b5f02c8f450f890639dc444280420e3a65296effde9c",
+          "gitBlob": "0ed1950df2bc62e9c72000454cae37cc1dc44a5a"
+        },
+        "after": {
+          "bytes": 620202,
+          "sha256": "489e43a00abb742d0d85bf104479f3bbcae1a228df0e31eef55962cdd527c499",
+          "gitBlob": "c8cd13bd7eb123069b193a7d6a2db0cf3ebacb73"
+        },
+        "hunks": [
+          {
+            "header": "@@ -228,6 +228,7 @@ import {",
+            "before": {
+              "bytes": 417,
+              "sha256": "25d9bedb95323f0a51c0c456c665bc77b5b13ca4d82fded61f6400003ad9223b",
+              "gitBlob": "7f769afe3848c305c0a2f627e2ba45e7d30da623"
+            },
+            "after": {
+              "bytes": 485,
+              "sha256": "e0c7e7c96d1c8e7dc5ee8400369823e6dcad309d2ef0a0b9650a15f9b840cce5",
+              "gitBlob": "cf24923a1f0b7114bdb47e38229c73e995ee2fd3"
+            }
+          },
+          {
+            "header": "@@ -3450,19 +3451,11 @@ try {",
+            "before": {
+              "bytes": 686,
+              "sha256": "64cc05f10e2a3e2f4658740c3d46af70bcda3ff1b6054a2cb567e06cadc930d6",
+              "gitBlob": "9d592e02cd00cb8a06b2582a2c111dbe3afa0d0d"
+            },
+            "after": {
+              "bytes": 299,
+              "sha256": "7c1ddc33e73c84998d188e5d481753ae60437bfe68fabbdc8c97710c48a0cc32",
+              "gitBlob": "d80f2e8f621be1f35878596dba0967aaae12e862"
+            }
+          },
+          {
+            "header": "@@ -14924,9 +14917,18 @@ try {",
+            "before": {
+              "bytes": 408,
+              "sha256": "bd6c07a05e585acd028cb251160859dc9b89adfb1c4bc1ea3dfc900e3c648f6d",
+              "gitBlob": "546659f89922322a367995649a023c53678287ad"
+            },
+            "after": {
+              "bytes": 670,
+              "sha256": "e838ba916b41e6fdb3061037f71f8b421922dfea3f931b0986ca316dd6aedcf1",
+              "gitBlob": "1068e7c7f67032a9ab5a48584ab8f74a096f6e9a"
+            }
+          }
+        ]
+      },
+      {
+        "path": "game/couch/couch.mjs",
+        "before": {
+          "bytes": 208050,
+          "sha256": "fa5726ab79986c9abb2530431cf3010845ab64142bf7d7a8922df79397491ed9",
+          "gitBlob": "98a69d5e65188ad45ceb1f15e8fa24737b751fa7"
+        },
+        "after": {
+          "bytes": 208220,
+          "sha256": "d1b2950666c60b710fae9e9db63e1d1e4a7f72902be6a45cf05a6e1bfe33844f",
+          "gitBlob": "f9f8ffb6a1e9ed66f91b28bdcd6a673f30cb6269"
+        },
+        "hunks": [
+          {
+            "header": "@@ -1,6 +1,7 @@",
+            "before": {
+              "bytes": 418,
+              "sha256": "ae07b6ea99850c591aefd68b32e5afcf38b0adbdde3c79d545823237062e559c",
+              "gitBlob": "a4a80578cdd5a0c5eeb4aa427df18589c82787f6"
+            },
+            "after": {
+              "bytes": 463,
+              "sha256": "36608f4184abdf211261e2e75885e61581837e97cfbe3a03cce941d670f1dad8",
+              "gitBlob": "a580ff493dfd1559140c8a7cf5db6883ff0a3d0d"
+            }
+          },
+          {
+            "header": "@@ -2810,8 +2811,13 @@ try {",
+            "before": {
+              "bytes": 307,
+              "sha256": "b8f767075f7f33a8fa3efe0af6e8990d4890345e6f7274b47c60c385ef00eab8",
+              "gitBlob": "b0292dcc0a52008ba20f42e6f6555194f5df396c"
+            },
+            "after": {
+              "bytes": 432,
+              "sha256": "fc46343ce3589c6d7b8889a72edb225ce7d3bafded9df3ba462870e95a9f3d85",
+              "gitBlob": "a0f5bb798152be459d4ad6013d7ae34ae4bb9a56"
+            }
+          }
+        ]
+      },
+      {
+        "path": "game/couch/relay-rescue.mjs",
+        "before": {
+          "bytes": 289352,
+          "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f",
+          "gitBlob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1"
+        },
+        "after": {
+          "bytes": 290769,
+          "sha256": "50b9f3c496c738d7610e922b77009076848cdb5fc9f1f6d3b972656daeccfca5",
+          "gitBlob": "0705d4db72b6401771d8ddd357f758b7c4f6428d"
+        },
+        "hunks": [
+          {
+            "header": "@@ -263,6 +263,7 @@ export function bootCoop({",
+            "before": {
+              "bytes": 263,
+              "sha256": "ee342bb85c0bda172a3de8c4c55d9766cf8f68ffc0c744ed21cdb641d0f0f120",
+              "gitBlob": "06fd1c3d22272b5698fccd61abf1890cb2b3e775"
+            },
+            "after": {
+              "bytes": 296,
+              "sha256": "28e74f45da8f4199b0a3bb344971460a27b589fddaa0d2ae291d2c02cc5aef5d",
+              "gitBlob": "4b483627ee9c5e32e643cc7239b33fdd3f8389fa"
+            }
+          },
+          {
+            "header": "@@ -4715,6 +4716,11 @@ export function bootCoop({",
+            "before": {
+              "bytes": 200,
+              "sha256": "35b1ce81b3889d03dd62d9bc9a646d894556b5e9738da9a13aca7016f9908995",
+              "gitBlob": "fb9d5d45f2960da785dc3dab40ad734989f2973b"
+            },
+            "after": {
+              "bytes": 369,
+              "sha256": "6b8c361c557e5df32bf4b201dcd3e7ed747641079ff14897bc078ef23eb7a5aa",
+              "gitBlob": "0197d47ea657db456d55a5fdb912e9c72fdb5e15"
+            }
+          },
+          {
+            "header": "@@ -6512,6 +6518,32 @@ export function bootCoop({",
+            "before": {
+              "bytes": 356,
+              "sha256": "ba03ee433151f2085b3faa6ba40f4a0fb1766d08052c14fdc8cef1757579ac59",
+              "gitBlob": "da553a7c16700f2a5e6159d2031a85bfb2aef1a0"
+            },
+            "after": {
+              "bytes": 1438,
+              "sha256": "a96bf2b41d7bc0ca5eacef42d97597feab40f5a157fbf97764cc21c2c230fb6c",
+              "gitBlob": "f0efb0e1a207b69d6cadeb1f29533951299e4d9d"
+            }
+          },
+          {
+            "header": "@@ -6522,6 +6554,8 @@ export function bootCoop({",
+            "before": {
+              "bytes": 231,
+              "sha256": "79fac47ae139d17f3c49f3cc411af1c3fc1d79f62b5e62a21f0ab12da2ce29b4",
+              "gitBlob": "b855c7ae3c5a1369cee352241cac91109dd2124e"
+            },
+            "after": {
+              "bytes": 364,
+              "sha256": "f7c4285e7f203880a4079f9e422d33e4f4cad218a21f49e51de3da003d6a2dbc",
+              "gitBlob": "107e3f6c9db389e75b3c400691fac35e1fc877dc"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "prSnapshot": [
+    {
+      "number": 1620,
+      "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "state": "open",
+      "draft": false,
+      "changedFiles": 14,
+      "paths": [
+        {
+          "path": ".github/workflows/appearance-preview.yml",
+          "sha": "fa0563c4eaf1b322c5ee25aa957015a1a6509f21"
+        },
+        {
+          "path": ".github/workflows/published-pages-smoke.yml",
+          "sha": "48e48f436374f807d27692844e3c290038fd581e"
+        },
+        {
+          "path": "docs/performance/solo-published-pages-smoke-plan.json",
+          "sha": "21262dad73602f5c5d241b2802561692cea6d5ee"
+        },
+        {
+          "path": "game/app.mjs",
+          "sha": "fa4c10c45ebcd21fb657e5485c8add82b0b541dc"
+        },
+        {
+          "path": "game/mission-library/multiplayer-expeditions.mjs",
+          "sha": "c1dc1dd1d68b33ab45a3369fbe304e26f1a2a7a6"
+        },
+        {
+          "path": "game/test/mission-library-stage-observation.test.mjs",
+          "sha": "0629a1bc54fc8c56037acae01bf1a5543aac706f"
+        },
+        {
+          "path": "game/test/performance-session.test.mjs",
+          "sha": "c9e3bda114f84f7a6c6ebbfe0492a6cd7982b014"
+        },
+        {
+          "path": "game/ui/mission-library-browser.mjs",
+          "sha": "4d809b7d55fb519d54afa80c8ebb603a4fdb758b"
+        },
+        {
+          "path": "game/ui/performance-session.mjs",
+          "sha": "e8ca2257c9bef58d93db295fb2de87d5dfbc63c2"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+          "sha": "ce4a6c36de5b350e985baab8efa5324f895aa536"
+        },
+        {
+          "path": "scripts/run-solo-pages-smoke.mjs",
+          "sha": "26270269537b882c18968caf96469a6c51f9229a"
+        },
+        {
+          "path": "scripts/solo-pages-smoke.mjs",
+          "sha": "245fff28219a338af20cc3ed83ebdc8e641e749c"
+        },
+        {
+          "path": "scripts/solo-pages-smoke.test.mjs",
+          "sha": "eeb2981be24048105c4e6395ecbc06b8ee086af6"
+        },
+        {
+          "path": "scripts/test-appearance-preview-policy.mjs",
+          "sha": "af37844b0f749ad59428ff349b27581ed0b282c1"
+        }
+      ],
+      "overlapWithFixedMainDelta": [
+        "game/app.mjs"
+      ]
+    },
+    {
+      "number": 1674,
+      "head": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+      "state": "open",
+      "draft": true,
+      "changedFiles": 22,
+      "paths": [
+        {
+          "path": ".github/workflows/appearance-preview.yml",
+          "sha": "d2653e30a169e8f384794b5a29f92a6eb35beeb7"
+        },
+        {
+          "path": ".github/workflows/published-pages-smoke.yml",
+          "sha": "48e48f436374f807d27692844e3c290038fd581e"
+        },
+        {
+          "path": "docs/performance/solo-published-pages-smoke-plan.json",
+          "sha": "21262dad73602f5c5d241b2802561692cea6d5ee"
+        },
+        {
+          "path": "game/app.mjs",
+          "sha": "1e7119e73be898d5bf713cc18b34c1ed3537d27a"
+        },
+        {
+          "path": "game/mission-library/library.mjs",
+          "sha": "d4efe4eefd5c520895b8d9bff48efc2892baf2d3"
+        },
+        {
+          "path": "game/mission-library/multiplayer-expeditions.mjs",
+          "sha": "c1dc1dd1d68b33ab45a3369fbe304e26f1a2a7a6"
+        },
+        {
+          "path": "game/test/helpers/optional-worlds-loader.mjs",
+          "sha": "cbf53d1adfc1b026b0c74f691ea7e9d153588c2e"
+        },
+        {
+          "path": "game/test/mission-library-browser.test.mjs",
+          "sha": "83b633e909c81d296c5e2f2e6b8ef79daced2584"
+        },
+        {
+          "path": "game/test/mission-library-stage-observation.test.mjs",
+          "sha": "0629a1bc54fc8c56037acae01bf1a5543aac706f"
+        },
+        {
+          "path": "game/test/mission-library.test.mjs",
+          "sha": "6aca8c971f4126f0745b8502f731bbf68014cf7e"
+        },
+        {
+          "path": "game/test/optional-chapters-scenarios.mjs",
+          "sha": "df791ff7157dc852966ae6bd7a8a981b79d52f82"
+        },
+        {
+          "path": "game/test/performance-session.test.mjs",
+          "sha": "c9e3bda114f84f7a6c6ebbfe0492a6cd7982b014"
+        },
+        {
+          "path": "game/test/solo-lazy-library-host.test.mjs",
+          "sha": "8bda463f2bfb936b6a88f1e8e1732371bfbc85df"
+        },
+        {
+          "path": "game/test/solo-performance-host.test.mjs",
+          "sha": "f35c553b991d69177bee159302044fd9a071b23f"
+        },
+        {
+          "path": "game/ui/game-shell.mjs",
+          "sha": "df6d48d3c6ea0fa250a8abe54a5c9c2b7abb7e34"
+        },
+        {
+          "path": "game/ui/mission-library-browser.mjs",
+          "sha": "6a7ea93c31935fb0859e08b887e35a02ed85f92d"
+        },
+        {
+          "path": "game/ui/performance-session.mjs",
+          "sha": "e8ca2257c9bef58d93db295fb2de87d5dfbc63c2"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+          "sha": "2515f406c9d03243d80b625c70fbd836e6e29a69"
+        },
+        {
+          "path": "scripts/run-solo-pages-smoke.mjs",
+          "sha": "26270269537b882c18968caf96469a6c51f9229a"
+        },
+        {
+          "path": "scripts/solo-pages-smoke.mjs",
+          "sha": "245fff28219a338af20cc3ed83ebdc8e641e749c"
+        },
+        {
+          "path": "scripts/solo-pages-smoke.test.mjs",
+          "sha": "eeb2981be24048105c4e6395ecbc06b8ee086af6"
+        },
+        {
+          "path": "scripts/test-appearance-preview-policy.mjs",
+          "sha": "af37844b0f749ad59428ff349b27581ed0b282c1"
+        }
+      ],
+      "overlapWithFixedMainDelta": [
+        "game/app.mjs"
+      ]
+    },
+    {
+      "number": 1693,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "state": "open",
+      "draft": true,
+      "changedFiles": 7,
+      "paths": [
+        {
+          "path": "game/app.mjs",
+          "sha": "082b593bf58c4f405e8f2f9588722410b4c0ce3b"
+        },
+        {
+          "path": "game/couch/couch-input.mjs",
+          "sha": "2d54f29a47b0044447feb8c4fce3d27b6590a41b"
+        },
+        {
+          "path": "game/couch/couch.mjs",
+          "sha": "234d63e3371e3d84ad733eb2593b5518fbee0f01"
+        },
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "sha": "6c9cc0cd45a41c49d3c095ba622b821b70d22288"
+        },
+        {
+          "path": "game/test/couch-input.test.mjs",
+          "sha": "a7a26793f572e9b7caac0ea2451cef7148eb0f38"
+        },
+        {
+          "path": "game/test/couch-lifecycle-clock.test.mjs",
+          "sha": "7184ce721c075b05527c4aeaa948891b1dd50209"
+        },
+        {
+          "path": "game/test/solo-cadence-input-host.test.mjs",
+          "sha": "075a75d413c5b8c8785652a789885d5b3f8ee100"
+        }
+      ],
+      "overlapWithFixedMainDelta": [
+        "game/app.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/relay-rescue.mjs"
+      ]
+    },
+    {
+      "number": 1694,
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "state": "open",
+      "draft": true,
+      "changedFiles": 4,
+      "paths": [
+        {
+          "path": "game/soundtrack-source.mjs",
+          "sha": "106eb9d719004c12aad2ab4ad95488b79dff20ca"
+        },
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "sha": "354b19260773058c4a0b401ed2bab167d4ffeef1"
+        },
+        {
+          "path": "game/test/soundtrack-source.test.mjs",
+          "sha": "588d449fc42de183962f8caa7ae64ea345fbc20c"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "sha": "640acdf98815047953d4131e67b13e32cfd78a56"
+        }
+      ],
+      "overlapWithFixedMainDelta": []
+    },
+    {
+      "number": 1621,
+      "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "state": "open",
+      "draft": false,
+      "changedFiles": 22,
+      "paths": [
+        {
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "sha": "0c3ebd54783fe5537c2077199347b584a1fe127c"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+          "sha": "d184dcf1870a15856e029769ddab76fcecb3cb3d"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+          "sha": "e8c91f7eefb112ac7f16fa5a05ce4a8a00676407"
+        },
+        {
+          "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+          "sha": "78c4a5f588b13097744746539c078acd9128220d"
+        },
+        {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "sha": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb"
+        },
+        {
+          "path": "scripts/solo-frame-trace-executed-source.mjs",
+          "sha": "95953fb727a0e61b04e8ca253af3eb1596ddd0ab"
+        },
+        {
+          "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+          "sha": "a3c787f2450f546542ef6b56a6e2251f03f09ed3"
+        },
+        {
+          "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+          "sha": "0c88d60746de697e23cf3ebb737ab20e03cbb31a"
+        },
+        {
+          "path": "scripts/solo-frame-trace.test.mjs",
+          "sha": "5c831aa0c0027391bd7cbdf44d6eeceeb10f9413"
+        },
+        {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "sha": "c2ab48d2227b980c33be0e1fc3deb5bc077e770a"
+        },
+        {
+          "path": "scripts/solo-remote-cpu-profile.mjs",
+          "sha": "e9cfbca906a7bf8d7d7b797980c40376a149e8e5"
+        },
+        {
+          "path": "scripts/solo-replay-portability-diagnostic.mjs",
+          "sha": "6b9d1bc93633dcf8fee382a1863812c988b27cc7"
+        },
+        {
+          "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+          "sha": "dff524e49090ed3203d1cb15af7b15f98aeb0ead"
+        },
+        {
+          "path": "scripts/solo-runtime73-measurement.test.mjs",
+          "sha": "bddf5cb09109bc8a56bfa9e18d1d7e415fadb4c5"
+        },
+        {
+          "path": "scripts/solo-shared-owner-declared-source.mjs",
+          "sha": "657c3ae7894525b5e71699313fbcf66c56c871bc"
+        },
+        {
+          "path": "scripts/test-solo-frame-trace-admission.mjs",
+          "sha": "b9bc1199f2152c9f1777570a8dca6c07987a509a"
+        },
+        {
+          "path": "scripts/test-solo-native-consumer-preparation.mjs",
+          "sha": "f7001047cfcb78ade870081e8568ee95c07b2828"
+        },
+        {
+          "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+          "sha": "683c8cfb47ffc2e9d2d114328235cae271322c4b"
+        },
+        {
+          "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+          "sha": "dfd79590ba03f19b6ae7b3ba5e552a4bdfebc06a"
+        },
+        {
+          "path": "scripts/test-solo-remote-cpu-profile.mjs",
+          "sha": "0fe96c6ae2b8a613f16e722dcb84b3122e071984"
+        },
+        {
+          "path": "scripts/test-solo-replay-portability-hook.mjs",
+          "sha": "7bd6bbe16ad69216de54a85f61dbb0838affb423"
+        },
+        {
+          "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+          "sha": "84cd5bc9c127ea16a8708ca379b77bb6b8982413"
+        }
+      ],
+      "overlapWithFixedMainDelta": []
+    },
+    {
+      "number": 1628,
+      "head": "62be652ce70b11f840b491c218609d5225374be4",
+      "state": "open",
+      "draft": false,
+      "changedFiles": 33,
+      "paths": [
+        {
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "sha": "f267efe7f6b771a25065072229e715f825278a3a"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+          "sha": "d184dcf1870a15856e029769ddab76fcecb3cb3d"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-demo-797e03/c293-paused-geometry-source.json",
+          "sha": "d14249d934a101dad41afc5ee2668e8c4686a24b"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+          "sha": "e8c91f7eefb112ac7f16fa5a05ce4a8a00676407"
+        },
+        {
+          "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+          "sha": "78c4a5f588b13097744746539c078acd9128220d"
+        },
+        {
+          "path": "docs/performance/solo-demo-recovery-797e03-geometry-tooling-plan.json",
+          "sha": "cdad47b102d4b67429bfb9cf49f8df33eb3c09ca"
+        },
+        {
+          "path": "docs/performance/solo-demo-resources-797e03-paused-geometry-plan.json",
+          "sha": "37fdab7077b222c11999c53a790efa2bcf7629c9"
+        },
+        {
+          "path": "scripts/observe-solo-demo-recovery.mjs",
+          "sha": "347a30023ad1ca53e86810b1663e9f878e176dd3"
+        },
+        {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "sha": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb"
+        },
+        {
+          "path": "scripts/solo-demo-geometry-historical-source.mjs",
+          "sha": "ba47858135993254ad878c59a725e623998e77a4"
+        },
+        {
+          "path": "scripts/solo-demo-recovery-probe.mjs",
+          "sha": "83d4cd14298d2471728e2ec03bee0aeacceac27b"
+        },
+        {
+          "path": "scripts/solo-frame-trace-executed-source.mjs",
+          "sha": "95953fb727a0e61b04e8ca253af3eb1596ddd0ab"
+        },
+        {
+          "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+          "sha": "a3c787f2450f546542ef6b56a6e2251f03f09ed3"
+        },
+        {
+          "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+          "sha": "0c88d60746de697e23cf3ebb737ab20e03cbb31a"
+        },
+        {
+          "path": "scripts/solo-frame-trace.test.mjs",
+          "sha": "5c831aa0c0027391bd7cbdf44d6eeceeb10f9413"
+        },
+        {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "sha": "c2ab48d2227b980c33be0e1fc3deb5bc077e770a"
+        },
+        {
+          "path": "scripts/solo-remote-cpu-profile.mjs",
+          "sha": "e9cfbca906a7bf8d7d7b797980c40376a149e8e5"
+        },
+        {
+          "path": "scripts/solo-remote-demo.mjs",
+          "sha": "d9d90b034e0645f679b8102e347c4616eaae6fc7"
+        },
+        {
+          "path": "scripts/solo-replay-portability-diagnostic.mjs",
+          "sha": "6b9d1bc93633dcf8fee382a1863812c988b27cc7"
+        },
+        {
+          "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+          "sha": "dff524e49090ed3203d1cb15af7b15f98aeb0ead"
+        },
+        {
+          "path": "scripts/solo-runtime73-measurement.test.mjs",
+          "sha": "4e2c246a866ce7c52a5c72f40bec46a76bd253ec"
+        },
+        {
+          "path": "scripts/solo-shared-owner-declared-source.mjs",
+          "sha": "657c3ae7894525b5e71699313fbcf66c56c871bc"
+        },
+        {
+          "path": "scripts/test-solo-demo-activation-admission.mjs",
+          "sha": "3880ffa54178314c4f7fa81a75cbe00dd88032a8"
+        },
+        {
+          "path": "scripts/test-solo-demo-geometry-admission.mjs",
+          "sha": "d02d5b4cffd6f06c8476efe50b719efea5833957"
+        },
+        {
+          "path": "scripts/test-solo-demo-trusted-close-admission.mjs",
+          "sha": "62b683b04b7ac7e66dc851eb13f55041c1e25371"
+        },
+        {
+          "path": "scripts/test-solo-frame-trace-admission.mjs",
+          "sha": "b9bc1199f2152c9f1777570a8dca6c07987a509a"
+        },
+        {
+          "path": "scripts/test-solo-native-consumer-preparation.mjs",
+          "sha": "f7001047cfcb78ade870081e8568ee95c07b2828"
+        },
+        {
+          "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+          "sha": "09c20501c8efb2238c976cb2dcdfca3127191eef"
+        },
+        {
+          "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+          "sha": "dfd79590ba03f19b6ae7b3ba5e552a4bdfebc06a"
+        },
+        {
+          "path": "scripts/test-solo-remote-cpu-profile.mjs",
+          "sha": "0fe96c6ae2b8a613f16e722dcb84b3122e071984"
+        },
+        {
+          "path": "scripts/test-solo-remote-demo.mjs",
+          "sha": "e69f3e0fcf2b586cba3f6bc5c208d2cad38c3f3b"
+        },
+        {
+          "path": "scripts/test-solo-replay-portability-hook.mjs",
+          "sha": "7bd6bbe16ad69216de54a85f61dbb0838affb423"
+        },
+        {
+          "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+          "sha": "84cd5bc9c127ea16a8708ca379b77bb6b8982413"
+        }
+      ],
+      "overlapWithFixedMainDelta": []
+    }
+  ],
+  "sharedFileComposition": [
+    {
+      "pr": 1620,
+      "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "path": "game/app.mjs",
+      "mergeBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+      "base": {
+        "bytes": 617002,
+        "sha256": "3a8d65e5766ea85aee249594cb813bbd223587146c130d32b814f82b49f6c1af",
+        "gitBlob": "cdf5b96eebb02439c0fd35ea2786c1ec5d60838b"
+      },
+      "branch": {
+        "bytes": 620177,
+        "sha256": "74ec3185d6cbcbb27b7a54387be747223da035c84106ecc85dad31de5e075500",
+        "gitBlob": "fa4c10c45ebcd21fb657e5485c8add82b0b541dc"
+      },
+      "main": {
+        "bytes": 620202,
+        "sha256": "489e43a00abb742d0d85bf104479f3bbcae1a228df0e31eef55962cdd527c499",
+        "gitBlob": "c8cd13bd7eb123069b193a7d6a2db0cf3ebacb73"
+      },
+      "mainPatch": "@@ -54,6 +54,7 @@ import {\n } from './ui/gameplay-copy.mjs';\n import { contentText } from './i18n/content.mjs';\n import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';\n+import { captureFlightLimits, createFlightLimitNotices } from './capture-flight-limits.mjs';\n import {\n   createPreparationCadence,\n   PreparationCadenceTimeoutError,\n@@ -227,6 +228,7 @@ import {\n } from './ui/controller-boost-settings.mjs';\n import { attachControllerNavigation } from './ui/controller-navigation.mjs';\n import { attachControllerReading } from './ui/controller-reading.mjs';\n+import { readingInputPrompt } from './ui/reading-input-prompt.mjs';\n import { attachControllerPreview } from './ui/controller-preview.mjs';\n import { attachPracticeNavigation } from './ui/practice-navigation.mjs';\n import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';\n@@ -2894,6 +2896,50 @@ try {\n   function warning(message, cue = null, role = 'host.unknown') {\n     return flightInformation.warning(message, cue, role);\n   }\n+  const flightLimitNotices = createFlightLimitNotices();\n+  let flightLimitViewKey = '';\n+  function refreshCaptureFlightLimits() {\n+    const eligible =\n+      started &&\n+      !practice &&\n+      !courseSession &&\n+      !courseEntry &&\n+      !['won', 'lost'].includes(run.status) &&\n+      !recoverGameplayTuning(run.level)?.adminOverride;\n+    const visible = eligible && paused && $('game-overlay').dataset.kind === 'pause';\n+    const panel = $('capture-flight-limits');\n+    const wasVisible = !panel.hidden;\n+    if (wasVisible !== visible) panel.hidden = !visible;\n+    if (!eligible) return;\n+    const view = captureFlightLimits({\n+      recordingTicks: recorder?.ticks,\n+      recordingStopped,\n+      elapsedSeconds: run.time,\n+      // Authored Journey clears/pictures do not pass through library time validation.\n+      collectionLimited: !candidateHost?.owns(activeEntry),\n+    });\n+    if (!paused)\n+      for (const key of flightLimitNotices(run, view))\n+        warning(localizedMessage(`interface:flightLimits.${key}`), null, 'host.flight-limits');\n+    if (visible && !wasVisible) panel.open = view.urgent;\n+    const busy = contentSwitchBusy || sessionBusy || backupBusy;\n+    const key = JSON.stringify([view, visible, busy, !!replayDownload]);\n+    if (key === flightLimitViewKey) return;\n+    flightLimitViewKey = key;\n+    localizedText($('capture-flight-limits-summary'), () =>\n+      t(`interface:flightLimits.${view.urgent ? 'attention' : 'title'}`),\n+    );\n+    localizedText($('capture-recording-limit'), () =>\n+      t(`interface:flightLimits.recording.${view.recording}`, {\n+        minutes: formatNumber(view.minutes ?? 0),\n+      }),\n+    );\n+    localizedText($('capture-collection-limit'), () =>\n+      t(`interface:flightLimits.collection.${view.collection}`),\n+    );\n+    $('capture-limit-saves').disabled = busy;\n+    $('capture-limit-replay').disabled = !recorder || !!replayDownload;\n+  }\n   function dialogOpen() {\n     return modalNavigation\n       ? modalNavigation.hasOpenDialog()\n@@ -3405,19 +3451,11 @@ try {\n     });\n   }\n   function readingPrompt({ scrollable }) {\n-    const mode = document.body.dataset.inputMode;\n-    const scroll = !scrollable\n-      ? t('interface:allTextIsVisible')\n-      : mode === 'controller' || mode === 'keyboard'\n-        ? t('interface:upDownScroll')\n-        : t('interface:scrollToRead');\n-    const exit =\n-      mode === 'controller'\n-        ? `${controllerLabels.menu.confirm} or ${controllerLabels.menu.back}`\n-        : mode === 'keyboard'\n-          ? t('interface:enterSpaceOrEscape')\n-          : t('interface:doneReading');\n-    return `${scroll} · ${exit} returns`;\n+    return readingInputPrompt({\n+      modality: document.body.dataset.inputMode,\n+      scrollable,\n+      controls: controllerLabels.menu,\n+    });\n   }\n   function setInputModality(mode) {\n     if (document.body.dataset.inputMode === mode) return;\n@@ -3980,6 +4018,10 @@ try {\n       entry: {\n         available: !practice && !courseSession && !started && !courseEntry,\n         helpAvailable: !practice && !courseSession,\n+        homeAvailable:\n+          !practice &&\n+          !courseSession &&\n+          !['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id),\n         pending: !!courseEntry,\n         message: courseEntryMessage,\n       },\n@@ -8364,6 +8406,11 @@ try {\n       warning(e.message);\n     }\n   };\n+  $('capture-limit-saves').onclick = () => {\n+    if (contentSwitchBusy || sessionBusy || backupBusy) return;\n+    return libraryPanel.open('saves');\n+  };\n+  $('capture-limit-replay').onclick = () => $('export-replay').click();\n   $('hangar-button').onclick = () => {\n     if (!craftSwitchAvailable()) return;\n     pause(true);\n@@ -11017,6 +11064,7 @@ try {\n     if (pauseTrace?.complete) markPauseWork(pauseTrace, 'pause-end');\n   }\n   function refreshHUDClocks() {\n+    refreshCaptureFlightLimits();\n     localizedText($('time'), () =>\n       timeLabel(\n         run.rules.timeLimitSeconds ? Math.max(0, run.rules.timeLimitSeconds - run.time) : run.time,\n@@ -11301,7 +11349,7 @@ try {\n       refreshInputPresentation();\n       $('pause-button').disabled = courseBlocked() || campaignOverview;\n       $('save-attempt-button').disabled =\n-        !started || practice || ['won', 'lost'].includes(run.status);\n+        !started || practice || !recorder || ['won', 'lost'].includes(run.status);\n       const near = run.hangars?.some(\n         (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,\n       );\n@@ -11850,6 +11898,7 @@ try {\n         if (!recordingStopped && recorder.ticks >= MAX_REPLAY_TICKS) {\n           recordingStopped = true;\n           recorder = null;\n+          hudDirty = true;\n           $('export-replay').disabled = true;\n           warning(localizedMessage('interface:the30MinuteReplayBudgetIsFullRecordingWasDiscarded'));\n         }\n@@ -11947,6 +11996,7 @@ try {\n           } catch {\n             recordingStopped = true;\n             recorder = null;\n+            hudDirty = true;\n             $('export-replay').disabled = true;\n             warning(localizedMessage('interface:replayRecordingStoppedYouCanKeepPlayingStartANew'));\n           }\n@@ -14329,9 +14379,16 @@ try {\n             ? {\n                 supportedModes: runtimeContent.selection.edition.modes,\n                 availableCollectionsOnly: true,\n-                description: runtimeContent.selection.edition.name,\n               }\n             : {}),\n+          description: () =>\n+            `${runtimeContent?.selection.edition.name ?? t('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir')} ${t('interface:captureNavigation.browseHint')}`,\n+          browsingContext: ({ label }) => {\n+            const context = soloNavigationContext();\n+            return context\n+              ? t('interface:captureNavigation.browsing', { mode: label, context })\n+              : label;\n+          },\n           getCurrentId: () => {\n             const mission = candidateHost && journeyMission();\n             if (mission)\n@@ -14859,7 +14916,23 @@ try {\n       close: () => unifiedChooser?.close(),\n     };\n   }\n+  function soloNavigationContext() {\n+    // The accepted catalogue owner, not the entry URL or visual theme, grants\n+    // this identity. Classic/imported selections retain their Capture context.\n+    if (\n+      candidateHost?.owns(activeEntry) &&\n+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)\n+    ) {\n+      const name =\n+        authoredRoute.id === 'humanoid-hunt-v1'\n+          ? huntText('lessons')\n+          : contentText(authoredRoute.source, 'name');\n+      return `${name} · ${t('interface:solo2')}`;\n+    }\n+    return t('interface:captureNavigation.context', { mode: t('interface:solo2') });\n+  }\n   gameShell = attachGameShell({\n+    navigationContext: soloNavigationContext,\n     getAppearanceDefault: () => {\n       const pin = currentAppearanceDefault();\n       return pin && runtimeContent?.appearanceThemes.length",
+      "combined": {
+        "bytes": 623377,
+        "sha256": "a455ce2885401d046bfb3c202976724ef6e2ae1143b3d2343acc6fef517faa77",
+        "gitBlob": "947416e33356c85c0cea4ff1530b897a798e8290"
+      },
+      "hunks": [
+        {
+          "header": "@@ -54,6 +54,7 @@ import {",
+          "before": {
+            "bytes": 244,
+            "sha256": "c8714a5736bfc582ebc26256124e86e11e0ac697398279aa5b5cc456486de03c",
+            "gitBlob": "5490df428e5ef6fadb195d6802d2a7fbe9cc07e5"
+          },
+          "after": {
+            "bytes": 337,
+            "sha256": "e9b05a3303e9dad80e6910802bea1290a33e7ad932e13cfa0a3c80321b3e9872",
+            "gitBlob": "0618e86f87c449fef87b9f49565df7c932087a6d"
+          }
+        },
+        {
+          "header": "@@ -227,6 +228,7 @@ import {",
+          "before": {
+            "bytes": 417,
+            "sha256": "25d9bedb95323f0a51c0c456c665bc77b5b13ca4d82fded61f6400003ad9223b",
+            "gitBlob": "7f769afe3848c305c0a2f627e2ba45e7d30da623"
+          },
+          "after": {
+            "bytes": 485,
+            "sha256": "e0c7e7c96d1c8e7dc5ee8400369823e6dcad309d2ef0a0b9650a15f9b840cce5",
+            "gitBlob": "cf24923a1f0b7114bdb47e38229c73e995ee2fd3"
+          }
+        },
+        {
+          "header": "@@ -2894,6 +2896,50 @@ try {",
+          "before": {
+            "bytes": 220,
+            "sha256": "7c2ee2f6dae7775c14b5c96250b7c3d0111b0ab2620f019a961ba14f887079e1",
+            "gitBlob": "6f94096677c1571e9dffb898513c29383fd3e065"
+          },
+          "after": {
+            "bytes": 2112,
+            "sha256": "ad4b61997a1fd2a0ed90c7545aee3d1953d324b18cdf931ca9c475641b588bb3",
+            "gitBlob": "144d095fe23a9ae673f01cd0caaa3f1acfd3b004"
+          }
+        },
+        {
+          "header": "@@ -3405,19 +3451,11 @@ try {",
+          "before": {
+            "bytes": 686,
+            "sha256": "64cc05f10e2a3e2f4658740c3d46af70bcda3ff1b6054a2cb567e06cadc930d6",
+            "gitBlob": "9d592e02cd00cb8a06b2582a2c111dbe3afa0d0d"
+          },
+          "after": {
+            "bytes": 299,
+            "sha256": "7c1ddc33e73c84998d188e5d481753ae60437bfe68fabbdc8c97710c48a0cc32",
+            "gitBlob": "d80f2e8f621be1f35878596dba0967aaae12e862"
+          }
+        },
+        {
+          "header": "@@ -3980,6 +4018,10 @@ try {",
+          "before": {
+            "bytes": 221,
+            "sha256": "64f00c97483b552b7e204c81258fd0436f777c5791b49e50e35dcb4b9a7d2e5c",
+            "gitBlob": "e6968fda30905328a4b9b8baa0e1ef7f7426ad7c"
+          },
+          "after": {
+            "bytes": 373,
+            "sha256": "9eed9caceab307187feb8febe69f69c4f85a0919d60efa86f116a0dee7205060",
+            "gitBlob": "cdb2b224baad364d7db11c0fd955da1dcfe50c24"
+          }
+        },
+        {
+          "header": "@@ -8364,6 +8406,11 @@ try {",
+          "before": {
+            "bytes": 134,
+            "sha256": "2b74749beca787b32664cde0566943a8b48bce5efb164de063ae408461574b0b",
+            "gitBlob": "f6994d300265184d715c47bb2707ee563c9c72b0"
+          },
+          "after": {
+            "bytes": 359,
+            "sha256": "268f589242f60df6a798121aea175fead8e1dea15795c81e4eec66135d171b00",
+            "gitBlob": "9fa1d31fd02592dd14c51a836efe6ecdad4065d4"
+          }
+        },
+        {
+          "header": "@@ -11017,6 +11064,7 @@ try {",
+          "before": {
+            "bytes": 258,
+            "sha256": "a5a78c4da1141f0f03b6c3317453b2ef8ca541b8c463690914addae19e68afe1",
+            "gitBlob": "c2c856779808f07a7510566f34aa4902e8679ec1"
+          },
+          "after": {
+            "bytes": 292,
+            "sha256": "ee90943ffd806be9edaa1cbcc6741a0454c7da4baa77fbdbacda1fddc7cf294b",
+            "gitBlob": "0d0c1fb081ec6474139ef781a9a3ed6a2a3b4383"
+          }
+        },
+        {
+          "header": "@@ -11301,7 +11349,7 @@ try {",
+          "before": {
+            "bytes": 344,
+            "sha256": "0480c6c0d95f8c97df1062bb5b1f8b746b77595ab41555351e289f1c7a81d809",
+            "gitBlob": "3c8f7e4e4948aad46324289dfe24ce29197bf586"
+          },
+          "after": {
+            "bytes": 357,
+            "sha256": "e0b632b4c339653cc8555ca474f37c229647ab994ebe544a4a17fe09e1410e05",
+            "gitBlob": "4b3894931b8b46491ce06f17a7c7649e5a52c491"
+          }
+        },
+        {
+          "header": "@@ -11850,6 +11898,7 @@ try {",
+          "before": {
+            "bytes": 290,
+            "sha256": "7b94f14d0bfcb2e78cf0a1bd25318d1b715042ac32906ecb29f7b6c12079cbda",
+            "gitBlob": "ae77a1d6e7a6f4d7387c049aea04cef6cb99e9fd"
+          },
+          "after": {
+            "bytes": 317,
+            "sha256": "fcdb3a1d0c4e8db42fd855963308b6eacbd6790ccb64696605ddacc8c8e3ea42",
+            "gitBlob": "ad8712e0ac81b2df4213585ae0e8d854bbe52e40"
+          }
+        },
+        {
+          "header": "@@ -11947,6 +11996,7 @@ try {",
+          "before": {
+            "bytes": 247,
+            "sha256": "9111d025f9327b977b0c06034b379630cadfade10931d89158baed8ac42e1ff5",
+            "gitBlob": "bbe7e2d9ddd5c87fb1d328e0f7851a3b32ed0bbd"
+          },
+          "after": {
+            "bytes": 276,
+            "sha256": "be9bb5fb846e6f43dbcf20d0d9922ce17e6fe577f360d52d8da20bb6049f2ef7",
+            "gitBlob": "8914ce55c1bea75c98739c8222f6a5e85d9c509d"
+          }
+        },
+        {
+          "header": "@@ -14329,9 +14379,16 @@ try {",
+          "before": {
+            "bytes": 359,
+            "sha256": "15570b765a5df6b0305476d71db36b3c52de2175fe0b7e0d3789224ae6e3e79f",
+            "gitBlob": "25f99ecbb9866a591998296f196d14a222c71e79"
+          },
+          "after": {
+            "bytes": 740,
+            "sha256": "bcdc5d37b03f4cec38d16187f5abaa90cd3a2e8724ece63ca28a63eba52e3eaf",
+            "gitBlob": "67212d2f20e6b588a9f8fb1d80310079dc681a54"
+          }
+        },
+        {
+          "header": "@@ -14859,7 +14916,23 @@ try {",
+          "before": {
+            "bytes": 227,
+            "sha256": "fffb7af5de96cf8f3dd25b8792a52eb64cd3a161fb86357ced1825315c23afa2",
+            "gitBlob": "98c6e0942b5bc1134de82e5dc7af1633624627a9"
+          },
+          "after": {
+            "bytes": 900,
+            "sha256": "32835b704a8e08112f048e29e640fd3614e44e33d3b1ee15a995c9ea90f966e9",
+            "gitBlob": "979bf6fec8219442b8f8256c61f169486e1c0902"
+          }
+        }
+      ],
+      "composition": "all actual-ancestor main hunks match exactly once in reviewed repair source; no overlapping changed region",
+      "syntax": "parsed without evaluation"
+    },
+    {
+      "pr": 1674,
+      "head": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+      "path": "game/app.mjs",
+      "mergeBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "base": {
+        "bytes": 619315,
+        "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa",
+        "gitBlob": "ec8c2d1179c42b603987cfd725d45f20f4af6251"
+      },
+      "branch": {
+        "bytes": 625291,
+        "sha256": "0f288d5f956933805356435bb41806afc287cd72e81466319904fbe15d04ec65",
+        "gitBlob": "1e7119e73be898d5bf713cc18b34c1ed3537d27a"
+      },
+      "main": {
+        "bytes": 620202,
+        "sha256": "489e43a00abb742d0d85bf104479f3bbcae1a228df0e31eef55962cdd527c499",
+        "gitBlob": "c8cd13bd7eb123069b193a7d6a2db0cf3ebacb73"
+      },
+      "mainPatch": "@@ -228,6 +228,7 @@ import {\n } from './ui/controller-boost-settings.mjs';\n import { attachControllerNavigation } from './ui/controller-navigation.mjs';\n import { attachControllerReading } from './ui/controller-reading.mjs';\n+import { readingInputPrompt } from './ui/reading-input-prompt.mjs';\n import { attachControllerPreview } from './ui/controller-preview.mjs';\n import { attachPracticeNavigation } from './ui/practice-navigation.mjs';\n import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';\n@@ -3450,19 +3451,11 @@ try {\n     });\n   }\n   function readingPrompt({ scrollable }) {\n-    const mode = document.body.dataset.inputMode;\n-    const scroll = !scrollable\n-      ? t('interface:allTextIsVisible')\n-      : mode === 'controller' || mode === 'keyboard'\n-        ? t('interface:upDownScroll')\n-        : t('interface:scrollToRead');\n-    const exit =\n-      mode === 'controller'\n-        ? `${controllerLabels.menu.confirm} or ${controllerLabels.menu.back}`\n-        : mode === 'keyboard'\n-          ? t('interface:enterSpaceOrEscape')\n-          : t('interface:doneReading');\n-    return `${scroll} · ${exit} returns`;\n+    return readingInputPrompt({\n+      modality: document.body.dataset.inputMode,\n+      scrollable,\n+      controls: controllerLabels.menu,\n+    });\n   }\n   function setInputModality(mode) {\n     if (document.body.dataset.inputMode === mode) return;\n@@ -4025,6 +4018,10 @@ try {\n       entry: {\n         available: !practice && !courseSession && !started && !courseEntry,\n         helpAvailable: !practice && !courseSession,\n+        homeAvailable:\n+          !practice &&\n+          !courseSession &&\n+          !['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id),\n         pending: !!courseEntry,\n         message: courseEntryMessage,\n       },\n@@ -14382,9 +14379,16 @@ try {\n             ? {\n                 supportedModes: runtimeContent.selection.edition.modes,\n                 availableCollectionsOnly: true,\n-                description: runtimeContent.selection.edition.name,\n               }\n             : {}),\n+          description: () =>\n+            `${runtimeContent?.selection.edition.name ?? t('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir')} ${t('interface:captureNavigation.browseHint')}`,\n+          browsingContext: ({ label }) => {\n+            const context = soloNavigationContext();\n+            return context\n+              ? t('interface:captureNavigation.browsing', { mode: label, context })\n+              : label;\n+          },\n           getCurrentId: () => {\n             const mission = candidateHost && journeyMission();\n             if (mission)\n@@ -14912,7 +14916,23 @@ try {\n       close: () => unifiedChooser?.close(),\n     };\n   }\n+  function soloNavigationContext() {\n+    // The accepted catalogue owner, not the entry URL or visual theme, grants\n+    // this identity. Classic/imported selections retain their Capture context.\n+    if (\n+      candidateHost?.owns(activeEntry) &&\n+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)\n+    ) {\n+      const name =\n+        authoredRoute.id === 'humanoid-hunt-v1'\n+          ? huntText('lessons')\n+          : contentText(authoredRoute.source, 'name');\n+      return `${name} · ${t('interface:solo2')}`;\n+    }\n+    return t('interface:captureNavigation.context', { mode: t('interface:solo2') });\n+  }\n   gameShell = attachGameShell({\n+    navigationContext: soloNavigationContext,\n     getAppearanceDefault: () => {\n       const pin = currentAppearanceDefault();\n       return pin && runtimeContent?.appearanceThemes.length",
+      "combined": {
+        "bytes": 626178,
+        "sha256": "a1bb2b7faaa0a354772a9cae2b3eed4c41757f4114f9111cb2bf2bc8085a0c76",
+        "gitBlob": "2ec022ca57cbf849aa82b3f54c9fa111ad33e66d"
+      },
+      "hunks": [
+        {
+          "header": "@@ -228,6 +228,7 @@ import {",
+          "before": {
+            "bytes": 417,
+            "sha256": "25d9bedb95323f0a51c0c456c665bc77b5b13ca4d82fded61f6400003ad9223b",
+            "gitBlob": "7f769afe3848c305c0a2f627e2ba45e7d30da623"
+          },
+          "after": {
+            "bytes": 485,
+            "sha256": "e0c7e7c96d1c8e7dc5ee8400369823e6dcad309d2ef0a0b9650a15f9b840cce5",
+            "gitBlob": "cf24923a1f0b7114bdb47e38229c73e995ee2fd3"
+          }
+        },
+        {
+          "header": "@@ -3450,19 +3451,11 @@ try {",
+          "before": {
+            "bytes": 686,
+            "sha256": "64cc05f10e2a3e2f4658740c3d46af70bcda3ff1b6054a2cb567e06cadc930d6",
+            "gitBlob": "9d592e02cd00cb8a06b2582a2c111dbe3afa0d0d"
+          },
+          "after": {
+            "bytes": 299,
+            "sha256": "7c1ddc33e73c84998d188e5d481753ae60437bfe68fabbdc8c97710c48a0cc32",
+            "gitBlob": "d80f2e8f621be1f35878596dba0967aaae12e862"
+          }
+        },
+        {
+          "header": "@@ -4025,6 +4018,10 @@ try {",
+          "before": {
+            "bytes": 221,
+            "sha256": "64f00c97483b552b7e204c81258fd0436f777c5791b49e50e35dcb4b9a7d2e5c",
+            "gitBlob": "e6968fda30905328a4b9b8baa0e1ef7f7426ad7c"
+          },
+          "after": {
+            "bytes": 373,
+            "sha256": "9eed9caceab307187feb8febe69f69c4f85a0919d60efa86f116a0dee7205060",
+            "gitBlob": "cdb2b224baad364d7db11c0fd955da1dcfe50c24"
+          }
+        },
+        {
+          "header": "@@ -14382,9 +14379,16 @@ try {",
+          "before": {
+            "bytes": 359,
+            "sha256": "15570b765a5df6b0305476d71db36b3c52de2175fe0b7e0d3789224ae6e3e79f",
+            "gitBlob": "25f99ecbb9866a591998296f196d14a222c71e79"
+          },
+          "after": {
+            "bytes": 740,
+            "sha256": "bcdc5d37b03f4cec38d16187f5abaa90cd3a2e8724ece63ca28a63eba52e3eaf",
+            "gitBlob": "67212d2f20e6b588a9f8fb1d80310079dc681a54"
+          }
+        },
+        {
+          "header": "@@ -14912,7 +14916,23 @@ try {",
+          "before": {
+            "bytes": 227,
+            "sha256": "fffb7af5de96cf8f3dd25b8792a52eb64cd3a161fb86357ced1825315c23afa2",
+            "gitBlob": "98c6e0942b5bc1134de82e5dc7af1633624627a9"
+          },
+          "after": {
+            "bytes": 900,
+            "sha256": "32835b704a8e08112f048e29e640fd3614e44e33d3b1ee15a995c9ea90f966e9",
+            "gitBlob": "979bf6fec8219442b8f8256c61f169486e1c0902"
+          }
+        }
+      ],
+      "composition": "all actual-ancestor main hunks match exactly once in reviewed repair source; no overlapping changed region",
+      "syntax": "parsed without evaluation"
+    },
+    {
+      "pr": 1693,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "path": "game/app.mjs",
+      "mergeBase": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "base": {
+        "bytes": 619467,
+        "sha256": "c1a489711a970e580fe8c4fbc9a4a486e97d96d18097320e1331ffc436965f9b",
+        "gitBlob": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb"
+      },
+      "branch": {
+        "bytes": 619784,
+        "sha256": "07b8986a0dadd299c0e3dc3243f5419226ad936a29d4078f37398479b225420c",
+        "gitBlob": "082b593bf58c4f405e8f2f9588722410b4c0ce3b"
+      },
+      "main": {
+        "bytes": 620202,
+        "sha256": "489e43a00abb742d0d85bf104479f3bbcae1a228df0e31eef55962cdd527c499",
+        "gitBlob": "c8cd13bd7eb123069b193a7d6a2db0cf3ebacb73"
+      },
+      "mainPatch": "@@ -228,6 +228,7 @@ import {\n } from './ui/controller-boost-settings.mjs';\n import { attachControllerNavigation } from './ui/controller-navigation.mjs';\n import { attachControllerReading } from './ui/controller-reading.mjs';\n+import { readingInputPrompt } from './ui/reading-input-prompt.mjs';\n import { attachControllerPreview } from './ui/controller-preview.mjs';\n import { attachPracticeNavigation } from './ui/practice-navigation.mjs';\n import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';\n@@ -3450,19 +3451,11 @@ try {\n     });\n   }\n   function readingPrompt({ scrollable }) {\n-    const mode = document.body.dataset.inputMode;\n-    const scroll = !scrollable\n-      ? t('interface:allTextIsVisible')\n-      : mode === 'controller' || mode === 'keyboard'\n-        ? t('interface:upDownScroll')\n-        : t('interface:scrollToRead');\n-    const exit =\n-      mode === 'controller'\n-        ? `${controllerLabels.menu.confirm} or ${controllerLabels.menu.back}`\n-        : mode === 'keyboard'\n-          ? t('interface:enterSpaceOrEscape')\n-          : t('interface:doneReading');\n-    return `${scroll} · ${exit} returns`;\n+    return readingInputPrompt({\n+      modality: document.body.dataset.inputMode,\n+      scrollable,\n+      controls: controllerLabels.menu,\n+    });\n   }\n   function setInputModality(mode) {\n     if (document.body.dataset.inputMode === mode) return;\n@@ -14386,9 +14379,16 @@ try {\n             ? {\n                 supportedModes: runtimeContent.selection.edition.modes,\n                 availableCollectionsOnly: true,\n-                description: runtimeContent.selection.edition.name,\n               }\n             : {}),\n+          description: () =>\n+            `${runtimeContent?.selection.edition.name ?? t('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir')} ${t('interface:captureNavigation.browseHint')}`,\n+          browsingContext: ({ label }) => {\n+            const context = soloNavigationContext();\n+            return context\n+              ? t('interface:captureNavigation.browsing', { mode: label, context })\n+              : label;\n+          },\n           getCurrentId: () => {\n             const mission = candidateHost && journeyMission();\n             if (mission)\n@@ -14916,7 +14916,23 @@ try {\n       close: () => unifiedChooser?.close(),\n     };\n   }\n+  function soloNavigationContext() {\n+    // The accepted catalogue owner, not the entry URL or visual theme, grants\n+    // this identity. Classic/imported selections retain their Capture context.\n+    if (\n+      candidateHost?.owns(activeEntry) &&\n+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)\n+    ) {\n+      const name =\n+        authoredRoute.id === 'humanoid-hunt-v1'\n+          ? huntText('lessons')\n+          : contentText(authoredRoute.source, 'name');\n+      return `${name} · ${t('interface:solo2')}`;\n+    }\n+    return t('interface:captureNavigation.context', { mode: t('interface:solo2') });\n+  }\n   gameShell = attachGameShell({\n+    navigationContext: soloNavigationContext,\n     getAppearanceDefault: () => {\n       const pin = currentAppearanceDefault();\n       return pin && runtimeContent?.appearanceThemes.length",
+      "combined": {
+        "bytes": 620519,
+        "sha256": "17c47e15885bd7b102a6f8d85515aa6e76ff0accf99b8dd610372520db2a9d1f",
+        "gitBlob": "fab7031d825e1faa6009c2583430270485ce1280"
+      },
+      "hunks": [
+        {
+          "header": "@@ -228,6 +228,7 @@ import {",
+          "before": {
+            "bytes": 417,
+            "sha256": "25d9bedb95323f0a51c0c456c665bc77b5b13ca4d82fded61f6400003ad9223b",
+            "gitBlob": "7f769afe3848c305c0a2f627e2ba45e7d30da623"
+          },
+          "after": {
+            "bytes": 485,
+            "sha256": "e0c7e7c96d1c8e7dc5ee8400369823e6dcad309d2ef0a0b9650a15f9b840cce5",
+            "gitBlob": "cf24923a1f0b7114bdb47e38229c73e995ee2fd3"
+          }
+        },
+        {
+          "header": "@@ -3450,19 +3451,11 @@ try {",
+          "before": {
+            "bytes": 686,
+            "sha256": "64cc05f10e2a3e2f4658740c3d46af70bcda3ff1b6054a2cb567e06cadc930d6",
+            "gitBlob": "9d592e02cd00cb8a06b2582a2c111dbe3afa0d0d"
+          },
+          "after": {
+            "bytes": 299,
+            "sha256": "7c1ddc33e73c84998d188e5d481753ae60437bfe68fabbdc8c97710c48a0cc32",
+            "gitBlob": "d80f2e8f621be1f35878596dba0967aaae12e862"
+          }
+        },
+        {
+          "header": "@@ -14386,9 +14379,16 @@ try {",
+          "before": {
+            "bytes": 359,
+            "sha256": "15570b765a5df6b0305476d71db36b3c52de2175fe0b7e0d3789224ae6e3e79f",
+            "gitBlob": "25f99ecbb9866a591998296f196d14a222c71e79"
+          },
+          "after": {
+            "bytes": 740,
+            "sha256": "bcdc5d37b03f4cec38d16187f5abaa90cd3a2e8724ece63ca28a63eba52e3eaf",
+            "gitBlob": "67212d2f20e6b588a9f8fb1d80310079dc681a54"
+          }
+        },
+        {
+          "header": "@@ -14916,7 +14916,23 @@ try {",
+          "before": {
+            "bytes": 227,
+            "sha256": "fffb7af5de96cf8f3dd25b8792a52eb64cd3a161fb86357ced1825315c23afa2",
+            "gitBlob": "98c6e0942b5bc1134de82e5dc7af1633624627a9"
+          },
+          "after": {
+            "bytes": 900,
+            "sha256": "32835b704a8e08112f048e29e640fd3614e44e33d3b1ee15a995c9ea90f966e9",
+            "gitBlob": "979bf6fec8219442b8f8256c61f169486e1c0902"
+          }
+        }
+      ],
+      "composition": "all actual-ancestor main hunks match exactly once in reviewed repair source; no overlapping changed region",
+      "syntax": "parsed without evaluation"
+    },
+    {
+      "pr": 1693,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "path": "game/couch/couch.mjs",
+      "mergeBase": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "base": {
+        "bytes": 207485,
+        "sha256": "9134b8348647b9ef3b8fa31b5e2aabe3a0f4d9d952e9e969e7d1d98135857d1f",
+        "gitBlob": "6f4a12dba5296b1d1681b79742bc8a38daf93860"
+      },
+      "branch": {
+        "bytes": 207572,
+        "sha256": "9d54e15dccaec8f8d876288c14cd1df50584e7fcae5cf191567f33d625cff576",
+        "gitBlob": "234d63e3371e3d84ad733eb2593b5518fbee0f01"
+      },
+      "main": {
+        "bytes": 208220,
+        "sha256": "d1b2950666c60b710fae9e9db63e1d1e4a7f72902be6a45cf05a6e1bfe33844f",
+        "gitBlob": "f9f8ffb6a1e9ed66f91b28bdcd6a673f30cb6269"
+      },
+      "mainPatch": "@@ -1,6 +1,7 @@\n import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';\n import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';\n import { runtimeActorArtRevision } from '../hunt/preferences.mjs';\n+import { huntText } from '../hunt/copy.mjs';\n import { loadBaseArtwork } from '../base-artwork.mjs';\n import { createEnemyStatsHost } from '../enemy-stats.mjs';\n import { mountEnemyStats } from '../ui/enemy-stats.mjs';\n@@ -2805,6 +2806,20 @@ try {\n     getLevels: () => match?.runs?.map((run) => run.level) ?? [],\n   });\n   let globalSettingsVisit = 0;\n+  function duelNavigationContext() {\n+    const mode = t('interface:versus2');\n+    if (\n+      candidateJourney?.owns(roundRecipe?.entry) &&\n+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)\n+    ) {\n+      const name =\n+        authoredRoute.id === 'humanoid-hunt-v1'\n+          ? huntText('lessons')\n+          : contentText(authoredRoute.source, 'name');\n+      return `${name} · ${mode}`;\n+    }\n+    return t('interface:captureNavigation.context', { mode });\n+  }\n   shell = createCouchShell({\n     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),\n     getSceneContext: () => ({\n@@ -3763,6 +3778,11 @@ try {\n         library: result.library,\n         profile,\n         mode: 'versus',\n+        browsingContext: ({ label }) =>\n+          t('interface:captureNavigation.browsing', {\n+            mode: label,\n+            context: duelNavigationContext(),\n+          }),\n         getCurrentId: () => {\n           if (currentLibrarySelection?.match === match) return currentLibrarySelection.id;\n           const entry = roundRecipe.entry;\n@@ -4315,7 +4335,7 @@ try {\n       contentBusy,\n       focusTransition,\n       summary: () =>\n-        `${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,\n+        `${duelNavigationContext()} · ${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,\n     });\n     $('race-time-field').hidden = qualifiedVersusEntry(roundRecipe.entry);\n     // Reconcile deliberate layout transitions immediately, including browsers",
+      "combined": {
+        "bytes": 208307,
+        "sha256": "299e57526165384815c5139395fdcc7ffdfd80ab496b2d71f5cc11a83b7e53ce",
+        "gitBlob": "a4afeb55c70ac9f75c77f9c213f91b6873921f4d"
+      },
+      "hunks": [
+        {
+          "header": "@@ -1,6 +1,7 @@",
+          "before": {
+            "bytes": 418,
+            "sha256": "ae07b6ea99850c591aefd68b32e5afcf38b0adbdde3c79d545823237062e559c",
+            "gitBlob": "a4a80578cdd5a0c5eeb4aa427df18589c82787f6"
+          },
+          "after": {
+            "bytes": 463,
+            "sha256": "36608f4184abdf211261e2e75885e61581837e97cfbe3a03cce941d670f1dad8",
+            "gitBlob": "a580ff493dfd1559140c8a7cf5db6883ff0a3d0d"
+          }
+        },
+        {
+          "header": "@@ -2805,6 +2806,20 @@ try {",
+          "before": {
+            "bytes": 262,
+            "sha256": "94183c64b2198dd761720325fadb584c3a6f08b98b9adf4209b78bea06ed522d",
+            "gitBlob": "54d6559cdab288bc67b60bffa31b05a4d9f019f9"
+          },
+          "after": {
+            "bytes": 743,
+            "sha256": "645b49bb4b0bbc28c5f0189e7f43e46daa1fbc67c8cb5a6f17b3df1191358f79",
+            "gitBlob": "70719216dc7b06002701ccf8cede75cbaa27105e"
+          }
+        },
+        {
+          "header": "@@ -3763,6 +3778,11 @@ try {",
+          "before": {
+            "bytes": 238,
+            "sha256": "ccbb267c62d5830d84d4b199bbf967d156950e0d06d7cef5933159ca63fbb575",
+            "gitBlob": "09308e2c35b7399ed2b498fb8d0851f9b1158b9b"
+          },
+          "after": {
+            "bytes": 417,
+            "sha256": "8181bc6ddfd9f4319e4a10d8136c4d7fcadde9f1fbf724b65c0ab98ae32c07c0",
+            "gitBlob": "56624afc1372196742e5769e20218e02c54607ee"
+          }
+        },
+        {
+          "header": "@@ -4315,7 +4335,7 @@ try {",
+          "before": {
+            "bytes": 446,
+            "sha256": "14f0d2db982a72c26e9b3afea79ff4c925575b8eb9be6919c6e441dd23390793",
+            "gitBlob": "c4fe88c86abd7aa33a5cf5307e1bc75e17d08c60"
+          },
+          "after": {
+            "bytes": 476,
+            "sha256": "f7befd9485a3eac82095fd7397ab10a4ff4865d5fadd254581226318ac0f2803",
+            "gitBlob": "e14754900b4ee9514b9261c8a5630a1954b230bb"
+          }
+        }
+      ],
+      "composition": "all actual-ancestor main hunks match exactly once in reviewed repair source; no overlapping changed region",
+      "syntax": "parsed without evaluation"
+    },
+    {
+      "pr": 1693,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "path": "game/couch/relay-rescue.mjs",
+      "mergeBase": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "base": {
+        "bytes": 289352,
+        "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f",
+        "gitBlob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1"
+      },
+      "branch": {
+        "bytes": 289449,
+        "sha256": "a359ca4ca21b178487807ad4ffc5443b237e122a3da15dd177ecc57b9e2fdd7c",
+        "gitBlob": "6c9cc0cd45a41c49d3c095ba622b821b70d22288"
+      },
+      "main": {
+        "bytes": 290769,
+        "sha256": "50b9f3c496c738d7610e922b77009076848cdb5fc9f1f6d3b972656daeccfca5",
+        "gitBlob": "0705d4db72b6401771d8ddd357f758b7c4f6428d"
+      },
+      "mainPatch": "@@ -263,6 +263,7 @@ export function bootCoop({\n   candidateDifficulty = 'standard',\n   candidateNotice = '',\n   candidateEditionLabel = '',\n+  candidateNavigationLabel = '',\n } = {}) {\n   // Consume native setup intent before applying saved defaults. Only an actual\n   // difficulty edit changes the global preference; opening its selector does not.\n@@ -4715,6 +4716,11 @@ export function bootCoop({\n       document,\n       library: getTeamLibrary(),\n       mode: 'team',\n+      browsingContext: ({ label }) =>\n+        t('interface:captureNavigation.browsing', {\n+          mode: label,\n+          context: teamNavigationContext(),\n+        }),\n       getCurrentId: () =>\n         missionLibrary.missions.find((row) => {\n           const bound = libraryRuntimeRows.get(row)?.();\n@@ -6512,6 +6518,32 @@ export function bootCoop({\n     const level = selectedLevel();\n     return candidateJourney?.rows.find((row) => row.pack === pack && row.level === level) ?? null;\n   }\n+  function teamNavigationContext(includeMission = false) {\n+    const sourcePack = run ? (acceptedPicture?.sourcePack ?? attemptPack) : pack;\n+    const level = run ? attemptLevel : selectedLevel();\n+    const row = run ? acceptedPicture?.journeyRow : selectedCandidateRow();\n+    const owned = candidateJourney?.owns(row);\n+    const edition = owned && !defaultJourney ? renderMessage(candidateNavigationLabel) : '';\n+    const mode = t('interface:team');\n+    const context = edition\n+      ? `${edition} · ${mode}`\n+      : owned || sourcePack === COOP_STARTER_PACK\n+        ? t('interface:captureNavigation.context', { mode })\n+        : `${contentText(sourcePack, 'name')} · ${mode}`;\n+    if (!includeMission) return context;\n+    const chapter = owned\n+      ? contentText(row.mission, 'campaignTitle')\n+      : sourcePack === COOP_STARTER_PACK\n+        ? contentText(sourcePack, 'name')\n+        : '';\n+    return [\n+      context,\n+      chapter && !context.startsWith(`${chapter} · `) ? chapter : '',\n+      contentText(level, 'name'),\n+    ]\n+      .filter(Boolean)\n+      .join(' · ');\n+  }\n   function difficultyControls(level = selectedLevel()) {\n     // Compiled Journey packs are immutable preset editions. Changing this menu\n     // selects a newly compiled owned edition, never re-projects imported bytes.\n@@ -6522,6 +6554,8 @@ export function bootCoop({\n     gameplayTuningPanel?.refresh();\n   }\n   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {\n+    localizedText($('coop-navigation-context'), () => teamNavigationContext(true));\n+    $('coop-navigation-context').hidden = false;\n     huntSaveControls?.refresh();\n     difficultyControls(level);\n     if (run) level = run.level;",
+      "combined": {
+        "bytes": 290866,
+        "sha256": "8ef96bbd982c0b64b5d58879854b52914c891436f3cb9a7ecde900631be5977b",
+        "gitBlob": "4d4f3caa3f1d44be3aaaa201b7ee7fecb8e0341b"
+      },
+      "hunks": [
+        {
+          "header": "@@ -263,6 +263,7 @@ export function bootCoop({",
+          "before": {
+            "bytes": 263,
+            "sha256": "ee342bb85c0bda172a3de8c4c55d9766cf8f68ffc0c744ed21cdb641d0f0f120",
+            "gitBlob": "06fd1c3d22272b5698fccd61abf1890cb2b3e775"
+          },
+          "after": {
+            "bytes": 296,
+            "sha256": "28e74f45da8f4199b0a3bb344971460a27b589fddaa0d2ae291d2c02cc5aef5d",
+            "gitBlob": "4b483627ee9c5e32e643cc7239b33fdd3f8389fa"
+          }
+        },
+        {
+          "header": "@@ -4715,6 +4716,11 @@ export function bootCoop({",
+          "before": {
+            "bytes": 200,
+            "sha256": "35b1ce81b3889d03dd62d9bc9a646d894556b5e9738da9a13aca7016f9908995",
+            "gitBlob": "fb9d5d45f2960da785dc3dab40ad734989f2973b"
+          },
+          "after": {
+            "bytes": 369,
+            "sha256": "6b8c361c557e5df32bf4b201dcd3e7ed747641079ff14897bc078ef23eb7a5aa",
+            "gitBlob": "0197d47ea657db456d55a5fdb912e9c72fdb5e15"
+          }
+        },
+        {
+          "header": "@@ -6512,6 +6518,32 @@ export function bootCoop({",
+          "before": {
+            "bytes": 356,
+            "sha256": "ba03ee433151f2085b3faa6ba40f4a0fb1766d08052c14fdc8cef1757579ac59",
+            "gitBlob": "da553a7c16700f2a5e6159d2031a85bfb2aef1a0"
+          },
+          "after": {
+            "bytes": 1438,
+            "sha256": "a96bf2b41d7bc0ca5eacef42d97597feab40f5a157fbf97764cc21c2c230fb6c",
+            "gitBlob": "f0efb0e1a207b69d6cadeb1f29533951299e4d9d"
+          }
+        },
+        {
+          "header": "@@ -6522,6 +6554,8 @@ export function bootCoop({",
+          "before": {
+            "bytes": 231,
+            "sha256": "79fac47ae139d17f3c49f3cc411af1c3fc1d79f62b5e62a21f0ab12da2ce29b4",
+            "gitBlob": "b855c7ae3c5a1369cee352241cac91109dd2124e"
+          },
+          "after": {
+            "bytes": 364,
+            "sha256": "f7c4285e7f203880a4079f9e422d33e4f4cad218a21f49e51de3da003d6a2dbc",
+            "gitBlob": "107e3f6c9db389e75b3c400691fac35e1fc877dc"
+          }
+        }
+      ],
+      "composition": "all actual-ancestor main hunks match exactly once in reviewed repair source; no overlapping changed region",
+      "syntax": "parsed without evaluation"
+    }
+  ],
+  "compositionMethod": "Verified the actual merge-base-to-fixed-main patch reproduces the complete fixed-main file, then applied every hunk at its unique exact before context to the complete branch file. Parsed each resulting module without evaluation. Direct c4 patch application is not the correct ancestry model for branches that predate earlier navigation work; all five actual-ancestor compositions succeed.",
+  "findings": [
+    {
+      "priority": "normal integration",
+      "prs": [
+        1620,
+        1674
+      ],
+      "finding": "App path overlaps are present but new reading/navigation regions do not overlap the reviewed Missions/Worlds changes. Exact ancestor-aware source composition succeeds for both.",
+      "next": "Preserve both sides in the normal reviewed main merge; execute resulting exact-head source checks. No new product repair is justified by this main delta."
+    },
+    {
+      "priority": "normal integration",
+      "prs": [
+        1693
+      ],
+      "finding": "All three lifecycle owner files overlap by path, but exact ancestor-aware composition preserves the lifecycle clocks/edge fixes and all new navigation/reading changes.",
+      "next": "Normal reviewed main integration plus the existing lifecycle and navigation controls on the combined head. Source syntax/composition is not behavioral proof."
+    },
+    {
+      "priority": "no new source overlap",
+      "prs": [
+        1694,
+        1621,
+        1628
+      ],
+      "finding": "The entire changed pathsets are disjoint from the new 27-path delta. The MP3 helper imports and source/player contracts are unaffected by these main changes.",
+      "next": "Retain existing exact-head gates and native qualification; no conflict repair from this delta."
+    },
+    {
+      "priority": "existing generated integration remains",
+      "prs": [
+        1620,
+        1674
+      ],
+      "finding": "None of the 46 finite generator path literals, including admitted sources, external entries and outputs, changed between c4 and c169. The canonical Missions library/browser and generated JS/CSS are byte-identical across this new delta.",
+      "next": "Do not infer that older branch generated output is already current. Earlier common-ancestor differences in continuous-play, global-settings and Missions browser still require the previously identified canonical/generated combined projection and normal --check before release."
+    }
+  ],
+  "generatedBoundary": {
+    "generator": {
+      "path": "scripts/refresh-fpv-play-shell.mjs",
+      "bytes": 10768,
+      "sha256": "b52dae963bb8894824f06ced5be9808edeb4038a66b6810d0091df223ee00d8b",
+      "gitBlob": "3c16fe0e7f450cde67af9d241875afdf28414d56"
+    },
+    "finiteLiteralPaths": [
+      "game/data-json.mjs",
+      "game/display-preferences.mjs",
+      "game/edition-context.mjs",
+      "game/enemy-stats.mjs",
+      "game/hunt/actor-art.mjs",
+      "game/hunt/actor-catalog.mjs",
+      "game/hunt/industrial-soldier-kit.mjs",
+      "game/hunt/preferences.mjs",
+      "game/i18n/index.mjs",
+      "game/mission-library/goal-preferences.mjs",
+      "game/mission-library/library.mjs",
+      "game/mission-library/opening-intent.mjs",
+      "game/presentation/actor-animation.mjs",
+      "game/presentation/theme-system.mjs",
+      "game/profile-database.mjs",
+      "game/profile-storage.mjs",
+      "game/text-face.mjs",
+      "game/text-size.mjs",
+      "game/ui/art-review-navigation.mjs",
+      "game/ui/celebration.mjs",
+      "game/ui/continuous-celebration.mjs",
+      "game/ui/continuous-play.mjs",
+      "game/ui/enemy-appearance-controls.mjs",
+      "game/ui/enemy-stats.mjs",
+      "game/ui/global-settings-view.css",
+      "game/ui/global-settings-view.mjs",
+      "game/ui/journey.css",
+      "game/ui/level-card.mjs",
+      "game/ui/menu-animation-preferences.mjs",
+      "game/ui/menu-audio.mjs",
+      "game/ui/mission-library-browser.mjs",
+      "game/ui/mission-library-goal.mjs",
+      "game/ui/mode-choice-view.mjs",
+      "game/ui/mode-choice.css",
+      "game/ui/mode-play-shell.css",
+      "game/ui/mode-play-shell.mjs",
+      "game/ui/mode-settings-view.css",
+      "game/ui/mode-settings-view.mjs",
+      "game/ui/movement-audio.mjs",
+      "game/ui/pause-menu.css",
+      "game/ui/radio-audio.mjs",
+      "game/ui/settings-panels.mjs",
+      "game/ui/theme-family-controls.mjs",
+      "game/ui/theme-material-preview.mjs",
+      "optional-practice/civilian-fpv/flight-fullscreen.css",
+      "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+    ],
+    "newDeltaIntersections": [],
+    "canonicalGuards": [
+      {
+        "path": "game/mission-library/library.mjs",
+        "before": "2084353eff4715d535f743757a3f3a0c17d7b809",
+        "after": "2084353eff4715d535f743757a3f3a0c17d7b809"
+      },
+      {
+        "path": "game/ui/mission-library-browser.mjs",
+        "before": "f33470e358aa8cc5e0593f87172cf5aed924b244",
+        "after": "f33470e358aa8cc5e0593f87172cf5aed924b244"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "before": "e29ba9c538d80da47d79932b4d873e68f56118ef",
+        "after": "e29ba9c538d80da47d79932b4d873e68f56118ef"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+        "before": "2879c44a910233ee05dc34ef15f7b689a7de5afa",
+        "after": "2879c44a910233ee05dc34ef15f7b689a7de5afa"
+      },
+      {
+        "path": "scripts/refresh-fpv-play-shell.mjs",
+        "before": "3c16fe0e7f450cde67af9d241875afdf28414d56",
+        "after": "3c16fe0e7f450cde67af9d241875afdf28414d56"
+      }
+    ],
+    "earlierAncestorDifferences": [
+      {
+        "pr": 1620,
+        "mergeBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+        "paths": [
+          "game/ui/continuous-play.mjs",
+          "game/ui/global-settings-view.css",
+          "game/ui/global-settings-view.mjs",
+          "game/ui/mission-library-browser.mjs",
+          "optional-practice/civilian-fpv/flight-fullscreen.css",
+          "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+        ]
+      },
+      {
+        "pr": 1674,
+        "mergeBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "paths": [
+          "game/ui/continuous-play.mjs",
+          "game/ui/global-settings-view.css",
+          "game/ui/global-settings-view.mjs",
+          "game/ui/mission-library-browser.mjs",
+          "optional-practice/civilian-fpv/flight-fullscreen.css",
+          "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+        ]
+      }
+    ],
+    "generatorExecuted": false
+  },
+  "conclusion": "No concrete new interaction defect or nonroutine conflict identified in this bounded review. Keep routine main composition and generated-source verification explicit; no regression-free, merged, current-head test, native or performance pass is claimed.",
+  "localWrites": false,
+  "functionalExecution": false,
+  "mutation": false
+}
