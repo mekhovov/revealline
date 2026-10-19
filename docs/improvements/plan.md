@@ -2,11 +2,11 @@
 
 **Review version: 19 October 2026**
 
-**Latest execution checkpoint:** **27 source slices merged, 15 feature PRs open for checks, 36 draft/dependent PRs; 78 active/admitted candidates and 1 withdrawn candidate.** All 113 deliverables retain individual status. These counts are delivery inventory, not a completion percentage.
+**Latest execution checkpoint:** **27 source slices merged, 15 feature PRs open for checks, 37 draft/dependent PRs; 79 active/admitted candidates and 1 withdrawn candidate.** All 113 deliverables retain individual status. These counts are delivery inventory, not a completion percentage.
 
-**Current priorities:** qualify Capture Home #1729 and its independent test prerequisite #1732; finish Rooms native corrections and the explained default Versus selection. Worlds support is now [draft #1733](https://github.com/mekhovov/revealline/pull/1733), with **245/245 complete focused checks**, independent source review and actual paused-flight return evidence. Full source/package/admission gates remain.
+**Current priorities:** qualify Capture Home #1729 and its independent test prerequisite #1732; qualify Rooms #1734 and finish the explained default Versus selection. Worlds support is now [draft #1733](https://github.com/mekhovov/revealline/pull/1733), with **245/245 complete focused checks**, independent source review and actual paused-flight return evidence. Full source/package/admission gates remain.
 
-**Validation findings:** Rooms still has failed/incomplete native runs, with cache, modal and pending-close focus boundaries under correction. Versus pure checks pass5/5, but its native host was protectively stopped after unusually high memory use; the original earlier SIGKILL cause remains unknown. Bounded diagnostics and lightweight complete checks precede any heavy retry. Neither is reported complete.
+**Validation findings:** Rooms corrections now pass152/152 across11 complete files and are published as draft #1734; earlier failures remain recorded. Versus pure checks pass5/5, but its native host was protectively stopped after unusually high memory use; the original earlier SIGKILL cause remains unknown. Bounded diagnostics and lightweight complete checks precede any heavy retry. Neither is reported complete.
 
 **New player-facing finding:** changing Worlds Settings from Ukrainian to English can retain the old-language storage status. A separate F59 slice will repaint cached semantic status without database reads or new permission prompts, preserving late-request/disposal ownership. Estimate0.5–1developer day plus review queues.
 
@@ -20,7 +20,7 @@ This plan replaces the earlier roadmap, retains **F01–F81**, and incorporates 
 
 **Execution authorized: 18 October 2026.** Current implementation, evidence, priorities and remaining work are recorded in [the live progress board](progress.md) and [structured tracker](progress.json). Existing local work remains preserved. Physical-device qualification is pending because no iPhone or Steam Deck is available.
 
-**Implementation review update:** Team, Versus, Academy and the observation-copy support slices retain separate drafts and evidence. Worlds #1733 is a reviewed draft; Rooms remains developing. F10 remains partial: Capture admission and the separate Versus explanation are active; Team can follow through its own progress owner. Full lesson recommendations require F25/D. Source checks, actual browser review, package admission, live release and physical acceptance remain distinct gates.
+**Implementation review update:** Team, Versus, Academy and the observation-copy support slices retain separate drafts and evidence. Worlds #1733 and Rooms #1734 are separate reviewed drafts. F10 remains partial: Capture admission and the separate Versus explanation are active; Team can follow through its own progress owner. Full lesson recommendations require F25/D. Source checks, actual browser review, package admission, live release and physical acceptance remain distinct gates.
 
 - **F75:** the 30-minute recording cap and the two-hour legacy collection validator have different owners. Authored Journey completion uses separate events; do not imply that every Journey loses progress at two hours.
 - **F82/F14:** the committed package passes desktop missing-module recovery, explicit repair and offline Home startup after full worker activation. Core-only preparation leaves selected Journey artwork unavailable, so full offline gameplay remains unqualified. Readiness must report these separately. A test that removed files during worker activation was invalid and is excluded.
