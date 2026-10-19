@@ -59,6 +59,7 @@ async function projectGlobalServices() {
     'game/text-size.mjs',
     'game/ui/theme-material-preview.mjs',
     'game/ui/movement-audio.mjs',
+    'game/ui/gameplay-audio-controls.mjs',
     'game/ui/radio-audio.mjs',
     'game/ui/celebration.mjs',
     'game/data-json.mjs',
