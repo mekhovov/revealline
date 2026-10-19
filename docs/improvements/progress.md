@@ -2,7 +2,7 @@
 
 Updated **19 October 2026** (Europe/Berlin). The [approved plan](plan.md) covers **83 feature groups / 113 deliverables**. Implementation is continuing in three lanes, with independent review and browser qualification in parallel.
 
-**5 merged · 26 feature PRs ready for required checks · 31 draft feature PRs · 2 merged slices confirmed in published source · 0 newly verified live journeys.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
+**8 merged · 25 feature PRs ready for required checks · 32 draft feature PRs · 2 merged slices confirmed in published source · 0 newly verified live journeys.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
 
 ## Current priorities
 
@@ -31,9 +31,11 @@ P2 work proceeds alongside these gates: **F22** paused progress and **F19** nati
 | **F17** lesson mode choice · [#1625](https://github.com/mekhovov/revealline/pull/1625)        | Merged at6acfa2fb6 after required exact-head gates. Reviewed actual coach with modeled paused host.                         | Real-flight/device acceptance and live publication remain separate.                      |
 | **F02a** First Flight Home · [#1655](https://github.com/mekhovov/revealline/pull/1655)        | Merged atbd15820 after all required exact-head gates. Actual lesson completion/Next/Skip/replay/Home review retained.       | Further onboarding, live publication and hardware acceptance remain separate.            |
 
+**New source merges:** Survival continuation assessment [#1639](https://github.com/mekhovov/revealline/pull/1639), automatic-play preferences [#1629](https://github.com/mekhovov/revealline/pull/1629), and the About-title fix [#1670](https://github.com/mekhovov/revealline/pull/1670) are merged. Their dependent slices now need current-main reconciliation. These merges do not establish a new deployment or device qualification.
+
 ## Reviewed foundations and required checks
 
-All rows are **P1**. Ready means reviewed and eligible for checks, not merged or deployed. A foundation temporarily returns to draft while integration is being reviewed; the snapshot above records the live PR state.
+Rows are **P1**; #1629, #1639 and #1670 have now merged as noted above. Ready means reviewed and eligible for checks, not merged or deployed. A foundation temporarily returns to draft while integration is being reviewed; the snapshot above records the live PR state.
 
 | Deliverable                                                                                     | Evidence                                                                                                                                                                                                            | Remaining                                                                                                                                                                 |
 | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -96,21 +98,21 @@ All rows are **P1**. The structured tracker pins every reviewed revision and dis
 
 **New P2 deliverables ready:** [F22 paused progress #1682](https://github.com/mekhovov/revealline/pull/1682) shows actual accepted current/target/remaining progress in Field details. Earned Capture EN/UK review preserves48.6% /65% /16.4%,11560score,3lives and paused0:05; route/Hunt coverage is automated. [F19b upgrade commitments #1683](https://github.com/mekhovov/revealline/pull/1683) explains payload/support choices, authored slot capacity and maximum rank. Actual320px staged native cards accept one choice with unchanged tick/time; outcome wording is explicit. Both pass independent source review and full source gates; neither establishes physical-device acceptance.
 
-**Current review additions:** [Snake medal guidance #1690](https://github.com/mekhovov/revealline/pull/1690) and [caption reading time #1691](https://github.com/mekhovov/revealline/pull/1691) now have independent source and scoped browser review. [Capture #1688](https://github.com/mekhovov/revealline/pull/1688) stays draft: actual320px review found its advice hidden by existing footer rules. [Snake scaling #1689](https://github.com/mekhovov/revealline/pull/1689) is reviewed but dependent; [Duel scaling #1692](https://github.com/mekhovov/revealline/pull/1692) awaits browser qualification. Team scaling and explicitly scoped mono effects/voices are developing. Source/model, actual automated gameplay, staged component and physical evidence remain separate.
+**Current review additions:** [Capture medal guidance #1688](https://github.com/mekhovov/revealline/pull/1688) now passes renewed native EN/UK320/landscape review and is ready. [Duel language #1701](https://github.com/mekhovov/revealline/pull/1701) is ready after28 focused/full checks and native HUD review. [Mono effects/voices #1697](https://github.com/mekhovov/revealline/pull/1697) is a reviewed dependent draft:14 real channel cases and scoped settings review pass; listening/device evidence stays open. [Duel scaling #1692](https://github.com/mekhovov/revealline/pull/1692) remains draft because actual play revealed vertical board clipping after horizontal correction; a bounded-viewport fix is under review. [Team scaling #1700](https://github.com/mekhovov/revealline/pull/1700) passes source gates and awaits browser qualification. Worlds exact time/contact medal guidance is developing. Previous failures and evidence boundaries are retained.
 
 ## Phase picture
 
-| Phase                    | Progress                                                         | Main remaining work                                                                     |
-| ------------------------ | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| 0 — Baseline             | Established                                                      | Maintain isolated branches, exact revisions and shared-file ownership.                  |
-| 1 — Reliability          | 5 merged feature PRs overall; reviewed reliability slices queued | Merge reconciliation, localization findings and Demo-dependent reliability.             |
-| 2 — Learn and start      | First Flight merged; paused progress/upgrade context ready       | Next-medal review, selection hierarchy, further onboarding and guidance.                |
-| 3 — Progress and offline | Archive/local recovery reviewed; Survival suspend active         | Suspend stack admission, remaining diagnostic hosts, package capacity, device evidence. |
-| 4 — Comfort/input/audio  | All identified preset hosts reviewed; bindings active            | Critical cues, seat mappings, scaling, assistive technology and listening.              |
-| 5 — Practice/social      | Planned                                                          | Playlists, practice, replays, rooms and device calibration.                             |
-| 6 — Creation/community   | Planned                                                          | Creator entry, validation, playtest, publishing and discovery.                          |
-| 7 — Progression/content  | Planned                                                          | Albums, goals, cosmetics and bounded balance experiments.                               |
-| 8 — Services/platforms   | Planned                                                          | Cloud/native services and platform qualification.                                       |
+| Phase                    | Progress                                                         | Main remaining work                                                                      |
+| ------------------------ | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| 0 — Baseline             | Established                                                      | Maintain isolated branches, exact revisions and shared-file ownership.                   |
+| 1 — Reliability          | 8 merged feature PRs overall; reviewed reliability slices queued | Merge reconciliation, localization findings and Demo-dependent reliability.              |
+| 2 — Learn and start      | First Flight merged; paused progress/upgrade context ready       | Worlds medal conditions, selection hierarchy, further onboarding and guidance.           |
+| 3 — Progress and offline | Archive/local recovery reviewed; Survival suspend active         | Suspend stack admission, remaining diagnostic hosts, package capacity, device evidence.  |
+| 4 — Comfort/input/audio  | All identified preset hosts reviewed; bindings active            | Duel/Team scaling, mono integration, remaining cues, assistive technology and listening. |
+| 5 — Practice/social      | Planned                                                          | Playlists, practice, replays, rooms and device calibration.                              |
+| 6 — Creation/community   | Planned                                                          | Creator entry, validation, playtest, publishing and discovery.                           |
+| 7 — Progression/content  | Planned                                                          | Albums, goals, cosmetics and bounded balance experiments.                                |
+| 8 — Services/platforms   | Planned                                                          | Cloud/native services and platform qualification.                                        |
 
 ## Evidence limits and dependencies
 
@@ -124,6 +126,6 @@ All rows are **P1**. The structured tracker pins every reviewed revision and dis
 - **Backups:** nonempty desktop evidence uses exact owned test media and explicitly synthetic, unearned progress in an isolated origin. It does not establish large-media/device behavior, earned-gameplay correctness or multi-store atomicity.
 - **Demo predecessor D:** original WIP is preserved. Separate [#1615](https://github.com/mekhovov/revealline/pull/1615), latest observed 2b85914484ca, remains draft; its previous source packaging is reported passed, while the newly observed revision and remaining browser/rotation/WebKit/CI/device gates remain its owner’s responsibility. Its figures do not replace candidate-specific capacity measurement or this plan’s950MB target. Dependent F02b/c/F15b/F76 work stays open.
 - **Baseline checks:** unchanged formatting debt and reproduced unrelated failures remain disclosed, never counted as passing. Missing local test dependencies/trimmed fixtures are repaired before interpreting results.
-- **Disk:** about 1.5 GiB free at the latest check after releasing this task’s generated Survival package and its two review servers. Full manifest, build identity, screenshots and receipts are retained. Heavy builds remain serialized; original WIP and unrelated files are untouched.
+- **Disk:** Space recovered by removing only this task’s unnecessary snapshot restorations; small immutable source servers avoid duplicate assets. Exact source snapshots are checked against Git blobs after discovering shared-inode drift. Full manifest, build identity, screenshots and receipts are retained. Heavy builds remain serialized; original WIP and unrelated files are untouched.
 
 The [structured tracker](progress.json) retains all113 deliverables, priorities, estimates, dependencies, exact source identities and detailed evidence. Assessment, reviewed, merged and verified-live are separate states. Substantial milestones update both records.
