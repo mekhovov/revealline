@@ -128,6 +128,7 @@ async function harness({
   mode = 'solo',
   activity = 'campaign',
   sharedTools = false,
+  liveLocale = false,
   directEntry = true,
   focused = true,
   artReview = null,
@@ -140,6 +141,7 @@ async function harness({
 } = {}) {
   const document = new Document();
   let harnessLocale = 'en';
+  const localeListeners = new Set();
   document.hasFocus = () => focused;
   const writerClaims = [];
   document.createElement = (tag) => {
@@ -419,8 +421,12 @@ async function harness({
     t,
     setLocale(value) {
       harnessLocale = value;
+      if (liveLocale) for (const listener of localeListeners) listener(value);
     },
-    onLocaleChange() {},
+    onLocaleChange(listener) {
+      if (liveLocale) localeListeners.add(listener);
+      return () => localeListeners.delete(listener);
+    },
     createDestructionPreferences: () =>
       createDestructionPreferences({
         window,
@@ -1356,6 +1362,43 @@ test('the shared keyboard navigator moves menu focus without leaking directional
   assert.equal(state.document.body.dataset.playing, 'false');
 });
 
+for (const [mode, activity, query, expected] of [
+  ['solo', 'campaign', '', 'SNAKE · Solo · Campaign'],
+  ['team', 'campaign', '', 'SNAKE · Team · Campaign'],
+  ['versus', 'campaign', '', 'SNAKE · Duel · Campaign'],
+  ['solo', 'endless', '', 'SNAKE · Solo · Endless'],
+  ['versus', 'endless', '&duel=score', 'SNAKE · Duel · Endless · Score duel · 3 min'],
+  ['versus', 'endless', '&duel=survival', 'SNAKE · Duel · Endless · Survival duel'],
+]) {
+  test(`Snake Home identifies the accepted ${mode}/${activity}${query} round without starting it`, async () => {
+    const state = await harness({
+      mode,
+      activity,
+      query,
+      directEntry: false,
+      liveLocale: mode === 'versus',
+    });
+    const context = state.$('snake-navigation-context');
+    assert.equal(context.hidden, false);
+    assert.equal(context.textContent, expected);
+    assert.equal(state.shell.elements.modes.getAttribute('aria-describedby'), context.id);
+    assert.equal(state.shell.topDialog(), state.shell.elements.home);
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    if (mode === 'versus') {
+      state.$('language').value = 'uk';
+      state.$('language').emit('change');
+      assert.match(context.textContent, /^ЗМІЙКА · Дуель · /);
+    }
+    state.frame(0);
+    state.frame(2000);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(state.document.body.dataset.playing, 'false');
+  });
+}
+
 test('the Snake library shows all missions and filters without changing the paused attempt', async () => {
   const state = await harness();
   state.frame(0);
@@ -1370,6 +1413,11 @@ test('the Snake library shows all missions and filters without changing the paus
   assert.equal(state.$('journey-cards').children.length, 1);
   state.$('journey-mode').value = 'team';
   state.$('journey-mode').emit('change');
+  state.$('journey-filter-details').open = false;
+  assert.match(
+    state.$('journey-chooser-status').textContent,
+    /Browsing Team · from SNAKE · Solo · Campaign/,
+  );
   state.frame(1200);
   assert.deepEqual(
     state.created.map((run) => core.exportClassicSnakeReplay(run)),
@@ -1394,6 +1442,12 @@ test('Snake library mode selection launches the exact chosen Team mission with o
   state.$('journey-mode').value = 'team';
   state.$('journey-mode').emit('change');
   const selected = CLASSIC_SNAKE_LEVELS.at(-1);
+  const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  libraryCard(state, selected.id).focus();
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    before,
+  );
   libraryCard(state, selected.id).click();
   await flush();
   assert.equal(state.created.at(-1).level.id, selected.id);
@@ -1402,7 +1456,60 @@ test('Snake library mode selection launches the exact chosen Team mission with o
   assert.equal(state.$('journey-chooser').open, false);
   assert.equal(state.shell.topDialog(), null);
   assert.equal(state.document.body.dataset.playing, 'true');
+  state.shell.openHome();
+  assert.equal(state.$('snake-navigation-context').textContent, 'SNAKE · Team · Campaign');
+  assert.equal(
+    state.shell.elements.home.querySelector('.mode-play-mission').textContent,
+    selected.title.en,
+  );
 });
+
+for (const [browsedMode, label, translatedLabel] of [
+  ['team', 'Team', 'Команда'],
+  ['versus', 'Duel', 'Дуель'],
+])
+  test(`Snake ${browsedMode} navigation context localizes without changing the paused owner or selected library mode`, async () => {
+    const state = await harness({ liveLocale: true });
+    state.frame(0);
+    state.frame(200);
+    state.shell.openHome();
+    state.shell.open('missions');
+    state.$('journey-mode').value = browsedMode;
+    state.$('journey-mode').emit('change');
+    assert.ok(
+      state
+        .$('journey-chooser-status')
+        .textContent.includes(`Browsing ${label} · from SNAKE · Solo · Campaign`),
+    );
+    assert.equal(
+      [...state.$('journey-mode').children].find((option) => option.value === browsedMode)
+        .textContent,
+      label,
+    );
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const selected = libraryCard(state, CLASSIC_SNAKE_LEVELS[1].id);
+    selected.focus();
+    state.$('language').value = 'uk';
+    state.$('language').emit('change');
+    assert.equal(state.document.activeElement, selected);
+    assert.equal(state.$('snake-navigation-context').textContent, 'ЗМІЙКА · Соло · Кампанія');
+    assert.ok(
+      state
+        .$('journey-chooser-status')
+        .textContent.includes(
+          `Перегляд: ${translatedLabel} · поточна гра: ЗМІЙКА · Соло · Кампанія`,
+        ),
+    );
+    state.$('journey-back').click();
+    assert.equal(state.shell.topDialog(), state.shell.elements.home);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    state.shell.open('missions');
+    assert.equal(state.$('journey-mode').value, browsedMode);
+  });
 
 test('a mode change in Snake rules remains selected when returning to the existing library', async () => {
   const state = await harness();
@@ -2651,4 +2758,94 @@ test('transient status wrapping never inherits the operation-only rule that hide
     ),
     'only staged operation objectives replace the ordinary quota',
   );
+});
+
+test('Snake live language refresh translates every stats view without changing the paused attempt', async (t) => {
+  const state = await harness({ liveLocale: true });
+  t.after(() => state.disposeTools());
+  const run = state.created[0];
+  state.frame(0);
+  let cursor = 0;
+  let now = 0;
+  for (let tick = 0; tick < clearedReplay.steps && run.catches === 0; tick++) {
+    while (clearedReplay.turns[cursor]?.tick === tick) {
+      const command = clearedReplay.turns[cursor++];
+      const key = { up: 'w', right: 'd', down: 's', left: 'a' }[command.direction];
+      state.document.emit('keydown', {
+        target: state.document.querySelector('canvas'),
+        key,
+        code: `Key${key.toUpperCase()}`,
+        repeat: false,
+      });
+    }
+    now += core.classicSnakeSummary(run).stepMs;
+    state.frame(now);
+  }
+  await flush();
+  assert.equal(run.status, 'running');
+  assert.equal(run.catches, 1, 'legal host input catches one enemy before the locale change');
+  state.shell.elements.buttons.pause.click();
+  const views = [...state.document.querySelectorAll('.enemy-stats')];
+  assert.equal(views.length, 3, 'HUD, Pause and Results share the current locale');
+  const pauseView = state.shell.elements.content.pause.querySelector('.enemy-stats');
+  const disclosure = pauseView.querySelector('details');
+  const summary = disclosure.querySelector('summary');
+  disclosure.open = true;
+  disclosure.emit('toggle');
+  summary.focus();
+  const counts = () =>
+    views.map((view) => [...view.querySelectorAll('strong')].map((node) => node.textContent));
+  const expectedCounts = counts();
+  assert.deepEqual(expectedCounts, [
+    ['1', '1'],
+    ['1', '1'],
+    ['1', '1'],
+  ]);
+  state.shell.elements.buttons.settings.click();
+  state.$('snake-menu-settings-tab-accessibility').click();
+  const language = state.$('language');
+  const paused = state.created.map((value) => core.exportClassicSnakeReplay(value));
+  const saved = [...state.storage];
+  for (const [locale, copy] of [
+    ['uk', ['Ця спроба', 'За весь час', 'Види ворогів', 'Переможені вороги']],
+    ['en', ['This run', 'Lifetime', 'Enemy details', 'Enemies defeated']],
+  ]) {
+    language.focus();
+    language.value = locale;
+    language.emit('change');
+    assert.equal(state.document.activeElement, language, 'locale refresh never steals focus');
+    assert.equal(disclosure.open, true);
+    assert.equal(
+      disclosure.querySelector('summary'),
+      summary,
+      'the open disclosure retains its summary',
+    );
+    for (const view of views) {
+      assert.equal(view.getAttribute('aria-label'), copy[3]);
+      assert.equal(view.querySelector('.enemy-stats-run span').textContent, copy[0]);
+      assert.equal(view.querySelector('.enemy-stats-caption').textContent, copy[1]);
+      if (view.dataset.variant === 'panel') {
+        assert.equal(view.querySelector('.enemy-stats-disclosure-label').textContent, copy[2]);
+        assert.equal(view.querySelector('.enemy-stats-grid').getAttribute('aria-label'), copy[2]);
+      }
+    }
+    assert.match(
+      pauseView.querySelector('.enemy-stats-row-count').getAttribute('aria-label'),
+      new RegExp(`^${copy[0]}: 1`),
+    );
+    assert.deepEqual(counts(), expectedCounts);
+    state.frame((now += 1000));
+    assert.deepEqual(
+      state.created.map((value) => core.exportClassicSnakeReplay(value)),
+      paused,
+    );
+    assert.deepEqual(
+      [...state.storage],
+      saved,
+      'stats refresh does not write gameplay or stats records',
+    );
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.equal(state.shell.elements.root.dataset.phase, 'paused');
+    assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.settings);
+  }
 });

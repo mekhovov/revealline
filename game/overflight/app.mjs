@@ -990,6 +990,7 @@ function syncUpgrade(force = false) {
       });
     }
     $('reroll-upgrades').textContent = text('reroll');
+    $('reroll-hint').textContent = text('rerollHint');
     const remaining = run.progression.rerolls;
     $('rerolls-left').textContent = `${remaining} ${text('rerolls')}`;
     $('reroll-upgrades').disabled = review.active() || remaining <= 0;
