@@ -267,6 +267,7 @@ export function bootCoop({
   candidateDifficulty = 'standard',
   candidateNotice = '',
   candidateEditionLabel = '',
+  candidateNavigationLabel = '',
 } = {}) {
   // Consume native setup intent before applying saved defaults. Only an actual
   // difficulty edit changes the global preference; opening its selector does not.
@@ -921,8 +922,9 @@ export function bootCoop({
     region.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
   }
   $('coop-field-details').onclick = openCueDetails;
+  const levelSelect = $('coop-level');
   const selectedLevel = () =>
-    pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
+    pack.levels.find((level) => level.id === levelSelect.value) || pack.levels[0];
   const encounterChoices = new WeakMap();
   const huntRecords = createHuntRecords({ window, getStorage: () => localStorage });
   huntSaveControls = attachTeamHuntSave({
@@ -1799,7 +1801,10 @@ export function bootCoop({
     });
     musicPublished.setPlayer(music.player);
   }
-  nativeMenu?.refreshGlobalSettings?.({ controls: globalTools.controls });
+  nativeMenu?.refreshGlobalSettings?.({
+    controls: globalTools.controls,
+    comfort: { display: displayPreferences },
+  });
   function prepareReactionAttempt() {
     if (run && reactionRun !== run) {
       reactionRun = run;
@@ -4744,6 +4749,11 @@ export function bootCoop({
       document,
       library: getTeamLibrary(),
       mode: 'team',
+      browsingContext: ({ label }) =>
+        t('interface:captureNavigation.browsing', {
+          mode: label,
+          context: teamNavigationContext(),
+        }),
       getCurrentId: () =>
         missionLibrary.missions.find((row) => {
           const bound = libraryRuntimeRows.get(row)?.();
@@ -6541,6 +6551,32 @@ export function bootCoop({
     const level = selectedLevel();
     return candidateJourney?.rows.find((row) => row.pack === pack && row.level === level) ?? null;
   }
+  function teamNavigationContext(includeMission = false) {
+    const sourcePack = run ? (acceptedPicture?.sourcePack ?? attemptPack) : pack;
+    const level = run ? attemptLevel : selectedLevel();
+    const row = run ? acceptedPicture?.journeyRow : selectedCandidateRow();
+    const owned = candidateJourney?.owns(row);
+    const edition = owned && !defaultJourney ? renderMessage(candidateNavigationLabel) : '';
+    const mode = t('interface:team');
+    const context = edition
+      ? `${edition} · ${mode}`
+      : owned || sourcePack === COOP_STARTER_PACK
+        ? t('interface:captureNavigation.context', { mode })
+        : `${contentText(sourcePack, 'name')} · ${mode}`;
+    if (!includeMission) return context;
+    const chapter = owned
+      ? contentText(row.mission, 'campaignTitle')
+      : sourcePack === COOP_STARTER_PACK
+        ? contentText(sourcePack, 'name')
+        : '';
+    return [
+      context,
+      chapter && !context.startsWith(`${chapter} · `) ? chapter : '',
+      contentText(level, 'name'),
+    ]
+      .filter(Boolean)
+      .join(' · ');
+  }
   function difficultyControls(level = selectedLevel()) {
     // Compiled Journey packs are immutable preset editions. Changing this menu
     // selects a newly compiled owned edition, never re-projects imported bytes.
@@ -6551,6 +6587,8 @@ export function bootCoop({
     gameplayTuningPanel?.refresh();
   }
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
+    localizedText($('coop-navigation-context'), () => teamNavigationContext(true));
+    $('coop-navigation-context').hidden = false;
     huntSaveControls?.refresh();
     difficultyControls(level);
     if (run) level = run.level;

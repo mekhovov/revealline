@@ -1,0 +1,330 @@
+{
+  "format": "FPVReservoirMineralFinishSourceQualification.v1",
+  "asset": "prepared",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "Exact published r16 prepared baseline",
+      "passed": true
+    },
+    {
+      "name": "Unchanged1.2MiB source target",
+      "passed": true
+    },
+    {
+      "name": "Candidate no larger than baseline",
+      "passed": true
+    },
+    {
+      "name": "nodes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "scenes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "meshes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "materials exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "textures exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "samplers exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "accessors exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "extensionsUsed exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "extensionsRequired exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Still13 materials/3maps/60nodes",
+      "passed": true
+    },
+    {
+      "name": "Buffer-view count unchanged",
+      "passed": true
+    },
+    {
+      "name": "Buffer view0 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view1 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view2 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view3 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view3 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view4 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view4 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view5 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view5 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view6 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view6 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view7 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view7 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view8 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view8 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view9 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view9 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view10 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view10 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view11 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view11 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view12 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view12 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view13 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view13 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view14 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view14 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Buffer view15 layout/state exact",
+      "passed": true
+    },
+    {
+      "name": "Geometry buffer view15 byte-exact",
+      "passed": true
+    },
+    {
+      "name": "Other image1 metadata exact",
+      "passed": true
+    },
+    {
+      "name": "Other image1 payload exact",
+      "passed": true
+    },
+    {
+      "name": "Other image2 metadata exact",
+      "passed": true
+    },
+    {
+      "name": "Other image2 payload exact",
+      "passed": true
+    },
+    {
+      "name": "Mineral image ownership/MIME exact",
+      "passed": true
+    },
+    {
+      "name": "Asset metadata exact except explicit generator provenance",
+      "passed": true
+    },
+    {
+      "name": "PNG signature",
+      "passed": true
+    },
+    {
+      "name": "Unchanged opaque8bit RGB image",
+      "passed": true
+    },
+    {
+      "name": "Unchanged256px dimensions",
+      "passed": true
+    },
+    {
+      "name": "Exact unfiltered source image allocation",
+      "passed": true
+    },
+    {
+      "name": "PNG signature",
+      "passed": true
+    },
+    {
+      "name": "Unchanged opaque8bit RGB image",
+      "passed": true
+    },
+    {
+      "name": "Unchanged256px dimensions",
+      "passed": true
+    },
+    {
+      "name": "Exact unfiltered source image allocation",
+      "passed": true
+    },
+    {
+      "name": "Existing mineral image changed",
+      "passed": true
+    },
+    {
+      "name": "Encoded mineral image no larger",
+      "passed": true
+    },
+    {
+      "name": "Brightness stays within half an8bit level",
+      "passed": true
+    },
+    {
+      "name": "Lower broad contrast, no black gap",
+      "passed": true
+    },
+    {
+      "name": "Maximum neighboring/tiling edge contrast does not increase",
+      "passed": true
+    },
+    {
+      "name": "Still12260triangles",
+      "passed": true
+    },
+    {
+      "name": "Eight original course IDs",
+      "passed": true
+    },
+    {
+      "name": "All routes/physics/criteria/spawns/collision exact except explicit revision",
+      "passed": true
+    },
+    {
+      "name": "spawnBindings exact",
+      "passed": true
+    },
+    {
+      "name": "routeBindings exact",
+      "passed": true
+    },
+    {
+      "name": "overrides exact",
+      "passed": true
+    },
+    {
+      "name": "themes exact",
+      "passed": true
+    },
+    {
+      "name": "campaigns exact",
+      "passed": true
+    },
+    {
+      "name": "playlists exact",
+      "passed": true
+    }
+  ],
+  "before": {
+    "bytes": 1233136,
+    "sha256": "6d7d829e337357b61fa212af3691bd8e3088092ce22de9d93011f7e820142bae",
+    "imageBytes": 66240,
+    "imageSHA256": "b7166f194b8e19fca239590cf43f672b7dff29204e50275122655c48de04e7fc",
+    "pixels": {
+      "pixels": 65536,
+      "mean": 189.62298583984375,
+      "deviation": 11.971368796838425,
+      "minimum": 145,
+      "maximum": 220,
+      "maximumGradient": 46
+    }
+  },
+  "after": {
+    "bytes": 1215540,
+    "sha256": "845db7a0d0d92b3be0ff7a180af947d6827eea94616970f569aece7ef32f51de",
+    "imageBytes": 48639,
+    "imageSHA256": "6bd7be75fd45225311691e098f9387180ccf7dbf453120e69129923e93e565bf",
+    "pixels": {
+      "pixels": 65536,
+      "mean": 189.4452362060547,
+      "deviation": 5.047687405502602,
+      "minimum": 173,
+      "maximum": 203,
+      "maximumGradient": 19
+    }
+  },
+  "resourceDelta": {
+    "maps": 0,
+    "materials": 0,
+    "triangles": 0,
+    "nodes": 0,
+    "texturePixels": 0,
+    "colliderChange": 0
+  },
+  "projectParityIncluded": true,
+  "tierScope": "Identical model geometry/UV/normal/material/sampler/map ownership and unchanged renderer/tier source. No GPU rendering or measured tier performance.",
+  "scope": "Serialized source/asset and optional course data parity only. Pixel statistics do not establish artistic improvement or FPV clearance legibility. Matched native low-pilot/grazing/approach/chase/overview, prepared/flight/package/player/public gates remain separate."
+}
