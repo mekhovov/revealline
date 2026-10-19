@@ -8,6 +8,7 @@ on:
       - 'scripts/diagnose-solo-replay-portability.mjs'
       - 'scripts/solo-replay-portability-diagnostic.test.mjs'
       - 'docs/performance/fixtures/solo-replay-portability/first-eight-39109911286.json'
+      - 'docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture'
       - 'scripts/run-solo-replay-portability.mjs'
       - 'scripts/test-solo-replay-portability-hook.mjs'
       - 'docs/performance/solo-replay-portability-797-plan.json'
@@ -399,6 +400,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-shared-owner-declared-source.mjs
             /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
@@ -1018,6 +1021,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-shared-owner-declared-source.mjs
             /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
             /docs/performance/solo-remote-9d5139b-correctness-plan.json
@@ -1399,6 +1404,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-shared-owner-declared-source.mjs
             /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
             /docs/performance/solo-remote-9d5139b-correctness-plan.json
@@ -1845,6 +1852,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /.github/workflows/solo-native-package-consumer.yml
             /.github/workflows/solo-remote-auxiliary-temporary.yml
             /.github/workflows/solo-remote-final-audio-temporary.yml
@@ -2401,6 +2410,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
@@ -2750,7 +2761,7 @@ jobs:
       SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate
       PYTHONDONTWRITEBYTECODE: 1
       SOLO_DIAGNOSTIC_LANE: ${{ inputs.lane }}
-      SOLO_DIAGNOSTIC_OUTPUT: ${{ inputs.lane == 'frame-trace' && 'solo-linux-9d5139-frame-failure' || 'solo-linux-797e03-hud-cpu' }}
+      SOLO_DIAGNOSTIC_OUTPUT: ${{ inputs.lane == 'frame-trace' && 'solo-linux-9d5139-frame-tasks-v2' || 'solo-linux-797e03-hud-cpu' }}
     steps:
       - timeout-minutes: 2
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -2761,6 +2772,10 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/solo-browser-frame-trace-9d-tasks-plan.json
+            /scripts/solo-frame-trace-tasks-admission.test.mjs
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /docs/performance/solo-browser-frame-trace-9d-failure-plan.json
             /scripts/solo-frame-trace-failure-admission.test.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/83f-held-source.json
@@ -3092,10 +3107,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/solo-frame-trace-failure-admission.test.mjs scripts/test-solo-first-victory-cpu-797e03.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-first-victory-cpu-de332.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-final-long-rail-cpu-profile.mjs scripts/test-solo-qualification-replay-identity.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-first-victory-cpu-profile.mjs scripts/test-solo-first-victory-cpu-239.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test --test-concurrency=2 scripts/solo-frame-trace-tasks-admission.test.mjs scripts/test-solo-first-victory-cpu-797e03.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-first-victory-cpu-de332.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-final-long-rail-cpu-profile.mjs scripts/test-solo-qualification-replay-identity.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-first-victory-cpu-profile.mjs scripts/test-solo-first-victory-cpu-239.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
           case "$SOLO_DIAGNOSTIC_LANE" in
             frame-trace)
-              node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-browser-frame-trace-9d-failure-plan.json "$RUNNER_TEMP/solo-cpu-profile-job.json"
+              node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-browser-frame-trace-9d-tasks-plan.json "$RUNNER_TEMP/solo-cpu-profile-job.json"
               ;;
             hud-cpu)
               node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-first-victory-cpu-797e03-plan.json "$RUNNER_TEMP/solo-cpu-profile-job.json"
@@ -5751,6 +5766,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json
             /docs/performance/solo-demo-resources-797e03-close-boundary-plan.json
             /game/test/demo-input.test.mjs
@@ -6291,6 +6308,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-demo-close-declared-source.mjs
             /docs/performance/fixtures/solo-demo-797e03/d99-close-boundary-source.json
             /docs/performance/solo-demo-recovery-73a345-plan.json
@@ -6848,6 +6867,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-demo-close-declared-source.mjs
             /docs/performance/fixtures/solo-demo-797e03/d99-close-boundary-source.json
             /docs/performance/solo-demo-recovery-73a345-plan.json
@@ -7399,6 +7420,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-frame-trace-executed-source.mjs
+            /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
@@ -7416,6 +7439,7 @@ jobs:
             /scripts/diagnose-solo-replay-portability.mjs
             /scripts/solo-replay-portability-diagnostic.test.mjs
             /docs/performance/fixtures/solo-replay-portability/first-eight-39109911286.json
+            /docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture
             /scripts/run-solo-replay-portability.mjs
             /scripts/test-solo-replay-portability-hook.mjs
             /docs/performance/solo-replay-portability-797-plan.json
@@ -7772,6 +7796,7 @@ jobs:
             /scripts/diagnose-solo-replay-portability.mjs
             /scripts/solo-replay-portability-diagnostic.test.mjs
             /docs/performance/fixtures/solo-replay-portability/first-eight-39109911286.json
+            /docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture
             /scripts/run-solo-replay-portability.mjs
             /scripts/test-solo-replay-portability-hook.mjs
             /docs/performance/solo-replay-portability-797-plan.json
