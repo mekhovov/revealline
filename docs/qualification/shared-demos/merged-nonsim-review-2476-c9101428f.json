@@ -1,0 +1,118 @@
+{
+  "format": "revealline-demo-merged-nonsim-review.v1",
+  "created": "2026-10-19T03:11:54.876475+00:00",
+  "reviewedHead": "c9101428f186ffea75f237e1bb0a33281db0dbbd",
+  "priorCandidate": "575c10a31287b7ae086bcf373ef4ab3ecbf613a3",
+  "incomingBase": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+  "priorBase": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "method": "Read actual merged source, compare prior candidate to adopted HEAD for non-SIM overlapping app and shell files, and compare the incoming base delta. Git reads used GIT_NO_LAZY_FETCH=1. Reviewed app/shell files had no uncommitted diff at review time.",
+  "files": [
+    {
+      "path": "game/app.mjs",
+      "sha256": "35c419a9a4620023046e142de871a768b8de493f05cf62bfa956e332b65bc0de",
+      "bytes": 623500,
+      "reviewLineAnchors": [
+        237,
+        3462,
+        13844,
+        14955,
+        15161,
+        15305
+      ]
+    },
+    {
+      "path": "game/snake/classic-app.mjs",
+      "sha256": "0190d217964f2ee680c9986299012f28e870d5441b2fe68aa3d571c7b420947b",
+      "bytes": 108651,
+      "reviewLineAnchors": [
+        1211,
+        1600,
+        1615,
+        1641,
+        2473,
+        2909,
+        2954
+      ]
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "sha256": "bb7f9ec49a91dd9515bc997e9515f0ff43553be80a0257a3209da2a17f090066",
+      "bytes": 94245,
+      "reviewLineAnchors": [
+        1009,
+        1357,
+        2602,
+        2633
+      ]
+    },
+    {
+      "path": "game/overflight/play.html",
+      "sha256": "d9dd593ac230ba47cdb215f558e857b35d4d4e829374edb2134dff26d87d787b",
+      "bytes": 12805,
+      "reviewLineAnchors": [
+        286,
+        289
+      ]
+    },
+    {
+      "path": "game/overflight/style.css",
+      "sha256": "2fc835add26f6df1c08909f7f74d26dfc15400a3f364e319e9c390025865abf2",
+      "bytes": 28645,
+      "reviewLineAnchors": [
+        1389
+      ]
+    },
+    {
+      "path": "game/ui/mode-play-shell.mjs",
+      "sha256": "3483d2df578c98f7ddcbc92a99f23640ef8a111978b64c78aabefa146ee182d1",
+      "bytes": 28698,
+      "reviewLineAnchors": [
+        225,
+        387,
+        590,
+        769
+      ]
+    },
+    {
+      "path": "game/ui/native-menus.mjs",
+      "sha256": "6eca342500a4c2cc6fe82bd568d9225098150847bad82df17dffddfcad985e6b",
+      "bytes": 26152,
+      "reviewLineAnchors": [
+        337
+      ]
+    }
+  ],
+  "findings": [],
+  "conclusions": [
+    "No actionable non-SIM merge blocker found in the reviewed scope.",
+    "Snake still hides both demo entry actions for Team, Versus and community contexts; ordinary menu filtering and late demo action registration remain.",
+    "Snake native frame early-return ownership, transient demo pause and exact standard Ready Fresh path are preserved.",
+    "Solo owner-checked Hunt navigation context and localized reading prompts are presentation changes; guarded prepareDemoFresh and existing demo input/persistence gates remain unchanged.",
+    "Survival app overlap adds reroll disclosure copy backed by actual HTML; its scheduler, controller handoff, guarded Fresh and cancellation rollback remain unchanged.",
+    "Shared shell navigation context and aria-describedby changes preserve addHomeActions/controller ordering. Team native menu relocation is outside demo eligibility.",
+    "No changes to shared director, demo adapters or native demo corpus were present in the compared non-SIM scope."
+  ],
+  "suggestedFocusedRegressions": [
+    "game/test/classic-snake-ui.test.mjs",
+    "game/test/mode-play-shell.test.mjs",
+    "game/test/native-landing-structure.test.mjs",
+    "game/test/reading-prompts-host.test.mjs",
+    "game/test/demo-classic-fresh-host.test.mjs",
+    "game/test/demo-native-host.test.mjs",
+    "game/test/overflight-reroll-disclosure.test.mjs"
+  ],
+  "execution": {
+    "testsRun": false,
+    "browsersRun": false,
+    "buildRun": false,
+    "sourceEdits": false,
+    "gitMutations": false,
+    "lazyFetchAllowed": false
+  },
+  "limits": [
+    "This is a bounded source review, not execution, browser, full coverage, or endurance qualification.",
+    "SIM changes and native SIM content identities are reviewed separately by the SIM agent.",
+    "Full runtime/build fingerprint was not recomputed by this review; file hashes identify only the listed source bytes.",
+    "Line anchors reflect the adopted source reviewed at c9101428f and may move after subsequent generated-file refreshes or integration."
+  ]
+}

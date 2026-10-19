@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-19T03:28:32.445389+00:00",
+  "device": "/dev/disk4s1",
+  "mount": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c",
+  "image": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification.sparsebundle",
+  "previouslyDetached": true,
+  "availableBytes": 1856114688
+}
