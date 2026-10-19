@@ -15,10 +15,10 @@
   },
   "nextPriority": [
     "Admit reviewed foundations through required checks on each current revision",
-    "Finish local recovery and support-summary integrations",
-    "Complete the demonstrated primary reader translation fix",
-    "Extend large-text support to the remaining game families",
-    "Deliver paused mission progress and remaining upgrade consequences",
+    "Complete Survival/Raid support integration and remaining diagnostic hosts",
+    "Extend readable text to the complete Classic Snake play family",
+    "Verify paused mission progress, including route-based and Hunt goals",
+    "Explain Survival upgrade commitments using the native choice policy",
     "Continue Demo-dependent work after its predecessor; physical-only gates remain Not tested"
   ],
   "release": {
@@ -181,17 +181,17 @@
       "impact": "M/H",
       "effort": "**0.5–1.5d**",
       "featureId": "F15",
-      "status": "developing",
+      "status": "ready_for_checks",
       "owner": "lane-c",
       "qualification": {
         "automated": "focused_and_full_source_passed",
-        "browser": "scoped_touch_and_about_passed",
+        "browser": "scoped_touch_about_stats_reading_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Complete the primary reader hint localization fix using the existing shared formatter; current touch/About/stats slices await required checks.",
+      "next": "Admit the four reviewed touch/About/stats/reading copy slices. Broader terminology and later feature-batch reviews remain F59.",
       "evidence": [
         "Source scan on20555cd found no missing rich slots or plain-label interpolation tokens in checked Solo Help/About/Couch/Team surfaces. This is not a browser closure.",
         "Current-source Solo Help EN browser shows no localization placeholders. About has build-time __REVEALLINE_VERSION__ only in source serving; exact F82 packaged About substitutes0.151.1. No shipped localization defect demonstrated by that token.",
@@ -237,11 +237,18 @@
         {
           "id": "primary-reading-hint",
           "priority": "P1",
-          "status": "developing",
-          "next": "Replace Solo duplicate prompt with existing shared localized helper; verify actual-host keyboard/remapped controller/touch callbacks and retained pause/focus.",
+          "status": "ready_for_checks",
+          "next": "Required checks and admission for this bounded copy fix; authored titles and captured history retain their own language.",
           "evidence": [
-            "Actual e40 Ukrainian readers end keyboard hints with English returns. Exactdd337 source app3452–3465 privateformatter also adds literal or for controller; common localized helper already covers both. Separate bounded fix preserves existing reader owners and F09 layout. Red actual-host cases reproduce keyboard/controller/touch suffixes before correction; implementation underway."
-          ]
+            "Actual e40 Ukrainian readers end keyboard hints with English returns. Exactdd337 source app3452–3465 privateformatter also adds literal or for controller; common localized helper already covers both. Separate bounded fix preserves existing reader owners and F09 layout. Red actual-host cases reproduce keyboard/controller/touch suffixes before correction; implementation underway.",
+            "Exact d393 uses the existing shared localized formatter.79 focused/policy cases, full lint/changed format and uninterrupted source validation pass; independent A/root source review clear and root10/10actual-host tests pass without skips. Actual320×776 Legacy paused3:03/3lives/0 Field details shows correct EN/UK active reading hints; End reaches final content, Return focuses Read, Back restores opener and same paused facts. Outer wrapper locale button blurs iframe and triggers existing pause persistence (writes3→4); unchanged focus/storage across that browser switch is not claimed. Prepared-briefing focused-document tests cover live locale preservation. No device/AT/audio claim. /tmp/f15-d393-reading-browser-receipt.json. Promoted ready at unchanged d393."
+          ],
+          "owner": "lane-c",
+          "pr": "https://github.com/mekhovov/revealline/pull/1681",
+          "commit": "d39385ca9cb6bec083a1bb84b97d257416be182e",
+          "deliveryState": "ready",
+          "observedRemoteHead": "d39385ca9cb6bec083a1bb84b97d257416be182e",
+          "mergeState": "UNSTABLE"
         }
       ]
     },
@@ -868,9 +875,13 @@
         {
           "id": "survival-commitment-context",
           "priority": "P2",
-          "status": "planned",
-          "next": "Disclose payload path, final combat slot, support family and capped rank using the native legal-choice policy.",
-          "effort": "2–4d"
+          "status": "developing",
+          "next": "Derive native legal offer consequences for payload path, combat slot, support family and max rank; preserve current/next graphic and one-choice owner. Missing policy context and Raid stay excluded.",
+          "effort": "2–4d",
+          "owner": "lane-c",
+          "evidence": [
+            "Scope approved after current P1 review: use the accepted native build/legal-choice policy and actual authored module set. No balance/replay/save/input changes; EN/UK visible/accessible parity, compact real-card and keyboard activation review required. Existing shield slice remains separately ready; reroll and utility copy remain open."
+          ]
         },
         {
           "id": "reroll-choice-availability",
@@ -953,7 +964,8 @@
       "commit": null,
       "next": "Implement current/target/remaining progress in the accepted paused snapshot and existing details section; retain Hunt quota/required-objective distinctions, locale repaint and safe Back.",
       "evidence": [
-        "Read-only exactdd337 source assessment credits existing goal, objectives, rules, threats, binding and paused ownership. Actual isolated22a Choose your share Field details shows Reveal65% but no current/remaining coverage inside the modal; HUD0% remains outside. Back retains17:16/3lives/0score and opener focus. No exact-main browser replay or comprehension/physical claim. Assessment /tmp/revealline-f22-assessment-oct19.md; F09 reader-layout problem is tracked separately."
+        "Read-only exactdd337 source assessment credits existing goal, objectives, rules, threats, binding and paused ownership. Actual isolated22a Choose your share Field details shows Reveal65% but no current/remaining coverage inside the modal; HUD0% remains outside. Back retains17:16/3lives/0score and opener focus. No exact-main browser replay or comprehension/physical claim. Assessment /tmp/revealline-f22-assessment-oct19.md; F09 reader-layout problem is tracked separately.",
+        "Independent source review caught route-budget percentages mislabeled as picture coverage. The first internal945 candidate is not accepted; corrected basis-aware wording and route fixture regression are required before browser review. Earlier90/93 information cohort has3 failures reproduced directly on clean dd337; no historical assertions edited or failures counted as passes."
       ]
     },
     {
@@ -1102,13 +1114,18 @@
         },
         {
           "id": "retained-recovery-entry",
-          "status": "draft_review",
-          "evidence": "87 tests/full lint/validation/changed formatting; independent source review and 70 independently rerun tests pass. Actual generated 30,790-byte package: offload → catalog503 → reload → Recovery copies → exact local reinstall → Play focus → Creator Continue → Pause. No full offline PWA or physical claim; new nonempty earned-progress equality is model evidence, not browser evidence.",
+          "status": "reviewed_stack",
+          "evidence": [
+            "87 tests/full lint/validation/changed formatting; independent source review and 70 independently rerun tests pass. Actual generated 30,790-byte package: offload → catalog503 → reload → Recovery copies → exact local reinstall → Play focus → Creator Continue → Pause. No full offline PWA or physical claim; new nonempty earned-progress equality is model evidence, not browser evidence.",
+            "Integrated e872 on removal a4cf preserves original12-file/+738−26 delta,9 feature blobs and9 original locale changes.94/94 serial focused checks, full lint/changed format and uninterrupted validation pass;8 unchanged full-format baseline files remain. Root independent equality review confirms all18 generated namespaces and original source changes. Published dependent draft1657; original22772 catalog-outage/reinstall/Play/Continue/Pause receipt retained, no new PWA/device qualification."
+          ],
           "pr": "https://github.com/mekhovov/revealline/pull/1657",
-          "commit": "22772f197235be127485b92744c46981b899b489",
+          "commit": "e872da10e9bf743ac698e5fcef5489725a9a8bc9",
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
-          "observedRemoteHead": "22772f197235be127485b92744c46981b899b489"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "e872da10e9bf743ac698e5fcef5489725a9a8bc9",
+          "dependency": "PR1653 exact a4cf2afb23cd55bb1df26f8fbc1d76e713c03dd9",
+          "next": "Await predecessor and exact-head admission; prior catalog-outage receipt retains its original candidate scope."
         }
       ],
       "deliveryState": "draft",
@@ -1381,7 +1398,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Finish integrating reviewed Snake/Survival summaries onto current primary; then remaining couch/SIM/Rooms adapters. Existing browser evidence remains scoped.",
+      "next": "Finish Survival/Raid integration, then remaining couch/SIM/Rooms summaries. Primary and Snake integrations are reviewed; browser evidence retains its exact candidate scope.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim."
@@ -1402,14 +1419,18 @@
         },
         {
           "id": "snake-host",
-          "status": "draft_review",
-          "dependency": "PR1661 exact47c8693a",
-          "evidence": "139 focused/full source gates and13 independently rerun summary/host checks pass. Actual Team host paused report, EN/UK refresh, Close/reopen clearing and931-byte download-preview equality pass. Hardware/native/controller readiness and other Snake variants remain modeled separately.",
+          "status": "reviewed_stack",
+          "dependency": "PR1661 exact f3c97cb5bb4be58c816df45087b89afd6d2b26e8",
+          "evidence": [
+            "139 focused/full source gates and13 independently rerun summary/host checks pass. Actual Team host paused report, EN/UK refresh, Close/reopen clearing and931-byte download-preview equality pass. Hardware/native/controller readiness and other Snake variants remain modeled separately.",
+            "Integrated a40 preserves original8-file/+248−16 delta,5 feature blobs and3 original locale changes.139/139 focused checks, full lint/changed format and uninterrupted source validation pass;8 unchanged format baseline files remain. Root independently verifies exact source delta and all18 generated namespaces. Published dependent draft1664; original751 actual paused Team/export receipt retained."
+          ],
           "pr": "https://github.com/mekhovov/revealline/pull/1664",
-          "commit": "751468ec94eaa898029242d567f7d4f86ac15f2c",
+          "commit": "a40fd15192dd7e3972fcba96e4a903eb1eae175c",
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
-          "observedRemoteHead": "751468ec94eaa898029242d567f7d4f86ac15f2c"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "a40fd15192dd7e3972fcba96e4a903eb1eae175c",
+          "next": "Await primary predecessor and exact-head admission; actual export evidence remains scoped to original751."
         },
         {
           "id": "survival-raid-host",
@@ -1715,7 +1736,7 @@
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1668",
       "commit": "0fa88f0bed68de9730e8619528e712f361d73403",
-      "next": "Await compatibility/current-primary admission; begin remaining host scaling after lane-B recovery/support reconciliation.",
+      "next": "Await compatibility/current-primary admission; lane B begins remaining-host family inventory under F09b.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
         "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
@@ -1769,8 +1790,8 @@
       "impact": "H/H",
       "effort": "**3–5d**; F09a",
       "featureId": "F09",
-      "status": "planned",
-      "owner": null,
+      "status": "assessing",
+      "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -1779,8 +1800,10 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "After support integration, deliver Classic Snake Solo/Versus/Team play as one complete family on reviewed primary1672. Inventory deferred sheets, readers and canvas text; keep separate hub and other families on honest fallback.",
+      "evidence": [
+        "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json."
+      ]
     },
     {
       "id": "F18a",
@@ -3310,6 +3333,11 @@
       "date": "2026-10-19",
       "item": "Reader accepted, archive stack reconciled, shield consequences ready",
       "reason": "Primarye40 reader source and EN/UK portrait/landscape checks pass; guidedc87 and qualification85e drafts published with full gates. First F19slice1680 ready after independent native-card/source review. F15a existing mixed-language prompt and F22 paused progress now developing.4merged/19ready/28draft; no new live/device claim."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "F15a/F79/F58/F09b/F19/F22",
+      "reason": "Reading localization is independently reviewed and ready. Recovery and Snake diagnostics are integrated with current predecessors. Begin bounded Classic Snake scaling and Survival commitment work; correct route-based progress wording before acceptance."
     }
   ],
   "deliveryDependencies": [
@@ -3326,7 +3354,7 @@
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 19,
+    "featurePRsReady": 20,
     "featurePRsDraft": 28,
     "deliverablesMerged": 4,
     "verifiedLive": 0,
