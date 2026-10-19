@@ -523,6 +523,7 @@
                   <p id="overlay-difficulty" class="micro-note" hidden></p>
                   <div id="result-medals" class="result-medals" hidden></div>
                   <p id="mastery-overlay" class="mastery-note" hidden></p>
+                  <p id="capture-medal-goal" hidden></p>
                 </div>
                 <div class="reading-toolbar">
                   <div class="reading-actions">
@@ -3210,9 +3211,11 @@ No offline check yet.</pre
         <h1 id="shell-title" data-i18n-rich="interface:reveal">
           FPV<span data-i18n="interface:line" data-i18n-slot="slot0">/ LINE</span>
         </h1>
+        <p id="shell-family-context" class="home-family-context" hidden></p>
         <nav
           id="shell-title-modes"
           aria-label="Choose play mode"
+          aria-describedby="shell-family-context"
           data-i18n-aria-label="common:game.chooseMode"
         >
           <a id="shell-title-versus" href="couch/?return=solo" data-i18n="common:game.couchVersus"

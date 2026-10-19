@@ -1372,6 +1372,11 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 .global-settings-option [hidden] {
   display: none !important;
 }
+.global-settings-save-retry {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+}
 
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
