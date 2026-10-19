@@ -5924,5 +5924,14 @@
   "flightLimits.collectionExpired": "The two-hour Classic collection limit has passed. This flight can continue, but its completion cannot be kept in the Classic collection. Earlier progress is unchanged.",
   "captureNavigation.context": "Capture · {{mode}}",
   "captureNavigation.browsing": "Browsing {{mode}} · from {{context}}",
-  "captureNavigation.browseHint": "Activate a mission to open its flight or briefing. Browsing and Back do not start a new flight."
+  "captureNavigation.browseHint": "Activate a mission to open its flight or briefing. Browsing and Back do not start a new flight.",
+  "captureMedal.unavailable": "Medal comparison is unavailable for this result.",
+  "captureMedal.highest": "Gold earned — the highest medal for this mission.",
+  "captureMedal.gold": "Next: Gold. Finish in {{target}} s or less without losing a life.",
+  "captureMedal.silver": "Next: Silver. Finish in {{target}} s or less.",
+  "captureMedal.timeMet": "Your time already meets this target.",
+  "captureMedal.tiny": "Less than 0.01 s over the time target.",
+  "captureMedal.shortfall": "Improve this time by {{seconds}} s (rounded up to 0.01 s).",
+  "captureMedal.cleanMet": "No lives lost in this attempt.",
+  "captureMedal.cleanMissing": "A life was lost; complete a retry without losing a life."
 }
