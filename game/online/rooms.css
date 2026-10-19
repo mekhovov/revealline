@@ -67,7 +67,8 @@ select:focus-visible {
   outline: 3px solid #ffda71;
   outline-offset: 3px;
 }
-button:disabled {
+button:disabled,
+.room-invitation-actions button[aria-disabled='true'] {
   opacity: 0.5;
   cursor: default;
 }

@@ -96,7 +96,12 @@ export function mountRoomInvitationActions({
   function paint() {
     if (disposed) return;
     root.hidden = address === null;
-    for (const button of Object.values(buttons)) button.disabled = !usable() || pending !== null;
+    for (const button of Object.values(buttons)) {
+      // Keep a valid pending action focusable: native disabled blurs it during
+      // slower work. Each handler retains the same single-operation guard.
+      button.disabled = !usable();
+      button.setAttribute('aria-disabled', String(button.disabled || pending !== null));
+    }
     buttons.select.hidden = !manualAvailable;
     root.setAttribute('aria-busy', String(pending !== null));
     localizedText(buttons.qr, qrText);

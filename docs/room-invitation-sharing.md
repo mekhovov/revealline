@@ -3,8 +3,10 @@
 Status: developing. Draft for remote review and normal CI on exact captured main
 `cdbda99ac881eb9cac62d536543d9078b92ac081`. This is the complete bounded
 Copy/Share/QR implementation. The complete four-file component/room source
-cohort passes 87/87; actual browser and device acceptance remain pending. Draft
-publication does not establish those qualifications or complete F49.
+cohort now passes 108/108, including a correction for delayed-operation
+keyboard focus verified in the real browser. The earlier 87/87 qualification
+remains separate below. Full-source, package, OS sharing, QR scanning and device
+acceptance remain pending; draft publication does not complete F49.
 
 ## Player benefit and boundary
 
@@ -208,9 +210,10 @@ system clipboard or an operating-system Share sheet.
 
 ## Remaining gates
 
-Independent source review accepted the boundary for draft publication. Actual
-desktop and compact browser layout/focus/controller checks, a real clipboard
-permission workflow, operating-system Share and cancellation, real QR scans,
+Independent source review accepted the boundary for draft publication. The
+scoped desktop Copy/QR/retirement and delayed-component focus evidence below
+does not complete desktop/compact layout or controller acceptance. A real
+clipboard permission-denial workflow, operating-system Share and cancellation, real QR scans,
 iPhone/PWA and Steam Deck acceptance, full-source validation and built package
 qualification remain pending. No hardware is currently available. No offline
 or physical-device claim follows from modeled APIs or local source tests.
@@ -224,3 +227,103 @@ or updating the draft.
 
 F49 remains developing until those acceptance boundaries are met; source tests
 alone do not make the whole Phase 5 feature complete.
+
+## Delayed-operation focus correction: 108/108 and scoped browser green
+
+Actual desktop browser review at published
+`e3e9b552a389b260374872894458f788564510da` confirmed Copy's clipboard
+contents exactly matched the accepted invitation. The prior empty clipboard
+was restored. Show QR displayed the local SVG, without a scan claim. Warm
+keyboard Hide/Show and a fresh document keyboard activation retained focus,
+so the initial pointer-only BODY observation was not treated as a general
+keyboard defect.
+
+A separate ignored real-DOM page imported the exact committed component and
+real QR encoder through its existing factory option, with a two-second Promise
+delay and fictitious invitation pins. Native Tab/Enter activated Show QR without
+further input. Disabling that focused native button moved focus to BODY while
+pending and at settlement. The passive snapshots and root screenshot
+`f49-deferred-qr-keyboard-focus-red.png` establish that narrow delayed-work bug.
+The page is outside the game build inputs and is not product source.
+
+The correction uses native disabled only while the invitation is unavailable.
+Pending valid actions remain focusable with `aria-disabled=true` and existing
+`aria-busy`; each existing handler still refuses duplicate or cross-action work
+until the current request settles. The existing disabled appearance covers the
+ARIA state. No completion calls focus or stores a new focus owner, so settlement
+cannot reclaim focus after the player navigates elsewhere.
+
+The component fixture adds an opt-in, local disabled-property boundary that
+blurs only its focused native button. Before changing production, all 21 new
+deferred focus cases failed their retained-focus assertion against the exact
+published action source (0 pass / 21 assertion failures; no cancellations or
+skips). These cases cover QR and Clipboard success/failure, Share success,
+failure and cancellation, each with retained focus, moved focus, and retired
+then reopened presentation. This models the independently observed real DOM
+behavior; it changes no shared DOM helper. Existing locale-refresh assertions
+now check the intended ARIA lock while keeping the native button focusable.
+The original 87/87 result remains historical, not a qualification for the
+correction. The first corrected complete four-file run at source manifest
+`096e04d3334b3f001c7df7a9c5f4c26fdc169837f15203f68e41a1695e63c017`
+passed 106/108: component 69/69, client 21/21, content 6/6, presentation 10/12.
+The two presentation failures were the shared-body assertion expecting native
+`disabled=true` while pending after Settings/Back. That assertion was updated
+to native `false` plus `aria-disabled=true`, retaining the subsequent actual
+click, one-request counter, Ready/Pause counters and stale feedback/image
+assertions. Settlement must clear the ARIA lock. No assertion about duplicate
+work or game ownership was removed; no runtime change followed that run.
+There were no guards, stderr, truncation, skipped/cancelled cases or source
+drift. The successor complete cohort passed **108/108** at frozen source and
+tracked-status manifest
+`87ec6f0b0444905f584125a6c44327b476fd895d8aa5d4ccbe869209bf7344da`.
+HEAD remained `e3e9b552a389b260374872894458f788564510da` with exactly the five
+reviewed correction paths modified, identical before and after every file.
+The whole nine-path content manifest was
+`ced2761f37e47521af3312c354a5d5e53518f7c3f8afceeb70004ed69e8a21b6`.
+This final receipt is a documentation-only successor; all eight nondoc PR files
+remain exactly the passing source.
+
+| Complete file                       | Passed | Wall seconds | Peak group RSS KiB | Full stdout bytes |
+| ----------------------------------- | -----: | -----------: | -----------------: | ----------------: |
+| `room-invitation-actions.test.mjs`  |  69/69 |        0.331 |            149,168 |            16,707 |
+| `online-room-client.test.mjs`       |  21/21 |        0.335 |            146,128 |             5,179 |
+| `online-room-content.test.mjs`      |    6/6 |        0.289 |            163,344 |             1,697 |
+| `online-room-presentation.test.mjs` |  12/12 |        0.282 |            157,184 |             3,040 |
+
+All four fresh Node 22.22.2 workers exited 0, with zero skips, cancellations,
+stderr, truncation, guards or source drift. The same 1,536 MiB heap, 2,048 MiB
+process-group RSS, 180-second and 2 GiB floor guards applied. Full unfiltered
+per-file stdout/stderr and `focus-corrected-cohort.json` remain in the ignored
+F49 evidence directory; the failed 106/108 run remains separately retained.
+Stdout SHA256, in table order:
+
+- `165a28fdfec82b70cb21e9d3e30aa9727fcc3d3a854be512335cd53a2f472af4`
+- `4c9121df3bc64f940c22227fb9f15f56b5333bc5532a8138bf99effc15661a1d`
+- `3595e4354009fab960cfb08e89d09f0f224ee8474e2d7f6f9afc56be5380fb54`
+- `6ccace7e3ac98f1b85c6e984052c4905b2d6c1fc075d789effbc3763e282841e`
+
+Root then opened a separately versioned ignored probe whose direct component
+module response matched action source SHA256
+`ebb1835b98ce16b34446b675c78635e256b8fc5c656623925be1941c1332ccb9`.
+The unchanged original RED page and screenshot remain separate. Native Tab and
+Enter activated Show QR; no further focus action or click occurred. Focus stayed
+on `invite-qr` at 50, 500 and 1,500 ms and after the full two-second operation
+settled. Native disabled remained false; `aria-disabled` was true while pending
+and false after completion; expanded became true. The screenshot
+`f49-deferred-qr-keyboard-focus-green.png` records this scope. The original
+ordinary-reload probe had reused the older module instance and is not treated
+as a result for the corrected source. No product cache policy changed.
+
+This is real browser acceptance of the delayed component focus boundary, not
+full Ukrainian host, OS Share/cancellation, QR scanning or device acceptance.
+The real-game English observations below retain their predecessor source
+scope. No whole-project/build pass follows from the 108-case cohort.
+
+Actual predecessor Back/Home/Settings/mission navigation retired the prepared
+QR. One Home Continue action legitimately armed the only seat; that room was
+immediately left. No second seat or gameplay was exercised. An actual Share
+request remained pending while native Escape returned to Home and then the
+mission menu; this is not proof of operating-system cancellation. OS controls
+were unavailable to the browser tool. Public Leave cleaned the room. No
+messages were sent; actual OS sharing/cancellation, QR scanning, physical
+devices, latest-main integration, and full source/package gates remain pending.
