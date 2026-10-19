@@ -2,17 +2,19 @@
 
 ## Latest checkpoint · 19 October, implementation continues
 
-**31 merged · 12 open for checks · 41 drafts = 84 active/admitted feature candidates; 1 withdrawn.** All **83 feature groups / 113 deliverables** remain tracked. Seven delivery dependencies are separate. PR inventory is not plan completion.
+**31 merged · 12 open for checks · 42 drafts = 85 active/admitted feature candidates; 1 withdrawn.** All **83 feature groups / 113 deliverables** remain tracked. Seven delivery dependencies are separate. PR inventory is not plan completion.
 
-| Priority | Deliverable                      | Current result                                                                                                                       | Next acceptance boundary                                                                      |
-| -------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| P1       | Text compatibility #1668         | Current-main integration frozen; 43 feature paths preserved, 39 JavaScript files pass lint, both bootstrap checks pass.              | Complete current-source native cohort and broader gates before updating draft.                |
-| P1       | Single Drone/Riy text scaling    | Current save/caption owners integrated; complete typography inventory and responsive layout authored.                                | Native tests, full field/HUD/touch visibility and actual compact EN/UK review.                |
-| P1       | Duel Home guidance #1741         | Clean 11-file draft on #1735. All 11 files ran at recorded scopes: 135 pass, one independently reproduced pre-existing Team failure. | Current-source, compact browser, package and admission checks; F10 lessons remain separate.   |
-| P1       | Team navigation repair #1740     | Separate current-main draft fixes that baseline ownership bug; complete localization file passes 5/5.                                | Independent review and broader source/browser gates.                                          |
-| P2       | Pause-music language #1737       | Current-source complete 28/28; actual Duel and Team first-pause/retained EN/UK language and Settings focus reviewed.                 | Full source/package/admission, listening and physical checks.                                 |
-| P2       | Academy terminal language        | Two real terminal cases reproduce lost result meaning after native language change.                                                  | Correct local painter and verify success/replay/reset controls; no new proof or record owner. |
-| P1       | Worlds/Rooms support #1733/#1734 | Complete 245/152 focused checks and sampled EN/UK browser review.                                                                    | Current-source/package/admission, exports, live rooms and physical acceptance.                |
+| Priority | Deliverable                      | Current result                                                                                                                       | Next acceptance boundary                                                                           |
+| -------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| P1       | Text compatibility #1668         | Complete current-main cohort 456/456 and full configured lint pass; canonical catalogs/bootstrap exact.                              | Draft updated normally; full source/package/rendered/CI/admission gates remain.                    |
+| P1       | Single Drone/Riy text scaling    | 33 focused cases pass; actual offscreen Start corrected. Compact browser found critical HUD wrapping to improve.                     | Finish actual EN/UK field/touch/reading/upgrades/results review; full source/package gates remain. |
+| P1       | Duel Home guidance #1741         | Clean 11-file draft on #1735. All 11 files ran at recorded scopes: 135 pass, one independently reproduced pre-existing Team failure. | Current-source, compact browser, package and admission checks; F10 lessons remain separate.        |
+| P1       | Team navigation repair #1740     | Separate current-main draft fixes that baseline ownership bug; complete localization file passes 5/5.                                | Independent review and broader source/browser gates.                                               |
+| P2       | Pause-music language #1737       | Current-source complete 28/28; actual Duel and Team first-pause/retained EN/UK language and Settings focus reviewed.                 | Full source/package/admission, listening and physical checks.                                      |
+| P2       | Academy terminal language        | Draft #1742 preserves terminal meaning; complete native file passes 78/78 including replay/reset/normal success.                     | Actual browser, full-source, package, required CI and physical checks remain.                      |
+| P1       | Worlds/Rooms support #1733/#1734 | Complete 245/152 focused checks and sampled EN/UK browser review.                                                                    | Current-source/package/admission, exports, live rooms and physical acceptance.                     |
+
+**Team Home:** new host passes13/13; three existing regression files pass. Difficulty3/9 is being checked against the unchanged baseline; final three files remain Not run. **Phase5 F49:** private-room Copy/Share/QR is in development, with21 pure component/QR checks passing; host/browser acceptance remains.
 
 **Capacity:** bounded source work and focused tests continue with a protected 2 GiB reserve. Large builds/source captures must fit that reserve. Original work and failed-run evidence remain preserved.
 
@@ -20,16 +22,16 @@
 
 ## Current priorities
 
-- P1 · Text compatibility #1668: qualify the frozen current-main integration before updating its draft. Preserve desired text size, save/reentrancy behavior and all host fallbacks.
-- P1 · Single Drone/Riy: finish the complete Extra large menu, field/HUD, upgrade and result layouts, then actual compact English/Ukrainian review. Preserve simultaneous field, critical status and touch/action access.
-- P1 · Team repair #1740: five focused checks pass. Finish independent review and broader qualification for the retained navigation-context bug.
-- P1 · Duel Home #1741: review the clean draft on fixture prerequisite #1735. All11 files ran at recorded scopes (135 pass, one independently reproduced baseline Team failure). Compact/current-source/package gates remain.
-- P1 · Shared support foundations: #1661 has81 focused checks; controller #1731 has141; Worlds #1733 has245; Rooms #1734 has152. Complete current-source, package and admission gates before dependent delivery.
-- P1 · Capacity: continue bounded work while protecting2GiB free. Full builds and large captures require enough headroom; do not discard original work or evidence.
-- P2 · Academy language: fix the confirmed timeout/unscored result explanation, with ordinary success/replay/reset controls and unchanged proof/records.
-- P2 · Pause music #1737: complete28/28 current-source checks and actual Duel/Team EN/UK browser review pass. Full/package/admission, listening and physical acceptance remain.
-- P1 · Team launch prerequisites and remaining recovery adapters: preserve intended one-click play, exact checkpoints and existing owners. Required CI governs admission.
-- Continue all eight phases. All83 feature groups/113 deliverables remain tracked; lessons still need Learn/Demo dependencies. Physical iPhone PWA offline and Steam Deck checks remain Not tested.
+- P1 · Single Drone/Riy scaling: fix the demonstrated critical HUD wrapping, then finish actual compact English/Ukrainian field, touch, reading, upgrade and result review. The initial offscreen Start is corrected; 33 focused cases pass at their recorded scopes.
+- P1 · Text compatibility #1668: current-main integration passes the complete 456-case cohort, full configured lint, canonical catalogs and both bootstrap checks. Finish full source/package/rendered checks, required CI and admission.
+- P1 · Team Home guidance: pure 8/8 and complete new host 13/13 pass; continue the seven existing regression files. Preserve the independently verified current mission route and all progress/launch owners.
+- P1 · Shared support/recovery and existing drafts: reconcile current-source predecessors and finish required qualification for controller #1731, primary #1661, Worlds #1733 and Rooms #1734.
+- P2 · Academy language #1742: complete native 78/78 passes, including terminal/replay/reset controls. Actual browser, full source, package and physical gates remain.
+- P2 · Private-room invitations F49: implement Copy, native Share and local QR with truthful fallback, cancellation and stale-owner handling; keep transport and room credentials unchanged.
+- P1 · Capacity: roughly 2.2 GiB remains. Protect the 2 GiB reserve; stop guarded work if it is breached. Avoid large builds/captures and retain original work and evidence.
+- P2 · Pause music #1737: complete current-source 28/28 and actual Duel/Team EN/UK browser review pass. Full/package/admission, listening and hardware acceptance remain.
+- P1 · Review Capture #1729, Duel #1741 and Team repair #1740 with their explicit prerequisites. Source PR counts do not establish whole-feature completion.
+- Continue all eight phases and retain all 83 feature groups / 113 deliverables. Contextual lessons still require Learn/Demo dependencies; physical iPhone PWA offline and Steam Deck checks remain Not tested.
 
 ## Phase picture
 
@@ -40,7 +42,7 @@
 | 2 — Find, learn and start         | First Flight, several context/result explanations merged; search recovery1715 published.                                      | Native search acceptance, next-mission recommendation, further onboarding and guidance.                                    |
 | 3 — Progress and offline          | Archive/local recovery and suspend have reviewed slices; support-summary foundation passes full source gates.                 | Admission, remaining host adapters, package capacity and real PWA/device evidence.                                         |
 | 4 — Comfort, input and audio      | Presets, bindings, scaling and language slices are reviewed or admitted; Team launch test/doc contracts are being reconciled. | Compact browser checks, two Overflight scaling families, remaining hosts, listening and assistive-technology journeys.     |
-| 5 — Practice and playing together | Planned.                                                                                                                      | Playlists, replays, practice routes, invitations, lobby readiness and performance sampling.                                |
+| 5 — Practice and playing together | Private-room invitation Copy/Share/QR (F49) now in development.                                                               | Playlists, replays, practice routes, invitations, lobby readiness and performance sampling.                                |
 | 6 — Creator and community         | Foundational catalog/recovery slices reviewed; larger workflows planned.                                                      | Creator entry/playtest/validation, previews, discovery, publishing and bookmarks.                                          |
 | 7 — Progression and depth         | Hunt draft#1727 now includes the reading-region fix atad50;74 native/read-owner checks pass.                                  | Review and qualify the bounded Hunt slice, then earned-art browsing, experiments, featured challenges and chapter content. |
 | 8 — Services and platforms        | Planned; bounded native scope already distinguished from full-game distribution.                                              | Online recovery, cloud transfer, signed distribution/updates and optional platform features.                               |
