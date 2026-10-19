@@ -918,8 +918,9 @@ export function bootCoop({
     region.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
   }
   $('coop-field-details').onclick = openCueDetails;
+  const levelSelect = $('coop-level');
   const selectedLevel = () =>
-    pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
+    pack.levels.find((level) => level.id === levelSelect.value) || pack.levels[0];
   const encounterChoices = new WeakMap();
   const huntRecords = createHuntRecords({ window, getStorage: () => localStorage });
   huntSaveControls = attachTeamHuntSave({
@@ -1776,7 +1777,10 @@ export function bootCoop({
     });
     musicPublished.setPlayer(music.player);
   }
-  nativeMenu?.refreshGlobalSettings?.({ controls: globalTools.controls });
+  nativeMenu?.refreshGlobalSettings?.({
+    controls: globalTools.controls,
+    comfort: { display: displayPreferences },
+  });
   function prepareReactionAttempt() {
     if (run && reactionRun !== run) {
       reactionRun = run;
