@@ -28,12 +28,13 @@ export function attachCouchInput({
   initialSlots = [null, null],
   controllerSession = null,
   keyboardBindings = null,
+  keyboardMode = 'duel',
   onPause = () => {},
   onStop = () => {},
   onPads = () => {},
   onAcceptedInput = () => {},
 } = {}) {
-  let bindings = couchKeyMap(keyboardBindings);
+  let bindings = couchKeyMap(keyboardBindings, keyboardMode);
   if (typeof continuousSteering !== 'function')
     throw new TypeError('continuousSteering must be a function.');
   if (
@@ -553,7 +554,7 @@ export function attachCouchInput({
     clearPlayer,
     clearPhysical,
     setKeyboardBindings(value) {
-      const next = couchKeyMap(value);
+      const next = couchKeyMap(value, keyboardMode);
       if (destroyed || JSON.stringify(next) === JSON.stringify(bindings)) return;
       if (active()) throw new Error('Keyboard bindings can only change outside active play.');
       // Keep accepted continuous steering; require a fresh physical press for

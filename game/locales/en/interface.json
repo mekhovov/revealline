@@ -6032,5 +6032,9 @@
   "couchKeyboard.save.conflict": "Another tab assigned a conflicting key. Review or reset the mappings before retrying.",
   "couchKeyboard.save.saving": "Saving…",
   "couchKeyboard.save.occupied": "Another tab is saving these keys. Retry when it finishes.",
-  "couchKeyboard.save.lockUnavailable": "This browser cannot reserve a safe save. These keys remain session only."
+  "couchKeyboard.save.lockUnavailable": "This browser cannot reserve a safe save. These keys remain session only.",
+  "couchKeyboard.teamTitle": "Team keyboard: two players",
+  "couchKeyboard.teamIntro": "Each physical key controls one player and action. Hold Support to help your partner. Escape or P always pauses. These choices apply to Team; Duel and other games keep their existing controls.",
+  "couchKeyboard.support": "Support",
+  "couchKeyboard.teamKeys": "{{player}}: {{move}} steer, {{boost}} Boost, {{support}} Support."
 }
