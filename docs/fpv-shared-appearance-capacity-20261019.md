@@ -31,8 +31,8 @@ and replacing only the generated shell gives these exact input totals:
 
 These are the isolated extraction totals, **before** the 2,966-byte course
 provenance prerequisite, 23-byte workbench lifecycle fix and upcoming reference
-consumer integration. The final combined source still requires exact runtime,
-source, bundled/offline and native package qualification. No new runtime module
+consumer integration. Those historical extraction totals are superseded by the combined source-bound
+qualification below. No new runtime module
 or package file slot is added by this extraction.
 
 Evidence: `/private/tmp/fpv-shared-appearance-after.tap` (SHA-256
@@ -40,5 +40,13 @@ Evidence: `/private/tmp/fpv-shared-appearance-after.tap` (SHA-256
 the retained failing `/private/tmp/fpv-shared-appearance-before.tap`, and
 `/private/tmp/fpv-shared-appearance-input-capacity.json`.
 
-This closes the capacity design investigation. Combined qualification and
-release remain in the [current completion plan](fpv-current-completion-plan.md).
+The combined source `11883768afe9119b4da833324e4b6f33d4ab1a94` passes **19/19**
+package checks and **366/366** integrated regression checks. Exact original-input
+Academy size is **13,298,176 / 13,303,808 bytes** (5,632 spare); bundled Academy
+is **13,067,786 / 13,107,200 bytes** (39,414 spare). World input margin is
+**1,183,101 bytes**. All three complete runtime/source candidates, the actual
+bundled offline transformation and simulator-only native package pass their
+existing contracts. [Source-bound receipt](fpv-workbench-integrity-package-20261019.json).
+
+This closes local capacity implementation and qualification. Normal release and
+deployed acceptance remain in the [current completion plan](fpv-current-completion-plan.md).

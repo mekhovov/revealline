@@ -6,12 +6,28 @@ It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
 unrelated world-expansion or demonstration-authoring projects.
 
-## Active continuation — 19 October, 02:54 CEST
+## Active continuation — 19 October, 03:03 CEST
 
-The next work is **workbench correctness → safe package capacity → course-result
-integrity integration**, alongside the unchanged release queue and Firefox
-qualification. The whole plan remains incomplete. These findings update the
-older release snapshot immediately below:
+The workbench lifecycle fixes, safe package reduction and unscored course-result
+integrity changes are **implemented, independently reviewed and qualified locally**.
+The next work is **normal publication → source-bound deployment acceptance**,
+with Firefox investigation and non-activating propulsion preparation continuing
+independently. The whole plan remains incomplete. This section and the detailed
+remaining-work table supersede every earlier snapshot and estimate below.
+
+The combined source `11883768afe9119b4da833324e4b6f33d4ab1a94` passes
+**366/366 focused regression checks** and **19/19 package checks**, with no skips.
+Scoped lint, formatting, generated-shell byte identity and independent integration
+review pass. Earlier invocations failed to load missing tracked modules, an audio
+fixture or an existing dependency in the sparse checkout; those setup failures
+are retained separately, and no runtime or test edits were used to clear them.
+[Exact source-bound package and test receipt](fpv-workbench-integrity-package-20261019.json).
+
+Academy has **5,632 original-input bytes** and **39,414 bundled bytes** spare;
+World has **1,183,101 input bytes** spare. All three optional source inventories
+remain at their unchanged **98/151/211** limits. Native packaging passes its
+simulator-only development contract; this does not qualify a native device.
+Main was refreshed again and remains an ancestor of this source.
 
 - **R3: inspector 200% zoom is locally accepted.** A fresh exact World package
   at `7d92d2fd10a0e0b098f95eadea30df9bb5080932` passed English/Ukrainian keyboard,
@@ -30,7 +46,7 @@ older release snapshot immediately below:
   recovers **7,416 bytes** without changing a limit, removing content, or
   touching physics. **70/70** focused checks and independent review pass.
   The R11 prerequisite and its reference-selection consumers are now integrated
-  locally. Exact combined package qualification remains.
+  locally. Exact combined package qualification passes.
   [Capacity receipt](fpv-shared-appearance-capacity-20261019.md).
 - **R11: owned-proof unscored selection is implemented and reviewed.** Split
   and recorded-aircraft controls require the verifier's immutable in-process
@@ -53,12 +69,33 @@ older release snapshot immediately below:
   found no change. No final-source test failure or merge
   conflict was found. Public metadata still reports `e440030395`. No run was
   reset and the public browser/archive state was untouched. Queue ETA unknown.
+  At **02:59:48 CEST**, #1679's team-admission check had started; its other
+  eleven checks and #1685's fifteen checks remained queued. This is queue
+  progress, not release completion. No final-source failed check was reported.
 
 The protected archive incident R13 remains P1 with no further deletion or
 unapproved inspection. Disk headroom is about **1.5 GiB**; only small targeted
 builds and measurements are being used. Conditional estimates below remain
 engineering allowances, not completion promises; the old capacity-search
-estimate is superseded by the completed reduction awaiting combined qualification.
+estimate is superseded by the completed and package-qualified reduction.
+
+Current priority order:
+
+1. **P1:** publish the reviewed follow-up after #1685 and accept the eventual
+   deployed source. Queue time is unknown; allow **1–2 working days after a
+   stable deployment** for the shared available-desktop acceptance scope.
+2. **P1:** finish the minimized Firefox contact diagnostic, then assess a
+   trajectory-preserving remedy. Initial profiling is complete; a fix ETA is
+   unknown. The existing failed performance gate remains open.
+3. **P2:** available-desktop offline/update, rendered-host and Regional coverage;
+   **3–5 working days** for an agreed accessible matrix, fixes extra.
+4. **P2:** synthetic, non-activating propulsion composition and later trusted
+   scoring-policy preparation. These can proceed without pilots. Real-aircraft
+   activation and scored promotion still require their separate evidence gates.
+5. **Access/evidence-dependent:** R13 archive diagnosis, physical radios/pilots,
+   matched aircraft measurements and signed/native targets retain the detailed
+   dependencies below. No further public archive mutation is authorized by this
+   continuation.
 
 ## Earlier status snapshot — 19 October, 02:18 CEST
 
@@ -99,11 +136,12 @@ preflight; this does not mean the changes are live. The release sequence is
 bookkeeping changes documentation only and is retained locally without resetting
 the published source's already queued checks.
 
-### Prioritized remaining work and conditional estimates
+### Historical 02:18 priorities and estimates — superseded
 
-These are **active engineering estimates after dependencies are available**,
-not promised dates or queue time. Shared release acceptance covers
-R1/R14–R21 together. No dependable all-plan completion date is available.
+This table preserves the earlier decision state, including the then-unresolved
+capacity deficit and zoom check. It is not the current work queue. Use the active
+continuation above and the detailed remaining-work table below. No dependable
+all-plan completion date is available.
 
 | Priority / work                                                   | Remaining result                                                                                                                                                                                                                       | Estimate / dependency                                                                                                                                                                                                                                            |
 | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -533,9 +571,9 @@ qualification; P3 depends on a qualified physical/platform baseline.
 | R11D / P2                    | Split references **locally complete**, including the final owner/lifecycle label fix (92 focused checks). Actual final-package proof selection and paused recovery pass.                                                                                                                                              | Final follow-up release/public acceptance only.                                                                                                                                                                               | A control reflects its own live reference; clearing proof removes that reference even if its presence query fails. No physics or scoring changes.                       |
 | R11E / P2                    | Optional recorded-aircraft reference **implemented, reviewed, locally accepted**; final package retains independent split and visual actions.                                                                                                                                                                         | Final follow-up release/public acceptance only.                                                                                                                                                                               | Bounded geometry-correct poses, no collisions/scoring effects, explicit selection and cleanup.                                                                          |
 | R17 / P2                     | EN/UK recovery feedback **implemented, reviewed, locally accepted** without repeated storage operations.                                                                                                                                                                                                              | Final follow-up release/public acceptance only.                                                                                                                                                                               | Locale changes only presentation; unknown diagnostics remain literal.                                                                                                   |
-| R18 / P1 prerequisite        | Shared appearance-module extraction **implemented, reviewed and integrated locally**, saving **7,416 bytes** per package; **70/70** focused checks pass. This resolves the isolated R11 capacity deficit in the source calculation. | Exact final combined runtime/source/bundled/native qualification next; allow **half a day** if no new package failure. | Preserve caps/admissions and all file slots. Isolated Academy input headroom **8,783 bytes** before R11/workbench/consumer additions; final measured margin pending. |
+| R18 / completed local prerequisite | Shared appearance extraction saves **7,416 bytes** per package; integration review and **19/19 package checks** pass on source `11883768a`. | Normal publication and shared R1 acceptance remain; no capacity implementation estimate. | Exact Academy margins **5,632 input / 39,414 bundled bytes**; caps and full source inventories unchanged. [Receipt](fpv-workbench-integrity-package-20261019.json). |
 | R21 / P2                     | Fine-adjust accessible labels and contextual Legacy reference guidance **implemented, reviewed and accepted in the final package**. All thirty labels translate; numeric values/undo and retained Legacy behavior are unchanged.                                                                                      | Final follow-up publication/public acceptance only.                                                                                                                                                                           | 169 focused checks and actual packaged Ukrainian interaction pass; no physics or stored-configuration change. [Evidence](fpv-workbench-labels-20261019.md).             |
-| R11 / P2–P3                  | Immutable verifier-owned proof and shared split/visual selection guard **integrated and reviewed locally**, with **95/95** genuine-proof and lifecycle checks. Scored admission, competitive ghost/sector filtering and promotion remain unfinished. | Final combined package qualification and release next; **1–2 engineering weeks provisionally** for agreed scoring scope. Promotion additionally needs physical/platform gates; no date promised. | Custom/forged/partial results stay ineligible. Unscored tools do not close scored admission. Default/scoring flags stay false. |
+| R11 / P2–P3 | Immutable verifier-owned proof and shared split/visual selection guard **implemented, reviewed and locally qualified**, included in **366/366** integrated checks and **19/19** package checks. Scored admission, competitive ghost/sector filtering and promotion remain unfinished. | Publish the qualified unscored changes, then shared R1 acceptance. **1–2 engineering weeks provisionally** for agreed scoring scope; physical/platform qualification additionally gates promotion. | Custom/forged/partial results stay ineligible. Unscored tools do not close scored admission. Default/scoring flags stay false. |
 | R12 / separate scope         | Signed/full-game native distribution **unscheduled**; simulator-only development package delivered.                                                                                                                                                                                                                   | Not estimated until targets, signing access and package scope are decided.                                                                                                                                                    | Signed target install/update/runtime acceptance; does not block the current web release.                                                                                |
 
 R2 covers the requested [Swarm kit catalog](https://swarm.army/kits) and
@@ -546,7 +584,7 @@ and bounded sheet-header inspection limits.
 
 Current sequence: **#1665 → #1679 → #1685 → accept required protected-main updates and fresh checks → deploy → source-bound public acceptance**. Parent #1626's Pages workflow is complete. The flight correction branch is `codex/fpv-flight-integration-20261019`; the reviewed follow-up is `codex/fpv-qualification-followup-20261019`; unrelated main lesson-mode changes are retained. A direct stacked diff against #1665's original branch would not represent this rebased history correctly.
 
-R13 remains an independent P1 investigation; R4 has no safe cleanup path until the inventory is understood. R2's bounded inventory, R3's existing local zoom checks and the newer inspector's narrow EN/UK check are locally complete; physical touch, inspector-specific zoom and public acceptance remain separate. R6 preparation can proceed independently of deferred physical radios/pilots, but measured activation cannot. The delivered R11A–E and R17–R21 corrections need normal publication and scoped public acceptance; R18’s additional capacity work remains open. Do not wait for R6–R12 to improve released practice, or treat them as passed because the local release is ready.
+R13 remains an independent P1 investigation; R4 has no safe cleanup path until the inventory is understood. R2’s bounded inventory and R3’s local narrow/200% EN/UK checks are complete; physical touch, virtual keyboard and public acceptance remain separate. R6 software preparation can proceed independently of deferred physical radios/pilots, but measured activation cannot. Delivered R11A–E and R17–R21 corrections need normal publication and scoped public acceptance; R18’s capacity reduction and exact combined-package qualification are complete locally. Do not wait for R6–R12 to improve released practice or treat them as passed because the local release is ready.
 
 ### R6 evidence and preparation history
 
