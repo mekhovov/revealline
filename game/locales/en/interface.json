@@ -5993,5 +5993,7 @@
   "supportSummary.game.lost": "Attempt ended",
   "supportSummary.game.unavailable": "Unavailable",
   "supportSummary.preparedWaiting": "Summary prepared below. An earlier export is still waiting for its destination; another export will be available when it settles.",
+  "overflight.fieldRerolls_one": "{{count}} reroll",
+  "overflight.fieldRerolls_other": "{{count}} rerolls",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }
