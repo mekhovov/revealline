@@ -6,7 +6,7 @@ It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
 unrelated world-expansion or demonstration-authoring projects.
 
-## Current continuation — 19 October, 06:55 CEST
+## Current continuation — 19 October, 06:58 CEST
 
 **The plan remains incomplete. Available software work continues.** This summary
 supersedes older queue, capacity and in-progress notes below.
@@ -43,8 +43,12 @@ supersedes older queue, capacity and in-progress notes below.
 - **PID release submitted:** [PR #1717](https://github.com/mekhovov/revealline/pull/1717)
   at `0f2e4bf50a` depends on #1698. At 06:56 it has fifteen queued checks;
   mergeability is temporarily unknown, with no completed result inferred.
-  The separately qualified R11/audio follow-up
-  is being submitted after #1717; normal integration and public acceptance remain.
+  The separately qualified R11/audio follow-up is now submitted as
+  [PR #1722](https://github.com/mekhovov/revealline/pull/1722) at `35a1824f1c`,
+  depending on #1717. At 06:58 it is mergeable with fifteen queued checks and
+  no completed result. Normal integration and public acceptance remain.
+  This local publication note does not change either queued PR head merely to
+  record its own publication.
 - **Release queue remains external:** at 06:45, #1679, #1685 and #1698 are open
   and mergeable with twelve queued checks each and no completed new-head result.
   No run was reset or gate bypassed. The 06:51 read-only public metadata
@@ -52,14 +56,14 @@ supersedes older queue, capacity and in-progress notes below.
 - **Protected archives remain untouched and unresolved (R13).** No hidden
   public storage inspection, new deletion or denied-route retry occurred.
 
-| Priority                                | Remaining result                                                                                                                              | Estimate and dependency                                                                                                                                                                |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P1 — release                            | Complete normal hosted checks/integration/deployment for #1679 → #1685 → #1698 → #1717 and the R11 follow-up; accept the actual public build. | Local implementation/qualification complete; queue ETA unknown. Shared public acceptance: **1–2 working days after stable deployment**, fixes extra.                                   |
-| P1 — Firefox                            | Find a trajectory-preserving remedy and pass the original 2× performance gate.                                                                | Reproduction/profiling complete; remedy ETA **unknown**. No physics timing or gate change.                                                                                             |
-| P1 — protected archives                 | Account for six older records and determine cause/recovery.                                                                                   | **1–3 investigation days after a permitted diagnostic context**, recovery ETA unknown. No cleanup.                                                                                     |
-| Completed locally — practice references | Search, capacity repair and Academy/World recorded-flight acceptance are complete; publish the reviewed follow-up.                            | No remaining implementation estimate for this increment; normal release/public acceptance above. Scored promotion remains separately gated.                                            |
-| P2 — broader acceptance                 | Installed/offline/update, additional rendered hosts and Regional streaming; physical input targets when available.                            | **3–5 working days** for the available desktop matrix; **1–2 days per additional target**, access/fixes extra.                                                                         |
-| P2 — measured dynamics                  | Remaining bounded allocation/dynamics preparation, followed by reference fitting.                                                             | Software preparation continues without radios/pilots. **5–10 days per first reference after suitable matched evidence**; data acquisition/all-aircraft fidelity have no reliable date. |
+| Priority                                | Remaining result                                                                                                                | Estimate and dependency                                                                                                                                                                |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P1 — release                            | Complete normal hosted checks/integration/deployment for #1679 → #1685 → #1698 → #1717 → #1722; accept the actual public build. | Local implementation/qualification complete; queue ETA unknown. Shared public acceptance: **1–2 working days after stable deployment**, fixes extra.                                   |
+| P1 — Firefox                            | Find a trajectory-preserving remedy and pass the original 2× performance gate.                                                  | Reproduction/profiling complete; remedy ETA **unknown**. No physics timing or gate change.                                                                                             |
+| P1 — protected archives                 | Account for six older records and determine cause/recovery.                                                                     | **1–3 investigation days after a permitted diagnostic context**, recovery ETA unknown. No cleanup.                                                                                     |
+| Completed locally — practice references | Search, capacity repair and Academy/World recorded-flight acceptance are complete; publish the reviewed follow-up.              | No remaining implementation estimate for this increment; normal release/public acceptance above. Scored promotion remains separately gated.                                            |
+| P2 — broader acceptance                 | Installed/offline/update, additional rendered hosts and Regional streaming; physical input targets when available.              | **3–5 working days** for the available desktop matrix; **1–2 days per additional target**, access/fixes extra.                                                                         |
+| P2 — measured dynamics                  | Remaining bounded allocation/dynamics preparation, followed by reference fitting.                                               | Software preparation continues without radios/pilots. **5–10 days per first reference after suitable matched evidence**; data acquisition/all-aircraft fidelity have no reliable date. |
 
 Physical radios/pilot feedback remain deferred at the user's request. Numerical
 agreement and native replay success qualify computation, not whole-aircraft
