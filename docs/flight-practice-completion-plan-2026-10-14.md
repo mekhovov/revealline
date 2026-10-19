@@ -2,50 +2,43 @@
 
 ## Latest review checkpoint — 19 October 2026
 
-Use the [current status review, completed work, detailed remaining plan, ETAs and
-blockers](flight-practice-status-2026-10-19.md) as the planning authority. The
-[local diagnosis/browser execution report](flight-practice-execution-2026-10-19.md)
-retains exact source-bound test evidence.
+The [current status, remaining priorities, estimates and blockers](flight-practice-status-2026-10-19.md)
+is the planning authority. The [execution report](flight-practice-execution-2026-10-19.md)
+retains exact source-bound successes, failures and inconclusive results.
 
-Continuation: all 33 Practice commits were rebased without conflicts or patch
-changes onto accepted main `36e8bc426` (14 newer commits). Frozen source
-`08fc3430c8` passes 127 selected regressions. All three new standalone packages
-reproduce twice and pass admission; exact comparison finds changed runtime
-bytes in every app. Affected browser qualification and current-head CI remain
-open. The last pre-push old-head CI snapshot has eight successes, one running
-and five queued; it is not evidence for the rebased source.
+Accepted main `36e8bc426` is integrated without changing any of the 33 Practice
+patches. Candidate `08fc3430c8` reproduces/admitted all three packages twice.
+Observer/full-site/test source `bcc0b61a8` now passes the normal production
+build in 277.874 seconds, all six EN/UK production journeys, ten beginner
+exercises, six restarted-offline short flights, current Gym/Academy historical
+update sessions, and actual Academy proof recovery after native quota eviction.
 
-The approved share resolves output space; bounded writes, opt-in phase reporting
-and conservative cross-volume clone veto pass **53 targeted tests**. External
-sampling and isolated original validators completed without changing catalogue
-bytes. The instrumented normal full build still fails its unchanged ten-minute
-limit in **expanded-files**; the latest writer change has no full-build retest.
-Whole-run attribution and current production-directory journeys remain open.
+Full local suites pass: **1,278 Practice / 757 local-UX**, with unchanged limits.
+The initial local-UX setup failure was an omitted committed sparse-checkout
+directory, not a test pass; restoring the exact source and verifying all 44,923
+tracked raw files enabled the successful rerun. Earlier build/setup failures
+remain retained. Local disk headroom recovered enough for guarded checks; the
+previous 661 MiB blocker is historical, not the current status.
 
-**Newly audited passes:** current Academy historical installed-session continuity
-completes its R2 refresh, and all six current restarted-offline short-flight routes
-pass. Simulator evidence remains pinned to candidate `6177d2cc8`; build-tool
-evidence is separately pinned to `623918462`, not relabelled runtime bytes.
-Next: affected integrated-candidate checks/current-head CI, bounded evidence-led build diagnosis, independent all-app
-actual recovery (R3) and native outstanding-digest cancellation (R4), then current
-production journeys. Acceptance/reviewer work (R6–R9) retains its prerequisites.
-Hosting, hardware and historical Worlds stay owner-deferred, not passed. Earlier
-disk measurements and source-specific results below are preserved history.
+**Next:** remaining R3 backup/recovery coverage, an evidence-supported R4 native
+hash-cancellation measurement approach, and required remote CI. Three new World
+recovery observer attempts failed before native eviction and are paused for
+approach review; no recovery pass or simulator defect is inferred. Native digest
+traces confirmed worker activity but did not witness cancellation overlapping
+outstanding hashing. R4 remains inconclusive. Current R2 refresh and R5 are done
+for the frozen bytes, not automatically for subsequent SIM changes.
 
-Local headroom is now the immediate execution blocker: most recently 661 MiB
-free, below browser/full-build guards. The share has approximately 51 GiB but
-does not supply local profile space. Small share-only package builds completed;
-no full build or new browser run was attempted below the guards. I/O probes
-suggest a thread-pool contribution on SMB, not a proven full-build fix. Keep
-production concurrency and limits unchanged pending a safe representative run.
+Arrange R6 performance budgets, R7 actual zoom/spoken review, R8 real novice/
+maintainer walkthroughs, then R9's 24 attributable package decisions. The last
+remote snapshot has all 12 checks queued on draft PR #1554 at `bcc0b61a8`.
+Do not wait idle for CI, fabricate approval, repeat unchanged passing tests or
+change source during frozen runs. No overall completion date is supportable.
 
-The former 3–5 day range is not a current overall ETA. The build fix and CI/human
-waiting have no reliable completion time; the linked review gives conditional
-effort for every remaining item and preserves all 24 pending gate decisions.
-This review updates documentation only; no rebase, new tests or PR mutation.
-Local free space is now approximately 1.8 GiB, below the recent 2 GiB disposable
-browser preflight floor; heavier local browser checks need recovered headroom.
-The Mac mini share still has about 52 GiB for output/evidence.
+Hosting/publication, physical hardware and historical World active-session
+qualification remain explicitly owner-deferred. Nothing here publishes apps,
+waives release requirements, modifies simulator mechanics or touches the shared
+dirty primary checkout. Historical sections below preserve their original
+sources and decisions; their old “next” instructions do not supersede this one.
 
 ## Historical accepted-main checkpoint — 237b40543
 
