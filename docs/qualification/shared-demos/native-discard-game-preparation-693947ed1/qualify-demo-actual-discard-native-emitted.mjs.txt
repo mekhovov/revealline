@@ -1,0 +1,589 @@
+/* global document, window, location, IDBObjectStore, getComputedStyle */
+import assert from 'node:assert/strict';
+import { readFile, lstat, mkdir, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { createNativeDiscardEnvironment } from './demo-native-discard-environment.mjs';
+import { installDiscardObservationFixture, assertDiscardObservationHealth } from './demo-discard-observation-fixture.mjs';
+import { openEmittedPreview } from '../scripts/emitted-preview.mjs';
+import { finishQualification, writeQualificationReport } from '../scripts/shared-demo-browser-report.mjs';
+import {
+  playerPersistenceMutations,
+  mutationSignatures,
+  unexpectedBootMutations,
+  browserErrorDescription,
+  restorationDiagnosticGate,
+} from '../scripts/demo-restoration-observation.mjs';
+import { startProductionPreview } from '../scripts/serve-production-preview.mjs';
+import { fingerprintDemoSources } from '../scripts/demo-source-fingerprint.mjs';
+import { emittedEvidenceSnapshot } from './demo-probe-evidence.mjs';
+
+const args = Object.fromEntries(
+  process.argv.slice(2).map((arg) => {
+    const split = arg.indexOf('=');
+    return [arg.slice(2, split), arg.slice(split + 1)];
+  }),
+);
+const engine = 'chromium';
+assert.equal(typeof WebSocket, 'function', 'Use the bundled Node24 runtime.');
+assert.equal(args.browser ?? engine, engine, 'Actual discard probe is Chromium-only.');
+assert.ok(['chromium', 'firefox', 'webkit'].includes(engine), 'Choose a supported browser.');
+assert.ok(
+  args.runtime && args.executable && args.report,
+  'Supply runtime, executable and a new report path.',
+);
+assert.ok(args['emitted-preview'], 'This diagnostic fixture requires strict emitted input.');
+const port = Number(args.port ?? 18775);
+assert.ok(Number.isSafeInteger(port) && port > 1024 && port <= 65535);
+assert.match(args.head ?? '', /^[a-f0-9]{40}$/, 'Pin the newly frozen HEAD before launch.');
+assert.match(args.fingerprint ?? '', /^[a-f0-9]{64}$/, 'Pin the newly frozen runtime before launch.');
+assert.ok(!args.mode || ['solo', 'snake', 'sim', 'survival'].includes(args.mode));
+if (Object.hasOwn(args, 'emitted-preview'))
+  assert.ok(args['emitted-preview'], 'Supply a nonempty emitted-preview directory.');
+const base = `http://127.0.0.1:${port}`;
+const reportPath = args.report;
+async function requireFreshReport() {
+  try {
+    await lstat(reportPath);
+    throw new Error('Refusing to replace an existing qualification receipt. Use a new report path.');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+}
+await requireFreshReport();
+const sha = (value) => createHash('sha256').update(value).digest('hex');
+const manifestPath = 'docs/qualification/shared-demos/source-freeze-latest.json';
+const manifest = JSON.parse(await readFile(manifestPath));
+assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), args.head);
+assert.equal(manifest.sourceFingerprint, args.fingerprint);
+const runtimeScope = 'Sorted rg --files game optional-practice publishing; .mjs/.js/.json/.css/.html; excludes /test/, *.test.mjs and */coverage.json; SHA256(path + NUL + raw SHA256(file bytes)).';
+async function runtimeFingerprint() {
+  const paths = execFileSync('rg', ['--files', 'game', 'optional-practice', 'publishing'], {
+    encoding: 'utf8',
+    maxBuffer: 8 * 1024 * 1024,
+  }).split('\n').filter(path =>
+    /\.(mjs|js|json|css|html)$/.test(path) &&
+    !path.includes('/test/') &&
+    !path.endsWith('.test.mjs') &&
+    !path.endsWith('/coverage.json')
+  ).sort();
+  const hash = createHash('sha256');
+  let bytes = 0;
+  for (const path of paths) {
+    const value = await readFile(path);
+    bytes += value.length;
+    hash.update(path + '\0').update(createHash('sha256').update(value).digest());
+  }
+  return { sha256: hash.digest('hex'), files: paths.length, bytes };
+}
+function assertRuntimeFingerprint(value, label) {
+  assert.equal(value.sha256, args.fingerprint, `${label}: full runtime must match the pinned fingerprint.`);
+  assert.equal(value.sha256, manifest.sourceFingerprint, `${label}: full runtime must match the manifest.`);
+  assert.equal(value.files, manifest.files, `${label}: canonical runtime file count must match.`);
+  assert.equal(value.bytes, manifest.bytes, `${label}: canonical runtime byte count must match.`);
+}
+const boundPaths = [manifestPath, 'game/app.mjs', 'game/ui/demo-host.mjs',
+  'game/snake/classic-app.mjs', 'game/overflight/app.mjs', 'optional-practice/civilian-fpv/world-app.mjs',
+  'scripts/qualify-demo-restoration-browser.mjs', 'scripts/demo-restoration-observation.mjs',
+  'scripts/shared-demo-browser-report.mjs', 'scripts/serve-production-preview.mjs',
+  'scripts/demo-source-fingerprint.mjs', 'scripts/emitted-preview.mjs', '.cache/demo-probe-evidence.mjs', '.cache/demo-native-discard-environment.mjs',
+  '.cache/demo-discard-observation-fixture.mjs', '.cache/demo-discard-observer-browser.js'];
+const sourceHashes = async () => Object.fromEntries(await Promise.all(boundPaths.map(async path => [path, sha(await readFile(path))])));
+const beforeHashes = await sourceHashes();
+const report = {
+  format: 'SharedDemoActualChromiumNativeDiscardWithObservedHTMLV1',
+  engine,
+  started: new Date().toISOString(),
+  complete: false,
+  source: {
+    binding:
+      'This probe independently recomputes the canonical full runtime fingerprint before browser launch and after browser/preview cleanup, checks hash/file count/byte count against the pinned argument and manifest, and retains scoped source and unchanged-HEAD checks. It also binds the canonical complete scripts/authoring build-input scope and exact emitted capture/audit/inventory bytes before and after.',
+    head: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+    manifestPath,
+    ...manifest,
+  },
+  probe: {
+    path: '.cache/qualify-demo-actual-discard-native-emitted.mjs',
+    sha256: sha(await readFile(new URL(import.meta.url))),
+    helperSHA256: sha(
+      await readFile(new URL('../scripts/demo-restoration-observation.mjs', import.meta.url)),
+    ),
+  },
+  functionalComplete: false,
+  strictDiagnosticGate: false,
+  checks: [],
+  errors: [],
+  actualDiscards: [],
+  beforeHashes,
+  runtimeBinding: { scope: runtimeScope, before: null, after: null },
+  buildInputBinding: { scope: runtimeScope.replace('game optional-practice publishing', 'scripts authoring'), before: null, after: null },
+  emittedEvidenceBinding: { before: null, after: null },
+  references: [
+    'https://developer.chrome.com/docs/web-platform/page-lifecycle-api',
+    'https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/resources/discards/discards_tab.ts',
+  ],
+  instrumentation:
+    'A declared synchronous HTML fixture loads a pinned read-only observer before app scripts. It wraps Storage/IndexedDB calls without changing native arguments/results, retains a bounded per-document buffer, and reports to a same-origin collector independent of Playwright. A separate task-owned preview serves ' +
+    (args['emitted-preview'] ? 'the verified emitted inventory' : 'unchanged frozen runtime') +
+    ' with fixture credentials and public,max-age=0,must-revalidate headers. No Playwright routing is installed. The declared diagnostic HTML fixture and bounded event collector are served by this test-only server.',
+  nativeEnvironments: [],
+  observationLimit: 'Saved local/session values must be identical. Mutation assertions cover observed top-document events and no new observed startup mutation signatures; they do not prove equal write volume, persisted IndexedDB values, or absence of an undelivered old-document tail after detachment. Restored startup must reconcile its complete retained buffer. Native inspector-only diagnostics during the detached interval are not claimed.',
+  limitations: [
+    ...(args['emitted-preview'] ? [
+      'The preview serves the verified emitted inventory after verifying its captured source identity against the current checkout. The local HTML access fixture and additional hashed synchronous observation script tag are declared. This is not offline HTML integrity proof; service workers are not blocked or unregistered.',
+    ] : []),
+    'Actual urgent discard is requested only for the exact owned game tab through chrome://discards UI; no user browser, extension, crash, synthetic wasDiscarded override, or page.reload fallback is used.',
+    'Every accepted case requires the native UI to report discarded, a new document identity, and native document.wasDiscarded=true after tab activation.',
+    'Fresh profiles cover ordinary entry plus watching/practice in each selected mode; existing saved-flight checkpoint tests remain complementary.',
+    'Storage API observers preserve native return values; managed media asset-cache writes are recorded separately from player persistence, following the existing restoration helper.',
+    'Resource assertions cover no restored demo surface/owned scene and absence of exactly observed dedicated-worker native target IDs after confirmed discard. They do not measure browser-internal GPU/process memory.',
+    'The canonical full runtime scope excludes tests, coverage reports, documentation, binary assets and ignored files. The canonical scripts/authoring build-input scope uses the same file selection rules and is independently bound before/after; relevant helpers, this probe, and its ignored evidence helper are also pinned. This is not a hash of every repository file.',
+    'The before/after fingerprints detect changes at those boundaries, not transient edits reverted during the run. The parent must keep the declared source freeze and exclusive browser slot held.',
+    'Invocation requires an exact newly frozen HEAD/runtime; this preparation script itself grants no browser or discard credit until all strict checks complete.',
+  ],
+};
+const entries = [
+  { mode: 'solo', url: '/game/?journey=legacy', button: '#shell-demo' },
+  {
+    mode: 'snake',
+    url: '/game/snake/play.html?level=classic-snake-open-loop&ready=1',
+    button: '#demo-button',
+  },
+  { mode: 'sim', url: '/optional-practice/fpv-worlds/index.html', button: '#demo-button' },
+  {
+    mode: 'survival',
+    url: '/game/overflight/play.html?layout=field-crossing-shelterbelt-gaps',
+    button: '#demo-button',
+  },
+];
+let browser, page, context, timer, preview, discards, environment, fixture, beforeRuntime, beforeBuildInput, beforeEmittedEvidence;
+let expired = false;
+const assertWithinDeadline = () => assert.equal(expired, false, 'Actual discard overall deadline has expired.');
+let stage = 'boot',
+  currentMode = null;
+const events = [];
+const snapshot = async () => {
+  await fixture.reconcile(page, currentMode + ':' + stage + ':snapshot');
+  return page.evaluate(() => {
+    const d = document.querySelector('#demo-dialog');
+    return {
+      documentId: window.demoRestorationObservation.id,
+      wasDiscarded: document.wasDiscarded,
+      resources: d?.dataset.demoResources ? JSON.parse(d.dataset.demoResources) : null,
+      open: d?.open ?? false,
+      practice: d?.classList.contains('is-practice') ?? false,
+      phase: d?.dataset.demoPhase ?? null,
+      mode: d?.dataset.demoMode ?? null,
+      tick: d?.dataset.demoTick ?? null,
+      bodyState: document.body.dataset.flightState ?? null,
+      dialogs: [...document.querySelectorAll('dialog[open]')].map((n) => n.id).sort(),
+      nativeSurfaces: document.querySelectorAll('.demo-native-surface').length,
+      lifecycle: window.demoRestorationObservation.lifecycle,
+      navigation: performance.getEntriesByType('navigation').map((n) => ({
+        type: n.type,
+        notRestoredReasons: n.notRestoredReasons?.toJSON?.() ?? null,
+      })),
+    };
+  });
+};
+const storage = async () => {
+  await fixture.reconcile(page, currentMode + ':' + stage + ':storage');
+  return page.evaluate(() =>
+    Object.fromEntries(
+      ['localStorage', 'sessionStorage'].map((name) => [
+        name,
+        Object.fromEntries(
+          Object.keys(window[name])
+            .sort()
+            .map((k) => [k, window[name].getItem(k)]),
+        ),
+      ]),
+    ),
+  );
+};
+const summarizedStorage = (value) => ({
+  sha256: sha(JSON.stringify(value)),
+  keys: Object.fromEntries(Object.entries(value).map(([k, v]) => [k, Object.keys(v)])),
+});
+const mutations = (start) => events.slice(start).filter((e) => e.kind === 'mutation');
+const playerMutations = playerPersistenceMutations;
+const signature = mutationSignatures;
+const setStage = async (value) => {
+  await fixture.reconcile(page, currentMode + ':' + stage + ':stage-end');
+  stage = value;
+  await page.evaluate(value => { window.demoRestorationObservation.stage = value; }, value);
+};
+async function ordinaryEntry(entry, { openMenu = false } = {}) {
+  const password = page.getByLabel('Password', { exact: true });
+  if (await password.isVisible()) {
+    await password.fill('fixture-password');
+    await page.getByRole('button', { name: 'Unlock', exact: true }).click();
+  }
+  const menu = {
+    solo: '#shell-menu',
+    snake: '#snake-action-menu',
+    sim: '#worlds-shell-action-menu',
+    survival: '#overflight-action-menu',
+  }[entry.mode];
+  await page.waitForFunction(
+    ({ button, menu }) => {
+      if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
+        return false;
+      const visible = (node) =>
+        !!node?.getClientRects().length && getComputedStyle(node).visibility !== 'hidden';
+      return (
+        visible(document.querySelector(button)) ||
+        (visible(document.querySelector(menu)) && !document.querySelector('dialog[open]'))
+      );
+    },
+    { button: entry.button, menu },
+    { timeout: 30000 },
+  );
+  if (openMenu && !(await page.locator(entry.button).isVisible())) {
+    try {
+      await page.locator(menu).click({ timeout: 3000 });
+    } catch (error) {
+      if (!(await page.locator(entry.button).isVisible())) throw error;
+    }
+  }
+  if (openMenu) await page.locator(entry.button).waitFor({ state: 'visible', timeout: 30000 });
+  await page.waitForTimeout(450);
+  const state = await snapshot();
+  assert.equal(state.open, false, 'Discard restoration must enter ordinary mode, not resume Demo.');
+  assert.equal(state.practice, false, 'Reload must not reconstruct practice.');
+  assert.equal(state.nativeSurfaces, 0, 'No demo native scene survives reload.');
+  return state;
+}
+async function startDemo(entry, practice) {
+  await ordinaryEntry(entry, { openMenu: true });
+  await page.locator(entry.button).click();
+  await page.waitForFunction(
+    () => document.querySelector('#demo-dialog')?.dataset.demoPhase === 'playing',
+    null,
+    { timeout: 31000 },
+  );
+  const shown = await snapshot();
+  assert.equal(shown.mode, entry.mode);
+  await page.waitForFunction(
+    (tick) => document.querySelector('#demo-dialog')?.dataset.demoTick !== tick,
+    shown.tick,
+    { timeout: 3500 },
+  );
+  if (practice) {
+    await page.locator('#demo-interrupt').click();
+    await page.locator('#demo-takeover').click();
+    await page.waitForFunction(
+      () => document.querySelector('#demo-dialog')?.classList.contains('is-practice'),
+      null,
+      { timeout: 15000 },
+    );
+    const fork = await snapshot();
+    await page.keyboard.press('ArrowRight');
+    await page.waitForFunction(
+      (tick) => document.querySelector('#demo-dialog')?.dataset.demoTick !== tick,
+      fork.tick,
+      { timeout: 3500 },
+    );
+  }
+  return snapshot();
+}
+async function actualDiscard(entry, stateName) {
+  assertWithinDeadline();
+  assert.equal(page.context(), context);
+  assert.equal(discards.context(), context);
+  assert.equal(context.pages().length, 2, 'Only two owned tabs exist in this isolated context.');
+  const targetURL = page.url();
+  assert.ok(targetURL.startsWith(base + '/'), 'Discard target must be the owned fixture app.');
+  const before = await snapshot();
+  const attempt = { mode: entry.mode, stateName, started: new Date().toISOString(), targetURL, before };
+  report.actualDiscards.push(attempt);
+  const restoredEnvironment = await environment.discard({
+    target: page, controls: discards, attempt,
+    beforeDetach: async () => {
+      attempt.lastObservedOldDocumentPrefix = await fixture.reconcile(page, currentMode + ':' + stateName + ':before-detach');
+    },
+  });
+  browser = restoredEnvironment.browser;
+  context = restoredEnvironment.context;
+  page = restoredEnvironment.target;
+  discards = restoredEnvironment.controls;
+  await page.waitForFunction(() => document.wasDiscarded === true &&
+    !!window.demoRestorationObservation, null, { timeout: 30000 });
+  const restored = await ordinaryEntry(entry);
+  assert.equal(restored.wasDiscarded, true, 'Native wasDiscarded proves actual discard, not ordinary reload.');
+  assert.notEqual(restored.documentId, before.documentId, 'Discard replaces the old document.');
+  assert.equal(restored.open, false);
+  assert.equal(restored.practice, false);
+  assert.equal(restored.nativeSurfaces, 0);
+  if (restored.resources) {
+    assert.equal(restored.resources.ownedNativeScenes, 0);
+    assert.equal(restored.resources.ownedSoloScenes, 0);
+    assert.equal(restored.resources.practiceWorlds, 0);
+    assert.deepEqual(restored.resources.renderer, {});
+  }
+  attempt.restored = restored;
+  attempt.restoredWorkerCount = page.workers().length;
+  attempt.restoredObservationPrefix = await fixture.reconcile(page, currentMode + ':' + stateName + ':restored');
+  attempt.finished = new Date().toISOString();
+  return restored;
+}
+
+try {
+  beforeRuntime = await runtimeFingerprint();
+  report.runtimeBinding.before = beforeRuntime;
+  assertRuntimeFingerprint(beforeRuntime, 'Before launch');
+  assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), args.head);
+  assert.deepEqual(await sourceHashes(), beforeHashes, 'Scoped files remain frozen through preflight.');
+  report.runtimeBinding.beforeVerified = true;
+  beforeBuildInput = await fingerprintDemoSources(process.cwd(), ['scripts', 'authoring']);
+  report.buildInputBinding.before = beforeBuildInput;
+  if (args['emitted-preview']) {
+    beforeEmittedEvidence = await emittedEvidenceSnapshot(process.cwd(), args['emitted-preview']);
+    report.emittedEvidenceBinding.before = beforeEmittedEvidence;
+  }
+  preview = await startProductionPreview({
+    root: process.cwd(),
+    port,
+    fixtureAccess: true,
+    cache: 'revalidate',
+    emittedPreview: args['emitted-preview'],
+    verifyEmittedSource: !!args['emitted-preview'],
+  });
+  fixture = await installDiscardObservationFixture({ preview, events, getStage: () => stage, getMode: () => currentMode });
+  report.preview = {
+    port,
+    cache: preview.cache,
+    mode: preview.mode,
+    headers: preview.headers,
+    fixtureAccess: preview.fixtureAccess,
+    ...(preview.emittedPreview ? { emittedPreview: preview.emittedPreview } : {}),
+  };
+  if (args['emitted-preview']) {
+    assert.ok(preview.emittedPreview, 'The requested emitted preview must be admitted.');
+    assert.equal(preview.emittedPreview.sourceVerified, true, 'Emitted source must be verified.');
+    assert.equal(preview.emittedPreview.manifestSHA256, beforeEmittedEvidence.manifest.sha256);
+    assert.equal(preview.emittedPreview.inventorySHA256, beforeEmittedEvidence.identity.inventorySHA256);
+    assert.equal(preview.emittedPreview.sourceRevision, args.head);
+    assert.deepEqual(preview.emittedPreview.sourceFingerprint, beforeRuntime);
+    assert.deepEqual(preview.emittedPreview.buildInputFingerprint, beforeBuildInput);
+    assert.deepEqual(await emittedEvidenceSnapshot(process.cwd(), args['emitted-preview']), beforeEmittedEvidence,
+      'The exact capture/audit/inventory bytes remain unchanged through strict provider admission.');
+    report.emittedEvidenceBinding.beforeVerified = true;
+  }
+  report.buildInputBinding.beforeVerified = true;
+  const response = await fetch(base + '/game/');
+  assert.equal(response.headers.get('cache-control'), 'public, max-age=0, must-revalidate');
+  report.preview.observedCacheControl = response.headers.get('cache-control');
+  timer = setTimeout(() => {
+    expired = true;
+    report.failure ??= 'Actual discard qualification exceeded 360 seconds.';
+    report.complete = false;
+    void environment?.close().catch(error => { report.deadlineCleanupError = String(error); });
+  }, 360000);
+  for (const entry of entries.filter((entry) => !args.mode || entry.mode === args.mode)) {
+    assertWithinDeadline();
+    currentMode = entry.mode;
+    stage = 'boot';
+    const nativeReport = { mode: entry.mode };
+    report.nativeEnvironments.push(nativeReport);
+    environment = await createNativeDiscardEnvironment({
+      runtime: args.runtime, executable: args.executable, report: nativeReport,
+      onError: error => {
+        if (report.errors.length < 24) report.errors.push({ mode: currentMode, stage,
+          receivedAt: new Date().toISOString(), message: browserErrorDescription(error) });
+        else report.errorOverflow = (report.errorOverflow ?? 0) + 1;
+      },
+    });
+    if (expired) {
+      await environment.close();
+      assertWithinDeadline();
+    }
+    browser = environment.browser;
+    context = environment.context;
+    report.browserVersion = browser.version();
+    page = await context.newPage();
+    environment.trackPageErrors(page);
+    discards = await context.newPage();
+    environment.trackPageErrors(discards);
+    await environment.setupControls(discards);
+    await page.bringToFront();
+    await page.goto(`${base}${entry.url}`);
+    await ordinaryEntry(entry);
+    const baselineSaved = await storage();
+    await setStage('ordinary-control-discard');
+    const controlStart = events.length;
+    const control = await actualDiscard(entry, 'ordinary');
+    assert.deepEqual(await storage(), baselineSaved, 'Ordinary actual discard preserves saved values.');
+    const controlWrites = signature(playerMutations(mutations(controlStart)));
+    report.checks.push({ type: 'ordinary-control-discard', mode: entry.mode, state: control,
+      storage: summarizedStorage(baselineSaved), mutationSignatures: controlWrites });
+    for (const practice of [false, true]) {
+      assertWithinDeadline();
+      const stateName = practice ? 'practice' : 'watching';
+      const saved = await storage();
+      await setStage(stateName);
+      const activeStart = events.length;
+      const active = await startDemo(entry, practice);
+      assert.deepEqual(await storage(), saved, `${entry.mode} ${stateName} must preserve storage.`);
+      const activeWrites = mutations(activeStart);
+      assert.deepEqual(playerMutations(activeWrites), [], `${stateName} cannot write player persistence.`);
+      await setStage(`discard-from-${stateName}`);
+      const discardStart = events.length;
+      const restored = await actualDiscard(entry, stateName);
+      assert.deepEqual(restored.resources, control.resources, 'Restored demo ownership matches ordinary discard baseline.');
+      assert.deepEqual(await storage(), saved, 'Actual discard cannot persist Demo or isolated practice.');
+      assert.deepEqual(unexpectedBootMutations(mutations(discardStart), controlWrites), [],
+        'No new observed top-document player mutation signatures beyond ordinary startup are allowed.');
+      report.checks.push({ type: 'actual-discard-from-demo', mode: entry.mode, stateName,
+        active, restored, storage: summarizedStorage(saved), activeMutations: activeWrites,
+        discardMutationSignatures: signature(playerMutations(mutations(discardStart))) });
+    }
+    await fixture.reconcile(page, currentMode + ':mode-end');
+    await environment.close();
+    environment = browser = context = page = discards = null;
+  }
+  assert.equal(report.errorOverflow ?? 0, 0, 'No native error overflow is permitted.');
+  assert.deepEqual(fixture.errors, []);
+  assert.equal(report.failure, undefined, 'An expired overall deadline remains a failure.');
+  assert.equal(report.eventOverflow ?? 0, 0, 'Bounded observations must not silently omit events.');
+  const selectedModes = entries.filter(entry => !args.mode || entry.mode === args.mode).length;
+  assert.equal(report.checks.length, selectedModes * 3, 'Ordinary control, watching and practice all complete.');
+  assert.equal(report.actualDiscards.length, selectedModes * 3);
+  report.functionalComplete = true;
+  report.strictDiagnosticGate = restorationDiagnosticGate(report.errors, events);
+  assert.equal(
+    report.strictDiagnosticGate,
+    true,
+    JSON.stringify({
+      pageErrors: report.errors,
+      domErrors: events.filter((event) =>
+        ['window-error', 'unhandledrejection'].includes(event.kind),
+      ),
+    }),
+  );
+  report.events = events;
+  report.complete = true;
+} catch (error) {
+  process.exitCode = 1;
+  report.complete = false;
+  report.failure ??= browserErrorDescription(error);
+  report.activeStage = { mode: currentMode, stage };
+  report.events = events;
+  try {
+    report.discardsFailureText = discards ? (await discards.locator('body').innerText({ timeout: 1000 })).slice(0, 12000) : null;
+  } catch {}
+
+} finally {
+  clearTimeout(timer);
+  const result = await finishQualification({
+    report,
+    reportPath,
+    browser: { close: async () => { if (environment) await environment.close(); } },
+    writeReport: async (...writeArgs) => {
+      if (preview) {
+        if (preview.emittedPreview) report.preview.fixtureResponses = preview.fixtureResponses;
+        try {
+          preview.server.closeAllConnections();
+          await new Promise((resolve, reject) => {
+            const closeTimer = setTimeout(
+              () => reject(new Error('Preview cleanup exceeded 2000ms.')),
+              2000,
+            );
+            preview.server.close((error) => {
+              clearTimeout(closeTimer);
+              if (error) reject(error);
+              else resolve();
+            });
+          });
+          report.previewClosed = true;
+        } catch (error) {
+          report.previewClosed = false;
+          report.complete = false;
+          report.failure ??= browserErrorDescription(error);
+        }
+      }
+      if (fixture) {
+        report.observationFixture = fixture.summary();
+        try {
+        const evidenceDirectory = reportPath.replace(/\.json$/, '') + '-fixture';
+        await mkdir(evidenceDirectory, { recursive: false });
+        await writeFile(join(evidenceDirectory, 'observer.js.txt'), fixture.observer, { flag: 'wx' });
+        const emitted = await openEmittedPreview(args['emitted-preview'], { root: process.cwd(), verifySource: false });
+        let index = 0;
+        const originalPins = new Map();
+        for (const row of fixture.html.values()) {
+          if (!originalPins.has(row.path)) {
+            const original = await emitted.read(row.path);
+            assert.equal(sha(original), row.original.sha256);
+            const name = 'original-' + originalPins.size + '.html.txt';
+            await writeFile(join(evidenceDirectory, name), original, { flag: 'wx' });
+            originalPins.set(row.path, name);
+          }
+          await writeFile(join(evidenceDirectory, 'credential-' + index + '.html.txt'), row.credentialBytes, { flag: 'wx' });
+          await writeFile(join(evidenceDirectory, 'served-' + index + '.html.txt'), row.servedBytes, { flag: 'wx' });
+          index++;
+        }
+        report.observationFixture.artifacts = { directory: evidenceDirectory, originals: Object.fromEntries(originalPins), servedVariants: index };
+        } catch (error) {
+          report.complete = false;
+          report.failure ??= browserErrorDescription(error);
+          report.secondaryDiagnostics ??= [];
+          report.secondaryDiagnostics.push({ stage: 'observation-artifact-write', error: browserErrorDescription(error) });
+        }
+      }
+      // Bind failed attempts too, after browser and preview cleanup. A source
+      // mismatch must fail qualification without replacing its primary failure.
+      report.sourceUnchanged = false;
+      try {
+        const afterRuntime = await runtimeFingerprint();
+        report.runtimeBinding.after = afterRuntime;
+        assertRuntimeFingerprint(afterRuntime, 'After cleanup');
+        assert.deepEqual(afterRuntime, beforeRuntime, 'Full canonical runtime remains unchanged.');
+        assert.equal(report.runtimeBinding.beforeVerified, true, 'Runtime was admitted before launch.');
+        report.afterHashes = await sourceHashes();
+        assert.deepEqual(report.afterHashes, beforeHashes, 'Scoped source files remain unchanged.');
+        assert.deepEqual(JSON.parse(await readFile(manifestPath)), manifest, 'Source declaration remains frozen.');
+        report.headAfter = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+        assert.equal(report.headAfter, args.head, 'Held HEAD remains unchanged.');
+        assert.equal(sha(await readFile(new URL(import.meta.url))), report.probe.sha256, 'The probe remains unchanged.');
+        const afterBuildInput = await fingerprintDemoSources(process.cwd(), ['scripts', 'authoring']);
+        report.buildInputBinding.after = afterBuildInput;
+        assert.equal(report.buildInputBinding.beforeVerified, true, 'Build inputs were bound before launch.');
+        assert.deepEqual(afterBuildInput, beforeBuildInput, 'Complete canonical scripts/authoring build inputs remain unchanged.');
+        if (args['emitted-preview']) {
+          const afterEvidence = await emittedEvidenceSnapshot(process.cwd(), args['emitted-preview']);
+          report.emittedEvidenceBinding.after = afterEvidence;
+          assert.equal(report.emittedEvidenceBinding.beforeVerified, true, 'Emitted evidence was admitted before launch.');
+          assert.deepEqual(afterEvidence, beforeEmittedEvidence, 'Exact emitted capture/audit/inventory bytes remain unchanged.');
+          report.emittedEvidenceBinding.afterVerified = true;
+        }
+        report.buildInputBinding.afterVerified = true;
+        report.runtimeBinding.afterVerified = true;
+        report.sourceUnchanged = true;
+      } catch (error) {
+        report.complete = false;
+        report.failure ??= browserErrorDescription(error);
+        report.secondaryDiagnostics ??= [];
+        if (report.secondaryDiagnostics.length < 8)
+          report.secondaryDiagnostics.push({ stage: 'source-binding', error: browserErrorDescription(error) });
+      }
+      try {
+        assertWithinDeadline();
+        assert.ok(fixture, 'Observation fixture must have been admitted.');
+        report.observationFixture = { ...report.observationFixture, ...fixture.summary() };
+        report.strictDiagnosticGate = assertDiscardObservationHealth({ summary: report.observationFixture,
+          errors: report.errors, errorOverflow: report.errorOverflow, events });
+        report.finalObservationGate = { checkedAfterBrowserAndServerCleanup: true, passed: true };
+      } catch (error) {
+        report.complete = false;
+        report.failure ??= browserErrorDescription(error);
+        report.finalObservationGate = { checkedAfterBrowserAndServerCleanup: true, passed: false,
+          error: browserErrorDescription(error) };
+      }
+      await requireFreshReport();
+      await writeQualificationReport(...writeArgs);
+    },
+  });
+  if (!result.complete) process.exitCode = 1;
+}

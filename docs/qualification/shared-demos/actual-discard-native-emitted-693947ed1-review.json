@@ -1,0 +1,108 @@
+{
+  "format": "ActualNativeDiscardFailureReviewV1",
+  "created": "2026-10-19T01:53:23.762064+00:00",
+  "receipt": "docs/qualification/shared-demos/actual-discard-native-emitted-693947ed1.json",
+  "receiptSHA256": "3e48cadc2836add88626ee520e7ef5a96be56faa8f4241d90e7c12f465a7e53f",
+  "result": "FAILED; no actual-game discard credit. First ordinary Solo case refused by native eligibility; no watching/practice or other-mode cases reached.",
+  "checksPassed": 0,
+  "requiredCases": 12,
+  "runtimeIdentity": {
+    "head": "693947ed1373db7a265def126a5eede2bf875013",
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0"
+  },
+  "binding": {
+    "sourceUnchanged": true,
+    "buildInputAfterVerified": true,
+    "emittedAfterVerified": true
+  },
+  "nativeEvidence": {
+    "hidden": true,
+    "targetDebuggerAttached": false,
+    "nativeStateAfterUrgentAttempt": "loaded",
+    "beforeCells": [
+      "1",
+      "3.0",
+      "\n            \n              \n              \n              FPV / LINE\n            \n          ",
+      "http://127.0.0.1:18775/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+      "hidden",
+      "loaded",
+      "hidden",
+      "\n            \u2718\ufe0f\n            \n              [View Reason]\n              Tab is recently visible,Tab has form interactions,The user has edited the tab's content\n            \n          ",
+      "\n            \u2718\ufe0f\n            \n              [View Reason]\n              recently visible,holding Web Lock,loading,most recently used\n            \n          ",
+      "0",
+      "\n            \u2714\n            \n              [Toggle]\n            \n          ",
+      "\n            just now\n          ",
+      "\n            \n              [Load]\n            \n            \n              [Urgent Discard]\n            \n            \n              [Proactive Discard]\n            \n            \n              [Freeze]\n            \n          "
+    ],
+    "afterCells": [
+      "1",
+      "3.0",
+      "\n            \n              \n              \n              FPV / LINE\n            \n          ",
+      "http://127.0.0.1:18775/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+      "hidden",
+      "loaded",
+      "hidden",
+      "\n            \u2718\ufe0f\n            \n              [View Reason]\n              Tab is recently visible,Tab has form interactions,The user has edited the tab's content\n            \n          ",
+      "\n            \u2718\ufe0f\n            \n              [View Reason]\n              recently visible,holding Web Lock,most recently used\n            \n          ",
+      "0",
+      "\n            \u2714\n            \n              [Toggle]\n            \n          ",
+      "\n            just now\n          ",
+      "\n            \n              [Load]\n            \n            \n              [Urgent Discard]\n            \n            \n              [Proactive Discard]\n            \n            \n              [Freeze]\n            \n          "
+    ],
+    "workerIDsBeforeDetach": [],
+    "workerIDsAfterDetach": []
+  },
+  "diagnosis": {
+    "confirmed": "Native UI explicitly reports form interactions and edited-content protection. Chrome155 eligibility source marks both as protected independently of urgent/proactive reason; exact-page discard only proceeds for kEligible. The qualifier filled the password form in this same game document and its native gate stored the access verifier (observer event3).",
+    "qualificationLimit": "No successful native discard or restored document was observed. The UI also lists recently visible; proactive-only WebLock/most-recently-used entries are not evidence that those caused the urgent failure.",
+    "correction": "Use a declared blank same-origin bootstrap to seed only exact known fixture access verifier before first real game document, preserving native protection rules and all original gates. Static preparation only until new candidate/capture release."
+  },
+  "primarySources": [
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/performance_manager/policies/discard_eligibility_policy.cc",
+      "lines": "431-440",
+      "meaning": "Form interaction and user-edits protected predicates."
+    },
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/performance_manager/policies/page_discarding_helper.cc",
+      "lines": "300-309",
+      "meaning": "Exact-page discard considers only kEligible nodes."
+    }
+  ],
+  "diagnostics": {
+    "nativeErrors": [],
+    "postCleanupGate": {
+      "checkedAfterBrowserAndServerCleanup": true,
+      "passed": true
+    },
+    "collectorErrors": [],
+    "meaning": "Passing diagnostic gate is narrower than overall qualification, which remains failed."
+  },
+  "cleanup": {
+    "browserCloseCompleted": true,
+    "previewClosed": true,
+    "nativeExit": {
+      "code": 0,
+      "signal": null,
+      "at": "2026-10-19T01:48:57.808Z"
+    },
+    "childExitConfirmed": true,
+    "remainingOwnedProcesses": [],
+    "profileRemoved": true,
+    "cleanupComplete": true
+  },
+  "retainedSources": {
+    "docs/qualification/shared-demos/actual-discard-native-emitted-693947ed1-review/actual-discard-native-emitted-693947ed1.actual.stdout.txt": {
+      "bytes": 857,
+      "sha256": "dd40fc891a54adca64979235ab224b98f3ee72b9de86baf922d868341b44f0a5"
+    },
+    "docs/qualification/shared-demos/actual-discard-native-emitted-693947ed1-review/chromium155-discard-eligibility-policy.cc.txt": {
+      "bytes": 22289,
+      "sha256": "cc84d1605ccdc73bd1d20e73660ca500ef64cbd7cd9b4f94b1a88b21df8879a6"
+    },
+    "docs/qualification/shared-demos/actual-discard-native-emitted-693947ed1-review/chromium155-page-discarding-helper.cc.txt": {
+      "bytes": 14100,
+      "sha256": "80cd9697655d356bfbd80610c6e53b5832487ad8883bb7d0161b70e0afd425f7"
+    }
+  }
+}

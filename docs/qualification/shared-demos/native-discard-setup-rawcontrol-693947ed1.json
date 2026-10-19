@@ -1,0 +1,334 @@
+{
+  "format": "NativeChromiumDiscardRawControlSetupObservationV1",
+  "nodeVersion": "v24.19.0",
+  "started": "2026-10-19T01:21:14.492Z",
+  "head": "693947ed1373db7a265def126a5eede2bf875013",
+  "complete": false,
+  "before": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": {
+      "bytes": 422,
+      "sha256": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c"
+    },
+    ".cache/qualify-demo-actual-discard-237.mjs": {
+      "bytes": 31524,
+      "sha256": "e4410c02ae706cdc082b57aee898e30b164c5590d99d5ae1b9c47f3bc55f799a"
+    },
+    ".cache/demo-probe-evidence.mjs": {
+      "bytes": 2632,
+      "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9"
+    },
+    ".cache/observe-native-discard-setup-rawcontrol-693947ed1.mjs": {
+      "bytes": 24201,
+      "sha256": "579d9154934e02dbb2fdd2ae071248c0bf3ae8a0d41d55f08e4c691d0e85dfe6"
+    },
+    "scripts/shared-demo-browser-report.mjs": {
+      "bytes": 3881,
+      "sha256": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df"
+    },
+    "scripts/demo-restoration-observation.mjs": {
+      "bytes": 1810,
+      "sha256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+    }
+  },
+  "after": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": {
+      "bytes": 422,
+      "sha256": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c"
+    },
+    ".cache/qualify-demo-actual-discard-237.mjs": {
+      "bytes": 31524,
+      "sha256": "e4410c02ae706cdc082b57aee898e30b164c5590d99d5ae1b9c47f3bc55f799a"
+    },
+    ".cache/demo-probe-evidence.mjs": {
+      "bytes": 2632,
+      "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9"
+    },
+    ".cache/observe-native-discard-setup-rawcontrol-693947ed1.mjs": {
+      "bytes": 24201,
+      "sha256": "579d9154934e02dbb2fdd2ae071248c0bf3ae8a0d41d55f08e4c691d0e85dfe6"
+    },
+    "scripts/shared-demo-browser-report.mjs": {
+      "bytes": 3881,
+      "sha256": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df"
+    },
+    "scripts/demo-restoration-observation.mjs": {
+      "bytes": 1810,
+      "sha256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+    }
+  },
+  "checks": [
+    {
+      "type": "native-debug-ui-available"
+    },
+    {
+      "type": "native-two-tab-visibility",
+      "hidden": {
+        "target": {
+          "url": "http://127.0.0.1:57569/owned-c29d875d-f820-43cc-9837-b43f44fa9663",
+          "hidden": true,
+          "visibilityState": "hidden",
+          "hasFocus": false,
+          "wasDiscarded": false,
+          "documentId": "ea4b50d9-cc98-4f2b-8a50-fc44610d01f3"
+        },
+        "controls": {
+          "url": "chrome://discards/",
+          "hidden": false,
+          "visibilityState": "visible",
+          "hasFocus": true,
+          "wasDiscarded": false,
+          "documentId": null
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "actions": [
+    {
+      "at": "2026-10-19T01:21:15.439Z",
+      "type": "attach-exact-owned-native-browser",
+      "pid": 88895,
+      "profile": "/tmp/codex-native-discard-owned-V5l4tW",
+      "endpoint": "http://127.0.0.1:57572",
+      "noDefaults": true
+    },
+    {
+      "at": "2026-10-19T01:21:15.793Z",
+      "type": "native-owned-tab-identity",
+      "label": "target",
+      "targetId": "27CFCAF11521E6803957F7E92554D578",
+      "windowId": 1378594307
+    },
+    {
+      "at": "2026-10-19T01:21:15.794Z",
+      "type": "native-owned-tab-identity",
+      "label": "controls",
+      "targetId": "62ED2A4BCA1EE22BDAC14933C75ABBC9",
+      "windowId": 1378594307
+    },
+    {
+      "at": "2026-10-19T01:21:15.842Z",
+      "type": "navigate-owned-control-tab",
+      "url": "chrome://chrome-urls/#internal-debug-pages"
+    },
+    {
+      "at": "2026-10-19T01:21:15.922Z",
+      "type": "native-debug-ui-enabled",
+      "scope": "Chrome Local State within this newly created ephemeral user-data-dir only"
+    },
+    {
+      "at": "2026-10-19T01:21:16.067Z",
+      "type": "raw-cdp-attach-owned-control-only",
+      "targetId": "62ED2A4BCA1EE22BDAC14933C75ABBC9",
+      "autoAttachEnabled": false
+    },
+    {
+      "at": "2026-10-19T01:21:16.071Z",
+      "type": "playwright-disconnected-owned-chrome-remains",
+      "pid": 88895
+    }
+  ],
+  "lifecycle": [
+    {
+      "at": "2026-10-19T01:21:15.771Z",
+      "type": "pageshow",
+      "id": "9de966aa-3c0a-4aa9-b0e0-1a8cc3314574",
+      "hidden": true,
+      "visibilityState": "hidden",
+      "wasDiscarded": false,
+      "persisted": false
+    },
+    {
+      "at": "2026-10-19T01:21:16.028Z",
+      "type": "visibilitychange",
+      "id": "9de966aa-3c0a-4aa9-b0e0-1a8cc3314574",
+      "hidden": false,
+      "visibilityState": "visible",
+      "wasDiscarded": false,
+      "persisted": null
+    },
+    {
+      "at": "2026-10-19T01:21:16.050Z",
+      "type": "visibilitychange",
+      "id": "9de966aa-3c0a-4aa9-b0e0-1a8cc3314574",
+      "hidden": true,
+      "visibilityState": "hidden",
+      "wasDiscarded": false,
+      "persisted": null
+    }
+  ],
+  "pageEvents": [
+    {
+      "at": "2026-10-19T01:21:15.706Z",
+      "type": "created",
+      "url": "about:blank"
+    },
+    {
+      "at": "2026-10-19T01:21:15.732Z",
+      "type": "created",
+      "url": "about:blank"
+    },
+    {
+      "at": "2026-10-19T01:21:16.071Z",
+      "type": "closed",
+      "url": "http://127.0.0.1:57569/owned-c29d875d-f820-43cc-9837-b43f44fa9663"
+    },
+    {
+      "at": "2026-10-19T01:21:16.071Z",
+      "type": "closed",
+      "url": "chrome://discards/"
+    }
+  ],
+  "limits": {
+    "browserSpawnMs": 2000,
+    "browserEndpointMs": 10000,
+    "browserConnectMs": 10000,
+    "navigationMs": 10000,
+    "uiActionMs": 3000,
+    "nativeHiddenMs": 3000,
+    "nativeDiscardMs": 10000,
+    "nativeRestorationMs": 10000,
+    "browserCloseMs": 10000,
+    "serverCloseMs": 2000
+  },
+  "scope": "Environment-only observer: one directly spawned Chrome with an explicitly owned temporary user-data-dir, its default context attached through public connectOverCDP({noDefaults:true}), exactly two owned tabs and a tiny localhost HTML page. No game, emitted runtime, worker, source simulation, or acceptance gate is exercised.",
+  "limitations": [
+    "Only native debug UI enablement is changed; public noDefaults:true avoids installing Playwright focus emulation. No Emulation commands are sent. No synthetic visibility/wasDiscarded override, crash, discard-all action, reload fallback, extension or user-browser connection is used.",
+    "Native hidden visibility, exact-owned urgent discard UI state, new document identity and document.wasDiscarded=true are mandatory. Any failure remains a failed observation.",
+    "After native hidden state is observed, Playwright disconnects without shutting down the owned Chrome. A raw CDP connection attaches only to the exact control tab, never the target, and clicks the native UI through normal input dispatch. Native target activation precedes reconnection. No automatic target attachment is enabled.",
+    "Source checks bind this observer and related setup/report helpers plus HEAD and source-freeze bytes. This no-game observer does not recompute or qualify the complete runtime."
+  ],
+  "references": [
+    "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/components/webui/chrome_urls/resources/app.ts",
+    "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/ui/webui/chrome_urls/chrome_urls_handler.cc",
+    "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/resources/discards/discards_tab.ts"
+  ],
+  "fixture": {
+    "targetURL": "http://127.0.0.1:57569/owned-c29d875d-f820-43cc-9837-b43f44fa9663",
+    "bytes": 260,
+    "sha256": "e3231e38a705d197b8c2652fee472a1ff3a667395a966778c40d99e6df072c08"
+  },
+  "launchEnvironment": [
+    "--headless",
+    "--enable-automation",
+    "--remote-debugging-port=0",
+    "--remote-debugging-address=127.0.0.1",
+    "--user-data-dir=/tmp/codex-native-discard-owned-V5l4tW",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--no-startup-window",
+    "--window-size=1024,768",
+    "--disable-background-networking",
+    "--disk-cache-size=1048576",
+    "--media-cache-size=1048576"
+  ],
+  "ownedProcess": {
+    "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "profile": "/tmp/codex-native-discard-owned-V5l4tW",
+    "detachedProcessGroup": true,
+    "pid": 88895,
+    "stderr": "\nDevTools listening on ws://127.0.0.1:57572/devtools/browser/89b3a078-f776-4d74-9786-6d76073cf70f\n[88911:3083245:1019/032115.516443:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083314:1019/032115.516775:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\nTrying to load the allocator multiple times. This is *not* supported.\n[88911:3083245:1019/032115.676989:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083314:1019/032115.677053:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083245:1019/032115.681948:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083314:1019/032115.682008:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083245:1019/032115.682137:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083314:1019/032115.682163:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083245:1019/032115.683955:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083314:1019/032115.684035:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083245:1019/032115.684160:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88911:3083314:1019/032115.684204:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[88895:3083154:1019/032115.823497:ERROR:chrome/browser/ui/webui/ntp/new_tab_ui.cc:54] Requested load of chrome://newtab/ for incorrect profile type.\n",
+    "exit": {
+      "code": 0,
+      "signal": null,
+      "at": "2026-10-19T01:21:17.088Z"
+    },
+    "exitConfirmed": true,
+    "profileRemoved": true
+  },
+  "browserVersion": "155.0.8059.85",
+  "commandLineOwnedProfileVerified": true,
+  "initial": {
+    "target": {
+      "url": "http://127.0.0.1:57569/owned-c29d875d-f820-43cc-9837-b43f44fa9663",
+      "hidden": true,
+      "visibilityState": "hidden",
+      "hasFocus": false,
+      "wasDiscarded": false,
+      "documentId": "ea4b50d9-cc98-4f2b-8a50-fc44610d01f3"
+    },
+    "controls": {
+      "url": "about:blank",
+      "hidden": false,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "wasDiscarded": false,
+      "documentId": null
+    }
+  },
+  "windows": [
+    {
+      "label": "target",
+      "targetId": "27CFCAF11521E6803957F7E92554D578",
+      "windowId": 1378594307
+    },
+    {
+      "label": "controls",
+      "targetId": "62ED2A4BCA1EE22BDAC14933C75ABBC9",
+      "windowId": 1378594307
+    }
+  ],
+  "foreground": {
+    "url": "http://127.0.0.1:57569/owned-c29d875d-f820-43cc-9837-b43f44fa9663",
+    "hidden": false,
+    "visibilityState": "visible",
+    "hasFocus": true,
+    "wasDiscarded": false,
+    "documentId": "ea4b50d9-cc98-4f2b-8a50-fc44610d01f3"
+  },
+  "hidden": {
+    "target": {
+      "url": "http://127.0.0.1:57569/owned-c29d875d-f820-43cc-9837-b43f44fa9663",
+      "hidden": true,
+      "visibilityState": "hidden",
+      "hasFocus": false,
+      "wasDiscarded": false,
+      "documentId": "ea4b50d9-cc98-4f2b-8a50-fc44610d01f3"
+    },
+    "controls": {
+      "url": "chrome://discards/",
+      "hidden": false,
+      "visibilityState": "visible",
+      "hasFocus": true,
+      "wasDiscarded": false,
+      "documentId": null
+    }
+  },
+  "detachedTargetInfo": [
+    {
+      "targetId": "27CFCAF11521E6803957F7E92554D578",
+      "type": "page",
+      "title": "Owned native discard setup c29d875d-f820-43cc-9837-b43f44fa9663",
+      "url": "http://127.0.0.1:57569/owned-c29d875d-f820-43cc-9837-b43f44fa9663",
+      "attached": false,
+      "canAccessOpener": false,
+      "browserContextId": "AC46870D75DBA746D95A89517A5A72D5"
+    },
+    {
+      "targetId": "62ED2A4BCA1EE22BDAC14933C75ABBC9",
+      "type": "page",
+      "title": "Discards",
+      "url": "chrome://discards/",
+      "attached": true,
+      "canAccessOpener": false,
+      "browserContextId": "AC46870D75DBA746D95A89517A5A72D5"
+    }
+  ],
+  "failure": "AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^d+$/. Input:\n\n'1'\n\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/observe-native-discard-setup-rawcontrol-693947ed1.mjs:325:10",
+  "failedStage": "wait-for-native-detached-eligibility",
+  "targetClosed": true,
+  "browserCloseAttempted": true,
+  "nativeBrowserCloseRequested": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T01:21:17.088Z",
+  "serverCleanup": {
+    "attempted": true,
+    "complete": true,
+    "timeoutMs": 2000,
+    "elapsedMs": 0.2272080000002461,
+    "finished": "2026-10-19T01:21:17.105Z"
+  },
+  "serverClosed": true,
+  "headAfter": "693947ed1373db7a265def126a5eede2bf875013",
+  "bindingsUnchanged": true
+}

@@ -1,0 +1,35 @@
+TAP version 13
+# Subtest: capture, audit and inventory bytes are independently bound, including formatting-only mutation
+ok 1 - capture, audit and inventory bytes are independently bound, including formatting-only mutation
+  ---
+  duration_ms: 29.159917
+  ...
+# Subtest: canonical scripts and authoring fingerprint detects an unlisted helper or authored JSON mutation
+ok 2 - canonical scripts and authoring fingerprint detects an unlisted helper or authored JSON mutation
+  ---
+  duration_ms: 28.738625
+  ...
+# Subtest: preview cleanup follows browser cleanup and saves exactly once
+ok 3 - preview cleanup follows browser cleanup and saves exactly once
+  ---
+  duration_ms: 1.550416
+  ...
+# Subtest: server callback failure preserves primary error while recording explicit failed cleanup
+ok 4 - server callback failure preserves primary error while recording explicit failed cleanup
+  ---
+  duration_ms: 0.280709
+  ...
+# Subtest: stalled preview close times out, saves failure, and late callback cannot rewrite the result
+ok 5 - stalled preview close times out, saves failure, and late callback cannot rewrite the result
+  ---
+  duration_ms: 5.707417
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 113.157

@@ -1,0 +1,14 @@
+✔ entry HTML adds the synchronous observer before native scripts while preserving CSP and pinned body (31.100208ms)
+✔ collector deduplicates equal messages and rejects altered sequence duplicates (18.109375ms)
+✔ prefix reconciliation requires every sequence and fails buffer overflow (8.478334ms)
+✔ browser observer records before startup and preserves native storage return and thrown error (4.085042ms)
+✔ observer transport and metadata faults cannot replace native API return or error (1.296125ms)
+✔ final observation gate rejects late collector, overflow, and native/DOM errors (0.590333ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 145.268875

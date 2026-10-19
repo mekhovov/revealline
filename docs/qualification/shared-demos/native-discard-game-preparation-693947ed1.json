@@ -1,0 +1,93 @@
+{
+  "format": "NativeDiscardGameProbePreparationV1",
+  "created": "2026-10-19T01:47:25.761030+00:00",
+  "status": "Reviewed preparation complete; no actual-game pass claimed.",
+  "head": "693947ed1373db7a265def126a5eede2bf875013",
+  "runtime": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+  "pins": {
+    ".cache/qualify-demo-actual-discard-native-emitted.mjs": {
+      "bytes": 31334,
+      "sha256": "76664f9597613e21aa065645a8aa287b3ac606df6d3838c647062ca3eb89263e",
+      "preservedSource": "docs/qualification/shared-demos/native-discard-game-preparation-693947ed1/qualify-demo-actual-discard-native-emitted.mjs.txt"
+    },
+    ".cache/demo-native-discard-environment.mjs": {
+      "bytes": 16284,
+      "sha256": "49a0e1adaed091f78b6de483004dd01ea6c4c7b483983410988269290c88d604",
+      "preservedSource": "docs/qualification/shared-demos/native-discard-game-preparation-693947ed1/demo-native-discard-environment.mjs.txt"
+    },
+    ".cache/demo-discard-observation-fixture.mjs": {
+      "bytes": 8839,
+      "sha256": "60b974bed05b34ef59f9867edfe332b055faefad6ad862afe3570c2744c6b863",
+      "preservedSource": "docs/qualification/shared-demos/native-discard-game-preparation-693947ed1/demo-discard-observation-fixture.mjs.txt"
+    },
+    ".cache/demo-discard-observer-browser.js": {
+      "bytes": 4723,
+      "sha256": "e25d3ffb75dfcfaf18d895d28941e58c6fcc9d2c2777987defe93649916087b4",
+      "preservedSource": "docs/qualification/shared-demos/native-discard-game-preparation-693947ed1/demo-discard-observer-browser.js.txt"
+    },
+    ".cache/demo-discard-observation-fixture.test.mjs": {
+      "bytes": 8670,
+      "sha256": "999426d6395e83620a683a59d2e87e9422b6303528098b35a2e60faa10821efa",
+      "preservedSource": "docs/qualification/shared-demos/native-discard-game-preparation-693947ed1/demo-discard-observation-fixture.test.mjs.txt"
+    },
+    ".cache/demo-discard-observation-fixture-reviewed.actual.stdout.txt": {
+      "bytes": 722,
+      "sha256": "50869b3405450e5296829dfa47fe15397e044ce9e680a89f561a67d692cb0b6e",
+      "preservedSource": "docs/qualification/shared-demos/native-discard-game-preparation-693947ed1/demo-discard-observation-fixture-reviewed.actual.stdout.txt"
+    }
+  },
+  "checks": {
+    "syntax": "Main probe, environment helper, fixture helper and browser observer pass node --check.",
+    "tinyFixtureCommand": "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node --test .cache/demo-discard-observation-fixture.test.mjs",
+    "tinyFixtureResult": {
+      "tests": 6,
+      "pass": 6,
+      "fail": 0,
+      "durationMs": 145.268875,
+      "stdoutPath": ".cache/demo-discard-observation-fixture-reviewed.actual.stdout.txt",
+      "outputFormat": "Actual Node24 default spec reporter stdout; not reconstructed TAP."
+    }
+  },
+  "gameBrowserPassClaimed": false,
+  "nativeEnvironmentEvidence": "docs/qualification/shared-demos/native-discard-setup-rawcontrol-693947ed1-numeric.json",
+  "scope": [
+    "12 ordinary/watch/practice native discard cases across4modes, independent owned profile per mode.",
+    "Exact emitted provider/runtime/build/HEAD/manifest/audit/inventory and ignored helper pinning before and after.",
+    "Native hidden state; detach game debugger; raw CDP only owned controls; native urgent UI; native replacement target activation; wasDiscarded=true.",
+    "Complete surviving-document buffer reconciliation; exact local/session saved-value equality; no new observed startup mutation signatures.",
+    "Actual worker target IDs observed before detachment must be absent after native UI confirms discard."
+  ],
+  "limits": [
+    "Preparation only: no game discard acceptance credit.",
+    "HTML adds a synchronous same-origin observer before native scripts; original/credential/observer/served bytes are pinned and preserved; not unchangedHTML/offlineintegrity.",
+    "Old document may have undelivered final events after acknowledged prefix and before native destruction. No exhaustive zero-write or equal write-volume claim for that tail.",
+    "Top-document errors/unhandled rejections only during detached interval; native-inspector-only and unobserved frame/worker diagnostics are not claimed.",
+    "Local/session saved-value equality does not prove IndexedDB value/transaction equality; observed IndexedDB API calls remain strict signatures.",
+    "No audio policy or eligibility override; native protection refusal remains failed qualification.",
+    "Parent released the exclusive browser slot after the failed endurance run closed; final independent review passed before launch."
+  ],
+  "invocation": [
+    "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    ".cache/qualify-demo-actual-discard-native-emitted.mjs",
+    "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+    "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "--emitted-preview=.cache/shared-demos-emitted-dd337c8-693947ed1",
+    "--port=18775",
+    "--head=693947ed1373db7a265def126a5eede2bf875013",
+    "--fingerprint=b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "--report=docs/qualification/shared-demos/actual-discard-native-emitted-693947ed1.json"
+  ],
+  "reviewFixes": [
+    "All observer metadata and beacon/serialization errors increment observerFailures without changing native Storage/IDB result or exception; object-key user coercion is not repeated.",
+    "Complete post-cleanup gate rechecks collector/errors/overflow/diagnostics before receipt write.",
+    "Owned process enumeration is bounded to1000ms and2MiB.",
+    "Overall expiry rejects and closes late environment and prevents subsequent cases.",
+    "Restored Solo owned scenes must equal zero.",
+    "Native worker IDs are retained immediately after debugger disconnect separately from post-discard observation."
+  ],
+  "independentReview": {
+    "reviewer": "/root/sim_adapter",
+    "result": "Final read-only delta review passed; six pins match, no further actionable blocker.",
+    "received": "2026-10-19T01:48:20.265935+00:00"
+  }
+}

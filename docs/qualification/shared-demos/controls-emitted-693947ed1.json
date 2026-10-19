@@ -1,0 +1,93 @@
+{
+  "started": "2026-10-19T00:59:33.539Z",
+  "complete": false,
+  "checks": [],
+  "errors": [],
+  "headBefore": "693947ed1373db7a265def126a5eede2bf875013",
+  "sourceBefore": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "buildInputsBefore": {
+    "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+    "files": 9398,
+    "bytes": 348357907
+  },
+  "observerSHA256": "4a58638de35c58c0510fe0931d0e72522244b623697dade2d3e51802c49a5d6d",
+  "scope": "Actual native pages with seeded isolated shared preferences and a virtual standard gamepad. No runtime module or response routing. The preview changes access credentials only. Physical controllers remain a separate human check.",
+  "preview": {
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1",
+      "manifestSHA256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474",
+      "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+      "files": 5952,
+      "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+      "sourceFingerprint": {
+        "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+        "files": 9996,
+        "bytes": 404392393
+      },
+      "buildInputFingerprint": {
+        "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+        "files": 9398,
+        "bytes": 348357907
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "693947ed1373db7a265def126a5eede2bf875013",
+        "runtime": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInput": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/snake/play.html",
+        "original": {
+          "bytes": 17647,
+          "sha256": "4621069238ed1fa74544623ca83e3119a0e2d1ac21aa99c4dbd3ffccfe9a2741"
+        },
+        "served": {
+          "bytes": 17621,
+          "sha256": "43e0761d95a2575f3d04f92812c39f075e47497748eea1172ee808e8b4bd6b54"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "seededProfileKey": "revealline.library.release-0.151.1.v1",
+  "limitations": [
+    "Emitted bytes are verified against the held source; only local HTML access credentials differ. No offline HTML integrity or physical-controller claim."
+  ],
+  "failure": "page.waitForFunction: Timeout 15000ms exceeded.\n    at practiceByRemap (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-shared-controls-emitted.mjs:61:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-shared-controls-emitted.mjs:116:35\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-shared-controls-emitted.mjs:31:16)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-shared-controls-emitted.mjs:100:3",
+  "visibleText": "SNAKE\nPause\nOpen Loop\nWALLS\nEnemies\nThis run\n0\nLifetime\n0\n\nTurn before the edge. Your drone keeps moving. Catch the enemies.\n\nCAUGHT\n0 / 8\nLENGTH\n4\nTIME\n0:00\nSCORE\n0\nNEXT TURN\n·\nREADY FOR LAUNCH\nStart mission\n\nCatch the humanoid. Grow one segment. Keep moving without hitting a wall or your body.\n\nSolo\n1P\nTeam\n2P\nDuel\n2P\nSnake\nFPV Survivals\nbeta\nSIM\nbeta\nLess\n\nOpen Loop\n\nStart\nSelect Mission\nSettings\nWatch demo\nWatch all modes\nSound: off\nFull screen\n\nDEMO · RECORDED PLAY\n\nSnake Solo · Signal Check\nResume\nNext level\nWant to play?\nAudio & details\nFullscreen\nBack\n\nTwo antennas teach local reception. Enemies disappear during a burst; skirt the circle or catch the source at its beacon.\n\nTargets: 0 / 2\n\nTwo antennas teach local reception. Enemies disappear during a burst; skirt the circle or catch the source at its beacon.\nCarol of the Bells (Metal Version)\nAlexander Nakarada\nCreator source ↗\nSound on\nPlay music\nNext song\nAudio options\n\npaused\n\nShow a demo after 60 seconds on the idle home screen\n\nTwo antennas teach local reception. Enemies disappear during a burst; skirt the circle or catch the source at its beacon.\n\nPlay from beginning\nTake over · practice\nKeep watching",
+  "headAfter": "693947ed1373db7a265def126a5eede2bf875013",
+  "sourceAfter": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "buildInputsAfter": {
+    "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+    "files": 9398,
+    "bytes": 348357907
+  },
+  "observerSHA256After": "4a58638de35c58c0510fe0931d0e72522244b623697dade2d3e51802c49a5d6d",
+  "sourceUnchanged": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T01:00:06.347Z",
+  "previewClosed": true
+}
