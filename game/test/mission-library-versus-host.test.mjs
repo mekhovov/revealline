@@ -13,6 +13,11 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
+import { inspectImageDataUrl, inspectImageBytes } from '../content.mjs';
+import {
+  assertDuelLibraryInventory,
+  expectedDuelLibraryRows,
+} from './helpers/duel-library-inventory.mjs';
 
 const index = JSON.parse(
   await readFile(new URL('../content/mission-library-index.json', import.meta.url)),
@@ -22,6 +27,13 @@ const model = createMissionLibrary(
 );
 const late = model.missions.find((row) => row.runtimeId === 'signal-12');
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 10000 });
+// Node fixture admission checks the exact bounded image headers/dimensions.
+// Browser pixel decoding remains a separate real-device/browser gate.
+const decodeHeader = async (dataUrl) => {
+  const header = inspectImageDataUrl(dataUrl);
+  assert.equal(header.valid, true, header.errors.join('; '));
+  return { naturalWidth: header.width, naturalHeight: header.height };
+};
 function assertReadyCard(card, name = card.querySelector('.journey-card-title').textContent) {
   assert.equal(card.tagName, 'BUTTON');
   assert.equal(card.type, 'button');
@@ -62,7 +74,7 @@ async function fixture(t, { href, fetchResponse, installedSource, ...options } =
   const locks = new Locks();
   if (installedSource) {
     let media;
-    const { pack } = await preparePack(installedSource);
+    const { pack } = await preparePack(installedSource, { decodeImage: decodeHeader });
     const writer = await claimProfileWriter(locks, 'revealline.library.dev.v1.writer');
     const installer = createExternalChapterHost({
       indexedDB,
@@ -73,6 +85,7 @@ async function fixture(t, { href, fetchResponse, installedSource, ...options } =
       writer,
       registeredEntries: [],
       knownDescriptors: [],
+      decodeImage: decodeHeader,
       getManagedStore: () =>
         (media ??= createManagedMediaStore({ indexedDB, soundtrackCatalogue: true })),
     });
@@ -175,14 +188,17 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
   assert.equal(p.$('journey-lifecycle').value, 'current');
-  assert.equal(p.$('journey-cards').children.length, 240);
+  assertDuelLibraryInventory(p, { lifecycle: 'current' });
   showAllLifecycles(p);
-  assert.equal(p.$('journey-cards').children.length, 435);
+  assertDuelLibraryInventory(p);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);
   const classic = [...p.$('journey-cards').children].filter((card) =>
     card.querySelector('.journey-card-tags').textContent.includes('Classic'),
   );
-  assert.equal(classic.length, 296);
+  assert.deepEqual(
+    new Set(classic.map((card) => card.dataset.missionId)),
+    new Set(expectedDuelLibraryRows({ collection: 'Classic' }).map(({ id }) => id)),
+  );
   assertReadyCard(
     classic.find((card) => card.dataset.missionId === late.id),
     late.name,
@@ -372,15 +388,18 @@ test('Versus mode filter exposes the same qualified Journey identities in Solo w
   const p = await fixture(t);
   await open(p);
   showAllLifecycles(p);
+  assertDuelLibraryInventory(p);
   const original = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
   p.$('journey-mode').value = 'solo';
   p.$('journey-mode').emit('change');
   const cards = [...p.$('journey-cards').children];
+  const soloIds = assertDuelLibraryInventory(p, { mode: 'solo' });
   assert.deepEqual(
     cards.map((card) => card.dataset.missionId),
-    original,
+    original.filter((id) => soloIds.has(id)),
+    'Shared qualified identities retain their order; Duel-only missions remain in Duel.',
   );
-  assert.equal(new Set(original).size, 435);
+  assert.equal(new Set(original).size, original.length);
   const target = cards[1];
   assert.match(target.textContent, /Journey.*Band 1\/12/);
   assertReadyCard(target);
@@ -400,11 +419,30 @@ for (const collection of ['Journey', 'Classic'])
     p.$('journey-mode').value = 'team';
     p.$('journey-mode').emit('change');
     const cards = [...p.$('journey-cards').children];
-    assert.equal(cards.length, 14);
-    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, 14);
-    const target = cards.find((card) =>
-      card.querySelector('.journey-card-tags').textContent.includes(collection),
+    const expected = assertDuelLibraryInventory(p, { mode: 'team', lifecycle: 'current' });
+    assert.equal(cards.length, expected.size);
+    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, expected.size);
+    const targetId = JSON.stringify(
+      collection === 'Journey'
+        ? [
+            'journey:team-cultural-specialist-originals-2',
+            'team-cultural-specialist-originals-2',
+            JSON.stringify(['candidate', 'journey-team-opening', 'horizon-partners']),
+            'candidate/journey-team-opening/horizon-partners/twin-landings',
+            '',
+          ]
+        : [
+            'team-classic:relay-rescue-starter',
+            'relay-rescue-starter@2',
+            'relay-rescue-starter',
+            'first-connection',
+            '2',
+          ],
     );
+    const targets = cards.filter((card) => card.dataset.missionId === targetId);
+    assert.equal(targets.length, 1, 'The exact retained Team owner remains available.');
+    const target = targets[0];
+    assert.match(target.querySelector('.journey-card-tags').textContent, new RegExp(collection));
     assertReadyCard(target);
     target.click();
     await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
@@ -489,7 +527,7 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   assert.equal(p.renders[0].level.id, 'first-return');
   await open(p);
   showAllLifecycles(p);
-  assert.equal(p.$('journey-cards').children.length, 435);
+  assertDuelLibraryInventory(p);
   const card = [...p.$('journey-cards').children].find((card) =>
     JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
   );
@@ -541,14 +579,19 @@ for (const chapterSource of ['optional'])
       class Picture {
         set src(value) {
           this.ready = Promise.resolve().then(async () => {
-            const bytes = value.startsWith('data:')
-              ? Buffer.from(value.split(',')[1], 'base64')
-              : Buffer.from(await urls.get(value).arrayBuffer());
-            assert.equal(bytes.subarray(1, 4).toString(), 'PNG');
-            this.width = this.naturalWidth = bytes.readUInt32BE(16);
-            this.height = this.naturalHeight = bytes.readUInt32BE(20);
-            this.onload?.();
+            const blob = value.startsWith('data:') ? null : urls.get(value);
+            assert.ok(value.startsWith('data:') || blob, 'The actual blob URL is still owned.');
+            const header = value.startsWith('data:')
+              ? inspectImageDataUrl(value)
+              : inspectImageBytes(new Uint8Array(await blob.arrayBuffer()), blob.type);
+            assert.equal(header.valid, true, header.errors.join('; '));
+            this.width = this.naturalWidth = header.width;
+            this.height = this.naturalHeight = header.height;
           });
+          this.ready.then(
+            () => this.onload?.(),
+            (error) => this.onerror?.(error),
+          );
         }
         async decode() {
           await this.ready;
@@ -664,7 +707,7 @@ for (const interruption of ['blur', 'focus', 'pointer'])
         assert.equal(p.doc.activeElement, focused);
         await open(p);
         showAllLifecycles(p);
-        assert.equal(p.$('journey-cards').children.length, 435);
+        assertDuelLibraryInventory(p);
       } finally {
         release();
         await opening;
