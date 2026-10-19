@@ -1,0 +1,171 @@
+--- a/authoring/fpv-worlds/idb-ownership/transactions.mjs
++++ b/authoring/fpv-worlds/idb-ownership/transactions.mjs
+@@ -53,7 +53,7 @@
+     return found.length === 1 &&
+       found[0].unfiltered &&
+       found[0].state === "complete"
+-      ? found[0].rows
++      ? found[0]
+       : null;
+   };
+   const world =
+@@ -76,15 +76,15 @@
+       scope,
+       outcome: row.state === "pending" ? "pending" : "unknown",
+     };
+-  const activeRows = read(records ? "records" : "projects");
+-  const retainedRows = hasRetained ? read("revisions") : null;
+-  if (activeRows === null || (hasRetained && retainedRows === null))
++  const active = read(records ? "records" : "projects");
++  const retained = hasRetained ? read("revisions") : null;
++  if (active === null || (hasRetained && retained === null))
+     return { ...unknown, scope };
+   return {
+     scope,
+-    outcome: activeRows + (retainedRows ?? 0) === 0 ? "empty" : "nonempty",
+-    activeRows,
+-    retainedRows,
++    outcome: active.rows + (retained?.rows ?? 0) === 0 ? "empty" : "nonempty",
++    activeRows: active.rowsExact ? active.rows : null,
++    retainedRows: retained?.rowsExact ? retained.rows : null,
+   };
+ }
+ 
+@@ -229,7 +229,14 @@
+         row.incomplete = true;
+         return;
+       }
+-      const read = { store, method, unfiltered, state: "pending", rows: null };
++      const read = {
++        store,
++        method,
++        unfiltered,
++        state: "pending",
++        rows: null,
++        rowsExact: null,
++      };
+       row.reads.push(read);
+       let traversed = 0;
+       listen(
+@@ -245,9 +252,14 @@
+                 return;
+               }
+               read.rows = request.result.length;
++              read.rowsExact = true;
+               read.state = "complete";
+             } else if (request.result === null) {
+               read.rows = traversed;
++              // Caller-owned advance(n) / continue(key) may skip rows. We do not
++              // intercept progression, so nonzero deliveries are only a lower bound.
++              // No delivered row followed by exhaustion still establishes zero.
++              read.rowsExact = traversed === 0;
+               read.state = "complete";
+             } else traversed = count(traversed);
+           }),
+--- a/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs
++++ b/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs
+@@ -100,8 +100,11 @@
+     scope: "active-and-retained",
+     outcome: "nonempty",
+     activeRows: 1,
+-    retainedRows: 2,
+-  });
++    retainedRows: null,
++  });
++  const retained = last(tool).reads.find((row) => row.store === "revisions");
++  assert.equal(retained.rows, 2);
++  assert.equal(retained.rowsExact, false);
+   await store.list();
+   assert.deepEqual(last(tool).listing, {
+     scope: "active-only",
+@@ -387,3 +390,62 @@
+   db.close();
+   await tick();
+ });
++
++test("cursor deliveries are a lower bound even when a caller skips to exhaustion", async () => {
++  const tool = observer(),
++    db = await opened(tool.indexedDB);
++  const seed = db.transaction("revisions", "readwrite");
++  for (let i = 0; i < 5; i++)
++    seed.objectStore("revisions").put({ id: "synthetic", sha256: String(i) });
++  await done(seed);
++  for (const [method, expected] of [
++    ["continue", 5],
++    ["advance", 1],
++    ["continue-key", 2],
++  ]) {
++    const read = listing(db);
++    let delivered = 0;
++    read.cursor.onsuccess = () => {
++      const cursor = read.cursor.result;
++      if (!cursor) return;
++      delivered++;
++      if (method === "advance") cursor.advance(10);
++      else if (method === "continue-key" && delivered === 1)
++        cursor.continue(["synthetic", "4"]);
++      else cursor.continue();
++    };
++    await read.done;
++    assert.equal(delivered, expected, "Only the caller advances the cursor");
++    const row = last(tool),
++      retained = row.reads.find((entry) => entry.store === "revisions");
++    assert.equal(row.listing.outcome, "nonempty");
++    assert.equal(row.listing.activeRows, 0);
++    assert.equal(
++      row.listing.retainedRows,
++      null,
++      "An exhausted cursor does not establish the store total",
++    );
++    assert.equal(
++      retained.rows,
++      expected,
++      "Preserve the observed delivery count",
++    );
++    assert.equal(
++      retained.rowsExact,
++      false,
++      "Cursor progression is not intercepted",
++    );
++  }
++  const cleared = db.transaction("revisions", "readwrite");
++  cleared.objectStore("revisions").clear(); // Only this fresh memory fixture is mutated.
++  await done(cleared);
++  await listing(db).done;
++  assert.equal(last(tool).listing.outcome, "empty");
++  assert.equal(last(tool).listing.retainedRows, 0);
++  assert.equal(
++    last(tool).reads.find((entry) => entry.store === "revisions").rowsExact,
++    true,
++  );
++  tool.stop();
++  db.close();
++});
+--- a/authoring/fpv-worlds/idb-ownership/README.md
++++ b/authoring/fpv-worlds/idb-ownership/README.md
+@@ -94,8 +94,14 @@
+ successful count for each relevant listed store can establish empty. World
+ `active-only` means only projects were read; retained contents remain unknown.
+ `active-and-retained` requires both projects and the revisions cursor to finish.
+-Counts are raw store-row counts, with overlap between active and retained; they
+-are not unique world counts. Filtered, partially traversed, stopped, refused,
++Unfiltered `getAll()` provides an exact row count. Cursor `reads[].rows` counts
++observed deliveries: caller-owned `advance(n)` or `continue(key)` can skip rows,
++so an exhausted nonempty cursor has `rowsExact: false` and is only a lower bound.
++The corresponding `listing.activeRows` or `listing.retainedRows` stays null when
++the exact total is unknown. A cursor that exhausts without delivering a row has an
++exact zero; a completed cursor with deliveries still establishes nonempty.
++Active and retained rows overlap and are not unique world counts. Filtered,
++partially traversed, stopped, refused,
+ overflowed and outside-facade observations cannot establish empty. A successful
+ read characterizes that observed connection at that time, not original data loss,
+ current UI state, liveness or retention across a restart.
+@@ -180,7 +186,7 @@
+ small delegated-boundary sentinels test those contracts explicitly. Its forced-close
+ helper and synthetic events are software stimuli, **not observed browser failures**.
+ 
+-Ten additional groups exercise the actual main741 WorldStore listing in isolated
++Eleven additional groups exercise the actual main741 WorldStore listing in isolated
+ fake IndexedDB, active/retained/empty counts, pending/immediate and mid-read aborts,
+ filtered/incomplete/stopped reads, caller-owned cursor progression, same-connection
+ close attribution, thrown identity, one argument coercion, detached snapshots,

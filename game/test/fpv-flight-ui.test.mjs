@@ -1548,6 +1548,78 @@ test('TX15 default does not match an unrelated joystick', async (t) => {
   assert.equal(f.view.snapshot().status, 'disarmed');
 });
 
+for (const save of ['guided', 'manual']) {
+  test(`Academy radio setup saves through ${save} controls and activates radio flight`, async (t) => {
+    const data = new Map();
+    const f = await fixture(t, {
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem: (key, value) => data.set(key, value),
+      },
+    });
+    const profile = defaultRadioProfile();
+    const pad = {
+      id: profile.device.id,
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0.004, 0.004, -1, 0.004, -1, 0, 0, 0],
+      buttons: Array.from({ length: 24 }, () => ({ value: 0 })),
+    };
+    f.setPads([pad]);
+    f.win.Event = Event;
+    const create = f.doc.createElement.bind(f.doc);
+    f.doc.createElement = (...args) => {
+      const node = create(...args);
+      Object.defineProperty(node, 'firstChild', {
+        get: () =>
+          node._text
+            ? {
+                get textContent() {
+                  return node._text;
+                },
+                set textContent(value) {
+                  node._text = value;
+                },
+              }
+            : (node.children[0] ?? null),
+      });
+      return node;
+    };
+    f.$('setup').click();
+    const container = f.$('radio-setup');
+    const click = (text) =>
+      container
+        .querySelectorAll('button')
+        .find((node) => node.textContent === text)
+        .click();
+    if (save === 'manual') {
+      click('I checked the animated sticks and their direction');
+      click('Save verified profile');
+    } else {
+      const checked = container.querySelector('.radio-confirm input');
+      checked.checked = true;
+      checked.emit('change');
+      click('Save & return');
+    }
+    await f.view.settled();
+    assert.equal(f.$('setup-dialog').open, false);
+    assert.equal(f.$('input-source').value, 'radio');
+    assert.equal(f.view.radio.status().verified, true);
+    assert.equal(f.view.radio.status().editing, false);
+    assert.notEqual(f.view.snapshot().status, 'active');
+    f.tick(2);
+    pad.axes[4] = 1;
+    f.tick(2);
+    assert.equal(f.view.snapshot().status, 'active');
+    pad.axes[2] = -0.5;
+    pad.axes[3] = 0.5;
+    f.tick(3);
+    assert.ok(f.view.snapshot().lastInput.throttle > 0);
+    assert.ok(f.view.snapshot().lastInput.yaw > 0);
+  });
+}
+
 test('camera focus preserves global pause for keyboard, touch and radio owners without resuming held input', async (t) => {
   for (const owner of ['keyboard', 'touch', 'radio']) {
     for (const code of ['KeyP', 'Escape']) {

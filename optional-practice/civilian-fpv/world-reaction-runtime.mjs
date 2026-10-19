@@ -2,9 +2,13 @@
 // Native flight logic remains in its existing cores. No simulation clock or record recipe changes.
 const sourceHashes={
 'optional-practice/civilian-fpv/world-audio.mjs':
-'cc05ffc5e1b54f500efc17dccf77c96c608a2fc535e8947b8787eccb2103565f',
+'0682921ac27879c76a3b63666d9685ede0844db7d616109df31b6ade6b7301b7',
+'game/ui/gameplay-audio-output.mjs':
+'9aa56a400d417db362a366a74790c7703b3f2bcde720ef0cc8944dea8a42ebd2',
+'game/gameplay-audio-preferences.mjs':
+'e7e6f8ae31d760879d97dddf9bfc7fe27b38a48888c60bc9028fa2232fb4eb20',
+'game/ui/audio-output.mjs':'66047e07247684f9f3069f9561898f33b5566d0d997e950adac17c0eed0ff790',
 'game/audio/dialogue-mix.mjs':'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
-'game/ui/audio-output.mjs':'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
 'game/audio-preferences.mjs':'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
 'game/ui/encounter-audio.mjs':'ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd',
@@ -138,17 +142,175 @@ import*as external17 from'./world-model.mjs';
 import*as external18 from'./flight-sectors.mjs';
 import*as external19 from'./world-content.mjs';
 const modules=Object.create(null);
-modules['game/audio/dialogue-mix.mjs']=(()=>{
-/** Decorative spoken reactions sit behind music and gameplay warnings.
- * The mix trim also applies to saved slider choices without rewriting preferences. */
-const DEFAULT_DIALOGUE_VOLUME=0.25;
-const DIALOGUE_MIX_GAIN=0.4;
-const DIALOGUE_MUSIC_GAIN=0.9;
+modules['game/gameplay-audio-preferences.mjs']=(()=>{
+// Separate from the strict legacy mute/volume record: older pages cannot erase
+// this new choice when they save their existing audio controls.
+const GAMEPLAY_AUDIO_KEY='revealline.gameplay-audio-output.v1';
+const format='GameplayAudioOutputV1';
+const observers=new WeakMap();
+
+function decode(raw){
+if(raw===null)return false;
+if(typeof raw!=='string'||raw.length>256)throw new Error('preserved');
+const value=JSON.parse(raw);
+if(
+!value||
+typeof value!=='object'||
+Array.isArray(value)||
+Object.keys(value).length!==2||
+value.format!==format||
+typeof value.monoEffects!=='boolean'
+)
+throw new Error('preserved');
+return value.monoEffects;
+}
+
+/** One output choice, no playback or profile writes. Failed intent survives
+ * peer/storage events; only explicit choice or Retry attempts persistence. */
+function createGameplayAudioPreferences({
+getStorage=()=>globalThis.localStorage,
+window:target=globalThis.window??globalThis,
+}={}){
+let monoEffects=false,
+durable=true,
+reason='',
+pending=false,
+disposed=false,
+revision=0;
+const listeners=new Set();
+const pageKey=target&&['object','function'].includes(typeof target)?target:null;
+const peers=(pageKey&&observers.get(pageKey))??new Set();
+if(pageKey)observers.set(pageKey,peers);
+const snapshot=()=>({monoEffects,durable,reason,pending});
+const notify=()=>{
+for(const listener of[...listeners])if(listeners.has(listener))listener(snapshot());
+return snapshot();
+};
+const read=()=>{
+const storage=getStorage();
+if(!storage?.getItem|| !storage?.setItem)throw new Error('unavailable');
+const raw=storage.getItem(GAMEPLAY_AUDIO_KEY);
+let value;
+try{
+value=decode(raw);
+}catch{
+throw new Error('preserved');
+}
+return{storage,raw,value};
+};
+const failure=(error)=>{
+durable=false;
+reason=['preserved','unconfirmed','unavailable'].includes(error?.message)
+?error.message
+:error?.name==='QuotaExceededError'
+?'full'
+:'blocked';
+};
+const load=()=>{
+const token=revision;
+try{
+const record=read();
+if(disposed||revision!==token||pending)return;
+monoEffects=record.value;
+durable=true;
+reason='';
+}catch(error){
+if(!disposed&&revision===token&& !pending)failure(error);
+}
+};
+load();
+const receivePage=(state)=>{
+if(disposed||pending)return;
+revision++;
+({monoEffects,durable,reason,pending}=state);
+notify();
+};
+peers.add(receivePage);
+const save=()=>{
+if(disposed|| !pending)return snapshot();
+const token=revision;
+try{
+const{storage}=read();
+if(disposed||revision!==token)return snapshot();
+const raw=JSON.stringify({format,monoEffects});
+storage.setItem(GAMEPLAY_AUDIO_KEY,raw);
+if(disposed)return snapshot();
+if(revision!==token){
+// A reentrant newer choice must not inherit this older write's success.
+if(read().value!==monoEffects){
+pending=true;
+failure(new Error('unconfirmed'));
+notify();
+}
+return snapshot();
+}
+if(storage.getItem(GAMEPLAY_AUDIO_KEY)!==raw)throw new Error('unconfirmed');
+if(disposed||revision!==token)return snapshot();
+durable=true;
+pending=false;
+reason='';
+}catch(error){
+if(!disposed&&revision===token)failure(error);
+}
+if(disposed||revision!==token)return snapshot();
+const result=notify();
+if(!disposed&&revision===token)
+for(const receive of[...peers])if(receive!==receivePage)receive(result);
+return snapshot();
+};
+const receive=(event)=>{
+if(disposed||pending)return;
+if(event.type==='pageshow'&&event.persisted!==true)return;
+if(event.type==='storage'){
+if(event.key!==null&&event.key!==GAMEPLAY_AUDIO_KEY)return;
+try{
+const current=read();
+if(
+current.storage!==event.storageArea||
+(event.key===null?current.raw!==null:current.raw!==event.newValue)
+)
+return;
+}catch{
+return;
+}
+}
+load();
+if(!disposed)notify();
+};
+target?.addEventListener?.('storage',receive);
+target?.addEventListener?.('pageshow',receive);
+return Object.freeze({
+snapshot,
+choose(value){
+if(disposed)return snapshot();
+if(typeof value!=='boolean')throw new TypeError('Mono effects must be a boolean.');
+revision++;
+monoEffects=value;
+pending=true;
+return save();
+},
+retry:save,
+subscribe(listener){
+if(disposed)return()=>{};
+listeners.add(listener);
+listener(snapshot());
+return()=>listeners.delete(listener);
+},
+dispose(){
+disposed=true;
+revision++;
+listeners.clear();
+peers.delete(receivePage);
+if(pageKey&& !peers.size)observers.delete(pageKey);
+target?.removeEventListener?.('storage',receive);
+target?.removeEventListener?.('pageshow',receive);
+},
+});
+}
 
 return{
-DEFAULT_DIALOGUE_VOLUME:DEFAULT_DIALOGUE_VOLUME,
-DIALOGUE_MIX_GAIN:DIALOGUE_MIX_GAIN,
-DIALOGUE_MUSIC_GAIN:DIALOGUE_MUSIC_GAIN,
+GAMEPLAY_AUDIO_KEY:GAMEPLAY_AUDIO_KEY,
+createGameplayAudioPreferences:createGameplayAudioPreferences,
 };
 })();
 modules['game/ui/audio-output.mjs']=(()=>{
@@ -163,6 +325,7 @@ function createGameAudioOutput(context){
 const output={};
 for(const key of[
 'master',
+'gameplayBus',
 'musicBus',
 'sfxBus',
 'menuBus',
@@ -171,8 +334,9 @@ for(const key of[
 'dialogueBus',
 ])
 output[key]=context.createGain();
-for(const key of['musicBus','sfxBus','menuBus','dialogueBus'])
-output[key].connect(output.master);
+output.musicBus.connect(output.master);
+for(const key of['sfxBus','menuBus','dialogueBus'])output[key].connect(output.gameplayBus);
+output.gameplayBus.connect(output.master);
 for(const key of['movementBus','radioBus'])output[key].connect(output.sfxBus);
 output.compressor=context.createDynamicsCompressor?.();
 if(output.compressor){
@@ -183,6 +347,39 @@ output.master.connect(output.compressor);
 output.compressor.connect(context.destination);
 }else output.master.connect(context.destination);
 return output;
+}
+
+/** Down-mix effects after their panners, without touching music, media elements,
+ * the master fader, or recording taps. A rejected configuration is not a pass. */
+function setGameEffectsMono(output,enabled){
+const node=output?.gameplayBus;
+if(!node||typeof enabled!=='boolean')return false;
+const previous={
+channelCount:node.channelCount,
+channelCountMode:node.channelCountMode,
+channelInterpretation:node.channelInterpretation,
+};
+try{
+node.channelInterpretation='speakers';
+node.channelCount=enabled?1:2;
+node.channelCountMode=enabled?'explicit':'max';
+if(
+node.channelCount!==(enabled?1:2)||
+node.channelCountMode!==(enabled?'explicit':'max')||
+node.channelInterpretation!=='speakers'
+)
+throw new Error('Channel configuration was not applied.');
+return true;
+}catch{
+for(const[key,value]of Object.entries(previous)){
+try{
+node[key]=value;
+}catch{
+/* Preserve the browser's accepted path. */
+}
+}
+return false;
+}
 }
 
 /** Request the same audible iOS playback category before creating/resuming audio. */
@@ -208,8 +405,81 @@ return false;
 return{
 createGameAudioContext:createGameAudioContext,
 createGameAudioOutput:createGameAudioOutput,
+setGameEffectsMono:setGameEffectsMono,
 requestPlaybackAudioSession:requestPlaybackAudioSession,
 releasePlaybackAudioSession:releasePlaybackAudioSession,
+};
+})();
+modules['game/ui/gameplay-audio-output.mjs']=(()=>{
+const createGameplayAudioPreferences=
+modules['game/gameplay-audio-preferences.mjs']['createGameplayAudioPreferences'];
+const setGameEffectsMono=modules['game/ui/audio-output.mjs']['setGameEffectsMono'];
+
+/** Presentation-only owner. Selecting a policy never constructs or resumes a
+ * context. The engine attaches its already gesture-created graph explicitly. */
+function createGameplayAudioOutput(options={}){
+const preferences=createGameplayAudioPreferences(options),
+listeners=new Set();
+let output=null,
+state=preferences.snapshot(),
+status='inactive',
+disposed=false;
+const snapshot=()=>({...state,status});
+const apply=()=>{
+if(disposed)return;
+status= !output
+?'inactive'
+:setGameEffectsMono(output,state.monoEffects)
+?state.monoEffects
+?'mono'
+:'original'
+:'unsupported';
+for(const listener of[...listeners])if(listeners.has(listener))listener(snapshot());
+};
+const stop=preferences.subscribe((next)=>{
+state=next;
+apply();
+});
+return Object.freeze({
+snapshot,
+choose:(enabled)=>preferences.choose(enabled),
+retry:()=>preferences.retry(),
+attach(graph){
+if(!disposed){
+output=graph;
+apply();
+}
+},
+subscribe(listener){
+if(disposed)return()=>{};
+listeners.add(listener);
+listener(snapshot());
+return()=>listeners.delete(listener);
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+stop();
+preferences.dispose();
+listeners.clear();
+output=null;
+},
+});
+}
+
+return{createGameplayAudioOutput:createGameplayAudioOutput};
+})();
+modules['game/audio/dialogue-mix.mjs']=(()=>{
+/** Decorative spoken reactions sit behind music and gameplay warnings.
+ * The mix trim also applies to saved slider choices without rewriting preferences. */
+const DEFAULT_DIALOGUE_VOLUME=0.25;
+const DIALOGUE_MIX_GAIN=0.4;
+const DIALOGUE_MUSIC_GAIN=0.9;
+
+return{
+DEFAULT_DIALOGUE_VOLUME:DEFAULT_DIALOGUE_VOLUME,
+DIALOGUE_MIX_GAIN:DIALOGUE_MIX_GAIN,
+DIALOGUE_MUSIC_GAIN:DIALOGUE_MUSIC_GAIN,
 };
 })();
 modules['game/ui/audio-master.mjs']=(()=>{
@@ -811,6 +1081,8 @@ kind:active?.radio?'radio':active?'dialogue':null,
 return{dialogueChannel:dialogueChannel};
 })();
 modules['optional-practice/civilian-fpv/world-audio.mjs']=(()=>{
+const createGameplayAudioOutput=
+modules['game/ui/gameplay-audio-output.mjs']['createGameplayAudioOutput'];
 const createHumanReactionPolicy=external0['createHumanReactionPolicy'];
 const HUMAN_REACTION_BANK=external1['HUMAN_REACTION_BANK'];
 const destructionBufferGain=external2['destructionBufferGain'];
@@ -849,6 +1121,7 @@ storage=options.storage??host.localStorage;
 }catch{
 // Sound works for this visit even when browser preferences are unavailable.
 }
+const gameplayOutput=createGameplayAudioOutput({window:host,getStorage:()=>storage});
 const AudioContext=host.AudioContext??host.webkitAudioContext;
 let enabled=false;
 try{
@@ -1094,6 +1367,7 @@ wind,
 hum,
 humGain,
 };
+gameplayOutput.attach(output);
 return true;
 }catch{
 candidate?.close().catch(()=>{});
@@ -1283,6 +1557,7 @@ releasePlaybackAudioSession(host.navigator?.audioSession);
 }
 
 return{
+gameplayOutput,
 get context(){
 return context;
 },
@@ -1567,6 +1842,7 @@ dispose(){
 if(disposed)return;
 disposed=true;
 humanBuffers.clear();
+gameplayOutput.dispose();
 pause();
 releaseMaster();
 host.removeEventListener?.('storage',changed);
