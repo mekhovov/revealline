@@ -1,0 +1,128 @@
+{
+  "previousHead": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+  "head": "4c3727ef3dc36719c511cccc4fe9785a7fd7f47b",
+  "allChangedGitHubBlobReadbacksMatch": true,
+  "files": [
+    {
+      "path": ".github/workflows/fpv-preservation-readback.yml",
+      "gitBlobSHA1": "974be30c2d0279200b9504d35255d483317fd4cc",
+      "bytes": 3885,
+      "sha256": "03938cf8803cd4545c9fe360488e1f13394000ab4868342a8e4aef145d5d8060"
+    },
+    {
+      "path": ".github/workflows/fpv-preservation-portable-restore.yml",
+      "gitBlobSHA1": "2f773380e906f7e3a626606ea9ce83baefe3e24b",
+      "bytes": 4913,
+      "sha256": "895f386a58f4e8da9d33d91caacfe115868e8faf142defe209732eb8030c1d0a"
+    },
+    {
+      "path": ".github/workflows/fpv-preservation-incremental-readback.yml",
+      "gitBlobSHA1": "2082a525e29fd6d97d395a14832ca533bba23fa2",
+      "bytes": 3852,
+      "sha256": "80c0e8df35825fc4a7a114e3be2ce9adaadcf2d948b66c179e736a123f6b657d"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/ad-hoc-workflow-head-guards/root-head-guard-review-001.json",
+      "gitBlobSHA1": "a8c88e48e768257fb56aa769f1b6ac6cbf431719",
+      "bytes": 1497,
+      "sha256": "316b105e1f59a246dfc0d6f5fed294c6e925defc412c78f2a482cf9e9a36e236"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/ad-hoc-workflow-head-guards/root-incremental-head-guard-review-001.json",
+      "gitBlobSHA1": "95959b91c38896a674e8a507222ced7b05edcff5",
+      "bytes": 533,
+      "sha256": "98ec0f1b005bed7d8562f3d1f5faf54fdc95a09ad97957b13fb77552f2098f70"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/unexpected-original-preservation-retrigger-cancellations-001.json",
+      "gitBlobSHA1": "e4ac1dbd2162416ce1c997fca2c73d4e933fa680",
+      "bytes": 1157,
+      "sha256": "cdf72885d6c3b62d386f5a38b8d18e3f0d2ca025ed41d1d3de73cb0b93155cb5"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/four-reviewed-public-positive-cohorts-object-coverage-003.json",
+      "gitBlobSHA1": "0f9adca67754434c375193d1d4973f7fbb5a7259",
+      "bytes": 14153,
+      "sha256": "4968a47b87e51a724008b70fc417f63e2bbac2b3c7e6ebcc576f691dfb4c2d88"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/tools-publication-increment-020.json",
+      "gitBlobSHA1": "7d6eb01de89fbcaca09769fec6b12c61438d2c55",
+      "bytes": 2479,
+      "sha256": "23166fae8715d47c39ae73cf369fb326cd70b535ecce2d61cbf1dc97506be396"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/actual-job-log.txt",
+      "gitBlobSHA1": "23d395708dff62ade284e15abbefff358a5ea05e",
+      "bytes": 25160,
+      "sha256": "ac7539b3be72ffc3f664369572da4c9f76beba4e0ee4a0aea86f11e55e2bd3b9"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/artifact-metadata.json",
+      "gitBlobSHA1": "f74ee5cb825ba935c43998a11aa1d35c86f6ea63",
+      "bytes": 833,
+      "sha256": "69e856ed61dfd95e29b7d56bb3c2a780c44e45332a0ebc3dbcdff680211c2779"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/collection.json",
+      "gitBlobSHA1": "5b934933e7262ef961714803e17c257ceeb3b54c",
+      "bytes": 1150,
+      "sha256": "94be2dc86ae11242dd0f9b2a11b517adcbd28abd97025c0daed47c8f47da52b3"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/extra-public-003-verified.json",
+      "gitBlobSHA1": "0932175d9d29a045305f80a8637f8d07f11f5705",
+      "bytes": 7869899,
+      "sha256": "b8bc6a35af9bcfb0f0ad0a5625f1a231945842d3c607a2d788627dccc424e9b0"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/job-metadata.json",
+      "gitBlobSHA1": "1917a41dc9966e42a7c1307ba391e48b202d6da6",
+      "bytes": 2973,
+      "sha256": "3c4956179c64f454e7c649c19bdbafa2b0211ca78f10ec1df458c02e7e309b57"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/run-metadata.json",
+      "gitBlobSHA1": "5951076c2747d90f61c5c2ba4b7cfc3730b2f95f",
+      "bytes": 14304,
+      "sha256": "f24f537423850488251a30e210bd140ab50a7054720d190e275137799f9035be"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/root-independent-review/root-acceptance.json",
+      "gitBlobSHA1": "af3883dbc134f8ab3cbf415e348e2dea42e4b5a8",
+      "bytes": 1174,
+      "sha256": "1d524fce6d6bd8a0b4198ad38b0a7a61d2eede31276f0878921d933b6913c797"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/root-independent-review/initial-contents-media-type-negative.json",
+      "gitBlobSHA1": "5afd9fe6ad6b054e2874e4d3d7c36c69fd27b3b4",
+      "bytes": 340,
+      "sha256": "92cd98b463c1dfa2da9fd53aee96bb87aab0b294ad6b14eb36f79c811a8f9db2"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/root-independent-review/actual-job.json",
+      "gitBlobSHA1": "1917a41dc9966e42a7c1307ba391e48b202d6da6",
+      "bytes": 2973,
+      "sha256": "3c4956179c64f454e7c649c19bdbafa2b0211ca78f10ec1df458c02e7e309b57"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/root-independent-review/actual-run.json",
+      "gitBlobSHA1": "5951076c2747d90f61c5c2ba4b7cfc3730b2f95f",
+      "bytes": 14304,
+      "sha256": "f24f537423850488251a30e210bd140ab50a7054720d190e275137799f9035be"
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/root-independent-review/actual-artifact.json",
+      "gitBlobSHA1": "f74ee5cb825ba935c43998a11aa1d35c86f6ea63",
+      "bytes": 833,
+      "sha256": "69e856ed61dfd95e29b7d56bb3c2a780c44e45332a0ebc3dbcdff680211c2779"
+    }
+  ],
+  "acceptedActualIncrementalRun": 38875736494,
+  "acceptedActualRunHead": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+  "onlyOwnedAdHocWorkflowGuardsChanged": true,
+  "requiredApplicationCIAndRepositoryProtectionUnchanged": true,
+  "sourceHelpersUnchangedFrom": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+  "noInheritedNewHeadRestorationPassClaim": true,
+  "allVolumeComplete": false
+}

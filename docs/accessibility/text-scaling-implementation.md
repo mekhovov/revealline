@@ -1,5 +1,12 @@
 # F09 text and HUD scaling implementation notes
 
+> Current proposal: reconciliation against main `102c4dffe9720b343f2b16649e72288bfee8f264`.
+> The dated results below belong to their named earlier sources, including the
+> 461 focused cases and eleven configured components at `869dff`. They do not
+> qualify this proposed source. Only the six source-canonical stages in the final
+> section have run for this reconciliation; its formatting and syntax checks,
+> native/browser journeys, full validation and package checks remain pending.
+
 ## Measured baseline
 
 Exact runtime: `cb8dddd3d3c11d24c56b014fa48ac0e6417d6465`. Actual desktop browser at1280×720, English, primary Journey shell. Settings changes used normal controls; pause retained the same flight. [Computed measurements](text-scaling-baseline-2026-10-18.json) describe visible Home, Settings and paused HUD surfaces. This is not mobile or200% qualification.
@@ -104,3 +111,84 @@ The APFS-clone snapshot has29,236 available exact-target tracked files, verified
 Before and after each accepted component, all29,236 snapshot files matched audit `fe2cdf6ebc822f67472bbc21a442daafa63e0ed1320b64af86a9536de60e665e`. Complete raw output, per-component limits/exits and all22 log hashes remain under `.cache/improvements-evidence/2026-10-19/compat-869-apfs-preflight/`; `configured-components-final.json` identifies exactly which attempt qualifies each component. The original interrupted `full-gates/` chain and its failure are retained alongside `full-gates-resumed/`. This documentation-only successor keeps all42 non-document feature blobs exact869; checks were not rerun at the successor.
 
 Package capacity, actual current browser journeys and new-head remote CI/admission remain open. Physical iPhone installed-PWA offline cold launch, Steam Deck, listening and assistive-technology acceptance remain unqualified.
+
+## Proposed compatibility reconciliation against 102c · source evidence only
+
+The proposed 43-path compatibility update retains every current-main value and
+owner outside its reviewed changes. Current main adds ten optional mission-opening
+trace markers in `game/app.mjs`; all ten remain byte-exact alongside the original
+four text compatibility edits. The other 39 authored candidates and all 78 pinned
+generator inputs retain their independently reviewed bytes. The three canonical
+outputs were regenerated from this reviewed source, rather than copied from an
+older generated module. This is a source proposal, not a published or merged head.
+
+The compatibility behavior is unchanged: retain `extra-large` intent, render the
+established Large fallback on unsupported hosts, and explain that fallback without
+saving, changing a flight or exposing a new selectable size. This does not qualify
+200% typography or the separate Single Drone/Riy layout prototype.
+
+### Accepted source-canonical run
+
+Remote main was re-read immediately before this single run and matched exactly
+`102c4dffe9720b343f2b16649e72288bfee8f264`. All six stages exited zero with complete
+bounded capture, empty stderr and no remaining owned descendants:
+
+| Stage                                  | Seconds | Peak owned RSS bytes |
+| -------------------------------------- | ------: | -------------------: |
+| Exact catalog projection, author       |   2.338 |          253,853,696 |
+| Exact catalog projection, check/decode |   1.881 |          239,108,096 |
+| Registered theme-bootstrap author      |   0.414 |          150,716,416 |
+| Registered theme-bootstrap check       |   0.440 |          147,898,368 |
+| Registered SIM shell author            |   0.678 |          165,429,248 |
+| Registered SIM shell check             |   0.645 |          159,399,936 |
+
+The catalog projection extracts seven pinned declarations from the registered
+localization source using verified JavaScript UTF-16 and UTF-8 spans. It first
+reproduces the original main catalog bytes from all 18 original namespace JSON
+files. It then verifies exactly three added compatibility entries per language,
+no altered or removed existing values, and complete lossless decoding to all 18
+candidate namespaces. It does **not** run the full localization CLI, source
+reference audit or content-registry generation/check.
+
+The theme stage intentionally evaluates the registered pure theme compiler and
+its admitted data/i18n/catalog dependencies in a Node process without a browser,
+storage or network host. No application, game host or gameplay module entrypoint
+runs. The SIM stage reads and projects source text. Its current-main bytes outside
+the generated JS markers remain exact, and the complete CSS file remains unchanged.
+
+| Canonical output                                       |     Bytes | Git blob                                   |
+| ------------------------------------------------------ | --------: | ------------------------------------------ |
+| `game/i18n/catalogs.mjs`                               | 1,278,099 | `d0a9885af95a24d8dbf592dd2e83e54569f2ac34` |
+| `game/presentation/theme-bootstrap.mjs`                |    93,524 | `5cb5c5a4a8ac84818328369d8a775c456a60745e` |
+| `optional-practice/civilian-fpv/flight-fullscreen.mjs` |   349,183 | `d595595a79b74481e2112be45e04506c4e6c650b` |
+
+The immutable receipt is
+`/tmp/revealline-compat1668-102c-canonical-private/receipt.json`, SHA-256
+`92a29f3c551dcd16b8ede5f08393b340e8992cc7ff5d6b4f09b056d95ce304f5`.
+It identifies the frozen runner and every output/log hash. The raw campaign
+contains 3,767 stdout bytes and zero stderr bytes. Private allocation was
+12,115,968 bytes of the 16 MiB cap; final free space was 788,955,136 bytes. Each
+child retained the 256 MiB heap, 512 MiB owned RSS, 45-second wall limit and source
+free-space guards of 256 MiB before launch / 128 MiB continuously. The native
+2 GiB reserve remains unchanged. All original source artifacts, A checkout
+files/HEAD/index and dependencies matched before and after. Earlier failures and
+qualification receipts remain intact; none are relabeled as a new-head pass.
+
+### Remaining gates for this proposal
+
+The next bounded source-static plan checks formatting of all 40 authored files
+with the captured current-main formatter configuration, plus syntax of all 39
+owned JavaScript files including the three canonical outputs. These checks are
+currently **unrun**. Generated output formatting is owned by the registered
+canonical author/check stages; catalog bundles are also explicitly ignored by the
+repository formatter. No generic formatter will rewrite generated bytes.
+
+Complete native cohorts, full localization/content-registry/reference checks,
+configured source validation, package build and current-head hosted CI remain
+pending. Browser journeys, installed-PWA offline cold starts, listening, assistive
+technology, physical iPhone and Steam Deck remain unqualified. Historical 869dff
+results are useful regression evidence for that exact source only. Fresh remote
+main and all 43 owned-path / 78 generator-input pins must be verified again before
+any publication proposal; newer unrelated files must remain on their current
+main bytes. No formatting, source application, Git update or publication is
+performed by this documentation change.

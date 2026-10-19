@@ -1,6 +1,7 @@
 import { localizedOverflight } from './copy.mjs';
 import { overflightHuntText } from './raid-copy.mjs';
 import { overflightHuntUpgradeParameters, HUNT_UPGRADE_IDS } from './raid-upgrades.mjs';
+import { t } from '../i18n/index.mjs';
 
 const palette = {
   ground: '#12241f',
@@ -322,6 +323,7 @@ export function createOverflightHuntUpgradeCard({
   document,
   offer,
   player,
+  rerolls,
   rulesVersion,
   locale = 'en',
   reducedEffects = false,
@@ -377,16 +379,33 @@ export function createOverflightHuntUpgradeCard({
       paintSprite,
     });
   button.paintPreview();
+  // Presentation receives the host's held count; accepted offer/replay copy and
+  // external callers without that option retain their original contract.
+  const showRerollCount =
+    offer.kind === 'field' &&
+    offer.system === 'field-reroll' &&
+    Number.isInteger(rerolls) &&
+    rerolls >= 0;
+  const current = showRerollCount
+    ? t('interface:overflight.fieldRerolls', {
+        count: rerolls,
+        lng: locale === 'uk' ? 'uk' : 'en',
+      })
+    : local(offer.current);
   const comparison = model.field
-    ? `${local(offer.current)} → ${local(offer.next)}`
+    ? `${current} → ${local(offer.next)}`
     : `${text('current')}: ${previewCaption(model, 0, locale)}. ${text('next')}: ${previewCaption(model, 1, locale)}`;
   const consequence = shieldRefitConsequence(model.shieldRefit, locale);
-  button.append(heading, canvas, node('span', local(offer.next), 'upgrade-description'));
+  button.append(
+    heading,
+    canvas,
+    node('span', showRerollCount ? comparison : local(offer.next), 'upgrade-description'),
+  );
   if (consequence)
     button.append(node('span', consequence, 'upgrade-description upgrade-consequence'));
   button.setAttribute(
     'aria-label',
-    `${local(offer.title)}. ${comparison}. ${local(offer.current)}. ${local(offer.next)}${consequence ? ` ${consequence}` : ''}`,
+    `${local(offer.title)}. ${comparison}. ${current}. ${local(offer.next)}${consequence ? ` ${consequence}` : ''}`,
   );
   button.addEventListener('click', () => onChoose(offer.id));
   return button;

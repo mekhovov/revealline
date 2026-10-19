@@ -2,6 +2,54 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "mission-library-solo-native",
+      "pathPatterns": [
+        "^game/test/mission-library-solo-(?:fixture\\.mjs|(?:(?:custom|incoming|handoff)-)?host\\.test\\.mjs)$"
+      ],
+      "commands": [
+        {
+          "id": "mission-library-solo-native-custom",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-custom-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "mission-library-solo-native-setup",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "mission-library-solo-native-incoming",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-incoming-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "mission-library-solo-native-handoff",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-handoff-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
+    },
+    {
       "id": "official-download-retention",
       "pathPatterns": [
         "^game/official-downloads\\.mjs$",
@@ -244,6 +292,13 @@
           "args": [
             "--test",
             "publishing/focused-tests.test.mjs",
+            "publishing/focused-shard-plan.test.mjs",
+            "publishing/focused-git-inputs.test.mjs",
+            "publishing/focused-execution-plan.test.mjs",
+            "publishing/focused-compact.test.mjs",
+            "publishing/focused-compact-cli.test.mjs",
+            "publishing/focused-compact-integration.test.mjs",
+            "publishing/focused-compact-workflow.test.mjs",
             "publishing/fastline-merge-controller.test.mjs",
             "publishing/fastline-release-inputs.test.mjs",
             "publishing/fastline-release-objects.test.mjs",
@@ -388,6 +443,22 @@
             "game/test/journey.test.mjs",
             "game/test/creator-bundle.test.mjs"
           ]
+        }
+      ]
+    },
+    {
+      "id": "mission-library-solo-cold-opening-diagnostic",
+      "pathPatterns": ["^game/test/mission-library-solo-cold-opening\\.probe\\.mjs$"],
+      "commands": [
+        {
+          "id": "mission-library-solo-cold-opening-diagnostic",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-cold-opening.probe.mjs"
+          ],
+          "timeoutMs": 300000
         }
       ]
     }

@@ -1,0 +1,86 @@
+{
+  "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+  "runtimeRoot": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/functional-check",
+  "url": "http://127.0.0.1:9214/index.html",
+  "fixtureFiles": [
+    {
+      "path": "index.html",
+      "bytes": 2820,
+      "sha256": "dc7d7363309cfc57703425b10c4a7fd1ac322ba85550d98edd8164d3d5edfd18"
+    },
+    {
+      "path": "preview.css",
+      "bytes": 708,
+      "sha256": "bb92f1390f6e082789e19c8fa5c9d8c66cc39888bcebe47ba83cb92fc731c49d"
+    },
+    {
+      "path": "preview.mjs",
+      "bytes": 7745,
+      "sha256": "e52bd89c984436412b8c56f410242e65d971cd981be6c329e9b8d0d32cbc755a"
+    }
+  ],
+  "scope": "Synthetic callback-only component; exact packaged Library/input/CSS. No scenery/WebGL/default DB/player storage/real flight/persistence. Not full-player/theme/physical/public acceptance. CSP disallows connection fetches. Native not yet inspected.",
+  "httpChecks": [
+    {
+      "path": "index.html",
+      "httpStatus": 200,
+      "bytes": 2820,
+      "sha256": "dc7d7363309cfc57703425b10c4a7fd1ac322ba85550d98edd8164d3d5edfd18"
+    },
+    {
+      "path": "preview.mjs",
+      "httpStatus": 200,
+      "bytes": 7745,
+      "sha256": "e52bd89c984436412b8c56f410242e65d971cd981be6c329e9b8d0d32cbc755a"
+    },
+    {
+      "path": "preview.css",
+      "httpStatus": 200,
+      "bytes": 708,
+      "sha256": "bb92f1390f6e082789e19c8fa5c9d8c66cc39888bcebe47ba83cb92fc731c49d"
+    },
+    {
+      "path": "runtime/optional-practice/civilian-fpv/regional-library.mjs",
+      "httpStatus": 200,
+      "bytes": 74392,
+      "sha256": "4e414ab01cd63b8feaaeda1f141a76a7cd85d738084a92b25e1ea4f8eb0f918e"
+    },
+    {
+      "path": "runtime/optional-practice/civilian-fpv/input.mjs",
+      "httpStatus": 200,
+      "bytes": 38417,
+      "sha256": "fa05c07d694b96042ad4285294b1b676c60ef85b5122175a0d7b0b0268a1e8d6"
+    },
+    {
+      "path": "runtime/optional-practice/civilian-fpv/world-style.css",
+      "httpStatus": 200,
+      "bytes": 119168,
+      "sha256": "e75fe38f7a339e844376c9ca2eb35ef6d7f84202b395e0c8d2c491ba915e1529"
+    },
+    {
+      "path": "runtime/optional-practice/civilian-fpv/style.css",
+      "httpStatus": 200,
+      "bytes": 175643,
+      "sha256": "caf333f5853e0805126789f96e5013878461f725cd8354c9239be84e5aab81ce"
+    },
+    {
+      "path": "runtime/game/vendor/i18next-26.4.2.min.js",
+      "httpStatus": 200,
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    }
+  ],
+  "exactPackageQualification": {
+    "receipt": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/qualification-receipt.json",
+    "sha256": "00c9df15c65930ebfb9f5e5f7c7bb7ed413bc94af9149561c6c550e9a5e17d97",
+    "packageRevision": "2f7cf1e44d94c82359bb74143950b17f981fd2be587019f0ead30e490efb5197",
+    "runtimeArchiveSHA256": "47ae369ca6fcf448e5a75e552ce1a4323b0f464ec67565535eeab24f3177b1cf"
+  },
+  "sourceRootNotServed": true,
+  "distinctDeferredPaths": [
+    "guarded existing open()",
+    "actual visible Refresh button callback, without open()",
+    "missing prior Fly via actual visible Refresh button callback"
+  ],
+  "priorNativeNegativePreservedAt": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/native-root/native-receipt.json"
+}
