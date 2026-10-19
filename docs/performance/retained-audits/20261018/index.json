@@ -1748,6 +1748,12 @@
       "blob": "18fe9b9504e5616232279df6be7b970514801161",
       "bytes": 1073,
       "sha256": "a25cf5252b6cb35755ff61a439fcc51f48a158ed719328857c844d2f03c8d68c"
+    },
+    {
+      "path": "plan-followup-integration-and-cleanup-publication-20261019.json",
+      "blob": "846a504615850895e2b45d1c9f66f72315dfe616",
+      "bytes": 874,
+      "sha256": "4b445d13837585378fd0f61eb9f161cebb6c85c716bb1c1e867bb3241707f7ec"
     }
   ]
 }
