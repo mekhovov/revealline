@@ -331,8 +331,9 @@ geometry, voltage, target, cells and numerical policy. Every result remains
 
 This increment does not interpret an ESC command as normalized motor speed or
 RPM. It does not use `allocateAircraftThrust()`, whose existing flight model has
-a different command domain and allocation policy. Searching multiple cells,
-choosing among multiple solutions, desaturation/axis priorities, coupled
+a different command domain and allocation policy. The domain selector below
+adds a bounded search across declared cells. Choosing among multiple solutions,
+desaturation/axis priorities, coupled
 battery-sag inversion, armed idle/Airmode, motor transients, actual achieved-torque
 feedback and versioned runtime integration remain separate work. The absence of
 matched motor/propeller measurements still prevents a measured-fidelity claim.
@@ -356,6 +357,96 @@ limits and forward checks. That review also prompted the explicit lower-endpoint
 source-receipt label above. This receipt establishes source-level numerical
 preparation only; no new game build, browser flight, device or measured-aircraft
 qualification is claimed.
+
+## Fixed-voltage command-domain selection: non-activating preparation
+
+`propulsion-domain.mjs` exports `solveStaticQuadCommandDomain()`. The new
+`StaticQuadDomainInverse.v1` input uses the local inverse's complete frame, thrust
+axis, torque basis, SI units, ideal fixed-voltage supply and target. Each rotor
+contains `id`, `position`, `reactionDirection`, `commandUnit` and its original
+`surface`, without a caller-selected `cell`. Existing formats and the cell solver
+are unchanged. The module has no live aircraft, controller, worker, inspector or
+package imports.
+
+The searched domain is the **union of explicitly declared command cells at the
+specified voltage**. It does not include isolated observed command paths that
+are not edges of any admitted cell. Undeclared intervals remain holes; no cells
+are inferred and no query is clamped, snapped or extrapolated. Every surface and
+all its declared cells are validated first. Exact voltage comparisons select
+covered cells. At a shared voltage knot, the lowest admitted voltage-cell index
+is retained for each command interval: both adjacent cells use the same observed
+path values in every channel at that knot, matching the surface evaluator's rule.
+
+The Cartesian product of the four candidate lists is traversed in lexicographic
+rotor/cell order. Its fixed limit is **256 combinations**; a larger domain is
+unavailable, never silently truncated. One call to the unchanged local inverse
+performs complete input validation and is reused as candidate zero. An empty or
+over-budget domain therefore makes one validation call; an admitted search makes
+at most 256 cell-solver calls. Candidate lists have at most 15 entries per rotor
+under the existing surface limits. The result retains one selected result or one
+unresolved result, plus at most two compact ambiguous-command summaries; it does
+not collect every attempted forward receipt.
+
+Each candidate retains the local solver's endpoint checks, fixed force/torque
+scales, matrix conditioning, strict command bounds, exact terminal-voltage check,
+power checks and forward residual tolerances. Only
+`outside-selected-command-cells` is treated as a computed rejection that permits
+the search to continue. Any other failure makes the search
+`unresolved-command-cell` and returns no usable commands, even if an earlier cell
+solved. Invalid evidence or a poorly conditioned cell cannot disappear from the
+domain merely because another candidate works.
+
+The result is solved only after the complete admitted search produces one exact
+command vector. Exact duplicate vectors from shared command boundaries retain
+the first lexicographic cell tuple and increment `duplicateSolutions`. Different
+vectors produce `ambiguous-command-solutions`, even when the difference is only
+rounding near a shared boundary. There is no epsilon-based merging. This is a
+**calculated selection under the existing local inverse's numerical policy**,
+not certified mathematical uniqueness: finite-precision out-of-cell rejection
+can exclude an exact root very near a boundary. A targeted decimal-boundary test
+demonstrates the conservative ambiguity outcome. A stronger uniqueness guarantee
+would require a separately reviewed numerical error-bound method.
+
+Other unavailable reasons are `no-admitted-cell-at-voltage`,
+`command-domain-workload-limit` and `no-command-domain-solution`. Malformed records
+still throw through complete validation. `commands` and `selection` remain null
+on all unavailable outcomes. `workload` reports the candidate product, actual
+cell-solver calls and exact duplicate count. The identity binds complete surface
+content identities, ordered candidate lists, geometry, target, voltage, workload
+limit and local numerical policy. Data are detached and deeply frozen.
+Top-level `sources` are the validation cell's lower-command receipts, explicitly
+labeled `sourceReceiptContext: 'validation-cell-lower-command-endpoints'`; those
+source `command` values are not the selected commands. A successful `selection`
+retains its full cell-inverse result and forward provenance.
+
+Every outcome remains `resultKind: 'calculated'` and `flightEligible: false`.
+This bounded synchronous inspection calculation is not a real-time allocator or
+a performance-qualified flight loop. Coupled battery sag/current regulation,
+desaturation and axis priorities, command-to-controller adaptation, motor
+transients, physical measurements and versioned runtime/replay qualification
+remain open R6 work.
+
+The fifteen new synthetic tests cover an independent piecewise forward oracle,
+asymmetric geometry, per-rotor slopes and mixed command units, exact and nearby
+boundaries, voltage-knot ownership, declared holes, distinct multiple solutions,
+near-boundary nonmerging, solved-plus-unresolved domains, singular/ill-conditioned
+matrices, missing evidence, power failures, exact/over-budget workload limits,
+immutable provenance and non-activation. They use invented data only. Run them
+with the unchanged five propulsion suites:
+
+```sh
+node --test --test-concurrency=1 game/test/fpv-aircraft-propulsion-domain.test.mjs game/test/fpv-aircraft-propulsion-inverse.test.mjs game/test/fpv-aircraft-propulsion-quad.test.mjs game/test/fpv-aircraft-propulsion-surface.test.mjs game/test/fpv-aircraft-propulsion-load.test.mjs game/test/fpv-aircraft-propulsion-evidence.test.mjs
+```
+
+On 19 October 2026, this isolated change from
+`5aef423f2b51133681ad43c864150eed1f34fe21` passed **95/95** focused checks on
+Node 20.19.5: fifteen domain checks plus the unchanged eighty inverse/forward
+checks. Scoped ESLint, JavaScript/test Prettier and `git diff --check` pass.
+Independent read-only math/source review reproduced all fifteen new checks and
+found no blocker. The preserved local log `fpv-propulsion-domain-tests-20261019.log`
+has SHA-256 `b7e3331a43677bdf9fc055da96d3f72c38e5d6314b3790c307e0963ed8efe83a`.
+This is source-level numerical preparation; no package build, browser/device
+flight or measured-aircraft qualification is newly claimed.
 
 ## API and example
 
