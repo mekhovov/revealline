@@ -39,7 +39,7 @@ export const INPUTS = Object.freeze({
     'e729ead2a1014b7edf2809d2d32dfd2958f66441194468d36b9e9f7b534ba856',
   'game/content/themes.json': '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2',
   'authoring/library/countercurrent-art/provenance.json':
-    '41f8d87480fa488bddcbd29f66b9dd239ece2acbf860c143f6eef82c6fc733e4',
+    '9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98',
   'authoring/library/countercurrent-art/manifest.json':
     'c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543',
 });

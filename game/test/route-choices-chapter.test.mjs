@@ -160,7 +160,7 @@ test('Gentle has distinct full campaign identity and honestly removes authored c
   );
 });
 
-test('existing image/pack/library caps accept this pack and refuse addition to all four original worlds without eviction', async () => {
+test('existing image/pack/library caps accept this pack and allow addition to the three retained worlds without eviction', async () => {
   assert.equal(CONTENT_LIMITS.maxImageBytes, 4 * 1024 * 1024);
   assert.equal(PACK_LIMITS.maxBytes, 24 * 1024 * 1024);
   assert.equal(PACK_LIMITS.libraryBytes, 48 * 1024 * 1024);
@@ -172,11 +172,7 @@ test('existing image/pack/library caps accept this pack and refuse addition to a
   assert.equal(Buffer.byteLength(bytes), source.libraryBytes);
   assert.equal(exportPackLibrary(await importPackLibrary(bytes, { decodeImage })), bytes);
   assert.equal(empty.packs.length, 0);
-  const names = [
-    'original-fpv-pressure',
-    'original-ukraine-atlas',
-    'original-retro-1994',
-  ];
+  const names = ['original-fpv-pressure', 'original-ukraine-atlas', 'original-retro-1994'];
   const oldPacks = await Promise.all(
     names.map(async (name) =>
       JSON.parse(
@@ -192,7 +188,11 @@ test('existing image/pack/library caps accept this pack and refuse addition to a
     { decodeImage },
   );
   const before = sha(exportPackLibrary(old));
-  assert.throws(() => installPack(old, prepared));
+  const expanded = installPack(old, prepared);
+  assert.deepEqual(
+    expanded.packs.map((pack) => pack.id),
+    [...names, source.pack.id],
+  );
   assert.equal(sha(exportPackLibrary(old)), before);
   assert.deepEqual(
     old.packs.map((p) => p.id),
@@ -202,12 +202,21 @@ test('existing image/pack/library caps accept this pack and refuse addition to a
 
 test('new chapter has one exact optional catalog entry while raw art and automatic/indexed content stay excluded', async () => {
   const files = await collectBuildFiles(ROOT, await readBuildConfig(ROOT));
-  assert.ok(
-    !files.some(
-      (f) =>
-        f.startsWith('authoring/library/fpv-route-choices/') ||
-        f.startsWith('authoring/library/challenge-chapter-art/'),
-    ),
+  assert.deepEqual(
+    files
+      .filter(
+        (f) =>
+          f.startsWith('authoring/library/fpv-route-choices/') ||
+          f.startsWith('authoring/library/challenge-chapter-art/'),
+      )
+      .sort(),
+    [
+      'authoring/library/challenge-chapter-art/originals/crosswind-depot.png',
+      'authoring/library/challenge-chapter-art/originals/signal-switchback.png',
+      'authoring/library/challenge-chapter-art/originals/split-signal-foundry.png',
+      'authoring/library/challenge-chapter-art/provenance.json',
+      'authoring/library/fpv-route-choices/distribution.json',
+    ],
   );
   for (const name of [
     'packs/index.json',

@@ -15,8 +15,8 @@ const themes = ['ukraine', 'retro'];
 const entries = [];
 for (const [index, theme] of themes.entries()) {
   const result = await buildSentinelTheme(theme);
-  assert.deepEqual(result.descriptor, SOURCE_EXTERNAL_CHAPTERS[index + 5]);
-  const item = EXTERNAL_CATALOG.chapters[index + 5];
+  assert.deepEqual(result.descriptor, SOURCE_EXTERNAL_CHAPTERS[index + 4]);
+  const item = EXTERNAL_CATALOG.chapters[index + 4];
   for (const kind of ['pack', 'media'])
     entries.push({
       name: item[kind].path,
@@ -30,25 +30,25 @@ const decodeImage = async (blob) => {
   const b = Buffer.from(await blob.arrayBuffer());
   return { naturalWidth: b.readUInt32BE(16), naturalHeight: b.readUInt32BE(20) };
 };
-test('three Sentinel theme producers supply exact pairs and preserve all five original authorities', async () => {
-  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 16);
+test('two Sentinel theme producers preserve the four retained earlier authorities', async () => {
+  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 12);
   assert.equal(
-    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 5))),
-    '83ba162b7fd1f7d6520081e70fa3d6abe4f0cff3f4b8e0b95ab2d0cd1206b32c',
+    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 4))),
+    '320d3c877f3d553b61a8ea7e41a8da05bb78e1c8c79c4556ddb4f7e6b4e1358c',
   );
   assert.equal(
-    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 5))),
-    'dc1ef7d0995578a9af50a134a1f20339128e133e97f54cf93d45b797708fb4c7',
+    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 4))),
+    'ab3ea68fa4a66472b81a27891cedacb9f5e8335b560083642269f51a472204ac',
   );
-  assert.equal(entries.length, 6);
-  assert.equal(bodies.size, 6);
+  assert.equal(entries.length, 4);
+  assert.equal(bodies.size, 4);
   // All earlier body bytes, cumulative totals and the twelve-owner capacity case
   // share the complete real-source audit in scripts/test-external-distribution.mjs.
   assert.equal(
     entries.reduce((n, e) => n + e.bytes.length, 0),
-    23173302,
+    15747554,
   );
-  for (const item of EXTERNAL_CATALOG.chapters.slice(5, 8))
+  for (const item of EXTERNAL_CATALOG.chapters.slice(4, 6))
     for (const kind of ['pack', 'media']) {
       const actual = bodies.get(item[kind].path);
       assert.equal(actual.length, item[kind].bytes);
@@ -56,7 +56,7 @@ test('three Sentinel theme producers supply exact pairs and preserve all five or
     }
   for (const [i, theme] of themes.entries())
     assert.deepEqual(
-      SOURCE_EXTERNAL_CHAPTERS[i + 5],
+      SOURCE_EXTERNAL_CHAPTERS[i + 4],
       JSON.parse(
         await readFile(
           new URL(
@@ -67,17 +67,20 @@ test('three Sentinel theme producers supply exact pairs and preserve all five or
       ),
     );
   const files = await collectBuildFiles(root);
-  assert(
-    !files.some((f) =>
-      /authoring\/library\/sentinel-theme-(art|chapters)\//.test(
-        typeof f === 'string' ? f : f.path,
-      ),
-    ),
+  // Current shared scenery uses these exact reviewed metadata/original inputs.
+  // Producer scripts and unselected authoring files remain outside the build.
+  assert.deepEqual(
+    files.filter((file) => file.startsWith('authoring/library/sentinel-theme-chapters/')).sort(),
+    [
+      'authoring/library/sentinel-theme-chapters/descriptors/retro.json',
+      'authoring/library/sentinel-theme-chapters/descriptors/ukraine.json',
+      'authoring/library/sentinel-theme-chapters/editions.json',
+    ],
   );
 });
 for (const [i, theme] of themes.entries())
   test(`explicit ${theme} transport resolves only that exact owner and all three null-story originals`, async () => {
-    const item = EXTERNAL_CATALOG.chapters[i + 5],
+    const item = EXTERNAL_CATALOG.chapters[i + 4],
       requests = [];
     const baseURL = [
       'https://example.test/',
@@ -94,7 +97,7 @@ for (const [i, theme] of themes.entries())
         return new Response(bodies.get(item[kind].path));
       },
     });
-    assert.deepEqual(prepared.descriptor, SOURCE_EXTERNAL_CHAPTERS[i + 5]);
+    assert.deepEqual(prepared.descriptor, SOURCE_EXTERNAL_CHAPTERS[i + 4]);
     assert.equal(requests.length, 2);
     assert(
       requests.every(
@@ -110,8 +113,8 @@ for (const [i, theme] of themes.entries())
     }
   });
 test('cross-theme originals and interrupted second body cannot become an install capability', async () => {
-  const item = EXTERNAL_CATALOG.chapters[5],
-    other = EXTERNAL_CATALOG.chapters[6];
+  const item = EXTERNAL_CATALOG.chapters[4],
+    other = EXTERNAL_CATALOG.chapters[5];
   await assert.rejects(
     prepareExternalDownload(item.id, {
       baseURL: 'https://example.test/',

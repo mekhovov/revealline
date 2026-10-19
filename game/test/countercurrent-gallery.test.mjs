@@ -28,16 +28,16 @@ walk(html);
 const attrs = (node) =>
   Object.fromEntries((node.attrs || []).map(({ name, value }) => [name, value]));
 
-test('the bounded viewer declares exactly twelve recorded originals and the existing README', async () => {
+test('the bounded viewer declares exactly nine retained originals and the existing README', async () => {
   assert.equal(
     sha(manifestRaw),
-    '27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1',
+    'c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543',
   );
-  assert.equal(COUNTERCURRENT_SOURCES.length, 13);
-  assert.equal(new Set(COUNTERCURRENT_SOURCES.map((source) => source.id)).size, 13);
+  assert.equal(COUNTERCURRENT_SOURCES.length, 10);
+  assert.equal(new Set(COUNTERCURRENT_SOURCES.map((source) => source.id)).size, 10);
   assert.ok(Object.isFrozen(COUNTERCURRENT_SOURCES));
   const images = COUNTERCURRENT_SOURCES.filter((source) => source.kind === 'image');
-  assert.equal(images.length, 12);
+  assert.equal(images.length, 9);
   assert.deepEqual(
     images.map((source) => source.path).sort(),
     manifest.images.map((image) => folder + image.path).sort(),
@@ -80,8 +80,8 @@ test('all original PNG and review JPEG bytes remain exact against preserved prov
     assert.equal(sha(preview), thumb.sha256, thumb.path);
     thumbnailBytes += preview.length;
   }
-  assert.equal(originalBytes, 31692501);
-  assert.equal(thumbnailBytes, 483255);
+  assert.equal(originalBytes, 23175876);
+  assert.equal(thumbnailBytes, 345995);
   // This is byte/header validation; full native PNG/JPEG decoding is separate.
   for (const path of [
     'README.md',
@@ -111,7 +111,7 @@ test('every original/document link retains its exact destination and a stable un
     .filter((node) => node.tagName === 'a')
     .map((node) => ({ node, ...attrs(node) }))
     .filter((node) => COUNTERCURRENT_SOURCES.some((source) => source.path === folder + node.href));
-  assert.equal(sources.length, 13);
+  assert.equal(sources.length, 10);
   assert.deepEqual(
     sources.map((link) => folder + link.href).sort(),
     COUNTERCURRENT_SOURCES.map((source) => source.path).sort(),
@@ -132,11 +132,7 @@ test('every original/document link retains its exact destination and a stable un
   );
   assert.deepEqual(
     headings.map((node) => attrs(node).id),
-    [
-      'countercurrent-fpv',
-      'countercurrent-ukraine',
-      'countercurrent-retro',
-    ],
+    ['countercurrent-fpv', 'countercurrent-ukraine', 'countercurrent-retro'],
   );
   for (const heading of headings) {
     const target = byId.get(attrs(heading)['data-authoring-target']);
