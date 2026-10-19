@@ -6,6 +6,7 @@ import path from 'node:path';
 import { parse } from 'acorn';
 import { format, resolveConfig } from 'prettier';
 import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
+import { simShellPruningPlan } from './fpv-shell-pruning.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const check = process.argv.includes('--check');
@@ -92,7 +93,7 @@ async function projectGlobalServices() {
     if (modules.has(file)) return `modules[${JSON.stringify(file)}]`;
     if (visiting.has(file)) throw new Error(`Cyclic shared settings dependency: ${file}`);
     visiting.add(file);
-    let text = await read(file);
+    const text = await read(file);
     const nodes = parse(text, { sourceType: 'module', ecmaVersion: 'latest' }).body;
     const replacements = [],
       names = [];
@@ -124,13 +125,24 @@ async function projectGlobalServices() {
         replacements.push([node.start, declaration.start, '']);
       }
     }
-    for (const [start, end, replacement] of replacements.reverse())
-      text = text.slice(0, start) + replacement + text.slice(end);
     visiting.delete(file);
-    modules.set(file, { text, names });
+    modules.set(file, { text, names, replacements });
     return `modules[${JSON.stringify(file)}]`;
   }
   for (const file of Object.keys(entries)) await visit(file);
+  const pruning = simShellPruningPlan(
+    new Map([...modules].map(([file, { text }]) => [file, text])),
+    entries,
+  );
+  for (const [file, module] of modules) {
+    const omitted = pruning.get(file) ?? [];
+    const replacements = module.replacements
+      .filter(([start]) => !omitted.some((node) => node.start <= start && start < node.end))
+      .concat(omitted.map(({ start, end }) => [start, end, '']));
+    for (const [start, end, replacement] of replacements.sort((a, b) => b[0] - a[0]))
+      module.text = module.text.slice(0, start) + replacement + module.text.slice(end);
+    module.names = module.names.filter((name) => !omitted.some((node) => node.name === name));
+  }
   return [
     ...[...external].map(
       ([file, name]) => `import * as ${name} from ${JSON.stringify('../../' + file)};`,
