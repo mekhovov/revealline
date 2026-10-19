@@ -1,152 +1,81 @@
 {
-  "format": "FPVCASPartPublished.v1",
-  "repo": "mekhovov/revealline",
-  "releaseId": 414505790,
-  "assetId": 646133063,
-  "assetName": "fpv-cas-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d.tar.zst",
-  "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/fpv-cas-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d.tar.zst",
-  "bytes": 9998275,
-  "sha256": "ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d",
-  "partManifest": {
-    "format": "FPVCASPart.v1",
-    "number": 1,
-    "objects": [
-      {
-        "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a",
-        "bytes": 356686,
-        "member": "objects/01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a"
-      },
-      {
-        "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb",
-        "bytes": 612326,
-        "member": "objects/1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb"
-      },
-      {
-        "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8",
-        "bytes": 700570,
-        "member": "objects/22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8"
-      },
-      {
-        "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401",
-        "bytes": 405702,
-        "member": "objects/2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401"
-      },
-      {
-        "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1",
-        "bytes": 389078,
-        "member": "objects/393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1"
-      },
-      {
-        "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
-        "bytes": 1744888,
-        "member": "objects/41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7"
-      },
-      {
-        "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
-        "bytes": 1669344,
-        "member": "objects/5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6"
-      },
-      {
-        "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
-        "bytes": 1620118,
-        "member": "objects/7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd"
-      },
-      {
-        "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192",
-        "bytes": 540732,
-        "member": "objects/b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192"
-      },
-      {
-        "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
-        "bytes": 1580074,
-        "member": "objects/be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136"
-      },
-      {
-        "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066",
-        "bytes": 375148,
-        "member": "objects/fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066"
-      }
-    ]
-  },
-  "sourceChecks": [
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-inside-village-theme.webp",
-      "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a",
-      "bytes": 356686,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994144523395300
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "bf1dc9056dab749e229f92738ec86e33e100f8317acf9d925c6ef87daab6cb0d",
+  "originalGitBlob": "c3cb88caf56f77b033fd4aff4a9f88b3380820b7",
+  "removedRecordsOrFields": 11,
+  "excerpt": {
+    "format": "FPVCASPartPublished.v1",
+    "repo": "mekhovov/revealline",
+    "releaseId": 414505790,
+    "assetId": 646133063,
+    "assetName": "fpv-cas-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d.tar.zst",
+    "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/fpv-cas-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d.tar.zst",
+    "bytes": 9998275,
+    "sha256": "ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d",
+    "partManifest": {
+      "format": "FPVCASPart.v1",
+      "number": 1,
+      "objects": [
+        {
+          "sha256": "01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a",
+          "bytes": 356686,
+          "member": "objects/01b291d818f0839722c02c5b72592ee752e0fda4d605a4cd048be43c7a21b34a"
+        },
+        {
+          "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb",
+          "bytes": 612326,
+          "member": "objects/1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb"
+        },
+        {
+          "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8",
+          "bytes": 700570,
+          "member": "objects/22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8"
+        },
+        {
+          "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401",
+          "bytes": 405702,
+          "member": "objects/2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401"
+        },
+        {
+          "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1",
+          "bytes": 389078,
+          "member": "objects/393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1"
+        },
+        {
+          "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
+          "bytes": 1744888,
+          "member": "objects/41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7"
+        },
+        {
+          "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
+          "bytes": 1669344,
+          "member": "objects/5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6"
+        },
+        {
+          "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
+          "bytes": 1620118,
+          "member": "objects/7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd"
+        },
+        {
+          "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192",
+          "bytes": 540732,
+          "member": "objects/b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192"
+        },
+        {
+          "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
+          "bytes": 1580074,
+          "member": "objects/be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136"
+        },
+        {
+          "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066",
+          "bytes": 375148,
+          "member": "objects/fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066"
+        }
+      ]
     },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-developer-integration-theme.webp",
-      "sha256": "1da45a8b55412741155b8d10bb85e6a339cd95304eb253276669c2f8e707cadb",
-      "bytes": 612326,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994144348265400
-    },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp",
-      "sha256": "22a53a8e40d2b7c8788d89d264ac946b0465895eb8e407b7b0745f5efdc0eff8",
-      "bytes": 700570,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994145049728400
-    },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-product-operations-theme.webp",
-      "sha256": "2a58390914ff3bba6b21d68026a6cd21c5505de37d443f3e6760caba29deb401",
-      "bytes": 405702,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994144716740400
-    },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa.webp",
-      "sha256": "393ebd9f3cf395598a79a43cd1277adfe4381cee177549be38fc027ec76afdc1",
-      "bytes": 389078,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994146821894700
-    },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-team-portrait.webp",
-      "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7",
-      "bytes": 1744888,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994145295350300
-    },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-versus-portrait.webp",
-      "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6",
-      "bytes": 1669344,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994145932296000
-    },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-versus.webp",
-      "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd",
-      "bytes": 1620118,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994146293256400
-    },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-village.webp",
-      "sha256": "b7a4113a200a956e207188e5e66a472539bbe5d29b7009039bc79e90ca551192",
-      "bytes": 540732,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994146463847300
-    },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-team.webp",
-      "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136",
-      "bytes": 1580074,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994145688903800
-    },
-    {
-      "path": "fpv-urban-independent-20261014/game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp",
-      "sha256": "fd4b66a8df11db0504aa05fb6000511c307e46b8bac68e461e3ad396bb8a6066",
-      "bytes": 375148,
-      "sourceBeforeAndAfterSHA256Match": true,
-      "mtimeNs": 1791994144832389100
-    }
-  ],
-  "localSourceReceiptSHA256": "602ba0409afdb649a387a78b7f63720cae8de72b943d955a9387d85bda2aaf6d",
-  "verificationPending": true
+    "sourceChecks": [],
+    "localSourceReceiptSHA256": "602ba0409afdb649a387a78b7f63720cae8de72b943d955a9387d85bda2aaf6d",
+    "verificationPending": true
+  }
 }

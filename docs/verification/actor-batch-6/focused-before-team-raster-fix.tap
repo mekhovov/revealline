@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: contact style accepts one exact opt-in token and always returns a bounded visible stroke
 ok 1 - contact style accepts one exact opt-in token and always returns a bounded visible stroke
@@ -795,12 +797,6 @@ ok 132 - ukraine: actual observed movement animates microtile bodies; Pause hold
 ok 133 - retro: actual observed movement animates microtile bodies; Pause holds the exact pose
   ---
   duration_ms: 0.211791
-  type: 'test'
-  ...
-# Subtest: coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
-ok 134 - coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
-  ---
-  duration_ms: 0.859791
   type: 'test'
   ...
 # Subtest: uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion

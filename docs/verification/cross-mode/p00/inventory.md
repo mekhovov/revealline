@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # P00 — committed cross-mode baseline inventory
 
 This record freezes the **integrated v0.53.0 source**, before the P00 release version bump. It inventories existing behavior; it does not deliver or approve the later redesign phases.
@@ -31,11 +33,9 @@ The 34 campaigns consist of First Signal, eight active packs, four archive packs
 
 The selected presentation is `base@1` plus `fpv@15`; the sixteen theme records are base plus the fifteen immutable FPV revisions, not sixteen complete editions. The resolved 293 slots contain 135 images, 3 fonts, and 155 recipes. Quality metadata identifies 194 reviewed bindings and 99 source bindings. A recipe can be an approved component; `recipe` alone is not a missing-art finding. The 99 source bindings are not proof of completed non-FPV production.
 
-The picture-owner inventory includes 56 FPV, 34 Ukrainian, 34 Retro, and 31 Coupa identities. Owner identity includes the base campaign key, level ID/revision, and theme ID. The existing release-picture selector is FPV-specific; matching a level name or ID alone is insufficient authority to replace artwork.
 
 ## Static Versus map matrix
 
-First Signal exposes twelve logical maps and allows four themes: FPV Front, Ukraine Atlas, 1994 Forever, and Spend Network. Pressure Lines contributes three maps with its authored FPV presentation. Therefore the test matrix is **12×4 + 3 = 51**, not 15×4.
 
 | Map ID | Map name | Geometry | Theme coverage |
 |---|---|---|---|
@@ -137,7 +137,6 @@ Every phase below is queued unless a separate accepted phase record proves compl
 | P12-A–D | 48 DroneAid missions, twelve per release; brandbook/logo/poster/audio/Team variants |
 | P13 | 12 Living Atlas missions; complete cultural edition and Team variants |
 | P14 | 12 After School Arcade missions; complete Retro edition and Team variants |
-| P15 | 12 Spend in Motion missions; complete Coupa edition and Team variants |
 | P16 | Collection/story/records; settings/data/recovery; learning/replay/controllers; Workshop/supporting pages; existing content curation |
 | P17 | tested community guide/templates/prompts; independent fresh-workspace rehearsal |
 | P18 | 792 solo configurations plus qualified Versus; 36 Team encounter configurations; required slot completeness; full regression/public/offline/budget evidence |

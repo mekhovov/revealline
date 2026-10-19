@@ -1,6 +1,6 @@
 {
   "format": "revealline-retained-review-evidence.v1",
-  "scope": "Exact text projection of one historical assessment after ownership retirement. All source fingerprints, prior-review references, outcomes and retained assessments are unchanged. This is not the original review byte identity and does not approve new source, artwork or a new release. Original bytes are preserved externally and in the extracted content archive.",
+  "scope": "Exact text projection of two historical assessments after ownership retirement. All source fingerprints, prior-review references, outcomes and retained assessments are unchanged. This is not the original review byte identity and does not approve new source, artwork or a new release. Original bytes are preserved externally and in the extracted content archive.",
   "items": [
     {
       "path": "docs/verification/fpv-family-effects-continuation-2026-09-28/review.json",
@@ -8,6 +8,13 @@
       "sha256": "5dda0ea57365afd8bb2767075973d0d7d6b520de225bca8d43325e70090a0bcb",
       "previousBytes": 9012,
       "bytes": 8995
+    },
+    {
+      "path": "docs/verification/fpv-family-effects-continuation-2026-09-28/main-rebase-review.json",
+      "previousSHA256": "5f234d657c95047ae677757259999196571d0b2c3e10d084c59c1457d804eea7",
+      "sha256": "9a89fc929937b26e040e1740787989ca3bbeb9ad75dd372db3a952a6ebfea630",
+      "previousBytes": 9455,
+      "bytes": 9438
     }
   ]
 }

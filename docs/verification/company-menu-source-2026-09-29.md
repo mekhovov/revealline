@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Company landing source verification — 2026-09-29
 
 Real Chrome browser pass against `http://127.0.0.1:8768/game/?edition=<id>`. Each row was loaded independently, waited for the open landing, and inspected through the rendered DOM. This covers all fourteen current catalog editions in the main source package; it is not a standalone-package, hardware-controller or visual-approval claim.
@@ -6,12 +8,6 @@ Every row exposed exactly the Solo mode control and four landing actions: Start,
 
 | Edition ID                       | Observed title       | Observed final scene ID                | Modes | Essential controls / poster |
 | -------------------------------- | -------------------- | -------------------------------------- | ----- | --------------------------- |
-| `coupa-all`                      | Coupa Village        | `coupa-village`                        | Solo  | Pass                        |
-| `coupa-adventure`                | Spend in Motion      | `coupa-spend-in-motion-theme`          | Solo  | Pass                        |
-| `coupa-culture`                  | Inside the Village   | `coupa-inside-village-theme`           | Solo  | Pass                        |
-| `coupa-foundations`              | From Need to Value   | `coupa-source-to-pay-theme`            | Solo  | Pass                        |
-| `coupa-operations`               | A Day in Coupa       | `coupa-product-operations-theme`       | Solo  | Pass                        |
-| `coupa-developers`               | Connect the Network  | `coupa-developer-integration-theme`    | Solo  | Pass                        |
 | `droneaid-community`             | Community Relay      | `droneaid-community`                   | Solo  | Pass                        |
 | `droneaid-nl-community`          | DroneAid Netherlands | `droneaid-nl-community`                | Solo  | Pass                        |
 | `droneaid-nl-workshop-lights`    | Workshop Lights      | `droneaid-nl-workshop-lights-theme`    | Solo  | Pass                        |
@@ -44,15 +40,11 @@ Each of the **14 edition IDs above** also passed a separate real Chrome launcher
 
 All 14 compiled landings displayed the matching title and expected scene ID in the table, exactly Solo plus Start / Select Mission / Settings / Sound, a decoded scene poster, and **Version v0.142.1**. No additional landing actions appeared. No unsupported Versus or Team entry appeared. This checks actual launcher-to-player handoff, rather than opening a source route that happens to share its shell. The offline preparation action itself was not invoked in this browser pass; compilation/closure validation is recorded separately in `menu-scenes/edition-compilation.json`.
 
-The footer song metadata updates asynchronously. Thirteen final routes displayed `Carol of the Bells (Metal Version) · Alexander Nakarada` after readiness; Coupa Village's final run had no selected track and showed the then-current fallback `Selected soundtrack`. Its owner subsequently changed that fallback to the truthful localized `No track selected`, without starting audio. This report does not claim a selected song in that empty state.
 
-The two aggregate scene image assets were subsequently replaced with their own overview artwork. After the final refresh, both `/editions/coupa-all/app/` and `/editions/droneaid-nl-community/app/` were followed through Check → Prepare on `http://127.0.0.1:8974/`. Their actual compiled poster images both decoded at **1536×1024**, with the respective `coupa-village` and `droneaid-nl-community` scene IDs. This closes the image decode check for the replacement aggregate artwork.
 
-The final generated Coupa launcher also passed a **virtual standard-pad** journey using `game/test/manual/edition-launcher-controller.html`: Confirm's release activated Check and revealed the validated Prepare link; Back focused Prepare; a subsequent Confirm release followed that exact versioned company entry. The fixture supplied device button states to the actual compiled launcher and did not call its click/domain handlers directly. It was served temporarily outside all edition package directories, then removed from staging. This is browser/controller integration evidence, not a physical-device claim.
 
 ## Actual Chrome 200% zoom
 
-The final compiled **Coupa Village** landing on origin `8974` was checked at real browser zoom in both English and Ukrainian. Native Chrome shortcuts changed zoom, and Chrome's accessibility UI explicitly reported **Zoom: 200%**. Device pixel ratio changed from 2 to 4; the effective CSS viewport changed from 1593×1123 to **796×561**. No CSS transform, page zoom style or viewport-emulation setting was used.
 
 At 200%, both locales had document width **796 px**, matching the viewport without horizontal page overflow. All five essential controls stayed horizontally in bounds (x≈39.8…549.8). The landing's decorative container rounded to 797 px internally, but did not create document-level overflow. **Settings** was opened by Enter and its **Back / Назад** button activated by Enter in both languages; it closed and restored focus to `shell-options`. The UI locale was restored to English.
 
@@ -60,8 +52,6 @@ Native Chrome zoom was restored to **100%**, confirmed in Chrome's accessibility
 
 ## Actual prepared offline reload
 
-The **English Coupa Village** edition was prepared through its real **Settings → Content & Offline → Prepare this edition for offline play** action on `http://127.0.0.1:8974/editions/coupa-all/releases/v0.142.1/site/game/index.html?edition=coupa-all`. Its UI reported **This edition is verified for offline play.**
 
-Chrome DevTools was opened through the native browser UI. The Network throttling picker was explicitly changed from **No throttling** to **Offline**, and the native accessibility tree confirmed **Presets: Offline** before the page was reloaded. The reload reached the complete landing with its five essential controls, song attribution and Version v0.142.1. The `coupa-village` overview decoded at **1536×1024**; the menu used `Reveal Line Pixel` and `document.fonts.check` reported that pixel face loaded. The native Network table showed resources **Served from ServiceWorker**, including the overview image and a packaged font. This was a real Offline-profile reload, not an online cache-only reload.
 
 Afterward, the same native picker was restored to **No throttling**, confirmed in Chrome's accessibility tree, and DevTools was closed. Zoom remained 100% (DPR=2, viewport width1593). This checks the prepared company landing on local Chrome, not a physical offline device, native iOS runtime, offline gameplay completion or every edition. The later r2 markup/field-editor-style packaging fixes are outside the resources exercised by this landing check.

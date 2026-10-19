@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 {
   "version": "0.142.4",
   "buildId": "59a00ad014543d2776422ec2cf6f5d8a3b652cd765e7ae81d56e50ea999eaa9f",
@@ -25,7 +27,6 @@
       "bytesWithCore": 75977509
     },
     {
-      "id": "community:coupa",
       "files": 37,
       "bytesWithCore": 107477411
     },
@@ -351,7 +352,6 @@ GET /authoring/motion-lab/assets/fpv-body.png 200
 GET /authoring/motion-lab/assets/fpv-night.png 200
 GET /authoring/motion-lab/assets/fpv-racer.png 200
 GET /authoring/motion-lab/assets/heavy-lift.png 200
-GET /authoring/motion-lab/assets/navi-avatar.png 200
 GET /authoring/motion-lab/assets/retro-craft.png 200
 GET /authoring/motion-lab/assets/scout-quad.png 200
 GET /authoring/motion-lab/assets/ukrainian-bird.png 200
@@ -419,7 +419,6 @@ GET /game/challenges.mjs 200
 GET /game/chapter-download.mjs 200
 GET /game/character-presentations.mjs 200
 GET /game/collection-results.mjs 200
-GET /game/communities/coupa/index.html 200
 GET /game/communities/directory.css 200
 GET /game/communities/directory.mjs 200
 GET /game/communities/droneaid-community/index.html 200
@@ -495,15 +494,6 @@ GET /game/content-launch.mjs 200
 GET /game/content.mjs 200
 GET /game/content/campaign.json 200
 GET /game/content/classes.json 200
-GET /game/content/company-boot/coupa-adventure/archives.json 200
-GET /game/content/company-boot/coupa-adventure/campaign.json 200
-GET /game/content/company-boot/coupa-adventure/classes.json 200
-GET /game/content/company-boot/coupa-adventure/presets.json 200
-GET /game/content/company-boot/coupa-adventure/themes.json 200
-GET /game/content/company-boot/coupa-culture/campaign.json 200
-GET /game/content/company-boot/coupa-developers/campaign.json 200
-GET /game/content/company-boot/coupa-foundations/campaign.json 200
-GET /game/content/company-boot/coupa-operations/campaign.json 200
 GET /game/content/company-boot/droneaid-community/campaign.json 200
 GET /game/content/company-boot/droneaid-community/presets.json 200
 GET /game/content/company-boot/droneaid-community/themes.json 200
@@ -527,17 +517,6 @@ GET /game/content/company-boot/ukraine-culture/themes.json 200
 GET /game/content/company-boot/victory-drones/campaign.json 200
 GET /game/content/company-boot/victory-drones/presets.json 200
 GET /game/content/company-boot/victory-drones/themes.json 200
-GET /game/content/company-campaigns/coupa-developer-integration.json 200
-GET /game/content/company-campaigns/coupa-developer-integration.lessons.json 200
-GET /game/content/company-campaigns/coupa-inside-village.json 200
-GET /game/content/company-campaigns/coupa-inside-village.lessons.json 200
-GET /game/content/company-campaigns/coupa-product-operations.json 200
-GET /game/content/company-campaigns/coupa-product-operations.lessons.json 200
-GET /game/content/company-campaigns/coupa-source-to-pay.json 200
-GET /game/content/company-campaigns/coupa-source-to-pay.lessons.json 200
-GET /game/content/company-campaigns/coupa-source-to-pay.rewards.json 200
-GET /game/content/company-campaigns/coupa-spend-in-motion.json 200
-GET /game/content/company-campaigns/coupa-spend-in-motion.rewards.json 200
 GET /game/content/company-campaigns/droneaid-community-relay.json 200
 GET /game/content/company-campaigns/droneaid-nl-careful-handoff.json 200
 GET /game/content/company-campaigns/droneaid-nl-makers-together.json 200
@@ -719,20 +698,6 @@ GET /game/editions/offline-package-id.mjs 200
 GET /game/editions/presets.mjs 200
 GET /game/editions/project.mjs 200
 GET /game/editions/retained-presentation.mjs 200
-GET /game/editions/retained/coupa-adventure-before-discovery-rewards.json 200
-GET /game/editions/retained/coupa-adventure-fb207466c.json 200
-GET /game/editions/retained/coupa-all-before-discovery-rewards.json 200
-GET /game/editions/retained/coupa-all-before-learning-bonus.json 200
-GET /game/editions/retained/coupa-all-fb207466c.json 200
-GET /game/editions/retained/coupa-all.json 200
-GET /game/editions/retained/coupa-culture-fb207466c.json 200
-GET /game/editions/retained/coupa-developers-fb207466c.json 200
-GET /game/editions/retained/coupa-developers.json 200
-GET /game/editions/retained/coupa-foundations-before-learning-bonus.json 200
-GET /game/editions/retained/coupa-foundations-fb207466c.json 200
-GET /game/editions/retained/coupa-foundations.json 200
-GET /game/editions/retained/coupa-operations-fb207466c.json 200
-GET /game/editions/retained/coupa-operations.json 200
 GET /game/editions/retained/droneaid-nl-careful-handoff-475bccde4.json 200
 GET /game/editions/retained/droneaid-nl-careful-handoff-fb207466c.json 200
 GET /game/editions/retained/droneaid-nl-community-38d320f48.json 200
@@ -1538,43 +1503,8 @@ GET /game/editions/assets/discovery/motion-makers/motion-makers-en-v1.txt 200
 GET /game/editions/assets/discovery/motion-makers/motion-makers-uk-v1.txt 200
 GET /game/editions/assets/discovery/motion-makers/motion-makers-en-v1.vtt 200
 GET /game/editions/assets/discovery/motion-makers/motion-makers-uk-v1.vtt 200
-GET /game/editions/assets/coupa/flower-blue.png 200
 GET /game/editions/assets/shared/Poppins-Regular.ttf 200
 GET /game/editions/assets/shared/Poppins-OFL.txt 200
-GET /game/editions/assets/coupa/coupa-inside-village-key.png 200
-GET /game/editions/assets/coupa/coupa-source-to-pay-key.png 200
-GET /game/editions/assets/coupa/coupa-product-operations-key.png 200
-GET /game/editions/assets/coupa/icon-192.png 200
-GET /game/editions/assets/coupa/icon-512.png 200
-GET /game/editions/assets/coupa/spend-city-v2.png 200
-GET /game/editions/assets/coupa/network-atlas-v2.png 200
-GET /game/editions/assets/coupa/wallpaper-network-2024.png 200
-GET /game/editions/assets/coupa/wallpaper-center-2024.png 200
-GET /game/editions/assets/coupa/choose-together-v1.png 200
-GET /game/editions/assets/coupa/repair-the-draft-v1.png 200
-GET /game/editions/assets/coupa/scoped-access-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/listen-then-link-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/room-for-everyone-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/own-the-handoff-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/terms-bridge-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/request-to-order-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/received-in-part-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/review-the-request-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/handle-the-change-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/record-the-delivery-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/beyond-page-one-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/known-references-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/draft-validate-explain-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/close-the-loop-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/clear-the-exception-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/run-ledger-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/build-tomorrow-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/all-of-us-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/supplier-square-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/paper-jam-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/shared-routes-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/quarter-end-weather-v1.png 200
-GET /game/editions/assets/coupa/bulk-02/make-room-for-tomorrow-v1.png 200
 GET /game/editions/assets/droneaid-nl/logo.png 200
 GET /game/editions/assets/droneaid-nl/propeller.png 200
 GET /game/editions/assets/droneaid-nl/icon-192.png 200

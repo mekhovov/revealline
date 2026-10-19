@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 - button "Game menu": ◩ REVEAL / LINE
 - generic: TACTICAL EDITION
 - button "Enter fullscreen": ⛶
@@ -142,7 +144,6 @@
       - option "FPV Front" [selected]
       - option "Ukraine Atlas"
       - option "1994 Forever"
-      - option "Spend Network"
     - text: Campaign
     - combobox "Campaign":
       - option "First Signal" [selected]
@@ -173,12 +174,10 @@
       - option "Neutral marker"
       - option "Atlas bird"
       - option "Tape runner"
-      - option "Spend Sprite"
       - option "Skyline FPV · locked" [disabled]
       - option "Night signal FPV · locked" [disabled]
       - option "Falcon trim · locked" [disabled]
       - option "Vector trail · locked" [disabled]
-      - option "Audit pulse · locked" [disabled]
       - option "Scout quad"
       - option "Heavy lift"
       - option "Fixed-wing body · locked" [disabled]

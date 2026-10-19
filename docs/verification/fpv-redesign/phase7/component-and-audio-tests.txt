@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: facing uses newly observed tick positions instead of a stale velocity field
 ok 1 - facing uses newly observed tick positions instead of a stale velocity field
@@ -274,16 +276,6 @@ ok 55 - legacy retro cover: a decoded backdrop preserves opaque concealment, cue
   ---
   duration_ms: 4.34525
   ...
-# Subtest: legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 56 - legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 3.672209
-  ...
-# Subtest: legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 57 - legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 4.580375
-  ...
 # Subtest: Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
 ok 58 - Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
   ---
@@ -313,16 +305,6 @@ ok 62 - Classic wide retro contain: a decoded backdrop preserves opaque concealm
 ok 63 - Classic wide retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
   ---
   duration_ms: 8.535125
-  ...
-# Subtest: Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 64 - Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 7.613209
-  ...
-# Subtest: Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 65 - Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 7.518833
   ...
 # Subtest: absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit
 ok 66 - absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit

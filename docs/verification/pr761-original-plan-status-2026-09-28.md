@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Player experience and character delivery — 28 September 2026
 
 This checkpoint supersedes the **queue, version reservations and ETA** sections
@@ -229,7 +231,6 @@ in PR761 rather than opening several release queues.
 | Parallel publisher  | Reconcile checked PR761 input and resolve relevant production review gates; immutable release and Pages verification | Depends on admission, exact integrated gates and public checks, not C2                               |
 | C3 — active         | Seven-class richer native bodies, enemy roles, Team states and related native-flow gaps                              | 3–5 days; seven-class source cohort complete, production adoption open                               |
 | C4 — active         | Optional pressure/combat authoring without downgrading sibling recipes; combinations and replay qualification        | 3–5 days; real Solo preview implemented, production/counterplay qualification next                   |
-| C5 — active         | DroneAid/Ukrainian, cultural, Retro and Coupa cohorts                                                                | 2–4 days per cohort; three sources/four board derivatives prepared; cultural/art/runtime review next |
 | C6 — active         | Complete state playback and runtime collection-policy adoption; existing non-rotor parts editor implemented          | 2–3 days in parallel                                                                                 |
 | Supporting C0/C1    | Current affected binding coverage, exact body/rig pairing and required bounds/performance checks                     | Included per cohort; wider baseline ½–1 day later                                                    |
 | C7 / UX6            | Whole-player/content, performance, accessibility, offline and history qualification                                  | 4–7 days plus physical devices                                                                       |
@@ -354,7 +355,6 @@ Remaining priorities and effort ranges after work starts:
 | --------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------- |
 | C3        | Exact native roster/enemy/Team-state production adoption, whole-board review and retained appearance checks      | 3–5 days                   |
 | C4        | Broader opt-in pursuit/interception/patrol/sentry counterplay, full mission/replay qualification and public play | 3–5 days                   |
-| C5        | Poltava native derivative/pixel cleanup/cultural review; next community, Retro and Coupa cohorts                 | 2–4 days per cohort        |
 | C6        | Complete moving-part/state workflows, native r6 import, full collection/theme restoration and authoring handoff  | 2–3 days in parallel       |
 | C7 / UX6  | Remaining distinct bindings, whole-player, performance/offline/hardware qualification                            | 4–7 days plus devices      |
 | C2 — last | Game-feel comparison, listening and two consented rounds with six players                                        | 2–3 days plus participants |
