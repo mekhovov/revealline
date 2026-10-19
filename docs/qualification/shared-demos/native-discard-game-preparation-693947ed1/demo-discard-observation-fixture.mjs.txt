@@ -1,0 +1,148 @@
+import assert from 'node:assert/strict';
+import { createHash, randomUUID } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { restorationDiagnosticGate } from '../scripts/demo-restoration-observation.mjs';
+import { bounded } from './demo-native-discard-environment.mjs';
+
+const pin = bytes => ({ bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') });
+const entryPaths = new Map([
+  ['/game/', 'game/index.html'], ['/game/index.html', 'game/index.html'],
+  ['/game/snake/play.html', 'game/snake/play.html'],
+  ['/game/overflight/play.html', 'game/overflight/play.html'],
+  ['/optional-practice/fpv-worlds/index.html', 'optional-practice/fpv-worlds/index.html'],
+]);
+
+/** Instrument only the four entry documents; all native modules remain provider-owned. */
+export async function installDiscardObservationFixture({ preview, events, getStage, getMode }) {
+  const observer = await readFile(new URL('./demo-discard-observer-browser.js', import.meta.url));
+  const token = randomUUID();
+  const scriptPath = '/__discard-observer-' + token + '.js';
+  const collectorPath = '/__discard-observer-' + token + '/events';
+  const received = new Map(), reconciliations = [], html = new Map(), errors = [];
+  let errorOverflow = 0;
+  const rememberError = value => { if (errors.length < 16) errors.push(value); else errorOverflow++; };
+  const eventIdentity = event => event.id + ':' + event.seq;
+  const accept = rows => {
+    assert.ok(Array.isArray(rows) && rows.length <= 32);
+    for (const row of rows) {
+      assert.ok(row && typeof row.id === 'string' && /^[a-f0-9-]{36}$/.test(row.id));
+      assert.ok(Number.isSafeInteger(row.seq) && row.seq > 0 && row.seq <= 2000);
+      assert.ok(typeof row.kind === 'string' && JSON.stringify(row).length <= 8192);
+      const key = eventIdentity(row), prior = received.get(key);
+      if (prior) assert.deepEqual(row, prior, 'Collector duplicates must be byte-equivalent data.');
+      else {
+        assert.ok(received.size < 3000, 'Collector overflow cannot silently omit observations.');
+        received.set(key, row); events.push(row);
+      }
+    }
+  };
+  const handlers = preview.server.listeners('request');
+  assert.equal(handlers.length, 1);
+  preview.server.removeAllListeners('request');
+  preview.server.on('request', (request, response) => {
+    const pathname = new URL(request.url, 'http://127.0.0.1').pathname;
+    if (pathname === scriptPath) {
+      response.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8', 'Cache-Control': 'no-store' });
+      response.end(observer); return;
+    }
+    if (pathname === collectorPath) {
+      if (request.method !== 'POST') { response.writeHead(405); response.end(); return; }
+      const chunks = []; let bytes = 0;
+      request.setTimeout(2000, () => { rememberError('Collector body deadline.'); request.destroy(); });
+      request.on('data', chunk => {
+        bytes += chunk.length;
+        if (bytes > 262144) { rememberError('Collector body overflow.'); request.destroy(); }
+        else chunks.push(chunk);
+      });
+      request.on('error', error => rememberError(String(error).slice(0, 1024)));
+      request.on('end', () => {
+        request.setTimeout(0);
+        try {
+          accept(JSON.parse(Buffer.concat(chunks).toString('utf8')));
+          response.writeHead(204, { 'Cache-Control': 'no-store' }); response.end();
+        } catch (error) {
+          rememberError(String(error).slice(0, 2048)); response.writeHead(400); response.end();
+        }
+      });
+      return;
+    }
+    const relative = entryPaths.get(pathname);
+    if (!relative || request.method !== 'GET') { handlers[0](request, response); return; }
+    // Provider still performs exact emitted admission and applies its existing credential fixture.
+    const originalWriteHead = response.writeHead.bind(response);
+    const originalEnd = response.end.bind(response);
+    let status = 200, headers = {}, chunks = [];
+    response.writeHead = (nextStatus, nextHeaders) => { status = nextStatus; headers = nextHeaders ?? {}; return response; };
+    response.write = chunk => { chunks.push(Buffer.from(chunk)); return true; };
+    response.end = chunk => {
+      if (chunk) chunks.push(Buffer.from(chunk));
+      let body = Buffer.concat(chunks);
+      try {
+        if (status === 200 && String(headers['Content-Type']).startsWith('text/html')) {
+          assert.ok(body.length < 2097152, 'Entry HTML observation is bounded.');
+          const source = body.toString('utf8');
+          assert.match(source, /<head(?:\s[^>]*)?>/i);
+          const mode = getMode() ?? 'preflight', stage = getStage();
+          assert.match(mode, /^[a-z-]+$/); assert.match(stage, /^[a-z-]+$/);
+          const addition = '<script src="' + scriptPath + '" data-collector="' + collectorPath +
+            '" data-mode="' + mode + '" data-stage="' + stage + '"></script>';
+          const injected = Buffer.from(source.replace(/<head(?:\s[^>]*)?>/i, match => match + addition));
+          const fixture = preview.fixtureResponses.find(row => row.path === relative);
+          assert.ok(fixture?.original, 'Require the strict emitted original HTML pin.');
+          const key = relative + ':' + pin(injected).sha256;
+          html.set(key, { path: relative, original: fixture.original, credentialFixture: pin(body),
+            addedTag: addition, observer: pin(observer), served: pin(injected),
+            credentialBytes: body, servedBytes: injected });
+          body = injected;
+          headers['Content-Length'] = body.length;
+          headers.ETag = '"' + pin(body).sha256 + '"';
+          headers['Accept-Ranges'] = 'none';
+        }
+        originalWriteHead(status, headers); originalEnd(body);
+      } catch (error) {
+        rememberError(String(error).slice(0, 2048));
+        originalWriteHead(500, { 'Content-Type': 'text/plain' }); originalEnd('Observation fixture failed.');
+      }
+      return response;
+    };
+    handlers[0](request, response);
+  });
+  const reconcile = async (page, label) => {
+    const value = await bounded(() => page.evaluate(() => window.demoRestorationObservation.flush()), 5000);
+    assert.equal(value.observerFailures, 0, 'Observer errors must remain explicit qualification failures.');
+    assert.equal(value.overflow, 0, 'In-document buffer overflow is a strict failure.');
+    assert.equal(value.buffer.length, value.cutoff);
+    for (let index = 0; index < value.cutoff; index++) {
+      const row = value.buffer[index];
+      assert.equal(row.id, value.id); assert.equal(row.seq, index + 1);
+      assert.deepEqual(received.get(eventIdentity(row)), row, 'Collector must acknowledge the complete retained document prefix.');
+    }
+    assert.equal(value.buffer[0]?.kind, 'observer-installed', 'Observer must precede native application startup.');
+    const receipt = { label, id: value.id, cutoff: value.cutoff, overflow: value.overflow,
+      transportRejected: value.transportRejected, observerFailures: value.observerFailures, at: new Date().toISOString() };
+    reconciliations.push(receipt);
+    assert.deepEqual(errors, []);
+    return receipt;
+  };
+  return { observer, html, errors, reconcile, summary: () => ({
+    observer: pin(observer), collectorPath, eventCount: received.size, reconciliations,
+    html: [...html.values()].map(({ credentialBytes, servedBytes, ...row }) => row),
+    limits: 'Top-document buffer and acknowledged collector prefixes only. The old document may have an undelivered tail between final reconciliation and native destruction. Restored startup is reconciled from its surviving in-memory buffer. Native inspector-only diagnostics during detachment and unobserved frames/workers are outside this observer.',
+    htmlException: 'A synchronous same-origin observer script tag is inserted immediately after head, before access/app scripts. Exact emitted HTML pins, credential-only bytes, observer bytes, and final served bytes are recorded. This diagnostic fixture is not byte-identical HTML or offline-integrity qualification.',
+    errors, errorOverflow,
+  }) };
+}
+
+/** Invoke again after browser/server cleanup so late diagnostics cannot escape admission. */
+export function assertDiscardObservationHealth({ summary, errors, errorOverflow, events }) {
+  assert.deepEqual(summary.errors, [], 'Collector/fixture errors remain strict failures.');
+  assert.equal(summary.errorOverflow, 0, 'Collector errors must not overflow.');
+  assert.equal(errorOverflow ?? 0, 0, 'Native errors must not overflow.');
+  for (const prefix of summary.reconciliations) {
+    assert.equal(prefix.overflow, 0);
+    assert.equal(prefix.observerFailures, 0);
+  }
+  const diagnostics = restorationDiagnosticGate(errors, events);
+  assert.equal(diagnostics, true, 'Observed native or DOM errors remain strict failures.');
+  return diagnostics;
+}

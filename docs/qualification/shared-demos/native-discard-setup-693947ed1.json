@@ -1,0 +1,106 @@
+{
+  "format": "NativeChromiumDiscardSetupObservationV1",
+  "started": "2026-10-19T01:12:51.133Z",
+  "head": "693947ed1373db7a265def126a5eede2bf875013",
+  "complete": false,
+  "before": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": {
+      "bytes": 422,
+      "sha256": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c"
+    },
+    ".cache/qualify-demo-actual-discard-237.mjs": {
+      "bytes": 31524,
+      "sha256": "e4410c02ae706cdc082b57aee898e30b164c5590d99d5ae1b9c47f3bc55f799a"
+    },
+    ".cache/demo-probe-evidence.mjs": {
+      "bytes": 2632,
+      "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9"
+    },
+    ".cache/observe-native-discard-setup-693947ed1.mjs": {
+      "bytes": 12801,
+      "sha256": "5dc65f14a57a5f792ed8c0655d8dba2653a56f4b0e8d0e736ddbba7a730f1ee6"
+    },
+    "scripts/shared-demo-browser-report.mjs": {
+      "bytes": 3881,
+      "sha256": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df"
+    },
+    "scripts/demo-restoration-observation.mjs": {
+      "bytes": 1810,
+      "sha256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+    }
+  },
+  "after": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": {
+      "bytes": 422,
+      "sha256": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c"
+    },
+    ".cache/qualify-demo-actual-discard-237.mjs": {
+      "bytes": 31524,
+      "sha256": "e4410c02ae706cdc082b57aee898e30b164c5590d99d5ae1b9c47f3bc55f799a"
+    },
+    ".cache/demo-probe-evidence.mjs": {
+      "bytes": 2632,
+      "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9"
+    },
+    ".cache/observe-native-discard-setup-693947ed1.mjs": {
+      "bytes": 12801,
+      "sha256": "5dc65f14a57a5f792ed8c0655d8dba2653a56f4b0e8d0e736ddbba7a730f1ee6"
+    },
+    "scripts/shared-demo-browser-report.mjs": {
+      "bytes": 3881,
+      "sha256": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df"
+    },
+    "scripts/demo-restoration-observation.mjs": {
+      "bytes": 1810,
+      "sha256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+    }
+  },
+  "checks": [],
+  "errors": [],
+  "actions": [],
+  "lifecycle": [],
+  "pageEvents": [],
+  "limits": {
+    "browserLaunchMs": 15000,
+    "navigationMs": 10000,
+    "uiActionMs": 3000,
+    "nativeHiddenMs": 3000,
+    "nativeDiscardMs": 10000,
+    "nativeRestorationMs": 10000,
+    "browserCloseMs": 10000,
+    "serverCloseMs": 2000
+  },
+  "scope": "Environment-only observer: one ephemeral Playwright Chrome profile, one isolated context, exactly two owned tabs and a tiny localhost HTML page. No game, emitted runtime, worker, source simulation, or acceptance gate is exercised.",
+  "limitations": [
+    "Only native debug UI enablement and removal of Playwright automatic focus emulation are attempted. No synthetic visibility/wasDiscarded override, crash, discard-all action, reload fallback, extension or user-browser connection is used.",
+    "Native hidden visibility, exact-owned urgent discard UI state, new document identity and document.wasDiscarded=true are mandatory. Any failure remains a failed observation.",
+    "Source checks bind this observer and related setup/report helpers plus HEAD and source-freeze bytes. This no-game observer does not recompute or qualify the complete runtime."
+  ],
+  "references": [
+    "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/components/webui/chrome_urls/resources/app.ts",
+    "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/ui/webui/chrome_urls/chrome_urls_handler.cc",
+    "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/resources/discards/discards_tab.ts"
+  ],
+  "fixture": {
+    "targetURL": "http://127.0.0.1:56032/owned-9a9f0af5-8215-4a62-b0a9-4653e1dfaf09",
+    "bytes": 260,
+    "sha256": "42afe87c01fcf0f1b190c149adb42a54bbca90453037d4ae682fac4788180a1a"
+  },
+  "browserVersion": "155.0.8059.85",
+  "failure": "cdpSession.send: Protocol error (Browser.getBrowserCommandLine): Command line not returned because --enable-automation not set.\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/observe-native-discard-setup-693947ed1.mjs:86:59",
+  "failedStage": "setup",
+  "targetClosed": null,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T01:12:52.051Z",
+  "serverCleanup": {
+    "attempted": true,
+    "complete": true,
+    "timeoutMs": 2000,
+    "elapsedMs": 0.18604200000004312,
+    "finished": "2026-10-19T01:12:52.051Z"
+  },
+  "serverClosed": true,
+  "headAfter": "693947ed1373db7a265def126a5eede2bf875013",
+  "bindingsUnchanged": true
+}

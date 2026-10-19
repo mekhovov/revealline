@@ -1,0 +1,201 @@
+#!/usr/bin/env python3
+"""Read-only, post-run supplement for the frozen 693947ed1 endurance gate."""
+import argparse
+import datetime as dt
+import hashlib
+import json
+import math
+from pathlib import Path
+import sys
+
+GAP_LIMIT_SECONDS = 45
+SAMPLE_CAP = 800
+QUALIFIER_SHA256 = '2059e16979a261009a31393f3d7a4878abcd2bd3b3a4b78d130112d88dbd38ec'
+WRAPPER_SHA256 = '79b966bb098d69f014dbf34111c3ae7c13c6ce1c3f1137b3f0e8a8e17c07b3ab'
+
+
+def sha(body):
+    return hashlib.sha256(body).hexdigest()
+
+
+def timestamp(value):
+    parsed = dt.datetime.fromisoformat(value.replace('Z', '+00:00'))
+    if parsed.tzinfo is None:
+        raise ValueError('Timestamp must include a timezone.')
+    return parsed
+
+
+def signature(sample):
+    return [sample.get(key) for key in ('source', 'phase', 'tick')]
+
+
+def analyze(report, source):
+    """Does not alter either original gate result or infer continuous painting."""
+    if not source.get('ended'):
+        raise ValueError('The source wrapper has not finalized; do not analyze a live run.')
+    blockers = []
+    required = ('sourceRevisionUnchanged', 'sourceUnchanged', 'buildInputsUnchanged',
+                'sourceDeclarationUnchanged', 'emittedCaptureUnchanged', 'harnessUnchanged',
+                'wrapperUnchanged', 'browserComplete', 'browserCloseCompleted', 'previewClosed',
+                'emittedPreviewAdmitted', 'ownedChildCleanupVerified', 'ownedObservationWithinLimits',
+                'logDrainComplete', 'logWithinLimit')
+    missing_flags = [key for key in required if source.get(key) is not True]
+    cleanup = source.get('ownedProcessCleanup', {})
+    if (source.get('complete') is not True or source.get('exitCode') != 0 or
+            source.get('runnerError') or missing_flags or cleanup.get('verified') is not True or
+            cleanup.get('remainingCount') != 0):
+        blockers.append('The original source wrapper and owned cleanup did not pass completely.')
+    if (report.get('complete') is not True or report.get('browserCloseCompleted') is not True or
+            report.get('previewClosed') is not True or report.get('errors') != []):
+        blockers.append('The original browser gate and browser/server cleanup did not pass completely.')
+    for side in ('Start', 'End'):
+        if source.get('harnessSha256At' + side, {}).get('scripts/qualify-shared-demo-browser.mjs') != QUALIFIER_SHA256:
+            blockers.append('The qualifier differs from the exact sampling implementation reviewed here.')
+        if source.get('wrapperSha256At' + side) != WRAPPER_SHA256:
+            blockers.append('The wrapper differs from the exact completion implementation reviewed here.')
+    samples = report.get('samples', [])
+    if not isinstance(samples, list) or not samples or len(samples) > SAMPLE_CAP:
+        raise ValueError('Expected one to 800 retained samples from the reviewed qualifier.')
+    if not report.get('enduranceStarted') or not report.get('enduranceFinished'):
+        raise ValueError('The final receipt has no complete endurance interval.')
+    start, finish = (timestamp(report[key]) for key in ('enduranceStarted', 'enduranceFinished'))
+    times = [timestamp(sample['at']) for sample in samples]
+    duration = (finish - start).total_seconds()
+    if duration < 7200:
+        blockers.append('The recorded endurance interval is shorter than 7200 wall-clock seconds.')
+    if len(samples) == SAMPLE_CAP:
+        blockers.append('The retained list reached its 800-sample cap; earlier trimming cannot be excluded.')
+    if source.get('samples') != len(samples):
+        blockers.append('The wrapper sample count does not match the final browser receipt.')
+    if source.get('enduranceStarted') != report['enduranceStarted'] or source.get('enduranceFinished') != report['enduranceFinished']:
+        blockers.append('The wrapper and browser interval endpoints differ.')
+
+    points = [(start, 'start', None)] + [(time, 'sample', i) for i, time in enumerate(times)] + [(finish, 'finish', None)]
+    intervals = []
+    for prior, current in zip(points, points[1:]):
+        intervals.append({'from': prior[0].isoformat(), 'to': current[0].isoformat(),
+                          'fromKind': prior[1], 'toKind': current[1],
+                          'fromSample': prior[2], 'toSample': current[2],
+                          'seconds': (current[0] - prior[0]).total_seconds()})
+    non_increasing = [row for row in intervals if row['seconds'] < 0 or
+                      (row['fromKind'] == row['toKind'] == 'sample' and row['seconds'] == 0)]
+    large_gaps = [row for row in intervals if row['seconds'] >= GAP_LIMIT_SECONDS]
+    if non_increasing:
+        blockers.append('Sample timestamps are not strictly ordered within the complete interval.')
+    if large_gaps:
+        blockers.append('One or more observation gaps, including interval edges, meet or exceed 45 seconds.')
+
+    runs = []
+    first = 0
+    for end in range(1, len(samples) + 1):
+        if end == len(samples) or signature(samples[end]) != signature(samples[first]):
+            runs.append({'fromSample': first, 'toSample': end - 1, 'samples': end - first,
+                         'signature': signature(samples[first]),
+                         'seconds': (times[end - 1] - times[first]).total_seconds()})
+            first = end
+    longest = max(runs, key=lambda row: row['seconds'])
+    if longest['seconds'] >= GAP_LIMIT_SECONDS:
+        blockers.append('An unchanged source/phase/tick sequence spans at least 45 sampled seconds.')
+
+    resource_errors, phases = [], {}
+    for i, sample in enumerate(samples):
+        phase = sample.get('phase')
+        phases[str(phase)] = phases.get(str(phase), 0) + 1
+        resources = sample.get('resources', {})
+        fields = {'nativeSurfaces': sample.get('nativeSurfaces'),
+                  'ownedNativeScenes': resources.get('ownedNativeScenes'),
+                  'practiceWorlds': resources.get('practiceWorlds')}
+        invalid = [key for key, value in fields.items() if type(value) is not int or
+                   value < 0 or value > (0 if key == 'practiceWorlds' else 1)]
+        if invalid or phase not in ('playing', 'complete', 'loading'):
+            resource_errors.append({'sample': i, 'at': sample.get('at'), 'phase': phase,
+                                    'counts': fields, 'invalidCountFields': invalid})
+    if resource_errors:
+        blockers.append('A sample has practice, an unexpected watching phase, or invalid/overlapping native scene counts.')
+    native_surfaces = [row.get('nativeSurfaces') for row in samples]
+    owned_scenes = [row.get('resources', {}).get('ownedNativeScenes') for row in samples]
+    count_range = lambda values: [min(values), max(values)] if all(type(v) is int for v in values) else None
+    return {
+        'format': 'SharedDemoSupplementalSampledContinuityV1', 'analysisComplete': True,
+        'originalGateResults': {'browserComplete': report.get('complete'), 'wrapperComplete': source.get('complete'),
+                                'exitCode': source.get('exitCode'), 'missingWrapperFlags': missing_flags},
+        'supplementalVerdict': 'sampled-continuity-supported' if not blockers else 'sampled-continuity-not-established',
+        'sampledContinuitySupported': not blockers, 'blockers': sorted(set(blockers)),
+        'interval': {'start': report['enduranceStarted'], 'finish': report['enduranceFinished'],
+                     'wallClockSeconds': duration, 'firstSampleDelaySeconds': intervals[0]['seconds'],
+                     'finalSampleGapSeconds': intervals[-1]['seconds'], 'samples': len(samples),
+                     'minimumNominalSamplesAt10SecondCadence': math.ceil(duration / 10),
+                     'nominalSampleCountIsInformationalOnly': True,
+                     'maximumGapIncludingEdgesSeconds': max(row['seconds'] for row in intervals)},
+        'sampleRetention': {'cap': SAMPLE_CAP, 'capReached': len(samples) == SAMPLE_CAP,
+                            'earlierTrimmingExcludedByExactReviewedImplementation': len(samples) < SAMPLE_CAP},
+        'observationThresholdSeconds': GAP_LIMIT_SECONDS,
+        'allIntervals': intervals, 'gapsAtOrAboveThreshold': large_gaps,
+        'nonIncreasingOrOutOfBoundsIntervals': non_increasing,
+        'longestUnchangedSequence': longest, 'phaseCounts': phases,
+        'observedSignatureChanges': len(runs) - 1,
+        'sampleResourceSummary': {
+            'noPracticeWorldsObserved': all(type(row.get('resources', {}).get('practiceWorlds')) is int and
+                                          row['resources']['practiceWorlds'] == 0 for row in samples),
+            'nativeSurfaceRange': count_range(native_surfaces),
+            'ownedNativeSceneRange': count_range(owned_scenes),
+            'scope': 'Counts exposed by the shared host at each recorded sample; not an exhaustive heap or detached-node census.',
+        },
+        'sampleResourceViolations': resource_errors,
+        'limitations': [
+            'This is a separate post-run sampled-observation assessment. Original gate results are preserved unchanged.',
+            'Timestamps are wall-clock values. No independently recorded monotonic playback duration or operating-system sleep history is available.',
+            'The 45-second threshold is the existing qualifier progress threshold, applied additionally to unobserved gaps; it is not a new claim about continuous frames.',
+            'Passing sampled continuity excludes observed large gaps and sustained sampled nonprogress, not all shorter stalls, hidden intervals, or unseen practice/resource states.',
+            'No continuous painting, visible-frame rate, active simulation seconds, exact heap, or driver allocation claim is made.',
+        ],
+    }
+
+
+def pinned_json(path):
+    body = path.read_bytes()
+    if len(body) > 32 * 1024 * 1024:
+        raise ValueError('Receipt exceeds the finite 32 MiB analysis limit.')
+    return json.loads(body), {'path': str(path.resolve()), 'bytes': len(body), 'sha256': sha(body)}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--receipt', required=True, type=Path)
+    parser.add_argument('--source', required=True, type=Path)
+    parser.add_argument('--output', required=True, type=Path)
+    args = parser.parse_args()
+    if args.output.exists():
+        raise FileExistsError('Choose a new output path; existing evidence cannot be overwritten.')
+    report, report_pin = pinned_json(args.receipt)
+    source, source_pin = pinned_json(args.source)
+    if source.get('report') != args.receipt.name or source.get('reportSha256') != report_pin['sha256']:
+        raise ValueError('Final wrapper does not bind these exact final browser report bytes.')
+    wrapper_path = args.source.parent / source['wrapperSource']
+    if wrapper_path.parent.resolve() != args.source.parent.resolve():
+        raise ValueError('Wrapper copy must be beside its source receipt.')
+    wrapper = wrapper_path.read_bytes()
+    if sha(wrapper) != WRAPPER_SHA256:
+        raise ValueError('Preserved wrapper copy does not match the exact reviewed implementation.')
+    result = analyze(report, source)
+    result['analyzedAt'] = dt.datetime.now(dt.timezone.utc).isoformat()
+    result['inputs'] = {'browserReport': report_pin, 'sourceWrapperReport': source_pin,
+                       'wrapperCopy': {'path': str(wrapper_path.resolve()), 'sha256': sha(wrapper)},
+                       'analyzer': {'path': str(Path(__file__).resolve()), 'sha256': sha(Path(__file__).read_bytes())}}
+    result['sourceIdentityDeclaredByOriginalGate'] = {
+        'revision': source.get('sourceRevisionAtStart'), 'runtime': source.get('sourceFingerprintAtStart'),
+        'buildInputs': source.get('buildInputFingerprintAtStart'),
+        'scope': 'Retained from the bound original source gate; not recomputed by this read-only analyzer.'}
+    # Guard input stability before exclusive output creation. The completed original receipts remain untouched.
+    if sha(args.receipt.read_bytes()) != report_pin['sha256'] or sha(args.source.read_bytes()) != source_pin['sha256']:
+        raise ValueError('An input receipt changed during analysis; no result written.')
+    with args.output.open('x') as stream:
+        json.dump(result, stream, indent=2)
+        stream.write('\n')
+    print(json.dumps({'output': str(args.output), 'verdict': result['supplementalVerdict'],
+                      'samples': result['interval']['samples'], 'blockers': result['blockers']}))
+    return 0 if result['sampledContinuitySupported'] else 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())

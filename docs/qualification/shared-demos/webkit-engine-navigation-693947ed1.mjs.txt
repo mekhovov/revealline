@@ -1,0 +1,139 @@
+import assert from 'node:assert/strict';
+import http from 'node:http';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
+import { fingerprintDemoSources } from '../scripts/demo-source-fingerprint.mjs';
+
+const args = Object.fromEntries(process.argv.slice(2).map(arg => {
+  const at = arg.indexOf('='); return [arg.slice(2, at), arg.slice(at + 1)];
+}));
+assert.match(args.head ?? '', /^[a-f0-9]{40}$/);
+assert.match(args.fingerprint ?? '', /^[a-f0-9]{64}$/);
+assert.ok(args.report?.endsWith('.json'));
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const revision = () => execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const bounded = async (work, ms) => {
+  let timer;
+  try { return await Promise.race([Promise.resolve().then(work), new Promise((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`Operation exceeded ${ms}ms`)), ms);
+  })]); } finally { clearTimeout(timer); }
+};
+const before = await fingerprintDemoSources(process.cwd());
+assert.equal(revision(), args.head);
+assert.equal(before.sha256, args.fingerprint);
+const source = await readFile(new URL(import.meta.url));
+const report = {
+  format: 'SharedDemoWebKitEngineNavigationObservationV1', started: new Date().toISOString(),
+  complete: false, sourceRevision: args.head, runtimeBefore: before,
+  probeSHA256: sha(source), cells: [],
+  purpose: 'A single no-game two-cell Fetch experiment in the installed engine. The navigation cell is attempted only after a valid successful control. Replacement is synchronized by the fixture receiving the replacement request, with no timed retry.',
+  limitations: ['This observes native engine behavior; it does not replace, waive or relabel the failed game restoration gate. It does not prove that every historical native diagnostic shares this cause.'],
+  reference: 'https://github.com/microsoft/playwright/issues/43120',
+};
+await writeFile(args.report, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
+await writeFile(args.report.replace(/\.json$/, '.mjs.txt'), source, { flag: 'wx' });
+const ledger = [], errors = [];
+let fixtureFailure = null, totalErrors = 0;
+let releaseReplacement, replacementObserved, holdReplacement = false;
+const server = http.createServer((req, res) => {
+  const pathname = new URL(req.url, 'http://localhost').pathname;
+  if (ledger.length >= 64) { fixtureFailure ??= 'Finite fixture ledger exceeded'; res.writeHead(503); res.end(); return; }
+  ledger.push({ path: pathname, event: 'received', at: Date.now() });
+  req.resume();
+  const send = () => {
+    res.setHeader('Content-Type', pathname === '/owned-asset' ? 'text/plain' : 'text/html');
+    res.end(pathname === '/owned-asset' ? 'owned asset' : '<!doctype html><title>Owned navigation fixture</title>');
+  };
+  if (pathname === '/replacement' && holdReplacement) {
+    releaseReplacement = send; replacementObserved();
+  } else send();
+});
+server.on('error', error => { fixtureFailure ??= String(error); });
+const release = () => { const send = releaseReplacement; releaseReplacement = null; send?.(); };
+let browser;
+try {
+  await bounded(() => new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', () => { server.removeListener('error', reject); resolve(); });
+  }), 3000);
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const { webkit } = await import(pathToFileURL(args.runtime).href);
+  browser = await webkit.launch({ executablePath: args.executable, headless: true, timeout: 15000 });
+  report.browserVersion = browser.version();
+  report.executable = { path: args.executable, sha256: sha(await readFile(args.executable)) };
+  const context = await browser.newContext();
+  await context.addInitScript(() => {
+    window.__probeEvents = [];
+    for (const type of ['error', 'unhandledrejection', 'pagehide'])
+      addEventListener(type, event => window.__probeEvents.push({ type, at: Date.now(), message: String(event.message ?? event.reason ?? '') }));
+  });
+  const page = await context.newPage();
+  page.setDefaultTimeout(10000);
+  page.on('pageerror', error => {
+    totalErrors++;
+    if (errors.length < 64) errors.push({ message: error.message, at: Date.now() });
+    else fixtureFailure ??= 'Finite native-error log exceeded';
+  });
+  await page.goto(base + '/initial');
+  const owner = await page.evaluateHandle(() => ({
+    id: crypto.randomUUID(),
+    async read() {
+      const rows = [];
+      for (let i = 0; i < 3; i++) {
+        try {
+          const response = await fetch('/owned-asset', { redirect: 'error', credentials: 'same-origin', signal: new AbortController().signal });
+          rows.push({ status: response.status, body: await response.text(), caught: false });
+        } catch (error) { rows.push({ caught: true, name: error.name, message: error.message }); }
+      }
+      return { id: this.id, origin: location.origin, rows, domEvents: [...window.__probeEvents] };
+    },
+  }));
+  const ownerId = await owner.evaluate(value => value.id);
+  const firstLedger = ledger.length;
+  const control = await bounded(() => owner.evaluate(value => value.read()), 10000);
+  const controlCell = { kind: 'control', ...control, errors: [...errors], server: ledger.slice(firstLedger) };
+  report.cells.push(controlCell);
+  assert.equal(control.id, ownerId); assert.equal(control.origin, base);
+  assert.equal(control.rows.length, 3);
+  assert.ok(control.rows.every(row => row.status === 200 && row.body === 'owned asset' && !row.caught));
+  assert.equal(errors.length, 0);
+  assert.equal(controlCell.server.filter(row => row.path === '/owned-asset').length, 3);
+  const secondLedger = ledger.length;
+  holdReplacement = true;
+  const boundary = new Promise(resolve => { replacementObserved = resolve; });
+  const navigation = page.goto(base + '/replacement').then(() => ({ complete: true }), error => ({ complete: false, error: String(error) }));
+  let observation;
+  try {
+    await bounded(() => boundary, 10000);
+    observation = await bounded(() => owner.evaluate(value => value.read()), 10000);
+  } finally { release(); }
+  const arrived = await bounded(() => navigation, 10000);
+  assert.equal(arrived.complete, true);
+  const cell = { kind: 'replacement-request-held', ...observation, errors: [...errors], server: ledger.slice(secondLedger), navigation: arrived };
+  report.cells.push(cell);
+  assert.equal(observation.id, ownerId); assert.equal(observation.origin, base);
+  report.mechanismReproduced = observation.rows.length === 3 && observation.rows.every(row => row.caught)
+    && errors.length === 3 && errors.every(error => error.message.includes('due to access control checks'))
+    && !cell.server.some(row => row.path === '/owned-asset')
+    && !observation.domEvents.some(event => ['error', 'unhandledrejection'].includes(event.type));
+  report.outcome = report.mechanismReproduced ? 'native-navigation-fetch-refusal-reproduced' : 'target-not-reproduced';
+  assert.equal(fixtureFailure, null);
+  report.complete = true;
+} catch (error) { report.failure = String(error.stack ?? error); process.exitCode = 1; }
+finally {
+  release();
+  try { if (browser) await bounded(() => browser.close(), 10000); report.browserClosed = true; }
+  catch (error) { report.browserCloseError = String(error); report.complete = false; process.exitCode = 1; }
+  try { server.closeAllConnections(); await bounded(() => new Promise(resolve => server.close(resolve)), 2000); report.serverClosed = true; }
+  catch (error) { report.serverCloseError = String(error); report.complete = false; process.exitCode = 1; }
+  report.finalErrors = errors; report.totalErrors = totalErrors; report.fixtureFailure = fixtureFailure;
+  if (fixtureFailure) { report.complete = false; process.exitCode = 1; }
+  report.runtimeAfter = await fingerprintDemoSources(process.cwd());
+  report.sourceStable = revision() === args.head && JSON.stringify(report.runtimeAfter) === JSON.stringify(before) && sha(await readFile(new URL(import.meta.url))) === sha(source);
+  if (!report.sourceStable) { report.complete = false; process.exitCode = 1; }
+  report.finished = new Date().toISOString();
+  await writeFile(args.report, JSON.stringify(report, null, 2) + '\n');
+  console.log(JSON.stringify({ complete: report.complete, outcome: report.outcome, browserClosed: report.browserClosed, serverClosed: report.serverClosed, failure: report.failure }));
+}

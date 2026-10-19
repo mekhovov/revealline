@@ -1,0 +1,440 @@
+/* global document, window, location */
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { readFile, lstat, mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { createHash, randomUUID } from 'node:crypto';
+import { execFileSync, spawn } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
+import { finishQualification, writeQualificationReport } from '../scripts/shared-demo-browser-report.mjs';
+import { browserErrorDescription } from '../scripts/demo-restoration-observation.mjs';
+import { closeOwnedPreview } from './demo-probe-evidence.mjs';
+
+const args = Object.fromEntries(process.argv.slice(2).map(arg => {
+  const split = arg.indexOf('=');
+  assert.ok(arg.startsWith('--') && split > 2);
+  return [arg.slice(2, split), arg.slice(split + 1)];
+}));
+assert.ok(args.runtime && args.executable && args.report && args.head);
+assert.equal(typeof WebSocket, 'function', 'Use the installed Node24 runtime with native WebSocket.');
+assert.match(args.head, /^[a-f0-9]{40}$/);
+try {
+  await lstat(args.report);
+  throw new Error('Choose a fresh report path; existing evidence must be retained.');
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
+const head = () => execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+assert.equal(head(), args.head);
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const paths = ['docs/qualification/shared-demos/source-freeze-latest.json',
+  '.cache/qualify-demo-actual-discard-237.mjs', '.cache/demo-probe-evidence.mjs',
+  '.cache/observe-native-discard-setup-rawcontrol-693947ed1.mjs',
+  'scripts/shared-demo-browser-report.mjs', 'scripts/demo-restoration-observation.mjs'];
+const identities = async () => Object.fromEntries(await Promise.all(paths.map(async path => {
+  const bytes = await readFile(path);
+  return [path, { bytes: bytes.length, sha256: sha(bytes) }];
+})));
+const before = await identities();
+const report = {
+  format: 'NativeChromiumDiscardRawControlSetupObservationV1',
+  nodeVersion: process.version,
+  started: new Date().toISOString(), head: args.head, complete: false,
+  before, after: null, checks: [], errors: [], actions: [], lifecycle: [], pageEvents: [],
+  limits: {
+    browserSpawnMs: 2000, browserEndpointMs: 10000, browserConnectMs: 10000, navigationMs: 10000, uiActionMs: 3000,
+    nativeHiddenMs: 3000, nativeDiscardMs: 10000, nativeRestorationMs: 10000,
+    browserCloseMs: 10000, serverCloseMs: 2000,
+  },
+  scope: 'Environment-only observer: one directly spawned Chrome with an explicitly owned temporary user-data-dir, its default context attached through public connectOverCDP({noDefaults:true}), exactly two owned tabs and a tiny localhost HTML page. No game, emitted runtime, worker, source simulation, or acceptance gate is exercised.',
+  limitations: [
+    'Only native debug UI enablement is changed; public noDefaults:true avoids installing Playwright focus emulation. No Emulation commands are sent. No synthetic visibility/wasDiscarded override, crash, discard-all action, reload fallback, extension or user-browser connection is used.',
+    'Native hidden visibility, exact-owned urgent discard UI state, new document identity and document.wasDiscarded=true are mandatory. Any failure remains a failed observation.',
+    'After native hidden state is observed, Playwright disconnects without shutting down the owned Chrome. A raw CDP connection attaches only to the exact control tab, never the target, and clicks the native UI through normal input dispatch. Native target activation precedes reconnection. No automatic target attachment is enabled.',
+    'Source checks bind this observer and related setup/report helpers plus HEAD and source-freeze bytes. This no-game observer does not recompute or qualify the complete runtime.',
+  ],
+  references: [
+    'https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/components/webui/chrome_urls/resources/app.ts',
+    'https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/ui/webui/chrome_urls/chrome_urls_handler.cc',
+    'https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/resources/discards/discards_tab.ts',
+  ],
+};
+const remember = (list, row, max = 40) => { if (list.length < max) list.push({ at: new Date().toISOString(), ...row }); };
+const action = (type, details = {}) => remember(report.actions, { type, ...details });
+let browser, browserSession, context, target, controls, server, child, childExit, profile, raw;
+let rawEndpoint;
+let childExited = false;
+const bounded = async (fn, ms) => {
+  let timer;
+  try {
+    return await Promise.race([Promise.resolve().then(fn), new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error(`Operation exceeded ${ms}ms.`)), ms);
+    })]);
+  } finally { clearTimeout(timer); }
+};
+let stage = 'setup';
+// Raw transport exists only during a detached-target native discard. No auto-attach.
+async function connectRaw(endpoint) {
+  const socket = new WebSocket(endpoint);
+  const pending = new Map();
+  let serial = 0;
+  const opened = new Promise((resolve, reject) => {
+    socket.addEventListener('open', resolve, { once: true });
+    socket.addEventListener('error', () => reject(new Error('Owned raw CDP WebSocket failed.')), { once: true });
+  });
+  const closed = new Promise(resolve => socket.addEventListener('close', () => {
+    for (const { reject, timer } of pending.values()) {
+      clearTimeout(timer);
+      reject(new Error('Owned raw CDP connection closed.'));
+    }
+    pending.clear();
+    resolve();
+  }, { once: true }));
+  socket.addEventListener('message', event => {
+    const value = JSON.parse(event.data);
+    if (value.id) {
+      const row = pending.get(value.id);
+      if (!row) return;
+      pending.delete(value.id);
+      clearTimeout(row.timer);
+      if (value.error) row.reject(new Error(JSON.stringify(value.error)));
+      else row.resolve(value.result);
+    } else if (value.method === 'Runtime.exceptionThrown') {
+      remember(report.errors, { stage, surface: 'owned-raw-control', native: value.params }, 16);
+    }
+  });
+  try { await bounded(() => opened, 5000); }
+  catch (error) { socket.close(); throw error; }
+  return {
+    send(method, params = {}, sessionId) {
+      const id = ++serial;
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          pending.delete(id);
+          reject(new Error(`Raw CDP ${method} exceeded 3000ms.`));
+        }, 3000);
+        pending.set(id, { resolve, reject, timer });
+        socket.send(JSON.stringify({ id, method, params, ...(sessionId ? { sessionId } : {}) }));
+      });
+    },
+    async close() {
+      if (socket.readyState !== WebSocket.CLOSED) socket.close();
+      await bounded(() => closed, 2000);
+    },
+  };
+}
+function readNativeDiscardRow(targetURL, scroll = false) {
+  const roots = [document];
+  for (let i = 0; i < roots.length; i++) {
+    for (const element of roots[i].querySelectorAll('*')) {
+      if (element.shadowRoot) roots.push(element.shadowRoot);
+    }
+    if (roots.length > 100) throw new Error('Unexpected native UI shadow-tree size.');
+  }
+  const tables = roots.flatMap(root => [...root.querySelectorAll('#tab-discards-info-table-body')]);
+  if (tables.length !== 1) return { tables: tables.length, matches: 0 };
+  const matches = [...tables[0].querySelectorAll('tr')].filter(row =>
+    [...row.querySelectorAll('td')].some(cell => cell.textContent.trim() === targetURL));
+  if (matches.length !== 1) return { tables: 1, matches: matches.length };
+  const row = matches[0];
+  const actions = [...row.querySelectorAll('[data-id]')].filter(node => node.textContent.trim() === '[Urgent Discard]');
+  if (actions.length !== 1) return { tables: 1, matches: 1, actions: actions.length };
+  const urgent = actions[0];
+  if (scroll) urgent.scrollIntoView({ block: 'center', inline: 'center' });
+  const rect = urgent.getBoundingClientRect();
+  return { tables: 1, matches: 1, actions: 1,
+    cells: [...row.querySelectorAll('td')].map(cell => cell.textContent),
+    disabled: urgent.hasAttribute('disabled'), tabId: urgent.dataset.id,
+    rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
+    viewport: { width: window.innerWidth, height: window.innerHeight } };
+}
+
+const unique = randomUUID();
+const html = `<!doctype html><meta charset="utf-8"><title>Owned native discard setup ${unique}</title><body><h1>Owned discard setup</h1><script>window.nativeDiscardSetup={documentId:crypto.randomUUID(),wasDiscarded:document.wasDiscarded};</script>`;
+const fixtureSHA256 = sha(Buffer.from(html));
+try {
+  server = createServer((req, res) => {
+    if (req.url === '/owned-' + unique) {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
+      res.end(html);
+    } else { res.writeHead(404); res.end(); }
+  });
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', resolve);
+  });
+  const targetURL = `http://127.0.0.1:${server.address().port}/owned-${unique}`;
+  report.fixture = { targetURL, bytes: Buffer.byteLength(html), sha256: fixtureSHA256 };
+  const { chromium } = await import(pathToFileURL(args.runtime).href);
+  profile = await mkdtemp(join(tmpdir(), 'codex-native-discard-owned-'));
+  const chromeArgs = [
+    '--headless', '--enable-automation', '--remote-debugging-port=0',
+    '--remote-debugging-address=127.0.0.1', `--user-data-dir=${profile}`,
+    '--no-first-run', '--no-default-browser-check', '--no-startup-window',
+    '--window-size=1024,768', '--disable-background-networking',
+    '--disk-cache-size=1048576', '--media-cache-size=1048576',
+  ];
+  report.launchEnvironment = chromeArgs;
+  report.ownedProcess = { executable: args.executable, profile, detachedProcessGroup: true };
+  child = spawn(args.executable, chromeArgs, { detached: true, stdio: ['ignore', 'ignore', 'pipe'] });
+  report.ownedProcess.pid = child.pid;
+  report.ownedProcess.stderr = '';
+  child.stderr.on('data', chunk => {
+    const remaining = 16384 - report.ownedProcess.stderr.length;
+    if (remaining > 0) report.ownedProcess.stderr += chunk.toString().slice(0, remaining);
+  });
+  childExit = new Promise(resolve => {
+    child.once('error', error => {
+      childExited = true;
+      report.ownedProcess.spawnError = String(error);
+      resolve();
+    });
+    child.once('exit', (code, signal) => {
+      childExited = true;
+      report.ownedProcess.exit = { code, signal, at: new Date().toISOString() };
+      resolve();
+    });
+  });
+  await bounded(() => new Promise((resolve, reject) => {
+    child.once('spawn', resolve);
+    child.once('error', reject);
+  }), report.limits.browserSpawnMs);
+  let endpoint;
+  const endpointDeadline = performance.now() + report.limits.browserEndpointMs;
+  for (;;) {
+    assert.equal(childExited, false, 'Owned Chrome exited before its native CDP endpoint was available.');
+    try {
+      const activePort = (await readFile(join(profile, 'DevToolsActivePort'), 'utf8')).trim().split('\n');
+      assert.match(activePort[0], /^\d+$/);
+      assert.match(activePort[1], /^\/devtools\/browser\/[a-f0-9-]+$/i);
+      endpoint = `http://127.0.0.1:${activePort[0]}`;
+      rawEndpoint = `ws://127.0.0.1:${activePort[0]}${activePort[1]}`;
+      break;
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      assert.ok(performance.now() < endpointDeadline, 'Owned Chrome did not expose its loopback CDP endpoint.');
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+  }
+  action('attach-exact-owned-native-browser', { pid: child.pid, profile, endpoint, noDefaults: true });
+  browser = await chromium.connectOverCDP(endpoint, { noDefaults: true, timeout: report.limits.browserConnectMs });
+  report.browserVersion = browser.version();
+  browserSession = await browser.newBrowserCDPSession();
+  const { arguments: commandLine } = await browserSession.send('Browser.getBrowserCommandLine');
+  assert.ok(commandLine.includes(`--user-data-dir=${profile}`));
+  report.commandLineOwnedProfileVerified = true;
+  assert.equal(browser.contexts().length, 1, 'Use only the isolated default context of the exact owned browser.');
+  context = browser.contexts()[0];
+  assert.equal(context.pages().length, 0, 'The owned default context must begin without preexisting pages.');
+  context.setDefaultTimeout(3000);
+  context.setDefaultNavigationTimeout(10000);
+  context.on('page', page => {
+    remember(report.pageEvents, { type: 'created', url: page.url() });
+    page.on('close', () => remember(report.pageEvents, { type: 'closed', url: page.url() }));
+    page.on('pageerror', error => remember(report.errors, { stage, url: page.url(), name: error.name, error: browserErrorDescription(error) }, 16));
+  });
+  await context.exposeBinding('recordNativeDiscardSetup', (_source, value) => remember(report.lifecycle, value));
+  await context.addInitScript(() => {
+    if (!location.protocol.startsWith('http')) return;
+    const id = crypto.randomUUID();
+    for (const type of ['pageshow', 'pagehide', 'visibilitychange', 'freeze', 'resume']) {
+      window.addEventListener(type, event => {
+        void window.recordNativeDiscardSetup({ type, id, hidden: document.hidden,
+          visibilityState: document.visibilityState, wasDiscarded: document.wasDiscarded,
+          persisted: event.persisted ?? null }).catch(() => {});
+      });
+    }
+  });
+  target = await context.newPage();
+  controls = await context.newPage();
+  assert.equal(context.pages().length, 2);
+  await target.goto(targetURL);
+  const state = page => page.evaluate(() => ({ url: location.href, hidden: document.hidden,
+    visibilityState: document.visibilityState, hasFocus: document.hasFocus(),
+    wasDiscarded: document.wasDiscarded, documentId: window.nativeDiscardSetup?.documentId ?? null }));
+  report.initial = { target: await state(target), controls: await state(controls) };
+  stage = 'verify-native-window-and-no-default-overrides';
+  const sessions = [];
+  for (const [label, page] of [['target', target], ['controls', controls]]) {
+    const session = await context.newCDPSession(page);
+    sessions.push(session);
+    const { targetInfo } = await session.send('Target.getTargetInfo');
+    const windowInfo = await browserSession.send('Browser.getWindowForTarget', { targetId: targetInfo.targetId });
+    report.windows ??= [];
+    report.windows.push({ label, targetId: targetInfo.targetId, windowId: windowInfo.windowId });
+    action('native-owned-tab-identity', { label, targetId: targetInfo.targetId, windowId: windowInfo.windowId });
+  }
+  assert.equal(report.windows[0].windowId, report.windows[1].windowId,
+    'The two owned tabs must belong to the same native window.');
+  stage = 'enable-native-debug-ui';
+  await controls.goto('chrome://chrome-urls/#internal-debug-pages');
+  action('navigate-owned-control-tab', { url: controls.url() });
+  const enable = controls.getByRole('button', { name: 'Enable internal debugging pages', exact: true });
+  await enable.waitFor({ state: 'visible', timeout: 10000 });
+  await enable.click({ timeout: 3000 });
+  await controls.getByRole('button', { name: 'Disable internal debugging pages', exact: true }).waitFor({ state: 'visible', timeout: 3000 });
+  action('native-debug-ui-enabled', { scope: 'Chrome Local State within this newly created ephemeral user-data-dir only' });
+  await controls.goto('chrome://discards/');
+  await controls.locator('#tab-discards-info-table-body').waitFor({ state: 'visible', timeout: 10000 });
+  report.checks.push({ type: 'native-debug-ui-available' });
+  stage = 'native-tab-visibility';
+  await target.bringToFront();
+  await target.waitForFunction(() => document.hidden === false, null, { timeout: 3000, polling: 100 });
+  report.foreground = await state(target);
+  await controls.bringToFront();
+  await target.waitForFunction(() => document.hidden === true, null, { timeout: 3000, polling: 100 });
+  report.hidden = { target: await state(target), controls: await state(controls) };
+  assert.equal(report.hidden.controls.hidden, false);
+  report.checks.push({ type: 'native-two-tab-visibility', hidden: report.hidden });
+  stage = 'detach-playwright-before-native-discard';
+  const targetId = report.windows.find(row => row.label === 'target').targetId;
+  const controlId = report.windows.find(row => row.label === 'controls').targetId;
+  raw = await connectRaw(rawEndpoint);
+  const { sessionId: controlSession } = await raw.send('Target.attachToTarget', { targetId: controlId, flatten: true });
+  action('raw-cdp-attach-owned-control-only', { targetId: controlId, autoAttachEnabled: false });
+  await raw.send('Runtime.enable', {}, controlSession);
+  await browser.close(); // connectOverCDP.close only disconnects; it does not close Chrome.
+  browser = undefined;
+  browserSession = undefined;
+  assert.equal(childExited, false);
+  action('playwright-disconnected-owned-chrome-remains', { pid: child.pid });
+  const detached = await raw.send('Target.getTargets');
+  report.detachedTargetInfo = detached.targetInfos.filter(info => info.targetId === targetId || info.targetId === controlId);
+  assert.equal(report.detachedTargetInfo.length, 2);
+  assert.equal(report.detachedTargetInfo.find(info => info.targetId === targetId).attached, false,
+    'The actual discarded target must have no debugger attachment.');
+  const readRow = async (scroll = false) => {
+    const result = await raw.send('Runtime.evaluate', {
+      expression: `(${readNativeDiscardRow.toString()})(${JSON.stringify(targetURL)},${scroll})`,
+      returnByValue: true,
+    }, controlSession);
+    assert.equal(result.exceptionDetails, undefined, 'Native control observation must not throw.');
+    return result.result.value;
+  };
+  stage = 'wait-for-native-detached-eligibility';
+  const eligibilityDeadline = performance.now() + 10000;
+  let row;
+  for (;;) {
+    row = await readRow();
+    if (row.matches === 1 && row.actions === 1 && !row.disabled && !row.cells.join(' ').includes('DevTools')) break;
+    assert.ok(performance.now() < eligibilityDeadline, 'Native exact-owned row still reports attached DevTools or unavailable action.');
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  row = await readRow(true);
+  assert.match(row.tabId ?? '', /^[0-9]+$/);
+  report.beforeCells = row.cells;
+  report.detachedEligibility = row;
+  const x = row.rect.x + row.rect.width / 2;
+  const y = row.rect.y + row.rect.height / 2;
+  assert.ok(row.rect.width > 0 && row.rect.height > 0 && x >= 0 && y >= 0 && x < row.viewport.width && y < row.viewport.height);
+  stage = 'native-exact-owned-urgent-discard';
+  action('native-exact-owned-urgent-discard-input', { targetURL, tabId: row.tabId, controlTargetId: controlId, x, y });
+  await raw.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', clickCount: 1 }, controlSession);
+  await raw.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', clickCount: 1 }, controlSession);
+  const discardDeadline = performance.now() + 10000;
+  for (;;) {
+    row = await readRow();
+    if (row.cells?.some(cell => /^discarded\b/i.test(cell.trim()))) {
+      report.discardedCells = row.cells;
+      break;
+    }
+    report.lastNativeRow = row;
+    assert.ok(performance.now() < discardDeadline, 'Native discards UI did not confirm discard.');
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  report.checks.push({ type: 'native-ui-confirms-discard', tabId: row.tabId });
+  stage = 'native-tab-activation';
+  const afterDiscard = await raw.send('Target.getTargets');
+  report.targetsAfterDiscard = afterDiscard.targetInfos.filter(info => info.type === 'page');
+  const restoreTargets = report.targetsAfterDiscard.filter(info => info.url === targetURL);
+  assert.equal(restoreTargets.length, 1, 'Activate only the unique exact-owned native discarded tab.');
+  assert.equal(restoreTargets[0].attached, false);
+  await raw.send('Target.activateTarget', { targetId: restoreTargets[0].targetId });
+  action('native-owned-target-activation-without-attach', { targetId: restoreTargets[0].targetId });
+  browser = await chromium.connectOverCDP(endpoint, { noDefaults: true, timeout: 10000 });
+  browserSession = await browser.newBrowserCDPSession();
+  context = browser.contexts()[0];
+  const restoredPages = context.pages().filter(page => page.url() === targetURL);
+  assert.equal(restoredPages.length, 1);
+  target = restoredPages[0];
+  target.on('pageerror', error => remember(report.errors, { stage, surface: 'restored-owned-target', name: error.name, error: browserErrorDescription(error) }, 16));
+  await target.waitForFunction(() => document.wasDiscarded === true && !!window.nativeDiscardSetup,
+    null, { timeout: 10000, polling: 100 });
+  report.restored = await state(target);
+  assert.notEqual(report.restored.documentId, report.foreground.documentId);
+  assert.equal(report.restored.wasDiscarded, true);
+  assert.equal(report.restored.url, targetURL);
+  report.checks.push({ type: 'native-discarded-document-restored', state: report.restored });
+  assert.deepEqual(report.errors, [], 'Native page errors remain strict failures.');
+  report.complete = true;
+} catch (error) {
+  report.complete = false;
+  report.failure = String(error?.stack ?? error).slice(0, 8192);
+  report.failedStage = stage;
+  report.targetClosed = target?.isClosed() ?? null;
+  if (controls && !controls.isClosed()) {
+    try { report.controlText = (await controls.locator('body').innerText({ timeout: 1500 })).slice(0, 12000); }
+    catch (secondary) { report.controlTextError = String(secondary).slice(0, 1024); }
+  }
+} finally {
+  const cleanupOwner = child ? { close: async () => {
+    if (browserSession) {
+      try {
+        await bounded(() => browserSession.send('Browser.close'), 2000);
+        report.nativeBrowserCloseRequested = true;
+      } catch (error) { report.nativeBrowserCloseError = String(error).slice(0, 2048); }
+    } else if (raw) {
+      try {
+        await bounded(() => raw.send('Browser.close'), 2000);
+        report.nativeBrowserCloseRequested = true;
+      } catch (error) { report.nativeBrowserCloseError = String(error).slice(0, 2048); }
+    } else if (!childExited) {
+      process.kill(-child.pid, 'SIGTERM');
+      report.ownedProcess.earlySetupTermination = 'SIGTERM';
+    }
+    if (browser) await browser.close();
+    if (raw) await raw.close();
+    await bounded(() => childExit, 5000);
+    assert.equal(childExited, true);
+    report.ownedProcess.exitConfirmed = true;
+  } } : null;
+  await finishQualification({ report, reportPath: args.report, browser: cleanupOwner, closeTimeoutMs: 10000,
+    writeReport: async (path, value, options) => {
+      if (child && !childExited) {
+        value.complete = false;
+        value.failure ??= 'Owned Chrome required forced cleanup.';
+        value.ownedProcess.forcedCleanup = [];
+        for (const signal of ['SIGTERM', 'SIGKILL']) {
+          if (childExited) break;
+          try {
+            process.kill(-child.pid, signal);
+            value.ownedProcess.forcedCleanup.push(signal);
+            await bounded(() => childExit, 2000);
+          } catch (error) {
+            value.ownedProcess.cleanupError = String(error).slice(0, 2048);
+          }
+        }
+      }
+      value.ownedProcess ??= {};
+      value.ownedProcess.exitConfirmed = !child || childExited;
+      if (profile && (!child || childExited)) {
+        await rm(profile, { recursive: true, force: true });
+        value.ownedProcess.profileRemoved = true;
+      }
+      await closeOwnedPreview(server ? { server } : null, value, 2000);
+      value.after = await identities();
+      value.headAfter = head();
+      try {
+        assert.equal(value.headAfter, args.head);
+        assert.deepEqual(value.after, before);
+        value.bindingsUnchanged = true;
+      } catch (error) {
+        value.bindingsUnchanged = false;
+        value.complete = false;
+        value.failure ??= String(error?.stack ?? error);
+      }
+      await writeQualificationReport(path, value, options);
+    } });
+}
+if (!report.complete) process.exitCode = 1;

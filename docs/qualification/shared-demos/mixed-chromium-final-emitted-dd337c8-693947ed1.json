@@ -1,0 +1,433 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T00:52:51.029Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:flight-04-acro-9f0f8cfdac49a166",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Sideways and brake",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Рухайтесь праворуч, зберігаючи курс, загальмуйте в об’ємі та сядьте."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-pursuit-supply-circuit:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Supply Circuit",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Обходи за припасами й заслінка ділять одне коло. Необов’язковий кур’єр не заважає завершенню."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-86ee84d48134b04b",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Cross the afterglow",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-survey-basin:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Survey Basin",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-runner-at-the-window:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Runner at the Window",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:warehouse-04-self-level-02d9a79166ddda7f",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Beam circuit",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-d1a5994b174c9108",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Choose your share",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-rooftops-03-acro-7c70b3d832650381",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Rooftop courier trail",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-heavy-crossing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Heavy Crossing",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:field-crossing-shelterbelt-gaps:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Shelterbelt Gaps",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-0a838d0c1691b31f",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Neon Arrows",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-20-self-level-1b0ad0ea2b94f32f",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Keep height while tilted",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-double-pressure:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Double Pressure",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-irrigation-courts:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Irrigation Courts",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-11ac088d9288363c",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Twin lens chambers",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1",
+      "manifestSHA256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474",
+      "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+      "files": 5952,
+      "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+      "sourceFingerprint": {
+        "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+        "files": 9996,
+        "bytes": 404392393
+      },
+      "buildInputFingerprint": {
+        "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+        "files": 9398,
+        "bytes": 348357907
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "693947ed1373db7a265def126a5eede2bf875013",
+        "runtime": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInput": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148313,
+          "sha256": "418f56ea11a419120e53fc1cd8dceaad5c10c394dad39e0922623aa2b9d6edc6"
+        },
+        "served": {
+          "bytes": 148287,
+          "sha256": "f7b9763619eb424bf737ee3e676695b5e364c45164deb5178aa91b9294b6ccac"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "enduranceStarted": "2026-10-19T00:54:06.692Z",
+  "enduranceFinished": "2026-10-19T00:54:06.692Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T00:54:07.463Z",
+  "previewClosed": true
+}

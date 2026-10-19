@@ -1,0 +1,356 @@
+{
+  "format": "SharedDemoEmittedEnduranceSourceV1",
+  "started": "2026-10-19T01:24:41.801669+00:00",
+  "complete": false,
+  "sourceRevisionAtStart": "693947ed1373db7a265def126a5eede2bf875013",
+  "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "sourceFingerprintAtStart": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "buildInputFingerprintAtStart": {
+    "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+    "files": 9398,
+    "bytes": 348357907
+  },
+  "sourceDeclarationAtStart": {
+    "pin": {
+      "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+      "bytes": 422,
+      "sha256": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c"
+    },
+    "value": {
+      "created": "2026-10-19T00:33:50.857423+00:00",
+      "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "sourceFingerprint": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+      "files": 9996,
+      "bytes": 404392393
+    }
+  },
+  "emittedCaptureAtStart": {
+    "directory": ".cache/shared-demos-emitted-dd337c8-693947ed1",
+    "manifest": {
+      "path": ".cache/shared-demos-emitted-dd337c8-693947ed1/manifest.json",
+      "bytes": 1304395,
+      "sha256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.json",
+      "bytes": 2057403,
+      "sha256": "7d46a578c3b0ca2b208e58cba99c151bf4889ec850bdc176da1030875baa7532"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.inventory.json",
+      "bytes": 941134,
+      "sha256": "49a076bea7fa4402f33de1e07415f5095a0a95cbd11218f8c8593d8bcf93ab0a"
+    },
+    "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+    "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+    "sourceFingerprint": {
+      "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+      "files": 9996,
+      "bytes": 404392393
+    },
+    "buildInputFingerprint": {
+      "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+      "files": 9398,
+      "bytes": 348357907
+    }
+  },
+  "harnessSha256AtStart": {
+    "scripts/qualify-shared-demo-browser.mjs": "2059e16979a261009a31393f3d7a4878abcd2bd3b3a4b78d130112d88dbd38ec",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+    "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+    "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+    "scripts/qualify-demo-main-pages.mjs": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a"
+  },
+  "wrapperSha256AtStart": "79b966bb098d69f014dbf34111c3ae7c13c6ce1c3f1137b3f0e8a8e17c07b3ab",
+  "wrapperSource": "endurance-source-emitted-693947ed1-final-wrapper.py.txt",
+  "requestedSeconds": 7201,
+  "minimumAcceptedSeconds": 7200,
+  "runnerBoundSeconds": 7800,
+  "report": "rotation-chromium-emitted-693947ed1-final-two-hour.json",
+  "log": ".cache/rotation-chromium-emitted-693947ed1-final-two-hour.log",
+  "command": [
+    "node",
+    "scripts/qualify-shared-demo-browser.mjs",
+    "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+    "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "--browser=chromium",
+    "--emitted-preview=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1",
+    "--port=18773",
+    "--seconds=7201",
+    "--practice=true",
+    "--cycles=12",
+    "--lifecycle=true",
+    "--localeCheck=true",
+    "--report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/rotation-chromium-emitted-693947ed1-final-two-hour.json"
+  ],
+  "scope": "One uninterrupted watching interval of at least 7200 seconds after interaction preflight. Prior partial runs contribute zero time. Exact current emitted-source admission, final persistence/resource checks, strict page diagnostics, browser close and preview close are required.",
+  "limitations": [
+    "Local HTML credentials are an explicit recorded fixture; no offline HTML integrity or public deployment admission is claimed."
+  ],
+  "childPID": 96361,
+  "exitCode": 1,
+  "ownedProcessCleanup": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 8,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 96361,
+        "ppid": 96278,
+        "pgid": 96361,
+        "uid": 502,
+        "started": "Mon Oct 19 03:24:41 2026",
+        "argv": "node scripts/qualify-shared-demo-browser.mjs --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --browser=chromium --emitted-preview=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1 --port=18773 --seconds=7201 --practice=true --cycles=12 --lifecycle=true --localeCheck=true --report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/rotation-chromium-emitted-693947ed1-final-two-hour.json",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T01:24:41.926818+00:00"
+      },
+      {
+        "pid": 96499,
+        "ppid": 96361,
+        "pgid": 96499,
+        "uid": 502,
+        "started": "Mon Oct 19 03:24:48 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --remote-debugging-pipe --no-startup-window",
+        "profile": "/tmp/playwright_chromiumdev_profile-SrPH3v",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96361,
+          "Mon Oct 19 03:24:41 2026",
+          502,
+          "node scripts/qualify-shared-demo-browser.mjs --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --browser=chromium --emitted-preview=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1 --port=18773 --seconds=7201 --practice=true --cycles=12 --lifecycle=true --localeCheck=true --report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/rotation-chromium-emitted-693947ed1-final-two-hour.json"
+        ],
+        "observedAt": "2026-10-19T01:24:50.315004+00:00"
+      },
+      {
+        "pid": 96509,
+        "ppid": 96499,
+        "pgid": 96499,
+        "uid": 502,
+        "started": "Mon Oct 19 03:24:49 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (GPU).app/Contents/MacOS/Google Chrome Helper (GPU) --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-breakpad --headless --enable-unsafe-swiftshader --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --gpu-preferences=WAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAADAAAAAEAAAAAAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA= --shared-files --field-trial-handle=1718379636,r,1102664857706899387,14056190010151886772,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14774845796822851625,5046608564367132665,4 --trace-process-track-uuid=3190708988185955192",
+        "profile": "/tmp/playwright_chromiumdev_profile-SrPH3v",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96499,
+          "Mon Oct 19 03:24:48 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T01:24:50.315031+00:00"
+      },
+      {
+        "pid": 96510,
+        "ppid": 96499,
+        "pgid": 96499,
+        "uid": 502,
+        "started": "Mon Oct 19 03:24:49 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --no-sandbox --mute-audio --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --shared-files --field-trial-handle=1718379636,r,1102664857706899387,14056190010151886772,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14774845796822851625,5046608564367132665,4 --trace-process-track-uuid=3190708989122997041",
+        "profile": "/tmp/playwright_chromiumdev_profile-SrPH3v",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96499,
+          "Mon Oct 19 03:24:48 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T01:24:50.315034+00:00"
+      },
+      {
+        "pid": 96511,
+        "ppid": 96499,
+        "pgid": 96499,
+        "uid": 502,
+        "started": "Mon Oct 19 03:24:49 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=service --no-sandbox --mute-audio --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --shared-files --field-trial-handle=1718379636,r,1102664857706899387,14056190010151886772,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14774845796822851625,5046608564367132665,4 --trace-process-track-uuid=3190708990060038890",
+        "profile": "/tmp/playwright_chromiumdev_profile-SrPH3v",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96499,
+          "Mon Oct 19 03:24:48 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T01:24:50.315035+00:00"
+      },
+      {
+        "pid": 96518,
+        "ppid": 96499,
+        "pgid": 96499,
+        "uid": 502,
+        "started": "Mon Oct 19 03:24:49 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --top-chrome-webui --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=6 --launch-time-ticks=30494199865 --shared-files --field-trial-handle=1718379636,r,1102664857706899387,14056190010151886772,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14774845796822851625,5046608564367132665,4 --trace-process-track-uuid=3190708991934122588",
+        "profile": "/tmp/playwright_chromiumdev_profile-SrPH3v",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96499,
+          "Mon Oct 19 03:24:48 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T01:24:50.315038+00:00"
+      },
+      {
+        "pid": 96523,
+        "ppid": 96499,
+        "pgid": 96499,
+        "uid": 502,
+        "started": "Mon Oct 19 03:24:49 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=8 --launch-time-ticks=30494249043 --shared-files --field-trial-handle=1718379636,r,1102664857706899387,14056190010151886772,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14774845796822851625,5046608564367132665,4 --trace-process-track-uuid=3190708993808206286",
+        "profile": "/tmp/playwright_chromiumdev_profile-SrPH3v",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96499,
+          "Mon Oct 19 03:24:48 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T01:24:50.315040+00:00"
+      },
+      {
+        "pid": 96524,
+        "ppid": 96499,
+        "pgid": 96499,
+        "uid": 502,
+        "started": "Mon Oct 19 03:24:49 2026",
+        "argv": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=7 --launch-time-ticks=30494250350 --shared-files --field-trial-handle=1718379636,r,1102664857706899387,14056190010151886772,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,14774845796822851625,5046608564367132665,4 --trace-process-track-uuid=3190708992871164437",
+        "profile": "/tmp/playwright_chromiumdev_profile-SrPH3v",
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96499,
+          "Mon Oct 19 03:24:48 2026",
+          502,
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SrPH3v --remote-debugging-pipe --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T01:24:50.315041+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "ownedChildCleanupVerified": true,
+  "ownedObservationWithinLimits": true,
+  "logObservation": {
+    "byteLimit": 8388608,
+    "totalBytes": 550,
+    "writtenBytes": 550,
+    "truncatedBytes": 0,
+    "tailLimit": 65536,
+    "tailBytes": 550,
+    "tailSHA256": "615a0a8fef7459233ff9db69d6f81f957be88974d6bf7c015a868e7d3029c57f",
+    "tail": "{\"reportPath\":\"/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/rotation-chromium-emitted-693947ed1-final-two-hour.json\",\"complete\":false,\"checks\":27,\"failure\":\"AssertionError [ERR_ASSERTION]: The rotation must keep demonstrating available modes.\\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:346:12\",\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "logDrainComplete": true,
+  "logWithinLimit": true,
+  "ended": "2026-10-19T01:41:25.151436+00:00",
+  "sourceRevisionAtEnd": "693947ed1373db7a265def126a5eede2bf875013",
+  "sourceFingerprintAtEnd": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "buildInputFingerprintAtEnd": {
+    "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+    "files": 9398,
+    "bytes": 348357907
+  },
+  "sourceDeclarationAtEnd": {
+    "pin": {
+      "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+      "bytes": 422,
+      "sha256": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c"
+    },
+    "value": {
+      "created": "2026-10-19T00:33:50.857423+00:00",
+      "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "sourceFingerprint": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+      "files": 9996,
+      "bytes": 404392393
+    }
+  },
+  "emittedCaptureAtEnd": {
+    "directory": ".cache/shared-demos-emitted-dd337c8-693947ed1",
+    "manifest": {
+      "path": ".cache/shared-demos-emitted-dd337c8-693947ed1/manifest.json",
+      "bytes": 1304395,
+      "sha256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.json",
+      "bytes": 2057403,
+      "sha256": "7d46a578c3b0ca2b208e58cba99c151bf4889ec850bdc176da1030875baa7532"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.inventory.json",
+      "bytes": 941134,
+      "sha256": "49a076bea7fa4402f33de1e07415f5095a0a95cbd11218f8c8593d8bcf93ab0a"
+    },
+    "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+    "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+    "sourceFingerprint": {
+      "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+      "files": 9996,
+      "bytes": 404392393
+    },
+    "buildInputFingerprint": {
+      "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+      "files": 9398,
+      "bytes": 348357907
+    }
+  },
+  "harnessSha256AtEnd": {
+    "scripts/qualify-shared-demo-browser.mjs": "2059e16979a261009a31393f3d7a4878abcd2bd3b3a4b78d130112d88dbd38ec",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+    "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+    "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+    "scripts/qualify-demo-main-pages.mjs": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a"
+  },
+  "wrapperSha256AtEnd": "79b966bb098d69f014dbf34111c3ae7c13c6ce1c3f1137b3f0e8a8e17c07b3ab",
+  "sourceRevisionUnchanged": true,
+  "sourceUnchanged": true,
+  "buildInputsUnchanged": true,
+  "sourceDeclarationUnchanged": true,
+  "emittedCaptureUnchanged": true,
+  "harnessUnchanged": true,
+  "wrapperUnchanged": true,
+  "reportSha256": "35b54675d3d61db9c5bda16b6c1925af08aa96d2d4ea718cab5f7e8dc140a637",
+  "browserComplete": false,
+  "browserCloseCompleted": true,
+  "previewClosed": true,
+  "pageErrors": 0,
+  "samples": 87,
+  "checks": 27,
+  "enduranceStarted": "2026-10-19T01:26:41.083Z",
+  "enduranceFinished": null,
+  "emittedPreviewAdmitted": true
+}

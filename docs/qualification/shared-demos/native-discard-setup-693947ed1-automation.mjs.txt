@@ -1,0 +1,219 @@
+/* global document, window, location */
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { readFile, lstat } from 'node:fs/promises';
+import { createHash, randomUUID } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
+import { finishQualification, writeQualificationReport } from '../scripts/shared-demo-browser-report.mjs';
+import { browserErrorDescription } from '../scripts/demo-restoration-observation.mjs';
+import { closeOwnedPreview } from './demo-probe-evidence.mjs';
+
+const args = Object.fromEntries(process.argv.slice(2).map(arg => {
+  const split = arg.indexOf('=');
+  assert.ok(arg.startsWith('--') && split > 2);
+  return [arg.slice(2, split), arg.slice(split + 1)];
+}));
+assert.ok(args.runtime && args.executable && args.report && args.head);
+assert.match(args.head, /^[a-f0-9]{40}$/);
+try {
+  await lstat(args.report);
+  throw new Error('Choose a fresh report path; existing evidence must be retained.');
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
+const head = () => execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+assert.equal(head(), args.head);
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const paths = ['docs/qualification/shared-demos/source-freeze-latest.json',
+  '.cache/qualify-demo-actual-discard-237.mjs', '.cache/demo-probe-evidence.mjs',
+  '.cache/observe-native-discard-setup-693947ed1.mjs',
+  'scripts/shared-demo-browser-report.mjs', 'scripts/demo-restoration-observation.mjs'];
+const identities = async () => Object.fromEntries(await Promise.all(paths.map(async path => {
+  const bytes = await readFile(path);
+  return [path, { bytes: bytes.length, sha256: sha(bytes) }];
+})));
+const before = await identities();
+const report = {
+  format: 'NativeChromiumDiscardSetupObservationV1',
+  started: new Date().toISOString(), head: args.head, complete: false,
+  before, after: null, checks: [], errors: [], actions: [], lifecycle: [], pageEvents: [],
+  limits: {
+    browserLaunchMs: 15000, navigationMs: 10000, uiActionMs: 3000,
+    nativeHiddenMs: 3000, nativeDiscardMs: 10000, nativeRestorationMs: 10000,
+    browserCloseMs: 10000, serverCloseMs: 2000,
+  },
+  scope: 'Environment-only observer: one ephemeral Playwright Chrome profile, one isolated context, exactly two owned tabs and a tiny localhost HTML page. No game, emitted runtime, worker, source simulation, or acceptance gate is exercised.',
+  limitations: [
+    'Only native debug UI enablement and removal of Playwright automatic focus emulation are attempted. No synthetic visibility/wasDiscarded override, crash, discard-all action, reload fallback, extension or user-browser connection is used.',
+    'Native hidden visibility, exact-owned urgent discard UI state, new document identity and document.wasDiscarded=true are mandatory. Any failure remains a failed observation.',
+    'Source checks bind this observer and related setup/report helpers plus HEAD and source-freeze bytes. This no-game observer does not recompute or qualify the complete runtime.',
+  ],
+  references: [
+    'https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/components/webui/chrome_urls/resources/app.ts',
+    'https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/ui/webui/chrome_urls/chrome_urls_handler.cc',
+    'https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/resources/discards/discards_tab.ts',
+  ],
+};
+const remember = (list, row, max = 40) => { if (list.length < max) list.push({ at: new Date().toISOString(), ...row }); };
+const action = (type, details = {}) => remember(report.actions, { type, ...details });
+let browser, context, target, controls, server;
+let stage = 'setup';
+const unique = randomUUID();
+const html = `<!doctype html><meta charset="utf-8"><title>Owned native discard setup ${unique}</title><body><h1>Owned discard setup</h1><script>window.nativeDiscardSetup={documentId:crypto.randomUUID(),wasDiscarded:document.wasDiscarded};</script>`;
+const fixtureSHA256 = sha(Buffer.from(html));
+try {
+  server = createServer((req, res) => {
+    if (req.url === '/owned-' + unique) {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
+      res.end(html);
+    } else { res.writeHead(404); res.end(); }
+  });
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', resolve);
+  });
+  const targetURL = `http://127.0.0.1:${server.address().port}/owned-${unique}`;
+  report.fixture = { targetURL, bytes: Buffer.byteLength(html), sha256: fixtureSHA256 };
+  const { chromium } = await import(pathToFileURL(args.runtime).href);
+  browser = await chromium.launch({
+    executablePath: args.executable, headless: true, timeout: report.limits.browserLaunchMs,
+    ignoreDefaultArgs: ['--disable-back-forward-cache'],
+    args: ['--enable-automation', '--disk-cache-size=1048576', '--media-cache-size=1048576'],
+  });
+  report.browserVersion = browser.version();
+  action('enable-command-line-introspection', { flag: '--enable-automation', scope: 'This owned ephemeral browser only; required by Browser.getBrowserCommandLine' });
+  const browserSession = await browser.newBrowserCDPSession();
+  const { arguments: commandLine } = await browserSession.send('Browser.getBrowserCommandLine');
+  report.launchEnvironment = commandLine.filter(value =>
+    /^--(?:user-data-dir|headless|disable-background|disable-renderer-backgrounding|enable-automation|no-startup-window)/.test(value));
+  assert.equal(report.launchEnvironment.filter(value => value.startsWith('--user-data-dir=')).length, 1);
+  context = await browser.newContext({ viewport: { width: 1024, height: 768 } });
+  context.setDefaultTimeout(3000);
+  context.setDefaultNavigationTimeout(10000);
+  context.on('page', page => {
+    remember(report.pageEvents, { type: 'created', url: page.url() });
+    page.on('close', () => remember(report.pageEvents, { type: 'closed', url: page.url() }));
+    page.on('pageerror', error => remember(report.errors, { stage, url: page.url(), name: error.name, error: browserErrorDescription(error) }, 16));
+  });
+  await context.exposeBinding('recordNativeDiscardSetup', (_source, value) => remember(report.lifecycle, value));
+  await context.addInitScript(() => {
+    if (!location.protocol.startsWith('http')) return;
+    const id = crypto.randomUUID();
+    for (const type of ['pageshow', 'pagehide', 'visibilitychange', 'freeze', 'resume']) {
+      window.addEventListener(type, event => {
+        void window.recordNativeDiscardSetup({ type, id, hidden: document.hidden,
+          visibilityState: document.visibilityState, wasDiscarded: document.wasDiscarded,
+          persisted: event.persisted ?? null }).catch(() => {});
+      });
+    }
+  });
+  target = await context.newPage();
+  controls = await context.newPage();
+  assert.equal(context.pages().length, 2);
+  await target.goto(targetURL);
+  const state = page => page.evaluate(() => ({ url: location.href, hidden: document.hidden,
+    visibilityState: document.visibilityState, hasFocus: document.hasFocus(),
+    wasDiscarded: document.wasDiscarded, documentId: window.nativeDiscardSetup?.documentId ?? null }));
+  report.initial = { target: await state(target), controls: await state(controls) };
+  stage = 'remove-automation-focus-override';
+  const sessions = [];
+  for (const [label, page] of [['target', target], ['controls', controls]]) {
+    const session = await context.newCDPSession(page);
+    sessions.push(session);
+    const { targetInfo } = await session.send('Target.getTargetInfo');
+    const windowInfo = await browserSession.send('Browser.getWindowForTarget', { targetId: targetInfo.targetId });
+    report.windows ??= [];
+    report.windows.push({ label, targetId: targetInfo.targetId, windowId: windowInfo.windowId });
+    await session.send('Emulation.setFocusEmulationEnabled', { enabled: false });
+    action('remove-playwright-focus-emulation', { label, command: 'Emulation.setFocusEmulationEnabled', enabled: false });
+  }
+  assert.equal(report.windows[0].windowId, report.windows[1].windowId,
+    'The two owned tabs must belong to the same native window.');
+  stage = 'enable-native-debug-ui';
+  await controls.goto('chrome://chrome-urls/#internal-debug-pages');
+  action('navigate-owned-control-tab', { url: controls.url() });
+  const enable = controls.getByRole('button', { name: 'Enable internal debugging pages', exact: true });
+  await enable.waitFor({ state: 'visible', timeout: 10000 });
+  await enable.click({ timeout: 3000 });
+  await controls.getByRole('button', { name: 'Disable internal debugging pages', exact: true }).waitFor({ state: 'visible', timeout: 3000 });
+  action('native-debug-ui-enabled', { scope: 'Chrome Local State within this newly created ephemeral user-data-dir only' });
+  await controls.goto('chrome://discards/');
+  await controls.locator('#tab-discards-info-table-body').waitFor({ state: 'visible', timeout: 10000 });
+  report.checks.push({ type: 'native-debug-ui-available' });
+  stage = 'native-tab-visibility';
+  await target.bringToFront();
+  await target.waitForFunction(() => document.hidden === false, null, { timeout: 3000, polling: 100 });
+  report.foreground = await state(target);
+  await controls.bringToFront();
+  await target.waitForFunction(() => document.hidden === true, null, { timeout: 3000, polling: 100 });
+  report.hidden = { target: await state(target), controls: await state(controls) };
+  assert.equal(report.hidden.controls.hidden, false);
+  report.checks.push({ type: 'native-two-tab-visibility', hidden: report.hidden });
+  stage = 'native-exact-owned-urgent-discard';
+  const row = controls.locator('#tab-discards-info-table-body tr').filter({ has: controls.getByText(targetURL, { exact: true }) });
+  await row.waitFor({ state: 'visible', timeout: 10000 });
+  assert.equal(await row.count(), 1);
+  const urgent = row.getByText('[Urgent Discard]', { exact: true });
+  await urgent.waitFor({ state: 'visible', timeout: 10000 });
+  const eligibilityDeadline = performance.now() + 10000;
+  while (await urgent.getAttribute('disabled') !== null) {
+    assert.ok(performance.now() < eligibilityDeadline, 'Native exact-owned urgent discard action remains unavailable.');
+    await controls.waitForTimeout(100);
+  }
+  report.beforeCells = await row.locator('td').allTextContents();
+  const tabId = await urgent.getAttribute('data-id');
+  assert.match(tabId ?? '', /^\d+$/);
+  action('native-exact-owned-urgent-discard-click', { targetURL, tabId });
+  await urgent.click({ timeout: 3000 });
+  const discardDeadline = performance.now() + 10000;
+  for (;;) {
+    const cells = await row.locator('td').allTextContents();
+    if (cells.some(cell => /^discarded\b/i.test(cell.trim()))) {
+      report.discardedCells = cells;
+      break;
+    }
+    assert.ok(performance.now() < discardDeadline, 'Native discards UI did not confirm discard.');
+    await controls.waitForTimeout(100);
+  }
+  report.checks.push({ type: 'native-ui-confirms-discard', tabId });
+  stage = 'native-tab-activation';
+  // No evaluation or reload of the discarded tab before normal tab activation.
+  await target.bringToFront();
+  await target.waitForFunction(() => document.wasDiscarded === true && !!window.nativeDiscardSetup,
+    null, { timeout: 10000, polling: 100 });
+  report.restored = await state(target);
+  assert.notEqual(report.restored.documentId, report.foreground.documentId);
+  assert.equal(report.restored.wasDiscarded, true);
+  assert.equal(report.restored.url, targetURL);
+  report.checks.push({ type: 'native-discarded-document-restored', state: report.restored });
+  assert.deepEqual(report.errors, [], 'Native page errors remain strict failures.');
+  report.complete = true;
+} catch (error) {
+  report.complete = false;
+  report.failure = String(error?.stack ?? error).slice(0, 8192);
+  report.failedStage = stage;
+  report.targetClosed = target?.isClosed() ?? null;
+  if (controls && !controls.isClosed()) {
+    try { report.controlText = (await controls.locator('body').innerText({ timeout: 1500 })).slice(0, 12000); }
+    catch (secondary) { report.controlTextError = String(secondary).slice(0, 1024); }
+  }
+} finally {
+  await finishQualification({ report, reportPath: args.report, browser, closeTimeoutMs: 10000,
+    writeReport: async (path, value, options) => {
+      await closeOwnedPreview(server ? { server } : null, value, 2000);
+      value.after = await identities();
+      value.headAfter = head();
+      try {
+        assert.equal(value.headAfter, args.head);
+        assert.deepEqual(value.after, before);
+        value.bindingsUnchanged = true;
+      } catch (error) {
+        value.bindingsUnchanged = false;
+        value.complete = false;
+        value.failure ??= String(error?.stack ?? error);
+      }
+      await writeQualificationReport(path, value, options);
+    } });
+}
+if (!report.complete) process.exitCode = 1;

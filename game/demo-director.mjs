@@ -98,7 +98,7 @@ export function createDemoDirector({
     if (recoveryTimer !== null) clearTimer(recoveryTimer);
     recoveryTimer = null;
   }
-  function choose() {
+  function choose({ preferVerified = false } = {}) {
     const available = candidates.filter(
       (item) =>
         !failed.has(item.id) &&
@@ -109,7 +109,7 @@ export function createDemoDirector({
       error &&
       lastVerified &&
       available.includes(lastVerified) &&
-      !rotation.hasPendingModes(available)
+      (preferVerified || !rotation.hasPendingModes(available))
     )
       return lastVerified;
     if (prefetch.source && available.includes(prefetch.source)) return prefetch.source;
@@ -155,6 +155,7 @@ export function createDemoDirector({
     recoveryTimer = setTimer(stopRecovery, Math.max(0, recoveryDeadline - now()));
     phase = 'loading';
     emit();
+    let recoveryHadTimeout = false;
     while (current()) {
       if (expired()) return false;
       // Failed preparation can also return an owned player. Retire it before
@@ -178,7 +179,7 @@ export function createDemoDirector({
         }
       }
       if (!current() || expired()) return false;
-      const candidate = choose();
+      const candidate = choose({ preferVerified: recoveryHadTimeout });
       preparingCandidate = candidate;
       if (!candidate) {
         phase = 'unavailable';
@@ -254,6 +255,11 @@ export function createDemoDirector({
         if (candidate.kind === 'bot') requiredNextKind = 'replay';
         if (candidate.kind !== 'bot' || failure?.code !== 'no-safe-macro') failed.add(candidate.id);
         rotation.defer(candidate);
+        // A slow unknown source must not spend the remaining recovery budget
+        // ahead of a usable verified performance. Other unvisited modes stay
+        // eligible for the next ordinary transition; content-error fairness is
+        // unchanged, and failed/suspended sources remain excluded by choose().
+        recoveryHadTimeout ||= timedOut(failure);
         error = String(failure?.message || failure).slice(0, 240);
       }
     }

@@ -9,6 +9,7 @@ import {
 import { pathToFileURL } from 'node:url';
 import { pbkdf2Sync } from 'node:crypto';
 import { startProductionPreview } from './serve-production-preview.mjs';
+import { createDemoEnduranceProgress } from './shared-demo-endurance-progress.mjs';
 
 // Uses a supplied, already installed Playwright runtime; never installs browsers.
 const args = Object.fromEntries(
@@ -333,13 +334,22 @@ try {
     }
     await context.setOffline(false);
   }
-  const until = Date.now() + duration * 1000;
-  report.enduranceStarted = new Date().toISOString();
-  let lastProgress = Date.now(),
-    previousSignature = '';
+  const enduranceStartedAt = Date.now();
+  const until = enduranceStartedAt + duration * 1000;
+  report.enduranceStarted = new Date(enduranceStartedAt).toISOString();
+  const progress = createDemoEnduranceProgress(enduranceStartedAt);
   while (Date.now() < until) {
     await page.waitForTimeout(Math.min(10000, until - Date.now()));
     const value = await snapshot();
+    const observedAt = Date.now();
+    // Preserve the exact observation that fails a gate, including unavailable
+    // state and its last source preparation/failure details.
+    report.lastEnduranceObservation = {
+      at: new Date(observedAt).toISOString(),
+      workers: page.workers().length,
+      ...value,
+    };
+    progress.observe(value, observedAt);
     assert.ok(value.nativeSurfaces <= 1, 'Only one native scene may remain mounted.');
     assert.ok(value.resources.ownedNativeScenes <= 1, 'Only one native scene may remain owned.');
     assert.equal(value.resources.practiceWorlds, 0, 'Watching cannot retain a practice world.');
@@ -348,15 +358,13 @@ try {
       'unavailable',
       'The rotation must keep demonstrating available modes.',
     );
-    const signature = `${value.source}:${value.phase}:${value.tick}`;
-    if (signature !== previousSignature) lastProgress = Date.now();
-    assert.ok(Date.now() - lastProgress < 45000, 'Playback or recovery must keep making progress.');
-    previousSignature = signature;
-    report.samples.push({ at: new Date().toISOString(), workers: page.workers().length, ...value });
+    report.samples.push(report.lastEnduranceObservation);
     if (report.samples.length > 800) report.samples.shift();
     if (report.samples.length % 6 === 0) await writeQualificationReport(reportPath, report);
   }
-  report.enduranceFinished = new Date().toISOString();
+  const enduranceFinishedAt = Date.now();
+  report.enduranceFinalObservation = progress.finish(enduranceFinishedAt);
+  report.enduranceFinished = new Date(enduranceFinishedAt).toISOString();
   await page.locator('#demo-back').click();
   await page.waitForFunction(
     () => {
