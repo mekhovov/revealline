@@ -153,30 +153,6 @@
         "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-58c23858-d10c-4626-9b02-cafd14d9af82.png"
       },
       "editPromptPath": "prompts/retro-midnight-disk-station-cleanup.txt"
-    },
-    {
-      "id": "spend-cloud-cart-exchange",
-      "theme": "Spend Network",
-      "title": "Cloud Cart Exchange",
-      "path": "originals/spend-cloud-cart-exchange-clean.png",
-      "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-0921606c-0920-4233-a76d-67def9bd2880.png",
-      "bytes": 2549711,
-      "sha256": "560949cad2ee1031dd5f5edd9c5115db576db5d8133ae3712faa11243cee0971",
-      "width": 1774,
-      "height": 887,
-      "bitDepth": 8,
-      "colorType": 2,
-      "sourceInode": 76423071,
-      "workspaceInode": 76424334,
-      "copyMethod": "APFS clonefile, separate inode, shared data; no transformation",
-      "promptPath": "prompts/spend-cloud-cart-exchange.txt",
-      "initialSource": {
-        "path": "originals/spend-cloud-cart-exchange.png",
-        "bytes": 2656655,
-        "sha256": "6141755ee163d55f8e949488391238ff0f740d279406b74d3f5f91b60dcfa341",
-        "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-60c2fb0b-43e6-4155-86b9-eedfca6d037b.png"
-      },
-      "editPromptPath": "prompts/spend-cloud-cart-exchange-cleanup.txt"
     }
   ],
   "note": "All six exact generated outputs retained. Four distinct scenes count as four reserve works; two initial versions are provenance only."

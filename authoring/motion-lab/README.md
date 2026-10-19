@@ -39,8 +39,7 @@ Defaults remain **hybrid terrain** and a **1.25-cell FPV body slot**. The scale 
 
 For a recipe with **wings, exhaust, pulses or lights**, the inspection panel exposes
 its existing attachment anchors and base animation rate. For example, inspect
-Atlas bird to adjust a wing hinge, Tape runner for exhaust, or Spend Sprite for a
-pulse and separate blinking lights. The current `paintCharacter` renderer draws
+Atlas bird to adjust a wing hinge or Tape runner for exhaust. The current `paintCharacter` renderer draws
 the accepted draft in the inspection view and, when that character is equipped,
 the arena. The editor does not add a simulation state or a new animation type.
 

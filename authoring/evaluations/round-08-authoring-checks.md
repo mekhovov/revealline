@@ -57,7 +57,7 @@ The [temporary harness](/tmp/xonix-round08-forward-rupwpgmo/forward-test.mjs) an
 All 17 scenario checks passed:
 
 - A save round-trip retained the map-and-game-specific Falcon trim choice and the separate theme-scoped Vector trail choice. A different Ukrainian map or game selected the Atlas starter; repeated Atlas/retro context switching retained the intended choices.
-- Unmet Night signal and Audit pulse conditions exposed current/target counts. Locked or removed saved selections fell back to eligible starters.
+- Unmet Night signal conditions exposed current/target counts. Locked or removed saved selections fell back to eligible starters.
 - Exact duplicate events, revised payloads sharing an event ID, and revised payloads sharing a run ID were rejected without mutating the prior profile. Legitimate new runs on one retro level kept only that level's best stars; changing map/challenge names on one FPV level did not inflate its distinct-clear count.
 - Missing/unknown/malformed context fields and malformed IDs were rejected at the relevant input boundary. Null, undefined and malformed fixture profiles returned a consistent rejection after the module author's robustness update.
 - Duplicate saved events/runs or duplicate equipped scopes were rejected on restore. A wrong-map clear did not satisfy the clean-relay condition.
