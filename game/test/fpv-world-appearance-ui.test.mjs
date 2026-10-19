@@ -3572,6 +3572,9 @@ test('World verified current medal guidance survives native language changes wit
 });
 
 test('World authoring preview keeps its no-award result without next-medal guidance', async (t) => {
+  const previousLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(previousLocale, { persist: false }));
   const h = fixture(t);
   await h.app.ready;
   const source = WORLD_CATALOGUE.find((item) => !item.legacy);
