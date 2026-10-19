@@ -6,7 +6,7 @@ import { inspectImageDataUrl } from '../content.mjs';
 import { soloPage } from './helpers/solo-dom.mjs';
 import { installedAssets, open } from './mission-library-solo-fixture.mjs';
 
-// Diagnostic only: the existing production performance query owns all clocks
+// Diagnostic only: the existing production query owns its own stage clocks.
 // and stage stamps. This fixture adds no timers, frames or opening gates.
 test('cold installed Custom Browse reports its existing public opening stages', async (t) => {
   const source = JSON.parse(
@@ -28,8 +28,10 @@ test('cold installed Custom Browse reports its existing public opening stages', 
   const assets = await installedAssets(pack);
   const prefix = 'RevealLineMissionsStageV1 ',
     stageLogs = [],
+    stageMetrics = [],
     originalDebug = console.debug;
-  let stageBytes = 0,
+  let metricOrigin = null,
+    stageBytes = 0,
     droppedStages = 0,
     observationErrors = 0;
   const observedDebug = function (...args) {
@@ -40,6 +42,25 @@ test('cold installed Custom Browse reports its existing public opening stages', 
         if (stageLogs.length < 64 && bytes <= 512 && stageBytes + bytes <= 8192) {
           stageLogs.push(line);
           stageBytes += bytes;
+          // Cumulative process measurements, aligned to this retained stage index.
+          // CPU includes GC and other process work; it is not exclusive owner CPU.
+          const wallNs = process.hrtime.bigint(),
+            cpu = process.cpuUsage();
+          metricOrigin ??= { wallNs, cpu };
+          const elapsedWallMs = Math.round(Number(wallNs - metricOrigin.wallNs) / 1000) / 1000,
+            userCpuUs = cpu.user - metricOrigin.cpu.user,
+            systemCpuUs = cpu.system - metricOrigin.cpu.system;
+          if (
+            stageMetrics.length < 64 &&
+            Number.isFinite(elapsedWallMs) &&
+            elapsedWallMs >= 0 &&
+            Number.isFinite(userCpuUs) &&
+            userCpuUs >= 0 &&
+            Number.isFinite(systemCpuUs) &&
+            systemCpuUs >= 0
+          ) {
+            stageMetrics.push([stageLogs.length - 1, elapsedWallMs, userCpuUs, systemCpuUs]);
+          } else observationErrors++;
         } else droppedStages++;
       }
     } catch {
@@ -70,6 +91,7 @@ test('cold installed Custom Browse reports its existing public opening stages', 
       const evidence = JSON.stringify({
         format: 'mission-library-public-stage-probe.v1',
         stageLogs,
+        stageMetrics,
         stageBytes,
         droppedStages,
         observationErrors,
