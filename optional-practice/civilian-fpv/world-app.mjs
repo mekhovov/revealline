@@ -122,7 +122,11 @@ import {
 import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { mountPracticeOfflineControls } from './offline.mjs';
-import { mountWorldLibrary, worldImportErrorCopy } from './world-reaction-runtime.mjs';
+import {
+  mountWorldLibrary,
+  worldImportErrorCopy,
+  WORLD_LIBRARY_CATALOGUE,
+} from './world-reaction-runtime.mjs';
 import { mountRegionalLibrary, regionalPresentationOptions } from './regional-library.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import { runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
@@ -1044,6 +1048,9 @@ export function mountWorldApp({
     missionChooser = null,
     missionLibrary = null,
     missionLaunchGeneration = 0,
+    randomContext = 'flight',
+    randomLevelChoice = 'auto',
+    randomLevelControl = null,
     runtimeOfflineFeedback = null,
     regionalRecoveryControls = null,
     regionalStartControls = null,
@@ -1140,6 +1147,8 @@ export function mountWorldApp({
     flowCelebration = null;
   const learningById = new Map(BEGINNER_LESSONS.map((lesson) => [lesson.id, lesson]));
   const learningEntries = new Map(BEGINNER_CATALOGUE.map((entry) => [entry.id, entry]));
+  const learningMissionKeys = new Set(BEGINNER_CATALOGUE.map(keyOf));
+  const randomLevelsKey = 'revealline.sim.worlds.random-levels.v1';
   const primaryLearning = PRIMARY_LESSON_ORDER.map((id) => learningEntries.get(id));
   const learningSequence = (entry) =>
     learningById.get(entry?.id)?.mode === 'acro' ? PRIMARY_LESSON_ORDER : SELF_LEVEL_LESSON_ORDER;
@@ -1162,6 +1171,11 @@ export function mountWorldApp({
     storage = win.localStorage;
   } catch {
     /* Browser can deny local preference access. */
+  }
+  try {
+    if (storage?.getItem(randomLevelsKey) === 'mixed') randomLevelChoice = 'mixed';
+  } catch {
+    /* Random still follows the current activity without storage. */
   }
   const enemyStatistics = createSimEnemyStatsHost({ gameType: 'worlds', storage });
   void enemyStatistics.stats.read();
@@ -1223,7 +1237,9 @@ export function mountWorldApp({
   ];
   try {
     const saved = JSON.parse(storage?.getItem('revealline.fpv.world-settings.v1') ?? '{}');
-    if (!saved['flight-source'] && win.matchMedia?.('(pointer: coarse)').matches)
+    if (!saved['flight-source'] && profileStore.snapshot().radio?.verified)
+      $('flight-source').value = 'radio';
+    else if (!saved['flight-source'] && win.matchMedia?.('(pointer: coarse)').matches)
       $('flight-source').value = 'touch';
     if (saved['flight-drone-guide'] === 'on') saved['flight-drone-guide'] = 'compact';
     for (const id of preferenceIds)
@@ -1278,16 +1294,15 @@ export function mountWorldApp({
         let saved;
         try {
           saved = JSON.parse(storage?.getItem('revealline.fpv.world-settings.v1') ?? '{}');
-        } catch { /* Invalid saved camera preferences stay absent. */ }
+        } catch {
+          /* Invalid saved camera preferences stay absent. */
+        }
         for (const id of ['world-fov', 'world-tilt']) {
           if (typeof saved?.[id] === 'string') preferences[id] = saved[id];
           else delete preferences[id];
         }
       }
-      storage?.setItem(
-        'revealline.fpv.world-settings.v1',
-        JSON.stringify(preferences),
-      );
+      storage?.setItem('revealline.fpv.world-settings.v1', JSON.stringify(preferences));
     } catch (error) {
       reportError(error);
     }
@@ -1820,7 +1835,10 @@ export function mountWorldApp({
         'Підготовка файлів для автономного запуску…',
       ],
       removing: ['Removing offline simulator files…', 'Прибирання автономних файлів симулятора…'],
-      ready: ['Offline runtime preparation completed.', 'Підготовку автономного запуску завершено.'],
+      ready: [
+        'Offline runtime preparation completed.',
+        'Підготовку автономного запуску завершено.',
+      ],
       removed: [
         'Offline simulator files removed. Installed worlds and flight records are kept.',
         'Автономні файли симулятора прибрано. Встановлені світи й записи польотів збережено.',
@@ -2302,6 +2320,11 @@ export function mountWorldApp({
     };
     return txt(...(messages[reason] ?? messages.ready));
   }
+  const radioFlightNotice = el('p', undefined, 'sim-radio-flight-notice');
+  radioFlightNotice.setAttribute('role', 'status');
+  radioFlightNotice.setAttribute('aria-live', 'polite');
+  radioFlightNotice.hidden = true;
+  $('world-viewport').append(radioFlightNotice);
   const stickTraces = ['left', 'right'].map((side) =>
     mountStickTrace($(`world-${side}-stick`), { travel: 180 * 0.34 }),
   );
@@ -2397,7 +2420,8 @@ export function mountWorldApp({
         now: traceTime,
         source,
         reducedMotion,
-        available: !unavailable && !monitor.hidden && state?.status === 'active',
+        available:
+          !unavailable && !monitor.hidden && (state?.status === 'active' || source === 'radio'),
       });
       node.setAttribute(
         'aria-label',
@@ -2409,6 +2433,10 @@ export function mountWorldApp({
       'world-touch-throttle',
       `${Math.round(controls.throttle * 100)}%${touchActive && $('world-left-stick').dataset.touchActive !== 'true' ? ` · ${txt('held', 'утримується')}` : ''}`,
     );
+    radioFlightNotice.hidden =
+      source !== 'radio' || state?.status === 'active' || !sceneReady || beginnerCoach.blocksArm();
+    const radioNotice = radioHelp(radio.status().reason);
+    if (radioFlightNotice.textContent !== radioNotice) radioFlightNotice.textContent = radioNotice;
     const status = $('world-input-status');
     const text =
       source === 'radio'
@@ -2672,11 +2700,33 @@ export function mountWorldApp({
           .includes(search),
     );
   }
+  function includesRandomLevel(isLearning, context = randomContext) {
+    return randomLevelChoice === 'mixed' || isLearning === (context === 'learning');
+  }
+  function paintRandomLevels() {
+    if (!randomLevelControl) return;
+    const { label, select, automatic, mixed } = randomLevelControl;
+    label.textContent = txt('Random levels', 'Випадкові рівні');
+    automatic.textContent =
+      randomContext === 'learning'
+        ? txt('Learning levels only', 'Лише навчальні рівні')
+        : txt('Flight levels only', 'Лише рівні польоту');
+    mixed.textContent = txt('Learning + flight levels', 'Навчання + польоти');
+    select.value = randomLevelChoice;
+  }
   function randomFlightCandidates(worldId) {
-    return filteredCatalogue().filter((entry) => !worldId || entry.world === worldId);
+    return filteredCatalogue().filter(
+      (entry) =>
+        (!worldId || entry.world === worldId) &&
+        includesRandomLevel(Boolean(entry.beginner), current?.beginner ? 'learning' : 'flight'),
+    );
   }
   async function startRandomFlight(worldId) {
     await ready;
+    if (!worldId && missionChooser) {
+      openMissionChooser(current?.beginner ? 'learn' : 'explore');
+      return missionChooser.playRandom();
+    }
     if (disposed) return;
     const candidates = randomFlightCandidates(worldId),
       alternatives = candidates.filter((entry) => keyOf(entry) !== lastCatalogueFlightKey),
@@ -2976,65 +3026,72 @@ export function mountWorldApp({
       const libraryGroups = new Map();
       for (const entry of catalogue.filter(
         (entry) =>
-          !entry.archived && (!courseClassFilter || courseClassFilter.matches(entry.course)),
+          !entry.archived &&
+          !downloadedCourseOffered(entry) &&
+          (!courseClassFilter || courseClassFilter.matches(entry.course)),
       )) {
         const id = entry.projectId ? `worlds:${entry.packIdentity}` : 'worlds:builtin';
         if (!libraryGroups.has(id)) libraryGroups.set(id, []);
         libraryGroups.get(id).push(entry);
       }
-    for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
-      if (!libraryGroups.has(old)) missionLibrary.remove(old);
-    const complete = completedKeys();
-    for (const [id, missions] of libraryGroups) {
-      const positions = new Map(),
-        sizes = new Map();
-      for (const entry of missions) {
-        const key = missionCampaign(entry).key;
-        positions.set(entry, sizes.get(key) ?? 0);
-        sizes.set(key, (sizes.get(key) ?? 0) + 1);
+      for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
+        if (
+          (old === 'worlds:builtin' || old.startsWith('worlds:fpv-pack:')) &&
+          !libraryGroups.has(old)
+        )
+          missionLibrary.remove(old);
+      const complete = completedKeys();
+      for (const [id, missions] of libraryGroups) {
+        const positions = new Map(),
+          sizes = new Map();
+        for (const entry of missions) {
+          const key = missionCampaign(entry).key;
+          positions.set(entry, sizes.get(key) ?? 0);
+          sizes.set(key, (sizes.get(key) ?? 0) + 1);
+        }
+        missionLibrary.register({
+          id,
+          editionId: id,
+          edition: 'FPV SIM · Worlds',
+          collection: id === 'worlds:builtin' ? 'Classic' : 'Custom',
+          entries: missions,
+          describe: (entry) => ({
+            id: keyOf(entry),
+            revision: entry.course.revision ?? '',
+            campaignKey: missionCampaign(entry).key,
+            campaignTitle: missionCampaign(entry).title,
+            name: label(entry),
+            levelIndex: positions.get(entry),
+            ...(!entry.projectId
+              ? {
+                  canonicalLevelKey: `sim-worlds:${keyOf(entry)}`,
+                  globalLevelNumber:
+                    [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].findIndex(
+                      (candidate) => keyOf(candidate) === keyOf(entry),
+                    ) + 1,
+                }
+              : {}),
+            campaignLevelCount: sizes.get(missionCampaign(entry).key),
+            modes: ['solo'],
+            tags: ['FPV', 'Practice'],
+            hook: entry.course.locales[locale]?.brief ?? entry.course.locales.en.brief,
+            rules: catalogueDetails(entry),
+          }),
+          availability: () => ({ state: 'ready' }),
+          card: (entry) => entry.course,
+          progressState: (entry) => ({
+            state: complete.has(keyOf(entry)) ? 'completed' : 'new',
+            bestStars: null,
+          }),
+          launch: (entry, { isCurrent }) => startFlight(entry, { isCurrent }),
+        });
       }
-      missionLibrary.register({
-        id,
-        editionId: id,
-        edition: 'FPV SIM · Worlds',
-        collection: id === 'worlds:builtin' ? 'Classic' : 'Custom',
-        entries: missions,
-        describe: (entry) => ({
-          id: keyOf(entry),
-          revision: entry.course.revision ?? '',
-          campaignKey: missionCampaign(entry).key,
-          campaignTitle: missionCampaign(entry).title,
-          name: label(entry),
-          levelIndex: positions.get(entry),
-          ...(!entry.projectId
-            ? {
-                canonicalLevelKey: `sim-worlds:${keyOf(entry)}`,
-                globalLevelNumber:
-                  [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].findIndex(
-                    (candidate) => keyOf(candidate) === keyOf(entry),
-                  ) + 1,
-              }
-            : {}),
-          campaignLevelCount: sizes.get(missionCampaign(entry).key),
-          modes: ['solo'],
-          tags: ['FPV', 'Practice'],
-          hook: entry.course.locales[locale]?.brief ?? entry.course.locales.en.brief,
-          rules: catalogueDetails(entry),
-        }),
-        availability: () => ({ state: 'ready' }),
-        card: (entry) => entry.course,
-        progressState: (entry) => ({
-          state: complete.has(keyOf(entry)) ? 'completed' : 'new',
-          bestStars: null,
-        }),
-        launch: (entry, { isCurrent }) => startFlight(entry, { isCurrent }),
-      });
-    }
       missionChooser?.refresh();
     }
     presentation.refresh();
   }
   function renderCatalogue() {
+    paintRandomLevels();
     renderSchool();
     $('world-grid').replaceChildren();
     $('level-count').textContent = catalogue.filter((entry) => !entry.archived).length;
@@ -3047,14 +3104,18 @@ export function mountWorldApp({
 
     const groups = new Map();
     for (const entry of catalogue.filter(
-      (entry) => !entry.archived && (!courseClassFilter || courseClassFilter.matches(entry.course)),
+      (entry) =>
+        !entry.archived &&
+        !downloadedCourseOffered(entry) &&
+        (!courseClassFilter || courseClassFilter.matches(entry.course)),
     )) {
       const id = entry.projectId ? `worlds:${entry.packIdentity}` : 'worlds:builtin';
       if (!groups.has(id)) groups.set(id, []);
       groups.get(id).push(entry);
     }
     for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
-      if (!groups.has(old)) missionLibrary.remove(old);
+      if ((old === 'worlds:builtin' || old.startsWith('worlds:fpv-pack:')) && !groups.has(old))
+        missionLibrary.remove(old);
     const complete = completedKeys();
     for (const [id, missions] of groups) {
       const positions = new Map(),
@@ -3106,16 +3167,18 @@ export function mountWorldApp({
   }
   function openMissionChooser(section = 'explore') {
     if (!missionChooser) return;
+    randomContext = section === 'learn' ? 'learning' : 'flight';
+    paintRandomLevels();
     missionLaunchGeneration++;
     pauseFlight();
     missionChooser.open();
     worldLibrary.deactivate();
     regionalLibrary.deactivate();
-    worldCatalogueHost.hidden = section === 'learn';
-    if (section !== 'learn') {
-      worldLibrary.open(worldCatalogueHost);
-      regionalLibrary.open(worldCatalogueHost);
-    }
+    worldCatalogueHost.hidden = true;
+    // One chooser owns selection; download browsers remain in Content & Offline.
+    void regionalLibrary.refreshMissions().catch(() => {});
+    void worldLibrary.refreshMissions().catch(() => {});
+    syncDownloadMissions();
     if (section === 'learn') {
       const complete = completedKeys();
       const next =
@@ -3726,21 +3789,35 @@ export function mountWorldApp({
   async function flyInstalledWorld(record) {
     // Launch the verified installed revision, never a same-name replacement.
     const entry = catalogue.find(
-      (candidate) => candidate.projectId === record.id && candidate.packIdentity === `fpv-pack:${record.sha256}`,
+      (candidate) =>
+        candidate.projectId === record.id && candidate.packIdentity === `fpv-pack:${record.sha256}`,
     );
-    if (!entry) throw new Error(txt('This world is no longer installed. Refresh the Library.', 'Цей світ більше не встановлено. Оновіть бібліотеку.'));
+    if (!entry)
+      throw new Error(
+        txt(
+          'This world is no longer installed. Refresh the Library.',
+          'Цей світ більше не встановлено. Оновіть бібліотеку.',
+        ),
+      );
     await startFlight(entry, { paused: true });
   }
   const worldLibrary = mountWorldLibrary({
     el,
     txt,
     parent: $('installed-packs'),
-    begin: () => worldStore.generation(),
+    initialRows: WORLD_LIBRARY_CATALOGUE,
+    onChange: () => syncDownloadMissions(),
+    begin: () => {
+      if (!worldStore)
+        throw new Error(txt('Device storage is unavailable.', 'Сховище пристрою недоступне.'));
+      return worldStore.generation();
+    },
     fly: flyInstalledWorld,
     install: (bytes, row, options) =>
       installExactPack(bytes, `fpv-pack:${row.sha256}`, { ...options, row }),
   });
   const regionalLibrary = mountRegionalLibrary({
+    onChange: () => syncDownloadMissions(),
     el,
     txt,
     parent: $('installed-packs'),
@@ -3748,7 +3825,10 @@ export function mountWorldApp({
     fly: (configuration, record, { isCurrent }) => {
       const generation = ++missionLaunchGeneration;
       return startRegionalFlight(
-        regionalLibraryEntry(configuration, { sha256: record.sha256, descriptor: record.descriptor }),
+        regionalLibraryEntry(configuration, {
+          sha256: record.sha256,
+          descriptor: record.descriptor,
+        }),
         {
           canAdopt: isCurrent,
           isCurrent: () => !doc.hidden && generation === missionLaunchGeneration,
@@ -3756,6 +3836,157 @@ export function mountWorldApp({
       );
     },
   });
+  let downloadMissionSignature = '';
+  const downloadedEntry = ({ row, index, level }) =>
+    catalogue.find(
+      (entry) =>
+        entry.packIdentity === `fpv-pack:${row.sha256}` &&
+        (level
+          ? entry.id === level.id
+          : entry.id ===
+            revisions.find((pack) => pack.sha256 === row.sha256)?.project.courses[index]?.id),
+    );
+  function downloadedCourseOffered(entry) {
+    return (
+      entry.projectId &&
+      worldLibrary
+        .missions()
+        .some(
+          (mission) =>
+            entry.packIdentity === `fpv-pack:${mission.row.sha256}` &&
+            (!mission.level || mission.level.id === entry.id),
+        )
+    );
+  }
+  function syncDownloadMissions() {
+    if (!missionLibrary || disposed) return;
+    const worlds = worldLibrary.missions(),
+      regions = regionalLibrary.missions();
+    const hashOf = (row) => row.saved?.sha256 ?? row.pin.sha256;
+    const signature = JSON.stringify([
+      worlds.map(({ row, index }) => [row.sha256, index]),
+      regions.map((row) => [row.id, hashOf(row)]),
+      locale,
+    ]);
+    // Do not replace an owner while its exact download is being prepared.
+    if (signature === downloadMissionSignature) {
+      missionChooser?.refresh();
+      return;
+    }
+    downloadMissionSignature = signature;
+    const packTitle = (row) => row.title[locale === 'uk' ? 1 : 0];
+    const worldName = (mission) => {
+      const installed = downloadedEntry(mission);
+      return installed
+        ? label(installed)
+        : (mission.level?.title[locale === 'uk' ? 1 : 0] ??
+            `${packTitle(mission.row)} · ${txt('Level', 'Рівень')} ${mission.index + 1}`);
+    };
+    missionLibrary.register({
+      id: 'worlds:downloads',
+      editionId: 'worlds:downloads',
+      edition: 'FPV SIM · Worlds',
+      collection: 'Custom',
+      entries: worlds,
+      describe: (mission) => ({
+        id: `${mission.row.sha256}:${mission.index}`,
+        campaignKey: mission.row.id,
+        campaignTitle: packTitle(mission.row),
+        name: worldName(mission),
+        revision: mission.row.revision,
+        levelIndex: mission.index,
+        campaignLevelCount: mission.row.courses,
+        modes: ['solo'],
+        tags: ['FPV', 'Practice'],
+        hook: txt(
+          'Download once and fly this route. Starts disarmed.',
+          'Завантажте один раз і літайте маршрутом. Старт із вимкненими двигунами.',
+        ),
+      }),
+      presentation: (mission) => ({
+        name: worldName(mission),
+        campaignTitle: packTitle(mission.row),
+      }),
+      availability: (mission) =>
+        downloadedEntry(mission)
+          ? { state: 'ready' }
+          : { state: 'download', bytes: mission.row.bytes },
+      prepare: (mission, options) => worldLibrary.prepareMission(mission.row, options),
+      card: (mission) => downloadedEntry(mission)?.course ?? null,
+      progressState: (mission) => ({
+        state: completedKeys().has(downloadedEntry(mission) && keyOf(downloadedEntry(mission)))
+          ? 'completed'
+          : 'new',
+        bestStars: null,
+      }),
+      launch: (mission, { isCurrent }) => {
+        const entry = downloadedEntry(mission);
+        if (!entry)
+          throw new Error(
+            txt('This route is no longer installed.', 'Цей маршрут більше не встановлено.'),
+          );
+        return startFlight(entry, { isCurrent });
+      },
+    });
+    missionLibrary.register({
+      id: 'worlds:regions',
+      editionId: 'worlds:regions',
+      edition: 'FPV SIM · Maps',
+      collection: 'Custom',
+      entries: regions,
+      describe: (row) => ({
+        id: `${row.id}:${hashOf(row)}`,
+        campaignKey: row.familyKey,
+        campaignTitle: localized(row.familyTitle),
+        name: localized(row.title),
+        revision: hashOf(row),
+        levelIndex: regions.filter((other) => other.familyKey === row.familyKey).indexOf(row),
+        campaignLevelCount: regions.filter((other) => other.familyKey === row.familyKey).length,
+        modes: ['solo'],
+        tags: ['FPV', 'Practice'],
+        hook:
+          localized(row.description) ||
+          txt('Regional free flight · unscored', 'Вільний політ у регіоні · без заліку'),
+      }),
+      presentation: (row) => ({
+        name: localized(row.title),
+        campaignTitle: localized(row.familyTitle),
+        hook:
+          localized(row.description) ||
+          txt('Regional free flight · unscored', 'Вільний політ у регіоні · без заліку'),
+      }),
+      availability: (row) =>
+        regionalLibrary.isInstalled(row)
+          ? { state: 'ready' }
+          : row.pin
+            ? { state: 'download', bytes: row.bytes }
+            : {
+                state: 'unavailable',
+                reason: txt(
+                  'Saved scenery could not be verified. Open Content & Offline to manage this version.',
+                  'Не вдалося перевірити збережену місцевість. Відкрийте «Вміст і офлайн» для керування цією версією.',
+                ),
+              },
+      prepare: (row, options) => regionalLibrary.prepareMission(row, options),
+      card: () => null,
+      async launch(row, { isCurrent = () => true }) {
+        const generation = missionLaunchGeneration;
+        const { configuration, record } = await regionalLibrary.loadMission(row);
+        if (disposed || !isCurrent() || generation !== missionLaunchGeneration) return;
+        return startRegionalFlight(
+          regionalLibraryEntry(configuration, {
+            sha256: record.sha256,
+            descriptor: record.descriptor,
+          }),
+          {
+            canAdopt: isCurrent,
+            isCurrent: () => !disposed && !doc.hidden && generation === missionLaunchGeneration,
+          },
+        );
+      },
+    });
+    missionChooser?.refresh();
+  }
   on(restorePackInput, 'change', async (event) => {
     const file = event.target.files[0],
       required = restorePackIdentity;
@@ -4577,15 +4808,15 @@ export function mountWorldApp({
     pausing = false;
     if (current) {
       $('flight-status').textContent = current.regional
-        ? (regionalStopFeedback(flight?.snapshot()) || txt('Unscored · Paused', 'Без заліку · Пауза'))
+        ? regionalStopFeedback(flight?.snapshot()) || txt('Unscored · Paused', 'Без заліку · Пауза')
         : txt(
-        replayProof
-          ? 'Playback paused. Resume to continue.'
-          : 'Paused. Arm deliberately to continue.',
-        replayProof
-          ? 'Відтворення на паузі. Натисніть «Продовжити».'
-          : 'Пауза. Натисніть «Увімкнути», щоб продовжити.',
-      );
+            replayProof
+              ? 'Playback paused. Resume to continue.'
+              : 'Paused. Arm deliberately to continue.',
+            replayProof
+              ? 'Відтворення на паузі. Натисніть «Продовжити».'
+              : 'Пауза. Натисніть «Увімкнути», щоб продовжити.',
+          );
       if (!disposed) void saveRecovery().catch(reportError);
     }
   }
@@ -4815,14 +5046,25 @@ export function mountWorldApp({
   function regionalNavigationLabel() {
     if (!regionalNavigation) return '';
     if (regionalNavigation.kind === 'saved') return regionalNavigation.label;
-    return [...(regionalStartControls?.select.options ?? [])].find((option) => option.value === regionalNavigation.id)?.textContent.replace(/^\d+ · /, '') ?? regionalNavigation.id.replace(/-/g, ' ');
+    return (
+      [...(regionalStartControls?.select.options ?? [])]
+        .find((option) => option.value === regionalNavigation.id)
+        ?.textContent.replace(/^\d+ · /, '') ?? regionalNavigation.id.replace(/-/g, ' ')
+    );
   }
   function guideRegionalSelection(kind) {
     if (!current?.regional || regionalPreparing || flight?.snapshot().status !== 'paused') return;
     try {
-      regionalNavigation = regionalNavigationTarget(current, kind === 'saved'
-        ? { location: regionalLocationControls.locations.find((place) => place.id === regionalLocationControls.select.value) }
-        : { spawnId: regionalStartControls.select.value });
+      regionalNavigation = regionalNavigationTarget(
+        current,
+        kind === 'saved'
+          ? {
+              location: regionalLocationControls.locations.find(
+                (place) => place.id === regionalLocationControls.select.value,
+              ),
+            }
+          : { spawnId: regionalStartControls.select.value },
+      );
       updateHUD(flight.snapshot());
     } catch {
       regionalNavigation = null;
@@ -4833,24 +5075,38 @@ export function mountWorldApp({
     const feedback = regionalNavigationFeedback(current, regionalNavigation, state);
     if (!feedback) return null;
     const metres = feedback.horizontalMm / 1000,
-      distance = metres >= 1000 ? `${(metres / 1000).toFixed(1)} ${txt('km', 'км')}`
-        : `${metres < 1 ? '<1' : metres < 100 ? Math.round(metres) : Math.round(metres / 5) * 5} ${txt('m', 'м')}`,
-      arrow = feedback.sector === null ? '·' : ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'][feedback.sector],
-      direction = !feedback.headingValid ? txt('Heading unavailable', 'Курс невідомий')
-        : feedback.horizontalMm < 1000 ? txt('At this position', 'У цій позиції')
+      distance =
+        metres >= 1000
+          ? `${(metres / 1000).toFixed(1)} ${txt('km', 'км')}`
+          : `${metres < 1 ? '<1' : metres < 100 ? Math.round(metres) : Math.round(metres / 5) * 5} ${txt('m', 'м')}`,
+      arrow =
+        feedback.sector === null
+          ? '·'
+          : ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'][feedback.sector],
+      direction = !feedback.headingValid
+        ? txt('Heading unavailable', 'Курс невідомий')
+        : feedback.horizontalMm < 1000
+          ? txt('At this position', 'У цій позиції')
           : `${txt('Nose', 'Від носа')} ${arrow}`,
-      height = feedback.height === 'above' ? txt('Higher', 'Вище')
-        : feedback.height === 'below' ? txt('Lower', 'Нижче') : txt('Same height', 'Та сама висота');
+      height =
+        feedback.height === 'above'
+          ? txt('Higher', 'Вище')
+          : feedback.height === 'below'
+            ? txt('Lower', 'Нижче')
+            : txt('Same height', 'Та сама висота');
     return {
       action: `${direction} · ${distance}`,
       label: regionalNavigationLabel(),
       hint: `${height} · ${txt('no route', 'не маршрут')}`,
-      detail: txt('Direction from the drone nose, not the camera. A straight bearing does not check obstacles or provide a safe route.',
-        'Напрямок від носа дрона, а не камери. Прямий напрямок не перевіряє перешкоди та не є безпечним маршрутом.'),
+      detail: txt(
+        'Direction from the drone nose, not the camera. A straight bearing does not check obstacles or provide a safe route.',
+        'Напрямок від носа дрона, а не камери. Прямий напрямок не перевіряє перешкоди та не є безпечним маршрутом.',
+      ),
     };
   }
   function paintRegionalStarts(state = null) {
-    if (!current?.regional || regionalNavigation?.packIdentity !== current.packIdentity) regionalNavigation = null;
+    if (!current?.regional || regionalNavigation?.packIdentity !== current.packIdentity)
+      regionalNavigation = null;
     paintRegionalLocations(state);
     const controls = regionalStartControls;
     if (!controls) return;
@@ -4928,12 +5184,18 @@ export function mountWorldApp({
         confluence: ['Confluence', 'Злиття русел'],
         'hoodoo-flats': ['Hoodoo flats', 'Рівнина кам’яних стовпів'],
         amphitheatre: ['Amphitheatre', 'Амфітеатр'],
-        basin: ['Basin', 'Улоговина'], mesa: ['Mesa', 'Плато'],
-        gorge: ['Gorge', 'Ущелина'], buttes: ['Rock towers', 'Скельні вежі'],
-        fork: ['Fork junction', 'Розгалуження'], shelf: ['Rock shelf', 'Скельний уступ'],
+        basin: ['Basin', 'Улоговина'],
+        mesa: ['Mesa', 'Плато'],
+        gorge: ['Gorge', 'Ущелина'],
+        buttes: ['Rock towers', 'Скельні вежі'],
+        fork: ['Fork junction', 'Розгалуження'],
+        shelf: ['Rock shelf', 'Скельний уступ'],
       };
       for (const [index, spawn] of current.configuration.manifest.spawns.entries()) {
-        const option = el('option', `${index + 1} · ${names[spawn.id] ? txt(...names[spawn.id]) : spawn.id.replace(/-/g, ' ')}`);
+        const option = el(
+          'option',
+          `${index + 1} · ${names[spawn.id] ? txt(...names[spawn.id]) : spawn.id.replace(/-/g, ' ')}`,
+        );
         option.value = spawn.id;
         controls.select.append(option);
       }
@@ -4942,9 +5204,13 @@ export function mountWorldApp({
     }
     const active = (state ?? flight?.snapshot())?.status === 'active';
     controls.restart.disabled = controls.select.disabled = Boolean(controls.busy || active);
-    controls.guide.disabled = Boolean(controls.busy || regionalPreparing || (state ?? flight?.snapshot())?.status !== 'paused');
+    controls.guide.disabled = Boolean(
+      controls.busy || regionalPreparing || (state ?? flight?.snapshot())?.status !== 'paused',
+    );
     controls.off.disabled = !regionalNavigation;
-    const status = regionalNavigation ? `${txt('Guiding to', 'Напрямок до')}: ${regionalNavigationLabel()}` : txt('Direction guidance is off.', 'Показ напрямку вимкнено.');
+    const status = regionalNavigation
+      ? `${txt('Guiding to', 'Напрямок до')}: ${regionalNavigationLabel()}`
+      : txt('Direction guidance is off.', 'Показ напрямку вимкнено.');
     if (controls.status.textContent !== status) controls.status.textContent = status;
   }
   function paintRegionalAdvanced(state = null) {
@@ -4960,67 +5226,118 @@ export function mountWorldApp({
     controls.button.textContent = advanced
       ? txt('Use Legacy flight · restart', 'Політ Legacy · перезапустити')
       : txt('Try Advanced here · restart', 'Спробувати Advanced тут · перезапустити');
-    controls.button.disabled = Boolean(controls.busy || regionalPreparing || (!advanced && unavailable));
+    controls.button.disabled = Boolean(
+      controls.busy || regionalPreparing || (!advanced && unavailable),
+    );
     for (const control of [controls.exportRecording, controls.exportRecovery, controls.restore]) {
       control.hidden = !advanced;
-      control.disabled = Boolean(controls.busy || regionalPreparing || !flight?.snapshot().advanced || flight?.snapshot().reason === 'worker-error');
+      control.disabled = Boolean(
+        controls.busy ||
+          regionalPreparing ||
+          !flight?.snapshot().advanced ||
+          flight?.snapshot().reason === 'worker-error',
+      );
     }
-    controls.exportRecording.textContent = txt('Export Advanced recording', 'Експорт запису Advanced');
+    controls.exportRecording.textContent = txt(
+      'Export Advanced recording',
+      'Експорт запису Advanced',
+    );
     controls.exportRecovery.textContent = txt('Export recovery', 'Експорт відновлення');
     controls.restore.textContent = txt('Restore recovery file', 'Відновити з файлу');
-    controls.cancelRecovery.textContent = txt('Cancel recovery verification', 'Скасувати перевірку відновлення');
+    controls.cancelRecovery.textContent = txt(
+      'Cancel recovery verification',
+      'Скасувати перевірку відновлення',
+    );
     controls.cancelRecovery.hidden = !advanced || !controls.recovery;
-    controls.help.textContent = unavailable && !advanced
-      ? txt('Advanced is unavailable: this platform cannot start a simulation worker.', 'Advanced недоступний: платформа не підтримує окремий потік симуляції.')
-      : txt('Experimental Acro · unscored · air start 2 m above the selected point. Landings and collisions use the verified terrain. Uses portable rates, or Actual defaults for Legacy feel.',
-        'Експериментальний Acro · без заліку · старт у повітрі на 2 м вище вибраної точки. Посадки та зіткнення використовують перевірену геометрію місцевості. Використовуються переносні рейти або типові Actual для Legacy feel.');
+    controls.help.textContent =
+      unavailable && !advanced
+        ? txt(
+            'Advanced is unavailable: this platform cannot start a simulation worker.',
+            'Advanced недоступний: платформа не підтримує окремий потік симуляції.',
+          )
+        : txt(
+            'Experimental Acro · unscored · air start 2 m above the selected point. Landings and collisions use the verified terrain. Uses portable rates, or Actual defaults for Legacy feel.',
+            'Експериментальний Acro · без заліку · старт у повітрі на 2 м вище вибраної точки. Посадки та зіткнення використовують перевірену геометрію місцевості. Використовуються переносні рейти або типові Actual для Legacy feel.',
+          );
   }
   function regionalStopFeedback(state) {
     if (!current?.regional || !state || state.status === 'active') return '';
     if (regionalPreparationIssue && !regionalPreparing)
       return txt(regionalPreparationIssue.en, regionalPreparationIssue.uk);
     const messages = {
-      'region-edge': ['Region boundary reached. Restart to return to the launch point.', 'Межу регіону досягнуто. Перезапустіть, щоб повернутися до старту.'],
-      'worker-error': ['Advanced worker interrupted. Restart to fly again.', 'Потік Advanced перервано. Перезапустіть політ.'],
-      'terrain-error': ['Terrain could not be prepared. Retry to load the area again.', 'Не вдалося підготувати місцевість. Повторіть спробу, щоб знову завантажити ділянку.'],
-      'terrain-required': ['Terrain is not ready. Retry to load the area again.', 'Місцевість ще не готова. Повторіть спробу, щоб знову завантажити ділянку.'],
-      'preparing-terrain': ['Unscored · Loading area… Wait until the area is ready to resume.', 'Без заліку · Завантаження… Дочекайтеся готовності місцевості, щоб продовжити.'],
-      'duration-limit': ['Flight duration limit reached. Export your recording, then restart for a new flight.', 'Досягнуто межі тривалості польоту. Експортуйте запис і перезапустіть для нового польоту.'],
-      'recording-limit': ['Recording capacity reached. Export your recording, then restart for a new flight.', 'Досягнуто межі обсягу запису. Експортуйте запис і перезапустіть для нового польоту.'],
+      'region-edge': [
+        'Region boundary reached. Restart to return to the launch point.',
+        'Межу регіону досягнуто. Перезапустіть, щоб повернутися до старту.',
+      ],
+      'worker-error': [
+        'Advanced worker interrupted. Restart to fly again.',
+        'Потік Advanced перервано. Перезапустіть політ.',
+      ],
+      'terrain-error': [
+        'Terrain could not be prepared. Retry to load the area again.',
+        'Не вдалося підготувати місцевість. Повторіть спробу, щоб знову завантажити ділянку.',
+      ],
+      'terrain-required': [
+        'Terrain is not ready. Retry to load the area again.',
+        'Місцевість ще не готова. Повторіть спробу, щоб знову завантажити ділянку.',
+      ],
+      'preparing-terrain': [
+        'Unscored · Loading area… Wait until the area is ready to resume.',
+        'Без заліку · Завантаження… Дочекайтеся готовності місцевості, щоб продовжити.',
+      ],
+      'duration-limit': [
+        'Flight duration limit reached. Export your recording, then restart for a new flight.',
+        'Досягнуто межі тривалості польоту. Експортуйте запис і перезапустіть для нового польоту.',
+      ],
+      'recording-limit': [
+        'Recording capacity reached. Export your recording, then restart for a new flight.',
+        'Досягнуто межі обсягу запису. Експортуйте запис і перезапустіть для нового польоту.',
+      ],
     };
     const message = messages[state.reason];
     return message ? txt(...message) : '';
   }
   function savedLocationError(error) {
     if (error?.code === 'regional-location-outside' || error?.code === 'regional-location-revision')
-      return txt('This saved place is unavailable. Choose a clear starting point. The place is kept.',
-        'Це збережене місце недоступне. Виберіть вільне місце старту. Запис збережено.');
-    if (error?.code === 'generation-conflict') return txt(
-      'Saved places changed in another tab. Refresh and choose again.',
-      'Збережені місця змінилися в іншій вкладці. Оновіть і виберіть знову.',
+      return txt(
+        'This saved place is unavailable. Choose a clear starting point. The place is kept.',
+        'Це збережене місце недоступне. Виберіть вільне місце старту. Запис збережено.',
+      );
+    if (error?.code === 'generation-conflict')
+      return txt(
+        'Saved places changed in another tab. Refresh and choose again.',
+        'Збережені місця змінилися в іншій вкладці. Оновіть і виберіть знову.',
+      );
+    if (error?.code === 'regional-location-full')
+      return txt(
+        'Saved places are full. Remove a place you no longer need.',
+        'Сховище місць заповнене. Видаліть місце, яке більше не потрібне.',
+      );
+    if (error?.code === 'regional-location-label')
+      return txt('Enter a name of 1–64 characters.', 'Введіть назву від 1 до 64 символів.');
+    return txt(
+      'Saved places are unavailable. Existing places are retained.',
+      'Збережені місця недоступні. Наявні місця збережено.',
     );
-    if (error?.code === 'regional-location-full') return txt(
-      'Saved places are full. Remove a place you no longer need.',
-      'Сховище місць заповнене. Видаліть місце, яке більше не потрібне.',
-    );
-    if (error?.code === 'regional-location-label') return txt(
-      'Enter a name of 1–64 characters.', 'Введіть назву від 1 до 64 символів.',
-    );
-    return txt('Saved places are unavailable. Existing places are retained.',
-      'Збережені місця недоступні. Наявні місця збережено.');
   }
   function regionalPlacesHelp() {
     return regionalLocationControls?.restoreUnavailable
-      ? txt('This saved place cannot be verified. Choose a clear starting point above. The place is kept.',
-        'Це збережене місце неможливо перевірити. Виберіть вільне місце старту вище. Запис збережено.')
-      : txt('Places belong to this world version. Restore levelled and disarmed; mode and view stay the same.',
-        'Місця належать цій версії світу. Відновлення вирівнює й не озброює дрон; режим і вигляд зберігаються.');
+      ? txt(
+          'This saved place cannot be verified. Choose a clear starting point above. The place is kept.',
+          'Це збережене місце неможливо перевірити. Виберіть вільне місце старту вище. Запис збережено.',
+        )
+      : txt(
+          'Places belong to this world version. Restore levelled and disarmed; mode and view stay the same.',
+          'Місця належать цій версії світу. Відновлення вирівнює й не озброює дрон; режим і вигляд зберігаються.',
+        );
   }
   function locationStore() {
-    regionalLocationsStore ??= openRegionalLocations({ indexedDB: win.indexedDB }).catch((error) => {
-      regionalLocationsStore = null;
-      throw error;
-    });
+    regionalLocationsStore ??= openRegionalLocations({ indexedDB: win.indexedDB }).catch(
+      (error) => {
+        regionalLocationsStore = null;
+        throw error;
+      },
+    );
     return regionalLocationsStore;
   }
   async function refreshRegionalLocations(owner = current) {
@@ -5042,7 +5359,11 @@ export function mountWorldApp({
         controls.select.append(option);
       }
       if (saved.locations.some((place) => place.id === selected)) controls.select.value = selected;
-      if (!controls.label.value) controls.label.value = txt(`Place ${saved.locations.length + 1}`, `Місце ${saved.locations.length + 1}`);
+      if (!controls.label.value)
+        controls.label.value = txt(
+          `Place ${saved.locations.length + 1}`,
+          `Місце ${saved.locations.length + 1}`,
+        );
       controls.help.textContent = regionalPlacesHelp();
     } catch (error) {
       if (current === owner && request === controls.request) {
@@ -5060,7 +5381,11 @@ export function mountWorldApp({
     const c = regionalLocationControls;
     if (!c) return;
     c.root.hidden = !current?.regional || current.regionalReview;
-    if (c.root.hidden) { if (c.owner) c.request++; c.owner = null; return; }
+    if (c.root.hidden) {
+      if (c.owner) c.request++;
+      c.owner = null;
+      return;
+    }
     if (c.owner !== current) {
       c.owner = current;
       c.generation = null;
@@ -5088,68 +5413,133 @@ export function mountWorldApp({
       if (changedLocale && c.generation !== null) c.help.textContent = regionalPlacesHelp();
     }
     const paused = (state ?? flight?.snapshot())?.status === 'paused';
-    const unavailable = c.busy || c.loading || !paused || regionalPreparing || c.generation === null;
+    const unavailable =
+      c.busy || c.loading || !paused || regionalPreparing || c.generation === null;
     c.save.disabled = c.label.disabled = Boolean(unavailable || !sceneReady);
-    c.guide.disabled = c.restore.disabled = c.select.disabled = c.remove.disabled = Boolean(unavailable || !c.locations.length);
+    c.guide.disabled =
+      c.restore.disabled =
+      c.select.disabled =
+      c.remove.disabled =
+        Boolean(unavailable || !c.locations.length);
     c.confirm.disabled = Boolean(unavailable);
     c.refresh.disabled = Boolean(c.busy || c.loading);
   }
   async function saveRegionalLocation() {
-    const c = regionalLocationControls, owner = current, selected = flight;
-    if (!c || c.save.disabled || c.owner !== owner || !sceneReady || selected?.snapshot().status !== 'paused') return;
+    const c = regionalLocationControls,
+      owner = current,
+      selected = flight;
+    if (
+      !c ||
+      c.save.disabled ||
+      c.owner !== owner ||
+      !sceneReady ||
+      selected?.snapshot().status !== 'paused'
+    )
+      return;
     const state = selected.snapshot();
     c.busy = true;
     paintRegionalLocations(state);
     try {
-      const pose = validateRegionalLocationStart({ position: state.position,
-        heading: ((state.attitude.yaw % 36000) + 36000) % 36000 }, owner.configuration.manifest);
+      const pose = validateRegionalLocationStart(
+        { position: state.position, heading: ((state.attitude.yaw % 36000) + 36000) % 36000 },
+        owner.configuration.manifest,
+      );
       const store = await locationStore();
-      if (disposed || current !== owner || flight !== selected || selected.snapshot().status !== 'paused') return;
-      const saved = await store.add(regionalLocationIdentity(owner), { label: c.label.value, pose },
-        { expectedGeneration: c.generation });
+      if (
+        disposed ||
+        current !== owner ||
+        flight !== selected ||
+        selected.snapshot().status !== 'paused'
+      )
+        return;
+      const saved = await store.add(
+        regionalLocationIdentity(owner),
+        { label: c.label.value, pose },
+        { expectedGeneration: c.generation },
+      );
       if (current === owner) {
         c.label.value = '';
         await refreshRegionalLocations(owner);
         if (current === owner) {
           c.select.value = saved.location.id;
-          c.help.textContent = txt('Place saved on this device.', 'Місце збережено на цьому пристрої.');
+          c.help.textContent = txt(
+            'Place saved on this device.',
+            'Місце збережено на цьому пристрої.',
+          );
         }
       }
-    } catch (error) { if (current === owner) c.help.textContent = savedLocationError(error); }
-    finally { c.busy = false; paintRegionalLocations(); }
+    } catch (error) {
+      if (current === owner) c.help.textContent = savedLocationError(error);
+    } finally {
+      c.busy = false;
+      paintRegionalLocations();
+    }
   }
   async function restoreRegionalLocation() {
-    const c = regionalLocationControls, owner = current;
-    if (!c || c.restore.disabled || c.owner !== owner || flight?.snapshot().status !== 'paused') return;
-    const selectedId = c.select.value, expected = c.generation, launchGeneration = missionLaunchGeneration,
-      selectedFlight = flight, selectedToken = flightToken;
+    const c = regionalLocationControls,
+      owner = current;
+    if (!c || c.restore.disabled || c.owner !== owner || flight?.snapshot().status !== 'paused')
+      return;
+    const selectedId = c.select.value,
+      expected = c.generation,
+      launchGeneration = missionLaunchGeneration,
+      selectedFlight = flight,
+      selectedToken = flightToken;
     c.busy = true;
     paintRegionalLocations();
     try {
       const saved = await (await locationStore()).list(regionalLocationIdentity(owner));
-      if (disposed || current !== owner || doc.hidden || launchGeneration !== missionLaunchGeneration ||
-          selectedFlight !== flight || selectedToken !== flightToken || flight?.snapshot().status !== 'paused') return;
-      if (saved.generation !== expected) throw Object.assign(new Error('Changed saved places'), { code: 'generation-conflict' });
-      const entry = regionalSavedLocation(owner, saved.locations.find((place) => place.id === selectedId));
+      if (
+        disposed ||
+        current !== owner ||
+        doc.hidden ||
+        launchGeneration !== missionLaunchGeneration ||
+        selectedFlight !== flight ||
+        selectedToken !== flightToken ||
+        flight?.snapshot().status !== 'paused'
+      )
+        return;
+      if (saved.generation !== expected)
+        throw Object.assign(new Error('Changed saved places'), { code: 'generation-conflict' });
+      const entry = regionalSavedLocation(
+        owner,
+        saved.locations.find((place) => place.id === selectedId),
+      );
       const generation = ++missionLaunchGeneration;
       await startRegionalFlight(entry, {
-        mode: $('flight-mode').value, lessonCamera: $('flight-camera').value,
+        mode: $('flight-mode').value,
+        lessonCamera: $('flight-camera').value,
         isCurrent: () => !doc.hidden && generation === missionLaunchGeneration,
       });
-    } catch (error) { if (current === owner) c.help.textContent = savedLocationError(error); }
-    finally { c.busy = false; paintRegionalLocations(); }
+    } catch (error) {
+      if (current === owner) c.help.textContent = savedLocationError(error);
+    } finally {
+      c.busy = false;
+      paintRegionalLocations();
+    }
   }
   async function removeRegionalLocation() {
-    const c = regionalLocationControls, owner = current, review = c.removal;
+    const c = regionalLocationControls,
+      owner = current,
+      review = c.removal;
     if (!c || c.confirm.disabled || c.owner !== owner || !review || c.review.hidden) return;
     c.busy = true;
     paintRegionalLocations();
     try {
-      await (await locationStore()).remove(regionalLocationIdentity(owner), review.id,
-        { expectedGeneration: review.generation });
+      await (
+        await locationStore()
+      ).remove(regionalLocationIdentity(owner), review.id, {
+        expectedGeneration: review.generation,
+      });
       if (current === owner) await refreshRegionalLocations(owner);
-    } catch (error) { if (current === owner) c.help.textContent = savedLocationError(error); }
-    finally { c.busy = false; c.review.hidden = true; c.removal = null; paintRegionalLocations(); }
+    } catch (error) {
+      if (current === owner) c.help.textContent = savedLocationError(error);
+    } finally {
+      c.busy = false;
+      c.review.hidden = true;
+      c.removal = null;
+      paintRegionalLocations();
+    }
   }
   async function restartRegionalAtSelection() {
     const controls = regionalStartControls;
@@ -5207,15 +5597,22 @@ export function mountWorldApp({
           : state.status === 'active'
             ? 'playing'
             : state.status,
-      pauseOpensMenu: Boolean(current?.regional),
+      pauseOpensMenu: Boolean(
+        current?.regional && state.status !== 'active' && state.reason !== 'prepared',
+      ),
       navigationContext,
       missionName: $('flight-title').textContent,
       summary: $('flight-menu-brief').textContent,
-      canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status) &&
+      canResume:
+        !playbackEnded &&
+        ['paused', 'disarmed'].includes(state.status) &&
         (!current.regional || state.reason === 'prepared'),
-      pauseResumeDisabled: Boolean(current.regional &&
-        (!sceneReady || (current.regionalAdvanced && regionalAdvancedControls?.busy) ||
-          (state.reason !== 'prepared' && state.status !== 'active'))),
+      pauseResumeDisabled: Boolean(
+        current.regional &&
+          (!sceneReady ||
+            (current.regionalAdvanced && regionalAdvancedControls?.busy) ||
+            (state.reason !== 'prepared' && state.status !== 'active')),
+      ),
       resumeUnavailableReason,
       muted: !audio.enabled(),
     });
@@ -5233,7 +5630,8 @@ export function mountWorldApp({
     });
     const navigation = current.regional ? navigationPresentation(state) : null;
     if (current.regional) {
-      guidance.action = navigation?.action ?? txt('Regional review · unscored', 'Перевірка регіону · без заліку');
+      guidance.action =
+        navigation?.action ?? txt('Regional review · unscored', 'Перевірка регіону · без заліку');
       guidance.label = '';
       guidance.gauge = null;
       guidance.earned = null;
@@ -5257,11 +5655,8 @@ export function mountWorldApp({
     const activeHud = hudVisible && state.status === 'active';
     // Ready and paused regional flight keep the same unobstructed viewport.
     // This is presentation state only; arming and HUD progress remain unchanged.
-    $('flight-dialog').dataset.simFlightCompact = String(
-      Boolean(current.regional && hudVisible),
-    );
-    $('world-viewport').dataset.simFlightCompact =
-      $('flight-dialog').dataset.simFlightCompact;
+    $('flight-dialog').dataset.simFlightCompact = String(Boolean(current.regional && hudVisible));
+    $('world-viewport').dataset.simFlightCompact = $('flight-dialog').dataset.simFlightCompact;
     $('flight-dialog').dataset.simHudActive = String(activeHud);
     $('world-viewport').dataset.simHudActive = String(activeHud);
     $('world-viewport').dataset.simHudGuide = String(beginnerCoach.blocksArm());
@@ -5404,7 +5799,11 @@ export function mountWorldApp({
             'Запис виконання, медаль і запис польоту не збережено.',
           ),
         ),
-        button(txt('Practise again', 'Тренуватися ще раз'), () => startFlight(current, retainedDraftOptions()), 'primary'),
+        button(
+          txt('Practise again', 'Тренуватися ще раз'),
+          () => startFlight(current, retainedDraftOptions()),
+          'primary',
+        ),
         button(txt('Back to lobby', 'До меню'), () => closeFlight()),
       );
       $('flight-status').textContent = current.freeFlight
@@ -6055,8 +6454,12 @@ export function mountWorldApp({
         const before = flight.snapshot().ticks;
         const selectedFlight = flight;
         const inputSource = replayProof ? 'recording' : $('flight-source').value;
-        const sampledDiagnostics = inputSource === 'radio' ? radio.diagnostics({ refresh: false })
-          : inputSource === 'controller' ? gamepad.diagnostics() : input.diagnostics();
+        const sampledDiagnostics =
+          inputSource === 'radio'
+            ? radio.diagnostics({ refresh: false })
+            : inputSource === 'controller'
+              ? gamepad.diagnostics()
+              : input.diagnostics();
         const result = flight.step(
           current.legacy
             ? controls
@@ -6119,7 +6522,8 @@ export function mountWorldApp({
           break;
         }
         if (flight.snapshot().ticks > before) {
-          if (!replayProof) inputDiagnostics.record(flight, inputSource, controls, sampledDiagnostics);
+          if (!replayProof)
+            inputDiagnostics.record(flight, inputSource, controls, sampledDiagnostics);
           renderer?.observePresentation?.(flight.snapshot());
           audio.update(flight.snapshot(), {
             active: !replayProof && flight.snapshot().status === 'active',
@@ -6281,18 +6685,16 @@ export function mountWorldApp({
         const abort = () => reject(preparationDeadline.signal.reason);
         preparationDeadline.signal.addEventListener('abort', abort, { once: true });
         if (preparationDeadline.signal.aborted) abort();
-        Promise.resolve(promise).then(resolve, reject).finally(() =>
-          preparationDeadline.signal.removeEventListener('abort', abort));
+        Promise.resolve(promise)
+          .then(resolve, reject)
+          .finally(() => preparationDeadline.signal.removeEventListener('abort', abort));
       });
     const timeout = win.setTimeout(() => {
       timedOut = true;
       preparationDeadline.abort(new DOMException('Regional preparation timed out', 'TimeoutError'));
       if (owns()) selected.cancelPreparation();
     }, 30000);
-    $('flight-status').textContent = txt(
-      'Unscored · Loading area…',
-      'Без заліку · Завантаження…',
-    );
+    $('flight-status').textContent = txt('Unscored · Loading area…', 'Без заліку · Завантаження…');
     const owns = () => !disposed && flight === selected && token === flightToken;
     const operation = (async () => {
       try {
@@ -6323,11 +6725,17 @@ export function mountWorldApp({
             savedStart: Boolean(current.configuration.savedStart),
             contextLost: renderer.resources?.().renderer?.contextLost === true,
           });
-          if (regionalPreparationIssue.restoreUnavailable && regionalLocationControls?.owner === current) {
+          if (
+            regionalPreparationIssue.restoreUnavailable &&
+            regionalLocationControls?.owner === current
+          ) {
             regionalLocationControls.restoreUnavailable = true;
             regionalLocationControls.help.textContent = regionalPlacesHelp();
           }
-          $('flight-status').textContent = txt(regionalPreparationIssue.en, regionalPreparationIssue.uk);
+          $('flight-status').textContent = txt(
+            regionalPreparationIssue.en,
+            regionalPreparationIssue.uk,
+          );
         }
       } finally {
         win.clearTimeout(timeout);
@@ -6345,8 +6753,7 @@ export function mountWorldApp({
       activeTuningDraft = null;
     }
     const token = ++flightToken;
-    const ownsLaunch = () =>
-      !disposed && token === flightToken && options.isCurrent?.() !== false;
+    const ownsLaunch = () => !disposed && token === flightToken && options.isCurrent?.() !== false;
     const canAdopt = () => ownsLaunch() && options.canAdopt?.() !== false;
     industrialPreparation?.abort();
     checkpointPreparation?.abort();
@@ -6359,21 +6766,25 @@ export function mountWorldApp({
     // Validate paired sources before releasing a usable previous flight.
     tuningStore.refresh();
     const baselineConfiguration = options.tuningDraft ?? tuningStore.effective();
-    const tuningConfiguration = baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
-      ? prepareAircraftChallenge(baselineConfiguration, options.challenge)
-      : baselineConfiguration;
+    const tuningConfiguration =
+      baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
+        ? prepareAircraftChallenge(baselineConfiguration, options.challenge)
+        : baselineConfiguration;
     const physicalAircraft =
       tuningConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
     const regionalAdvanced = Boolean(entry.regionalAdvanced || physicalAircraft);
     if (physicalAircraft) entry = { ...entry, regionalAdvanced: true };
     if (regionalAdvanced && typeof win.Worker !== 'function')
-      throw new Error(txt('Advanced is unavailable on this platform.', 'Advanced недоступний на цій платформі.'));
+      throw new Error(
+        txt('Advanced is unavailable on this platform.', 'Advanced недоступний на цій платформі.'),
+      );
     if (regionalAdvanced) {
-      regionalNativeLifecycle ??= onNativeInactive(() => pauseFlight(true, 'focus-lost'), { locationRef: win.location })
-        .then((remove) => {
-          if (disposed) return Promise.resolve(remove());
-          removeRegionalNativeInactive = remove;
-        });
+      regionalNativeLifecycle ??= onNativeInactive(() => pauseFlight(true, 'focus-lost'), {
+        locationRef: win.location,
+      }).then((remove) => {
+        if (disposed) return Promise.resolve(remove());
+        removeRegionalNativeInactive = remove;
+      });
       await regionalNativeLifecycle;
       if (!canAdopt()) return;
     }
@@ -6388,7 +6799,9 @@ export function mountWorldApp({
       mode:
         regionalAdvanced && !physicalAircraft ? 'acro' : (options.mode ?? $('flight-mode').value),
       response,
-      ...(regionalAdvanced ? { advanced: tuningConfiguration.advanced, rateProfile: response.rates } : {}),
+      ...(regionalAdvanced
+        ? { advanced: tuningConfiguration.advanced, rateProfile: response.rates }
+        : {}),
       ...(tuningConfiguration.challenge ? { challenge: tuningConfiguration.challenge } : {}),
       prepareFrame: async (group, options) => {
         if (flight === nextFlight) regionalPreparationStage = 'graphics';
@@ -6398,10 +6811,11 @@ export function mountWorldApp({
     };
     let nextFlight = regionalAdvanced
       ? createAdvancedRegionalSession(sessionConfiguration, {
-          createClient: () => createAdvancedWorkerClient({
-            Worker: win.Worker,
-            url: new URL('../fpv-worlds/advanced-worker.mjs', import.meta.url),
-          }),
+          createClient: () =>
+            createAdvancedWorkerClient({
+              Worker: win.Worker,
+              url: new URL('../fpv-worlds/advanced-worker.mjs', import.meta.url),
+            }),
         })
       : createRegionalSession(sessionConfiguration);
     if (physicalAircraft)
@@ -6460,10 +6874,18 @@ export function mountWorldApp({
     accumulator = 0;
     $('flight-title').textContent = label(entry);
     $('flight-collection').textContent = regionalAdvanced
-      ? txt('REGIONAL ADVANCED · EXPERIMENTAL · UNSCORED', 'РЕГІОН ADVANCED · ЕКСПЕРИМЕНТАЛЬНИЙ · БЕЗ ЗАЛІКУ')
+      ? txt(
+          'REGIONAL ADVANCED · EXPERIMENTAL · UNSCORED',
+          'РЕГІОН ADVANCED · ЕКСПЕРИМЕНТАЛЬНИЙ · БЕЗ ЗАЛІКУ',
+        )
       : entry.regionalReview
-      ? txt('REGIONAL REVIEW · UNSCORED', 'ПЕРЕВІРКА РЕГІОНУ · БЕЗ ЗАЛІКУ')
-      : [txt('REGIONAL FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ У РЕГІОНІ · БЕЗ ЗАЛІКУ'), entry.installedRevision].filter(Boolean).join(' · ');
+        ? txt('REGIONAL REVIEW · UNSCORED', 'ПЕРЕВІРКА РЕГІОНУ · БЕЗ ЗАЛІКУ')
+        : [
+            txt('REGIONAL FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ У РЕГІОНІ · БЕЗ ЗАЛІКУ'),
+            entry.installedRevision,
+          ]
+            .filter(Boolean)
+            .join(' · ');
     $('flight-brief').textContent = $('flight-menu-brief').textContent =
       entry.course.locales[locale].brief;
     $('flight-status').textContent = txt('Preparing region…', 'Підготовка регіону…');
@@ -6912,9 +7334,10 @@ export function mountWorldApp({
     } else {
       tuningStore.refresh();
       const baselineConfiguration = options.tuningDraft ?? tuningStore.effective();
-      const tuningConfiguration = !replayProof && baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
-        ? prepareAircraftChallenge(baselineConfiguration, options.challenge)
-        : baselineConfiguration;
+      const tuningConfiguration =
+        !replayProof && baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
+          ? prepareAircraftChallenge(baselineConfiguration, options.challenge)
+          : baselineConfiguration;
       const physicalAircraft =
         !replayProof && tuningConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
       if ((!learning || physicalAircraft) && !replayProof) {
@@ -7709,7 +8132,9 @@ export function mountWorldApp({
       (current?.regionalAdvanced && regionalAdvancedControls?.busy) ||
       ghostLookup ||
       !flight ||
-      (current?.regional && flight.snapshot().reason !== 'prepared' && flight.snapshot().status !== 'active') ||
+      (current?.regional &&
+        flight.snapshot().reason !== 'prepared' &&
+        flight.snapshot().status !== 'active') ||
       terminal(flight.snapshot()) ||
       (replayProof && finished)
     )
@@ -7783,7 +8208,15 @@ export function mountWorldApp({
     if (disposed) return null;
     // Keep flight keys in the reference arena and radio samples in the rate preview.
     if (advancedPractice) return null;
-    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: tuning.captureActive(), blockDevices: tuning.captureActive(), captureControllerIndex: gamepad.status().index, onCaptureBack: () => tuning.releaseCapture() };
+    if (tuning?.root.open)
+      return {
+        root: tuning.root,
+        key: 'fpv-tuning',
+        blockRadio: tuning.captureActive(),
+        blockDevices: tuning.captureActive(),
+        captureControllerIndex: gamepad.status().index,
+        onCaptureBack: () => tuning.releaseCapture(),
+      };
     const globalToolRoot = globalTools?.root();
     if (globalToolRoot)
       return {
@@ -8002,7 +8435,7 @@ export function mountWorldApp({
     if (action === 'practice' || (action === 'try' && checkpointSession)) {
       if (!selected.section && !selected.fullPractice) return;
       const proof = selected.section
-        ? checkpointRequest?.proof ?? replayProof ?? demonstrationFor(entry, selected.mode)
+        ? (checkpointRequest?.proof ?? replayProof ?? demonstrationFor(entry, selected.mode))
         : null;
       options.checkpoint = {
         mode: selected.mode,
@@ -8363,7 +8796,12 @@ export function mountWorldApp({
     radioSetup = null;
     $('world-radio-dialog').close();
     pauseFlight();
-    if (tuningCalibrationReturn) {const done=tuningCalibrationReturn; tuningCalibrationReturn=null; done(); return;}
+    if (tuningCalibrationReturn) {
+      const done = tuningCalibrationReturn;
+      tuningCalibrationReturn = null;
+      done();
+      return;
+    }
     if (playShell?.elements.dialogs.pause.open)
       playShell.elements.content.pause.querySelector('[data-flight-setup="radio"]')?.focus();
     else if ($('sim-settings').open) $('radio-setup-button').focus();
@@ -8445,13 +8883,14 @@ export function mountWorldApp({
     playShell.open('missions');
   };
   missionLibrary = createSimMissionLibrary();
+  syncDownloadMissions();
+  void regionalLibrary.refreshMissions().catch(() => {});
   const missionTools = el('div', undefined, 'dialog-actions');
   const selectedTools = el('div', undefined, 'dialog-actions');
   const worldCatalogueHost = el('section', undefined, 'world-catalogue-host');
-  const randomMission = button(txt('Random flight', 'Випадковий політ'), async () => {
-    missionChooser.close();
-    await startRandomFlight();
-  });
+  const randomMission = button(txt('Random flight', 'Випадковий політ'), () =>
+    missionChooser.playRandom(),
+  );
   randomMission.dataset.randomFlight = 'catalogue';
   missionTools.append(randomMission);
   for (const [tab, en, uk] of [
@@ -8471,6 +8910,11 @@ export function mountWorldApp({
     document: doc,
     library: missionLibrary,
     supportedModes: ['solo'],
+    randomDownloadable: true,
+    randomFilter: (row) =>
+      includesRandomLevel(
+        row.ownerId === 'worlds:builtin' && learningMissionKeys.has(row.runtimeId),
+      ),
     browsingContext: ({ label }) => `${navigationContext()} · ${label}`,
     description: () =>
       txt(
@@ -8486,8 +8930,23 @@ export function mountWorldApp({
     },
     goalPreferenceOptions: { editionId: 'sim-worlds', getStorage: () => storage },
     onPause: pauseFlight,
-    getCurrentId: () =>
-      current && missionLibrary.missions.find((row) => row.runtimeId === keyOf(current))?.id,
+    getCurrentId: () => {
+      // Leaving a flight clears current; Random still avoids its last catalogue level.
+      const entry = current ?? catalogue.find((row) => keyOf(row) === lastCatalogueFlightKey);
+      return (
+        entry &&
+        missionLibrary.missions.find(
+          (row) =>
+            row.runtimeId === keyOf(entry) ||
+            (entry.regional &&
+              row.ownerId === 'worlds:regions' &&
+              row.runtimeId === `${entry.course.id}:${entry.packIdentity.slice(19)}`) ||
+            (row.ownerId === 'worlds:downloads' &&
+              row.runtimeId ===
+                `${entry.packIdentity.slice(9)}:${revisions.find((pack) => `fpv-pack:${pack.sha256}` === entry.packIdentity)?.project.courses.findIndex((course) => course.id === entry.id)}`),
+        )?.id
+      );
+    },
     readState: () => {
       try {
         return JSON.parse(storage?.getItem('revealline.sim.worlds.mission-browser.v1') ?? 'null');
@@ -8503,6 +8962,7 @@ export function mountWorldApp({
       }
     },
     renderPreview({ container, diagram: course, document }) {
+      if (!course) return;
       const svg = routeThumbnail(document, course, {
         ...appearanceControls.resolve().appearance,
         flightMode: $('flight-mode').value,
@@ -8512,7 +8972,14 @@ export function mountWorldApp({
     },
     onSelection(row) {
       selectedTools.replaceChildren();
-      const entry = catalogue.find((entry) => keyOf(entry) === row?.runtimeId);
+      const downloaded =
+        row?.ownerId === 'worlds:downloads' &&
+        worldLibrary
+          .missions()
+          .find((mission) => `${mission.row.sha256}:${mission.index}` === row.runtimeId);
+      const entry = downloaded
+        ? downloadedEntry(downloaded)
+        : catalogue.find((entry) => keyOf(entry) === row?.runtimeId);
       if (!entry) return;
       const tool = (text, action) =>
         button(text, (...args) => {
@@ -8583,6 +9050,34 @@ export function mountWorldApp({
         }),
       );
     },
+  });
+  const randomLevelsField = el('label', undefined, 'sim-random-levels');
+  const randomLevelsCaption = el('span');
+  const randomLevelsSelect = el('select');
+  randomLevelsSelect.id = 'world-random-levels';
+  const randomAutomatic = el('option'),
+    randomMixed = el('option');
+  randomAutomatic.value = 'auto';
+  randomMixed.value = 'mixed';
+  randomLevelsSelect.append(randomAutomatic, randomMixed);
+  randomLevelsField.append(randomLevelsCaption, randomLevelsSelect);
+  randomLevelControl = {
+    label: randomLevelsCaption,
+    select: randomLevelsSelect,
+    automatic: randomAutomatic,
+    mixed: randomMixed,
+  };
+  paintRandomLevels();
+  missionChooser.elements.footer.querySelector('#journey-random-level').before(randomLevelsField);
+  on(randomLevelsSelect, 'change', () => {
+    randomLevelChoice = randomLevelsSelect.value === 'mixed' ? 'mixed' : 'auto';
+    try {
+      storage?.setItem(randomLevelsKey, randomLevelChoice);
+    } catch {
+      /* Keep this session's choice. */
+    }
+    paintRandomLevels();
+    missionChooser.refresh();
   });
   // Keep both catalogues inside the chooser's one allocated scrolling row.
   // An unassigned grid child would create an implicit row beneath the action dock.
@@ -8655,18 +9150,15 @@ export function mountWorldApp({
       start: () => $('hero-fly').click(),
       continue: resumeFromShell,
       resume: resumeFromShell,
-      pauseFocus: () => playShell.elements.content.pause.querySelector('[data-practice-action="retry"]'),
+      pauseFocus: () =>
+        playShell.elements.content.pause.querySelector('[data-practice-action="retry"]'),
       retry: () => (current ? void retryFlight().catch(reportError) : $('hero-fly').click()),
       skip: () => {
         const index = Math.max(0, catalogue.indexOf(current));
         const entry = catalogue[(index + 1) % catalogue.length];
         if (entry) void startFlight(entry).catch(reportError);
       },
-      random: () => {
-        const choices = catalogue.filter((entry) => entry !== current);
-        const entry = choices[Math.floor(Math.random() * choices.length)] ?? current;
-        if (entry) void startFlight(entry).catch(reportError);
-      },
+      random: () => void startRandomFlight().catch(reportError),
       fullscreen: () => void immersive.toggle(),
       toggleSound: () => soundButton.click(),
       canResume: () =>
@@ -8785,20 +9277,37 @@ export function mountWorldApp({
   regionalPerformanceRestart.type = 'button';
   regionalRecoveryRoot.append(regionalRecoveryMessage, regionalPerformanceRestart);
   playShell.elements.content.pause.prepend(regionalRecoveryRoot);
-  regionalRecoveryControls = { root: regionalRecoveryRoot, message: regionalRecoveryMessage,
-    restart: regionalPerformanceRestart, busy: false };
+  regionalRecoveryControls = {
+    root: regionalRecoveryRoot,
+    message: regionalRecoveryMessage,
+    restart: regionalPerformanceRestart,
+    busy: false,
+  };
   on(regionalPerformanceRestart, 'click', async () => {
-    if (!current?.regional || regionalPreparing || regionalPerformanceRestart.disabled ||
-        !['graphics-timeout', 'graphics-failed'].includes(regionalPreparationIssue?.kind)) return;
+    if (
+      !current?.regional ||
+      regionalPreparing ||
+      regionalPerformanceRestart.disabled ||
+      !['graphics-timeout', 'graphics-failed'].includes(regionalPreparationIssue?.kind)
+    )
+      return;
     regionalRecoveryControls.busy = true;
     paintRegionalPreparation();
     $('flight-quality').value = 'low';
     savePreferences();
     try {
-      await startRegionalFlight(current, { ...retainedDraftOptions(), mode: $('flight-mode').value,
-        lessonCamera: $('flight-camera').value, paused: true });
-    } catch (error) { reportError(error); }
-    finally { regionalRecoveryControls.busy = false; paintRegionalPreparation(); }
+      await startRegionalFlight(current, {
+        ...retainedDraftOptions(),
+        mode: $('flight-mode').value,
+        lessonCamera: $('flight-camera').value,
+        paused: true,
+      });
+    } catch (error) {
+      reportError(error);
+    } finally {
+      regionalRecoveryControls.busy = false;
+      paintRegionalPreparation();
+    }
   });
 
   const extraTools = el('details', undefined, 'mission-library-setup');
@@ -8857,12 +9366,20 @@ export function mountWorldApp({
   regionalStartLabel.htmlFor = regionalStartSelect.id;
   regionalStartHelp.id = 'regional-starting-point-help';
   regionalStartSelect.setAttribute('aria-describedby', regionalStartHelp.id);
-  for (const button of [regionalStartRestart, regionalStartGuide, regionalNavigationOff]) button.type = 'button';
+  for (const button of [regionalStartRestart, regionalStartGuide, regionalNavigationOff])
+    button.type = 'button';
   regionalStartGuide.dataset.regionalGuide = 'start';
   regionalNavigationOff.dataset.regionalGuide = 'off';
   regionalNavigationStatus.setAttribute('role', 'status');
   regionalStartLabel.append(regionalStartText, regionalStartSelect);
-  regionalStartRoot.append(regionalStartLabel, regionalStartGuide, regionalStartRestart, regionalNavigationOff, regionalNavigationStatus, regionalStartHelp);
+  regionalStartRoot.append(
+    regionalStartLabel,
+    regionalStartGuide,
+    regionalStartRestart,
+    regionalNavigationOff,
+    regionalNavigationStatus,
+    regionalStartHelp,
+  );
   regionalStartControls = {
     root: regionalStartRoot,
     label: regionalStartText,
@@ -8878,7 +9395,10 @@ export function mountWorldApp({
   };
   on(regionalStartRestart, 'click', restartRegionalAtSelection);
   on(regionalStartGuide, 'click', () => guideRegionalSelection('start'));
-  on(regionalNavigationOff, 'click', () => { regionalNavigation = null; if (flight) updateHUD(flight.snapshot()); });
+  on(regionalNavigationOff, 'click', () => {
+    regionalNavigation = null;
+    if (flight) updateHUD(flight.snapshot());
+  });
   playShell.elements.content.pause.querySelector('.sim-flight-practice').append(regionalStartRoot);
   const regionalAdvancedRoot = el('section'),
     regionalAdvancedButton = el('button'),
@@ -8894,23 +9414,53 @@ export function mountWorldApp({
   regionalAdvancedButton.dataset.regionalAdvanced = 'toggle';
   regionalAdvancedHelp.id = 'regional-advanced-help';
   regionalAdvancedButton.setAttribute('aria-describedby', regionalAdvancedHelp.id);
-  for (const control of [regionalAdvancedExport, regionalAdvancedRecoveryExport, regionalAdvancedRestore, regionalAdvancedCancelRecovery]) control.type = 'button';
+  for (const control of [
+    regionalAdvancedExport,
+    regionalAdvancedRecoveryExport,
+    regionalAdvancedRestore,
+    regionalAdvancedCancelRecovery,
+  ])
+    control.type = 'button';
   regionalAdvancedCancelRecovery.hidden = true;
   regionalAdvancedRecoveryFile.type = 'file';
   regionalAdvancedRecoveryFile.accept = '.json,application/json';
   regionalAdvancedRecoveryFile.hidden = true;
   regionalAdvancedMessage.setAttribute('role', 'status');
-  regionalAdvancedRoot.append(regionalAdvancedButton, regionalAdvancedHelp, regionalAdvancedExport, regionalAdvancedRecoveryExport, regionalAdvancedRestore, regionalAdvancedCancelRecovery, regionalAdvancedRecoveryFile, regionalAdvancedMessage);
-  regionalAdvancedControls = { root: regionalAdvancedRoot, button: regionalAdvancedButton, help: regionalAdvancedHelp, exportRecording: regionalAdvancedExport, exportRecovery: regionalAdvancedRecoveryExport, restore: regionalAdvancedRestore, cancelRecovery: regionalAdvancedCancelRecovery, recovery: null, busy: false };
+  regionalAdvancedRoot.append(
+    regionalAdvancedButton,
+    regionalAdvancedHelp,
+    regionalAdvancedExport,
+    regionalAdvancedRecoveryExport,
+    regionalAdvancedRestore,
+    regionalAdvancedCancelRecovery,
+    regionalAdvancedRecoveryFile,
+    regionalAdvancedMessage,
+  );
+  regionalAdvancedControls = {
+    root: regionalAdvancedRoot,
+    button: regionalAdvancedButton,
+    help: regionalAdvancedHelp,
+    exportRecording: regionalAdvancedExport,
+    exportRecovery: regionalAdvancedRecoveryExport,
+    restore: regionalAdvancedRestore,
+    cancelRecovery: regionalAdvancedCancelRecovery,
+    recovery: null,
+    busy: false,
+  };
   regionalStartRoot.after(regionalAdvancedRoot);
   on(regionalAdvancedButton, 'click', async () => {
-    if (!current?.regional || regionalAdvancedControls.busy || regionalAdvancedButton.disabled) return;
+    if (!current?.regional || regionalAdvancedControls.busy || regionalAdvancedButton.disabled)
+      return;
     const selected = { ...current, regionalAdvanced: !current.regionalAdvanced };
     regionalAdvancedControls.busy = true;
     paintRegionalAdvanced();
-    try { await startRegionalFlight(selected, { mode: selected.regionalAdvanced ? 'acro' : $('flight-mode').value }); }
-    catch (error) { reportError(error); }
-    finally {
+    try {
+      await startRegionalFlight(selected, {
+        mode: selected.regionalAdvanced ? 'acro' : $('flight-mode').value,
+      });
+    } catch (error) {
+      reportError(error);
+    } finally {
       regionalAdvancedControls.busy = false;
       if (!disposed && flight) updateHUD(flight.snapshot());
     }
@@ -8924,18 +9474,33 @@ export function mountWorldApp({
     try {
       const value = await (recoveryFile ? selected.captureRecovery() : selected.recording());
       if (disposed || flight !== selected) return;
-      const outcome = await exportJSONFile(value, recoveryFile ? 'regional-advanced-recovery.json' : 'regional-advanced-recording.json', {
-        locationRef: win.location, documentRef: doc, URLImpl: win.URL ?? globalThis.URL,
-        BlobImpl: win.Blob ?? globalThis.Blob, schedule: win.setTimeout.bind(win),
-      });
+      const outcome = await exportJSONFile(
+        value,
+        recoveryFile ? 'regional-advanced-recovery.json' : 'regional-advanced-recording.json',
+        {
+          locationRef: win.location,
+          documentRef: doc,
+          URLImpl: win.URL ?? globalThis.URL,
+          BlobImpl: win.Blob ?? globalThis.Blob,
+          schedule: win.setTimeout.bind(win),
+        },
+      );
       if (disposed || flight !== selected) return;
-      regionalAdvancedMessage.textContent = outcome.status === 'shared'
-        ? txt('File shared.', 'Файл надіслано.')
-        : outcome.status === 'cancelled'
-          ? txt('Export cancelled.', 'Експорт скасовано.')
-          : txt('Download requested. Check your downloads or Save dialog.', 'Завантаження запитано. Перевірте завантаження або вікно збереження.');
+      regionalAdvancedMessage.textContent =
+        outcome.status === 'shared'
+          ? txt('File shared.', 'Файл надіслано.')
+          : outcome.status === 'cancelled'
+            ? txt('Export cancelled.', 'Експорт скасовано.')
+            : txt(
+                'Download requested. Check your downloads or Save dialog.',
+                'Завантаження запитано. Перевірте завантаження або вікно збереження.',
+              );
     } catch (error) {
-      if (!disposed && flight === selected) regionalAdvancedMessage.textContent = txt(`Export failed: ${error.message}`, `Не вдалося експортувати: ${error.message}`);
+      if (!disposed && flight === selected)
+        regionalAdvancedMessage.textContent = txt(
+          `Export failed: ${error.message}`,
+          `Не вдалося експортувати: ${error.message}`,
+        );
     } finally {
       regionalAdvancedControls.busy = false;
       if (!disposed && flight) updateHUD(flight.snapshot());
@@ -8951,22 +9516,38 @@ export function mountWorldApp({
   });
   on(regionalAdvancedCancelRecovery, 'click', () => regionalAdvancedControls.recovery?.cancel());
   on(regionalAdvancedRecoveryFile, 'change', async () => {
-    const file = regionalAdvancedRecoveryFile.files?.[0], selected = flight;
-    if (!file || !current?.regionalAdvanced || !selected?.restoreRecovery || regionalAdvancedControls.busy) return;
+    const file = regionalAdvancedRecoveryFile.files?.[0],
+      selected = flight;
+    if (
+      !file ||
+      !current?.regionalAdvanced ||
+      !selected?.restoreRecovery ||
+      regionalAdvancedControls.busy
+    )
+      return;
     regionalAdvancedControls.busy = true;
     pauseFlight();
     let rejectCancellation;
-    const cancelled = new Promise((_, reject) => { rejectCancellation = reject; });
-    const owner = { restoreStarted: false, cancel() {
-      if (owner.restoreStarted) selected.cancelPreparation();
-      rejectCancellation(new DOMException('Recovery verification cancelled', 'AbortError'));
-    } };
+    const cancelled = new Promise((_, reject) => {
+      rejectCancellation = reject;
+    });
+    const owner = {
+      restoreStarted: false,
+      cancel() {
+        if (owner.restoreStarted) selected.cancelPreparation();
+        rejectCancellation(new DOMException('Recovery verification cancelled', 'AbortError'));
+      },
+    };
     regionalAdvancedControls.recovery = owner;
     paintRegionalAdvanced();
-    regionalAdvancedMessage.textContent = txt('Verifying recovery. Flight stays paused; you can cancel.', 'Перевірка відновлення. Політ залишається на паузі; перевірку можна скасувати.');
+    regionalAdvancedMessage.textContent = txt(
+      'Verifying recovery. Flight stays paused; you can cancel.',
+      'Перевірка відновлення. Політ залишається на паузі; перевірку можна скасувати.',
+    );
     let recoveryTimeout = null;
     try {
-      if (file.size > ADVANCED_REGIONAL_RECOVERY_BYTES) throw new Error(txt('Recovery file is too large.', 'Файл відновлення завеликий.'));
+      if (file.size > ADVANCED_REGIONAL_RECOVERY_BYTES)
+        throw new Error(txt('Recovery file is too large.', 'Файл відновлення завеликий.'));
       const value = JSON.parse(await Promise.race([file.text(), cancelled]));
       if (disposed || flight !== selected) return;
       owner.restoreStarted = true;
@@ -8986,13 +9567,26 @@ export function mountWorldApp({
       if (disposed || flight !== selected) return;
       sceneReady = false;
       await prepareRegionalFlight();
-      regionalAdvancedMessage.textContent = ['duration-limit', 'recording-limit'].includes(selected.snapshot().reason)
-        ? txt('Recovery restored at the flight limit. Export your recording or restart.', 'Політ відновлено на межі запису. Експортуйте запис або перезапустіть.')
-        : txt('Recovery restored. Flight stays paused; arm when ready.', 'Політ відновлено на паузі; увімкніть, коли будете готові.');
+      regionalAdvancedMessage.textContent = ['duration-limit', 'recording-limit'].includes(
+        selected.snapshot().reason,
+      )
+        ? txt(
+            'Recovery restored at the flight limit. Export your recording or restart.',
+            'Політ відновлено на межі запису. Експортуйте запис або перезапустіть.',
+          )
+        : txt(
+            'Recovery restored. Flight stays paused; arm when ready.',
+            'Політ відновлено на паузі; увімкніть, коли будете готові.',
+          );
     } catch (error) {
-      if (!disposed && flight === selected) regionalAdvancedMessage.textContent = error.name === 'AbortError'
-        ? txt('Recovery verification cancelled. The current flight is unchanged.', 'Перевірку відновлення скасовано. Поточний політ не змінено.')
-        : txt(`Recovery failed: ${error.message}`, `Не вдалося відновити: ${error.message}`);
+      if (!disposed && flight === selected)
+        regionalAdvancedMessage.textContent =
+          error.name === 'AbortError'
+            ? txt(
+                'Recovery verification cancelled. The current flight is unchanged.',
+                'Перевірку відновлення скасовано. Поточний політ не змінено.',
+              )
+            : txt(`Recovery failed: ${error.message}`, `Не вдалося відновити: ${error.message}`);
     } finally {
       win.clearTimeout(recoveryTimeout);
       if (regionalAdvancedControls.recovery === owner) regionalAdvancedControls.recovery = null;
@@ -9000,12 +9594,24 @@ export function mountWorldApp({
       if (!disposed && flight) updateHUD(flight.snapshot());
     }
   });
-  const placesRoot = el('section'), placesTitle = el('h3'),
-    placeNameLabel = el('label'), placeNameText = el('span'), placeName = el('input'),
-    placeSelectLabel = el('label'), placeSelectText = el('span'), placeSelect = el('select'),
-    placeSave = el('button'), placeRestore = el('button'), placeGuide = el('button'), placeRemove = el('button'),
-    placeRefresh = el('button'), placeHelp = el('p'),
-    placeReview = el('div'), placeReviewText = el('p'), placeConfirm = el('button'), placeKeep = el('button');
+  const placesRoot = el('section'),
+    placesTitle = el('h3'),
+    placeNameLabel = el('label'),
+    placeNameText = el('span'),
+    placeName = el('input'),
+    placeSelectLabel = el('label'),
+    placeSelectText = el('span'),
+    placeSelect = el('select'),
+    placeSave = el('button'),
+    placeRestore = el('button'),
+    placeGuide = el('button'),
+    placeRemove = el('button'),
+    placeRefresh = el('button'),
+    placeHelp = el('p'),
+    placeReview = el('div'),
+    placeReviewText = el('p'),
+    placeConfirm = el('button'),
+    placeKeep = el('button');
   placesRoot.hidden = placeReview.hidden = true;
   placeName.id = 'regional-place-name';
   placeName.type = 'text';
@@ -9020,14 +9626,55 @@ export function mountWorldApp({
   placeHelp.setAttribute('role', 'status');
   placeSelect.setAttribute('aria-describedby', placeHelp.id);
   placeName.setAttribute('aria-describedby', placeHelp.id);
-  for (const button of [placeSave, placeRestore, placeGuide, placeRemove, placeRefresh, placeConfirm, placeKeep]) button.type = 'button';
+  for (const button of [
+    placeSave,
+    placeRestore,
+    placeGuide,
+    placeRemove,
+    placeRefresh,
+    placeConfirm,
+    placeKeep,
+  ])
+    button.type = 'button';
   placeReview.append(placeReviewText, placeConfirm, placeKeep);
-  placesRoot.append(placesTitle, placeNameLabel, placeSave, placeSelectLabel, placeGuide, placeRestore, placeRemove, placeRefresh, placeReview, placeHelp);
-  regionalLocationControls = { root: placesRoot, title: placesTitle,
-    label: placeName, labelText: placeNameText, select: placeSelect, selectText: placeSelectText,
-    save: placeSave, restore: placeRestore, guide: placeGuide, remove: placeRemove, refresh: placeRefresh,
-    help: placeHelp, review: placeReview, confirm: placeConfirm, keep: placeKeep,
-    owner: null, locale: null, request: 0, locations: [], generation: null, loading: false, busy: false, removal: null, restoreUnavailable: false };
+  placesRoot.append(
+    placesTitle,
+    placeNameLabel,
+    placeSave,
+    placeSelectLabel,
+    placeGuide,
+    placeRestore,
+    placeRemove,
+    placeRefresh,
+    placeReview,
+    placeHelp,
+  );
+  regionalLocationControls = {
+    root: placesRoot,
+    title: placesTitle,
+    label: placeName,
+    labelText: placeNameText,
+    select: placeSelect,
+    selectText: placeSelectText,
+    save: placeSave,
+    restore: placeRestore,
+    guide: placeGuide,
+    remove: placeRemove,
+    refresh: placeRefresh,
+    help: placeHelp,
+    review: placeReview,
+    confirm: placeConfirm,
+    keep: placeKeep,
+    owner: null,
+    locale: null,
+    request: 0,
+    locations: [],
+    generation: null,
+    loading: false,
+    busy: false,
+    removal: null,
+    restoreUnavailable: false,
+  };
   on(placeSave, 'click', saveRegionalLocation);
   on(placeRestore, 'click', restoreRegionalLocation);
   placeGuide.dataset.regionalGuide = 'saved';
@@ -9039,11 +9686,17 @@ export function mountWorldApp({
     const place = c.locations.find((item) => item.id === c.select.value);
     if (!place) return;
     c.removal = { id: place.id, generation: c.generation };
-    placeReviewText.textContent = txt(`Remove “${place.label}” from this device?`, `Видалити «${place.label}» з цього пристрою?`);
+    placeReviewText.textContent = txt(
+      `Remove “${place.label}” from this device?`,
+      `Видалити «${place.label}» з цього пристрою?`,
+    );
     placeReview.hidden = false;
     placeKeep.focus();
   });
-  on(placeKeep, 'click', () => { placeReview.hidden = true; regionalLocationControls.removal = null; });
+  on(placeKeep, 'click', () => {
+    placeReview.hidden = true;
+    regionalLocationControls.removal = null;
+  });
   on(placeConfirm, 'click', removeRegionalLocation);
   regionalStartRoot.after(placesRoot);
   tuning = mountFlightTuning({
@@ -9055,14 +9708,30 @@ export function mountWorldApp({
     getFlightConfiguration: () => workbenchAttemptConfiguration,
     responseBenchWorkerURL: new URL('../fpv-worlds/response-bench-worker.mjs', import.meta.url),
     getPracticeConditions: () => {
-      const entry = tuningReturnEntry ?? current ?? catalogue.find((item) => !item.beginner && !item.legacy);
+      const entry =
+        tuningReturnEntry ?? current ?? catalogue.find((item) => !item.beginner && !item.legacy);
       if (!entry) return null;
-      return { host: entry.regional ? 'Regional' : 'World', courseId: entry.id, mode: $('flight-mode').value, courseIdentity: dataIdentity(entry.regional ? entry.configuration : entry.course),
+      return {
+        host: entry.regional ? 'Regional' : 'World',
+        courseId: entry.id,
+        mode: $('flight-mode').value,
+        courseIdentity: dataIdentity(entry.regional ? entry.configuration : entry.course),
         label: `${entry.regional ? 'Regional' : 'World'} · ${entry.id} · ${$('flight-mode').value}`,
-        input: { source: $('flight-source').value, keyboard: $('flight-keyboard-preset').value, touch: $('flight-touch-response').value, radio: radio.status().profile, radioDevice: radio.status().selected?.key ?? null, controller: { id: gamepad.status().id, index: gamepad.status().index } } };
+        input: {
+          source: $('flight-source').value,
+          keyboard: $('flight-keyboard-preset').value,
+          touch: $('flight-touch-response').value,
+          radio: radio.status().profile,
+          radioDevice: radio.status().selected?.key ?? null,
+          controller: { id: gamepad.status().id, index: gamepad.status().index },
+        },
+      };
     },
     canCalibrate: () => !$('radio-setup-button').disabled,
-    onCalibration(done) { tuningCalibrationReturn = done; $('radio-setup-button').click(); },
+    onCalibration(done) {
+      tuningCalibrationReturn = done;
+      $('radio-setup-button').click();
+    },
     onApply() {
       if ($('sim-settings').open) closeSettings({ force: true });
       const entry =
@@ -9081,11 +9750,16 @@ export function mountWorldApp({
         { preview: true, tuningDraft: configuration },
       ).catch(reportError);
     },
-    getDiagnostics: () => inputDiagnostics.read(
-      flight,
-      replayProof ? 'recording' : $('flight-source').value,
-      !replayProof && $('flight-source').value === 'radio' ? radio.diagnostics() : !replayProof && $('flight-source').value === 'controller' ? gamepad.previewDiagnostics() : null,
-    ),
+    getDiagnostics: () =>
+      inputDiagnostics.read(
+        flight,
+        replayProof ? 'recording' : $('flight-source').value,
+        !replayProof && $('flight-source').value === 'radio'
+          ? radio.diagnostics()
+          : !replayProof && $('flight-source').value === 'controller'
+            ? gamepad.previewDiagnostics()
+            : null,
+      ),
     onAdvanced(configuration) {
       pauseFlight();
       const container = doc.createElement('dialog');
@@ -9320,6 +9994,7 @@ export function mountWorldApp({
   });
 
   const cueSettings = {
+    gameplayOutput: audio.gameplayOutput,
     // This preference is global; the 3D engine has no separate radio bus.
     // The canonical Soundscape consumes the same record in supported modes.
     get radioSettings() {

@@ -28,6 +28,7 @@ export function createPracticeAudio({ window, createAudio = createWorldAudio } =
   let previous = null;
   return Object.freeze({
     enabled: audio.enabled,
+    gameplayOutput: audio.gameplayOutput,
     setEnabled: audio.setEnabled,
     subscribe: audio.subscribe,
     masterSnapshot: audio.masterSnapshot,

@@ -104,6 +104,10 @@ import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
 import { COOP_STARTER_PACK, coopPackDestination } from '../coop/library.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
+import { createCouchKeyboardPreferences } from './keyboard-preferences.mjs';
+import { mountCouchKeyboardSettings } from './keyboard-settings.mjs';
+import { couchDirectionLabel } from './keyboard-bindings.mjs';
+import { keyLabel } from '../key-bindings.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { coopCueOverflowEntries, hasCoopCueOverflow } from './coop-cue-overflow.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
@@ -196,6 +200,7 @@ import { attachTeamLibraryPreview, paintTeamPicturePreview } from './team-librar
 
 import { teamReturnHref } from '../mode-return.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
+import { teamHomeRecommendation } from '../ui/team-home-recommendation.mjs';
 
 const $ = (id) => document.getElementById(id);
 // This host is loaded through the direct-tool launcher after parsing. Bind its
@@ -266,6 +271,10 @@ export function bootCoop({
   candidateEditionLabel = '',
   candidateNavigationLabel = '',
 } = {}) {
+  const homeRecommendation = $('coop-home-recommendation'),
+    homeStart = $('coop-start'),
+    homeRecommendationParent = homeRecommendation.parentNode,
+    homeRecommendationNext = homeRecommendation.nextSibling;
   // Consume native setup intent before applying saved defaults. Only an actual
   // difficulty edit changes the global preference; opening its selector does not.
   const earlySelection = globalThis.RevealLineTeamEntry?.take();
@@ -572,6 +581,9 @@ export function bootCoop({
     pictureSequence = 0,
     nextOperation = null,
     startPermitted = true;
+  let initialHomeSelection = null,
+    initialHomePicture = null,
+    homeRecommendationRetired = false;
   let foundationMessage = null;
   let journeySkip = null;
   const journeyReactions = attachJourneyReactions({ prefix: 'coop-' });
@@ -1254,6 +1266,7 @@ export function bootCoop({
     placePictureRecovery();
     pauseMenu?.setActive(pausedAttempt);
     showTouch();
+    updateHomeRecommendation();
   }
   function back() {
     if (closeGlobalSettingsTool(document)) return;
@@ -1475,7 +1488,9 @@ export function bootCoop({
     root: $('coop-settings-panel-controls'),
     session: controllerSession,
   });
+  const keyboardPreferences = createCouchKeyboardPreferences({ mode: 'team' });
   input = attachCouchInput({
+    keyboardBindings: keyboardPreferences.snapshot().bindings,
     controllerSession,
     getTouchSettings: () => couchTouch.snapshot(),
     ...COOP_INPUT_CAPABILITIES,
@@ -1494,6 +1509,24 @@ export function bootCoop({
         });
       if ($('coop-pads').textContent !== text()) localizedText($('coop-pads'), text);
     },
+  });
+  const keyboardSettings = mountCouchKeyboardSettings({
+    root: $('coop-settings-panel-controls'),
+    mode: 'team',
+    preferences: keyboardPreferences,
+    isOpen: () => settingsDialog.open && !running(),
+  });
+  const stopKeyboard = keyboardPreferences.subscribe(({ bindings }) => {
+    input.setKeyboardBindings(bindings);
+    for (let player = 0; player < 2; player++)
+      localizedText($(`coop-key-help-${player}`), () =>
+        t('interface:couchKeyboard.teamKeys', {
+          player: t(player === 0 ? 'interface:sunflower' : 'interface:skyline'),
+          move: couchDirectionLabel(bindings, player, 'team'),
+          boost: keyLabel(bindings.seats[player].boost),
+          support: keyLabel(bindings.seats[player].action),
+        }),
+      );
   });
   const router = createControllerRouter({
     readPads: () => controllerSession.frame().menuPads,
@@ -1705,6 +1738,8 @@ export function bootCoop({
       { element: $('team-landing-fullscreen-status') },
     ],
   });
+  const homeContext = $('coop-navigation-context');
+  homeContext.parentNode.insertBefore(homeRecommendation, homeContext.nextSibling);
   settingsPanels = attachSettingsPanels({
     root: settingsDialog,
     document,
@@ -1844,6 +1879,7 @@ export function bootCoop({
       );
     }
     runningEnemyControls.refresh();
+    keyboardSettings.refresh();
     settingsDialog.showModal();
     placePictureRecovery();
     globalTools.refresh();
@@ -1867,12 +1903,16 @@ export function bootCoop({
   }
   function closeSettings({ restore = true } = {}) {
     if (!settingsDialog.open) return;
+    keyboardSettings.cancel();
+    keyboardPreferences.suspend();
     if (settingsOwner) settingsOwner.restore = restore && foreground();
     settingsDialog.close();
   }
   const settingsClosed = () => {
     // A queued close from an earlier visit has no authority over a reopened one.
     if (settingsDialog.open) return;
+    keyboardSettings.cancel();
+    keyboardPreferences.suspend();
     const owner = settingsOwner;
     if (!owner) return;
     const restore = owner.restore && settingsCurrent(owner);
@@ -2609,6 +2649,7 @@ export function bootCoop({
     );
     placePictureRecovery();
     discoveryControls();
+    updateHomeRecommendation();
   }
   function retirePicture() {
     const operation = pictureOperation;
@@ -5312,6 +5353,8 @@ export function bootCoop({
         : t('interface:proceduralTeamArenaIsReadyForThisAttempt'),
     );
     generation++;
+    // Fresh Start and Retry discard time spent in the lobby or retained pause.
+    last = null;
     startCoop(run);
     libraryStatus('');
     beginInstalledTeamAttempt(run, selection, briefing?.restored, {
@@ -6523,6 +6566,66 @@ export function bootCoop({
     const level = selectedLevel();
     return candidateJourney?.rows.find((row) => row.pack === pack && row.level === level) ?? null;
   }
+  function homeRecommendationText() {
+    const selection = pictureSelection,
+      row = selection?.journeyRow;
+    const ready = Boolean(
+      defaultJourney &&
+        !incomingLibraryMission &&
+        !homeRecommendationRetired &&
+        !disposed &&
+        !run &&
+        !departure &&
+        !pictureOperation &&
+        !importOperation &&
+        !importAdopting &&
+        !importDisplay &&
+        !nextOperation &&
+        !libraryLaunch &&
+        selection?.state === 'ready' &&
+        !homeStart.disabled &&
+        selection.sourcePack === pack &&
+        selection.levelId === levelSelect.value &&
+        row?.pack === pack &&
+        row.level === selectedLevel(),
+    );
+    const explanation = teamHomeRecommendation({
+      journey: candidateJourney,
+      row,
+      initial: selection === initialHomePicture ? initialHomeSelection : null,
+      ready,
+    });
+    return explanation
+      ? t(`interface:teamHomeRecommendation.${explanation.kind}`, {
+          mission: contentText(explanation.mission, 'name'),
+          previous: explanation.previous ? contentText(explanation.previous, 'name') : '',
+        })
+      : '';
+  }
+  function describeHomeRecommendation(visible) {
+    const descriptions = new Set(
+      (homeStart.getAttribute('aria-describedby') ?? '').split(/\s+/).filter(Boolean),
+    );
+    descriptions.delete(homeRecommendation.id);
+    if (visible) descriptions.add(homeRecommendation.id);
+    if (descriptions.size) homeStart.setAttribute('aria-describedby', [...descriptions].join(' '));
+    else homeStart.removeAttribute('aria-describedby');
+  }
+  function updateHomeRecommendation() {
+    const visible = Boolean(homeRecommendationText());
+    homeRecommendation.hidden = !visible;
+    localizedText(homeRecommendation, homeRecommendationText);
+    describeHomeRecommendation(visible);
+  }
+  function retireHomeRecommendation() {
+    homeRecommendationRetired = true;
+    homeRecommendation.hidden = true;
+    localizedText(homeRecommendation, () => '');
+    describeHomeRecommendation(false);
+    if (homeRecommendationNext?.parentNode === homeRecommendationParent)
+      homeRecommendationParent.insertBefore(homeRecommendation, homeRecommendationNext);
+    else homeRecommendationParent.append(homeRecommendation);
+  }
   function teamNavigationContext(includeMission = false) {
     const sourcePack = run ? (acceptedPicture?.sourcePack ?? attemptPack) : pack;
     const level = run ? attemptLevel : selectedLevel();
@@ -6605,6 +6708,7 @@ export function bootCoop({
         ? t('interface:capturesRechargeBothPlayersSupportAndCanRescueADowned')
         : t('interface:comparisonSupportRefillsOnItsTimerRescueByHoldingSupport'),
     );
+    updateHomeRecommendation();
   }
   function refreshGameplayTuningNote(
     level = selectedLevel(),
@@ -7106,6 +7210,17 @@ export function bootCoop({
     const row =
       candidateProgress?.initial(candidateDifficulty) ??
       candidateJourney.row(first, candidateDifficulty);
+    const profile = candidateProgress?.snapshot(),
+      cursorId = profile?.cursors.team ?? null,
+      savedCursor = candidateJourney.catalog.find(cursorId),
+      cursor = savedCursor && candidateJourney.isCore(savedCursor.id) ? savedCursor : null;
+    initialHomeSelection = {
+      destination: row,
+      first,
+      cursorId,
+      cursor,
+      recordedClear: Boolean(cursor && Object.hasOwn(profile.clears.team, cursor.id)),
+    };
     showPack(row.pack, row.level.id);
   } else if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
   showPackStatus();
@@ -7178,6 +7293,7 @@ export function bootCoop({
     // closeAudio() later repeats this idempotently with the remaining audio cleanup.
     musicPublished?.close();
     $('coop-field-details').onclick = null;
+    retireHomeRecommendation();
     nativeMenu?.destroy();
     installOfflinePanel?.dispose();
     void globalTools.dispose();
@@ -7266,6 +7382,9 @@ export function bootCoop({
     clear();
     couchTouch.destroy();
     controllerSetup.dispose();
+    keyboardSettings.dispose();
+    stopKeyboard();
+    keyboardPreferences.dispose();
     controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();
@@ -7440,6 +7559,7 @@ export function bootCoop({
       return Boolean(run);
     },
   });
+  initialHomePicture = pictureSelection;
   if (incomingAutoStart) handoffOpening = trackMissionLibraryOpening({ document });
   void preparation.finally(() => handoffOpening?.dispose());
   // A community Play link resolves an installed immutable edition through the

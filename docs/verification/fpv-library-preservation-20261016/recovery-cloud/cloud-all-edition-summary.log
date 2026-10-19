@@ -1,0 +1,12 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:59:12.4606535Z   "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:59:12.4607370Z   "sourceTree": "dab7b812eb88c9e744f67b0d9d1cca70df492c7c",
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:59:12.4607996Z   "editionIds": [
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:59:12.4630398Z   "zipMembersVerified": true,
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:59:12.4630864Z   "reproducibleBuilds": 2,
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:59:12.4632169Z   "capacityMetadataFiles": 22,
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:59:12.4632715Z   "capacityMetadataBytes": 2704747,
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:59:12.4633195Z   "publicEligible": false
+candidate	Save small capacity metadata for review	2026-10-16T02:59:13.1404357Z SHA256 digest of uploaded artifact zip is 889b9966288f025642ceb494e5627e5420809a44590207715ee559d730047747
+candidate	Save small capacity metadata for review	2026-10-16T02:59:13.3385973Z Artifact company-capacity-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3 has been successfully uploaded! Final size is 996305 bytes. Artifact ID is 12022115964

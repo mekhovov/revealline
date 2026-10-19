@@ -6,6 +6,9 @@ on:
       - '.github/workflows/appearance-preview.yml'
       - 'docs/appearance-preview-testing.md'
       - 'game/app.mjs'
+      - 'game/ui/performance-session.mjs'
+      - 'game/test/performance-session.test.mjs'
+      - 'game/test/mission-library-stage-observation.test.mjs'
       - 'game/couch/couch.mjs'
       - 'game/couch/couch-shell.mjs'
       - 'game/couch/couch-static-pictures.mjs'
@@ -110,6 +113,7 @@ on:
       - 'game/ui/victory-story.mjs'
       - 'game/ui/title-character.mjs'
       - 'game/ui/soundtrack-panel.mjs'
+      - 'game/ui/soundtrack-authoring-view.mjs'
       - 'game/ui/enemy-guide.mjs'
       - 'game/ui/enemy-body-assets.mjs'
       - 'game/replay-theater/**'
@@ -212,6 +216,7 @@ on:
       - 'game/test/demo-retained-presentation-host.test.mjs'
       - 'game/test/soundtrack-panel.test.mjs'
       - 'game/test/soundtrack-host.test.mjs'
+      - 'game/test/helpers/soundtrack-authoring-loader.mjs'
       - 'game/test/enemy-guide-panel.test.mjs'
       - 'game/test/enemy-body-assets.test.mjs'
       - 'game/test/solo-demo-media-admission-host.test.mjs'
@@ -285,6 +290,8 @@ env:
     game/test/library-entry.test.mjs
     game/test/solo-lazy-library-host.test.mjs
     game/test/solo-transition-performance-host.test.mjs
+    game/test/performance-session.test.mjs
+    game/test/mission-library-stage-observation.test.mjs
   APPEARANCE_DEMO_TEST_FILES: >-
     game/test/demo-scene-transition.test.mjs
     game/test/victory-story-ui.test.mjs

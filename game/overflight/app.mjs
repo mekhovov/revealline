@@ -1078,6 +1078,7 @@ function syncUpgrade(force = false) {
           offer,
           build: run.build,
           player: run.player,
+          rerolls: run.progression.rerolls,
           compiled,
           rulesVersion: run.rulesVersion,
           riySettings: run.riy?.rules,
