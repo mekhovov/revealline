@@ -1,0 +1,20 @@
+{
+  "format": "IndependentGitHubBundleAssetFullReadback.v1",
+  "createdUTC": "2026-10-16T06:18:32.860320+00:00",
+  "repository": "mekhovov/revealline",
+  "releaseId": 414505790,
+  "draftBackupReleaseVerified": true,
+  "releaseTag": "fpv-development-preservation-20261016",
+  "assetId": 646261949,
+  "assetName": "fpv-app-selected-history-20261016.bundle",
+  "bytes": 389261798,
+  "sha256": "d21fd37f7ca6231ce0b6622e5591b3db4dac282f9f62520f024620d797292636",
+  "serverDigest": "sha256:d21fd37f7ca6231ce0b6622e5591b3db4dac282f9f62520f024620d797292636",
+  "fullAuthenticatedServerStreamReadbackVerified": true,
+  "assetMetadataStableAcrossReadback": true,
+  "sourceUploadReceiptSHA256": "186ff582be30d2c909de9033d0eea398ed3fa95829472f13e023fba0a56f1b2c",
+  "largeLocalDuplicateCreated": false,
+  "sourceMutation": false,
+  "coldRestoreAcceptedByThisReceipt": false,
+  "scope": "Independent full389MB server-byte hash through the authenticated GitHub API. This proves backup asset identity, not app/product qualification or a physical-volume disconnect."
+}

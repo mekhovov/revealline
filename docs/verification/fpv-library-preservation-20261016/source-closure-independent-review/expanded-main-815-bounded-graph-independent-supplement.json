@@ -1,0 +1,12 @@
+{
+  "format": "IndependentExpandedMainSourceBoundedGraphSupplement.v1",
+  "parentAcceptanceSHA256": "909f07d6926133d6562efa8511543a3646054f59e92196bcf9ff43828d349fe5",
+  "localRecoveredHead": "ce723af994e1598b6ca7ca64d197654b7d08965b",
+  "exactRecoveryHeadParentsVerified": true,
+  "tipCount": 88,
+  "capturedAdditionalCommitCount": 203,
+  "all203AdditionalCommitIDsReachableWithinNewGraph": true,
+  "traversalStopsAtCapturedSourceBoundary": "91f3f76fe347fde44dd0ec6c854c272182423219",
+  "noPublicOrOriginalHistoryTraversal": true,
+  "sourceMutation": false
+}
