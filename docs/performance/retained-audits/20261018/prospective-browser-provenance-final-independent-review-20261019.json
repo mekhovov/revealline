@@ -1,0 +1,105 @@
+{
+  "schema": "held-provenance-independent-source-review-v1",
+  "at": "2026-10-19T02:08:28.284Z",
+  "proposal": {
+    "gitBlob": "c443d172be2abc7ad39f7e21c512c4414446576d",
+    "bytes": 272285,
+    "sha256": "51a1c53c79d3ede42e9a968e4275f134e5a82abef8b2ccd5e3007d7fa19f61a1"
+  },
+  "base": {
+    "revision": "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+    "tree": "50c622f54c9748c1ad695b7885a3164c092e109c",
+    "branch": "codex/solo-empirical-overhead-acceptance"
+  },
+  "verdict": "clean source review of held prospective proposal; not source-admitted or release-ready",
+  "beforeGuards": [
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "expected": "ce977d2d6c0c2bf58d3357f9276b602542b4312b",
+      "actual": "ce977d2d6c0c2bf58d3357f9276b602542b4312b"
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "expected": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda",
+      "actual": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "expected": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb",
+      "actual": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb"
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "expected": null,
+      "actual": null
+    },
+    {
+      "path": "scripts/test-solo-remote-correctness.mjs",
+      "expected": "0076cbee64b6ecfe41617d04694d25462cfef198",
+      "actual": "0076cbee64b6ecfe41617d04694d25462cfef198"
+    }
+  ],
+  "afterReceipts": [
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "changed": false,
+      "actual": {
+        "blob": "9e8c0f98cb4f5f155730210727e2ebe697467c1d",
+        "bytes": 75299,
+        "sha256": "d02de6f556485b396813fbf0c13b9013092234555a4a24c6c48db03e53bca234"
+      }
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "changed": true,
+      "actual": {
+        "blob": "0694e1c02c637e14d3db3aeb71ceb5fe9567f5d9",
+        "bytes": 19654,
+        "sha256": "4ec473b6e9a4d61b8054fd6b9b504a799d9d3a6eb351f0da1661e4757001f04b"
+      }
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "changed": false,
+      "actual": {
+        "blob": "acf7804984cfb14cf44e2e31df89e24249dc7001",
+        "bytes": 95945,
+        "sha256": "9f91930e45174d389743375db1e0bc982b316db0f3108e3073ad1fb57e57fb2a"
+      }
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "changed": false,
+      "actual": {
+        "blob": "4bd42945816f21157734195b5e5e9e4910250d35",
+        "bytes": 10370,
+        "sha256": "fc272d24216627c4422f72b1389a0f8787b187743bbf2dbf2e1ad6ee337017d7"
+      }
+    },
+    {
+      "path": "scripts/test-solo-remote-correctness.mjs",
+      "changed": true,
+      "actual": {
+        "blob": "7ad2235e20f71e77256d2dec060ace78fe6e3d70",
+        "bytes": 28584,
+        "sha256": "b4aa6f58c544690eca699224b313097703d2be9ff5d719170d62d1c9fc4a73be"
+      }
+    }
+  ],
+  "review": {
+    "candidateIdentity": "Fixed Linux WPE candidates, one capped nonrecursive directory, root/ELF/regular-file/stream size checks, alias deduplication, before/after file ownership checks, 12-file/512MiB-file/1GiB-total caps and abort-linked streaming examined. Installed bytes remain explicitly separate from unavailable loaded-library identity.",
+    "context": "Whitelisted requested settings copied separately from actual security/isolation/display flags; one snapshot before Start/work probe; <=5s timeout; missing required flags fail before Start through caller. No new active-loop RPC.",
+    "correctedFindings": [
+      "Observer now rechecks existing stop owner immediately after the newly awaited snapshot, before admission/work probe/Start.",
+      "New runtime fixture canonicalizes its temporary root while original raw-path cleanup remains owned by existing temporary(t)."
+    ],
+    "successorDelta": "Only observer post-await stop check and corresponding source-placement guard plus fixture canonicalization differ from a4cc; three other source bodies identical. All five hashes/bytes and original before guards verified; Acorn parses all five.",
+    "limits": [
+      "All nine controls remain unexecuted. Static placement controls establish code placement, not runtime browser qualification.",
+      "15s filesystem timer is abort intent; noncancelable filesystem awaits and late evaluation retain unchanged outer owner/hard cleanup limits.",
+      "Historical declaration/import/sparse closure and separately named prospective tooling successor remain outstanding; this five-path map must not widen the current fourteen-path overhead repair.",
+      "No finite timer-error envelope, observer-equivalence or 5% overhead pass is provided.",
+      "No local writes, functional tests, browser execution, branch changes or dispatches."
+    ]
+  }
+}

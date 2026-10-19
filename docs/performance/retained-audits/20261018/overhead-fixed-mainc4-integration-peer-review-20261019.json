@@ -1,0 +1,39 @@
+{
+  "schema": "revealline.integration-peer-review.v1",
+  "reviewedAt": "2026-10-19T02:16:44.183Z",
+  "candidate": {
+    "blob": "ee61e79e002b683b640882dd3d127b93742597cb",
+    "bytes": 124518,
+    "sha256": "23777c63bfdd6e97fcb77bab5b2defc45127513d967a92b6d05fe413478c21fd",
+    "gitBlob": "ee61e79e002b683b640882dd3d127b93742597cb"
+  },
+  "supersededCleanReview": "6fd74bc914b18c29338d2a7591e6041b27a634d9",
+  "verdict": "Clean bounded fixed-main delta; source-only admission.",
+  "parents": [
+    "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+    "c4c5fc3c8fbdd17ce496005993e58ad45710823c"
+  ],
+  "root": "c47e94b099c5eb98065b318658c4ee0bbaa6542e",
+  "checks": {
+    "actualSelectedMainTree": "ec0fae168fde07bde94ec3d832b778a2b6553db5",
+    "reconstructedSelectedMain": true,
+    "extraFivePaths": [
+      "game/couch/couch.mjs",
+      "game/test/duel-navigation-context-host.test.mjs",
+      "game/test/native-landing-structure.test.mjs",
+      "game/ui/native-menu.css",
+      "game/ui/native-menus.mjs"
+    ],
+    "disjointFromEarlier66AndHeld35": true,
+    "all71BeforeAfterGuards": true,
+    "bothFullUnionRootsMatch": true,
+    "acceptedOutputs14AndThreeToolingSubtreeDeclarationsUnchanged": true,
+    "sevenPolicyIdentitiesUnchanged": true,
+    "exactTraceDependencyAndFiveProvenanceExclusionsUnchanged": true
+  },
+  "limits": [
+    "No runtime/tests/build/generator/browser or local filesystem writes.",
+    "No branch/PR/ref mutation and no later-main chase.",
+    "Original trace completion before merge/native and new-head hosted source controls remain required."
+  ]
+}

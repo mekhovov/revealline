@@ -1490,6 +1490,60 @@
       "blob": "2bf8389e6af4d4a20537150f638772fb755e44a3",
       "bytes": 3700,
       "sha256": "3b8fea21c152df1d993b14da0cda9e78c013c3f0210de9535cb77f22581adaac"
+    },
+    {
+      "path": "prospective-browser-provenance-peer-corrected-held-map-20261019.json",
+      "blob": "c443d172be2abc7ad39f7e21c512c4414446576d",
+      "bytes": 272285,
+      "sha256": "51a1c53c79d3ede42e9a968e4275f134e5a82abef8b2ccd5e3007d7fa19f61a1"
+    },
+    {
+      "path": "prospective-browser-provenance-final-independent-review-20261019.json",
+      "blob": "1ed2925b2f5d3760d53a5d0f9c1d4475b5bb70b2",
+      "bytes": 4805,
+      "sha256": "cf54462f9d05b042244747cf300803da3928cdf812a8add897c710517fe276b4"
+    },
+    {
+      "path": "heap-source-guard-replay-completion-20261019.json",
+      "blob": "6064546cac729885263bb30c587f57005f9689b8",
+      "bytes": 60163,
+      "sha256": "8134609828bb5da554dd0e7935eca86a8961e4c1f630a66c1d70bcf9487b94cf"
+    },
+    {
+      "path": "overhead-fixed-main444-integration-proposal-20261019.json",
+      "blob": "a2f84e3573f0c078629894f5bd69e72a55030581",
+      "bytes": 114702,
+      "sha256": "b3cd74827779f9bb963e7ba29749e6e7af4d9e6c68906eda7e530c37c2f9d913"
+    },
+    {
+      "path": "overhead-fixed-main444-integration-peer-review-20261019.json",
+      "blob": "6fd74bc914b18c29338d2a7591e6041b27a634d9",
+      "bytes": 4078,
+      "sha256": "7618ba99e40d185c229c7f76e5a2ea92eb85fcc11430ead6132209970d2557cf"
+    },
+    {
+      "path": "overhead-fixed-mainc4-integration-proposal-20261019.json",
+      "blob": "ee61e79e002b683b640882dd3d127b93742597cb",
+      "bytes": 124518,
+      "sha256": "23777c63bfdd6e97fcb77bab5b2defc45127513d967a92b6d05fe413478c21fd"
+    },
+    {
+      "path": "overhead-fixed-mainc4-integration-peer-review-20261019.json",
+      "blob": "3ca40ed3b4d8d57eec38dd42b6755c573f5b5ae5",
+      "bytes": 1581,
+      "sha256": "3eaa73fa4850701d4906d864a215e65fe3958584a1ddb53aa5b26d2c5a366c79"
+    },
+    {
+      "path": "overhead-source-draft-admission-20261019.json",
+      "blob": "71034c47e3cd7b63e9edc3b7f7d27a04064c31c0",
+      "bytes": 986,
+      "sha256": "05631da98f9c4ce4fb399034d645f068535966996178b0aa851292768a9f7119"
+    },
+    {
+      "path": "duel-navigation-lifecycle-static-compatibility-20261019.json",
+      "blob": "df0a2f23124f62f5f39f236fdd165f9a1d813926",
+      "bytes": 1462,
+      "sha256": "26c00afcc7a0dcaf9bda19a782ea66a2054c89f75438ece6c99acca378523dbe"
     }
   ]
 }

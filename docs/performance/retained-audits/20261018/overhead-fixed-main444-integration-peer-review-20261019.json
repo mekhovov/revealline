@@ -1,0 +1,83 @@
+{
+  "schema": "revealline.integration-peer-review.v1",
+  "reviewedAt": "2026-10-19T02:13:16.477Z",
+  "candidate": {
+    "blob": "a2f84e3573f0c078629894f5bd69e72a55030581",
+    "bytes": 114702,
+    "sha256": "b3cd74827779f9bb963e7ba29749e6e7af4d9e6c68906eda7e530c37c2f9d913",
+    "gitBlob": "a2f84e3573f0c078629894f5bd69e72a55030581"
+  },
+  "verdict": "Clean for the proposed bounded source-only normal merge and draft admission; no functional/native result inferred.",
+  "parents": [
+    "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+    "444707792f1dca6867ce227fc3467267d6061855"
+  ],
+  "expectedTree": "3de5fbf5bc0cee814b825de8f5cf402850a1ba7b",
+  "checks": {
+    "fullRemoteParentTrees": [
+      {
+        "head": "bd15820bee10a33ba64534071d22657fbd7326d3",
+        "tree": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+        "leaves": 44793,
+        "reconstructed": true
+      },
+      {
+        "head": "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+        "tree": "50c622f54c9748c1ad695b7885a3164c092e109c",
+        "leaves": 44803,
+        "reconstructed": true
+      },
+      {
+        "head": "444707792f1dca6867ce227fc3467267d6061855",
+        "tree": "09560df2d4960a41f9f864672831f6cb966e526f",
+        "leaves": 44832,
+        "reconstructed": true
+      }
+    ],
+    "mainChangedPaths": 66,
+    "heldIncludingTracePaths": 35,
+    "collisionPaths": [],
+    "unionFromBothParents": "3de5fbf5bc0cee814b825de8f5cf402850a1ba7b",
+    "all66BeforeAfterGuardsVerified": true,
+    "all14AcceptedOutputsMatchOriginal4df2AndActualRemoteBlobs": true,
+    "policyFilesUnchanged": 7,
+    "toolingSubtrees": [
+      {
+        "path": "scripts",
+        "sha": "52b2ab386ff8c705ccfd4f69f42c392b29751923"
+      },
+      {
+        "path": "docs/performance",
+        "sha": "9f20f3bd20c1a9fbc3ede53f8af9be50d967d355"
+      },
+      {
+        "path": ".github/workflows",
+        "sha": "b5dc2f0a08efac312257cd2e4913f1e0f64c4ab9"
+      }
+    ],
+    "exactTraceParent": true,
+    "prospectiveProvenancePathsExcluded": 5
+  },
+  "observations": [
+    "The selected target is fixed main444707; this review does not chase or qualify later main drift.",
+    "No overlap exists between the 66 main paths and 35 held-plus-trace paths. Both independent full unions reconstruct3de5fbf5bc0cee814b825de8f5cf402850a1ba7b.",
+    "scripts, docs/performance and .github/workflows remain byte-identical Git subtrees to held abd2. This preserves the reviewed sparse/import/declaration closure and original trace adapter.",
+    "The fourteen accepted outputs are exactly the earlier4df2 contents and independently hash-read back from remote Git blobs. The five prospective provenance paths remain original or absent.",
+    "Draft body correctly retains Depends on #1621, source-only intent, original trace outcome/review before merge/native, and no5%pass.",
+    "All thirteen new/five strengthened controls still need new-head hosted execution. Merged1619 on selected main does not acquire a validation pass through this integration."
+  ],
+  "publicationGuardsReviewed": [
+    "Branch ref must still equal abd2b6c4f340ec968be6f0279aa0afab3a52bd37.",
+    "Verify exact selected main444707 identity and its full tree; if current main drifts, report it without silently widening this proposal.",
+    "Verify all66 before blobs against held tree and all14 accepted outputs against final tree.",
+    "Create only a normal two-parent merge preserving selected parents, then compare complete resulting tree with3de5fbf5bc0cee814b825de8f5cf402850a1ba7b.",
+    "Open as draft with Depends on #1621; preserve original trace completion/review before merge or native dispatch.",
+    "Do not add any c443 prospective provenance changes.",
+    "Complete hosted source/build/admission checks on the new head; historical passes are not new-head passes."
+  ],
+  "limitations": [
+    "No runtime, tests, build, generator or browser execution.",
+    "No local filesystem writes, branch/ref/PR changes or status polling.",
+    "Only fixed immutable source/tree objects were read and this review evidence blob retained."
+  ]
+}

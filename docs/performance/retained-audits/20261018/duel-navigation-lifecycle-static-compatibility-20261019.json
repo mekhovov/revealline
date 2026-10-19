@@ -1,0 +1,53 @@
+{
+  "kind": "DuelNavigationLifecycleStaticCompatibilityV1",
+  "at": "2026-10-19T02:19:17.539138+00:00",
+  "path": "game/couch/couch.mjs",
+  "mainBefore": "444707792f1dca6867ce227fc3467267d6061855",
+  "mainAfter": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "lifecycleHead": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+  "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "baseEqualsPreviousMain": true,
+  "sources": {
+    "base": "6f4a12dba5296b1d1681b79742bc8a38daf93860",
+    "main": "98a69d5e65188ad45ceb1f15e8fa24737b751fa7",
+    "lifecycle": "234d63e3371e3d84ad733eb2593b5518fbee0f01"
+  },
+  "changedBaseRanges": {
+    "main": [
+      [
+        2808,
+        2807
+      ],
+      [
+        3766,
+        3765
+      ],
+      [
+        4318,
+        4318
+      ]
+    ],
+    "lifecycle": [
+      [
+        1120,
+        1119
+      ],
+      [
+        4775,
+        4784
+      ],
+      [
+        4786,
+        4786
+      ]
+    ]
+  },
+  "overlap": false,
+  "jointSource": {
+    "bytes": 208137,
+    "sha256": "9797444690ae2978cda687bc40c2d7ed00aa8a5643ac467cea57b9816fcf70ec",
+    "syntaxParsedWithoutExecution": true
+  },
+  "review": "Navigation changes are confined to menu context labels and browsing options; lifecycle changes reset the accepted Resume clock and preserve neutral-tick input pulses. Their changed source ranges are disjoint. This adds source compatibility evidence only; no combined or native test pass.",
+  "functionalExecution": false
+}

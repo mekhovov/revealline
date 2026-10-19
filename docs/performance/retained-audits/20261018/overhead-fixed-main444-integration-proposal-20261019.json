@@ -1,0 +1,3427 @@
+{
+  "format": "guarded-normal-merge-source-admission-proposal-v1",
+  "createdAt": "2026-10-19T02:11:33.723Z",
+  "status": "review-only; no branch mutation",
+  "repository": "mekhovov/revealline",
+  "branch": "codex/solo-empirical-overhead-acceptance",
+  "previousIntegration": {
+    "gitBlob": "4df2a26d310c908ddd64d65187374a1d5dcdf124",
+    "bytes": 839441,
+    "sha256": "571c7869c7a3bad1ea281d31130f3a87826716eb0f211b87e71b67ac42d7ad6b",
+    "peerReceipt": "ee0409c4beba1da7548dcd25a51c25a497a9c1c2"
+  },
+  "held": {
+    "head": "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+    "tree": "50c622f54c9748c1ad695b7885a3164c092e109c",
+    "refReadback": {
+      "sha": "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+      "type": "commit",
+      "url": "https://api.github.com/repos/mekhovov/revealline/git/commits/abd2b6c4f340ec968be6f0279aa0afab3a52bd37"
+    }
+  },
+  "selectedMain": {
+    "head": "444707792f1dca6867ce227fc3467267d6061855",
+    "tree": "09560df2d4960a41f9f864672831f6cb966e526f",
+    "limit": "Explicit fixed target; later main drift is pending review and is not chased automatically."
+  },
+  "commonBase": {
+    "head": "bd15820bee10a33ba64534071d22657fbd7326d3",
+    "tree": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+    "comparisonStatus": "diverged"
+  },
+  "stage": {
+    "parents": [
+      "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+      "444707792f1dca6867ce227fc3467267d6061855"
+    ],
+    "baseTree": "50c622f54c9748c1ad695b7885a3164c092e109c",
+    "expectedTree": "3de5fbf5bc0cee814b825de8f5cf402850a1ba7b",
+    "message": "Merge main into overhead source qualification",
+    "changes": [
+      {
+        "path": "authoring/fpv-worlds/library-listing/README.md",
+        "before": null,
+        "after": {
+          "path": "authoring/fpv-worlds/library-listing/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "24f949d7e47fc645b44305091b906ad5d251c42e"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/contract.mjs",
+        "before": null,
+        "after": {
+          "path": "authoring/fpv-worlds/library-listing/contract.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a03093ac67bbcd88251e76de9545b3d9a152720c"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/harness.mjs",
+        "before": null,
+        "after": {
+          "path": "authoring/fpv-worlds/library-listing/harness.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f6b3aee072a46754480bc2b51817bfc93db67f9"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/index.html.template",
+        "before": null,
+        "after": {
+          "path": "authoring/fpv-worlds/library-listing/index.html.template",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cccd1b6cd5070fff35afd28d44f7ddc8c471d275"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/prepare.mjs",
+        "before": null,
+        "after": {
+          "path": "authoring/fpv-worlds/library-listing/prepare.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "32b3c5371c9ba039a17e7ee7b2258ddf66bc5cde"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/style.css",
+        "before": null,
+        "after": {
+          "path": "authoring/fpv-worlds/library-listing/style.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1819b6ee79cf5df6a7e24ebe1b987904161a224d"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/verify-prepare.mjs",
+        "before": null,
+        "after": {
+          "path": "authoring/fpv-worlds/library-listing/verify-prepare.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "529f006d5dcaf9d9a8bbb1641bedb1ea98cc8fb2"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/verify.mjs",
+        "before": null,
+        "after": {
+          "path": "authoring/fpv-worlds/library-listing/verify.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74fa7a276fcffa666a2aa8b1a23216994e0d2f10"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/README.md",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "69aecb39982676afa3146189984ddb4203193d2a"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/combined-qualification-complete-receipt.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/combined-qualification-complete-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b73eafb2d3812dde87177d92011b42276638b32f"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/company-original-members-receipt.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/company-original-members-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bc65966479ac59686fac806940face13bdd88354"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/evidence-inventory.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/evidence-inventory.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b3b5f70fe8ef690a2210b1b056b861d8d8df4172"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/http-identity-receipt.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/http-identity-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "617a63d85206b7479f8af9083e94881e6bf5356a"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/identity.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/identity.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c28517620685f5fdcf704c8729682a1f238b3ee1"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/independent-helper-review-20261016.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/independent-helper-review-20261016.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c76bba870574b2ae42ecb174b338222c9ade9449"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-pass.tap",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-pass.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ee37fd157a8ce656d0e7999475e027bf39ae37d7"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-red.tap.gz",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-red.tap.gz",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "181a179fca36ff3a130b4b07e54300ba1e6b32e5"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepared-stage-safety.tap",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepared-stage-safety.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "41cb0e161eb18673e0223ab6ee1659a494bac79a"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-first-report.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-first-report.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c9cb1eaf05e751fa540c8b1faf544111e3c223cc"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-first.png",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-first.png",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5c555d8b7bfb9f957084be635ba067a78832cdf2"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-console.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-console.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0637a088a01e8ddab3bf3fa98dbe804cbde1a0dc"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-report.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-report.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1c17ed1d6a68037b518a578d832e5b4cc55bb6b9"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen.png",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen.png",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5c555d8b7bfb9f957084be635ba067a78832cdf2"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-receipt.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4153fc45c662cde3c1ce55d7f214df1d8bb119cf"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-reconciliation-20261016.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-reconciliation-20261016.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "179d7d8557f47148c02932868687e6b7d8d33b7e"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-identity.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-identity.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da514b52f94a49962841904967bef54be6ffce3e"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-safety-tests.tap",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-safety-tests.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "94fa7ab873f4aa9cb58e2c07053592eeeb56f544"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/public-deployment-marker.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/public-deployment-marker.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c3e75652e77a1fbd47be9e2734afb4fa130a9d5c"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/public-http-identity.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/public-http-identity.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3b2ec56a36eba8d58e13dd1e6e5cc041aeaac63e"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/qualification-receipt.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/qualification-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ea68f3ae07adc9067a7543c84922c697b96bdc53"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/reproducible-prepare-tests.tap",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/reproducible-prepare-tests.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "32a8435f788320a399061198dc224348314ae2a5"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/safety-checks.tap",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/safety-checks.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7896f3a5f90fee98b45bfbaaee7c069d5a000be4"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/source-preservation.json",
+        "before": null,
+        "after": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/source-preservation.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7344ebf266a1bb62233bbb46714222db37f56d2b"
+        }
+      },
+      {
+        "path": "docs/fpv-continuous-delivery.md",
+        "before": {
+          "path": "docs/fpv-continuous-delivery.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b587b9b1ab98c8ccb8686eafb89cd602d89e2d02"
+        },
+        "after": {
+          "path": "docs/fpv-continuous-delivery.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9ed891b55b291d7b792a264d0628e6b0ed52a98e"
+        }
+      },
+      {
+        "path": "docs/fpv-large-worlds-delivery-plan.md",
+        "before": {
+          "path": "docs/fpv-large-worlds-delivery-plan.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6c3abfd4a9ca4c9253c9847e251c0a888517730a"
+        },
+        "after": {
+          "path": "docs/fpv-large-worlds-delivery-plan.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6d35a053c198bc620b4501733f81ed13f26db1b7"
+        }
+      },
+      {
+        "path": "docs/survival-suspend-assessment.md",
+        "before": null,
+        "after": {
+          "path": "docs/survival-suspend-assessment.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0188b0725a3e33badab40e482208ea9900fb3960"
+        }
+      },
+      {
+        "path": "game/app.mjs",
+        "before": {
+          "path": "game/app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb"
+        },
+        "after": {
+          "path": "game/app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0ed1950df2bc62e9c72000454cae37cc1dc44a5a"
+        }
+      },
+      {
+        "path": "game/couch/couch-music-host.mjs",
+        "before": {
+          "path": "game/couch/couch-music-host.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "aa2d1c828fc9d7a9f6f8a8a355af2d511c7495b8"
+        },
+        "after": {
+          "path": "game/couch/couch-music-host.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2e4de410d668a8c0150d3851de7cba9fd7b1c3bd"
+        }
+      },
+      {
+        "path": "game/i18n/catalogs.mjs",
+        "before": {
+          "path": "game/i18n/catalogs.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da55b6ed67d125e7d86015fb3024f47bef8ddccb"
+        },
+        "after": {
+          "path": "game/i18n/catalogs.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1126df4a073262353d0c73de5fed15b561b1075c"
+        }
+      },
+      {
+        "path": "game/index.html",
+        "before": {
+          "path": "game/index.html",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "93af395bf479b57f5d617761b78fe6d1202c5282"
+        },
+        "after": {
+          "path": "game/index.html",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d407c422884e2b9e8c983e4e152c7e70cbeb6f3d"
+        }
+      },
+      {
+        "path": "game/locales/en/interface.json",
+        "before": {
+          "path": "game/locales/en/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a9f2afab3a547c9f60ae20c6e6e1d62620c63c2a"
+        },
+        "after": {
+          "path": "game/locales/en/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f07f59d71e1d44f0532eefc1c9161bb76d0f9b5"
+        }
+      },
+      {
+        "path": "game/locales/uk/interface.json",
+        "before": {
+          "path": "game/locales/uk/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "06b881122b8fbec7e6f1423a56bc4ae1ae2af371"
+        },
+        "after": {
+          "path": "game/locales/uk/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "772095b830769472d547ff8c0a82cdc8f576391d"
+        }
+      },
+      {
+        "path": "game/snake/classic-app.mjs",
+        "before": {
+          "path": "game/snake/classic-app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d1c00cdba5eec5d274f79a6226b20f3d8213644d"
+        },
+        "after": {
+          "path": "game/snake/classic-app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7e305d25efd222aa9b9487d99c2400e9ba38560a"
+        }
+      },
+      {
+        "path": "game/test/capture-navigation-context-host.test.mjs",
+        "before": null,
+        "after": {
+          "path": "game/test/capture-navigation-context-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "656de185d92bc71e710237127ecea4bbdcd6ca11"
+        }
+      },
+      {
+        "path": "game/test/classic-snake-ui.test.mjs",
+        "before": {
+          "path": "game/test/classic-snake-ui.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "41024673668c55c0e2ec2551903595f1a4d8c8b1"
+        },
+        "after": {
+          "path": "game/test/classic-snake-ui.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cf74f38f92f60300a7de7d839d18095bb1072749"
+        }
+      },
+      {
+        "path": "game/test/continuous-play-preferences.test.mjs",
+        "before": null,
+        "after": {
+          "path": "game/test/continuous-play-preferences.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ad02e230e261359493626065ae962a384c51deb0"
+        }
+      },
+      {
+        "path": "game/test/couch-audio-catalogue-demand.test.mjs",
+        "before": null,
+        "after": {
+          "path": "game/test/couch-audio-catalogue-demand.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a124930b551bf56aaac34c01b21cdc4e60bfc6e4"
+        }
+      },
+      {
+        "path": "game/test/edition-solo-host.test.mjs",
+        "before": {
+          "path": "game/test/edition-solo-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4c9cfd079707824092a91e341cb50aeffe5734cc"
+        },
+        "after": {
+          "path": "game/test/edition-solo-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b3c7239c1080b5d7badfb16aa4913c04ec95a044"
+        }
+      },
+      {
+        "path": "game/test/global-settings-tools.test.mjs",
+        "before": {
+          "path": "game/test/global-settings-tools.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "24f85d3d40c167e10452383111c67aede4cce2d7"
+        },
+        "after": {
+          "path": "game/test/global-settings-tools.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9344b49a00c15141da4753134da15002b8ea31e7"
+        }
+      },
+      {
+        "path": "game/test/helpers/survival-roundtrip.mjs",
+        "before": null,
+        "after": {
+          "path": "game/test/helpers/survival-roundtrip.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e4a5ef2ac7d499a914270fff7c045d34ef1b2c56"
+        }
+      },
+      {
+        "path": "game/test/overflight-suspend-assessment.test.mjs",
+        "before": null,
+        "after": {
+          "path": "game/test/overflight-suspend-assessment.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9165d7c69aeba5acaabb2b7d712d61e1736e65fe"
+        }
+      },
+      {
+        "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+        "before": {
+          "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f26fe925daf68b52c7470e37e6e2032c7fa51c41"
+        },
+        "after": {
+          "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a765711f91ec813b5835539a7704909e72055b58"
+        }
+      },
+      {
+        "path": "game/test/soundtrack-host.test.mjs",
+        "before": {
+          "path": "game/test/soundtrack-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "542454f59f5353a0ca7af1fecefe9fd542915ee4"
+        },
+        "after": {
+          "path": "game/test/soundtrack-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f8f753f9727ba3174f54a6959a916a5da412a9e1"
+        }
+      },
+      {
+        "path": "game/test/soundtrack-panel.test.mjs",
+        "before": {
+          "path": "game/test/soundtrack-panel.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fff6f285dafaa68fb491db0d11a6fb98de2d0ff0"
+        },
+        "after": {
+          "path": "game/test/soundtrack-panel.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9c50de59e2f44949e4a4563374806ee3c511bbcc"
+        }
+      },
+      {
+        "path": "game/ui/continuous-play.mjs",
+        "before": {
+          "path": "game/ui/continuous-play.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "154c08de8c48e5f60ac200d7d7933956406f5353"
+        },
+        "after": {
+          "path": "game/ui/continuous-play.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "44fe211abd96b33cdd8122ccb66e4f716fa5d26a"
+        }
+      },
+      {
+        "path": "game/ui/game-shell.css",
+        "before": {
+          "path": "game/ui/game-shell.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6e5e0b8146f0e91c39eded7ec937d1bc8e939e25"
+        },
+        "after": {
+          "path": "game/ui/game-shell.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d9293746818d7018048fca23994ea2a785b7d7a1"
+        }
+      },
+      {
+        "path": "game/ui/game-shell.mjs",
+        "before": {
+          "path": "game/ui/game-shell.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6f27527b63bf33cac9ed84afd52cc197d0afa72f"
+        },
+        "after": {
+          "path": "game/ui/game-shell.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "79c2331bff44bbc22cf94666a322a1484a1234bb"
+        }
+      },
+      {
+        "path": "game/ui/global-settings-tools.mjs",
+        "before": {
+          "path": "game/ui/global-settings-tools.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9fc419aba9d84f87aca0e0e497143d9327fa39ba"
+        },
+        "after": {
+          "path": "game/ui/global-settings-tools.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5dd2ba796d24413567c9dc031db574f9c8670669"
+        }
+      },
+      {
+        "path": "game/ui/global-settings-view.css",
+        "before": {
+          "path": "game/ui/global-settings-view.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "574d3ec7dd0d7b6628ffe0463ac99208d7faae11"
+        },
+        "after": {
+          "path": "game/ui/global-settings-view.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bba527b52a78dddb5bebb42a002e8db990182be1"
+        }
+      },
+      {
+        "path": "game/ui/global-settings-view.mjs",
+        "before": {
+          "path": "game/ui/global-settings-view.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "627db69019fae3aa834e928dce82043a9bd6d8be"
+        },
+        "after": {
+          "path": "game/ui/global-settings-view.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a36ff5f1ee56e83c133480c02121279578baef1c"
+        }
+      },
+      {
+        "path": "game/ui/journey-chooser.mjs",
+        "before": {
+          "path": "game/ui/journey-chooser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf476ed2d470e8377bad0d8af7825b5da3049dab"
+        },
+        "after": {
+          "path": "game/ui/journey-chooser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f423d478869ead76642d53aefcd7572a9b3910"
+        }
+      },
+      {
+        "path": "game/ui/mission-library-browser.mjs",
+        "before": {
+          "path": "game/ui/mission-library-browser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e295f3202293e001716cb50a52bd3d95268af859"
+        },
+        "after": {
+          "path": "game/ui/mission-library-browser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f33470e358aa8cc5e0593f87172cf5aed924b244"
+        }
+      },
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "before": {
+          "path": "game/ui/soundtrack-panel.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6bc193e24ecbf36b9de764e6a59c8829800176cd"
+        },
+        "after": {
+          "path": "game/ui/soundtrack-panel.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f7894242e9572eccff97bb997aba9361e17a699"
+        }
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+        "before": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "170d97b0b5f339769e161de4def9d27e69bdfdab"
+        },
+        "after": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2879c44a910233ee05dc34ef15f7b689a7de5afa"
+        }
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "before": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9499ede569fb1e9b525bb7ca5b871ce2465361d5"
+        },
+        "after": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e29ba9c538d80da47d79932b4d873e68f56118ef"
+        }
+      },
+      {
+        "path": "optional-practice/civilian-fpv/style.css",
+        "before": {
+          "path": "optional-practice/civilian-fpv/style.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b15081f84dd07689c8c117b498e0821557d01c0f"
+        },
+        "after": {
+          "path": "optional-practice/civilian-fpv/style.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "441be5963d9789d58e1049da74e9b6a8539fba8e"
+        }
+      }
+    ]
+  },
+  "fullUnion": {
+    "computedFromMain": "3de5fbf5bc0cee814b825de8f5cf402850a1ba7b",
+    "computedFromHeld": "3de5fbf5bc0cee814b825de8f5cf402850a1ba7b",
+    "equal": true,
+    "mainChanges": 66,
+    "heldIncludingTraceChanges": 35,
+    "collisions": [],
+    "complete": true,
+    "inventory": [
+      {
+        "path": "authoring/fpv-worlds/library-listing/README.md",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "authoring/fpv-worlds/library-listing/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "24f949d7e47fc645b44305091b906ad5d251c42e"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/contract.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "authoring/fpv-worlds/library-listing/contract.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a03093ac67bbcd88251e76de9545b3d9a152720c"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/harness.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "authoring/fpv-worlds/library-listing/harness.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f6b3aee072a46754480bc2b51817bfc93db67f9"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/index.html.template",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "authoring/fpv-worlds/library-listing/index.html.template",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cccd1b6cd5070fff35afd28d44f7ddc8c471d275"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/prepare.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "authoring/fpv-worlds/library-listing/prepare.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "32b3c5371c9ba039a17e7ee7b2258ddf66bc5cde"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/style.css",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "authoring/fpv-worlds/library-listing/style.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1819b6ee79cf5df6a7e24ebe1b987904161a224d"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/verify-prepare.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "authoring/fpv-worlds/library-listing/verify-prepare.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "529f006d5dcaf9d9a8bbb1641bedb1ea98cc8fb2"
+        }
+      },
+      {
+        "path": "authoring/fpv-worlds/library-listing/verify.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "authoring/fpv-worlds/library-listing/verify.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74fa7a276fcffa666a2aa8b1a23216994e0d2f10"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/README.md",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "69aecb39982676afa3146189984ddb4203193d2a"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/combined-qualification-complete-receipt.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/combined-qualification-complete-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b73eafb2d3812dde87177d92011b42276638b32f"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/company-original-members-receipt.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/company-original-members-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bc65966479ac59686fac806940face13bdd88354"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/evidence-inventory.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/evidence-inventory.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b3b5f70fe8ef690a2210b1b056b861d8d8df4172"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/http-identity-receipt.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/http-identity-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "617a63d85206b7479f8af9083e94881e6bf5356a"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/identity.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/identity.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c28517620685f5fdcf704c8729682a1f238b3ee1"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/independent-helper-review-20261016.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/independent-helper-review-20261016.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c76bba870574b2ae42ecb174b338222c9ade9449"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-pass.tap",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-pass.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ee37fd157a8ce656d0e7999475e027bf39ae37d7"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-red.tap.gz",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepare-boundaries-red.tap.gz",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "181a179fca36ff3a130b4b07e54300ba1e6b32e5"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepared-stage-safety.tap",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/independent-prepared-stage-safety.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "41cb0e161eb18673e0223ab6ee1659a494bac79a"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-first-report.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-first-report.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c9cb1eaf05e751fa540c8b1faf544111e3c223cc"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-first.png",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-first.png",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5c555d8b7bfb9f957084be635ba067a78832cdf2"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-console.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-console.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0637a088a01e8ddab3bf3fa98dbe804cbde1a0dc"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-report.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen-report.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1c17ed1d6a68037b518a578d832e5b4cc55bb6b9"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen.png",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-listing-reopen.png",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5c555d8b7bfb9f957084be635ba067a78832cdf2"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-receipt.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4153fc45c662cde3c1ce55d7f214df1d8bb119cf"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/native-reconciliation-20261016.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/native-reconciliation-20261016.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "179d7d8557f47148c02932868687e6b7d8d33b7e"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-identity.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-identity.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da514b52f94a49962841904967bef54be6ffce3e"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-safety-tests.tap",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/prepared-stage-safety-tests.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "94fa7ab873f4aa9cb58e2c07053592eeeb56f544"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/public-deployment-marker.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/public-deployment-marker.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c3e75652e77a1fbd47be9e2734afb4fa130a9d5c"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/public-http-identity.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/public-http-identity.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3b2ec56a36eba8d58e13dd1e6e5cc041aeaac63e"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/qualification-receipt.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/qualification-receipt.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ea68f3ae07adc9067a7543c84922c697b96bdc53"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/reproducible-prepare-tests.tap",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/reproducible-prepare-tests.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "32a8435f788320a399061198dc224348314ae2a5"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/safety-checks.tap",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/safety-checks.tap",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7896f3a5f90fee98b45bfbaaee7c069d5a000be4"
+        }
+      },
+      {
+        "path": "docs/evidence/fpv-library-listing-native-20261016/source-preservation.json",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/evidence/fpv-library-listing-native-20261016/source-preservation.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7344ebf266a1bb62233bbb46714222db37f56d2b"
+        }
+      },
+      {
+        "path": "docs/fpv-continuous-delivery.md",
+        "status": "modified",
+        "base": {
+          "path": "docs/fpv-continuous-delivery.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b587b9b1ab98c8ccb8686eafb89cd602d89e2d02"
+        },
+        "held": {
+          "path": "docs/fpv-continuous-delivery.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b587b9b1ab98c8ccb8686eafb89cd602d89e2d02"
+        },
+        "main": {
+          "path": "docs/fpv-continuous-delivery.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9ed891b55b291d7b792a264d0628e6b0ed52a98e"
+        }
+      },
+      {
+        "path": "docs/fpv-large-worlds-delivery-plan.md",
+        "status": "modified",
+        "base": {
+          "path": "docs/fpv-large-worlds-delivery-plan.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6c3abfd4a9ca4c9253c9847e251c0a888517730a"
+        },
+        "held": {
+          "path": "docs/fpv-large-worlds-delivery-plan.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6c3abfd4a9ca4c9253c9847e251c0a888517730a"
+        },
+        "main": {
+          "path": "docs/fpv-large-worlds-delivery-plan.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6d35a053c198bc620b4501733f81ed13f26db1b7"
+        }
+      },
+      {
+        "path": "docs/survival-suspend-assessment.md",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "docs/survival-suspend-assessment.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0188b0725a3e33badab40e482208ea9900fb3960"
+        }
+      },
+      {
+        "path": "game/app.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb"
+        },
+        "held": {
+          "path": "game/app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb"
+        },
+        "main": {
+          "path": "game/app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0ed1950df2bc62e9c72000454cae37cc1dc44a5a"
+        }
+      },
+      {
+        "path": "game/couch/couch-music-host.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/couch/couch-music-host.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "aa2d1c828fc9d7a9f6f8a8a355af2d511c7495b8"
+        },
+        "held": {
+          "path": "game/couch/couch-music-host.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "aa2d1c828fc9d7a9f6f8a8a355af2d511c7495b8"
+        },
+        "main": {
+          "path": "game/couch/couch-music-host.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2e4de410d668a8c0150d3851de7cba9fd7b1c3bd"
+        }
+      },
+      {
+        "path": "game/i18n/catalogs.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/i18n/catalogs.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da55b6ed67d125e7d86015fb3024f47bef8ddccb"
+        },
+        "held": {
+          "path": "game/i18n/catalogs.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da55b6ed67d125e7d86015fb3024f47bef8ddccb"
+        },
+        "main": {
+          "path": "game/i18n/catalogs.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1126df4a073262353d0c73de5fed15b561b1075c"
+        }
+      },
+      {
+        "path": "game/index.html",
+        "status": "modified",
+        "base": {
+          "path": "game/index.html",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "93af395bf479b57f5d617761b78fe6d1202c5282"
+        },
+        "held": {
+          "path": "game/index.html",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "93af395bf479b57f5d617761b78fe6d1202c5282"
+        },
+        "main": {
+          "path": "game/index.html",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d407c422884e2b9e8c983e4e152c7e70cbeb6f3d"
+        }
+      },
+      {
+        "path": "game/locales/en/interface.json",
+        "status": "modified",
+        "base": {
+          "path": "game/locales/en/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a9f2afab3a547c9f60ae20c6e6e1d62620c63c2a"
+        },
+        "held": {
+          "path": "game/locales/en/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a9f2afab3a547c9f60ae20c6e6e1d62620c63c2a"
+        },
+        "main": {
+          "path": "game/locales/en/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f07f59d71e1d44f0532eefc1c9161bb76d0f9b5"
+        }
+      },
+      {
+        "path": "game/locales/uk/interface.json",
+        "status": "modified",
+        "base": {
+          "path": "game/locales/uk/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "06b881122b8fbec7e6f1423a56bc4ae1ae2af371"
+        },
+        "held": {
+          "path": "game/locales/uk/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "06b881122b8fbec7e6f1423a56bc4ae1ae2af371"
+        },
+        "main": {
+          "path": "game/locales/uk/interface.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "772095b830769472d547ff8c0a82cdc8f576391d"
+        }
+      },
+      {
+        "path": "game/snake/classic-app.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/snake/classic-app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d1c00cdba5eec5d274f79a6226b20f3d8213644d"
+        },
+        "held": {
+          "path": "game/snake/classic-app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d1c00cdba5eec5d274f79a6226b20f3d8213644d"
+        },
+        "main": {
+          "path": "game/snake/classic-app.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7e305d25efd222aa9b9487d99c2400e9ba38560a"
+        }
+      },
+      {
+        "path": "game/test/capture-navigation-context-host.test.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "game/test/capture-navigation-context-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "656de185d92bc71e710237127ecea4bbdcd6ca11"
+        }
+      },
+      {
+        "path": "game/test/classic-snake-ui.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/test/classic-snake-ui.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "41024673668c55c0e2ec2551903595f1a4d8c8b1"
+        },
+        "held": {
+          "path": "game/test/classic-snake-ui.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "41024673668c55c0e2ec2551903595f1a4d8c8b1"
+        },
+        "main": {
+          "path": "game/test/classic-snake-ui.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cf74f38f92f60300a7de7d839d18095bb1072749"
+        }
+      },
+      {
+        "path": "game/test/continuous-play-preferences.test.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "game/test/continuous-play-preferences.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ad02e230e261359493626065ae962a384c51deb0"
+        }
+      },
+      {
+        "path": "game/test/couch-audio-catalogue-demand.test.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "game/test/couch-audio-catalogue-demand.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a124930b551bf56aaac34c01b21cdc4e60bfc6e4"
+        }
+      },
+      {
+        "path": "game/test/edition-solo-host.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/test/edition-solo-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4c9cfd079707824092a91e341cb50aeffe5734cc"
+        },
+        "held": {
+          "path": "game/test/edition-solo-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4c9cfd079707824092a91e341cb50aeffe5734cc"
+        },
+        "main": {
+          "path": "game/test/edition-solo-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b3c7239c1080b5d7badfb16aa4913c04ec95a044"
+        }
+      },
+      {
+        "path": "game/test/global-settings-tools.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/test/global-settings-tools.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "24f85d3d40c167e10452383111c67aede4cce2d7"
+        },
+        "held": {
+          "path": "game/test/global-settings-tools.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "24f85d3d40c167e10452383111c67aede4cce2d7"
+        },
+        "main": {
+          "path": "game/test/global-settings-tools.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9344b49a00c15141da4753134da15002b8ea31e7"
+        }
+      },
+      {
+        "path": "game/test/helpers/survival-roundtrip.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "game/test/helpers/survival-roundtrip.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e4a5ef2ac7d499a914270fff7c045d34ef1b2c56"
+        }
+      },
+      {
+        "path": "game/test/overflight-suspend-assessment.test.mjs",
+        "status": "added",
+        "base": null,
+        "held": null,
+        "main": {
+          "path": "game/test/overflight-suspend-assessment.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9165d7c69aeba5acaabb2b7d712d61e1736e65fe"
+        }
+      },
+      {
+        "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f26fe925daf68b52c7470e37e6e2032c7fa51c41"
+        },
+        "held": {
+          "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f26fe925daf68b52c7470e37e6e2032c7fa51c41"
+        },
+        "main": {
+          "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a765711f91ec813b5835539a7704909e72055b58"
+        }
+      },
+      {
+        "path": "game/test/soundtrack-host.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/test/soundtrack-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "542454f59f5353a0ca7af1fecefe9fd542915ee4"
+        },
+        "held": {
+          "path": "game/test/soundtrack-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "542454f59f5353a0ca7af1fecefe9fd542915ee4"
+        },
+        "main": {
+          "path": "game/test/soundtrack-host.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f8f753f9727ba3174f54a6959a916a5da412a9e1"
+        }
+      },
+      {
+        "path": "game/test/soundtrack-panel.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/test/soundtrack-panel.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fff6f285dafaa68fb491db0d11a6fb98de2d0ff0"
+        },
+        "held": {
+          "path": "game/test/soundtrack-panel.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fff6f285dafaa68fb491db0d11a6fb98de2d0ff0"
+        },
+        "main": {
+          "path": "game/test/soundtrack-panel.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9c50de59e2f44949e4a4563374806ee3c511bbcc"
+        }
+      },
+      {
+        "path": "game/ui/continuous-play.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/ui/continuous-play.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "154c08de8c48e5f60ac200d7d7933956406f5353"
+        },
+        "held": {
+          "path": "game/ui/continuous-play.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "154c08de8c48e5f60ac200d7d7933956406f5353"
+        },
+        "main": {
+          "path": "game/ui/continuous-play.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "44fe211abd96b33cdd8122ccb66e4f716fa5d26a"
+        }
+      },
+      {
+        "path": "game/ui/game-shell.css",
+        "status": "modified",
+        "base": {
+          "path": "game/ui/game-shell.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6e5e0b8146f0e91c39eded7ec937d1bc8e939e25"
+        },
+        "held": {
+          "path": "game/ui/game-shell.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6e5e0b8146f0e91c39eded7ec937d1bc8e939e25"
+        },
+        "main": {
+          "path": "game/ui/game-shell.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d9293746818d7018048fca23994ea2a785b7d7a1"
+        }
+      },
+      {
+        "path": "game/ui/game-shell.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/ui/game-shell.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6f27527b63bf33cac9ed84afd52cc197d0afa72f"
+        },
+        "held": {
+          "path": "game/ui/game-shell.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6f27527b63bf33cac9ed84afd52cc197d0afa72f"
+        },
+        "main": {
+          "path": "game/ui/game-shell.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "79c2331bff44bbc22cf94666a322a1484a1234bb"
+        }
+      },
+      {
+        "path": "game/ui/global-settings-tools.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/ui/global-settings-tools.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9fc419aba9d84f87aca0e0e497143d9327fa39ba"
+        },
+        "held": {
+          "path": "game/ui/global-settings-tools.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9fc419aba9d84f87aca0e0e497143d9327fa39ba"
+        },
+        "main": {
+          "path": "game/ui/global-settings-tools.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5dd2ba796d24413567c9dc031db574f9c8670669"
+        }
+      },
+      {
+        "path": "game/ui/global-settings-view.css",
+        "status": "modified",
+        "base": {
+          "path": "game/ui/global-settings-view.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "574d3ec7dd0d7b6628ffe0463ac99208d7faae11"
+        },
+        "held": {
+          "path": "game/ui/global-settings-view.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "574d3ec7dd0d7b6628ffe0463ac99208d7faae11"
+        },
+        "main": {
+          "path": "game/ui/global-settings-view.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bba527b52a78dddb5bebb42a002e8db990182be1"
+        }
+      },
+      {
+        "path": "game/ui/global-settings-view.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/ui/global-settings-view.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "627db69019fae3aa834e928dce82043a9bd6d8be"
+        },
+        "held": {
+          "path": "game/ui/global-settings-view.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "627db69019fae3aa834e928dce82043a9bd6d8be"
+        },
+        "main": {
+          "path": "game/ui/global-settings-view.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a36ff5f1ee56e83c133480c02121279578baef1c"
+        }
+      },
+      {
+        "path": "game/ui/journey-chooser.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/ui/journey-chooser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf476ed2d470e8377bad0d8af7825b5da3049dab"
+        },
+        "held": {
+          "path": "game/ui/journey-chooser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf476ed2d470e8377bad0d8af7825b5da3049dab"
+        },
+        "main": {
+          "path": "game/ui/journey-chooser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f423d478869ead76642d53aefcd7572a9b3910"
+        }
+      },
+      {
+        "path": "game/ui/mission-library-browser.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/ui/mission-library-browser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e295f3202293e001716cb50a52bd3d95268af859"
+        },
+        "held": {
+          "path": "game/ui/mission-library-browser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e295f3202293e001716cb50a52bd3d95268af859"
+        },
+        "main": {
+          "path": "game/ui/mission-library-browser.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f33470e358aa8cc5e0593f87172cf5aed924b244"
+        }
+      },
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "status": "modified",
+        "base": {
+          "path": "game/ui/soundtrack-panel.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6bc193e24ecbf36b9de764e6a59c8829800176cd"
+        },
+        "held": {
+          "path": "game/ui/soundtrack-panel.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6bc193e24ecbf36b9de764e6a59c8829800176cd"
+        },
+        "main": {
+          "path": "game/ui/soundtrack-panel.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f7894242e9572eccff97bb997aba9361e17a699"
+        }
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+        "status": "modified",
+        "base": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "170d97b0b5f339769e161de4def9d27e69bdfdab"
+        },
+        "held": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "170d97b0b5f339769e161de4def9d27e69bdfdab"
+        },
+        "main": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2879c44a910233ee05dc34ef15f7b689a7de5afa"
+        }
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "status": "modified",
+        "base": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9499ede569fb1e9b525bb7ca5b871ce2465361d5"
+        },
+        "held": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9499ede569fb1e9b525bb7ca5b871ce2465361d5"
+        },
+        "main": {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e29ba9c538d80da47d79932b4d873e68f56118ef"
+        }
+      },
+      {
+        "path": "optional-practice/civilian-fpv/style.css",
+        "status": "modified",
+        "base": {
+          "path": "optional-practice/civilian-fpv/style.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b15081f84dd07689c8c117b498e0821557d01c0f"
+        },
+        "held": {
+          "path": "optional-practice/civilian-fpv/style.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b15081f84dd07689c8c117b498e0821557d01c0f"
+        },
+        "main": {
+          "path": "optional-practice/civilian-fpv/style.css",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "441be5963d9789d58e1049da74e9b6a8539fba8e"
+        }
+      },
+      {
+        "path": ".github/workflows/solo-native-package-consumer.yml",
+        "status": "modified",
+        "base": {
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6"
+        },
+        "held": {
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1faa02770851a633b6b1bc33ee133a0657d81bb5"
+        },
+        "main": {
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6"
+        }
+      },
+      {
+        "path": "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d184dcf1870a15856e029769ddab76fcecb3cb3d"
+        },
+        "main": null
+      },
+      {
+        "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f4db3ee085da60b4210158af7c6445718350b494"
+        },
+        "main": null
+      },
+      {
+        "path": "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e8c91f7eefb112ac7f16fa5a05ce4a8a00676407"
+        },
+        "main": null
+      },
+      {
+        "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "78c4a5f588b13097744746539c078acd9128220d"
+        },
+        "main": null
+      },
+      {
+        "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6db9e784e0cf28fdacb313035db3009d71eef646"
+        },
+        "main": null
+      },
+      {
+        "path": "scripts/qualify-solo-diagnostics.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/qualify-solo-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "954d79349078934e4c22ee0f3e26156a9da0196c"
+        },
+        "held": {
+          "path": "scripts/qualify-solo-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1d8b129a3e643332e93ed393ec39b39f87e450ae"
+        },
+        "main": {
+          "path": "scripts/qualify-solo-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "954d79349078934e4c22ee0f3e26156a9da0196c"
+        }
+      },
+      {
+        "path": "scripts/qualify-solo-runtime.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54"
+        },
+        "held": {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb"
+        },
+        "main": {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54"
+        }
+      },
+      {
+        "path": "scripts/solo-frame-trace-executed-source.mjs",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "scripts/solo-frame-trace-executed-source.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "95953fb727a0e61b04e8ca253af3eb1596ddd0ab"
+        },
+        "main": null
+      },
+      {
+        "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bba0507688112325c343c8e37248233aea240d7c"
+        },
+        "held": {
+          "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a3c787f2450f546542ef6b56a6e2251f03f09ed3"
+        },
+        "main": {
+          "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bba0507688112325c343c8e37248233aea240d7c"
+        }
+      },
+      {
+        "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0c88d60746de697e23cf3ebb737ab20e03cbb31a"
+        },
+        "main": null
+      },
+      {
+        "path": "scripts/solo-frame-trace.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-frame-trace.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f895f933a4bf5c7752d0cfb34ac7c8c780af947b"
+        },
+        "held": {
+          "path": "scripts/solo-frame-trace.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5c831aa0c0027391bd7cbdf44d6eeceeb10f9413"
+        },
+        "main": {
+          "path": "scripts/solo-frame-trace.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f895f933a4bf5c7752d0cfb34ac7c8c780af947b"
+        }
+      },
+      {
+        "path": "scripts/solo-native-measurement-consumer.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-native-measurement-consumer.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d4578b4f1d0ddef7cf7c92a649f2269ae44aa79a"
+        },
+        "held": {
+          "path": "scripts/solo-native-measurement-consumer.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0fd59e6020ead2b3a7ad851e917e0ca8632f3ff2"
+        },
+        "main": {
+          "path": "scripts/solo-native-measurement-consumer.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d4578b4f1d0ddef7cf7c92a649f2269ae44aa79a"
+        }
+      },
+      {
+        "path": "scripts/solo-overhead-acceptance.mjs",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "scripts/solo-overhead-acceptance.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "79eec3717c5c5c416053f93412fa24272cc394a2"
+        },
+        "main": null
+      },
+      {
+        "path": "scripts/solo-overhead-acceptance.test.mjs",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "scripts/solo-overhead-acceptance.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3daa44fae18f00b6b20d04ed6d23b93b30f35a8e"
+        },
+        "main": null
+      },
+      {
+        "path": "scripts/solo-overhead-declared-source.mjs",
+        "status": "added",
+        "base": null,
+        "held": {
+          "path": "scripts/solo-overhead-declared-source.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd74aa4dc4e338ea09c78a3d5a03f5a13206dbe5"
+        },
+        "main": null
+      },
+      {
+        "path": "scripts/solo-qualification-cpu-profile.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3c70bfff3d049d7ac7f96f90cfbfb6741d01e93c"
+        },
+        "held": {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c2ab48d2227b980c33be0e1fc3deb5bc077e770a"
+        },
+        "main": {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3c70bfff3d049d7ac7f96f90cfbfb6741d01e93c"
+        }
+      },
+      {
+        "path": "scripts/solo-remote-cpu-profile.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d9b7a184a80505b300f6395610479b4a1fcb5570"
+        },
+        "held": {
+          "path": "scripts/solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e9cfbca906a7bf8d7d7b797980c40376a149e8e5"
+        },
+        "main": {
+          "path": "scripts/solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d9b7a184a80505b300f6395610479b4a1fcb5570"
+        }
+      },
+      {
+        "path": "scripts/solo-remote-diagnostics.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "93903085fc95fbfa793d84edd53a48cc0d9a469a"
+        },
+        "held": {
+          "path": "scripts/solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e3b2b2ee35164a17152cb69098d77b5e1be0bb7d"
+        },
+        "main": {
+          "path": "scripts/solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "93903085fc95fbfa793d84edd53a48cc0d9a469a"
+        }
+      },
+      {
+        "path": "scripts/solo-replay-portability-diagnostic.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-replay-portability-diagnostic.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b5ebb3abcc6a65065f92ecd700382c05a541ff1b"
+        },
+        "held": {
+          "path": "scripts/solo-replay-portability-diagnostic.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6b9d1bc93633dcf8fee382a1863812c988b27cc7"
+        },
+        "main": {
+          "path": "scripts/solo-replay-portability-diagnostic.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b5ebb3abcc6a65065f92ecd700382c05a541ff1b"
+        }
+      },
+      {
+        "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d2f92e251900e4775206aaefe69617d192e8e103"
+        },
+        "held": {
+          "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "dff524e49090ed3203d1cb15af7b15f98aeb0ead"
+        },
+        "main": {
+          "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d2f92e251900e4775206aaefe69617d192e8e103"
+        }
+      },
+      {
+        "path": "scripts/solo-runtime73-measurement.test.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-runtime73-measurement.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6765b28da00d745808eab8b5310bb1f7ea81a0cd"
+        },
+        "held": {
+          "path": "scripts/solo-runtime73-measurement.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bddf5cb09109bc8a56bfa9e18d1d7e415fadb4c5"
+        },
+        "main": {
+          "path": "scripts/solo-runtime73-measurement.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6765b28da00d745808eab8b5310bb1f7ea81a0cd"
+        }
+      },
+      {
+        "path": "scripts/solo-shared-owner-declared-source.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/solo-shared-owner-declared-source.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c6216aeb54a4e1fc66667ac73ac8ff7c7501d1cb"
+        },
+        "held": {
+          "path": "scripts/solo-shared-owner-declared-source.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "657c3ae7894525b5e71699313fbcf66c56c871bc"
+        },
+        "main": {
+          "path": "scripts/solo-shared-owner-declared-source.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c6216aeb54a4e1fc66667ac73ac8ff7c7501d1cb"
+        }
+      },
+      {
+        "path": "scripts/test-solo-diagnostics-analysis.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-diagnostics-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "42034bf9c1afb24dc4be8009b6af2c5ecc511f49"
+        },
+        "held": {
+          "path": "scripts/test-solo-diagnostics-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2feb26b495845f97ee74a508ab3ccba26f4de15a"
+        },
+        "main": {
+          "path": "scripts/test-solo-diagnostics-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "42034bf9c1afb24dc4be8009b6af2c5ecc511f49"
+        }
+      },
+      {
+        "path": "scripts/test-solo-frame-trace-admission.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-frame-trace-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "01ecb56634efbd5664d16948626c740a6d8b378a"
+        },
+        "held": {
+          "path": "scripts/test-solo-frame-trace-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b9bc1199f2152c9f1777570a8dca6c07987a509a"
+        },
+        "main": {
+          "path": "scripts/test-solo-frame-trace-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "01ecb56634efbd5664d16948626c740a6d8b378a"
+        }
+      },
+      {
+        "path": "scripts/test-solo-journal-cost-admission.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-journal-cost-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6e766415b9d7a3d20561c3c895ddc971b505ce08"
+        },
+        "held": {
+          "path": "scripts/test-solo-journal-cost-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "07508313196ae894e88b088f23640fe130dfbd35"
+        },
+        "main": {
+          "path": "scripts/test-solo-journal-cost-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6e766415b9d7a3d20561c3c895ddc971b505ce08"
+        }
+      },
+      {
+        "path": "scripts/test-solo-journal-cost-analysis.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-journal-cost-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "75fdaae296b0fc713b81d63f106161aaeb0a4862"
+        },
+        "held": {
+          "path": "scripts/test-solo-journal-cost-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3a82111a78548e86f2b0794292c3b52ee5b70369"
+        },
+        "main": {
+          "path": "scripts/test-solo-journal-cost-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "75fdaae296b0fc713b81d63f106161aaeb0a4862"
+        }
+      },
+      {
+        "path": "scripts/test-solo-native-consumer-overhead.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-native-consumer-overhead.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a518a83fd388bacdd3656e7d928ebca6dd1cc929"
+        },
+        "held": {
+          "path": "scripts/test-solo-native-consumer-overhead.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "309944ece0a8c0560905aa94fe9297a31c680047"
+        },
+        "main": {
+          "path": "scripts/test-solo-native-consumer-overhead.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a518a83fd388bacdd3656e7d928ebca6dd1cc929"
+        }
+      },
+      {
+        "path": "scripts/test-solo-native-consumer-preparation.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-native-consumer-preparation.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "19ae6e3cfddbfb00fb4a42476cfa734c0703e52f"
+        },
+        "held": {
+          "path": "scripts/test-solo-native-consumer-preparation.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f7001047cfcb78ade870081e8568ee95c07b2828"
+        },
+        "main": {
+          "path": "scripts/test-solo-native-consumer-preparation.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "19ae6e3cfddbfb00fb4a42476cfa734c0703e52f"
+        }
+      },
+      {
+        "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d0b4b0c495f5f3c67a7ec0b662872759a4145cc2"
+        },
+        "held": {
+          "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "683c8cfb47ffc2e9d2d114328235cae271322c4b"
+        },
+        "main": {
+          "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d0b4b0c495f5f3c67a7ec0b662872759a4145cc2"
+        }
+      },
+      {
+        "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "450eed9ada786f837a577b48cf9e755b435d6d7c"
+        },
+        "held": {
+          "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "dfd79590ba03f19b6ae7b3ba5e552a4bdfebc06a"
+        },
+        "main": {
+          "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "450eed9ada786f837a577b48cf9e755b435d6d7c"
+        }
+      },
+      {
+        "path": "scripts/test-solo-remote-cpu-profile.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "20d383e4648e77c1cf9170a012ce95abf677358e"
+        },
+        "held": {
+          "path": "scripts/test-solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0fe96c6ae2b8a613f16e722dcb84b3122e071984"
+        },
+        "main": {
+          "path": "scripts/test-solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "20d383e4648e77c1cf9170a012ce95abf677358e"
+        }
+      },
+      {
+        "path": "scripts/test-solo-remote-diagnostics.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "676125ac6dc239e4fe135b3dc819cf84d4ebf791"
+        },
+        "held": {
+          "path": "scripts/test-solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d29304ac88f2e75152e33b805582996ce1b238"
+        },
+        "main": {
+          "path": "scripts/test-solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "676125ac6dc239e4fe135b3dc819cf84d4ebf791"
+        }
+      },
+      {
+        "path": "scripts/test-solo-replay-portability-hook.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-replay-portability-hook.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "79c5aeae1a9d0abec846cb9346a144ffc6963af2"
+        },
+        "held": {
+          "path": "scripts/test-solo-replay-portability-hook.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7bd6bbe16ad69216de54a85f61dbb0838affb423"
+        },
+        "main": {
+          "path": "scripts/test-solo-replay-portability-hook.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "79c5aeae1a9d0abec846cb9346a144ffc6963af2"
+        }
+      },
+      {
+        "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+        "status": "modified",
+        "base": {
+          "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b4ac0fa28ea316f3d79227f8f74196416cbedcbb"
+        },
+        "held": {
+          "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "84cd5bc9c127ea16a8708ca379b77bb6b8982413"
+        },
+        "main": {
+          "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b4ac0fa28ea316f3d79227f8f74196416cbedcbb"
+        }
+      }
+    ],
+    "reverseOverlay": [
+      {
+        "path": ".github/workflows/solo-native-package-consumer.yml",
+        "before": {
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6"
+        },
+        "after": {
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1faa02770851a633b6b1bc33ee133a0657d81bb5"
+        }
+      },
+      {
+        "path": "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+        "before": null,
+        "after": {
+          "path": "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d184dcf1870a15856e029769ddab76fcecb3cb3d"
+        }
+      },
+      {
+        "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+        "before": null,
+        "after": {
+          "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f4db3ee085da60b4210158af7c6445718350b494"
+        }
+      },
+      {
+        "path": "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+        "before": null,
+        "after": {
+          "path": "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e8c91f7eefb112ac7f16fa5a05ce4a8a00676407"
+        }
+      },
+      {
+        "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+        "before": null,
+        "after": {
+          "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "78c4a5f588b13097744746539c078acd9128220d"
+        }
+      },
+      {
+        "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+        "before": null,
+        "after": {
+          "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6db9e784e0cf28fdacb313035db3009d71eef646"
+        }
+      },
+      {
+        "path": "scripts/qualify-solo-diagnostics.mjs",
+        "before": {
+          "path": "scripts/qualify-solo-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "954d79349078934e4c22ee0f3e26156a9da0196c"
+        },
+        "after": {
+          "path": "scripts/qualify-solo-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1d8b129a3e643332e93ed393ec39b39f87e450ae"
+        }
+      },
+      {
+        "path": "scripts/qualify-solo-runtime.mjs",
+        "before": {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54"
+        },
+        "after": {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb"
+        }
+      },
+      {
+        "path": "scripts/solo-frame-trace-executed-source.mjs",
+        "before": null,
+        "after": {
+          "path": "scripts/solo-frame-trace-executed-source.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "95953fb727a0e61b04e8ca253af3eb1596ddd0ab"
+        }
+      },
+      {
+        "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+        "before": {
+          "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bba0507688112325c343c8e37248233aea240d7c"
+        },
+        "after": {
+          "path": "scripts/solo-frame-trace-failure-admission.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a3c787f2450f546542ef6b56a6e2251f03f09ed3"
+        }
+      },
+      {
+        "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+        "before": null,
+        "after": {
+          "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0c88d60746de697e23cf3ebb737ab20e03cbb31a"
+        }
+      },
+      {
+        "path": "scripts/solo-frame-trace.test.mjs",
+        "before": {
+          "path": "scripts/solo-frame-trace.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f895f933a4bf5c7752d0cfb34ac7c8c780af947b"
+        },
+        "after": {
+          "path": "scripts/solo-frame-trace.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5c831aa0c0027391bd7cbdf44d6eeceeb10f9413"
+        }
+      },
+      {
+        "path": "scripts/solo-native-measurement-consumer.test.mjs",
+        "before": {
+          "path": "scripts/solo-native-measurement-consumer.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d4578b4f1d0ddef7cf7c92a649f2269ae44aa79a"
+        },
+        "after": {
+          "path": "scripts/solo-native-measurement-consumer.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0fd59e6020ead2b3a7ad851e917e0ca8632f3ff2"
+        }
+      },
+      {
+        "path": "scripts/solo-overhead-acceptance.mjs",
+        "before": null,
+        "after": {
+          "path": "scripts/solo-overhead-acceptance.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "79eec3717c5c5c416053f93412fa24272cc394a2"
+        }
+      },
+      {
+        "path": "scripts/solo-overhead-acceptance.test.mjs",
+        "before": null,
+        "after": {
+          "path": "scripts/solo-overhead-acceptance.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3daa44fae18f00b6b20d04ed6d23b93b30f35a8e"
+        }
+      },
+      {
+        "path": "scripts/solo-overhead-declared-source.mjs",
+        "before": null,
+        "after": {
+          "path": "scripts/solo-overhead-declared-source.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd74aa4dc4e338ea09c78a3d5a03f5a13206dbe5"
+        }
+      },
+      {
+        "path": "scripts/solo-qualification-cpu-profile.mjs",
+        "before": {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3c70bfff3d049d7ac7f96f90cfbfb6741d01e93c"
+        },
+        "after": {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c2ab48d2227b980c33be0e1fc3deb5bc077e770a"
+        }
+      },
+      {
+        "path": "scripts/solo-remote-cpu-profile.mjs",
+        "before": {
+          "path": "scripts/solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d9b7a184a80505b300f6395610479b4a1fcb5570"
+        },
+        "after": {
+          "path": "scripts/solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e9cfbca906a7bf8d7d7b797980c40376a149e8e5"
+        }
+      },
+      {
+        "path": "scripts/solo-remote-diagnostics.mjs",
+        "before": {
+          "path": "scripts/solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "93903085fc95fbfa793d84edd53a48cc0d9a469a"
+        },
+        "after": {
+          "path": "scripts/solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e3b2b2ee35164a17152cb69098d77b5e1be0bb7d"
+        }
+      },
+      {
+        "path": "scripts/solo-replay-portability-diagnostic.mjs",
+        "before": {
+          "path": "scripts/solo-replay-portability-diagnostic.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b5ebb3abcc6a65065f92ecd700382c05a541ff1b"
+        },
+        "after": {
+          "path": "scripts/solo-replay-portability-diagnostic.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6b9d1bc93633dcf8fee382a1863812c988b27cc7"
+        }
+      },
+      {
+        "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+        "before": {
+          "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d2f92e251900e4775206aaefe69617d192e8e103"
+        },
+        "after": {
+          "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "dff524e49090ed3203d1cb15af7b15f98aeb0ead"
+        }
+      },
+      {
+        "path": "scripts/solo-runtime73-measurement.test.mjs",
+        "before": {
+          "path": "scripts/solo-runtime73-measurement.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6765b28da00d745808eab8b5310bb1f7ea81a0cd"
+        },
+        "after": {
+          "path": "scripts/solo-runtime73-measurement.test.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bddf5cb09109bc8a56bfa9e18d1d7e415fadb4c5"
+        }
+      },
+      {
+        "path": "scripts/solo-shared-owner-declared-source.mjs",
+        "before": {
+          "path": "scripts/solo-shared-owner-declared-source.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c6216aeb54a4e1fc66667ac73ac8ff7c7501d1cb"
+        },
+        "after": {
+          "path": "scripts/solo-shared-owner-declared-source.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "657c3ae7894525b5e71699313fbcf66c56c871bc"
+        }
+      },
+      {
+        "path": "scripts/test-solo-diagnostics-analysis.mjs",
+        "before": {
+          "path": "scripts/test-solo-diagnostics-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "42034bf9c1afb24dc4be8009b6af2c5ecc511f49"
+        },
+        "after": {
+          "path": "scripts/test-solo-diagnostics-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2feb26b495845f97ee74a508ab3ccba26f4de15a"
+        }
+      },
+      {
+        "path": "scripts/test-solo-frame-trace-admission.mjs",
+        "before": {
+          "path": "scripts/test-solo-frame-trace-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "01ecb56634efbd5664d16948626c740a6d8b378a"
+        },
+        "after": {
+          "path": "scripts/test-solo-frame-trace-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b9bc1199f2152c9f1777570a8dca6c07987a509a"
+        }
+      },
+      {
+        "path": "scripts/test-solo-journal-cost-admission.mjs",
+        "before": {
+          "path": "scripts/test-solo-journal-cost-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6e766415b9d7a3d20561c3c895ddc971b505ce08"
+        },
+        "after": {
+          "path": "scripts/test-solo-journal-cost-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "07508313196ae894e88b088f23640fe130dfbd35"
+        }
+      },
+      {
+        "path": "scripts/test-solo-journal-cost-analysis.mjs",
+        "before": {
+          "path": "scripts/test-solo-journal-cost-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "75fdaae296b0fc713b81d63f106161aaeb0a4862"
+        },
+        "after": {
+          "path": "scripts/test-solo-journal-cost-analysis.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3a82111a78548e86f2b0794292c3b52ee5b70369"
+        }
+      },
+      {
+        "path": "scripts/test-solo-native-consumer-overhead.mjs",
+        "before": {
+          "path": "scripts/test-solo-native-consumer-overhead.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a518a83fd388bacdd3656e7d928ebca6dd1cc929"
+        },
+        "after": {
+          "path": "scripts/test-solo-native-consumer-overhead.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "309944ece0a8c0560905aa94fe9297a31c680047"
+        }
+      },
+      {
+        "path": "scripts/test-solo-native-consumer-preparation.mjs",
+        "before": {
+          "path": "scripts/test-solo-native-consumer-preparation.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "19ae6e3cfddbfb00fb4a42476cfa734c0703e52f"
+        },
+        "after": {
+          "path": "scripts/test-solo-native-consumer-preparation.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f7001047cfcb78ade870081e8568ee95c07b2828"
+        }
+      },
+      {
+        "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+        "before": {
+          "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d0b4b0c495f5f3c67a7ec0b662872759a4145cc2"
+        },
+        "after": {
+          "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "683c8cfb47ffc2e9d2d114328235cae271322c4b"
+        }
+      },
+      {
+        "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+        "before": {
+          "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "450eed9ada786f837a577b48cf9e755b435d6d7c"
+        },
+        "after": {
+          "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "dfd79590ba03f19b6ae7b3ba5e552a4bdfebc06a"
+        }
+      },
+      {
+        "path": "scripts/test-solo-remote-cpu-profile.mjs",
+        "before": {
+          "path": "scripts/test-solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "20d383e4648e77c1cf9170a012ce95abf677358e"
+        },
+        "after": {
+          "path": "scripts/test-solo-remote-cpu-profile.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0fe96c6ae2b8a613f16e722dcb84b3122e071984"
+        }
+      },
+      {
+        "path": "scripts/test-solo-remote-diagnostics.mjs",
+        "before": {
+          "path": "scripts/test-solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "676125ac6dc239e4fe135b3dc819cf84d4ebf791"
+        },
+        "after": {
+          "path": "scripts/test-solo-remote-diagnostics.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d29304ac88f2e75152e33b805582996ce1b238"
+        }
+      },
+      {
+        "path": "scripts/test-solo-replay-portability-hook.mjs",
+        "before": {
+          "path": "scripts/test-solo-replay-portability-hook.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "79c5aeae1a9d0abec846cb9346a144ffc6963af2"
+        },
+        "after": {
+          "path": "scripts/test-solo-replay-portability-hook.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7bd6bbe16ad69216de54a85f61dbb0838affb423"
+        }
+      },
+      {
+        "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+        "before": {
+          "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b4ac0fa28ea316f3d79227f8f74196416cbedcbb"
+        },
+        "after": {
+          "path": "scripts/test-solo-shared-mode-owner-admission.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "84cd5bc9c127ea16a8708ca379b77bb6b8982413"
+        }
+      }
+    ]
+  },
+  "acceptedOutputs": [
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "bytes": 18831,
+      "sha256": "b044e21f33fa8b75c99c9907fde34e8c711307ea318f5ca92be66064ca26b5d3",
+      "gitBlob": "1d8b129a3e643332e93ed393ec39b39f87e450ae",
+      "preserved": true
+    },
+    {
+      "path": "scripts/solo-remote-diagnostics.mjs",
+      "bytes": 32267,
+      "sha256": "700d711935ccf1f44aebd64c4695586418705bc56b52f0826e7205bcf5b06b47",
+      "gitBlob": "e3b2b2ee35164a17152cb69098d77b5e1be0bb7d",
+      "preserved": true
+    },
+    {
+      "path": "scripts/test-solo-diagnostics-analysis.mjs",
+      "bytes": 22249,
+      "sha256": "d44a5c095620b79dac1db38b3f42270f9330b2f0bf21e8fa2eb785d56046ee30",
+      "gitBlob": "2feb26b495845f97ee74a508ab3ccba26f4de15a",
+      "preserved": true
+    },
+    {
+      "path": "scripts/test-solo-journal-cost-analysis.mjs",
+      "bytes": 14852,
+      "sha256": "7f385bf8d084f676a7a1d9402a3e23426168cbdca310b9d7278d6a53dc42fe97",
+      "gitBlob": "3a82111a78548e86f2b0794292c3b52ee5b70369",
+      "preserved": true
+    },
+    {
+      "path": "scripts/test-solo-remote-diagnostics.mjs",
+      "bytes": 32844,
+      "sha256": "934bf4efff69f00248d1d3e96170b6a411a83d1a81d89700d2677a5a089e5f78",
+      "gitBlob": "d7d29304ac88f2e75152e33b805582996ce1b238",
+      "preserved": true
+    },
+    {
+      "path": "scripts/solo-overhead-acceptance.mjs",
+      "bytes": 1341,
+      "sha256": "b508ea89e7dccda4ecd638f1e5bd06588a3ccab892b55473eb0b610e0d74fc53",
+      "gitBlob": "79eec3717c5c5c416053f93412fa24272cc394a2",
+      "preserved": true
+    },
+    {
+      "path": "scripts/solo-overhead-acceptance.test.mjs",
+      "bytes": 6170,
+      "sha256": "aa1f3976fa7fc4f84cd921b25c65d34d8296a14d2b321c48633dff080dd3cbd7",
+      "gitBlob": "3daa44fae18f00b6b20d04ed6d23b93b30f35a8e",
+      "preserved": true
+    },
+    {
+      "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+      "bytes": 3207,
+      "sha256": "fa3da66b0a172d684f976f397f3b02c4b2ad51698626c30dc44fed94bb35d324",
+      "gitBlob": "6db9e784e0cf28fdacb313035db3009d71eef646",
+      "preserved": true
+    },
+    {
+      "path": "scripts/test-solo-journal-cost-admission.mjs",
+      "bytes": 12792,
+      "sha256": "d1fdb10303d7f8eda411473bebe50b887f364a66249305b9352cd6302d006044",
+      "gitBlob": "07508313196ae894e88b088f23640fe130dfbd35",
+      "preserved": true
+    },
+    {
+      "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+      "bytes": 58143,
+      "sha256": "053b815fbc0b0936a756b3b447f94e47f834220eb45ca3cffb7df8b11dfbef9a",
+      "gitBlob": "f4db3ee085da60b4210158af7c6445718350b494",
+      "preserved": true
+    },
+    {
+      "path": "scripts/solo-overhead-declared-source.mjs",
+      "bytes": 2525,
+      "sha256": "1672019df2a808052849bd5afb220f01e8170e48555f9163a6ddccc215075867",
+      "gitBlob": "cd74aa4dc4e338ea09c78a3d5a03f5a13206dbe5",
+      "preserved": true
+    },
+    {
+      "path": "scripts/test-solo-native-consumer-overhead.mjs",
+      "bytes": 9761,
+      "sha256": "a21429896db4803cd30e969460e1a911dd0fce7a8fc07422170dd6cfe229316e",
+      "gitBlob": "309944ece0a8c0560905aa94fe9297a31c680047",
+      "preserved": true
+    },
+    {
+      "path": "scripts/solo-native-measurement-consumer.test.mjs",
+      "bytes": 25354,
+      "sha256": "c6cf29ba019c2abfdf401aea9c2edd88f2102d12ec0d054bb7817c3d3b6582fd",
+      "gitBlob": "0fd59e6020ead2b3a7ad851e917e0ca8632f3ff2",
+      "preserved": true
+    },
+    {
+      "path": ".github/workflows/solo-native-package-consumer.yml",
+      "bytes": 439597,
+      "sha256": "f1d18d55ce3df73d4e4748ce655b67f2576b02b2d20fa07a952596537e32b08d",
+      "gitBlob": "1faa02770851a633b6b1bc33ee133a0657d81bb5",
+      "preserved": true
+    }
+  ],
+  "exactTraceDependency": {
+    "pr": 1621,
+    "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+    "tree": "4bd51f0d0b846063e030372d6873ca029852e697",
+    "originalTraceMustCompleteBeforeMergeOrNative": true
+  },
+  "closure": [
+    {
+      "path": "scripts",
+      "held": {
+        "path": "scripts",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "52b2ab386ff8c705ccfd4f69f42c392b29751923"
+      },
+      "candidate": {
+        "path": "scripts",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "52b2ab386ff8c705ccfd4f69f42c392b29751923"
+      }
+    },
+    {
+      "path": "docs/performance",
+      "held": {
+        "path": "docs/performance",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "9f20f3bd20c1a9fbc3ede53f8af9be50d967d355"
+      },
+      "candidate": {
+        "path": "docs/performance",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "9f20f3bd20c1a9fbc3ede53f8af9be50d967d355"
+      }
+    },
+    {
+      "path": ".github/workflows",
+      "held": {
+        "path": ".github/workflows",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "b5dc2f0a08efac312257cd2e4913f1e0f64c4ab9"
+      },
+      "candidate": {
+        "path": ".github/workflows",
+        "mode": "040000",
+        "type": "tree",
+        "sha": "b5dc2f0a08efac312257cd2e4913f1e0f64c4ab9"
+      }
+    }
+  ],
+  "prospectiveProvenanceExcluded": [
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "held": {
+        "path": "scripts/run-solo-remote-correctness.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ce977d2d6c0c2bf58d3357f9276b602542b4312b"
+      },
+      "candidate": {
+        "path": "scripts/run-solo-remote-correctness.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ce977d2d6c0c2bf58d3357f9276b602542b4312b"
+      },
+      "prospectiveBlob": "9e8c0f98cb4f5f155730210727e2ebe697467c1d"
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "held": {
+        "path": "scripts/observe-solo-performance.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda"
+      },
+      "candidate": {
+        "path": "scripts/observe-solo-performance.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda"
+      },
+      "prospectiveBlob": "0694e1c02c637e14d3db3aeb71ceb5fe9567f5d9"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "held": {
+        "path": "scripts/qualify-solo-runtime.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb"
+      },
+      "candidate": {
+        "path": "scripts/qualify-solo-runtime.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2d4ae7ef5d67a6345ec01fe723f5c6943dff62fb"
+      },
+      "prospectiveBlob": "acf7804984cfb14cf44e2e31df89e24249dc7001"
+    },
+    {
+      "path": "scripts/solo-qualification-provenance.mjs",
+      "held": null,
+      "candidate": null,
+      "prospectiveBlob": "4bd42945816f21157734195b5e5e9e4910250d35"
+    },
+    {
+      "path": "scripts/test-solo-remote-correctness.mjs",
+      "held": {
+        "path": "scripts/test-solo-remote-correctness.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0076cbee64b6ecfe41617d04694d25462cfef198"
+      },
+      "candidate": {
+        "path": "scripts/test-solo-remote-correctness.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0076cbee64b6ecfe41617d04694d25462cfef198"
+      },
+      "prospectiveBlob": "7ad2235e20f71e77256d2dec060ace78fe6e3d70"
+    }
+  ],
+  "policy": [
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "expected": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "main": {
+        "path": ".github/workflows/deploy-pages.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+      },
+      "candidate": {
+        "path": ".github/workflows/deploy-pages.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+      }
+    },
+    {
+      "path": "publishing/admission-binding.mjs",
+      "expected": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "main": {
+        "path": "publishing/admission-binding.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bbc451129f21407143e4d3034d819711e5539dd2"
+      },
+      "candidate": {
+        "path": "publishing/admission-binding.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bbc451129f21407143e4d3034d819711e5539dd2"
+      }
+    },
+    {
+      "path": "publishing/admission-preflight.mjs",
+      "expected": "9750b8dc5aef171f9124563966f726c2cbe15237",
+      "main": {
+        "path": "publishing/admission-preflight.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9750b8dc5aef171f9124563966f726c2cbe15237"
+      },
+      "candidate": {
+        "path": "publishing/admission-preflight.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9750b8dc5aef171f9124563966f726c2cbe15237"
+      }
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "expected": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "main": {
+        "path": "publishing/focused-tests.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+      },
+      "candidate": {
+        "path": "publishing/focused-tests.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+      }
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "expected": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+      "main": {
+        "path": "publishing/focused-test-map.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+      },
+      "candidate": {
+        "path": "publishing/focused-test-map.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+      }
+    },
+    {
+      "path": "publishing/test-policy.json",
+      "expected": "e067e704a165e16e449761989e3e1b611dc35181",
+      "main": {
+        "path": "publishing/test-policy.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e067e704a165e16e449761989e3e1b611dc35181"
+      },
+      "candidate": {
+        "path": "publishing/test-policy.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e067e704a165e16e449761989e3e1b611dc35181"
+      }
+    },
+    {
+      "path": "publishing/test-policy.mjs",
+      "expected": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+      "main": {
+        "path": "publishing/test-policy.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+      },
+      "candidate": {
+        "path": "publishing/test-policy.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+      }
+    }
+  ],
+  "sourceAdmission": {
+    "priorProof": "00bed72ac663dcd7660db371d94034fcad6b1aa1",
+    "unchangedPolicy": true,
+    "sourceCommandsUnchanged": true,
+    "priorImportSparseClosureUnchanged": true,
+    "nativeGuardStagger": "Parent reported heap guard39185723029 succeeded before this proposal. Fresh-check guard ownership before opening; no new native dispatch is authorized.",
+    "controls": {
+      "new": 13,
+      "strengthened": 5,
+      "executedForCandidate": false
+    }
+  },
+  "draft": {
+    "title": "Keep empirical-only overhead results unqualified",
+    "body": "Empirical minimum timer increments do not establish a maximum measurement error. This change preserves conditional overhead calculations while preventing current CLI and adapter reports from treating that evidence alone as a qualified 5% pass. Historical declarations and retained results stay unchanged through exact test-only source witnesses.\n\nDepends on #1621.\n\nDraft for source validation only. The original fourteen-file repair and exact trace dependency are preserved while integrating main444707 through a normal merge. Keep this draft unmerged and do not dispatch native work until the original trace-v2 outcome is retained and reviewed. No 5% qualification pass is claimed.\n\nValidation pending: thirteen new controls and five strengthened adapter controls, exact-head hosted source/build checks, and final combined-source review. No local functional tests were executed. The separate prospective measurement-provenance proposal is excluded."
+  },
+  "publicationGuards": [
+    "Branch ref must still equal abd2b6c4f340ec968be6f0279aa0afab3a52bd37.",
+    "Verify exact selected main444707 identity and its full tree; if current main drifts, report it without silently widening this proposal.",
+    "Verify all66 before blobs against held tree and all14 accepted outputs against final tree.",
+    "Create only a normal two-parent merge preserving selected parents, then compare complete resulting tree with3de5fbf5bc0cee814b825de8f5cf402850a1ba7b.",
+    "Open as draft with Depends on #1621; preserve original trace completion/review before merge or native dispatch.",
+    "Do not add any c443 prospective provenance changes.",
+    "Complete hosted source/build/admission checks on the new head; historical passes are not new-head passes."
+  ],
+  "limitations": [
+    "No local source writes, builds, tests, generator execution or browser actions.",
+    "No branch, PR, readiness, merge or dispatch mutation performed.",
+    "Main444707 includes merged1619 whose current-head validation was still queued at prior audit083e9eb9; this integration supplies no substituted pass."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "kind": "OverheadSourceDraftAdmissionV1",
+  "at": "2026-10-19T02:17:57.557080+00:00",
+  "proposal": "ee61e79e002b683b640882dd3d127b93742597cb",
+  "peer": "3ca40ed3b4d8d57eec38dd42b6755c573f5b5ae5",
+  "branch": "codex/solo-empirical-overhead-acceptance",
+  "previousHead": "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+  "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+  "parents": [
+    "abd2b6c4f340ec968be6f0279aa0afab3a52bd37",
+    "c4c5fc3c8fbdd17ce496005993e58ad45710823c"
+  ],
+  "tree": "c47e94b099c5eb98065b318658c4ee0bbaa6542e",
+  "mainObserved": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "pr": 1703,
+  "url": "https://github.com/mekhovov/revealline/pull/1703",
+  "heapGuard": 39185723029,
+  "sourceControls": {
+    "new": 13,
+    "strengthened": 5,
+    "executed": false
+  },
+  "originalTraceHold": true,
+  "provenanceExcluded": true,
+  "fullTreesVerifiedBothWays": true,
+  "outputBytesVerified": 14,
+  "policyIdentitiesVerified": 7,
+  "functionalExecution": false
+}
