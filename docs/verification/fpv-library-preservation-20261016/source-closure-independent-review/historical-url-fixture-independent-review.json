@@ -1,0 +1,609 @@
+{
+  "format": "IndependentExactHistoricalCredentialUrlFixtureReview.v1",
+  "createdUTC": "2026-10-16T05:05:37.516278+00:00",
+  "inputTargetManifestSHA256": "844a7cc63dd3cd3335eba51be9b69c99c104dbd46b06dc8cb81ec7cf1ad36fcf",
+  "blobCount": 32,
+  "bytes": 606472,
+  "actualMatchOccurrences": 33,
+  "distinctActualMatchHashes": [
+    "093866188144b0216fb125431572e8ac2df8980dfeeb6ebeb3d9f3987d1e4c1d",
+    "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+    "a28b8176f57374f4f478f28ad1530d57fff8e37cdb58a74e5146350154124e29",
+    "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+    "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19",
+    "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931"
+  ],
+  "clearedBlobCount": 32,
+  "heldBlobCount": 0,
+  "candidates": [
+    {
+      "path": "game/test/music-credit.test.mjs",
+      "gitBlob": "4bdac7f36d13af95d59feac6cc0c5574a21f69c7",
+      "bytes": 4748,
+      "sha256": "95a0e00cda6dae46d503db256b77c082fec0daee96176a76f2660b3b9f8864cf",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Negative credit-source fixture: asserts truthful non-link fallback and no href.",
+      "matches": [
+        {
+          "matchSHA256": "093866188144b0216fb125431572e8ac2df8980dfeeb6ebeb3d9f3987d1e4c1d",
+          "line": 64,
+          "nearestTestStart": "test('missing credits, synthesis and unsafe websites have truthful non-link fallbacks', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "gitBlob": "b7f1069c03a63e70b128b07925ee03ce7c86ee87",
+      "bytes": 47682,
+      "sha256": "62850e6b7cf4dcbba1edac620ccf6cf94c1b49e417a3ac0831ec9b0b08d5f3cf",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Explicit unsafe URL array: asserts hidden source link and removal of an old safe href.",
+      "matches": [
+        {
+          "matchSHA256": "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+          "line": 917,
+          "nearestTestStart": "test('Couch music credits follow audible MP3 metadata without live position announcements', async (t) => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/community-account-upload.test.mjs",
+      "gitBlob": "5b013c2a4206e05a89346f5181481c82cbb7f835",
+      "bytes": 6775,
+      "sha256": "82a67e19cc7b56559fd9a76e356049a6bccebcca71faa243705ce2dae0b2bd4f",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Account-page URL validation assert.throws checks bounded same-origin rejection.",
+      "matches": [
+        {
+          "matchSHA256": "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+          "line": 107,
+          "nearestTestStart": "test('same-origin account client sends bounded JSON with cookie credentials and restores session', async () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "scripts/test-production-panel.mjs",
+      "gitBlob": "00d8dbee9e2254730ea4c3d0356e9d55cbce445b",
+      "bytes": 14126,
+      "sha256": "19c2c32ba77244566a3a38d6c7dc5f786e21a4102ac6cce4556aedae7bb0c088",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "sourceURL assert.throws rejects the unsafe root before a body fetch.",
+      "matches": [
+        {
+          "matchSHA256": "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+          "line": 215,
+          "nearestTestStart": "test('preview source URL rejects unsafe or remote roots before any body fetch', async () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "gitBlob": "35b15a00988af7ff5b0a46ce850a63437751ebc5",
+      "bytes": 8176,
+      "sha256": "c1a49b78812e493ca8082591f48f13c5de66d4eb16706252820b8b69d92ad423",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Unsafe base URL array is passed to href and rejected by assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 78,
+          "nearestTestStart": "test('builder admits only known authored routes, explicit Legacy and supported host modes', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "gitBlob": "fa3319aaa45169893da127f15081d7b7116202a7",
+      "bytes": 47692,
+      "sha256": "6c1c2c6add5191c3d108f229ea2052e7331ec550060631985f8f722c55869d4a",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Explicit unsafe URL array: asserts hidden source link and removal of an old safe href.",
+      "matches": [
+        {
+          "matchSHA256": "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+          "line": 917,
+          "nearestTestStart": "test('Couch music credits follow audible MP3 metadata without live position announcements', async (t) => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/installed-app.test.mjs",
+      "gitBlob": "0ba05234424ca87495ea4a991837a101b7e57a4a",
+      "bytes": 5543,
+      "sha256": "ededefc50b0b5e2f0f917ed935876bc3e2adf63864e4f5f470144b82bc1e8a91",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Credential-decorated scope fixture is rejected by validateInstalledEdition assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19",
+          "line": 62,
+          "nearestTestStart": "test('one launcher identity covers immutable editions, and foreign or credentialed editions are rejected', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "gitBlob": "d63030d2bcebb8ffdfe3ee7f92c96719ce6d1f29",
+      "bytes": 50936,
+      "sha256": "8909ca7710b6e4bc97e93cfc619ab6f72fc82f5e5ababbe6dd015320da5b3771",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Explicit unsafe URL array: asserts hidden source link and removal of an old safe href.",
+      "matches": [
+        {
+          "matchSHA256": "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+          "line": 959,
+          "nearestTestStart": "test('Couch music credits follow audible MP3 metadata without live position announcements', async (t) => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/installed-app.test.mjs",
+      "gitBlob": "3a98aca8414be0bf64d4043ce7c8cd2a16da8ec9",
+      "bytes": 18612,
+      "sha256": "dd2d2abd2205962d831379ac30326e39ee2520bd5eceec9bfbfc84675ba7ab7c",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Credential-decorated scope fixture is rejected by validateInstalledEdition assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19",
+          "line": 220,
+          "nearestTestStart": "test('one launcher identity covers immutable editions, and foreign or credentialed editions are rejected', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "gitBlob": "fc469f20cd9e0e35990148bc449a5ea539af6d49",
+      "bytes": 47610,
+      "sha256": "1d9d4b6324c9fe4e8ae177fd2c023fede72d7b990c47bcd5755bd82e630ceaa1",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Explicit unsafe URL array: asserts hidden source link and removal of an old safe href.",
+      "matches": [
+        {
+          "matchSHA256": "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+          "line": 917,
+          "nearestTestStart": "test('Couch music credits follow audible MP3 metadata without live position announcements', async (t) => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/completion-rewards.test.mjs",
+      "gitBlob": "2204d8c6409f09fbf0038d9b45f0e81d11268b99",
+      "bytes": 18029,
+      "sha256": "b36564d5fdbf2f7acf6655b24dc87630b69d3ea4cb0e47142825c668884946cf",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Invalid URL fixture is placed in a local reward definition and rejected by validateCompletionReward assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 379,
+          "nearestTestStart": "test('strict data boundary rejects getters, injected fields, invalid URLs and impossible dates', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "gitBlob": "e27d374c2f56bfc0de9207d319ec5e142a65d753",
+      "bytes": 48788,
+      "sha256": "d9c0a47705bb7dbf287f3199bd64f7566de3fea6fb30a4e7af64e4354a229287",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Explicit unsafe URL array: asserts hidden source link and removal of an old safe href.",
+      "matches": [
+        {
+          "matchSHA256": "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+          "line": 936,
+          "nearestTestStart": "test('Couch music credits follow audible MP3 metadata without live position announcements', async (t) => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/demo-audio.test.mjs",
+      "gitBlob": "524d40b713d6db2059d2e019dead7d63628c1e0a",
+      "bytes": 9397,
+      "sha256": "e3cda368dfa7c2a4844af61cdd58159336f7641ed07d302821539507e0f357a7",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Unsafe website candidate in a text-only credit fixture; safe recorded source remains the only linked source.",
+      "matches": [
+        {
+          "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19",
+          "line": 176,
+          "nearestTestStart": "test('credits are text-only and source links reject unsafe schemes and credentials', (context) => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "gitBlob": "f99a11d7155c908c1dbb53df1f84153107925e2e",
+      "bytes": 10185,
+      "sha256": "84c1efe919140a94a9c5033337fed813cc41c095f561e7218e131712dfb4ad6d",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Unsafe base URL array is passed to href and rejected by assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 98,
+          "nearestTestStart": "test('builder admits only known authored routes, explicit Legacy and supported host modes', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "gitBlob": "043c82ff2dab2bb8d00e9f0e77cd11ce57feb2c0",
+      "bytes": 8176,
+      "sha256": "d1e180742a07f3e5998e6a9af8833d1175068df741dd3052aa9a773d9414fae8",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Unsafe base URL array is passed to href and rejected by assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 78,
+          "nearestTestStart": "test('builder admits only known authored routes, explicit Legacy and supported host modes', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/landing-release-history-host.test.mjs",
+      "gitBlob": "aa5079969da9bcc396a687222ec29afa2e142d25",
+      "bytes": 11812,
+      "sha256": "f7763a26be77a441c652a97ecc86dfb4327aff0fd78991a49ba1161f89bfd77d",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Global malicious v9 release fixture is passed to the mocked catalog response; exact expected picker values exclude that record and preserve three valid builds.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 164,
+          "nearestTestStart": null,
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "gitBlob": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "bytes": 8176,
+      "sha256": "8ef1a0756ac8aa176d114b8b30380558bf2e8437dac81a41172c7e922fedc870",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Unsafe base URL array is passed to href and rejected by assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 78,
+          "nearestTestStart": "test('builder admits only known authored routes, explicit Legacy and supported host modes', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/edition-offline-client.test.mjs",
+      "gitBlob": "8cbb34af4efad23fa5c86676e95c567418aba803",
+      "bytes": 8995,
+      "sha256": "1e0d2b1ca1672c091557ab84c3387b5fc495bdb2fe34c2b66b35af5227d9ebc7",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Credential decoration is synthesized into a scope fixture and rejected by validateCompanyInstallationReference assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 219,
+          "nearestTestStart": "test('installation references reject foreign origins, audiences, mutable paths and URL decorations', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "gitBlob": "c1a2dfdf7256f7d63a57e3616dfc0f1e58b95b43",
+      "bytes": 13863,
+      "sha256": "65d5d1c1c400cbf81b80455fa163ba25b60f5060c54b435761373ebb82b229c0",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "validateDeployedTusResumeConfig assert.throws explicitly expects a must-not-contain-credentials error.",
+      "matches": [
+        {
+          "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931",
+          "line": 58,
+          "nearestTestStart": "test('deployed tus config requires secure remote transport and bounded credentials', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/control-concepts.test.mjs",
+      "gitBlob": "50f37f9e5f00b5ae2633228cb9b4df9b42c23076",
+      "bytes": 9724,
+      "sha256": "b6f38cff3b01dbc6871fc2d35d925a000c4659781cf6afb192903ad91ed178b4",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "A local fixture mutation introduces an unsafe source URL and validateControlLabFixture is required to throw.",
+      "matches": [
+        {
+          "matchSHA256": "093866188144b0216fb125431572e8ac2df8980dfeeb6ebeb3d9f3987d1e4c1d",
+          "line": 43,
+          "nearestTestStart": "test('fixture boundary rejects rewiring, progress, malformed links, missing translations and executable data', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "gitBlob": "da0d30a679807855b8b1f209216c34275889adbf",
+      "bytes": 7384,
+      "sha256": "ebf2ff2fd61329f24ece847cc746fdd323597019d15f5b050286ef52414ab35b",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "validateDeployedTusResumeConfig assert.throws explicitly expects a must-not-contain-credentials error.",
+      "matches": [
+        {
+          "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931",
+          "line": 52,
+          "nearestTestStart": "test('deployed tus config requires HTTPS, explicit opt-in, namespace and bounded credentials', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "gitBlob": "3bcfb0567fe37e8192880b5a5a7541fef38d6050",
+      "bytes": 48235,
+      "sha256": "89b2bd3d78abdbcea0eaeee5fa6b44277180d487131fcae4513c95939771dbc6",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Explicit unsafe URL array: asserts hidden source link and removal of an old safe href.",
+      "matches": [
+        {
+          "matchSHA256": "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+          "line": 928,
+          "nearestTestStart": "test('Couch music credits follow audible MP3 metadata without live position announcements', async (t) => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/company-studio-learning-guided.test.mjs",
+      "gitBlob": "d253814dc27837294d2d66c79890c45df145c53e",
+      "bytes": 16292,
+      "sha256": "dcdae23542c459300ff43977fcadc4b8cc5a4fb9570b40d612297f957eef2696",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Unsafe URL is entered into a fake guided form; staging refuses the write and reports safe HTTPS.",
+      "matches": [
+        {
+          "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19",
+          "line": 356,
+          "nearestTestStart": "test('guided atlas changes objective, source and application feedback while preserving exact artwork and diagram pins', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/completion-rewards.test.mjs",
+      "gitBlob": "25a827dff63fe229b21e378bfcfbfe9d6339d39e",
+      "bytes": 23403,
+      "sha256": "1a97d514440982e829c596f2a9aa09aec4a2ae56ce9fbb20e2da8e693295d3bd",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Invalid URL fixture is placed in a local reward definition and rejected by validateCompletionReward assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 414,
+          "nearestTestStart": "test('strict data boundary rejects getters, injected fields, invalid URLs and impossible dates', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/edition-offline-client.test.mjs",
+      "gitBlob": "de8d70cc3b3b8245d37fe843e60d9be9d937d852",
+      "bytes": 8995,
+      "sha256": "67f0306f9dcc6a0ff68340720cd84e2044425026b2e3c3d44e1fc6a0e3c724ea",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Credential decoration is synthesized into a scope fixture and rejected by validateCompanyInstallationReference assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 219,
+          "nearestTestStart": "test('installation references reject foreign origins, audiences, mutable paths and URL decorations', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "gitBlob": "e94529c1e526abf72b47541637aefe7a48f1f18f",
+      "bytes": 11342,
+      "sha256": "17bfa545a0e9a144a98130f6d89d009fc4086bc2a712bcdad8a13cbb4a018362",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "validateDeployedTusResumeConfig assert.throws explicitly expects a must-not-contain-credentials error.",
+      "matches": [
+        {
+          "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931",
+          "line": 58,
+          "nearestTestStart": "test('deployed tus config requires secure remote transport and bounded credentials', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/site-release-links.test.mjs",
+      "gitBlob": "6cf983f560c622c0abb1cc040af26ae2dc9b8b77",
+      "bytes": 6719,
+      "sha256": "211c40629878e7e85b0ecbbc0acbd7f70b2c88f085b2e6a6bfd2cd748ee69340",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Rejected archive URL arrays verify no valid archive link/rebased destination is produced.",
+      "matches": [
+        {
+          "matchSHA256": "093866188144b0216fb125431572e8ac2df8980dfeeb6ebeb3d9f3987d1e4c1d",
+          "line": 75,
+          "nearestTestStart": "test('archive links reject script schemes, credentials, traversal and non-game destinations', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        },
+        {
+          "matchSHA256": "093866188144b0216fb125431572e8ac2df8980dfeeb6ebeb3d9f3987d1e4c1d",
+          "line": 131,
+          "nearestTestStart": "test('About rebases only validated local archive records against the fetched catalog URL', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "gitBlob": "be155996ce4f30c737e01e9a14b0bf62c2f3b1f2",
+      "bytes": 47383,
+      "sha256": "f353da12ba56e9e94c755a89a30b9bd557cdbf83afa8cd2a7bdda6447b86c1a5",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Explicit unsafe URL array: asserts hidden source link and removal of an old safe href.",
+      "matches": [
+        {
+          "matchSHA256": "0fc4f6fa3a5e07ee93c40c805476c7ac1509218afcf67552afb2d5b2bded1c44",
+          "line": 916,
+          "nearestTestStart": "test('Couch music credits follow audible MP3 metadata without live position announcements', async (t) => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "gitBlob": "f5f1a4dda73166182d622020e36be0e5c4f272cd",
+      "bytes": 11665,
+      "sha256": "a10c9b2aa8d99cbccfc87f5582659dca586a0618415d358a379b27febbdcfbbe",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "validateDeployedTusResumeConfig assert.throws explicitly expects a must-not-contain-credentials error.",
+      "matches": [
+        {
+          "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931",
+          "line": 58,
+          "nearestTestStart": "test('deployed tus config requires secure remote transport and bounded credentials', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "scripts/test-optional-installation-quota-probe.mjs",
+      "gitBlob": "49c62b894132884c5dbb5b190db8a8ee18f19b6d",
+      "bytes": 5470,
+      "sha256": "0f50af2a0a6729a5cac3d1249ba8318d42a6cdd5eade3ade2bf24b11178423ad",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Invalid loopback origin fixture is rejected by validateQuotaProbeOrigin assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "a28b8176f57374f4f478f28ad1530d57fff8e37cdb58a74e5146350154124e29",
+          "line": 39,
+          "nearestTestStart": "test('only exact explicit-port IPv4 loopback HTTP origins are eligible', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/community-routes.test.mjs",
+      "gitBlob": "3dc42163e07d19b69dd10ee776a1aaef0e130e38",
+      "bytes": 8262,
+      "sha256": "a671adf05b762a0ed73642effbc7f8babe18d83f1b41023fb79372d17c0f0711",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Unsafe Back-source fixture is required to fall back to the known game URL.",
+      "matches": [
+        {
+          "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370",
+          "line": 51,
+          "nearestTestStart": "test('community Back rejects foreign origins, releases, tools and invalid company selectors', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    },
+    {
+      "path": "game/test/installed-app.test.mjs",
+      "gitBlob": "ae82437e027d6f28c446ac49a263c9387085db39",
+      "bytes": 12277,
+      "sha256": "2fde203a9d0fd503961d4ba35682788f0e180ef2268d4297c8f3503c55c7d647",
+      "rawGitIdentityVerified": true,
+      "source": "internal-canonical-no-lazy-fetch",
+      "disposition": "cleared-exact-negative-test-fixture",
+      "fixtureRationale": "Credential-decorated scope fixture is rejected by validateInstalledEdition assert.throws.",
+      "matches": [
+        {
+          "matchSHA256": "ec25b8fa54a9d7a878a86e6f38233af24d5d27d184b396136d6d7f0251d33c19",
+          "line": 128,
+          "nearestTestStart": "test('one launcher identity covers immutable editions, and foreign or credentialed editions are rejected', () => {",
+          "disposition": "reviewed literal or synthesized negative-test URL userinfo"
+        }
+      ]
+    }
+  ],
+  "allowanceScope": "Only these exact reviewed path + Git blob + actual match SHA256 bindings. No filename-only, URL-host, credential-pattern or global hash-only exception for unrelated blobs. Later candidate blobs require separate review.",
+  "matchedValuesIncluded": false,
+  "rawSourceBodiesIncluded": false,
+  "readMethod": "Read-only canonical Git store with GIT_NO_LAZY_FETCH=1 and raw object SHA1 verification; all32 blobs available without fallback. Context was inspected after userinfo redaction.",
+  "originalSourceMutation": false,
+  "runtimeEnvBrowserOrPlayerDataRead": false,
+  "finalHistoricalPrivacyClosureAccepted": false
+}

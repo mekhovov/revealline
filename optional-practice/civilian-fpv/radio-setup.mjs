@@ -716,7 +716,7 @@ export function mountRadioSetup({
       if (!verified || recording || identifying || switchCapture) throw new Error(copy.incomplete);
       const p = readProfile(true);
       runtime.setProfile(p);
-      runtime.verify();
+      if (!runtime.verify()) throw new Error(copy.incomplete);
       const result = store.save({ ...store.snapshot(), radio: p });
       status.textContent = result.saved ? copy.saved : `${copy.session} ${result.error}`;
       refreshLibrary();
@@ -727,7 +727,7 @@ export function mountRadioSetup({
       return null;
     }
   }
-  const saveButton = button(copy.save, saveProfile);
+  const saveButton = button(copy.save, () => guide?.completeSave(saveProfile()));
   listen(select, 'change', () => {
     guide?.reset();
     if (select.value === '') {

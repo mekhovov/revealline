@@ -1674,9 +1674,28 @@ export function mountFlightTuning({
     t('Restore library backup', 'Відновити бібліотеку'),
     async () => {
       await mutate(() => store.restore(text.value, library.revision));
-      drafts.clear();
-      setupDrafts.clear();
-      load();
+      if (disposed) return;
+      // A replacement library may remove the setup being edited. Reset the
+      // complete editor baseline only after persistence has succeeded.
+      try {
+        drafts.clear();
+        setupDrafts.clear();
+        editedSetup = null;
+        editedSetupId = library.selectedSetupId;
+        completeDraft = null;
+        responseBench?.invalidate();
+        load();
+        status.textContent = t(
+          'Library restored. The current attempt keeps its original configuration.',
+          'Бібліотеку відновлено. Поточна спроба зберігає початкові налаштування.',
+        );
+      } catch (failure) {
+        // Rendering cannot undo the committed restore or report it as failed.
+        status.textContent = `${t(
+          'Library restored, but the editor could not refresh. Choose Refresh library to reload the saved settings.',
+          'Бібліотеку відновлено, але редактор не вдалося оновити. Виберіть «Оновити бібліотеку», щоб завантажити збережені налаштування.',
+        )} ${failure.message}`;
+      }
     },
     transfer,
   );
@@ -1847,6 +1866,7 @@ export function mountFlightTuning({
       editedSetupId = store.snapshot().selectedSetupId;
       completeDraft = null;
       load();
+      if (!store.status().error) status.textContent = '';
     },
     actions,
   );
