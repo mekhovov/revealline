@@ -5330,6 +5330,164 @@ test('the selected visible Audio owner coalesces focus and click into one demand
   );
 });
 
+test('Settings commits before authoring mounts and later preserves an unrelated editor draft', async (t) => {
+  let imports = 0,
+    wakes = 0;
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      beforeAudio: () => {
+        wakes++;
+      },
+      loadAuthoringView: () => {
+        imports++;
+        return import('../ui/soundtrack-authoring-view.mjs');
+      },
+      onlineCatalogueDownload: {
+        fetch: async () => onlineCatalogueResponse(onlineCatalogueFixture()),
+      },
+    },
+  });
+  const modal = app.panel.element;
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(imports, 0);
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), false);
+  assert.equal(app.doc.nodes.has('soundtrack-audition'), false);
+  await settleOnlineCatalogue(
+    () => !app.node('settings-play-styles').disabled,
+    'local settings hydrate without authoring',
+  );
+  const before = await app.store.read();
+  await app.click('settings-styles-none');
+  app.node('settings-style-synth').checked = true;
+  app.node('settings-style-synth').onchange();
+  const playing = app.click('settings-play-styles');
+  assert.equal(wakes, 1, 'Audio activation remains in the original control turn');
+  await playing;
+  const selected = await app.store.read();
+  assert.equal(selected.generation, before.generation + 1);
+  assert.deepEqual(selected.publicStyles, ['synth']);
+  assert.equal(imports, 0);
+  assert.equal(app.doc.nodes.has('soundtrack-audition'), false);
+  await app.panel.open();
+  assert.equal(imports, 1);
+  assert.equal(app.panel.element, modal);
+  const editor = app.node('tracks');
+  await app.click('create-playlist');
+  const draftPlaylist = app.node('playlists').value;
+  assert.equal((await app.store.read()).library.playlists.length, 0);
+  assert.equal(app.panel.close(), true);
+  await app.click('settings-styles-none');
+  app.node('settings-style-fpv').checked = true;
+  app.node('settings-style-fpv').onchange();
+  await app.click('settings-play-styles');
+  const listening = await app.store.read();
+  assert.deepEqual(listening.publicStyles, ['fpv']);
+  assert.equal(
+    listening.library.playlists.length,
+    0,
+    'Settings does not commit unrelated draft edits',
+  );
+  await app.panel.open();
+  assert.equal(app.node('tracks'), editor);
+  assert.equal(imports, 1);
+  assert.equal(app.node('save').disabled, false);
+  await app.click('save');
+  const saved = await app.store.read();
+  assert.equal(saved.generation, listening.generation + 1);
+  assert.equal(saved.library.playlists[0].id, draftPlaylist);
+  assert.deepEqual(saved.publicStyles, ['fpv']);
+});
+
+test('shared Couch owner and modal facade remain usable while authoring import is pending', async (t) => {
+  const { createManagedMediaStore } = await import('../managed-media-store.mjs');
+  const { createCouchMusicLibrary } = await import('../couch/couch-music-library.mjs');
+  const { createCouchMusicSession } = await import('../couch/couch-music-session.mjs');
+  const { createSoundtrackPlayer } = await import('../ui/soundtrack-player.mjs');
+  const { audioHarness } = await import('./helpers/soundtrack-audio.mjs');
+  const memory = memoryIndexedDB();
+  const manager = createManagedMediaStore({
+    indexedDB: memory.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
+  const store = createSoundtrackStore({ managedStore: manager });
+  const audio = audioHarness();
+  let owner,
+    release,
+    imports = 0;
+  const held = new Promise((resolve) => {
+    release = resolve;
+  });
+  t.after(() => release());
+  const player = createSoundtrackPlayer({
+    soundscape: audio.soundscape,
+    audioElement: audio.media,
+    URLImpl: audio.URLImpl,
+    readAsset: (hash) => owner.readAsset(hash),
+    fadeMs: 0,
+  });
+  owner = createCouchMusicLibrary({ managedStore: manager, player });
+  const session = createCouchMusicSession({ player, library: owner, soundscape: audio.soundscape });
+  const initial = await fixture();
+  const app = await setup(t, {
+    initial,
+    store,
+    open: false,
+    callbacks: {
+      player,
+      musicSession: session,
+      adoptLibrary: (value) => owner.adoptVerifiedSnapshot(value),
+      onLibrary: () => player.prepare(),
+      beforeAudio: () => player.wake(),
+      loadAuthoringView: async () => {
+        imports++;
+        await held;
+        return import('../ui/soundtrack-authoring-view.mjs');
+      },
+    },
+  });
+  t.after(() => {
+    session.dispose();
+    player.dispose();
+    owner.close();
+    manager.close();
+    audio.soundscape.dispose();
+  });
+  const modal = app.panel.element;
+  assert(
+    modal.contains(app.node('play')),
+    'The existing host can bind modal input ownership immediately',
+  );
+  assert.equal(app.panel.isOpen(), false);
+  const opening = app.panel.open();
+  assert.equal(app.panel.element, modal);
+  assert.equal(app.panel.isOpen(), true);
+  await settleOnlineCatalogue(
+    () => owner.snapshot().generation === 1 && !app.node('close').disabled,
+    'Couch adoption completes independently of optional authoring',
+  );
+  assert.equal(imports, 1);
+  assert.equal(app.doc.nodes.has('soundtrack-audition'), false);
+  await app.click('play');
+  assert.equal(session.snapshot().transportChoice, 'play');
+  assert.equal(player.snapshot().playing, true);
+  assert.equal(app.panel.close(), true);
+  release();
+  await opening;
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), false);
+  await app.panel.open();
+  assert.equal(app.panel.element, modal);
+  assert.equal(imports, 1, 'A fresh visit reuses the loaded module without recreating owners');
+  await app.click('clone-playlist');
+  await app.click('save');
+  assert.equal(owner.snapshot().generation, 2);
+  assert.equal(owner.readAsset(initial.track.asset.sha256).size, initial.blob.size);
+});
+
 test('soundtrack presentation notifies the committed open once and never rejected or repeated opens', async (t) => {
   let presentations = 0,
     reject = true,
@@ -5380,4 +5538,75 @@ test('soundtrack presentation retires a transient successful native open before 
   await h.panel.open();
   assert.equal(h.panel.isOpen(), false);
   assert.equal(presentations, 1);
+});
+
+test('soundtrack committed presentation precedes held authoring and retired visits cannot publish', async (t) => {
+  let release,
+    imports = 0,
+    mounts = 0,
+    presentations = 0;
+  const events = [];
+  const held = new Promise((resolve) => {
+    release = resolve;
+  });
+  t.after(() => release());
+  const app = await setup(t, {
+    open: false,
+    callbacks: {
+      onPresentationChange: () => {
+        presentations++;
+        events.push('presentation');
+      },
+      loadAuthoringView: async () => {
+        imports++;
+        events.push('authoring-load');
+        await held;
+        const module = await import('../ui/soundtrack-authoring-view.mjs');
+        return {
+          ...module,
+          createSoundtrackAuthoringView(...args) {
+            mounts++;
+            return module.createSoundtrackAuthoringView(...args);
+          },
+        };
+      },
+    },
+  });
+  const modal = app.panel.element;
+  const first = app.panel.open();
+  assert.equal(app.panel.isOpen(), true);
+  assert.equal(presentations, 1, 'The committed open notifies synchronously');
+  assert.deepEqual(events, ['presentation']);
+  assert.equal(imports, 0, 'Authoring is demanded after the presentation notification');
+  await settleOnlineCatalogue(
+    () => imports === 1 && !app.node('close').disabled,
+    'the original modal owner can close while authoring is held',
+  );
+  assert.deepEqual(events, ['presentation', 'authoring-load']);
+  await app.panel.open();
+  assert.equal(presentations, 1, 'An already-open request is not another presentation');
+  assert.equal(imports, 1, 'An already-open request does not import again');
+  assert.equal(mounts, 0);
+  assert.equal(app.panel.close(), true);
+  const second = app.panel.open();
+  assert.equal(app.panel.isOpen(), true);
+  assert.equal(presentations, 2, 'A fresh committed visit notifies before the old load settles');
+  assert.equal(imports, 1, 'The new visit joins the existing module load');
+  assert.equal(mounts, 0);
+  assert.equal(app.panel.close(), true);
+  const retiredFocus = app.doc.activeElement;
+  release();
+  await Promise.all([first, second]);
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(mounts, 0, 'Neither retired visit may publish the resolved authoring view');
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), false);
+  assert.equal(app.doc.nodes.has('soundtrack-audition'), false);
+  assert.equal(app.doc.activeElement === retiredFocus, true, 'Late import cannot move focus');
+  assert.equal(presentations, 2, 'Late import cannot revive a presentation');
+  await app.panel.open();
+  assert.equal(app.panel.element === modal, true);
+  assert.equal(presentations, 3);
+  assert.equal(imports, 1, 'The next explicit visit reuses the resolved module');
+  assert.equal(mounts, 1, 'Only the current explicit visit may mount authoring');
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), true);
 });
