@@ -1874,6 +1874,18 @@
       "blob": "98e68258ae6d37a03fdf546096f897d89eb0c161",
       "bytes": 2586,
       "sha256": "8d3bc271d97f9bf04a7130c357547f0dcd69f5d48f15870e7b8d286e319f5e6d"
+    },
+    {
+      "path": "performance-plan-current-header-independent-review-20261019.json",
+      "blob": "339b7b507ee18c6d763c6cf8b9f9739e411575bd",
+      "bytes": 2897,
+      "sha256": "da072a355a034d9dabc23a307c37a5e76c36f7dc11c527ba6d179bb64cea2c55"
+    },
+    {
+      "path": "performance-plan-successor-publication-20261019-0355.json",
+      "blob": "9f27525cfea6ee1d0294f8d7ce0e57acdfb4c030",
+      "bytes": 1168,
+      "sha256": "954716e56c97b07bf8458a591db9295999b29c2a4d2503d18f1bbab3fb3fe982"
     }
   ]
 }

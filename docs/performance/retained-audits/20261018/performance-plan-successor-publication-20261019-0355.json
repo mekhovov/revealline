@@ -1,0 +1,28 @@
+{
+  "kind": "plan-publication",
+  "pr": 1710,
+  "url": "https://github.com/mekhovov/revealline/pull/1710",
+  "branch": "codex/solo-performance-qualification-20261019",
+  "parent": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+  "head": "45c6a6fb034cfd7a38eb6ed0fde505bfe3e10d9e",
+  "tree": "d88987db23a53bd039f23241289f49a94ee6c120",
+  "path": "docs/performance/solo-performance-followup-plan.md",
+  "blob": "7db2edbf24f78aa966678f8b9ab8804731413a8c",
+  "bytes": 190282,
+  "sha256": "b8d1ef2a06053f51ca345cecf3e61e0ef700f7c9cd2be312519c746ee4fae384",
+  "evidenceIndex": {
+    "head": "05928ac578e0a04d02335235b87a29a66f269232",
+    "tree": "b357667f8881e771acc7feb9d85644c0331ef2ef",
+    "indexBlob": "fe8f37f5f32549109198769fae7fe40fd11d7b31",
+    "bytes": 74614,
+    "sha256": "927564e1b283ae19577feaf0b2399ca8b4e8cd65fc02a291779b0ec59f64372d",
+    "records": 312
+  },
+  "historicalTail": {
+    "unchanged": true,
+    "bytes": 126143,
+    "sha256": "d31ad625087f70e4e507accdcce3bad037a3d44410ba77893c9484c011074bff"
+  },
+  "previousPlanPR": 1706,
+  "scope": "one documentation path; complete tree readback; new draft after prior status PR merged; no source changes"
+}

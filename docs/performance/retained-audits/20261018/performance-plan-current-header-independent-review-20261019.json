@@ -1,0 +1,44 @@
+{
+  "format": "SoloPerformanceCurrentPlanHeaderPeerReviewV1",
+  "candidate": {
+    "blob": "7db2edbf24f78aa966678f8b9ab8804731413a8c",
+    "bytes": 190282,
+    "sha256": "b8d1ef2a06053f51ca345cecf3e61e0ef700f7c9cd2be312519c746ee4fae384"
+  },
+  "scope": "Current header only; historical body checked byte identity, not re-reviewed as current instructions. No remote status polling or source execution.",
+  "historicalTail": {
+    "bytes": 126143,
+    "sha256": "d31ad625087f70e4e507accdcce3bad037a3d44410ba77893c9484c011074bff",
+    "exactMatch": true
+  },
+  "evidenceIndex": {
+    "commit": "05928ac578e0a04d02335235b87a29a66f269232",
+    "records": 312,
+    "bytes": 74614,
+    "sha256": "927564e1b283ae19577feaf0b2399ca8b4e8cd65fc02a291779b0ec59f64372d"
+  },
+  "verifiedCompactReceipts": [
+    "reaction-cancellation-generated-closure-peer-20261019.json",
+    "reaction-cancellation-draft-publication-20261019.json",
+    "trail-merge-before-source-qualification-20261019-0347.json",
+    "trail-exact-head-gameplay-control-scope-20261019.json",
+    "published-dd337-selected-practice-receipt-scope-20261019.json"
+  ],
+  "decision": "Approve the reviewed current-header claims. No actionable contradiction found within the explicitly frozen observation times.",
+  "checks": [
+    "#1708 is described as three-file draft source admission on fixed a2c0b33 with six unexecuted controls, unchanged demanded cue scheduling/readiness and no measured performance claim.",
+    "Generated FPV closure is supported by a separate exact-transform peer receipt; canonical cleanup review is not represented as sufficient on its own.",
+    "#1706 is recorded as merged; the new document update is explicitly a successor from fixed ae5ecbf.",
+    "#1696 is correctly merged but unqualified, with pre-source merge timing, later 339-case existing-suite pass and absence of its five new controls stated separately.",
+    "#1619's eight queued checks and unverified fifteen controls remain a P0 concern; earlier-head passes are not reused as qualification.",
+    "#1676's completed seventeen controls/1781-case Appearance result and queued release gate remain distinct from deployment/native behavior.",
+    "#1620/#1621/#1628 retain passing source gates but unmerged status; original trace precedes shared adapter merges and native dispatch.",
+    "Public dd337 identity/final verification is distinguished from zero-entry selected-practice evidence and gameplay qualification.",
+    "Remaining physical/native failures, unavailable devices, local read-only limit and unknown overall ETA remain explicit."
+  ],
+  "limitations": [
+    "This review does not certify new check status after the 03:47 retained snapshot.",
+    "No hosted new-control, combined-build, native performance or device acceptance is inferred.",
+    "The historical tail is retained as retired evidence, not revived release instructions."
+  ]
+}
