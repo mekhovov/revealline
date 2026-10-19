@@ -29,11 +29,7 @@ import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
-import {
-  getMenuAnimation,
-  setMenuAnimation,
-  subscribeMenuAnimation,
-} from '../ui/menu-animation-preferences.mjs';
+import { menuAnimationBinding } from '../ui/menu-animation-preferences.mjs';
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
 import {
   attachSettingsPanels,
@@ -1200,6 +1196,7 @@ function openMissionLibrary() {
       document: doc,
       library: missionLibrary,
       mode,
+      getHostMode: () => mode,
       browsingContext: ({ mode: browsedMode }) =>
         text('browsingContext', {
           mode: navigationMode(browsedMode),
@@ -2768,11 +2765,7 @@ snakeGlobalSettings = mountGlobalSettings({
     ...continuousPlayBindings(continuousPreferences),
     textFace: displayBinding('textFace'),
     textSize: displayBinding('textSize'),
-    menuAnimation: {
-      get: () => getMenuAnimation(globalThis),
-      set: (value) => setMenuAnimation(value, globalThis),
-      subscribe: (listener) => subscribeMenuAnimation(listener, globalThis),
-    },
+    menuAnimation: menuAnimationBinding(globalThis),
   },
 });
 const snakeTouchSettings = el('section');

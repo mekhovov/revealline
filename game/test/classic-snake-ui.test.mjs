@@ -28,6 +28,7 @@ import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { menuAnimationBinding, MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -323,9 +324,7 @@ async function harness({
     },
     attachMenuAudioSettings() {},
     attachDefeatSoundControls,
-    getMenuAnimation: () => true,
-    setMenuAnimation() {},
-    subscribeMenuAnimation: () => () => {},
+    menuAnimationBinding,
     mountModeSettings,
     attachSettingsPanels,
     settingsPanelBack,
@@ -411,6 +410,8 @@ async function harness({
     matchMedia: () => Object.assign(new Events(), { matches: false }),
     addEventListener: window.addEventListener.bind(window),
     removeEventListener: window.removeEventListener.bind(window),
+    dispatchEvent: window.dispatchEvent.bind(window),
+    CustomEvent,
     requestAnimationFrame(callback) {
       scheduledFrames.push(callback);
     },
@@ -1436,6 +1437,48 @@ test('the Snake library shows all missions and filters without changing the paus
   );
 });
 
+for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} Snake mission recovery preserves the paused native attempt and its accepted host`, async () => {
+    const state = await harness({ mode });
+    state.frame(0);
+    state.frame(200);
+    state.shell.open('missions');
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const location = state.location.href;
+    state.$('journey-lifecycle').value = 'archive';
+    state.$('journey-lifecycle').emit('change');
+    assert.equal(state.$('journey-lifecycle').value, 'archive');
+    state.$('journey-mode').value = mode === 'team' ? 'solo' : 'team';
+    state.$('journey-mode').emit('change');
+    state.$('journey-search').value = 'No such mission here';
+    state.$('journey-search').emit('input');
+    state.$('journey-filters-reset').focus();
+    state.$('journey-filters-reset').click();
+    assert.equal(state.$('journey-mode').value, mode);
+    assert.equal(state.$('journey-lifecycle').value, 'current');
+    assert.equal(state.$('journey-search').value, 'No such mission here');
+    assert.equal(state.$('journey-cards').children.length, 0);
+    assert.equal(state.document.activeElement, state.$('journey-search'));
+    state.frame(2000);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(state.location.href, location);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    state.$('journey-search-clear').focus();
+    state.$('journey-search-clear').click();
+    assert.ok(state.$('journey-cards').children.length > 0);
+    state.$('journey-back').click();
+    assert.equal(state.$('journey-chooser').open, false);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+}
+
 test('Snake library mode selection launches the exact chosen Team mission with one activation', async () => {
   const state = await harness();
   state.shell.open('missions');
@@ -1457,6 +1500,23 @@ test('Snake library mode selection launches the exact chosen Team mission with o
   assert.equal(state.shell.topDialog(), null);
   assert.equal(state.document.body.dataset.playing, 'true');
   state.shell.openHome();
+  state.shell.open('missions');
+  const accepted = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  state.$('journey-mode').value = 'solo';
+  state.$('journey-mode').emit('change');
+  state.$('journey-filters-reset').focus();
+  state.$('journey-filters-reset').click();
+  assert.equal(
+    state.$('journey-mode').value,
+    'team',
+    'The reused chooser follows the accepted Team owner.',
+  );
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    accepted,
+  );
+  assert.equal(state.document.body.dataset.playing, 'false');
+  state.$('journey-back').click();
   assert.equal(state.$('snake-navigation-context').textContent, 'SNAKE · Team · Campaign');
   assert.equal(
     state.shell.elements.home.querySelector('.mode-play-mission').textContent,
@@ -2848,4 +2908,30 @@ test('Snake live language refresh translates every stats view without changing t
     assert.equal(state.shell.elements.root.dataset.phase, 'paused');
     assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.settings);
   }
+});
+
+test('actual Snake settings keep an unsaved menu animation choice and Retry the same checkbox', async () => {
+  const h = await harness(),
+    write = h.storage.set.bind(h.storage);
+  let working = false;
+  h.storage.set = (key, value) => {
+    if (key === MENU_ANIMATION_KEY && !working)
+      throw new DOMException('Modeled blocked storage', 'SecurityError');
+    return write(key, value);
+  };
+  h.shell.open('settings');
+  const input = h.$('snake-global-menuAnimation');
+  input.checked = false;
+  input.emit('change');
+  const status = h.$(`${input.id}-status`),
+    retry = status.parentNode.querySelector('.global-settings-save-retry');
+  assert.equal(input.checked, false);
+  assert.match(status.textContent, /Session only.*blocked/);
+  retry.focus();
+  working = true;
+  retry.click();
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+  assert.equal(status.textContent, 'Saved');
+  assert.equal(h.document.activeElement, input);
+  assert.equal(retry.hidden, true);
 });
