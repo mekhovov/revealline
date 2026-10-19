@@ -6,11 +6,11 @@ It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
 unrelated world-expansion or demonstration-authoring projects.
 
-## Active continuation — 19 October, 03:25 CEST
+## Active continuation — 19 October, 03:26 CEST
 
 The workbench lifecycle fixes, safe package reduction and unscored course-result
 integrity changes are **implemented, independently reviewed and qualified locally**.
-The next work is **normal publication → source-bound deployment acceptance**,
+The next work is **normal integration and deployment → source-bound acceptance**,
 with Firefox investigation and non-activating propulsion preparation continuing
 independently. The whole plan remains incomplete. This section and the detailed
 remaining-work table supersede every earlier snapshot and estimate below.
@@ -32,6 +32,14 @@ continuation at `6b91adb212d2a1366fe90890ae9eff251f5fa971` has the same
 **243 unique packaged inputs**, byte for byte. Additional 64/5/49 passing tool
 suites are reported separately because prerequisites overlap.
 [Continuation receipt](fpv-workbench-integrity-continuation-20261019.json).
+
+The reviewed continuation is now published as
+**[PR #1698](https://github.com/mekhovov/revealline/pull/1698)** at
+`6c6ca7cd59ca0f04d3f005b929b67cb1b391aee1`, explicitly depending on #1685.
+At **03:25 CEST** it is mergeable, with fifteen checks queued and no completed
+check yet. This is publication, not integration or deployment. This later
+documentation-only publication note is retained locally rather than changing
+the queued PR source solely to record its number.
 
 - **R3: inspector 200% zoom is locally accepted.** A fresh exact World package
   at `7d92d2fd10a0e0b098f95eadea30df9bb5080932` passed English/Ukrainian keyboard,
@@ -120,7 +128,7 @@ estimate is superseded by the completed and package-qualified reduction.
 
 Current priority order:
 
-1. **P1:** publish the reviewed follow-up after #1685 and accept the eventual
+1. **P1:** integrate #1698 after #1685 and accept the eventual
    deployed source. Queue time is unknown; allow **1–2 working days after a
    stable deployment** for the shared available-desktop acceptance scope.
 2. **P1:** assess a trajectory-preserving Firefox remedy using the completed
@@ -624,7 +632,7 @@ The [inventory](fpv-civilian-source-inventory.md) records each public record and
 tab, its exact title and disposition, along with the first-party feed/loading-shell
 and bounded sheet-header inspection limits.
 
-Current sequence: **#1665 → #1679 → #1685 → reviewed workbench-integrity continuation → accept required protected-main updates and fresh checks → deploy → source-bound public acceptance**. Parent #1626's Pages workflow is complete. The flight correction branch is `codex/fpv-flight-integration-20261019`; #1685 is `codex/fpv-qualification-followup-20261019`; the new continuation is `codex/fpv-workbench-integrity-20261019`. Unrelated main lesson-mode changes are retained. A direct stacked diff against #1665's original branch would not represent this rebased history correctly.
+Current sequence: **#1665 → #1679 → #1685 → #1698 → accept required protected-main updates and fresh checks → deploy → source-bound public acceptance**. Parent #1626's Pages workflow is complete. The flight correction branch is `codex/fpv-flight-integration-20261019`; #1685 is `codex/fpv-qualification-followup-20261019`; #1698 is `codex/fpv-workbench-integrity-20261019`. Unrelated main lesson-mode changes are retained. A direct stacked diff against #1665's original branch would not represent this rebased history correctly.
 
 R13 remains an independent P1 investigation; R4 has no safe cleanup path until the inventory is understood. R2’s bounded inventory and R3’s local narrow/200% EN/UK checks are complete; physical touch, virtual keyboard and public acceptance remain separate. R6 software preparation can proceed independently of deferred physical radios/pilots, but measured activation cannot. Delivered R11A–E and R17–R21 corrections need normal publication and scoped public acceptance; R18’s capacity reduction and exact combined-package qualification are complete locally. Do not wait for R6–R12 to improve released practice or treat them as passed because the local release is ready.
 
