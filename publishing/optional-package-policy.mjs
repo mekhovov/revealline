@@ -424,6 +424,7 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
     localFiles: Object.freeze([
       'index.html',
       'advanced-worker.mjs',
+      'response-bench-worker.mjs',
       'app.webmanifest',
       'README.md',
       'SCENERY-LICENSES.txt',
@@ -590,11 +591,40 @@ const FPV_TUNING_FILES = Object.freeze([
   'flight-response.mjs',
   'tuning-library.mjs',
   'tuning-ui.mjs',
+  'setup-draft.mjs',
+  'setup-workbench.mjs',
+  'aircraft-tuning-fields.mjs',
+  'controller-tune-library.mjs',
+  'controller-tune-panel.mjs',
+  'response-bench.mjs',
+  'response-bench-client.mjs',
+  'response-bench-worker.mjs',
+  'response-bench-panel.mjs',
   'tuning.css',
   'betaflight-import.mjs',
   'advanced-controller.mjs',
   'advanced-terrain.mjs',
   'advanced-simulation.mjs',
+  'advanced-aircraft-runtime.mjs',
+  'aircraft-physics.mjs',
+  'aircraft-response.mjs',
+  'aircraft-presets.mjs',
+  'aircraft-appearance.mjs',
+  'aircraft-preview.mjs',
+  'aircraft-recording.mjs',
+  'aircraft-terrain.mjs',
+  'aircraft-course-session.mjs',
+  'aircraft-mission-checkpoint.mjs',
+  'aircraft-practice-controls.mjs',
+  'aircraft-course-advice.mjs',
+  'aircraft-archive.mjs',
+  'aircraft-archive-controls.mjs',
+  'aircraft-archive-verifier.mjs',
+  'advanced-ghost-path.mjs',
+  'propulsion-evidence.mjs',
+  'propulsion-evidence-ui.mjs',
+  'aircraft-challenge.mjs',
+  'aircraft-challenge-ui.mjs',
   'advanced-worker.mjs',
   'advanced-worker-client.mjs',
   'advanced-practice.mjs',
@@ -617,9 +647,10 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ...policy,
         // Original aggregate locale files are retained as source hashes, while
         // only selected messages ship. Academy's reviewed input inventory is
-        // 12,603,530 bytes; this separate 12 MiB + 128 KiB accounting allowance
-        // leaves runtime and complete published-source output capped at 12 MiB.
-        ...(id === 'civilian-fpv' ? { sourceInputBytes: 12 * 1024 * 1024 + 128 * 1024 } : {}),
+        // 13,156,199 bytes with the visual workbench and isolated response bench.
+        // The 12 MiB + 704 KiB input allowance retains aggregate locale hashes;
+        // those full locale inputs do not ship in standalone SIM archives.
+        ...(id === 'civilian-fpv' ? { sourceInputBytes: 12 * 1024 * 1024 + 704 * 1024 } : {}),
         // The canonical browser is projected into an existing package module.
         // Admit only its message families, including plural and dynamic keys.
         localeKeyPrefixes: Object.freeze({
@@ -681,13 +712,18 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         limits: Object.freeze({
           ...policy.limits,
           // Includes tuning/worker, the native-safe boot and platform adapter;
+          // The visual workbench and isolated response bench add nine explicit
+          // files to each complete runtime/source envelope. The installed-core
+          // Academy cache includes the shared full locale catalog; its measured
+          // 12,976,707-byte closure requires a 512 KiB allowance above 12 MiB.
+          // Standalone Academy remains below 12 MiB; World stays at 20 MiB.
           // World also admits its single Regional Advanced adapter.
           // Academy now carries the same pinned 4.35 MB Rapier build as World.
           files:
             id === 'civilian-fpv'
-              ? 121
+              ? 150
               : id === 'fpv-worlds'
-                ? 180 // Includes World's same-scope Advanced worker bootstrap.
+                ? 210 // Includes World's same-scope flight and response-bench workers.
                 : id === 'civilian-flight'
                   ? 98
                   : policy.limits.files,
@@ -695,7 +731,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
             id === 'fpv-worlds'
               ? 20 * 1024 * 1024
               : id === 'civilian-fpv'
-                ? 12 * 1024 * 1024
+                ? 12 * 1024 * 1024 + 512 * 1024
                 : policy.limits.bytes,
         }),
         localFiles: Object.freeze([

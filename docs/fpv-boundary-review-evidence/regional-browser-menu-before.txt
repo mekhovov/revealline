@@ -1,0 +1,15 @@
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.waitForEvent: Timeout 30000ms exceeded while waiting for event "download"
+=========================== logs ===========================
+waiting for event "download"
+============================================================
+    at smokeAdvancedRegional (/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-advanced-regional.mjs:325:37)
+    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-advanced-regional.mjs:502:18 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v22.22.2

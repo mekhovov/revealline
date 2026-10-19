@@ -1,0 +1,753 @@
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	﻿2026-10-16T04:39:06.9809882Z Current runner version: '2.337.0'
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9839729Z ##[group]Runner Image Provisioner
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9840714Z Hosted Compute Agent
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9841486Z Version: 20261012.601
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9842360Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9843325Z Build Date: 2026-10-12T17:48:21Z
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9844202Z Worker ID: {a1710942-8543-4555-8c7c-e441ce9d4fe5}
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9845055Z Region: eastus
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9845787Z Cloud: Azure
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9846471Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9848474Z ##[group]Operating System
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9849284Z Ubuntu
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9849882Z 24.04.5
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9850618Z LTS
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9851318Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9852073Z ##[group]Runner Image
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9852781Z Image: ubuntu-24.04
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9853507Z Version: 20261012.334.1
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9855120Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9857281Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9858711Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9860040Z ##[group]GITHUB_TOKEN Permissions
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9862905Z Contents: read
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9863685Z Metadata: read
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9864374Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9867255Z Secret source: Actions
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9868556Z Cache mode: write
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:06.9869575Z Prepare workflow directory
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.0453180Z Prepare all required actions
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.0512562Z Getting action download info
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.1828657Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.4047306Z Download action repository 'actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7104190Z Complete job name: verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7666131Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7667018Z with:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7667433Z   ref: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7667963Z   persist-credentials: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7669098Z   sparse-checkout: authoring/fpv-development-preservation
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	docs/reports/fpv-development-preservation-20261016/published-parts
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7670079Z   repository: mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7673275Z   token: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7673652Z   ssh-strict: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7674035Z   ssh-user: git
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7674412Z   clean: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7674798Z   sparse-checkout-cone-mode: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7675265Z   fetch-depth: 1
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7675639Z   fetch-tags: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7676032Z   show-progress: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7676416Z   lfs: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7676805Z   submodules: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7677193Z   set-safe-directory: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7677661Z   allow-unsafe-pr-checkout: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7678409Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7681483Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7682487Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7683682Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.7684221Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.8545368Z Syncing repository: mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.8546883Z ##[group]Getting Git version info
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.8547502Z Working directory is '/home/runner/work/revealline/revealline'
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.8548608Z [command]/usr/bin/git version
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.8957783Z git version 2.55.0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.8975532Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9005166Z Temporarily overriding HOME='/home/runner/work/_temp/0f82bf46-7ddc-447b-a5f8-1f86936f22ab' before making global git config changes
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9007718Z Adding repository directory to the temporary git global config as a safe directory
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9009498Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9059235Z Deleting the contents of '/home/runner/work/revealline/revealline'
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9060248Z ##[group]Initializing the repository
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9079005Z [command]/usr/bin/git init /home/runner/work/revealline/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9295633Z hint: Using 'master' as the name for the initial branch. This default branch name
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9296882Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9297731Z hint: to use in all of your new repositories, which will suppress this warning,
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9298603Z hint: call:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9299011Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9299506Z hint: 	git config --global init.defaultBranch <name>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9300166Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9300724Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9301689Z hint: 'development'. The just-created branch can be renamed via this command:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9302356Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9302755Z hint: 	git branch -m <name>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9303199Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9303769Z hint: Disable this message with "git config set advice.defaultBranchName false"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9304731Z Initialized empty Git repository in /home/runner/work/revealline/revealline/.git/
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9306785Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9348779Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9349507Z ##[group]Disabling automatic garbage collection
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9351585Z [command]/usr/bin/git config --local gc.auto 0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9380065Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9380786Z ##[group]Setting up auth
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9385017Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9416386Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9771485Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:07.9808781Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.0025774Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.0062851Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.0269964Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.0307031Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.0307780Z ##[group]Fetching the repository
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.0314815Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3131425Z From https://github.com/mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3132527Z  * branch            69bef1a2ca1cb0e26ea7abd689be853c4fb58df7 -> FETCH_HEAD
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3140259Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3141272Z ##[group]Determining the checkout info
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3142377Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3143178Z ##[group]Setting up sparse checkout
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3145128Z [command]/usr/bin/git sparse-checkout set authoring/fpv-development-preservation docs/reports/fpv-development-preservation-20261016/published-parts
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3191347Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3192871Z ##[group]Checking out the ref
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:08.3194065Z [command]/usr/bin/git checkout --progress --force 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2532410Z Note: switching to '69bef1a2ca1cb0e26ea7abd689be853c4fb58df7'.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2532952Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2533324Z You are in 'detached HEAD' state. You can look around, make experimental
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2534020Z changes and commit them, and you can discard any commits you make in this
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2534752Z state without impacting any branches by switching back to a branch.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2535166Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2535458Z If you want to create a new branch to retain commits you create, you may
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2537825Z do so (now or later) by using -c with the switch command. Example:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2538386Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2538580Z   git switch -c <new-branch-name>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2538894Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2539080Z Or undo this operation with:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2539348Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2539584Z   git switch -
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2539805Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2540235Z Turn off this advice by setting config variable advice.detachedHead to false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2540710Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2541111Z HEAD is now at 69bef1a Read sealed release asset IDs directly without draft listing access
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2550014Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2594130Z [command]/usr/bin/git log -1 --format=%H
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2620890Z 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2634678Z ##[group]Removing auth
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2636610Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2664978Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2908657Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2936006Z http.https://github.com/.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2943816Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.2975161Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3195391Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3225617Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3437225Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3614647Z ##[group]Run test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3615075Z ^[[36;1mtest "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3615358Z ^[[36;1mcommand -v gh^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3615568Z ^[[36;1msudo apt-get update -qq^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3615815Z ^[[36;1msudo apt-get install -y zstd^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3816930Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3817258Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3819580Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3820107Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3820688Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3820945Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:09.3933628Z /usr/bin/gh
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:16.8082224Z Reading package lists...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:16.9916069Z Building dependency tree...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:16.9922782Z Reading state information...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1553343Z zstd is already the newest version (1.5.5+dfsg2-2build1.1).
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1570458Z zstd set to manually installed.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1570885Z 0 upgraded, 0 newly installed, 0 to remove and 44 not upgraded.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1605223Z ##[group]Run mkdir "$RUNNER_TEMP/preservation-receipts"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1605570Z ^[[36;1mmkdir "$RUNNER_TEMP/preservation-receipts"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1605851Z ^[[36;1mplan_name="$(basename "$PLAN_PATH" .json)"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1606195Z ^[[36;1mpython3 authoring/fpv-development-preservation/verify_published.py \^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1606566Z ^[[36;1m  --plan "$PLAN_PATH" \^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1606826Z ^[[36;1m  --work "$RUNNER_TEMP/preservation-part" \^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1607175Z ^[[36;1m  --receipt "$RUNNER_TEMP/preservation-receipts/$plan_name-verified.json"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1661515Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1661803Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1663751Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1664260Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1664875Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.1665146Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.5129349Z gh: Resource not accessible by integration (HTTP 403)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6264801Z Traceback (most recent call last):
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6265651Z   File "/home/runner/work/revealline/revealline/authoring/fpv-development-preservation/verify_published.py", line 66, in <module>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6266341Z     main()
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6266762Z   File "/home/runner/work/revealline/revealline/authoring/fpv-development-preservation/verify_published.py", line 41, in main
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6267620Z     asset = gh_json('api', f'repos/{REPO}/releases/assets/{plan["assetId"]}')
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6268231Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6268762Z   File "/home/runner/work/revealline/revealline/authoring/fpv-development-preservation/verify_upload.py", line 32, in gh_json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6269414Z     return json.loads(subprocess.check_output(['gh', *args], text=True))
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6269793Z                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6270101Z   File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6270665Z     return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6271129Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6271592Z   File "/usr/lib/python3.12/subprocess.py", line 571, in run
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6272073Z     raise CalledProcessError(retcode, process.args,
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6272757Z subprocess.CalledProcessError: Command '['gh', 'api', 'repos/mekhovov/revealline/releases/assets/646093315']' returned non-zero exit status 1.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6425235Z ##[error]Process completed with exit code 1.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6505896Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6506225Z with:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6506402Z   name: preservation-readback-0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6506686Z   path: /home/runner/work/_temp/preservation-receipts/*.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6506969Z   if-no-files-found: warn
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6507158Z   retention-days: 90
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6507336Z   compression-level: 6
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6507511Z   overwrite: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6507693Z   include-hidden-files: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6507881Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6510020Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6510539Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6511119Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.6511372Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.7779661Z ##[warning]No files were found with the provided path: /home/runner/work/_temp/preservation-receipts/*.json. No artifacts will be uploaded.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.7945709Z Post job cleanup.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.8668794Z [command]/usr/bin/git version
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.8704675Z git version 2.55.0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.8733613Z Temporarily overriding HOME='/home/runner/work/_temp/d260023d-1cf6-460b-8db7-8f9947fbce23' before making global git config changes
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.8734598Z Adding repository directory to the temporary git global config as a safe directory
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.8738298Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.8770913Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.8799523Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.9033519Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.9064927Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.9305342Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.9339668Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-46360e3916646a8c4...	UNKNOWN STEP	2026-10-16T04:39:17.9703336Z Cleaning up orphan processes
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	﻿2026-10-16T04:39:07.4401800Z Current runner version: '2.337.0'
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4415537Z ##[group]Runner Image Provisioner
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4416124Z Hosted Compute Agent
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4416500Z Version: 20261012.601
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4416901Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4417561Z Build Date: 2026-10-12T17:48:21Z
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4417944Z Worker ID: {d58c6854-a351-4fff-ad78-a1a446c256ae}
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4418398Z Region: westus2
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4418730Z Cloud: Azure
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4419071Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4419801Z ##[group]Operating System
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4420183Z Ubuntu
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4420528Z 24.04.5
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4420832Z LTS
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4421185Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4421545Z ##[group]Runner Image
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4421888Z Image: ubuntu-24.04
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4422257Z Version: 20261012.334.1
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4422967Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4423873Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4424414Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4425089Z ##[group]GITHUB_TOKEN Permissions
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4426155Z Contents: read
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4426540Z Metadata: read
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4426896Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4428230Z Secret source: Actions
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4428835Z Cache mode: write
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4429215Z Prepare workflow directory
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4713125Z Prepare all required actions
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.4742807Z Getting action download info
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.8243432Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:07.9085977Z Download action repository 'actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.0849575Z Complete job name: verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1246470Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1246955Z with:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1247576Z   ref: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1247909Z   persist-credentials: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1248459Z   sparse-checkout: authoring/fpv-development-preservation
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	docs/reports/fpv-development-preservation-20261016/published-parts
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1249038Z   repository: mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1250886Z   token: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1251112Z   ssh-strict: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1251340Z   ssh-user: git
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1251564Z   clean: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1251803Z   sparse-checkout-cone-mode: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1252076Z   fetch-depth: 1
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1252304Z   fetch-tags: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1252541Z   show-progress: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1252844Z   lfs: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1253081Z   submodules: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1253321Z   set-safe-directory: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1253605Z   allow-unsafe-pr-checkout: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1253987Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1255717Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1256306Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1256999Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1257492Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1866102Z Syncing repository: mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1867289Z ##[group]Getting Git version info
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1867800Z Working directory is '/home/runner/work/revealline/revealline'
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1868334Z [command]/usr/bin/git version
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1962693Z git version 2.55.0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1975885Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1985761Z Temporarily overriding HOME='/home/runner/work/_temp/c07b9793-da96-4f65-a1cd-60f60329ffec' before making global git config changes
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1990018Z Adding repository directory to the temporary git global config as a safe directory
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.1990907Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2031908Z Deleting the contents of '/home/runner/work/revealline/revealline'
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2034159Z ##[group]Initializing the repository
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2036461Z [command]/usr/bin/git init /home/runner/work/revealline/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2123199Z hint: Using 'master' as the name for the initial branch. This default branch name
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2124103Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2124944Z hint: to use in all of your new repositories, which will suppress this warning,
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2125614Z hint: call:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2125981Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2126432Z hint: 	git config --global init.defaultBranch <name>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2127018Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2131122Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2135680Z hint: 'development'. The just-created branch can be renamed via this command:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2141320Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2141705Z hint: 	git branch -m <name>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2142089Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2142629Z hint: Disable this message with "git config set advice.defaultBranchName false"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2143486Z Initialized empty Git repository in /home/runner/work/revealline/revealline/.git/
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2145052Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2189702Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2190352Z ##[group]Disabling automatic garbage collection
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2192125Z [command]/usr/bin/git config --local gc.auto 0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2221341Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2221987Z ##[group]Setting up auth
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2226423Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2253387Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2538875Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2565888Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2728915Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2754307Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2916076Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2946472Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2947080Z ##[group]Fetching the repository
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.2952834Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6915727Z From https://github.com/mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6916487Z  * branch            69bef1a2ca1cb0e26ea7abd689be853c4fb58df7 -> FETCH_HEAD
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6920375Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6921125Z ##[group]Determining the checkout info
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6922524Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6923308Z ##[group]Setting up sparse checkout
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6928654Z [command]/usr/bin/git sparse-checkout set authoring/fpv-development-preservation docs/reports/fpv-development-preservation-20261016/published-parts
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6969505Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6970214Z ##[group]Checking out the ref
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:08.6972000Z [command]/usr/bin/git checkout --progress --force 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6078516Z Note: switching to '69bef1a2ca1cb0e26ea7abd689be853c4fb58df7'.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6079604Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6080123Z You are in 'detached HEAD' state. You can look around, make experimental
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6081301Z changes and commit them, and you can discard any commits you make in this
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6082498Z state without impacting any branches by switching back to a branch.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6083205Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6083664Z If you want to create a new branch to retain commits you create, you may
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6084757Z do so (now or later) by using -c with the switch command. Example:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6085384Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6085648Z   git switch -c <new-branch-name>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6086071Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6086355Z Or undo this operation with:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6086744Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6087035Z   git switch -
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6087485Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6088055Z Turn off this advice by setting config variable advice.detachedHead to false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6088806Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6089400Z HEAD is now at 69bef1a Read sealed release asset IDs directly without draft listing access
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6093914Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6131704Z [command]/usr/bin/git log -1 --format=%H
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6153697Z 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6160575Z ##[group]Removing auth
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6162479Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6187549Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6379310Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6402979Z http.https://github.com/.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6409770Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6437317Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6620979Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6647529Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.6834674Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7017842Z ##[group]Run test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7018956Z ^[[36;1mtest "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7019864Z ^[[36;1mcommand -v gh^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7020551Z ^[[36;1msudo apt-get update -qq^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7021338Z ^[[36;1msudo apt-get install -y zstd^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7241884Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7242790Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7248663Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7250338Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7252310Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7253188Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:09.7354036Z /usr/bin/gh
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:14.9977579Z Reading package lists...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.1234078Z Building dependency tree...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.1239391Z Reading state information...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2433676Z zstd is already the newest version (1.5.5+dfsg2-2build1.1).
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2434054Z zstd set to manually installed.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2434335Z 0 upgraded, 0 newly installed, 0 to remove and 44 not upgraded.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2483910Z ##[group]Run mkdir "$RUNNER_TEMP/preservation-receipts"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2484172Z ^[[36;1mmkdir "$RUNNER_TEMP/preservation-receipts"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2484359Z ^[[36;1mplan_name="$(basename "$PLAN_PATH" .json)"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2484599Z ^[[36;1mpython3 authoring/fpv-development-preservation/verify_published.py \^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2484869Z ^[[36;1m  --plan "$PLAN_PATH" \^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2485044Z ^[[36;1m  --work "$RUNNER_TEMP/preservation-part" \^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2485281Z ^[[36;1m  --receipt "$RUNNER_TEMP/preservation-receipts/$plan_name-verified.json"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2537742Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2537956Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2539387Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2539740Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2540173Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.2540357Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.6684536Z gh: Resource not accessible by integration (HTTP 403)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7204881Z Traceback (most recent call last):
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7205632Z   File "/home/runner/work/revealline/revealline/authoring/fpv-development-preservation/verify_published.py", line 66, in <module>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7206473Z     main()
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7207051Z   File "/home/runner/work/revealline/revealline/authoring/fpv-development-preservation/verify_published.py", line 41, in main
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7207673Z     asset = gh_json('api', f'repos/{REPO}/releases/assets/{plan["assetId"]}')
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7207909Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7208243Z   File "/home/runner/work/revealline/revealline/authoring/fpv-development-preservation/verify_upload.py", line 32, in gh_json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7210503Z     return json.loads(subprocess.check_output(['gh', *args], text=True))
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7210814Z                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7211049Z   File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7211319Z     return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7211584Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7211777Z   File "/usr/lib/python3.12/subprocess.py", line 571, in run
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7212638Z     raise CalledProcessError(retcode, process.args,
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7213256Z subprocess.CalledProcessError: Command '['gh', 'api', 'repos/mekhovov/revealline/releases/assets/646133063']' returned non-zero exit status 1.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7320824Z ##[error]Process completed with exit code 1.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7382169Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7382391Z with:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7382512Z   name: preservation-readback-2
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7382707Z   path: /home/runner/work/_temp/preservation-receipts/*.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7382893Z   if-no-files-found: warn
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7383023Z   retention-days: 90
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7383143Z   compression-level: 6
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7383261Z   overwrite: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7383382Z   include-hidden-files: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7383507Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7384882Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7385236Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7385631Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.7385802Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.8334326Z ##[warning]No files were found with the provided path: /home/runner/work/_temp/preservation-receipts/*.json. No artifacts will be uploaded.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.8506873Z Post job cleanup.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9049006Z [command]/usr/bin/git version
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9085690Z git version 2.55.0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9107844Z Temporarily overriding HOME='/home/runner/work/_temp/32572262-fe22-4faf-a3de-0420b8df2276' before making global git config changes
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9111996Z Adding repository directory to the temporary git global config as a safe directory
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9112548Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9143129Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9168123Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9378710Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9412687Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9621652Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9650446Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-ba941694c6a3682c0...	UNKNOWN STEP	2026-10-16T04:39:15.9945883Z Cleaning up orphan processes
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	﻿2026-10-16T04:39:07.6540479Z Current runner version: '2.337.0'
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6558449Z ##[group]Runner Image Provisioner
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6559008Z Hosted Compute Agent
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6559338Z Version: 20261012.601
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6559750Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6560197Z Build Date: 2026-10-12T17:48:21Z
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6560634Z Worker ID: {f14f3ec0-aaea-40b2-a048-ff9268105efb}
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6561042Z Region: westus3
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6561364Z Cloud: Azure
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6561710Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6562491Z ##[group]Operating System
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6562894Z Ubuntu
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6563207Z 24.04.5
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6563634Z LTS
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6563967Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6564321Z ##[group]Runner Image
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6564671Z Image: ubuntu-24.04
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6565053Z Version: 20261012.334.1
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6565828Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6566794Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6567323Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6568033Z ##[group]GITHUB_TOKEN Permissions
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6569170Z Contents: read
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6569591Z Metadata: read
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6569911Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6571356Z Secret source: Actions
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6571870Z Cache mode: write
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.6572313Z Prepare workflow directory
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.7647024Z Prepare all required actions
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:07.7688426Z Getting action download info
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.0457151Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.1596132Z Download action repository 'actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6193537Z Complete job name: verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6799864Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6800417Z with:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6800701Z   ref: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6801052Z   persist-credentials: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6801653Z   sparse-checkout: authoring/fpv-development-preservation
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	docs/reports/fpv-development-preservation-20261016/published-parts
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6802287Z   repository: mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6804670Z   token: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6804913Z   ssh-strict: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6805160Z   ssh-user: git
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6805410Z   clean: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6805667Z   sparse-checkout-cone-mode: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6805981Z   fetch-depth: 1
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6806229Z   fetch-tags: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6806502Z   show-progress: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6806793Z   lfs: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6807055Z   submodules: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6807311Z   set-safe-directory: true
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6807630Z   allow-unsafe-pr-checkout: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6808000Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6810045Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6810701Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6811465Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.6811825Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.7456685Z Syncing repository: mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.7458118Z ##[group]Getting Git version info
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.7458597Z Working directory is '/home/runner/work/revealline/revealline'
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.7459549Z [command]/usr/bin/git version
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.7535351Z git version 2.55.0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.7549659Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.7560448Z Temporarily overriding HOME='/home/runner/work/_temp/c8d6e024-e842-4392-a0a7-f7dfa7c0eee6' before making global git config changes
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.7562006Z Adding repository directory to the temporary git global config as a safe directory
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.7564914Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.8464023Z Deleting the contents of '/home/runner/work/revealline/revealline'
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.8467488Z ##[group]Initializing the repository
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.8471025Z [command]/usr/bin/git init /home/runner/work/revealline/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9757994Z hint: Using 'master' as the name for the initial branch. This default branch name
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9758724Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9759255Z hint: to use in all of your new repositories, which will suppress this warning,
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9759669Z hint: call:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9759899Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9760225Z hint: 	git config --global init.defaultBranch <name>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9760640Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9760977Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9761495Z hint: 'development'. The just-created branch can be renamed via this command:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9761914Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9762155Z hint: 	git branch -m <name>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9762424Z hint:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9762791Z hint: Disable this message with "git config set advice.defaultBranchName false"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9864461Z Initialized empty Git repository in /home/runner/work/revealline/revealline/.git/
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:08.9872575Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.1056410Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.1057024Z ##[group]Disabling automatic garbage collection
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.1060187Z [command]/usr/bin/git config --local gc.auto 0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.1663120Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.1664275Z ##[group]Setting up auth
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.1669118Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.1702484Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.2674271Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.2704416Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.2872569Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.2899639Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.3070540Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.3253229Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.3254718Z ##[group]Fetching the repository
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:09.3261017Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4196997Z From https://github.com/mekhovov/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4197449Z  * branch            69bef1a2ca1cb0e26ea7abd689be853c4fb58df7 -> FETCH_HEAD
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4200370Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4200698Z ##[group]Determining the checkout info
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4202875Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4203535Z ##[group]Setting up sparse checkout
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4208180Z [command]/usr/bin/git sparse-checkout set authoring/fpv-development-preservation docs/reports/fpv-development-preservation-20261016/published-parts
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4253471Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4254277Z ##[group]Checking out the ref
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:10.4254599Z [command]/usr/bin/git checkout --progress --force 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0359289Z Updating files:   0% (1/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0364352Z Updating files:   1% (10/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0368865Z Updating files:   2% (20/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0376020Z Updating files:   3% (30/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0380165Z Updating files:   4% (40/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0386212Z Updating files:   5% (50/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0392610Z Updating files:   6% (60/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0397929Z Updating files:   7% (70/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0406122Z Updating files:   8% (80/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0412591Z Updating files:   9% (90/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0426256Z Updating files:  10% (100/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0437455Z Updating files:  11% (110/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0446139Z Updating files:  12% (120/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0456763Z Updating files:  13% (130/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0464567Z Updating files:  14% (140/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0471918Z Updating files:  15% (150/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0478307Z Updating files:  16% (160/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0485278Z Updating files:  17% (170/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0491294Z Updating files:  18% (180/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0497928Z Updating files:  19% (190/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0505104Z Updating files:  20% (200/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0510056Z Updating files:  21% (210/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0515513Z Updating files:  22% (220/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0519807Z Updating files:  23% (230/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0532472Z Updating files:  24% (240/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0542586Z Updating files:  25% (250/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0547452Z Updating files:  26% (260/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0553663Z Updating files:  27% (270/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0558797Z Updating files:  28% (280/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0563244Z Updating files:  29% (290/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0579371Z Updating files:  30% (300/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0584657Z Updating files:  31% (310/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0589265Z Updating files:  32% (320/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0594093Z Updating files:  33% (330/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0600479Z Updating files:  34% (340/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0607192Z Updating files:  35% (350/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0611515Z Updating files:  36% (360/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0621892Z Updating files:  37% (370/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0627055Z Updating files:  38% (380/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0633513Z Updating files:  39% (390/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0638929Z Updating files:  40% (400/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0643173Z Updating files:  41% (410/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0650696Z Updating files:  42% (420/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0661131Z Updating files:  43% (430/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0665934Z Updating files:  44% (440/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0670339Z Updating files:  45% (450/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0676266Z Updating files:  46% (460/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0680043Z Updating files:  47% (470/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0685110Z Updating files:  48% (480/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0689639Z Updating files:  49% (490/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0694067Z Updating files:  50% (500/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0698237Z Updating files:  51% (510/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0702413Z Updating files:  52% (520/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0709796Z Updating files:  53% (530/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0714536Z Updating files:  54% (540/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0719658Z Updating files:  55% (550/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0725389Z Updating files:  56% (560/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0731323Z Updating files:  57% (570/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0735987Z Updating files:  58% (580/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0740401Z Updating files:  59% (590/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0746583Z Updating files:  60% (600/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0750721Z Updating files:  61% (610/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0756465Z Updating files:  62% (620/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0766853Z Updating files:  63% (630/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0772376Z Updating files:  64% (640/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0777190Z Updating files:  65% (650/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0782877Z Updating files:  66% (660/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0790311Z Updating files:  67% (670/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0798219Z Updating files:  68% (680/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0802816Z Updating files:  69% (690/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0813742Z Updating files:  70% (700/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0819541Z Updating files:  71% (710/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0825314Z Updating files:  72% (720/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0835090Z Updating files:  73% (730/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0845791Z Updating files:  74% (740/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0851665Z Updating files:  75% (750/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0859048Z Updating files:  76% (760/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0864445Z Updating files:  77% (770/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0872020Z Updating files:  78% (780/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0878483Z Updating files:  79% (790/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0882899Z Updating files:  80% (800/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0935796Z Updating files:  81% (810/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0941326Z Updating files:  82% (820/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0950361Z Updating files:  83% (830/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0959241Z Updating files:  84% (840/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0967701Z Updating files:  85% (850/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0973758Z Updating files:  86% (860/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0980045Z Updating files:  87% (870/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0985446Z Updating files:  88% (880/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0991652Z Updating files:  89% (890/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.0996627Z Updating files:  90% (900/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1005140Z Updating files:  91% (910/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1009101Z Updating files:  92% (920/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1013468Z Updating files:  93% (930/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1017954Z Updating files:  94% (940/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1022522Z Updating files:  95% (950/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1031270Z Updating files:  96% (960/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1035014Z Updating files:  97% (970/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1040403Z Updating files:  98% (980/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1047886Z Updating files:  99% (990/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1049299Z Updating files: 100% (1000/1000)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1049545Z Updating files: 100% (1000/1000), done.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1268579Z Note: switching to '69bef1a2ca1cb0e26ea7abd689be853c4fb58df7'.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1268905Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1269103Z You are in 'detached HEAD' state. You can look around, make experimental
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1269355Z changes and commit them, and you can discard any commits you make in this
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1269672Z state without impacting any branches by switching back to a branch.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1269821Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1269919Z If you want to create a new branch to retain commits you create, you may
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1270162Z do so (now or later) by using -c with the switch command. Example:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1270298Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1270361Z   git switch -c <new-branch-name>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1270457Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1270592Z Or undo this operation with:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1270678Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1270727Z   git switch -
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1270802Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1270916Z Turn off this advice by setting config variable advice.detachedHead to false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1271077Z 
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1271208Z HEAD is now at 69bef1a Read sealed release asset IDs directly without draft listing access
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1286649Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1328505Z [command]/usr/bin/git log -1 --format=%H
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1349444Z 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1356610Z ##[group]Removing auth
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1358916Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1383593Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1630110Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1631004Z http.https://github.com/.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1631648Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1642821Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1838091Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.1868971Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2056906Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2211295Z ##[group]Run test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2211625Z ^[[36;1mtest "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2211809Z ^[[36;1mcommand -v gh^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2211963Z ^[[36;1msudo apt-get update -qq^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2212110Z ^[[36;1msudo apt-get install -y zstd^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2425700Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2425933Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2427630Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2427972Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2428367Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2428542Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:12.2529132Z /usr/bin/gh
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:17.9230462Z Reading package lists...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.1129601Z Building dependency tree...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.1134970Z Reading state information...
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2734596Z zstd is already the newest version (1.5.5+dfsg2-2build1.1).
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2734938Z zstd set to manually installed.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2736135Z 0 upgraded, 0 newly installed, 0 to remove and 44 not upgraded.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2778625Z ##[group]Run mkdir "$RUNNER_TEMP/preservation-receipts"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2778877Z ^[[36;1mmkdir "$RUNNER_TEMP/preservation-receipts"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2779057Z ^[[36;1mplan_name="$(basename "$PLAN_PATH" .json)"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2779282Z ^[[36;1mpython3 authoring/fpv-development-preservation/verify_published.py \^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2779511Z ^[[36;1m  --plan "$PLAN_PATH" \^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2779677Z ^[[36;1m  --work "$RUNNER_TEMP/preservation-part" \^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2779909Z ^[[36;1m  --receipt "$RUNNER_TEMP/preservation-receipts/$plan_name-verified.json"^[[0m
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2830571Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2830746Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2832196Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2832529Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2832970Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.2833138Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.7785713Z gh: Resource not accessible by integration (HTTP 403)
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8494061Z Traceback (most recent call last):
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8494728Z   File "/home/runner/work/revealline/revealline/authoring/fpv-development-preservation/verify_published.py", line 66, in <module>
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8495070Z     main()
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8495350Z   File "/home/runner/work/revealline/revealline/authoring/fpv-development-preservation/verify_published.py", line 41, in main
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8495746Z     asset = gh_json('api', f'repos/{REPO}/releases/assets/{plan["assetId"]}')
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8495983Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8496318Z   File "/home/runner/work/revealline/revealline/authoring/fpv-development-preservation/verify_upload.py", line 32, in gh_json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8497163Z     return json.loads(subprocess.check_output(['gh', *args], text=True))
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8497542Z                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8497910Z   File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8498505Z     return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8498980Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8499286Z   File "/usr/lib/python3.12/subprocess.py", line 571, in run
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8499614Z     raise CalledProcessError(retcode, process.args,
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8500225Z subprocess.CalledProcessError: Command '['gh', 'api', 'repos/mekhovov/revealline/releases/assets/646122696']' returned non-zero exit status 1.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8639635Z ##[error]Process completed with exit code 1.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8705243Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8705479Z with:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8705604Z   name: preservation-readback-1
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8705784Z   path: /home/runner/work/_temp/preservation-receipts/*.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8705969Z   if-no-files-found: warn
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8706099Z   retention-days: 90
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8706217Z   compression-level: 6
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8706333Z   overwrite: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8706449Z   include-hidden-files: false
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8706575Z env:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8708056Z   GH_TOKEN: ***
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8708405Z   PLAN_PATH: docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520.json
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8708808Z   EXPECTED_HEAD: 69bef1a2ca1cb0e26ea7abd689be853c4fb58df7
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.8708982Z ##[endgroup]
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.9783952Z ##[warning]No files were found with the provided path: /home/runner/work/_temp/preservation-receipts/*.json. No artifacts will be uploaded.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:18.9952738Z Post job cleanup.
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.0502070Z [command]/usr/bin/git version
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.0534127Z git version 2.55.0
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.0560049Z Temporarily overriding HOME='/home/runner/work/_temp/eae201d5-f123-4d7f-8fbd-1acc297e32b6' before making global git config changes
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.0561044Z Adding repository directory to the temporary git global config as a safe directory
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.0564288Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.0601922Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.0634970Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.0855293Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.0898908Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.1120441Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.1165747Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+verify (docs/reports/fpv-development-preservation-20261016/published-parts/part-9d974f7da889830ed...	UNKNOWN STEP	2026-10-16T04:39:19.1499373Z Cleaning up orphan processes

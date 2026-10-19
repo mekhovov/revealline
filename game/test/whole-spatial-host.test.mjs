@@ -72,7 +72,7 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       assert.equal(p.$('theme-select').value, 'horizon-actors-v1');
       assert.match(
         p.$('overlay-difficulty').textContent,
-        /Journey standard.*3 starting lives.*no failing countdown/,
+        /Journey Standard.*3 starting lives.*no failing countdown/,
       );
       assert.equal(p.rendered.run.rules.moveSpeed, 8.84);
       assert.match(p.$('difficulty-note').textContent, /Reference-paced targets/);
@@ -85,7 +85,7 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       p.key('ArrowDown', false);
       for (let i = 0; i < 1000 && p.rendered.run.status !== 'won'; i++) p.frame();
       assert.equal(p.rendered.run.status, 'won');
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('journey-chooser')?.open ?? false, false);
       p.$('next-button').click();
       await running(p, 'choose-your-share');
       assert.equal(p.rendered.run.player.speed, 0);
@@ -128,6 +128,12 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       assert.match(profile.skipped.solo[0], /choose-your-share$/);
       assert.deepEqual(await historical.read(), prior);
       await chooseJourneyMission(p, 'shell-packs', routeId, 'long-way-home');
+      await settle(() => {
+        p.frame(0);
+        return p.rendered.run.levelId === 'long-way-home' && !p.$('start-button').disabled;
+      });
+      assert.equal(p.doc.body.dataset.flightState, 'briefing');
+      p.$('start-button').click();
       await running(p, 'long-way-home');
       const previousRun = p.rendered.run,
         previousPicture = p.rendered.backdrop;
@@ -149,7 +155,7 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
       p.$('journey-skip').click();
       await running(p, 'behind-the-patrol');
       assert.equal(p.$('theme-select').value, 'border-bloom-actors-v1');
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('journey-chooser')?.open ?? false, false);
       assert.equal(p.rendered.run.player.speed, 0);
       assert.equal(
         Object.keys((await backend.read()).clears.solo).length,
@@ -178,7 +184,7 @@ for (const revision of ['v1', 'v2', 'v3', 'v4']) {
     assert.equal(p.$('race-theme').value, 'horizon-actors-v1');
     assert.match(
       p.$('race-journey-difficulty-note').textContent,
-      /standard.*Reference-paced targets/,
+      /Standard.*Reference-paced targets/,
     );
     assert(p.renders.every((run) => run.rules.moveSpeed === 8.84));
     assert.notEqual(p.renders[0], p.renders[1]);

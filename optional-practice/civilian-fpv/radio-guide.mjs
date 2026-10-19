@@ -41,6 +41,9 @@ export function mountRadioGuide({
     roll: t('Roll', 'Крен'),
   };
   const order = ['throttle', 'yaw', 'pitch', 'roll'];
+  // Match profile validation: USB radios need not expose the full -1…1 range.
+  const minimumSpan = 0.5;
+  const minimumMovement = minimumSpan / 2;
   const listeners = [];
   const el = (tag, text, parent, cls) => {
     const node = doc.createElement(tag);
@@ -153,6 +156,7 @@ export function mountRadioGuide({
     () => finishAction(true),
   );
   const recalibrate = button(t('Recalibrate sticks', 'Калібрувати стіки'), actions, start);
+  const manual = button(t('Set sticks manually', 'Налаштувати стіки вручну'), actions, startManual);
   const cancel = button(
     t('Cancel calibration', 'Скасувати калібрування'),
     actions,
@@ -202,13 +206,15 @@ export function mountRadioGuide({
   const extra = el('div', undefined, shell, 'radio-extras');
   const labels = {
     switches: t('Switches & buttons · optional', 'Перемикачі й кнопки · необов’язково'),
-    manual: t('Advanced calibration', 'Розширене калібрування'),
+    manual: t('Manual stick setup', 'Ручне налаштування стіків'),
     response: t('Flight feel · rates & sensitivity', 'Реакція польоту · швидкість і чутливість'),
     diagnostics: t('Connection diagnostics', 'Діагностика підключення'),
     transfer: t('Back up or import a profile', 'Резервна копія або імпорт профілю'),
   };
+  const panels = {};
   for (const key of ['manual', 'response', 'diagnostics', 'transfer']) {
     const details = el('details', undefined, extra, `radio-extra radio-extra-${key}`);
+    panels[key] = details;
     el('summary', labels[key], details);
     const content = el('div', undefined, details, 'radio-extra-body');
     content.append(...groups[key]);
@@ -271,6 +277,40 @@ export function mountRadioGuide({
   function focusStep() {
     update(runtime.raw());
     title.focus({ preventScroll: true });
+  }
+  function startManual() {
+    stopCaptures();
+    clearConfirmation();
+    identity = null;
+    interrupted = false;
+    phase = 'manual';
+    checked.checked = false;
+    // Keep measurements already collected by the wizard; provide editable
+    // standard ranges for the remaining axes so automatic capture is optional.
+    const used = new Set(
+      Object.values(rows)
+        .filter((row) => row.axis.value !== '')
+        .map((row) => Number(row.axis.value)),
+    );
+    for (const row of Object.values(rows)) {
+      if (row.axis.value === '') {
+        let axis = 0;
+        while (used.has(axis)) axis++;
+        row.axis.value = String(axis);
+        used.add(axis);
+      }
+      if (row.min.value === '') row.min.value = '-1';
+      if (row.max.value === '') row.max.value = '1';
+      if (row.center.value === '') row.center.value = '0';
+    }
+    invalidate();
+    status.textContent = '';
+    panels.manual.open = true;
+    panels.diagnostics.open = true;
+    extra.prepend(panels.diagnostics);
+    shell.insertBefore(extra, switchCard);
+    switchCard.open = false;
+    focusStep();
   }
   function start() {
     try {
@@ -356,7 +396,7 @@ export function mountRadioGuide({
             'Підключення змінилося. Скасуйте й почніть калібрування знову.',
           ),
         );
-      if (phase === 'connect') {
+      if (phase === 'connect' || phase === 'manual') {
         if (validProfile(pad)) {
           phase = 'check';
           checked.checked = false;
@@ -378,7 +418,7 @@ export function mountRadioGuide({
           .sort((a, b) => b.change - a.change);
         if (
           !ranges[0] ||
-          ranges[0].change < 0.3 ||
+          ranges[0].change < minimumMovement ||
           ranges[0].change < (ranges[1]?.change ?? 0) * 1.8 ||
           !otherAxesStill(pad, ranges[0].axis)
         )
@@ -409,7 +449,7 @@ export function mountRadioGuide({
       } else if (phase === 'negative') {
         const end = pad.axes[positive.axis];
         if (
-          Math.abs(end - positive.value) < 0.5 ||
+          Math.abs(end - positive.value) < minimumSpan ||
           !otherAxesStill(pad, positive.axis) ||
           (order[index] !== 'throttle' &&
             (end - baseline[positive.axis]) * (positive.value - baseline[positive.axis]) >= 0)
@@ -486,18 +526,20 @@ export function mountRadioGuide({
         if (!verifyProfile()) return;
         const result = saveProfile();
         if (!result) return;
-        if (result.saved) {
-          phase = 'saved';
-          clearConfirmation();
-          onDone();
-          return;
-        }
-        phase = 'saved';
+        completeSave(result);
+        return;
       }
       focusStep();
     } catch (error) {
       status.textContent = error.message;
     }
+  }
+  function completeSave(result) {
+    if (!result) return;
+    phase = 'saved';
+    clearConfirmation();
+    if (result.saved) onDone();
+    else focusStep();
   }
   function otherAxesStill(pad, axis) {
     return (
@@ -519,7 +561,7 @@ export function mountRadioGuide({
       .sort((a, b) => b.change - a.change);
     const first = ranked[0];
     return first &&
-      first.change >= 0.65 &&
+      first.change >= minimumMovement &&
       first.change >= (ranked[1]?.change ?? 0) * 1.8 &&
       otherAxesStill(pad, first.axis)
       ? first
@@ -653,7 +695,7 @@ export function mountRadioGuide({
           held(
             pad,
             'negative',
-            Math.abs(delta) >= 1.1 && opposite && otherAxesStill(pad, positive.axis),
+            Math.abs(delta) >= minimumSpan && opposite && otherAxesStill(pad, positive.axis),
             now,
           )
         )
@@ -676,6 +718,9 @@ export function mountRadioGuide({
   }
   function update(pad) {
     tickAutomation(pad);
+    // Loading a saved/known calibration fills the editor before the runtime is
+    // verified. Always offer its explicit check/save action immediately.
+    if (phase === 'connect' && validProfile(pad)) phase = 'check';
     const mapping = isMapping(),
       actionMapping = isAction(),
       input = validProfile(pad);
@@ -683,8 +728,7 @@ export function mountRadioGuide({
     shell.dataset.radioGuideIndex = String(index);
     shell.dataset.radioGuideConfirmation = confirmationStage;
     if (!pad && (mapping || actionMapping)) interrupted = true;
-    if (phase === 'connect' && runtime.status().verified && input) phase = 'check';
-    const step = phase === 'connect' ? 0 : mapping || actionMapping ? 1 : 2;
+    const step = phase === 'connect' ? 0 : mapping || actionMapping || phase === 'manual' ? 1 : 2;
     head.hidden = phase !== 'connect';
     stepNodes.forEach((node, i) => {
       node.classList.toggle('is-current', i === step);
@@ -735,10 +779,13 @@ export function mountRadioGuide({
     back.hidden = !['positive', 'return', 'negative', 'centre'].includes(phase);
     cancel.hidden = !mapping && !actionMapping;
     recalibrate.hidden =
-      !['check', 'connect'].includes(phase) || !pad || (phase === 'connect' && !input);
+      !['check', 'connect', 'manual'].includes(phase) || !pad || (phase === 'connect' && !input);
+    manual.hidden = phase === 'manual' || phase === 'saved';
+    manual.disabled = !pad;
     primary.disabled =
       !pad ||
       interrupted ||
+      (phase === 'manual' && (!input || externalCaptureActive())) ||
       (phase === 'check' && (!input || !checked.checked || externalCaptureActive()));
     for (const key of order) setText(values[key], input ? `${Math.round(input[key] * 100)}%` : '—');
     setText(
@@ -754,7 +801,18 @@ export function mountRadioGuide({
           ),
     );
     for (const target of targets) target.hidden = true;
-    if (phase === 'connect') {
+    if (phase === 'manual') {
+      setText(progress, t('02 / MANUAL SETUP', '02 / РУЧНЕ НАЛАШТУВАННЯ'));
+      setText(title, t('Assign your stick channels.', 'Призначте канали стіків.'));
+      setText(
+        instruction,
+        t(
+          'Move one stick at a time and watch the raw channels below. Set its axis number, minimum, centre, maximum and reverse direction if needed. Then check the live sticks and save.',
+          'Рухайте по одному стіку та стежте за каналами нижче. Укажіть номер осі, мінімум, центр, максимум і за потреби змініть напрямок. Потім перевірте стіки наживо та збережіть.',
+        ),
+      );
+      setText(primary, t('Check my sticks', 'Перевірити стіки'));
+    } else if (phase === 'connect') {
       setText(progress, t('01 / CONNECT', '01 / ПІД’ЄДНАННЯ'));
       setText(
         title,
@@ -863,8 +921,8 @@ export function mountRadioGuide({
             )
           : !input
             ? t(
-                'This mapping needs calibration. Choose Recalibrate sticks, or review Advanced calibration below.',
-                'Це призначення потребує калібрування. Натисніть «Калібрувати стіки» або перевірте розширені налаштування нижче.',
+                'This mapping needs calibration. Choose Recalibrate sticks or Set sticks manually.',
+                'Це призначення потребує калібрування. Виберіть «Калібрувати стіки» або «Налаштувати стіки вручну».',
               )
             : t(
                 'Move both sticks left/right and up/down. Check that the dots follow in the same direction.',
@@ -907,6 +965,7 @@ export function mountRadioGuide({
   update(runtime.raw());
   return {
     update,
+    completeSave,
     captureActive: () => isMapping() || isAction(),
     reset() {
       clearConfirmation();

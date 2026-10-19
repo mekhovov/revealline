@@ -6,6 +6,7 @@ import { attachCouchInput } from '../couch/couch-input.mjs';
 import { createDuel, stepDuel, resumeDuel, pauseDuel, neutralCommand } from '../multiplayer.mjs';
 import { releaseInputs, CLASSES } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { replaceCouchKey } from '../couch/keyboard-bindings.mjs';
 
 class Target {
   constructor(parent = null) {
@@ -84,7 +85,14 @@ const makePad = (index) => ({
 });
 function fixture(
   t,
-  { tap = false, onStop = () => {}, onPause = () => {}, initialSlots, controllerSession } = {},
+  {
+    tap = false,
+    onStop = () => {},
+    onPause = () => {},
+    initialSlots,
+    controllerSession,
+    continuous = false,
+  } = {},
 ) {
   const win = new Target(),
     doc = new Target(win),
@@ -122,6 +130,7 @@ function fixture(
     getGamepads: () => pads,
     active: () => active,
     tapMode: () => tap,
+    continuousSteering: () => continuous,
     onPause: () => {
       active = false;
       pauseCount++;
@@ -166,6 +175,33 @@ function fixture(
   };
 }
 const neutralPair = () => [neutralCommand(), neutralCommand()];
+
+test('keyboard remapping retains accepted continuous steering and requires release after capture', (t) => {
+  const f = fixture(t, { continuous: true });
+  f.key('KeyD');
+  assert.equal(f.input.consume()[0].direction, 'right');
+  assert.throws(
+    () => f.input.setKeyboardBindings(replaceCouchKey(null, 0, 'up', 'KeyI')),
+    /outside active play/,
+  );
+  f.setActive(false);
+  f.key('KeyI');
+  f.input.setKeyboardBindings(replaceCouchKey(null, 0, 'up', 'KeyI'));
+  assert.equal(f.input.snapshotDirection(0), 'right');
+  f.setActive(true);
+  f.key('KeyI', { repeat: true });
+  assert.equal(f.input.consume()[0].direction, 'right');
+  f.up('KeyI');
+  f.key('KeyI');
+  assert.equal(f.input.consume()[0].direction, 'up');
+  f.up('KeyI');
+  f.up('KeyD');
+  f.key('KeyD');
+  f.key('KeyW');
+  assert.equal(f.input.consume()[0].direction, 'right', 'The old key cannot create a new turn.');
+  f.key('ArrowDown');
+  assert.equal(f.input.consume()[1].direction, 'down');
+});
 
 test('continuation restores connected controller seats without accepting held input', (t) => {
   const f = fixture(t, { initialSlots: [2, 0] });

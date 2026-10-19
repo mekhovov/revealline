@@ -33,8 +33,8 @@ const candidate = (built) => {
 
 // Shared theme logic is explicit; token and fullscreen sheets are embedded with SIM presentation.
 // Shared menus add two image assets and hash-bound locale inputs.
-// Shared battlefield art extends the runtime/source closures to 96/98.
-// Keep those exact closures inside the separately reviewed 121-file envelope.
+// Shared battlefield art extends the runtime/source closures; aircraft practice, archives, bench inspection and optional challenges have explicit module inventories.
+// Keep those exact closures inside the separately reviewed 150-file envelope.
 const assertSharedRadioClosure = (built, source) => {
   for (const name of [
     'optional-practice/civilian-fpv/rates.mjs',
@@ -66,6 +66,7 @@ const assertSharedRadioClosure = (built, source) => {
 
 test('Academy and World explicitly ship the complete offline tuning and module-worker closure', async () => {
   const root = fileURLToPath(new URL('../', import.meta.url));
+  const mainBuild = JSON.parse(await readFile(path.join(root, 'game/build-config.json')));
   for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
     const built = await buildOptionalPractice(root, { ...options, packageId });
     const packaged = new Map(built.entries.map((entry) => [entry.name, entry.bytes]));
@@ -76,11 +77,40 @@ test('Academy and World explicitly ship the complete offline tuning and module-w
       'flight-response.mjs',
       'tuning-library.mjs',
       'tuning-ui.mjs',
+      'setup-draft.mjs',
+      'setup-workbench.mjs',
+      'aircraft-tuning-fields.mjs',
+      'controller-tune-library.mjs',
+      'controller-tune-panel.mjs',
+      'response-bench.mjs',
+      'response-bench-client.mjs',
+      'response-bench-worker.mjs',
+      'response-bench-panel.mjs',
       'tuning.css',
       'betaflight-import.mjs',
       'advanced-controller.mjs',
       'advanced-terrain.mjs',
       'advanced-simulation.mjs',
+      'advanced-aircraft-runtime.mjs',
+      'aircraft-physics.mjs',
+      'aircraft-response.mjs',
+      'aircraft-presets.mjs',
+      'aircraft-appearance.mjs',
+      'aircraft-preview.mjs',
+      'aircraft-recording.mjs',
+      'aircraft-terrain.mjs',
+      'aircraft-course-session.mjs',
+      'aircraft-mission-checkpoint.mjs',
+      'aircraft-practice-controls.mjs',
+      'aircraft-course-advice.mjs',
+      'aircraft-archive.mjs',
+      'aircraft-archive-controls.mjs',
+      'aircraft-archive-verifier.mjs',
+      'advanced-ghost-path.mjs',
+      'propulsion-evidence.mjs',
+      'propulsion-evidence-ui.mjs',
+      'aircraft-challenge.mjs',
+      'aircraft-challenge-ui.mjs',
       'advanced-worker.mjs',
       'advanced-worker-client.mjs',
       'advanced-practice.mjs',
@@ -91,6 +121,7 @@ test('Academy and World explicitly ship the complete offline tuning and module-w
       'vendor/rapier/provenance.json',
     ]) {
       const name = `optional-practice/civilian-fpv/${module}`;
+      assert.ok(mainBuild.include.includes(name), `Main Pages distribution: ${name}`);
       assert.ok(packaged.has(name), `${packageId}: ${name}`);
       const pin = built.manifest.files.find((entry) => entry.path === name);
       assert.ok(pin, `${packageId}: offline pin ${name}`);
@@ -108,6 +139,18 @@ test('Academy and World explicitly ship the complete offline tuning and module-w
       assert.ok(pin);
       assert.ok(serviceWorker.includes(pin.sha256));
     }
+    const benchWorker = 'optional-practice/fpv-worlds/response-bench-worker.mjs';
+    assert.ok(mainBuild.include.includes(benchWorker), 'Main Pages World response worker');
+    assert.equal(packaged.has(benchWorker), packageId === 'fpv-worlds');
+    if (packageId === 'fpv-worlds') {
+      assert.match(
+        packaged.get(benchWorker).toString(),
+        /import '\.\.\/civilian-fpv\/response-bench-worker\.mjs'/,
+      );
+      const pin = built.manifest.files.find((entry) => entry.path === benchWorker);
+      assert.ok(pin);
+      assert.ok(serviceWorker.includes(pin.sha256));
+    }
     assert.equal(
       packaged.has('optional-practice/civilian-fpv/advanced-regional.mjs'),
       packageId === 'fpv-worlds',
@@ -115,6 +158,10 @@ test('Academy and World explicitly ship the complete offline tuning and module-w
     assert.match(
       packaged.get('optional-practice/civilian-fpv/advanced-worker-client.mjs').toString(),
       /new URL\(['"]\.\/advanced-worker\.mjs['"], import\.meta\.url\)/,
+    );
+    assert.match(
+      packaged.get('optional-practice/civilian-fpv/response-bench-client.mjs').toString(),
+      /new URL\(['"]\.\/response-bench-worker\.mjs['"], import\.meta\.url\)/,
     );
     assert.ok(
       built.entries.every(
@@ -289,12 +336,12 @@ test('actual FPV application, native notebook and installation launcher close in
     admission = await validateOptionalPackageAdmission(f.envelope, f);
   assert.deepEqual(first.zip, second.zip);
   assert.equal(admission.publicEligible, false);
-  assert.equal(admission.packages[0].files, 119);
+  assert.equal(admission.packages[0].files, 148);
   for (const entry of first.entries.filter((entry) => entry.name.endsWith('.html'))) {
     assert.match(entry.bytes.toString(), /access-gate:start/, entry.name);
     assert.match(entry.bytes.toString(), /data-access-state="locked"/, entry.name);
   }
-  assert.equal(OPTIONAL_PACKAGE_POLICIES['civilian-fpv'].limits.files, 121);
+  assert.equal(OPTIONAL_PACKAGE_POLICIES['civilian-fpv'].limits.files, 150);
   assert.ok(admission.packages[0].bytes <= 12 * 1024 * 1024);
   for (const name of [
     'notebook.mjs',
@@ -313,7 +360,7 @@ test('actual FPV application, native notebook and installation launcher close in
   assert.equal(manifest.icons.length, 2);
   assert.equal(manifest.id, '/revealline/practice/civilian-fpv/');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 121);
+  assert.equal(source.size, 150);
   assertSharedRadioClosure(first, source);
   assert.ok(
     [...source.values()].reduce((total, bytes) => total + bytes.length, 0) <= 12 * 1024 * 1024,
@@ -321,8 +368,8 @@ test('actual FPV application, native notebook and installation launcher close in
   const policy = OPTIONAL_PACKAGE_POLICIES['civilian-fpv'];
   const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
   const sum = (rows) => rows.reduce((total, row) => total + row.bytes, 0);
-  assert.equal(policy.limits.bytes, 12 * 1024 * 1024);
-  assert.equal(policy.sourceInputBytes, policy.limits.bytes + 128 * 1024);
+  assert.equal(policy.limits.bytes, 12 * 1024 * 1024 + 512 * 1024);
+  assert.equal(policy.sourceInputBytes, policy.limits.bytes + 192 * 1024);
   assert.ok(sum(inventory.inputs) <= policy.sourceInputBytes);
   assert.equal(OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.bytes, 20 * 1024 * 1024);
   assert.equal(OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sourceInputBytes, undefined);
@@ -428,13 +475,13 @@ test('explicit FPV package remains independently reproducible with complete pinn
   assert.deepEqual(first.zip, second.zip);
   assert.equal(first.manifest.id, 'civilian-fpv');
   assert.equal(first.manifest.installation.id, '/revealline/practice/civilian-fpv/');
-  assert.equal(first.entries.length, 119);
+  assert.equal(first.entries.length, 148);
   assert.ok(first.entries.reduce((sum, item) => sum + item.bytes.length, 0) < 12 * 1024 * 1024);
   assert.ok(first.entries.every(({ name }) => !name.includes('civilian-flight')));
   const f = candidate(first);
   const admitted = await validateOptionalPackageAdmission(f.envelope, f);
   assert.equal(admitted.publicEligible, false);
-  assert.equal(admitted.packages[0].files, 119);
+  assert.equal(admitted.packages[0].files, 148);
   const localeProjection = first.entries
     .find((entry) => entry.name === 'game/i18n/catalogs.mjs')
     .bytes.toString();
@@ -443,7 +490,7 @@ test('explicit FPV package remains independently reproducible with complete pinn
   const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
   assert.equal(inventory.licenses.find((item) => item.dependency === 'three').version, '0.186.1');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 121);
+  assert.equal(source.size, 150);
   for (const locale of ['en', 'uk'])
     assert.ok(inventory.inputs.some((row) => row.path === `game/locales/${locale}/common.json`));
   for (const asset of [
@@ -452,7 +499,7 @@ test('explicit FPV package remains independently reproducible with complete pinn
   ])
     assert.ok(source.has(asset), 'The shared menu artwork is also present offline.');
   assertSharedRadioClosure(first, source);
-  assert.equal(fixture.policy.limits.files, 121);
+  assert.equal(fixture.policy.limits.files, 150);
   assert.ok(source.size <= fixture.policy.limits.files);
   assert.ok([...source.values()].reduce((sum, bytes) => sum + bytes.length, 0) <= 12 * 1024 * 1024);
   assert.ok(source.has(fixture.policy.template));

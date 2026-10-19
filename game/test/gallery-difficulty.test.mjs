@@ -1,10 +1,118 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { CLASSES } from '../core/index.mjs';
 import { campaignKey } from '../library.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { createGalleryDifficultyResolver } from '../gallery-difficulty.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
+import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
+import { createEncounterSoloHost } from '../content-design/encounter-host.mjs';
+
+const { themes: journeyThemes } = JSON.parse(
+  await readFile(new URL('../content-design/themes.json', import.meta.url)),
+);
+function journeyHost(t, source = createOpeningCandidates()) {
+  const host = createCandidateSoloHost(source, { themes: journeyThemes });
+  t.after(() => host.preparer.dispose());
+  return host;
+}
+
+for (const [difficulty, label] of [
+  ['standard', 'Standard'],
+  ['gentle', 'Gentle'],
+  ['expert', 'Expert'],
+])
+  test(`the actual Journey ${difficulty} execution labels its saved identity`, (t) => {
+    const host = journeyHost(t);
+    const entry = host.select(host.catalog.missions[0], difficulty);
+    const key = campaignKey(entry.campaign);
+    const before = JSON.stringify(entry);
+    assert.equal(host.owns(entry), true);
+    assert.equal(entry.baseCampaign, null);
+    assert.equal(entry.executionKey, key);
+    const resolver = createGalleryDifficultyResolver([entry]);
+    assert.equal(resolver.label(key), label);
+    assert.equal(resolver.resolve(key).difficulty, difficulty);
+    assert.equal(resolver.resolve(key).baseCampaignKey, entry.baseCampaignKey);
+    assert.equal(JSON.stringify(entry), before);
+  });
+
+test('current Journey variants share their exact picture with Standard first in any saved order', (t) => {
+  const host = journeyHost(t);
+  const mission = host.catalog.missions[0];
+  const selected = ['expert', 'gentle', 'standard'].map((mode) => host.select(mission, mode));
+  const saved = selected.map((entry) => ({
+    key: entry.executionKey,
+    campaignKey: entry.executionKey,
+    levelId: entry.campaign.levels[0].id,
+    themeId: entry.themes[0].id,
+  }));
+  const before = JSON.stringify(saved);
+  const groups = createGalleryDifficultyResolver(selected).group(saved);
+  assert.equal(groups.length, 1);
+  assert.equal(groups[0].item, saved[2]);
+  assert.deepEqual(
+    groups[0].variants.map((variant) => variant.difficulty),
+    ['standard', 'gentle', 'expert'],
+  );
+  assert.equal(JSON.stringify(saved), before);
+});
+
+test('Journey label ownership rejects altered wrappers and copied campaigns', (t) => {
+  const host = journeyHost(t);
+  const entry = host.select(host.catalog.missions[0], 'gentle');
+  const key = entry.executionKey;
+  for (const change of [
+    { difficulty: 'standard' },
+    { difficulty: 'expert' },
+    { difficulty: undefined },
+    { executionKey: key + '0' },
+    { baseCampaignKey: entry.baseCampaignKey + '0' },
+    { policyVersion: 'journey-v1' },
+    { baseCampaign: undefined },
+    { campaign: structuredClone(entry.campaign) },
+    { campaign: Object.freeze(structuredClone(entry.campaign)) },
+  ]) {
+    const resolver = createGalleryDifficultyResolver([{ ...entry, ...change }]);
+    assert.equal(resolver.resolve(key), null);
+    assert.equal(resolver.label(key), 'Archived · difficulty unavailable');
+  }
+  assert.equal(createGalleryDifficultyResolver([entry]).resolve(key + '0'), null);
+});
+
+test('removed or replaced Journey executions stay archived despite matching mission IDs', (t) => {
+  const host = journeyHost(t);
+  const entry = host.select(host.catalog.missions[0], 'standard');
+  const source = createOpeningCandidates();
+  source.missions[0].coverage = 0.7;
+  const replacement = journeyHost(t, source);
+  assert.equal(replacement.catalog.missions[0].id, host.catalog.missions[0].id);
+  assert.equal(
+    createGalleryDifficultyResolver(replacement.entries).resolve(entry.executionKey),
+    null,
+  );
+  assert.equal(
+    createGalleryDifficultyResolver([]).label(entry.executionKey),
+    'Archived · difficulty unavailable',
+  );
+});
+
+test('the public encounter host retains the same owned Journey difficulty and locale behavior', (t) => {
+  const host = createEncounterSoloHost(createOpeningCandidates(), { themes: journeyThemes });
+  t.after(() => host.preparer.dispose());
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  const entry = host.entries.find((candidate) => candidate.difficulty === 'expert');
+  assert.equal(host.owns(entry), true);
+  assert.equal(entry.encounterVariant, 'authored');
+  const resolver = createGalleryDifficultyResolver([entry]);
+  setLocale('en', { persist: false });
+  assert.equal(resolver.label(entry.executionKey), 'Expert');
+  setLocale('uk', { persist: false });
+  assert.equal(resolver.label(entry.executionKey), 'Експертна');
+});
 
 const original = {
   campaign: {

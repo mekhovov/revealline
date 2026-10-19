@@ -1,6 +1,5 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
-import { loadEditionBootstrap } from './bootstrap.mjs';
 import {
   createEditionRuntimeCatalog,
   resolveEditionAppearanceThemes,
@@ -155,6 +154,7 @@ export async function validateRetainedPresentation(source, { edition } = {}) {
   }
   required(files.size === paths.size, 'Retained presentation JSON input is missing.');
   const base = 'https://edition.invalid/';
+  const { loadEditionBootstrap } = await import('./bootstrap.mjs');
   const bootstrap = await loadEditionBootstrap({
     editionId: edition.id,
     contentBaseURL: base,

@@ -1,3 +1,5 @@
+import { Soundscape } from '../ui/audio.mjs';
+import { observeAudioViewWrites } from './helpers/audio-view-writes.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { demoPage } from './helpers/demo-host-fixture.mjs';
@@ -153,4 +155,90 @@ test('actual Play style starts paused music, preserves listening restrictions, a
   page.doc.body.emit('keydown', { code: 'KeyN', key: 'n' });
   await flush();
   assert.equal(paused(page), true, 'Global Next supersedes style playback while retaining Pause');
+});
+
+test('actual shared media progress defers unchanged and hidden Demo controls without changing admission or playback', async (context) => {
+  let sound;
+  const original = Soundscape.prototype.setActorPresentation;
+  context.mock.method(Soundscape.prototype, 'setActorPresentation', function (...args) {
+    sound = this;
+    return original.apply(this, args);
+  });
+  const { page, original: recording } = await setup(context);
+  assert.ok(sound);
+  const ordinary = authoritativeCheckpoint(page.rendered.run);
+  page.$('demo-audio-mute').click();
+  page.$('demo-audio-toggle').click();
+  await settle(() => playing(page) && page.audioElements.some((element) => !element.paused));
+  page.$('demo-watch-pause').click();
+  assert.equal(sound.mediaPreparation.snapshot().phase, 'paused');
+  const media = page.audioElements.find((element) => !element.paused);
+  const watched = observeAudioViewWrites(page.$('demo-dialog'));
+  context.after(() => watched.stop());
+  for (let index = 1; index <= 20; index++) {
+    media.currentTime = (recording.track.asset.durationSeconds * index) / 1000;
+    media.emit('timeupdate');
+  }
+  assert.equal(
+    watched.count(),
+    0,
+    'Actual player progress does not repaint unchanged Demo controls.',
+  );
+  assert.equal(media.paused, false);
+  assert.equal(sound.mediaPreparation.snapshot().phase, 'paused');
+  const title = page.$('demo-now-playing').textContent;
+  const trackChanges = context.mock.method(sound, 'setTrack');
+  page.doc.hidden = true;
+  page.doc.emit('visibilitychange');
+  assert.equal(
+    sound.mediaPreparation.snapshot().phase,
+    'playing',
+    'Hidden spectator still publishes background transport admission before deferring DOM.',
+  );
+  watched.reset();
+  media.emit('ended');
+  await settle(
+    () => trackChanges.mock.callCount() > 0,
+    'Actual ended event advances the shared playlist to its built-in track.',
+  );
+  assert.equal(watched.count(), 0, 'Background track changes cannot render the hidden Demo.');
+  assert.equal(page.$('demo-now-playing').textContent, title);
+  page.doc.hidden = false;
+  page.doc.emit('visibilitychange');
+  assert.notEqual(page.$('demo-now-playing').textContent, title);
+  assert.equal(
+    playing(page),
+    true,
+    'Visibility return does not override the shared listening intent.',
+  );
+  assert.equal(sound.mediaPreparation.snapshot().phase, 'paused');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), ordinary);
+  assert.deepEqual(page.errors, []);
+});
+
+test('ordinary Solo playback leaves closed Demo views untouched while the public transport keeps playing', async (context) => {
+  const { page, original: recording } = await setup(context);
+  page.$('demo-audio-mute').click();
+  page.$('demo-audio-toggle').click();
+  await settle(() => playing(page) && page.audioElements.some((element) => !element.paused));
+  page.$('demo-back').click();
+  assert.equal(page.$('demo-dialog').open, false);
+  page.$('overlay-brief').click();
+  page.$('shell-briefing').click();
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
+  const ordinary = authoritativeCheckpoint(page.rendered.run);
+  const media = page.audioElements.find((element) => !element.paused);
+  assert.ok(media, 'The same actual shared player remains active after public Solo Start.');
+  const watched = observeAudioViewWrites(page.$('demo-dialog'));
+  context.after(() => watched.stop());
+  for (let index = 1; index <= 20; index++) {
+    media.currentTime = (recording.track.asset.durationSeconds * index) / 1000;
+    media.emit('timeupdate');
+  }
+  assert.equal(watched.count(), 0);
+  assert.equal(media.paused, false);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), ordinary);
+  assert.deepEqual(page.errors, []);
 });

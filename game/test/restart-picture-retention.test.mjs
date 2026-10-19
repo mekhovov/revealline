@@ -1,3 +1,4 @@
+import { activateHostAction } from './helpers/host-action.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -16,6 +17,12 @@ import { prepareStillAsset } from '../media-still.mjs';
 import { verifyReplay } from '../replay.mjs';
 import { campaignKey } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { ACTOR_SESSION_FORMAT, snapshotSession } from '../sessions.mjs';
+import {
+  CAPTURE_PRESENTATION_SESSION_FORMAT,
+  nativeCaptureSession,
+  snapshotCaptureSession,
+} from '../capture-presentation-session.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const themes = JSON.parse(readFileSync(new URL('../content/themes.json', import.meta.url))).themes;
@@ -126,17 +133,22 @@ for (const format of ['xonix-session.v4', 'xonix-session.v2'])
     ticks(p, 13);
     p.key('ArrowDown', false);
     p.$('pause-button').click();
-    const accepted = JSON.parse(p.storage.getItem(sessionKey));
-    assert.equal(accepted.format, 'xonix-session.v4');
+    const acceptedEnvelope = snapshotCaptureSession(JSON.parse(p.storage.getItem(sessionKey))),
+      accepted = nativeCaptureSession(acceptedEnvelope);
+    assert.equal(acceptedEnvelope.format, CAPTURE_PRESENTATION_SESSION_FORMAT);
+    assert.equal(accepted.format, ACTOR_SESSION_FORMAT);
     assert.equal(
       accepted.visualThemePin,
-      undefined,
+      null,
       'This regression covers attempts without complete-theme pins.',
     );
     const restored = structuredClone(accepted);
     restored.format = format;
+    delete restored.visualThemePin;
+    delete restored.actorAppearancePin;
     if (format === 'xonix-session.v2') delete restored.presentationPins;
-    p.$('library-button').click();
+    assert.deepEqual(snapshotSession(restored), restored, 'The imported legacy envelope is valid.');
+    await activateHostAction(p.$('library-button'));
     p.$('save-json').value = JSON.stringify(restored);
     p.$('import-save').click();
     await settle(() => !p.$('library-dialog').open);
@@ -161,7 +173,9 @@ for (const format of ['xonix-session.v4', 'xonix-session.v2'])
     if (format === 'xonix-session.v2') assert.equal(p.rendered.backdrop, null);
     else assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
     p.$('pause-button').click();
-    const restarted = JSON.parse(p.storage.getItem(sessionKey));
+    // Importing the explicit historical native file does not invent modern
+    // accepted-artwork metadata, so Restart must retain that exact envelope.
+    const restarted = snapshotCaptureSession(JSON.parse(p.storage.getItem(sessionKey)));
     assert.equal(restarted.format, format);
     assert.deepEqual(restarted.presentationPins, restored.presentationPins);
     assert.equal(restarted.visualThemePin, undefined);

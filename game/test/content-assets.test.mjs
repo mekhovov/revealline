@@ -6,6 +6,8 @@ import {
   compileAssetRevision,
   assetRevisionMime,
   loadPreviewArtwork,
+  loadVerifiedArtwork,
+  verifiedArtworkBlob,
   verifiedPreviewBackground,
 } from '../content-design/assets.mjs';
 import { HORIZON_ART_CANDIDATES } from '../content-design/horizon-art.mjs';
@@ -16,10 +18,62 @@ import { prepareContentPreview } from '../content-design/preview.mjs';
 import { canonicalJSON, dataIdentity } from '../data-json.mjs';
 import { acquireCandidatePicture } from '../content-design/picture.mjs';
 import { rasterFixtures } from './helpers/raster-fixtures.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 const asset = HORIZON_ART_CANDIDATES[0];
 const bytes = await readFile(new URL(`../${asset.path}`, import.meta.url));
 const fetchAsset = async () => new Response(bytes);
 const digest = (value) => webcrypto.subtle.digest('SHA-256', value);
+
+test('native artwork encoding follows verification and cancellation retires its reader', async (t) => {
+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'FileReader');
+  let reader;
+  class NativeReader {
+    constructor() {
+      reader = this;
+      this.aborted = false;
+    }
+    readAsDataURL(blob) {
+      this.blob = blob;
+    }
+    abort() {
+      this.aborted = true;
+      this.onabort?.();
+    }
+  }
+  Object.defineProperty(globalThis, 'FileReader', { configurable: true, value: NativeReader });
+  t.after(() =>
+    descriptor
+      ? Object.defineProperty(globalThis, 'FileReader', descriptor)
+      : delete globalThis.FileReader,
+  );
+  const originalBtoa = Object.getOwnPropertyDescriptor(globalThis, 'btoa');
+  Object.defineProperty(globalThis, 'btoa', {
+    configurable: true,
+    value: () => assert.fail('Native encoding needs no JS binary string.'),
+  });
+  t.after(() => Object.defineProperty(globalThis, 'btoa', originalBtoa));
+  const loading = loadPreviewArtwork(asset, { fetchAsset, digest });
+  await waitFor(() => reader?.blob, { message: 'Native encoding begins after validation' });
+  assert.deepEqual(new Uint8Array(await reader.blob.arrayBuffer()), new Uint8Array(bytes));
+  assert.equal(reader.blob.type, assetRevisionMime(asset));
+  reader.result = `data:image/png;base64,${bytes.toString('base64')}`;
+  reader.onload();
+  assert.equal((await loading).dataUrl, reader.result);
+  const controller = new AbortController();
+  reader = null;
+  const cancelled = loadPreviewArtwork(asset, { fetchAsset, digest, signal: controller.signal });
+  await waitFor(() => reader?.blob, { message: 'Cancellable native encoding begins' });
+  controller.abort();
+  await assert.rejects(cancelled, { name: 'AbortError' });
+  assert.equal(reader.aborted, true);
+  assert.equal(reader.onload, null);
+  reader = null;
+  await assert.rejects(
+    loadPreviewArtwork({ ...asset, width: asset.width + 1 }, { fetchAsset, digest }),
+    /dimensions/,
+  );
+  assert.equal(reader, null, 'Bad bytes/header never enter native encoding.');
+});
 
 test('PNG, JPEG and WebP asset pins retain exact bytes, MIME and gameplay-independent identities', async () => {
   for (const { extension, mime, bytes: original } of rasterFixtures()) {
@@ -205,4 +259,93 @@ test('reviewed originals have a bounded slow-device verification budget beyond t
     }),
     /timeout/,
   );
+});
+
+test('binary artwork retains verified original bytes without preview encoding or a serializable background', async (t) => {
+  const originals = ['FileReader', 'btoa'].map((name) => [
+    name,
+    Object.getOwnPropertyDescriptor(globalThis, name),
+  ]);
+  for (const [name] of originals)
+    Object.defineProperty(globalThis, name, {
+      configurable: true,
+      value: function () {
+        assert.fail('Runtime artwork must not encode a data URL.');
+      },
+    });
+  t.after(() => {
+    for (const [name, descriptor] of originals)
+      if (descriptor) Object.defineProperty(globalThis, name, descriptor);
+      else delete globalThis[name];
+  });
+  for (const { extension, mime, bytes: original } of rasterFixtures()) {
+    const pin = {
+      ...asset,
+      path: 'content-design/assets/fixture/binary.' + extension,
+      sha256: createHash('sha256').update(original).digest('hex'),
+      bytes: original.length,
+      width: 1,
+      height: 1,
+    };
+    const media = await loadVerifiedArtwork(pin, {
+      fetchAsset: async () => new Response(original),
+      digest,
+    });
+    assert(Object.isFrozen(media));
+    assert.equal(media.dataUrl, undefined);
+    const blob = verifiedArtworkBlob(pin, media);
+    assert.equal(blob, media.blob);
+    assert.equal(blob.type, mime);
+    assert.equal(blob.size, original.length);
+    assert.deepEqual(new Uint8Array(await blob.arrayBuffer()), new Uint8Array(original));
+    assert.throws(() => verifiedArtworkBlob(pin, { ...media }), /verify/);
+    assert.throws(() => verifiedArtworkBlob({ ...pin, revision: 'other' }, media), /verify/);
+    assert.throws(() => verifiedPreviewBackground(pin, media), /verify/);
+  }
+});
+
+test('binary artwork keeps exact length, digest, raster, dimensions and redirect rejection', async () => {
+  for (const [pin, expected] of [
+    [{ ...asset, sha256: '0'.repeat(64) }, /digest/],
+    [{ ...asset, bytes: bytes.length - 1 }, /length/],
+    [{ ...asset, bytes: bytes.length + 1 }, /length/],
+    [{ ...asset, width: asset.width + 1 }, /dimensions/],
+    [{ ...asset, path: 'content-design/assets/fixture/wrong.webp' }, /raster header/],
+  ])
+    await assert.rejects(loadVerifiedArtwork(pin, { fetchAsset, digest }), expected);
+  await assert.rejects(
+    loadVerifiedArtwork(asset, { fetchAsset: async () => ({ ok: true, redirected: true }) }),
+    /redirection/,
+  );
+  await assert.rejects(
+    loadVerifiedArtwork(asset, {
+      fetchAsset: () => assert.fail('Invalid deadlines cannot admit a fetch.'),
+      timeoutMs: CONTENT_ARTWORK_LOAD_TIMEOUT_MS + 1,
+    }),
+    /timeout/,
+  );
+});
+
+test('binary artwork cancellation settles while an admitted digest is still held', async () => {
+  let entered = false,
+    finishDigest;
+  const controller = new AbortController();
+  const loading = loadVerifiedArtwork(asset, {
+    fetchAsset,
+    signal: controller.signal,
+    digest: (value) => {
+      assert.deepEqual(value, new Uint8Array(bytes));
+      entered = true;
+      return new Promise((resolve) => {
+        finishDigest = resolve;
+      });
+    },
+  });
+  const rejected = assert.rejects(loading, { name: 'AbortError' });
+  await waitFor(() => entered, { message: 'The exact binary digest must be admitted first.' });
+  controller.abort();
+  await rejected;
+  finishDigest(await digest(bytes));
+  await new Promise((resolve) => setImmediate(resolve));
+  await assert.rejects(loading, { name: 'AbortError' });
 });

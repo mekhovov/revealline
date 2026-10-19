@@ -1372,6 +1372,11 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 .global-settings-option [hidden] {
   display: none !important;
 }
+.global-settings-save-retry {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+}
 
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
@@ -2910,7 +2915,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     display: none;
   }
   /* Compact flight hides branding spans; this status is not branding. */
-  body.field-kit.game-shell[data-flight-state='running']
+  body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
     #shell-menu
     .journey-save-badge:not([hidden]) {
     display: grid;
