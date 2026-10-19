@@ -27,9 +27,41 @@ The regressions cover EN→UK→EN capture ownership, close/reopen, explicit cap
 release and section changes; Legacy→Actual search target replacement; locale
 changes while a search result has focus; preservation of raw numeric text,
 draft rates and Basic preference; and no library save or flight application.
-They use the real modules with the repository's in-memory DOM. Actual rendered
-acceptance of these two lifecycle fixes remains separate from the completed
-[inspector zoom check](fpv-inspector-zoom-20261019.md), which used their parent.
+They use the real modules with the repository's in-memory DOM. The separate
+[inspector zoom check](fpv-inspector-zoom-20261019.md) used their parent.
+
+## Fresh rendered acceptance
+
+A new complete World package was emitted from clean committed source
+`0c5a079bdc04adb331ce8dec162d83ab99b10617`, tree
+`96797cbacdd70cdbca6a78c5f9648e5593f32231`, with every input matched to the
+commit. It contains **209 files / 18,624,100 bytes**, including the shared
+appearance projection and course-result prerequisite, before reference-consumer
+integration. It was served only on `127.0.0.1:8884` in Chrome Guest.
+
+- In Basic, search **Expo** while Legacy is selected; change the algorithm to
+  Actual while results remain open. The result list updates to the new fields.
+  Activating the first result focuses the connected Roll Expo input; typing
+  `17` after its initial `0` leaves raw text `017`, correctly evaluated as
+  **17%**, with the curve/readouts updated. Basic remains selected.
+- Enable preview capture, close the editor and reopen it. Capture is unchecked
+  and the status correctly says sticks navigate menus. This passes in both
+  English and Ukrainian. Enabling capture in Ukrainian shows the matching
+  preview-ownership message and paused menu-navigation hint.
+- Both projected Settings and standalone SIM appearance controls render in
+  Display & Language and translate to Ukrainian. Their unique DOM IDs and
+  independent state/disposal are covered by the shared-appearance tests.
+- Revert restores **My drone / Legacy feel / zero changes**. No flight or
+  setup save occurs. Locale changes use the ordinary Settings selector in this
+  disposable Guest session. The Guest window, profile picker and local server
+  are closed afterward. Public browser state and archives are untouched.
+
+The in-place locale-refresh-with-capture transition is covered by the automated
+real-module tests; the rendered route changes language from Settings while the
+workbench is closed. No physical radio input or public deployment is claimed.
+Screenshots `workbench-live-search-20261019.png` and
+`workbench-capture-uk-20261019.png` are retained in the task's `sustained-flight`
+visualization folder.
 
 Retained logs:
 
