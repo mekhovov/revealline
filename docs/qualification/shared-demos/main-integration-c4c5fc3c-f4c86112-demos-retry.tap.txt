@@ -1,0 +1,784 @@
+TAP version 13
+# Subtest: actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+ok 1 - actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+  ---
+  duration_ms: 1890.442375
+  ...
+# Subtest: actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+ok 2 - actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+  ---
+  duration_ms: 2849.329333
+  ...
+# Subtest: actual shared media progress defers unchanged and hidden Demo controls without changing admission or playback
+ok 3 - actual shared media progress defers unchanged and hidden Demo controls without changing admission or playback
+  ---
+  duration_ms: 1625.516291
+  ...
+# Subtest: ordinary Solo playback leaves closed Demo views untouched while the public transport keeps playing
+ok 4 - ordinary Solo playback leaves closed Demo views untouched while the public transport keeps playing
+  ---
+  duration_ms: 2302.796459
+  ...
+# Subtest: actual loading Demo Back owns Enter through restored Home and releases fresh input
+ok 5 - actual loading Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1286.298083
+  ...
+# Subtest: actual watching Demo Back owns Enter through restored Home and releases fresh input
+ok 6 - actual watching Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1485.357042
+  ...
+# Subtest: actual practice Demo Back owns Enter through restored Home and releases fresh input
+ok 7 - actual practice Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1503.84
+  ...
+# Subtest: actual returned Demo Back owns Enter through restored Home and releases fresh input
+ok 8 - actual returned Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1495.785416
+  ...
+# Subtest: actual loading Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 9 - actual loading Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1084.629334
+  ...
+# Subtest: actual watching Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 10 - actual watching Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1458.029125
+  ...
+# Subtest: actual practice Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 11 - actual practice Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1761.946875
+  ...
+# Subtest: actual returned Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 12 - actual returned Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1687.007166
+  ...
+# Subtest: actual loading Demo Back owns Space through restored Home and releases fresh input
+ok 13 - actual loading Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1049.976
+  ...
+# Subtest: actual watching Demo Back owns Space through restored Home and releases fresh input
+ok 14 - actual watching Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1466.487917
+  ...
+# Subtest: actual practice Demo Back owns Space through restored Home and releases fresh input
+ok 15 - actual practice Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1497.630584
+  ...
+# Subtest: actual returned Demo Back owns Space through restored Home and releases fresh input
+ok 16 - actual returned Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1490.280875
+  ...
+# Subtest: actual Demo audio UI retains native keyboard activation and range editing
+ok 17 - actual Demo audio UI retains native keyboard activation and range editing
+  ---
+  duration_ms: 1477.984167
+  ...
+# Subtest: uninstalled authored Solo Fresh preserves exact chooser handoff from ?journey=legacy
+ok 18 - uninstalled authored Solo Fresh preserves exact chooser handoff from ?journey=legacy
+  ---
+  duration_ms: 1643.080958
+  ...
+# Subtest: uninstalled authored Solo Fresh preserves exact chooser handoff from Journey
+ok 19 - uninstalled authored Solo Fresh preserves exact chooser handoff from Journey
+  ---
+  duration_ms: 4118.296917
+  ...
+# Subtest: uninstalled Solo Fresh keeps an unfinished flight behind its ordinary departure guard
+ok 20 - uninstalled Solo Fresh keeps an unfinished flight behind its ordinary departure guard
+  ---
+  duration_ms: 2138.161708
+  ...
+# Subtest: watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 21 - watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 2932.828209
+  ...
+# Subtest: watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 22 - watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 2588.63025
+  ...
+# Subtest: practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 23 - practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 2800.056375
+  ...
+# Subtest: practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 24 - practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 2802.983042
+  ...
+# Subtest: native-first watching Demo Back stays the winner after Settings restores and A is held for five seconds
+ok 25 - native-first watching Demo Back stays the winner after Settings restores and A is held for five seconds
+  ---
+  duration_ms: 1825.130791
+  ...
+# Subtest: native-first practice Demo Back stays the winner after Settings restores and A is held for five seconds
+ok 26 - native-first practice Demo Back stays the winner after Settings restores and A is held for five seconds
+  ---
+  duration_ms: 1920.298792
+  ...
+# Subtest: touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+ok 27 - touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+  ---
+  duration_ms: 1799.641875
+  ...
+# Subtest: rotation begins approachable and avoids consecutive same-level replay/bot scenes
+ok 28 - rotation begins approachable and avoids consecutive same-level replay/bot scenes
+  ---
+  duration_ms: 3.188334
+  ...
+# Subtest: failed sources are skipped once for this director session
+ok 29 - failed sources are skipped once for this director session
+  ---
+  duration_ms: 0.926125
+  ...
+# Subtest: late cancelled preparation cannot replace a newer player and releases its ownership
+ok 30 - late cancelled preparation cannot replace a newer player and releases its ownership
+  ---
+  duration_ms: 0.272625
+  ...
+# Subtest: suspension cancels loading and requires an explicit play gesture after lifecycle return
+ok 31 - suspension cancels loading and requires an explicit play gesture after lifecycle return
+  ---
+  duration_ms: 0.299666
+  ...
+# Subtest: completion remains available for a host-owned dwell, pause survives asynchronous load
+ok 32 - completion remains available for a host-owned dwell, pause survives asynchronous load
+  ---
+  duration_ms: 0.115375
+  ...
+# Subtest: visible stalls skip spectator time and repeated completed scenes keep rotating without input
+ok 33 - visible stalls skip spectator time and repeated completed scenes keep rotating without input
+  ---
+  duration_ms: 1.29975
+  ...
+# Subtest: empty or wholly unavailable rotation has a stable terminal state
+ok 34 - empty or wholly unavailable rotation has a stable terminal state
+  ---
+  duration_ms: 0.319208
+  ...
+# Subtest: source exceptions during playback skip only that source and preserve next-source ownership
+ok 35 - source exceptions during playback skip only that source and preserve next-source ownership
+  ---
+  duration_ms: 2.950958
+  ...
+# Subtest: expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+ok 36 - expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+  ---
+  duration_ms: 0.339167
+  ...
+# Subtest: a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+ok 37 - a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+  ---
+  duration_ms: 0.412625
+  ...
+# (node:12869) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+ok 38 - the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+  ---
+  duration_ms: 544.107416
+  ...
+# Subtest: no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+ok 39 - no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+  ---
+  duration_ms: 0.3805
+  ...
+# Subtest: preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+ok 40 - preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+  ---
+  duration_ms: 0.286584
+  ...
+# Subtest: Next cancels a preparation which never returns and retains only its newer owner
+ok 41 - Next cancels a preparation which never returns and retains only its newer owner
+  ---
+  duration_ms: 0.248125
+  ...
+# Subtest: dispose settles preparation immediately and disposes its ignored-abort late adapter once
+ok 42 - dispose settles preparation immediately and disposes its ignored-abort late adapter once
+  ---
+  duration_ms: 0.126166
+  ...
+# Subtest: wholly timed-out recordings end unavailable after one bounded attempt per source
+ok 43 - wholly timed-out recordings end unavailable after one bounded attempt per source
+  ---
+  duration_ms: 0.217292
+  ...
+# Subtest: recovery checks its total 29997ms before adopting a prepared source
+ok 44 - recovery checks its total 29997ms before adopting a prepared source
+  ---
+  duration_ms: 0.179292
+  ...
+# Subtest: recovery checks its total 30000ms before adopting a prepared source
+ok 45 - recovery checks its total 30000ms before adopting a prepared source
+  ---
+  duration_ms: 0.22375
+  ...
+# Subtest: recovery checks its total 33000ms before adopting a prepared source
+ok 46 - recovery checks its total 33000ms before adopting a prepared source
+  ---
+  duration_ms: 0.130459
+  ...
+# Subtest: synchronous retirement and replacement preparation share the recovery budget
+ok 47 - synchronous retirement and replacement preparation share the recovery budget
+  ---
+  duration_ms: 0.129625
+  ...
+# Subtest: retirement that exhausts recovery cannot begin another source or quarantine the old source
+ok 48 - retirement that exhausts recovery cannot begin another source or quarantine the old source
+  ---
+  duration_ms: 0.129875
+  ...
+# Subtest: preparation evidence survives timeout and ignores late diagnostic updates
+ok 49 - preparation evidence survives timeout and ignores late diagnostic updates
+  ---
+  duration_ms: 0.305584
+  ...
+# Subtest: preparation evidence survives cancel and ignores late diagnostic updates
+ok 50 - preparation evidence survives cancel and ignores late diagnostic updates
+  ---
+  duration_ms: 0.12525
+  ...
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 51 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 2550.536125
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 52 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 2284.545584
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 53 - actual idle home entry resets on activity and does not write game data
+  ---
+  duration_ms: 1810.968958
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 54 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+  ---
+  duration_ms: 10489.075208
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 55 - leaving a Journey demo restores exactly one truthful title action without saving
+  ---
+  duration_ms: 3877.4745
+  ...
+# Subtest: fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+ok 56 - fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+  ---
+  duration_ms: 1603.502833
+  ...
+# Subtest: takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+ok 57 - takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+  ---
+  duration_ms: 1561.656917
+  ...
+# Subtest: controller gameplay action takes over while preserving one hardware read per frame
+ok 58 - controller gameplay action takes over while preserving one hardware read per frame
+  ---
+  duration_ms: 1509.106541
+  ...
+# Subtest: a single remaining source prepares a new painter on repetition without reusing disposed media
+ok 59 - a single remaining source prepares a new painter on repetition without reusing disposed media
+  ---
+  duration_ms: 2012.248125
+  ...
+# Subtest: unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+ok 60 - unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+  ---
+  duration_ms: 11594.097042
+  ...
+# Subtest: fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+ok 61 - fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+  ---
+  duration_ms: 1901.428833
+  ...
+# Subtest: a replay fork completing after blur cannot arm hidden practice or replace its current owner
+ok 62 - a replay fork completing after blur cannot arm hidden practice or replace its current owner
+  ---
+  duration_ms: 1596.394375
+  ...
+# Subtest: locked Fresh handoff cancelled by blur remains paused until another explicit choice
+ok 63 - locked Fresh handoff cancelled by blur remains paused until another explicit choice
+  ---
+  duration_ms: 1570.94975
+  ...
+# Subtest: locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+ok 64 - locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+  ---
+  duration_ms: 1570.168708
+  ...
+# Subtest: a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+ok 65 - a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+  ---
+  duration_ms: 9179.212792
+  ...
+# Subtest: accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+ok 66 - accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+  ---
+  duration_ms: 9727.907041
+  ...
+# Subtest: demo control hints show the saved keyboard bindings in the actual app
+ok 67 - demo control hints show the saved keyboard bindings in the actual app
+  ---
+  duration_ms: 1513.542
+  ...
+# Subtest: spectator information and play invitation stay visible while details remain optional
+ok 68 - spectator information and play invitation stay visible while details remain optional
+  ---
+  duration_ms: 1502.906833
+  ...
+# Subtest: demo guide respects the shared character-reactions preference without hiding teaching captions
+ok 69 - demo guide respects the shared character-reactions preference without hiding teaching captions
+  ---
+  duration_ms: 1650.225458
+  ...
+# Subtest: a pending scene picture releases its painter on deadline before the decoder settles
+ok 70 - a pending scene picture releases its painter on deadline before the decoder settles
+  ---
+  duration_ms: 1927.730417
+  ...
+# Subtest: a pending scene picture releases its painter on Back before the decoder settles
+ok 71 - a pending scene picture releases its painter on Back before the decoder settles
+  ---
+  duration_ms: 1648.689583
+  ...
+# Subtest: catalogue fetch which ignores abort still has a finite total loading deadline
+ok 72 - catalogue fetch which ignores abort still has a finite total loading deadline
+  ---
+  duration_ms: 1.002584
+  ...
+# Subtest: catalogue body which ignores abort still has a finite total loading deadline
+ok 73 - catalogue body which ignores abort still has a finite total loading deadline
+  ---
+  duration_ms: 0.141791
+  ...
+# Subtest: fetch and body share a budget; success retires timers and caller listeners
+ok 74 - fetch and body share a budget; success retires timers and caller listeners
+  ---
+  duration_ms: 0.409042
+  ...
+# Subtest: replay body timeout and parent cancellation settle before an uncooperative body returns
+ok 75 - replay body timeout and parent cancellation settle before an uncooperative body returns
+  ---
+  duration_ms: 0.477834
+  ...
+# Subtest: cancelled late fetch cancels its body without starting text parsing
+ok 76 - cancelled late fetch cancels its body without starting text parsing
+  ---
+  duration_ms: 0.192792
+  ...
+# Subtest: loading cleans up synchronous failure, early abort, late rejection and failing late disposal
+ok 77 - loading cleans up synchronous failure, early abort, late rejection and failing late disposal
+  ---
+  duration_ms: 0.274
+  ...
+# Subtest: slow fetch cannot restart the body deadline and all cancellation listeners are retired
+ok 78 - slow fetch cannot restart the body deadline and all cancellation listeners are retired
+  ---
+  duration_ms: 0.263334
+  ...
+# Subtest: overdue synchronous preparation is rejected and retired before its timer can run
+ok 79 - overdue synchronous preparation is rejected and retired before its timer can run
+  ---
+  duration_ms: 0.088583
+  ...
+# Subtest: settlement checks elapsed time at 14999ms without relying on timer delivery
+ok 80 - settlement checks elapsed time at 14999ms without relying on timer delivery
+  ---
+  duration_ms: 0.159292
+  ...
+# Subtest: settlement checks elapsed time at 15000ms without relying on timer delivery
+ok 81 - settlement checks elapsed time at 15000ms without relying on timer delivery
+  ---
+  duration_ms: 0.061416
+  ...
+# Subtest: settlement checks elapsed time at 15001ms without relying on timer delivery
+ok 82 - settlement checks elapsed time at 15001ms without relying on timer delivery
+  ---
+  duration_ms: 0.096833
+  ...
+# Subtest: overdue synchronous and asynchronous errors retain timeout classification
+ok 83 - overdue synchronous and asynchronous errors retain timeout classification
+  ---
+  duration_ms: 0.093958
+  ...
+# Subtest: native watching advances without Solo effects and practice resumes on its visible surface
+ok 84 - native watching advances without Solo effects and practice resumes on its visible surface
+  ---
+  duration_ms: 21.33925
+  ...
+# Subtest: native readouts use shared playback time when the engine exposes no time field
+ok 85 - native readouts use shared playback time when the engine exposes no time field
+  ---
+  duration_ms: 4.195833
+  ...
+# Subtest: raw SIM-origin controller samples reach Snake practice through the mounted shared host
+ok 86 - raw SIM-origin controller samples reach Snake practice through the mounted shared host
+  ---
+  duration_ms: 11.487916
+  ...
+# Subtest: a quick close and reopen awaits asynchronous scene disposal
+ok 87 - a quick close and reopen awaits asynchronous scene disposal
+  ---
+  duration_ms: 5.310792
+  ...
+# Subtest: renderer disposal failure still retires physics and removes the owned surface
+ok 88 - renderer disposal failure still retires physics and removes the owned surface
+  ---
+  duration_ms: 11.164708
+  ...
+# Subtest: a practice world returned after cancellation is disposed exactly once
+ok 89 - a practice world returned after cancellation is disposed exactly once
+  ---
+  duration_ms: 3.172417
+  ...
+# Subtest: graphics loss retires the native engine and publishes its bounded diagnostic
+ok 90 - graphics loss retires the native engine and publishes its bounded diagnostic
+  ---
+  duration_ms: 8.535041
+  ...
+# Subtest: native preparation forwards one bounded reporter through source and renderer ownership
+ok 91 - native preparation forwards one bounded reporter through source and renderer ownership
+  ---
+  duration_ms: 2.336208
+  ...
+# Subtest: loading fades only the displayed frame and holds darkness until a prepared scene arrives
+ok 92 - loading fades only the displayed frame and holds darkness until a prepared scene arrives
+  ---
+  duration_ms: 0.703167
+  ...
+# Subtest: fast scene loading still finishes departure; privacy clearing discards the snapshot
+ok 93 - fast scene loading still finishes departure; privacy clearing discards the snapshot
+  ---
+  duration_ms: 0.070916
+  ...
+# Subtest: Next during arrival preserves its dimming and accepts the displayed reward frame
+ok 94 - Next during arrival preserves its dimming and accepts the displayed reward frame
+  ---
+  duration_ms: 0.101667
+  ...
+# Subtest: settled arrival and loading hold do not keep rewriting opacity
+ok 95 - settled arrival and loading hold do not keep rewriting opacity
+  ---
+  duration_ms: 0.160458
+  ...
+# Subtest: resource diagnostic retains only the currently allocated transition surface
+ok 96 - resource diagnostic retains only the currently allocated transition surface
+  ---
+  duration_ms: 0.841917
+  ...
+# Subtest: native demo entry reads canonical touch choices and refreshes its read-only snapshot on reopen
+ok 97 - native demo entry reads canonical touch choices and refreshes its read-only snapshot on reopen
+  ---
+  duration_ms: 15.222833
+  ...
+# Subtest: read-only touch admission rejects malformed, oversized and unavailable values without changing caller defaults
+ok 98 - read-only touch admission rejects malformed, oversized and unavailable values without changing caller defaults
+  ---
+  duration_ms: 0.149041
+  ...
+# Subtest: native mixed entry reads saved shared controls without writes (legacy profile)
+ok 99 - native mixed entry reads saved shared controls without writes (legacy profile)
+  ---
+  duration_ms: 16.578209
+  ...
+# Subtest: native mixed entry reads saved shared controls without writes (generation profile)
+ok 100 - native mixed entry reads saved shared controls without writes (generation profile)
+  ---
+  duration_ms: 13.227125
+  ...
+# Subtest: shared demo control snapshots reject malformed or inaccessible profiles without writes
+ok 101 - shared demo control snapshots reject malformed or inaccessible profiles without writes
+  ---
+  duration_ms: 0.278958
+  ...
+# Subtest: native device guidance replaces generic pad mappings and updates while paused
+ok 102 - native device guidance replaces generic pad mappings and updates while paused
+  ---
+  duration_ms: 3.958708
+  ...
+# Subtest: Solo and native entries share dev settings without writes until an explicit change
+ok 103 - Solo and native entries share dev settings without writes until an explicit change
+  ---
+  duration_ms: 10.228791
+  ...
+# Subtest: Solo and native entries share release-0.145.0 settings without writes until an explicit change
+ok 104 - Solo and native entries share release-0.145.0 settings without writes until an explicit change
+  ---
+  duration_ms: 10.679542
+  ...
+# Subtest: native small metadata agrees with Solo edition and release channel isolation
+ok 105 - native small metadata agrees with Solo edition and release channel isolation
+  ---
+  duration_ms: 0.63875
+  ...
+# Subtest: legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+ok 106 - legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+  ---
+  duration_ms: 0.096291
+  ...
+# Subtest: denied storage uses reduced-motion defaults and explicit changes stay session-only
+ok 107 - denied storage uses reduced-motion defaults and explicit changes stay session-only
+  ---
+  duration_ms: 0.843375
+  ...
+# Subtest: stalled and oversized metadata cannot hold startup or change the settings channel
+ok 108 - stalled and oversized metadata cannot hold startup or change the settings channel
+  ---
+  duration_ms: 6.464416
+  ...
+# Subtest: a delayed optional catalog cannot starve available modes or freeze localization
+ok 109 - a delayed optional catalog cannot starve available modes or freeze localization
+  ---
+  duration_ms: 1.380583
+  ...
+# Subtest: prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+ok 110 - prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+  ---
+  duration_ms: 0.707667
+  ...
+# Subtest: the next prefetched recording is consumed once and never creates a second player early
+ok 111 - the next prefetched recording is consumed once and never creates a second player early
+  ---
+  duration_ms: 1.044375
+  ...
+# Subtest: modes and level variants have equal performance weight despite duplicate recordings
+ok 112 - modes and level variants have equal performance weight despite duplicate recordings
+  ---
+  duration_ms: 2.155333
+  ...
+# Subtest: an unavailable graphics engine is attempted once, not once per authored level
+ok 113 - an unavailable graphics engine is attempted once, not once per authored level
+  ---
+  duration_ms: 1.354542
+  ...
+# Subtest: a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+ok 114 - a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+  ---
+  duration_ms: 1.119083
+  ...
+# Subtest: a deferred mode returns with its next recording while healthy mode cycles keep progressing
+ok 115 - a deferred mode returns with its next recording while healthy mode cycles keep progressing
+  ---
+  duration_ms: 0.575083
+  ...
+# Subtest: duplicate bad recordings cannot hold the next level behind repeated verified fallback
+ok 116 - duplicate bad recordings cannot hold the next level behind repeated verified fallback
+  ---
+  duration_ms: 0.419917
+  ...
+# Subtest: all fallback attempts together stop at thirty seconds
+ok 117 - all fallback attempts together stop at thirty seconds
+  ---
+  duration_ms: 1.475792
+  ...
+# Subtest: replacement waits for asynchronous graphics disposal
+ok 118 - replacement waits for asynchronous graphics disposal
+  ---
+  duration_ms: 0.277125
+  ...
+# Subtest: fallback waits for cleanup of a source rejected after preparation
+ok 119 - fallback waits for cleanup of a source rejected after preparation
+  ---
+  duration_ms: 0.276125
+  ...
+# Subtest: captions retain five explanations, stay six seconds, and discard stale warnings
+ok 120 - captions retain five explanations, stay six seconds, and discard stale warnings
+  ---
+  duration_ms: 0.260125
+  ...
+# Subtest: caption history translates observed events without replaying or dropping their reading interval
+ok 121 - caption history translates observed events without replaying or dropping their reading interval
+  ---
+  duration_ms: 0.070709
+  ...
+# Subtest: natural completion retains the last explanation and the recap for six seconds each
+ok 122 - natural completion retains the last explanation and the recap for six seconds each
+  ---
+  duration_ms: 0.114375
+  ...
+# Subtest: a source timeout prefers verified Snake and preserves the unvisited mode for the next transition
+ok 123 - a source timeout prefers verified Snake and preserves the unvisited mode for the next transition
+  ---
+  duration_ms: 2.02225
+  ...
+# Subtest: a verified fallback still shares the original thirty-second recovery deadline
+ok 124 - a verified fallback still shares the original thirty-second recovery deadline
+  ---
+  duration_ms: 0.5685
+  ...
+# Subtest: timeout recovery cannot reuse a verified source after demo-playback-failed
+ok 125 - timeout recovery cannot reuse a verified source after demo-playback-failed
+  ---
+  duration_ms: 1.007792
+  ...
+# Subtest: timeout recovery cannot reuse a verified source after demo-renderer-unavailable
+ok 126 - timeout recovery cannot reuse a verified source after demo-renderer-unavailable
+  ---
+  duration_ms: 0.430417
+  ...
+# Subtest: cancelling a preferred verified fallback retires its late player without adoption
+ok 127 - cancelling a preferred verified fallback retires its late player without adoption
+  ---
+  duration_ms: 0.630125
+  ...
+# Subtest: published Solo boots the starter and starts an unprepared chapter online without a popup
+ok 128 - published Solo boots the starter and starts an unprepared chapter online without a popup
+  ---
+  duration_ms: 2484.424208
+  ...
+# Subtest: an exact saved campaign restores online and retains explicitly prepared offline bytes
+    # Subtest: online restore needs no offline preparation
+    ok 1 - online restore needs no offline preparation
+      ---
+      duration_ms: 1176.886041
+      ...
+    # Subtest: prepared bytes restore the saved campaign and explicit retention survives deselection
+    ok 2 - prepared bytes restore the saved campaign and explicit retention survives deselection
+      ---
+      duration_ms: 1304.994833
+      ...
+    # Subtest: expired optional retention preserves the paused saved flight without a late pin
+    ok 3 - expired optional retention preserves the paused saved flight without a late pin
+      ---
+      duration_ms: 3151.836542
+      ...
+    # Subtest: a reopened page restores the deselected chapter from retained bytes with network blocked
+    ok 4 - a reopened page restores the deselected chapter from retained bytes with network blocked
+      ---
+      duration_ms: 1270.033292
+      ...
+    1..4
+ok 129 - an exact saved campaign restores online and retains explicitly prepared offline bytes
+  ---
+  duration_ms: 7000.601
+  ...
+# Subtest: ordinary mode departure opens Versus without offline preparation
+ok 130 - ordinary mode departure opens Versus without offline preparation
+  ---
+  duration_ms: 746.787667
+  ...
+# Subtest: complete published Missions retains both Hunt owners and expeditions without native catalogue imports
+ok 131 - complete published Missions retains both Hunt owners and expeditions without native catalogue imports
+  ---
+  duration_ms: 1498.022459
+  ...
+# Subtest: published incoming Ready handoff and page reopen finish the exact paused mission without native expedition imports
+    # Subtest: incoming
+    ok 1 - incoming
+      ---
+      duration_ms: 1247.466834
+      ...
+    # Subtest: reopened
+    ok 2 - reopened
+      ---
+      duration_ms: 1258.182625
+      ...
+    1..2
+ok 132 - published incoming Ready handoff and page reopen finish the exact paused mission without native expedition imports
+  ---
+  duration_ms: 2506.524083
+  ...
+# Subtest: an older published snapshot without supplemental views keeps the real native fallback
+ok 133 - an older published snapshot without supplemental views keeps the real native fallback
+  ---
+  duration_ms: 3942.221584
+  ...
+# Subtest: manual resource export requires real Demo Pause and retains closed display across reopen
+ok 134 - manual resource export requires real Demo Pause and retains closed display across reopen
+  ---
+  duration_ms: 2180.690167
+  ...
+# Subtest: closed Demo retains unsettled scene reservation until ignored decode actually completes
+ok 135 - closed Demo retains unsettled scene reservation until ignored decode actually completes
+  ---
+  duration_ms: 1294.616
+  ...
+# Subtest: manual resource export rejects advancing practice despite the retained interrupted spectator flag
+ok 136 - manual resource export rejects advancing practice despite the retained interrupted spectator flag
+  ---
+  duration_ms: 1479.773958
+  ...
+# Subtest: atomic report preserves the last complete sample after failWrite
+ok 137 - atomic report preserves the last complete sample after failWrite
+  ---
+  duration_ms: 1.0545
+  ...
+# Subtest: atomic report preserves the last complete sample after failRename
+ok 138 - atomic report preserves the last complete sample after failRename
+  ---
+  duration_ms: 0.08925
+  ...
+# Subtest: atomic report replaces after a complete write and leaves colliding files alone
+ok 139 - atomic report replaces after a complete write and leaves colliding files alone
+  ---
+  duration_ms: 0.146833
+  ...
+# Subtest: dead-page diagnostics and ENOSPC still close and emit the primary failure
+ok 140 - dead-page diagnostics and ENOSPC still close and emit the primary failure
+  ---
+  duration_ms: 1.920209
+  ...
+# Subtest: hung diagnostics are bounded and a failed close cannot suppress output
+ok 141 - hung diagnostics are bounded and a failed close cannot suppress output
+  ---
+  duration_ms: 6.454917
+  ...
+# Subtest: a persistence-only failure fails qualification with bounded diagnostics
+ok 142 - a persistence-only failure fails qualification with bounded diagnostics
+  ---
+  duration_ms: 0.15725
+  ...
+# Subtest: the actual CLI closes a launched browser when context setup fails
+ok 143 - the actual CLI closes a launched browser when context setup fails
+  ---
+  duration_ms: 227.175
+  ...
+# Subtest: regular watching and bounded loading progress retain the existing progress contract
+ok 144 - regular watching and bounded loading progress retain the existing progress contract
+  ---
+  duration_ms: 0.783708
+  ...
+# Subtest: a long sleep followed by a changed tick cannot erase the observation gap
+ok 145 - a long sleep followed by a changed tick cannot erase the observation gap
+  ---
+  duration_ms: 0.1865
+  ...
+# Subtest: the first sample and final edge both retain the strict forty-five-second bound
+ok 146 - the first sample and final edge both retain the strict forty-five-second bound
+  ---
+  duration_ms: 0.075917
+  ...
+# Subtest: frequent samples with unchanged playback still fail the original nonprogress check
+ok 147 - frequent samples with unchanged playback still fail the original nonprogress check
+  ---
+  duration_ms: 0.079334
+  ...
+# Subtest: a clock reversal or nonfinite observation cannot qualify despite changed playback
+ok 148 - a clock reversal or nonfinite observation cannot qualify despite changed playback
+  ---
+  duration_ms: 0.427333
+  ...
+1..148
+# tests 154
+# suites 0
+# pass 154
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 166194.693417

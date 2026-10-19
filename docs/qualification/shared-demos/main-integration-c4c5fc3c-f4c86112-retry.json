@@ -1,0 +1,117 @@
+{
+  "format": "revealline-demo-main-integration-retry.v1",
+  "started": "2026-10-19T02:37:26.939331+00:00",
+  "sourceBefore": {
+    "head": "f4c86112ceca20b2e720590bd217d77f3b05ce65",
+    "runtime": {
+      "sha256": "35b8b966b926324557effeea0e9f54d93348d5617fea4e054f9fc0e7ea3859f4",
+      "files": 9996,
+      "bytes": 404409496
+    },
+    "buildInput": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    }
+  },
+  "sourceStable": true,
+  "complete": true,
+  "scope": "Fresh complete rerun after local ENOSPC; logs and receipts on bounded owned scratch. Separate emitted/browser qualification remains required.",
+  "supersedesNoPriorFailure": true,
+  "uniqueTestFiles": 31,
+  "jobs": [
+    {
+      "name": "incoming",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/capture-navigation-context-host.test.mjs",
+        "game/test/classic-snake-ui.test.mjs",
+        "game/test/continuous-play-preferences.test.mjs",
+        "game/test/couch-audio-catalogue-demand.test.mjs",
+        "game/test/duel-navigation-context-host.test.mjs",
+        "game/test/edition-solo-host.test.mjs",
+        "game/test/first-flight-home-host.test.mjs",
+        "game/test/first-flight-view.test.mjs",
+        "game/test/global-settings-tools.test.mjs",
+        "game/test/native-landing-structure.test.mjs",
+        "game/test/overflight-suspend-assessment.test.mjs",
+        "game/test/solo-soundtrack-admission-host.test.mjs",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/soundtrack-panel.test.mjs"
+      ],
+      "started": "2026-10-19T02:37:26.939719+00:00",
+      "stdout": "main-integration-c4c5fc3c-f4c86112-incoming-retry.tap.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 227.83585683400452,
+      "stdoutBytes": 105116,
+      "stdoutSHA256": "d49ee7ac8b4ced3ddf2437944b4b82d1fe7acb16b0c99d82d7e91d427ca69008",
+      "totals": {
+        "tests": 478,
+        "suites": 0,
+        "pass": 478,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "complete": true
+    },
+    {
+      "name": "demos",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/demo-host.test.mjs",
+        "game/test/demo-audio-host.test.mjs",
+        "game/test/demo-native-host.test.mjs",
+        "game/test/demo-settings.test.mjs",
+        "game/test/demo-back-host.test.mjs",
+        "game/test/demo-confirm-settings-host.test.mjs",
+        "game/test/demo-classic-fresh-host.test.mjs",
+        "game/test/published-solo-entry-host.test.mjs",
+        "game/test/demo-director.test.mjs",
+        "game/test/demo-loading.test.mjs",
+        "game/test/demo-shared.test.mjs",
+        "game/test/demo-loading-host.test.mjs",
+        "game/test/demo-scene-transition.test.mjs",
+        "game/test/solo-demo-resources-host.test.mjs",
+        "game/test/demo-timeout-fallback.test.mjs",
+        "scripts/test-shared-demo-browser-report.mjs",
+        "scripts/test-shared-demo-endurance-progress.mjs"
+      ],
+      "started": "2026-10-19T02:41:14.776510+00:00",
+      "stdout": "main-integration-c4c5fc3c-f4c86112-demos-retry.tap.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 166.3502651250019,
+      "stdoutBytes": 34647,
+      "stdoutSHA256": "35814457e3f79762415cffa871ea98d2306cc7e9c02a74d4a3fba1c8e92a1048",
+      "totals": {
+        "tests": 154,
+        "suites": 0,
+        "pass": 154,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "complete": true
+    }
+  ],
+  "sourceAfter": {
+    "head": "f4c86112ceca20b2e720590bd217d77f3b05ce65",
+    "runtime": {
+      "sha256": "35b8b966b926324557effeea0e9f54d93348d5617fea4e054f9fc0e7ea3859f4",
+      "files": 9996,
+      "bytes": 404409496
+    },
+    "buildInput": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    }
+  },
+  "finished": "2026-10-19T02:44:03.956065+00:00"
+}
