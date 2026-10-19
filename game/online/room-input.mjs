@@ -16,7 +16,8 @@ export function attachRoomInput({
   const router = createControllerRouter({ readPads, autoJoin: true });
   let command = neutralControllerFlight(),
     status = null,
-    destroyed = false;
+    destroyed = false,
+    supportController = null;
   const input = attachInput({
     arena,
     active,
@@ -29,6 +30,7 @@ export function attachRoomInput({
     onSteer,
   });
   function clear() {
+    supportController = null;
     command = neutralControllerFlight();
     router.clear();
     input.clear();
@@ -53,6 +55,7 @@ export function attachRoomInput({
   document.addEventListener('visibilitychange', hidden);
   return Object.freeze({
     clear,
+    supportObservation: () => (supportController ? { ...supportController } : null),
     poll() {
       if (destroyed) return input.poll();
       if (document.hidden || document.hasFocus?.() === false) {
@@ -61,6 +64,12 @@ export function attachRoomInput({
       }
       const scope = getScope(),
         frame = router.sample({ scope });
+      // Reuse this ordinary sample; diagnostics never poll or retain raw input.
+      supportController = {
+        sampledAt: globalThis.performance.now(),
+        status: frame.status.code,
+        assigned: frame.assigned !== null,
+      };
       command = frame.flight;
       if (frame.status.code !== status) {
         status = frame.status.code;

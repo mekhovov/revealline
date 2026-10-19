@@ -20,6 +20,7 @@ import { onNativeInactive, exportJSONFile } from '../platform.mjs';
 import { drawClassicBoard, classicCatchMarks } from '../snake/classic-view.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { mountRoomUI } from './room-ui.mjs';
+import { roomSupportState } from './room-support-summary.mjs';
 import { createRoomBoardPresentation, reconcileRoomPresentationRuns } from './room-events.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { createClassicPresentation } from '../snake/classic-presentation.mjs';
@@ -918,6 +919,7 @@ window.addEventListener('pageshow', () => {
 });
 roomUI = mountRoomUI({
   getState: () => state,
+  getSupportState: () => roomSupportState(lifecycle.snapshot()),
   getSeat: () => credentials?.seat ?? 0,
   canPlay: () => lifecycle.canPlay() && !stopped && !document.hidden,
   submit: (control) => lifecycle.submit(control),

@@ -22,10 +22,21 @@ import { mountToolDisplay } from '../ui/tool-display.mjs';
 import { getLocale, t } from '../i18n/index.mjs';
 import { createRoomAudioActivation, createRoomEventCursor } from './room-events.mjs';
 import { attachRoomSupport } from './room-controls.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
+import { nativePlatform } from '../platform.mjs';
 
 /** The room transport owns readiness and outcomes. This adapter owns only native
  * menu/input presentation and the one page mixer; it never advances a simulation. */
-export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display, destruction }) {
+export function mountRoomUI({
+  getState,
+  getSeat,
+  canPlay,
+  submit,
+  pause,
+  display,
+  destruction,
+  getSupportState = () => null,
+}) {
   const doc = globalThis.document,
     $ = (id) => doc.getElementById(id),
     uk = getLocale() === 'uk',
@@ -49,7 +60,9 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     wantsPlay = false,
     gestureReady = false,
     wasLive = false,
-    ended = null;
+    ended = null,
+    supportSummary = null,
+    supportPageActive = true;
   const cursor = createRoomEventCursor(),
     projections = [];
   const audioMaster = createAudioMaster(),
@@ -197,6 +210,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
       cards[getState()?.recipe.mode === 'versus' ? getSeat() : 0]?.canvas.focus({
         preventScroll: true,
       }),
+    onSurfaceChange: () => supportSummary?.invalidate(),
     initial: 'home',
   });
   // subscribe() publishes immediately; the title must exist before its first
@@ -237,6 +251,39 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
       $('room-live-status').textContent = message;
     },
   });
+  supportSummary = attachLocalSupportSummary({
+    document: doc,
+    window,
+    root: $('room-support-summary-root'),
+    settings: shell.elements.dialogs.settings,
+    getSettingsOpen: () =>
+      supportPageActive &&
+      shell.elements.dialogs.settings.open &&
+      shell.topDialog() === shell.elements.dialogs.settings,
+    getHost: () => ({
+      version: doc.documentElement.dataset.buildVersion,
+      kind: 'private-room',
+      state: getSupportState(),
+      locale: getLocale(),
+      platform: nativePlatform() ?? 'browser',
+      // A server seat or replay is not a local save writer lease.
+      writable: null,
+      writerReason: null,
+      controller: input.supportObservation(),
+    }),
+  });
+  const retireSupport = () => supportSummary.invalidate();
+  const hideSupport = () => {
+    supportPageActive = false;
+    input.clear();
+    retireSupport();
+  };
+  const showSupport = () => {
+    supportPageActive = true;
+  };
+  window.addEventListener('blur', retireSupport);
+  window.addEventListener('pagehide', hideSupport);
+  window.addEventListener('pageshow', showSupport);
   supportInput = attachRoomSupport({
     document: doc,
     button: $('support'),
@@ -249,6 +296,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     void audioActivation.enable();
   }
   function suspend() {
+    supportSummary?.invalidate();
     pendingTurns = [];
     lastControls = '';
     supportInput?.clear();
@@ -558,6 +606,10 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
     tailStyle: () => $('room-tail').value,
     width: (board) => footprints?.width(board),
     dispose() {
+      window.removeEventListener('blur', retireSupport);
+      window.removeEventListener('pagehide', hideSupport);
+      window.removeEventListener('pageshow', showSupport);
+      supportSummary.destroy();
       suspend();
       sound.suspend();
       cursor.reset();
