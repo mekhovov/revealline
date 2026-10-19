@@ -176,6 +176,7 @@
     <link rel="stylesheet" data-boot-href="ui/optional-practice-panel.css" />
     <link rel="stylesheet" data-boot-href="ui/demo.css" />
     <link rel="stylesheet" data-boot-href="ui/flight-information-details.css" />
+    <link rel="stylesheet" data-boot-href="ui/capture-flight-limits.css" />
     <link rel="stylesheet" data-boot-href="ui/mode-choice.css" />
     <link rel="stylesheet" data-boot-href="ui/pixel-theme.css" />
     <link rel="stylesheet" data-boot-href="ui/mission-picker.css" />
@@ -555,6 +556,34 @@
                     Read without starting or resuming.
                   </p>
                 </div>
+                <details id="capture-flight-limits" class="capture-flight-limits" hidden>
+                  <summary id="capture-flight-limits-summary"></summary>
+                  <p id="capture-recording-limit"></p>
+                  <p id="capture-collection-limit"></p>
+                  <p data-i18n="interface:flightLimits.beforeLeaving">
+                    Before closing the game, check your saved flight or export the current attempt
+                    in Saves &amp; recovery. A replay is for watching, not resuming. Home keeps this
+                    flight paused in this tab; it is not a backup.
+                  </p>
+                  <div class="capture-flight-limit-actions">
+                    <button
+                      id="capture-limit-saves"
+                      type="button"
+                      class="button secondary"
+                      data-i18n="interface:flightLimits.saves"
+                    >
+                      Saves &amp; recovery
+                    </button>
+                    <button
+                      id="capture-limit-replay"
+                      type="button"
+                      class="button secondary"
+                      data-i18n="interface:flightLimits.replay"
+                    >
+                      Export replay
+                    </button>
+                  </div>
+                </details>
                 <p id="flight-preparation-status" class="menu-progress-status" hidden></p>
                 <div class="overlay-actions">
                   <button
@@ -1465,9 +1494,10 @@
           </p>
           <p data-i18n-rich="interface:replayRecordingAndRecoverableSavesStopAfter30MinutesOf">
             <strong data-i18n="interface:longFlights" data-i18n-slot="slot0">Long flights:</strong>
-            Replay recording and recoverable saves stop after 30 minutes of play. A flight can
-            continue, but a completion after two hours cannot be kept in the collection. Pause when
-            taking a break, and export your library to keep a backup.
+            Replay recording and new recoverable saves stop after 30 minutes of play. Earlier
+            checkpoints may remain. Classic collection results have a two-hour limit; Journey clears
+            and pictures use their own progress store. Pause to check Flight saves and export before
+            leaving. A replay cannot resume a flight.
           </p>
         </div>
       </div>
@@ -3243,6 +3273,11 @@ No offline check yet.</pre
               >Continue</span
             >
             <span aria-hidden="true">→</span>
+          </button>
+          <button id="first-flight-home-enter" type="button" class="button secondary" hidden>
+            <span data-i18n="interface:firstFlight">First Flight</span>
+            <span aria-hidden="true"> · </span>
+            <span data-i18n="interface:learnByPlaying">Learn by playing</span>
           </button>
           <button
             id="shell-play"

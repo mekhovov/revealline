@@ -7,6 +7,16 @@ import { readFile } from 'node:fs/promises';
 export const FINAL_WAVE_WITNESS_PATH =
   'docs/performance/fixtures/solo-final-wave/a7e-execution-source.json';
 const root = new URL('../', import.meta.url);
+// Active sparse consumers retain their original input closure. Only the finite
+// retired declarations need the additional preserved source fixture.
+async function readSoloDiagnosticSource(path) {
+  const retired =
+    /^\.github\/workflows\/solo-remote-final-(?:lifecycle-(?:long29|next|retry)|soak(?:-v2)?|timing-(?:cold-first30|warm-first30|sentry|long-rail)(?:-v2)?)-temporary\.yml$/;
+  if (!retired.test(path)) return readFile(new URL(path, root));
+  const historical = await import('./solo-retired-diagnostic-source.mjs');
+  return historical.readSoloDiagnosticSource(path);
+}
+
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 export function validateFinalWaveWitness(bytes) {
@@ -26,7 +36,15 @@ export async function assertFinalWaveBindings(manifestPath, references, workflow
   const release = witness.releases.find((entry) => entry.workflow === workflowPath);
   assert(release && Object.hasOwn(release.manifests, manifestPath), 'Unwitnessed release');
   for (const path of [manifestPath, workflowPath]) {
-    const bytes = await readFile(new URL(path, root));
+    const current = await readSoloDiagnosticSource(path);
+    // Correctness later reused its workflow path. Its original a7e execution
+    // definition is already preserved separately; compare that exact source.
+    const bytes =
+      path === '.github/workflows/solo-remote-final-correctness-temporary.yml'
+        ? await readFile(
+            new URL('docs/performance/fixtures/solo-final-wave/a7e-correctness-workflow.yml', root),
+          )
+        : current;
     assert.equal(bytes.length, files.get(path)?.bytes, path);
     assert.equal(sha(bytes), files.get(path)?.sha256, path);
   }
