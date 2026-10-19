@@ -7,12 +7,13 @@ blockers](flight-practice-status-2026-10-19.md) as the planning authority. The
 [local diagnosis/browser execution report](flight-practice-execution-2026-10-19.md)
 retains exact source-bound test evidence.
 
-Fresh read-only review: PR #1554 is draft, with all 12 reported checks queued at
-head `1b8dcb491`. GitHub reports mergeable against its sampled `dd337c812` base;
-live main is now `bd15820be`, ten commits beyond the integrated `237b40543`,
-including coach/World runtime and Capture First Flight changes. Integration,
-new candidate reproduction/input comparison and affected qualification are
-remaining work, not completed by this documentation review.
+Continuation: all 33 Practice commits were rebased without conflicts or patch
+changes onto accepted main `36e8bc426` (14 newer commits). Frozen source
+`08fc3430c8` passes 127 selected regressions. All three new standalone packages
+reproduce twice and pass admission; exact comparison finds changed runtime
+bytes in every app. Affected browser qualification and current-head CI remain
+open. The last pre-push old-head CI snapshot has eight successes, one running
+and five queued; it is not evidence for the rebased source.
 
 The approved share resolves output space; bounded writes, opt-in phase reporting
 and conservative cross-volume clone veto pass **53 targeted tests**. External
@@ -25,11 +26,18 @@ Whole-run attribution and current production-directory journeys remain open.
 completes its R2 refresh, and all six current restarted-offline short-flight routes
 pass. Simulator evidence remains pinned to candidate `6177d2cc8`; build-tool
 evidence is separately pinned to `623918462`, not relabelled runtime bytes.
-Next: accepted-main integration/current-head CI, bounded evidence-led build diagnosis, independent all-app
+Next: affected integrated-candidate checks/current-head CI, bounded evidence-led build diagnosis, independent all-app
 actual recovery (R3) and native outstanding-digest cancellation (R4), then current
 production journeys. Acceptance/reviewer work (R6–R9) retains its prerequisites.
 Hosting, hardware and historical Worlds stay owner-deferred, not passed. Earlier
 disk measurements and source-specific results below are preserved history.
+
+Local headroom is now the immediate execution blocker: most recently 661 MiB
+free, below browser/full-build guards. The share has approximately 51 GiB but
+does not supply local profile space. Small share-only package builds completed;
+no full build or new browser run was attempted below the guards. I/O probes
+suggest a thread-pool contribution on SMB, not a proven full-build fix. Keep
+production concurrency and limits unchanged pending a safe representative run.
 
 The former 3–5 day range is not a current overall ETA. The build fix and CI/human
 waiting have no reliable completion time; the linked review gives conditional
