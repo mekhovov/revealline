@@ -329,8 +329,8 @@
     },
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 110675,
-      "sha256": "bdb794a0a133cd664f7c91dc99d32f3e996b507e64dd7ef29534cced76462ec1"
+      "bytes": 110951,
+      "sha256": "a8217d19a9b26a194ef98b38890835b51f6b96a9f3dfe30677062c3e142ba0ae"
     },
     {
       "path": "scripts/solo-shared-source-checkout.sh",

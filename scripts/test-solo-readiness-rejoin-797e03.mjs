@@ -335,7 +335,7 @@ test('pre-heap witness binds all 27 immutable declarations to actual retained to
   }
   const oldPath = 'docs/performance/solo-readiness-preparation-de332-plan.json';
   const old = JSON.parse(await read(oldPath));
-  const oldSustained = old.adapterInputs.find(
+  const oldSustained = old.frozenTools.find(
     (row) => row.path === 'scripts/solo-remote-sustained.mjs',
   );
   assert.equal(oldSustained.bytes, 91250);
