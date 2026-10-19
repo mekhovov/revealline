@@ -20,7 +20,7 @@ import { loadLibrary } from '../library.mjs';
 import { EXTERNAL_CATALOG } from '../external-chapter-catalog.mjs';
 import { releasedExternalOriginal as selectedOriginal } from './helpers/released-original.mjs';
 const allEditions = [];
-for (const theme of ['fpv', 'ukraine', 'retro', 'coupa'])
+for (const theme of ['fpv', 'ukraine', 'retro'])
   allEditions.push(await buildCountercurrentTheme(theme));
 const proof = JSON.parse(
   await readFile(new URL('../../authoring/library/countercurrent/routes.json', import.meta.url)),

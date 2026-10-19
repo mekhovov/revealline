@@ -26,22 +26,22 @@ export async function readPinned(file, limit, expected) {
   if (expected !== undefined) assert.equal(digest(bytes), expected, `Exact source: ${file}`);
   return bytes;
 }
-export const THEME_IDS = Object.freeze(['fpv', 'ukraine', 'retro', 'coupa']);
+export const THEME_IDS = Object.freeze(['fpv', 'ukraine', 'retro']);
 export const EDITIONS_FILE = 'authoring/library/countercurrent-chapters/editions.json';
 export const INPUTS = Object.freeze({
   'authoring/library/countercurrent/build.mjs':
-    '545629fb0269bfe63f4895db9b5e5e537c704f24d2795e4d4e78e62ea6344de2',
+    'e0689abb6dc91be8da928f83035ad169f68a041d02377976485e68bfa9ccdd12',
   'authoring/library/countercurrent/layouts.json':
     'daaeb40b6260ada3632d602d42b41788fb0c36de109bcc0a1f648018112f3abc',
   'authoring/library/countercurrent/controls.mjs':
     'cffb060cbe1132ce4987820d3d5bd0bff47392b3dd10a42bd85486470f29d4eb',
   'authoring/library/countercurrent/routes.json':
     'e729ead2a1014b7edf2809d2d32dfd2958f66441194468d36b9e9f7b534ba856',
-  'game/content/themes.json': '93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774',
+  'game/content/themes.json': '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2',
   'authoring/library/countercurrent-art/provenance.json':
-    '72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435',
+    '41f8d87480fa488bddcbd29f66b9dd239ece2acbf860c143f6eef82c6fc733e4',
   'authoring/library/countercurrent-art/manifest.json':
-    '27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1',
+    'c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543',
 });
 export const artRoot = () => 'authoring/library/countercurrent-art';
 // The source IDs and revision remain physical authority. Only these display fields differ.
@@ -67,7 +67,7 @@ export function validateCountercurrentThemeEditions(value, provenances) {
     doc.editions.map((e) => e.themeId),
     THEME_IDS,
   );
-  assert.equal(provenances.length, 4);
+  assert.equal(provenances.length, THEME_IDS.length);
   for (const [index, edition] of doc.editions.entries()) {
     exactKeys(
       edition,
@@ -80,7 +80,7 @@ export function validateCountercurrentThemeEditions(value, provenances) {
     assert.equal(edition.artRoot, artRoot(themeId));
     assert.equal(edition.provenanceSha256, INPUTS[`${edition.artRoot}/provenance.json`]);
     assert.equal(provenance.format, 'revealline-source-art-provenance.v1');
-    assert.equal(provenance.images.length, 12);
+    assert.equal(provenance.images.length, THEME_IDS.length * 3);
     assert.equal(edition.images.length, 3);
     for (const [i, picture] of edition.images.entries()) {
       exactKeys(
@@ -119,7 +119,7 @@ export function validateCountercurrentThemeEditions(value, provenances) {
 }
 
 export async function buildCountercurrentTheme(themeId) {
-  assert.ok(THEME_IDS.includes(themeId), 'Choose fpv, ukraine, retro or coupa.');
+  assert.ok(THEME_IDS.includes(themeId), 'Choose fpv, ukraine or retro.');
   const inputPins = [];
   for (const [file, sha256] of Object.entries(INPUTS)) {
     const bytes = await readPinned(file, 4 * 1024 * 1024, sha256);
@@ -290,7 +290,7 @@ export async function buildCountercurrentTheme(themeId) {
 }
 
 export async function writeCountercurrentTheme(themeId, outputDirectory) {
-  assert.ok(THEME_IDS.includes(themeId), 'Choose fpv, ukraine, retro or coupa.');
+  assert.ok(THEME_IDS.includes(themeId), 'Choose fpv, ukraine or retro.');
   assert.equal(typeof outputDirectory, 'string');
   const output = path.resolve(outputDirectory),
     relative = path.relative(ROOT, output);

@@ -11,7 +11,7 @@ import { buildSentinelTheme } from '../../authoring/library/sentinel-theme-chapt
 import { collectBuildFiles } from '../../scripts/game-cli.mjs';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const sha = (b) => createHash('sha256').update(b).digest('hex');
-const themes = ['ukraine', 'retro', 'coupa'];
+const themes = ['ukraine', 'retro'];
 const entries = [];
 for (const [index, theme] of themes.entries()) {
   const result = await buildSentinelTheme(theme);

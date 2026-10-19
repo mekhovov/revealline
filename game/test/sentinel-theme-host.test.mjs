@@ -15,7 +15,7 @@ import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { loadLibrary } from '../library.mjs';
 import { EXTERNAL_CATALOG } from '../external-chapter-catalog.mjs';
-const allEditions = await Promise.all(['ukraine', 'retro', 'coupa'].map(buildSentinelTheme));
+const allEditions = await Promise.all(['ukraine', 'retro'].map(buildSentinelTheme));
 const proof = JSON.parse(
   await readFile(
     new URL('../../authoring/library/sentinel-circuit-external/routes.json', import.meta.url),

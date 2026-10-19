@@ -38,7 +38,7 @@ test('every registered current and retained edition is inventoried without multi
     [...expectedOwners].sort(),
   );
   const bundled = result.owners.find(
-    (row) => row.id === 'company/coupa-spend-in-motion/coupa-spend-in-motion-01/solo',
+    (row) => row.id === 'company/droneaid-nl-workshop-lights/droneaid-nl-workshop-lights-01/solo',
   );
   assert.equal(bundled.currentInstances.length, 2);
   assert.deepEqual(result.comparisons.currentOwnerVariants, []);

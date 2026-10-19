@@ -8937,11 +8937,7 @@ try {
       () =>
         `${contentText(theme, 'labels.enemy')} · ${contentText(theme, 'labels.boss')} · ${contentText(theme, 'labels.supply')}`,
     );
-    localizedText($('footer-note'), () =>
-      theme.id === 'coupa'
-        ? t('interface:fictionalSpendManagementThemeOriginalHelperArtwork')
-        : t('interface:originalWorldsMakeEveryLineCount'),
-    );
+    localizedText($('footer-note'), () => t('interface:originalWorldsMakeEveryLineCount'));
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, painterVisuals());

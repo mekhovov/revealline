@@ -64,7 +64,7 @@ const campaigns = new Map(
   packs.map((pack) => [pack.id, resolvePackCampaign(pack, pack.campaigns[0].id).campaign]),
 );
 const STAMP = '2026-09-12T12:00:00.000Z';
-const FIRST = ['fpv-racer', 'fixedwing-body', 'ukrainian-falcon', 'retro-vector', 'navi-auditor'];
+const FIRST = ['fpv-racer', 'fixedwing-body', 'ukrainian-falcon', 'retro-vector'];
 const FINAL = ['fpv-night', 'delta-interceptor'];
 const traces = new Map();
 const completions = new Map();
@@ -157,7 +157,7 @@ const finalTier = (library, campaign) =>
     (tier) => tier.id === 'chapter-explorer',
   );
 
-test('chapter reward work preserves original route and campaign identity oracles', () => {
+test('chapter reward work preserves routes and the reviewed campaign membership identity', () => {
   assert.equal(
     sha(homeProofBytes),
     '63a77908b1ce98b480f9fd0431894e4f1d58ad56e4266ae0860206de564d8c1a',
@@ -167,7 +167,7 @@ test('chapter reward work preserves original route and campaign identity oracles
     '22886cf439f716db31333b3b6d9fae0478f8007aff734632badc7c2f38dc53c8',
   );
   assert.equal(campaignKey(campaigns.get(home.id)), 'homeward-skies/1/0d01f5687b3c38ff');
-  assert.equal(campaignKey(campaigns.get(workshop.id)), 'equipment-workshop/1/3fc2cf073da368b4');
+  assert.equal(campaignKey(campaigns.get(workshop.id)), 'equipment-workshop/1/7bbeedba8b221cf4');
   // Produced by frozen v0.9 site core/library modules from these same three legal
   // routes, IDs and timestamp. Source: 315a4782a159f2274f7200e3470ec20c3859707b.
   // Ordinary tests use this fixed oracle, never archived code or Git at runtime.
@@ -214,22 +214,23 @@ test('chapter reward work preserves original route and campaign identity oracles
 
 for (const pack of packs)
   for (const policy of ['immediate', 'grid-center'])
-    test(`${pack.id}/${policy}: three actual clears unlock the final cosmetic tier once`, async () => {
+    test(`${pack.id}/${policy}: all current clears unlock the final cosmetic tier once`, async () => {
       const campaign = campaigns.get(pack.id),
-        snapshots = states(pack, policy);
-      for (let count = 0; count <= 3; count++) {
+        snapshots = states(pack, policy),
+        total = campaign.levels.length;
+      for (let count = 0; count <= total; count++) {
         const library = snapshots[count],
           before = exportLibrary(library),
           progress = progressFor(library, campaign),
           tier = finalTier(library, campaign);
-        assert.equal(tier.target, 3);
+        assert.equal(tier.target, total);
         assert.equal(tier.count, count);
-        assert.equal(tier.earned, count === 3);
+        assert.equal(tier.earned, count === total);
         for (const body of FINAL)
-          assert.equal(unlockedBodies(progress, campaign).has(body), count === 3);
+          assert.equal(unlockedBodies(progress, campaign).has(body), count === total);
         assert.equal(
           achievements(progress, campaign).find((a) => a.id === 'pathfinder').earned,
-          count === 3,
+          count === total,
         );
         assert.equal(
           library.masteries.length,
@@ -240,18 +241,18 @@ for (const pack of packs)
         if (count) {
           assert.deepEqual(
             newAppearanceBodies(progressFor(snapshots[count - 1], campaign), progress, campaign),
-            count === 1 ? FIRST : count === 3 ? FINAL : [],
+            count === 1 ? FIRST : count === total ? FINAL : [],
           );
           const level = campaign.levels[count - 1];
           const checked = await verifyReplayAsync(traces.get(runId(pack, policy, level.id)));
           assert.equal(checked.match, true);
         }
       }
-      const repeated = award(snapshots[3], pack, policy, campaign.levels[2].id);
-      assert.equal(repeated, snapshots[3], 'The same run ID is idempotent.');
+      const repeated = award(snapshots[total], pack, policy, campaign.levels[total - 1].id);
+      assert.equal(repeated, snapshots[total], 'The same run ID is idempotent.');
       assert.deepEqual(
         newAppearanceBodies(
-          progressFor(snapshots[3], campaign),
+          progressFor(snapshots[total], campaign),
           progressFor(repeated, campaign),
           campaign,
         ),
@@ -311,8 +312,8 @@ test('ordinary Workshop routes remain unqualified despite granting chapter cosme
     assert.equal(checked.qualified, false);
     assert.equal(verifiedMasteryRecord(checked), null);
   }
-  assert.equal(finalTier(states(workshop)[3], campaign).earned, true);
-  assert.deepEqual(states(workshop)[3].masteries, []);
+  assert.equal(finalTier(states(workshop).at(-1), campaign).earned, true);
+  assert.deepEqual(states(workshop).at(-1).masteries, []);
 });
 
 test('mixed backup and pack removal/reinstall preserve clears and an independently verified seal', async () => {
@@ -353,8 +354,8 @@ test('mixed backup and pack removal/reinstall preserve clears and an independent
     ).campaign;
   assert.equal(finalTier(removed.library, returning).earned, true);
   assert.deepEqual(removed.library.masteries, [record]);
-  assert.equal(removed.library.gallery.length, 6);
-  assert.equal(removed.library.scores.length, 6);
+  assert.equal(removed.library.gallery.length, 5);
+  assert.equal(removed.library.scores.length, 5);
   assert.deepEqual(library, original);
 });
 
@@ -383,11 +384,12 @@ for (const policy of ['immediate', 'grid-center'])
     const restoredCampaign = resolvePackCampaign(backup.packs.packs[0], campaign.id).campaign;
     assert.equal(canPlay(progressFor(backup.library, restoredCampaign), restoredCampaign, 1), true);
     assert.deepEqual(backup.library, original);
-    // Owning map 3 alone must not broadly unlock uncleared map 2.
-    const thirdOnly = award(emptyLibrary(), workshop, policy, campaign.levels[2].id),
-      thirdProgress = progressFor(thirdOnly, campaign);
-    assert.equal(canPlay(thirdProgress, campaign, 2), true);
-    assert.equal(canPlay(thirdProgress, campaign, 1), false);
+    // A three-map pack still verifies that owning map 3 does not unlock map 2.
+    const threeMapCampaign = campaigns.get(home.id);
+    const thirdOnly = award(emptyLibrary(), home, policy, threeMapCampaign.levels[2].id),
+      thirdProgress = progressFor(thirdOnly, threeMapCampaign);
+    assert.equal(canPlay(thirdProgress, threeMapCampaign, 2), true);
+    assert.equal(canPlay(thirdProgress, threeMapCampaign, 1), false);
   });
 
 test('practice completions cannot add clear-derived eligibility or stored rewards', () => {

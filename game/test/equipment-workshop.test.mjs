@@ -65,7 +65,7 @@ test('workshop retains proven geometry and equipment with three independent them
   assert.deepEqual(pack.classRecipes, homeward.classRecipes);
   assert.deepEqual(
     campaign.levels.map((level) => level.themeId),
-    ['ukraine', 'retro', 'coupa'],
+    ['ukraine', 'retro'],
   );
   for (let i = 0; i < campaign.levels.length; i++) {
     const current = normalizedLevel(campaign.levels[i]);

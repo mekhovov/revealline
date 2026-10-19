@@ -1671,7 +1671,6 @@
   "pngDownloadRequestedConfirmTheDestinationInYourBrowserThe": "PNG download requested. Confirm the destination in your browser; the prepared bytes remain available to retry.",
   "fpvFront": "FPV Front",
   "ukraineAtlas": "Ukraine Atlas",
-  "spendNetwork": "Spend Network",
   "tooManyWorldChoices": "Too many world choices.",
   "worldPagesContainTwoOrFourCards": "World pages contain two or four cards.",
   "invalidWorldPage": "Invalid world page.",
@@ -2946,7 +2945,6 @@
   "gameplay": "Gameplay",
   "finalesHighIntensity": "Finales / high intensity",
   "energy1Calm5Intense": "Energy (1 calm — 5 intense)",
-  "worldsCommaSeparatedRetroFpvUkraineCoupa": "Worlds (comma separated: retro, fpv, ukraine, coupa)",
   "musicalCharacter": "Musical character",
   "prepareOriginalMp3Download": "Prepare original MP3 download",
   "verifyingOriginalMp3ForDownload": "Verifying original MP3 for download…",
@@ -5695,9 +5693,6 @@
   "communityDirectory.droneaidCategory": "BUILD / CONNECT / SUPPORT",
   "communityDirectory.droneaidDescription": "FPV workshop adventures and community connections, from the Netherlands to Portugal and Germany.",
   "communityDirectory.openDroneaid": "Play Netherlands campaigns",
-  "communityDirectory.coupaCategory": "DISCOVER / CONNECT / GROW",
-  "communityDirectory.coupaDescription": "Explore Coupa Village through illustrated campaigns about connected work, culture and ideas.",
-  "communityDirectory.openCoupa": "Play Coupa",
   "communityDirectory.separateHeading": "Your company. Your campaigns.",
   "communityDirectory.separateDescription": "Each edition keeps its own saved flights and progress. Inside the game, campaign choices stay within that company.",
   "communityDirectory.footer": "Community directory · No account needed to play",
@@ -5946,5 +5941,6 @@
   "missionLibrary.search.emptyView": "No missions match the current edition and mode. Open Filters to choose another view.",
   "versusHomeRecommendation.first": "Suggested race: {{mission}}. Start with the first mission in this Journey.",
   "versusHomeRecommendation.selected": "Selected race: {{mission}}. Start uses this exact mission and your current match setup.",
-  "versusHomeRecommendation.recordedNext": "Suggested race: {{mission}}. It follows {{previous}}, whose completion is recorded in your Journey progress."
+  "versusHomeRecommendation.recordedNext": "Suggested race: {{mission}}. It follows {{previous}}, whose completion is recorded in your Journey progress.",
+  "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

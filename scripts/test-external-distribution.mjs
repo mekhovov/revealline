@@ -186,7 +186,7 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
   assert(offline.files.some((entry) => entry.path === 'game/content/packs/index.json'));
   assert(
     !manifest.files.some((f) =>
-      /authoring\/library\/(route-worlds|external-chapter-pilot|ukraine-route-art|retro-route-art|spend-route-art|sentinel-circuit|sentinel-circuit-art|sentinel-circuit-external|sentinel-theme-art|sentinel-theme-chapters|fracture-lines|fracture-lines-art|fracture-lines-chapter|fracture-ukraine-art|fracture-retro-art|fracture-coupa-art|fracture-theme-chapters|countercurrent-chapters|countercurrent-art)\//.test(
+      /authoring\/library\/(route-worlds|external-chapter-pilot|ukraine-route-art|retro-route-art|sentinel-circuit|sentinel-circuit-art|sentinel-circuit-external|sentinel-theme-art|sentinel-theme-chapters|fracture-lines|fracture-lines-art|fracture-lines-chapter|fracture-ukraine-art|fracture-retro-art|fracture-coupa-art|fracture-theme-chapters|countercurrent-chapters|countercurrent-art)\//.test(
         f.path,
       ),
     ),

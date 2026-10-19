@@ -117,16 +117,16 @@ test('More worlds shows all authored layout/equipment descriptions before downlo
     'optional-worlds-next',
     ...catalog.packs.map((item) => `optional-worlds-install-${item.id}`),
     'optional-worlds-source-recovery-summary',
-    ...['ukraine', 'retro', 'coupa'].map(
+    ...['ukraine', 'retro'].map(
       (theme) => `optional-worlds-source-route-worlds-${theme}-recovery-summary`,
     ),
-    ...['fpv', 'ukraine', 'retro', 'coupa'].map(
+    ...['fpv', 'ukraine', 'retro'].map(
       (theme) => `optional-worlds-source-sentinel-circuit-${theme}-recovery-summary`,
     ),
-    ...['fpv', 'ukraine', 'retro', 'coupa'].map(
+    ...['fpv', 'ukraine', 'retro'].map(
       (theme) => `optional-worlds-source-fracture-lines-${theme}-recovery-summary`,
     ),
-    ...['fpv', 'ukraine', 'retro', 'coupa'].map(
+    ...['fpv', 'ukraine', 'retro'].map(
       (theme) => `optional-worlds-source-countercurrent-${theme}-recovery-summary`,
     ),
     'optional-worlds-read',

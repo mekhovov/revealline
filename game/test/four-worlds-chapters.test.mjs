@@ -51,7 +51,7 @@ test('four optional theme chapters compile all twelve exact originals with disti
   );
   assert.deepEqual(
     source.packs.map((p) => p.themes[0].id),
-    ['fpv', 'ukraine', 'retro', 'coupa'],
+    ['fpv', 'ukraine', 'retro'],
   );
   assert.equal(source.recipe.chapters[1].sourceTheme, 'heritage');
   const used = new Set();

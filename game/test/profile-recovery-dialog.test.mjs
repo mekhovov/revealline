@@ -342,9 +342,9 @@ test('closing while source-version resolution is pending prevents late reader cr
 });
 
 test('edition recovery binds its reader without fetching unrelated historical catalogs', async () => {
-  const h = fixture({ editionId: 'coupa-all' });
+  const h = fixture({ editionId: 'sample-all' });
   await h.host.open();
-  assert.equal(h.calls.readers[0].editionId, 'coupa-all');
+  assert.equal(h.calls.readers[0].editionId, 'sample-all');
   assert.deepEqual(h.calls.readers[0].recoveryCatalogs, []);
   assert.deepEqual(h.calls.catalogs, []);
   await h.host.close();

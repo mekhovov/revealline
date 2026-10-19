@@ -247,15 +247,15 @@ test('minimum-aware normal, boss and compact player frames remain finite and bou
     );
   }
 });
-test('four themes have distinct geometric silhouettes even with identical colors', () => {
+test('remaining themes have distinct geometric silhouettes even with identical colors', () => {
   const palette = themes[0].palette,
     signatures = [];
-  for (const id of ['fpv', 'ukraine', 'retro', 'coupa']) {
+  for (const id of ['fpv', 'ukraine', 'retro']) {
     const { ctx, calls } = surface();
     drawPresentedActor(ctx, frame(id), palette);
     signatures.push(JSON.stringify(calls.filter((c) => c.op === 'fillRect').map((c) => c.args)));
   }
-  assert.equal(new Set(signatures).size, 4);
+  assert.equal(new Set(signatures).size, 3);
 });
 test('compact and detailed recipes differ; custom families resolve to the matching visual theme', () => {
   const a = surface(),
@@ -543,7 +543,7 @@ test('foundation craft keeps its contact cue without detached corner brackets', 
 
 for (const wide of [false, true]) {
   test(`${wide ? 'wide' : 'legacy'}: all four player rigs keep a readable bounded size across phone and desktop canvases`, () => {
-    for (const bodyId of ['fpv-body', 'ukrainian-bird', 'retro-craft', 'navi-avatar']) {
+    for (const bodyId of ['fpv-body', 'ukrainian-bird', 'retro-craft']) {
       for (const css of [240, 280, 288, 320, 390, 600, 1152]) {
         const { p, s, run } = playerFixture({ wide, css, bodyId }),
           checkpoint = authoritativeCheckpoint(run);

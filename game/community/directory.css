@@ -73,9 +73,6 @@
     border: 1px solid #30414f;
     border-top: 3px solid var(--accent);
   }
-  .community-card--coupa {
-    --accent: #79cfff;
-  }
   .card-identity {
     display: flex;
     align-items: center;

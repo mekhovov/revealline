@@ -904,14 +904,14 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const snapshot = [...storage.map],
       writeCount = storage.writes.length;
     page.change('enemy-guide-topic', 'line-impact');
-    page.change('enemy-guide-theme', 'coupa');
+    page.change('enemy-guide-theme', 'retro');
     assert.match(page.$('enemy-guide-risk').textContent, /costs a life/);
     const controls = padBoundary(page, t);
     const lesson = await launch(page);
     const recipe = JSON.parse(preview.getItem(handoffKey));
     assert.equal(recipe.level.id, 'line-impact-demo');
     assert.equal(recipe.settings.turnPolicy, turnPolicy);
-    assert.equal(recipe.theme.id, 'coupa');
+    assert.equal(recipe.theme.id, 'retro');
     assert.equal(recipe.masteryDefinition, null);
     const reads = page.padReads;
     controls.set(13, true);

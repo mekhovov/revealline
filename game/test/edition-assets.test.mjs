@@ -8,7 +8,7 @@ const root = new URL('../../', import.meta.url);
 const catalog = JSON.parse(await fs.readFile(new URL('game/editions/catalog.json', root)));
 const bootstrap = {
   catalog,
-  selection: resolveEditionSelection(catalog, { editionId: 'coupa-adventure' }),
+  selection: resolveEditionSelection(catalog, { editionId: 'droneaid-nl-workshop-lights' }),
 };
 test('presentation preparation reads only selected exact asset bytes', async () => {
   const requested = [];
@@ -19,12 +19,12 @@ test('presentation preparation reads only selected exact asset bytes', async () 
       return new Response(await fs.readFile(new URL(url.pathname.slice(1), root)));
     },
   });
-  assert.ok(verified.includes('coupa-flower'));
-  assert.ok(verified.includes('coupa-wallpaper-network-2024'));
-  assert.ok(verified.includes('coupa-spend-city-v2'));
-  assert.ok(!verified.includes('coupa-home'));
+  assert.ok(verified.includes('droneaid-nl-propeller'));
+  assert.ok(verified.includes('droneaid-nl-logo'));
+  assert.ok(verified.includes('droneaid-nl-workshop-lights-01-reveal-v2'));
+  assert.ok(!verified.includes('droneaid-home'));
   assert.ok(
-    requested.every((file) => !file.includes('droneaid') && !file.includes('inside-village')),
+    requested.every((file) => !file.includes('/droneaid/') && !file.includes('/fpv-makers/')),
   );
 });
 test('corrupt or incomplete asset download cannot activate a presentation', async () => {
@@ -48,7 +48,7 @@ test('corrupt or incomplete asset download cannot activate a presentation', asyn
   );
 });
 test('reward viewers receive only verified bytes, without a second unverified download', async () => {
-  const asset = catalog.assets.find((item) => item.id === 'coupa-flower');
+  const asset = catalog.assets.find((item) => item.id === 'droneaid-nl-propeller');
   const original = await fs.readFile(new URL(asset.path, root));
   let received = 0,
     requests = 0;
@@ -107,7 +107,7 @@ test('cancellation and oversized streams reject before presentation adoption', a
 });
 
 test('asset verification releases stream locks and cancels a blocked tee without awaiting its other consumer', async () => {
-  const asset = catalog.assets.find((entry) => entry.id === 'coupa-flower');
+  const asset = catalog.assets.find((entry) => entry.id === 'droneaid-nl-propeller');
   for (const cancelled of [false, true]) {
     const controller = new AbortController();
     let pulled;

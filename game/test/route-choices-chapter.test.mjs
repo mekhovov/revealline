@@ -176,7 +176,6 @@ test('existing image/pack/library caps accept this pack and refuse addition to a
     'original-fpv-pressure',
     'original-ukraine-atlas',
     'original-retro-1994',
-    'original-spend-network',
   ];
   const oldPacks = await Promise.all(
     names.map(async (name) =>

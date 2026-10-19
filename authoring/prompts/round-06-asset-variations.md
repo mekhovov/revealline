@@ -17,7 +17,6 @@ Use [xonix-background-stylist](../skills/xonix-background-stylist/SKILL.md) to i
 | `asset-variant-07-fpv-background` | Vary Daybreak, Winter, Night or another FPV chapter aesthetic. | Requested image edit |
 | `asset-variant-08-atlas-background` | Adapt a specific Ukrainian cultural chapter without mixing traditions. | Requested image edit |
 | `asset-variant-09-retro-background` | Explore a specific 80s/90s direction rather than imposing generic neon. | Requested image edit |
-| `asset-variant-10-navi-background` | Vary a business-network scene with appropriate character provenance. | Requested image edit |
 | `asset-variant-11-object-skins` | Turn `X`, `^` and other placeholders into interchangeable visual objects. | Requested image edit |
 | `asset-variant-12-avatar-variants` | Create cosmetic avatar options with the same logical footprint. | Requested image edit |
 | `asset-variant-13-terrain-skins` | Swap wall, slow and lethal materials while preserving their meanings. | Requested image edit |

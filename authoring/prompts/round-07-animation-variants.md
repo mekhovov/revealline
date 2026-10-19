@@ -15,7 +15,6 @@ Use [xonix-animation-director](../skills/xonix-animation-director/SKILL.md) with
 | `animation-05-enemy-motion-signatures` | Distinct silhouettes for field, contour, exposed-ground and erosion roles. | Requested keyframe image edit |
 | `animation-06-atlas-motion` | Specific Ukrainian material/cultural motion with three appearance modes. | Text plan |
 | `animation-07-retro-motion` | Coherent 80s/90s motion economy, with neon and CRT effects optional. | Text plan |
-| `animation-08-navi-motion` | Friendly business-world animation and correctly identified brand placeholders. | Text plan |
 | `animation-09-terrain-appearance` | Microtile, detailed-object and hybrid materials on identical geometry. | Text plan |
 | `animation-10-trail-capture` | Independent active trail, capture pulse and event-cue timing. | Text plan |
 | `animation-11-hit-respawn` | Legible failure and recovery without inventing gameplay protection. | Text plan |

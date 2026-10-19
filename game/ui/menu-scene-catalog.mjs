@@ -3,58 +3,6 @@ const rows = [
   ['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50% 50%', 'drone'],
   ['ukraine', 'meadow', '#0b1730', '#ffd876', '#83c4ed', '68% 50%', '71% 50%', 'bird'],
   ['retro', 'rain', '#080e26', '#ffcd80', '#80dcf2', '68% 50%', '68% 50%', 'reflection'],
-  ['coupa', 'village', '#08233c', '#ffdc84', '#8adcf7', '62% 50%', '65% 45%', 'petal'],
-  ['coupa-village', 'village', '#092941', '#ffe1a0', '#83cffb', '68% 50%', '71% 50%', 'petal'],
-  [
-    'coupa-spend-in-motion-theme',
-    'current',
-    '#0a2845',
-    '#ffe395',
-    '#6ddaf4',
-    '60% 50%',
-    '64% 50%',
-    'signal',
-  ],
-  [
-    'coupa-inside-village-theme',
-    'garden',
-    '#14364b',
-    '#ffce98',
-    '#9ddfdb',
-    '60% 50%',
-    '55% 50%',
-    'petal',
-  ],
-  [
-    'coupa-source-to-pay-theme',
-    'route',
-    '#152f49',
-    '#eecb74',
-    '#8fe0e5',
-    '60% 50%',
-    '58% 50%',
-    'parcel',
-  ],
-  [
-    'coupa-product-operations-theme',
-    'workshop',
-    '#113347',
-    '#f8b96e',
-    '#87dcd1',
-    '60% 50%',
-    '62% 50%',
-    'signal',
-  ],
-  [
-    'coupa-developer-integration-theme',
-    'network',
-    '#172f58',
-    '#c6b2ff',
-    '#64daf3',
-    '60% 50%',
-    '57% 50%',
-    'signal',
-  ],
   ['droneaid-community', 'relay', '#152b39', '#f0c777', '#94d1cd', '64% 50%', '67% 50%', 'drone'],
   [
     'droneaid-nl-community',
@@ -135,13 +83,6 @@ const routeRows = {
   fpv: ['rise', 48, 5, 48, 0.5, 27, 3, 72],
   ukraine: ['horizon', 47, 4, 50, 0.48, 24, 2, 75],
   retro: ['circuit', 50, 8, 47, 0.58, 30, 4, 68],
-  coupa: ['bridge', 49, 5, 49, 0.52, 28, 3, 71],
-  'coupa-village': ['rise', 48, 4, 50, 0.54, 28, 3, 71],
-  'coupa-spend-in-motion-theme': ['bridge', 47, 5, 51, 0.48, 27, 2, 72],
-  'coupa-inside-village-theme': ['horizon', 48, 6, 49, 0.48, 27, 3, 72],
-  'coupa-source-to-pay-theme': ['bridge', 50, 5, 48, 0.5, 29, 3, 70],
-  'coupa-product-operations-theme': ['circuit', 48, 4, 50, 0.48, 28, 3, 71],
-  'coupa-developer-integration-theme': ['circuit', 47, 4, 51, 0.62, 27, 2, 72],
   'droneaid-community': ['bridge', 49, 6, 48, 0.46, 28, 4, 70],
   'droneaid-nl-community': ['horizon', 49, 5, 49, 0.5, 28, 3, 71],
   'droneaid-nl-workshop-lights-theme': ['rise', 50, 5, 47, 0.52, 29, 3, 69],
@@ -189,48 +130,11 @@ const environmentRows = {
     ['lamp', 68, 29, 6, 7, -1, 4.2],
     ['lamp', 94, 20, 5, 10, -3, 5.6],
   ],
-  coupa: [
-    ['water', 47, 93, 14, 5, -2, 5.4],
-    ['water', 68, 45, 10, 3, -0.8, 4.4],
-    ['beam', 76, 3, 22, 28, -4, 9],
-  ],
-  'coupa-village': [
-    ['water', 42, 26, 17, 10, -2, 5.6],
-    ['water', 66, 63, 12, 3, -0.7, 4.2],
-    ['cloud', 56, 5, 24, 9, -5, 17],
-  ],
-  'coupa-spend-in-motion-theme': [
-    ['water', 47, 84, 16, 10, -2, 5],
-    ['water', 77, 64, 8, 8, -1, 4.6],
-    ['cloud', 61, 2, 24, 8, -6, 18],
-  ],
-  'coupa-inside-village-theme': [
-    ['water', 50, 64, 15, 3, -1, 4.6],
-    ['cloud', 14, 2, 25, 11, -4, 17],
-    ['lamp', 94, 18, 5, 8, -2, 5.6],
-  ],
-  'coupa-source-to-pay-theme': [
-    ['water', 67, 49, 5, 8, -1, 4.4],
-    ['water', 76, 77, 7, 10, -2.6, 5.2],
-    ['cloud', 12, 4, 27, 10, -5, 17],
-  ],
-  'coupa-product-operations-theme': [
-    ['lamp', 44, 12, 5, 6, -1, 4.8],
-    ['lamp', 77, 13, 6, 7, -2.7, 6],
-    ['beam', 63, 48, 11, 23, -3, 8],
-  ],
-  'coupa-developer-integration-theme': [
-    ['beam', 49, 4, 5, 24, -1, 5.4],
-    ['beam', 49, 55, 6, 15, -2, 4.8],
-    ['lamp', 25, 77, 4, 7, -1.2, 6],
-  ],
   'droneaid-community': [
     ['lamp', 46, 5, 5, 12, -1, 5.2],
     ['lamp', 57, 19, 5, 10, -2.4, 6],
     ['steam', 58, 61, 4, 13, -1.6, 5.8],
   ],
-  // The supplied brand poster is a still photograph. Keep its drone geometry
-  // intact; the shared arrival and receiver effects provide ambient motion.
   'droneaid-nl-community': [],
   'droneaid-nl-workshop-lights-theme': [
     ['beam', 8, 9, 34, 53, -2, 8],
@@ -297,8 +201,6 @@ const portraitEnvironments = Object.fromEntries(
   }).map(([id, values]) => [id, freezeEnvironment(values)]),
 );
 const indoorActors = new Set([
-  'coupa-product-operations-theme',
-  'coupa-developer-integration-theme',
   'droneaid-community',
   'droneaid-nl-workshop-lights-theme',
   'droneaid-nl-parts-in-motion-theme',
@@ -431,46 +333,6 @@ export const MENU_SCENE_COMPOSITIONS = Object.freeze({
       ]),
     }),
   }),
-  coupa: Object.freeze({
-    versus: Object.freeze({
-      composition: 'coupa-versus',
-      landscape: './art/menu-scenes/coupa-versus.webp',
-      portrait: './art/menu-scenes/coupa-versus-portrait.webp',
-      landscapePosition: '70% 50%',
-      portraitPosition: '50% 50%',
-      environment: freezeEnvironment([
-        ['cloud', 79, 4, 20, 10, -4, 16],
-        ['lamp', 39, 24, 3, 6, -1, 4.8],
-        ['water', 85, 28, 9, 4, -2, 5.2],
-        ['foliage', 32, 38, 5, 12, -2, 7],
-      ]),
-      portraitEnvironment: freezeEnvironment([
-        ['cloud', 56, 40, 37, 5, -4, 16],
-        ['lamp', 17, 49, 5, 3, -1, 4.8],
-        ['water', 81, 54, 10, 3, -2, 5.2],
-        ['foliage', 78, 85, 15, 10, -2, 7],
-      ]),
-    }),
-    team: Object.freeze({
-      composition: 'coupa-team',
-      landscape: './art/menu-scenes/coupa-team.webp',
-      portrait: './art/menu-scenes/coupa-team-portrait.webp',
-      landscapePosition: '70% 50%',
-      portraitPosition: '50% 50%',
-      environment: freezeEnvironment([
-        ['cloud', 78, 9, 20, 14, -4, 16],
-        ['lamp', 39, 19, 3, 7, -1, 4.8],
-        ['water', 84, 33, 7, 5, -2, 5.2],
-        ['foliage', 42, 30, 5, 18, -2, 7],
-      ]),
-      portraitEnvironment: freezeEnvironment([
-        ['cloud', 57, 40, 39, 7, -4, 16],
-        ['lamp', 7, 34, 7, 5, -1, 4.8],
-        ['water', 78, 53, 8, 3, -2, 5.2],
-        ['foliage', 80, 87, 12, 10, -2, 7],
-      ]),
-    }),
-  }),
 });
 const compositionProfiles = new WeakMap();
 
@@ -523,12 +385,6 @@ export const MENU_SCENES = Object.freeze(
 );
 
 const EDITION_SCENES = Object.freeze({
-  'coupa-all': 'coupa-village',
-  'coupa-adventure': 'coupa-spend-in-motion-theme',
-  'coupa-culture': 'coupa-inside-village-theme',
-  'coupa-foundations': 'coupa-source-to-pay-theme',
-  'coupa-operations': 'coupa-product-operations-theme',
-  'coupa-developers': 'coupa-developer-integration-theme',
   'droneaid-community': 'droneaid-community',
   'droneaid-nl-community': 'droneaid-nl-community',
   ...Object.fromEntries(

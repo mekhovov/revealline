@@ -122,7 +122,7 @@ test('Sentinel source, runtime and exact proof identity agree without generated 
   assert.equal(level.version, 'xonix-level.v2');
   assert.deepEqual(
     pack.themes.map((theme) => theme.id),
-    ['fpv', 'ukraine', 'retro', 'coupa'],
+    ['fpv', 'ukraine', 'retro'],
   );
   assert.equal(proof.format, 'xonix-sentinel-proof.v1');
   assert.equal(proof.packSha256, digest(pack));

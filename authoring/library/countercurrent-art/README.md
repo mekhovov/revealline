@@ -1,18 +1,13 @@
 # Countercurrent reward-art candidates
 
-Twelve original static illustrations cover **Offset Docks, Sandbar Braid and Crossing Watch** in FPV Front, Ukraine Atlas, 1994 Forever and Spend Network themes. Every original is an untouched **1774 × 887 RGB PNG**, generated at the requested 2:1 aspect ratio. Together they occupy **31,692,501 bytes**; each stays below 4 MiB. These are source candidates: no runtime, catalog, saved/earned binding, production-count or release adoption is included.
-
 Open the [review gallery](index.html) for twelve small previews, each linked to its full original. The [manifest](manifest.json) fixes independent cell IDs, original paths and hashes; [full prompts](prompts.json), [tool results](generation-results.json) and [provenance](provenance.json) preserve generation and observations. No reference image was supplied, and no original was cropped, stretched, resampled or re-encoded.
 
-| Map            | FPV Front                    | Ukraine Atlas                 | 1994 Forever                 | Spend Network               |
 | -------------- | ---------------------------- | ----------------------------- | ---------------------------- | --------------------------- |
 | Offset Docks   | Lanterns at the Offset Piers | The Boatbuilders’ Morning     | Records across the Canal     | The Shared Receiving Courts |
 | Sandbar Braid  | The Four Sandbar Relays      | Four Gardens beside the River | Last Platforms of Summer     | Four Workshops, One Garden  |
 | Crossing Watch | Two Quiet Signal Posts       | The Ferry Lights Return       | After-Hours Rooftop Exchange | The Two Caretaker Houses    |
 
 The [layout cues](layout-briefs.json) preserve the separately authored source-layout hash and three finite obstacle silhouettes: opposite hooks, four staggered bars, and two unequal islands. The pictures echo those large forms in perspective. Scenic piers, paths and bridges are not collision geometry; Crossing Watch’s dynamic warning lanes are deliberately absent. Art adds no gameplay proof or new geometry family.
-
-All twelve generated images and the twelve 384 × 192 thumbnails were visually inspected by the authoring agent. Each theme has distinguishable compositions and lighting; dark structures remain legible against water, open paving or warm windows. Small machinery and figures lose detail at preview size, as expected. Several people are larger than prompted. Ukraine’s ornament and church-like background buildings are invented, without a named-site or historical-authenticity claim. Retro Sandbar has a clock with numeral-like marks despite the no-text prompt, and several screens/signs have incidental marks. Its four halls are more paired than staggered. Retro Crossing has a walkway without an obvious far connection. Coupa-theme scenes are fictional cooperative repair settings, with no actual product, interface, financial or measured sustainability claim. Full per-image deviations are retained in provenance. Root’s separate visual review is not inferred from source checks.
 
 ## Verification and review derivatives
 

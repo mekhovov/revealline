@@ -154,7 +154,6 @@ Choose a **Preview context** to examine family/level/challenge/map availability.
 | FPV Front     | Daybreak FPV | Skyline FPV; Night signal FPV | Three separate image bodies, each with its own motor rig                                          |
 | Ukraine Atlas | Atlas bird   | Falcon trim                   | Trim uses the same swallow body with a different wing palette; not a separate falcon illustration |
 | 1994 Forever  | Tape runner  | Vector trail                  | Shared craft body, alternate thruster palette                                                     |
-| Navi Network  | Spend Sprite | Audit pulse                   | Shared original helper body; not verified official Coupa Navi art                                 |
 
 **Apply test reward** inserts the selected authored simulated result. Repeating the same fixture cannot count twice. The six fixtures demonstrate wins, distinct-level star totals, map objectives and clean-run criteria. Ownership persists independently of current context, while availability remains context-specific. **Reset test collection** restores starters. These controls demonstrate collection design, not real wins or a live economy.
 
@@ -169,7 +168,6 @@ Palette, terrain materials, body and animation recipe are independent. **Apply f
 | FPV Front     | Concrete / mud / wire                  |
 | Ukraine Atlas | Stone / reeds / thorns                 |
 | 1994 Forever  | Circuit / static / plasma              |
-| Navi Network  | Archive / queue / alerts               |
 
 Microtiles repeat at one-cell pitch; props use larger spaced diagrams; hybrid combines quiet texture and props. Every treatment clips to the same authored rectangles. These are frontend-rendered diagrams, not finished production tiles.
 

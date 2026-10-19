@@ -29,15 +29,6 @@ Find `authoring/CONTRACT.md` in the target workspace; if needed resolve this ins
 
 ## Execute
 
-1. Identify the role: reveal artwork, player, enemy, UI, effect, or marketing. Read intended dimensions, camera/view, frame scale, palette, and references. Preserve the difference between source-art size, runtime texture size, and gameplay cell coordinates.
-2. Inspect every supplied/local image being edited before the edit. Preserve reference provenance. Use the image tool's supported reference mechanism; ask for reattachment only when a required reference is inaccessible. Without a verified character sheet, call a new mascot a concept, not an exact Navi reproduction.
-3. Select and fill a prompt; record its ID, substitutions, full effective text, references, tool route, and output paths. Generate meaningful variations along one or two named axes such as daylight, regional motif, medium, or silhouette. Keep the rest consistent so the user can compare them.
-4. Generate or edit the art directly within scope. Keep military reveal subjects consistent with the requested FPV theme; keep illustrated subjects distinct from active threat indicators. For Ukrainian traditions and branded work, verify unfamiliar specifics with primary references before claiming authenticity.
-5. Preserve source images. Propose separate derived exports for each target; never destructively pixelate all media. Pixel sprite atlases need nearest filtering; smooth paintings/photographs belong in separate textures using their intended filtering. An atlas cannot assign a different filter to each frame.
-6. Inspect the resulting image. Assess focal subjects under partial reveal, quiet regions behind HUD, active-trail contrast, silhouette size, and whether the requested medium survived. Correct a substantive mismatch through the image tool. Do not certify exact arena geometry or touch usability from generated concept art.
-7. For sprites, distinguish an attractive sprite-sheet illustration from an inspected production sheet. Check equal frame cells, alpha, padding, consistent pivot, frame ordering, animation tags and timing. Use Aseprite's documented export pipeline when available and useful. Do not claim animation works until the frames were inspected and played or rendered.
-8. Save the asset handoff. Register media with planned/ready status according to the contract's actual checks, not the generator's confidence. Run pack validation if a pack changed; report visual review separately from file/schema checks.
-
 ## Adapt templates to the request
 
 Prompt-library wording is a starting point, not an instruction that overrides the user's chapter, medium, quantity, or approved design. Adapt those choices explicitly and record the effective prompt. Use the current schema's actual enum values: watercolor/gouache are `illustration` with their medium described in the art brief. Within the legacy draft-pack contract, keep unsupported medals, generation behavior and other primitives as proposals instead of inventing accepted fields; use the actual runtime contract for applied game work.

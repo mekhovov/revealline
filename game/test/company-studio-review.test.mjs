@@ -69,7 +69,7 @@ const observation = (context) => ({
   notes: '',
 });
 
-test('review context selects all 36 current FPV pictures and keeps culture sources distinct', async () => {
+test('review context selects all 36 current FPV pictures and retains their source attribution', async () => {
   const { context } = await fixture();
   assert.equal(context.missions.length, 36);
   assert.deepEqual(
@@ -94,14 +94,7 @@ test('review context selects all 36 current FPV pictures and keeps culture sourc
     ),
   );
   assert(Object.isFrozen(context.missions[0].picture));
-  const { context: culture } = await fixture('coupa-culture');
-  assert.equal(culture.missions.length, 6);
-  assert(culture.missions.every(({ notice }) => notice.includes('Fictional, offline training')));
-  assert(
-    culture.missions.every(({ sources }) =>
-      sources.some(({ url }) => url === 'https://careers.coupa.com/en/life-at-coupa/'),
-    ),
-  );
+
 });
 
 test('explicit observations roundtrip with exact artifact and picture pins without approval fields', async () => {
@@ -123,7 +116,7 @@ test('review import rejects stale artifacts, wrong pictures, foreign missions, d
       packet.artifact.sha256 = 'b'.repeat(64);
     },
     (packet) => {
-      packet.editionId = 'coupa-all';
+      packet.editionId = 'foreign-edition';
     },
     (packet) => {
       packet.observations[0].missionId = 'foreign-01';
@@ -196,11 +189,7 @@ test('generation notes skip exact superseded pictures and expose current warning
     ],
   );
   assert(!JSON.stringify(notes).includes('$CODEX_HOME'));
-  const { context: coupa } = await fixture('coupa-all');
-  assert.equal(
-    studioGenerationNotes(await json('game/editions/art-prompts-coupa-bulk-02.json'), coupa).length,
-    22,
-  );
+
 });
 
 test('generation note import rejects changed selected bytes, duplicate rows and unsafe source links', async () => {

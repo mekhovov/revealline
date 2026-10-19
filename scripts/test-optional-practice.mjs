@@ -63,7 +63,7 @@ test('optional practice archives are reproducible, admitted completely and absen
   assert.match(entries.get('game/i18n/catalogs.mjs').toString(), /dataJson/);
   assert.doesNotMatch(
     entries.get('game/i18n/catalogs.mjs').toString(),
-    /coupa|droneaid|completionRewards/i,
+    /company-campaigns|droneaid|completionRewards/i,
   );
   const identity = JSON.parse(entries.get(`${OPTIONAL_PRACTICE_ROOT}app.webmanifest`));
   assert.equal(identity.id, './civilian-flight-practice');

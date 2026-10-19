@@ -13,7 +13,7 @@ import {
 } from '../couch/coop-picture-bindings.mjs';
 import { createCoopPresentation } from '../couch/coop-presentation.mjs';
 
-const publishedManifest = '7e8db95cec2eaab6b031e12bb44e036173611539393d44bbdfc50ff784d098b8';
+const publishedManifest = 'a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0';
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const compiled = validateCompiledPresentation(
   JSON.parse(await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url))),
@@ -202,7 +202,7 @@ test('the original retained62 manifest still selects and verifies both unchanged
     JSON.parse(
       await readFile(
         new URL(
-          '../presentation/compiled/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json',
+          '../presentation/compiled/runtime.af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972.json',
           import.meta.url,
         ),
       ),

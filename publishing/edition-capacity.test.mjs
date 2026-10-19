@@ -99,8 +99,8 @@ test('capacity packet reports exact immutable and shared stable-pointer bytes, n
     'capacity-inventory.json',
     'checksums.json',
     'editions.json',
-    'manifest-coupa.json',
     'manifest-droneaid.json',
+    'manifest-sample.json',
   ]);
   assert([...packet.values()].reduce((n, bytes) => n + bytes.length, 0) < 100_000);
   assert.deepEqual(
@@ -155,11 +155,11 @@ test('missing, changed and cross-source candidate metadata cannot supply a capac
   }
   const changed = new Map(f.files);
   changed.set(
-    'manifest-coupa.json',
-    Buffer.concat([changed.get('manifest-coupa.json'), Buffer.from('\n')]),
+    'manifest-sample.json',
+    Buffer.concat([changed.get('manifest-sample.json'), Buffer.from('\n')]),
   );
   assert.throws(() => createEditionCapacityReport(changed), /bytes differ/);
-  changed.delete('manifest-coupa.json');
+  changed.delete('manifest-sample.json');
   assert.throws(() => createEditionCapacityReport(changed), /Missing/);
 });
 
@@ -198,13 +198,13 @@ test('malformed manifest inventory, duplicate identities and unsafe packet metad
     },
   ]) {
     const files = new Map(f.files),
-      manifest = json(files.get('manifest-coupa.json'));
+      manifest = json(files.get('manifest-sample.json'));
     mutate(manifest);
-    put(files, 'manifest-coupa.json', manifest);
+    put(files, 'manifest-sample.json', manifest);
     const envelope = json(files.get('editions.json'));
     envelope.editions[0].manifest = editionDescriptor(
-      'manifest-coupa.json',
-      files.get('manifest-coupa.json'),
+      'manifest-sample.json',
+      files.get('manifest-sample.json'),
     );
     put(files, 'editions.json', envelope);
     const proof = json(files.get('candidate-verification.json'));

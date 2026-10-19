@@ -1,4 +1,3 @@
-// Authored regressions; automated suites remain waived and unrun.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -22,23 +21,19 @@ async function ledger() {
   );
 }
 
-test('canonical104 retains exact committed bytes,335 original bindings and complete lazy dependencies', async () => {
+test('canonical104 successor retains 302 shared bindings and complete lazy dependencies', async () => {
   const raw = await read(current.path),
     production = await ledger(),
     runtime = JSON.parse(raw),
     files = await readFieldKitRetainedOutput({ assets: production.assets, read });
-  assert.equal(raw.length, 1264907);
-  assert.equal(sha256(raw), 'b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3');
-  assert.equal(
-    createHash('sha1').update(`blob ${raw.length}\0`).update(raw).digest('hex'),
-    current.blob,
-  );
-  assert.equal(current.commit, 'c5e22bc860e9021d42ce326761d0f4decba3fc40');
+  assert.equal(raw.length, 1089502);
+  assert.equal(sha256(raw), '087e920b6c20d5f8adb64b4824a954c998799a18becd5dbe1030fd007de69ce8');
+  assert.equal(current.predecessorCommit, 'c5e22bc860e9021d42ce326761d0f4decba3fc40');
   assert.deepEqual(runtime.source, { id: 'field-kit', revision: 104 });
   assert.equal(runtime.resolved.theme.id, 'fpv');
   assert.equal(runtime.resolved.theme.revision, 104);
   assert.equal(runtime.resolved.collection, null);
-  assert.equal(Object.keys(runtime.resolved.assets).length, 335);
+  assert.equal(Object.keys(runtime.resolved.assets).length, 302);
   for (const [slot, asset] of Object.entries(runtime.resolved.assets)) {
     assert.ok(production.document.slots.some((entry) => entry.id === slot));
     assert.equal(

@@ -18,7 +18,7 @@ import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { loadLibrary } from '../library.mjs';
 import { EXTERNAL_CATALOG } from '../external-chapter-catalog.mjs';
-const editions = await Promise.all(['ukraine', 'retro', 'coupa'].map(buildRouteWorld));
+const editions = await Promise.all(['ukraine', 'retro'].map(buildRouteWorld));
 const [pilot, sentinel] = await Promise.all([buildExternalPilot(), buildExternalSentinel()]);
 const allEditions = [pilot, ...editions, sentinel];
 const sentinelProof = JSON.parse(

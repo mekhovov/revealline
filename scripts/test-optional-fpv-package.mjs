@@ -486,7 +486,7 @@ test('explicit FPV package remains independently reproducible with complete pinn
     .find((entry) => entry.name === 'game/i18n/catalogs.mjs')
     .bytes.toString();
   assert.match(localeProjection, /learningProfiles\.choose/);
-  assert.doesNotMatch(localeProjection, /completionRewards|Coupa|DroneAid/);
+  assert.doesNotMatch(localeProjection, /completionRewards|company-campaigns|DroneAid/);
   const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
   assert.equal(inventory.licenses.find((item) => item.dependency === 'three').version, '0.186.1');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));

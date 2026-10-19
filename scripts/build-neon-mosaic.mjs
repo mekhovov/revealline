@@ -42,7 +42,6 @@ export const MOSAIC_DESIGNS = [
   { id: 'fpv', title: 'FPV', lines: ['FPV'] },
   { id: 'ukraine', title: 'UKRAINE', lines: ['UKRAINE'] },
   { id: 'drone-aid', title: 'DRONE AID', lines: ['DRONE', 'AID'] },
-  { id: 'coupa', title: 'COUPA', lines: ['COUPA'] },
   { id: 'social-drone', title: 'SOCIAL DRONE', lines: ['SOCIAL', 'DRONE'] },
   { id: 'sdua', title: 'SDUA', lines: ['SDUA'] },
   { id: 'victory-drones', title: 'VICTORY DRONES', lines: ['VICTORY', 'DRONES'] },
@@ -379,6 +378,9 @@ function makeBouncers(cells, id, count) {
   return result;
 }
 
+// Permanent layout positions: retired entries stay empty so other missions never change.
+const MOSAIC_LAYOUT_IDS = Object.freeze(["fpv","ukraine","drone-aid",null,"social-drone","sdua","victory-drones","vd","fpv-line","reveal","fly-free","fpv-drone","tryzub","vyshyvanka","ruzha","kalyna","tree-of-life","pysanka","barvinok","wheat","vinok","didukh","rushnyk","bandura","trembita","tsymbaly","kosiv-pitcher","opishnia-ram","petrykivka","oak","stork","swallow","horse","deer","fish","berehynia","bezkonechnyk","ornek-tulip"]);
+
 export async function buildNeonMosaic() {
   const [chambers, channels, arrows] = await Promise.all([
     buildNeonChambers(),
@@ -388,7 +390,9 @@ export async function buildNeonMosaic() {
   const backgrounds = await Promise.all(
     MOSAIC_DESIGNS.map((design) => neonRevealBackground(design.id, `Neon ${design.title}`)),
   );
-  return MOSAIC_DESIGNS.map((design, index) => {
+  return MOSAIC_DESIGNS.map((design, position) => {
+    const index = MOSAIC_LAYOUT_IDS.indexOf(design.id);
+    assert.ok(index >= 0, `Register a permanent layout position for ${design.id}`);
     const { cells, lower } = designCells(design, index),
       scenario = structuredClone(channels.scenario);
     scenario.visualOverrides = {
@@ -399,7 +403,7 @@ export async function buildNeonMosaic() {
     };
     for (const [role, visual] of Object.entries(scenario.visualOverrides))
       visual.name = `Mosaic ${role}`;
-    scenario.visualOverrides.background = backgrounds[index];
+    scenario.visualOverrides.background = backgrounds[position];
     const terrain = [
       ...rectangles(cells, 'B').map((r) => ({ kind: 'slow', ...r })),
       ...rectangles(cells, 'X').map((r) => ({ kind: 'lethal', ...r })),

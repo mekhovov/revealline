@@ -4,7 +4,6 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { canonicalJSON } from '../data-json.mjs';
 import { COMPANY_CAMPAIGNS, COMPANY_MISSIONS } from '../company-campaigns/catalog.mjs';
-import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
 import { createCompanyProject, createCompanyJourneyRoute } from '../company-campaigns/content.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createContentExecutionCatalog } from '../content-design/execution.mjs';
@@ -26,7 +25,7 @@ import {
 } from '../../scripts/lib/company-route-evidence.mjs';
 
 const projects = new Map(
-  ['coupa', 'droneaid', 'droneaid-nl'].map((brandId) => [
+  ['droneaid', 'droneaid-nl'].map((brandId) => [
     brandId,
     compileContentProject(createCompanyProject({ brandId })),
   ]),
@@ -35,11 +34,11 @@ const evidence = JSON.parse(
   readFileSync(new URL('fixtures/company-campaign-routes.json', import.meta.url), 'utf8'),
 );
 
-test('66 current company missions and the historical three-mission pilot have distinct authored topologies', () => {
-  assert.equal(COMPANY_MISSIONS.length, 69);
+test('36 current company missions and the historical three-mission pilot have distinct authored topologies', () => {
+  assert.equal(COMPANY_MISSIONS.length, 39);
   assert.deepEqual(
     COMPANY_CAMPAIGNS.map((campaign) => campaign.missionIds.length),
-    [6, 6, 6, 6, 6, 3, 6, 6, 6, 6, 6, 6],
+    [3, 6, 6, 6, 6, 6, 6],
   );
   const topologies = new Set();
   const simulations = new Set();
@@ -61,18 +60,14 @@ test('66 current company missions and the historical three-mission pilot have di
       );
     }
   }
-  assert.equal(topologies.size, 69);
-  assert.equal(simulations.size, 69);
-  for (const mission of COMPANY_MISSIONS)
-    assert.equal(
-      COMPANY_LESSONS.find((lesson) => lesson.missionId === mission.id)?.id ?? null,
-      mission.lessonId,
-    );
+  assert.equal(topologies.size, 39);
+  assert.equal(simulations.size, 39);
+  assert(COMPANY_MISSIONS.every((mission) => mission.lessonId === null));
 });
 
-test('414 pinned routes win with actual default Journey tuning, objectives and no life loss across both steering policies', () => {
+test('234 pinned routes win with actual default Journey tuning, objectives and no life loss across both steering policies', () => {
   assert.equal(evidence.format, COMPANY_ROUTE_EVIDENCE_FORMAT);
-  assert.equal(evidence.rows.length, 414);
+  assert.equal(evidence.rows.length, 234);
   assert.deepEqual(Object.keys(evidence.checkpointRuntime).sort(), [
     'arch',
     'node',
@@ -143,11 +138,11 @@ test('414 pinned routes win with actual default Journey tuning, objectives and n
     assert.equal(replay.match, true, label);
     assert.deepEqual(replay.actual.checkpoint, checkpoint, `${label}: exact independent replay`);
   }
-  assert.equal(combinations.size, 414);
+  assert.equal(combinations.size, 234);
 });
 
 test('current company campaigns progress through real main Journey mechanics and their stated challenge bands', () => {
-  const expected = { coupa: [1, 4, 6, 8, 11], 'droneaid-nl': [1, 3, 5, 7, 9, 11] };
+  const expected = { 'droneaid-nl': [1, 3, 5, 7, 9, 11] };
   for (const [brandId, bands] of Object.entries(expected)) {
     const project = projects.get(brandId);
     const executions = createContentExecutionCatalog(project.source);
@@ -203,7 +198,7 @@ test('current company campaigns progress through real main Journey mechanics and
 });
 
 test('current missions pin the canonical Journey catalogs; historical pilot retains its original policy', () => {
-  for (const brandId of ['coupa', 'droneaid-nl']) {
+  for (const brandId of ['droneaid-nl']) {
     const source = createCompanyProject({ brandId });
     assert.equal(source.policyId, 'journey-trail-impact-v3');
     assert.equal(source.actorCatalogId, 'journey-actors-v9');
@@ -240,7 +235,7 @@ test('the historical Portuguese pilot remains byte-identical in canonical source
 });
 
 test('portable company witnesses preserve discrete changes while exact replays retain continuous state', () => {
-  const manifest = resolveMission(projects.get('coupa'), COMPANY_MISSIONS[0].id);
+  const manifest = resolveMission(projects.get(COMPANY_MISSIONS[0].brandId), COMPANY_MISSIONS[0].id);
   const run = createRun(manifest.level, { seed: 1, classId: 'scout', turnPolicy: 'immediate' });
   const original = companyRouteWitness(run);
   const checkpoint = authoritativeCheckpoint(run);

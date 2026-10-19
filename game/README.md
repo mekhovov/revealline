@@ -30,7 +30,7 @@ Copper Orchard also offers the optional **Steady Signal** seal: close one cut th
 
 River Switchyard adds **Supply Line** for successful refills, closed suppressed crossings and a switch at the southern hangar. Home Beacon adds **Safe Return** for a live-cut impact pulse, completed recovery and clean finish. Pause shows named requirements, while flight keeps a compact summary. See [all three equipment seals](../docs/equipment-seals.md) for their distinct rules and supported authoring formats.
 
-The campaign introduces bouncers, border patrols, supplies, objectives, obstacles, a telegraphed lane boss, signal interference and hangars. FPV Front, Ukraine Atlas, 1994 Forever and Spend Network change presentation. The business world is an original Coupa-inspired metaphor, not official product behavior or real customer savings. Military classes use fictional arcade abilities rather than real operational specifications.
+The campaign introduces bouncers, border patrols, supplies, objectives, obstacles, a telegraphed lane boss, signal interference and hangars. FPV Front, Ukraine Atlas, 1994 Forever change presentation. Military classes use fictional arcade abilities rather than real operational specifications.
 
 ## Solo controls and classes
 

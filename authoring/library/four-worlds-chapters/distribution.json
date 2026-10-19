@@ -91,34 +91,6 @@
           "sourceImageId": "last-train-cassette"
         }
       ]
-    },
-    {
-      "id": "original-spend-network",
-      "version": "1.0.0",
-      "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
-      "bytes": 11067202,
-      "sha256": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac",
-      "normalizedBytes": 11058349,
-      "campaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-      "themeId": "coupa",
-      "sourceTheme": "coupa",
-      "maps": [
-        {
-          "id": "original-spend-shared-harbor",
-          "sourceGeometryId": "orchard-crossing",
-          "sourceImageId": "shared-value-harbor"
-        },
-        {
-          "id": "original-spend-city-wins",
-          "sourceGeometryId": "courtyard-exits",
-          "sourceImageId": "city-savings-observatory"
-        },
-        {
-          "id": "original-spend-market-workshop",
-          "sourceGeometryId": "night-crossfire",
-          "sourceImageId": "thoughtful-market-workshop"
-        }
-      ]
     }
   ]
 }

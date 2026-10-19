@@ -28,7 +28,7 @@ function readStoredResponse(value) {
   });
 }
 
-async function build(editionId = 'coupa', options = {}) {
+async function build(editionId = 'sample', options = {}) {
   return buildEditionOfflineFiles({
     files: new Map([
       ['game/company.html', Buffer.from('<!doctype html><head></head><main>Game</main>')],
@@ -148,7 +148,7 @@ test('offline artifacts are reproducible with distinct stable app IDs and scoped
     b = await build(),
     other = await build('droneaid');
   assert.deepEqual(a, b);
-  assert.equal(JSON.parse(a.get('app/manifest.webmanifest')).id, '/revealline/editions/coupa/');
+  assert.equal(JSON.parse(a.get('app/manifest.webmanifest')).id, '/revealline/editions/sample/');
   assert.notEqual(
     JSON.parse(a.get('app/manifest.webmanifest')).id,
     JSON.parse(other.get('app/manifest.webmanifest')).id,
@@ -222,7 +222,7 @@ test('corrupt downloads refuse worker installation and over-budget editions are 
   const files = new Map([['game/company.html', Buffer.from('game')]]);
   for (let i = 0; i < 2001; i++) files.set(`game/f-${i}.json`, Buffer.from('{}'));
   await assert.rejects(
-    buildEditionOfflineFiles({ files, editionId: 'coupa', version: '1.0.0' }),
+    buildEditionOfflineFiles({ files, editionId: 'sample', version: '1.0.0' }),
     /2000 files/,
   );
 });
@@ -332,7 +332,7 @@ test('manifest raster icon format and dimensions come from the original image by
     ['game/company.html', Buffer.from('<head></head>')],
     ['game/logo.png', icon],
   ]);
-  const built = await build('coupa', { files, iconPath: 'game/logo.png' });
+  const built = await build('sample', { files, iconPath: 'game/logo.png' });
   assert.deepEqual(JSON.parse(built.get('app/manifest.webmanifest')).icons[0], {
     src: './icon.png',
     sizes: '1x1',
@@ -340,7 +340,7 @@ test('manifest raster icon format and dimensions come from the original image by
     purpose: 'any',
   });
   files.set('game/logo.png', Buffer.from('wrong format'));
-  await assert.rejects(build('coupa', { files, iconPath: 'game/logo.png' }), /icon bytes/);
+  await assert.rejects(build('sample', { files, iconPath: 'game/logo.png' }), /icon bytes/);
 });
 
 test('an active unchanged worker repairs only evicted or corrupt files after an interrupted download', async () => {
@@ -389,7 +389,7 @@ test('an active unchanged worker repairs only evicted or corrupt files after an 
 test('cache storage failures never certify a partial game or launcher and repair preserves retained editions', async () => {
   const files = await build(),
     stores = new Map(),
-    old = worker(await build('coupa', { version: '0.139.0' }), { stores }),
+    old = worker(await build('sample', { version: '0.139.0' }), { stores }),
     other = worker(await build('droneaid'), { stores });
   await old.dispatch('install');
   await other.dispatch('install');
@@ -500,7 +500,7 @@ test('failed update and foreign-client repair cannot change a retained release o
       ]),
     ),
   );
-  const update = worker(await build('coupa', { version: '0.141.0' }), { stores, corrupt: true });
+  const update = worker(await build('sample', { version: '0.141.0' }), { stores, corrupt: true });
   await assert.rejects(update.dispatch('install'), /differs/);
   assert.equal(stores.size, 2);
   for (const [url, body] of retained)
@@ -536,16 +536,16 @@ test('generated stable launcher opens verified active and retained release links
   const files = await build(),
     nodes = new Map(),
     values = new Map();
-  const root = 'https://game.test/revealline/editions/coupa/';
+  const root = 'https://game.test/revealline/editions/sample/';
   const reference = (version) => ({
-    editionId: 'coupa',
+    editionId: 'sample',
     version,
     scope: `${root}releases/v${version}/site/`,
     entry: 'game/company.html',
     buildId: 'ab'.repeat(32),
   });
   const state = { active: reference('0.140.0'), previous: reference('0.139.0') };
-  values.set('revealline.company-installed.coupa.v1', JSON.stringify(state));
+  values.set('revealline.company-installed.sample.v1', JSON.stringify(state));
   let candidate = { ...reference('0.141.0'), scope: '../releases/v0.141.0/site/' };
   const document = {
     getElementById(id) {
@@ -577,11 +577,11 @@ test('generated stable launcher opens verified active and retained release links
   assert.equal(nodes.get('prepare').href.href, `${root}releases/v0.141.0/site/game/company.html`);
   candidate = {
     ...candidate,
-    scope: 'https://elsewhere.test/revealline/editions/coupa/releases/v0.141.0/site/',
+    scope: 'https://elsewhere.test/revealline/editions/sample/releases/v0.141.0/site/',
   };
   await nodes.get('check').onclick();
   assert.match(nodes.get('status').textContent, /matching published edition/);
-  assert.equal(values.get('revealline.company-installed.coupa.v1'), JSON.stringify(state));
+  assert.equal(values.get('revealline.company-installed.sample.v1'), JSON.stringify(state));
 });
 
 test('canonical DroneAid launcher keeps its stable installed key and reopens saved legacy scopes', async () => {

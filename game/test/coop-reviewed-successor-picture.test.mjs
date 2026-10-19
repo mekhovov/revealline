@@ -16,7 +16,7 @@ import {
 } from '../couch/coop-picture-bindings.mjs';
 import { page } from './helpers/coop-host.mjs';
 
-const publishedManifest = '7e8db95cec2eaab6b031e12bb44e036173611539393d44bbdfc50ff784d098b8';
+const publishedManifest = 'a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0';
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const bundle = await importThemeBundle(
   new Blob([
@@ -36,8 +36,8 @@ const currentSnapshot = () => ({ resolved: structuredClone(currentCompiled.resol
 const retainedSnapshots = new Map();
 for (const [revision, manifestSha256] of [
   [101, publishedManifest],
-  [102, '92f09d9eb867989438991f116ee8a192cee6ac8c2e3f286297aa184257c96f78'],
-  [103, '813ce5598736109011290a38ce3bbf257375d1e45f496ba60237bf4725bc81ca'],
+  [102, '649a6f8b94cac1fd2f81e05c5647e0e85e16cd7858c592ae5bdbdc85481b384f'],
+  [103, '3074a0964b6f451500b7f104c62d17d876ee2058488a830365ad5ed23ff3cfaa'],
 ]) {
   const value = validateCompiledPresentation(
     JSON.parse(
@@ -459,15 +459,15 @@ test('historical picture authority remains bounded to forty-six exact distinct r
   assert.throws(() => fixture(102, imported, imported.levels[0].id, policies), /item budget/);
 });
 
-test('native-menu104 preserves the distinct canonical103 runtime and all three picture leases', async () => {
-  const manifestSha256 = '3663f75cfc922f63f99e2e57ac4fc82ce65a45e25af1624c29178c69f7f7af44';
+test('native-menu104 preserves the canonical103 successor and all three picture leases', async () => {
+  const manifestSha256 = '7acb0bb2793781d0d5bbb774eeda05f38bfa30dcf71dc6a600a652bb7718f589';
   const bytes = await readFile(
     new URL(
       '../../authoring/library/fpv-field-kit/retained/runtime.' + manifestSha256 + '.json',
       import.meta.url,
     ),
   );
-  assert.equal(bytes.length, 1250579);
+  assert.equal(bytes.length, 1075486);
   assert.equal(sha(bytes), manifestSha256);
   const canonical = validateCompiledPresentation(JSON.parse(bytes));
   assert.equal(canonical.resolved.theme.revision, 103);

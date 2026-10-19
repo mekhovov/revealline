@@ -320,13 +320,13 @@ for (const { id, opener } of WORKSHOP_TOOLS) {
 
 test('company tool routes retain only a valid single edition through exact-release return', () => {
   const game =
-    'https://example.test/editions/coupa-all/releases/v1.0.0/site/game/index.html?edition=coupa-all&journey=coupa-all&practice=1';
+    'https://example.test/editions/sample-all/releases/v1.0.0/site/game/index.html?edition=sample-all&journey=sample-all&practice=1';
   const href = workshopToolHref(game, 'controller-lab');
-  assert.equal(new URL(href).searchParams.get('edition'), 'coupa-all');
+  assert.equal(new URL(href).searchParams.get('edition'), 'sample-all');
   assert.equal(new URL(href).searchParams.has('practice'), false);
   assert.equal(
     new URL(workshopReturnLinks(href, 'controller-lab').game).searchParams.get('edition'),
-    'coupa-all',
+    'sample-all',
   );
   for (const query of [
     'edition=one&edition=two',

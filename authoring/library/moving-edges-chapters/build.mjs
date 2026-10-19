@@ -26,7 +26,7 @@ export async function readPinned(file, limit, expected) {
   if (expected !== undefined) assert.equal(digest(bytes), expected, `Exact source: ${file}`);
   return bytes;
 }
-export const THEME_IDS = Object.freeze(['fpv', 'ukraine', 'retro', 'coupa']);
+export const THEME_IDS = Object.freeze(['fpv', 'ukraine', 'retro']);
 export const EDITIONS_FILE = 'authoring/library/moving-edges-chapters/editions.json';
 export const INPUTS = Object.freeze({
   'authoring/library/moving-edges/build.mjs':
@@ -132,7 +132,7 @@ export function validateMovingEdgesThemeEditions(value, provenances) {
 }
 
 export async function buildMovingEdgesTheme(themeId) {
-  assert.ok(THEME_IDS.includes(themeId), 'Choose fpv, ukraine, retro or coupa.');
+  assert.ok(THEME_IDS.includes(themeId), 'Choose fpv, ukraine or retro.');
   const inputPins = [];
   for (const [file, sha256] of Object.entries(INPUTS)) {
     const bytes = await readPinned(file, 4 * 1024 * 1024, sha256);
@@ -317,7 +317,7 @@ export async function buildMovingEdgesTheme(themeId) {
 }
 
 export async function writeMovingEdgesTheme(themeId, outputDirectory) {
-  assert.ok(THEME_IDS.includes(themeId), 'Choose fpv, ukraine, retro or coupa.');
+  assert.ok(THEME_IDS.includes(themeId), 'Choose fpv, ukraine or retro.');
   assert.equal(typeof outputDirectory, 'string');
   const output = path.resolve(outputDirectory),
     relative = path.relative(ROOT, output);

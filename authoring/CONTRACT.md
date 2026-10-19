@@ -15,7 +15,6 @@ Round 06 adds a [separate media authoring format and working import tool](media/
 - `examples/fpv-front.pack.json`: main Ukrainian FPV military direction, image discovery and relay objectives.
 - `examples/ukraine-atlas.pack.json`: botanical illustration, relaxed timing, and a separately planned licensed photograph with pixel sprites.
 - `examples/retro-1994.pack.json`: pixel artwork, timed score pursuit and collectible disks.
-- `examples/navi-network.pack.json`: business-city illustration, cost-leak objectives and explicitly fictional savings.
 - `scripts/validate_pack.py`: dependency-free contract and semantic validator.
 - `scripts/build_contract.py`: maintainer regeneration utility. It overwrites the schema/catalog and four examples; do not run it over authored revisions without updating its source.
 
@@ -60,8 +59,6 @@ This abbreviated shape is illustrative and is not a valid pack. Start from a com
 | `rulesets` | Fill policy, input cut mode, lives/time, score, goals and completion logic | Artwork or geography |
 | `levels` | Grid, static blocks, starts, enemies, markers and capture effects, modifiers | New executable behavior |
 | `campaigns` | Ordered/open level selection and collection reward vocabulary | Platform stores, purchases or external account state |
-
-This separation permits a Ukrainian scene, scanned artwork, photograph, neon pixel image or Coupa city to use the same simulation. The theme can re-label a marker as a relay, flower, disk or invoice. Its capture effect remains an explicit catalog invocation.
 
 ## Core rule contract
 

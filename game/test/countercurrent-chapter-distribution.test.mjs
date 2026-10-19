@@ -23,7 +23,7 @@ import { collectBuildFiles } from '../../scripts/game-cli.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const themes = ['fpv', 'ukraine', 'retro', 'coupa'];
+const themes = ['fpv', 'ukraine', 'retro'];
 const entries = [];
 for (const [index, theme] of themes.entries()) {
   const result = await buildCountercurrentTheme(theme);

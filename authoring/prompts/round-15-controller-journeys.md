@@ -14,8 +14,6 @@ Use the real game and existing validators. Preserve level geometry, class recipe
 
 ## 3. A four-world focus and contrast pass
 
-> Use $xonix-runtime-maintainer and $xonix-theme-designer to inspect controller focus, Confirm/Back hints and select drafts in FPV Front, Ukraine Atlas, 1994 Forever and Navi Network. Use the same mission, class and control trace for each theme at 1280×720, 390×844 and 844×390 logical viewports. Record focus visibility over light and dark art and after responsive reflow. If adjustment is needed, change presentation only and repeat the same trace. A body, palette or prompt label must not change movement, collisions or controller mapping. Treat original Spend Sprite artwork as an original business helper, not an official Coupa character.
-
 ## 4. Draft settings that never restart on browsing
 
 > Use $xonix-runtime-maintainer to test controller editing for campaign, starting class, world, steering and volume controls. Enter a draft with A; browse enabled values without invoking the underlying change handler; cancel with B, then repeat and commit once. Mutate or disable the current control during an injected DOM test and verify its draft cancels rather than applying to a replacement. Confirm keyboard/pointer interaction relinquishes the controller edit. Use the existing handlers and bounded preferences; do not create a new saved controller-remap format as part of this task.

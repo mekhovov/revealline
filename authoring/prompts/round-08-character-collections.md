@@ -17,7 +17,6 @@ Exact text, variables and reference requirements live in [round-08-character-col
 | `collection-03-three-blade-recipe` | Hub/blade count, phase, anchors and visual-rate review. | Text plan |
 | `collection-04-atlas-character` | A specific Ukrainian cultural/material character. | Requested image generation |
 | `collection-05-retro-character` | Original 80s–90s craft with a clear small silhouette. | Requested image generation |
-| `collection-06-navi-character` | A business character variation with honest brand identity. | Requested image edit |
 | `collection-07-exchange-asset` | Apply an actual replacement and verify the displayed switch. | Asset execution |
 | `collection-08-context-selection` | Eligibility, selection and fallback across supported scopes. | Text plan |
 | `collection-09-earned-reward-fixtures` | Understandable cosmetic rewards and duplicate-safe simulated results. | Text plan |
@@ -38,17 +37,12 @@ The following IDs and labels come from the current collection definitions. The t
 | FPV FRONT | `fpv-body` — Daybreak FPV | `fpv-racer` — Skyline FPV; `fpv-night` — Night signal FPV |
 | UKRAINE ATLAS | `ukrainian-bird` — Atlas bird | `ukrainian-falcon` — Falcon trim, currently a shared-bird-body trim |
 | 1994 FOREVER | `retro-craft` — Tape runner | `retro-vector` — Vector trail, currently a shared-craft-body treatment |
-| NAVI NETWORK | `navi-avatar` — Spend Sprite | `navi-auditor` — Audit pulse, currently a shared-helper-body treatment |
-
-`neutral-marker` is the globally available diagnostic fallback. Spend Sprite is an **original business helper, not an official Coupa or Navi character**. Racer/night names confer no speed, stealth, collision or handling advantage. Current FPV concepts use no Z markings and distinguish Ukrainian, hostile-military and neutral identity explicitly.
 
 Character IDs are stable across visual replacements. A new paint treatment or propeller recipe should not discard a player's collection identity. The collection definitions own availability and acquisition; renderer presets own body/attachment references. Do not insert image, animation or stat fields into a collection record that rejects them.
 
 Current component recipe IDs live in [presets.json](../motion-lab/presets.json), with validation and pose sampling in [animation.mjs](../motion-lab/animation.mjs): `fpv-tri`, `fpv-two`, `fpv-four`, `night-tri`, `swallow-flight`, `falcon-trim`, `retro-thruster`, `vector-thruster`, `helper-guidance`, `audit-guidance` and `still`. Rotor `bladeCount` accepts 2, 3 or 4; `bladeShape` accepts `swept`, `tapered` or `paddle`. `phaseDegrees` is a cosmetic phase offset. `idleRps` is the baseline visual revolutions per second, `travelRps` adds a rate per normalized travel-speed ratio, and `maxVisualRps` caps the visual rate; none is physical rotor RPM or a gameplay travel-speed setting. The lab limits displayed phase steps to reduce sampled-motion aliasing. Use its actual anchor convention and parameter bounds when editing recipes.
 
 The current UI separates inspecting a character from explicit Equip, and can save a choice for the context, theme or global scope in its isolated lab profile. Recipe/blade/shape/radius edits are temporary preview changes; they are not a saved collection format or a production export. The enlarged north-facing inspection view supports slower motion review. Palette and terrain controls remain independent of equipment, and applying a family look preserves equipment preferences. Verify actual painting/playback before describing these controls as evidence that a particular asset works.
-
-The six authored context IDs are `fpv-first-flight`, `fpv-precision`, `atlas-heritage`, `retro-first`, `retro-second` and `navi-spend-review`. Scope records support `gameId`, `themeId`, `caseId`, `challengeId`, `levelId` and `mapId`; omitted fields are unrestricted within that scope. Selection uses the evaluator's documented matching and specificity, not an invented rule such as “the last context always wins.” Distinguish selected, eligible, unlocked and actually loaded.
 
 ## Simulated reward examples
 
@@ -61,25 +55,12 @@ These fixture IDs contain explicitly simulated `run.completed.v1` results in an 
 | `atlas-heritage` | Heritage clear with `heritage-fragment`; satisfies Falcon trim's condition. |
 | `retro-first-clear` | Two stars on `retro-l01`; insufficient alone for Vector trail's five-star alternative. |
 | `retro-second-clear` | Three stars on different level `retro-l02`; together with the first fixture reaches five best-result stars. |
-| `navi-clean-case` | A fictional spend-review clear with `anomaly-resolved`; satisfies Audit pulse's condition. |
 
 The actual definitions also give Night signal FPV and Vector trail alternative distinct-clear paths. Repeating a fixture must not inflate distinct-level or best-star totals. Earning a character and equipping it are separate actions; context eligibility still applies. Test a failure case, repeated event and context switch in addition to the happy path. Never reuse these lab fixtures as production telemetry or save data.
 
 The preview/game mode boundary is **namespace segregation, not authentication**. Structurally valid local results can be rewritten; a changed flag does not prove a real run occurred. A production result/save adapter must supply trusted game facts and versioned content/ruleset identities before production unlock guarantees are possible. This collection preview does not implement that adapter.
 
 ## Resolve examples locally
-
-```sh
-python3 authoring/prompt.py show collection-03-three-blade-recipe
-python3 authoring/prompt.py render collection-08-context-selection \
-  --set 'COLLECTION_DATA=authoring/motion-lab/collection-presets.json and its current evaluator' \
-  --set 'CONTEXT_CASES=fpv-first-flight, fpv-precision and navi-spend-review' \
-  --set 'PROGRESS_FIXTURE=isolated lab profile; fpv-first-clear, fpv-clean-map and navi-clean-case'
-python3 authoring/prompt.py render collection-14-gameplan-review \
-  --set 'GAMEPLAY_PLAN=docs/round-08-gameplay-plan.md' \
-  --set 'COLLECTION_PROPOSAL=docs/round-08-character-collection.md' \
-  --set 'IMPLEMENTED_CAPABILITIES=inspect the current authoring tools and motion-lab README; territory game logic remains unimplemented'
-```
 
 Rendering only substitutes text and validates variables. To execute a requested image edit, inspect the actual reference and use the built-in image tool; preserve originals and save derived copies with their complete effective prompts. Do not treat a path written in a prompt as evidence that the file was inspected or generated.
 

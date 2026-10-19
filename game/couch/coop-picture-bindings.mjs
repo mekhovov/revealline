@@ -76,7 +76,7 @@ export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
 /** Numeric identities shared by published and preview histories require exact
  * manifest constraints when their picture associations differ.
  */
-const PUBLISHED_101_MANIFEST = '7e8db95cec2eaab6b031e12bb44e036173611539393d44bbdfc50ff784d098b8';
+const PUBLISHED_101_MANIFEST = 'a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0';
 const retainedIdentity = (themeRevision) => ({
   themeRevision,
   ...(themeRevision === 101 ? { manifestSha256: PUBLISHED_101_MANIFEST } : {}),

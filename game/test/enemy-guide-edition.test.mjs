@@ -94,7 +94,7 @@ test('custom edition with no role image remains readable with no absent palette 
   assert.equal(h.$('theme').disabled, true);
   assert.equal(h.$('play').disabled, true);
   assert.ok(h.$('risk').textContent.length > 0);
-  for (const id of ['ukraine', 'retro', 'coupa', 'fpv']) {
+  for (const id of ['ukraine', 'retro', 'fpv']) {
     h.$('theme').value = id;
     assert.doesNotThrow(() => h.$('theme').onchange());
     h.guide.update(0.1);

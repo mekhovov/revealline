@@ -162,7 +162,7 @@ test('unrelated HTML, base overrides and foreign offline scopes fail before a ho
     assert.throws(() => transform(source));
 });
 
-function host(href = 'https://owner.github.io/project/game/communities/coupa/?lang=uk#settings') {
+function host(href = 'https://owner.github.io/project/game/communities/droneaid/?lang=uk#settings') {
   const windowRef = new Events();
   const elements = new Map([
     ['community-status', { textContent: 'Loading' }],
@@ -256,13 +256,13 @@ for (const route of COMMUNITY_ROUTES)
   });
 
 test('a foreign edition query cannot fetch or write a host and retains only its own fallback', async () => {
-  const f = host('https://owner.github.io/project/game/communities/coupa/?edition=droneaid');
+  const f = host('https://owner.github.io/project/game/communities/droneaid/?edition=droneaid-community');
   assert.equal(await loadCommunityEntry(f.options), false);
   assert.equal(f.requests.length, 0);
   assert.deepEqual(f.writes, []);
   assert.equal(
     f.elements.get('community-fallback').href,
-    communityEntryURL('https://owner.github.io/project/game/communities/coupa/').href,
+    communityEntryURL('https://owner.github.io/project/game/communities/droneaid/').href,
   );
   assert.equal(f.options.documentRef.documentElement.dataset.communityEntry, 'failed');
 });
@@ -285,7 +285,7 @@ for (const [name, overrides] of [
     assert.match(f.elements.get('community-status').textContent, /direct game link/);
     assert.equal(
       new URL(f.elements.get('community-fallback').href).searchParams.get('edition'),
-      'coupa-all',
+      'droneaid-nl-community',
     );
   });
 

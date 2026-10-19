@@ -22,7 +22,7 @@ import { loadLibrary } from '../library.mjs';
 import { EXTERNAL_CATALOG } from '../external-chapter-catalog.mjs';
 const allEditions = [
   await buildFractureChapter(),
-  ...(await Promise.all(['ukraine', 'retro', 'coupa'].map(buildFractureTheme))),
+  ...(await Promise.all(['ukraine', 'retro'].map(buildFractureTheme))),
 ];
 const proof = JSON.parse(
   await readFile(new URL('../../authoring/library/fracture-lines/routes.json', import.meta.url)),

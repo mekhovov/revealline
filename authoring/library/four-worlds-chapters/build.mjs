@@ -158,11 +158,10 @@ export async function readOriginalChapters() {
       ['original-fpv-pressure', 'fpv', 'fpv'],
       ['original-ukraine-atlas', 'ukraine', 'heritage'],
       ['original-retro-1994', 'retro', 'retro'],
-      ['original-spend-network', 'coupa', 'coupa'],
     ],
   );
   const catalog = inputs['authoring/library/four-worlds-source/catalog.json'];
-  assert.equal(catalog.images.length, 12);
+  assert.equal(catalog.images.length, 9);
   const images = new Map();
   for (const record of catalog.images) {
     const bytes = await ordinaryFile(record.source, record.sha256);

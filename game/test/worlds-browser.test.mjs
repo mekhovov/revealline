@@ -7,10 +7,10 @@ import { Document } from './helpers/couch-dom.mjs';
 import { SoloElement } from './helpers/solo-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
-const themes = ['fpv', 'ukraine', 'retro', 'coupa'];
+const themes = ['fpv', 'ukraine', 'retro', 'other'];
 const entries = Array.from({ length: 36 }, (_, i) => ({
   key: `source:world-${i}`,
-  themeId: themes[i % 4],
+  themeId: themes[i % themes.length],
   mode: i % 3 ? 'Arcade' : 'Tactical',
 }));
 test('all 36 choices traverse exactly once in deterministic 4/2 card pages and every theme/mode intersection', () => {
@@ -85,7 +85,7 @@ function fixture(t, changes = {}) {
     nav.destroy();
     panel.dispose();
   });
-  const visible = () => $('cards').children.filter((card) => !card.hidden);
+  const visible = () => $('cards').children.filter((card) => card.className?.includes('optional-world-card') && !card.hidden);
   return {
     doc,
     panel,
@@ -257,7 +257,7 @@ test('remote failure still inspects exact source cards and exposes remaining ins
   });
   await f.panel.open();
   assert.match(f.$('status').textContent, /Online list unavailable/);
-  f.change('theme', 'coupa');
+  f.change('theme', 'other');
   while (!f.$('next').disabled) f.$('next').click();
   assert.equal(f.$('source-world-35-choose').disabled, false);
   assert(f.visible().includes(f.$('source-world-35-card')));

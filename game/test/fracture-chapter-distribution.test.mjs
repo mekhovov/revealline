@@ -18,7 +18,7 @@ import { collectBuildFiles } from '../../scripts/game-cli.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const themes = ['fpv', 'ukraine', 'retro', 'coupa'];
+const themes = ['fpv', 'ukraine', 'retro'];
 const entries = [];
 for (const [index, theme] of themes.entries()) {
   const result = await (theme === 'fpv' ? buildFractureChapter() : buildFractureTheme(theme));
@@ -91,7 +91,7 @@ test('four Fracture producers supply exact pairs without changing the eight earl
   const files = await collectBuildFiles(root);
   assert(
     !files.some((file) =>
-      /authoring\/library\/fracture-(?:lines(?:-art|-chapter)?|ukraine-art|retro-art|coupa-art|theme-chapters)\//.test(
+      /authoring\/library\/fracture-(?:lines(?:-art|-chapter)?|ukraine-art|retro-art|theme-chapters)\//.test(
         typeof file === 'string' ? file : file.path,
       ),
     ),

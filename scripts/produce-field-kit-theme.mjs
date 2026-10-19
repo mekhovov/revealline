@@ -1060,7 +1060,7 @@ async function generate(args) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  // The current candidate introduces the pinned 54-picture successor. Keep the
+  // The current candidate introduces the pinned source-picture successor. Keep the
   // older Team-only writer strict and route this one explicit contract through
   // its dedicated history validator.
   production.document = retainPictureProductionHistory(production.document, history?.document);

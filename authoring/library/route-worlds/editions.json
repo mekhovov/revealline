@@ -44,28 +44,6 @@
           "sourceLevelId": "route-choices-switchback"
         }
       ]
-    },
-    {
-      "themeId": "coupa",
-      "artRoot": "authoring/library/spend-route-art",
-      "provenanceSha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc",
-      "images": [
-        {
-          "id": "value-foundry",
-          "title": "Value Foundry",
-          "sourceLevelId": "route-choices-foundry"
-        },
-        {
-          "id": "shared-harbor",
-          "title": "Shared Harbor",
-          "sourceLevelId": "route-choices-depot"
-        },
-        {
-          "id": "network-garden",
-          "title": "Network Garden",
-          "sourceLevelId": "route-choices-switchback"
-        }
-      ]
     }
   ]
 }

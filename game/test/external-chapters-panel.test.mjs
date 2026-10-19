@@ -133,7 +133,7 @@ test('sixteen real choices stay reachable offline and an active Countercurrent o
     id: edition.descriptor.id,
     themeId: edition.descriptor.themeId,
   }));
-  const target = editions.find((e) => e.id === 'countercurrent-coupa');
+  const target = editions.find((e) => e.id === 'countercurrent-retro');
   assert.ok(target);
   const f = fixture(
     t,

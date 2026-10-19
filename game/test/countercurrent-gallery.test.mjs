@@ -136,7 +136,6 @@ test('every original/document link retains its exact destination and a stable un
       'countercurrent-fpv',
       'countercurrent-ukraine',
       'countercurrent-retro',
-      'countercurrent-coupa',
     ],
   );
   for (const heading of headings) {
@@ -312,7 +311,7 @@ test('all thirteen gallery openers use the same owned modal and Back restores th
 
 test('theme Sections retain an inactive first-source link through neutral input frames', (t) => {
   const h = fixture(t);
-  for (const theme of ['fpv', 'ukraine', 'retro', 'coupa']) {
+  for (const theme of ['fpv', 'ukraine', 'retro']) {
     h.sections.click();
     const dialog = h.doc.querySelector('.authoring-sections-dialog');
     const heading = h.doc.getElementById(`countercurrent-${theme}`);

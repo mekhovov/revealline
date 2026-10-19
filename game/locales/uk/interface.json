@@ -1671,7 +1671,6 @@
   "pngDownloadRequestedConfirmTheDestinationInYourBrowserThe": "Завантаження PNG запитано. Підтвердь місце в браузері; підготовлені байти доступні для повтору.",
   "fpvFront": "Фронт FPV",
   "ukraineAtlas": "Атлас України",
-  "spendNetwork": "Мережа витрат",
   "tooManyWorldChoices": "Забагато варіантів світів.",
   "worldPagesContainTwoOrFourCards": "Сторінки світів містять дві або чотири картки.",
   "invalidWorldPage": "Некоректна сторінка світів.",
@@ -2950,7 +2949,6 @@
   "gameplay": "Ігровий процес",
   "finalesHighIntensity": "Фінали / висока інтенсивність",
   "energy1Calm5Intense": "Енергійність (1 — спокійно, 5 — інтенсивно)",
-  "worldsCommaSeparatedRetroFpvUkraineCoupa": "Світи (через кому: retro, fpv, ukraine, coupa)",
   "musicalCharacter": "Музичний характер",
   "prepareOriginalMp3Download": "Підготувати оригінальний MP3 до завантаження",
   "verifyingOriginalMp3ForDownload": "Перевіряємо оригінальний MP3 для завантаження…",
@@ -5805,9 +5803,6 @@
   "communityDirectory.droneaidCategory": "БУДУЙТЕ / ЄДНАЙТЕСЯ / ПІДТРИМУЙТЕ",
   "communityDirectory.droneaidDescription": "Пригоди у FPV-майстерні та спільні справи — від Нідерландів до Португалії й Німеччини.",
   "communityDirectory.openDroneaid": "Грати в кампанії Нідерландів",
-  "communityDirectory.coupaCategory": "ДОСЛІДЖУЙТЕ / ЄДНАЙТЕСЯ / ЗРОСТАЙТЕ",
-  "communityDirectory.coupaDescription": "Досліджуйте Coupa Village в ілюстрованих кампаніях про спільну працю, культуру та ідеї.",
-  "communityDirectory.openCoupa": "Грати в Coupa",
   "communityDirectory.separateHeading": "Ваша компанія. Ваші кампанії.",
   "communityDirectory.separateDescription": "Кожне видання має власні збережені польоти та прогрес. У грі можна обирати кампанії лише своєї компанії.",
   "communityDirectory.footer": "Каталог спільнот · Для гри не потрібен обліковий запис",
@@ -6058,5 +6053,6 @@
   "missionLibrary.search.emptyView": "Жодна місія не відповідає поточному виданню й режиму. Відкрийте «Фільтри», щоб змінити вигляд.",
   "versusHomeRecommendation.first": "Пропонована місія для змагання: {{mission}}. Почніть із першої місії цієї подорожі.",
   "versusHomeRecommendation.selected": "Обрана місія для змагання: {{mission}}. Початок змагання використовує саме цю місію та поточні налаштування матчу.",
-  "versusHomeRecommendation.recordedNext": "Пропонована місія для змагання: {{mission}}. Вона йде після місії «{{previous}}», завершення якої записано у вашому прогресі."
+  "versusHomeRecommendation.recordedNext": "Пропонована місія для змагання: {{mission}}. Вона йде після місії «{{previous}}», завершення якої записано у вашому прогресі.",
+  "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

@@ -1,7 +1,7 @@
 {
   "format": "revealline-sentinel-theme-editions.v1",
   "artRoot": "authoring/library/sentinel-theme-art",
-  "provenanceSha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948",
+  "provenanceSha256": "0aab60f6002e6665cc0a6092cee3ddbb86665b14c9b6168d1385ac07db01ba9b",
   "editions": [
     {
       "themeId": "ukraine",
@@ -60,36 +60,6 @@
           "sha256": "03a1ee0b83a70df661885d0c9da0c2830a2349b583556be1012ee07264405eee",
           "title": "The hilltop night transmission",
           "description": "Recommended: Fiber relay. Signal resistance keeps movement and equipment working through the band; your live cable can still break. Other classes can use the western and southern detour. Capture the visible shield objective first. The Mainframe warns horizontally, then after that objective warns vertically. Wait for the active stripe to end; during the opening close a cut with at least twelve new field cells. An early or short cut keeps ordinary gains but does not open the core. Missed openings repeat. If at most twelve field cells remain, wait safely outside a cut for an opening. This encounter has a shielded stage and an exposed stage."
-        }
-      ]
-    },
-    {
-      "themeId": "coupa",
-      "id": "sentinel-circuit-coupa",
-      "images": [
-        {
-          "sourceCellId": "sentinel-circuit/listening-court/coupa",
-          "sourceLevelId": "sentinel-circuit-listening-court",
-          "path": "coupa/originals/listening-court.png",
-          "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
-          "title": "The shared inventory court",
-          "description": "Recommended: Scout. Scan reveals the hidden opportunity and shows enemy direction hints; it does not slow enemies or capture territory. Reveal 45% and the opportunity. Read the two open courtyards before choosing the upper survey loop or lower outer approach. The center throat ends at a wall: walls cannot reconnect a cut. An enemy warns before committing to its target. A known route without Scan remains possible."
-        },
-        {
-          "sourceCellId": "sentinel-circuit/switchyard-gates/coupa",
-          "sourceLevelId": "sentinel-circuit-switchyard-gates",
-          "path": "coupa/originals/switchyard-gates.png",
-          "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
-          "title": "The inland exchange yard",
-          "description": "Recommended: Light carrier. Collect one charge at home, then move Up about five cells and drop the temporary field before the enemy reaches your cable. The field stuns nearby enemies for 2.5 seconds; it is not a delivery or damage action. Reveal 45% and the eastern opportunity. Empty or early equipment leaves the crossing exposed. A longer route follows the eastern safe edge, cuts left above the enemy, then returns through the upper gate."
-        },
-        {
-          "sourceCellId": "sentinel-circuit/open-the-circuit/coupa",
-          "sourceLevelId": "sentinel-circuit-open-circuit",
-          "path": "coupa/originals/open-the-circuit.png",
-          "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
-          "title": "The illuminated exchange hall",
-          "description": "Recommended: Fiber relay. Signal resistance keeps movement and equipment working through the band; your live cable can still break. Other classes can use the western and southern detour. Capture the visible shield objective first. The Complexity hub warns horizontally, then after that objective warns vertically. Wait for the active stripe to end; during the opening close a cut with at least twelve new field cells. An early or short cut keeps ordinary gains but does not open the core. Missed openings repeat. If at most twelve field cells remain, wait safely outside a cut for an opening. This encounter has a shielded stage and an exposed stage."
         }
       ]
     }
