@@ -1,0 +1,122 @@
+{
+  "sourceRevision": "81c0d6587cdb582835a64e3d69c4c130460fb11a",
+  "sourceTree": "2079c94d36b74838cb96cf357e5501dd24ef2235",
+  "version": "v0.151.1",
+  "scope": "Every archive member length/hash and exact inventory verified; not native/browser qualification",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "kind": "distribution",
+      "verifiedMembers": 94,
+      "uncompressedBytes": 3748578,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3762262,
+      "archiveSHA256": "4bfee7444065b619191d4eca261636c46278d4d3b1b98a23fbafb2f11bda25ab"
+    },
+    {
+      "id": "civilian-flight",
+      "kind": "source",
+      "verifiedMembers": 96,
+      "uncompressedBytes": 3783306,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3797326,
+      "archiveSHA256": "0f055ccd5e09fcda3559ca110c11b3e72b27432fe638e2fb509a1d56fbfdf78e"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "distribution",
+      "verifiedMembers": 101,
+      "uncompressedBytes": 6766304,
+      "limits": {
+        "files": 104,
+        "bytes": 8388608
+      },
+      "archiveBytes": 6781322,
+      "archiveSHA256": "a8fc25331fa42acda229c4f76d5d3a2d233b627c2638aeca624287fd65199c5c"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "source",
+      "verifiedMembers": 103,
+      "uncompressedBytes": 6802465,
+      "limits": {
+        "files": 104,
+        "bytes": 8388608
+      },
+      "archiveBytes": 6817787,
+      "archiveSHA256": "6143bf21e99da57cd2ca33b1935f2c1cdf2636cbad8590b3b5ee116a6c7889ee"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "distribution",
+      "verifiedMembers": 162,
+      "uncompressedBytes": 17574342,
+      "limits": {
+        "files": 164,
+        "bytes": 20971520
+      },
+      "archiveBytes": 17600770,
+      "archiveSHA256": "c1152ca1a81b451387bce73e5034479d16943565faac05410a1c281893326113"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "source",
+      "verifiedMembers": 164,
+      "uncompressedBytes": 17619051,
+      "limits": {
+        "files": 164,
+        "bytes": 20971520
+      },
+      "archiveBytes": 17645783,
+      "archiveSHA256": "8e61b502b1e2822926e0e98fdc4824f202bd7de36997d8b90f5d393909a706e0"
+    }
+  ]
+}
+[{"id":"civilian-flight","modules":68,"imports":96},{"id":"civilian-fpv","modules":81,"imports":152},{"id":"fpv-worlds","modules":134,"imports":340}]
+{
+  "capturedAt": "2026-10-16T02:09:53.049654+00:00",
+  "sourceRevision": "81c0d6587cdb582835a64e3d69c4c130460fb11a",
+  "sourceTree": "2079c94d36b74838cb96cf357e5501dd24ef2235",
+  "cloudRun": 38837878854,
+  "artifactId": 12019858512,
+  "packageRevision": "b49bd26e9fb7d6fde9c383eb624824452cfb957dee1acbf262753acebf432c08",
+  "runtimeArchiveSHA256": "c1152ca1a81b451387bce73e5034479d16943565faac05410a1c281893326113",
+  "githubArtifactSHA256": "5de33cab799f59cd889d54fd979cba95435c461ee0be92c161931072cefbdeb1",
+  "topLevelChecksums": 15,
+  "allArchiveReceipt": "all-package-members-receipt.json",
+  "importClosureReceipt": "archive-import-closure-receipt.json",
+  "packagedFamilyAndLabelChecks": {
+    "passed": true,
+    "cases": 23,
+    "tests": [
+      {
+        "path": "game/test/fpv-regional-library-families.test.mjs",
+        "sha256": "750c242925a776a345b9920469f7df5d7fce334bc9b58f3bc6b4c67e45b51169"
+      },
+      {
+        "path": "game/test/fpv-regional-library-labels.test.mjs",
+        "sha256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272"
+      },
+      {
+        "path": "game/test/helpers/couch-dom.mjs",
+        "sha256": "145f0d3010e26c3cc4be105050c8e344808983907d3121741c9ae6a8bc382001"
+      },
+      {
+        "path": "game/test/fixtures/fpv-regional-labels-metadata.json",
+        "sha256": "d19d86f670febf58924cabb169cf93f7e22358ab8ddde493fe68da5fae75046c"
+      }
+    ],
+    "runtimeBytesUnchanged": true,
+    "sourceAdaptations": [],
+    "hostSetup": "Shipped i18next engine loaded before generated bootstrap, matching its documented browser host dependency. First Node invocation without host engine failed before tests; preserved in packaged-family-label-checks.tap."
+  },
+  "nativeAccepted": false,
+  "publicAccepted": false,
+  "scope": "Exact optional cloud package, six source/distribution archive member inventories/hashes/budgets and three finished import closures checked. Twenty-three exact-source software groups exercise shipped Library/UI/input modules using isolated synthetic metadata/callbacks and deterministic DOM. No player data, real assets loaded, runtime renderer, native DOM, physical device, offline/restart/public acceptance, storage failure diagnosis or budget change."
+}

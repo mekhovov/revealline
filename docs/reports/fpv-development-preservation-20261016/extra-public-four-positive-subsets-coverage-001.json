@@ -1,0 +1,29 @@
+{
+  "format": "FPVFourExactPositivePublicExtraSubsetsCoverage.v1",
+  "counts": {
+    "inventoryFilePaths": 9316,
+    "coveredFilePaths": 9316,
+    "heldFilePaths": 0,
+    "uncoveredFilePaths": 0,
+    "logicalCoveredBytes": 2371548616,
+    "verifiedParts": 20,
+    "directAssets": 3,
+    "symlinks": 0,
+    "heldSymlinks": 0
+  },
+  "allListedPositiveFilesHaveVerifiedCASOrFreshReadbackReleaseSource": true,
+  "sourceReviewCommits": [
+    "2fb1c6a5b2fd3ab3cae60e4efd85f3c63f4d613c",
+    "6c8b9071ea48145eb0a73132b40ee9541955ab9c"
+  ],
+  "manifestSHA256": [
+    "3c8bf60d4ab96f8ddb8220acdd1c419afb28d9121a3bb805317255902bae71cb",
+    "c91fa011daa5589a27d0953a5eae07fe0a97f240f5f4f27066b96280334de755"
+  ],
+  "exactPrivacyNamePathClearances": 295,
+  "unknownOrChangedCandidatesNotSelected": 515,
+  "inventorySetFinal": false,
+  "fullPathRestorePerformed": false,
+  "allVolumeInputSetFinal": false,
+  "overallDisconnectSafetyClaimed": false
+}

@@ -1098,7 +1098,11 @@ test('focused CI installs the locked native fixture owner before selected checks
   );
   const execute = steps.findIndex((step) => step.startsWith('name: Run selected focused gates\n'));
   assert.ok(rootInstall >= 0 && install > rootInstall && execute > install);
-  assert.match(steps[install], /if: steps\.plan\.outputs\.required == 'true'/);
+  assert.match(
+    focused,
+    /needs\.preflight\.outputs\.focusedContract == 'revealline-focused-plan\.v2'/,
+  );
+  assert.match(focused, /needs\.preflight\.outputs\.focusedShards != '0'/);
   assert.match(steps[install], /working-directory: source/);
   assert.match(
     steps[install],
@@ -1511,4 +1515,37 @@ test('actual CLI preserves failed output and fails closed on invalid options, ch
   result = f.verify();
   assert.equal(result.status, 1);
   assert.match(result.stderr, /exceeds its bound/);
+});
+
+test('Solo Mission Library edits select every complete native file with its own five-minute ceiling', () => {
+  const groups = [
+    ['mission-library-solo-native-custom', 'game/test/mission-library-solo-custom-host.test.mjs'],
+    ['mission-library-solo-native-setup', 'game/test/mission-library-solo-host.test.mjs'],
+    ['mission-library-solo-native-incoming', 'game/test/mission-library-solo-incoming-host.test.mjs'],
+    ['mission-library-solo-native-handoff', 'game/test/mission-library-solo-handoff-host.test.mjs'],
+  ];
+  for (const changed of ['game/test/mission-library-solo-fixture.mjs', ...groups.map(([, file]) => file)]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    assert.deepEqual(plan.deferredTests, []);
+    assert.deepEqual(plan.commands.map(({ id }) => id), groups.map(([id]) => id));
+    for (const [index, [, file]] of groups.entries()) {
+      assert.equal(plan.commands[index].command, 'node');
+      assert.deepEqual(plan.commands[index].args, ['--test', '--test-concurrency=1', file]);
+      assert.equal(plan.commands[index].timeoutMs, 300000);
+    }
+  }
+});
+
+test('unrelated native edits do not select or defer the Solo Mission Library cohort', () => {
+  for (const changed of [
+    'game/test/controller-navigation.test.mjs',
+    'game/test/mission-library-solo-lifecycle-host.test.mjs',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.equal(plan.categories.includes('mission-library-solo-native'), false);
+    assert.equal(plan.commands.some(({ id }) => id.startsWith('mission-library-solo-native-')), false);
+    assert.deepEqual(plan.deferredTests, []);
+    assert.equal(plan.commands.some(({ args }) => args.includes(changed)), true);
+  }
 });

@@ -1,0 +1,9 @@
+{
+  "format": "RootVerifierTransportNegative.v1",
+  "step": "Fetch exact >1MiB GitHub Contents plan",
+  "initialAccept": "application/octet-stream",
+  "exitCode": 1,
+  "priorActualRunJobArtifactAssertionsPassed": true,
+  "payloadFailureClaim": false,
+  "retry": "Use documented raw Contents media type; no source change or backup waiver"
+}
