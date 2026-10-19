@@ -1,0 +1,1312 @@
+{
+  "schema": "revealline-remote-ci-audit-v1",
+  "repository": "mekhovov/revealline",
+  "reviewer": "status_qualification",
+  "observedAt": "2026-10-19T00:34:00Z",
+  "retainedAt": "2026-10-19T00:38:18Z",
+  "snapshotTimePrecision": "Metadata captured around00:34 UTC; artifacts subsequently verified in RAM.",
+  "scope": "Exact-head partial CI results for #1675 and #1676, not merge/publication or native qualification.",
+  "snapshots": [
+    {
+      "path": "actions/runs/39173025211",
+      "data": {
+        "id": 39173025211,
+        "name": "Appearance preview",
+        "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+        "head_branch": "codex/solo-lazy-soundtrack-authoring",
+        "status": "queued",
+        "conclusion": null,
+        "run_attempt": 2,
+        "created_at": "2026-10-18T22:37:13Z",
+        "updated_at": "2026-10-18T23:34:11Z",
+        "run_started_at": "2026-10-18T23:34:10Z",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39173025211",
+        "jobs_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39173025211/jobs",
+        "artifacts_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39173025211/artifacts"
+      }
+    },
+    {
+      "path": "actions/runs/39173025211/attempts/2/jobs?per_page=100",
+      "data": {
+        "total_count": 4,
+        "jobs": [
+          {
+            "id": 117821813077,
+            "name": "installed_admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:34:12Z",
+            "completed_at": null
+          },
+          {
+            "id": 117821814124,
+            "name": "team_admission",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:28:12Z",
+            "completed_at": "2026-10-18T23:32:36Z"
+          },
+          {
+            "id": 117821841325,
+            "name": "demo_admission",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:28:22Z",
+            "completed_at": "2026-10-18T23:31:11Z"
+          },
+          {
+            "id": 117821846814,
+            "name": "admission",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:22:07Z",
+            "completed_at": "2026-10-18T23:24:58Z"
+          }
+        ]
+      }
+    },
+    {
+      "path": "actions/runs/39173025193",
+      "data": {
+        "id": 39173025193,
+        "name": "Validate source for continuous main",
+        "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+        "head_branch": "codex/solo-lazy-soundtrack-authoring",
+        "status": "in_progress",
+        "conclusion": null,
+        "run_attempt": 1,
+        "created_at": "2026-10-18T22:37:13Z",
+        "updated_at": "2026-10-19T00:34:04Z",
+        "run_started_at": "2026-10-18T22:37:13Z",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39173025193",
+        "jobs_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39173025193/jobs",
+        "artifacts_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39173025193/artifacts"
+      }
+    },
+    {
+      "path": "actions/runs/39173025193/jobs?per_page=100",
+      "data": {
+        "total_count": 7,
+        "jobs": [
+          {
+            "id": 117809866195,
+            "name": "preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:19:37Z",
+            "completed_at": "2026-10-18T23:19:52Z"
+          },
+          {
+            "id": 117818839739,
+            "name": "focused_shards (4)",
+            "status": "in_progress",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:34:03Z",
+            "completed_at": null,
+            "currentStep": "Check out exact pull-request source"
+          },
+          {
+            "id": 117818839744,
+            "name": "focused_shards (2)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:23:21Z",
+            "completed_at": "2026-10-19T00:33:04Z"
+          },
+          {
+            "id": 117818839749,
+            "name": "focused_shards (1)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:24:37Z",
+            "completed_at": "2026-10-19T00:27:13Z"
+          },
+          {
+            "id": 117818839770,
+            "name": "focused_shards (3)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:27:15Z",
+            "completed_at": "2026-10-19T00:30:37Z"
+          },
+          {
+            "id": 117818840634,
+            "name": "test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:19:53Z",
+            "completed_at": "2026-10-18T23:19:52Z"
+          },
+          {
+            "id": 117818840719,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:19:53Z",
+            "completed_at": "2026-10-18T23:19:52Z"
+          }
+        ]
+      }
+    },
+    {
+      "path": "actions/runs/39173029629",
+      "data": {
+        "id": 39173029629,
+        "name": "Validate source for continuous main",
+        "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+        "head_branch": "codex/solo-pages-backup-observation",
+        "status": "queued",
+        "conclusion": null,
+        "run_attempt": 1,
+        "created_at": "2026-10-18T22:37:17Z",
+        "updated_at": "2026-10-18T23:23:01Z",
+        "run_started_at": "2026-10-18T22:37:17Z",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629",
+        "jobs_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39173029629/jobs",
+        "artifacts_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39173029629/artifacts"
+      }
+    },
+    {
+      "path": "actions/runs/39173029629/jobs?per_page=100",
+      "data": {
+        "total_count": 7,
+        "jobs": [
+          {
+            "id": 117809880606,
+            "name": "preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:22:49Z",
+            "completed_at": "2026-10-18T23:23:01Z"
+          },
+          {
+            "id": 117819513720,
+            "name": "focused_shards (1)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:25:05Z",
+            "completed_at": "2026-10-19T00:28:29Z"
+          },
+          {
+            "id": 117819513761,
+            "name": "focused_shards (3)",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": null
+          },
+          {
+            "id": 117819513779,
+            "name": "focused_shards (4)",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": null
+          },
+          {
+            "id": 117819513782,
+            "name": "focused_shards (2)",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": null
+          },
+          {
+            "id": 117819514613,
+            "name": "test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": "2026-10-18T23:23:01Z"
+          },
+          {
+            "id": 117819515014,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": "2026-10-18T23:23:01Z"
+          }
+        ]
+      }
+    },
+    {
+      "path": "pulls/1675",
+      "data": {
+        "number": 1675,
+        "state": "open",
+        "merged": false,
+        "head": {
+          "ref": "codex/solo-lazy-soundtrack-authoring",
+          "sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad"
+        },
+        "base": {
+          "ref": "main",
+          "sha": "dd337c8120fd6f875544c1479713d3aa4299c323"
+        },
+        "mergeable": true,
+        "draft": true,
+        "html_url": "https://github.com/mekhovov/revealline/pull/1675"
+      }
+    },
+    {
+      "path": "pulls/1676",
+      "data": {
+        "number": 1676,
+        "state": "open",
+        "merged": false,
+        "head": {
+          "ref": "codex/solo-pages-backup-observation",
+          "sha": "73eb20a2d32edf194cdc7915d6fb055753df8925"
+        },
+        "base": {
+          "ref": "main",
+          "sha": "dd337c8120fd6f875544c1479713d3aa4299c323"
+        },
+        "mergeable": true,
+        "draft": true,
+        "html_url": "https://github.com/mekhovov/revealline/pull/1676"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "artifact": {
+        "id": 12154712395,
+        "name": "appearance-team-admission-8499225d1d4391372e52903a3a0e8ecaab1b3aad-1",
+        "size_in_bytes": 14808,
+        "digest": "sha256:4987cea94b2ecb8b8ce81f8394fb30131ec99d06798aab183a89fcff0aa69ca0",
+        "run": 39173025211
+      },
+      "files": [
+        {
+          "name": "team-admission-proof.json",
+          "bytes": 1643,
+          "sha256": "fd97bb0fe3fd2b43aa78e9042a92e13c0ad5f73d64e3df5316231e0a9499ec9a",
+          "receipt": {
+            "format": "AppearanceAdmissionProofV1",
+            "sourceRevision": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+            "sourceTree": "8763bfc452d22373a6733984fc19d2aa09a3c3c9",
+            "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39173025211",
+            "node": "v22.13.1",
+            "testPolicy": {
+              "policyMode": "required",
+              "mode": "required",
+              "runTests": "true",
+              "qualification": "tests-required",
+              "forced": false,
+              "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+              "policy": {
+                "format": "revealline-release-test-policy.v1",
+                "mode": "required",
+                "authorization": "explicit-user-request-20261004",
+                "scope": "automated-test-suites",
+                "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+                "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+              }
+            },
+            "result": "passed",
+            "executed": true,
+            "command": "node --test --test-concurrency=1",
+            "files": [
+              "game/test/couch-static-pictures.test.mjs",
+              "game/test/couch-static-picture-host.test.mjs",
+              "game/test/couch-shell.test.mjs",
+              "game/test/controller-navigation.test.mjs",
+              "game/test/controller-reading.test.mjs"
+            ],
+            "output": {
+              "path": "team-admission-tests.tap",
+              "bytes": 76814,
+              "sha256": "7c18faa5992b36a45d85c2402f644ef7d6667e98258d79809c4f3b94883a19a3"
+            }
+          }
+        },
+        {
+          "name": "team-admission-tests.tap",
+          "bytes": 76814,
+          "sha256": "7c18faa5992b36a45d85c2402f644ef7d6667e98258d79809c4f3b94883a19a3",
+          "tapFooter": [
+            "  ---",
+            "  duration_ms: 199.212878",
+            "  ...",
+            "1..344",
+            "# tests 354",
+            "# suites 0",
+            "# pass 354",
+            "# fail 0",
+            "# cancelled 0",
+            "# skipped 0",
+            "# todo 0",
+            "# duration_ms 195338.112091"
+          ],
+          "failures": []
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "id": 12154508544,
+        "name": "appearance-demo-admission-8499225d1d4391372e52903a3a0e8ecaab1b3aad-1",
+        "size_in_bytes": 5973,
+        "digest": "sha256:6c7a0bc1732261914427fa4b07ad4a53b5f851ab74187efaf7f8da165f8fbcc8",
+        "run": 39173025211
+      },
+      "files": [
+        {
+          "name": "demo-admission-proof.json",
+          "bytes": 1672,
+          "sha256": "8912cb2fe14a2503184605c3dbffe6b419c7baec743ffc16df0001112df84143",
+          "receipt": {
+            "format": "AppearanceAdmissionProofV1",
+            "sourceRevision": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+            "sourceTree": "8763bfc452d22373a6733984fc19d2aa09a3c3c9",
+            "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39173025211",
+            "node": "v22.13.1",
+            "testPolicy": {
+              "policyMode": "required",
+              "mode": "required",
+              "runTests": "true",
+              "qualification": "tests-required",
+              "forced": false,
+              "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+              "policy": {
+                "format": "revealline-release-test-policy.v1",
+                "mode": "required",
+                "authorization": "explicit-user-request-20261004",
+                "scope": "automated-test-suites",
+                "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+                "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+              }
+            },
+            "result": "passed",
+            "executed": true,
+            "command": "node --test --test-concurrency=1",
+            "files": [
+              "game/test/demo-scene-transition.test.mjs",
+              "game/test/victory-story-ui.test.mjs",
+              "game/test/demo-bot.test.mjs",
+              "game/test/demo-sources.test.mjs",
+              "game/test/solo-demo-resources-host.test.mjs",
+              "game/test/demo-loading-host.test.mjs"
+            ],
+            "output": {
+              "path": "demo-admission-tests.tap",
+              "bytes": 20945,
+              "sha256": "c793fd8632bb0a75cfe5a31ce8f16c065da1670bdd7c6b6cd6f25a0a61453f32"
+            }
+          }
+        },
+        {
+          "name": "demo-admission-tests.tap",
+          "bytes": 20945,
+          "sha256": "c793fd8632bb0a75cfe5a31ce8f16c065da1670bdd7c6b6cd6f25a0a61453f32",
+          "tapFooter": [
+            "  ---",
+            "  duration_ms: 9.628703",
+            "  ...",
+            "1..84",
+            "# tests 84",
+            "# suites 0",
+            "# pass 84",
+            "# fail 0",
+            "# cancelled 0",
+            "# skipped 0",
+            "# todo 0",
+            "# duration_ms 97181.069939"
+          ],
+          "failures": []
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "id": 12154192505,
+        "name": "appearance-admission-8499225d1d4391372e52903a3a0e8ecaab1b3aad-1",
+        "size_in_bytes": 10384,
+        "digest": "sha256:71fe0d34b1aa82c5f61973a97740e903bc91d02dbc112e07d1ecad4b3bb9e729",
+        "run": 39173025211
+      },
+      "files": [
+        {
+          "name": "admission-proof.json",
+          "bytes": 2328,
+          "sha256": "fc02cf308929cde50169612695fcd0ff5e15f6d6be1a9232121319134a9e1f8d",
+          "receipt": {
+            "format": "AppearanceAdmissionProofV1",
+            "sourceRevision": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+            "sourceTree": "8763bfc452d22373a6733984fc19d2aa09a3c3c9",
+            "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39173025211",
+            "node": "v22.13.1",
+            "testPolicy": {
+              "policyMode": "required",
+              "mode": "required",
+              "runTests": "true",
+              "qualification": "tests-required",
+              "forced": false,
+              "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+              "policy": {
+                "format": "revealline-release-test-policy.v1",
+                "mode": "required",
+                "authorization": "explicit-user-request-20261004",
+                "scope": "automated-test-suites",
+                "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+                "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+              }
+            },
+            "result": "passed",
+            "executed": true,
+            "command": "node --test --test-concurrency=1",
+            "files": [
+              "game/test/journey-performance-admission.test.mjs",
+              "game/test/journey-performance-observation-admission.test.mjs",
+              "game/test/journey-profile-owned-transition.test.mjs",
+              "game/test/journey-required-progress-admission.test.mjs",
+              "game/test/solo-required-progress-preparation-host.test.mjs",
+              "game/test/owned-recorder.test.mjs",
+              "game/test/demo-library-indexeddb.test.mjs",
+              "game/test/optional-learning-admission.test.mjs",
+              "game/test/optional-replay-admission.test.mjs",
+              "game/test/solo-pending-verification-gameplay-host.test.mjs",
+              "game/test/edition-mastery-host.test.mjs",
+              "game/test/edition-lessons.test.mjs",
+              "game/test/capture-presentation-session.test.mjs",
+              "game/test/solo-dense-replay-persistence.test.mjs",
+              "game/test/library-entry.test.mjs",
+              "game/test/solo-lazy-library-host.test.mjs",
+              "game/test/solo-transition-performance-host.test.mjs"
+            ],
+            "output": {
+              "path": "admission-tests.tap",
+              "bytes": 41694,
+              "sha256": "e3609459052814c84cb8a83271a2b5cf5603d9e123756a6f0caa05df592f5742"
+            }
+          }
+        },
+        {
+          "name": "admission-tests.tap",
+          "bytes": 41694,
+          "sha256": "e3609459052814c84cb8a83271a2b5cf5603d9e123756a6f0caa05df592f5742",
+          "tapFooter": [
+            "  duration_ms: 4548.459445",
+            "  ...",
+            "# {\"terminalCampaignScans\":0,\"terminalCheckpointSections\":0}",
+            "1..163",
+            "# tests 170",
+            "# suites 0",
+            "# pass 170",
+            "# fail 0",
+            "# cancelled 0",
+            "# skipped 0",
+            "# todo 0",
+            "# duration_ms 108013.432506"
+          ],
+          "failures": []
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "id": 12156227524,
+        "name": "focused-shard-39173025193-1-2",
+        "size_in_bytes": 2971,
+        "digest": "sha256:974705bb9218692ba7dde92b5647b5c5ff51cbccab0329b9f4d0afdc05e2511c",
+        "run": 39173025193
+      },
+      "files": [
+        {
+          "name": "output.log",
+          "bytes": 4366,
+          "sha256": "0b0311522f88be4ec9683db0213aef46d7f31e954daa710ed6a2a1be7a2de846"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 2340,
+          "sha256": "6e89a8b182e3eb001b3b297822d77e2f858938af4a58b9ad6c85e75c077e5ae0",
+          "receipt": {
+            "format": "revealline-focused-shard.v1",
+            "state": "complete",
+            "shard": {
+              "index": 2,
+              "total": 4
+            },
+            "identity": {
+              "sourceRevision": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+              "workflowRevision": "c8147b613fac1c250655e8c6f02e52e05ba8e86f",
+              "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+              "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+              "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+              "changedPathsSha256": "cb9cc98aa0df459ff69894ae5985485b54adfb413b97d188233128aeff70e610",
+              "fallbackHandled": false,
+              "sourceTree": "8763bfc452d22373a6733984fc19d2aa09a3c3c9"
+            },
+            "plan": {
+              "commands": [
+                {
+                  "id": "publishing-controller",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "publishing/focused-tests.test.mjs",
+                    "publishing/fastline-merge-controller.test.mjs",
+                    "publishing/fastline-release-inputs.test.mjs",
+                    "publishing/fastline-release-objects.test.mjs",
+                    "publishing/fastline-release-publisher.test.mjs",
+                    "publishing/source-workflow.test.mjs",
+                    "scripts/test-pages-capacity-evidence.mjs",
+                    "scripts/test-pages-archive-evidence.mjs",
+                    "scripts/test-pages-recovery.mjs",
+                    "scripts/test-pages-capacity-report.mjs",
+                    "scripts/test-main-pages-metadata.mjs",
+                    "scripts/test-pages-candidate-contract.mjs",
+                    "scripts/test-pages-candidate-overlay.mjs",
+                    "scripts/test-pages-candidate-archive.mjs",
+                    "scripts/test-pages-candidate-measurement.mjs",
+                    "scripts/test-pages-candidate-stack.mjs",
+                    "scripts/test-pages-stack-contract.mjs",
+                    "scripts/test-pages-stack-source.mjs",
+                    "scripts/test-pages-stack-packet.mjs",
+                    "scripts/test-pages-stack-measurement.mjs",
+                    "scripts/test-pages-stack-artifacts.mjs",
+                    "scripts/test-pages-stack-e2e.mjs",
+                    "publishing/test-policy.test.mjs"
+                  ]
+                },
+                {
+                  "id": "unknown-runtime-validate",
+                  "command": "npm",
+                  "args": [
+                    "run",
+                    "validate"
+                  ],
+                  "timeoutMs": 1800000
+                },
+                {
+                  "id": "changed-test:game/test/solo-soundtrack-admission-host.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/solo-soundtrack-admission-host.test.mjs"
+                  ]
+                },
+                {
+                  "id": "changed-test:game/test/soundtrack-host.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/soundtrack-host.test.mjs"
+                  ]
+                },
+                {
+                  "id": "changed-test:game/test/soundtrack-panel.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/soundtrack-panel.test.mjs"
+                  ]
+                }
+              ],
+              "sha256": "9edf85b3f595c1313f2c8c4b9ef168602b1b4b22ab26185cc48b990c13ce9674"
+            },
+            "indices": [
+              1
+            ],
+            "result": {
+              "attempted": 1,
+              "failures": [],
+              "exitCode": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "id": 12155889376,
+        "name": "focused-shard-39173025193-1-3",
+        "size_in_bytes": 2999,
+        "digest": "sha256:b6430baefe09945ef4302df453017a019b276781635f41478814b7a0c343ebed",
+        "run": 39173025193
+      },
+      "files": [
+        {
+          "name": "output.log",
+          "bytes": 8492,
+          "sha256": "c567a9f5a877ba33f57adaf3360eebf1ad74591565347e1be4e7776dd84ef394"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 2340,
+          "sha256": "b03942b3a8c66b7d4ad86ebf3c0e02280d9235beb4d4ef5ac8459d1845549be0",
+          "receipt": {
+            "format": "revealline-focused-shard.v1",
+            "state": "complete",
+            "shard": {
+              "index": 3,
+              "total": 4
+            },
+            "identity": {
+              "sourceRevision": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+              "workflowRevision": "c8147b613fac1c250655e8c6f02e52e05ba8e86f",
+              "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+              "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+              "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+              "changedPathsSha256": "cb9cc98aa0df459ff69894ae5985485b54adfb413b97d188233128aeff70e610",
+              "fallbackHandled": false,
+              "sourceTree": "8763bfc452d22373a6733984fc19d2aa09a3c3c9"
+            },
+            "plan": {
+              "commands": [
+                {
+                  "id": "publishing-controller",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "publishing/focused-tests.test.mjs",
+                    "publishing/fastline-merge-controller.test.mjs",
+                    "publishing/fastline-release-inputs.test.mjs",
+                    "publishing/fastline-release-objects.test.mjs",
+                    "publishing/fastline-release-publisher.test.mjs",
+                    "publishing/source-workflow.test.mjs",
+                    "scripts/test-pages-capacity-evidence.mjs",
+                    "scripts/test-pages-archive-evidence.mjs",
+                    "scripts/test-pages-recovery.mjs",
+                    "scripts/test-pages-capacity-report.mjs",
+                    "scripts/test-main-pages-metadata.mjs",
+                    "scripts/test-pages-candidate-contract.mjs",
+                    "scripts/test-pages-candidate-overlay.mjs",
+                    "scripts/test-pages-candidate-archive.mjs",
+                    "scripts/test-pages-candidate-measurement.mjs",
+                    "scripts/test-pages-candidate-stack.mjs",
+                    "scripts/test-pages-stack-contract.mjs",
+                    "scripts/test-pages-stack-source.mjs",
+                    "scripts/test-pages-stack-packet.mjs",
+                    "scripts/test-pages-stack-measurement.mjs",
+                    "scripts/test-pages-stack-artifacts.mjs",
+                    "scripts/test-pages-stack-e2e.mjs",
+                    "publishing/test-policy.test.mjs"
+                  ]
+                },
+                {
+                  "id": "unknown-runtime-validate",
+                  "command": "npm",
+                  "args": [
+                    "run",
+                    "validate"
+                  ],
+                  "timeoutMs": 1800000
+                },
+                {
+                  "id": "changed-test:game/test/solo-soundtrack-admission-host.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/solo-soundtrack-admission-host.test.mjs"
+                  ]
+                },
+                {
+                  "id": "changed-test:game/test/soundtrack-host.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/soundtrack-host.test.mjs"
+                  ]
+                },
+                {
+                  "id": "changed-test:game/test/soundtrack-panel.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/soundtrack-panel.test.mjs"
+                  ]
+                }
+              ],
+              "sha256": "9edf85b3f595c1313f2c8c4b9ef168602b1b4b22ab26185cc48b990c13ce9674"
+            },
+            "indices": [
+              2
+            ],
+            "result": {
+              "attempted": 1,
+              "failures": [],
+              "exitCode": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "id": 12155769148,
+        "name": "focused-shard-39173025193-1-1",
+        "size_in_bytes": 23148,
+        "digest": "sha256:e66ba0b079cf0d243574879bff41b6ba32d4086af1e81d2773fdf23e5ca0dac1",
+        "run": 39173025193
+      },
+      "files": [
+        {
+          "name": "output.log",
+          "bytes": 111052,
+          "sha256": "2099aeb7f2fd53cb7dfd342bd4da4f3b1ba592f11d8c729dfdb2cb0142f76dc8"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 2342,
+          "sha256": "e15442741272940e2076303a11956c0c0953b84c56d98418f0a1e11242bf1910",
+          "receipt": {
+            "format": "revealline-focused-shard.v1",
+            "state": "complete",
+            "shard": {
+              "index": 1,
+              "total": 4
+            },
+            "identity": {
+              "sourceRevision": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+              "workflowRevision": "c8147b613fac1c250655e8c6f02e52e05ba8e86f",
+              "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+              "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+              "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+              "changedPathsSha256": "cb9cc98aa0df459ff69894ae5985485b54adfb413b97d188233128aeff70e610",
+              "fallbackHandled": false,
+              "sourceTree": "8763bfc452d22373a6733984fc19d2aa09a3c3c9"
+            },
+            "plan": {
+              "commands": [
+                {
+                  "id": "publishing-controller",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "publishing/focused-tests.test.mjs",
+                    "publishing/fastline-merge-controller.test.mjs",
+                    "publishing/fastline-release-inputs.test.mjs",
+                    "publishing/fastline-release-objects.test.mjs",
+                    "publishing/fastline-release-publisher.test.mjs",
+                    "publishing/source-workflow.test.mjs",
+                    "scripts/test-pages-capacity-evidence.mjs",
+                    "scripts/test-pages-archive-evidence.mjs",
+                    "scripts/test-pages-recovery.mjs",
+                    "scripts/test-pages-capacity-report.mjs",
+                    "scripts/test-main-pages-metadata.mjs",
+                    "scripts/test-pages-candidate-contract.mjs",
+                    "scripts/test-pages-candidate-overlay.mjs",
+                    "scripts/test-pages-candidate-archive.mjs",
+                    "scripts/test-pages-candidate-measurement.mjs",
+                    "scripts/test-pages-candidate-stack.mjs",
+                    "scripts/test-pages-stack-contract.mjs",
+                    "scripts/test-pages-stack-source.mjs",
+                    "scripts/test-pages-stack-packet.mjs",
+                    "scripts/test-pages-stack-measurement.mjs",
+                    "scripts/test-pages-stack-artifacts.mjs",
+                    "scripts/test-pages-stack-e2e.mjs",
+                    "publishing/test-policy.test.mjs"
+                  ]
+                },
+                {
+                  "id": "unknown-runtime-validate",
+                  "command": "npm",
+                  "args": [
+                    "run",
+                    "validate"
+                  ],
+                  "timeoutMs": 1800000
+                },
+                {
+                  "id": "changed-test:game/test/solo-soundtrack-admission-host.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/solo-soundtrack-admission-host.test.mjs"
+                  ]
+                },
+                {
+                  "id": "changed-test:game/test/soundtrack-host.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/soundtrack-host.test.mjs"
+                  ]
+                },
+                {
+                  "id": "changed-test:game/test/soundtrack-panel.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/soundtrack-panel.test.mjs"
+                  ]
+                }
+              ],
+              "sha256": "9edf85b3f595c1313f2c8c4b9ef168602b1b4b22ab26185cc48b990c13ce9674"
+            },
+            "indices": [
+              0,
+              4
+            ],
+            "result": {
+              "attempted": 2,
+              "failures": [],
+              "exitCode": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "id": 12154138420,
+        "name": "admission-39173025193-1",
+        "size_in_bytes": 505,
+        "digest": "sha256:4fbfadf09af32acb88cf401755aced79e6ab8370a4621126065dc20c048d6265",
+        "run": 39173025193
+      },
+      "files": [
+        {
+          "name": "admission.json",
+          "bytes": 642,
+          "sha256": "dfb1c3d2f5b9ce2dd57053bfc0d6005e4cbcca050550d25cd7011608a4d09cb5",
+          "receipt": {
+            "format": "revealline-admission.v1",
+            "headSha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+            "baseSha": "dd337c8120fd6f875544c1479713d3aa4299c323",
+            "workflowRevision": "c8147b613fac1c250655e8c6f02e52e05ba8e86f",
+            "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+            "classification": "maintenance",
+            "dependencies": [
+              1619
+            ],
+            "paths": [
+              ".github/workflows/appearance-preview.yml",
+              "game/test/helpers/soundtrack-authoring-loader.mjs",
+              "game/test/solo-soundtrack-admission-host.test.mjs",
+              "game/test/soundtrack-host.test.mjs",
+              "game/test/soundtrack-panel.test.mjs",
+              "game/ui/soundtrack-authoring-view.mjs",
+              "game/ui/soundtrack-panel.mjs"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "id": 12156241805,
+        "name": "focused-shard-39173029629-1-1",
+        "size_in_bytes": 19935,
+        "digest": "sha256:7e4c0c119361fb2c422e0241dadcd63c2967698eeeac31f891b5ac95ea4d57c3",
+        "run": 39173029629
+      },
+      "files": [
+        {
+          "name": "output.log",
+          "bytes": 91491,
+          "sha256": "1b48347546102b3cac0ac48e333412ab5f9fb1a85d94f91a04cb7ac1eeb24493"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 3263,
+          "sha256": "af032e3b6776478e3e98075d684482eb449b551a0ed075ddbb517649f450ede3",
+          "receipt": {
+            "format": "revealline-focused-shard.v1",
+            "state": "complete",
+            "shard": {
+              "index": 1,
+              "total": 4
+            },
+            "identity": {
+              "sourceRevision": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+              "workflowRevision": "e94fcc301cd4e4af3ff674ecf9482070309636ad",
+              "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+              "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+              "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+              "changedPathsSha256": "b1adf78cd44529a523ec7689dfd10f8261ef0723979f570e040f75b42970e10d",
+              "fallbackHandled": false,
+              "sourceTree": "56e1268dff01fb21056ab57f6a563da7483145ad"
+            },
+            "plan": {
+              "commands": [
+                {
+                  "id": "publishing-controller",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "publishing/focused-tests.test.mjs",
+                    "publishing/fastline-merge-controller.test.mjs",
+                    "publishing/fastline-release-inputs.test.mjs",
+                    "publishing/fastline-release-objects.test.mjs",
+                    "publishing/fastline-release-publisher.test.mjs",
+                    "publishing/source-workflow.test.mjs",
+                    "scripts/test-pages-capacity-evidence.mjs",
+                    "scripts/test-pages-archive-evidence.mjs",
+                    "scripts/test-pages-recovery.mjs",
+                    "scripts/test-pages-capacity-report.mjs",
+                    "scripts/test-main-pages-metadata.mjs",
+                    "scripts/test-pages-candidate-contract.mjs",
+                    "scripts/test-pages-candidate-overlay.mjs",
+                    "scripts/test-pages-candidate-archive.mjs",
+                    "scripts/test-pages-candidate-measurement.mjs",
+                    "scripts/test-pages-candidate-stack.mjs",
+                    "scripts/test-pages-stack-contract.mjs",
+                    "scripts/test-pages-stack-source.mjs",
+                    "scripts/test-pages-stack-packet.mjs",
+                    "scripts/test-pages-stack-measurement.mjs",
+                    "scripts/test-pages-stack-artifacts.mjs",
+                    "scripts/test-pages-stack-e2e.mjs",
+                    "publishing/test-policy.test.mjs"
+                  ]
+                },
+                {
+                  "id": "company-generated-source-and-media",
+                  "command": "npm",
+                  "args": [
+                    "run",
+                    "company:check"
+                  ]
+                },
+                {
+                  "id": "company-runtime-and-publication",
+                  "command": "npm",
+                  "args": [
+                    "run",
+                    "company:test"
+                  ],
+                  "timeoutMs": 2700000
+                },
+                {
+                  "id": "company-review-measurements",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "scripts/test-company-review.mjs"
+                  ]
+                },
+                {
+                  "id": "edition-appearance-contracts",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/actor-appearance-pin.test.mjs",
+                    "game/test/actor-appearance-lease.test.mjs",
+                    "game/test/replay-presentation.test.mjs",
+                    "game/test/replay-actor-context.test.mjs"
+                  ]
+                },
+                {
+                  "id": "edition-persistence-compatibility",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/installed-app.test.mjs",
+                    "game/test/profile-transfer.test.mjs",
+                    "game/test/profile-channel-reader.test.mjs",
+                    "scripts/test-offline-publication.mjs"
+                  ]
+                },
+                {
+                  "id": "unknown-runtime-validate",
+                  "command": "npm",
+                  "args": [
+                    "run",
+                    "validate"
+                  ],
+                  "timeoutMs": 1800000
+                },
+                {
+                  "id": "changed-test:game/test/mission-library-stage-observation.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/mission-library-stage-observation.test.mjs"
+                  ]
+                },
+                {
+                  "id": "changed-test:game/test/performance-session.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "game/test/performance-session.test.mjs"
+                  ]
+                },
+                {
+                  "id": "changed-test:scripts/solo-pages-backup.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "scripts/solo-pages-backup.test.mjs"
+                  ]
+                },
+                {
+                  "id": "changed-test:scripts/solo-pages-smoke.test.mjs",
+                  "command": "node",
+                  "args": [
+                    "--test",
+                    "scripts/solo-pages-smoke.test.mjs"
+                  ]
+                }
+              ],
+              "sha256": "360db954d7b96a4ef09328698fa7cd512db7f81b48f207907e1664f1ea9e76d6"
+            },
+            "indices": [
+              0,
+              4,
+              8
+            ],
+            "result": {
+              "attempted": 3,
+              "failures": [],
+              "exitCode": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "id": 12153849975,
+        "name": "admission-39173029629-1",
+        "size_in_bytes": 629,
+        "digest": "sha256:ee04e5ecc3f2ba779b8ce45074930fe958056b303b20123fda74582e313ff978",
+        "run": 39173029629
+      },
+      "files": [
+        {
+          "name": "admission.json",
+          "bytes": 999,
+          "sha256": "5ce5cceeceaf1379734407983cbe8f9a8ac5e50723793c4ce78b237e33096b65",
+          "receipt": {
+            "format": "revealline-admission.v1",
+            "headSha": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+            "baseSha": "dd337c8120fd6f875544c1479713d3aa4299c323",
+            "workflowRevision": "e94fcc301cd4e4af3ff674ecf9482070309636ad",
+            "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+            "classification": "maintenance",
+            "dependencies": [
+              1620
+            ],
+            "paths": [
+              ".github/workflows/appearance-preview.yml",
+              ".github/workflows/published-pages-smoke.yml",
+              "docs/performance/solo-published-pages-smoke-plan.json",
+              "game/app.mjs",
+              "game/mission-library/multiplayer-expeditions.mjs",
+              "game/test/mission-library-stage-observation.test.mjs",
+              "game/test/performance-session.test.mjs",
+              "game/ui/mission-library-browser.mjs",
+              "game/ui/performance-session.mjs",
+              "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+              "scripts/run-solo-pages-smoke.mjs",
+              "scripts/solo-pages-backup.mjs",
+              "scripts/solo-pages-backup.test.mjs",
+              "scripts/solo-pages-smoke.mjs",
+              "scripts/solo-pages-smoke.test.mjs",
+              "scripts/test-appearance-preview-policy.mjs"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sourceGroupFacts": [
+    {
+      "pr": 1675,
+      "run": 39173025193,
+      "head": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+      "shards": [
+        {
+          "index": 1,
+          "artifact": 12155769148,
+          "selectedCommandIndices": [
+            0,
+            4
+          ],
+          "completeTapGroups": [
+            164,
+            395
+          ],
+          "allPass": true,
+          "interleavedOutput": true
+        },
+        {
+          "index": 2,
+          "artifact": 12156227524,
+          "selectedCommandIndices": [
+            1
+          ],
+          "result": "Full npm validate including localization and all generated projections passed."
+        },
+        {
+          "index": 3,
+          "artifact": 12155889376,
+          "selectedCommandIndices": [
+            2
+          ],
+          "tests": 39,
+          "pass": 39,
+          "fail": 0,
+          "command": "game/test/solo-soundtrack-admission-host.test.mjs"
+        },
+        {
+          "index": 4,
+          "state": "checkout in progress; actual soundtrack-host controls not yet verified"
+        }
+      ]
+    },
+    {
+      "pr": 1676,
+      "run": 39173029629,
+      "head": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+      "shards": [
+        {
+          "index": 1,
+          "artifact": 12156241805,
+          "selectedCommandIndices": [
+            0,
+            4,
+            8
+          ],
+          "completeTapGroups": [
+            395,
+            24,
+            54
+          ],
+          "allPass": true,
+          "interleavedOutput": true
+        },
+        {
+          "index": 2,
+          "state": "queued"
+        },
+        {
+          "index": 3,
+          "state": "queued"
+        },
+        {
+          "index": 4,
+          "state": "queued"
+        }
+      ]
+    }
+  ],
+  "specificNewAuthoringCoverage": {
+    "verified": [
+      "Settings commits before authoring mounts and later preserves an unrelated editor draft",
+      "shared Couch owner and modal facade remain usable while authoring import is pending"
+    ],
+    "source": "Exact #1675 soundtrack-panel.test.mjs TAP names163/164 in artifact12155769148",
+    "notYetVerified": "Remaining new actual-host cold/held/close/hidden/replacement/retry/native-close controls belong to soundtrack-host.test.mjs in source shard4; do not infer them from overlapping admission counts."
+  },
+  "attemptDistinction": "Appearance three successful retained artifacts are named attempt1 and predate the retry. The one authorized attempt2 installed_admission checkout retry remains queued. GitHub attempt2 job listing carries prior successful jobs; it does not prove those jobs reran.",
+  "priorInfrastructureFailure": {
+    "id": 117809866425,
+    "run_id": 39173025211,
+    "workflow_name": "Appearance preview",
+    "head_branch": "codex/solo-lazy-soundtrack-authoring",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39173025211",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAbbgPmuQ",
+    "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117809866425",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39173025211/job/117809866425",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-10-18T22:37:14Z",
+    "started_at": "2026-10-18T23:10:31Z",
+    "completed_at": "2026-10-18T23:13:36Z",
+    "name": "installed_admission",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T23:10:32Z",
+        "completed_at": "2026-10-18T23:10:33Z"
+      },
+      {
+        "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 2,
+        "started_at": "2026-10-18T23:10:33Z",
+        "completed_at": "2026-10-18T23:13:33Z"
+      },
+      {
+        "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 3,
+        "started_at": "2026-10-18T23:13:33Z",
+        "completed_at": "2026-10-18T23:13:33Z"
+      },
+      {
+        "name": "Read exact-source Installed chapter admission policy",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 4,
+        "started_at": "2026-10-18T23:13:33Z",
+        "completed_at": "2026-10-18T23:13:33Z"
+      },
+      {
+        "name": "Install Installed chapter admission test dependencies",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 5,
+        "started_at": "2026-10-18T23:13:33Z",
+        "completed_at": "2026-10-18T23:13:33Z"
+      },
+      {
+        "name": "Run complete installed chapter ownership and preparation regressions",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 6,
+        "started_at": "2026-10-18T23:13:33Z",
+        "completed_at": "2026-10-18T23:13:33Z"
+      },
+      {
+        "name": "Bind exact-source Installed chapter admission proof",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 7,
+        "started_at": "2026-10-18T23:13:33Z",
+        "completed_at": "2026-10-18T23:13:33Z"
+      },
+      {
+        "name": "Retain Installed chapter admission proof and partial diagnostics",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 8,
+        "started_at": "2026-10-18T23:13:33Z",
+        "completed_at": "2026-10-18T23:13:33Z"
+      },
+      {
+        "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-10-18T23:13:33Z",
+        "completed_at": "2026-10-18T23:13:33Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-10-18T23:13:33Z",
+        "completed_at": "2026-10-18T23:13:33Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117809866425",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000043227,
+    "runner_name": "GitHub Actions 1000043227",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "integrity": "Every downloaded small ZIP matched declared byte size and SHA256; CRC test passed. Appearance proof output byte counts/digests match retained TAP. Source receipts bind exact source/tree and completed command indices. No large build artifact downloaded.",
+  "limitations": [
+    "Source aggregates and full Appearance/package remain incomplete at this snapshot.",
+    "Counts overlap existing suites and are not added into a unique qualification total.",
+    "No local product/test/build/browser execution, rerun, dispatch, PR merge or source mutation."
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "schema": "revealline-bounded-source-compatibility-review-v1",
+  "repository": "mekhovov/revealline",
+  "reviewedAt": "2026-10-19T00:38:18Z",
+  "reviewer": "status_qualification",
+  "main": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "mergedPullRequest": 1655,
+  "question": "Does the new required first-flight-home-enter node break another host or require an FPV shared-shell regeneration?",
+  "verdict": "No concrete defect found in the reviewed scope; source review only.",
+  "sources": [
+    {
+      "path": "game/ui/first-flight-view.mjs",
+      "blob": "1bd67ea6c167081fb29ca3f737deea6b14d5e334",
+      "bytes": 7917,
+      "sha256": "e94601c1488848884c2e629dac356cc47865b6f5ffbfb4effff79404e5103767"
+    },
+    {
+      "path": "scripts/refresh-fpv-play-shell.mjs",
+      "blob": "3c16fe0e7f450cde67af9d241875afdf28414d56",
+      "bytes": 10768,
+      "sha256": "b52dae963bb8894824f06ced5be9808edeb4038a66b6810d0091df223ee00d8b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "blob": "9499ede569fb1e9b525bb7ca5b871ce2465361d5",
+      "bytes": 324774,
+      "sha256": "54d3db054b4c2d405df6b11f77e18f00b81880989293cd3a7d95a6788d948b27"
+    },
+    {
+      "path": "game/index.html",
+      "blob": "93af395bf479b57f5d617761b78fe6d1202c5282",
+      "bytes": 143246,
+      "sha256": "62913fc6f145596ff7425e13b3f3f19e2937ec6254b112cbc22691e28eb2ca6a"
+    },
+    {
+      "path": "game/app.mjs",
+      "blob": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb",
+      "bytes": 619467,
+      "sha256": "c1a489711a970e580fe8c4fbc9a4a486e97d96d18097320e1331ffc436965f9b"
+    }
+  ],
+  "scan": {
+    "scope": [
+      "game/",
+      "optional-practice/",
+      "scripts/"
+    ],
+    "extensions": [
+      ".mjs",
+      ".js",
+      ".html"
+    ],
+    "files": 4461,
+    "exactLocalGitObjects": 4461,
+    "missingObjects": 0,
+    "method": "Enumerated the exact remote main Git tree; read matching existing local Git objects without checkout/filesystem mutations; independently recomputed every blob SHA1 before searching literal module references and attachFirstFlightView.",
+    "matches": [
+      {
+        "path": "game/app.mjs",
+        "blob": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb",
+        "importLine": 190,
+        "callLine": 8219
+      },
+      {
+        "path": "game/test/first-flight-view.test.mjs",
+        "blob": "f250b6bd262c525c900b12f037b93150f4f9993c",
+        "importLine": 4,
+        "callLine": 56
+      },
+      {
+        "path": "game/ui/first-flight-view.mjs",
+        "blob": "1bd67ea6c167081fb29ca3f737deea6b14d5e334",
+        "declarationLine": 6
+      }
+    ]
+  },
+  "findings": [
+    "The only production caller/import found is game/app.mjs; its canonical game/index.html supplies first-flight-home-enter at line3277.",
+    "attachFirstFlightView validates all required nodes at lines34\u201336 before installing listeners/rendering. A hypothetical missing node would fail as incomplete view before later render dereferences; no current host missing that node was found.",
+    "The direct view test constructs its nodes from current game/index.html lines46\u201351, so the new ID is included rather than supplied by an outdated independent fixture.",
+    "The FPV generator's admitted module set and four canonical mode-shell sources exclude all three changed production files: app.mjs, index.html, first-flight-view.mjs. The generated flight-fullscreen.mjs contains no first-flight view reference, so this merge does not create a projection mismatch through those inputs.",
+    "Compiled edition collection reads canonical engine files (compile-edition368\u2013390), including game/index.html through edition-runtime275. The reviewed HTML projection at compile-edition618ff preserves the new button; no alternate First Flight host instantiation was found."
+  ],
+  "additionalSources": [
+    {
+      "path": "game/test/first-flight-view.test.mjs",
+      "bytes": 9063,
+      "sha256": "8fa8d4efec487e22cffb0382b4c7fcb106f26896e2e35ecde547c5c57fa355a0"
+    },
+    {
+      "path": "scripts/compile-edition.mjs",
+      "bytes": 44846,
+      "sha256": "f836063d1ac4412e5a957ba682fadb9fd316cf205ff3176250bd4ff9a9a1fa23"
+    },
+    {
+      "path": "scripts/edition-runtime.mjs",
+      "bytes": 19316,
+      "sha256": "58a7ebe8510019b61d89f501567bbd48b7a3ffcd1228e5d8a61d8a3ccf3328e5"
+    }
+  ],
+  "limits": [
+    "No product modules, tests, generator, build or browser were executed.",
+    "This verifies the named source compatibility concern, not all First Flight behavior or current published deployment.",
+    "No source checkout, uncommitted FPV files, branches or PRs were changed."
+  ]
+}

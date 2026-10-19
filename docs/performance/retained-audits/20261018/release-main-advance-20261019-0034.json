@@ -1,0 +1,345 @@
+{
+  "schema": "revealline-read-only-release-milestone-v1",
+  "observedAt": "2026-10-19T00:35:51.931Z",
+  "main": {
+    "sha": "bd15820bee10a33ba64534071d22657fbd7326d3",
+    "message": "Merge pull request #1655 from mekhovov/codex/f02a-first-flight-home\n\nSurface optional First Flight on Capture Home",
+    "parents": [
+      "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "aad2f48a0cc45e07777fa240d4fba661291c6382"
+    ],
+    "comparisonBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "files": [
+      {
+        "path": "game/app.mjs",
+        "status": "modified",
+        "changes": 4,
+        "patch": "@@ -4025,6 +4025,10 @@ try {\n       entry: {\n         available: !practice && !courseSession && !started && !courseEntry,\n         helpAvailable: !practice && !courseSession,\n+        homeAvailable:\n+          !practice &&\n+          !courseSession &&\n+          !['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id),\n         pending: !!courseEntry,\n         message: courseEntryMessage,\n       },"
+      },
+      {
+        "path": "game/index.html",
+        "status": "modified",
+        "changes": 5,
+        "patch": "@@ -3274,6 +3274,11 @@ <h1 id=\"shell-title\" data-i18n-rich=\"interface:reveal\">\n             >\n             <span aria-hidden=\"true\">→</span>\n           </button>\n+          <button id=\"first-flight-home-enter\" type=\"button\" class=\"button secondary\" hidden>\n+            <span data-i18n=\"interface:firstFlight\">First Flight</span>\n+            <span aria-hidden=\"true\"> · </span>\n+            <span data-i18n=\"interface:learnByPlaying\">Learn by playing</span>\n+          </button>\n           <button\n             id=\"shell-play\"\n             type=\"button\""
+      },
+      {
+        "path": "game/test/first-flight-home-host.test.mjs",
+        "status": "added",
+        "changes": 178
+      },
+      {
+        "path": "game/test/first-flight-view.test.mjs",
+        "status": "modified",
+        "changes": 24
+      },
+      {
+        "path": "game/ui/first-flight-view.mjs",
+        "status": "modified",
+        "changes": 5,
+        "patch": "@@ -15,6 +15,7 @@ export function attachFirstFlightView({\n } = {}) {\n   const ids = [\n     'first-flight-enter',\n+    'first-flight-home-enter',\n     'first-flight-help-enter',\n     'first-flight-entry-status',\n     'first-flight-entry-cancel',\n@@ -52,6 +53,7 @@ export function attachFirstFlightView({\n     listeners.push(() => node.removeEventListener(type, listener));\n   }\n   listen('enter', 'click', onEnter);\n+  listen('home-enter', 'click', onEnter);\n   listen('help-enter', 'click', onEnter);\n   listen('entry-cancel', 'click', onCancelEnter);\n   listen('next', 'click', onNext);\n@@ -112,8 +114,9 @@ export function attachFirstFlightView({\n         : null;\n     current = { request: lesson ? request : null };\n     $('enter').hidden = !!lesson || !entry.available;\n+    $('home-enter').hidden = !!lesson || !entry.homeAvailable;\n     $('help-enter').hidden = !!lesson || !entry.helpAvailable;\n-    $('enter').disabled = $('help-enter').disabled = !!entry.pending;\n+    $('enter').disabled = $('home-enter').disabled = $('help-enter').disabled = !!entry.pending;\n     $('entry-cancel').hidden = !entry.pending;\n     const entryMessage = typeof entry.message === 'string' ? entry.message : '';\n     text('entry-status', entryMessage);"
+      }
+    ],
+    "sourceReview": "Five changed paths add optional First Flight Home entry. No policy/workflow/shared trace-adapter changes. App hunk is separate from release-cohort soundtrack/Missions changes; this scoped diff inspection is not final combined runtime qualification."
+  },
+  "prs": [
+    {
+      "number": 1619,
+      "url": "https://github.com/mekhovov/revealline/pull/1619",
+      "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "merged_at": null,
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "checks": {
+        "total": 24,
+        "collected": 24,
+        "inventorySha256": "2e2d14862fc16aa477a8af4838e3e826351c5baaabf0933b41c4aaa0794d2b24",
+        "tally": {
+          "success": 22,
+          "skipped": 2
+        },
+        "releaseReady": [
+          {
+            "id": 117803379569,
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-10-18T22:53:56Z"
+          }
+        ]
+      }
+    },
+    {
+      "number": 1620,
+      "url": "https://github.com/mekhovov/revealline/pull/1620",
+      "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "merged_at": null,
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "checks": {
+        "total": 26,
+        "collected": 26,
+        "inventorySha256": "cca953ba40b202d3d37ff3c79c348127bae4aafba36f9adbd3dd60cfdb19cce3",
+        "tally": {
+          "success": 23,
+          "skipped": 3
+        },
+        "releaseReady": [
+          {
+            "id": 117803024912,
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-10-18T22:42:30Z"
+          }
+        ]
+      }
+    },
+    {
+      "number": 1621,
+      "url": "https://github.com/mekhovov/revealline/pull/1621",
+      "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "merged_at": null,
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "checks": {
+        "total": 111,
+        "collected": 111,
+        "inventorySha256": "31676340411d9d8542b1ca82d7a3d8073ea3d6a7252fb5bbf63f1714bda54076",
+        "tally": {
+          "success": 17,
+          "skipped": 94
+        },
+        "releaseReady": [
+          {
+            "id": 117799599161,
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-10-18T22:23:56Z"
+          }
+        ]
+      }
+    },
+    {
+      "number": 1628,
+      "url": "https://github.com/mekhovov/revealline/pull/1628",
+      "head": "62be652ce70b11f840b491c218609d5225374be4",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "merged_at": null,
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "checks": {
+        "total": 113,
+        "collected": 113,
+        "inventorySha256": "fef3526c2504e57fad3e9c0ddbdb10f95f23c640757e9658eb21842482060f6c",
+        "tally": {
+          "success": 17,
+          "skipped": 96
+        },
+        "releaseReady": [
+          {
+            "id": 117814060858,
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-10-18T23:49:35Z"
+          }
+        ]
+      }
+    },
+    {
+      "number": 1654,
+      "url": "https://github.com/mekhovov/revealline/pull/1654",
+      "head": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "merged_at": null,
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "checks": {
+        "total": 20,
+        "collected": 20,
+        "inventorySha256": "cb05410788b2bdc0fd0095b287510e84b181b5a1b67cbb7504161cf05288e7a1",
+        "tally": {
+          "success": 18,
+          "skipped": 2
+        },
+        "releaseReady": [
+          {
+            "id": 117803949673,
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-10-18T22:53:53Z"
+          }
+        ]
+      }
+    }
+  ],
+  "publisher": {
+    "runId": 39168765766,
+    "head": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "status": "queued",
+    "conclusion": null,
+    "jobs": [
+      {
+        "id": 117813536487,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-18T23:45:54Z",
+        "completed_at": "2026-10-18T23:53:43Z"
+      },
+      {
+        "id": 117825738848,
+        "name": "deploy",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-18T23:53:44Z",
+        "completed_at": null
+      }
+    ]
+  },
+  "publicIdentity": [
+    {
+      "url": "https://mekhovov.github.io/revealline/main-deployment.json",
+      "status": 200,
+      "bytes": 303,
+      "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+      "body": {
+        "format": "revealline-main-deployment.v1",
+        "channel": "main",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "sourceCommittedAt": "2026-10-18T21:05:19Z",
+        "buildVersion": "main-e4400303952d",
+        "play": "game/",
+        "releases": "https://github.com/mekhovov/revealline/releases"
+      }
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline/release.json",
+      "status": 200,
+      "bytes": 303,
+      "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+      "body": {
+        "format": "revealline-main-deployment.v1",
+        "channel": "main",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "sourceCommittedAt": "2026-10-18T21:05:19Z",
+        "buildVersion": "main-e4400303952d",
+        "play": "game/",
+        "releases": "https://github.com/mekhovov/revealline/releases"
+      }
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline/game/build-info.json",
+      "status": 200,
+      "bytes": 143,
+      "sha256": "f4993b007304ab787c4431932a6f8037c1d75ab58fdff755807382f0060ce05a",
+      "body": {
+        "formatVersion": 1,
+        "version": "0.151.1",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "entry": "game/index.html"
+      }
+    }
+  ],
+  "knownControllerEvents": [
+    {
+      "id": 39171295590,
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-10-18T22:13:39Z",
+      "updated_at": "2026-10-18T22:54:00Z",
+      "prs": [
+        1619
+      ],
+      "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 39171307810,
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-10-18T22:13:49Z",
+      "updated_at": "2026-10-18T22:42:33Z",
+      "prs": [
+        1620
+      ],
+      "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 39170888801,
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-10-18T22:07:59Z",
+      "updated_at": "2026-10-18T22:24:00Z",
+      "prs": [
+        1621
+      ],
+      "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 39172372875,
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-10-18T22:28:25Z",
+      "updated_at": "2026-10-18T23:49:38Z",
+      "prs": [
+        1628
+      ],
+      "head": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 39174214314,
+      "event": "workflow_run",
+      "status": "pending",
+      "conclusion": null,
+      "created_at": "2026-10-18T22:53:59Z",
+      "updated_at": "2026-10-18T22:54:00Z",
+      "prs": [],
+      "head": "dd337c8120fd6f875544c1479713d3aa4299c323"
+    },
+    {
+      "id": 39173406631,
+      "event": "workflow_run",
+      "status": "queued",
+      "conclusion": null,
+      "created_at": "2026-10-18T22:42:32Z",
+      "updated_at": "2026-10-18T23:54:02Z",
+      "prs": [],
+      "head": "dd337c8120fd6f875544c1479713d3aa4299c323"
+    },
+    {
+      "id": 39172047962,
+      "event": "workflow_run",
+      "status": "queued",
+      "conclusion": null,
+      "created_at": "2026-10-18T22:23:58Z",
+      "updated_at": "2026-10-19T00:11:38Z",
+      "prs": [],
+      "head": "dd337c8120fd6f875544c1479713d3aa4299c323"
+    }
+  ],
+  "controllerScope": "Read latest50 Fastline metadata rows plus seven previously retained specific events. Recent50 scope is not an entire queue census. workflow_run metadata has empty PR associations, so event identity is not assigned to a PR by time alone.",
+  "meaningfulResults": [
+    "Main externally advanced fromdd337 tobd158 by merge#1655; our four ready releases remain unmerged with unchanged heads and complete green/intentional-skip check inventories.",
+    "Existing completion controller events39172047962 and39173406631 have progressed from pending toqueued, but remain unsettled.",
+    "1654 remainsdraft; ddpublisher deployment remainsqueued; publicmetadata remainse440/version0.151.1."
+  ],
+  "recommendation": "Existing completion events remain unsettled; no rerun/cancel/merge/dispatch guard is satisfied by this snapshot. Root must fresh-bind the current source/public package before native dispatch.",
+  "limits": [
+    "Identity metadata only, no new public asset/native gameplay qualification.",
+    "No local writes, functional tests/builds/browser execution or remote mutation except retention of this audit."
+  ]
+}

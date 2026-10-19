@@ -1094,6 +1094,36 @@
       "blob": "fd9359099c2409b24fd1ee7b7bfc8c9b2659c782",
       "bytes": 18672,
       "sha256": "cf85846e5a7c2247861c58f1473a8a5f22c179b60409305d035c1757b3233852"
+    },
+    {
+      "path": "release-main-advance-20261019-0034.json",
+      "blob": "76d0397ce3b4eb5a547e0aa8102cc0945b92774b",
+      "bytes": 13026,
+      "sha256": "82eb965eefd7a2a87a5c379c10db10b7822453967abe7a40e517a529dbd3864d"
+    },
+    {
+      "path": "authoring-backup-partial-source-20261019-0034.json",
+      "blob": "a06834c4c42da784ac0842b1115c3f1698ecafc2",
+      "bytes": 50476,
+      "sha256": "4a14c333e5a2c8f6a7cb79e784c2db017096029df7bbc0d24b5bceff63538199"
+    },
+    {
+      "path": "gameplay-before-optional-followups-priority-review.json",
+      "blob": "036309258680983f6ea744372d039338f4c1fa9b",
+      "bytes": 10928,
+      "sha256": "0877b263f78f67e3dd4ada38817026a1d5b8e2aebe37c872341dac9125d5e6c4"
+    },
+    {
+      "path": "first-flight-home-source-compatibility-20261019.json",
+      "blob": "fde81135303f74a0ba445d3c0c8dac4e9869298f",
+      "bytes": 4656,
+      "sha256": "6253ddf5f44941d1aed3318db6fa0b2705262c6c4a270092408b86ad7304cd18"
+    },
+    {
+      "path": "first-flight-home-bounded-review-clarification.json",
+      "blob": "53c5b335128337d74023efb729f12b295b0f4c3d",
+      "bytes": 4884,
+      "sha256": "712b6791eeb089b2d12729c88c85e19d23fbb42898f73a71248e603b78de6ab2"
     }
   ]
 }

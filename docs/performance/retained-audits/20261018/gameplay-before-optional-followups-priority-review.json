@@ -1,0 +1,74 @@
+{
+  "schema": "revealline-performance-priority-review-v1",
+  "reviewedAt": "2026-10-19T00:39:13.018Z",
+  "reviewer": "status_checks",
+  "scope": "Plan sequencing review only; source dependency and trusted-policy impact review. No implementation, functional execution, readiness, branch, merge or dispatch changes.",
+  "source": {
+    "repository": "mekhovov/revealline",
+    "pullRequest": 1654,
+    "head": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+    "url": "https://github.com/mekhovov/revealline/pull/1654",
+    "files": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "99aa5c9f05d57d305013fa2a184bf7f5967dece6",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 3,
+        "role": "Trusted source-gate workflow: focused and release-ready conditions change always() to !cancelled(); functional steps, aggregation bodies and failure requirements unchanged.",
+        "patch": "@@ -233,11 +233,12 @@ jobs:\n \n   focused:\n     # Keep the existing required status: no individual shard can qualify the gate.\n+    # Aggregate failed dependencies, but let cancellation retire an obsolete run.\n     if: >-\n-      always() && github.event_name == 'pull_request' &&\n+      ${{ !cancelled() && github.event_name == 'pull_request' &&\n       needs.preflight.result == 'success' &&\n       needs.preflight.outputs.admission != 'hold' &&\n-      needs.preflight.outputs.focusedRequired == 'true'\n+      needs.preflight.outputs.focusedRequired == 'true' }}\n     needs: [preflight, focused_shards]\n     runs-on: ubuntu-latest\n     timeout-minutes: 5\n@@ -438,7 +439,8 @@ jobs:\n           node .source-gate-automation/scripts/check-source-identity.mjs --root .\n \n   release-ready:\n-    if: always() && github.event_name == 'pull_request'\n+    # A cancelled run cannot qualify a head and must release its concurrency slot.\n+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}\n     needs: [preflight, focused, test, build]\n     runs-on: ubuntu-latest\n     steps:"
+      },
+      {
+        "path": "publishing/fastline-merge-controller.test.mjs",
+        "gitBlob": "375b7a1a6d6ab540f3f80a085ef0a2b059014a3d",
+        "status": "modified",
+        "additions": 12,
+        "deletions": 7,
+        "role": "Controller regression controls for skipped/cancelled required conclusions.",
+        "patch": "@@ -1544,13 +1544,18 @@ test(\"changed heads invalidate admission and disarm an existing request\", () =>\n   });\n });\n \n-test(\"a failed required rerun disarms an already admitted exact head\", () => {\n-  const input = fixture({ auto_merge: { enabled_at: \"now\" } });\n-  input.requiredCheck.conclusion = \"failure\";\n-  assert.deepEqual(decideMergeAction(input), {\n-    action: \"disarm\",\n-    reason: \"release-ready is not successful on the exact head\",\n-  });\n+test('failed, cancelled or skipped required gates never admit an exact head', () => {\n+  for (const conclusion of ['failure', 'cancelled', 'skipped']) {\n+    for (const auto_merge of [null, { enabled_at: 'now' }]) {\n+      const input = fixture({ auto_merge });\n+      input.requiredCheck.conclusion = conclusion;\n+      input.checkRuns[0].conclusion = conclusion;\n+      assert.deepEqual(decideMergeAction(input), {\n+        action: auto_merge ? 'disarm' : 'wait',\n+        reason: 'release-ready is not successful on the exact head',\n+      });\n+    }\n+  }\n });\n \n test(\"missing or stale admission receipts disarm even a successful exact head\", () => {"
+      },
+      {
+        "path": "publishing/source-workflow.test.mjs",
+        "gitBlob": "9247cd2357c1501f9c4ef2f0c624b1dacf1125ac",
+        "status": "modified",
+        "additions": 47,
+        "deletions": 1,
+        "role": "Source-workflow regression controls for aggregate shell failure and cancellation conditions.",
+        "patch": "@@ -204,7 +204,7 @@ test('aggregate preserves the required focused status and rejects any nonsuccess\n   const { spawnSync } = await import('node:child_process');\n   const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');\n   const aggregate = source.split('\\n  focused:\\n')[1]?.split('\\n  test:\\n')[0];\n-  assert.match(aggregate, /always\\(\\) && github.event_name == 'pull_request'/u);\n+  assert.match(aggregate, /!cancelled\\(\\) && github.event_name == 'pull_request'/u);\n   for (const condition of [\n     \"needs.preflight.result == 'success'\",\n     \"needs.preflight.outputs.admission != 'hold'\",\n@@ -238,8 +238,54 @@ test('aggregate preserves the required focused status and rejects any nonsuccess\n   assert.ok(aggregate.includes('--admission \"$RUNNER_TEMP/preflight-admission/admission.json\"'));\n   assert.ok(aggregate.includes('--test-policy automation/publishing/test-policy.json'));\n   const ready = source.split('\\n  release-ready:\\n')[1];\n+  assert.match(ready, /if: \\$\\{\\{ !cancelled\\(\\) && github.event_name == 'pull_request' \\}\\}/u);\n   assert.match(ready, /needs: \\[preflight, focused, test, build\\]/u);\n   assert.match(ready, /FOCUSED_RESULT: \\$\\{\\{ needs.focused.result \\}\\}/u);\n   assert.ok(ready.includes('test \"$FOCUSED_RESULT\" = success'));\n   assert.ok(ready.includes('test \"$FOCUSED_RESULT\" = skipped'));\n });\n+\n+test('release policy rejects failed dependencies and keeps only explicit policy skips', async () => {\n+  const { spawnSync } = await import('node:child_process');\n+  const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');\n+  const ready = source.split('\\n  release-ready:\\n')[1];\n+  const body = ready?.split('        run: |\\n')[1]?.replace(/^ {10}/gmu, '');\n+  assert.ok(body);\n+  const passing = {\n+    ADMISSION: 'release',\n+    PREFLIGHT_RESULT: 'success',\n+    FOCUSED_REQUIRED: 'true',\n+    FOCUSED_RESULT: 'success',\n+    BUILD_RESULT: 'success',\n+    FULL_CI: 'true',\n+    TEST_RESULT: 'success',\n+  };\n+  const check = (overrides, expected) => {\n+    // Exercise the workflow's actual gate body; this does not model GitHub's\n+    // scheduler or claim that cancellation was observed on a hosted runner.\n+    const result = spawnSync('bash', ['-e', '-o', 'pipefail', '-c', body], {\n+      env: { ...process.env, ...passing, ...overrides },\n+      timeout: 1000,\n+    });\n+    assert.equal(result.error, undefined);\n+    assert.equal(result.status === 0, expected, JSON.stringify(overrides));\n+  };\n+  check({}, true);\n+  // A dependency reporting cancelled while its workflow remains live must\n+  // still fail admission. Whole-workflow cancellation stops the job instead.\n+  for (const name of ['PREFLIGHT_RESULT', 'FOCUSED_RESULT', 'BUILD_RESULT', 'TEST_RESULT']) {\n+    for (const status of ['failure', 'cancelled', 'skipped', '']) {\n+      check({ [name]: status }, false);\n+    }\n+  }\n+  for (const ADMISSION of ['maintenance', 'scheduled']) {\n+    check({ ADMISSION, BUILD_RESULT: 'skipped', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);\n+  }\n+  check({ ADMISSION: 'release-evidence', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);\n+  check({ FOCUSED_REQUIRED: 'false', FOCUSED_RESULT: 'skipped' }, true);\n+  check({ FOCUSED_REQUIRED: 'false', FOCUSED_RESULT: 'success' }, false);\n+  check({ FOCUSED_REQUIRED: '' }, false);\n+  check({ ADMISSION: 'hold' }, false);\n+  check({ ADMISSION: 'unknown' }, false);\n+  check({ TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);\n+});"
+      }
+    ],
+    "policyImpact": "Changing the trusted workflow changes its accepted automation identity. Earlier-policy checks remain historical source evidence and must not be presented as acceptance under the new policy. Fresh exact-source/policy-bound receipts and normal controller requirements apply after integration."
+  },
+  "finding": "No production dependency of the held lifecycle, MP3 inspection, artwork or trail repairs requires Worlds/Missions preparation, Soundtrack authoring or backup-observer acceptance first. Those P2 branches depend on the initial release cohort, not the reverse. The unresolved Worlds fixture/source admission failure need not block first execution of confirmed gameplay repair controls.",
+  "recommendedSequence": [
+    {
+      "step": 1,
+      "action": "Preserve unchanged ready heads #1619,#1620,#1621,#1628 through their ordinary guarded merges. Complete and review both engines of the bounded P0 published observation, retaining exact public identity and every terminal outcome."
+    },
+    {
+      "step": 2,
+      "action": "Reconcile #1654 once against fresh main; complete fresh required source/policy qualification and the existing guarded policy-change merge procedure. No bypass of controller restrictions or retrospective reuse of stale policy receipts."
+    },
+    {
+      "step": 3,
+      "action": "Admit held lifecycle and MP3 repairs first, then artwork/trail source validation against the accepted main/policy. Retain independent review and meaningful replay, cancellation, ownership, generated-output and combined-source checks."
+    },
+    {
+      "step": 4,
+      "action": "Release P2 #1674/#1675/#1676 after the P1 repair source-qualification milestone, using fresh main/trusted-policy evidence where required. Existing useful P2 CI continues and all original results remain retained."
+    }
+  ],
+  "guards": [
+    "Do not edit the four ready heads or invalidate their admitted gate receipts before their merges and P0 observation.",
+    "P0 means a completed, reviewed terminal observation, not an assertion of success. If a severe product failure is found, triage and prioritize the repair without making its first qualification depend on passing the affected flow. Final acceptance still requires the original scenario gates.",
+    "Original trace-v2 remains before heap/overhead changes to shared adapters. Preserve historical declarations, failures, workload and owner limits; check exact source/workflow binding and artifact availability before dispatch.",
+    "No useful active P2 functional jobs are cancelled for this reprioritization. An old-policy pass is preserved but does not automatically qualify a new-policy combined source.",
+    "No readiness, branches, PRs, merge, dispatch, retries, tests, local files, app or browser execution changed by this review."
+  ],
+  "riskAndBenefit": [
+    "Removes an avoidable critical-path dependency on P2 Worlds admission before confirmed P1 gameplay defects can receive functional tests.",
+    "Does not promise reduced hosted runner wait or total completion time. #1654 fixes demonstrated obsolete aggregate retention; account-wide queue behavior remains unproven.",
+    "Fresh integration may reveal source/generated/test-closure conflicts; retain distinct source-reviewed, test-passed, merged, published and native-qualified states.",
+    "Physical devices remain unavailable and final matched/native/performance qualification remains open."
+  ]
+}
