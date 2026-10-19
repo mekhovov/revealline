@@ -1,0 +1,43 @@
+{
+  "format": "revealline.plan-header-consistency-peer.v1",
+  "reviewedAt": "2026-10-19T02:44:49.840Z",
+  "candidate": {
+    "gitBlob": "a6230b3726851e77e821715a61250e39c5d6b7bd",
+    "bytes": 39705,
+    "sha256": "a248bbf8f828fb92be493e310b894e816f1ed2c0f0eeafc8665cfaa03fa930b6"
+  },
+  "comparison": {
+    "snapshot": "fb1c319334765588af86e87f8ba420a488d1e9cf",
+    "snapshotWindow": "2026-10-19T02:36\u201302:37Z",
+    "laterFacts": "Root-supplied publication facts for1705c1c9433/current-main6b05de0 and source-compatibilityd9e855; no additional status queries."
+  },
+  "verdict": "No blocking factual contradiction or qualification overclaim found; one source-compatibility wording clarification recommended before final assembly.",
+  "verifiedConsistency": [
+    "1619 merged0991 remains incompletely current-head-qualified: four success/two skip/twelve queued/two active in the frozen snapshot, fifteen new controls unverified; prior0eef evidence remains historical.",
+    "1620eb2,16214d28 and162862be remain open with intended gates successful; originaltrace execution stays pending and precedes sharedheap/overhead merge/native work.",
+    "1674ada002b and1675403753c separate fixture-only lease corrections retain71 and325 current assertions respectively; five new ownership controls each remain unexecuted. Previous failures, no-footer partial TAP and unchanged deadlines remain explicit.",
+    "1676 source groups and seventeen backup controls retain existing audited scope; final aggregate and Appearance remain pending, and native backup/restore/large-profile qualification remain separate.",
+    "1693/1694/1695/1696 source/native controls remain pending;1699guard29 controls do not establish24heap cases.",
+    "1703c933 replay guard success is metadata-only at02:27:27, with no inferred case count or pass for13new/five strengthened overhead controls.",
+    "1705helper-only draft has8unexecuted contracts and no caller/declaration/workflow change; ninth caller-placement and sharedtool edits stay held. Installed candidates are not loaded-library proof and no5percent gate is claimed.",
+    "Publicdd337 successful deployment is distinct from queued finalverification/currentmain advancement and native qualification. #1619 is not yet on observedpublicdd337.",
+    "Sourcecause for heldloader worker is scoped to testfixture; laterauthoringhang remains unresolved untilremotehostcompletion. No claim fixes caused originaldevicehitches.",
+    "Releaseorder is finite, sourcequalification can proceed independently, originaltrace/nativeholds remain explicit, and runner/deviceoverallETA isunknown. Three matched30minute baseline/candidate repetitions correctly require3hoursperphysicaldevice/6browser-hoursacrosstwoengines before otherwork."
+  ],
+  "recommendedClarification": {
+    "old": "The Missions compatibility audit's fixed target is f465806.",
+    "replacement": "The earlier generated-output composition audit used f465806; the later c169b21 review extends source compatibility without establishing combined execution.",
+    "reason": "Avoids obscuring the newer c169/d9e855 compatibility review already described above."
+  },
+  "assemblyRequirements": [
+    "Replace@STAMP@ only with actualfinalpublicationcontext.",
+    "Update evidence-index count/hash/link deterministically afterappend.",
+    "Preserve historicaltail byte-for-byte and verify against original during finalassembly; the reviewed39705byteheader does not contain that fulltail.",
+    "Retain frozen snapshot dates rather than presenting status counts as live."
+  ],
+  "scopeLimits": [
+    "Header/source-consistency review only.",
+    "No additional status poll, localfiles, functional tests, browser/native execution, PR or branch mutation.",
+    "Remoteevidenceblob retention only."
+  ]
+}

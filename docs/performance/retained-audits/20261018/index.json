@@ -1676,6 +1676,12 @@
       "blob": "a6230b3726851e77e821715a61250e39c5d6b7bd",
       "bytes": 39705,
       "sha256": "a248bbf8f828fb92be493e310b894e816f1ed2c0f0eeafc8665cfaa03fa930b6"
+    },
+    {
+      "path": "plan-current-source-repair-final-review-20261019.json",
+      "blob": "0355b97886c5dc4cf4d5afa0d35396a440d94d57",
+      "bytes": 3787,
+      "sha256": "ee65455e8c687532bc9083aef0470b075522f109e279b12a2bcbf2ed2743bad9"
     }
   ]
 }
