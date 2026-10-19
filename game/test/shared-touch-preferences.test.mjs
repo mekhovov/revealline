@@ -303,3 +303,38 @@ test('unchanged explicit selection rechecks storage and never reports Saved afte
   assert.equal(prefs.persistence().reason, 'unconfirmed');
   prefs.destroy();
 });
+
+test('a newer isolated choice keeps its session explanation when an older save is interrupted', () => {
+  const storage = memory(),
+    events = new EventTarget();
+  storage.setItem(TOUCH_PREFERENCES_KEY, JSON.stringify(DEFAULT_TOUCH_CONTROLS));
+  const write = storage.setItem;
+  let interrupt = null,
+    writes = 0;
+  storage.setItem = (key, value) => {
+    writes++;
+    const action = interrupt;
+    interrupt = null;
+    action?.();
+    write(key, value);
+  };
+  const prefs = createTouchPreferences({ storage, eventTarget: events });
+  interrupt = () => prefs.set({ ...prefs.snapshot(), side: 'left' }, { persist: false });
+  prefs.set({ ...prefs.snapshot(), mode: 'swipe' });
+  assert.deepEqual(prefs.snapshot(), { ...DEFAULT_TOUCH_CONTROLS, mode: 'swipe', side: 'left' });
+  assert.deepEqual(prefs.persistence(), { status: 'session', reason: 'session', canRetry: false });
+  const stored = storage.getItem(TOUCH_PREFERENCES_KEY);
+  assert.equal(
+    JSON.parse(stored).side,
+    'right',
+    'The older write never persists the newer isolated choice.',
+  );
+  prefs.retry();
+  const restored = new Event('pageshow');
+  restored.persisted = true;
+  events.dispatchEvent(restored);
+  assert.equal(prefs.snapshot().side, 'left');
+  assert.equal(storage.getItem(TOUCH_PREFERENCES_KEY), stored);
+  assert.equal(writes, 1, 'The isolated choice cannot acquire a write through Retry or restore.');
+  prefs.destroy();
+});
