@@ -7,7 +7,7 @@
     "audit": "e2bf4f0e61218c85a1b0bb5779884b622ec03925",
     "implementation": "20555cda6bd44a0736aa829e64c52e455b4e770c",
     "originalWorkspace": "Preserved; no implementation edits.",
-    "latestObservedMain": "94dc41538c6451f700d228011ab7f5ab03ef585d"
+    "latestObservedMain": "36ca6c6f07b3a98c2a7c7ec564a6ca0681a2133f"
   },
   "featureCount": 83,
   "setup": {
@@ -15,11 +15,11 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Capture Home: recorded nine-file / 113-case pass remains scoped. Ordinary diagnostic #1757 finishes 18/22 with cold opening and three pre-setup picture failures unresolved. Explicit probes #1761 and #1764 both fail their complete case; independent source-probe clocks now narrow expensive mission-data construction without proving one owner or player latency. Finish diagnosis, then current source/browser/package/player acceptance.",
+    "P1 · Capture Home: recorded nine-file / 113-case pass remains scoped. Ordinary diagnostic #1757 finishes 18/22; cold opening and three pre-setup picture failures remain unresolved. Earlier explicit probes finish 0/1. Finer boundaries in #1764 now await hosted results to distinguish imports and mission-data construction. Then finish current source/browser/package/player acceptance.",
     "P1 · Single Drone/Riy: 28 checks pass across two complete files; a third is incomplete and 25 have not run. Source is restored. The preparation guard correction passes 10 isolated checks; a fresh attempt stops before source changes because space fell again. Resume the full cohort when capacity permits, then fonts, languages, controls and full player journeys.",
     "P1 · Text compatibility #1668: prior 11 source checks remain scoped. A current-main reconciliation map identifies five text-conflict boundaries and canonical regeneration needs. Reconcile, then rerun current source, browser, package and CI gates.",
     "P1 · Team Home #1747: source now merged. All nine admitted files match the independently reviewed local reconciliation. Prior 11 source checks remain bound to 22c553; finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
-    "P1 · Shared support: draft #1762 finishes eight changed files: six pass, two fail. Corrections preserve the failed Snake assertion and use Recovery’s public Back owner. Reconcile newer shared UI/generated source, then update the draft and rerun all eight files; browser/package/remaining hosts stay open. Separate controller checks remain scoped.",
+    "P1 · Shared support: both corrections are published in draft #1762. Current source generation, formatting and syntax pass; all eight complete test files await fresh hosted results. Original six passing files and two failures remain recorded. Then finish browser/package and remaining hosts.",
     "P2 · Room invitations #1744: source merged; 108 scoped checks, tracked-module lint and delayed QR focus review pass. Full source, Ukrainian host, manual fallback, package, sharing, scanning and device checks remain.",
     "P2 · Audio and terminology: preserve merged changes; finish remaining host copy, listening and player acceptance.",
     "Continue phases 0–8 with all 83 feature groups and 113 deliverables in their original priority order and estimates. Source merge is not full feature completion. Protect 2 GiB; physical iPhone offline startup, Steam Deck and suspend/resume remain Not tested."
@@ -104,7 +104,7 @@
           ".cache/improvements-evidence/2026-10-19/minimal-retention-generated-duplicate-release.json"
         ]
       },
-      "latestFreePointBytes": 2239901696,
+      "latestFreePointBytes": 1778147328,
       "latestCompaction": {
         "sourcePackBytes": 1478004933,
         "minimalReplacementBytes": 545060240,
@@ -161,10 +161,17 @@
         "priorStop": "prelaunch_free261742592B_below_256MiB_no_source_generation_started",
         "stopReceipt": "/tmp/revealline-f58-current-main-94dc-review/preflight-stop.json",
         "stopReceiptSHA256": "dc4dae77bb5090ed6d0aa2a81c503d52d456dc6d14d968b2102b33e468af6546",
-        "retry": "explicit_bounded_source_only_retry_after_capacity_recovery",
+        "retry": "passed_source_authoring_only",
         "prelaunchFloorBytes": 268435456,
         "continuousFloorBytes": 134217728,
-        "nativeFloorUnchanged": true
+        "nativeFloorUnchanged": true,
+        "canonicalReceiptSHA256": "a7b6d201ce5c412a06ed6b98367b906a343ed2daf836d6ef60aa9efa172207a4",
+        "generatedJavaScriptBlob": "fe3fec1b7d5d48a126a86daa8285fed18281e36a",
+        "currentMainCSSAndOutsideMarkersExact": true,
+        "immutableInputsOriginalSourceAndDependenciesExact": true,
+        "native": "not_run",
+        "publishedCommit": "7b9ec7e6ccd7bae9594c5c4085ec0ed59de05f52",
+        "publishedBase": "36ca6c6f07b3a98c2a7c7ec564a6ca0681a2133f"
       }
     },
     "pendingTestPrerequisite": {
@@ -215,7 +222,7 @@
       "deliveryState": "merged",
       "mergedAt": "2026-10-19T18:59:36Z",
       "mergeCommit": "3630ffbc84ac1862c25647ab5e364c42cceec217",
-      "next": "Ordinary18/22 remains unresolved. Explicitd372 and independent-clocka1f eachfail0/1; largest measured source interval spans multiple owners, so no runtime optimization or player latency claim. Investigate source construction and the separate incoming-picture setup owner. Pagination/audio/chapter repairs retain their scoped passes; current-source/browser/package acceptance and local reserve remain open."
+      "next": "Collect db77 explicit submarker results; olda1f/d372/39e0of1 and ordinary18of22 remain unresolved. Preserve process-wide timing caveats and diagnose separate incoming-picture setup failures. Current source/browser/package/player acceptance remains open; no runtime repair inferred."
     },
     "preparationReview": {
       "overflight": {
@@ -1385,10 +1392,12 @@
           ],
           "pr": "https://github.com/mekhovov/revealline/pull/1683",
           "commit": "720d034334f13658d23c898432d5d2da9d53b61a",
-          "deliveryState": "ready",
-          "observedRemoteHead": "720d034334f13658d23c898432d5d2da9d53b61a",
+          "deliveryState": "merged",
+          "observedRemoteHead": "6e5ea45dd69ceaabe924d0a54969ed77e4302086",
           "mergeState": "CLEAN",
-          "lastKnownMergeState": "CLEAN"
+          "lastKnownMergeState": "CLEAN",
+          "mergedAt": "2026-10-19T20:52:37Z",
+          "mergeCommit": "36ca6c6f07b3a98c2a7c7ec564a6ca0681a2133f"
         },
         {
           "id": "reroll-cost-and-repeat-disclosure",
@@ -2022,7 +2031,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "P1: reconcile current shared UI/canonical owners, then update lifecycle + Snake draft #1762 and rerun its eight whole files. Exact41d0 has six passing files and two failures with corrections prepared. Browser/full-source/package acceptance remains open. Preserve separate controller wording evidence (22 component and2Solo-host passes;11sourcechecks held) and remaining host phases.",
+      "next": "P1: collect exact7b9ec7 hosted whole-file/source results for corrected lifecycle + Snake draft1762, then actual Data/modal/navigation browser and package acceptance. Earlier six passing files/two failures remain recorded. Preserve independent controller wording evidence and qualify remaining hosts separately.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim.",
@@ -2238,13 +2247,13 @@
         {
           "id": "shared-report-lifecycle-foundation-snake",
           "priority": "P1",
-          "status": "draft_six_whole_files_pass_two_fail_successor_reconciling_main",
+          "status": "draft_corrected_successor_published_hosted_whole_files_pending",
           "owner": "lane-c",
           "pr": "https://github.com/mekhovov/revealline/pull/1762",
           "phaseBoundary": "Shared report visibility/invalidate foundation plus Snake integration only. Reuse existing1726/1730 callbacks and current shell ownership; other host acceptance remains separately tracked.",
-          "next": "Reconcile the corrected five-path successor with newer shared UI/canonical-source owners, preserve later main changes, then update draft1762 and rerun all eight complete test files. Exact41d0 has six passing files and two failing files; no phase pass. Browser/full-source/package/remaining hosts remain separate.",
+          "next": "Collect all eight complete changed-file commands and configured source checks at exact7b9ec7. Original41d0 retains six passing files and two failures. Corrected-head browser, package and remaining hosts stay open.",
           "qualification": {
-            "automated": "exact41d0_eight_whole_files_terminal_six_pass_two_fail_successor_not_run",
+            "automated": "corrected_source_canonical_format_syntax_pass_hosted_whole_files_pending",
             "browser": "not_run",
             "physical": "not_tested"
           },
@@ -2254,13 +2263,24 @@
             "Published draft1762 at41d0/tree85de644b, soleparentcurrentmain4706142. Root remote readback confirms all18paths/modes/OIDs and every unowned tree entry exact; all49canonical base input OIDs match. Canonical generator+--check exit0; CSS/outside-markers exact. All17JavaScript syntax-only checks and16authored+doc repository-format check pass; normalizedAST/comments preserve formatting-only test predecessors. Two public music-handler completion awaits separately reviewed, all assertions retained. Manifest57ce53f26c03e7224a8d8ed4a48d8a6d69744ab5aed4df03f9a4e460b52191cb; canonicalreceiptced091917d3ed0257e18e11ffb1bdf7838b027adf40dc5df2d7bcbe623fbeafb; staticsreceipta5792f48827a54b03dc891dd7f797d6d6cbbcea2af2cc4a9d7f067a05cb0fb75. No local application source/index/ref/asset mutation. Native CI pending, browser/package/physical unqualified.",
             "Exact41d0 hosted run39318368361 preflight passes. Immutable focused plan428a585164df68c971cde128514c39c6872208424b5bd886d062b057c4f3dd03 selects all8changed testfiles as distinct complete commands; no name filters. Seventeen configured commands overall, commandConcurrency2, Node20.19.6 Linux. Tests still pending; broad test/build jobs skipped by policy are not passes.",
             "Exact41d0 all8changedfiles finish on hostedNode20.19.6: whole global-settings19/19,settings-panels15/15,mode-settings7/7,music23/23,local-summary11/11,soundtrack164/164 pass; Snake155/156fails newdesktop-no-op regression, Recovery14/15fails newraw-close fixture. No cancel/skip/todo. Company1365/configuredvalidate/i18n pass separately. Sourcebeforeafter45511files/tree85de/aggregate2a55519d exact; full raw/receipts retained under/tmp/revealline-f58-1762-hosted-results/. Do not sum unrelated broad checks or label8filephase passed.",
-            "Corrected successor32a37d5ef31bff317de2e029a95aebc494514e215c5b42bb8771ac4a85423f41 changes exactly5paths/13publishedblobs identical. Runtimeonlynotifies desktopresize when breakpointchanges or compactviewchanges; original failedSnakecase/assertions unchanged and newcomponentregression added. Recoveryfixture usespublicBackandawaitsitscleanup,all3assertions retained. Canonicalcurrent77package generate/check and17syntax+format checks pass; CSS/outside-markers exact. Newmain94dc changes sharedUI/generatedowner inputs, so this artifact is not retagged as current and needs source-only reconciliation before publication. Correctednative green remains pending."
+            "Corrected successor32a37d5ef31bff317de2e029a95aebc494514e215c5b42bb8771ac4a85423f41 changes exactly5paths/13publishedblobs identical. Runtimeonlynotifies desktopresize when breakpointchanges or compactviewchanges; original failedSnakecase/assertions unchanged and newcomponentregression added. Recoveryfixture usespublicBackandawaitsitscleanup,all3assertions retained. Canonicalcurrent77package generate/check and17syntax+format checks pass; CSS/outside-markers exact. Newmain94dc changes sharedUI/generatedowner inputs, so this artifact is not retagged as current and needs source-only reconciliation before publication. Correctednative green remains pending.",
+            "Corrected normal successor7b9ec7/tree133cc8c published with parents[41d0,36ca], preserving prior failed history and allcurrentmain unowned tree entries. Fresh49generatorinputs and18beforeOIDpins exact. Current18manifest955eb93e963137b196f1162ab5d27888f9083590dcdff6324ff08f2015f570d4; canonicalgeneration/checkreceipt a7b6d201ce5c412a06ed6b98367b906a343ed2daf836d6ef60aa9efa172207a4; source-static18stagesreceipt f678f3aba584b7a9b0cb6eb53cc4752b2934b258cffde4e38388fc8b0a3f34be. Independent review clear, currentCSSwhole/outsideJSmarkers exact. All13unchangedpublishedblobs retain exact41d0 bytes; five corrected paths only. Hostedrun39323375502 is pending; no correctednative pass/browser/package claim. Initial261MBdiskpreflightstop preserved; boundedsourceauthoringretrypassed without nativefloor relaxation.",
+            "Actual hosted focused plan at7b9ec7/tree133cc/base36ca selects all8changed complete files exactlyonce as node--test FILE, nofilters/deferred/waived;17commands/4shards. Node20.19.6Linux; preflightPASS; broadtest/buildSKIPPED notpasses. SelectionproofSHA47d41cf0f653eb5ba63f0c9249e8f68ed8468ce2d872353cbca5fcf0fe2219f8. Whole-file terminal results pending."
           ],
-          "commit": "41d0b3a97748d90708b1dcdea0cf9c9884fccac4",
-          "observedRemoteHead": "41d0b3a97748d90708b1dcdea0cf9c9884fccac4",
+          "commit": "7b9ec7e6ccd7bae9594c5c4085ec0ed59de05f52",
+          "observedRemoteHead": "7b9ec7e6ccd7bae9594c5c4085ec0ed59de05f52",
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
+          "mergeState": "UNSTABLE",
           "canonicalProjection": {
+            "generatedJavaScriptBlob": "fe3fec1b7d5d48a126a86daa8285fed18281e36a",
+            "stylesheetUnchanged": true,
+            "outsideMarkersExact": true,
+            "sourceOnly": true,
+            "canonicalInputBase": "94dc41538c6451f700d228011ab7f5ab03ef585d",
+            "publishedBase": "36ca6c6f07b3a98c2a7c7ec564a6ca0681a2133f",
+            "all49BaseInputPinsExactAtPublication": true
+          },
+          "previousPublishedProjection": {
             "generatedJavaScriptBlob": "9237fd345b4a325337fb8b656dca32a09cf03c4e",
             "stylesheetUnchanged": true,
             "outsideMarkersExact": true,
@@ -4983,6 +5003,16 @@
       "date": "2026-10-19",
       "item": "Capacity recovery and current-main preparation",
       "reason": "Other chats continue. Forty-five stale unused main HTTP cache entries are byte-verified in recoverable backup before release (161440678B to19030950B). Initial94dc canonical preflight stop retained; source-only retry uses unchanged256/128MiB guard after recovery. Full native/build reserve unchanged. Compatibility current-main reconciliation map prepared without source application."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Publish reviewed support-report corrections and retain all acceptance gates",
+      "reason": "Draft1762 normal successor7b9ec7 preserves failed41d0 history and captured36ca currentmain. Canonical generation/check,18source-static stages and independent review pass; all8new-head native files pending, browser/package/device unqualified. External1683 source merge updates inventory48/9/32/1. Original83groups/113deliverables unchanged."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Publish finer cold-opening boundaries without changing the probe",
+      "reason": "Draft1764 successor db77 adds10optionalexistingmarks plusnote; probeexacta1f andordinaryfiles unchanged. Allunowned36ca tree entries preserved via normaltwo-parent update. Earlier0/1 and18/22failuresretained; new-headresults pending."
     }
   ],
   "deliveryDependencies": [
@@ -5235,24 +5265,25 @@
     {
       "id": "CI-Solo-cold-opening-node-metrics",
       "priority": "P1",
-      "status": "draft_complete_probe_0_pass_1_fail",
+      "status": "draft_submarkers_successor_hosted_pending_prior_probe_0_of_1",
       "deliveryState": "draft",
       "pr": "https://github.com/mekhovov/revealline/pull/1764",
-      "commit": "a1f38ee42d3fd2558cb11d868e6fc4180c581792",
-      "observedRemoteHead": "a1f38ee42d3fd2558cb11d868e6fc4180c581792",
-      "scope": "Two paths: explicit test-only Node monotonic wall/process-CPU observations plus operational note. Existing stage observer/case/deadline/64events/12KiBencodedceiling and every game/ordinary-test owner remain unchanged. Measurements affect scheduling and include other process work.",
-      "next": "Complete exacta1f probe fails0/1 with23aligned finite measurement rows. Inspect the8.18s interval spanning two source projections, remoteTeam import/construction and spatial import/guards; no exclusive cause/ordinary-player latency inferred. Preserve all earlier failures and use narrowly scoped source evidence before any runtime optimization.",
+      "commit": "db77e35d8b08206fb524e679a704025d05b8d206",
+      "observedRemoteHead": "db77e35d8b08206fb524e679a704025d05b8d206",
+      "scope": "Three paths: ten optional existing app trace marks, byte-identical independent-Node-clock explicit probe, diagnostic documentation. All ordinary four-file Solo cohort/shared helper and every unowned captured-main entry preserved; original await/guard order, deadline, stage/evidence caps unchanged.",
+      "next": "Collect exactdb77 hosted probe and selected ordinary-file results separately. Olda1f complete0/1 is retained. Ten paired marks distinguish Journey adapters, remote Team import/construction and prior import; no runtime repair or ordinary-player latency claim.",
       "evidence": [
         "Root/source-independent reversal proof, Node22syntax/repositoryformat pass; soleparentfd347/tree d4a2d292/2paths/everyunownedentry exact. No localapplication source/index/ref/assets mutation.",
-        "Exacta1f run39320186269 complete0/1,0cancel/skip/todo,fullraw54889B/no truncation/stderr0.23stage+23metricrows,0drops/errors; encodedfailure2540B. Lastinstalled-begin17.400s cumulative source-probe wall. Largestobservedinterval8.182s includesmultipleowners, not exclusivefunctionCPU. Node process CPU includesGC/observer/asyncwork; fixtureclock1000/null unchanged. Before/after45512files/tree d4a2d292/aggregateeb43ab4e exact. TerminalsummarySHA9edc172ee2dc335c11be3796538447341ffdec0d1451554f0748690c699687cc. No ordinary-path pass or benchmark claim."
+        "Exacta1f run39320186269 complete0/1,0cancel/skip/todo,fullraw54889B/no truncation/stderr0.23stage+23metricrows,0drops/errors; encodedfailure2540B. Lastinstalled-begin17.400s cumulative source-probe wall. Largestobservedinterval8.182s includesmultipleowners, not exclusivefunctionCPU. Node process CPU includesGC/observer/asyncwork; fixtureclock1000/null unchanged. Before/after45512files/tree d4a2d292/aggregateeb43ab4e exact. TerminalsummarySHA9edc172ee2dc335c11be3796538447341ffdec0d1451554f0748690c699687cc. No ordinary-path pass or benchmark claim.",
+        "Normal non-force successordb77e35/tree22782e5 published with parents[a1f,36ca], exact3owned leaves. App10-line reversal returns exact626233B/Git66687; probe9ef273 exacta1f; allunownedtreeentries currentmain exact and4ordinarySolo files+sharedhelper exactbothparents. Node22syntax/repoformat/independentsource review pass. Manifestce36f7427bba1ed1dcb1a6046097c31756a2f79fe8ea8e393b0e159245499fc3. InitialPRGETlaggedafter successfulPATCH; finalfreshPR/refGETbothdb77/open/draft and no secondmutation. Newheadnativepending; oldfailuresretained."
       ],
       "mergeState": "UNSTABLE"
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 10,
+    "featurePRsReady": 9,
     "featurePRsDraft": 32,
-    "deliverablesMerged": 47,
+    "deliverablesMerged": 48,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
     "hardware": "unavailable",
@@ -5262,8 +5293,8 @@
     "observedDate": "2026-10-19",
     "scope": "All90 feature candidates from task/slice/follow-up PR fields; fifteen separately tracked delivery prerequisites and documentation excluded",
     "counts": {
-      "merged": 47,
-      "ready": 10,
+      "merged": 48,
+      "ready": 9,
       "draft": 32,
       "withdrawn": 1
     },
@@ -5272,10 +5303,10 @@
       1702, 1704, 1721, 1729
     ],
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1669, 1682, 1686],
-    "note": "47 feature source PRs merged,10 open for checks,32 drafts and1 withdrawn. Fifteen delivery prerequisites are separate. Source-merged diagnostic1761 retains its failed0/1 evidence; independent-clock1764 alsofails0/1. Report-phase1762 has6wholefilespassing/2failing at41d0; source corrections are prepared, not green. Preserve prior conflicts when mergeability is UNKNOWN. No manual merge/promotion/check bypass.",
+    "note": "48 feature source PRs merged, 9 open for checks, 32 drafts and 1 withdrawn. Fifteen prerequisites remain separate. Report corrections are published in draft1762 at7b9ec7 with current source-only checks passing; fresh whole-file CI is pending. All prior failures and hardware gates remain. No manual merge/promotion/check bypass.",
     "latestMain": {
-      "revision": "94dc41538c6451f700d228011ab7f5ab03ef585d",
-      "note": "Newer shared browser/shell/generated FPV owners require source-only reconciliation before report-phase successor publication. All earlier checks retain exact-source scope."
+      "revision": "36ca6c6f07b3a98c2a7c7ec564a6ca0681a2133f",
+      "note": "Survival commitment explanation1683 merged externally. Report successor7b9ec7 preserves all49canonical input pins and every unowned current-main tree entry; source-only94dc receipts remain scoped to identical owned inputs."
     },
     "queryEvidence": "/tmp/revealline-complete-inventory-105-result.json",
     "inventoryCorrection": "Previously omitted1673 is an existing merged settings follow-up; correcting45→46 is accounting, not new implementation."
