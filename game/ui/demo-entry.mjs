@@ -100,7 +100,6 @@ export async function installDemoEntry({
     }),
     loadSources: options.loadSources,
     readMedia: options.readMedia ?? (async () => null),
-    menu: options.menu ?? (() => {}),
     settingsKey,
     canWrite: options.canWrite ?? (() => true),
   });

@@ -1,0 +1,103 @@
+{
+  "schema": "SharedDemoSimUIOwnership.v1",
+  "at": "2026-10-19T03:43:53.783515+00:00",
+  "baseCommit": "034999ecf0d16faf8a9c78f38de3b088b7ec1fcb",
+  "scope": "Focused native SIM UI ownership fix; no browser, physical device, full build, or broad-source qualification claimed.",
+  "originalProductionModule": {
+    "path": "optional-practice/civilian-fpv/demo-input.mjs",
+    "sha256": "5e7c2111259ca55b2702dfff21daf055e934705f6744398ec481b9f7d25ca9ab",
+    "bytes": 14727
+  },
+  "findings": [
+    {
+      "priority": "P1",
+      "path": "optional-practice/civilian-fpv/demo-input.mjs",
+      "originalLines": "140-177",
+      "description": "Focused Demo UI button Space under the saved classic preset, or arrow navigation under either preset, entered practice and prevented the UI key default."
+    },
+    {
+      "priority": "P1",
+      "path": "optional-practice/civilian-fpv/demo-input.mjs",
+      "originalLines": "338-405",
+      "description": "Native SIM controller polling ignored focused Demo UI and could take over using menu stick movement."
+    }
+  ],
+  "change": "Use the shared data-demo-ui ownership marker for keyboard and controller. Release native controls once at entry, retain blocked pad samples and neutral pickup on return, delegate UI commands to the supplied shared navigator, and preserve explicit radio/touch handoffs during fork preparation.",
+  "workingSources": [
+    {
+      "path": "optional-practice/civilian-fpv/demo-input.mjs",
+      "sha256": "3cba4c5b9916aeee3a4c89f34d95270a7717e43523b7f1d8bfac9a65e5bb04f1",
+      "bytes": 15722
+    },
+    {
+      "path": "game/test/demo-sim-input.test.mjs",
+      "sha256": "1388ddd9239bb233d10461921b751d1941cc0c3ca9a5a2adb52497cd8b1343d6",
+      "bytes": 13980
+    }
+  ],
+  "verification": {
+    "tests": {
+      "command": "GIT_NO_LAZY_FETCH=1 NODE_DISABLE_COMPILE_CACHE=1 node --test game/test/demo-sim-input.test.mjs game/test/fpv-controller-readiness.test.mjs game/test/fpv-radio.test.mjs",
+      "exitCode": 0,
+      "tests": 27,
+      "passed": 27,
+      "failed": 0
+    },
+    "lint": {
+      "command": "./node_modules/.bin/eslint optional-practice/civilian-fpv/demo-input.mjs game/test/demo-sim-input.test.mjs --max-warnings 0",
+      "exitCode": 0
+    },
+    "format": {
+      "command": "./node_modules/.bin/prettier --write optional-practice/civilian-fpv/demo-input.mjs game/test/demo-sim-input.test.mjs",
+      "exitCode": 0,
+      "result": "Both files unchanged"
+    },
+    "cases": [
+      "Both keyboard presets and native UI buttons/summary/links",
+      "Menu gesture cannot resume paused practice",
+      "Controller UI delivery and neutral-then-fresh return",
+      "Radio arm changes while focused UI cannot resume; new arm needed afterward",
+      "Explicit radio practice button preserves accepted throttle during asynchronous handoff"
+    ]
+  },
+  "evidence": [
+    {
+      "path": "docs/qualification/shared-demos/sim-ui-ownership-034999ecf-before.tap.txt",
+      "sha256": "14fd1ac82d998b2f0d18ad933ce4373949bf1857036a24edfb91e3c7eb24501c",
+      "bytes": 4459,
+      "meaning": "Initial three focused ownership regressions fail on the original production module; five pre-existing SIM input tests pass. The initial fixture preceded the final radio/focus refinements and is not retained as an exact test-source snapshot.",
+      "tapTotals": {
+        "tests": 8,
+        "pass": 5,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "docs/qualification/shared-demos/sim-ui-ownership-034999ecf-final.tap.txt",
+      "sha256": "0b388a100fecb6d2c30ba8ace0aa72c441a14aa65f63352e193b88cce179c2a5",
+      "bytes": 6579,
+      "meaning": "Final focused SIM input plus native controller readiness and radio suites pass on the current two-file working change.",
+      "tapTotals": {
+        "tests": 27,
+        "pass": 27,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "docs/qualification/shared-demos/sim-ui-ownership-034999ecf-invocation-error.txt",
+      "sha256": "01069d8994629468f55054df8e90e20755be9529ee2d118e13df3c0db4212683",
+      "bytes": 134,
+      "meaning": "A mistaken nonexistent fpv-gamepad.test.mjs argument exited before tests; no qualification credit.",
+      "tapTotals": {}
+    }
+  ],
+  "limits": [
+    "Initial red test fixture was refined afterward; exact original fixture file is not retained.",
+    "Focused event fixtures do not establish actual browser/controller/mobile/audible acceptance.",
+    "Companion shared navigation changes are reviewed and qualified separately."
+  ]
+}

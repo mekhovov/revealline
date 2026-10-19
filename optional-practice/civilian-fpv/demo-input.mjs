@@ -31,6 +31,7 @@ export function attachSimDemoInput({
   onBack = () => {},
   onResume = (intent) => practice()?.start(intent),
   getContext = () => ({}),
+  menu = () => {},
 }) {
   const doc = root.ownerDocument,
     win = doc.defaultView,
@@ -54,7 +55,8 @@ export function attachSimDemoInput({
     owner = 'keyboard',
     throttle = 0,
     currentPractice = null,
-    preparing = false;
+    preparing = false,
+    uiOwned = false;
   let pads = [],
     frameNow = 0,
     controllerIntent = false,
@@ -73,6 +75,7 @@ export function attachSimDemoInput({
     },
   });
   const visible = () => !doc.hidden && doc.hasFocus?.() !== false;
+  const ownsUI = (target = doc.activeElement) => !!target?.closest?.('[data-demo-ui]');
   const listen = (target, event, handler, options) => {
     target?.addEventListener(event, handler, options);
     removers.push(() => target?.removeEventListener(event, handler, options));
@@ -133,6 +136,18 @@ export function attachSimDemoInput({
     if (!handoff || owner !== 'radio') radio.freeze('focus-lost');
     practice()?.pause();
   };
+  const yieldToUI = () => {
+    if (uiOwned) return;
+    uiOwned = true;
+    pressed.clear();
+    // Release once at the ownership boundary. An explicit radio/touch button
+    // can still retain its accepted handoff while the isolated fork prepares.
+    release();
+  };
+  listen(root, 'focusin', (event) => {
+    if (ownsUI(event.target)) yieldToUI();
+    else uiOwned = false;
+  });
   listen(
     win,
     'keydown',
@@ -156,6 +171,11 @@ export function attachSimDemoInput({
         }
         return;
       }
+      if (ownsUI(event.target)) {
+        yieldToUI();
+        return;
+      }
+      uiOwned = false;
       if (!keyboardFlightKey(event.code, preset().id) && event.code !== preset().fire) return;
       if (event.repeat && !keys.has(event.code)) return;
       event.preventDefault();
@@ -341,6 +361,16 @@ export function attachSimDemoInput({
       bindPractice();
       pads = frame.gamepads ?? [];
       frameNow = frame.now ?? win.performance.now();
+      if (ownsUI()) {
+        yieldToUI();
+        // Continue observing the captured device in blocked scope so returning
+        // to the canvas requires neutral pickup and a new gameplay gesture.
+        pad.poll({ gamepads: pads, now: frameNow, scope: 'blocked' });
+        updateControllerHint();
+        menu(frame.ui ?? {});
+        return;
+      }
+      uiOwned = false;
       const context = getContext();
       if (!context.simRadio && frameNow - lastRadioDiscovery >= 1000) {
         lastRadioDiscovery = frameNow;
