@@ -2897,6 +2897,26 @@ test('PID edits retain literal precision and invalid text across blur, locale, p
   assert.deepEqual(f.store.effective(), effective);
 });
 
+test('locale refresh keeps a failed PID save message until an explicit valid undo', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'nazgul-eco-xl5-v11', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
+  const before = f.store.export(),
+    status = f.ui.root.querySelector('[role="status"]');
+  f.edit('Roll P (N·m/(rad/s))', '');
+  await f.click('Save for next flight');
+  const failure = status.textContent;
+  assert.match(failure, /Could not apply:.*enter a valid number/);
+  for (const locale of ['uk', 'en']) {
+    f.setLocale(locale);
+    assert.equal(status.textContent, failure);
+  }
+  await f.click('Undo last edit');
+  assert.equal(status.textContent, '');
+  assert.equal(f.store.export(), before);
+});
+
 test('PID fine adjustment starts at the exact stored gain, including rounding boundaries', async (t) => {
   const f = fixture(t),
     configuration = createPresetConfiguration('meteor75-analog-2022'),

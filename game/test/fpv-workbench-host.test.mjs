@@ -277,12 +277,43 @@ for (const recovery of ['Revert draft', 'Undo last edit', 'Use in draft'])
     if (recovery === 'Use in draft') assert.match(summary(), /1 changes.*Draft$/);
     else assert.match(summary(), /0 changes.*Saved for next flight$/);
     assert.doesNotMatch(summary(), /unfinished values/);
+    if (recovery !== 'Use in draft')
+      assert.equal(f.ui.root.querySelector('[role="status"]').textContent, '');
     assert.match(bench.textContent, /Available for this aircraft controller/);
     await f.click('Run simulation bench', bench);
     assert.equal(f.workers.length, 1, 'a valid restored controller can start a comparison');
     assert.equal(f.workers[0].messages[0].request.draft.advanced.controller.gains.roll.p, original);
     assert.equal(f.store.export(), before, 'restoring validity does not persist a new setup');
   });
+
+test('undo to another unfinished PID draft retains its error and blocks comparison', async (t) => {
+  const f = await fixture(t, { physical: true, enableBench: true }),
+    before = f.store.export(),
+    status = f.ui.root.querySelector('[role="status"]');
+  f.edit('Roll P (N·m/(rad/s))', '');
+  f.edit('Roll P (N·m/(rad/s))', '-');
+  await f.click('Save for next flight');
+  const failure = status.textContent;
+  assert.match(failure, /Could not apply:.*enter a valid number/);
+  f.ui.refresh();
+  assert.equal(status.textContent, failure, 'ordinary reload must retain the failed-save message');
+  await f.click('Undo last edit');
+  assert.equal(f.field('Roll P (N·m/(rad/s))').value, '');
+  assert.equal(status.textContent, failure);
+  assert.match(
+    f.ui.root.querySelector('.workbench-summary').textContent,
+    /1 unfinished values.*Draft$/,
+  );
+  await f.click('Run simulation bench', f.ui.root.querySelector('.tuning-bench'));
+  assert.equal(f.workers.length, 0);
+  assert.equal(f.store.export(), before);
+  await f.click('Undo last edit');
+  assert.equal(status.textContent, '');
+  assert.match(
+    f.ui.root.querySelector('.workbench-summary').textContent,
+    /0 changes.*Saved for next flight$/,
+  );
+});
 
 for (const raw of ['', '-', '1001'])
   test(`refresh preserves genuinely invalid PID text ${JSON.stringify(raw)} and its error`, async (t) => {

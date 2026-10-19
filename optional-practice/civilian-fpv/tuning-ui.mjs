@@ -1851,7 +1851,7 @@ export function mountFlightTuning({
       if (!store.snapshot().setups.some((item) => item.id === editedSetupId))
         editedSetupId = store.snapshot().selectedSetupId;
       completeDraft = null;
-      load();
+      load(undefined, true);
     },
     actions,
   );
@@ -1951,7 +1951,7 @@ export function mountFlightTuning({
     }
     node.value = value;
   }
-  function load(profileId) {
+  function load(profileId, clearFailure = false) {
     clearImportPreview();
     uploadGeneration++;
     library = store.snapshot();
@@ -2067,6 +2067,7 @@ export function mountFlightTuning({
         'This draft predates a library change. Export it before refreshing; saving over newer settings is blocked.',
         'Ця чернетка старіша за зміну бібліотеки. Експортуйте її перед оновленням; перезапис новіших налаштувань заблоковано.',
       );
+    else if (clearFailure && !root.querySelector('[aria-invalid="true"]')) status.textContent = '';
   }
   function paintAssignment(profileId = assignment.value || null) {
     setOptions(
@@ -3006,7 +3007,7 @@ export function mountFlightTuning({
           components: clone(editor.components),
           baseRevision: editRevision,
         });
-        load(editor.profileId);
+        load(editor.profileId, true);
         return;
       }
       const state = completeDraft.snapshot();
@@ -3026,7 +3027,7 @@ export function mountFlightTuning({
         components: state.setup.components,
         baseRevision: editRevision,
       });
-      load(state.profile.sourceId);
+      load(state.profile.sourceId, true);
     },
     actions,
   );
