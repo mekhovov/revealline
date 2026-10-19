@@ -39,11 +39,21 @@
     "No physical-device, offline-install, durable-save, replay or raster acceptance.",
     "Response errors and cancellations are retained; no app-cause inference from a failed smoke.",
     "Selecting the current Journey card deliberately replaces only this fresh smoke attempt; replacement/departure confirmation is refused.",
-    "Chromium and WebKit desktop engines only; no Safari or physical-device equivalence claim."
+    "Chromium and WebKit desktop engines only; no Safari or physical-device equivalence claim.",
+    "The optional Missions mode enables existing performance diagnostics only on the initial Solo document. Received stage spans are elapsed time, not CPU attribution; an unreceived final boundary remains unknown."
   ],
   "artifactBytes": 4194304,
   "privateEvidenceBytes": 4194304,
   "outerTimeoutSeconds": 720,
   "jobTimeoutMinutes": 32,
-  "engines": ["chromium", "webkit"]
+  "engines": ["chromium", "webkit"],
+  "diagnosticModes": ["none", "missions"],
+  "defaultDiagnostic": "none",
+  "missionsDiagnostic": {
+    "scope": "missions-first-open-stage-observation",
+    "initialSoloQuery": "performance=1",
+    "requiredCompleteOpenings": 2,
+    "transport": "bounded-scalar-console-v1",
+    "performanceExcluded": true
+  }
 }

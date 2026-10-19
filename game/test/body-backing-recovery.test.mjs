@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { paintBodyBacking } from '../ui/body-backing.mjs';
+import { createBodyBackingOwner, paintBodyBacking } from '../ui/body-backing.mjs';
+import { paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
+import { BoardPainter } from '../ui/render.mjs';
+import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+import { FIXED_DT, stepRun } from '../core/index.mjs';
 
 // Deterministic ownership controls, not a native raster or device qualification.
 function fixture(
@@ -15,7 +20,7 @@ function fixture(
   } = {},
 ) {
   const descriptors = new Map(
-    ['OffscreenCanvas', 'document'].map((name) => [
+    [...(offscreen ? ['OffscreenCanvas'] : ['OffscreenCanvas', 'document'])].map((name) => [
       name,
       Object.getOwnPropertyDescriptor(globalThis, name),
     ]),
@@ -102,16 +107,17 @@ function fixture(
     configurable: true,
     value: offscreen ? Surface : undefined,
   });
-  Object.defineProperty(globalThis, 'document', {
-    configurable: true,
-    value: {
-      createElement: (tag) => {
-        assert.equal(tag, 'canvas');
-        assert.equal(offscreen, false);
-        return new Surface();
+  if (!offscreen)
+    Object.defineProperty(globalThis, 'document', {
+      configurable: true,
+      value: {
+        createElement: (tag) => {
+          assert.equal(tag, 'canvas');
+          assert.equal(offscreen, false);
+          return new Surface();
+        },
       },
-    },
-  });
+    });
   const target = {
     drawImage: (canvas, ...geometry) => {
       assert.equal(canvas.lost, false, 'An unavailable backing must not be submitted.');
@@ -140,8 +146,8 @@ function fixture(
       pixels,
     };
   };
-  const paint = (source, selectedBody = body) =>
-    paintBodyBacking(target, selectedBody, source, 28, 14);
+  const paint = (source, selectedBody = body, owner) =>
+    paintBodyBacking(target, selectedBody, source, 28, 14, owner);
   return { surfaces, submissions, queries, dimensions, draws, body, image, paint, target };
 }
 
@@ -329,3 +335,341 @@ test('generic event-target support alone retains native loss fallback', (t) => {
   assert.equal(f.queries.count, 22);
   assert.deepEqual(f.draws, { source: 2, read: 2, write: 2 });
 });
+
+function controlledTimers(t) {
+  let next = 0;
+  const pending = new Map(),
+    history = [];
+  t.mock.method(globalThis, 'setTimeout', (callback, delay) => {
+    assert.equal(delay, 250, 'Recovery probes stay outside the frame loop.');
+    const id = ++next;
+    pending.set(id, callback);
+    history.push(callback);
+    return id;
+  });
+  t.mock.method(globalThis, 'clearTimeout', (id) => pending.delete(id));
+  return {
+    pending,
+    history,
+    tick() {
+      for (const [id, callback] of [...pending]) {
+        pending.delete(id);
+        callback();
+      }
+    },
+  };
+}
+function ownedBacking(t, callbacks = {}) {
+  const events = [];
+  const owner = createBodyBackingOwner({
+    onContextLoss: (event) => {
+      events.push(['lost', event]);
+      callbacks.onContextLoss?.(event);
+    },
+    onContextRestored: (event) => {
+      events.push(['restored', event]);
+      callbacks.onContextRestored?.(event);
+    },
+  });
+  t.after(() => owner.dispose());
+  return { owner, events };
+}
+function paintActor(f, image, owner) {
+  const context = new Proxy(
+    {
+      drawImage: (source, ...geometry) => {
+        if (source !== image) f.target.drawImage(source, ...geometry);
+      },
+    },
+    { get: (target, key) => (key in target ? target[key] : () => {}) },
+  );
+  paintCharacter(context, {
+    body: { ...f.body, widthCells: 2, heightCells: 1, headingOffsetDegrees: 0 },
+    image,
+    recipe: { components: [] },
+    animation: {},
+    colors: { body: '#ffffff', accent: '#ffffff' },
+    bodyBackingOwner: owner,
+  });
+}
+
+test('shared masks notify distinct live owners once and preserve loss through cache invalidation', (t) => {
+  const timers = controlledTimers(t),
+    f = fixture(t, { query: true }),
+    image = f.image();
+  let first, second;
+  first = ownedBacking(t, {
+    onContextLoss: () => {
+      first.owner.clear({ preserveLost: true });
+      second.owner.clear({ preserveLost: true });
+    },
+  });
+  second = ownedBacking(t);
+  for (let frame = 0; frame < 20; frame++) {
+    f.paint(image, f.body, first.owner);
+    f.paint(image, f.body, second.owner);
+  }
+  assert.equal(f.surfaces.length, 1);
+  assert.equal(f.queries.count, 1);
+  assert.equal(timers.pending.size, 0);
+  const surface = f.surfaces[0],
+    expected = f.submissions[0].pixels;
+  surface.lose();
+  surface.lose();
+  assert.equal(first.events.length, 1);
+  assert.equal(second.events.length, 1);
+  assert.notEqual(first.events[0][1].owner, second.events[0][1].owner);
+  assert.equal(timers.pending.size, 1, 'Shared loss owns one probe, not one per painter.');
+  first.owner.clear({ preserveLost: true });
+  assert.equal(first.events.length, 1, 'Ordinary invalidation cannot discharge a lost owner.');
+  surface.restore();
+  assert.deepEqual(
+    first.events.map(([kind]) => kind),
+    ['lost', 'restored'],
+  );
+  assert.deepEqual(
+    second.events.map(([kind]) => kind),
+    ['lost', 'restored'],
+  );
+  assert.equal(first.events[0][1].owner, first.events[1][1].owner);
+  assert.equal(first.events[1][1].retired, undefined);
+  assert.equal(timers.pending.size, 0);
+  f.paint(image, f.body, second.owner);
+  assert.deepEqual(f.submissions.at(-1).pixels, expected);
+  assert.deepEqual(f.draws, { source: 2, read: 2, write: 2 });
+  first.owner.clear();
+  surface.lose();
+  assert.equal(first.events.length, 2, 'A detached healthy owner cannot receive future loss.');
+  assert.equal(second.events.length, 3);
+});
+
+test('initially lost eventless storage recovers owned holds without another paint', (t) => {
+  const timers = controlledTimers(t),
+    f = fixture(t, { offscreen: true, events: false, query: true, initiallyLost: true }),
+    image = f.image(),
+    first = ownedBacking(t),
+    second = ownedBacking(t);
+  f.paint(image, f.body, first.owner);
+  f.paint(image, f.body, second.owner);
+  assert.equal(first.events[0][0], 'lost');
+  assert.equal(second.events[0][0], 'lost');
+  assert.equal(timers.pending.size, 1);
+  assert.deepEqual(f.draws, { source: 0, read: 0, write: 0 });
+  timers.tick();
+  assert.equal(timers.pending.size, 1);
+  assert.equal(first.events.length, 1);
+  f.surfaces[0].lost = false;
+  timers.tick();
+  assert.equal(timers.pending.size, 0);
+  assert.equal(first.events[1][0], 'restored');
+  assert.equal(second.events[1][0], 'restored');
+  assert.deepEqual(f.draws, { source: 0, read: 0, write: 0 }, 'Probes never prepare pixels.');
+  f.paint(image, f.body, first.owner);
+  assert.deepEqual(f.draws, { source: 1, read: 1, write: 1 });
+});
+
+test('a premature restore event cannot release ownership while native storage is lost', (t) => {
+  const timers = controlledTimers(t),
+    f = fixture(t, { query: true }),
+    image = f.image(),
+    held = ownedBacking(t);
+  f.paint(image, f.body, held.owner);
+  const surface = f.surfaces[0];
+  surface.lose();
+  surface.event('contextrestored');
+  assert.equal(held.events.length, 1);
+  timers.tick();
+  assert.equal(held.events.length, 1);
+  surface.lost = false;
+  timers.tick();
+  assert.deepEqual(
+    held.events.map(([kind]) => kind),
+    ['lost', 'restored'],
+  );
+  assert.equal(timers.pending.size, 0);
+  assert.deepEqual(f.draws, { source: 1, read: 1, write: 1 });
+});
+
+test('retiring one shared lease preserves another hold and last retirement cancels stale probes', (t) => {
+  const timers = controlledTimers(t),
+    f = fixture(t, { query: true }),
+    image = f.image(),
+    first = ownedBacking(t),
+    second = ownedBacking(t);
+  f.paint(image, f.body, first.owner);
+  f.paint(image, f.body, second.owner);
+  const surface = f.surfaces[0];
+  surface.lose();
+  const staleProbe = timers.history[0];
+  first.owner.dispose();
+  assert.equal(first.events.at(-1)[1].retired, true);
+  assert.equal(second.events.length, 1);
+  assert.equal(timers.pending.size, 1);
+  second.owner.clear();
+  assert.equal(second.events.at(-1)[1].retired, true);
+  assert.equal(timers.pending.size, 0);
+  staleProbe();
+  surface.restore();
+  surface.lose();
+  assert.equal(first.events.length, 2);
+  assert.equal(second.events.length, 2);
+  assert.equal(timers.pending.size, 0);
+  const successor = ownedBacking(t);
+  f.paint(image, f.body, successor.owner);
+  assert.equal(successor.events[0][0], 'lost');
+  assert.notEqual(successor.events[0][1].owner, second.events[0][1].owner);
+  assert.equal(timers.pending.size, 1);
+  staleProbe();
+  assert.equal(timers.pending.size, 1, 'A stale callback cannot orphan its successor probe.');
+  surface.restore();
+  assert.equal(successor.events.at(-1)[0], 'restored');
+  f.paint(image, f.body, first.owner);
+  surface.lose();
+  assert.equal(first.events.length, 2, 'Disposed owners cannot reacquire a shared mask.');
+});
+
+test('failed owned mask preparation detaches its callbacks before replacement', (t) => {
+  const f = fixture(t, { firstFailure: 'readback' }),
+    image = f.image(),
+    held = ownedBacking(t);
+  assert.throws(() => f.paint(image, f.body, held.owner), /Readback denied/);
+  f.surfaces[0].lose();
+  f.surfaces[0].restore();
+  assert.deepEqual(held.events, []);
+  f.paint(image, f.body, held.owner);
+  f.surfaces[1].lose();
+  assert.equal(held.events.length, 1);
+  f.surfaces[0].restore();
+  assert.equal(held.events.length, 1, 'Stale storage cannot restore its replacement.');
+  f.surfaces[1].restore();
+  assert.equal(held.events.length, 2);
+});
+
+test('BoardPainter character leases survive loss invalidation and retire on replacement or disposal', (t) => {
+  const timers = controlledTimers(t),
+    f = fixture(t, { query: true }),
+    image = f.image(),
+    losses = new Set(),
+    events = [];
+  const painter = new BoardPainter(
+    {},
+    {
+      onContextLoss(event) {
+        losses.add(event.owner);
+        events.push(['lost', event]);
+        painter.invalidate();
+      },
+      onContextRestored(event) {
+        losses.delete(event.owner);
+        events.push(['restored', event]);
+        if (!losses.size) painter.invalidate();
+      },
+    },
+  );
+  t.after(() => painter.dispose());
+  paintActor(f, image, painter.bodyBacking);
+  f.surfaces[0].lose();
+  assert.equal(losses.size, 1, 'Reentrant invalidation cannot erase the paused owner.');
+  assert.equal(events.length, 1);
+  assert.equal(timers.pending.size, 1);
+  f.surfaces[0].restore();
+  assert.equal(losses.size, 0);
+  assert.equal(events.length, 2);
+  assert.equal(timers.pending.size, 0);
+  paintActor(f, image, painter.bodyBacking);
+  f.surfaces[0].lose();
+  assert.equal(losses.size, 1);
+  painter.setLevel({ id: 'replacement' });
+  assert.equal(losses.size, 0);
+  assert.equal(events.at(-1)[1].retired, true);
+  assert.equal(timers.pending.size, 0);
+  f.surfaces[0].restore();
+  paintActor(f, image, painter.bodyBacking);
+  f.surfaces[0].lose();
+  assert.equal(losses.size, 1);
+  painter.dispose();
+  assert.equal(losses.size, 0);
+  const count = events.length;
+  f.surfaces[0].restore();
+  f.surfaces[0].lose();
+  assert.equal(events.length, count);
+  assert.equal(timers.pending.size, 0);
+});
+
+test('an inert native loss query cannot emit restoration or schedule recovery for healthy storage', (t) => {
+  const timers = controlledTimers(t),
+    f = fixture(t, { events: false, query: true }),
+    image = f.image(),
+    held = ownedBacking(t);
+  f.paint(image);
+  const query = t.mock.method(f.surfaces[0].context, 'isContextLost', () => undefined);
+  for (let frame = 0; frame < 20; frame++) f.paint(image, f.body, held.owner);
+  assert.equal(query.mock.callCount(), 20);
+  assert.deepEqual(held.events, [], 'A neutral native query does not restore an unlost owner.');
+  assert.equal(timers.pending.size, 0);
+  assert.equal(f.surfaces.length, 1);
+  assert.deepEqual(f.draws, { source: 1, read: 1, write: 1 });
+});
+
+test(
+  'a masked character surface pauses Solo and repaints before explicit Resume',
+  { timeout: 120000 },
+  async (t) => {
+    const page = await soloPage(t),
+      f = fixture(t, { offscreen: true }),
+      image = f.image(),
+      original = BoardPainter.prototype.draw;
+    let painter;
+    // The established host models the board renderer. Forward its recording and
+    // exercise the real character/backing path with that host's real painter lease.
+    const draw = t.mock.method(BoardPainter.prototype, 'draw', function (...args) {
+      original.apply(this, args);
+      painter = this;
+      paintActor(f, image, this.bodyBacking);
+    });
+    const start = async () => {
+      page.$('start-button').click();
+      await settle(
+        () => page.doc.body.dataset.flightState === 'running',
+        'Owned renderer is ready.',
+        {
+          timeoutMs: 20000,
+        },
+      );
+      page.frame(0);
+    };
+    try {
+      await start();
+      page.key('ArrowDown');
+      page.frame(100);
+      const run = page.rendered.run,
+        before = authoritativeCheckpoint(run),
+        surface = f.surfaces[0],
+        reads = f.draws.read;
+      assert.ok(surface, 'Prepared character drawing must acquire its mask lease.');
+      surface.lose();
+      assert.equal(page.doc.body.dataset.flightState, 'paused');
+      page.$('start-button').click();
+      page.frame(1000);
+      assert.deepEqual(authoritativeCheckpoint(run), before);
+      assert.equal(f.draws.read, reads, 'A paused lost mask performs no pixel preparation.');
+      surface.restore();
+      page.frame(0);
+      page.frame(10000);
+      assert.equal(page.doc.body.dataset.flightState, 'paused');
+      assert.deepEqual(authoritativeCheckpoint(run), before);
+      assert.ok(f.draws.read > reads, 'Restoration repaints the backing while the run is paused.');
+      await start();
+      assert.equal(page.rendered.run, run);
+      assert.deepEqual(authoritativeCheckpoint(run), before);
+      const expected = structuredClone(run);
+      for (let tick = 0; tick < 12; tick++) stepRun(expected, { direction: 'down' }, FIXED_DT);
+      page.frame(100);
+      assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(expected));
+      assert.deepEqual(page.errors, []);
+    } finally {
+      draw.mock.restore();
+      painter?.bodyBacking.dispose();
+    }
+  },
+);
