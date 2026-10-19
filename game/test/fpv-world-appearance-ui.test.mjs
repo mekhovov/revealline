@@ -31,6 +31,10 @@ import { worldRecordIdentity } from '../../optional-practice/civilian-fpv/world-
 import { openWorldStore } from '../../optional-practice/civilian-fpv/world-store.mjs';
 import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
 
+import { WORLD_LIBRARY_CATALOGUE } from '../../optional-practice/civilian-fpv/world-library.mjs';
+import { REGIONAL_LIBRARY_PINS } from '../../optional-practice/civilian-fpv/regional-library.mjs';
+const unifiedMissionCount = WORLD_CATALOGUE.length + BEGINNER_CATALOGUE.length + WORLD_LIBRARY_CATALOGUE.reduce((total, row) => total + row.courses, 0) + REGIONAL_LIBRARY_PINS.length;
+
 const requireAuthoring = createRequire(
   new URL('../../authoring/fpv-worlds/package.json', import.meta.url),
 );
@@ -300,33 +304,22 @@ test('World lesson mode action restarts paused in the matching mode and preserve
 });
 
 test('World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats', async (t) => {
-  const priorLocale = getLocale();
+  const priorLocale = getLocale(),
+    priorRandom = Math.random;
+  Math.random = () => 0;
+  t.after(() => {
+    Math.random = priorRandom;
+  });
   const h = fixture(t);
   await h.app.ready;
   const originals = structuredClone(WORLD_CATALOGUE),
     choose = () => h.doc.querySelector('[data-random-flight="catalogue"]');
-  h.$('theme-tabs')
-    .querySelectorAll('button')
-    .find((b) => b.textContent === 'Snake Hunt')
-    .click();
-  for (const [id, value] of [
-    ['activity-filter', 'hunt'],
-    ['difficulty-filter', 'beginner'],
-    ['completion-filter', 'new'],
-  ]) {
-    h.$(id).value = value;
-    h.$(id).emit('change');
-  }
-  const expected = new Set(
-    WORLD_CATALOGUE.filter(
-      (entry) =>
-        entry.theme === 'snake-hunt' &&
-        entry.activity === 'hunt' &&
-        entry.difficulty === 'beginner',
-    ).map((entry) => entry.id),
-  );
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const expected = new Set(WORLD_CATALOGUE.filter((entry) => entry.world === 'stadium').map((entry) => entry.id));
   h.$('worlds-shell-action-missions').click();
   assert.equal(choose().type, 'button');
+  h.$('journey-search').value = 'Circuit stadium';
+  h.$('journey-search').emit('input');
   h.$('flight-mode').value = 'acro';
   let previous = null;
   for (let i = 0; i < 4; i++) {
@@ -347,15 +340,13 @@ test('World random flight from the shared chooser follows displayed filters, pre
     await settleUntil(() => !h.$('flight-dialog').open, 'return to catalogue');
     h.$('worlds-shell-action-missions').click();
   }
-  h.$('completion-filter').value = 'complete';
-  h.$('completion-filter').emit('change');
+  h.$('journey-search').value = 'no-such-route';
+  h.$('journey-search').emit('input');
   choose().click();
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(h.app.snapshot().course, undefined, 'activation rechecks eligibility');
-  h.$('completion-filter').value = 'all';
-  h.$('completion-filter').emit('change');
-  h.$('search').value = 'Clockwise catch';
-  h.$('search').emit('input');
+  h.$('journey-search').value = 'Clockwise catch';
+  h.$('journey-search').emit('input');
   choose().click();
   await settleUntil(
     () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
@@ -371,10 +362,10 @@ test('World random flight from the shared chooser follows displayed filters, pre
   choose().click();
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(h.app.snapshot().course, undefined, 'English search is re-evaluated in Ukrainian');
-  h.$('search').value = WORLD_CATALOGUE.find(
+  h.$('journey-search').value = WORLD_CATALOGUE.find(
     (entry) => entry.id === 'snake-hunt-loops-02',
   ).course.locales.uk.title;
-  h.$('search').emit('input');
+  h.$('journey-search').emit('input');
   choose().click();
   await settleUntil(
     () => ['active', 'disarmed'].includes(h.app.snapshot().state?.status),
@@ -419,11 +410,9 @@ test('World random flight includes the active installed revision and excludes re
   }
   const h = fixture(t, indexedDB);
   await h.app.ready;
-  h.$('theme-tabs')
-    .querySelectorAll('button')
-    .find((b) => ['My worlds', 'Мої світи'].includes(b.textContent))
-    .click();
   h.$('worlds-shell-action-missions').click();
+  h.$('journey-search').value = 'random';
+  h.$('journey-search').emit('input');
   const choose = h.doc.querySelector('[data-random-flight="catalogue"]');
   choose.click();
   await settleUntil(
@@ -1745,7 +1734,7 @@ test('Worlds and School share one complete scrollable library with direct native
   await h.app.ready;
   h.$('worlds-shell-action-missions').click();
   const cards = h.doc.querySelectorAll('.journey-card');
-  assert.equal(cards.length, WORLD_CATALOGUE.length + BEGINNER_CATALOGUE.length);
+  assert.equal(cards.length, unifiedMissionCount);
   assert.equal(h.$('world-grid').children.length, 0);
   assert.equal(h.$('school-lessons').children.length, 0);
   assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, cards.length);
@@ -1984,7 +1973,7 @@ test('World shared chooser remains usable when native scene loading fails', asyn
   );
   assert.equal(
     h.doc.querySelectorAll('.journey-card').length,
-    WORLD_CATALOGUE.length + BEGINNER_CATALOGUE.length,
+    unifiedMissionCount,
   );
   assert.ok(h.doc.querySelectorAll('.journey-card').every((item) => !item.disabled));
   assert.notEqual(h.app.snapshot().state.status, 'active');
@@ -3761,4 +3750,196 @@ test('actual World settings keep an unsaved menu animation choice and Retry the 
   assert.equal(h.win.localStorage.getItem(key), 'off');
   assert.equal(status.textContent, 'Saved');
   assert.equal(retry.hidden, true);
+});
+
+test('Regional flight keeps the saved radio, arms, flies and pauses with accurate menu state', async (t) => {
+  const [
+    { createEnduranceFixture },
+    { regionalLibraryEntry },
+    { defaultRadioProfile },
+    { createFlightProfileStore },
+  ] = await Promise.all([
+    import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+    import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+    import('../../optional-practice/civilian-fpv/radio-profile.mjs'),
+    import('../../optional-practice/civilian-fpv/radio-profile.mjs'),
+  ]);
+  const { terrain } = await createEnduranceFixture();
+  const storage = new Map();
+  const profile = defaultRadioProfile();
+  profile.verified = true;
+  const store = createFlightProfileStore({
+    storage: {
+      getItem: (key) => storage.get(key) ?? null,
+      setItem: (key, value) => storage.set(key, value),
+    },
+  });
+  store.save({ format: 'FlightProfiles.v1', radio: profile, response: store.snapshot().response });
+  const h = fixture(t, {
+    storage,
+    rendererFactory: () => ({
+      available: true,
+      setPresentation() {},
+      setRegional() {},
+      setQuality() {},
+      setDrone() {},
+      setGhost() {},
+      setPath() {},
+      draw() {},
+      dispose() {},
+      async prepareRegionalFrame() {},
+      async prepare() {
+        return true;
+      },
+    }),
+  });
+  await h.app.ready;
+  const pad = {
+    id: profile.device.id,
+    index: 0,
+    connected: true,
+    mapping: '',
+    axes: [0.004, 0.004, -1, 0.004, 1, 0, 0, 0],
+    buttons: Array.from({ length: 24 }, () => ({ value: 0 })),
+  };
+  h.pads.push(pad);
+  assert.equal(
+    h.$('flight-source').value,
+    'radio',
+    'A saved radio is the default when no source preference exists',
+  );
+  await h.app.startFlight(
+    regionalLibraryEntry(
+      { manifest: terrain.manifest, source: terrain.source },
+      { sha256: 'a'.repeat(64) },
+    ),
+  );
+  assert.equal(h.app.snapshot().state.reason, 'prepared');
+  h.tick(2);
+  assert.notEqual(
+    h.app.snapshot().state.status,
+    'active',
+    'A held ON switch must not auto-arm a new map',
+  );
+  h.$('world-arm').click();
+  assert.match(h.doc.querySelector('.sim-radio-flight-notice').textContent, /OFF.*ON|ВИМК.*УВІМК/);
+  pad.axes[4] = -1;
+  h.tick(2);
+  pad.axes[4] = 1;
+  h.tick(2);
+  assert.equal(h.app.snapshot().state.status, 'active');
+  pad.axes[2] = 0;
+  h.tick(5);
+  assert.ok(h.app.snapshot().state.ticks > 0);
+  assert.ok(h.app.snapshot().state.lastInput.throttle > 0);
+  assert.ok(
+    ['Pause', 'Пауза'].includes(h.doc.querySelector('[data-mode-action="pause"]').textContent),
+  );
+  assert.equal(h.doc.querySelector('.sim-radio-flight-notice').hidden, true);
+});
+
+test('Unified map cards and search follow the current language without changing installed identities', async (t) => {
+  const prior = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(prior, { persist: false }));
+  const h = fixture(t);
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  h.$('journey-search').value = 'Railway Valley';
+  h.$('journey-search').emit('input');
+  const ids = h.doc.querySelectorAll('.journey-card').map((card) => card.dataset.missionId);
+  assert.equal(ids.length, 2);
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  h.$('journey-search').value = 'Залізнична долина';
+  h.$('journey-search').emit('input');
+  const cards = h.doc.querySelectorAll('.journey-card');
+  assert.deepEqual(cards.map((card) => card.dataset.missionId), ids);
+  assert.ok(cards.every((card) => card.textContent.includes('Залізнична долина')));
+});
+
+for (const context of ['learning', 'flight']) {
+  test(`Random defaults to ${context} levels in that activity`, async (t) => {
+    const priorRandom = Math.random;
+    Math.random = () => (context === 'learning' ? 0 : 0.999);
+    t.after(() => {
+      Math.random = priorRandom;
+    });
+    const h = fixture(t);
+    await h.app.ready;
+    h.$(
+      context === 'learning' ? 'worlds-shell-action-home-extra' : 'worlds-shell-action-missions',
+    ).click();
+    assert.equal(h.$('world-random-levels').value, 'auto');
+    assert.match(
+      h.$('world-random-levels').options[0].textContent,
+      context === 'learning' ? /Learning|навчальні/ : /Flight|польоту/,
+    );
+    h.$('journey-collection').value = 'Classic';
+    h.$('journey-collection').emit('change');
+    h.$('journey-random-level').click();
+    await settleUntil(() => Boolean(h.app.snapshot().course), 'Random prepares an eligible level');
+    assert.equal(
+      BEGINNER_CATALOGUE.some((entry) => entry.id === h.app.snapshot().course),
+      context === 'learning',
+    );
+    assert.equal(h.app.snapshot().state.ticks, 0);
+  });
+}
+
+test('Mixed Random can choose a learning level from flight mode and remembers the explicit choice', async (t) => {
+  const priorRandom = Math.random;
+  Math.random = () => 0.999;
+  t.after(() => {
+    Math.random = priorRandom;
+  });
+  const storage = new Map(),
+    h = fixture(t, { storage });
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  h.$('journey-collection').value = 'Classic';
+  h.$('journey-collection').emit('change');
+  h.$('world-random-levels').value = 'mixed';
+  h.$('world-random-levels').emit('change');
+  h.$('journey-random-level').click();
+  await settleUntil(
+    () => Boolean(h.app.snapshot().learning),
+    'Mixed selection can prepare a learning level',
+  );
+  const restored = fixture(t, { storage });
+  await restored.app.ready;
+  restored.$('worlds-shell-action-missions').click();
+  assert.equal(restored.$('world-random-levels').value, 'mixed');
+  restored.$('world-random-levels').value = 'auto';
+  restored.$('world-random-levels').emit('change');
+  assert.equal(storage.get('revealline.sim.worlds.random-levels.v1'), 'auto');
+});
+
+test('Random from a paused lesson keeps the learning context and can exclude all mismatched search results', async (t) => {
+  const priorLocale = getLocale();
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const h = fixture(t);
+  await h.app.ready;
+  h.$('world-language').value = 'en';
+  h.$('world-language').emit('change');
+  const lesson = BEGINNER_CATALOGUE[1];
+  await h.app.startFlight(lesson);
+  h.$('world-flight-menu').click();
+  h.$('worlds-shell-action-pause-random').click();
+  await settleUntil(
+    () => h.app.snapshot().course !== lesson.id,
+    'Pause Random selects another lesson',
+  );
+  assert.ok(BEGINNER_CATALOGUE.some((entry) => entry.id === h.app.snapshot().course));
+  h.$('worlds-shell-action-missions').click();
+  h.$('journey-search').value = 'Flight School';
+  h.$('journey-search').emit('input');
+  assert.equal(
+    h.$('journey-random-level').disabled,
+    true,
+    'Flight mode must not fall back to learning when search has no eligible flight results',
+  );
+  h.$('world-random-levels').value = 'mixed';
+  h.$('world-random-levels').emit('change');
+  assert.equal(h.$('journey-random-level').disabled, false);
 });

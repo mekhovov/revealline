@@ -5671,6 +5671,15 @@ const FLIGHT_HUD_STYLE = `
   cursor: pointer;
   pointer-events: auto;
 }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='hide'] {
+  position: absolute;
+  top: calc(var(--hud-top) + 46px);
+  left: calc(var(--hud-left) + min(var(--hud-card-width), 100% - var(--hud-left) - 64px) + 6px);
+  width: 44px; min-width: 44px; height: 44px; min-height: 44px;
+  padding: 0; border: 0; border-radius: 50%; background: var(--hud-bg);
+  color: var(--hud-ink); font: 24px/1 system-ui, sans-serif;
+  cursor: pointer; pointer-events: auto;
+}
 [data-sim-hud][data-hud-component] button:focus-visible { outline: 3px solid var(--hud-accent); outline-offset: 3px; }
 [data-sim-hud='flight'][data-hud-component] [data-hud-part='details'] {
   grid-column: 1 / -1;
@@ -5709,7 +5718,8 @@ const FLIGHT_HUD_STYLE = `
 [data-sim-hud='details'][data-hud-component] button { min-height: 44px; min-width: 44px; padding: 8px 14px; border: 1px solid #ffffff65; border-radius: 4px; background: #172431; cursor: pointer; }
 @container sim-flight-hud (max-height: 480px) and (min-width: 500px) {
   [data-sim-hud='flight'][data-hud-component] [data-hud-part='card'] { --hud-card-width: 220px; --hud-card-height: 64px; top: clamp(58px, calc(var(--hud-aim-y, 50%) + 20px), calc(100% - 128px)); left: calc(50% - 110px); grid-template-rows: 16px 20px 12px; padding: 6px 8px; }
-  [data-sim-hud='flight'][data-hud-component] [data-hud-part='explain'] { top: clamp(58px, calc(var(--hud-aim-y, 50%) + 20px), calc(100% - 128px)); left: calc(50% + 116px); }
+  [data-sim-hud='flight'][data-hud-component] :is([data-hud-part='explain'], [data-hud-part='hide']) { top: clamp(58px, calc(var(--hud-aim-y, 50%) + 20px), calc(100% - 128px)); left: calc(50% + 116px); }
+  [data-sim-hud='flight'][data-hud-component] [data-hud-part='hide'] { transform: translateY(46px); }
 }
 @media (forced-colors: active) {
   [data-sim-hud][data-hud-component] { --hud-ink: CanvasText; --hud-muted: CanvasText; --hud-bg: Canvas; --hud-accent: Highlight; forced-color-adjust: auto; }
@@ -5735,7 +5745,7 @@ export function mountFlightHud({
   const copy = (value) =>
     typeof value === 'string' ? value : (value?.[locale()] ?? value?.en ?? '');
   const normalize = (value = {}) => ({
-    mode: ['guided', 'minimal', 'detailed'].includes(value?.mode) ? value.mode : 'guided',
+    mode: ['off', 'guided', 'minimal', 'detailed'].includes(value?.mode) ? value.mode : 'guided',
     textSize: value?.textSize === 'large' ? 'large' : 'standard',
     highContrast: value?.highContrast === true,
   });
@@ -5789,6 +5799,7 @@ export function mountFlightHud({
     earnedLabel = make('span', 'earned-label', earned),
     checks = make('div', 'checks', card),
     explain = make('button', 'explain', root, '?'),
+    hide = make('button', 'hide', root, '×'),
     details = make('div', 'details', card),
     telemetry = make('div', 'telemetry', root),
     cue = make('div', 'cue', root),
@@ -5796,7 +5807,12 @@ export function mountFlightHud({
     cueArrow = make('span', 'cue-arrow', cue, '➜'),
     cueLabel = make('span', 'cue-label', cue),
     announcement = make('span', 'announcement', root);
-  explain.type = 'button';
+  explain.type = hide.type = 'button';
+  hide.addEventListener('click', (event) => {
+    event.stopPropagation();
+    persistPreferences({ ...preferences, mode: 'off' });
+    container.focus({ preventScroll: true });
+  });
   card.setAttribute('role', 'group');
   announcement.setAttribute('role', 'status');
   announcement.setAttribute('aria-live', 'polite');
@@ -6011,6 +6027,7 @@ export function mountFlightHud({
     // Paused practice can retain guidance, but a covering menu or result owns
     // the screen regardless of the simulation/playback state underneath it.
     root.hidden =
+      preferences.mode === 'off' ||
       options.visible === false ||
       !feedback ||
       (options.active === false && !options.paused && !options.replay);
@@ -6041,6 +6058,8 @@ export function mountFlightHud({
       t('Explain the current objective', 'Пояснити поточну ціль'),
     );
     explain.title = t('Objective details', 'Умови завдання');
+    hide.title = t('Hide flight guidance · restore in Settings', 'Сховати підказки · відновити в налаштуваннях');
+    setAttribute(hide, 'aria-label', hide.title);
     gauge.hidden = !g;
     explain.hidden = options.explain === false;
     if (g) paintGauge(g);
@@ -6203,6 +6222,7 @@ export function mountFlightHud({
               'mode',
               t('Guidance', 'Підказки'),
               [
+                ['off', t('Off', 'Вимкнено')],
                 ['guided', t('Guided', 'З підказками')],
                 ['minimal', t('Minimal', 'Мінімальні')],
                 ['detailed', t('Detailed', 'Докладні')],
