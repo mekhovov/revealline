@@ -94,6 +94,15 @@ async function open(f, paused = false) {
 const cards = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
 const card = (f, name) =>
   cards(f).find((button) => button.querySelector('strong').textContent === name);
+function startPrepared(f) {
+  assert.equal(f.$('coop-overlay').hidden, false, 'Selection prepares a stationary Team briefing.');
+  assert.equal(f.doc.activeElement.id, 'coop-resume');
+  assert.match(f.$('coop-resume').textContent, /Start together/);
+  assert.equal(f.$('coop-clock').textContent, '0:00');
+  f.tick(2);
+  f.tap('Enter');
+  assert.equal(f.$('coop-overlay').hidden, true);
+}
 async function play(f, name) {
   const button = card(f, name);
   assert(button, name);
@@ -102,6 +111,7 @@ async function play(f, name) {
   await waitFor(
     () => f.$('coop-stage').textContent === name.toUpperCase() && !f.$('journey-chooser').open,
   );
+  startPrepared(f);
   await waitFor(
     () =>
       f.$('coop-stage').textContent === name.toUpperCase() &&
@@ -206,6 +216,7 @@ test('same-ID imported Team edition stays Custom and launches its own preset', a
   custom.focus();
   f.tap('Enter');
   await waitFor(() => f.$('coop-stage').textContent === 'TWIN LANDINGS' && f.$('coop-menu').hidden);
+  startPrepared(f);
   assert.equal(f.$('coop-difficulty').value, 'expert');
   assert.equal(f.$('coop-journey-skip').hidden, true);
 });

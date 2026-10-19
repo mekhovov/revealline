@@ -207,6 +207,14 @@ test('pointer selection survives native restoration and a fresh Start focuses th
   const f = await fixture(t);
   await openLibrary(f, 'coop-discovery-open');
   await operation(relayCard(f), () => pointerClick(relayCard(f), 'touch'));
+  assert.equal(
+    f.$('coop-overlay').hidden,
+    false,
+    'Selection publishes READY before any new frame.',
+  );
+  assert.match(f.$('coop-resume').textContent, /Start together/);
+  assert.equal(f.doc.activeElement.id, 'coop-resume');
+  assert.equal(f.$('coop-clock').textContent, '0:00');
   await runningYard(f);
   const closed = f.restorations.find((entry) => entry.dialog === 'journey-chooser');
   assert.ok(closed);
@@ -233,7 +241,14 @@ test('holding controller Confirm through Team preparation cannot start the accep
   });
   await selecting;
   await waitFor(() => f.$('coop-stage').textContent === 'RELAY YARD' && !dialog(f).open);
+  assert.equal(f.$('coop-overlay').hidden, false, 'Preparation cannot publish a running attempt.');
+  const prepared = heldAttempt(f);
   f.tick(120);
+  assert.deepEqual(
+    heldAttempt(f),
+    prepared,
+    'Held Confirm preserves the complete prepared attempt.',
+  );
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.match(f.$('coop-resume').textContent, /Start together/);
   assert.equal(f.doc.activeElement.id, 'coop-resume');
@@ -241,6 +256,8 @@ test('holding controller Confirm through Team preparation cannot start the accep
   const acceptedPicture = teamImage(f);
   controls.pad.buttons[0] = { pressed: false, value: 0 };
   f.tick(2);
+  assert.deepEqual(heldAttempt(f), prepared, 'Release alone does not start the accepted attempt.');
+  assert.equal(f.$('coop-overlay').hidden, false);
   controls.press(0);
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(teamImage(f), acceptedPicture);

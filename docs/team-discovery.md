@@ -38,17 +38,19 @@ or release evidence.
 
 These are source contracts; completed evidence is recorded below.
 
-- One **Play** action prepares and starts the selected arena. The existing attempt
+- Selecting a mission prepares its exact native READY briefing. A fresh **Start Together**
+  starts the same accepted attempt; holding Confirm through preparation cannot start it. The existing attempt
   or result, picture and setup remain until content and artwork are ready. Failure
   or cancellation must not replace them.
-- Replacing a paused attempt requires **Stay** or **Replace & play**, with Stay
+- Replacing a paused attempt requires **Stay** or **Replace & prepare**, with Stay
   initially focused. Stay keeps the old attempt paused; Resume remains explicit.
-  Play retains the current challenge and teamwork settings.
+  Selection retains the current challenge and teamwork settings. A restored attempt
+  remains paused until explicit **Resume Together**.
 - Adoption publishes the candidate run, exact pack and picture ownership together.
   Retry keeps accepted visuals; Next follows the accepted pack's arena order.
   A matching name or level ID alone cannot authorize different content or artwork.
 - Completing a pack focuses **Browse Team arenas** directly on Results. Back keeps the earned result and original picture. **Change setup** remains a separate explicit action.
-- Accepted starter play updates the existing Team arena bookmark only after adoption; local same-ID imports never replace that bookmark. Storage denial or a newer callback focus cannot break play or steal focus.
+- Explicit Start updates the existing Team arena bookmark after accepted preparation; local same-ID imports never replace that bookmark. Storage denial or a newer callback focus cannot break play or steal focus.
 - The browser does not award Solo pictures or write Solo sessions, saves or
   progression. A legal installed-campaign win records one exact-edition Team
   clear. Local raw packs and unfinished Team attempts remain page-local; durable
