@@ -45,6 +45,7 @@ if (
     '--required-coating',
     '--rooted-vegetation',
     '--maintenance-inlays',
+    '--mineral-finish',
   ].includes(variant)
 )
   throw Error('Unknown scene variant');
@@ -68,6 +69,7 @@ if (
     '--required-coating',
     '--rooted-vegetation',
     '--maintenance-inlays',
+    '--mineral-finish',
   ].includes(variant)
 )
   includeRetainingFaces({
@@ -76,16 +78,25 @@ if (
       '--required-coating',
       '--rooted-vegetation',
       '--maintenance-inlays',
+      '--mineral-finish',
     ].includes(variant),
-    required: ['--required-coating', '--rooted-vegetation', '--maintenance-inlays'].includes(
-      variant,
-    ),
+    required: [
+      '--required-coating',
+      '--rooted-vegetation',
+      '--maintenance-inlays',
+      '--mineral-finish',
+    ].includes(variant),
   });
-const rootContact = ['--rooted-vegetation', '--maintenance-inlays'].includes(variant)
+const rootContact = ['--rooted-vegetation', '--maintenance-inlays', '--mineral-finish'].includes(
+    variant,
+  )
     ? includeRootedVegetation()
     : null,
-  maintenance = variant === '--maintenance-inlays' ? includeMaintenanceInlays() : null;
+  maintenance = ['--maintenance-inlays', '--mineral-finish'].includes(variant)
+    ? includeMaintenanceInlays()
+    : null;
 const scene = createScene({
+  mineralFinish: variant === '--mineral-finish',
   groundMaterials: [
     '--material-scale',
     '--retaining-faces',
@@ -93,6 +104,7 @@ const scene = createScene({
     '--required-coating',
     '--rooted-vegetation',
     '--maintenance-inlays',
+    '--mineral-finish',
   ].includes(variant),
 });
 check(
@@ -114,21 +126,23 @@ const prepared = await prepareWorldFile({
   }),
   project = prepared.project,
   revision =
-    variant === '--maintenance-inlays'
-      ? 'r16'
-      : variant === '--rooted-vegetation'
-        ? 'r15'
-        : variant === '--required-coating'
-          ? 'r14'
-          : variant === '--surface-coatings'
-            ? 'r13'
-            : variant === '--retaining-faces'
-              ? 'r12'
-              : variant === '--material-scale'
-                ? 'r11'
-                : variant
-                  ? 'r9'
-                  : 'r8',
+    variant === '--mineral-finish'
+      ? 'r17'
+      : variant === '--maintenance-inlays'
+        ? 'r16'
+        : variant === '--rooted-vegetation'
+          ? 'r15'
+          : variant === '--required-coating'
+            ? 'r14'
+            : variant === '--surface-coatings'
+              ? 'r13'
+              : variant === '--retaining-faces'
+                ? 'r12'
+                : variant === '--material-scale'
+                  ? 'r11'
+                  : variant
+                    ? 'r9'
+                    : 'r8',
   first = validateWorldCourse({
     ...structuredClone(baseline.courses[0]),
     revision,
@@ -189,7 +203,7 @@ project.provenance = [
       source: 'Original deterministic authoring/fpv-worlds/mountain-reservoir/source/',
     },
     sourceSHA256: hash(scene.bytes),
-    changes: ['--required-coating', '--maintenance-inlays'].includes(variant)
+    changes: ['--required-coating', '--maintenance-inlays', '--mineral-finish'].includes(variant)
       ? 'Existing pinned prepare pipeline with registered REVEALLINE_surface_coating v1 preservation. One canonical opaque-finish extension is required; older hosts reject it. No physics changes.'
       : variant === '--surface-coatings'
         ? 'Existing pinned prepare pipeline; original land-side engineering over accepted r4 composition. No physics changes. The mineral material declares the fixed SimSurfaceCoating.v1 opaque-finish hint; this candidate requires the qualified coating-capable renderer.'
@@ -235,6 +249,7 @@ for (const file of [
   'land-routes.mjs',
   'engineering-routes.mjs',
   'mineral.mjs',
+  'mineral-finish.mjs',
   'ground-maps.mjs',
   'retaining.mjs',
   'rooting.mjs',
@@ -275,12 +290,14 @@ const receipt = {
     '--required-coating',
     '--rooted-vegetation',
     '--maintenance-inlays',
+    '--mineral-finish',
   ].includes(variant)
     ? {
         rendererPrerequisite: [
           '--required-coating',
           '--rooted-vegetation',
           '--maintenance-inlays',
+          '--mineral-finish',
         ].includes(variant)
           ? 'REVEALLINE_surface_coating v1 support in renderer.mjs/world-visuals.mjs/world-content.mjs/world-themes.mjs; required capability rejects older hosts. This asset generation is not package admission.'
           : 'SimSurfaceCoating.v1 opaque-finish support in renderer.mjs/world-visuals.mjs; historical admitted renderers lack this feature. This asset generation is not package admission.',
