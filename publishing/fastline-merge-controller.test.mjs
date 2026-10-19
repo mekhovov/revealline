@@ -1576,6 +1576,36 @@ test("draft and closed PRs fail closed and disarm existing auto-merge", () => {
   }
 });
 
+test("draft or unknown readiness blocks every merge path and disarms existing requests", () => {
+  let combinations = 0;
+  for (const draft of [true, undefined, null]) {
+    for (const mergeable_state of [
+      "clean",
+      "unstable",
+      "behind",
+      "has_hooks",
+    ]) {
+      for (const auto_merge of [null, { enabled_at: "now" }]) {
+        for (const stack of [undefined, { number: 7, size: 2, position: 2 }]) {
+          const input = fixture({
+            draft,
+            mergeable_state,
+            auto_merge,
+            labels: [{ name: "fastline-stack-merge" }],
+            stack,
+          });
+          assert.deepEqual(decideMergeAction(input), {
+            action: auto_merge ? "disarm" : "wait",
+            reason: "pull request is draft or draft state is unknown",
+          });
+          combinations++;
+        }
+      }
+    }
+  }
+  assert.equal(combinations, 48);
+});
+
 test("labels, milestones and review state do not change exact-head admission", () => {
   for (const overrides of [
     { labels: [{ name: "hold: ux" }, { name: "release-train-hold" }] },
