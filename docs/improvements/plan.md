@@ -2,6 +2,16 @@
 
 **Review version: 19 October 2026**
 
+**Latest execution checkpoint:** **31 source slices merged · 12 feature PRs open for checks · 42 drafts = 85 active/admitted candidates; 1 withdrawn.** All 83 feature groups / 113 deliverables remain tracked. Seven delivery dependencies are separate. These counts are not a completion percentage.
+
+**New reviewable delivery:** Academy result-language [#1742](https://github.com/mekhovov/revealline/pull/1742) passes all 78 native cases. Text compatibility [#1668](https://github.com/mekhovov/revealline/pull/1668) now preserves captured current main and passes the complete 456-case cohort and full configured lint. Duel Home #1741, Team repair #1740 and pause-music #1737 retain their separate scopes and remaining gates.
+
+**Current priorities:** finish Single Drone/Riy conditional-state layout: initial landscape fits, but earned Shield/upgrade notices and result actions still fail compact review. Team Home's six difficulty failures reproduce identically on the unchanged baseline; a separate narrow fixture prerequisite is being prepared. Private-room Copy/Share/localQR has21 pure passes and bounded source review. Native tests, full checks and packages are now on **capacity hold** after Team Next hit the protected2GiB floor; source/browser work continues while at least3GiB is requested from the user.
+
+**Compact acceptance:** fit the complete field alongside critical HUD, Riy status/actions and touch controls. Persistent secondary copy may use the existing Pause reading owner; time-sensitive guidance stays live. Standard/Large semantics, accepted nodes, focus and gameplay input ownership remain intact. Extra large support is not complete until actual compact English/Ukrainian review passes.
+
+**Admission and limits:** observed main is `cdbda99ac881eb9cac62d536543d9078b92ac081`. Older receipts keep their exact source scope. Bounded work protects a 2 GiB reserve; no large build or source capture may breach it. Physical iPhone PWA/offline, Steam Deck and suspend/resume remain **Not tested**. Source, browser, release and device gates stay separate.
+
 ## 1. Summary, priorities and current evidence
 
 Improve the existing game in this order: **reliable controls and recovery → clearer first sessions → accessibility and comfort → practice and social play → creation and content discovery → larger platform investments.**
@@ -10,7 +20,7 @@ This plan replaces the earlier roadmap, retains **F01–F81**, and incorporates 
 
 **Execution authorized: 18 October 2026.** Current implementation, evidence, priorities and remaining work are recorded in [the live progress board](progress.md) and [structured tracker](progress.json). Existing local work remains preserved. Physical-device qualification is pending because no iPhone or Steam Deck is available.
 
-**Implementation review update:** **19 merged; 19 feature PRs ready and 29 draft/dependent PRs.** Shared touch-save recovery and Worlds medal guidance are implemented; compact browser review found real Duel Large-pad canvas collapse and Worlds action overlap, so both remain under correction. Text compatibility integration passes its recorded full source gates. Latest Survival suspend integration passes86 combined tests and independent review; its full exact-head gates are pending. Remaining hosts/later phases stay open, and no new live or physical qualification is claimed.
+**Implementation review update:** Team, Versus, Academy and the observation-copy support slices retain separate drafts and evidence. Worlds #1733 and Rooms #1734 are separate reviewed drafts. F10 remains partial: Capture admission and the separate Versus explanation are active; Team can follow through its own progress owner. Full lesson recommendations require F25/D. Source checks, actual browser review, package admission, live release and physical acceptance remain distinct gates.
 
 - **F75:** the 30-minute recording cap and the two-hour legacy collection validator have different owners. Authored Journey completion uses separate events; do not imply that every Journey loses progress at two hours.
 - **F82/F14:** the committed package passes desktop missing-module recovery, explicit repair and offline Home startup after full worker activation. Core-only preparation leaves selected Journey artwork unavailable, so full offline gameplay remains unqualified. Readiness must report these separately. A test that removed files during worker activation was invalid and is excluded.
@@ -358,11 +368,31 @@ All **F01–F83** remain available for selection. The recommended starting commi
 
 **Current feature boundaries:** F23 Worlds is a complete additional2–3day slice exposing existing exact time **and** contact limits in its verified result; Team/Duel have no ordinary medal ladder and are not assigned invented targets. F09 acceptance requires both active canvases within the visible viewport, not merely their arena bounds; readable2× text and existing touch owners remain intact. F29 channel measurements separate the existing compressor from exact downmix verification, and final intended signals must remain nonzero; this does not replace listening/device qualification.
 
-### Latest review and resource gate · 19 October
+### Earlier resource interruption · 19 October
 
-Disk exhaustion is blocking implementation and current-head full validation. Completed snapshots and task-owned review resources were released; the original workspace is preserved. At least5GB stable free space is requested. Small progress updates can proceed when writes succeed.
+At this earlier checkpoint, disk exhaustion blocked implementation and current-head full validation. Completed snapshots and task-owned review resources were released; the original workspace was preserved. The subsequent recovery and resumed checks are recorded below.
 
 - **P1 — F09:** Duel200% keyboard layout fits, but Large touch pads collapse both boards at320. Worlds result advice remains covered by its sticky action row. Additional Survival/Raid318 Settings review exposes a stretched generic Retry column that squeezes Controls; attribution against base remains pending. Keep these items open.
 - **P1 — F04b:** latest local main integration b1cb preserves all23 feature deltas, passes86 combined checks and independent review. Current-head full gates could not start due ENOSPC; earlier c94 full gates remain scoped to that revision. Latest integration published to draft#1663; exact-head admission pending.
 - **P1 — F15b:** actual Solo, Versus, Team, Survival and Raid menus pass sampled failed-save/session-only/Retry paths with modeled storage; local intent and the modeled peer change are retained. Browser source203 is unchanged by fd940 reason correction; fd940 has50 focused tests,18 independent owner tests and7 projection checks. Main reconciliation/full exact-head CI remain pending. No iPhone/PWA-offline/Steam Deck qualification inferred.
 - **Delivery:** Snake context#1637 and SIM Home#1652 are now merged. The JSON snapshot uses refreshed remote PR states; ready remains subject to exact-head checks and current-main reconciliation.
+
+### Earlier implementation checkpoint · superseded by the latest checkpoint above
+
+Disk recovered to6.9GiB after earlier failures; full checks resumed serially after restoring629 missing exact Git build inputs(545MB). Earlier failures are retained. Browser review cannot currently attach a webview, so new visual acceptance remains pending.
+
+| Priority | Deliverable                       | Current result                                                                                                                                            | Remaining gate                                                                                                 |
+| -------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| P1       | Duel readable touch controls#1692 | Published4d9b:64px Large targets in one row with actual button hit-region steering;51 focused cases and independent review pass.                          | Full current source gates and native320/landscape browser checks.                                              |
+| P1       | Worlds result guidance#1702       | Published426: action row scrolls below details;93/93 complete serial cases; exact base reproduces intermittent Retry timeout; source review clear.        | Full current source gates and actual result scrolling review.                                                  |
+| P1       | Survival/Raid Settings#1707       | Published55393: existing Retry and Expert move into their categories;86 complete host/shell/settings cases and source review pass.                        | Native compact panel review and required CI.                                                                   |
+| P1       | Touch save recovery#1704          | Published1b226 integrates main2476,172 complete focused cases and exact feature/locale preservation review pass.                                          | Full current source gates, required CI and admission; no physical offline claim.                               |
+| P1       | Survival suspend#1663             | Publishedb1cb:86 combined cases, independent review, lint and nongenerated formatting pass. Full validation restarted with exact missing inputs restored. | Finish uninterrupted validation and required exact-head checks; package/browser/device scope remains separate. |
+
+All113 deliverables remain in the structured tracker. Later practice/social, creation, progression and platform phases remain open; these PR counts do not represent percent completion.
+
+**F04b gate completed:** b1cb uninterrupted full validation, canonical projections and full lint now pass after exact sparse-input recovery; all22 nongenerated changed files pass formatting and the generated shell retains unchanged handwritten bytes. PR1663 is ready for required checks. Earlier failures remain recorded. No new package/browser/live/device acceptance is inferred.
+
+**Compact Settings gate completed:** exact55393 tracked-only snapshot full lint and uninterrupted validation pass; all7491 snapshot Git blobs match before/after. PR1707 remains draft for actual browser review. Preserved untracked review fixtures caused the earlier direct-checkout lint failure; they were excluded only from the immutable source snapshot. Worlds426 validation is next; F59 ordinary Worlds retained-result language is developing independently.
+
+**Current-main compatibility admission:** PR1668 temporarily returns to draft with e216 integrated against mainab472. All40 ordinary feature deltas, everymainlocalevalue and threecompatibilitykeys per language are independentlypreserved; all18 generated namespaces are canonical. Its54 focused cases pass; full current checks are running. This is separate from Survival1663 now being ready. Worlds426 full lint and uninterrupted validation now pass; it remains draft for actual browser scrolling review.
