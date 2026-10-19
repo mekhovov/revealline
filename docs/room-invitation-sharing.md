@@ -2,9 +2,9 @@
 
 Status: developing. Draft for remote review and normal CI on exact captured main
 `cdbda99ac881eb9cac62d536543d9078b92ac081`. This is the complete bounded
-Copy/Share/QR implementation; native room qualification and actual browser and
-device acceptance remain pending. Draft publication does not establish those
-qualifications or complete F49.
+Copy/Share/QR implementation. The complete four-file component/room source
+cohort passes 87/87; actual browser and device acceptance remain pending. Draft
+publication does not establish those qualifications or complete F49.
 
 ## Player benefit and boundary
 
@@ -105,16 +105,16 @@ files were unchanged before and after.
 That run covers direct receiver/gesture timing, success settlement, manual and
 denied clipboard paths, explicit retry, cancelled/unsupported/failed sharing,
 single-owner away/back, replacement/hidden/leave/dispose retirement, real QR
-geometry and live English/Ukrainian node reuse. It does not qualify the newly
-authored native room and accepted-snapshot cases, which have not run yet.
+geometry and live English/Ukrainian node reuse. That historical run did not
+qualify the later native room and accepted-snapshot cases.
 
 The frozen nine-path predecessor manifest was
 `182845e96750b71f3d00333e9db2d54137db8ad8b071fe77fbd3b0b3cf4fea49`.
 During the subsequent disk hold, **27 additional component cases were authored
-and remain unrun**. The original 21 cases are retained; the successor file's
-expected registration total is 48, not an executed pass count. Production files
-are unchanged from that predecessor. The successor changes only this receipt
-and `game/test/room-invitation-actions.test.mjs`.
+and published unrun** in draft PR1744. The original 21 cases remain byte-exact;
+the expanded file registers 48 cases. Production files are unchanged from that
+predecessor. The expansion changed only this receipt and
+`game/test/room-invitation-actions.test.mjs`.
 
 The additions cover two unchanged-poll cases that count status and QR-caption
 text writes and preserve their owned text nodes; twenty deferred Share/Clipboard
@@ -127,12 +127,69 @@ pagehide composition executes the existing pagehide/pageshow callbacks from
 services. It does not pretend the component owns those window events. Modeled
 DOM text-write counts do not establish real assistive-technology behavior.
 
-Planned complete source cohort, after independent review and a serialized native
-test slot: the new component file plus all of `online-room-client.test.mjs`,
-`online-room-content.test.mjs`, and `online-room-presentation.test.mjs`. New host
-cases use actual extracted page functions, the real room lifecycle and recipe
-validation, and the existing native play shell. They do not substitute a new
-routing or acceptance implementation. No existing test is removed or waived.
+### First complete-cohort attempt: failed/incomplete
+
+At published head `dcf62bb009c4e0fd7f8d5429b9131298c7e2dd2b`, manifest
+`4325c41a1c955fe62b1058c104f836ccc89336e42566500c02b364612a02f802`, the
+expanded component file passed **48/48**. The following complete client file
+exited 1 with **0 passed, 0 assertion failures and 21 cancelled**. Its first case
+awaited a binding fence that the fixture never reached; remaining cases were
+cancelled by the parent test. Content and presentation files did not run because
+the runner stopped on this failure. This is not a passing client or cohort run.
+
+The new core-only fixture omitted the service-owned control protocol and
+activation. Actual `poll()` correctly rejected it before recipe binding; the
+fixture collected that protocol error and then awaited an unresolved fence.
+The test-only correction adds those two modeled service fields to the
+authoritative room **before its genuine snapshot and state identity are
+created**. It also rejects the fence explicitly, with diagnostic error codes,
+if polling completes before binding. No wire payload is forged after signing,
+no runtime file changes, and no assertion or timeout is relaxed.
+
+Both complete outputs were retained without filtering or truncation; stderr was
+empty and no guard fired. Component stdout was 12,152 bytes, SHA256
+`aeb29201f50e01cd26ad031116c99f7b18caeac76aa31b64f681835db5ede449`;
+client stdout was 12,392 bytes, SHA256
+`3738bbe0e81f2cef0a09fd074ce3d9d6e7cfa48bbdb1a160e786a8536178d37f`.
+
+### Corrected complete cohort: 87/87 passed
+
+The corrected source manifest
+`3f199b97e4d3a96abce2553488c86ecbe96412e6d5907f2c711d6e9d3bf6f060`
+passed all four complete files serially in four fresh Node 22.22.2 workers.
+HEAD remained `dcf62bb009c4e0fd7f8d5429b9131298c7e2dd2b` with only the reviewed
+13-line client-fixture correction modified. Head, the entire nine-path manifest
+and that exact tracked status were identical before and after every file.
+
+| Complete file                       | Passed | Wall seconds | Peak group RSS KiB | Full stdout bytes |
+| ----------------------------------- | -----: | -----------: | -----------------: | ----------------: |
+| `room-invitation-actions.test.mjs`  |  48/48 |        0.364 |            168,480 |            12,151 |
+| `online-room-client.test.mjs`       |  21/21 |        0.391 |            177,584 |             5,180 |
+| `online-room-content.test.mjs`      |    6/6 |        0.345 |            174,768 |             1,697 |
+| `online-room-presentation.test.mjs` |  12/12 |        0.312 |            157,760 |             3,046 |
+
+Every file exited 0, with zero skips, cancellations, stderr, truncation or guard
+events. Guards were a 1,536 MiB heap, 2,048 MiB process-group RSS, 180 seconds
+per file and a 2 GiB disk floor. This is a complete scoped cohort pass, not a
+whole-project/full-source or package-build pass.
+
+The full unfiltered corrected-run transcript, all four SHA-verified stdout and
+stderr files, and per-file receipts are retained locally in the ignored
+`.cache/improvements-evidence/2026-10-19/f49/` directory. The earlier failed-run
+receipt and fingerprints remain separate from this passing run.
+
+| Passing file                        | Source SHA256                                                      | Full stdout SHA256                                                 |
+| ----------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `room-invitation-actions.test.mjs`  | `7eb64a6a1963ac4e6907614bd8a3dc9bd5108ad596c8fe56bc683277b12fcb3c` | `8fc41c9b62954e2443a8abcccaf9cc27d2e1ac11ec15e763e254426f4538087a` |
+| `online-room-client.test.mjs`       | `7894b9134a9b4bb12e5036e0f8366348127af8b7342d60fd5d644331d4a4602c` | `e169fb777035c907e019b1dab4e2c8cf5d86afb7ae81bd1ad4a0f1845306a6fe` |
+| `online-room-content.test.mjs`      | `199d111e64765797ccf57fd704e80ac3e73c0d8f1bc9827174d2e8737d442f85` | `0cf2cf3234da397f42c87929ddc9b973e655ee5319b20177a1fab5065ddb8468` |
+| `online-room-presentation.test.mjs` | `6d325e60d595adb61aa2de073e839252ad752afcab91c31520842530435d5c47` | `e3a1c591c3dc32bcc9321635a23780e76dcbf861865d430602441ea489d7302a` |
+
+Host cases use actual extracted page functions, the real room lifecycle and
+recipe validation, and the existing native play shell. They do not substitute a
+new routing or acceptance implementation. No existing test is removed or waived.
+Clipboard and Share APIs are modeled; these tests do not operate the actual
+system clipboard or an operating-system Share sheet.
 
 ## Primary guidance
 
@@ -151,19 +208,19 @@ routing or acceptance implementation. No existing test is removed or waived.
 
 ## Remaining gates
 
-Independent source review accepted the boundary for draft publication; the
-complete native cohort is pending. Actual
+Independent source review accepted the boundary for draft publication. Actual
 desktop and compact browser layout/focus/controller checks, a real clipboard
 permission workflow, operating-system Share and cancellation, real QR scans,
 iPhone/PWA and Steam Deck acceptance, full-source validation and built package
 qualification remain pending. No hardware is currently available. No offline
 or physical-device claim follows from modeled APIs or local source tests.
 
-The local native/heavy test slot remains on a capacity guard hold after disk
-pressure stopped another cohort. No local expanded component, client, content,
-presentation or native run is claimed for this draft. Remote CI may establish
-independent qualification through normal checks; no CI bypass or source/package
-pass is inferred from publishing it.
+The original draft was published during a capacity guard hold after disk
+pressure stopped another cohort. Safe cleanup later restored enough capacity
+for the explicitly granted, bounded serial cohort above. No additional heavy
+gate is inferred. Remote CI may establish independent qualification through
+normal checks; no CI bypass or source/package pass is inferred from publishing
+or updating the draft.
 
 F49 remains developing until those acceptance boundaries are met; source tests
 alone do not make the whole Phase 5 feature complete.
