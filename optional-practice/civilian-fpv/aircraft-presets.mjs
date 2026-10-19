@@ -9,7 +9,7 @@ import {
 } from './aircraft-physics.mjs';
 
 export const AIRCRAFT_PRESET_FORMAT = 'FpvAircraftPreset.v1';
-export const AIRCRAFT_CATALOG_REVISION = 3;
+export const AIRCRAFT_CATALOG_REVISION = 4;
 const freeze = (value) => {
   for (const child of Object.values(value)) if (child && typeof child === 'object') freeze(child);
   return Object.freeze(value);
@@ -439,11 +439,12 @@ const references = [
   },
   {
     id: 'nazgul-eco-xl5-v11',
+    revision: 2,
     name: 'iFlight Nazgul ECO XL5',
     variant: 'V1.1 · analog · 6S · 1800 KV',
     category: 'freestyle',
     wheelbase: 245,
-    propeller: 127,
+    propeller: 129.54,
     motor: '2207 1800 KV',
     prop: 'Nazgul F5',
     dry: 427,
@@ -454,6 +455,8 @@ const references = [
     batteryName: '6S 1400 mAh reference pack',
     dimensions: [305, 80, 305],
     thrust: 10,
+    // Preserve the revision 1 estimate: a dimension correction is not a motor measurement.
+    reactionTorque: 0.0127,
     lag: 0.03,
     resistance: 0.045,
     current: 110,
@@ -463,7 +466,26 @@ const references = [
         'https://iflight-rc.eu/en/products/nazgul-xl5-eco-v1-1-6s-analog',
         'Nazgul ECO XL5 V1.1 specifications',
       ),
+      source(
+        'https://shop.iflight.com/Nazgul-XL5-ECO-6S-Pro2193',
+        'Nazgul ECO XL5 V1.1 installed F5 propeller and related SKU 964',
+        '2026-10-18',
+      ),
+      source(
+        'https://shop.iflight.com/nazgul-5140-tri-blades-cw-ccw-propellers-3sets-6-pairs-pro964',
+        'Nazgul F5 SKU 964: 5.1-inch diameter specification',
+        '2026-10-18',
+      ),
     ],
+    evidence: {
+      propeller: manufacturer(
+        [0, 1, 2],
+        'V1.1 specifies Nazgul F5 and links SKU 964; that F5 specification gives 5.1 inches = 129.54 mm. The five-inch aircraft class is not the exact propeller diameter.',
+      ),
+      propulsion: estimated(
+        'Revision 2 preserves the revision 1 nominal-voltage thrust, 0.0127 reaction-torque coefficient and motor lag estimates. The diameter correction supplies no matched propulsion measurements.',
+      ),
+    },
     batteryDerived: true,
   },
   {
@@ -999,7 +1021,7 @@ export function createPresetConfiguration(id) {
     inertia,
     maxThrust: r.thrust,
     radius: Math.sqrt(dimensions.x * dimensions.x + dimensions.z * dimensions.z) / 2,
-    reactionTorque: r.propeller / 10000,
+    reactionTorque: r.reactionTorque ?? r.propeller / 10000,
     motorTimeConstant: r.lag,
     linearDrag: 0.02 * mass,
     quadraticDrag: 0.02 * mass,

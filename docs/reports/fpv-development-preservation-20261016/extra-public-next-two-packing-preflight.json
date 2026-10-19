@@ -1,0 +1,15 @@
+{
+  "format": "FPVExactNextTwoPublicExtraPackingPreflight.v1",
+  "manifestSHA256": "c91fa011daa5589a27d0953a5eae07fe0a97f240f5f4f27066b96280334de755",
+  "clearanceSHA256": "b4d05f778d69b6f8c4cb92b366afc2694f79f393a67e5d3a2fb0def8ba3ab574",
+  "files": 6147,
+  "logicalBytes": 1843256598,
+  "distinctSHA256": 3110,
+  "newObjectsComparedWithAllSealedParts": 32,
+  "newRawBytes": 1586002,
+  "maximumNewObjectBytes": 289095,
+  "exactHeldPathClearances": 239,
+  "onlyTwoExplicitPublicPrefixesSelected": true,
+  "otherCandidatesOrRootsApproved": false,
+  "extraVolumeInputSetFinal": false
+}

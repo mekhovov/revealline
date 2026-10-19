@@ -106,7 +106,19 @@ const words = {
     marathonBrief:
       'Clear a contract, then bank your score or risk it on the next. Five contracts change their approaches and offer smaller repairs. Hull, airframes and upgrades carry forward. Revised sorties cap your build at eight invested ranks; later refits exchange equal ranks or offer field rewards. Losing all airframes loses every unbanked point.',
     adjusted: 'Medal time',
+    raw: 'Flight time before penalty',
     penalty: 'Damage penalty',
+    nextMedal: 'Next medal',
+    medalGoal: 'Medal goal',
+    target: '{medal}: {seconds} s or less.',
+    shortfall: 'Reduce medal time by {seconds} s (shortfall rounded up to 0.01 s).',
+    tinyShortfall: 'Less than 0.01 s over the target.',
+    precision:
+      'Flight time, penalty and medal time are displayed to 0.01 s; medals use unrounded values.',
+    highestMedal: 'Gold earned — the highest medal for this sortie.',
+    finishForMedal: 'Complete the sortie to earn a medal. Time alone does not earn one.',
+    comparisonUnavailable: 'Medal comparison is unavailable for this result.',
+    seconds: 's',
     gold: 'Gold',
     silver: 'Silver',
     bronze: 'Bronze',
@@ -137,7 +149,19 @@ const words = {
     marathonBrief:
       'Виконайте контракт і заберіть очки або ризикніть у наступному. П’ять контрактів змінюють підходи, а ремонт стає меншим. Корпус, апарати й покращення зберігаються. В оновлених вильотах збірка містить до восьми рангів; далі можна обміняти рівні ранги або взяти польову винагороду. Втрата всіх апаратів забирає всі незбережені очки.',
     adjusted: 'Заліковий час',
+    raw: 'Час польоту без штрафу',
     penalty: 'Штраф за шкоду',
+    nextMedal: 'Наступна медаль',
+    medalGoal: 'Мета для медалі',
+    target: '{medal}: не більше {seconds} с.',
+    shortfall: 'Скоротіть заліковий час на {seconds} с (різницю округлено вгору до 0,01 с).',
+    tinyShortfall: 'Перевищення цілі менш ніж на 0,01 с.',
+    precision:
+      'Час польоту, штраф і заліковий час показано до 0,01 с; медалі визначаються за неокругленими значеннями.',
+    highestMedal: 'Золото здобуто — це найвища медаль цього вильоту.',
+    finishForMedal: 'Завершіть виліт, щоб здобути медаль. Самого часу недостатньо.',
+    comparisonUnavailable: 'Порівняння для медалі недоступне для цього результату.',
+    seconds: 'с',
     gold: 'Золото',
     silver: 'Срібло',
     bronze: 'Бронза',
@@ -163,9 +187,10 @@ const words = {
 };
 const copy = (locale) => words[locale === 'uk' ? 'uk' : 'en'];
 const multiplier = (contract) => 1 + (contract - 1) * 0.25;
-export function overflightRaidMedalTime(seconds) {
+export function overflightRaidMedalTime(seconds, locale = 'en') {
   const ticks = Math.round(seconds * 100);
-  return `${Math.floor(ticks / 6000)}:${((ticks % 6000) / 100).toFixed(2).padStart(5, '0')}`;
+  const value = `${Math.floor(ticks / 6000)}:${((ticks % 6000) / 100).toFixed(2).padStart(5, '0')}`;
+  return locale === 'uk' ? value.replace('.', ',') : value;
 }
 
 export function overflightTimeAttackResult(run) {
@@ -183,6 +208,62 @@ export function overflightTimeAttackResult(run) {
           'unranked'),
     clean: run.phase === 'won' && run.stats.damageTaken === 0,
   };
+}
+
+/** Presentation only: use the native result and exact authored targets, never
+ * rounded display strings, to explain the next medal without changing awards. */
+export function overflightTimeAttackMedalGoal(run) {
+  const budgets = run?.compiled?.medalBudgets ?? OVERFLIGHT_TIME_MEDALS;
+  if (
+    !Number.isFinite(run?.time) ||
+    run.time < 0 ||
+    !Number.isFinite(run?.stats?.damageTaken) ||
+    run.stats.damageTaken < 0 ||
+    !['gold', 'silver', 'bronze'].every((id) => Number.isFinite(budgets[id]) && budgets[id] > 0) ||
+    !(budgets.gold < budgets.silver && budgets.silver < budgets.bronze)
+  )
+    return Object.freeze({ state: 'unavailable' });
+  const result = overflightTimeAttackResult(run);
+  if (!Number.isFinite(result.adjustedTime)) return Object.freeze({ state: 'unavailable' });
+  if (run.phase !== 'won') return Object.freeze({ state: 'incomplete' });
+  if (result.medal === 'gold') return Object.freeze({ state: 'highest' });
+  const medal = { silver: 'gold', bronze: 'silver', unranked: 'bronze' }[result.medal];
+  return Object.freeze({
+    state: 'next',
+    medal,
+    target: budgets[medal],
+    shortfall: result.adjustedTime - budgets[medal],
+  });
+}
+
+function medalGoalCopy(run, locale) {
+  const text = copy(locale),
+    goal = overflightTimeAttackMedalGoal(run);
+  if (goal.state !== 'next')
+    return {
+      label: text.medalGoal,
+      value:
+        text[
+          {
+            highest: 'highestMedal',
+            incomplete: 'finishForMedal',
+            unavailable: 'comparisonUnavailable',
+          }[goal.state]
+        ],
+    };
+  const number = (value, digits) =>
+      value.toLocaleString(locale === 'uk' ? 'uk' : 'en', {
+        useGrouping: false,
+        maximumFractionDigits: digits,
+      }),
+    target = text.target
+      .replace('{medal}', text[goal.medal])
+      .replace('{seconds}', number(goal.target, 20)),
+    gap =
+      goal.shortfall < 0.01
+        ? text.tinyShortfall
+        : text.shortfall.replace('{seconds}', number(Math.ceil(goal.shortfall * 100) / 100, 2));
+  return { label: text.nextMedal, value: `${target} ${gap} ${text.precision}` };
 }
 
 function sourceOf(compiled) {
@@ -513,7 +594,10 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
     },
     renderResults(context) {
       const { run, document, formatTime: regularTime, records } = context;
-      const formatTime = variant === 'time-attack' ? overflightRaidMedalTime : regularTime;
+      const formatTime =
+        variant === 'time-attack'
+          ? (seconds) => overflightRaidMedalTime(seconds, document.documentElement.lang)
+          : regularTime;
       settle(run);
       const state = run.raidVariant,
         text = copy(document.documentElement.lang);
@@ -521,6 +605,8 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
       base.renderResults({
         ...context,
         formatTime,
+        text: (key) =>
+          variant === 'time-attack' && key === 'elapsed' ? text.raw : context.text(key),
         run: { ...run, review: true },
       });
       const $ = (id) => document.getElementById(id);
@@ -543,7 +629,14 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
           );
         $('result-kicker').textContent = text[result.medal];
         stat(text.adjusted, formatTime(result.adjustedTime));
-        stat(text.penalty, `+${result.penalty.toFixed(2)}s`);
+        stat(
+          text.penalty,
+          `+${result.penalty.toLocaleString(document.documentElement.lang, {
+            useGrouping: false,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })} ${text.seconds}`,
+        );
         const budgets = run.compiled.medalBudgets ?? OVERFLIGHT_TIME_MEDALS;
         stat(
           document.documentElement.lang === 'uk'
@@ -551,6 +644,8 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
             : 'Gold · Silver · Bronze',
           `${formatTime(budgets.gold)} · ${formatTime(budgets.silver)} · ${formatTime(budgets.bronze)}`,
         );
+        const goal = medalGoalCopy(run, document.documentElement.lang);
+        stat(goal.label, goal.value, { detail: true });
         if (result.clean) $('result-message').textContent = text.clean;
       } else {
         $('result-kicker').textContent = `${text.contract} ${state.contract}/5`;

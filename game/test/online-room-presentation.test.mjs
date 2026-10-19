@@ -17,6 +17,131 @@ import { createDestructionBudget } from '../hunt/destruction-budget.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { Document } from './helpers/couch-dom.mjs';
+import { mountRoomInvitationActions } from '../online/room-invitation-actions.mjs';
+import { roomInvitationLink } from '../online/room-content.mjs';
+
+for (const action of ['share', 'qr'])
+  test(`native room surfaces retire pending ${action} across Settings and return without starting play`, async (t) => {
+    const source = await readFile(new URL('../online/room-ui.mjs', import.meta.url), 'utf8'),
+      host = parse(source, { ecmaVersion: 'latest', sourceType: 'module' }).body.find(
+        (node) =>
+          node.type === 'ExportNamedDeclaration' && node.declaration?.id?.name === 'mountRoomUI',
+      ).declaration,
+      mount = host.body.body.find(
+        (node) =>
+          node.type === 'ExpressionStatement' &&
+          node.expression.type === 'AssignmentExpression' &&
+          node.expression.left.name === 'shell',
+      );
+    assert.ok(mount);
+    const doc = new Document(),
+      nodes = new Map(),
+      $ = (id) => {
+        if (!nodes.has(id)) {
+          const node = doc.createElement(id === 'invite' ? 'input' : 'section');
+          node.id = id;
+          doc.body.append(node);
+          nodes.set(id, node);
+        }
+        return nodes.get(id);
+      };
+    doc.hidden = false;
+    $('invitation').append($('invite'));
+    $('lobby').append($('invitation'));
+    let resolve,
+      calls = 0,
+      readyCalls = 0,
+      pauseCalls = 0,
+      changes = 0,
+      view = null;
+    const pending = new Promise((yes) => {
+      resolve = yes;
+    });
+    const mounted = runInNewContext(
+      `(function () {let shell; ${source.slice(mount.start, mount.end).replaceAll('import.meta.url', JSON.stringify(new URL('../online/room-ui.mjs', import.meta.url).href))} return shell;})()`,
+      {
+        doc,
+        $,
+        URL,
+        getLocale: () => 'en',
+        say: (en) => en,
+        modes: $('modes'),
+        briefing: $('briefing'),
+        ready() {
+          readyCalls++;
+        },
+        pause() {
+          pauseCalls++;
+        },
+        getState: () => ({ status: 'paused' }),
+        canPlay: () => false,
+        onSurfaceChange() {
+          changes++;
+          view?.invalidate();
+        },
+        mountModePlayShell: (options) => mountModePlayShell({ ...options, document: doc }),
+        attachModalNavigation: undefined,
+        attachFullscreen: undefined,
+        setMenuIcon: undefined,
+      },
+    );
+    t.after(() => {
+      view.dispose();
+      mounted.dispose();
+    });
+    assert.equal(changes, 1, 'The committed initial Home notification is initialization-safe.');
+    mounted.open('missions');
+    const navigator = {
+      share() {
+        calls++;
+        return pending;
+      },
+    };
+    view = mountRoomInvitationActions({
+      document: doc,
+      window: { navigator },
+      field: $('invite'),
+      after: $('invitation'),
+      getVisible: () => mounted.topDialog() === mounted.elements.dialogs.missions,
+      createQr() {
+        calls++;
+        return pending;
+      },
+    });
+    $('invite').value = roomInvitationLink('https://game.example/game/online/?lang=en', {
+      invite: 'a'.repeat(64),
+      contentHash: 'b'.repeat(64),
+      recipe: {},
+    });
+    view.update($('invite').value);
+    const button = doc.getElementById(`invite-${action}`),
+      handler = button.onclick;
+    let old;
+    button.onclick = (event) => {
+      old = handler(event);
+    };
+    button.focus();
+    button.click();
+    button.onclick = handler;
+    assert.equal(calls, 1);
+    mounted.open('settings');
+    assert.equal(mounted.topDialog() === mounted.elements.dialogs.settings, true);
+    mounted.back();
+    assert.equal(mounted.topDialog() === mounted.elements.dialogs.missions, true);
+    assert.equal(button.disabled, false, 'A usable pending action remains focusable on return.');
+    assert.equal(button.getAttribute('aria-disabled'), 'true');
+    button.click();
+    assert.equal(calls, 1);
+    resolve({ src: 'data:image/svg+xml,local', size: 40 });
+    await old;
+    assert.equal(doc.getElementById('invite-share-status').textContent, '');
+    assert.equal(doc.getElementById('invite-qr-image').hidden, true);
+    assert.equal(button.disabled, false);
+    assert.equal(button.getAttribute('aria-disabled'), 'false');
+    assert.equal(readyCalls, 0);
+    assert.equal(pauseCalls, 0);
+    assert.equal($('invite').value.includes('token='), false);
+  });
 
 test('private-room title shows the stored mute before joining and follows later shared changes', async () => {
   // Execute the actual host mount/subscription ordering with the real shared
@@ -68,6 +193,7 @@ test('private-room title shows the stored mute before joining and follows later 
         modes: $('modes'),
         briefing: $('briefing'),
         ready() {},
+        onSurfaceChange() {},
         getState: () => null,
         canPlay: () => false,
         mountModePlayShell: (options) => mountModePlayShell({ ...options, document: doc }),

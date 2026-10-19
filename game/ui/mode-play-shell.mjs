@@ -377,6 +377,7 @@ export function mountModePlayShell({
     title.replaceChildren(logo);
   }
   const edition = el('p', 'mode-play-edition');
+  edition.id = `${idPrefix}-navigation-context`;
   const modes = el('nav', 'mode-play-modes');
   move('modes', modes);
   const mission = el('p', 'mode-play-mission');
@@ -580,8 +581,10 @@ export function mountModePlayShell({
     }
     attribute(buttons.menu, 'aria-label', COPY[language].menu);
     put(modeLabel, 'textContent', text(modeName));
-    put(edition, 'textContent', text(modeName));
-    edition.hidden = true;
+    put(edition, 'textContent', text(state.navigationContext));
+    put(edition, 'hidden', !edition.textContent);
+    if (edition.hidden) modes.removeAttribute('aria-describedby');
+    else attribute(modes, 'aria-describedby', edition.id);
     attribute(modes, 'aria-label', COPY[language].modes);
     attribute(menu, 'aria-label', COPY[language].home);
     attribute(utilities, 'aria-label', COPY[language].settings);

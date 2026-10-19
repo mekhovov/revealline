@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { resolveObjectURL } from 'node:buffer';
 import { soloPage, memoryStorage, installSoloStylesheets } from './helpers/solo-dom.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
@@ -531,4 +532,91 @@ test('late optional page presentation stops at play without delaying required ar
   assert.deepEqual(page.rendered.backdrop.assetRevision, original);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
+});
+
+test('actual Main Start decodes owned binary artwork before play and retains it through paused Resume', async (t) => {
+  const readerDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'FileReader'),
+    decoded = new WeakSet(),
+    sources = [];
+  let encodings = 0;
+  Object.defineProperty(globalThis, 'FileReader', {
+    configurable: true,
+    value: class {
+      constructor() {
+        encodings++;
+        throw new Error('Main must prepare verified binary artwork without data URL encoding.');
+      }
+    },
+  });
+  t.after(() => {
+    if (readerDescriptor) Object.defineProperty(globalThis, 'FileReader', readerDescriptor);
+    else delete globalThis.FileReader;
+  });
+  class ObservedImage extends PNGImage {
+    set src(value) {
+      super.src = value;
+      if (value.startsWith('blob:')) sources.push({ image: this, url: value });
+    }
+    get src() {
+      return super.src;
+    }
+    async decode() {
+      await super.decode();
+      decoded.add(this);
+    }
+  }
+  const audio = audioHarness();
+  const h = await fixture(t, { audio, pictures: { Image: ObservedImage } }),
+    { page } = h,
+    before = authoritativeCheckpoint(page.rendered.run);
+  const audioURL = page.win.URL.createObjectURL(
+    new Blob([new Uint8Array([1])], { type: 'audio/mpeg' }),
+  );
+  assert.equal(audio.created.at(-1).url, audioURL, 'Audio retains its deterministic URL owner.');
+  page.win.URL.revokeObjectURL(audioURL);
+  assert(audio.revoked.includes(audioURL));
+  const starting = page.$('start-button').onclick();
+  await h.waitCadence();
+  assert.equal(encodings, 0);
+  assert(sources.length > 0, 'The real Main route admitted an owned binary image.');
+  assert(audio.created.every(({ blob }) => !blob.type.startsWith('image/')));
+  const original = sources.find(({ image }) => image === page.rendered.backdrop?.image);
+  assert(original, 'The submitted board uses that exact image owner.');
+  assert(decoded.has(original.image), 'Full decode completed before readiness sampling.');
+  assert(resolveObjectURL(original.url));
+  assert.notEqual(page.doc.body.dataset.flightState, 'running');
+  await h.fill(90);
+  await h.finish(starting);
+  page.frame(0);
+  assert.equal(page.doc.body.dataset.flightState, 'running');
+  assert.equal(page.doc.body.dataset.pictureState, 'ready');
+  assert.equal(page.rendered.backdrop.image, original.image);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  page.$('pause-button').click();
+  page.frame(0);
+  assert(resolveObjectURL(original.url));
+  await page.$('start-button').onclick();
+  page.frame(0);
+  assert.equal(page.doc.body.dataset.flightState, 'running');
+  assert.equal(page.rendered.backdrop.image, original.image);
+  assert(resolveObjectURL(original.url));
+  assert.equal(encodings, 0);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  assert.deepEqual(page.errors, []);
+});
+
+test('Solo fixture teardown retires unadopted native image and audio URL references', async (t) => {
+  const audio = audioHarness();
+  let imageURL, audioURL;
+  await t.test('create page-owned URL references without a runtime picture owner', async (t) => {
+    const { page } = await fixture(t, { audio, search: '?journey=legacy&performance=1' });
+    // URL ownership is independent of decoding; these references are never submitted as pictures.
+    imageURL = page.win.URL.createObjectURL(new Blob(['image-reference'], { type: 'image/png' }));
+    audioURL = page.win.URL.createObjectURL(new Blob(['audio-reference'], { type: 'audio/mpeg' }));
+    assert(resolveObjectURL(imageURL));
+    assert.equal(audio.created.at(-1).url, audioURL);
+    assert.equal(audio.revoked.includes(audioURL), false);
+  });
+  assert.equal(resolveObjectURL(imageURL), undefined);
+  assert.equal(audio.revoked.filter((url) => url === audioURL).length, 1);
 });
