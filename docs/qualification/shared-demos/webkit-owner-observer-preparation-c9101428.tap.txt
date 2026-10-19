@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: request, existing catches and final app sink share exact object/document identities
+ok 1 - request, existing catches and final app sink share exact object/document identities
+  ---
+  duration_ms: 2.315625
+  type: 'test'
+  ...
+# Subtest: late observer retains original document, and distinct errors cannot be falsely merged
+ok 2 - late observer retains original document, and distinct errors cannot be falsely merged
+  ---
+  duration_ms: 0.539708
+  type: 'test'
+  ...
+# Subtest: observer transport failure never throws through application and is counted
+ok 3 - observer transport failure never throws through application and is counted
+  ---
+  duration_ms: 0.397541
+  type: 'test'
+  ...
+# Subtest: two pending requests remain explicit ambiguity; delivered response removes only its candidate
+ok 4 - two pending requests remain explicit ambiguity; delivered response removes only its candidate
+  ---
+  duration_ms: 0.781291
+  type: 'test'
+  ...
+# Subtest: real source projection preserves native call and promise owner counts; anchors fail closed
+ok 5 - real source projection preserves native call and promise owner counts; anchors fail closed
+  ---
+  duration_ms: 9.954333
+  type: 'test'
+  ...
+# Subtest: actual projected final app catch preserves return, fallback and original throw
+ok 6 - actual projected final app catch preserves return, fallback and original throw
+  ---
+  duration_ms: 6.466667
+  type: 'test'
+  ...
+# Subtest: derived durable qualifier keeps gameplay functions/deadlines and parses without execution
+ok 7 - derived durable qualifier keeps gameplay functions/deadlines and parses without execution
+  ---
+  duration_ms: 287.378167
+  type: 'test'
+  ...
+# Subtest: request metadata has a fixed bound and excessive instrumentation fails explicitly
+ok 8 - request metadata has a fixed bound and excessive instrumentation fails explicitly
+  ---
+  duration_ms: 1.881792
+  type: 'test'
+  ...
+# Subtest: fully drained successful child permits completed diagnostic collection
+ok 9 - fully drained successful child permits completed diagnostic collection
+  ---
+  duration_ms: 0.157167
+  type: 'test'
+  ...
+# Subtest: fully collected strict failure stays failed while its collection may be complete
+ok 10 - fully collected strict failure stays failed while its collection may be complete
+  ---
+  duration_ms: 0.09225
+  type: 'test'
+  ...
+# Subtest: undrained, killed, timed out, inconsistent or abnormally exited children cannot complete collection
+ok 11 - undrained, killed, timed out, inconsistent or abnormally exited children cannot complete collection
+  ---
+  duration_ms: 0.147625
+  type: 'test'
+  ...
+# Subtest: exit one is admitted only for completed behavior with an explicit preserved strict failure
+ok 12 - exit one is admitted only for completed behavior with an explicit preserved strict failure
+  ---
+  duration_ms: 0.092375
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 606.070083

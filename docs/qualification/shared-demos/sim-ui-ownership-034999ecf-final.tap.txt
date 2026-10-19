@@ -1,0 +1,145 @@
+TAP version 13
+# Subtest: SIM classic keyboard leaves focused Demo UI activation and navigation owned by UI
+ok 1 - SIM classic keyboard leaves focused Demo UI activation and navigation owned by UI
+  ---
+  duration_ms: 4.651375
+  ...
+# Subtest: SIM two-stick keyboard leaves focused Demo UI activation and navigation owned by UI
+ok 2 - SIM two-stick keyboard leaves focused Demo UI activation and navigation owned by UI
+  ---
+  duration_ms: 0.872833
+  ...
+# Subtest: SIM toolbar ownership blocks controller takeover and requires neutral pickup after focus leaves
+ok 3 - SIM toolbar ownership blocks controller takeover and requires neutral pickup after focus leaves
+  ---
+  duration_ms: 1.743
+  ...
+# Subtest: SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+ok 4 - SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+  ---
+  duration_ms: 0.767292
+  ...
+# Subtest: SIM foreground loss pauses practice and requires a fresh keyboard edge
+ok 5 - SIM foreground loss pauses practice and requires a fresh keyboard edge
+  ---
+  duration_ms: 0.5475
+  ...
+# Subtest: SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+ok 6 - SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+  ---
+  duration_ms: 0.706125
+  ...
+# Subtest: SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+ok 7 - SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+  ---
+  duration_ms: 0.807208
+  ...
+# Subtest: SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+ok 8 - SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+  ---
+  duration_ms: 3.196167
+  ...
+# Subtest: SIM explicit radio practice button retains its accepted handoff while its fork prepares
+ok 9 - SIM explicit radio practice button retains its accepted handoff while its fork prepares
+  ---
+  duration_ms: 1.211709
+  ...
+# Subtest: every conflicting action chord pauses an active controller before neutral flight input can be used
+ok 10 - every conflicting action chord pauses an active controller before neutral flight input can be used
+  ---
+  duration_ms: 5.046458
+  ...
+# Subtest: overlapping action handoff pauses once; the same ambiguity while disarmed never arms
+ok 11 - overlapping action handoff pauses once; the same ambiguity while disarmed never arms
+  ---
+  duration_ms: 0.410083
+  ...
+# Subtest: disconnect and reconnect retain the deliberate neutral pickup and arm boundary
+ok 12 - disconnect and reconnect retain the deliberate neutral pickup and arm boundary
+  ---
+  duration_ms: 0.336666
+  ...
+# Subtest: reordered unmapped radio, reversed pitch and full noncentring throttle normalize independently of stick diagram
+ok 13 - reordered unmapped radio, reversed pitch and full noncentring throttle normalize independently of stick diagram
+  ---
+  duration_ms: 1.627625
+  ...
+# Subtest: asymmetric centres and deadzones calibrate without a hidden response curve
+ok 14 - asymmetric centres and deadzones calibrate without a hidden response curve
+  ---
+  duration_ms: 0.2805
+  ...
+# Subtest: bounded imports reject duplicate channels, malformed counts, incomplete calibration, unknown fields and nonfinite input
+ok 15 - bounded imports reject duplicate channels, malformed counts, incomplete calibration, unknown fields and nonfinite input
+  ---
+  duration_ms: 1.762584
+  ...
+# Subtest: response profiles use an explicit bounded integer cubic blend and round trip
+ok 16 - response profiles use an explicit bounded integer cubic blend and round trip
+  ---
+  duration_ms: 0.260333
+  ...
+# Subtest: diagnostics discard invalid samples and cadence restarts after missing input
+ok 17 - diagnostics discard invalid samples and cadence restarts after missing input
+  ---
+  duration_ms: 0.464792
+  ...
+# Subtest: arming explains high throttle and neutral attitude requirements; held timestamps remain valid
+ok 18 - arming explains high throttle and neutral attitude requirements; held timestamps remain valid
+  ---
+  duration_ms: 0.825458
+  ...
+# Subtest: same-slot replacement and disconnect clear input; reappearance requires explicit verification and arm
+ok 19 - same-slot replacement and disconnect clear input; reappearance requires explicit verification and arm
+  ---
+  duration_ms: 0.295084
+  ...
+# Subtest: airborne pause requires pickup at previous controls, not low throttle; reset clears pickup
+ok 20 - airborne pause requires pickup at previous controls, not low throttle; reset clears pickup
+  ---
+  duration_ms: 0.2775
+  ...
+# Subtest: latched arm starts OFF, needs fresh OFF→ON after focus loss and cannot reconnect armed
+ok 21 - latched arm starts OFF, needs fresh OFF→ON after focus loss and cannot reconnect armed
+  ---
+  duration_ms: 0.450166
+  ...
+# Subtest: calibration profile replacement invalidates verification; malformed or throwing browser API is diagnosable
+ok 22 - calibration profile replacement invalidates verification; malformed or throwing browser API is diagnosable
+  ---
+  duration_ms: 0.423875
+  ...
+# Subtest: profiles have validated export/import and failed writes are visible session-only without changing Journey
+ok 23 - profiles have validated export/import and failed writes are visible session-only without changing Journey
+  ---
+  duration_ms: 3.436083
+  ...
+# Subtest: calibration-only imports validate but preserve the legacy response used by future tuning migration
+ok 24 - calibration-only imports validate but preserve the legacy response used by future tuning migration
+  ---
+  duration_ms: 5.276
+  ...
+# Subtest: a failed calibration-only save retains response and persisted bytes while reporting session-only calibration
+ok 25 - a failed calibration-only save retains response and persisted bytes while reporting session-only calibration
+  ---
+  duration_ms: 1.59725
+  ...
+# Subtest: radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge
+ok 26 - radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge
+  ---
+  duration_ms: 0.590959
+  ...
+# Subtest: v2 axis switches preserve v1 calibration, reject flight-axis overlap and require fresh arming
+ok 27 - v2 axis switches preserve v1 calibration, reject flight-axis overlap and require fresh arming
+  ---
+  duration_ms: 0.690416
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 206.051875

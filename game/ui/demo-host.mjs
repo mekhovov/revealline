@@ -25,6 +25,7 @@ import { attachDemoAudio } from './demo-audio.mjs';
 import { bindingLabels } from '../key-bindings.mjs';
 import { controllerBindingLabels } from '../controller-bindings.mjs';
 import { createDemoControllerFrame } from './demo-controller.mjs';
+import { attachControllerNavigation } from './controller-navigation.mjs';
 
 export { resolveDemoTheme } from '../demo-modes/solo.mjs';
 
@@ -44,7 +45,7 @@ export function attachDemoHost({
   onExit,
   onFreshStart,
   clearInput,
-  menu,
+  menu: suppliedMenu,
   nativeConfirmOwned = () => false,
   canWrite = () => false,
   settingsKey,
@@ -243,6 +244,28 @@ export function attachDemoHost({
     getPreferences: () => getContext().preferences,
   });
   const ownsUI = () => !!doc.activeElement?.closest?.('[data-demo-ui]');
+  // Native entries share the same DOM navigator. Existing page-owned navigators
+  // keep their guarded Confirm/Back policies when explicitly supplied.
+  const menuNavigation = suppliedMenu
+    ? null
+    : attachControllerNavigation({
+        document: doc,
+        getScope: () => (active && ownsUI() ? 'menu:shared-demo' : 'flight'),
+        getRoot: () => dialog,
+        getDefaultFocus: () =>
+          $('demo-fresh').hidden || !interrupted ? $('demo-watch-pause') : $('demo-fresh'),
+        getControlLabels: () => ({
+          directions: t('interface:directionControls'),
+          ...controllerBindingLabels(
+            getContext().preferences?.controllerBindings,
+            controllerIdentity?.id,
+          ).menu,
+        }),
+        onBack: () => close(),
+        onMenu: () => close(),
+      });
+  const menu = suppliedMenu ?? ((command) => menuNavigation.handle(command));
+
   const renderingLost = () => (!nativeLook() && displayLost) || (paintOwner?.losses?.size ?? 0) > 0;
   const watching = () => active && !practice && !interrupted && !busy && !renderingLost();
   const currentOwner = (owner) =>
@@ -718,6 +741,7 @@ export function attachDemoHost({
     : null;
   displayObserver?.observe(canvas);
   function clear() {
+    menuNavigation?.clear();
     clearInput();
     input.clear();
   }
@@ -1626,6 +1650,7 @@ export function attachDemoHost({
       audioControls.dispose();
       input.destroy();
       demoController.dispose();
+      menuNavigation?.destroy();
       fullscreen.dispose();
       layout.dispose();
       displayObserver?.disconnect();

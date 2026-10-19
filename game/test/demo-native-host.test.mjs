@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachDemoHost } from '../ui/demo-host.mjs';
+import { installDemoEntry } from '../ui/demo-entry.mjs';
 import { DEMO_SHELL } from '../ui/demo-shell.mjs';
 import { DEFAULT_PREFERENCES } from '../library.mjs';
 import { Document } from './helpers/couch-dom.mjs';
@@ -150,7 +151,7 @@ function fixture(t, options = {}) {
       return scene;
     },
   };
-  const host = attachDemoHost({
+  const hostOptions = {
     document: doc,
     modeId: 'snake',
     adapters: { snake: adapter },
@@ -166,7 +167,7 @@ function fixture(t, options = {}) {
     onEnter() {},
     onExit() {},
     clearInput() {},
-    menu() {},
+    menu: options.menu,
     onFreshStart: async () => false,
     readMedia: async () => null,
     audio: {
@@ -175,16 +176,30 @@ function fixture(t, options = {}) {
         throw new Error('Solo audio must not see native state');
       },
     },
-  });
+  };
+  const documentListenersBeforeHost = [
+    ...doc.listeners.values(),
+    ...doc.captureListeners.values(),
+  ].reduce((total, entries) => total + entries.size, 0);
+  let host = options.entry ? null : attachDemoHost(hostOptions);
   t.after(async () => {
-    await host.close();
-    host.destroy();
+    if (host) {
+      await host.close();
+      host.destroy();
+    }
     if (windowDescriptor) Object.defineProperty(globalThis, 'window', windowDescriptor);
     else delete globalThis.window;
   });
   return {
-    host,
+    get host() {
+      return host;
+    },
+    async installEntry() {
+      host = await installDemoEntry({ ...hostOptions, settingsKey: 'demo-test-preferences' });
+      return host;
+    },
     doc,
+    documentListenersBeforeHost,
     players,
     practices,
     surfaces,
@@ -385,5 +400,84 @@ test('native preparation forwards one bounded reporter through source and render
   assert.equal(row.preparation.candidates[0].tick, 10);
   assert.deepEqual(JSON.parse(page.$('demo-dialog').dataset.demoPreparationDetails), row);
   await page.host.close();
+  assert.deepEqual(page.storage.writes, []);
+});
+
+test('native entry supplies shared controller menu navigation, activation and Back without a page callback', async (t) => {
+  const page = fixture(t, { entry: true, genericInput: true });
+  await page.installEntry();
+  await page.host.open();
+  const pause = page.$('demo-watch-pause'),
+    next = page.$('demo-next');
+  pause._rect = { x: 0, y: 0, width: 100, height: 44 };
+  next._rect = { x: 120, y: 0, width: 100, height: 44 };
+  for (const [index, control] of page.$('demo-dialog').querySelectorAll('button').entries()) {
+    if (control !== pause && control !== next)
+      control._rect = { x: 0, y: 100 + index * 50, width: 100, height: 44 };
+  }
+  pause.focus();
+  const sample = (ui = {}) =>
+    page.host.controller({ flight: {}, ui, status: { code: 'connected' } });
+  sample();
+  sample({ direction: 'right' });
+  assert.equal(
+    page.doc.activeElement,
+    next,
+    'the shared navigator moves within the visible demo toolbar',
+  );
+  pause.focus();
+  let activations = 0;
+  pause.addEventListener('click', () => activations++);
+  sample({ confirm: true });
+  assert.equal(activations, 1);
+  assert.equal(page.players[0].phase, 'paused');
+  assert.equal(page.practices.length, 0, 'menu activation cannot take over gameplay');
+  sample();
+  sample({ back: true });
+  assert.equal(page.host.active, false);
+  assert.deepEqual(page.storage.writes, []);
+});
+
+test('shared host forwards an explicit page-owned menu exactly once and creates no fallback navigation', async (t) => {
+  const commands = [];
+  const page = fixture(t, { genericInput: true, menu: (command) => commands.push(command) });
+  await page.host.open();
+  page.$('demo-watch-pause').focus();
+  page.host.controller({ flight: {}, ui: {} });
+  page.host.controller({ flight: {}, ui: { confirm: true } });
+  assert.equal(commands.filter((command) => command.confirm).length, 1);
+  assert.equal(
+    page.players[0].phase,
+    'playing',
+    'the explicit owner remains solely responsible for activation',
+  );
+  assert.equal(page.$('demo-dialog').getAttribute('data-menu-input'), null);
+  assert.deepEqual(page.storage.writes, []);
+});
+
+test('native adapters receive the shared menu and destroying its host removes owned document listeners', async (t) => {
+  const page = fixture(t);
+  const count = () =>
+    [...page.doc.listeners.values(), ...page.doc.captureListeners.values()].reduce(
+      (total, entries) => total + entries.size,
+      0,
+    );
+  await page.host.open();
+  page.host.interrupt();
+  page.$('demo-takeover').focus();
+  page.inputs.menu({ confirm: true });
+  await settle(() => page.practices.length === 1);
+  assert.equal(page.practices[0].phase, 'paused', 'takeover waits for fresh practice input');
+  await page.host.close();
+  page.host.destroy();
+  assert.equal(
+    count(),
+    page.documentListenersBeforeHost,
+    'owned document listeners return to baseline',
+  );
+  assert.equal(page.$('demo-dialog').getAttribute('data-menu-input'), null);
+  const afterDestroy = count();
+  page.host.destroy();
+  assert.equal(count(), afterDestroy, 'repeated disposal remains harmless');
   assert.deepEqual(page.storage.writes, []);
 });

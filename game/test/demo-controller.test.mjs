@@ -381,3 +381,58 @@ test('SIM receives its original raw frame for native throttle and verified radio
   assert.equal(normalizer.sample(frame, flightScope('sim')), frame);
   normalizer.dispose();
 });
+
+test('raw SIM frames navigate shared menus without changing native flight or reading hardware again', () => {
+  const bindings = resolveControllerBindings();
+  bindings.menu.buttons.confirm = 2;
+  const preferences = Object.freeze({ controllerBindings: bindings });
+  const normalizer = createDemoControllerFrame({ getPreferences: () => preferences });
+  const pad = gamepad(),
+    nativeFlight = Object.freeze({ throttle: 0.61, yaw: -0.2 });
+  let reads = 0,
+    samples = 0;
+  const hardware = () => {
+    reads++;
+    return [pad];
+  };
+  const sample = (scope = 'menu:shared-demo') => {
+    samples++;
+    const frame = { gamepads: hardware(), now: samples * 20, flight: nativeFlight };
+    const mapped = normalizer.sample(frame, { ...flightScope('sim'), scope });
+    assert.equal(mapped.flight, nativeFlight);
+    assert.equal(mapped.gamepads, frame.gamepads);
+    return mapped;
+  };
+  pad.buttons[2].pressed = true;
+  assert.equal(sample().ui.confirm, false, 'held entry cannot confirm');
+  pad.buttons[2].pressed = false;
+  sample();
+  pad.axes[0] = 0.8;
+  assert.equal(sample().ui.direction, 'right');
+  pad.axes[0] = 0;
+  sample();
+  pad.buttons[2].pressed = true;
+  assert.equal(sample().ui.confirm, true);
+  assert.equal(sample().ui.confirm, false, 'one press produces one menu edge');
+  sample('flight');
+  assert.equal(sample().ui.confirm, false, 'returning from flight requires fresh neutral');
+  pad.buttons[2].pressed = false;
+  sample();
+  pad.buttons[1].pressed = true;
+  assert.equal(sample().ui.back, true);
+  assert.equal(reads, samples, 'the shared navigator consumes the one captured sample');
+  assert.equal(preferences.controllerBindings, bindings);
+  normalizer.dispose();
+});
+
+test('SIM shared menus retain an explicit native Confirm owner instead of producing a second edge', () => {
+  const normalizer = createDemoControllerFrame();
+  const pad = gamepad();
+  pad.buttons[0].pressed = true;
+  const frame = { gamepads: [pad], now: 1000, ui: { confirm: false, confirmStart: true } };
+  assert.equal(
+    normalizer.sample(frame, { ...flightScope('sim'), scope: 'menu:shared-demo' }),
+    frame,
+  );
+  normalizer.dispose();
+});

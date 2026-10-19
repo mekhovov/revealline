@@ -15,6 +15,7 @@ export function createDemoControllerFrame({ getPreferences = () => ({}) } = {}) 
     rawProfile = null,
     configuration = '',
     previousMode = null,
+    simMenuActive = false,
     needsNeutral = true,
     disposed = false;
   const router = createControllerRouter({
@@ -27,6 +28,7 @@ export function createDemoControllerFrame({ getPreferences = () => ({}) } = {}) 
     pads = [];
     rawProfile = null;
     needsNeutral = true;
+    simMenuActive = false;
     router.clear();
   };
   const normalize = (frame, options, assigned = undefined) => {
@@ -54,9 +56,27 @@ export function createDemoControllerFrame({ getPreferences = () => ({}) } = {}) 
         previousMode = modeId;
         clear();
       }
-      // SIM owns its native radio, throttle pickup and controller release gates.
+      // SIM keeps its native flight/radio sample. Its standalone entry supplies
+      // only captured pads, so derive menu edges while shared controls own focus.
+      // Existing native UI/Confirm owners keep the edges they already admitted.
+      if (modeId === 'sim') {
+        if (scope === 'flight') {
+          if (simMenuActive) clear();
+          return frame;
+        }
+        if (!Object.hasOwn(frame, 'gamepads') || frame.ui) return frame;
+        simMenuActive = true;
+        const normalized = normalize(frame, { scope, timeMs: frame.now, spectator: true });
+        return {
+          ...frame,
+          ui: normalized.ui,
+          assigned: normalized.assigned,
+          status: normalized.status,
+          disconnected: normalized.disconnected,
+        };
+      }
       // Legacy normalized callers without captured pads remain supported.
-      if (modeId === 'sim' || !Object.hasOwn(frame, 'gamepads')) return frame;
+      if (!Object.hasOwn(frame, 'gamepads')) return frame;
       const authoritative = completeFrame(frame)
         ? frame
         : completeFrame(frame.sharedController)
