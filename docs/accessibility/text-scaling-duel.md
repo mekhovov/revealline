@@ -40,21 +40,44 @@ selector outranks the existing shared ID branch. Result transition actions flow
 with the outer screen. The help reader retains its keyboard owner and gets a
 practical multiline viewport, not a normative minimum-size claim.
 
-Live HUD labels may grow beyond one viewport. The HUD reserves its actual height
-instead of the handheld 44px row, while complete bitmaps remain fitted by the
-existing footprint owner. A minimum arena region and document scrolling keep
-both seats reachable; responsive seat order and touch-input ownership stay intact.
-There is no board transform. Actual browser review must verify useful space,
-focus visibility and scroll reachability at 320/390px and 844×390 landscape.
+The live HUD reserves its actual height instead of the handheld 44px row. Both
+boards share the remaining bounded viewport, using the existing footprint owner
+to fit their complete bitmaps; an added minimum arena height must not force a
+live board below the viewport. Compact play keeps the primary Pause/Results
+label while full song details remain available through the existing Pause/audio
+controls and accessible description. Readable counters keep their enlarged font
+sizes. Responsive seat order, touch-input ownership and logical geometry stay
+intact. Actual browser review must verify both complete boards within the
+viewport at 320/390px and 844×390 landscape, alongside menu focus and scrolling.
 
 The first actual 320px Ukrainian review found that the compact song caption's
 unbroken intrinsic width expanded the app's implicit grid column and both seats.
 The correction explicitly constrains that column and its HUD/readout children,
-wraps the caption and seat statistics, and gives compact Pause/Results its own row
-on narrow screens. It applies to live play and the existing earned-board review;
+wraps seat statistics and gives compact Pause/Results its own row on narrow
+screens. A second actual check found that growing the app and a fixed arena
+minimum still pushed live boards below the viewport; the bounded grid and compact
+song-details policy above address that separate vertical failure. It applies to live play and the existing earned-board review;
 the normal and Large layouts, font sizes, hidden owners and logical bitmaps stay
 unchanged. Source checks bind these real owners; visual qualification belongs to
 the corrected snapshot, not the earlier overflowing candidate.
+
+The next actual check enabled Direction pad, Large controls and Always for both
+seats at Ukrainian 320px. The inherited tall-phone layout reserved a 192px
+three-row pad below each board and collapsed both board slots. Enlarged compact
+Duel now lays out the same four native direction buttons in one row below each
+board. Regular targets remain 52px; Large targets remain 64px square, with 4px
+gaps. DOM order, keyboard handlers, translated accessible names, text sizes and
+the ordinary Standard/Large cross are unchanged. Equipment retains its existing
+wrapping row and visibility owner.
+
+A row cannot use the old square pad's center-based compass. The couch input owner
+therefore resolves captured points against the actual four button rectangles
+only when the pad is wider than twice its height. The shared gesture owner keeps
+its existing per-finger capture, outside release and cancellation behavior;
+square D-pads, stick and swipe retain their existing direction resolver. Focused
+tests cover every row target, slides, gutters, both seats and stale/failing
+capture. Browser review must still measure both boards, each 64px target and
+usable steering at 320px portrait and 844×390 landscape before qualification.
 
 ## Qualification
 
