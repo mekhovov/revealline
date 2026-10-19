@@ -1,0 +1,189 @@
+{
+  "kind": "BodyBackingThemeMetadataClosureReadOnlyReviewV1",
+  "createdAt": "2026-10-19T04:26:58Z",
+  "base": "ac0a06f76a048bbcd0701c0c990785989673080c",
+  "pullRequest": {
+    "number": 1712,
+    "url": "https://github.com/mekhovov/revealline/pull/1712",
+    "head": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a",
+    "branch": "codex/solo-backing-context-recovery",
+    "observedState": "open draft mergeable",
+    "checksObserved": 11,
+    "checksObservedQueued": 11,
+    "companyRun": 39197989947,
+    "companyJobsObservedQueued": [
+      "candidate",
+      "optional-practice"
+    ],
+    "note": "Single task snapshot, not a completion or current-status guarantee."
+  },
+  "conclusion": "The existing automatic Company candidate does not close Field Kit recipe/consumer metadata after the helper change. A separate scoped source/CI change is required to expose the existing isolated producer remotely; no current fixed-main workflow invokes it or the actor continuation reader.",
+  "affectedClosures": [
+    {
+      "group": "motion",
+      "reference": "scripts/produce-field-kit-theme.mjs:42",
+      "reason": "Explicit body-backing.mjs member in ordered motion sources."
+    },
+    {
+      "group": "effects",
+      "reference": "scripts/produce-field-kit-theme.mjs:44",
+      "reason": "Explicit body-backing.mjs member in ordered effects sources."
+    },
+    {
+      "group": "team",
+      "reference": "scripts/produce-field-kit-theme.mjs:46",
+      "reason": "Explicit body-backing.mjs member in ordered Team sources."
+    },
+    {
+      "group": "equipment",
+      "reference": "scripts/produce-field-kit-theme.mjs:53",
+      "reason": "equipmentSources includes every Team source via spread; fieldKitEquipmentSource hashes this complete consumer closure at line74."
+    }
+  ],
+  "automaticCompanyBoundary": {
+    "source": ".github/workflows/company-edition-candidate.yml",
+    "sourceBlob": "e3578b3b6b18984d0d3af21956a04fdd7aba9ead",
+    "facts": [
+      "game/** triggers the existing PR workflow; candidate checks out the exact PR head at line104.",
+      "company:check at line116 checks company content generation/public source eligibility; it does not invoke Field Kit production.",
+      "bundle-editions at line134 verifies committed inputs, builds edition candidates twice, and emits compact capacity/artifact metadata. It does not call createFieldKitProduction or the actor continuation reader.",
+      "The candidate step preserves artifact output rather than changing repository source. Its successful result cannot stand in for recipe continuation or Field Kit ledger regeneration.",
+      "The optional-practice job uses the event merge tree; it is separate evidence from candidate's exact-head source."
+    ],
+    "references": [
+      "package.json:34",
+      "scripts/bundle-editions.mjs:77",
+      "scripts/bundle-editions.mjs:94",
+      "scripts/compile-edition.mjs:407"
+    ]
+  },
+  "existingMechanisms": {
+    "isolatedCandidate": {
+      "command": "node scripts/produce-field-kit-theme.mjs --candidate .cache/field-kit-candidate",
+      "verificationCommand": "node scripts/produce-field-kit-theme.mjs --check-candidate .cache/field-kit-candidate",
+      "references": [
+        "scripts/produce-field-kit-theme.mjs:1106",
+        "scripts/field-kit-production-candidate.mjs:62",
+        "scripts/field-kit-production-candidate.mjs:84",
+        "scripts/field-kit-production-candidate.mjs:107"
+      ],
+      "behavior": "Produces a new isolated production.rltheme plus compiled files and review.json; binds actual bytes to committed inputs, preserves predecessor history through existing retention logic, verifies output, and does not adopt published production."
+    },
+    "actorContinuation": {
+      "reference": "scripts/actor-presentation-continuation.mjs:88",
+      "behavior": "Requires an independently reviewed, caller-owned new record path/SHA pin; authenticates immutable ancestry, exact ordered source bytes, slots and payload digests for a nonempty subset of motion/effects/team/equipment. It is an admission helper, not automatic approval.",
+      "integrationGap": "createFieldKitProduction currently uses original/bulk quality readers and does not import or invoke readActorPresentationContinuation. Adding a review JSON alone cannot affect generated quality.",
+      "boundaries": [
+        "Original approved hashes/records must remain immutable.",
+        "Any new continuation must cover the exact current ordered closure, including earlier outstanding deltas; cannot claim only the newest helper delta without comparing the complete predecessor.",
+        "Preserve existing Team recipe/default/inherited-image checks and equipment original PNG guards. Continuation matching supplements those guards.",
+        "No listening, native/device, artistic or release qualification follows from source/payload equality."
+      ]
+    }
+  },
+  "workflowDiscovery": {
+    "fixedTreeComplete": true,
+    "workflowPathsInspected": 105,
+    "scope": "Source-text search only for existing Field Kit candidate/actor-continuation invocation and relevant dispatch routes.",
+    "result": "No checked-in workflow at this fixed main invokes field-kit --candidate/--check-candidate, runFieldKitCandidate, or readActorPresentationContinuation. Existing qualify-source and Pages measurement workflows validate/build frozen inputs; they do not supply an arbitrary generator command or adopt this metadata."
+  },
+  "minimalNextChange": {
+    "sequence": [
+      "Prepare a separately reviewable CI extension to the existing Company candidate job: an explicit manual-only boolean option and bounded steps that run the two existing isolated candidate commands on the job's exact checked-out source, then retain a separately named candidate artifact with the source-bound review.json and checksums.",
+      "Keep these as steps inside the existing candidate job, rather than a new skipped job/workflow. Preserve current company/optional-package tests and artifacts, contents:read permissions and exact source checkout. Assert tracked source remains unchanged before/after. Never invoke --write.",
+      "Use that technical candidate to inspect the four changed source aggregates and actual payload invariants. Author a new scoped continuation record and independently reviewed code-owned pin; wire the existing reader into the production builder without replacing old approved hashes or bypassing Team/equipment guards.",
+      "Rerun the isolated candidate and --check-candidate against the final committed integration; review a compatible successor and generated metadata separately before any adoption. Preserve all predecessor ledger/review bytes."
+    ],
+    "neededFiles": [
+      ".github/workflows/company-edition-candidate.yml",
+      "scripts/produce-field-kit-theme.mjs",
+      "scripts/actor-presentation-continuation.mjs (reuse existing API; no change required unless a reviewed integration need emerges)",
+      "new docs/verification/<specific-reviewed-continuation>/review.json",
+      "focused continuation/producer workflow controls using existing test files"
+    ],
+    "dispatchNow": false,
+    "whyNoImmediateRoute": "Current workflow inputs only select edition IDs; the existing runner cannot be directed to execute the isolated Field Kit producer. Waiting for or rerunning the present Company job will not generate/adopt the missing metadata. A reviewed source/CI extension or an allowed execution host is needed.",
+    "qualification": "This is a proposed minimal route, not implemented or authorized as an unreviewed workflow mutation."
+  },
+  "blockers": [
+    "The automatic Company and other11 PR checks were queued at the observed head; no pass evidence for1712 was collected.",
+    "No current hosted route invokes the isolated Field Kit producer/continuation reader.",
+    "The continuation integration/pin and exact generated successor are not yet prepared/reviewed; do not relabel old approvals.",
+    "Local execution/writes remain prohibited for this task. No available physical device qualification was added."
+  ],
+  "sourcePins": {
+    ".github/workflows/company-edition-candidate.yml": {
+      "blob": "e3578b3b6b18984d0d3af21956a04fdd7aba9ead"
+    },
+    "scripts/actor-presentation-continuation.mjs": {
+      "blob": "d4576396ae3241efa47a2268cd976a820d5c5fa1"
+    },
+    "scripts/bulk-presentation-continuation.mjs": {
+      "blob": "fad59b8980a67d612bfdcede15dbc450c6aff941"
+    },
+    "scripts/refresh-theme-bootstrap.mjs": {
+      "blob": "8bb40ddae8de12f7da391b2f930fe4b63467b6ce"
+    },
+    "scripts/produce-field-kit-theme.mjs": {
+      "blob": "04bcc741a03e5d7d9a54c4d44179639aa3e74805"
+    },
+    "scripts/team-recipe-review.mjs": {
+      "blob": "580fbacac93c62e9a8d73d55bf25247cdfad6200"
+    },
+    "package.json": {
+      "blob": "03292ddd5d31da1722f32bed186d9127f6628c85"
+    },
+    ".github/workflows/appearance-preview.yml": {
+      "blob": "3eba59c40de952d8353ee0ac487cf2382b88abde"
+    },
+    "scripts/check-presentation-metadata.mjs": {
+      "blob": "b7a40e692d10e0ee98f27ee18edafd2959752a84"
+    },
+    "scripts/produce-company-content.mjs": {
+      "blob": "c73e7f7f92eb9e3cf2ec4c63068754172b9cb8c1"
+    },
+    "scripts/bundle-editions.mjs": {
+      "blob": "20cbd23acff950a4b352cf08d9cb812650ab42eb"
+    },
+    "scripts/test-field-kit-recipe-sources.mjs": {
+      "blob": "238fafc881053898115c6f113d7ac182abc558ee"
+    },
+    "scripts/field-kit-production-candidate.mjs": {
+      "blob": "b471ec8ca42a4912017db90b794c2669053def17"
+    },
+    "scripts/picture-production-history.mjs": {
+      "blob": "e95564f44d268fe4d1fd01c77b356a0bcc11fed1"
+    },
+    ".github/workflows/qualify-release-source.yml": {
+      "blob": "6e475250787754aff2854f8fb5f46a636e5c1622"
+    },
+    ".github/workflows/measure-pages-candidate.yml": {
+      "blob": "033ff674ad852c1e4c735b94c1ef300e1d6dcd42"
+    },
+    ".github/workflows/measure-pages-stack.yml": {
+      "blob": "230d5f4070f4e69773885b80c4184652c7be772b"
+    },
+    ".github/workflows/industrial-feature-tests.yml": {
+      "blob": "30c75fd6d2a961f4eb1e2bf3fee9ced4284c4fc2"
+    },
+    "scripts/compile-edition.mjs": {
+      "blob": "be2b64aadf15b7c239dd799cfc51011a4c45ca31"
+    },
+    "scripts/presentation-production-history.mjs": {
+      "blob": "3e564432fea074f4b31ad7af74c744f4d4d1221d"
+    },
+    "scripts/field-kit-retained-runtime.mjs": {
+      "blob": "9761d251682199dff3c098eb79b6d4c980905ea8"
+    }
+  },
+  "actions": {
+    "localWrites": false,
+    "appExecution": false,
+    "tests": false,
+    "generators": false,
+    "workflowDispatch": false,
+    "sourcePush": false,
+    "planOrIndexMutation": false,
+    "remoteReads": true
+  }
+}

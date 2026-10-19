@@ -1,0 +1,695 @@
+{
+  "conclusions": {
+    "1693": "All 12 new controls passed across shards 2/3/4; shard 3 fails 2 old navigation expectations, 247/249. Amendment 06996da8 prepared and peer reviewed; no overall pass.",
+    "1695": "Shard 4 passed company-review-measurements (16) and gameplay-pressure-host (4) existing compatibility controls; none of the 11 new artwork top-level controls qualified yet.",
+    "1699": "No source-shard artifact at snapshot; four queued. Original #1621 trace-before-merge/native hold unchanged.",
+    "1703": "No source-shard artifact at snapshot; four queued. Original #1621 trace-before-merge/native hold unchanged.",
+    "1705": "No source-shard artifact at snapshot; four queued. No eight-control pass."
+  },
+  "kind": "five-draft-existing-source-artifact-qualification",
+  "noExecutionOrPRMutation": true,
+  "observedAt": "2026-10-19T04:35:30.685881+00:00",
+  "rawArtifactAudit": "a57b432f9b9b2315297ff319be172fdf0eb6abdc",
+  "snapshot": [
+    {
+      "artifactTotal": 4,
+      "artifacts": [
+        {
+          "created": "2026-10-19T04:22:51Z",
+          "digest": "sha256:2512c84437c6d1a8bce51fefaba4008ccb01e90fb87761cf183c9c6ba3280d1b",
+          "expired": false,
+          "id": 12163476140,
+          "name": "focused-shard-39183531423-1-2",
+          "size": 6501,
+          "workflow_run": {
+            "head_branch": "codex/solo-resume-input-lifecycle",
+            "head_repository_id": 1367404328,
+            "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "id": 39183531423,
+            "repository_id": 1367404328
+          }
+        },
+        {
+          "created": "2026-10-19T04:18:38Z",
+          "digest": "sha256:4ba863a78cbe6ca4912aa90945da8867aa18b9f23276e0c32e011556a9b05d58",
+          "expired": false,
+          "id": 12163251336,
+          "name": "focused-shard-39183531423-1-4",
+          "size": 7113,
+          "workflow_run": {
+            "head_branch": "codex/solo-resume-input-lifecycle",
+            "head_repository_id": 1367404328,
+            "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "id": 39183531423,
+            "repository_id": 1367404328
+          }
+        },
+        {
+          "created": "2026-10-19T04:26:33Z",
+          "digest": "sha256:c0147fb4765119ed690e722dcfd9204ccd69baac64d7e12787a8e5fc8be73993",
+          "expired": false,
+          "id": 12162354181,
+          "name": "focused-shard-39183531423-1-3",
+          "size": 15611,
+          "workflow_run": {
+            "head_branch": "codex/solo-resume-input-lifecycle",
+            "head_repository_id": 1367404328,
+            "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "id": 39183531423,
+            "repository_id": 1367404328
+          }
+        },
+        {
+          "created": "2026-10-19T02:49:38Z",
+          "digest": "sha256:4352508c3b1fc8c47766d2a5afa5f3053b6a0284c0137f008780b0effabe77e4",
+          "expired": false,
+          "id": 12159803153,
+          "name": "admission-39183531423-1",
+          "size": 469,
+          "workflow_run": {
+            "head_branch": "codex/solo-resume-input-lifecycle",
+            "head_repository_id": 1367404328,
+            "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "id": 39183531423,
+            "repository_id": 1367404328
+          }
+        }
+      ],
+      "attempt": 1,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "jobs": [
+        {
+          "attempt": 1,
+          "conclusion": "success",
+          "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+          "id": 117841118902,
+          "name": "preflight",
+          "run": 39183531423,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+          "id": 117865955069,
+          "name": "focused_shards (1)",
+          "run": 39183531423,
+          "status": "in_progress"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "success",
+          "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+          "id": 117865955077,
+          "name": "focused_shards (2)",
+          "run": 39183531423,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "success",
+          "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+          "id": 117865955089,
+          "name": "focused_shards (4)",
+          "run": 39183531423,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "failure",
+          "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+          "id": 117865955091,
+          "name": "focused_shards (3)",
+          "run": 39183531423,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+          "id": 117865956079,
+          "name": "test",
+          "run": 39183531423,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+          "id": 117865956183,
+          "name": "build",
+          "run": 39183531423,
+          "status": "completed"
+        }
+      ],
+      "jobsTotal": 7,
+      "number": 1693,
+      "run": 39183531423
+    },
+    {
+      "artifactTotal": 2,
+      "artifacts": [
+        {
+          "created": "2026-10-19T04:21:47Z",
+          "digest": "sha256:4aee12dee2c8c67748072f31a662a5cd887adbc5fdc37320976581f4ab948dbf",
+          "expired": false,
+          "id": 12162479609,
+          "name": "focused-shard-39184462903-1-4",
+          "size": 2790,
+          "workflow_run": {
+            "head_branch": "codex/solo-owned-binary-artwork",
+            "head_repository_id": 1367404328,
+            "head_sha": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+            "id": 39184462903,
+            "repository_id": 1367404328
+          }
+        },
+        {
+          "created": "2026-10-19T02:49:55Z",
+          "digest": "sha256:b7082fbcd551c0584540c1ad407fa8aaf6b87d1fa9c5ffa8305d3c7415d7509a",
+          "expired": false,
+          "id": 12160430967,
+          "name": "admission-39184462903-1",
+          "size": 501,
+          "workflow_run": {
+            "head_branch": "codex/solo-owned-binary-artwork",
+            "head_repository_id": 1367404328,
+            "head_sha": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+            "id": 39184462903,
+            "repository_id": 1367404328
+          }
+        }
+      ],
+      "attempt": 1,
+      "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+      "jobs": [
+        {
+          "attempt": 1,
+          "conclusion": "success",
+          "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+          "id": 117843839866,
+          "name": "preflight",
+          "run": 39184462903,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "success",
+          "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+          "id": 117866024797,
+          "name": "focused_shards (4)",
+          "run": 39184462903,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+          "id": 117866024811,
+          "name": "focused_shards (3)",
+          "run": 39184462903,
+          "status": "in_progress"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+          "id": 117866024814,
+          "name": "focused_shards (1)",
+          "run": 39184462903,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+          "id": 117866024827,
+          "name": "focused_shards (2)",
+          "run": 39184462903,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+          "id": 117866025944,
+          "name": "build",
+          "run": 39184462903,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+          "id": 117866026399,
+          "name": "test",
+          "run": 39184462903,
+          "status": "completed"
+        }
+      ],
+      "jobsTotal": 7,
+      "number": 1695,
+      "run": 39184462903
+    },
+    {
+      "artifactTotal": 1,
+      "artifacts": [
+        {
+          "created": "2026-10-19T03:18:35Z",
+          "digest": "sha256:0978b7dfe35647098767a91c46c4f37eb67510de31cfe771b588decb8eefc051",
+          "expired": false,
+          "id": 12160828882,
+          "name": "admission-39185722862-1",
+          "size": 796,
+          "workflow_run": {
+            "head_branch": "codex/solo-retry-heap-retainers",
+            "head_repository_id": 1367404328,
+            "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+            "id": 39185722862,
+            "repository_id": 1367404328
+          }
+        }
+      ],
+      "attempt": 1,
+      "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+      "jobs": [
+        {
+          "attempt": 1,
+          "conclusion": "success",
+          "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+          "id": 117847633789,
+          "name": "preflight",
+          "run": 39185722862,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+          "id": 117872924257,
+          "name": "focused_shards (2)",
+          "run": 39185722862,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+          "id": 117872924322,
+          "name": "focused_shards (1)",
+          "run": 39185722862,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+          "id": 117872924323,
+          "name": "focused_shards (3)",
+          "run": 39185722862,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+          "id": 117872924325,
+          "name": "focused_shards (4)",
+          "run": 39185722862,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+          "id": 117872925195,
+          "name": "test",
+          "run": 39185722862,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+          "id": 117872926059,
+          "name": "build",
+          "run": 39185722862,
+          "status": "completed"
+        }
+      ],
+      "jobsTotal": 7,
+      "number": 1699,
+      "run": 39185722862
+    },
+    {
+      "artifactTotal": 1,
+      "artifacts": [
+        {
+          "created": "2026-10-19T04:22:17Z",
+          "digest": "sha256:032185c6f1d105b564aeec5b7e3634de3be4ca56ec1b1c3ed33affa0ad4a69a9",
+          "expired": false,
+          "id": 12162848429,
+          "name": "admission-39189308444-1",
+          "size": 800,
+          "workflow_run": {
+            "head_branch": "codex/solo-empirical-overhead-acceptance",
+            "head_repository_id": 1367404328,
+            "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+            "id": 39189308444,
+            "repository_id": 1367404328
+          }
+        }
+      ],
+      "attempt": 1,
+      "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+      "jobs": [
+        {
+          "attempt": 1,
+          "conclusion": "success",
+          "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+          "id": 117858371570,
+          "name": "preflight",
+          "run": 39189308444,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+          "id": 117888238657,
+          "name": "focused_shards (2)",
+          "run": 39189308444,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+          "id": 117888238668,
+          "name": "focused_shards (4)",
+          "run": 39189308444,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+          "id": 117888238677,
+          "name": "focused_shards (1)",
+          "run": 39189308444,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+          "id": 117888238730,
+          "name": "focused_shards (3)",
+          "run": 39189308444,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+          "id": 117888239960,
+          "name": "test",
+          "run": 39189308444,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+          "id": 117888240028,
+          "name": "build",
+          "run": 39189308444,
+          "status": "completed"
+        }
+      ],
+      "jobsTotal": 7,
+      "number": 1703,
+      "run": 39189308444
+    },
+    {
+      "artifactTotal": 1,
+      "artifacts": [
+        {
+          "created": "2026-10-19T04:10:42Z",
+          "digest": "sha256:0f2626d732aaa2af9796f0614cc497c4924dcf2846f4e67821295ad49eaa1bac",
+          "expired": false,
+          "id": 12162417375,
+          "name": "admission-39191168798-1",
+          "size": 427,
+          "workflow_run": {
+            "head_branch": "codex/solo-measurement-provenance-helper",
+            "head_repository_id": 1367404328,
+            "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e",
+            "id": 39191168798,
+            "repository_id": 1367404328
+          }
+        }
+      ],
+      "attempt": 1,
+      "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+      "jobs": [
+        {
+          "attempt": 1,
+          "conclusion": "success",
+          "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+          "id": 117864094414,
+          "name": "preflight",
+          "run": 39191168798,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+          "id": 117885328072,
+          "name": "focused_shards (1)",
+          "run": 39191168798,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+          "id": 117885328102,
+          "name": "focused_shards (4)",
+          "run": 39191168798,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+          "id": 117885328129,
+          "name": "focused_shards (2)",
+          "run": 39191168798,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": null,
+          "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+          "id": 117885328141,
+          "name": "focused_shards (3)",
+          "run": 39191168798,
+          "status": "queued"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+          "id": 117885329384,
+          "name": "test",
+          "run": 39191168798,
+          "status": "completed"
+        },
+        {
+          "attempt": 1,
+          "conclusion": "skipped",
+          "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+          "id": 117885329710,
+          "name": "build",
+          "run": 39191168798,
+          "status": "completed"
+        }
+      ],
+      "jobsTotal": 7,
+      "number": 1705,
+      "run": 39191168798
+    }
+  ],
+  "sourceOnly": true,
+  "verifiedAvailableShards": [
+    {
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "headIsWorkflowParent": true,
+      "identityFiles": {
+        "publishing/focused-test-map.json": {
+          "blob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+          "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479"
+        },
+        "publishing/test-policy.json": {
+          "blob": "e067e704a165e16e449761989e3e1b611dc35181",
+          "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2"
+        }
+      },
+      "pr": 1693,
+      "shards": [
+        {
+          "artifact": 12163476140,
+          "attempted": 3,
+          "failures": [],
+          "identityAndSelectionVerified": {
+            "changedPathsDigest": true,
+            "manifestDigest": true,
+            "planDigest": true,
+            "policyDigest": true,
+            "sourceHead": true,
+            "sourceTree": true,
+            "testPolicyDigest": true,
+            "workflowRevision": true
+          },
+          "newControlPasses": [
+            "ok 26 - neutral Resume tick defers fresh local requests independently without releasing held pads",
+            "ok 27 - clearing a deferred Resume request retires it before the next fixed tick"
+          ],
+          "planSha256": "437ff67b9378071c63a0577c95d72a2562cc17cb3e78e5b687e9b0bd5b78d5a0",
+          "selected": [
+            "localization-runtime",
+            "company-review-measurements",
+            "changed-test:game/test/couch-input.test.mjs"
+          ],
+          "shard": 2
+        },
+        {
+          "artifact": 12163251336,
+          "attempted": 3,
+          "failures": [],
+          "identityAndSelectionVerified": {
+            "changedPathsDigest": true,
+            "manifestDigest": true,
+            "planDigest": true,
+            "policyDigest": true,
+            "sourceHead": true,
+            "sourceTree": true,
+            "testPolicyDigest": true,
+            "workflowRevision": true
+          },
+          "newControlPasses": [
+            "ok 7 - actual Solo keyboard requests after Resume survive the neutral tick and catch-up once",
+            "ok 8 - actual Solo touch requests after Resume survive the neutral tick and catch-up once",
+            "ok 9 - actual Solo Pause retires a fresh request deferred behind the Resume neutral tick"
+          ],
+          "planSha256": "437ff67b9378071c63a0577c95d72a2562cc17cb3e78e5b687e9b0bd5b78d5a0",
+          "selected": [
+            "company-generated-source-and-media",
+            "edition-persistence-compatibility",
+            "changed-test:game/test/solo-cadence-input-host.test.mjs"
+          ],
+          "shard": 4
+        },
+        {
+          "artifact": 12162354181,
+          "attempted": 3,
+          "failures": [
+            {
+              "args": [
+                "--test",
+                "game/test/couch-navigation.test.mjs",
+                "game/test/couch-composite-menu-navigation.test.mjs",
+                "game/test/mission-library-controller-host.test.mjs",
+                "game/test/content-team-navigation.test.mjs",
+                "game/test/controller-navigation.test.mjs"
+              ],
+              "command": "node",
+              "error": null,
+              "id": "player-navigation-team",
+              "signal": null,
+              "status": 1
+            }
+          ],
+          "identityAndSelectionVerified": {
+            "changedPathsDigest": true,
+            "manifestDigest": true,
+            "planDigest": true,
+            "policyDigest": true,
+            "sourceHead": true,
+            "sourceTree": true,
+            "testPolicyDigest": true,
+            "workflowRevision": true
+          },
+          "newControlPasses": [
+            "ok 1 - Versus accepted Resume excludes the prior 100ms menu interval",
+            "ok 2 - Versus accepted Resume excludes the prior 250ms menu interval",
+            "ok 3 - Versus accepted Resume excludes the prior 500ms menu interval",
+            "ok 4 - Versus fresh Resume requests survive the neutral tick with catch-up=false",
+            "ok 5 - Versus fresh Resume requests survive the neutral tick with catch-up=true",
+            "ok 6 - Team fresh Start and confirmed Retry exclude the prior 100ms menu interval",
+            "ok 7 - Team fresh Start and confirmed Retry exclude the prior 500ms menu interval"
+          ],
+          "planSha256": "437ff67b9378071c63a0577c95d72a2562cc17cb3e78e5b687e9b0bd5b78d5a0",
+          "selected": [
+            "player-navigation-team",
+            "edition-appearance-contracts",
+            "changed-test:game/test/couch-lifecycle-clock.test.mjs"
+          ],
+          "shard": 3
+        }
+      ],
+      "sourceTree": "4bb44157295ed7e170d60ce3276f790d920ea014",
+      "workflowParents": [
+        "bd15820bee10a33ba64534071d22657fbd7326d3",
+        "d1c6e236d8fb17448b3faaf89d11408ac302dba1"
+      ],
+      "workflowRevision": "f822cd3e7f25ad3409855543f01900866999f021"
+    },
+    {
+      "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+      "headIsWorkflowParent": true,
+      "identityFiles": {
+        "publishing/focused-test-map.json": {
+          "blob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+          "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479"
+        },
+        "publishing/test-policy.json": {
+          "blob": "e067e704a165e16e449761989e3e1b611dc35181",
+          "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2"
+        }
+      },
+      "pr": 1695,
+      "shards": [
+        {
+          "artifact": 12162479609,
+          "attempted": 2,
+          "failures": [],
+          "identityAndSelectionVerified": {
+            "changedPathsDigest": true,
+            "manifestDigest": true,
+            "planDigest": true,
+            "policyDigest": true,
+            "sourceHead": true,
+            "sourceTree": true,
+            "testPolicyDigest": true,
+            "workflowRevision": true
+          },
+          "planSha256": "af9dfc81e0330b9983a084d9afa3b19fcbdb61abacb682b25553c908bc93d981",
+          "selected": [
+            "company-review-measurements",
+            "changed-test:game/test/gameplay-pressure-host.test.mjs"
+          ],
+          "shard": 4
+        }
+      ],
+      "sourceTree": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5",
+      "workflowParents": [
+        "bd15820bee10a33ba64534071d22657fbd7326d3",
+        "7d964856a2ee46b8b6ca245d6b66154ab697543b"
+      ],
+      "workflowRevision": "b4e2a348e5eeb1b55ef5b384e509e0becd72f68a"
+    }
+  ]
+}

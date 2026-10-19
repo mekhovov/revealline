@@ -1,0 +1,805 @@
+{
+  "format": "revealline-bounded-source-qualification-audit.v1",
+  "scope": "One exact-head snapshot of merged #1619/#1696/#1694 after 04:16 UTC, followed by requested bounded main advance review; source/results only.",
+  "observedAt": "2026-10-19T04:23:42.372303+00:00",
+  "cutoff": "2026-10-19T04:16:00Z",
+  "newlyCompleted": [
+    {
+      "pr": 1619,
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "merge": "444707792f1dca6867ce227fc3467267d6061855",
+      "newTerminal": [
+        {
+          "id": 117860359201,
+          "name": "focused_shards (2)",
+          "conclusion": "success",
+          "completedAt": "2026-10-19T04:19:37Z",
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39182302063/job/117860359201"
+        }
+      ]
+    },
+    {
+      "pr": 1696,
+      "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+      "merge": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+      "newTerminal": []
+    },
+    {
+      "pr": 1694,
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "merge": "ac0a06f76a048bbcd0701c0c990785989673080c",
+      "newTerminal": [
+        {
+          "id": 117865030644,
+          "name": "focused_shards (1)",
+          "conclusion": "success",
+          "completedAt": "2026-10-19T04:19:28Z",
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39183587745/job/117865030644"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "pr": 1619,
+      "id": 12162482919,
+      "name": "focused-shard-39182302063-1-2",
+      "createdAt": "2026-10-19T04:19:33Z",
+      "zipBytes": 5630,
+      "zipSha256": "4ec6f59c4e8ea6b98ff74aefbe4a04927d7ab16f25a903afc53e268722f81273",
+      "apiDigest": "sha256:4ec6f59c4e8ea6b98ff74aefbe4a04927d7ab16f25a903afc53e268722f81273",
+      "runId": 39182302063,
+      "attempt": 1,
+      "jobId": 117860359201,
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "memberHashes": [
+        {
+          "name": "output.log",
+          "bytes": 22716,
+          "sha256": "9bbc80af4345a78ede2b8d195f74dc66516a1ddbc38ae913c4d046d641663267"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 2143,
+          "sha256": "55b94e9e498231b7c90776ce54d76e3637b597549f530eb47a9691a95e642d07"
+        }
+      ],
+      "receipt": {
+        "format": "revealline-focused-shard.v1",
+        "state": "complete",
+        "shard": {
+          "index": 2,
+          "total": 4
+        },
+        "identity": {
+          "sourceRevision": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+          "workflowRevision": "e742f09df3c5619a3150bdd41d2fc3d8a35779df",
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "a05228a3106f26a82ab3170cf1f123a7af51ccf3e7007bcd0c19c272b4975c72",
+          "fallbackHandled": false,
+          "sourceTree": "cb8af43d44f4abd27ee62e7324c472adebe24574"
+        },
+        "plan": {
+          "commands": [
+            {
+              "id": "i18n-check",
+              "command": "npm",
+              "args": [
+                "run",
+                "i18n:check"
+              ]
+            },
+            {
+              "id": "localization-runtime",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/localization.test.mjs",
+                "game/test/localization-couch-host.test.mjs",
+                "game/test/localization-gameplay-copy.test.mjs",
+                "game/test/localization-team-copy.test.mjs",
+                "game/test/about-navigation-host.test.mjs"
+              ]
+            },
+            {
+              "id": "player-navigation-team",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/couch-navigation.test.mjs",
+                "game/test/couch-composite-menu-navigation.test.mjs",
+                "game/test/mission-library-controller-host.test.mjs",
+                "game/test/content-team-navigation.test.mjs",
+                "game/test/controller-navigation.test.mjs"
+              ],
+              "timeoutMs": 1200000
+            },
+            {
+              "id": "unknown-runtime-validate",
+              "command": "npm",
+              "args": [
+                "run",
+                "validate"
+              ],
+              "timeoutMs": 1800000
+            },
+            {
+              "id": "changed-test:game/test/couch-audio-catalogue-demand.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/couch-audio-catalogue-demand.test.mjs"
+              ]
+            },
+            {
+              "id": "changed-test:game/test/solo-soundtrack-admission-host.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/solo-soundtrack-admission-host.test.mjs"
+              ]
+            },
+            {
+              "id": "changed-test:game/test/soundtrack-host.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/soundtrack-host.test.mjs"
+              ]
+            },
+            {
+              "id": "changed-test:game/test/soundtrack-panel.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/soundtrack-panel.test.mjs"
+              ]
+            }
+          ],
+          "sha256": "ef708827b9e00671c64f47278acfe201351c65fa39b92720dccaf584d7e746de"
+        },
+        "indices": [
+          1,
+          5
+        ],
+        "result": {
+          "attempted": 2,
+          "failures": [],
+          "exitCode": 0
+        }
+      },
+      "selectedCommands": [
+        {
+          "id": "localization-runtime",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/localization.test.mjs",
+            "game/test/localization-couch-host.test.mjs",
+            "game/test/localization-gameplay-copy.test.mjs",
+            "game/test/localization-team-copy.test.mjs",
+            "game/test/about-navigation-host.test.mjs"
+          ]
+        },
+        {
+          "id": "changed-test:game/test/solo-soundtrack-admission-host.test.mjs",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/solo-soundtrack-admission-host.test.mjs"
+          ]
+        }
+      ],
+      "logEvidence": [
+        "[focused:localization-runtime] node --test game/test/localization.test.mjs game/test/localization-couch-host.test.mjs game/test/localization-gameplay-copy.test.mjs game/test/localization-team-copy.test.mjs game/test/about-navigation-host.test.mjs",
+        "[focused:changed-test:game/test/solo-soundtrack-admission-host.test.mjs] node --test game/test/solo-soundtrack-admission-host.test.mjs",
+        "# tests 57",
+        "# pass 57",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 20106.498853",
+        "ok 39 - muted Solo boot and Direct Start defer public music until the actual Audio tab is selected",
+        "# tests 39",
+        "# pass 39",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 25883.706245"
+      ]
+    },
+    {
+      "pr": 1694,
+      "id": 12163251440,
+      "name": "focused-shard-39183587745-1-1",
+      "createdAt": "2026-10-19T04:19:25Z",
+      "zipBytes": 2691,
+      "zipSha256": "c5154f13cd2cabd866b93968991daf0286b0acbf7aa0d4354990fb77de7cdb5f",
+      "apiDigest": "sha256:c5154f13cd2cabd866b93968991daf0286b0acbf7aa0d4354990fb77de7cdb5f",
+      "runId": 39183587745,
+      "attempt": 1,
+      "jobId": 117865030644,
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "memberHashes": [
+        {
+          "name": "output.log",
+          "bytes": 4273,
+          "sha256": "9e01f7d851ff8d6db2b386f3aa8b8a7d90a92bb77a975526170ea11cff7107e2"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 1171,
+          "sha256": "9af8fd347539fa25337838634dca617f88da0dbe27338dbea4babacc71752542"
+        }
+      ],
+      "receipt": {
+        "format": "revealline-focused-shard.v1",
+        "state": "complete",
+        "shard": {
+          "index": 1,
+          "total": 4
+        },
+        "identity": {
+          "sourceRevision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+          "workflowRevision": "7f80f912e01eba26ae727ae2771cdcba8799bed5",
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "6db3d722e728f9708b4965c7668e4d5bfb49a5cbdbbbee72120a46f43d8fa8cc",
+          "fallbackHandled": false,
+          "sourceTree": "c11225baa8c0dcca055f058d31889c98a999ad04"
+        },
+        "plan": {
+          "commands": [
+            {
+              "id": "unknown-runtime-validate",
+              "command": "npm",
+              "args": [
+                "run",
+                "validate"
+              ],
+              "timeoutMs": 1800000
+            },
+            {
+              "id": "changed-test:game/test/soundtrack-player.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/soundtrack-player.test.mjs"
+              ]
+            },
+            {
+              "id": "changed-test:game/test/soundtrack-source.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/soundtrack-source.test.mjs"
+              ]
+            }
+          ],
+          "sha256": "e068219fb15258789fa5d572e8952919ba69938307efec139844cf1eb9d51c85"
+        },
+        "indices": [
+          0
+        ],
+        "result": {
+          "attempted": 1,
+          "failures": [],
+          "exitCode": 0
+        }
+      },
+      "selectedCommands": [
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": [
+            "run",
+            "validate"
+          ],
+          "timeoutMs": 1800000
+        }
+      ],
+      "logEvidence": [
+        "[focused:unknown-runtime-validate] npm run validate",
+        "  \"literalReferencesValid\": true,",
+        "{\"status\":\"verified-byte-identical\",\"modules\":32,\"recordings\":24,\"bytes\":920458}",
+        "{\"status\":\"verified-byte-identical\",\"modules\":13,\"externalModules\":1,\"bytes\":122545,\"target\":\"optional-practice/civilian-fpv/sim-presentation.mjs\"}",
+        "{\"status\":\"verified-byte-identical\",\"sourceSha256\":\"c72c76aff2abf1bb486d89a7377176e11c5c6d1f6de191b5a672d6e9f1fc55c2\",\"bytes\":287136,\"packageSlotsAdded\":0}",
+        "{\"status\":\"verified-byte-identical\",\"source\":\"optional-practice/worker-source.mjs\",\"sourceSha256\":\"1ca98dcf144a3faea89f15ae158ed17dce522b319cd82fdff7890d6ebf6ef095\",\"bytes\":7243,\"packageSlotsAdded\":0}",
+        "{\"status\":\"verified-byte-identical\",\"source\":\"optional-practice/civilian-fpv/world-visuals-source.mjs\",\"sourceSha256\":\"3902d7308e38f1b776b8799ad0640ec60461a6137b06a1ed059f001079ea94fc\",\"bytes\":122616,\"packageSlotsAdded\":0}"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "pr": 1619,
+      "newTarget": "muted Solo boot and Direct Start defer public music until the actual Audio tab is selected",
+      "result": "ok 39",
+      "selectedHostCommandTests": 39,
+      "selectedHostCommandPass": 39,
+      "selectedHostCommandFail": 0,
+      "separateLocalizationTests": 57,
+      "separateLocalizationPass": 57,
+      "separateLocalizationFail": 0,
+      "limitation": "39 includes imported saved-style tests; this is not 39 newly added controls. The 15 new couch-audio-catalogue-demand controls were not selected in shard 2. Earlier shard 1/3 artifacts predate this cutoff and were not audited here."
+    },
+    {
+      "pr": 1694,
+      "result": "npm run validate succeeded including generated-output checks; no TAP test invocation in this shard.",
+      "unverifiedTargets": [
+        "acquisition returns the exact owned Blob inspected by the supplied operation",
+        "delegated inspection preserves pinned facts and rejects completion after cancellation"
+      ],
+      "limitation": "The two new soundtrack-source controls are assigned to another command, not covered by shard 1. Prior shard 2 player result was separately inspected by root; not newly claimed here."
+    },
+    {
+      "pr": 1696,
+      "result": "No newly terminal exact-head check since cutoff; no new target pass claimed."
+    }
+  ],
+  "mainAdvance": {
+    "url": "https://api.github.com/repos/mekhovov/revealline/compare/ac0a06f76a048bbcd0701c0c990785989673080c...4dc5abeb4aac9d3cf405ede364f71c615b13c370",
+    "status": "ahead",
+    "ahead_by": 7,
+    "behind_by": 0,
+    "total_commits": 7,
+    "base": "ac0a06f76a048bbcd0701c0c990785989673080c",
+    "mergeBase": "ac0a06f76a048bbcd0701c0c990785989673080c",
+    "commits": [
+      {
+        "sha": "2046ab82b4c73737cf1a5a41a33c7892caff0567",
+        "parents": [
+          "536a70aa9e1fb36489985754cbccfa5148a1c3bc"
+        ],
+        "message": "fix(settings): restore nested tool focus after responsive resize"
+      },
+      {
+        "sha": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+        "parents": [
+          "a2c0b33c43d56adbdbb666c618d5f489cbdd32e7"
+        ],
+        "message": "fix(audio): stop cancelled recording inspection before parsing"
+      },
+      {
+        "sha": "5385fb52a2abd1b58e9aa10da42bca200117aa64",
+        "parents": [
+          "ab47230fd8e0e68c5536fe9d76616c7fe9a03516"
+        ],
+        "message": "fix: pluralize remaining rerolls in upgrade dialogs"
+      },
+      {
+        "sha": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+        "parents": [
+          "2046ab82b4c73737cf1a5a41a33c7892caff0567",
+          "ac0a06f76a048bbcd0701c0c990785989673080c"
+        ],
+        "message": "Merge main into responsive Settings focus return while preserving current owners"
+      },
+      {
+        "sha": "a94f2a6c3dac43ebeead58036a7b890414dfff37",
+        "parents": [
+          "ac0a06f76a048bbcd0701c0c990785989673080c",
+          "0fd780bba39ae36ae952172d4de2805cf8325c43"
+        ],
+        "message": "Merge pull request #1673 from mekhovov/codex/f81-responsive-tool-focus\n\nfix(settings): restore nested tool focus after responsive resize"
+      },
+      {
+        "sha": "754bfd4fa6675cc8bc5f527819179ef3b95b0afc",
+        "parents": [
+          "a94f2a6c3dac43ebeead58036a7b890414dfff37",
+          "5385fb52a2abd1b58e9aa10da42bca200117aa64"
+        ],
+        "message": "Merge pull request #1711 from mekhovov/codex/f59-reroll-count-language\n\nUse count-aware remaining reroll captions"
+      },
+      {
+        "sha": "4dc5abeb4aac9d3cf405ede364f71c615b13c370",
+        "parents": [
+          "754bfd4fa6675cc8bc5f527819179ef3b95b0afc",
+          "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384"
+        ],
+        "message": "Merge pull request #1708 from mekhovov/codex/solo-recording-cancellation\n\nfix(audio): stop cancelled recording inspection before parsing"
+      }
+    ],
+    "files": [
+      {
+        "filename": "docs/overflight-reroll-count-language.md",
+        "status": "added",
+        "changes": 27
+      },
+      {
+        "filename": "game/i18n/catalogs.mjs",
+        "status": "modified",
+        "changes": 2
+      },
+      {
+        "filename": "game/journey/reaction-voice-cache.mjs",
+        "status": "modified",
+        "changes": 4
+      },
+      {
+        "filename": "game/locales/en/interface.json",
+        "status": "modified",
+        "changes": 4
+      },
+      {
+        "filename": "game/locales/uk/interface.json",
+        "status": "modified",
+        "changes": 6
+      },
+      {
+        "filename": "game/overflight/app.mjs",
+        "status": "modified",
+        "changes": 4
+      },
+      {
+        "filename": "game/test/classic-snake-ui.test.mjs",
+        "status": "modified",
+        "changes": 52
+      },
+      {
+        "filename": "game/test/global-settings-tools.test.mjs",
+        "status": "modified",
+        "changes": 98
+      },
+      {
+        "filename": "game/test/overflight-reroll-disclosure.test.mjs",
+        "status": "modified",
+        "changes": 50
+      },
+      {
+        "filename": "game/test/reaction-recording-cancellation.test.mjs",
+        "status": "added",
+        "changes": 265
+      },
+      {
+        "filename": "game/ui/global-settings-tools.mjs",
+        "status": "modified",
+        "changes": 19
+      },
+      {
+        "filename": "game/ui/settings-panels.mjs",
+        "status": "modified",
+        "changes": 46
+      },
+      {
+        "filename": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "status": "modified",
+        "changes": 49
+      },
+      {
+        "filename": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "status": "modified",
+        "changes": 6
+      }
+    ]
+  },
+  "mergedPRState": [
+    {
+      "number": 1673,
+      "head": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+      "merged": true,
+      "merge": "a94f2a6c3dac43ebeead58036a7b890414dfff37",
+      "mergedAt": "2026-10-19T04:14:22Z",
+      "title": "fix(settings): restore nested tool focus after responsive resize",
+      "checksTotal": 13,
+      "checks": [
+        {
+          "id": 117885966730,
+          "name": "optional-practice",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885962212,
+          "name": "feature (creator)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885961473,
+          "name": "team_admission",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885961212,
+          "name": "admission",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885961134,
+          "name": "feature (recordings)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885960876,
+          "name": "feature (gameplay)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885960814,
+          "name": "installed_admission",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885960811,
+          "name": "feature (local-ux)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885960169,
+          "name": "candidate",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885960071,
+          "name": "demo_admission",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885959955,
+          "name": "feature (presentation)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885959744,
+          "name": "feature (rooms)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117885959578,
+          "name": "preflight",
+          "status": "queued",
+          "conclusion": null
+        }
+      ]
+    },
+    {
+      "number": 1711,
+      "head": "5385fb52a2abd1b58e9aa10da42bca200117aa64",
+      "merged": true,
+      "merge": "754bfd4fa6675cc8bc5f527819179ef3b95b0afc",
+      "mergedAt": "2026-10-19T04:21:38Z",
+      "title": "Use count-aware remaining reroll captions",
+      "checksTotal": 11,
+      "checks": [
+        {
+          "id": 117882586417,
+          "name": "record",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882585878,
+          "name": "feature (gameplay)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882585819,
+          "name": "feature (recordings)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882585792,
+          "name": "feature (rooms)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882585767,
+          "name": "feature (creator)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882585733,
+          "name": "feature (local-ux)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882585562,
+          "name": "feature (presentation)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882585539,
+          "name": "optional-practice",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882585279,
+          "name": "candidate",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882585245,
+          "name": "preflight",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117882584926,
+          "name": "reconcile",
+          "status": "queued",
+          "conclusion": null
+        }
+      ]
+    },
+    {
+      "number": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "merged": true,
+      "merge": "4dc5abeb4aac9d3cf405ede364f71c615b13c370",
+      "mergedAt": "2026-10-19T04:23:06Z",
+      "title": "fix(audio): stop cancelled recording inspection before parsing",
+      "checksTotal": 16,
+      "checks": [
+        {
+          "id": 117878901088,
+          "name": "record",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878901017,
+          "name": "team_admission",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900989,
+          "name": "feature (local-ux)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900988,
+          "name": "candidate",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900974,
+          "name": "demo_admission",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900967,
+          "name": "feature (recordings)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900962,
+          "name": "feature (gameplay)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900934,
+          "name": "installed_admission",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900910,
+          "name": "feature (rooms)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900898,
+          "name": "feature (creator)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900859,
+          "name": "optional-practice",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900758,
+          "name": "admission",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900728,
+          "name": "reconcile",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900720,
+          "name": "feature (presentation)",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900665,
+          "name": "preflight",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 117878900648,
+          "name": "hosted-acceptance",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "mergedControls": [
+    {
+      "pr": 1673,
+      "head": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+      "newControls": 10,
+      "files": [
+        "game/test/global-settings-tools.test.mjs",
+        "game/test/classic-snake-ui.test.mjs"
+      ],
+      "scope": "9 expanded About/Settings responsive focus owner and fallback controls plus 1 Snake paused-run/storage control",
+      "status": "No exact-head completed source-test result in snapshot; all 13 checks queued."
+    },
+    {
+      "pr": 1711,
+      "status": "No exact-head completed check in snapshot; all 11 queued. Language change retained for combined-main qualification; no broader new suite audit."
+    },
+    {
+      "pr": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "newControls": 6,
+      "file": "game/test/reaction-recording-cancellation.test.mjs",
+      "status": "Unverified. 15 checks queued; one hosted-acceptance success is unrelated to these tests.",
+      "hostedAcceptance": {
+        "job": {
+          "id": 117878900648,
+          "run_id": 39196032397,
+          "run_attempt": 1,
+          "head_sha": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+          "name": "hosted-acceptance",
+          "conclusion": "success"
+        },
+        "logBytes": 108637,
+        "rawLogSha256": "27912d585769639968118f05795c6ab74af3da86b76257c91407391d30a6bb39",
+        "commands": [
+          "2026-10-19T03:54:36.9079776Z ##[group]Run npm run acceptance:tus-deployed",
+          "2026-10-19T03:54:37.0142124Z > node src/deployed-tus-resume-runner.mjs",
+          "2026-10-19T03:54:41.6538483Z Deployed tus acceptance passed. Receipt: /home/runner/work/revealline/revealline/services/community/hosted-acceptance-evidence/hosted-tus.json",
+          "2026-10-19T03:55:02.6557735Z ##[group]Run npm run acceptance:deployed",
+          "2026-10-19T03:55:02.7537085Z > node src/deployed-journey-runner.mjs",
+          "2026-10-19T03:55:09.0316059Z Deployed community acceptance passed. Receipt: /home/runner/work/revealline/revealline/services/community/hosted-acceptance-evidence/hosted-two-user.json"
+        ],
+        "targetFileMentioned": false
+      }
+    }
+  ],
+  "limitations": [
+    "No native-browser, physical-device, sustained-performance, production Pages or combined-new-main pass is implied.",
+    "No local file writes, application execution, tests, generators, builds, workflow dispatch, rerun, cancellation, branch or source mutations were performed. Only read APIs and this evidence Git blob.",
+    "Remote snapshots are not continuous and do not assert future queue state."
+  ]
+}

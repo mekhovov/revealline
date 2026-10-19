@@ -1,0 +1,122 @@
+{
+  "kind": "controller-new-head-and-held-native-adapters",
+  "observedUTC": "2026-10-19T04:25:14.633593+00:00",
+  "pullRequests": [
+    {
+      "pr": 1699,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "labels": [],
+      "autoMerge": null,
+      "head": "739a87f66a80d4956f1af77c60c032821bf799fb"
+    },
+    {
+      "pr": 1703,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "labels": [],
+      "autoMerge": null,
+      "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b"
+    },
+    {
+      "pr": 1654,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "labels": [],
+      "autoMerge": null,
+      "head": "f157f0cc2195fa6c747c4e407d22db51f5ccca64"
+    },
+    {
+      "pr": 1713,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "labels": [],
+      "autoMerge": null,
+      "head": "d64d90c69a6ec21f16ca4e3607a1b86f7d486502",
+      "checks": [
+        {
+          "id": 117888595582,
+          "name": "feature (presentation)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595582"
+        },
+        {
+          "id": 117888595567,
+          "name": "feature (recordings)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595567"
+        },
+        {
+          "id": 117888595552,
+          "name": "feature (rooms)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595552"
+        },
+        {
+          "id": 117888595541,
+          "name": "preflight",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249422/job/117888595541"
+        },
+        {
+          "id": 117888595527,
+          "name": "candidate",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249464/job/117888595527"
+        },
+        {
+          "id": 117888595369,
+          "name": "feature (gameplay)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595369"
+        },
+        {
+          "id": 117888595365,
+          "name": "feature (creator)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595365"
+        },
+        {
+          "id": 117888595247,
+          "name": "optional-practice",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249464/job/117888595247"
+        },
+        {
+          "id": 117888595241,
+          "name": "reconcile",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249473/job/117888595241"
+        },
+        {
+          "id": 117888595201,
+          "name": "feature (local-ux)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595201"
+        },
+        {
+          "id": 117888595166,
+          "name": "record",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249132/job/117888595166"
+        }
+      ]
+    }
+  ],
+  "limits": "Source status only. No merges, draft changes, native dispatch or functional execution."
+}

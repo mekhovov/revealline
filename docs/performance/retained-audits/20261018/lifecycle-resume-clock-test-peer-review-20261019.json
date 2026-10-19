@@ -1,0 +1,216 @@
+{
+  "format": "revealline-1693-resume-navigation-peer-review.v1",
+  "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+  "failureEvidence": {
+    "artifact": 12162354181,
+    "zipBytes": 15611,
+    "zipSha256": "c0147fb4765119ed690e722dcfd9204ccd69baac64d7e12787a8e5fc8be73993",
+    "receipt": {
+      "format": "revealline-focused-shard.v1",
+      "state": "complete",
+      "shard": {
+        "index": 3,
+        "total": 4
+      },
+      "identity": {
+        "sourceRevision": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+        "workflowRevision": "f822cd3e7f25ad3409855543f01900866999f021",
+        "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+        "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+        "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+        "changedPathsSha256": "37d37d69ba249d92177a16ba3ba319b051c553911ee15fd8da99394c059d4dbc",
+        "fallbackHandled": false,
+        "sourceTree": "4bb44157295ed7e170d60ce3276f790d920ea014"
+      },
+      "plan": {
+        "commands": [
+          {
+            "id": "i18n-check",
+            "command": "npm",
+            "args": [
+              "run",
+              "i18n:check"
+            ]
+          },
+          {
+            "id": "localization-runtime",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/localization.test.mjs",
+              "game/test/localization-couch-host.test.mjs",
+              "game/test/localization-gameplay-copy.test.mjs",
+              "game/test/localization-team-copy.test.mjs",
+              "game/test/about-navigation-host.test.mjs"
+            ]
+          },
+          {
+            "id": "player-navigation-team",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/couch-navigation.test.mjs",
+              "game/test/couch-composite-menu-navigation.test.mjs",
+              "game/test/mission-library-controller-host.test.mjs",
+              "game/test/content-team-navigation.test.mjs",
+              "game/test/controller-navigation.test.mjs"
+            ],
+            "timeoutMs": 1200000
+          },
+          {
+            "id": "company-generated-source-and-media",
+            "command": "npm",
+            "args": [
+              "run",
+              "company:check"
+            ]
+          },
+          {
+            "id": "company-runtime-and-publication",
+            "command": "npm",
+            "args": [
+              "run",
+              "company:test"
+            ],
+            "timeoutMs": 2700000
+          },
+          {
+            "id": "company-review-measurements",
+            "command": "node",
+            "args": [
+              "--test",
+              "scripts/test-company-review.mjs"
+            ]
+          },
+          {
+            "id": "edition-appearance-contracts",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/actor-appearance-pin.test.mjs",
+              "game/test/actor-appearance-lease.test.mjs",
+              "game/test/replay-presentation.test.mjs",
+              "game/test/replay-actor-context.test.mjs"
+            ]
+          },
+          {
+            "id": "edition-persistence-compatibility",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/installed-app.test.mjs",
+              "game/test/profile-transfer.test.mjs",
+              "game/test/profile-channel-reader.test.mjs",
+              "scripts/test-offline-publication.mjs"
+            ]
+          },
+          {
+            "id": "unknown-runtime-validate",
+            "command": "npm",
+            "args": [
+              "run",
+              "validate"
+            ],
+            "timeoutMs": 1800000
+          },
+          {
+            "id": "changed-test:game/test/couch-input.test.mjs",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/couch-input.test.mjs"
+            ]
+          },
+          {
+            "id": "changed-test:game/test/couch-lifecycle-clock.test.mjs",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/couch-lifecycle-clock.test.mjs"
+            ]
+          },
+          {
+            "id": "changed-test:game/test/solo-cadence-input-host.test.mjs",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/solo-cadence-input-host.test.mjs"
+            ]
+          }
+        ],
+        "sha256": "437ff67b9378071c63a0577c95d72a2562cc17cb3e78e5b687e9b0bd5b78d5a0"
+      },
+      "indices": [
+        2,
+        6,
+        10
+      ],
+      "result": {
+        "attempted": 3,
+        "failures": [
+          {
+            "id": "player-navigation-team",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/couch-navigation.test.mjs",
+              "game/test/couch-composite-menu-navigation.test.mjs",
+              "game/test/mission-library-controller-host.test.mjs",
+              "game/test/content-team-navigation.test.mjs",
+              "game/test/controller-navigation.test.mjs"
+            ],
+            "status": 1,
+            "signal": null,
+            "error": null
+          }
+        ],
+        "exitCode": 1
+      }
+    },
+    "members": [
+      {
+        "name": "output.log",
+        "bytes": 79210,
+        "sha256": "2c517ad52f5d178ea312e8e0413568ef4a86c60e93e738eb917cecc5cc974752"
+      },
+      {
+        "name": "receipt.json",
+        "bytes": 3095,
+        "sha256": "d9af57a0a736c5786c01b610608050b60046bc1e79635ea59e9abbd062f0625b"
+      }
+    ],
+    "failureNames": [
+      "not ok 216 - immediate: actual Pause retains two different requested turns and explicit Resume continues both",
+      "not ok 218 - grid-center: actual Pause retains two different requested turns and explicit Resume continues both"
+    ],
+    "existingDetailedReceipt": "a57b432f9b9b2315297ff319be172fdf0eb6abdc"
+  },
+  "findings": [
+    "Both navigation failures are at the existing final authoritativeCheckpoint comparison, after the test expects twelve ticks from the first100ms callback following Resume.",
+    "At exact head d1c6e236, activateAcceptedMatch resets last=0; frame computes dt0 for that first callback, establishing a fresh clock. The absence of twelve gameplay ticks is the required clock-boundary behavior.",
+    "clear({resetDirection:false}) retains continuous steering through clearPhysical, resets accumulator, and resumeDuel retains preserveContinuation:true. The first dt0 callback polls input but cannot consume a simulation tick. neutralActions preserves direction while suppressing equipment for the subsequent neutral-action tick.",
+    "The narrow amendment first checks running state and unchanged full authoritative checkpoint after the first100ms callback, then retains the existing second100ms/twelve-step independent reference and both immediate/grid-center policies.",
+    "This strengthens the stale schedule expectation without relaxing the checkpoint, buffered-turn, explicit-Resume, fresh-action or replay contract. No production rollback is indicated by these two failures."
+  ],
+  "proposal": {
+    "blob": "06996da8a24612b1fe010f2b7441ef66f69e4470",
+    "bytes": 64907,
+    "sha256": "f729d2d1269407ce9bfd2e760b8faf442fdc27bed55a0cbb5e6e05a79836d991",
+    "path": "game/test/couch-navigation.test.mjs",
+    "beforeBlob": "582ac3095c60606538e5b8e4873ee255bccea832",
+    "afterBlob": "0d4e93d216ade3c71c405f35aad2452f99bb3785",
+    "afterBytes": 31204,
+    "afterSha256": "599176c70ba3e642c2684a90d7bfb9342612701730b9a2d93daaeb3940ff7fa9",
+    "diff": "--- before\n+++ after\n@@ -667,6 +667,10 @@\n     f.key('KeyW', false);\n     f.key('ArrowUp', false);\n     f.$('race-start').click();\n+    // Accepted Resume establishes its clock before a later callback spends play time.\n+    f.frame(100);\n+    assert.equal(f.state(), 'running');\n+    assert.deepEqual(f.checkpoint(), before, 'The first Resume callback must not spend menu time.');\n     f.frame(100);\n     for (let tick = 0; tick < 12; tick++) {\n       stepRun(expected[0], { direction: 'down' }, FIXED_DT);\n"
+  },
+  "staticChecks": {
+    "parsed": true,
+    "beforeTop": 37,
+    "afterTop": 37
+  },
+  "verdict": "Source-only peer approval for this exact one-file amendment. Before/after Git identities, bytes and SHA256 verified; no other source file is in the map. CI remains required to prove the corrected cases and existing selected tests pass.",
+  "limitations": [
+    "No application or test execution, generator, build, source push, workflow change/rerun or merge was performed.",
+    "Original failing result remains retained. This source review is not a passing-test or native-performance claim."
+  ]
+}

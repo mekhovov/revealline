@@ -1,0 +1,88 @@
+{
+  "format": "FastlineInapplicableSkipCollectorIndependentReviewV1",
+  "reviewer": "source_results_now",
+  "method": "Independent source inspection, immutable GitHub input reads and Acorn AST comparison only; no controller/application/test execution or local writes.",
+  "initialProposal": {
+    "blob": "289ceabc55a53f7b58cc273067603eee80dee5f7",
+    "bytes": 380477,
+    "sha256": "1ee8dc61677c65de643bd44af32ea10ba8c1db4d8c2f0f526a573ccc94629b6e"
+  },
+  "registrySourceReview": {
+    "blob": "5ee571c6b02673eb41fa15e08f3c207f737f0609",
+    "bytes": 18265,
+    "sha256": "c31f6332c351158f594e0ff996123d79421046f376262c301fbe92d87214e770",
+    "paths": 48,
+    "sources": 64,
+    "jobs": 165
+  },
+  "reviewedBoundaries": [
+    "New batch path activates only with validated PR identity and a non-policy skipped check; ordinary and policy-only inventories retain prior lookup path.",
+    "Complete exact-head run and workflow catalogs retain strict count, pagination and duplicate validation within existing shared 64-call, 120-second sweep and 30-second request bounds.",
+    "Workflow directory is exact-head, less than 1000 entries, strictly typed/path/SHA-bound, no pagination or duplicate path accepted.",
+    "All exemptions require GitHub Actions app, unique suite-to-run binding, exact run attempt jobs, exact check URL/name/status/conclusion/timestamp binding, active workflow id/path, exact reviewed workflow blob and unique PR/head/repository/main-base association.",
+    "Historical PR1544 is always denied; manual/native execution cannot receive PR-inapplicable proof.",
+    "Required source guards must be unique same-attempt jobs fully joined to completed successful checks.",
+    "Ambiguous matrix display names prove all possible reviewed definitions; inherited needs use exact known dependencies, no overriding condition, skipped joined parents and cycle detection.",
+    "Executed-source closure accepts only run-associated immutable base ancestor of exact head; exact comparison URL/base/merge-base and consistent nonnegative counts are canonicalized. Divergence or inconsistent proof remains blocked.",
+    "Two complete canonical sweeps retain all proof inputs, check identities, run associations, catalogs, candidate workflow blobs, ancestry and provenance; no parent or skipped native test is represented as passed.",
+    "Original seven policy files and native workflow/declaration owners remain unchanged."
+  ],
+  "staticAST": {
+    "parsed": true,
+    "changedExistingProductionNodes": [
+      "collectExactHeadCheckInventory",
+      "inventoryCheckBlocker",
+      "collectControllerSnapshot"
+    ],
+    "embeddedRegistryEqualsReviewed": true,
+    "allOriginalNonImportTestStatementsUnchanged": true
+  },
+  "budgetReview": {
+    "largeFixture": "46 reviewed published-workflow copies plus 14 ordinary successful checks",
+    "perSweep": 57,
+    "derivation": "2 check pages +1 suite+1 legacy+1 run catalog+2 workflow catalog+1 directory+48 exact-attempt job pages+1 ancestry =57",
+    "actualCohortProjectedPerSweep": {
+      "1620": 12,
+      "1621": 55,
+      "1628": 57
+    },
+    "executed": false
+  },
+  "initialReviewFinding": "Source-guard failure controls changed only job metadata while the joined check remained successful. Requested consistent source job+check non-success states and missing guard to exercise the actual source-success rule.",
+  "execution": false,
+  "sources": [
+    "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows"
+  ],
+  "finalProposal": {
+    "blob": "9db84e19111c53fb8b94e350f2059a036d55951f",
+    "bytes": 383653,
+    "sha256": "6a3273f01c525b9456a07090469bebb365c99cc4faa1ded3fb842f0285e2a075"
+  },
+  "finalSource": {
+    "controller": "46195e1f9bf769447a7827340bb1c92ba00e67b9",
+    "tests": "c6b58fc5afe0170ce31d2cfe60cbe3a93b78caa6"
+  },
+  "initialReviewFindingResolved": true,
+  "additionalControlsReviewed": [
+    "Consistently bound failed/cancelled/skipped/in_progress source job+check denies target exemption.",
+    "Absent source job and check deny target exemption.",
+    "Both shared matrix-name definitions must remain skipped; success/failure sibling denies target exemption.",
+    "A valid alternate historical base still rejects between-sweep mutation rather than relying on fixture routing error."
+  ],
+  "status": "Source review approved; remote functional execution and trusted-main qualification remain mandatory.",
+  "authoredNewGroups": 20,
+  "totalAuthoredGroups": 75,
+  "testsExecuted": false,
+  "limits": [
+    "No functional, workflow or controller code executed locally or during this review.",
+    "Remote execution of all new controls and retained prior tests remains required.",
+    "No workflow dispatch, policy mutation, merge, native-browser result or performance acceptance is authorized by this source review.",
+    "Ancestor-only proof deliberately blocks diverged historical runs; projected fit is not an executed collector performance result."
+  ],
+  "finalStatic": {
+    "finalParse": true,
+    "oldTestBodiesUnchanged": true,
+    "addedNonImportStatements": 21
+  },
+  "recordedAt": "2026-10-19T04:22:28.287590+00:00"
+}

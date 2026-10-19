@@ -1,0 +1,19 @@
+{
+  "kind": "reviewed-lifecycle-test-amendment-publication",
+  "observedUTC": "2026-10-19T04:34:56.781802+00:00",
+  "pr": 1693,
+  "url": "https://github.com/mekhovov/revealline/pull/1693",
+  "branch": "codex/solo-resume-input-lifecycle",
+  "parent": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+  "head": "360bc16a035ad11377a4bd5e5321d088763d336a",
+  "tree": "e5b5e4ce339e1aff301fad28662e5c756b5f3a3d",
+  "changedPaths": [
+    "game/test/couch-navigation.test.mjs"
+  ],
+  "sourceBlob": "0d4e93d216ade3c71c405f35aad2452f99bb3785",
+  "sourceSHA256": "599176c70ba3e642c2684a90d7bfb9342612701730b9a2d93daaeb3940ff7fa9",
+  "productionUnchanged": true,
+  "originalTreeOtherwisePreserved": true,
+  "testsExecuted": false,
+  "reviewReceipt": "d5ab9750b045840a89abb5d43375005f49203097"
+}

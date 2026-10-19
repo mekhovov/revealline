@@ -1,0 +1,104 @@
+{
+  "kind": "IndependentControllerRegistryImplementationReviewV1",
+  "decision": "No remaining blocking source-review findings in the exact proposal after fixture corrections; suitable for source-only draft admission, with hosted validation still required.",
+  "proposal": {
+    "blob": "9db84e19111c53fb8b94e350f2059a036d55951f",
+    "bytes": 383653,
+    "sha256": "6a3273f01c525b9456a07090469bebb365c99cc4faa1ded3fb842f0285e2a075",
+    "base": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1"
+  },
+  "files": {
+    "publishing/fastline-merge-controller.mjs": {
+      "beforeBlob": "a8b71ef43d7afbf18bc169bfc75ff924c634fd93",
+      "afterBlob": "46195e1f9bf769447a7827340bb1c92ba00e67b9",
+      "afterBytes": 150556,
+      "afterSha256": "710535a7a2cc1c15dbbc95b837aaf0cd2c7ef3a99e3c442fbf5ee346b9b45a49"
+    },
+    "publishing/fastline-merge-controller.test.mjs": {
+      "beforeBlob": "caac992f26cbf23e8b5b8a14289b5c2ef4076918",
+      "afterBlob": "c6b58fc5afe0170ce31d2cfe60cbe3a93b78caa6",
+      "afterBytes": 92315,
+      "afterSha256": "275a345c79d985d053829ef25e591a129831ef8057a980a90c3a6e304c90dd3c"
+    }
+  },
+  "registry": {
+    "blob": "03bfea5d878435f4765b3692a94ac2f6fb228b99",
+    "paths": 48,
+    "sourceBlobs": 64,
+    "jobs": 165,
+    "exactSemanticMatch": true
+  },
+  "independentChecks": {
+    "parsedSources": 4,
+    "registrySemanticallyIdentical": true,
+    "previousTestBodiesUnchanged": 55,
+    "newAuthoredGroups": 20,
+    "totalTopLevelTests": 75,
+    "testsExecuted": false,
+    "newNames": [
+      "reviewed PR-inapplicable skips preserve source success and native qualification separation",
+      "all skipped matrix-name candidates and transitive needs require source-bound proofs",
+      "frozen one-shot owners are inapplicable only outside PR1544",
+      "workflow mutations, source failure and manual/native runs never become skip exceptions",
+      "unknown check names and missing or non-skipped dependencies remain gates",
+      "failed, pending and cancelled native jobs remain blocked even under reviewed workflow bytes",
+      "PR associations bind the exact head, repository and unique non-historical owner",
+      "executed-source ancestry requires an immutable ancestor and a consistent summary",
+      "workflow catalogs, run batches and directories are complete, bounded and unambiguous",
+      "batched run-to-suite and exact-attempt job joins never collapse historical identities",
+      "the second complete sweep rechecks workflow bytes, PR base, ancestry and catalog state",
+      "a large frozen cohort stays within the unchanged per-sweep request bound",
+      "new proof reads share existing request and wall-clock bounds",
+      "the finite registry has no source-job exemption and every inherited proof names a reviewed root",
+      "a successful source guard from another run or attempt cannot authorize a skip",
+      "missing PR identity and original PR1544 never receive the new role",
+      "identical executed-source base requires the same head and zero comparison counts",
+      "source guards must be consistently successful in the same joined attempt",
+      "every ambiguous matrix sibling must be skipped before its shared name is inapplicable",
+      "a valid alternate recorded base still fails the complete-sweep stability check"
+    ]
+  },
+  "reviewedInvariants": [
+    "New role requires a positive identified PR; PR1544 is globally denied at any head, including manual-only entries.",
+    "Exact candidate workflow path/blob must select a finite registered source and match the active catalog workflow ID/path. Unknown or changed source has no fallback.",
+    "Every same-source definition sharing a skipped display name must prove; their observed same-name jobs must each be completed/skipped and check-bound. Unknown names and null-proof source definitions remain gates.",
+    "Dependencies are recursively proved with cycle rejection and exact condition/needs identities; all authored inherited rules lead to direct reviewed roots.",
+    "Required source guards are uniquely found in the same run/attempt and joined to successful checks by GitHub app, suite, head, run, attempt, job/check URL, name, timestamps and conclusions.",
+    "Run association must be unique and match PR number/URL, exact head, head/base repository identity and URLs, and main base ref. No head/base substitution from current-main state.",
+    "Recorded run base must equal the comparison base and merge base with zero behind commits; ahead/identical counts must be internally consistent. Otherwise the source proof fails closed.",
+    "Every sweep independently reads complete run/catalog/job inventories, exact-head workflow directory and recorded-base ancestry. Canonical equality covers their identities, states, associations and source results.",
+    "Two sweeps, 64-request ceiling and existing time limits remain unchanged. All additional reads flow through the existing bounded read helper.",
+    "Native/manual workflow bytes, admission policy and existing deploy source-policy handling are untouched. Skip classification is not a native qualification or successful browser execution."
+  ],
+  "reviewCorrectionsResolved": [
+    "The original second-sweep base-drift control rejected in its fixture URL assertion. The revised fixture deliberately serves valid ancestry for the alternate recorded base, then the test requires the collector's inventory-changed error and verifies two ancestry reads.",
+    "A focused ambiguous matrix-name control now supplies one success/failure sibling and confirms neither same-name check receives the new role.",
+    "Additional source-guard controls consistently mutate both check and job to failed, cancelled, skipped or in-progress, plus absent guard, and confirm the browser skip remains a gate."
+  ],
+  "sourceAnchors": {
+    "export const REVIEWED_PR_INAPPLICABLE_WORKFLOWS": 24,
+    "const batchSkipped =": 2549,
+    "const sourceTreeMatchesHead =": 2762,
+    "const boundCheckForJob =": 2807,
+    "const inapplicableProof =": 2826,
+    "pullRequestNumber === 1544": 2829,
+    "for (const jobId of reviewed.requiredSuccessfulJobs)": 2867,
+    "const candidates = definitions.filter": 2912,
+    "require(first.canonical ===": 3057
+  },
+  "limits": {
+    "testsExecuted": false,
+    "controllerImportedOrExecuted": false,
+    "localWrites": false,
+    "workflowDispatch": false,
+    "sourcePush": false,
+    "planOrIndexMutation": false,
+    "nativeQualification": false,
+    "ciRequired": true
+  },
+  "remaining": [
+    "Execute the 75-test controller suite and required hosted source gates on the exact published candidate.",
+    "Exercise the real bounded collection path under hosted validation; source review and fixture authorship do not establish runtime success.",
+    "Keep ordinary release evidence, original trace ordering and physical/native qualification requirements unchanged."
+  ]
+}

@@ -1982,6 +1982,114 @@
       "blob": "2afb27c9a864e7827d9a24faf1f86887f2f89c7a",
       "bytes": 27422,
       "sha256": "695f45bfb4ffb608c5e25c64e5fd92fa09b21b4ee7b1c98c9a7f0400a7d8c19a"
+    },
+    {
+      "path": "controller-inapplicable-source-proposal-20261019.json",
+      "blob": "9db84e19111c53fb8b94e350f2059a036d55951f",
+      "bytes": 383653,
+      "sha256": "6a3273f01c525b9456a07090469bebb365c99cc4faa1ded3fb842f0285e2a075"
+    },
+    {
+      "path": "controller-inapplicable-static-selection-review-20261019.json",
+      "blob": "23e8e50e0e3b63584d8bd87c3b9d0bec2354ede1",
+      "bytes": 3385,
+      "sha256": "ccd37caed3e75b904994ca77d25f7c53dedd2cd5c752a01f93610cbe8e659b69"
+    },
+    {
+      "path": "controller-inapplicable-peer-review-20261019.json",
+      "blob": "d8af84595e2b6e9b5366baa9ad1f66c51ddfa398",
+      "bytes": 5170,
+      "sha256": "4516f43173f25c3f0f7420a187dd219255ca8bc9e2aadb4048a58510edf39e27"
+    },
+    {
+      "path": "controller-inapplicable-independent-review-20261019.json",
+      "blob": "d9f3106611301ade1e4968c2736598864237e58d",
+      "bytes": 6893,
+      "sha256": "bd475243a0c1293a440d3bb38dbe4c57298d648f98a881caec81e509acf6cb25"
+    },
+    {
+      "path": "controller-inapplicable-reviewed-draft-publication-20261019.json",
+      "blob": "30de5ad1d31d60999356aabbf84a7e192203cf92",
+      "bytes": 1759,
+      "sha256": "6032372d9f691b7784ead3393f33eda584086be306f14d052e6afcfd3cb47d9f"
+    },
+    {
+      "path": "controller-new-head-and-native-adapter-holds-20261019.json",
+      "blob": "13f814d5411763ac2160cad7f0a43d38d67e2512",
+      "bytes": 3877,
+      "sha256": "4c70f1180a1f98d29a4e1c9f3f1d076e6f74c0b37c47dec7e78ca240f7624fb5"
+    },
+    {
+      "path": "controller-inapplicable-initial-review-proposal-20261019.json",
+      "blob": "289ceabc55a53f7b58cc273067603eee80dee5f7",
+      "bytes": 380477,
+      "sha256": "1ee8dc61677c65de643bd44af32ea10ba8c1db4d8c2f0f526a573ccc94629b6e"
+    },
+    {
+      "path": "merged-source-bounded-artifact-and-main-delta-20261019.json",
+      "blob": "87cc8bbcaf4f8107f2263a7aec87deb9b5f48cf2",
+      "bytes": 26860,
+      "sha256": "97eacdf773a83c6e221ab99e28a74d521eeae7a9b2af65b3e63477aaf283cdd6"
+    },
+    {
+      "path": "body-backing-theme-four-consumer-closure-20261019.json",
+      "blob": "0f3b66fdfc6c983d40021597f6cfa4034f5d0f81",
+      "bytes": 10684,
+      "sha256": "249ce7b7f92b813a57ea01ee24dd605a52b012d24d43064200ed2f487788826a"
+    },
+    {
+      "path": "couch-mp3-complete-source-artifacts-addendum-20261019.json",
+      "blob": "1c9da11ed39060e00f55b22920130af6c11ab187",
+      "bytes": 23057,
+      "sha256": "845bdc6d56dc898f95c3f042500fd2a34e8eb523fa1490ff3304fdaa5c26cc3d"
+    },
+    {
+      "path": "lifecycle-source-failure-and-related-artifact-audit-20261019.json",
+      "blob": "a57b432f9b9b2315297ff319be172fdf0eb6abdc",
+      "bytes": 45460,
+      "sha256": "7599101a5666ff240b397635156c2d949c45ddfec9ab59cba50dcc0f6ea00df6"
+    },
+    {
+      "path": "lifecycle-resume-clock-test-amendment-20261019.json",
+      "blob": "06996da8a24612b1fe010f2b7441ef66f69e4470",
+      "bytes": 64907,
+      "sha256": "f729d2d1269407ce9bfd2e760b8faf442fdc27bed55a0cbb5e6e05a79836d991"
+    },
+    {
+      "path": "lifecycle-resume-clock-test-peer-review-20261019.json",
+      "blob": "d5ab9750b045840a89abb5d43375005f49203097",
+      "bytes": 8912,
+      "sha256": "a360436c983661f59dbbbbd0bbf87c24e84427c70b437c40f79a8652dddbeec7"
+    },
+    {
+      "path": "lifecycle-resume-clock-test-amendment-publication-20261019.json",
+      "blob": "c3def4aa713ec2e538ab6b8e7a29b78a6f471bf9",
+      "bytes": 778,
+      "sha256": "8b1592f005105a6e68306c1dd685986a4f190b22779fbf25353ecb35ff2a09ba"
+    },
+    {
+      "path": "five-draft-source-qualification-audit-20261019.json",
+      "blob": "526822ee3bf190e17f36255252cc3dd047715673",
+      "bytes": 23281,
+      "sha256": "386747996f513eb879ce37c2c34ce7ecaf6415ea2cd51a5a7873f20dd9fcb845"
+    },
+    {
+      "path": "worlds-authoring-backup-source-inventory-20261019.json",
+      "blob": "497ee2f57fc0ef35d1fcc3d9ff9c7392ca957058",
+      "bytes": 8419,
+      "sha256": "b6d3b997a60d067e0121b8862f028cd753cceb1d2979c4da0e9dcd6929cdbfbd"
+    },
+    {
+      "path": "merged-cancellation-controller-guard-20261019.json",
+      "blob": "b6192ca32f5d79e9c7343bb2e7c9638274ca2e38",
+      "bytes": 740,
+      "sha256": "53130dab4312ad3a774425d65984dcd80719ec4dcbc7122448f9e5c4c218fedd"
+    },
+    {
+      "path": "obsolete-unassigned-cancellation-controller-cleanup-20261019.json",
+      "blob": "674fb80ee89254d6aaae5a14ec86910c7d2edb06",
+      "bytes": 734,
+      "sha256": "997bbbd95c390ab9e08ca6f09cc9e058d491216000e78a2c32ad67a42a3e97ae"
     }
   ]
 }

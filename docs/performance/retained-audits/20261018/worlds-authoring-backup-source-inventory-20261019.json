@@ -1,0 +1,238 @@
+{
+  "kind": "remaining-worlds-authoring-backup-source-inventory",
+  "observedUTC": "2026-10-19T04:36:20.755391+00:00",
+  "targets": [
+    {
+      "pr": 1674,
+      "head": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "checks": [
+        {
+          "id": 117887784427,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39190329073/job/117887784427"
+        },
+        {
+          "id": 117887784341,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "skipped",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39190329073/job/117887784341"
+        },
+        {
+          "id": 117887783279,
+          "name": "focused_shards (1)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39190329073/job/117887783279"
+        },
+        {
+          "id": 117887783189,
+          "name": "focused_shards (2)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39190329073/job/117887783189"
+        },
+        {
+          "id": 117887783188,
+          "name": "focused_shards (4)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39190329073/job/117887783188"
+        },
+        {
+          "id": 117887783174,
+          "name": "focused_shards (3)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39190329073/job/117887783174"
+        }
+      ],
+      "artifacts": []
+    },
+    {
+      "pr": 1675,
+      "head": "34761ede2f39de93a4d125995b63f65a64ac7b0b",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "checks": [
+        {
+          "id": 117888400803,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39192365339/job/117888400803"
+        },
+        {
+          "id": 117888400343,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "skipped",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39192365339/job/117888400343"
+        },
+        {
+          "id": 117888399074,
+          "name": "focused_shards (4)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39192365339/job/117888399074"
+        },
+        {
+          "id": 117888399038,
+          "name": "focused_shards (1)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39192365339/job/117888399038"
+        },
+        {
+          "id": 117888399030,
+          "name": "focused_shards (3)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39192365339/job/117888399030"
+        },
+        {
+          "id": 117888399028,
+          "name": "focused_shards (2)",
+          "status": "queued",
+          "conclusion": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39192365339/job/117888399028"
+        }
+      ],
+      "artifacts": []
+    },
+    {
+      "pr": 1676,
+      "head": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "checks": [
+        {
+          "id": 117865180152,
+          "name": "release-ready",
+          "status": "completed",
+          "conclusion": "success",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117865180152"
+        },
+        {
+          "id": 117842549290,
+          "name": "focused",
+          "status": "completed",
+          "conclusion": "success",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117842549290"
+        },
+        {
+          "id": 117819515014,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117819515014"
+        },
+        {
+          "id": 117819514613,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "skipped",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117819514613"
+        },
+        {
+          "id": 117819513782,
+          "name": "focused_shards (2)",
+          "status": "completed",
+          "conclusion": "success",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117819513782"
+        },
+        {
+          "id": 117819513779,
+          "name": "focused_shards (4)",
+          "status": "completed",
+          "conclusion": "success",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117819513779"
+        },
+        {
+          "id": 117819513761,
+          "name": "focused_shards (3)",
+          "status": "completed",
+          "conclusion": "success",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117819513761"
+        },
+        {
+          "id": 117819513720,
+          "name": "focused_shards (1)",
+          "status": "completed",
+          "conclusion": "success",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117819513720"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12157420558,
+          "name": "focused-shard-39173029629-1-4",
+          "size_in_bytes": 3070,
+          "digest": "sha256:5eb2c9b6049d5806b3cb5813efa82100c70d7400e4d45eafd26d86b8f66dfc0b",
+          "expired": false,
+          "created_at": "2026-10-19T00:57:32Z",
+          "workflow_run": {
+            "id": 39173029629,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/solo-pages-backup-observation",
+            "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925"
+          }
+        },
+        {
+          "id": 12157127070,
+          "name": "focused-shard-39173029629-1-3",
+          "size_in_bytes": 68835,
+          "digest": "sha256:a6b373ed53fd117823f0388516e5fbb5fc7b3490440b0922c232d6740866d7d2",
+          "expired": false,
+          "created_at": "2026-10-19T01:09:13Z",
+          "workflow_run": {
+            "id": 39173029629,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/solo-pages-backup-observation",
+            "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925"
+          }
+        },
+        {
+          "id": 12157013491,
+          "name": "focused-shard-39173029629-1-2",
+          "size_in_bytes": 5688,
+          "digest": "sha256:a638487a4fa993bfb0967269d2ee52b41adaff196beaea44f86a3cba651d3eea",
+          "expired": false,
+          "created_at": "2026-10-19T01:06:46Z",
+          "workflow_run": {
+            "id": 39173029629,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/solo-pages-backup-observation",
+            "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925"
+          }
+        },
+        {
+          "id": 12156241805,
+          "name": "focused-shard-39173029629-1-1",
+          "size_in_bytes": 19935,
+          "digest": "sha256:7e4c0c119361fb2c422e0241dadcd63c2967698eeeac31f891b5ac95ea4d57c3",
+          "expired": false,
+          "created_at": "2026-10-19T00:28:27Z",
+          "workflow_run": {
+            "id": 39173029629,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/solo-pages-backup-observation",
+            "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925"
+          }
+        }
+      ]
+    }
+  ],
+  "limits": "Availability/status only; no new functional pass inferred from artifact presence."
+}

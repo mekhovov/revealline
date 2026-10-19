@@ -1,0 +1,19 @@
+{
+  "kind": "obsolete-unassigned-task-controller-cancellation",
+  "observedUTC": "2026-10-19T04:39:01.945891+00:00",
+  "pr": 1708,
+  "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+  "runId": 39196032399,
+  "jobId": 117878900728,
+  "runAttempt": 1,
+  "workflow": ".github/workflows/fastline-auto-merge.yml",
+  "guard": {
+    "pullMerged": true,
+    "status": "queued",
+    "runnerId": 0,
+    "runnerName": "",
+    "steps": []
+  },
+  "queuedStartedAt": "2026-10-19T03:43:26Z",
+  "rationale": "Only the obsolete unassigned controller for this task's merged PR was cancelled. The API queued-job timestamp does not override current unassigned/zero-step evidence. No source/validation/Pages job or current controller was cancelled."
+}

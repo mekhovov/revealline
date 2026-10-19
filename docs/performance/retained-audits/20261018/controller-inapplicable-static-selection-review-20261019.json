@@ -1,0 +1,99 @@
+{
+  "checks": {
+    "acornParseBothFullFiles": true,
+    "eslintBothFullFiles": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "newBlocksFormatted": true,
+    "newProductionData": "REVIEWED_PR_INAPPLICABLE_WORKFLOWS",
+    "priorProductionTopLevelChangesOnly": [
+      "collectExactHeadCheckInventory",
+      "inventoryCheckBlocker",
+      "collectControllerSnapshot"
+    ]
+  },
+  "collectorExecuted": false,
+  "formatting": {
+    "configBlob": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+    "formatCheckGlobs": [
+      "game/**/*.{mjs,css,html,json}",
+      "intake/*.{mjs,md}",
+      "scripts/*.mjs",
+      "site/**/*.{mjs,css,html}"
+    ],
+    "note": "Preexisting formatting retained; no claim that full publishing files pass Prettier. All added blocks are formatted with the repository options.",
+    "options": {
+      "printWidth": 100,
+      "singleQuote": true,
+      "trailingComma": "all"
+    },
+    "packageBlob": "03292ddd5d31da1722f32bed186d9127f6628c85",
+    "publishingOutsideRepositoryFormatGlobs": true,
+    "wholeFilePrettierCheck": {
+      "controllerAfter": false,
+      "controllerBefore": false,
+      "testsAfter": false,
+      "testsBefore": false
+    }
+  },
+  "kind": "fastline-pr-inapplicable-source-proposal-static-receipt",
+  "limits": {
+    "completeSweeps": 2,
+    "maxRequestsPerSweep": 64,
+    "observedCohortRequestsPerSweep": {
+      "1620": 12,
+      "1621": 55,
+      "1628": 57
+    },
+    "physicalDeviceQualification": "not available and not implied",
+    "productionRunnerValidation": "required after publication",
+    "requestTimeoutMs": 30000,
+    "sweepTimeoutMs": 120000
+  },
+  "nativeQualified": false,
+  "production": {
+    "afterBlob": "46195e1f9bf769447a7827340bb1c92ba00e67b9",
+    "afterBytes": 150556,
+    "beforeBlob": "a8b71ef43d7afbf18bc169bfc75ff924c634fd93",
+    "path": "publishing/fastline-merge-controller.mjs",
+    "sha256": "710535a7a2cc1c15dbbc95b837aaf0cd2c7ef3a99e3c442fbf5ee346b9b45a49"
+  },
+  "proposal": {
+    "blob": "9db84e19111c53fb8b94e350f2059a036d55951f",
+    "bytes": 383653,
+    "sha256": "6a3273f01c525b9456a07090469bebb365c99cc4faa1ded3fb842f0285e2a075"
+  },
+  "retainedEvidence": {
+    "allCandidateTriggerBaseProof": "2afb27c9a864e7827d9a24faf1f86887f2f89c7a",
+    "completeAttemptJobs": "f66e028e1baed6d501725e16875cb1a5d1ec8fb9",
+    "registry": "03bfea5d878435f4765b3692a94ac2f6fb228b99",
+    "registryIndependentReview": "5ee571c6b02673eb41fa15e08f3c207f737f0609"
+  },
+  "sourceOnly": true,
+  "testSelection": {
+    "command": "node",
+    "commandId": "publishing-controller",
+    "pattern": "^publishing/",
+    "policyBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+    "ruleId": "publishing",
+    "selectedArgumentsInclude": [
+      "--test",
+      "publishing/fastline-merge-controller.test.mjs"
+    ],
+    "trustedMapBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+    "workflowAndPolicyMutations": 0
+  },
+  "tests": {
+    "addedTopLevelTests": 20,
+    "afterBlob": "c6b58fc5afe0170ce31d2cfe60cbe3a93b78caa6",
+    "afterBytes": 92315,
+    "allPreviousNonImportStatementsUnchanged": true,
+    "beforeBlob": "caac992f26cbf23e8b5b8a14289b5c2ef4076918",
+    "path": "publishing/fastline-merge-controller.test.mjs",
+    "previousTopLevelTests": 55,
+    "sha256": "275a345c79d985d053829ef25e591a129831ef8057a980a90c3a6e304c90dd3c",
+    "totalTopLevelTests": 75
+  },
+  "testsExecuted": false
+}

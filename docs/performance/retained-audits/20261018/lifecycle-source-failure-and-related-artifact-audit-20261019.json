@@ -1,0 +1,1112 @@
+[
+  {
+    "artifact": {
+      "created": "2026-10-19T04:22:51Z",
+      "digest": "sha256:2512c84437c6d1a8bce51fefaba4008ccb01e90fb87761cf183c9c6ba3280d1b",
+      "expired": false,
+      "id": 12163476140,
+      "name": "focused-shard-39183531423-1-2",
+      "size": 6501,
+      "workflow_run": {
+        "head_branch": "codex/solo-resume-input-lifecycle",
+        "head_repository_id": 1367404328,
+        "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+        "id": 39183531423,
+        "repository_id": 1367404328
+      }
+    },
+    "attempt": 1,
+    "digestVerified": true,
+    "entries": [
+      {
+        "bytes": 24608,
+        "failureExcerpts": [],
+        "name": "output.log",
+        "sha256": "c1163a63884a17ae535e084b961a74659e2d25e0c242a94c83086c397a8d0016",
+        "tapSummary": [
+          "ok 8 - measurement can be armed while Solo is paused and never starts or resumes the game itself",
+          "ok 9 - focus interruption discards an active sample even when the game resumes before the next RAF",
+          "# tests 16",
+          "# pass 16",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 372.853555",
+          "ok 6 - held arrival Confirm waits for neutral and join before any page action",
+          "ok 17 - pause button on a controller suppresses both same-sample commands until neutral after resume",
+          "ok 26 - neutral Resume tick defers fresh local requests independently without releasing held pads",
+          "ok 27 - clearing a deferred Resume request retires it before the next fixed tick",
+          "# tests 27",
+          "# pass 27",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 937.046418",
+          "ok 15 - blur clears edit/input and restoration requires neutral without a duplicate loop",
+          "ok 16 - hidden clears edit/input and restoration requires neutral without a duplicate loop",
+          "ok 17 - persisted pagehide clears edit/input and restoration requires neutral without a duplicate loop",
+          "ok 22 - disconnect retires edits and reconnect requires neutral and a fresh join",
+          "ok 38 - accepted Team bonus windows refresh their language without advancing their clocks",
+          "# tests 57",
+          "# pass 57",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 20950.2103"
+        ]
+      },
+      {
+        "bytes": 2758,
+        "json": {
+          "format": "revealline-focused-shard.v1",
+          "identity": {
+            "changedPathsSha256": "37d37d69ba249d92177a16ba3ba319b051c553911ee15fd8da99394c059d4dbc",
+            "fallbackHandled": false,
+            "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+            "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+            "sourceRevision": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "sourceTree": "4bb44157295ed7e170d60ce3276f790d920ea014",
+            "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "workflowRevision": "f822cd3e7f25ad3409855543f01900866999f021"
+          },
+          "indices": [
+            1,
+            5,
+            9
+          ],
+          "plan": {
+            "commands": [
+              {
+                "args": [
+                  "run",
+                  "i18n:check"
+                ],
+                "command": "npm",
+                "id": "i18n-check"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/localization.test.mjs",
+                  "game/test/localization-couch-host.test.mjs",
+                  "game/test/localization-gameplay-copy.test.mjs",
+                  "game/test/localization-team-copy.test.mjs",
+                  "game/test/about-navigation-host.test.mjs"
+                ],
+                "command": "node",
+                "id": "localization-runtime"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-navigation.test.mjs",
+                  "game/test/couch-composite-menu-navigation.test.mjs",
+                  "game/test/mission-library-controller-host.test.mjs",
+                  "game/test/content-team-navigation.test.mjs",
+                  "game/test/controller-navigation.test.mjs"
+                ],
+                "command": "node",
+                "id": "player-navigation-team",
+                "timeoutMs": 1200000
+              },
+              {
+                "args": [
+                  "run",
+                  "company:check"
+                ],
+                "command": "npm",
+                "id": "company-generated-source-and-media"
+              },
+              {
+                "args": [
+                  "run",
+                  "company:test"
+                ],
+                "command": "npm",
+                "id": "company-runtime-and-publication",
+                "timeoutMs": 2700000
+              },
+              {
+                "args": [
+                  "--test",
+                  "scripts/test-company-review.mjs"
+                ],
+                "command": "node",
+                "id": "company-review-measurements"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/actor-appearance-pin.test.mjs",
+                  "game/test/actor-appearance-lease.test.mjs",
+                  "game/test/replay-presentation.test.mjs",
+                  "game/test/replay-actor-context.test.mjs"
+                ],
+                "command": "node",
+                "id": "edition-appearance-contracts"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/installed-app.test.mjs",
+                  "game/test/profile-transfer.test.mjs",
+                  "game/test/profile-channel-reader.test.mjs",
+                  "scripts/test-offline-publication.mjs"
+                ],
+                "command": "node",
+                "id": "edition-persistence-compatibility"
+              },
+              {
+                "args": [
+                  "run",
+                  "validate"
+                ],
+                "command": "npm",
+                "id": "unknown-runtime-validate",
+                "timeoutMs": 1800000
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-input.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/couch-input.test.mjs"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-lifecycle-clock.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/couch-lifecycle-clock.test.mjs"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/solo-cadence-input-host.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/solo-cadence-input-host.test.mjs"
+              }
+            ],
+            "sha256": "437ff67b9378071c63a0577c95d72a2562cc17cb3e78e5b687e9b0bd5b78d5a0"
+          },
+          "result": {
+            "attempted": 3,
+            "exitCode": 0,
+            "failures": []
+          },
+          "shard": {
+            "index": 2,
+            "total": 4
+          },
+          "state": "complete"
+        },
+        "name": "receipt.json",
+        "sha256": "09e5536f6f5faf3d7e2cdad8164521d955ee79b99e8ee5e251dee75e159ba960"
+      }
+    ],
+    "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+    "pr": 1693,
+    "run": 39183531423
+  },
+  {
+    "artifact": {
+      "created": "2026-10-19T04:18:38Z",
+      "digest": "sha256:4ba863a78cbe6ca4912aa90945da8867aa18b9f23276e0c32e011556a9b05d58",
+      "expired": false,
+      "id": 12163251336,
+      "name": "focused-shard-39183531423-1-4",
+      "size": 7113,
+      "workflow_run": {
+        "head_branch": "codex/solo-resume-input-lifecycle",
+        "head_repository_id": 1367404328,
+        "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+        "id": 39183531423,
+        "repository_id": 1367404328
+      }
+    },
+    "attempt": 1,
+    "digestVerified": true,
+    "entries": [
+      {
+        "bytes": 27863,
+        "failureExcerpts": [],
+        "name": "output.log",
+        "sha256": "55e8870a3477c99f71bd0fe4b72c56445b1602f27d557bebad86a7f0ecfa692e",
+        "tapSummary": [
+          "ok 14 - same-URL worker preparation waits for migration, recovery and profile ownership",
+          "# tests 51",
+          "# pass 51",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 4964.839077",
+          "ok 1 - actual Solo controller Menu Resume cannot spend the paused callback interval",
+          "ok 2 - actual Solo controller Confirm Resume cannot spend the paused callback interval",
+          "ok 3 - actual Solo keyboard movement and discrete edges survive simulated display cadence and catch-up",
+          "ok 4 - actual Solo keyboard interruption discards stale discrete input and resumes with a fresh edge",
+          "ok 5 - actual Solo gamepad movement and discrete edges survive simulated display cadence and catch-up",
+          "ok 6 - actual Solo gamepad interruption discards stale discrete input and resumes with a fresh edge",
+          "ok 7 - actual Solo keyboard requests after Resume survive the neutral tick and catch-up once",
+          "ok 8 - actual Solo touch requests after Resume survive the neutral tick and catch-up once",
+          "ok 9 - actual Solo Pause retires a fresh request deferred behind the Resume neutral tick",
+          "# tests 9",
+          "# pass 9",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 67608.357623"
+        ]
+      },
+      {
+        "bytes": 2759,
+        "json": {
+          "format": "revealline-focused-shard.v1",
+          "identity": {
+            "changedPathsSha256": "37d37d69ba249d92177a16ba3ba319b051c553911ee15fd8da99394c059d4dbc",
+            "fallbackHandled": false,
+            "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+            "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+            "sourceRevision": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "sourceTree": "4bb44157295ed7e170d60ce3276f790d920ea014",
+            "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "workflowRevision": "f822cd3e7f25ad3409855543f01900866999f021"
+          },
+          "indices": [
+            3,
+            7,
+            11
+          ],
+          "plan": {
+            "commands": [
+              {
+                "args": [
+                  "run",
+                  "i18n:check"
+                ],
+                "command": "npm",
+                "id": "i18n-check"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/localization.test.mjs",
+                  "game/test/localization-couch-host.test.mjs",
+                  "game/test/localization-gameplay-copy.test.mjs",
+                  "game/test/localization-team-copy.test.mjs",
+                  "game/test/about-navigation-host.test.mjs"
+                ],
+                "command": "node",
+                "id": "localization-runtime"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-navigation.test.mjs",
+                  "game/test/couch-composite-menu-navigation.test.mjs",
+                  "game/test/mission-library-controller-host.test.mjs",
+                  "game/test/content-team-navigation.test.mjs",
+                  "game/test/controller-navigation.test.mjs"
+                ],
+                "command": "node",
+                "id": "player-navigation-team",
+                "timeoutMs": 1200000
+              },
+              {
+                "args": [
+                  "run",
+                  "company:check"
+                ],
+                "command": "npm",
+                "id": "company-generated-source-and-media"
+              },
+              {
+                "args": [
+                  "run",
+                  "company:test"
+                ],
+                "command": "npm",
+                "id": "company-runtime-and-publication",
+                "timeoutMs": 2700000
+              },
+              {
+                "args": [
+                  "--test",
+                  "scripts/test-company-review.mjs"
+                ],
+                "command": "node",
+                "id": "company-review-measurements"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/actor-appearance-pin.test.mjs",
+                  "game/test/actor-appearance-lease.test.mjs",
+                  "game/test/replay-presentation.test.mjs",
+                  "game/test/replay-actor-context.test.mjs"
+                ],
+                "command": "node",
+                "id": "edition-appearance-contracts"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/installed-app.test.mjs",
+                  "game/test/profile-transfer.test.mjs",
+                  "game/test/profile-channel-reader.test.mjs",
+                  "scripts/test-offline-publication.mjs"
+                ],
+                "command": "node",
+                "id": "edition-persistence-compatibility"
+              },
+              {
+                "args": [
+                  "run",
+                  "validate"
+                ],
+                "command": "npm",
+                "id": "unknown-runtime-validate",
+                "timeoutMs": 1800000
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-input.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/couch-input.test.mjs"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-lifecycle-clock.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/couch-lifecycle-clock.test.mjs"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/solo-cadence-input-host.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/solo-cadence-input-host.test.mjs"
+              }
+            ],
+            "sha256": "437ff67b9378071c63a0577c95d72a2562cc17cb3e78e5b687e9b0bd5b78d5a0"
+          },
+          "result": {
+            "attempted": 3,
+            "exitCode": 0,
+            "failures": []
+          },
+          "shard": {
+            "index": 4,
+            "total": 4
+          },
+          "state": "complete"
+        },
+        "name": "receipt.json",
+        "sha256": "2eef6017e2ef788c62dfc4ac8a634e5c2212c806003f76e05ca7e2ad2be97cb8"
+      }
+    ],
+    "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+    "pr": 1693,
+    "run": 39183531423
+  },
+  {
+    "artifact": {
+      "created": "2026-10-19T04:26:33Z",
+      "digest": "sha256:c0147fb4765119ed690e722dcfd9204ccd69baac64d7e12787a8e5fc8be73993",
+      "expired": false,
+      "id": 12162354181,
+      "name": "focused-shard-39183531423-1-3",
+      "size": 15611,
+      "workflow_run": {
+        "head_branch": "codex/solo-resume-input-lifecycle",
+        "head_repository_id": 1367404328,
+        "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+        "id": 39183531423,
+        "repository_id": 1367404328
+      }
+    },
+    "attempt": 1,
+    "digestVerified": true,
+    "entries": [
+      {
+        "bytes": 79210,
+        "failureExcerpts": [
+          "  ...\n# Subtest: immediate: actual Pause retains two different requested turns and explicit Resume continues both\nnot ok 216 - immediate: actual Pause retains two different requested turns and explicit Resume continues both\n  ---\n  duration_ms: 3449.194334\n  location: '/home/runner/work/revealline/revealline/source/game/test/couch-navigation.test.mjs:640:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly deep-equal:\n    + actual - expected ... Lines skipped\n    \n      [\n        {\n          algorithm: 'fnv1a64-state-v2',\n    +     hash: 'eb1824646cfe1e30',\n    -     hash: '44466c0e64614c2c',\n          sections: {\n            ability: 'f6b5aef539d929bb',\n            board: 'fdfff9d1d17aa722',\n    +       clock: '24bc6fb886281146',\n    -       clock: '828f70a70a8f6e4b',\n            configuration: '67780a210840e2ad',\n            continuation: 'a1e7286b42b404e7',\n    +       enemies: '4e59b96b074ee18b',\n    -       enemies: 'de34570d46bfe3d0',\n            identity: 'e033f20595efcd91',\n            objectives: '09612b07b5ecb5a5',\n    +       player: '760258811b7cc0ba',\n    -       player: '164a8d652d454d9e',\n            result: '5b9bc4ba528108e4',\n            supplies: 'e1b45854413ff5f8',\n    +       trail: 'f0ca473df9efdcc8'\n    -       trail: '088e714d246dced3'\n          }\n        },\n        {\n          algorithm: 'fnv1a64-state-v2',\n    +     hash: '1ac22ba1264ab9a9',\n    -     hash: 'd3556e21e51de25f',\n          sections: {",
+          "  ...\n# Subtest: grid-center: actual Pause retains two different requested turns and explicit Resume continues both\nnot ok 218 - grid-center: actual Pause retains two different requested turns and explicit Resume continues both\n  ---\n  duration_ms: 3379.154029\n  location: '/home/runner/work/revealline/revealline/source/game/test/couch-navigation.test.mjs:640:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly deep-equal:\n    + actual - expected ... Lines skipped\n    \n      [\n        {\n          algorithm: 'fnv1a64-state-v2',\n    +     hash: '688965311fa4f4fd',\n    -     hash: '6a4be9fe1e6e3db5',\n          sections: {\n            ability: 'f6b5aef539d929bb',\n            board: 'fdfff9d1d17aa722',\n    +       clock: '24bc6fb886281146',\n    -       clock: '1fd2afa2d35376ac',\n            configuration: '67780a210840e2ad',\n            continuation: 'a1e7286b42b404e7',\n    +       enemies: '4e59b96b074ee18b',\n    -       enemies: 'de34570d46bfe3d0',\n            identity: 'cd6a8315b1bd4bc4',\n            objectives: '09612b07b5ecb5a5',\n    +       player: '0dd3532e25a32a42',\n    -       player: '3e079f3f7dc18dc9',\n            result: '5b9bc4ba528108e4',\n            supplies: 'e1b45854413ff5f8',\n    ...\n        {\n          algorithm: 'fnv1a64-state-v2',\n    +     hash: '9979b68d24f50f3f',\n    -     hash: 'aecc5df17a0df10b',\n          sections: {\n            ability: 'f6b5aef539d929bb',\n            board: 'fdfff9d1d17aa722',\n    +       clock: '24bc6fb886281146',"
+        ],
+        "name": "output.log",
+        "sha256": "2c517ad52f5d178ea312e8e0413568ef4a86c60e93e738eb917cecc5cc974752",
+        "tapSummary": [
+          "ok 81 - reading entry focuses a named region before notification and returns owned metadata",
+          "ok 130 - native scroll opt-in does not change unowned keyboard defaults or retain gestures after destruction",
+          "ok 185 - engaged neutral samples validate only the current control while traversal and repair retain enumeration",
+          "ok 23 - Base Classic standard resolves actual content and never decodes pictures",
+          "ok 24 - Base Classic gentle resolves actual content and never decodes pictures",
+          "ok 33 - forged Journey project/map identity fails actual adapter equality; unknown edition requests no uploaded URL",
+          "ok 44 - owned snapshot is deeply immutable and does not freeze or retain caller data",
+          "# tests 54",
+          "# pass 54",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 36586.627901",
+          "ok 1 - Versus accepted Resume excludes the prior 100ms menu interval",
+          "ok 2 - Versus accepted Resume excludes the prior 250ms menu interval",
+          "ok 3 - Versus accepted Resume excludes the prior 500ms menu interval",
+          "ok 4 - Versus fresh Resume requests survive the neutral tick with catch-up=false",
+          "ok 5 - Versus fresh Resume requests survive the neutral tick with catch-up=true",
+          "# tests 7",
+          "# pass 7",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 40493.653134",
+          "ok 202 - native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard",
+          "ok 204 - descriptor change at the same index pauses flight and requires neutral plus a new menu join",
+          "ok 205 - disconnect event at the same index pauses flight and requires neutral plus a new menu join",
+          "not ok 216 - immediate: actual Pause retains two different requested turns and explicit Resume continues both",
+          "not ok 218 - grid-center: actual Pause retains two different requested turns and explicit Resume continues both",
+          "# tests 249",
+          "# pass 247",
+          "# fail 2",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 263192.024866"
+        ]
+      },
+      {
+        "bytes": 3095,
+        "json": {
+          "format": "revealline-focused-shard.v1",
+          "identity": {
+            "changedPathsSha256": "37d37d69ba249d92177a16ba3ba319b051c553911ee15fd8da99394c059d4dbc",
+            "fallbackHandled": false,
+            "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+            "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+            "sourceRevision": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "sourceTree": "4bb44157295ed7e170d60ce3276f790d920ea014",
+            "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "workflowRevision": "f822cd3e7f25ad3409855543f01900866999f021"
+          },
+          "indices": [
+            2,
+            6,
+            10
+          ],
+          "plan": {
+            "commands": [
+              {
+                "args": [
+                  "run",
+                  "i18n:check"
+                ],
+                "command": "npm",
+                "id": "i18n-check"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/localization.test.mjs",
+                  "game/test/localization-couch-host.test.mjs",
+                  "game/test/localization-gameplay-copy.test.mjs",
+                  "game/test/localization-team-copy.test.mjs",
+                  "game/test/about-navigation-host.test.mjs"
+                ],
+                "command": "node",
+                "id": "localization-runtime"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-navigation.test.mjs",
+                  "game/test/couch-composite-menu-navigation.test.mjs",
+                  "game/test/mission-library-controller-host.test.mjs",
+                  "game/test/content-team-navigation.test.mjs",
+                  "game/test/controller-navigation.test.mjs"
+                ],
+                "command": "node",
+                "id": "player-navigation-team",
+                "timeoutMs": 1200000
+              },
+              {
+                "args": [
+                  "run",
+                  "company:check"
+                ],
+                "command": "npm",
+                "id": "company-generated-source-and-media"
+              },
+              {
+                "args": [
+                  "run",
+                  "company:test"
+                ],
+                "command": "npm",
+                "id": "company-runtime-and-publication",
+                "timeoutMs": 2700000
+              },
+              {
+                "args": [
+                  "--test",
+                  "scripts/test-company-review.mjs"
+                ],
+                "command": "node",
+                "id": "company-review-measurements"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/actor-appearance-pin.test.mjs",
+                  "game/test/actor-appearance-lease.test.mjs",
+                  "game/test/replay-presentation.test.mjs",
+                  "game/test/replay-actor-context.test.mjs"
+                ],
+                "command": "node",
+                "id": "edition-appearance-contracts"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/installed-app.test.mjs",
+                  "game/test/profile-transfer.test.mjs",
+                  "game/test/profile-channel-reader.test.mjs",
+                  "scripts/test-offline-publication.mjs"
+                ],
+                "command": "node",
+                "id": "edition-persistence-compatibility"
+              },
+              {
+                "args": [
+                  "run",
+                  "validate"
+                ],
+                "command": "npm",
+                "id": "unknown-runtime-validate",
+                "timeoutMs": 1800000
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-input.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/couch-input.test.mjs"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-lifecycle-clock.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/couch-lifecycle-clock.test.mjs"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/solo-cadence-input-host.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/solo-cadence-input-host.test.mjs"
+              }
+            ],
+            "sha256": "437ff67b9378071c63a0577c95d72a2562cc17cb3e78e5b687e9b0bd5b78d5a0"
+          },
+          "result": {
+            "attempted": 3,
+            "exitCode": 1,
+            "failures": [
+              {
+                "args": [
+                  "--test",
+                  "game/test/couch-navigation.test.mjs",
+                  "game/test/couch-composite-menu-navigation.test.mjs",
+                  "game/test/mission-library-controller-host.test.mjs",
+                  "game/test/content-team-navigation.test.mjs",
+                  "game/test/controller-navigation.test.mjs"
+                ],
+                "command": "node",
+                "error": null,
+                "id": "player-navigation-team",
+                "signal": null,
+                "status": 1
+              }
+            ]
+          },
+          "shard": {
+            "index": 3,
+            "total": 4
+          },
+          "state": "complete"
+        },
+        "name": "receipt.json",
+        "sha256": "d9af57a0a736c5786c01b610608050b60046bc1e79635ea59e9abbd062f0625b"
+      }
+    ],
+    "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+    "pr": 1693,
+    "run": 39183531423
+  },
+  {
+    "artifact": {
+      "created": "2026-10-19T02:49:38Z",
+      "digest": "sha256:4352508c3b1fc8c47766d2a5afa5f3053b6a0284c0137f008780b0effabe77e4",
+      "expired": false,
+      "id": 12159803153,
+      "name": "admission-39183531423-1",
+      "size": 469,
+      "workflow_run": {
+        "head_branch": "codex/solo-resume-input-lifecycle",
+        "head_repository_id": 1367404328,
+        "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+        "id": 39183531423,
+        "repository_id": 1367404328
+      }
+    },
+    "attempt": 1,
+    "digestVerified": true,
+    "entries": [
+      {
+        "bytes": 563,
+        "json": {
+          "baseSha": "bd15820bee10a33ba64534071d22657fbd7326d3",
+          "classification": "maintenance",
+          "dependencies": [],
+          "format": "revealline-admission.v1",
+          "headSha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+          "paths": [
+            "game/app.mjs",
+            "game/couch/couch-input.mjs",
+            "game/couch/couch.mjs",
+            "game/couch/relay-rescue.mjs",
+            "game/test/couch-input.test.mjs",
+            "game/test/couch-lifecycle-clock.test.mjs",
+            "game/test/solo-cadence-input-host.test.mjs"
+          ],
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "workflowRevision": "f822cd3e7f25ad3409855543f01900866999f021"
+        },
+        "name": "admission.json",
+        "sha256": "95fdb0eb92889c0a6d2d628451cfeb648701414f7e766c1908c2a3a5ad5c4b9c"
+      }
+    ],
+    "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+    "pr": 1693,
+    "run": 39183531423
+  },
+  {
+    "artifact": {
+      "created": "2026-10-19T04:21:47Z",
+      "digest": "sha256:4aee12dee2c8c67748072f31a662a5cd887adbc5fdc37320976581f4ab948dbf",
+      "expired": false,
+      "id": 12162479609,
+      "name": "focused-shard-39184462903-1-4",
+      "size": 2790,
+      "workflow_run": {
+        "head_branch": "codex/solo-owned-binary-artwork",
+        "head_repository_id": 1367404328,
+        "head_sha": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+        "id": 39184462903,
+        "repository_id": 1367404328
+      }
+    },
+    "attempt": 1,
+    "digestVerified": true,
+    "entries": [
+      {
+        "bytes": 5673,
+        "failureExcerpts": [],
+        "name": "output.log",
+        "sha256": "8ff5f559d9e80c90958c60191843a6bc5ef492a880fb243cb15ce98e8da9c058",
+        "tapSummary": [
+          "ok 8 - measurement can be armed while Solo is paused and never starts or resumes the game itself",
+          "ok 9 - focus interruption discards an active sample even when the game resumes before the next RAF",
+          "# tests 16",
+          "# pass 16",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 223.099068",
+          "# tests 4",
+          "# pass 4",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 18294.508586"
+        ]
+      },
+      {
+        "bytes": 2210,
+        "json": {
+          "format": "revealline-focused-shard.v1",
+          "identity": {
+            "changedPathsSha256": "442c805f1b0add699c2351914aebc13d5142a944b366413dc718d51f9c540292",
+            "fallbackHandled": false,
+            "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+            "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+            "sourceRevision": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+            "sourceTree": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5",
+            "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "workflowRevision": "b4e2a348e5eeb1b55ef5b384e509e0becd72f68a"
+          },
+          "indices": [
+            3,
+            7
+          ],
+          "plan": {
+            "commands": [
+              {
+                "args": [
+                  "--test",
+                  "game/test/content-assets.test.mjs",
+                  "game/test/content-attempt.test.mjs",
+                  "game/test/content-picture.test.mjs",
+                  "game/test/candidate-team-pictures.test.mjs"
+                ],
+                "command": "node",
+                "id": "content-artwork-preparation"
+              },
+              {
+                "args": [
+                  "run",
+                  "company:check"
+                ],
+                "command": "npm",
+                "id": "company-generated-source-and-media"
+              },
+              {
+                "args": [
+                  "run",
+                  "company:test"
+                ],
+                "command": "npm",
+                "id": "company-runtime-and-publication",
+                "timeoutMs": 2700000
+              },
+              {
+                "args": [
+                  "--test",
+                  "scripts/test-company-review.mjs"
+                ],
+                "command": "node",
+                "id": "company-review-measurements"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/actor-appearance-pin.test.mjs",
+                  "game/test/actor-appearance-lease.test.mjs",
+                  "game/test/replay-presentation.test.mjs",
+                  "game/test/replay-actor-context.test.mjs"
+                ],
+                "command": "node",
+                "id": "edition-appearance-contracts"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/installed-app.test.mjs",
+                  "game/test/profile-transfer.test.mjs",
+                  "game/test/profile-channel-reader.test.mjs",
+                  "scripts/test-offline-publication.mjs"
+                ],
+                "command": "node",
+                "id": "edition-persistence-compatibility"
+              },
+              {
+                "args": [
+                  "run",
+                  "validate"
+                ],
+                "command": "npm",
+                "id": "unknown-runtime-validate",
+                "timeoutMs": 1800000
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/gameplay-pressure-host.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/gameplay-pressure-host.test.mjs"
+              },
+              {
+                "args": [
+                  "--test",
+                  "game/test/solo-cadence-readiness-host.test.mjs"
+                ],
+                "command": "node",
+                "id": "changed-test:game/test/solo-cadence-readiness-host.test.mjs"
+              }
+            ],
+            "sha256": "af9dfc81e0330b9983a084d9afa3b19fcbdb61abacb682b25553c908bc93d981"
+          },
+          "result": {
+            "attempted": 2,
+            "exitCode": 0,
+            "failures": []
+          },
+          "shard": {
+            "index": 4,
+            "total": 4
+          },
+          "state": "complete"
+        },
+        "name": "receipt.json",
+        "sha256": "ac843cbf1bc643506d14756441bb9cf9eec8bbbbe5f777c07b1f04d4627fd0be"
+      }
+    ],
+    "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+    "pr": 1695,
+    "run": 39184462903
+  },
+  {
+    "artifact": {
+      "created": "2026-10-19T02:49:55Z",
+      "digest": "sha256:b7082fbcd551c0584540c1ad407fa8aaf6b87d1fa9c5ffa8305d3c7415d7509a",
+      "expired": false,
+      "id": 12160430967,
+      "name": "admission-39184462903-1",
+      "size": 501,
+      "workflow_run": {
+        "head_branch": "codex/solo-owned-binary-artwork",
+        "head_repository_id": 1367404328,
+        "head_sha": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+        "id": 39184462903,
+        "repository_id": 1367404328
+      }
+    },
+    "attempt": 1,
+    "digestVerified": true,
+    "entries": [
+      {
+        "bytes": 696,
+        "json": {
+          "baseSha": "bd15820bee10a33ba64534071d22657fbd7326d3",
+          "classification": "maintenance",
+          "dependencies": [],
+          "format": "revealline-admission.v1",
+          "headSha": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+          "paths": [
+            "game/app.mjs",
+            "game/content-design/assets.mjs",
+            "game/content-design/attempt.mjs",
+            "game/content-design/picture.mjs",
+            "game/content-design/solo-host.mjs",
+            "game/test/content-assets.test.mjs",
+            "game/test/content-picture.test.mjs",
+            "game/test/gameplay-pressure-host.test.mjs",
+            "game/test/helpers/solo-dom.mjs",
+            "game/test/solo-cadence-readiness-host.test.mjs"
+          ],
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "workflowRevision": "b4e2a348e5eeb1b55ef5b384e509e0becd72f68a"
+        },
+        "name": "admission.json",
+        "sha256": "f0d3dc18f2220ee17f624b55ec48d8f6d8fc632de377722da867aad1a9676a80"
+      }
+    ],
+    "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+    "pr": 1695,
+    "run": 39184462903
+  },
+  {
+    "artifact": {
+      "created": "2026-10-19T03:18:35Z",
+      "digest": "sha256:0978b7dfe35647098767a91c46c4f37eb67510de31cfe771b588decb8eefc051",
+      "expired": false,
+      "id": 12160828882,
+      "name": "admission-39185722862-1",
+      "size": 796,
+      "workflow_run": {
+        "head_branch": "codex/solo-retry-heap-retainers",
+        "head_repository_id": 1367404328,
+        "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+        "id": 39185722862,
+        "repository_id": 1367404328
+      }
+    },
+    "attempt": 1,
+    "digestVerified": true,
+    "entries": [
+      {
+        "bytes": 2041,
+        "json": {
+          "baseSha": "bd15820bee10a33ba64534071d22657fbd7326d3",
+          "classification": "maintenance",
+          "dependencies": [
+            1621
+          ],
+          "format": "revealline-admission.v1",
+          "headSha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+          "paths": [
+            ".github/workflows/solo-native-package-consumer.yml",
+            "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+            "docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json",
+            "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+            "docs/performance/solo-797-retry-heap-retainers-plan.json",
+            "docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json",
+            "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/solo-frame-trace-executed-source.mjs",
+            "scripts/solo-frame-trace-failure-admission.test.mjs",
+            "scripts/solo-frame-trace-heap-tooling-admission.test.mjs",
+            "scripts/solo-frame-trace-tasks-admission.test.mjs",
+            "scripts/solo-frame-trace.test.mjs",
+            "scripts/solo-native-measurement-consumer.test.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-heap-retainers.mjs",
+            "scripts/solo-qualification-heap-retainers.test.mjs",
+            "scripts/solo-readiness-rejoin-declared-source.mjs",
+            "scripts/solo-remote-cpu-profile.mjs",
+            "scripts/solo-remote-sustained.mjs",
+            "scripts/solo-replay-portability-diagnostic.mjs",
+            "scripts/solo-replay-portability-diagnostic.test.mjs",
+            "scripts/solo-retry-heap-retainers-admission.test.mjs",
+            "scripts/solo-runtime73-measurement.test.mjs",
+            "scripts/solo-shared-owner-declared-source.mjs",
+            "scripts/test-solo-frame-trace-admission.mjs",
+            "scripts/test-solo-native-consumer-preparation.mjs",
+            "scripts/test-solo-native-consumer-shared-demo.mjs",
+            "scripts/test-solo-readiness-rejoin-797e03.mjs",
+            "scripts/test-solo-remote-cpu-profile.mjs",
+            "scripts/test-solo-replay-portability-hook.mjs",
+            "scripts/test-solo-shared-mode-owner-admission.mjs"
+          ],
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "workflowRevision": "366bbd19b8abcfc524dc205e4c80bee7eeb9df3b"
+        },
+        "name": "admission.json",
+        "sha256": "87fae7526c4e5f65cd5a0b2963a944a34d30a566fc579483dd84cc3e0d9feb6c"
+      }
+    ],
+    "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+    "pr": 1699,
+    "run": 39185722862
+  },
+  {
+    "artifact": {
+      "created": "2026-10-19T04:22:17Z",
+      "digest": "sha256:032185c6f1d105b564aeec5b7e3634de3be4ca56ec1b1c3ed33affa0ad4a69a9",
+      "expired": false,
+      "id": 12162848429,
+      "name": "admission-39189308444-1",
+      "size": 800,
+      "workflow_run": {
+        "head_branch": "codex/solo-empirical-overhead-acceptance",
+        "head_repository_id": 1367404328,
+        "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+        "id": 39189308444,
+        "repository_id": 1367404328
+      }
+    },
+    "attempt": 1,
+    "digestVerified": true,
+    "entries": [
+      {
+        "bytes": 2090,
+        "json": {
+          "baseSha": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+          "classification": "maintenance",
+          "dependencies": [
+            1621
+          ],
+          "format": "revealline-admission.v1",
+          "headSha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+          "paths": [
+            ".github/workflows/solo-native-package-consumer.yml",
+            "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+            "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+            "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+            "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+            "docs/performance/solo-overhead-acceptance-20261018.md",
+            "scripts/qualify-solo-diagnostics.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/solo-frame-trace-executed-source.mjs",
+            "scripts/solo-frame-trace-failure-admission.test.mjs",
+            "scripts/solo-frame-trace-tasks-admission.test.mjs",
+            "scripts/solo-frame-trace.test.mjs",
+            "scripts/solo-native-measurement-consumer.test.mjs",
+            "scripts/solo-overhead-acceptance.mjs",
+            "scripts/solo-overhead-acceptance.test.mjs",
+            "scripts/solo-overhead-declared-source.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-remote-cpu-profile.mjs",
+            "scripts/solo-remote-diagnostics.mjs",
+            "scripts/solo-replay-portability-diagnostic.mjs",
+            "scripts/solo-replay-portability-diagnostic.test.mjs",
+            "scripts/solo-runtime73-measurement.test.mjs",
+            "scripts/solo-shared-owner-declared-source.mjs",
+            "scripts/test-solo-diagnostics-analysis.mjs",
+            "scripts/test-solo-frame-trace-admission.mjs",
+            "scripts/test-solo-journal-cost-admission.mjs",
+            "scripts/test-solo-journal-cost-analysis.mjs",
+            "scripts/test-solo-native-consumer-overhead.mjs",
+            "scripts/test-solo-native-consumer-preparation.mjs",
+            "scripts/test-solo-native-consumer-shared-demo.mjs",
+            "scripts/test-solo-readiness-rejoin-797e03.mjs",
+            "scripts/test-solo-remote-cpu-profile.mjs",
+            "scripts/test-solo-remote-diagnostics.mjs",
+            "scripts/test-solo-replay-portability-hook.mjs",
+            "scripts/test-solo-shared-mode-owner-admission.mjs"
+          ],
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "workflowRevision": "e9f32bf8a767a92cde3a5a79480fafc317dffeae"
+        },
+        "name": "admission.json",
+        "sha256": "95932fa08ba5c848a23ac3342419ac270f377811f6f1c8264f3c6096d46114a1"
+      }
+    ],
+    "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+    "pr": 1703,
+    "run": 39189308444
+  },
+  {
+    "artifact": {
+      "created": "2026-10-19T04:10:42Z",
+      "digest": "sha256:0f2626d732aaa2af9796f0614cc497c4924dcf2846f4e67821295ad49eaa1bac",
+      "expired": false,
+      "id": 12162417375,
+      "name": "admission-39191168798-1",
+      "size": 427,
+      "workflow_run": {
+        "head_branch": "codex/solo-measurement-provenance-helper",
+        "head_repository_id": 1367404328,
+        "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e",
+        "id": 39191168798,
+        "repository_id": 1367404328
+      }
+    },
+    "attempt": 1,
+    "digestVerified": true,
+    "entries": [
+      {
+        "bytes": 438,
+        "json": {
+          "baseSha": "6b05de03e2b72af57e9d88b3c556a291c84a3ca0",
+          "classification": "maintenance",
+          "dependencies": [],
+          "format": "revealline-admission.v1",
+          "headSha": "c1c943344b29c456608632a7afc39d4436efd63e",
+          "paths": [
+            "scripts/solo-qualification-provenance.mjs",
+            "scripts/solo-qualification-provenance.test.mjs"
+          ],
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "workflowRevision": "969cbec5db79a62069d9180e876e19137a1a0445"
+        },
+        "name": "admission.json",
+        "sha256": "29ff6ef5eb98c77505d91e16e2bfedb95d5afcef5cc109feb2f867598ba1fcae"
+      }
+    ],
+    "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+    "pr": 1705,
+    "run": 39191168798
+  }
+]

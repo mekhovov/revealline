@@ -1,0 +1,28 @@
+{
+  "kind": "obsolete-merged-task-controller-guard",
+  "pr": 1708,
+  "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+  "observedUTC": "2026-10-19T04:37:50.476386+00:00",
+  "mutated": false,
+  "run": {
+    "id": 39196032399,
+    "run_attempt": 1,
+    "path": ".github/workflows/fastline-auto-merge.yml",
+    "head_sha": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+    "status": "queued",
+    "conclusion": null
+  },
+  "jobs": [
+    {
+      "id": 117878900728,
+      "name": "reconcile",
+      "status": "queued",
+      "conclusion": null,
+      "started_at": "2026-10-19T03:43:26Z",
+      "runner_id": 0,
+      "runner_name": "",
+      "steps": []
+    }
+  ],
+  "action": "left unchanged: strict unassigned/never-started guard not met"
+}

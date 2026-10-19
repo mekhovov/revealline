@@ -1,0 +1,594 @@
+{
+  "format": "revealline-source-qualification-completion-addendum.v1",
+  "previousReceipt": "87cc8bbcaf4f8107f2263a7aec87deb9b5f48cf2",
+  "scope": "Complete all available exact-head #1619 focused source shard evidence, including older artifacts, and inspect #1694 source-ownership controls. Existing failures and historical snapshots remain retained.",
+  "readTimeWindow": "Bounded pass after the 04:23:42 UTC snapshot and 04:26:57 UTC #1694 shard3 completion. Artifacts inspected without reruns; only one targeted aggregate status read and artifact inventories.",
+  "pr1619": {
+    "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+    "artifacts": [
+      {
+        "artifactId": 12162289643,
+        "name": "focused-shard-39182302063-1-1",
+        "run": 39182302063,
+        "createdAt": "2026-10-19T04:12:46Z",
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "zipBytes": 2020,
+        "zipSha256": "35e089dfe9990c644e08557b92a1c96a54435e25a2adf8b4a7c184a95167eb6c",
+        "apiDigest": "sha256:35e089dfe9990c644e08557b92a1c96a54435e25a2adf8b4a7c184a95167eb6c",
+        "members": [
+          {
+            "name": "output.log",
+            "bytes": 3931,
+            "sha256": "10f7ea3cabe64eebaf79690d67d93f8a82ddc5092dbcc4809d69c177a494035a"
+          },
+          {
+            "name": "receipt.json",
+            "bytes": 2143,
+            "sha256": "10661eae57fbb942d24aca543b185b7511e1e7ebb261254691f60986dc125fa5"
+          }
+        ],
+        "identity": {
+          "sourceRevision": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+          "workflowRevision": "e742f09df3c5619a3150bdd41d2fc3d8a35779df",
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "a05228a3106f26a82ab3170cf1f123a7af51ccf3e7007bcd0c19c272b4975c72",
+          "fallbackHandled": false,
+          "sourceTree": "cb8af43d44f4abd27ee62e7324c472adebe24574"
+        },
+        "shard": {
+          "index": 1,
+          "total": 4
+        },
+        "planSha256": "ef708827b9e00671c64f47278acfe201351c65fa39b92720dccaf584d7e746de",
+        "selectedIndices": [
+          0,
+          4
+        ],
+        "selectedCommands": [
+          {
+            "id": "i18n-check",
+            "command": "npm",
+            "args": [
+              "run",
+              "i18n:check"
+            ]
+          },
+          {
+            "id": "changed-test:game/test/couch-audio-catalogue-demand.test.mjs",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/couch-audio-catalogue-demand.test.mjs"
+            ]
+          }
+        ],
+        "result": {
+          "attempted": 2,
+          "failures": [],
+          "exitCode": 0
+        },
+        "tapSummaryLines": [
+          "1..15",
+          "# tests 15",
+          "# pass 15",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 2666.491194"
+        ],
+        "failureLines": []
+      },
+      {
+        "artifactId": 12162482919,
+        "name": "focused-shard-39182302063-1-2",
+        "run": 39182302063,
+        "createdAt": "2026-10-19T04:19:33Z",
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "zipBytes": 5630,
+        "zipSha256": "4ec6f59c4e8ea6b98ff74aefbe4a04927d7ab16f25a903afc53e268722f81273",
+        "apiDigest": "sha256:4ec6f59c4e8ea6b98ff74aefbe4a04927d7ab16f25a903afc53e268722f81273",
+        "members": [
+          {
+            "name": "output.log",
+            "bytes": 22716,
+            "sha256": "9bbc80af4345a78ede2b8d195f74dc66516a1ddbc38ae913c4d046d641663267"
+          },
+          {
+            "name": "receipt.json",
+            "bytes": 2143,
+            "sha256": "55b94e9e498231b7c90776ce54d76e3637b597549f530eb47a9691a95e642d07"
+          }
+        ],
+        "identity": {
+          "sourceRevision": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+          "workflowRevision": "e742f09df3c5619a3150bdd41d2fc3d8a35779df",
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "a05228a3106f26a82ab3170cf1f123a7af51ccf3e7007bcd0c19c272b4975c72",
+          "fallbackHandled": false,
+          "sourceTree": "cb8af43d44f4abd27ee62e7324c472adebe24574"
+        },
+        "shard": {
+          "index": 2,
+          "total": 4
+        },
+        "planSha256": "ef708827b9e00671c64f47278acfe201351c65fa39b92720dccaf584d7e746de",
+        "selectedIndices": [
+          1,
+          5
+        ],
+        "selectedCommands": [
+          {
+            "id": "localization-runtime",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/localization.test.mjs",
+              "game/test/localization-couch-host.test.mjs",
+              "game/test/localization-gameplay-copy.test.mjs",
+              "game/test/localization-team-copy.test.mjs",
+              "game/test/about-navigation-host.test.mjs"
+            ]
+          },
+          {
+            "id": "changed-test:game/test/solo-soundtrack-admission-host.test.mjs",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/solo-soundtrack-admission-host.test.mjs"
+            ]
+          }
+        ],
+        "result": {
+          "attempted": 2,
+          "failures": [],
+          "exitCode": 0
+        },
+        "tapSummaryLines": [
+          "1..57",
+          "# tests 57",
+          "# pass 57",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 20106.498853",
+          "1..39",
+          "# tests 39",
+          "# pass 39",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 25883.706245"
+        ],
+        "failureLines": []
+      },
+      {
+        "artifactId": 12162537297,
+        "name": "focused-shard-39182302063-1-3",
+        "run": 39182302063,
+        "createdAt": "2026-10-19T04:15:39Z",
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "zipBytes": 12826,
+        "zipSha256": "bd6e766371ef349ed6419b56d3f62f060d16c596cbdeb34c02b8832a9ab3cdd4",
+        "apiDigest": "sha256:bd6e766371ef349ed6419b56d3f62f060d16c596cbdeb34c02b8832a9ab3cdd4",
+        "members": [
+          {
+            "name": "output.log",
+            "bytes": 64757,
+            "sha256": "f615a4d1b14f759f24ae27a88c327f26c804caba579a9d78bbc8f9fec74ce05e"
+          },
+          {
+            "name": "receipt.json",
+            "bytes": 2143,
+            "sha256": "1d9d98cbaf36190eb7835cf254840449532c0fac750f5ff3133fa442406cf8e0"
+          }
+        ],
+        "identity": {
+          "sourceRevision": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+          "workflowRevision": "e742f09df3c5619a3150bdd41d2fc3d8a35779df",
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "a05228a3106f26a82ab3170cf1f123a7af51ccf3e7007bcd0c19c272b4975c72",
+          "fallbackHandled": false,
+          "sourceTree": "cb8af43d44f4abd27ee62e7324c472adebe24574"
+        },
+        "shard": {
+          "index": 3,
+          "total": 4
+        },
+        "planSha256": "ef708827b9e00671c64f47278acfe201351c65fa39b92720dccaf584d7e746de",
+        "selectedIndices": [
+          2,
+          6
+        ],
+        "selectedCommands": [
+          {
+            "id": "player-navigation-team",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/couch-navigation.test.mjs",
+              "game/test/couch-composite-menu-navigation.test.mjs",
+              "game/test/mission-library-controller-host.test.mjs",
+              "game/test/content-team-navigation.test.mjs",
+              "game/test/controller-navigation.test.mjs"
+            ],
+            "timeoutMs": 1200000
+          },
+          {
+            "id": "changed-test:game/test/soundtrack-host.test.mjs",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/soundtrack-host.test.mjs"
+            ]
+          }
+        ],
+        "result": {
+          "attempted": 2,
+          "failures": [],
+          "exitCode": 0
+        },
+        "tapSummaryLines": [
+          "1..32",
+          "# tests 32",
+          "# pass 32",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 128764.681888",
+          "1..239",
+          "# tests 249",
+          "# pass 249",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 325189.527062"
+        ],
+        "failureLines": []
+      },
+      {
+        "artifactId": 12162003152,
+        "name": "focused-shard-39182302063-1-4",
+        "run": 39182302063,
+        "createdAt": "2026-10-19T04:01:08Z",
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "zipBytes": 10210,
+        "zipSha256": "d6eb0d858757a66e221eb7acff9c7e2a8c00f43fe752abe9cda4eb7cc40eab05",
+        "apiDigest": "sha256:d6eb0d858757a66e221eb7acff9c7e2a8c00f43fe752abe9cda4eb7cc40eab05",
+        "members": [
+          {
+            "name": "output.log",
+            "bytes": 41233,
+            "sha256": "b06419cb46ed2cac3877b0270ee37bdc1ef3295d3e14792a568c969e8e22427c"
+          },
+          {
+            "name": "receipt.json",
+            "bytes": 2143,
+            "sha256": "6f0ae61b18cb3db7ba5f79711bc24df2c816bc52cb06ef0b60fdf2dc76e04442"
+          }
+        ],
+        "identity": {
+          "sourceRevision": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+          "workflowRevision": "e742f09df3c5619a3150bdd41d2fc3d8a35779df",
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "a05228a3106f26a82ab3170cf1f123a7af51ccf3e7007bcd0c19c272b4975c72",
+          "fallbackHandled": false,
+          "sourceTree": "cb8af43d44f4abd27ee62e7324c472adebe24574"
+        },
+        "shard": {
+          "index": 4,
+          "total": 4
+        },
+        "planSha256": "ef708827b9e00671c64f47278acfe201351c65fa39b92720dccaf584d7e746de",
+        "selectedIndices": [
+          3,
+          7
+        ],
+        "selectedCommands": [
+          {
+            "id": "unknown-runtime-validate",
+            "command": "npm",
+            "args": [
+              "run",
+              "validate"
+            ],
+            "timeoutMs": 1800000
+          },
+          {
+            "id": "changed-test:game/test/soundtrack-panel.test.mjs",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/soundtrack-panel.test.mjs"
+            ]
+          }
+        ],
+        "result": {
+          "attempted": 2,
+          "failures": [],
+          "exitCode": 0
+        },
+        "tapSummaryLines": [
+          "1..162",
+          "# tests 162",
+          "# pass 162",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 6219.448884"
+        ],
+        "failureLines": []
+      }
+    ],
+    "selectedCommandsComplete": 8,
+    "selectedCommandsTotal": 8,
+    "sourceShardsComplete": 4,
+    "tapTestOutcomes": 554,
+    "tapPassOutcomes": 554,
+    "tapFail": 0,
+    "tapSkipped": 0,
+    "newCouchControls": {
+      "file": "game/test/couch-audio-catalogue-demand.test.mjs",
+      "expectedAndObservedPassedNames": [
+        "race: actual selected Audio owner demands metadata without playback or save",
+        "race: saved FPV Play owns demand without visiting Audio or changing mute/storage",
+        "coop: actual selected Audio owner demands metadata without playback or save",
+        "coop: saved FPV Play owns demand without visiting Audio or changing mute/storage",
+        "actual Couch Audio browse rejects deselected ownership before admission",
+        "actual Couch Audio browse rejects disabled ownership before admission",
+        "actual Couch Audio browse rejects aria-disabled ownership before admission",
+        "actual Couch Audio browse rejects inert ownership before admission",
+        "actual Couch Audio browse rejects hidden ownership before admission",
+        "actual Couch Audio browse rejects replaced-tab ownership before admission",
+        "actual Couch Audio browse rejects replaced-owner ownership before admission",
+        "actual Couch Audio browse rejects moved-content ownership before admission",
+        "actual Couch Audio browse rejects hidden-document ownership before admission",
+        "actual Couch Audio browse rejects hidden-visibility ownership before admission",
+        "actual Couch Audio browse rejects disposed ownership before admission"
+      ]
+    },
+    "newSoloControl": {
+      "name": "muted Solo boot and Direct Start defer public music until the actual Audio tab is selected",
+      "result": "ok 39",
+      "artifactId": 12162482919
+    },
+    "pendingGate": {
+      "jobId": 117887547180,
+      "run": 39182302063,
+      "attempt": 1,
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "name": "focused",
+      "status": "queued",
+      "conclusion": null
+    },
+    "scopeNote": "554 is the sum of separate TAP process outcome counts, including nested tests and existing imported suites, not unique/new tests. No final aggregate admission or native pass is implied."
+  },
+  "pr1694": {
+    "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+    "artifact": {
+      "artifactId": 12162664808,
+      "name": "focused-shard-39183587745-1-3",
+      "run": 39183587745,
+      "createdAt": "2026-10-19T04:26:53Z",
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "zipBytes": 2008,
+      "zipSha256": "473236916a76a07e309e5c0f2b51d475ebf9cdb2e3630be45a7386ff80fa2921",
+      "apiDigest": "sha256:473236916a76a07e309e5c0f2b51d475ebf9cdb2e3630be45a7386ff80fa2921",
+      "members": [
+        {
+          "name": "output.log",
+          "bytes": 3760,
+          "sha256": "95c7551c7fa559731ab4afdaf9637cbf2f9ef901a8345b83f6250f1d1b5ff02b"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 1171,
+          "sha256": "e1b4c1b85f234258e6cbcee79d98a4967c961ac1900e9dff653a103505909bb8"
+        }
+      ],
+      "identity": {
+        "sourceRevision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+        "workflowRevision": "7f80f912e01eba26ae727ae2771cdcba8799bed5",
+        "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+        "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+        "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+        "changedPathsSha256": "6db3d722e728f9708b4965c7668e4d5bfb49a5cbdbbbee72120a46f43d8fa8cc",
+        "fallbackHandled": false,
+        "sourceTree": "c11225baa8c0dcca055f058d31889c98a999ad04"
+      },
+      "shard": {
+        "index": 3,
+        "total": 4
+      },
+      "planSha256": "e068219fb15258789fa5d572e8952919ba69938307efec139844cf1eb9d51c85",
+      "selectedIndices": [
+        2
+      ],
+      "selectedCommands": [
+        {
+          "id": "changed-test:game/test/soundtrack-source.test.mjs",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/soundtrack-source.test.mjs"
+          ]
+        }
+      ],
+      "result": {
+        "attempted": 1,
+        "failures": [],
+        "exitCode": 0
+      },
+      "tapSummaryLines": [
+        "1..14",
+        "# tests 14",
+        "# pass 14",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 447.203761"
+      ],
+      "failureLines": []
+    },
+    "job": {
+      "id": 117865030679,
+      "run": 39183587745,
+      "attempt": 1,
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "status": "completed",
+      "conclusion": "success",
+      "completedAt": "2026-10-19T04:26:57Z",
+      "prePostSourceChecks": [
+        {
+          "name": "Verify exact tracked source before commands",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify exact tracked source after commands",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "newSourceControlsPassed": [
+      "acquisition returns the exact owned Blob inspected by the supplied operation",
+      "delegated inspection preserves pinned facts and rejects completion after cancellation"
+    ],
+    "tests": 14,
+    "pass": 14,
+    "fail": 0,
+    "skipped": 0,
+    "otherEvidence": "All 10 new player controls were independently rechecked by exact TAP name in shard2 artifact12162702919, joining the 2 source controls here. Prior receipt87cc8bb covers shard1 validation. All3 selected commands are complete; aggregate/admission/native gates remain distinct.",
+    "pendingGate": "All three selected source commands now have evidence across shard1/2/3; no final focused aggregate, empty shard4, native performance or combined-main status was inferred or polled.",
+    "playerArtifact": {
+      "artifactId": 12162702919,
+      "name": "focused-shard-39183587745-1-2",
+      "run": 39183587745,
+      "createdAt": "2026-10-19T04:14:10Z",
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "zipBytes": 5817,
+      "zipSha256": "a679ac5c969b3b571dbd068ccdfd500cfb735baf480105f3465a13157224ed84",
+      "apiDigest": "sha256:a679ac5c969b3b571dbd068ccdfd500cfb735baf480105f3465a13157224ed84",
+      "members": [
+        {
+          "name": "output.log",
+          "bytes": 22226,
+          "sha256": "f035a4dcf5c2aae0bb9ca9140f1df9c451b745b7f081248ef24ba23f2989bb7d"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 1171,
+          "sha256": "67f0400c50337a6c38247a81619be2bd258960fde0e42a8c1956c4d1bd4c655f"
+        }
+      ],
+      "identity": {
+        "sourceRevision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+        "workflowRevision": "7f80f912e01eba26ae727ae2771cdcba8799bed5",
+        "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+        "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+        "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+        "changedPathsSha256": "6db3d722e728f9708b4965c7668e4d5bfb49a5cbdbbbee72120a46f43d8fa8cc",
+        "fallbackHandled": false,
+        "sourceTree": "c11225baa8c0dcca055f058d31889c98a999ad04"
+      },
+      "shard": {
+        "index": 2,
+        "total": 4
+      },
+      "planSha256": "e068219fb15258789fa5d572e8952919ba69938307efec139844cf1eb9d51c85",
+      "selectedIndices": [
+        1
+      ],
+      "selectedCommands": [
+        {
+          "id": "changed-test:game/test/soundtrack-player.test.mjs",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/soundtrack-player.test.mjs"
+          ]
+        }
+      ],
+      "result": {
+        "attempted": 1,
+        "failures": [],
+        "exitCode": 0
+      },
+      "tapSummaryLines": [
+        "1..96",
+        "# tests 96",
+        "# pass 96",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0",
+        "# todo 0",
+        "# duration_ms 2051.507805"
+      ],
+      "newPlayerControlsPassed": [
+        "downloaded playback uses one real worker inspection and no main-realm Blob materialization",
+        "local originals still receive worker validation without acquisition",
+        "custom reader inspection reuse is bound to one successful exact Blob: ignored",
+        "custom reader inspection reuse is bound to one successful exact Blob: same",
+        "custom reader inspection reuse is bound to one successful exact Blob: different",
+        "custom reader inspection reuse is bound to one successful exact Blob: failed",
+        "worker-unavailable playback holds fetch and inspection until a safe fallback phase",
+        "the unchanged acquisition deadline cancels queued fallback and releases both reservations",
+        "transport cancellation retires inspection even when a custom reader supplies another signal",
+        "active current-plus-next loading reuses one worker but never carries facts across acquisitions"
+      ]
+    },
+    "newControlsVerified": 12
+  },
+  "limitations": [
+    "This is source-test and validation evidence, not native-browser, production Pages, physical-device, sustained performance or combined-current-main qualification.",
+    "No tests, generators, app or builds were executed locally; no workflow rerun, dispatch, cancellation, source or branch mutation was performed.",
+    "Remote evidence retention only; previous reports remain immutable rather than being overwritten."
+  ],
+  "pr1696": {
+    "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+    "run": 39184548434,
+    "artifactInventory": {
+      "total_count": 1,
+      "artifacts": [
+        {
+          "id": 12161013192,
+          "node_id": "MDg6QXJ0aWZhY3QxMjE2MTAxMzE5Mg==",
+          "name": "admission-39184548434-1",
+          "size_in_bytes": 425,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12161013192",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12161013192/zip",
+          "expired": false,
+          "digest": "sha256:36a4a08ac1cddbec88b4c0519e81aad723f5160bac7d2abf6d5be192b99c32c4",
+          "created_at": "2026-10-19T03:19:18Z",
+          "updated_at": "2026-10-19T03:19:18Z",
+          "expires_at": "2026-10-26T03:19:17Z",
+          "workflow_run": {
+            "id": 39184548434,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/solo-trail-allocation",
+            "head_sha": "73d56d3b674bcfba890656143c810f10ffd233b3"
+          }
+        }
+      ]
+    },
+    "sourceTestArtifactsAvailable": 0,
+    "newCaptureControls": 5,
+    "status": "Unverified. The bounded inventory contains only the preflight admission artifact; no source-test result exists in this inventory. Existing unrelated gameplay tests do not satisfy these five controls."
+  }
+}
