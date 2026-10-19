@@ -192,6 +192,12 @@ export const OVERFLIGHT_COPY = Object.freeze({
     rerollHint: 'Uses 1 reroll. Some or all cards may repeat.',
     rerolls: 'rerolls left',
     emptySlot: 'Empty slot',
+    commitmentPayload: 'Selects this payload path for the sortie.',
+    commitmentSupport: 'Selects this support type for the sortie.',
+    commitmentCombat: 'After this choice: {used} of {capacity} combat slots used in this mission.',
+    commitmentCombatFinal:
+      'After this choice: {used} of {capacity} combat slots used in this mission — final available slot.',
+    commitmentMaximum: 'Reaches the maximum module level.',
     ready: 'Ready',
     won: 'Sortie complete',
     lost: 'Sortie ended',
@@ -461,6 +467,13 @@ export const OVERFLIGHT_COPY = Object.freeze({
     rerollHint: 'Витрачає 1 заміну. Деякі або всі картки можуть повторитися.',
     rerolls: 'замін залишилося',
     emptySlot: 'Вільне місце',
+    commitmentPayload: 'Обирає цей шлях розвитку заряду на весь виліт.',
+    commitmentSupport: 'Обирає цей тип підтримки на весь виліт.',
+    commitmentCombat:
+      'Після цього вибору: використано {used} із {capacity} бойових слотів цієї місії.',
+    commitmentCombatFinal:
+      'Після цього вибору: використано {used} із {capacity} бойових слотів цієї місії — останній доступний слот.',
+    commitmentMaximum: 'Досягає найвищого рівня модуля.',
     ready: 'Готово',
     won: 'Виліт виконано',
     lost: 'Виліт завершено',
