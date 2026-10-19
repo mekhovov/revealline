@@ -1098,7 +1098,11 @@ test('focused CI installs the locked native fixture owner before selected checks
   );
   const execute = steps.findIndex((step) => step.startsWith('name: Run selected focused gates\n'));
   assert.ok(rootInstall >= 0 && install > rootInstall && execute > install);
-  assert.match(steps[install], /if: steps\.plan\.outputs\.required == 'true'/);
+  assert.match(
+    focused,
+    /needs\.preflight\.outputs\.focusedContract == 'revealline-focused-plan\.v2'/,
+  );
+  assert.match(focused, /needs\.preflight\.outputs\.focusedShards != '0'/);
   assert.match(steps[install], /working-directory: source/);
   assert.match(
     steps[install],

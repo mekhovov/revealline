@@ -1901,6 +1901,28 @@ test("approval inventory is strict, unique and cannot come from candidate input"
   assert.equal(reviewedPolicyChangeMatches(null), false);
 });
 
+test("legacy approval profile is complete and cannot be replaced with shorter or reordered subsets", () => {
+  assert.equal(reviewedPolicyChangeMatches(policyFixture()), true);
+  for (const mutate of [
+    (entries) => entries.slice(0, -1),
+    (entries) => entries.slice(1),
+    (entries) => [entries[1], entries[0], ...entries.slice(2)],
+    (entries) => [...entries, entries[0]],
+    (entries) =>
+      entries.map((entry, index) =>
+        index === 3 ? ["publishing/focused-compact.mjs", entry[1]] : entry,
+      ),
+  ]) {
+    const input = policyFixture();
+    const approvals = structuredClone(REVIEWED_POLICY_CHANGES);
+    for (const key of ["trustedPolicyBlobs", "candidatePolicyBlobs"]) {
+      input[key] = mutate(input[key]);
+      approvals[0][key] = mutate(approvals[0][key]);
+    }
+    assert.equal(reviewedPolicyChangeMatches(input, approvals), false);
+  }
+});
+
 test("main freshness requires exact valid checkout and live branch identities", () => {
   assert.equal(trustedMainMatches(SHA, SHA), true);
   for (const values of [
