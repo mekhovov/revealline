@@ -32,3 +32,11 @@ Ten complete files pass **66/66, zero skips**: `hunt-status.test.mjs`, `hunt-rec
 - An initial core comparison exposed `structuredClone` normalizing a null-prototype cache. Comparing cloned snapshots on both sides preserves the full state assertion without changing production or game expectations.
 
 No global helper, timeout or existing assertion was weakened. No hydration, build, snapshot, full lint/validator or browser session was run for this feature. Disk remains below the agreed reserve; those gates must wait. EN/UK browser result wrapping and retained actions, authored Solo picture availability, actual handheld/PWA offline and physical-controller acceptance remain open.
+
+## Reading-owner follow-up to reviewed 6e9
+
+Source review found that primary Solo's Hunt result paragraph was appended outside the existing `#overlay-reading[data-game-reading]` region. Its Read details control therefore did not own those result facts, independently of any unmeasured pixel clipping. The bounded follow-up changes only the result attachment container to that explicit region; shared records, `record:false`, live HUD, reader, actions and CSS remain unchanged.
+
+The existing native adapter case now asserts direct parent/reading-region ownership and retained result, reader and action nodes from ready through accepted play/pause and EN → UK → EN, alongside its exact run/checkpoint, Hunt-storage-write count and focus checks. The original 6e9 validation evidence remains historical; successor focused results are reported separately. Rendered compact/UK/large-text result geometry and device acceptance remain pending.
+
+Follow-up focused result: **74/74, zero skips**, across three complete files: `hunt-status-host.test.mjs`, `controller-reading.test.mjs` and `flight-information-host.test.mjs`. Changed-file ESLint, repository-configured Prettier and diff checks pass. Helper paths were checked for filesystem output; runs used explicit Node 22, disabled lazy Git fetch/optional locks and no compile cache, capturing output only in memory/tool. No disk logs, copies, hydration, build or full scan. Root independently reviewed this three-file placement successor before commit/publication; the original reviewed 6e9 source and its evidence remain preserved.

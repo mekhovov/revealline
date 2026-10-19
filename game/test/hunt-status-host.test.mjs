@@ -61,7 +61,20 @@ test('Solo actual Hunt live/result adapters retain the paused accepted attempt o
     }),
   });
   const p = await soloPage(t, { storage });
+  const reading = p.$('overlay-reading'),
+    result = reading.querySelector('.hunt-status'),
+    actions = [p.$('overlay-read'), p.$('overlay-reading-done'), p.$('retry-button')];
+  const ownsResult = () => {
+    assert.ok(result, 'Hunt result facts belong to the existing Read details region.');
+    assert.equal(result.parentElement, reading);
+    assert.equal(result.closest('[data-game-reading]'), reading);
+    assert.equal(reading.querySelector('.hunt-status'), result);
+    for (const [index, id] of ['overlay-read', 'overlay-reading-done', 'retry-button'].entries())
+      assert.equal(p.$(id), actions[index], 'Reading/action controls retain their existing nodes.');
+  };
+  ownsResult();
   p.$('start-button').click();
+  ownsResult();
   p.key('ArrowDown');
   for (let i = 0; i < 12; i++) p.frame();
   p.key('ArrowDown', false);
@@ -71,10 +84,7 @@ test('Solo actual Hunt live/result adapters retain the paused accepted attempt o
   assert.equal(run.status, 'running');
   assert.equal(p.rendered.paused, true);
   assert.ok(run.runningEnemies?.hunt || run.classic?.hunt);
-  const nodes = [
-    p.$('hunt-feedback').querySelector('.hunt-status'),
-    p.$('journey-reactions').parentElement.querySelector('.hunt-status'),
-  ];
+  const nodes = [p.$('hunt-feedback').querySelector('.hunt-status'), result];
   const checkpoint = authoritativeCheckpoint(run),
     saved = storage.getItem(HUNT_RECORDS_KEY),
     writes = huntWrites(storage);
@@ -86,6 +96,7 @@ test('Solo actual Hunt live/result adapters retain the paused accepted attempt o
       node,
       button: p.$('shell-play'),
       unchanged: () => {
+        ownsResult();
         assert.equal(p.rendered.run, run);
         assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
         assert.equal(storage.getItem(HUNT_RECORDS_KEY), saved);
