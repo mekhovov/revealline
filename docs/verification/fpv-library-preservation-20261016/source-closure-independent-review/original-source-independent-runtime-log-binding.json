@@ -1,0 +1,17 @@
+{
+  "format": "IndependentOriginalSourceColdRuntimeLogPreservation.v1",
+  "createdUTC": "2026-10-16T06:33:04.838625+00:00",
+  "repository": "mekhovov/revealline",
+  "runId": 38860055058,
+  "jobId": 116840053758,
+  "workflowHead": "dc3aa3a536b077db0b20747dc81f2a8d0fbaea1e",
+  "fullAuthenticatedRuntimeLogFilename": "github-hosted-original-source-cold-job-log.txt",
+  "bytes": 13402,
+  "sha256": "ffa5644ef5dd5f37f7f6104106351aa1fd0833dc4ff9bcc9d521dfbd32c9bb9d",
+  "acceptedReceiptGitBlob": "f2a7a7953348f1effbc012e2b0f02444e3c2adcd",
+  "acceptedReceiptSHA256": "b4eaf35c23147ec4fc87eee8f8a5f05e09dee39929914358137b6156591b07e2",
+  "originalRuntimeBytesPreservedWithoutReformatting": true,
+  "sixFiniteCredentialPatternsAndLocalMachinePathChecksPassed": true,
+  "githubKnownSecretRedactionRetained": true,
+  "qualification": "Exact original16 hosted runtime input to the independent acceptance, preserved without depending on Actions log retention. No expanded/private-origin cache inputs included."
+}

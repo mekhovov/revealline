@@ -3,7 +3,6 @@ import {
   createPracticeAudio,
 } from '../../optional-practice/civilian-flight/audio.mjs';
 import { Soundscape } from '../ui/audio.mjs';
-// Authored regression coverage; execution remains explicitly waived.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createGameAudioOutput } from '../ui/audio-output.mjs';
@@ -39,7 +38,9 @@ function contextHarness() {
         this.targets.push(target);
         return target;
       },
-      disconnect() {},
+      disconnect() {
+        this.disconnected = true;
+      },
       start() {
         this.started = true;
       },
@@ -74,13 +75,15 @@ function contextHarness() {
   return { context, made };
 }
 
-test('the shared graph routes movement through effects and dialogue through master', () => {
+test('the shared graph routes effects and dialogue through the gameplay stage, with music independent', () => {
   const { context } = contextHarness(),
     output = createGameAudioOutput(context);
   assert.deepEqual(output.movementBus.targets, [output.sfxBus]);
-  assert.deepEqual(output.sfxBus.targets, [output.master]);
-  assert.deepEqual(output.dialogueBus.targets, [output.master]);
-  assert.deepEqual(output.menuBus.targets, [output.master]);
+  assert.deepEqual(output.sfxBus.targets, [output.gameplayBus]);
+  assert.deepEqual(output.dialogueBus.targets, [output.gameplayBus]);
+  assert.deepEqual(output.menuBus.targets, [output.gameplayBus]);
+  assert.deepEqual(output.gameplayBus.targets, [output.master]);
+  assert.deepEqual(output.musicBus.targets, [output.master]);
   assert.deepEqual(output.master.targets, [output.compressor]);
 });
 
@@ -416,4 +419,98 @@ test('optional FPV flight retains all five destruction materials in one transact
   );
   audio.dispose();
   master.dispose();
+});
+
+test('both live graph owners apply mono after activation, keep music separate and dispose the stage', async () => {
+  for (const family of ['soundscape', 'world', 'gym']) {
+    const { context, made } = contextHarness(),
+      values = new Map(),
+      writes = [];
+    let contexts = 0,
+      resumes = 0;
+    const storage = {
+      getItem: (key) => values.get(key) ?? null,
+      setItem(key, value) {
+        writes.push(key);
+        values.set(key, value);
+      },
+    };
+    context.resume = async () => {
+      resumes++;
+      context.state = 'running';
+    };
+    const host = {
+      localStorage: storage,
+      AudioContext: function () {
+        contexts++;
+        return context;
+      },
+      addEventListener() {},
+      removeEventListener() {},
+    };
+    const audioMaster = createAudioMaster({ muted: false, volume: 0.4 });
+    const audio =
+      family === 'soundscape'
+        ? new Soundscape({
+            window: host,
+            getStorage: () => storage,
+            audioMaster,
+            contextFactory: () => {
+              contexts++;
+              return context;
+            },
+          })
+        : family === 'world'
+          ? createWorldAudio({ window: host, storage, audioMaster })
+          : createPracticeAudio({
+              window: host,
+              createAudio: (options) => createWorldAudio({ ...options, audioMaster }),
+            });
+    audio.gameplayOutput.choose(true);
+    assert.equal(audio.gameplayOutput.snapshot().status, 'inactive');
+    assert.equal(contexts, 0, `${family}: selecting mono must not construct a context`);
+    assert.equal(resumes, 0);
+    if (family === 'soundscape') await audio.enable();
+    else await audio.resume();
+    assert.equal(contexts, 1);
+    assert.equal(audio.gameplayOutput.snapshot().status, 'mono');
+    const stage = made.find(
+      (node) => node.channelCountMode === 'explicit' && node.channelCount === 1,
+    );
+    assert.ok(stage);
+    assert.equal(
+      made.filter((node) => node.targets.includes(stage)).length,
+      3,
+      'SFX, menu and voice stage inputs.',
+    );
+    const master = stage.targets[0],
+      masterBefore = master.gain.value;
+    assert.equal(
+      made.filter((node) => node.targets.includes(master)).length,
+      2,
+      'Independent music and gameplay buses.',
+    );
+    const edges = made.map((node) => [...node.targets]);
+    const started = made.filter((node) => node.started).length,
+      beforeResumes = resumes;
+    audio.gameplayOutput.choose(false);
+    assert.equal(stage.channelCountMode, 'max');
+    assert.equal(master.gain.value, masterBefore);
+    assert.deepEqual(
+      made.map((node) => node.targets),
+      edges,
+    );
+    assert.equal(made.filter((node) => node.started).length, started);
+    assert.equal(resumes, beforeResumes);
+    assert.deepEqual(writes, [
+      'revealline.gameplay-audio-output.v1',
+      'revealline.gameplay-audio-output.v1',
+    ]);
+    await audio.dispose();
+    assert.equal(stage.disconnected, true);
+    assert.equal(context.state, 'closed');
+    audio.gameplayOutput.choose(true);
+    assert.equal(writes.length, 2);
+    audioMaster.dispose();
+  }
 });

@@ -1,5 +1,16 @@
 # Capture mission selection and briefing
 
+> **Historical policy and scoped evidence.** This document records the earlier
+> briefing-first behavior from `5ac6d674303f9151a68f78f23436bd52fbfb4c0d`.
+> Later merged [PR #1108](https://github.com/mekhovov/revealline/pull/1108) superseded
+> the shared-card launch policy: the [committed shared-selector guide](https://github.com/mekhovov/revealline/blob/e817f5ba34ddafaf7d0b78d8f7e1f7e27d162ef2/docs/verification/shared-mission-library/README.md#L18-L20)
+> defines activating a card as deliberate direct Play after owned preparation.
+> Focusing a card, browsing, filtering and Back do not launch. The original text
+> and verification below retain their historical scope; they are not a current
+> requirement to add another Start after shared-card activation. Explicit
+> Start/Continue, Pause/Resume, Retry and Next keep their existing host owners.
+> This policy attribution is not new verification of every current host or device.
+
 Selecting a mission from the shared library prepares its exact native attempt and
 artwork, then opens a briefing. Selection does not start the clock. Solo, local
 Versus and local Team require a fresh **Start** action after that preparation.

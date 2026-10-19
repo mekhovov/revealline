@@ -1,3 +1,4 @@
+import { createExecutedFrameReader } from './solo-frame-trace-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, realpath } from 'node:fs/promises';
@@ -19,6 +20,13 @@ import {
 } from './solo-readiness-rejoin-declared-source.mjs';
 
 const read = (path) => readFile(new URL('../' + path, import.meta.url));
+const historicalFrameRead = createExecutedFrameReader(read);
+// These exact qualifier and recorder bytes precede the additive v2 protocol.
+// Production still rejects stale input; no declaration or execution result changes.
+const declaredRead = (path) =>
+  ['scripts/qualify-solo-runtime.mjs', 'scripts/solo-qualification-cpu-profile.mjs'].includes(path)
+    ? historicalFrameRead(path)
+    : read(path);
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const priorPath = 'docs/performance/solo-readiness-preparation-797e03-plan.json';
 const planPath = 'docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json';
@@ -156,11 +164,11 @@ test('successor is held and preserves exact package, first-eight proof, six rows
   }
 });
 
-test('current successor refs and actual command remain source-confined while every old declaration remains frozen', async () => {
+test('retained successor refs and actual command remain source-confined while every old declaration remains frozen', async () => {
   const selected = body(workflow, 'readiness');
   const sparse = new Set([...selected.matchAll(/^            \/(.+)$/gm)].map((m) => m[1]));
   for (const ref of refs(plan)) {
-    const bytes = await read(ref.path);
+    const bytes = await declaredRead(ref.path);
     assert.deepEqual({ path: ref.path, bytes: bytes.length, sha256: hash(bytes) }, ref);
     assert(sparse.has(ref.path), ref.path);
   }
@@ -198,6 +206,8 @@ test('current successor refs and actual command remain source-confined while eve
     planPath,
     priorPath,
     READINESS_REJOIN_WITNESS,
+    'scripts/solo-frame-trace-executed-source.mjs',
+    'docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json',
     'scripts/solo-readiness-rejoin-declared-source.mjs',
     'scripts/test-solo-readiness-rejoin-797e03.mjs',
     'scripts/test-solo-required-media-transport.mjs',
