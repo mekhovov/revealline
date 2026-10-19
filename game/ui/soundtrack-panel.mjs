@@ -107,6 +107,7 @@ export function attachSoundtrackPanel({
   download,
   onOpen = () => {},
   onClose = () => {},
+  onPresentationChange = () => {},
   canRestoreFocus = () => true,
   onVolume = () => {},
   onPlayback = () => {},
@@ -3736,10 +3737,13 @@ export function attachSoundtrackPanel({
     if (disposed || dialog.open) return;
     onOpen();
     returnFocus = doc.activeElement;
-    if (!dialog.open) dialog.showModal();
+    const opening = !dialog.open;
+    if (opening) dialog.showModal();
     update();
     if (!onlineCatalogue && !onlineCatalogueController) void loadOnlineCatalogue();
     closeButton.focus();
+    if (opening) onPresentationChange();
+    if (disposed || !dialog.open) return;
     if (!saved) {
       const focusIsEmpty = () => doc.activeElement === doc.body || doc.activeElement === dialog;
       // Remember the initial target; native blur may arrive later during the read.

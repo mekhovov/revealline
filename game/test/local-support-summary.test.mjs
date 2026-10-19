@@ -164,7 +164,7 @@ test('hanging storage observations have a bounded deadline and cancellation sett
   wait.resolve(false);
 });
 
-function panel({ collect, exportFile } = {}) {
+function panel({ collect, exportFile, getSettingsOpen } = {}) {
   const doc = new Document(),
     win = new Events(),
     settings = doc.createElement('dialog'),
@@ -179,6 +179,7 @@ function panel({ collect, exportFile } = {}) {
     root,
     settings,
     getHost: host,
+    getSettingsOpen,
     collect:
       collect ?? ((options) => collectSupportSummary({ ...options, env: environment(), clock })),
     exportFile:
@@ -299,6 +300,59 @@ test('refreshing or reopening while a native export waits cannot start a second 
   await previous;
   assert.equal(h.$('download').disabled, false);
   assert.match(h.$('status').textContent, /Summary prepared below/);
+  assert.doesNotMatch(h.$('status').textContent, /Shared with/);
+  h.ui.destroy();
+});
+
+test('explicit section visibility and invalidation retire a pending visit even after away/back', async () => {
+  let open = true;
+  const held = deferred(),
+    report = await collectSupportSummary({ host: host(), env: environment(), clock });
+  let calls = 0;
+  const h = panel({
+    getSettingsOpen: () => open,
+    collect: () => (++calls === 1 ? held.promise : Promise.resolve(report)),
+  });
+  delete h.settings.open;
+  const old = h.ui.refresh();
+  open = false;
+  h.ui.invalidate();
+  assert.equal(await h.ui.refresh(), false);
+  open = true;
+  held.resolve(report);
+  await old;
+  assert.equal(h.$('json').textContent, '');
+  await h.ui.refresh();
+  assert.equal(h.$('download').disabled, false);
+  h.ui.destroy();
+  h.ui.invalidate();
+  assert.equal(await h.ui.refresh(), false);
+});
+
+test('explicit owner invalidation preserves an outstanding export lease across reopen and newer preparation', async () => {
+  const held = deferred();
+  let open = true,
+    exports = 0;
+  const h = panel({
+    getSettingsOpen: () => open,
+    exportFile: () => {
+      exports++;
+      return held.promise;
+    },
+  });
+  delete h.settings.open;
+  await h.ui.refresh();
+  const previous = h.ui.download();
+  open = false;
+  h.ui.invalidate();
+  open = true;
+  await h.ui.refresh();
+  assert.equal(h.$('download').disabled, true);
+  assert.equal(await h.ui.download(), false);
+  assert.equal(exports, 1);
+  held.resolve({ status: 'shared' });
+  await previous;
+  assert.equal(h.$('download').disabled, false);
   assert.doesNotMatch(h.$('status').textContent, /Shared with/);
   h.ui.destroy();
 });

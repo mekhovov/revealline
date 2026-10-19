@@ -31,6 +31,7 @@ function fixture(options = {}) {
   let nativeCloses = 0;
   dialog.showModal = () => {
     dialog.open = true;
+    options.afterNativeOpen?.({ dialog });
   };
   dialog.close = () => {
     dialog.open = false;
@@ -89,7 +90,11 @@ function fixture(options = {}) {
     packaged: options.packaged ?? true,
     resolveSourceVersion: options.resolveSourceVersion,
     unavailable: options.unavailable,
-    onOpen: () => calls.opened++,
+    onOpen: () => {
+      calls.opened++;
+      options.onOpen?.({ doc, settings, dialog });
+    },
+    onPresentationChange: options.onPresentationChange,
     load: () => {
       calls.loads++;
       return options.load ? options.load(runtime) : runtime;
@@ -348,4 +353,57 @@ test('edition recovery binds its reader without fetching unrelated historical ca
   assert.deepEqual(h.calls.readers[0].recoveryCatalogs, []);
   assert.deepEqual(h.calls.catalogs, []);
   await h.host.close();
+});
+
+test('recovery presentation commits once after native open and preserves rejected and repeated attempts', async (t) => {
+  let presentations = 0,
+    h;
+  h = fixture({
+    onPresentationChange: () => {
+      presentations++;
+      assert.equal(h.dialog.open, true);
+      assert.equal(h.settings.open, true);
+      assert.equal(h.doc.activeElement === h.$('back'), true);
+    },
+  });
+  t.after(() => h.host.dispose());
+  assert.equal(presentations, 0);
+  const first = h.host.open();
+  assert.equal(presentations, 1);
+  assert.equal(await h.host.open(), false);
+  assert.equal(presentations, 1);
+  await first;
+  await h.host.close();
+  assert.equal(presentations, 1);
+  await h.host.open();
+  assert.equal(presentations, 2);
+  await h.host.close();
+  h.settings.close();
+  assert.equal(await h.host.open(), false);
+  assert.equal(presentations, 2);
+});
+
+test('recovery does not notify when its pre-open owner rejects admission', async (t) => {
+  let presentations = 0;
+  const h = fixture({
+    onOpen: ({ settings }) => settings.close(),
+    onPresentationChange: () => presentations++,
+  });
+  t.after(() => h.host.dispose());
+  assert.equal(await h.host.open(), false);
+  assert.equal(h.dialog.open, false);
+  assert.equal(h.calls.loads, 0);
+  assert.equal(presentations, 0);
+});
+
+test('recovery retires a committed departure even when native opening focus immediately closes it', async (t) => {
+  let presentations = 0;
+  const h = fixture({
+    afterNativeOpen: ({ dialog }) => dialog.close(),
+    onPresentationChange: () => presentations++,
+  });
+  t.after(() => h.host.dispose());
+  assert.equal(await h.host.open(), false);
+  assert.equal(h.dialog.open, false);
+  assert.equal(presentations, 1);
 });
