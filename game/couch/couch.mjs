@@ -4157,7 +4157,10 @@ try {
     onOpen: clear,
     offlinePanel: installOfflinePanel,
   });
-  shell.refreshGlobalSettings?.({ controls: globalTools.controls });
+  shell.refreshGlobalSettings?.({
+    controls: globalTools.controls,
+    comfort: { display: displayPreferences },
+  });
 
   function couchScope() {
     if (globalSettingsToolsRoot(document)) return `couch:${globalSettingsToolsRoot(document).id}`;

@@ -1776,7 +1776,10 @@ export function bootCoop({
     });
     musicPublished.setPlayer(music.player);
   }
-  nativeMenu?.refreshGlobalSettings?.({ controls: globalTools.controls });
+  nativeMenu?.refreshGlobalSettings?.({
+    controls: globalTools.controls,
+    comfort: { display: displayPreferences },
+  });
   function prepareReactionAttempt() {
     if (run && reactionRun !== run) {
       reactionRun = run;
