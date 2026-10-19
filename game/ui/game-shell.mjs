@@ -442,10 +442,45 @@ export function attachGameShell({
   if (worlds) {
     worlds.hidden = isolated || !onWorlds;
     worlds.onclick = () => {
+      const parent = topDialog();
+      if (
+        destroyed ||
+        isolated ||
+        !onWorlds ||
+        !parent?.open ||
+        doc.hidden ||
+        doc.hasFocus?.() === false
+      )
+        return;
       pause(true);
-      closeHome();
-      if (missions.open) missions.close();
-      onWorlds?.();
+      const visit = homeVisit,
+        missionVisit = missionsRevision;
+      const isCurrent = () =>
+        !destroyed &&
+        homeVisit === visit &&
+        missionsRevision === missionVisit &&
+        topDialog() === parent &&
+        parent.open &&
+        !doc.hidden &&
+        doc.hasFocus?.() !== false;
+      if (!isCurrent()) return;
+      // Keep the current menu usable until the host has its optional module.
+      return onWorlds(worlds, {
+        isCurrent,
+        leave() {
+          if (!isCurrent()) return false;
+          closeHome();
+          if (missions.open) missions.close();
+          // Native close callbacks must not let a stale opening cover a new modal.
+          const remaining = topDialog();
+          return (
+            !destroyed &&
+            (!remaining || remaining === parent) &&
+            !doc.hidden &&
+            doc.hasFocus?.() !== false
+          );
+        },
+      });
     };
   }
   const overlayBrief = $('overlay-brief');
@@ -848,6 +883,7 @@ export function attachGameShell({
       focusClearance.destroy();
       missions.removeEventListener('close', closedMissions);
       missions.removeEventListener('cancel', cancelMissions);
+      if (worlds) worlds.onclick = null;
       if (overlayMenu) overlayMenu.onclick = null;
       if (overlayBrief) overlayBrief.onclick = null;
       home.removeEventListener('cancel', cancelHome);

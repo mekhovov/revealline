@@ -841,6 +841,8 @@ export function attachMissionLibraryBrowser({
     campaignRail.replaceChildren(...shortcuts);
     campaignRail.hidden = shortcuts.length < 2;
     let previousCampaign = null;
+    // The host identity is stable for this synchronous render; later renders read it again.
+    const currentId = matches.length ? getCurrentId() : null;
     const buttons = matches.map((row) => {
       const display = livePresentation(row);
       let card = cards.get(row.id);
@@ -904,7 +906,7 @@ export function attachMissionLibraryBrowser({
         ? 'included'
         : availability.state;
       card.button.dataset.pictureState = card.completion?.state ?? 'unfinished';
-      card.button.dataset.current = String(row.id === getCurrentId());
+      card.button.dataset.current = String(row.id === currentId);
       card.campaignHeading.hidden = previousCampaign === row.campaignKey;
       localizedText(card.progress, () =>
         card.completion?.state === 'unavailable'
@@ -1194,9 +1196,16 @@ export function attachMissionLibraryBrowser({
   }
   function open(
     origin = doc.activeElement,
-    { returnLabel = t('common:navigation.backToGame'), retune = true } = {},
+    { returnLabel = t('common:navigation.backToGame'), retune = true, onOpeningStage } = {},
   ) {
     if (destroyed) return;
+    const observe = onOpeningStage
+      ? (kind) => {
+          try {
+            onOpeningStage(kind);
+          } catch {}
+        }
+      : null;
     const changed = !dialog.open;
     const landing = retune && changed ? menuRetuneOrigin(origin) : null;
     retirePendingSelection();
@@ -1209,10 +1218,16 @@ export function attachMissionLibraryBrowser({
     localizedText(back, () => returnLabel);
     onPause?.();
     invalidateDiagrams();
+    observe?.('missions-campaigns-begin');
     rebuildCampaigns();
+    observe?.('missions-campaigns-end');
+    observe?.('missions-render-begin');
     render();
+    observe?.('missions-render-end');
     if (!dialog.open) nativeReturnFocus = doc.activeElement;
+    observe?.('missions-modal-begin');
     dialog.showModal();
+    observe?.('missions-modal-end');
     observeDiagrams();
     restoreSelection();
     if (landing) {

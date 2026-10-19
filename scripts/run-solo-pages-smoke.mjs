@@ -5,7 +5,13 @@ import { mkdir, mkdtemp, readFile, rm, stat, statfs, writeFile } from 'node:fs/p
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { pagesSmokePlan, encodePagesReport, redactPagesText } from './solo-pages-smoke.mjs';
+import {
+  pagesSmokePlan,
+  encodePagesReport,
+  redactPagesText,
+  pagesDiagnosticScope,
+  assertPagesMissionsEvidence,
+} from './solo-pages-smoke.mjs';
 
 const repository = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export function validatePagesDispatch(env, expected, node = process.versions.node) {
@@ -16,6 +22,7 @@ export function validatePagesDispatch(env, expected, node = process.versions.nod
   assert.equal(env.GITHUB_SHA, expected);
   assert.equal(node, '22.13.1');
   assert(['chromium', 'webkit'].includes(env.PAGES_SMOKE_ENGINE), 'Fixed browser engine required');
+  pagesDiagnosticScope(env.PAGES_SMOKE_DIAGNOSTIC ?? 'none');
   assert(
     typeof env.REVEALLINE_PAGES_TEST_PASSWORD === 'string' &&
       env.REVEALLINE_PAGES_TEST_PASSWORD.length > 0 &&
@@ -37,7 +44,10 @@ export function pagesSourceIdentity(expected) {
   assert.equal(git('status', '--porcelain=v1', '--untracked-files=no'), '');
   return { revision: expected, tree: git('rev-parse', 'HEAD^{tree}') };
 }
-export function assessOwnedPagesSmoke(report, owner, expected, engine) {
+export function assessOwnedPagesSmoke(report, owner, expected, engine, diagnostic = 'none') {
+  const diagnosticScope = pagesDiagnosticScope(diagnostic);
+  assert.equal(report.diagnostic, diagnostic);
+  assert.equal(report.diagnosticScope, diagnosticScope);
   assert(['chromium', 'webkit'].includes(engine), 'Fixed browser engine required');
   assert.equal(report.engine, engine);
   assert(
@@ -76,9 +86,16 @@ export function assessOwnedPagesSmoke(report, owner, expected, engine) {
     assert.equal(page.overflow, false);
     assert.deepEqual(page.events, []);
   }
+  if (diagnostic === 'missions') {
+    const assessment = assertPagesMissionsEvidence(report.pages[0]);
+    assert.deepEqual(report.missionsAssessment, assessment);
+    assert.equal(report.pages[1].missions, undefined, 'Shared route is not diagnostic-enabled');
+  }
   return {
     status: 'passed-controls',
     engine,
+    diagnostic,
+    diagnosticScope,
     performanceExcluded: true,
     scope:
       'Fixed public high-use flows on one stable deployed revision. Not whole-app or performance qualification.',
@@ -95,12 +112,14 @@ export async function runOwnedPagesSmoke({
 }) {
   const password = env.REVEALLINE_PAGES_TEST_PASSWORD;
   const engine = env.PAGES_SMOKE_ENGINE;
+  const diagnostic = env.PAGES_SMOKE_DIAGNOSTIC ?? 'none';
   const plan = await pagesSmokePlan();
   const summary = {
     format: 'RevealLinePublishedPagesSmokeOwnerV1',
     status: 'failed',
     expectedRevision,
     engine,
+    diagnostic,
     performanceExcluded: true,
     retry: false,
   };
@@ -117,6 +136,7 @@ export async function runOwnedPagesSmoke({
   };
   try {
     validatePagesDispatch(env, expectedRevision, platformNode);
+    summary.diagnosticScope = pagesDiagnosticScope(diagnostic);
     summary.sourceBefore = await sourceIdentity(expectedRevision);
     assert(
       playwrightPath.endsWith('/node_modules/playwright/index.mjs'),
@@ -166,6 +186,7 @@ export async function runOwnedPagesSmoke({
         engine,
         playwrightPath,
         rawReport,
+        diagnostic,
       ],
       {
         cwd: repository,
@@ -197,7 +218,13 @@ export async function runOwnedPagesSmoke({
     summary.report = await publish('report.json', report, plan.reportBytes);
     summary.sourceAfter = await sourceIdentity(expectedRevision);
     assert.deepEqual(summary.sourceAfter, summary.sourceBefore, 'Tooling source changed');
-    summary.assessment = assessOwnedPagesSmoke(report, summary.command, expectedRevision, engine);
+    summary.assessment = assessOwnedPagesSmoke(
+      report,
+      summary.command,
+      expectedRevision,
+      engine,
+      diagnostic,
+    );
     summary.status = 'passed-controls';
   } catch (error) {
     summary.failure = redactPagesText(error?.message ?? error, password);
@@ -253,6 +280,7 @@ export async function runOwnedPagesSmoke({
           format: summary.format,
           status: 'failed',
           expectedRevision,
+          diagnostic,
           receiptFailure: true,
           performanceExcluded: true,
         }) + '\n',
