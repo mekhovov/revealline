@@ -1,0 +1,35 @@
+{
+  "format": "SharedDemoHostedBaseSnapshotV1",
+  "observedAt": "2026-10-19 07:01:51 UTC",
+  "scope": "Read-only GitHub API snapshot; no Git fetch, source change or merge attempt.",
+  "pullRequest": {
+    "base": {
+      "ref": "main",
+      "sha": "16ebd7b51984387c39622380a8e51a60e745152e"
+    },
+    "draft": true,
+    "head": {
+      "ref": "codex/shared-game-demos",
+      "sha": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b"
+    },
+    "html_url": "https://github.com/mekhovov/revealline/pull/1615",
+    "mergeable": false,
+    "mergeable_state": "dirty",
+    "number": 1615,
+    "state": "open",
+    "updated_at": "2026-10-19T06:27:35Z"
+  },
+  "currentMain": {
+    "object": {
+      "sha": "9566d32099b37f7e0c14fcc8101ea75b0e8432b5",
+      "type": "commit",
+      "url": "https://api.github.com/repos/mekhovov/revealline/git/commits/9566d32099b37f7e0c14fcc8101ea75b0e8432b5"
+    },
+    "ref": "refs/heads/main"
+  },
+  "limitations": [
+    "The pull-request API base.sha and current refs/heads/main SHA differ; both are preserved exactly as returned.",
+    "mergeable:false/mergeable_state:dirty reports a conflict, but this snapshot does not identify conflicting paths.",
+    "No queued or running check is treated as a pass."
+  ]
+}

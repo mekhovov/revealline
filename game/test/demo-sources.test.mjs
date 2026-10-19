@@ -15,6 +15,7 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { createSoloRouteHost } from '../content-design/solo-route-host.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { loadEditionBootstrap } from '../editions/bootstrap.mjs';
+import { boundedJSON } from '../data-json.mjs';
 
 const json = async (relative) =>
   JSON.parse(await readFile(new URL(relative, import.meta.url), 'utf8'));
@@ -46,7 +47,7 @@ class LazyWorker {
 }
 const assetFetch = async (url) => ({ ok: true, text: async () => readFile(url, 'utf8') });
 
-test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily', async () => {
+test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily', async (t) => {
   const requests = [];
   const sources = await loadDemoSources({
     entries,
@@ -69,7 +70,41 @@ test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and
   assert.equal(sources.filter((source) => source.approachable).length, 1);
   assert.ok(sources.every((source) => source.variantId === 'standard'));
   for (const source of sources.filter((candidate) => candidate.kind === 'replay')) {
-    const player = await source.create({ signal: new AbortController().signal });
+    const requestOffset = requests.length;
+    let player;
+    try {
+      player = await source.create({ signal: new AbortController().signal });
+    } catch (error) {
+      try {
+        let diagnostics;
+        try {
+          diagnostics = boundedJSON(error.diagnostics ?? null, {
+            maxBytes: 4096,
+            maxNodes: 128,
+            maxDepth: 5,
+            maxArray: 16,
+            maxString: 512,
+          });
+        } catch {
+          diagnostics = { omitted: 'Unavailable or outside diagnostic bounds.' };
+        }
+        const attempts = requests.slice(requestOffset);
+        t.diagnostic(
+          JSON.stringify({
+            sourceId: source.id.slice(0, 128),
+            levelId: source.levelId.slice(0, 128),
+            campaignId: source.campaignId.slice(0, 128),
+            campaignKey: source.campaignKey.slice(0, 256),
+            attemptedURLs: attempts.slice(0, 16).map((url) => url.slice(0, 512)),
+            omittedURLs: Math.max(0, attempts.length - 16),
+            diagnostics,
+          }),
+        );
+      } catch {
+        // Diagnostic formatting must never replace the original verifier failure.
+      }
+      throw error;
+    }
     assert.equal(player.info.levelId, source.levelId);
     assert.equal(player.state.tick, 0);
     assert.equal(player.phase, 'paused');

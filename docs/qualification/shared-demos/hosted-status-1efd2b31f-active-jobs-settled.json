@@ -1,0 +1,158 @@
+{
+  "format": "SharedDemoHostedWatchSnapshotV1",
+  "observedAt": "2026-10-19T07:13:03Z",
+  "scope": "All previously active jobs settled; four checks remain queued. No workflow action or source change.",
+  "checks": [
+    {
+      "completedAt": "2026-10-19T07:08:33Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506104/job/117904302540",
+      "name": "optional-practice",
+      "status": "COMPLETED",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506247/job/117928938474",
+      "name": "preflight",
+      "status": "QUEUED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "completedAt": "2026-10-19T07:03:48Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117904302404",
+      "name": "admission",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "completedAt": "2026-10-19T06:58:25Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301416",
+      "name": "feature (gameplay)",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "2026-10-19T07:08:14Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301683",
+      "name": "feature (creator)",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "2026-10-19T07:09:26Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301656",
+      "name": "feature (presentation)",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301665",
+      "name": "feature (recordings)",
+      "status": "QUEUED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301702",
+      "name": "feature (rooms)",
+      "status": "QUEUED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506095/job/117904301570",
+      "name": "feature (local-ux)",
+      "status": "QUEUED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "completedAt": "2026-10-19T07:11:46Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117904302635",
+      "name": "demo_admission",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "completedAt": "2026-10-19T06:59:08Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506104/job/117904302321",
+      "name": "candidate",
+      "status": "COMPLETED",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "completedAt": "2026-10-19T07:06:31Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117904302563",
+      "name": "team_admission",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "completedAt": "2026-10-19T07:12:23Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117904302584",
+      "name": "installed_admission",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "completedAt": "2026-10-19T07:12:23Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117935070741",
+      "name": "preview",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    }
+  ],
+  "headRefOid": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "mergeable": "CONFLICTING",
+  "totals": {
+    "success": 6,
+    "failure": 3,
+    "skipped": 1,
+    "inProgress": 0,
+    "queued": 4
+  },
+  "storage": {
+    "observedAt": "2026-10-19T07:13:03Z",
+    "freeBytes": 1030123520,
+    "temporaryPacks": [
+      {
+        "name": "tmp_pack_4P9pLp",
+        "bytes": 74711040,
+        "inode": 147884858,
+        "mtimeNs": "1792380265265263138"
+      },
+      {
+        "name": "tmp_pack_g6cUnv",
+        "bytes": 43515904,
+        "inode": 148190370,
+        "mtimeNs": "1792387755888990116"
+      },
+      {
+        "name": "tmp_pack_Px3je2",
+        "bytes": 58720256,
+        "inode": 147885881,
+        "mtimeNs": "1792380357324194019"
+      }
+    ],
+    "newTemporaryPacksObserved": false
+  },
+  "limitations": [
+    "Queued checks have no outcome; no external queue cause or ETA is established.",
+    "Passing and failed gates retain their separate exact-head scope.",
+    "No Git settings, source, harness or endurance changes were made."
+  ]
+}

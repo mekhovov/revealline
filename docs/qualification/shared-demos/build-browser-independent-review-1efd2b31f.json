@@ -1,0 +1,434 @@
+{
+  "format": "SharedDemoBuildBrowserIndependentReviewV1",
+  "reviewedAt": "2026-10-19T05:55:47.175314+00:00",
+  "complete": true,
+  "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "runtime": {
+    "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+    "files": 9997,
+    "bytes": 404447584
+  },
+  "buildInputs": {
+    "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+    "files": 9406,
+    "bytes": 348396513
+  },
+  "scope": "Read-only receipt, child-hash, qualifier-file and capture-manifest audit; no source edits, tests, browser launch or full runtime rehash.",
+  "parents": [
+    {
+      "path": "docs/qualification/shared-demos/shared-demos-build-validation-16ebd7b-1efd2b31f-storage-retry.json",
+      "bytes": 6232,
+      "sha256": "fc2f16e6cb155a1f1242298bbccaa10b4cf008d5d300e043af9e6b91a1e16061"
+    },
+    {
+      "path": "docs/qualification/shared-demos/browser-refresh-final-emitted-16ebd7b-1efd2b31f-affected.json",
+      "bytes": 22426,
+      "sha256": "2ad5b425052b3f59362769d5c8e5ec174e2e104fe92ab56c2f0b2998c77c5c7d"
+    }
+  ],
+  "declaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "bytes": 422,
+    "sha256": "30553b327df9dd2671b6dc904ea3c986c84dc1e2effa34919cea836eeeaec78a"
+  },
+  "manifest": {
+    "path": ".cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry/manifest.json",
+    "bytes": 1304601,
+    "sha256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47"
+  },
+  "stages": [
+    {
+      "name": "main-pages",
+      "elapsedMs": 292344,
+      "log": {
+        "path": "docs/qualification/shared-demos/final-main-pages-16ebd7b-1efd2b31f-storage-retry.log.txt",
+        "bytes": 1280220,
+        "sha256": "f046fefc6a50c79c5237b5ea1b18b54e28abb60dce4f2041d8aa7b57907352a5"
+      },
+      "receipt": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-16ebd7b-1efd2b31f-storage-retry.json",
+        "bytes": 2065705,
+        "sha256": "2417b59a5ffca297cad6d67989669c2d3ff64f1067b188e9469b385509d9f70b"
+      }
+    },
+    {
+      "name": "full-packaging",
+      "elapsedMs": 292160,
+      "log": {
+        "path": "docs/qualification/shared-demos/final-full-packaging-16ebd7b-1efd2b31f-storage-retry.log.txt",
+        "bytes": 2341,
+        "sha256": "2ad1dc585b13eefa9e3a18671f308681f17d40b76af22b2c44ed34910e30b532"
+      },
+      "receipt": {
+        "path": "docs/qualification/shared-demos/shared-demos-packaging-16ebd7b-1efd2b31f-storage-retry.json",
+        "bytes": 704891,
+        "sha256": "b7f8e3559be4a7556961da3343af3ab3bb0dc161cc31427b5d955b7146db797a"
+      }
+    },
+    {
+      "name": "validate",
+      "elapsedMs": 202560,
+      "log": {
+        "path": "docs/qualification/shared-demos/final-validate-16ebd7b-1efd2b31f-storage-retry.log.txt",
+        "bytes": 3932,
+        "sha256": "e5ab3b82002d6f051ac3ed4e84ce5444ec4836936e807efb0016d18213d6391c"
+      }
+    },
+    {
+      "name": "lint",
+      "elapsedMs": 19964,
+      "log": {
+        "path": "docs/qualification/shared-demos/final-lint-16ebd7b-1efd2b31f-storage-retry.log.txt",
+        "bytes": 196,
+        "sha256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c"
+      }
+    }
+  ],
+  "browserJobs": [
+    {
+      "id": "restoration-webkit",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/restoration-webkit-final-emitted-16ebd7b-1efd2b31f-affected.json",
+        "bytes": 62962,
+        "sha256": "74bb875c6c29a6591e74fe6a30867acc9f1ec716480173ce494837e2cefbe49c"
+      },
+      "checks": 12,
+      "errors": 0,
+      "browserClosed": true,
+      "previewClosed": true,
+      "script": {
+        "path": "scripts/qualify-demo-restoration-browser.mjs",
+        "bytes": 23633,
+        "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83"
+      }
+    },
+    {
+      "id": "mixed-chromium",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/mixed-chromium-final-emitted-16ebd7b-1efd2b31f-affected.json",
+        "bytes": 41892,
+        "sha256": "b871e9497f8de3067d685ee88a013f698e97abedcfd3243c34734a690d22eee6"
+      },
+      "checks": 28,
+      "errors": 0,
+      "browserClosed": true,
+      "previewClosed": true,
+      "script": {
+        "path": "scripts/qualify-shared-demo-browser.mjs",
+        "bytes": 18020,
+        "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97"
+      }
+    },
+    {
+      "id": "mixed-firefox",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/mixed-firefox-final-emitted-16ebd7b-1efd2b31f-affected.json",
+        "bytes": 25741,
+        "sha256": "03b9e7b46ac1c6b89b6c41ebb966f8dfd2dc2bb7235ba4bd1b438ce9b00de824"
+      },
+      "checks": 27,
+      "errors": 0,
+      "browserClosed": true,
+      "previewClosed": true,
+      "script": {
+        "path": "scripts/qualify-shared-demo-browser.mjs",
+        "bytes": 18020,
+        "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97"
+      }
+    },
+    {
+      "id": "mixed-webkit",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/mixed-webkit-final-emitted-16ebd7b-1efd2b31f-affected.json",
+        "bytes": 25944,
+        "sha256": "2ca7b73c6287e0fdcb18e6e912e49251fa3ad32c94b9028c2b345e1fdb8bc7c5"
+      },
+      "checks": 27,
+      "errors": 0,
+      "browserClosed": true,
+      "previewClosed": true,
+      "script": {
+        "path": "scripts/qualify-shared-demo-browser.mjs",
+        "bytes": 18020,
+        "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "Current held HEAD matches the tested revision",
+      "pass": true
+    },
+    {
+      "check": "Build wrapper reports completed unchanged-source run",
+      "pass": true
+    },
+    {
+      "check": "Build initial/final HEAD binding",
+      "pass": true
+    },
+    {
+      "check": "Build initial/final runtime binding",
+      "pass": true
+    },
+    {
+      "check": "Build initial/final build-input binding",
+      "pass": true
+    },
+    {
+      "check": "Exactly four required build stages",
+      "pass": true
+    },
+    {
+      "check": "main-pages successful bounded exit and full log",
+      "pass": true
+    },
+    {
+      "check": "main-pages exact retained log hash/size",
+      "pass": true
+    },
+    {
+      "check": "main-pages child receipt hash/size",
+      "pass": true
+    },
+    {
+      "check": "main-pages complete child source binding",
+      "pass": true
+    },
+    {
+      "check": "full-packaging successful bounded exit and full log",
+      "pass": true
+    },
+    {
+      "check": "full-packaging exact retained log hash/size",
+      "pass": true
+    },
+    {
+      "check": "full-packaging child receipt hash/size",
+      "pass": true
+    },
+    {
+      "check": "full-packaging complete child source binding",
+      "pass": true
+    },
+    {
+      "check": "validate successful bounded exit and full log",
+      "pass": true
+    },
+    {
+      "check": "validate exact retained log hash/size",
+      "pass": true
+    },
+    {
+      "check": "lint successful bounded exit and full log",
+      "pass": true
+    },
+    {
+      "check": "lint exact retained log hash/size",
+      "pass": true
+    },
+    {
+      "check": "Main-pages source/head/diagnostics",
+      "pass": true
+    },
+    {
+      "check": "Main-pages exact payload/native closure",
+      "pass": true
+    },
+    {
+      "check": "Packaging full payloads and expected emissions",
+      "pass": true
+    },
+    {
+      "check": "Packaging initial/final build fingerprint is stable within its documented narrower scope",
+      "pass": true
+    },
+    {
+      "check": "Core file/byte limits",
+      "pass": true
+    },
+    {
+      "check": "Standalone file/archive limits",
+      "pass": true
+    },
+    {
+      "check": "Browser matrix strict completion",
+      "pass": true
+    },
+    {
+      "check": "Browser initial/final source/harness binding",
+      "pass": true
+    },
+    {
+      "check": "Browser unchanged runtime/harness/manifest",
+      "pass": true
+    },
+    {
+      "check": "Exactly four affected browser jobs",
+      "pass": true
+    },
+    {
+      "check": "Current capture manifest hash matches build and browsers",
+      "pass": true
+    },
+    {
+      "check": "Current capture source/build identities",
+      "pass": true
+    },
+    {
+      "check": "Shared capture inventory identity",
+      "pass": true
+    },
+    {
+      "check": "restoration-webkit exact child hash",
+      "pass": true
+    },
+    {
+      "check": "restoration-webkit child successful exit and close",
+      "pass": true
+    },
+    {
+      "check": "restoration-webkit strict result/check/diagnostic consistency",
+      "pass": true
+    },
+    {
+      "check": "restoration-webkit browser and preview cleanup",
+      "pass": true
+    },
+    {
+      "check": "restoration-webkit child capture/source binding",
+      "pass": true
+    },
+    {
+      "check": "restoration-webkit served source verified",
+      "pass": true
+    },
+    {
+      "check": "restoration-webkit current qualifier script pin",
+      "pass": true
+    },
+    {
+      "check": "Unprojected WebKit functional and strict diagnostic gates",
+      "pass": true
+    },
+    {
+      "check": "mixed-chromium exact child hash",
+      "pass": true
+    },
+    {
+      "check": "mixed-chromium child successful exit and close",
+      "pass": true
+    },
+    {
+      "check": "mixed-chromium strict result/check/diagnostic consistency",
+      "pass": true
+    },
+    {
+      "check": "mixed-chromium browser and preview cleanup",
+      "pass": true
+    },
+    {
+      "check": "mixed-chromium child capture/source binding",
+      "pass": true
+    },
+    {
+      "check": "mixed-chromium served source verified",
+      "pass": true
+    },
+    {
+      "check": "mixed-chromium current qualifier script pin",
+      "pass": true
+    },
+    {
+      "check": "mixed-firefox exact child hash",
+      "pass": true
+    },
+    {
+      "check": "mixed-firefox child successful exit and close",
+      "pass": true
+    },
+    {
+      "check": "mixed-firefox strict result/check/diagnostic consistency",
+      "pass": true
+    },
+    {
+      "check": "mixed-firefox browser and preview cleanup",
+      "pass": true
+    },
+    {
+      "check": "mixed-firefox child capture/source binding",
+      "pass": true
+    },
+    {
+      "check": "mixed-firefox served source verified",
+      "pass": true
+    },
+    {
+      "check": "mixed-firefox current qualifier script pin",
+      "pass": true
+    },
+    {
+      "check": "mixed-webkit exact child hash",
+      "pass": true
+    },
+    {
+      "check": "mixed-webkit child successful exit and close",
+      "pass": true
+    },
+    {
+      "check": "mixed-webkit strict result/check/diagnostic consistency",
+      "pass": true
+    },
+    {
+      "check": "mixed-webkit browser and preview cleanup",
+      "pass": true
+    },
+    {
+      "check": "mixed-webkit child capture/source binding",
+      "pass": true
+    },
+    {
+      "check": "mixed-webkit served source verified",
+      "pass": true
+    },
+    {
+      "check": "mixed-webkit current qualifier script pin",
+      "pass": true
+    },
+    {
+      "check": "Current frozen declaration hash",
+      "pass": true
+    },
+    {
+      "check": "HEAD unchanged during this read-only review",
+      "pass": true
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Build and browser initial/final full fingerprints are verified for consistency from their receipts; this review does not independently reread the full runtime, build-input tree or all capture payload bytes during active endurance.",
+    "Browser cleanup is established by each child close result, preview close result and successful process exit. This receipt does not independently assert absence of every native browser/driver allocation.",
+    "Local access credentials are the recorded fixture exception; this is not offline HTML-integrity or public deployment admission.",
+    "No new endurance, hosted-CI or physical/human acceptance result is claimed. The original failed build/browser receipts remain failed."
+  ],
+  "packagingFingerprintScope": {
+    "definition": "scripts plus authoringPreviewHosts; .mjs excluding basenames beginning test-.",
+    "source": "scripts/qualify-demo-packaging.mjs:205",
+    "initial": {
+      "sha256": "ba0226bbec5939304bffaeca9523538b55dd81368c25142aa6f1a62efeaeb98d",
+      "files": 591,
+      "bytes": 6854749
+    },
+    "final": {
+      "sha256": "ba0226bbec5939304bffaeca9523538b55dd81368c25142aa6f1a62efeaeb98d",
+      "files": 591,
+      "bytes": 6854749
+    },
+    "relationship": "This narrower packaging fingerprint is not compared to the enclosing build wrapper scripts+authoring production fingerprint. The enclosing wrapper separately confirms its broader initial/final fingerprint."
+  },
+  "reviewCorrection": {
+    "path": "docs/qualification/shared-demos/build-browser-independent-review-1efd2b31f-initial-scope-mismatch.json",
+    "sha256": "6a3ec03385882d4d469c31edaf607ef8b4f4d920eb0b4449216e9495d535860f",
+    "reason": "The initial review incorrectly equated the packaging qualifier narrow build fingerprint with the enclosing broader scripts+authoring fingerprint. Reading the qualifier confirmed distinct documented scopes; both before/after pairs are stable. This was a review-predicate error, not a product or qualification failure."
+  }
+}

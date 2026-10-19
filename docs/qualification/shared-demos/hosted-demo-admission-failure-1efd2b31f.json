@@ -1,0 +1,246 @@
+{
+  "format": "SharedDemoHostedFailureReviewV1",
+  "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "scope": "Read-only completed GitHub job metadata/log; no local tests, workflow action or source mutation.",
+  "job": {
+    "completed_at": "2026-10-19T07:11:46Z",
+    "conclusion": "failure",
+    "head_sha": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+    "id": 117904302635,
+    "name": "demo_admission",
+    "run_id": 39204506148,
+    "started_at": "2026-10-19T07:09:41Z",
+    "status": "completed",
+    "steps": [
+      {
+        "completed_at": "2026-10-19T07:09:43Z",
+        "conclusion": "success",
+        "name": "Set up job",
+        "number": 1,
+        "started_at": "2026-10-19T07:09:42Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:10:36Z",
+        "conclusion": "success",
+        "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "number": 2,
+        "started_at": "2026-10-19T07:09:43Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:10:44Z",
+        "conclusion": "success",
+        "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "number": 3,
+        "started_at": "2026-10-19T07:10:36Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:10:44Z",
+        "conclusion": "success",
+        "name": "Read exact-source Demo admission policy",
+        "number": 4,
+        "started_at": "2026-10-19T07:10:44Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:10:46Z",
+        "conclusion": "success",
+        "name": "Install Demo admission test dependencies",
+        "number": 5,
+        "started_at": "2026-10-19T07:10:44Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:11:43Z",
+        "conclusion": "failure",
+        "name": "Run complete Demo ownership, transitions and resources regressions",
+        "number": 6,
+        "started_at": "2026-10-19T07:10:46Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:11:43Z",
+        "conclusion": "skipped",
+        "name": "Bind exact-source Demo admission proof",
+        "number": 7,
+        "started_at": "2026-10-19T07:11:43Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:11:44Z",
+        "conclusion": "success",
+        "name": "Retain Demo admission proof and partial diagnostics",
+        "number": 8,
+        "started_at": "2026-10-19T07:11:43Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:11:44Z",
+        "conclusion": "skipped",
+        "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "number": 15,
+        "started_at": "2026-10-19T07:11:44Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:11:44Z",
+        "conclusion": "success",
+        "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "number": 16,
+        "started_at": "2026-10-19T07:11:44Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:11:44Z",
+        "conclusion": "success",
+        "name": "Complete job",
+        "number": 17,
+        "started_at": "2026-10-19T07:11:44Z",
+        "status": "completed"
+      }
+    ],
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39204506148/job/117904302635"
+  },
+  "failure": {
+    "test": "actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily",
+    "location": "game/test/demo-sources.test.mjs:49:1",
+    "error": "Replay verification failed. Its inputs do not reproduce the recorded final state.",
+    "name": "ReplayVerificationError",
+    "stack": [
+      "preparePlayer (game/replay-player.mjs:71:19)",
+      "Object.create (game/demo-sources.mjs:89:26)",
+      "TestContext.<anonymous> (game/test/demo-sources.test.mjs:72:20)"
+    ],
+    "tests": 85,
+    "passed": 84,
+    "failed": 1,
+    "durationMs": 56640.512562
+  },
+  "log": {
+    "api": "repos/mekhovov/revealline/actions/jobs/117904302635/logs",
+    "bytes": 69125,
+    "sha256": "09a12a059928eae47021a87910806d0791b2220f74212e5021fc2cabf4c6a0b7",
+    "lines": 806,
+    "excerpts": [
+      {
+        "line": 436,
+        "text": "2026-10-19T07:11:27.9887051Z # Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily"
+      },
+      {
+        "line": 437,
+        "text": "2026-10-19T07:11:27.9891359Z not ok 25 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily"
+      },
+      {
+        "line": 438,
+        "text": "2026-10-19T07:11:27.9891871Z   ---"
+      },
+      {
+        "line": 439,
+        "text": "2026-10-19T07:11:27.9892093Z   duration_ms: 960.80571"
+      },
+      {
+        "line": 440,
+        "text": "2026-10-19T07:11:27.9892547Z   location: '/home/runner/work/revealline/revealline/game/test/demo-sources.test.mjs:49:1'"
+      },
+      {
+        "line": 441,
+        "text": "2026-10-19T07:11:27.9893019Z   failureType: 'testCodeFailure'"
+      },
+      {
+        "line": 442,
+        "text": "2026-10-19T07:11:27.9893485Z   error: 'Replay verification failed. Its inputs do not reproduce the recorded final state.'"
+      },
+      {
+        "line": 443,
+        "text": "2026-10-19T07:11:27.9894092Z   code: 'ERR_TEST_FAILURE'"
+      },
+      {
+        "line": 444,
+        "text": "2026-10-19T07:11:27.9894353Z   name: 'ReplayVerificationError'"
+      },
+      {
+        "line": 445,
+        "text": "2026-10-19T07:11:27.9894598Z   stack: |-"
+      },
+      {
+        "line": 446,
+        "text": "2026-10-19T07:11:27.9895032Z     preparePlayer (file:///home/runner/work/revealline/revealline/game/replay-player.mjs:71:19)"
+      },
+      {
+        "line": 447,
+        "text": "2026-10-19T07:11:27.9895722Z     async Object.create (file:///home/runner/work/revealline/revealline/game/demo-sources.mjs:89:26)"
+      },
+      {
+        "line": 448,
+        "text": "2026-10-19T07:11:27.9896524Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/demo-sources.test.mjs:72:20)"
+      },
+      {
+        "line": 449,
+        "text": "2026-10-19T07:11:27.9897133Z     async Test.run (node:internal/test_runner/test:932:9)"
+      },
+      {
+        "line": 450,
+        "text": "2026-10-19T07:11:27.9897899Z     async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)"
+      },
+      {
+        "line": 451,
+        "text": "2026-10-19T07:11:27.9898285Z   ..."
+      },
+      {
+        "line": 752,
+        "text": "2026-10-19T07:11:43.6521859Z 1..85"
+      },
+      {
+        "line": 753,
+        "text": "2026-10-19T07:11:43.6522172Z # tests 85"
+      },
+      {
+        "line": 754,
+        "text": "2026-10-19T07:11:43.6525101Z # suites 0"
+      },
+      {
+        "line": 755,
+        "text": "2026-10-19T07:11:43.6525352Z # pass 84"
+      },
+      {
+        "line": 756,
+        "text": "2026-10-19T07:11:43.6525518Z # fail 1"
+      },
+      {
+        "line": 757,
+        "text": "2026-10-19T07:11:43.6525694Z # cancelled 0"
+      },
+      {
+        "line": 758,
+        "text": "2026-10-19T07:11:43.6525879Z # skipped 0"
+      },
+      {
+        "line": 759,
+        "text": "2026-10-19T07:11:43.6526049Z # todo 0"
+      },
+      {
+        "line": 760,
+        "text": "2026-10-19T07:11:43.6526245Z # duration_ms 56640.512562"
+      },
+      {
+        "line": 761,
+        "text": "2026-10-19T07:11:43.6584170Z ##[error]Process completed with exit code 1."
+      }
+    ],
+    "note": "Full downloaded log digest; ANSI sequences removed only from displayed excerpts."
+  },
+  "artifact": {
+    "name": "appearance-demo-admission-1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b-1",
+    "uploadStep": "success",
+    "uploadedBytes": 5349,
+    "zipSha256": "336c9194ac618e7c5fd15d5c754356c4590bb6a6f93a84e6aaf83e37e5495065",
+    "downloaded": false
+  },
+  "limitations": [
+    "The failed source identity/final-state mismatch is not diagnosed by this receipt.",
+    "The 84 passing tests do not clear the failed demo_admission gate.",
+    "Frozen source, HEAD, harness and local endurance remain unchanged."
+  ]
+}

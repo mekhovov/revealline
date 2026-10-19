@@ -1,0 +1,255 @@
+{
+  "format": "SharedDemoHostedFailureReviewV1",
+  "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "scope": "Read-only completed GitHub job metadata/log; no workflow action, local test execution or endurance change.",
+  "job": {
+    "completed_at": "2026-10-19T07:08:33Z",
+    "conclusion": "failure",
+    "head_sha": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+    "id": 117904302540,
+    "name": "optional-practice",
+    "run_id": 39204506104,
+    "started_at": "2026-10-19T06:52:33Z",
+    "status": "completed",
+    "steps": [
+      {
+        "completed_at": "2026-10-19T06:52:35Z",
+        "conclusion": "success",
+        "name": "Set up job",
+        "number": 1,
+        "started_at": "2026-10-19T06:52:34Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T06:53:29Z",
+        "conclusion": "success",
+        "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "number": 2,
+        "started_at": "2026-10-19T06:52:35Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T06:53:30Z",
+        "conclusion": "success",
+        "name": "Record optional integration source",
+        "number": 3,
+        "started_at": "2026-10-19T06:53:29Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T06:53:36Z",
+        "conclusion": "success",
+        "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "number": 4,
+        "started_at": "2026-10-19T06:53:30Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T06:53:36Z",
+        "conclusion": "success",
+        "name": "Read explicit automated-suite policy",
+        "number": 5,
+        "started_at": "2026-10-19T06:53:36Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T06:53:38Z",
+        "conclusion": "success",
+        "name": "Run npm ci",
+        "number": 6,
+        "started_at": "2026-10-19T06:53:36Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T06:53:39Z",
+        "conclusion": "success",
+        "name": "Install pinned FPV persistence test dependencies",
+        "number": 7,
+        "started_at": "2026-10-19T06:53:38Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:08:30Z",
+        "conclusion": "failure",
+        "name": "Verify optional routes, replay, input and installation isolation",
+        "number": 8,
+        "started_at": "2026-10-19T06:53:39Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:08:30Z",
+        "conclusion": "skipped",
+        "name": "Freeze twice and verify optional package artifacts",
+        "number": 9,
+        "started_at": "2026-10-19T07:08:30Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:08:30Z",
+        "conclusion": "skipped",
+        "name": "Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f",
+        "number": 10,
+        "started_at": "2026-10-19T07:08:30Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:08:30Z",
+        "conclusion": "skipped",
+        "name": "Report optional-package boundary",
+        "number": 11,
+        "started_at": "2026-10-19T07:08:30Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:08:30Z",
+        "conclusion": "skipped",
+        "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "number": 21,
+        "started_at": "2026-10-19T07:08:30Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:08:31Z",
+        "conclusion": "success",
+        "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "number": 22,
+        "started_at": "2026-10-19T07:08:30Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-19T07:08:31Z",
+        "conclusion": "success",
+        "name": "Complete job",
+        "number": 23,
+        "started_at": "2026-10-19T07:08:31Z",
+        "status": "completed"
+      }
+    ],
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39204506104/job/117904302540"
+  },
+  "failure": {
+    "test": "SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure",
+    "location": "publishing/optional-package-admission.test.mjs:63:1",
+    "error": "Complete optional source output exceeds package limits: fpv-worlds has 211/210 files and 18649958/20971520 bytes.",
+    "package": "fpv-worlds",
+    "outputFiles": 211,
+    "fileLimit": 210,
+    "fileOverage": 1,
+    "outputBytes": 18649958,
+    "byteLimit": 20971520,
+    "tests": 1290,
+    "passed": 1289,
+    "failed": 1,
+    "durationMs": 890788.822256
+  },
+  "log": {
+    "api": "repos/mekhovov/revealline/actions/jobs/117904302540/logs",
+    "bytes": 530667,
+    "sha256": "e4d4559d7df531659495553506c8289f2bb15b2c65bc5ae7794086bb9049c7a9",
+    "lines": 6841,
+    "excerpts": [
+      {
+        "line": 6068,
+        "text": "2026-10-19T07:08:30.9639578Z # Subtest: SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure"
+      },
+      {
+        "line": 6069,
+        "text": "2026-10-19T07:08:30.9640033Z not ok 1034 - SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure"
+      },
+      {
+        "line": 6070,
+        "text": "2026-10-19T07:08:30.9640127Z   ---"
+      },
+      {
+        "line": 6071,
+        "text": "2026-10-19T07:08:30.9640233Z   duration_ms: 1511.803477"
+      },
+      {
+        "line": 6072,
+        "text": "2026-10-19T07:08:30.9640656Z   location: '/home/runner/work/revealline/revealline/publishing/optional-package-admission.test.mjs:63:1'"
+      },
+      {
+        "line": 6073,
+        "text": "2026-10-19T07:08:30.9640804Z   failureType: 'testCodeFailure'"
+      },
+      {
+        "line": 6074,
+        "text": "2026-10-19T07:08:30.9641268Z   error: 'Complete optional source output exceeds package limits: fpv-worlds has 211/210 files and 18649958/20971520 bytes.'"
+      },
+      {
+        "line": 6075,
+        "text": "2026-10-19T07:08:30.9641376Z   code: 'ERR_TEST_FAILURE'"
+      },
+      {
+        "line": 6076,
+        "text": "2026-10-19T07:08:30.9641478Z   stack: |-"
+      },
+      {
+        "line": 6077,
+        "text": "2026-10-19T07:08:30.9642030Z     createOptionalPackageCandidate (file:///home/runner/work/revealline/revealline/publishing/optional-package-candidate.mjs:79:11)"
+      },
+      {
+        "line": 6078,
+        "text": "2026-10-19T07:08:30.9642465Z     fixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-admission.test.mjs:20:21)"
+      },
+      {
+        "line": 6079,
+        "text": "2026-10-19T07:08:30.9643024Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/publishing/optional-package-admission.test.mjs:69:13)"
+      },
+      {
+        "line": 6080,
+        "text": "2026-10-19T07:08:30.9643240Z     async Test.run (node:internal/test_runner/test:932:9)"
+      },
+      {
+        "line": 6081,
+        "text": "2026-10-19T07:08:30.9643525Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)"
+      },
+      {
+        "line": 6082,
+        "text": "2026-10-19T07:08:30.9643620Z   ..."
+      },
+      {
+        "line": 6820,
+        "text": "2026-10-19T07:08:30.9814798Z # tests 1290"
+      },
+      {
+        "line": 6821,
+        "text": "2026-10-19T07:08:30.9814891Z # suites 0"
+      },
+      {
+        "line": 6822,
+        "text": "2026-10-19T07:08:30.9814993Z # pass 1289"
+      },
+      {
+        "line": 6823,
+        "text": "2026-10-19T07:08:30.9815089Z # fail 1"
+      },
+      {
+        "line": 6824,
+        "text": "2026-10-19T07:08:30.9815185Z # cancelled 0"
+      },
+      {
+        "line": 6825,
+        "text": "2026-10-19T07:08:30.9815286Z # skipped 0"
+      },
+      {
+        "line": 6826,
+        "text": "2026-10-19T07:08:30.9815380Z # todo 0"
+      },
+      {
+        "line": 6827,
+        "text": "2026-10-19T07:08:30.9815501Z # duration_ms 890788.822256"
+      },
+      {
+        "line": 6828,
+        "text": "2026-10-19T07:08:30.9828210Z ##[error]Process completed with exit code 1."
+      }
+    ],
+    "note": "Full log digest covers the downloaded log; ANSI sequences removed only from displayed excerpts."
+  },
+  "limitations": [
+    "This identifies the file-count failure, not its cause or whether it predates the feature.",
+    "The passed test count does not make the failed optional-practice job pass.",
+    "Source, HEAD, harness and local endurance remain untouched."
+  ]
+}

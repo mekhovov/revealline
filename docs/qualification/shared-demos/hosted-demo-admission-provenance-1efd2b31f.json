@@ -1,0 +1,175 @@
+{
+  "format": "SharedDemoHostedFailureProvenanceV1",
+  "head": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "jobId": 117904302635,
+  "runId": 39204506148,
+  "environment": {
+    "os": "Ubuntu 24.04.5 LTS",
+    "runnerImage": "ubuntu-24.04",
+    "runnerImageVersion": "20261012.334.1",
+    "runnerVersion": "2.337.0",
+    "node": "22.13.1",
+    "npm": "10.9.2",
+    "platform": "linux",
+    "architecture": "x64",
+    "evidence": "Full job log lines11-20,232,248,253-254; x64/Linux follows the exact setup-node archive name."
+  },
+  "fullLog": {
+    "path": "hosted-demo-admission-1efd2b31f.log.txt",
+    "bytes": 69125,
+    "sha256": "09a12a059928eae47021a87910806d0791b2220f74212e5021fc2cabf4c6a0b7"
+  },
+  "artifact": {
+    "artifactId": 12168599097,
+    "zipBytes": 5349,
+    "zipSha256": "336c9194ac618e7c5fd15d5c754356c4590bb6a6f93a84e6aaf83e37e5495065",
+    "entries": [
+      {
+        "name": "demo-admission-tests.tap",
+        "bytes": 21898,
+        "compressed": 5187
+      }
+    ],
+    "saved": "docs/qualification/shared-demos/hosted-demo-admission-1efd2b31f.tap.txt",
+    "tapBytes": 21898,
+    "tapSha256": "e2ee103cb70b91982b9b7f89a333cc9c4caff8d45869c07ec9f74d66f1f1c3a6",
+    "evidence": [
+      {
+        "line": 133,
+        "text": "  ..."
+      },
+      {
+        "line": 134,
+        "text": "# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily"
+      },
+      {
+        "line": 135,
+        "text": "not ok 25 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily"
+      },
+      {
+        "line": 136,
+        "text": "  ---"
+      },
+      {
+        "line": 137,
+        "text": "  duration_ms: 960.80571"
+      },
+      {
+        "line": 138,
+        "text": "  location: '/home/runner/work/revealline/revealline/game/test/demo-sources.test.mjs:49:1'"
+      },
+      {
+        "line": 139,
+        "text": "  failureType: 'testCodeFailure'"
+      },
+      {
+        "line": 140,
+        "text": "  error: 'Replay verification failed. Its inputs do not reproduce the recorded final state.'"
+      },
+      {
+        "line": 141,
+        "text": "  code: 'ERR_TEST_FAILURE'"
+      },
+      {
+        "line": 142,
+        "text": "  name: 'ReplayVerificationError'"
+      },
+      {
+        "line": 143,
+        "text": "  stack: |-"
+      },
+      {
+        "line": 144,
+        "text": "    preparePlayer (file:///home/runner/work/revealline/revealline/game/replay-player.mjs:71:19)"
+      },
+      {
+        "line": 145,
+        "text": "    async Object.create (file:///home/runner/work/revealline/revealline/game/demo-sources.mjs:89:26)"
+      },
+      {
+        "line": 146,
+        "text": "    async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/demo-sources.test.mjs:72:20)"
+      },
+      {
+        "line": 147,
+        "text": "    async Test.run (node:internal/test_runner/test:932:9)"
+      },
+      {
+        "line": 148,
+        "text": "    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)"
+      },
+      {
+        "line": 149,
+        "text": "  ..."
+      },
+      {
+        "line": 150,
+        "text": "# Subtest: same map IDs in separately installed themed owners do not collide"
+      },
+      {
+        "line": 151,
+        "text": "ok 26 - same map IDs in separately installed themed owners do not collide"
+      },
+      {
+        "line": 152,
+        "text": "  ---"
+      },
+      {
+        "line": 153,
+        "text": "  duration_ms: 57.198978"
+      },
+      {
+        "line": 154,
+        "text": "  ..."
+      },
+      {
+        "line": 155,
+        "text": "# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey"
+      },
+      {
+        "line": 156,
+        "text": "ok 27 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey"
+      },
+      {
+        "line": 157,
+        "text": "  ---"
+      },
+      {
+        "line": 158,
+        "text": "  duration_ms: 3304.832585"
+      },
+      {
+        "line": 159,
+        "text": "  ..."
+      },
+      {
+        "line": 160,
+        "text": "# Subtest: actual public company editions expose only their own isolated installed levels"
+      },
+      {
+        "line": 161,
+        "text": "ok 28 - actual public company editions expose only their own isolated installed levels"
+      },
+      {
+        "line": 162,
+        "text": "  ---"
+      },
+      {
+        "line": 163,
+        "text": "  duration_ms: 3062.296019"
+      }
+    ]
+  },
+  "identityFinding": {
+    "exactSourceIdAvailable": false,
+    "verifierDiagnosticsAvailable": false,
+    "scope": "Full job log and the sole artifact TAP file contain only the generic ReplayVerificationError plus stack. The loop does not annotate the error with source.id before source.create at test line72.",
+    "failure": "Replay verification failed. Its inputs do not reproduce the recorded final state.",
+    "requiredNextEvidence": "After source freeze, a bounded source-tagged reproduction must identify the clip and retain its verification diagnostics before selecting a repair."
+  },
+  "limitations": [
+    "No local replay/test/browser execution occurred.",
+    "Platform/runtime differences are observed facts, not an established cause.",
+    "Runtime, HEAD, harness and endurance remain untouched."
+  ]
+}

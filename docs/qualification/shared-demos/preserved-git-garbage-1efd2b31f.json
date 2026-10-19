@@ -1,0 +1,25 @@
+{
+  "created": "2026-10-19T05:30:04.703881+00:00",
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/objects/pack/tmp_pack_5w0ESN",
+  "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-git-temporary-objects/tmp_pack_5w0ESN-1efd2b31f",
+  "before": {
+    "dev": 16777235,
+    "inode": 148189202,
+    "uid": 502,
+    "size": 1562640384,
+    "mtimeNs": 1792387576024942321,
+    "ctimeNs": 1792387576024942321,
+    "nlink": 1,
+    "mode": 33060
+  },
+  "sha256": "b0fb87987aa4c95dac5248c6f40a50453c7466e72dfcf8b220c802e57a6124ab",
+  "backupVerified": true,
+  "sourceRehashVerified": true,
+  "openHandlesAbsentBeforeRemoval": true,
+  "gitClassification": "garbage (read-only storage audit)",
+  "producer": "unknown",
+  "removed": true,
+  "freeBefore": 127881216,
+  "scope": "Only inactive temporary Git file; valid packs, unrelated/user files and earlier backups unchanged.",
+  "freeAfter": 1186500608
+}
