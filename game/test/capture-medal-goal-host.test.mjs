@@ -53,8 +53,13 @@ test('actual earned Capture result localizes its medal gap without changing acce
   const run = p.rendered.run;
   assert.equal(run.medal, 'silver');
   assert.equal(recoverGameplayTuning(run.level).adminOverride, false);
-  assert.match(p.$('overlay-footnote').textContent, /Next: Gold.*1 s.*rounded up.*No lives lost/);
-  assert.equal(p.$('overlay-footnote').textContent, captureMedalGoalCopy(run));
+  const goal = p.$('capture-medal-goal');
+  assert.equal(goal.hidden, false);
+  assert.equal(goal.parentElement, p.$('overlay-reading'));
+  assert.equal(goal.classList.contains('overlay-footnote'), false);
+  assert.match(goal.textContent, /Next: Gold.*1 s.*rounded up.*No lives lost/);
+  assert.equal(goal.textContent, captureMedalGoalCopy(run));
+  assert.equal(p.$('overlay-footnote').textContent, '');
   const profileKey = 'revealline.library.dev.v1',
     saved = loadLibrary(p.storage, profileKey, { campaigns: [campaign] }).library;
   assert.equal(saved.campaigns[campaignKey(campaign)].clears.first.medals, 2);
@@ -64,11 +69,8 @@ test('actual earned Capture result localizes its medal gap without changing acce
     writes = p.storage.writes.length;
   for (const language of ['uk', 'en']) {
     setLocale(language, { persist: false });
-    assert.equal(p.$('overlay-footnote').textContent, captureMedalGoalCopy(run));
-    assert.match(
-      p.$('overlay-footnote').textContent,
-      language === 'uk' ? /Наступна медаль: золото/ : /Next: Gold/,
-    );
+    assert.equal(goal.textContent, captureMedalGoalCopy(run));
+    assert.match(goal.textContent, language === 'uk' ? /Наступна медаль: золото/ : /Next: Gold/);
     assert.equal(p.doc.activeElement === p.$('retry-button'), true);
     assert.equal(p.rendered.run === run, true);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
@@ -80,6 +82,56 @@ test('actual earned Capture result localizes its medal gap without changing acce
   assert.equal(p.rendered.run.levelId, run.levelId);
   assert.equal(p.rendered.run.status, 'running');
   assert.equal(p.$('game-overlay').hidden, true);
+  p.$('pause-button').click();
+  p.frame(0);
+  assert.equal(goal.hidden, true);
+  assert.equal(goal.textContent, '');
+  assert.deepEqual(p.errors, []);
+});
+
+test('earned medal guidance uses the existing overflowing reader in both languages without changing the result', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const p = await soloPage(t, { campaign });
+  // Finite overflow geometry exercises the real reader owner when the native
+  // result paints. Actual portrait/landscape CSS is separate browser evidence.
+  p.$('overlay-reading').clientHeight = 120;
+  p.$('overlay-reading').scrollHeight = 640;
+  await complete(p);
+  const goal = p.$('capture-medal-goal'),
+    reader = p.$('overlay-reading'),
+    entry = p.$('overlay-read'),
+    done = p.$('overlay-reading-done'),
+    checkpoint = authoritativeCheckpoint(p.rendered.run),
+    storage = [...p.storage.map],
+    writes = p.storage.writes.length;
+  assert.ok(goal, 'medal guidance has its own result-only semantic node');
+  assert.equal(reader.contains(goal), true);
+  assert.equal(goal.hidden, false);
+  for (const language of ['en', 'uk']) {
+    setLocale(language, { persist: false });
+    assert.equal(goal.textContent, captureMedalGoalCopy(p.rendered.run));
+    assert.equal(goal.hidden, false);
+    p.frame(0);
+    assert.equal(entry.hidden, false);
+    entry.focus();
+    entry.click();
+    assert.equal(p.doc.activeElement, reader);
+    assert.equal(done.disabled, false);
+    reader.emit('keydown', { key: 'End', code: 'End', repeat: false });
+    reader.emit('keyup', { key: 'End', code: 'End', repeat: false });
+    assert.equal(reader.scrollTop, 520);
+    reader.emit('keydown', { key: 'Escape', code: 'Escape', repeat: false });
+    reader.emit('keyup', { key: 'Escape', code: 'Escape', repeat: false });
+    assert.equal(p.doc.activeElement, entry);
+    assert.equal(done.disabled, true);
+    assert.equal(p.$('game-overlay').dataset.kind, 'won');
+    assert.equal(p.$('game-overlay').hidden, false);
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+    assert.deepEqual([...p.storage.map], storage);
+    assert.equal(p.storage.writes.length, writes);
+  }
   assert.deepEqual(p.errors, []);
 });
 
@@ -93,6 +145,8 @@ test('an actual administrative playtest completion does not advertise a next med
   assert.equal(recoverGameplayTuning(p.rendered.run.level).adminOverride, true);
   assert.match(p.$('overlay-copy').textContent, /no clear, medal or mastery awarded/);
   assert.equal(p.$('result-medals').textContent, '');
+  assert.equal(p.$('capture-medal-goal').hidden, true);
+  assert.equal(p.$('capture-medal-goal').textContent, '');
   assert.equal(p.$('overlay-footnote').textContent, '');
   const saved = loadLibrary(p.storage, 'revealline.library.dev.v1', {
     campaigns: [campaign],

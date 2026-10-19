@@ -1,9 +1,13 @@
 # Capture medal goals
 
 F23b replaces the generic faster/cleaner retry suggestion in the existing Solo
-Capture result footnote with the next medal's accepted time target and remaining
+Capture result with the next medal's accepted time target and remaining
 conditions. The existing result summary, stars, picture, actions and record
 owners remain in place. English and Ukrainian use the normal live locale binding.
+The guidance belongs to the existing scrollable Mission details reader rather
+than the optional footer, which compact and short-landscape layouts hide. It
+occupies a complete row in the compact result and uses the existing Read details
+and Done reading controls; it adds no dialog or focus owner.
 
 The projection reads the terminal core medal and effective `run.rules.timeMedals`.
 Bronze targets Silver by time. Silver targets Gold by time and no lost lives.
@@ -21,7 +25,7 @@ and nonterminal runs have no medal goal.
 
 Practice keeps its existing no-unlocks footnote, and First Flight retains its
 lesson result owner. Administrative tuning keeps the existing no-award result
-message and suppressed stars, with no medal-goal footnote. This feature does
+message and suppressed stars, with no medal goal. This feature does
 not change collection, mastery, Journey star or recording eligibility.
 
 The focused tests earn native Gold, Silver and Bronze, verify their recordings,
