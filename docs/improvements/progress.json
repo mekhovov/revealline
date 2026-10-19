@@ -15,11 +15,11 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Capture Home: nine complete files pass, 113 checks. Unchanged captured main reproduces the final-file memory error; its post-audit hits disk reserve. Recovery now verifies all 29,267 files and original inodes restored. Review an independent test-memory prerequisite, then finish source/browser/package/CI gates.",
-    "P1 · Single Drone/Riy: local 0d301 includes the frozen touch dock and current compatibility documentation. Run 28 complete files, then both fonts, EN/UK, portrait controls and the complete menu/save/result journey, source checks and package. Earlier 64/64 reader checks keep their scope.",
+    "P1 · Capture Home: nine complete files/113 checks pass. Captured unchanged main reproduces final-file memory error; its failed post-audit is preserved and separate source recovery is verified. Local test-onlyd34 preserves22cases as four complete files with unchanged assertions/individual300s limits; root14-blob/ASTreview passes; regressions/native checks Not run. Qualify prerequisite, then source/browser/package/CI gates.",
+    "P1 · Single Drone/Riy: two complete files/28 checks pass on0d301. Third file stops at disk reserve without totals;25 files Not run. Recovery integrity/restoration verified; resume remaining cohort and both fonts/EN/UK/portrait/menu/save/result/source/package gates. Earlier64/64 reader checks keep their scope.",
     "P1 · Text compatibility #1668: all 11 configured source checks pass at the recorded source. Reconcile conflicts with newer main, then verify current browser, package and CI.",
     "P1 · Team Home #1747: source now merged. All nine admitted files match the independently reviewed local reconciliation. Prior 11 source checks remain bound to 22c553; finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
-    "P1 · Shared support: the independent controller wording replacement passes 22 component cases, lint and formatting. The actual two-case Solo host and full configured source checks remain; finish Worlds, Rooms and other host delivery gates.",
+    "P1 · Shared support: independent controller wording passes 22 component cases, lint/format and both actual Solo-host cases. All 11 configured source components stopped before launch at disk preflight. Resume those checks, then browser/package and remaining host delivery gates.",
     "P2 · Room invitations #1744: source merged; 108 scoped checks, tracked-module lint and delayed QR focus review pass. Full source, Ukrainian host, manual fallback, package, sharing, scanning and device checks remain.",
     "P2 · Audio and terminology: preserve merged changes; finish remaining host copy, listening and player acceptance.",
     "Continue phases 0–8 with all 83 feature groups and 113 deliverables in their original priority order and estimates. Source merge is not full feature completion. Protect 2 GiB; physical iPhone offline startup, Steam Deck and suspend/resume remain Not tested."
@@ -45,12 +45,12 @@
       "note": "Published prepared inventory is within current rolling-main980MB contract, above plan950MB target. Default1.075GB local output is a different profile. No limits changed or future candidate capacity inferred."
     },
     "localCapacity": {
-      "status": "native_paused_at_disk_reserve_recovery_only",
+      "status": "heavy_checks_held_below_native_reserve_source_review_continues",
       "recoveredBytes": 1813852160,
       "freeBytesAtCompletion": 2801545216,
       "protectedFloorBytes": 2147483648,
       "receipt": ".cache/improvements-evidence/2026-10-19/safe-duplicate-storage-cleanup/result.json",
-      "note": "Safe storage compaction and recoverable cache cleanup preserve all source, local-only commits, WIP, refs/indexes, dependencies, evidence and game offline/save storage. Two further old packs are replaced by exact verified minimal retention packs; every packed object and promisor object remains available. Free space is point-in-time; protect2GiB and preflight native/packages. Later unchanged-main native diagnostic hits disk reserve during post-audit; all guarded native/source-growth work is held until fresh capacity preflight. Recovery-only reads verify every source and saved original; restoring existing inodes requires no new source payload.",
+      "note": "Lossless Git compaction preserves every packed/promisor object, local-only commits, refs, indexes, source and WIP. Recoverable cache archives remain intact; no game offline/save storage touched. Other disk activity continues, so point-in-time space is not a capacity guarantee. Protect2GiB for native/build/package work; exact validation copies are restored before reuse.",
       "secondCleanup": {
         "generatedBytecodeAllocatedBytes": 348528640,
         "additionalDuplicatePacksExpired": 8,
@@ -103,7 +103,49 @@
           ".cache/improvements-evidence/2026-10-19/reversible-compiled-sdk-cache/result.json",
           ".cache/improvements-evidence/2026-10-19/minimal-retention-generated-duplicate-release.json"
         ]
+      },
+      "latestFreePointBytes": 2042724352,
+      "latestCompaction": {
+        "sourcePackBytes": 1478004933,
+        "minimalReplacementBytes": 545060240,
+        "requiredObjectsRetained": 18502,
+        "packedObjectsPreserved": 167319,
+        "promisorObjectsPreserved": 136906,
+        "allCurrentMetadataPreservedAtExpiry": true,
+        "nativeTestFloorUnchanged": 2147483648,
+        "receipt": ".cache/improvements-evidence/2026-10-19/safe-minimal-retention-phase6-expiry/result.json",
+        "note": "Read-only compression trial first hit768MiBRSS; bounded Git mmap/delta caches reduce observedRSS309.8MiB without raisinglimits. Cleanup-only temporaryreserve768MiB/600MiBfootprint leaves alloriginalpacks untilnewpack/18,502OIDs/fullretainedpackchecks verify. Unrelatedbranch metadata changes abort firstexpiry beforedeletion; freshprotectedbaseline then nativeexpiry preserves allcurrentmetadata andallobjects. Runtime/native/package2GiBreserveunchanged."
+      },
+      "concurrentWorkPreference": "User explicitly requests other chats keep running; no messages or pauses sent. Preflight every guarded run; source-only review and safe recoverable cleanup continue.",
+      "provenTemporaryFragmentRelease": {
+        "count": 2,
+        "duplicateBytes": 133431296,
+        "observedRecoveredBytes": 139304960,
+        "proof": "Everyfragmentbyteexactprefixofretainedbb49pack;entirepackSHA1matchesfilename/footer/indexandpriornativeverify;noopenhandles;sourcepackunchanged",
+        "unprovenFragmentPreserved": "tmp_pack_g6cUnv43515904B",
+        "receipt": ".cache/improvements-evidence/2026-10-19/proven-duplicate-pack-fragment-release/result.json"
       }
+    },
+    "pendingTestPrerequisite": {
+      "status": "local_committed_not_applied_or_tested",
+      "base": "e660eaef0aea3e93aa4ea3da4cc6fe984519a828",
+      "paths": 14,
+      "originalCasesPreserved": 22,
+      "completeNativeFiles": 4,
+      "perFileTimeoutMs": 300000,
+      "regressions": "not_run",
+      "native": "not_run",
+      "rootASTReview": "pass_19_registration_blocks_14_helper_declarations_verbatim",
+      "patchSHA256": "80867fbea9137540851b72558cffbde16b2fa4c9712ab4c5571d8c3e2b7fa67a",
+      "manifestSHA256": "fdba6d2597b2eb373b0f9da87c0fd2591dcbae3573517a13acb2cf7c3d75dabf",
+      "productionOwnersUnchanged": true,
+      "commit": "d34c52599b5bb1fb42972de8368bf75c74f73eb0",
+      "tree": "2b09a6ed5d2d0b10714f4152ea14897612f27dc8",
+      "branch": "codex/test-mission-library-file-isolation",
+      "published": false,
+      "rootCommittedBlobReview": "all14exactreviewedmanifest",
+      "sourceTreePreservation": "44954otherbaseentriesexact",
+      "commitReceiptSHA256": "1c239e7bd0e72961924f62750b1e1ed2eeaadf8b03f7a29ddbc634583b9d6703"
     }
   },
   "tasks": [
@@ -1860,7 +1902,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "P1: actual two-case primary support host and11 configured source components on independent3546, then browser/package and replacement draft. Finish remaining Worlds/Rooms/host gates; source merges remain separate from physical controller acceptance.",
+      "next": "P1: resume11 configured source components for3546 after capacity and exact validation copy return;22component cases,lint/format andactual2-caseprimaryhost pass. Then browser/package/replacementdraft and remainingWorlds/Rooms/host gates.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim.",
@@ -2000,14 +2042,15 @@
           "commit": "495ef542d4ddd27d787ab08774d5e96b45bfb9a9",
           "dependency": "PR1730 exact0e9; separate shared-view correction",
           "effort": "0.5d bounded copy/branch coverage plus native/browser review",
-          "next": "Independent six-path3546 replacement passes22/22 component cases, changed-module lint and authored formatting. Actual two-case Solo host and11 configured source components require the exact full candidate scratch; browser/package and replacement draft remain. Original stacked1731 preserved.",
+          "next": "Independent3546 passes22 component cases, lint, authored formatting and the actual complete two-case Solo host. Eleven configured source components did not launch after disk reserve failed preflight; exact validation copy is safely restored. Resume source checks after capacity/qualified snapshot, then browser/package and replacement draft.",
           "evidence": [
             "Connected is ready only when assigned=true,neutral=true,confirmBlocked=false. Otherwise describe observed presence without inferring menu readiness. Disconnected with unknown/falseassignment says no connected controller observed; known assigned-disconnect/stale/unavailable remain unchanged. No raw controller/export/collector facts changed.",
             "Valid27component RED18pass9fail demonstrates incorrect wording; corrected complete27/27 zero skips. Earlier invalid incomplete-snapshot fixture13pass14fail is excluded as bugproof. EN/UK focus and exactJSONexport preserved,2newkeys/language+canonicalbundle only.",
             "Root actual frozen candidate at1280x720: EN and UK fresh Prepare use accurate absence wording, Preparefocus retained, gameDisarmed unchanged. Changing category retires summary/disables Download. Screenshots before0e9+afterEN/UK under .cache/improvements-evidence/2026-10-19/academy-controller-observation-*. No physical connected/assigned-controller or download claim.",
             "One complete serial5file run141/141 zero skips59.73s covers component27, primary/Team/Versus hosts and Academy91. Frozen six-file400155manifest exact before/after; later docs-only qualification update, committed finaled2c0f20b5e1f41d7568e6cbf598b166753096958f600f99e3734c888bef4310manifest verified. Root independently preserves5991EN/6101UKbasevalues +exact2presencekeys/language; no collector/host/export changes. Remotehead495ef/base1730/draftverified, rootattached1731.",
             "Root reviewed independent3546 exact6paths oncapturedc00: all8maincomponentcases+14originalobservationcases preserved, allmainlocalizationvalues intact plus2keys/language andcanonical18bundle. No other208pathstack transplanted. Component22/22pass in61exactdependency-file snapshot, fullrawguardedlogs/no skips/drift/children. OriginalB9WIP/index/HEAD untouched. Small lint/format prep failedcapacity BEFOREclone/Node, thereforeNotrun. ActualSolo-host2cases needfullcandidateclosure;61filecomponentrootisinsufficient.",
-            "Bounded68-file exact3546 closure adds only7 current-main config/rule/format inputs to earlier61-file component root. Changed-module ESLint exit0 in1.399s with zero output; five authored-file formatting exit0 in0.831s,66B full stdout, no stderr. Full source audit e558dc44e8b0b22dfd2a64b3f7d758e96532774892196b4cd46ad4ccb8cdff28, original B HEAD/index/9WIP and dependency link/root metadata identical before/after; no guards, truncation or remaining descendants. Root independently verifies raw hashes and receipts. Earlier1.396GB pre-write prep failure retained. Actual Solo host remains Not run; no replacement PR or package pass."
+            "Bounded68-file exact3546 closure adds only7 current-main config/rule/format inputs to earlier61-file component root. Changed-module ESLint exit0 in1.399s with zero output; five authored-file formatting exit0 in0.831s,66B full stdout, no stderr. Full source audit e558dc44e8b0b22dfd2a64b3f7d758e96532774892196b4cd46ad4ccb8cdff28, original B HEAD/index/9WIP and dependency link/root metadata identical before/after; no guards, truncation or remaining descendants. Root independently verifies raw hashes and receipts. Earlier1.396GB pre-write prep failure retained. Actual Solo host remains Not run; no replacement PR or package pass.",
+            "Actual current3546 complete primary support host2/2 PASS: zero fail/cancel/skip/todo/stderr;2.554s TAP,12.003s including post-audit,255.2MiB sampled grouppeak. Root independently verifies full689B rawstdout SHAae93770453a6aa1cc375682940ec3503e1d979dce3765dfcb26430ce1e846bce, immutable child-terminala230 and final245fd405 receipts. All29266files/6902required inputs/source05f587 fingerprint and originalB+C/WIP/previews/index/refs/dependencies unchanged. First configured lint then stops BEFORE NODE at1.491GB; all11components Notrun. Reviewed rename-only restoration returns all29267C2d5files/21originalinodes4ef, retaining20candidate copies; oldhostpass/failedpreflight remain unchanged. No publication/package/currentphysical acceptance."
           ],
           "observedRemoteHead": "495ef542d4ddd27d787ab08774d5e96b45bfb9a9",
           "deliveryState": "draft",
@@ -2018,8 +2061,9 @@
             "files": 6,
             "published": false,
             "componentCasesPassed": 22,
-            "primaryHost": "not_run",
-            "lintFormat": "pass"
+            "primaryHost": "complete_two_case_pass",
+            "lintFormat": "pass",
+            "configuredSourceComponents": "not_run_capacity_preflight_stopped"
           }
         },
         {
@@ -2448,7 +2492,7 @@
       "blocker": null,
       "pr": null,
       "commit": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
-      "next": "P1: qualify clean local0d301 Single Drone/Riy dock with28 complete files, then both fonts/languages and full compact player journeys/source/package. Raid/Time Attack/Marathon remain the next complete family; current activation stays opt-in.",
+      "next": "P1: preserve latest2complete-file/28case dock pass; recovery-only exact-source/inode restoration verified; resume incomplete/25Notrun files when capacity permits. Complete fonts/languages/player journeys/source/package; next Overflight family remains Raid/TimeAttack/Marathon.",
       "evidence": [
         "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json.",
         "Frozen627 on e40: complete play-family preference/first-paint/settings integration,377-module/21-sheet inventory,41 readable absolute declarations scaled once and2 arrow-art exclusions.138 host/bootstrap/global plus120 shared regressions and3 closure/runtime-theme tests pass; full lint pass, full validation/source/browser review pending. Thin source fixture8810, no automatic progress injection. No200% or device acceptance claimed.",
@@ -2571,7 +2615,7 @@
           "commit": "1e3771762c37660531d105f4e17e61048a1c6775",
           "dependency": "Compatibility1668 and complete SingleDrone/Riy typography/layout inventory; follow independent width repair",
           "effort": "Within original6–10d totalF09, not a second full estimate",
-          "next": "Clean local0d301 merges only the current783 compatibility qualification document onto bebce. All58 frozen feature blobs remain exact f6fac374. Complete28-file cohort is Not run; then both fonts/EN/UK/portrait/input/save/result/source/package acceptance. No push or feature PR yet.",
+          "next": "Local0d301: two complete files/28 checks pass; third file stopped at disk floor after7 emitted successes without TAP totals;25 files Not run. Recovery-only audit/restoration PASS: full29267Csource and164originalinodes verified;143Acopies retained. Then resume incomplete/remaining files, fonts/EN/UK/portrait/input/save/result/source/package acceptance. No push/feature PR.",
           "evidence": [
             "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred.",
             "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed.",
@@ -2589,17 +2633,43 @@
             "Browser inspection confirms frozen Overflight Controls exposes Touch steering, hand, size and opacity only. No Always control is wired despite shared showScreenControls preference support. Prior presumed public Always path corrected; touch-on simultaneous HUD/control acceptance remains pending. Baseline screenshot overflight-controls-no-visibility-preference.png retained. No injected touch/state or synthetic browser acceptance.",
             "Local5424 clean merge preserves57featurepaths and full compatibility869closure; later12path dock prototype is uncommitted/unqualified. ActualbaselineUK844XL live Always showed112x236px Boost overlay obscuringfield; REDsaved. Prototype separates dock and Thisvisit setting, preserves one input/storage owner and default sharedfourfields. Native earnedshield upgrade retainscriticalprotection; Pause full lastmessage +level/kills/details visible. Initialcanvas375.8x211.38 exceeded161.21parent before nativeFIT500ms settling; later unchangedlayout canvas286.59x161.21 fits wholly. Preserve transientproof; no renderer repair justified by settled sample. Current tests/lint remainNotrun;64/64 belongs earlierreadercheckpoint.",
             "Root reviewed all12prototype pathdiffs;58pathf6fac374 freeze changes only CSSminimum140pxincl8pxmargins and Pausewording beyond prior462339 freeze. Shared Dpadgap0 leaves132pxcontent for three44pxtargets atminimum. No renderer/observer/core change. Next cohort28completefiles adds unchangedoverflight-riy.test.mjs for newcompact-label projection; no newcohort pass yet.",
-            "Local normal merge0d301/treebe9ca0d159c72d8cd9e7aefaa1eb750d23905549 has parents bebce and783538. Only qualification documentation changes versus bebce; all58 feature blobs equal frozen f6fac374. Root prior compact UK live/earned-upgrade/Pause samples retain their actual prototype scope. Shared scratch remains owned by Capture baseline work before a journaled whole-tree transition. Current28-file test cohort has not run; no old64-case reader receipt retagged. Extra HUD Boost status remains unchanged because it carries distinct Overdrive facts."
+            "Local normal merge0d301/treebe9ca0d159c72d8cd9e7aefaa1eb750d23905549 has parents bebce and783538. Only qualification documentation changes versus bebce; all58 feature blobs equal frozen f6fac374. Root prior compact UK live/earned-upgrade/Pause samples retain their actual prototype scope. Shared scratch remains owned by Capture baseline work before a journaled whole-tree transition. Current28-file test cohort has not run; no old64-case reader receipt retagged. Extra HUD Boost status remains unchanged because it carries distinct Overdrive facts.",
+            "Exact0d301 native attempt: touch-controls-view3/3 and overflight-touch25/25 complete PASS, raw lengths/hashes root verified. Third complete file overflight-text-scaling-host stops at disk-floor guard in15.868s, peak307984KiB RSS, minimum2146492416B free and no terminal TAP totals; seven emitted successes are not added to qualified totals. Remaining25files Not run. Child-terminal captured before metadata postflight; originalA58/C9+76/index/refs/dependencies unchanged by recorded stage audit. Final full29246-source content rehash refused belowfloor; separate read-only recovery integrity audit and rename-only restoration pending. No assertion failure inferred, no increased limits/retry/publication; earlier64-case reader and scoped browser evidence retain actual source boundaries.",
+            "Separate recovery-only wrapper fa313a loads immutable c7a transition in memory with256MiB emergency reserve solely for integrity/rename restoration; native2GiBreserve/runner/status untouched. Read-only completeA29246manifest f49860fc and all164Cpreimages/owners/deps/native evidence exact. Explicit recovery retains143Acopies by rename and restores164 originalC inodes, removes only owned authoring symlink, full29267restoredsource4ef4ac8f, no postflight errors. Root independently verifies164originalCbytes/OIDs/dev/inode/mtime and143retainedAcopies. Recoveryreceipt080ddd0a, native evidence47c6b3f7/cohortbabb unchanged. Recovery is not test/package qualification; heavy checks remain held belowreserve."
           ],
           "blocker": null,
           "candidateCommit": "50c2b888c179bbbe42cabe6979b9c226c194dd77",
           "qualification": {
-            "automated": "complete_eight_file_reader_64_pass_other_scopes_retained",
+            "automated": "dock_two_complete_files_28_pass_third_disk_guard_incomplete_25_not_run_earlier_reader_scope_retained",
             "browser": "scoped_UK_reader_results_and_isolated_EN_UK_name_pass",
             "physical": "not_tested"
           },
           "localPrototypeManifest": "f6fac3748aa7a335c0283a1723cdc4d3e0c2afea185748e12ad51dcfe03eb1db",
-          "localCandidateCommit": "0d30169a43b7deb8368c1f8a2642d00ea89284c1"
+          "localCandidateCommit": "0d30169a43b7deb8368c1f8a2642d00ea89284c1",
+          "currentNativeQualification": {
+            "candidate": "0d30169a43b7deb8368c1f8a2642d00ea89284c1",
+            "cohortFiles": 28,
+            "acceptedCompleteFiles": 2,
+            "acceptedCompleteCases": 28,
+            "acceptedFiles": [
+              {
+                "file": "game/test/touch-controls-view.test.mjs",
+                "cases": 3
+              },
+              {
+                "file": "game/test/overflight-touch.test.mjs",
+                "cases": 25
+              }
+            ],
+            "incompleteFile": "game/test/overflight-text-scaling-host.test.mjs",
+            "incompleteStatus": "disk_floor_guard_no_terminal_tap_totals",
+            "emittedSuccessesNotCounted": 7,
+            "remainingFilesNotRun": 25,
+            "finalFullSourceContentAudit": "separate_recovery_only_audit_pass_A29246_exact_then_C29267_restored_not_native_qualification",
+            "allCohortFilesPassed": false,
+            "receipt": ".cache/improvements-diagnostics/f09-touch-0d301-qualification/native-reviewed-a12a7935/cohort.json",
+            "recoveryReceiptSHA256": "080ddd0afe3a8bfd727932f19366c61944a13f4c2a38dd0308610133ad7af0d1"
+          }
         }
       ]
     },
@@ -4663,6 +4733,16 @@
       "date": "2026-10-19",
       "item": "Admission/F10/F29",
       "reason": "Fresh88-candidate inventory:45merged/10open/32draft/1withdrawn. Team1747 admitted9blobs match root-reviewed610;1697 mono effects/voices merged. Capture unchanged-main diagnostic reproduces memory signature but fails postflightdiskguard; independent source recovery integrity passes. No fullfeature/release/hardware completion claimed."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "F58a/capacity/F09b",
+      "reason": "Actual controllerhost2/2pass withfullsource/original-workproof;11configuredcomponentsNotrunaftercapacitypreflightfails. ExactC2d5source/inodesrestored. Larger losslessGitretentioncompaction preserves167319packed/136906promisorobjects andrecoverscapacity; A sourceapplynextunderunchanged2GiBnativefloor."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "F09b/F58a/test-prerequisite/capacity",
+      "reason": "Record2complete dock files/28passed, third disk-guard incomplete and25Notrun; controller actual Solo-host2/2pass with11source components Notrun after preflight. Review separate22-case native-file isolation proposal without changing assertions/limits. Lossless minimal Git retention preserves all objects; user keeps other chats running. Source recovery and remaining gates remain explicit."
     }
   ],
   "deliveryDependencies": [
@@ -4825,7 +4905,7 @@
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1669, 1682, 1686],
     "note": "45 source slices merged,10 open for checks,32 drafts,1 withdrawn. Team Home1747 and mono effects/voices1697 newly source merged; source admission is not full feature completion. Exact-source/browser/package/hardware boundaries remain. No manual merge, promotion or check bypass.",
     "latestMain": {
-      "revision": "5b465b6cf6fa6f177f8ae59b1bac4dfea43fa4aa",
+      "revision": "596b93b24412a3b1cccd10f5eb81bff2ab7a151b",
       "note": "Observed main only; all source qualifications retain their recorded candidate/base."
     }
   }
