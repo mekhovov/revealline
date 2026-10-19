@@ -1,10 +1,13 @@
 # Flight practice: non-hosting release checklist — 15 October 2026
 
-**Latest:** [19 October Mac mini staging checkpoint](flight-practice-execution-2026-10-19.md).
-Sufficient external output space and 47 targeted writer/build passes do not
-complete the current normal build: it times out before output materialization.
-Preparation diagnosis, R1–R9 and the explicit deferrals remain open. No production
-browser journey, approval or release guard is waived by using the share.
+**Current planning authority:** [19 October status, completed/remaining work, ETAs and blockers](flight-practice-status-2026-10-19.md).
+The [19 October execution evidence](flight-practice-execution-2026-10-19.md) adds
+53 targeted passes, current Academy continuity and six current offline routes.
+The normal full build still times out, latest observed in expanded-file writing;
+new main integration/current-head CI, broader recovery/cancellation and acceptance
+remain open. All 24 actual package-gate decisions remain pending. Historical
+snapshots below do not override this review; hosting, hardware and historical
+Worlds remain owner-deferred. No release guard is waived by using the share.
 
 **Current source-bound checkpoint:** [accepted-main 237b40543 report](flight-practice-execution-2026-10-18.md)
 supersedes older status summaries below. Source `6177d2cc8` has fresh package,

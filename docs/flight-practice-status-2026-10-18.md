@@ -1,10 +1,11 @@
 # Flight practice: status, remaining work and estimates — 18 October 2026
 
-> **Latest, 19 October:** [Mac mini staging follow-up and remaining work](flight-practice-execution-2026-10-19.md).
-> The share provides sufficient output space. A new 47-test writer/build check
-> passes, but the normal full build still times out during preparation, before
-> writing output. The earlier storage-only blocker description below is historical.
-> No new production/browser, performance, human or publication pass is claimed.
+> **Authoritative current review, 19 October:** [status, completed work, remaining items, estimates and blockers](flight-practice-status-2026-10-19.md).
+> Current Academy continuity and six restarted-offline routes pass; 53 targeted
+> build-tool checks pass. The normal full build still times out, latest observed
+> in expanded-file writing. PR #1554 is draft/mergeable with 12 queued checks;
+> ten newer main commits are not integrated. Everything below is historical,
+> not a current integration, storage, browser, CI or approval claim.
 
 > **Latest:** [accepted main 237b40543: verified work, blockers and remaining estimates](flight-practice-execution-2026-10-18.md).
 > Source `6177d2cc8` passes 1,270 Practice and 756 local-UX tests, fresh package

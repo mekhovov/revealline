@@ -1,5 +1,10 @@
 # Flight practice: local diagnosis and browser follow-up — 19 October 2026
 
+> **Latest planning review:** [current status, remaining work, ETAs and blockers](flight-practice-status-2026-10-19.md).
+> It adds the fresh PR/CI snapshot and ten newer accepted-main commits. This
+> execution report preserves original source-bound results and its execution-time
+> observations; older queue/space readings below are not live state.
+
 ## Current outcome
 
 The owner-approved Mac mini folder is mounted and usable:
