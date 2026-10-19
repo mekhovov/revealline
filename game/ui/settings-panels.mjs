@@ -69,6 +69,7 @@ export function attachSettingsPanels({
   root,
   document: doc = globalThis.document,
   beforeSelect = () => false,
+  onPresentationChange = () => {},
 } = {}) {
   const list = root?.querySelector?.('.field-kit-settings-tabs'),
     records = [...(list?.querySelectorAll('[role="tab"]') ?? [])].map((tab) => ({
@@ -83,7 +84,13 @@ export function attachSettingsPanels({
     root?.classList?.contains('native-settings') &&
     (doc.defaultView?.innerWidth ?? doc.documentElement?.clientWidth ?? Infinity) <= 700;
   function view(name) {
-    if (root?.classList?.contains('native-settings')) root.setAttribute('data-settings-view', name);
+    if (
+      !root?.classList?.contains('native-settings') ||
+      root.getAttribute('data-settings-view') === name
+    )
+      return false;
+    root.setAttribute('data-settings-view', name);
+    return true;
   }
   const owned = (record) => !destroyed && owns(root, doc, list, record);
   const available = () => records.filter((record) => owned(record) && enabled(record));
@@ -104,12 +111,17 @@ export function attachSettingsPanels({
       returnFocus = beforeSelect(next.tab) === true;
     // A host hook may retire this surface, disable the target or start a newer selection.
     if (ticket !== generation || !owned(next) || !enabled(next)) return false;
+    const selectionChanged = current !== next;
     paint(next);
     if (drill && compact()) {
-      view('panel');
+      const viewChanged = view('panel');
+      if (selectionChanged || viewChanged) onPresentationChange();
+      if (ticket !== generation || !owned(next) || !enabled(next) || current !== next) return false;
       if (!focusPanel()) next.panel.focus?.();
       return true;
     }
+    if (selectionChanged) onPresentationChange();
+    if (ticket !== generation || !owned(next) || !enabled(next) || current !== next) return false;
     if (focus || returnFocus) next.tab.focus();
     return true;
   }
@@ -119,8 +131,10 @@ export function attachSettingsPanels({
   view('categories');
   const back = () => {
     if (!destroyed && compact() && root.getAttribute('data-settings-view') === 'panel') {
+      const ticket = ++generation;
       view('categories');
-      current?.tab.focus();
+      onPresentationChange();
+      if (ticket === generation && !destroyed) current?.tab.focus();
       return true;
     }
     return false;
@@ -149,12 +163,19 @@ export function attachSettingsPanels({
   root?.addEventListener('click', backClick, true);
   const resize = () => {
     if (destroyed || !root?.contains(doc.activeElement)) return;
-    if (current?.panel.contains(doc.activeElement)) view('panel');
-    else if (list?.contains(doc.activeElement)) view('categories');
+    const changed = current?.panel.contains(doc.activeElement)
+      ? view('panel')
+      : list?.contains(doc.activeElement)
+        ? view('categories')
+        : false;
+    if (changed) {
+      generation++;
+      onPresentationChange();
+    }
   };
   doc.defaultView?.addEventListener?.('resize', resize);
   function focusPanel() {
-    if (!current || !owned(current)) return false;
+    if (!current || !owned(current) || !enabled(current)) return false;
     const target = [
       ...current.panel.querySelectorAll(
         'button,a[href],select,input:not([type="hidden"]),textarea,summary,[tabindex]',
@@ -210,13 +231,17 @@ export function attachSettingsPanels({
     panel: () => (current && owned(current) ? current.panel : null),
     focusCategories() {
       if (!current || !owned(current) || !enabled(current)) return false;
-      view('categories');
+      const ticket = ++generation;
+      if (view('categories')) onPresentationChange();
+      if (ticket !== generation || destroyed || !current || !owned(current) || !enabled(current))
+        return false;
       current.tab.focus();
       return true;
     },
     focusPanel() {
-      view('panel');
-      return focusPanel();
+      const ticket = ++generation;
+      if (view('panel')) onPresentationChange();
+      return ticket === generation && !destroyed && focusPanel();
     },
     back,
     destroy() {
@@ -228,6 +253,7 @@ export function attachSettingsPanels({
       root?.removeEventListener('click', backClick, true);
       doc.defaultView?.removeEventListener?.('resize', resize);
       removers.forEach((remove) => remove());
+      onPresentationChange();
     },
   });
 }

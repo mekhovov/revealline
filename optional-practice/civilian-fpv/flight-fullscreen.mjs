@@ -9115,7 +9115,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: 5ad4d180084e82aeeee30fd336a56aa099ae3b5a1952c0e2dfc3f15c16f38cc5
+// Canonical source sha256: cdb740b2c82dd94535fdce5412f3b939a25338d58003f5e6b44f1df51ea9b97b
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9377,6 +9377,7 @@ function attachSettingsPanels({
 root,
 document:doc=globalThis.document,
 beforeSelect=()=>false,
+onPresentationChange=()=>{},
 }={}){
 const list=root?.querySelector?.('.field-kit-settings-tabs'),
 records=[...(list?.querySelectorAll('[role="tab"]')??[])].map((tab)=>({
@@ -9391,8 +9392,13 @@ const compact=()=>
 root?.classList?.contains('native-settings')&&
 (doc.defaultView?.innerWidth??doc.documentElement?.clientWidth??Infinity)<=700;
 function view(name){
-if(root?.classList?.contains('native-settings'))
+if(
+!root?.classList?.contains('native-settings')||
+root.getAttribute('data-settings-view')===name
+)
+return false;
 root.setAttribute('data-settings-view',name);
+return true;
 }
 const owned=(record)=> !destroyed&&owns(root,doc,list,record);
 const available=()=>records.filter((record)=>owned(record)&&enabled(record));
@@ -9413,12 +9419,18 @@ const ticket= ++generation,
 returnFocus=beforeSelect(next.tab)===true;
 // A host hook may retire this surface, disable the target or start a newer selection.
 if(ticket!==generation|| !owned(next)|| !enabled(next))return false;
+const selectionChanged=current!==next;
 paint(next);
 if(drill&&compact()){
-view('panel');
+const viewChanged=view('panel');
+if(selectionChanged||viewChanged)onPresentationChange();
+if(ticket!==generation|| !owned(next)|| !enabled(next)||current!==next)
+return false;
 if(!focusPanel())next.panel.focus?.();
 return true;
 }
+if(selectionChanged)onPresentationChange();
+if(ticket!==generation|| !owned(next)|| !enabled(next)||current!==next)return false;
 if(focus||returnFocus)next.tab.focus();
 return true;
 }
@@ -9428,8 +9440,10 @@ paint(initial.find(({tab})=>tab.getAttribute('aria-selected')==='true')||initial
 view('categories');
 const back=()=>{
 if(!destroyed&&compact()&&root.getAttribute('data-settings-view')==='panel'){
+const ticket= ++generation;
 view('categories');
-current?.tab.focus();
+onPresentationChange();
+if(ticket===generation&& !destroyed)current?.tab.focus();
 return true;
 }
 return false;
@@ -9458,12 +9472,19 @@ event.stopImmediatePropagation?.();
 root?.addEventListener('click',backClick,true);
 const resize=()=>{
 if(destroyed|| !root?.contains(doc.activeElement))return;
-if(current?.panel.contains(doc.activeElement))view('panel');
-else if(list?.contains(doc.activeElement))view('categories');
+const changed=current?.panel.contains(doc.activeElement)
+?view('panel')
+:list?.contains(doc.activeElement)
+?view('categories')
+:false;
+if(changed){
+generation++;
+onPresentationChange();
+}
 };
 doc.defaultView?.addEventListener?.('resize',resize);
 function focusPanel(){
-if(!current|| !owned(current))return false;
+if(!current|| !owned(current)|| !enabled(current))return false;
 const target=[
 ...current.panel.querySelectorAll(
 'button,a[href],select,input:not([type="hidden"]),textarea,summary,[tabindex]',
@@ -9519,13 +9540,17 @@ primary:()=>(current&&owned(current)?current.tab:null),
 panel:()=>(current&&owned(current)?current.panel:null),
 focusCategories(){
 if(!current|| !owned(current)|| !enabled(current))return false;
-view('categories');
+const ticket= ++generation;
+if(view('categories'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 current.tab.focus();
 return true;
 },
 focusPanel(){
-view('panel');
-return focusPanel();
+const ticket= ++generation;
+if(view('panel'))onPresentationChange();
+return ticket===generation&& !destroyed&&focusPanel();
 },
 back,
 destroy(){
@@ -9537,6 +9562,7 @@ root?.removeEventListener('cancel',cancel);
 root?.removeEventListener('click',backClick,true);
 doc.defaultView?.removeEventListener?.('resize',resize);
 removers.forEach((remove)=>remove());
+onPresentationChange();
 },
 });
 }

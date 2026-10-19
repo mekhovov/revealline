@@ -63,6 +63,7 @@ export function createCouchShell({
   document: doc = globalThis.document,
   coarse = false,
   onTransition = () => {},
+  onSettingsPresentationChange = () => {},
   onNewMatch = () => {},
   onRetry = () => {},
   getDepartureState = () => null,
@@ -83,7 +84,11 @@ export function createCouchShell({
     modality = [coarse ? 'touch' : 'keyboard', coarse ? 'touch' : 'keyboard'],
     shown = [false, false],
     removers = [],
-    settings = attachSettingsPanels({ root: $('race-options-panel'), document: doc });
+    settings = attachSettingsPanels({
+      root: $('race-options-panel'),
+      document: doc,
+      onPresentationChange: onSettingsPresentationChange,
+    });
   const authoredDestinations = authoredModeDestinations('versus', authoredRoute);
   const secondaryDestinations = Object.freeze({
     about: $('race-more-about').getAttribute('href'),
@@ -152,6 +157,7 @@ export function createCouchShell({
     briefingOwner = null,
     destroyed = false,
     revealingResize = false,
+    settingsPresented = null,
     equipment = [];
   const returnScreens = new Map();
   const preparationNodes = ['race-preparation', 'race-picture-cancel'].map((id) => {
@@ -294,6 +300,11 @@ export function createCouchShell({
     for (const [name, [id]] of Object.entries(SCREENS)) {
       $(id).hidden = running || name !== screen;
       $(id).inert = running || name !== screen;
+    }
+    const nextSettingsPresented = !running && screen === 'options';
+    if (settingsPresented !== nextSettingsPresented) {
+      settingsPresented = nextSettingsPresented;
+      onSettingsPresentationChange();
     }
   }
   function renderPads() {
@@ -773,6 +784,7 @@ export function createCouchShell({
       pauseMenu?.destroy();
       nativeMenu?.destroy();
       for (const remove of removers) remove();
+      onSettingsPresentationChange();
     },
   };
 }

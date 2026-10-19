@@ -5980,5 +5980,6 @@
   "supportSummary.game.lost": "Attempt ended",
   "supportSummary.game.unavailable": "Unavailable",
   "supportSummary.preparedWaiting": "Summary prepared below. An earlier export is still waiting for its destination; another export will be available when it settles.",
+  "supportSummary.game.finished": "Round finished",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

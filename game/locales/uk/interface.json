@@ -6090,5 +6090,6 @@
   "supportSummary.game.lost": "Спробу закінчено",
   "supportSummary.game.unavailable": "Недоступно",
   "supportSummary.preparedWaiting": "Звіт підготовлено нижче. Попередній експорт ще очікує на місце призначення; наступний буде доступний після його завершення.",
+  "supportSummary.game.finished": "Раунд завершено",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

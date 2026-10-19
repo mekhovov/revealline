@@ -46,7 +46,12 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       Number.isSafeInteger(capturedAt) && capturedAt >= 1e12 && capturedAt < 1e13
         ? new Date(capturedAt).toISOString()
         : null,
-    scope: host.kind === 'capture-team' ? 'team-game-shell' : 'primary-game-shell',
+    scope:
+      host.kind === 'capture-team'
+        ? 'team-game-shell'
+        : host.kind === 'capture-versus'
+          ? 'versus-game-shell'
+          : 'primary-game-shell',
     build: {
       version: version(host.version),
       sourceRevision:
@@ -56,8 +61,15 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       packaged: boolean(host.packaged),
     },
     game: {
-      host: oneOf(host.kind, ['solo', 'journey', 'installed-edition', 'practice', 'capture-team']),
-      state: oneOf(host.state, ['idle', 'running', 'paused', 'won', 'lost']),
+      host: oneOf(host.kind, [
+        'solo',
+        'journey',
+        'installed-edition',
+        'practice',
+        'capture-team',
+        'capture-versus',
+      ]),
+      state: oneOf(host.state, ['idle', 'running', 'paused', 'won', 'lost', 'finished']),
       locale: oneOf(host.locale, ['en', 'uk']),
       saving: {
         writable: boolean(host.writable),
