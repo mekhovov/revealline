@@ -1,25 +1,43 @@
 # Improvement delivery progress
 
-Updated **19 October 2026** (Europe/Berlin). The [approved plan](plan.md) covers **83 feature groups / 113 deliverables**. Implementation is continuing in three lanes, with independent review and browser qualification in parallel.
+Updated **19 October 2026** (Europe/Berlin). The [approved plan](plan.md) retains **83 feature groups /113 deliverables**. [The structured tracker](progress.json) records every item’s priority, effort, dependency, source revision, evidence and next action.
 
-**21 merged · 19 feature PRs ready for required checks · 30 draft feature PRs · 2 merged slices confirmed in published source · 0 newly verified live journeys.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
+**Latest recorded feature PRs:24 merged ·16 ready for required checks ·31 drafts (71 total).** Delivery dependencies such as the Team fixture repair are counted separately. These are PR counts, not percentages of completed features. Two merged slices are confirmed in the last verified published source; no new live journey is qualified.
 
 ## Current priorities
 
-| Priority | Work                                             | Status / next result                                                                                                                                                                                                                                                 |
-| -------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P1       | Foundation integration and exact-head admission  | Community and diagnostics are now integrated and ready alongside Capture, archive, offline readiness, audio/preferences and bindings. Reconcile dependent stacks and let required exact-head checks govern admission.                                                |
-| P1       | **F09 — readable text**                          | Compatibility1668 is ready after439 complete focused cases/full source gates. Primary and Snake drafts retain recorded browser evidence; Duel4d9 full source checks are running, corrected Large-pad geometry awaits browser review. Team/remaining hosts stay open. |
-| P1       | **F04b — Survival suspend**                      | Integrated b1cb passes86 combined cases, independent review, full lint and uninterrupted validation;1663 is ready for required CI. Earlier desktop package/save/restore evidence stays scoped to its recorded head; capacity and hardware remain open.               |
-| P1       | **F08 — two-seat keyboard controls**             | Duel, Team and Snake source/browser reviews pass at their stated scopes. All three integrated revisions now pass source review/gates; predecessor admission remains.                                                                                                 |
-| P1       | **F15a / F81 — labels and navigation**           | Touch/About/stats/reading hints ready; responsive return reviewed. Ukrainian route briefing #1686 is source-reviewed and ready; broader terminology stays in F59.                                                                                                    |
-| P1       | **F11/F01/F06/F79 — reviewed stacks**            | Archive restore, mode context, presets and local content recovery await reconciled predecessors and exact-head checks.                                                                                                                                               |
-| P1       | **F58 — local support summaries**                | Primary, Snake and Survival/Raid integrations reviewed. Original actual export/return evidence is retained; remaining couch/SIM/Rooms adapters stay open.                                                                                                            |
-| P1       | **F03/F07 — readable threats and critical cues** | Desktop/compact scenes inspected; no ordinary Survival blocker demonstrated yet. Assessment stays open. Preserve existing cues and implement only evidenced gaps.                                                                                                    |
+| Priority | Item                               | Current progress                                                                                                                                                                | Next result needed                                                                                                                      |
+| -------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| P1       | Foundation admission               | Text compatibility1668 is ready after439 complete tests/full source gates. Support-summary1661 eec8 and touch-save1704 b48 also pass full source gates.                         | New main conflicts require reconciliation before admission; preserve each earlier pass’s exact source scope. Required CI governs merge. |
+| P1       | Readable text and compact controls | Duel1692 4d9 full source checks pass. Team1700 2768 preserves all original Team and corrected Duel changes. Primary/Snake drafts retain their recorded browser evidence.        | Team full source gate, actual compact/landscape geometry and remaining game families.                                                   |
+| P1       | Team preview/input reliability     | Separate1714 restores8/8 complete starter-preview tests while checking the whole catalog’s identities. The remaining held-Confirm failure reproduces on unchanged main.         | Diagnose the actual input transition before treating it as a fixture or runtime defect; retain all original state/input assertions.     |
+| P1       | Survival suspend1663               | b1cb passes86 combined cases, independent review and full source gates; ready for required checks. Earlier desktop Save/restore evidence stays scoped to its source.            | Required CI/admission, candidate package capacity and physical device qualification.                                                    |
+| P1       | Compact layouts                    | Worlds1702 and Survival/Raid Settings1707 full source checks pass, alongside Duel’s correction.                                                                                 | Renew actual browser scrolling/touch-layout review; browser attachment is currently unavailable.                                        |
+| P1       | Recovery and other hosts           | Archive, context, presets, bindings and local content recovery have reviewed slices. Support adapters cover primary, Snake and Survival/Raid at recorded scopes.                | Reconcile dependencies, then remaining couch/SIM/Rooms adapters and Demo-dependent work.                                                |
+| P1       | Threats and critical cues          | Inventory and sampled play remain recorded; ordinary Survival has no demonstrated blocker yet.                                                                                  | Fill evidenced gaps only; preserve existing captions, warning and reduced-effects behavior.                                             |
+| P2       | Search recovery1715                | f977 fixes both host-ownership issues found in review;253/253 native/shared cases and5 SIM cases pass.                                                                          | Full exact-snapshot source checks are running, then actual EN/UK compact and landscape review.                                          |
+| P2       | Language and result guidance       | Worlds language1709 and reroll grammar1711 pass full source gates. Duel language1701, Capture medal1688, Raid shield1680, Time Attack1684 and reroll disclosure1687 are merged. | Actual browser acceptance for drafts, remaining result/terminology hosts and current-head required checks.                              |
 
-Estimates remain the plan’s developer-day ranges, excluding review/CI queues and unavailable hardware. No iPhone or Steam Deck is available; hardware-only gates stay **Not tested** while independent work continues.
+Estimates remain developer-day ranges in the approved plan, excluding review/CI queues, unavailable browser controls and hardware waiting. No iPhone or Steam Deck is available. Physical offline cold launch, sustained performance and sleep/resume stay **Not tested**. Source checks, modeled host interaction, actual browser play and device acceptance are separate evidence.
 
-P2 work proceeds alongside these gates: **F22** paused progress and **F19** native Survival commitments are reviewed and ready for checks. **F23** Time Attack #1684 and **F19c** reroll disclosure #1687 are merged. Capture #1688 is merged. Worlds #1702 has a source-qualified overlap correction and remains draft for renewed compact browser acceptance. Further medal hosts and utility copy remain separate deliverables.
+## Phase picture
+
+| Phase                             | Current picture                                                                                               | Main remaining work                                                                          |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 0 — Baseline                      | Isolated checkouts and source ownership established; fixture repair1714 in review.                            | Complete held-Confirm diagnosis and retain reproducible checks.                              |
+| 1 — Reliability                   | Multiple source fixes merged; reviewed foundations and new integrations await admission.                      | Current-main reconciliation, Demo dependencies and remaining labels/save notices.            |
+| 2 — Find, learn and start         | First Flight, several context/result explanations merged; search recovery1715 published.                      | Native search acceptance, next-mission recommendation, further onboarding and guidance.      |
+| 3 — Progress and offline          | Archive/local recovery and suspend have reviewed slices; support-summary foundation passes full source gates. | Admission, remaining host adapters, package capacity and real PWA/device evidence.           |
+| 4 — Comfort, input and audio      | Presets, bindings, scaling and language slices are in review or admitted.                                     | Team/remaining scaling, compact browser checks, listening and assistive-technology journeys. |
+| 5 — Practice and playing together | Planned.                                                                                                      | Playlists, replays, practice routes, invitations, lobby readiness and performance sampling.  |
+| 6 — Creator and community         | Foundational catalog/recovery slices reviewed; larger workflows planned.                                      | Creator entry/playtest/validation, previews, discovery, publishing and bookmarks.            |
+| 7 — Progression and depth         | Planned.                                                                                                      | Earned-art browsing, experiments, featured challenges and chapter content.                   |
+| 8 — Services and platforms        | Planned; bounded native scope already distinguished from full-game distribution.                              | Online recovery, cloud transfer, signed distribution/updates and optional platform features. |
+
+The work continues across independent phases while source, predecessor, browser and hardware gates remain visible. No whole-plan completion or untested player benefit is implied by a merged source PR.
+
+<details>
+<summary>Detailed evidence, earlier checkpoints and qualification boundaries</summary>
 
 ## Merged
 
@@ -107,7 +125,7 @@ All rows are **P1**. The structured tracker pins every reviewed revision and dis
 | Phase                    | Progress                                                          | Main remaining work                                                                      |
 | ------------------------ | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | 0 — Baseline             | Established                                                       | Maintain isolated branches, exact revisions and shared-file ownership.                   |
-| 1 — Reliability          | 21 merged feature PRs overall; reviewed reliability slices queued | Merge reconciliation, localization findings and Demo-dependent reliability.              |
+| 1 — Reliability          | 24 merged feature PRs overall; reviewed reliability slices queued | Merge reconciliation, localization findings and Demo-dependent reliability.              |
 | 2 — Learn and start      | First Flight merged; paused progress/upgrade context ready        | Worlds medal conditions, selection hierarchy, further onboarding and guidance.           |
 | 3 — Progress and offline | Archive/local recovery reviewed; Survival suspend active          | Suspend stack admission, remaining diagnostic hosts, package capacity, device evidence.  |
 | 4 — Comfort/input/audio  | All identified preset hosts reviewed; bindings active             | Duel/Team scaling, mono integration, remaining cues, assistive technology and listening. |
@@ -175,3 +193,44 @@ All113 deliverables remain in the structured tracker. Later practice/social, cre
 | P2       | Remaining-reroll language1711              | 5385:107/107 complete cases, EN/UK plural rules, all27,618 earlier messages retained, independent review clear.            | Full source gates and native compact review.                                      |
 
 No new public-release behavior, physical iPhone offline cold launch or Steam Deck suspend/resume acceptance is claimed. Later practice/social, creation, progression and platform phases remain in the plan.
+
+### Latest active work · 19 October
+
+**23 merged /17 ready /30 draft feature PRs** at the latest observed inventory. Raid shield context1680 and Duel live-language1701 have merged; live/device acceptance remains separate.
+
+- **P1, Duel1692:** full current4d9 lint and uninterrupted validation pass. All29,007 exact snapshot files match before/after. Keep draft for compact touch geometry.
+- **P1, touch-save1704:** reviewed b48 is published and mergeable, with172 complete focused cases and exact feature/locale/catalog preservation. New-head full gates queued; earlier1b226 full pass stays scoped to1b226.
+- **P1, Team1700:** restacking onto source-qualified Duel4d9; preserve Team renderer defaults and both families’ input tests. Source/tests developing; browser pending.
+- **P2, Worlds language1709:** full lint passes; uninterrupted source validation running. Reroll language1711 follows, then touch-save b48.
+- **P2, F77 search recovery:** source/tests now developing. Add explicit zero-result guidance, visible filter values and Reset filters that preserves typed search. Existing Clear search and return context remain. The bounded source slice is estimated1–2developer days within the unchanged2–4day F77 estimate; browser availability is excluded.
+
+F77 follows [W3C search-status guidance](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html) and draws on the [Scottish Government filter pattern](https://designsystem.gov.scot/patterns/search-results/search-filters). Existing status ownership is retained; these references do not establish assistive-technology acceptance.
+
+### Current source and review checkpoint · 19 October
+
+**24 merged / 16 ready / 30 draft feature PRs (70 total)** at the latest inventory. Responsive nested-tool return1673 has merged. Feature counts remain83 groups /113 deliverables.
+
+| Priority | Item                                                       | Current result                                                                                                                                                                            | Next remaining gate                                                                                    |
+| -------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| P1       | Support summary1661                                        | Local eec8 preserves original7 feature changes, main translations and51 support keys per language.63/63 complete cases and independent review pass after exact missing-input restoration. | Full current source gate running; publish integration, required checks and dependent adapters.         |
+| P1       | Touch-save1704                                             | b48 full lint and uninterrupted validation pass;7495 exact snapshot files unchanged.                                                                                                      | New main conflict recurred; retain draft and reconcile for admission. No successor inherits this pass. |
+| P1       | Team1700                                                   | Published2768 preserves Team and corrected Duel controls.188/196 complete cases pass; all8 failures reproduce on unchanged exact parent.                                                  | Separate starter-preview fixture repair, then current source and compact browser gates.                |
+| P1       | Compact Duel1692 / Worlds1702 / Survival-Raid Settings1707 | Current source gates pass; layouts remain drafts.                                                                                                                                         | Actual compact/landscape acceptance when browser attachment works.                                     |
+| P2       | Worlds language1709 / reroll grammar1711                   | Current e46 and5385 full source gates pass;95 and107 complete focused cases respectively.                                                                                                 | Actual native language/layout acceptance.                                                              |
+| P2       | F77 search recovery                                        | Review found reused-Snake mode and Team mode-listener bugs before publication. Successor1137 fixes both;253/253 complete cases pass.                                                      | Independent successor review, bounded draft, full source and actual browser gates.                     |
+
+The Team fixture repair first checks the entire independent catalog identity set, then uses native Classic/Custom filters for its original starter-preview scenarios. It retains the original zero-canvas, artwork identity, no-awards, paused state, focus, URL, cancellation and Next assertions. It does not claim the whole expanded catalog has no schematic canvases.
+
+All previous missing-input, incomplete-fixture and stopped attempts remain recorded separately. Physical iPhone/PWA offline cold launch and Steam Deck sleep/resume remain **Not tested**.
+
+### Published source checkpoint · 19 October
+
+**24 merged /16 ready /31 draft feature PRs (71 total)**, plus separate delivery dependencies. The original113 deliverables are unchanged.
+
+- **F58 foundation1661:** eec8 full lint, uninterrupted validation,63/63 complete selected cases and independent review pass; all3383 input blobs match before/after. Published draft; current-main conflict/admission remains.
+- **F77 search recovery1715:** published finalf977,253/253 native/shared cases and5/5 SIM cases pass. Both review bugs are fixed, valid Archive filters exercised, canonical SIM projection regenerated. Full exact-snapshot checks are running; actual compact browser review remains open.
+- **Team preview reliability1714 (delivery dependency):**8/8 focused preview cases restored with full independent catalog identity checks and native Classic/Custom filtering; original artwork/no-awards/state assertions retained. Raw adjacent137/138 result and exact-main4/5 input baseline remain disclosed.
+- **P1 follow-up:** investigate the unchanged held-Confirm input failure before classifying it as a fixture issue or changing runtime behavior. No timeout or assertion weakening is authorized by the failure itself.
+- **Next:** finish F77 source gate, qualify Team2768, reconcile current-main foundations for admission, then resume actual browser acceptance when attachment is restored. Hardware-only checks remain Not tested.
+
+</details>
