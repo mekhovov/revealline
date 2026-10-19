@@ -155,8 +155,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/homeward-skies.json',
-      bytes: 11371975,
-      sha256: '8da78e2b029ce83ad1b68fa99a9b7da446da7b3432a0705a94357397ef1974e6',
+      bytes: 11371849,
+      sha256: '4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b',
       packId: 'homeward-skies',
       campaignId: 'homeward-skies',
     },
@@ -368,8 +368,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -390,7 +390,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-07.jpg',
     image: {
       sha256: '47d47c206c066181eb78d22f474891538b7a24801aa6118f8cfd53255cb818da',
       bytes: 264337,
@@ -523,8 +523,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -545,7 +545,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-02.jpg',
     image: {
       sha256: '176400881da368a2d827192379617651fb29fd4d44773cbd5a9296e1ee8c0048',
       bytes: 307870,
@@ -708,8 +708,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -730,7 +730,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-04.jpg',
     image: {
       sha256: 'cefa98a6ac605e808fb0e4109405bc08e0f806c1ed3b4a3d22def159d217c5ec',
       bytes: 264630,
@@ -1252,8 +1252,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -1274,7 +1274,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-10.jpg',
     image: {
       sha256: '417dc519500675498cf4b5e53f5d35592b0564b68ba970e51d0f950e13ff7e9f',
       bytes: 266680,
@@ -1436,8 +1436,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -1458,7 +1458,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-01.jpg',
     image: {
       sha256: 'b1111a42a118f874a0993abec79fe63a6da88f73ae70eaf7739aecc492115fb3',
       bytes: 268343,
@@ -1811,7 +1811,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'fieldcraft',
       campaignId: 'fieldcraft',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-02.jpg',
     image: {
       sha256: '2958e511adaf042515f6445f40d739cc46797af3a7378b18477bd3d0efac167b',
       bytes: 240180,
@@ -2019,7 +2019,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'fieldcraft',
       campaignId: 'fieldcraft',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-01.jpg',
     image: {
       sha256: '2b206ab092e51af1b4569c466ec791047aba5cbd605556252d00e6a0e1be3f79',
       bytes: 276824,
@@ -2213,8 +2213,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -2235,7 +2235,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-06.jpg',
     image: {
       sha256: 'd3719e11d241388f7d798ee0e4ed78387d56932dc461f1202284c34dea1ab12d',
       bytes: 234219,
@@ -2414,8 +2414,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/homeward-skies.json',
-      bytes: 11371975,
-      sha256: '8da78e2b029ce83ad1b68fa99a9b7da446da7b3432a0705a94357397ef1974e6',
+      bytes: 11371849,
+      sha256: '4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b',
       packId: 'homeward-skies',
       campaignId: 'homeward-skies',
     },
@@ -2577,12 +2577,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/sentinel-relay.json',
-      bytes: 359487,
-      sha256: 'b52a0eac9d1a629b2f3a007e6a46b4d95da23f00ae46fe10d2febf8b783a872d',
+      bytes: 359445,
+      sha256: '9183aa976fc1e79b6745f7c6a303bf3691499e0170f1904990f07864d31965b3',
       packId: 'sentinel-relay',
       campaignId: 'sentinel-relay',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/sentinel-relay-01.jpg',
     image: {
       sha256: 'af0f43097138386e745e361b3d6d7869740f6e15d99333d3bb2c237f48123418',
       bytes: 261421,
@@ -2752,8 +2752,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -2774,7 +2774,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-09.jpg',
     image: {
       sha256: '69455e043ab30c3eee430a2a81c8f1c1cd3901203e8b4e5dd38e5377348ebfac',
       bytes: 307774,
@@ -2922,7 +2922,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'fieldcraft',
       campaignId: 'fieldcraft',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-03.jpg',
     image: {
       sha256: 'e0b5c1100d674dc8038efac33b7813921a8181e26619c19a6428e79db6842802',
       bytes: 226890,
@@ -3072,8 +3072,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/homeward-skies.json',
-      bytes: 11371975,
-      sha256: '8da78e2b029ce83ad1b68fa99a9b7da446da7b3432a0705a94357397ef1974e6',
+      bytes: 11371849,
+      sha256: '4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b',
       packId: 'homeward-skies',
       campaignId: 'homeward-skies',
     },
@@ -4169,8 +4169,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/fpv-pressure-frontier.json',
-      bytes: 11377396,
-      sha256: '2423384010024a1574dde51f6d1b1ea70529c21a8bf5d3d59acf4d6db976cab1',
+      bytes: 11377254,
+      sha256: '2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9',
       packId: 'fpv-pressure-frontier',
       campaignId: 'fpv-pressure-frontier',
     },
@@ -5469,8 +5469,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -5491,7 +5491,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-05.jpg',
     image: {
       sha256: '003e6285f7c7ee1ed155d508caa67326ad5fe4d3eeed5edc761f349361aef402',
       bytes: 207886,
@@ -5613,8 +5613,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -5635,7 +5635,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-08.jpg',
     image: {
       sha256: '935c40840c16732082d0a7cd00fa725300a2b8fd44ffd738be2cbecb2db89581',
       bytes: 276549,
@@ -6434,7 +6434,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'fieldcraft',
       campaignId: 'fieldcraft',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-04.jpg',
     image: {
       sha256: 'f7ecf0b53b5cbe1d91aa99a64432d8526953329518922efcd2e46fb38e40fcff',
       bytes: 291750,
@@ -6912,8 +6912,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -6934,7 +6934,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-11.jpg',
     image: {
       sha256: '4f56ba1159a737de7580bbe82e4e71e86e2a430f61db35f4d331280fdddb090c',
       bytes: 226563,
@@ -7226,8 +7226,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/fpv-pressure-frontier.json',
-      bytes: 11377396,
-      sha256: '2423384010024a1574dde51f6d1b1ea70529c21a8bf5d3d59acf4d6db976cab1',
+      bytes: 11377254,
+      sha256: '2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9',
       packId: 'fpv-pressure-frontier',
       campaignId: 'fpv-pressure-frontier',
     },
@@ -7673,8 +7673,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -7695,7 +7695,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-03.jpg',
     image: {
       sha256: 'a5c0112706c147589d19bbd5ed5bb14f046c2d22e8dc802c0b09a59f4712e1e6',
       bytes: 264548,
@@ -8063,8 +8063,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -8085,7 +8085,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-12.jpg',
     image: {
       sha256: 'e70a6191b244d2a32cd535b86f469174f3be935a3b95808bd929b59088e8d70b',
       bytes: 240769,
@@ -8426,8 +8426,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/fpv-pressure-frontier.json',
-      bytes: 11377396,
-      sha256: '2423384010024a1574dde51f6d1b1ea70529c21a8bf5d3d59acf4d6db976cab1',
+      bytes: 11377254,
+      sha256: '2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9',
       packId: 'fpv-pressure-frontier',
       campaignId: 'fpv-pressure-frontier',
     },
@@ -8930,7 +8930,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/spirals.jpg',
     image: {
       sha256: 'dc5c43142aa7f64c957f3662ca1d6c18353de5145646b452ecca375db6774379',
       bytes: 308094,
@@ -9388,8 +9388,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -9410,7 +9410,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-05.jpg',
     image: {
       sha256: '003e6285f7c7ee1ed155d508caa67326ad5fe4d3eeed5edc761f349361aef402',
       bytes: 207886,
@@ -9532,12 +9532,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/trembita.jpg',
     image: {
       sha256: '122e60eba8e9e0bfadfc327b274f1c585f9536b385253bca53f5455a577329ff',
       bytes: 273676,
@@ -10438,12 +10438,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/social-drone.jpg',
     image: {
       sha256: '5e9e3e5fea0320d8a43a569e6b375eda826ca32ecfc92c74085bd021f9264dbb',
       bytes: 301925,
@@ -11523,12 +11523,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/fpv-line.jpg',
     image: {
       sha256: '84b9541fe5708f2b2222cc66b7c16d97075a534fdb156cc52e4fd62dbbd3e832',
       bytes: 258362,
@@ -12429,12 +12429,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/reveal.jpg',
     image: {
       sha256: '2d7816ed5fc5d52c17ed98cc6d7eee190e5a37ad5b02b4ddfc3b590337c21064',
       bytes: 315207,
@@ -13344,12 +13344,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/vinok.jpg',
     image: {
       sha256: 'a0a46324f9e5c1259f5e3323f26fd02d561a3dedaf4de91a594d0da3be17f9c0',
       bytes: 305925,
@@ -14365,7 +14365,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/crossroads.jpg',
     image: {
       sha256: 'bae269ddfdd4300046efb53143331c16e53ec27eb631e5e36feed7406fda7b53',
       bytes: 355573,
@@ -14589,12 +14589,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/didukh.jpg',
     image: {
       sha256: 'e51cddaa0356aed2a4f08b83c5465774b41a056cf94bfbdbbeed8781125cea2f',
       bytes: 303553,
@@ -16009,12 +16009,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/ornek-tulip.jpg',
     image: {
       sha256: '46401590fba6abdd6b55197dd7b338424e396db63742e0651241f16225b3d7b9',
       bytes: 380071,
@@ -17182,8 +17182,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -17204,7 +17204,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-06.jpg',
     image: {
       sha256: 'd3719e11d241388f7d798ee0e4ed78387d56932dc461f1202284c34dea1ab12d',
       bytes: 234219,
@@ -17388,7 +17388,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/crossgrid.jpg',
     image: {
       sha256: 'e00d35b7eb878e9398990ab3015442fe7a0679d7b6ff5b985d1e30e6505f1e97',
       bytes: 393121,
@@ -18261,12 +18261,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/kosiv-pitcher.jpg',
     image: {
       sha256: 'afce6d5be37d40ce25b809a15607a0d5b2d70f87c533c80c5beb126dbd8f67c4',
       bytes: 254037,
@@ -19263,12 +19263,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/deer.jpg',
     image: {
       sha256: 'fb167c05ea057ae21f4b22fd26eb9925f7f198f0af9d76f5df84c73c2e85ac00',
       bytes: 342081,
@@ -20473,8 +20473,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -20495,7 +20495,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-03.jpg',
     image: {
       sha256: 'a5c0112706c147589d19bbd5ed5bb14f046c2d22e8dc802c0b09a59f4712e1e6',
       bytes: 264548,
@@ -20664,7 +20664,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/chambers.jpg',
     image: {
       sha256: 'b74519eafe4e2b9a5b50a33f75234f1b422e9810b47a6bb05b522c7345671a8a',
       bytes: 340019,
@@ -21379,7 +21379,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/channels.jpg',
     image: {
       sha256: '310a80fa68880ea5e3f2cbc6834d8d85031caf92cfb5e9f6e2a74166b83d9444',
       bytes: 273241,
@@ -21774,12 +21774,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/pysanka.jpg',
     image: {
       sha256: '0e86c7a6000e3226417311f63e792d3460a6364dc3831a5063444a09c1ef144b',
       bytes: 264803,
@@ -23149,12 +23149,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/wheat.jpg',
     image: {
       sha256: '6b2021669abc026b083f236b177b7d29a3bf5a811e467b32f679be64a4cff19d',
       bytes: 302010,
@@ -24160,12 +24160,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/drone-aid.jpg',
     image: {
       sha256: '93c6eed0ad1b474e0b246e095ee84d20538a27d85ad849b44b54b3916691bfbf',
       bytes: 253318,
@@ -24972,7 +24972,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/pinwheels.jpg',
     image: {
       sha256: '57a046035083e28fa28cfa462f6fe6ffdc3b9a3c05578a10372ebaa83710f1fe',
       bytes: 296056,
@@ -26838,12 +26838,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/berehynia.jpg',
     image: {
       sha256: '95f6925cae62569bbeff1eeeba1e7cb983234e83c5c97e5594600efb30e35b70',
       bytes: 316235,
@@ -27526,7 +27526,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/spines.jpg',
     image: {
       sha256: '0454a346715ced75fe5b76adbac0a49d043ed2d1b2e428b97b0b305d146511cf',
       bytes: 296758,
@@ -28241,12 +28241,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/tree-of-life.jpg',
     image: {
       sha256: '4186fdaed519da02c2c60060481c4485d0b644fa469e2ae8a388fca309d06db8',
       bytes: 398576,
@@ -29748,12 +29748,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/horse.jpg',
     image: {
       sha256: '87b8def81643b371da61e8d08926f0c7c8b7eb56b5c0c087ef1a62c41201f50b',
       bytes: 269977,
@@ -30692,8 +30692,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -30714,7 +30714,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-01.jpg',
     image: {
       sha256: 'b1111a42a118f874a0993abec79fe63a6da88f73ae70eaf7739aecc492115fb3',
       bytes: 268343,
@@ -30833,7 +30833,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'night-shift',
       campaignId: 'night-shift',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/night-shift-02.jpg',
     image: {
       sha256: 'cee4164d7fc5ba2acc26f1abf69f06189ece70bed072e74f97b4e70bb82b2de1',
       bytes: 284877,
@@ -30951,12 +30951,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/sdua.jpg',
     image: {
       sha256: '900e18967ce3b44e97a1535c8c1fbafa7cfbaf014b90d0c79fdb631e13729646',
       bytes: 289021,
@@ -31753,12 +31753,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/swallow.jpg',
     image: {
       sha256: '48c31600fbea15e6ae744f54285cd55fc84dc380d988c4e74e1e10198395c53b',
       bytes: 262690,
@@ -32910,12 +32910,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/ukraine.jpg',
     image: {
       sha256: 'a66e43153821f160958de0a3bcd0f8329d4852bc89045e903d2b64e6ca9954b6',
       bytes: 307241,
@@ -33931,12 +33931,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/vyshyvanka.jpg',
     image: {
       sha256: '26ab0e26766a5c5f53fbec7f252ec237b17427aacd988f9ba5fef150e7502ddb',
       bytes: 282004,
@@ -35796,7 +35796,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/prism.jpg',
     image: {
       sha256: '1120a1edab648668689a92178c1b864e46f1405b128f3000ed56205713359b76',
       bytes: 296428,
@@ -38745,8 +38745,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/equipment-workshop.json',
-      bytes: 7189781,
-      sha256: 'c3ac46a2797a5bbac9e6f436656913e5896e2e9e78220926a8ab909b8f1fbe3c',
+      bytes: 7189735,
+      sha256: 'bf487870e21443f7246c28a74945583f412f13dd32c1cd09b17fdd0df62bbbd5',
       packId: 'equipment-workshop',
       campaignId: 'equipment-workshop',
     },
@@ -38999,12 +38999,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/sentinel-relay.json',
-      bytes: 359487,
-      sha256: 'b52a0eac9d1a629b2f3a007e6a46b4d95da23f00ae46fe10d2febf8b783a872d',
+      bytes: 359445,
+      sha256: '9183aa976fc1e79b6745f7c6a303bf3691499e0170f1904990f07864d31965b3',
       packId: 'sentinel-relay',
       campaignId: 'sentinel-relay',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/sentinel-relay-01.jpg',
     image: {
       sha256: 'af0f43097138386e745e361b3d6d7869740f6e15d99333d3bb2c237f48123418',
       bytes: 261421,
@@ -39174,12 +39174,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/oak.jpg',
     image: {
       sha256: '78abd211032a3d9e97812be686f844ac5814c9aad123ac334bdbc8a974034d46',
       bytes: 378536,
@@ -40635,7 +40635,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/switchback.jpg',
     image: {
       sha256: 'c6dd3f719f74fe7b51c87625e808c29980a4ea74e1c32eb04ed28144a564f3cc',
       bytes: 266422,
@@ -41753,12 +41753,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/vd.jpg',
     image: {
       sha256: '0f3ecd3ebee106f22a6782514fda83689e83cc0092935136e3aa2aeec1a68a7a',
       bytes: 271978,
@@ -42324,12 +42324,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/bezkonechnyk.jpg',
     image: {
       sha256: '3d0f0236c719696014280ecaeab35c7c0a83122db8a375b6037b332daf17dc3f',
       bytes: 261566,
@@ -43094,12 +43094,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/fpv-drone.jpg',
     image: {
       sha256: '0dbe3037abac6d1e57cf837fb8010424128b2ced96a37f912be5724d27f9011d',
       bytes: 275465,
@@ -44296,12 +44296,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/opishnia-ram.jpg',
     image: {
       sha256: '75f7f304dff33d90bc5c44e832bac5731ca25649746b8643402387080771cdb4',
       bytes: 231515,
@@ -45066,12 +45066,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/stork.jpg',
     image: {
       sha256: '27b5834da82114a2e364c3b560af7db4dcad0e9965504a21a92896b4b1b7af2c',
       bytes: 263569,
@@ -45884,8 +45884,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -45906,7 +45906,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-04.jpg',
     image: {
       sha256: 'cefa98a6ac605e808fb0e4109405bc08e0f806c1ed3b4a3d22def159d217c5ec',
       bytes: 264630,
@@ -46055,7 +46055,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/crossfire.jpg',
     image: {
       sha256: 'ddc978126e0df0dd503f90fea0dc2e157ef17ee183cc0a0931956e6536fd789d',
       bytes: 321291,
@@ -47149,12 +47149,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/fish.jpg',
     image: {
       sha256: '8780e3986f34435cb51912630962262bb2a0c70a95dc0a5d46d65a90465d9c86',
       bytes: 346475,
@@ -48298,8 +48298,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -48320,7 +48320,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-10.jpg',
     image: {
       sha256: '417dc519500675498cf4b5e53f5d35592b0564b68ba970e51d0f950e13ff7e9f',
       bytes: 266680,
@@ -48487,7 +48487,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/conduit.jpg',
     image: {
       sha256: 'fe2d331734238c2739ee555608716d00badaade6bab36e693b5fecb955c6e060',
       bytes: 309129,
@@ -49018,12 +49018,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/rushnyk.jpg',
     image: {
       sha256: 'c903a2c13166b951297ca1c64d7ec77011800746285b273f0d36b428350ff0e5',
       bytes: 281187,
@@ -49980,7 +49980,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/switchyards.jpg',
     image: {
       sha256: '762919e0bb6aa935dc8d63f77fbddaa136e91a0aea6257b6a3e96bb9433f9839',
       bytes: 333280,
@@ -51097,8 +51097,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -51119,7 +51119,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-12.jpg',
     image: {
       sha256: 'e70a6191b244d2a32cd535b86f469174f3be935a3b95808bd929b59088e8d70b',
       bytes: 240769,
@@ -51327,12 +51327,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/petrykivka.jpg',
     image: {
       sha256: '9f523607de4b11d94566966cfd939d97b3d5a9b2f651c71b65a0e9b6255440fb',
       bytes: 326843,
@@ -52388,7 +52388,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/hearts.jpg',
     image: {
       sha256: '90344bceb83628fe76ce4e49ce8b4a1ebfbf96b7b49b7113226e1773f41f4205',
       bytes: 311175,
@@ -53246,8 +53246,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -53268,7 +53268,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-07.jpg',
     image: {
       sha256: '47d47c206c066181eb78d22f474891538b7a24801aa6118f8cfd53255cb818da',
       bytes: 264337,
@@ -53401,12 +53401,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/tryzub.jpg',
     image: {
       sha256: 'cc144a5aee81834d53a1e5d420eea14ea01142e0a4ed26472cbee69b26f4a234',
       bytes: 300841,
@@ -54240,7 +54240,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'night-shift',
       campaignId: 'night-shift',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/night-shift-03.jpg',
     image: {
       sha256: '8ba136b1442f4216af31e2b49c3d1bc019af014f3942fe134b6970e152d761a3',
       bytes: 252851,
@@ -54379,12 +54379,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/tsymbaly.jpg',
     image: {
       sha256: 'a2300feb5fd5b02b8d5cc773abf90ff186b1e17ef80b64b084047026fa2a6def',
       bytes: 273836,
@@ -55722,12 +55722,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/bandura.jpg',
     image: {
       sha256: 'fa61734bd9c5b116a6ffa3e8f98a56bdbc8ccc715b7dcfba3eefa73b827ce43e',
       bytes: 303959,
@@ -57000,8 +57000,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -57022,7 +57022,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-08.jpg',
     image: {
       sha256: '935c40840c16732082d0a7cd00fa725300a2b8fd44ffd738be2cbecb2db89581',
       bytes: 276549,
@@ -57176,7 +57176,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/arrows.jpg',
     image: {
       sha256: 'addb55639de14d17ebd41216baa700046b83fe90b7ac6cbad85fb55c1ab6ac3c',
       bytes: 241946,
@@ -58937,12 +58937,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/fpv.jpg',
     image: {
       sha256: 'a197cfeb34f1f4af19707eb5a179640f1262a4e999c449b1b9f154ec81991f2c',
       bytes: 278600,
@@ -59715,12 +59715,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/fly-free.jpg',
     image: {
       sha256: 'e3f4c0fa2fb977d4ad44d41376f6a2e0a4637a54161b6ad4517f532edbffd63e',
       bytes: 253563,
@@ -60694,8 +60694,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/equipment-workshop.json',
-      bytes: 7189781,
-      sha256: 'c3ac46a2797a5bbac9e6f436656913e5896e2e9e78220926a8ab909b8f1fbe3c',
+      bytes: 7189735,
+      sha256: 'bf487870e21443f7246c28a74945583f412f13dd32c1cd09b17fdd0df62bbbd5',
       packId: 'equipment-workshop',
       campaignId: 'equipment-workshop',
     },
@@ -60857,12 +60857,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/victory-drones.jpg',
     image: {
       sha256: '2499e71d644946e84c77d56fe7222bf41a971186322181b52ed02d7375dba47e',
       bytes: 350373,
@@ -62249,8 +62249,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -62271,7 +62271,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-02.jpg',
     image: {
       sha256: '176400881da368a2d827192379617651fb29fd4d44773cbd5a9296e1ee8c0048',
       bytes: 307870,
@@ -62398,7 +62398,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/wavebands.jpg',
     image: {
       sha256: '70804e191696d5de43555da03868c3530cc245eb4a09e3823c16302de31da107',
       bytes: 355051,
@@ -65833,7 +65833,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'neon-reference-pack',
       campaignId: 'neon-reference',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/labyrinth.jpg',
     image: {
       sha256: '48a450fe0b635b7254244c070b61237314fdb96780f4d227e20f02cc45dcef40',
       bytes: 297021,
@@ -66932,12 +66932,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/barvinok.jpg',
     image: {
       sha256: '9c90efac2afc5418dff00339e15dce5c1def0cebe98610c90b1e383c020b8af2',
       bytes: 285162,
@@ -68294,12 +68294,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/ruzha.jpg',
     image: {
       sha256: '13eb1b98bd382d5e2a1a000a5eada942555d149e9e3f77b6746fd3cf705c8eb9',
       bytes: 287033,
@@ -69173,7 +69173,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'night-shift',
       campaignId: 'night-shift',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/night-shift-01.jpg',
     image: {
       sha256: 'a2fa65e9126e1402cf8e3dbd4d798b14f1c940adc4a5f981f0eee6f6d1c0c448',
       bytes: 251170,
@@ -69330,12 +69330,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/neon-mosaic-pack.json',
-      bytes: 15604118,
-      sha256: '0dc3e19347e49decae964699b45d9b4e725b06261e9175da33147619ef766d95',
+      bytes: 15604102,
+      sha256: '09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6',
       packId: 'neon-mosaic-pack',
       campaignId: 'neon-mosaic',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/neon-artwork/backgrounds/kalyna.jpg',
     image: {
       sha256: '066db767aae14f01e7106f3b6c936cfe986b59e6a0e58ccde9b9f4baed4a0008',
       bytes: 296474,
@@ -70420,8 +70420,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -70442,7 +70442,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-11.jpg',
     image: {
       sha256: '4f56ba1159a737de7580bbe82e4e71e86e2a430f61db35f4d331280fdddb090c',
       bytes: 226563,
@@ -70567,8 +70567,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -70589,7 +70589,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-09.jpg',
     image: {
       sha256: '69455e043ab30c3eee430a2a81c8f1c1cd3901203e8b4e5dd38e5377348ebfac',
       bytes: 307774,
@@ -70989,7 +70989,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'living-threads',
       campaignId: 'living-threads',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/living-threads-02.jpg',
     image: {
       sha256: 'f156153d7d696819b40252f1f8be2c56cb5732bd0aaee72bdabbeafd77218774',
       bytes: 277898,
@@ -71371,8 +71371,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -71393,7 +71393,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-06.jpg',
     image: {
       sha256: 'd3719e11d241388f7d798ee0e4ed78387d56932dc461f1202284c34dea1ab12d',
       bytes: 234219,
@@ -71572,8 +71572,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -71594,7 +71594,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-11.jpg',
     image: {
       sha256: '4f56ba1159a737de7580bbe82e4e71e86e2a430f61db35f4d331280fdddb090c',
       bytes: 226563,
@@ -71719,8 +71719,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -71741,7 +71741,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-12.jpg',
     image: {
       sha256: 'e70a6191b244d2a32cd535b86f469174f3be935a3b95808bd929b59088e8d70b',
       bytes: 240769,
@@ -71908,8 +71908,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -71930,7 +71930,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-04.jpg',
     image: {
       sha256: 'cefa98a6ac605e808fb0e4109405bc08e0f806c1ed3b4a3d22def159d217c5ec',
       bytes: 264630,
@@ -72115,8 +72115,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -72137,7 +72137,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-10.jpg',
     image: {
       sha256: '417dc519500675498cf4b5e53f5d35592b0564b68ba970e51d0f950e13ff7e9f',
       bytes: 266680,
@@ -72340,8 +72340,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -72362,7 +72362,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-07.jpg',
     image: {
       sha256: '47d47c206c066181eb78d22f474891538b7a24801aa6118f8cfd53255cb818da',
       bytes: 264337,
@@ -72577,8 +72577,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -72599,7 +72599,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-05.jpg',
     image: {
       sha256: '003e6285f7c7ee1ed155d508caa67326ad5fe4d3eeed5edc761f349361aef402',
       bytes: 207886,
@@ -73019,8 +73019,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -73041,7 +73041,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-08.jpg',
     image: {
       sha256: '935c40840c16732082d0a7cd00fa725300a2b8fd44ffd738be2cbecb2db89581',
       bytes: 276549,
@@ -73190,8 +73190,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/equipment-workshop.json',
-      bytes: 7189781,
-      sha256: 'c3ac46a2797a5bbac9e6f436656913e5896e2e9e78220926a8ab909b8f1fbe3c',
+      bytes: 7189735,
+      sha256: 'bf487870e21443f7246c28a74945583f412f13dd32c1cd09b17fdd0df62bbbd5',
       packId: 'equipment-workshop',
       campaignId: 'equipment-workshop',
     },
@@ -73742,7 +73742,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'living-threads',
       campaignId: 'living-threads',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/living-threads-03.jpg',
     image: {
       sha256: '0fcefc26e3edca61f3b8b05ca913f60717477bfc83728ea3d23038b770f04bc9',
       bytes: 299600,
@@ -73875,7 +73875,7 @@ export const CURRENT_ART_SOURCES = [
       packId: 'living-threads',
       campaignId: 'living-threads',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/living-threads-01.jpg',
     image: {
       sha256: '560d311bed6011e84cc59050f679177f70c701dca4fff81bdf046e94fcf0f432',
       bytes: 318191,
@@ -74032,8 +74032,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -74054,7 +74054,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-09.jpg',
     image: {
       sha256: '69455e043ab30c3eee430a2a81c8f1c1cd3901203e8b4e5dd38e5377348ebfac',
       bytes: 307774,
@@ -74279,8 +74279,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -74301,7 +74301,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-01.jpg',
     image: {
       sha256: 'b1111a42a118f874a0993abec79fe63a6da88f73ae70eaf7739aecc492115fb3',
       bytes: 268343,
@@ -74415,12 +74415,12 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/sentinel-relay.json',
-      bytes: 359487,
-      sha256: 'b52a0eac9d1a629b2f3a007e6a46b4d95da23f00ae46fe10d2febf8b783a872d',
+      bytes: 359445,
+      sha256: '9183aa976fc1e79b6745f7c6a303bf3691499e0170f1904990f07864d31965b3',
       packId: 'sentinel-relay',
       campaignId: 'sentinel-relay',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/sentinel-relay-01.jpg',
     image: {
       sha256: 'af0f43097138386e745e361b3d6d7869740f6e15d99333d3bb2c237f48123418',
       bytes: 261421,
@@ -74590,8 +74590,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -74612,7 +74612,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-03.jpg',
     image: {
       sha256: 'a5c0112706c147589d19bbd5ed5bb14f046c2d22e8dc802c0b09a59f4712e1e6',
       bytes: 264548,
@@ -74735,8 +74735,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'built-in',
       path: 'game/content/packs/equipment-workshop.json',
-      bytes: 7189781,
-      sha256: 'c3ac46a2797a5bbac9e6f436656913e5896e2e9e78220926a8ab909b8f1fbe3c',
+      bytes: 7189735,
+      sha256: 'bf487870e21443f7246c28a74945583f412f13dd32c1cd09b17fdd0df62bbbd5',
       packId: 'equipment-workshop',
       campaignId: 'equipment-workshop',
     },
@@ -74898,8 +74898,8 @@ export const CURRENT_ART_SOURCES = [
     source: {
       kind: 'base',
       path: 'game/content/base-artwork.json',
-      bytes: 4206376,
-      sha256: 'f0f5b2ffe916febc1910e29433cd2c45819888c34bdd08ad79c6b954edf3403d',
+      bytes: 4205872,
+      sha256: '875067f2e14413038d8b80c50ce1171b92d66027078873cc9b2776b8864a480b',
       packId: 'first-signal-artwork',
       contracts: [
         {
@@ -74920,7 +74920,7 @@ export const CURRENT_ART_SOURCES = [
       ],
       campaignId: 'first-signal',
     },
-    sourceImagePath: null,
+    sourceImagePath: 'authoring/library/classic-reveal-artwork/backgrounds/signal-02.jpg',
     image: {
       sha256: '176400881da368a2d827192379617651fb29fd4d44773cbd5a9296e1ee8c0048',
       bytes: 307870,

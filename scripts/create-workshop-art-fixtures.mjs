@@ -40,7 +40,7 @@ const STAMP = '2026-09-12T16:00:00.000Z';
 export const WORKSHOP_PREVIOUS_SHA256 =
   'f6be571a46086ed78ce18178d90326456eb4ebd114baef5e127d7656cee77002';
 export const WORKSHOP_PROOF_SHA256 =
-  '22886cf439f716db31333b3b6d9fae0478f8007aff734632badc7c2f38dc53c8';
+  'b096443b90b36625d9aea1e14dc586ef7b3433b2e0752460fa3c7443bf0a6f40';
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const json = (bytes) => JSON.parse(bytes.toString());
 const metadataOnly = (pack) => ({ ...pack, version: '1.0.0', levelVisuals: [] });
