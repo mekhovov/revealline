@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { soloPage } from './helpers/solo-dom.mjs';
+import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { attachFieldKitSurfaces } from '../ui/field-kit-surfaces.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 import { applyFieldKitCopy, fieldKitCopy } from '../ui/field-kit-copy.mjs';
@@ -46,7 +46,22 @@ test('Workshop destinations ship their actual authoring runtime and return paths
   );
   assert.match(motion, /href="\.\.\/\.\.\/game\/"/);
   assert.match(motion, /data-motion-text-size/);
-  assert.match(motion, /<script type="module" src="\.\/display-entry\.mjs"><\/script>/);
+  const displayEntries = [...motion.matchAll(/<script\b([^>]*)>/g)]
+    .map((match) =>
+      Object.fromEntries(
+        [...match[1].matchAll(/([^\s=]+)\s*=\s*"([^"]*)"/g)].map((entry) => [entry[1], entry[2]]),
+      ),
+    )
+    .filter((entry) => entry.src === './display-entry.mjs');
+  assert.equal(displayEntries.length, 1, 'The actual display entry is included exactly once.');
+  const displayEntry = displayEntries[0];
+  assert.equal(
+    displayEntry.type === 'application/x-revealline-locked'
+      ? displayEntry['data-access-type']
+      : displayEntry.type,
+    'module',
+    'The public access gate preserves the display entry module type.',
+  );
   // Shared preferences own this control, including startup failure. The generic
   // body-only adapter must not install a second, independent change listener.
   assert.doesNotMatch(motion, /data-field-kit-text-size/);
@@ -119,16 +134,22 @@ test('data and collection shortcuts reuse the existing nested Library sections w
   page.$('settings-tab-data').click();
   const snapshot = [...page.storage.map];
   page.$('settings-saves').click();
+  await settle(() => page.$('library-dialog').open && !page.$('library-saves').hidden);
   assert.equal(page.$('library-dialog').open, true);
   assert.equal(page.$('library-saves').hidden, false);
   assert.equal(page.$('settings-dialog').open, true);
   page.$('library-dialog').close();
+  page.$('settings-tab-content').click();
+  assert.equal(page.$('settings-panel-content').hidden, false);
+  assert.ok(page.$('settings-panel-content').contains(page.$('settings-packs')));
   page.$('settings-packs').click();
+  await settle(() => page.$('library-dialog').open && !page.$('library-packs').hidden);
   assert.equal(page.$('library-packs').hidden, false);
   page.$('library-dialog').close();
   page.$('settings-dialog').close();
   page.$('shell-gallery').click();
   page.$('collection-records').click();
+  await settle(() => page.$('library-dialog').open && !page.$('library-scores').hidden);
   assert.equal(page.$('library-scores').hidden, false);
   assert.equal(page.$('collection-dialog').open, true);
   assert.deepEqual([...page.storage.map], snapshot);

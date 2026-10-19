@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';
+import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
@@ -332,3 +333,52 @@ test('language changes preserve the remembered music session, volume focus and l
   assert.equal(title.textContent, 'Music');
   assert.equal(f.doc.activeElement, volume);
 });
+
+for (const prefix of ['race', 'coop'])
+  for (const state of ['playing', 'paused', 'muted', 'unavailable'])
+    test(`${prefix}: pause label admission and locale changes preserve the actual ${state} music owner`, async (t) => {
+      const { getLocale, setLocale } = await import('../i18n/index.mjs');
+      const previous = getLocale();
+      t.after(() => setLocale(previous, { persist: false }));
+      setLocale('uk', { persist: false });
+      const f = await setup(t, { prefix, muted: state === 'muted', twoTracks: true });
+      if (state === 'playing') {
+        f.gesture();
+        await settleUntil(() => f.host.player.snapshot().playing);
+      } else f.host.session.pause();
+      const root = f.doc.createElement('div');
+      f.doc.body.append(root);
+      const shortcut = pauseMusicAction(f.doc, prefix),
+        menu = createPauseMenu({ document: f.doc, root, audio: [shortcut] });
+      t.after(() => menu.destroy());
+      assert.equal(shortcut.element.isConnected, false);
+      assert.equal(shortcut.element.textContent, 'Наступна композиція');
+      if (state === 'unavailable') f.host.dispose();
+      const before = {
+        session: f.host.session.snapshot(),
+        playback: f.host.player.snapshot(),
+        master: f.master.snapshot(),
+        sound: { ...f.audio.soundscape.settings },
+        writes: f.memory.allPuts.length,
+        plays: f.audio.media.plays,
+      };
+      for (const [locale, label] of [
+        ['en', 'Next song'],
+        ['uk', 'Наступна композиція'],
+        ['en', 'Next song'],
+      ]) {
+        setLocale(locale, { persist: false });
+        menu.setActive(true);
+        assert.equal(shortcut.element.textContent, label);
+        assert.equal(shortcut.element.hidden, state === 'unavailable');
+        if (state !== 'unavailable') shortcut.element.focus();
+        assert.deepEqual(f.host.session.snapshot(), before.session);
+        assert.deepEqual(f.host.player.snapshot(), before.playback);
+        assert.deepEqual(f.master.snapshot(), before.master);
+        assert.deepEqual({ ...f.audio.soundscape.settings }, before.sound);
+        assert.equal(f.memory.allPuts.length, before.writes);
+        assert.equal(f.audio.media.plays, before.plays);
+        if (state !== 'unavailable') assert.equal(f.doc.activeElement === shortcut.element, true);
+        menu.setActive(false);
+      }
+    });

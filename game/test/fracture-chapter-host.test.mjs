@@ -3,6 +3,7 @@ import {
   proveHistoricalExternalRoute,
 } from './helpers/external-current-host-route.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { beginBackupReplacement } from './helpers/backup-review-readiness.mjs';
 // Actual app/core/store source. DOM, IndexedDB and image dimensions are finite
 // modeled boundaries; original compiler bytes/hashes are real, not native browser proof.
@@ -436,7 +437,7 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
       assert.equal(p.rendered.paused, true);
       cut = authoritativeCheckpoint(p.rendered.run);
       cutPins = structuredClone(p.rendered.backdrop.pin);
-      p.$('library-button').click();
+      await activateHostAction(p.$('library-button'));
       await p.$('export-backup').onclick();
       assert.match(p.$('save-status').textContent, /Game data prepared/);
       backup = JSON.parse(p.$('save-json').value);
@@ -455,7 +456,7 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
     { skip: saveComplete ? false : 'No completed saved-cut backup fixture.' },
     async (t) => {
       const p = await page(t, {}, true);
-      p.$('library-button').click();
+      await activateHostAction(p.$('library-button'));
       const local = new Map(p.storage.map),
         assets = p.fixture.assets.contents(),
         writes = p.fixture.assets.allPuts.length;
@@ -482,7 +483,7 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
       for (const e of allEditions) await downloadAndStay(p, e);
       assert.equal(p.$('pack-select').value, '');
       p.$('optional-worlds-dialog').close();
-      p.$('library-button').click();
+      await activateHostAction(p.$('library-button'));
       p.$('save-json').value = JSON.stringify(backup);
       const pendingReplacement = beginBackupReplacement(p, () => clickOperation(p, 'import-save'), {
         timeoutMs: INVENTORY_TIMEOUT_MS,

@@ -1,0 +1,52 @@
+{
+  "description": "Explicit FORCE_OPTIONS_REVIEW boolean values independently observed by executing readPresetProperties from the exact tagged Betaflight App parser. This affects review metadata only; the SIM always requires local bundle resolution and preview before saving. Bare legacy directives remain a separately tested SIM compatibility behavior.",
+  "source": {
+    "url": "https://raw.githubusercontent.com/betaflight/betaflight-configurator/2026.6.2/src/components/tabs/presets/PresetsRepoIndexed/PresetParser.js",
+    "sha256": "effdb390286b4d2b6499f04cb0ddee9d19cef8eeaf1ae6a0f2dd61fb2c7846c3",
+    "method": "readPresetProperties",
+    "evidence": "_processBooleanProperty accepts true and yes case-insensitively; all other explicit values are false."
+  },
+  "payload": "set roll_srate = 90",
+  "observations": [
+    {
+      "value": "TRUE",
+      "line": "#$ FORCE_OPTIONS_REVIEW: TRUE",
+      "upstreamForceOptionsReview": true
+    },
+    {
+      "value": "TrUe",
+      "line": "#$ FORCE_OPTIONS_REVIEW: TrUe",
+      "upstreamForceOptionsReview": true
+    },
+    {
+      "value": "yes",
+      "line": "#$ FORCE_OPTIONS_REVIEW: yes",
+      "upstreamForceOptionsReview": true
+    },
+    {
+      "value": "YeS",
+      "line": "#$ FORCE_OPTIONS_REVIEW: YeS",
+      "upstreamForceOptionsReview": true
+    },
+    {
+      "value": "FALSE",
+      "line": "#$ FORCE_OPTIONS_REVIEW: FALSE",
+      "upstreamForceOptionsReview": false
+    },
+    {
+      "value": "no",
+      "line": "#$ FORCE_OPTIONS_REVIEW: no",
+      "upstreamForceOptionsReview": false
+    },
+    {
+      "value": "",
+      "line": "#$ FORCE_OPTIONS_REVIEW: ",
+      "upstreamForceOptionsReview": false
+    },
+    {
+      "value": "1",
+      "line": "#$ FORCE_OPTIONS_REVIEW: 1",
+      "upstreamForceOptionsReview": false
+    }
+  ]
+}

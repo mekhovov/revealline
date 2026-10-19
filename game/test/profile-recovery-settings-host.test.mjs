@@ -29,7 +29,6 @@ function dialogs(t) {
     close.call(this);
     origins.get(this)?.focus();
   });
-  t.mock.method(SoloElement.prototype, 'getContext', () => null);
 }
 function cancel(dialog) {
   if (!dialog.emit('cancel').defaultPrevented) dialog.close();
@@ -47,6 +46,52 @@ async function enter(h) {
   assert.equal(h.$('profile-recovery-dialog').open, true);
   assert.equal(h.$('settings-dialog').open, true);
 }
+
+for (const route of ['collection-records', 'saves'])
+  test(`Settings recovery becomes available after returning from ${route} with an unchanged paused flight`, async (t) => {
+    dialogs(t);
+    const h = await soloPage(t, { campaign });
+    h.$('start-button').click();
+    await h.waitUntilRunning();
+    h.key('ArrowDown');
+    for (let i = 0; i < 10; i++) h.frame();
+    h.key('ArrowDown', false);
+    h.$('settings-button').click();
+    h.$('settings-tab-data').click();
+    assert.equal(h.$('profile-recovery-open').disabled, false);
+    const run = h.rendered.run,
+      checkpoint = structuredClone(run);
+    if (route === 'collection-records') {
+      h.$('shell-gallery').focus();
+      h.$('shell-gallery').click();
+      assert.equal(h.$('collection-dialog').open, true);
+      h.$('collection-progress').querySelector('summary').click();
+      assert.equal(h.$('collection-progress').open, true);
+      h.$('collection-records').click();
+    } else h.$('settings-saves').click();
+    assert.equal(h.$('library-dialog').open, true);
+    // Returning from another window refreshes availability while this child
+    // still owns the modal stack, as can an ordinary asynchronous HUD refresh.
+    h.win.emit('blur');
+    h.win.emit('focus');
+    h.frame(0);
+    assert.equal(h.$('profile-recovery-open').disabled, true);
+    assert.match(h.$('profile-recovery-entry-status').textContent, /Close the other tool/);
+    h.$('library-dialog').querySelector('[data-close]').click();
+    if (route === 'collection-records') {
+      assert.equal(h.$('profile-recovery-open').disabled, true, 'Collection still owns its modal');
+      h.$('collection-back').click();
+    }
+    // No HUD change or reopening Settings is needed to restore the visible action.
+    await Promise.resolve();
+    await enter(h);
+    await h.$('profile-recovery-back').onclick();
+    h.frame(0);
+    assert.equal(h.rendered.run, run);
+    assert.deepEqual(structuredClone(h.rendered.run), checkpoint);
+    assert.equal(h.rendered.paused, true);
+    assert.deepEqual(h.errors, []);
+  });
 
 test('actual title Settings recovery Back and controller Back preserve the title opener and one input loop', async (t) => {
   dialogs(t);
@@ -128,6 +173,7 @@ for (const mode of ['normal', 'quota-failure', 'occupied-writer'])
         : {}),
     });
     h.$('start-button').click();
+    await h.waitUntilRunning();
     h.key('ArrowDown');
     for (let i = 0; i < 30; i++) h.frame();
     h.key('ArrowDown', false);
@@ -173,6 +219,8 @@ for (const mode of ['normal', 'quota-failure', 'occupied-writer'])
       selections,
     );
     h.$('start-button').click();
+    await h.waitUntilRunning();
+    h.frame(); // Resume establishes a fresh simulation clock before its first active interval.
     h.frame();
     assert.equal(h.rendered.paused, false);
     assert.ok(

@@ -1,12 +1,49 @@
 # FPV tuning implementation status
 
-Updated 2026-10-17. The post-publication review below corrects three additional
-failure boundaries. [PR #1561](https://github.com/mekhovov/revealline/pull/1561)
-merged implementation `eaecd6056` into `main` as `b2f251dac` through the normal
-repository controller. The ordinary Pages build, deployment and verification
-all succeeded. Historical reports retain their original source hashes and scope;
-the post-deployment evidence is recorded separately below. Those public receipts
-qualify the original deployed merge, not the later corrections.
+Updated 2026-10-17. The latest correction is merged in
+[PR #1565](https://github.com/mekhovov/revealline/pull/1565) and published as
+`3e744a5ef7bede48eafcb79a8377bb46fb37d76f`. Available software work and delivery are complete.
+Physical and wider-platform qualification remain deferred; Advanced remains
+optional, unscored and default-ineligible. Historical reports below retain their
+original source hashes and scope.
+
+## Input availability completion
+
+The [latest review](fpv-tuning-input-recovery-review.md) preserves the completed
+rates/profile/import scope and closes a reproduced recovery defect: unavailable
+radio input now pauses a healthy Advanced practice worker while retaining its
+recording, export and explicit resume. Genuine worker failures remain unavailable.
+The live-test runner retains bounded startup diagnostics. Review prompted a
+correction restricting request/capture error metadata to fixed categories.
+
+All **741 practice tests**, EN/UK browser recovery, actual Electron export/resume,
+release validation and 12 non-skipped product checks pass. Fresh Academy and World
+password/offline/replay acceptance passes on the deployed revision. Additional live
+UI checks confirm missing-radio recording retention and explicit keyboard resume
+on both routes, with six exported records replayed. The original
+startup timeout remains failed and unexplained. The
+[delivery receipt](fpv-input-recovery-delivery-verification.json) binds the exact
+sources and evidence. No new physics benchmark or physical-device qualification
+is claimed.
+
+## Boundary completion review
+
+Rebased on main `1d631986a` before this continuation. The
+[updated boundary review](fpv-tuning-boundary-review.md) adds primary-source
+examples and closes three reproduced gaps: history restoration invalidates stale
+import intent; preset `FORCE_OPTIONS_REVIEW: yes` metadata matches the tagged
+parser; Regional duration/recording stops retain export, recovery and explicit
+restart without misclassifying them as broken workers. Unknown worker failures
+remain unavailable and Advanced remains unscored.
+
+All **731 practice tests** and release validation pass. Six editor-browser cases
+pass, including delayed import completion after restoring same-rate history.
+All 20 pins in the existing numerical matrix still match; no physics, timing or
+quota change was made. Current browser/native receipts and ordinary delivery are
+bound by the [final delivery verification](fpv-boundary-delivery-verification.json).
+Both fresh public password/offline flows pass. An earlier World startup timeout
+remains recorded with an unknown cause; reopening its profile and a full fresh
+rerun succeeded. Earlier reports below keep their original scope.
 
 ## Post-publication corrections
 
@@ -31,8 +68,21 @@ The [new verification receipt](fpv-post-publication-verification.json) pins the
 final sources: 714 practice tests, 108 final library/UI tests, six browser editor
 cases, renderer/worker smoke, six numerical runtimes and ordinary native staging
 pass. The numerical 250 Hz result stays within 1.8814% of the 2 kHz reference and
-measures at least 81.08× capacity on one host. Publication is the remaining
-delivery step; the prior public reports below remain historical.
+measures at least 81.08× capacity on one host. The later
+[actual Electron fixture check](fpv-native-post-publication-runtime.json)
+retains the full library across process reopen, verifies both native recording
+exports and disposes every worker. It adds desktop fixture evidence without
+claiming iOS or a distributed installer.
+
+[PR #1562](https://github.com/mekhovov/revealline/pull/1562) subsequently merged
+as `80494f63d` after all 12 non-skipped product checks passed. Normal Pages
+publication passed build, deploy and verification. Both fresh public installations
+pass normal password access, saved 900°/s rates, offline process restart and short
+unscored recording export/exact replay/disposal. The
+[final delivery receipt](fpv-post-publication-delivery-verification.json) binds
+those checks to the deployed source and the unchanged archive capacity limit.
+All available software work in this review is complete; prior public reports
+below remain historical and do not become evidence for this later source.
 Advanced remains optional and unscored. Physical radio/touch, pilot feedback,
 identified-aircraft measurements, iOS runtime and wider-device qualification are
 deferred; propwash/ground effect and scored/default promotion remain gated.

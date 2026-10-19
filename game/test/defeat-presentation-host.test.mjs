@@ -89,6 +89,7 @@ async function setup(t, { themeId = 'fpv', lives = 1, classic = false, reduced =
     });
   await settle(() => surface.frame.painter.image !== null);
   page.$('reduced-effects').checked = reduced;
+  page.$('reduced-effects').emit('change');
   // Start owns asynchronous picture preparation; steer only after the exact
   // attempt has replaced the ready briefing state.
   await activateHostAction(page.$('start-button'));
@@ -101,6 +102,9 @@ async function setup(t, { themeId = 'fpv', lives = 1, classic = false, reduced =
     page.frame();
     page.key('ArrowUp', false);
   }
+  // Terminal ownership clears input and resets the scene clock. Establish its
+  // fresh zero-time sample before measuring elapsed presentation frames.
+  page.frame(0);
   return {
     page,
     surface,
@@ -147,7 +151,8 @@ test('Classic traveling-front defeat, reduced effects, focus loss and explicit s
   assert.equal(run.failureCause, 'enemy-trail');
   assert.equal(page.$('game-overlay').hidden, true);
   const checkpoint = authoritativeCheckpoint(run),
-    age = effect().age;
+    age = effect().age,
+    terminalFrame = page.rendered;
   page.doc.hidden = true;
   page.win.emit('blur');
   page.frame(100);
@@ -157,7 +162,12 @@ test('Classic traveling-front defeat, reduced effects, focus loss and explicit s
   for (let i = 0; i < 10; i++) page.frame(100);
   assert.equal(effect().age, age);
   assert.equal(page.$('game-overlay').hidden, true);
-  assert.equal(page.rendered.defeatEffectsRunning, false);
+  assert.strictEqual(
+    page.rendered,
+    terminalFrame,
+    'The paused terminal canvas is retained without another drawing submission.',
+  );
+  assert.match(page.$('run-message').textContent, /presentation paused/);
   key(page, 'Enter');
   assert.equal(page.$('game-overlay').dataset.kind, 'lost');
   assert.equal(page.doc.activeElement.id, 'retry-button');

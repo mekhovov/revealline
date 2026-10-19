@@ -12,6 +12,11 @@ import {
 import { DEFAULT_RESPONSE } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 import { createTunedResponse } from '../../optional-practice/civilian-fpv/flight-response.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
+import {
+  applyAircraftComponents,
+  createPresetConfiguration,
+  listAircraftPresets,
+} from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 
 function memory(seed) {
   const data = new Map(seed ?? []),
@@ -31,6 +36,459 @@ const setup = (id, profileId = null, camera = { tilt: 20, verticalFov: 95 }) => 
   name: id,
   profileId,
   camera,
+});
+
+test('built-in aircraft selection atomically copies independent rates and physical configuration without changing player defaults', async () => {
+  const storage = memory(),
+    store = createTuningLibraryStore({ storage });
+  const before = store.snapshot();
+  const catalogBefore = listAircraftPresets().map((preset) => preset.id);
+  await store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor',
+    profileId: 'meteor-rates',
+    rates: 'defaults',
+  });
+  assert.equal(storage.writes.length, 1);
+  const value = store.snapshot(),
+    effective = store.effective(),
+    preset = createPresetConfiguration('meteor75-analog-2022');
+  assert.equal(value.defaultProfileId, before.defaultProfileId);
+  assert.deepEqual(value.profiles[0], before.profiles[0]);
+  assert.deepEqual(value.setups[0], before.setups[0]);
+  assert.equal(value.selectedSetupId, 'meteor');
+  assert.deepEqual(effective.response, preset.response);
+  assert.deepEqual(effective.advanced, {
+    aircraft: preset.aircraft,
+    controller: preset.controller,
+  });
+  assert.equal(effective.advanced.aircraft.battery.depletion, false);
+  assert.deepEqual(value.setups[1].preset, { id: 'meteor75-analog-2022', revision: 1 });
+  assert.equal(value.setups.length, 2, 'Built-ins do not occupy saved setup slots until selected');
+  assert.deepEqual(
+    listAircraftPresets().map((preset) => preset.id),
+    catalogBefore,
+  );
+  const restored = createTuningLibraryStore({ storage: memory() });
+  await restored.restore(store.export());
+  assert.deepEqual(restored.effective(), effective);
+});
+
+test('battery and physical-camera saves preserve rates/controller, freeze attempts, survive backups and reject failures atomically', async () => {
+  const storage = memory(),
+    store = createTuningLibraryStore({ storage });
+  await store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor',
+    profileId: 'meteor-rates',
+    rates: 'defaults',
+  });
+  const initial = store.effective();
+  const before = store.snapshot();
+  const request = {
+    setupId: 'meteor',
+    battery: { massGrams: 16, capacityMah: 600 },
+    cameraPayload: { massGrams: 4 },
+  };
+  const writes = storage.writes.length;
+  await store.saveAircraftComponents(request);
+  assert.equal(storage.writes.length, writes + 1);
+  const edited = store.effective();
+  assert.ok(
+    Math.abs(edited.advanced.aircraft.mass - (initial.advanced.aircraft.mass + 0.0073)) < 1e-15,
+  );
+  assert.equal(initial.advanced.aircraft.mass, 0.03768);
+  assert.deepEqual(edited.response, initial.response);
+  assert.deepEqual(edited.advanced.controller, initial.advanced.controller);
+  assert.deepEqual(store.snapshot().profiles, before.profiles);
+  assert.notEqual(edited.simulationIdentity, initial.simulationIdentity);
+  const restored = createTuningLibraryStore({ storage: memory() });
+  await restored.restore(store.export());
+  assert.deepEqual(restored.snapshot().setups, store.snapshot().setups);
+  const stable = store.export();
+  await assert.rejects(
+    store.saveAircraftComponents({ ...request, battery: { ...request.battery, massGrams: 999 } }),
+    /half to twice/,
+  );
+  assert.equal(store.export(), stable);
+  await assert.rejects(store.saveAircraftComponents(request, before.revision), /Settings changed/);
+  assert.equal(store.export(), stable);
+  storage.setItem = () => {
+    throw new Error('quota full');
+  };
+  await assert.rejects(
+    store.saveAircraftComponents({ ...request, cameraPayload: { massGrams: 5 } }),
+    /quota full/,
+  );
+  assert.equal(store.export(), stable);
+});
+
+test('older saved preset setups acquire component metadata without resetting explicit physical overrides', async () => {
+  const store = createTuningLibraryStore({ storage: memory() });
+  await store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor',
+    profileId: 'meteor-rates',
+    rates: 'defaults',
+  });
+  const setup = store.snapshot().setups.find((row) => row.id === 'meteor');
+  delete setup.components;
+  setup.advanced.aircraft.mass += 0.002;
+  setup.advanced.aircraft.motorTimeConstant = 0.025;
+  await store.saveSetup(setup);
+  await store.saveAircraftComponents({
+    setupId: 'meteor',
+    battery: { massGrams: 12.7, capacityMah: 450 },
+    cameraPayload: { massGrams: 2 },
+  });
+  assert.ok(Math.abs(store.effective().advanced.aircraft.mass - 0.04168) < 1e-15);
+  assert.equal(store.effective().advanced.aircraft.motorTimeConstant, 0.025);
+  assert.equal(
+    store.snapshot().setups.find((row) => row.id === 'meteor').components.cameraPayload.massGrams,
+    2,
+  );
+});
+
+test('optional depletion is a frozen per-flight preference and survives component edits and backups', async () => {
+  const storage = memory(),
+    store = createTuningLibraryStore({ storage });
+  await store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor',
+    profileId: 'meteor-rates',
+    rates: 'defaults',
+  });
+  const initialFlight = store.effective(),
+    profile = store.snapshot().profiles.find((item) => item.id === 'meteor-rates');
+  const setup = store.snapshot().setups.find((item) => item.id === 'meteor');
+  setup.advanced.aircraft.battery.depletion = true;
+  await store.saveSetup(setup);
+  const enduranceFlight = store.effective();
+  assert.equal(initialFlight.advanced.aircraft.battery.depletion, false);
+  assert.equal(enduranceFlight.advanced.aircraft.battery.depletion, true);
+  assert.notEqual(enduranceFlight.simulationIdentity, initialFlight.simulationIdentity);
+  assert.deepEqual(
+    store.snapshot().profiles.find((item) => item.id === 'meteor-rates'),
+    profile,
+  );
+  await store.saveAircraftComponents({
+    setupId: 'meteor',
+    battery: { massGrams: 16, capacityMah: 600 },
+    cameraPayload: { massGrams: 4 },
+  });
+  assert.equal(store.effective().advanced.aircraft.battery.depletion, true);
+  assert.equal(enduranceFlight.advanced.aircraft.mass, 0.03768);
+  const reopened = createTuningLibraryStore({ storage });
+  assert.equal(reopened.effective().advanced.aircraft.battery.depletion, true);
+  const restored = createTuningLibraryStore({ storage: memory() });
+  await restored.restore(store.export());
+  assert.deepEqual(restored.effective(), store.effective());
+});
+
+test('explicit same-preset selection resets installed component metadata while ordinary Advanced edits retain it', async () => {
+  const store = createTuningLibraryStore({ storage: memory() });
+  await store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor',
+    profileId: 'meteor-rates',
+    rates: 'defaults',
+  });
+  await store.saveAircraftComponents({
+    setupId: 'meteor',
+    battery: { massGrams: 16, capacityMah: 600 },
+    cameraPayload: { massGrams: 5 },
+  });
+  const before = store.snapshot().setups.find((item) => item.id === 'meteor');
+  const custom = structuredClone(before.advanced);
+  custom.aircraft.motorTimeConstant = 0.024;
+  await store.saveAircraftConfiguration({ setupId: 'meteor', advanced: custom });
+  assert.deepEqual(
+    store.snapshot().setups.find((item) => item.id === 'meteor').components,
+    before.components,
+  );
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  await store.saveAircraftConfiguration({
+    setupId: 'meteor',
+    advanced: { aircraft: preset.aircraft, controller: preset.controller },
+    preset: preset.preset,
+  });
+  const restored = store.snapshot().setups.find((item) => item.id === 'meteor');
+  assert.deepEqual(restored.components, preset.components);
+  assert.deepEqual(restored.advanced.aircraft, preset.aircraft);
+  assert.equal(restored.components.cameraPayload.massGrams, 0);
+  assert.equal(store.snapshot().profiles.length, 2);
+});
+
+test('Advanced saves carry draft component inventory atomically and later edits retain explicit mass and inertia overrides', async () => {
+  const store = createTuningLibraryStore({ storage: memory() });
+  await store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor',
+    profileId: 'meteor-rates',
+    rates: 'defaults',
+  });
+  const initial = store.snapshot().setups.find((item) => item.id === 'meteor');
+  const selected = {
+    battery: initial.components.battery,
+    cameraPayload: { massGrams: 4 },
+  };
+  const draft = applyAircraftComponents(initial.advanced.aircraft, initial.components, selected);
+  draft.aircraft.mass += 0.002;
+  for (const axis of ['x', 'y', 'z']) draft.aircraft.inertia[axis] *= 1.1;
+  const advanced = { ...initial.advanced, aircraft: draft.aircraft };
+  const request = { setupId: 'meteor', advanced, components: draft.components };
+  await store.saveAircraftConfiguration(request);
+  assert.equal(
+    store.snapshot().setups.find((item) => item.id === 'meteor').components.cameraPayload.massGrams,
+    4,
+  );
+  const stable = store.export();
+  await assert.rejects(
+    store.saveAircraftConfiguration({
+      ...request,
+      components: createPresetConfiguration('air65-ii-racing-2026').components,
+    }),
+    /Component inventory must describe/,
+  );
+  assert.equal(store.export(), stable);
+  await store.saveAircraftComponents({
+    setupId: 'meteor',
+    ...selected,
+    cameraPayload: { massGrams: 5 },
+  });
+  assert.ok(
+    Math.abs(store.effective().advanced.aircraft.mass - advanced.aircraft.mass - 0.001) < 1e-15,
+  );
+  await store.saveAircraftComponents({ setupId: 'meteor', ...selected });
+  assert.ok(Math.abs(store.effective().advanced.aircraft.mass - advanced.aircraft.mass) < 1e-15);
+  for (const axis of ['x', 'y', 'z'])
+    assert.ok(
+      Math.abs(
+        store.effective().advanced.aircraft.inertia[axis] - advanced.aircraft.inertia[axis],
+      ) < 1e-15,
+    );
+});
+
+test('Advanced aircraft saves reuse unchanged response profiles and atomically clone changed rates without altering shared users', async () => {
+  const storage = memory(),
+    store = createTuningLibraryStore({ storage });
+  await store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor',
+    profileId: 'meteor-rates',
+    rates: 'defaults',
+  });
+  await store.saveSetup(setup('shared', 'meteor-rates'));
+  const initial = store.effective(),
+    aircraft = structuredClone(initial.advanced);
+  aircraft.aircraft.mass = 0.04;
+  const writes = storage.writes.length;
+  await store.saveAircraftConfiguration({
+    setupId: 'meteor',
+    newProfileId: 'unused',
+    advanced: aircraft,
+    response: initial.response,
+    camera: { tilt: 33, verticalFov: 90 },
+  });
+  assert.equal(storage.writes.length, writes + 1);
+  assert.equal(store.snapshot().profiles.length, 2);
+  assert.equal(store.effective().profileId, 'meteor-rates');
+  assert.equal(store.effective().camera.tilt, 33);
+  assert.equal(store.effective().advanced.aircraft.mass, 0.04);
+  const before = structuredClone(initial.response),
+    changed = structuredClone(initial.response);
+  changed.rates.axes.yaw.rate = 100;
+  await store.saveAircraftConfiguration({
+    setupId: 'meteor',
+    newProfileId: 'independent',
+    advanced: aircraft,
+    response: changed,
+    camera: { tilt: 34, verticalFov: 91 },
+  });
+  assert.equal(store.snapshot().profiles.length, 3);
+  assert.equal(store.effective().profileId, 'independent');
+  assert.equal(store.effective().response.rates.axes.yaw.rate, 100);
+  assert.deepEqual(resolveFlightConfiguration(store.snapshot(), 'shared').response, before);
+  assert.equal(store.snapshot().defaultProfileId, 'legacy-feel');
+  assert.deepEqual(initial.response, before);
+  assert.deepEqual(store.snapshot().setups.find((s) => s.id === 'meteor').preset, {
+    id: 'meteor75-analog-2022',
+    revision: 1,
+  });
+});
+
+test('Advanced saves move preset provenance with selected aircraft and preserve all fields on invalid, stale or capacity-limited saves', async () => {
+  const store = createTuningLibraryStore({ storage: memory() });
+  const pavo = createPresetConfiguration('pavo20-pro-ii-o4-4s');
+  await store.saveAircraftConfiguration({
+    setupId: 'my-drone',
+    newProfileId: 'pavo-rates',
+    advanced: { aircraft: pavo.aircraft, controller: pavo.controller },
+    response: pavo.response,
+    camera: pavo.camera,
+    preset: pavo.preset,
+  });
+  assert.deepEqual(store.snapshot().setups[0].preset, pavo.preset);
+  let before = store.export();
+  await assert.rejects(
+    store.saveAircraftConfiguration({
+      setupId: 'my-drone',
+      newProfileId: 'bad',
+      advanced: store.effective().advanced,
+      camera: { tilt: 100, verticalFov: 82 },
+    }),
+    /Camera tilt/,
+  );
+  assert.equal(store.export(), before);
+  await assert.rejects(
+    store.saveAircraftConfiguration(
+      { setupId: 'my-drone', advanced: store.effective().advanced },
+      0,
+    ),
+    /Settings changed/,
+  );
+  assert.equal(store.export(), before);
+  for (let n = 0; n < 30; n++) await store.createProfile({ id: `extra-${n}`, name: `Extra ${n}` });
+  assert.equal(store.snapshot().profiles.length, 32);
+  await store.saveAircraftConfiguration({
+    setupId: 'my-drone',
+    advanced: store.effective().advanced,
+    response: pavo.response,
+    camera: { tilt: 25, verticalFov: 90 },
+  });
+  before = store.export();
+  const changed = structuredClone(pavo.response);
+  changed.rates.axes.roll.expo = 30;
+  await assert.rejects(
+    store.saveAircraftConfiguration({
+      setupId: 'my-drone',
+      newProfileId: 'over-limit',
+      advanced: store.effective().advanced,
+      response: changed,
+      camera: { tilt: 26, verticalFov: 91 },
+    }),
+    /32 rate profiles/,
+  );
+  assert.equal(store.export(), before);
+  const custom = structuredClone(store.effective().advanced);
+  custom.aircraft.id = 'my-custom-build';
+  await store.saveAircraftConfiguration({ setupId: 'my-drone', advanced: custom });
+  assert.equal(Object.hasOwn(store.snapshot().setups[0], 'preset'), false);
+});
+
+test('keep-current aircraft selection copies complete Legacy and portable response settings without reinterpreting rates', async () => {
+  const store = createTuningLibraryStore({
+    storage: memory(),
+    response: { ...DEFAULT_RESPONSE, maxRate: 480, expo: 42 },
+  });
+  const old = store.effective();
+  await store.createPresetSetup({
+    presetId: 'holybro-x650-v2',
+    setupId: 'large',
+    profileId: 'large-rates',
+    rates: 'keep',
+  });
+  assert.deepEqual(store.effective().response, old.response);
+  assert.equal(store.effective().advanced.aircraft.mass, 3.2);
+  const response = createTunedResponse(
+    createRateProfile({
+      algorithm: 'quick',
+      axes: { yaw: { rcRate: 123, rate: 180, expo: 31 } },
+      throttle: { mid: 42, expo: 17, limitType: 'scale', limitPercent: 70 },
+    }),
+    { maxTilt: 45, responseTicks: 12 },
+  );
+  await store.createPresetSetup({
+    presetId: 'air65-ii-racing-2026',
+    setupId: 'tiny',
+    profileId: 'tiny-rates',
+    rates: 'keep',
+    response,
+  });
+  assert.deepEqual(store.effective().response, response);
+  response.rates.axes.yaw.rate = 1;
+  assert.equal(store.effective().response.rates.axes.yaw.rate, 180);
+  assert.deepEqual(resolveFlightConfiguration(store.snapshot(), 'large').response, old.response);
+});
+
+test('reset restores only the chosen preset setup and leaves its old rates, other drones and in-progress configuration intact', async () => {
+  const store = createTuningLibraryStore({ storage: memory() });
+  await store.createPresetSetup({
+    presetId: 'pavo20-pro-ii-o4-4s',
+    setupId: 'cine',
+    profileId: 'cine-rates',
+    rates: 'defaults',
+  });
+  const setup = store.snapshot().setups[1];
+  setup.advanced.aircraft.mass = 0.2;
+  setup.camera.tilt = 42;
+  setup.name = 'My edited Pavo';
+  await store.saveSetup(setup);
+  await store.saveProfile('cine-rates', {
+    response: createTunedResponse(createRateProfile({ axes: { yaw: { rate: 110 } } })),
+  });
+  const flight = store.effective(),
+    frozen = structuredClone(flight);
+  await store.createPresetSetup({
+    presetId: 'pavo20-pro-ii-o4-4s',
+    setupId: 'cine',
+    profileId: 'reset-rates',
+    rates: 'defaults',
+    replace: true,
+  });
+  assert.deepEqual(flight, frozen);
+  assert.equal(store.snapshot().setups.length, 2);
+  assert.equal(store.snapshot().setups[1].name, 'My edited Pavo');
+  assert.equal(store.effective().advanced.aircraft.mass, 0.1712);
+  assert.equal(store.effective().response.rates.axes.yaw.rate, 50);
+  assert.equal(
+    store.snapshot().profiles.find((p) => p.id === 'cine-rates').response.rates.axes.yaw.rate,
+    110,
+  );
+  const before = store.export();
+  await assert.rejects(
+    store.createPresetSetup({
+      presetId: 'air65-ii-racing-2026',
+      setupId: 'cine',
+      profileId: 'bad',
+      rates: 'defaults',
+      replace: true,
+    }),
+    /own preset/,
+  );
+  assert.equal(store.export(), before);
+});
+
+test('preset creation rejects failed storage, stale tabs, invalid identities and capacity without partial profiles or selection', async () => {
+  const storage = memory(),
+    first = createTuningLibraryStore({ storage }),
+    stale = createTuningLibraryStore({ storage });
+  const request = {
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor',
+    profileId: 'meteor-rates',
+    rates: 'defaults',
+  };
+  await first.createPresetSetup(request);
+  const staleBefore = stale.snapshot();
+  await assert.rejects(stale.createPresetSetup(request), /Another tab/);
+  assert.deepEqual(stale.snapshot(), staleBefore);
+  const before = first.export();
+  await assert.rejects(first.createPresetSetup({ ...request, profileId: 'other' }), /new setup ID/);
+  assert.equal(first.export(), before);
+  storage.setItem = () => {
+    throw new Error('quota full');
+  };
+  await assert.rejects(
+    first.createPresetSetup({ ...request, setupId: 'second', profileId: 'second-rates' }),
+    /quota full/,
+  );
+  assert.equal(first.export(), before);
+  const full = createTuningLibraryStore({ storage: memory() });
+  for (let n = 0; n < 31; n++) await full.saveSetup(setup(`saved-${n}`));
+  const fullBefore = full.export();
+  await assert.rejects(full.createPresetSetup(request), /32 drone setups/);
+  assert.equal(full.export(), fullBefore);
 });
 
 test('migration preserves the existing response and camera without writing or replacing legacy storage', () => {

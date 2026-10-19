@@ -1,3 +1,4 @@
+import { drawBrandActor } from '../presentation/brand-actors.mjs';
 import { sampleActorAnimation } from '../presentation/actor-animation.mjs';
 import { aliasSafePhase } from '../../authoring/motion-lab/animation.mjs';
 import { paintRotor } from './rotor-presentation.mjs';
@@ -733,6 +734,7 @@ function distinctBody(c, f, k) {
 
 /** Original body-only skin; caller owns placement/size and functional badges. */
 export function drawEnemySilhouette(ctx, frame, colors) {
+  if (drawBrandActor(ctx, frame, colors)) return;
   if (drawActorRecipe(ctx, frame, colors)) return;
   if (drawJourneyActorMaterial(ctx, frame, colors)) return;
   if (!distinctBody(ctx, frame, colors))

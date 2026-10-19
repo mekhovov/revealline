@@ -1,0 +1,116 @@
+{
+  "format": "SoloCocoaExecutedSourceV1",
+  "sourceRevision": "3e640259d0b39b5d00c044f541208bd56260ab6c",
+  "sourceTree": "0d8e6535ac6a2a458d7a1080ce1f8a81ba130da2",
+  "run": 39096176027,
+  "artifact": 12125060656,
+  "archive": {
+    "bytes": 9131,
+    "sha256": "01ee8275038fbc1371438e8691d1fe7dd38c46200901df08282d082a7422123a"
+  },
+  "status": "failed-hosted-owner-contract-browser-media-withheld",
+  "scope": "Additive post-hoc exact-Git source readback only. Original executed V2 declaration/workflow and failed outcome remain unchanged. The inventory contract is historical evidence, not a substitute for future current-source controls.",
+  "contracts": {
+    "tests": 97,
+    "pass": 92,
+    "fail": 1,
+    "skipped": 4
+  },
+  "fullBeforeAndAllInventoriesRetained": false,
+  "retrospectiveOwnershipPass": false,
+  "reports": [
+    {
+      "member": "solo-native-mp3-owner-build.json",
+      "bytes": 1703,
+      "sha256": "64d7aeec25af73ed49f5305f8bd0180f42e5db6d2998c4bea3fa487e047272fb"
+    },
+    {
+      "member": "solo-native-mp3-prerequisite.json",
+      "bytes": 668,
+      "sha256": "ee489a1080c9c734f48d811fbf4bc4e757ae4a2fd2f2857f67584799f9e31d35"
+    },
+    {
+      "member": "solo-native-mp3-contracts.tap",
+      "bytes": 23020,
+      "sha256": "c220d6b1238bd8f273366db8e1d0a59c0b53fabbdfc03f065454992ff55c80a5"
+    },
+    {
+      "member": "solo-native-mp3-contracts/deadline.json",
+      "bytes": 2506,
+      "sha256": "9e2524bb5f0f62aa69552d55ee28d0ac19188279577224cdc4627390822e2653"
+    },
+    {
+      "member": "solo-native-mp3-contracts/normal.json",
+      "bytes": 1720,
+      "sha256": "1ad339ac5f70244e55e73fa1d1fa843225f2444d241617727f433d6b4ad97f94"
+    }
+  ],
+  "records": [
+    {
+      "path": "scripts/solo-native-mp3-control.mjs",
+      "gitBlob": "ffc8593e13a19b303ee4432982775395048b40db",
+      "bytes": 46268,
+      "sha256": "df5f588d4e38bd6b88af04a42ccbbf0b69435e483e58f96f1dc8733051f7e633"
+    },
+    {
+      "path": "scripts/prepare-solo-audio-fixtures.mjs",
+      "gitBlob": "85013affb4781a06e071872199abbf90e8363329",
+      "bytes": 10676,
+      "sha256": "a8941d708d9b773b3eda1b455f9291ee60f2c8b5846e7501a5a40236478c467e"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "gitBlob": "ccf6ac62a7e456c77e1f48c5973ead2b0cd0b3d9",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "gitBlob": "0176a28b0eb56e634a12112d5737211a6ec6de8f",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "gitBlob": "7dcc01723fb7e271e7bca7a16db9d7c859821644",
+      "bytes": 72137,
+      "sha256": "a478ba10d5a3ea7a1f9e6b9d29cf88bcaeadff1e729fd12cc575672c07554573"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.c",
+      "gitBlob": "48cff29f1e62f91019b4576ec0f288ecbfe4a26d",
+      "bytes": 7955,
+      "sha256": "72ff466c653ddb987a4e5df5df024aabd952cf45d659e7872809412aa996db9f"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.mjs",
+      "gitBlob": "70ec20f65f9c4671eedcc13b59d2cee9624b9997",
+      "bytes": 13716,
+      "sha256": "bc3c1976364478f8cfb06776c54edb06701b8a43b0526db2c974e38229209783"
+    },
+    {
+      "path": "docs/performance/solo-cocoa-identity-v2-plan.json",
+      "gitBlob": "ed7fb0119c4461065982a7955a3d62b6dc8fe96b",
+      "bytes": 18562,
+      "sha256": "067bc5cb72fd31236830a70c2f1945ba82af0c8d4c8af3d8f3b16330047b9b17"
+    },
+    {
+      "path": ".github/workflows/solo-native-mp3-cocoa-identity-v2-temporary.yml",
+      "gitBlob": "f7c1b63f3a9c1ad0fe76c670aefbee3264dd5c60",
+      "bytes": 13120,
+      "sha256": "482063a223a5f3f2ae3b965c90e4380fa5a5559e92f6933fc42fce4842761541"
+    },
+    {
+      "path": "scripts/test-solo-cocoa-identity-v2-release.mjs",
+      "gitBlob": "5c710ddf4369cdbdcc25832d1fc7bd69257dde5e",
+      "bytes": 9986,
+      "sha256": "65fdfb5363c9b40022fd6c9b323c7bd231990e14d93da405b1605c761f6404ce"
+    },
+    {
+      "path": "scripts/test-solo-darwin-process-inventory.mjs",
+      "gitBlob": "6bdbf9e43e49ca2e75b8c31d2f510f85523c01cb",
+      "bytes": 63461,
+      "sha256": "17ac5d2319db177e4c04b0d26f89fe6bfae0c62f91ddcba35a931187776aabf9"
+    }
+  ]
+}

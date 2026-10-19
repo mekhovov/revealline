@@ -1,0 +1,365 @@
+name: Temporary Solo final Long Rail causal CPU profile
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml'
+      - 'scripts/solo-remote-cpu-profile.mjs'
+      - 'scripts/test-solo-remote-cpu-profile.mjs'
+      - 'scripts/test-solo-final-long-rail-cpu-profile.mjs'
+      - 'scripts/test-solo-source-verifier-smoke.mjs'
+      - 'scripts/solo-qualification-replay-identity.mjs'
+      - 'scripts/test-solo-qualification-replay-identity.mjs'
+      - 'scripts/qualify-solo-runtime.mjs'
+      - 'scripts/solo-qualification.mjs'
+      - 'docs/performance/solo-final-long-rail-cpu-profile-plan.json'
+      - 'docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture'
+      - 'scripts/solo-qualification-cpu-profile.mjs'
+      - 'scripts/test-solo-qualification-cpu-profile.mjs'
+      - 'scripts/run-solo-remote-correctness.mjs'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: solo-linux-final-long-rail-cpu-profile-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  declare:
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c41a02216c0811952232a387fd1743e09452c269'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.phase.outputs.matrix }}
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/solo-remote-cpu-profile.mjs
+            /scripts/solo-remote-supplemental.mjs
+            /docs/performance/solo-final-long-rail-cpu-profile-plan.json
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Admit exactly one reviewed phase; no automatic continuation
+        id: phase
+        timeout-minutes: 1
+        run: node scripts/solo-remote-cpu-profile.mjs matrix-plan docs/performance/solo-final-long-rail-cpu-profile-plan.json >> "$GITHUB_OUTPUT"
+  preflight:
+    needs: declare
+    runs-on: ubuntu-24.04
+    timeout-minutes: ${{ matrix.jobMinutes }}
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix: ${{ fromJSON(needs.declare.outputs.matrix) }}
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
+      SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline
+      SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate
+      PYTHONDONTWRITEBYTECODE: 1
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: tools
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/solo-remote-cpu-profile-temporary.yml
+            /.github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml
+            /docs/performance/fixtures/solo-final-cpu-profile/parked-9e-source.json
+            /docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture
+            /docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture
+            /docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture
+            /docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture
+            /docs/performance/solo-final-long-rail-cpu-profile-plan.json
+            /docs/performance/solo-remote-cpu-profile-plan.json
+            /game/build-config.json
+            /game/campaign-contexts.mjs
+            /game/campaign-difficulty.mjs
+            /game/content-design/assets.mjs
+            /game/content-design/catalogs.mjs
+            /game/content-design/limits.mjs
+            /game/content-design/map.mjs
+            /game/content-launch.mjs
+            /game/content.mjs
+            /game/content/campaign.json
+            /game/content/soundtrack-catalogue.mjs
+            /game/controller-bindings.mjs
+            /game/controller-boost.mjs
+            /game/coop/bonus-opportunity.mjs
+            /game/coop/combat-patrols.mjs
+            /game/coop/core.mjs
+            /game/coop/expedition-environment.mjs
+            /game/coop/expedition-version.mjs
+            /game/coop/first-connection.mjs
+            /game/coop/foundations.mjs
+            /game/coop/geometry.mjs
+            /game/coop/library.mjs
+            /game/coop/recipes.mjs
+            /game/coop/relay-yard.mjs
+            /game/coop/roamers.mjs
+            /game/coop/running-enemies.mjs
+            /game/coop/terrain.mjs
+            /game/coop/threats.mjs
+            /game/coop/timed-bonuses.mjs
+            /game/core/abilities.mjs
+            /game/core/arcade-actions.mjs
+            /game/core/bonus-opportunity.mjs
+            /game/core/capture-regions.mjs
+            /game/core/capture.mjs
+            /game/core/classic-contour.mjs
+            /game/core/classic-definition.mjs
+            /game/core/classic-motion.mjs
+            /game/core/classic-state.mjs
+            /game/core/classic-step.mjs
+            /game/core/classic-topology.mjs
+            /game/core/combat-definition.mjs
+            /game/core/combat-motion.mjs
+            /game/core/combat-patrols.mjs
+            /game/core/contacts.mjs
+            /game/core/coverage.mjs
+            /game/core/directional-fields.mjs
+            /game/core/encounter.mjs
+            /game/core/enemy-pressure.mjs
+            /game/core/field-course.mjs
+            /game/core/foundations.mjs
+            /game/core/geometry.mjs
+            /game/core/index.mjs
+            /game/core/level.mjs
+            /game/core/line-impact.mjs
+            /game/core/movement.mjs
+            /game/core/registry.mjs
+            /game/core/relay-gates.mjs
+            /game/core/systems.mjs
+            /game/core/timed-bonuses.mjs
+            /game/core/versions.mjs
+            /game/data-json.mjs
+            /game/download-catalogue.mjs
+            /game/enemy-catalog.mjs
+            /game/external-chapter-source.mjs
+            /game/external-chapter.mjs
+            /game/first-flight.mjs
+            /game/flight-media-pins.mjs
+            /game/hunt/actor-facing.mjs
+            /game/hunt/pursuit-goals-v2.mjs
+            /game/hunt/pursuit-goals.mjs
+            /game/hunt/pursuit-specialists.mjs
+            /game/hunt/rules.mjs
+            /game/hunt/running-enemy-definition.mjs
+            /game/hunt/running-enemy-placement.mjs
+            /game/i18n/bootstrap.mjs
+            /game/i18n/catalogs.mjs
+            /game/i18n/index.mjs
+            /game/imports.mjs
+            /game/input-presentation.mjs
+            /game/key-bindings.mjs
+            /game/library.mjs
+            /game/managed-media-store.mjs
+            /game/mastery-catalog.mjs
+            /game/mastery-equipment.mjs
+            /game/mastery-records.mjs
+            /game/mastery.mjs
+            /game/media-bundle.mjs
+            /game/media-library.mjs
+            /game/media-presentation.mjs
+            /game/media-still.mjs
+            /game/media-storage-record.mjs
+            /game/mission-library/included-bundled-pack.mjs
+            /game/mp3-inspection.mjs
+            /game/mp3.mjs
+            /game/official-downloads.mjs
+            /game/online-soundtrack-catalogue.mjs
+            /game/online-soundtrack-sources.mjs
+            /game/optional-chapters.mjs
+            /game/packs.mjs
+            /game/picture-receipts.mjs
+            /game/platform.mjs
+            /game/presentation-pins.mjs
+            /game/progress.mjs
+            /game/replay.mjs
+            /game/snake/rules.mjs
+            /game/soundtrack-album-download.mjs
+            /game/soundtrack-albums.mjs
+            /game/soundtrack-archive.mjs
+            /game/soundtrack-bundle.mjs
+            /game/soundtrack-portable.mjs
+            /game/soundtrack-rights.mjs
+            /game/soundtrack-style-selection.mjs
+            /game/soundtrack-style-taxonomy.mjs
+            /game/soundtrack.mjs
+            /game/story-bindings.mjs
+            /game/story-receipts.mjs
+            /game/story-storage-record.mjs
+            /game/text-face.mjs
+            /game/text-size.mjs
+            /game/touch-controls.mjs
+            /game/ui/actor-recipes.mjs
+            /game/ui/analog-signal.mjs
+            /game/ui/combat-view.mjs
+            /game/ui/fpv-body-recipes.mjs
+            /game/ui/jammer-picture.mjs
+            /game/ui/music.mjs
+            /game/vendor/LZ-STRING-LICENSE.txt
+            /game/vendor/i18next-26.4.2.min.js
+            /game/vendor/lz-string-1.5.0.min.js
+            /game/victory-story.mjs
+            /game/video-poster.mjs
+            /package-lock.json
+            /package.json
+            /publishing/vendor/acorn-8.18.0.mjs
+            /scripts/brand-icons.mjs
+            /scripts/build-entry-writer.mjs
+            /scripts/calibrate-solo-performance.mjs
+            /scripts/core-soundtrack-publication.mjs
+            /scripts/default-runtime-metadata.mjs
+            /scripts/edition-code-indentation.mjs
+            /scripts/external-distribution.mjs
+            /scripts/game-cli.mjs
+            /scripts/hosted-soundtrack-publication.mjs
+            /scripts/localization-audit.mjs
+            /scripts/localization-content.mjs
+            /scripts/localization.mjs
+            /scripts/observe-solo-performance.mjs
+            /scripts/offline-core-closure.mjs
+            /scripts/optional-artwork.mjs
+            /scripts/optional-distribution.mjs
+            /scripts/pack-indexes.mjs
+            /scripts/qualify-solo-diagnostics.mjs
+            /scripts/qualify-solo-runtime.mjs
+            /scripts/reviewed-soundtrack-batches.mjs
+            /scripts/run-solo-remote-correctness.mjs
+            /scripts/serve-production-preview.mjs
+            /scripts/solo-build-archive.mjs
+            /scripts/solo-build-worker-closure.mjs
+            /scripts/solo-diagnostics-analysis.mjs
+            /scripts/solo-observation-lifecycle.mjs
+            /scripts/solo-qualification-audio.mjs
+            /scripts/solo-qualification-browser-context.mjs
+            /scripts/solo-qualification-cadence.mjs
+            /scripts/solo-qualification-cpu-profile.mjs
+            /scripts/solo-qualification-export.mjs
+            /scripts/solo-qualification-native-replay.mjs
+            /scripts/solo-qualification-observation.mjs
+            /scripts/solo-qualification-replay-core.mjs
+            /scripts/solo-qualification-replay-identity.mjs
+            /scripts/solo-qualification-replay.mjs
+            /scripts/solo-qualification.mjs
+            /scripts/solo-remote-archive.py
+            /scripts/solo-remote-baseline.mjs
+            /scripts/solo-remote-cpu-profile.mjs
+            /scripts/solo-remote-supplemental.mjs
+            /scripts/solo-source-verifier-smoke.mjs
+            /scripts/soundtrack-archive-admissions.mjs
+            /scripts/soundtrack-distribution.mjs
+            /scripts/test-solo-final-long-rail-cpu-profile.mjs
+            /scripts/test-solo-qualification-cpu-profile.mjs
+            /scripts/test-solo-qualification-replay-identity.mjs
+            /scripts/test-solo-remote-baseline.mjs
+            /scripts/test-solo-remote-correctness.mjs
+            /scripts/test-solo-remote-cpu-profile.mjs
+            /scripts/test-solo-source-verifier-smoke.mjs
+            /scripts/vendor/devtools-benchmark.mjs
+            /scripts/verify-solo-build.mjs
+      - timeout-minutes: 3
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: 8b01991942dc764b8aa4726851699ce1985e53ae
+          path: baseline
+          persist-credentials: false
+          fetch-depth: 1
+      - timeout-minutes: 3
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4
+          path: candidate
+          persist-credentials: false
+          fetch-depth: 1
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Record setup and install exact source dependencies
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
+            "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
+            "OUTPUT=$RUNNER_TEMP/solo-linux-final-long-rail-cpu-profile-${{ matrix.phase }}-${{ matrix.engine }}" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/solo-linux-setup"
+          test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
+          npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
+      - name: Install the separately pinned browser cohort
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/solo-browser-tools"
+          npm install --prefix "$RUNNER_TEMP/solo-browser-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-install.log"
+          "$RUNNER_TEMP/solo-browser-tools/node_modules/.bin/playwright" install --with-deps chromium 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-dependencies.log"
+          cp "$RUNNER_TEMP/solo-browser-tools/package-lock.json" "$RUNNER_TEMP/solo-linux-setup/browser-package-lock.json"
+      - name: Exercise archive rejection and owned timeout cleanup
+        timeout-minutes: 3
+        working-directory: tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-remote-cpu-profile.mjs scripts/test-solo-final-long-rail-cpu-profile.mjs scripts/test-solo-qualification-cpu-profile.mjs scripts/test-solo-qualification-replay-identity.mjs scripts/test-solo-source-verifier-smoke.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-final-long-rail-cpu-profile-plan.json "$RUNNER_TEMP/solo-cpu-profile-job.json"
+      - name: Run only this reviewed phase and fixed source pair
+        timeout-minutes: ${{ matrix.stepMinutes }}
+        working-directory: tools
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: timeout --signal=TERM --kill-after=30s ${{ matrix.outerSeconds }}s node scripts/run-solo-remote-correctness.mjs "$RUNNER_TEMP/solo-cpu-profile-job.json" "$OUTPUT"
+      - name: Describe bounded setup evidence without claiming truncated output complete
+        if: ${{ always() }}
+        timeout-minutes: 2
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import hashlib,json,os,pathlib
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'solo-linux-setup'
+          root.mkdir(exist_ok=True)
+          rows=[]
+          failed=False
+          for name in ['tools-npm.log','baseline-npm.log','browser-install.log','browser-dependencies.log','wrapper-tests.tap','browser-package-lock.json']:
+              path=root/name
+              if not path.exists():
+                  rows.append({'path':name,'status':'not-retained-setup-incomplete'})
+                  continue
+              size=path.stat().st_size
+              assert size <= 4*1024*1024, 'Setup file exceeded fixed bound'
+              capped=size == 4*1024*1024
+              failed |= capped
+              rows.append({'path':name,'bytes':size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'status':'cap-reached-completeness-unconfirmed' if capped else 'retained'})
+          (root/'retention.json').write_text(json.dumps({'status':'failed-output-cap' if failed else 'retained','files':rows,'maximumTotalBytes':24*1024*1024},indent=2)+'\n')
+          if failed: raise SystemExit(1)
+          PYCODE
+      - name: Retain all complete, failed and partial evidence
+        if: ${{ always() }}
+        timeout-minutes: 10
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-linux-final-long-rail-cpu-profile-${{ matrix.phase }}-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-linux-final-long-rail-cpu-profile-${{ matrix.phase }}-${{ matrix.engine }}/evidence/
+            ${{ runner.temp }}/solo-linux-setup/
+          if-no-files-found: warn
+          compression-level: 6
+          retention-days: 14

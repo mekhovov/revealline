@@ -1,6 +1,7 @@
 import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { huntText } from '../hunt/copy.mjs';
 import { loadBaseArtwork } from '../base-artwork.mjs';
 import { createEnemyStatsHost } from '../enemy-stats.mjs';
 import { mountEnemyStats } from '../ui/enemy-stats.mjs';
@@ -47,6 +48,7 @@ import { contentText } from '../i18n/content.mjs';
 import {
   t,
   getLocale,
+  onLocaleChange,
   localizedText,
   localizedAttribute,
   localizedOption,
@@ -56,6 +58,7 @@ import {
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { versusHomeRecommendation } from '../ui/versus-home-recommendation.mjs';
 import { createMissionStartCue } from './start-cue.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
@@ -136,6 +139,8 @@ import {
 } from '../multiplayer.mjs';
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
+import { createCouchKeyboardPreferences } from './keyboard-preferences.mjs';
+import { mountCouchKeyboardSettings } from './keyboard-settings.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -601,7 +606,11 @@ try {
         track: null,
         pictureEntry: baseEntry,
         musicCampaignKey: campaignKey(campaign),
-        authoredBackground: null,
+        authoredBackground:
+          baseEntry.levelVisuals.find((visual) => visual.levelId === level.id)?.visualOverrides
+            ?.background ??
+          baseEntry.visualOverrides.background ??
+          null,
       }));
   let featuredSource,
     featuredStatus = '';
@@ -846,10 +855,18 @@ try {
   const cursorReceiptId = cursorEntry
     ? (candidateJourney.progressMission?.(cursorEntry)?.id ?? journeyCursor.id)
     : journeyCursor?.id;
-  const initialJourneyMission =
-    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, cursorReceiptId)
-      ? (candidateJourney.next(journeyCursor.id) ?? journeyCursor)
-      : (journeyCursor ?? candidateJourney?.catalog.missions[0]);
+  const journeyCursorCleared =
+    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, cursorReceiptId);
+  const initialJourneyMission = journeyCursorCleared
+    ? (candidateJourney.next(journeyCursor.id) ?? journeyCursor)
+    : (journeyCursor ?? candidateJourney?.catalog.missions[0]);
+  const initialHomeSelection = {
+    destination: initialJourneyMission,
+    cursor: journeyCursor,
+    cursorId: journeyProfile?.snapshot().cursors.versus ?? null,
+    recordedClear: !!journeyCursorCleared,
+  };
+  let initialHomeRecipe = null;
   $('race-level').value = candidateJourney
     ? candidateJourney.row(initialJourneyMission, journeyPreferences.snapshot().difficulty).key
     : maps[0].key;
@@ -1025,6 +1042,9 @@ try {
       variant: 'hud',
     }),
   );
+  const stopEnemyStatsLocale = onLocaleChange(() => {
+    enemyStatsViews.forEach((view) => view.refresh());
+  });
   const continuousPlay = createContinuousPlayController({
     isCurrent: (identity) => identity === match && !disposed && match?.status === 'finished',
     isActive: () => !document.hidden && document.hasFocus(),
@@ -2032,7 +2052,9 @@ try {
         updateMenu();
       }
       const mayFocus = !disposed && controller === contentController && !controller.signal.aborted;
-      if (prepared && focusOrigin !== $('race-start'))
+      // Configured menu changes keep their selector; they do not authorize Start.
+      if (configured) restoreFocus(focusOrigin, mayFocus);
+      else if (prepared && focusOrigin !== $('race-start'))
         restoreFocus.pending($('race-start'), mayFocus);
       else restoreFocus($('race-start'), mayFocus, { retain: !!prepared });
     }
@@ -2750,7 +2772,10 @@ try {
     root: $('race-settings-panel-controls'),
     session: controllerSession,
   });
+  const keyboardPreferences = createCouchKeyboardPreferences();
+  let keyboardSettings = null;
   const input = attachCouchInput({
+    keyboardBindings: keyboardPreferences.snapshot().bindings,
     controllerSession,
     initialSlots: incomingContinuation?.slots ?? [null, null],
     getTouchSettings: () => couchTouch.snapshot(),
@@ -2799,7 +2824,22 @@ try {
     getLevels: () => match?.runs?.map((run) => run.level) ?? [],
   });
   let globalSettingsVisit = 0;
+  function duelNavigationContext() {
+    const mode = t('interface:versus2');
+    if (
+      candidateJourney?.owns(roundRecipe?.entry) &&
+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)
+    ) {
+      const name =
+        authoredRoute.id === 'humanoid-hunt-v1'
+          ? huntText('lessons')
+          : contentText(authoredRoute.source, 'name');
+      return `${name} · ${mode}`;
+    }
+    return t('interface:captureNavigation.context', { mode });
+  }
   shell = createCouchShell({
+    getKeyboardBindings: () => keyboardPreferences.snapshot().bindings,
     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
       themeId: theme?.id ?? 'fpv',
@@ -2827,6 +2867,9 @@ try {
     getTeamJourneyRoute: () =>
       librarySourceReturn?.mode === 'team' ? librarySourceReturn.journey : null,
     onTransition: ({ to, back = false } = {}) => {
+      keyboardSettings?.cancel();
+      if (to === 'options') keyboardSettings?.refresh();
+      else keyboardPreferences.suspend();
       globalSettingsVisit++;
       ++libraryOpenEpoch;
       cancelLibraryDecision();
@@ -2845,6 +2888,15 @@ try {
       void startRace(roundRecipe.entry, { focusOrigin: $('race-retry') });
     },
   });
+
+  keyboardSettings = mountCouchKeyboardSettings({
+    root: $('race-settings-panel-controls'),
+    preferences: keyboardPreferences,
+    isOpen: () => shell.scope() === 'options' && match?.status !== 'running',
+  });
+  const stopKeyboard = keyboardPreferences.subscribe(({ bindings }) =>
+    input.setKeyboardBindings(bindings),
+  );
 
   function catalogueAttempt() {
     return {
@@ -3757,6 +3809,11 @@ try {
         library: result.library,
         profile,
         mode: 'versus',
+        browsingContext: ({ label }) =>
+          t('interface:captureNavigation.browsing', {
+            mode: label,
+            context: duelNavigationContext(),
+          }),
         getCurrentId: () => {
           if (currentLibrarySelection?.match === match) return currentLibrarySelection.id;
           const entry = roundRecipe.entry;
@@ -4127,7 +4184,10 @@ try {
     onOpen: clear,
     offlinePanel: installOfflinePanel,
   });
-  shell.refreshGlobalSettings?.({ controls: globalTools.controls });
+  shell.refreshGlobalSettings?.({
+    controls: globalTools.controls,
+    comfort: { display: displayPreferences },
+  });
 
   function couchScope() {
     if (globalSettingsToolsRoot(document)) return `couch:${globalSettingsToolsRoot(document).id}`;
@@ -4308,8 +4368,9 @@ try {
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
+      startRecommendation: homeMissionRecommendation,
       summary: () =>
-        `${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
+        `${duelNavigationContext()} · ${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
     });
     $('race-time-field').hidden = qualifiedVersusEntry(roundRecipe.entry);
     // Reconcile deliberate layout transitions immediately, including browsers
@@ -4330,6 +4391,39 @@ try {
         });
     if ($('race-menu-status').textContent !== text)
       localizedText($('race-menu-status'), () => text);
+  }
+  function homeMissionRecommendation() {
+    if (
+      authoredRoute?.id !== DEFAULT_JOURNEY_ROUTES.versus ||
+      libraryHandoff ||
+      incomingContinuation ||
+      !candidateJourney?.owns(roundRecipe?.entry)
+    )
+      return null;
+    const recommendation = versusHomeRecommendation({
+      catalog: candidateJourney.catalog,
+      mission: roundRecipe.entry.mission,
+      initial: roundRecipe === initialHomeRecipe ? initialHomeSelection : null,
+      ready:
+        match?.status === 'ready' &&
+        contentReady &&
+        !contentBusy &&
+        !contentError &&
+        !nextAttempt &&
+        !libraryContinuation &&
+        !pendingReadyStart,
+    });
+    const key = {
+      first: 'interface:versusHomeRecommendation.first',
+      selected: 'interface:versusHomeRecommendation.selected',
+      recordedNext: 'interface:versusHomeRecommendation.recordedNext',
+    }[recommendation?.kind];
+    return recommendation
+      ? t(key, {
+          mission: contentText(recommendation.mission, 'name'),
+          previous: recommendation.previous ? contentText(recommendation.previous, 'name') : '',
+        })
+      : null;
   }
   localizedText($('race-export-recording'), () => t('interface:recording.exportRound'));
   // Locale bindings can outlive a retired page. Keep verification in the build
@@ -4498,7 +4592,7 @@ try {
       (element.matches('button[data-theme-preview]') &&
         !!element.closest('[data-theme-controls]')) ||
       !!element.closest(
-        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers',
+        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers, .multiplayer-keyboard',
       ),
     getControlLabels: () => ({
       directions: t('interface:dPadLeftStick'),
@@ -4682,6 +4776,7 @@ try {
     continuousPlay.dispose();
     flowControls.dispose();
     flowCelebration.dispose();
+    stopEnemyStatsLocale();
     enemyStatsViews.forEach((view) => view.dispose());
     void enemyStatistics.stats.flush().finally(() => enemyStatistics.close());
     document.removeEventListener('pointerdown', cancelContinuousPlay, true);
@@ -4710,6 +4805,9 @@ try {
     couchTouch.destroy();
     journeyReactions.dispose();
     controllerSetup.dispose();
+    keyboardSettings.dispose();
+    stopKeyboard();
+    keyboardPreferences.dispose();
     controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();
@@ -5158,6 +5256,7 @@ try {
   const initialPreparation = prepare(),
     initialMatch = match,
     initialGeneration = generation;
+  initialHomeRecipe = roundRecipe;
   frameId = requestAnimationFrame(frame);
   // Install the usable lobby before waiting for its required picture. Cancel
   // and Back stay reachable; only Start waits for this exact preparation.

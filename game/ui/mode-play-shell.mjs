@@ -377,6 +377,7 @@ export function mountModePlayShell({
     title.replaceChildren(logo);
   }
   const edition = el('p', 'mode-play-edition');
+  edition.id = `${idPrefix}-navigation-context`;
   const modes = el('nav', 'mode-play-modes');
   move('modes', modes);
   const mission = el('p', 'mode-play-mission');
@@ -441,9 +442,13 @@ export function mountModePlayShell({
   cleanups.push(() => landingNavigation.dispose());
   const pauseMenu = content.pause;
   pauseMenu.classList.add('shared-pause-menu');
+  const resumeNotice = el('p', 'pause-resume-notice');
+  resumeNotice.id = `${idPrefix}-resume-notice`;
+  resumeNotice.setAttribute('role', 'status');
+  resumeNotice.hidden = true;
   const resume = button('resume', () => activate('resume'), true, 'pause-resume');
   resume.classList.add('pause-command-primary');
-  pauseMenu.append(resume);
+  pauseMenu.append(resumeNotice, resume);
   const pauseGroup = (name, key, controls) => {
     const section = el('section', 'pause-command-section');
     section.dataset.pauseGroup = name;
@@ -576,8 +581,10 @@ export function mountModePlayShell({
     }
     attribute(buttons.menu, 'aria-label', COPY[language].menu);
     put(modeLabel, 'textContent', text(modeName));
-    put(edition, 'textContent', text(modeName));
-    edition.hidden = true;
+    put(edition, 'textContent', text(state.navigationContext));
+    put(edition, 'hidden', !edition.textContent);
+    if (edition.hidden) modes.removeAttribute('aria-describedby');
+    else attribute(modes, 'aria-describedby', edition.id);
     attribute(modes, 'aria-label', COPY[language].modes);
     attribute(menu, 'aria-label', COPY[language].home);
     attribute(utilities, 'aria-label', COPY[language].settings);
@@ -585,6 +592,17 @@ export function mountModePlayShell({
     put(mission, 'hidden', !mission.textContent);
     put(briefingSummary, 'textContent', text(state.summary) || text(state.missionName));
     put(briefingSummary, 'hidden', !briefingSummary.textContent);
+    // Home's canResume also describes saved progress, so it may be false for a
+    // valid tick-zero pause. Blocking an open attempt is an explicit capability.
+    put(resume, 'disabled', state.pauseResumeDisabled === true);
+    put(
+      resumeNotice,
+      'textContent',
+      state.pauseResumeDisabled === true ? text(state.resumeUnavailableReason) : '',
+    );
+    put(resumeNotice, 'hidden', !resumeNotice.textContent);
+    if (resumeNotice.hidden) resume.removeAttribute('aria-describedby');
+    else attribute(resume, 'aria-describedby', resumeNotice.id);
     put(
       buttons.pause,
       'disabled',
@@ -610,6 +628,7 @@ export function mountModePlayShell({
     focusPlay();
   }
   function activate(action) {
+    if (state.pauseResumeDisabled === true && ['resume', 'continue'].includes(action)) return false;
     if (typeof actions[action] !== 'function' && !(action === 'continue' && actions.resume))
       return false;
     enterPlay();
@@ -618,7 +637,31 @@ export function mountModePlayShell({
   }
   function initialFocus(name, dialog) {
     if (name === 'home') return buttons.primary;
-    if (name === 'pause') return resume;
+    if (name === 'pause') {
+      if (!resume.disabled) return resume;
+      const usable = (node) => {
+        if (
+          !node ||
+          node.disabled ||
+          !dialog.contains(node) ||
+          node.closest('[hidden],[inert],[aria-hidden="true"]')
+        )
+          return false;
+        for (
+          let ancestor = node;
+          ancestor && ancestor !== dialog;
+          ancestor = ancestor.parentElement
+        ) {
+          const style = doc.defaultView?.getComputedStyle?.(ancestor);
+          if (style?.display === 'none' || style?.visibility === 'hidden') return false;
+        }
+        return true;
+      };
+      return (
+        [actions.pauseFocus?.(), buttons['pause-restart'], buttons['pause-choose']].find(usable) ??
+        dialog.querySelector('h1')
+      );
+    }
     if (name === 'results') {
       const preferred = actions.resultFocus?.();
       const usable = (node) =>

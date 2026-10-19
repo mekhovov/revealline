@@ -1,0 +1,38 @@
+{
+  "format": "SoloDarwinV1ExecutionSourceWitnessV1",
+  "sourceRevision": "69639b30d985ffa723a4d0c11756b632fc2da5c1",
+  "tree": "d022c57efa75dbe7b7aeeca00a1950f61426595b",
+  "scope": "Immutable V1 execution source and declarations; not current V2 helper admission or a new native result.",
+  "files": [
+    {
+      "path": "scripts/solo-darwin-process-inventory.c",
+      "gitBlob": "0775ad06efe353035a58400398763791f55f7388",
+      "bytes": 5398,
+      "sha256": "e7fa66e67291768dc27ecf97d4976384ee89882115de90fea9eb5d2cbbca7996"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.mjs",
+      "gitBlob": "89d026ab37dda1af8133c561f29002124909af69",
+      "bytes": 8442,
+      "sha256": "f93dd0b8c0cd4c2a569c283a00cd922d27f79e92a791d982acf2eeb71e2b1e2a"
+    },
+    {
+      "path": "scripts/test-solo-darwin-process-inventory.mjs",
+      "gitBlob": "202e20c0a598ee7d3b47a2eb71a9c4bfd8b0699e",
+      "bytes": 13636,
+      "sha256": "2cceb862c341ddc081b1407eed5ffeb456eb5f5cd3d1ef21cd1a9a173a658ff2"
+    },
+    {
+      "path": ".github/workflows/solo-native-mp3-cocoa-temporary.yml",
+      "gitBlob": "b70677f56881e7909593c2ad80a4af9266556a6d",
+      "bytes": 10105,
+      "sha256": "8f323efed52a9dd848519b57b9f2a1f7868379df535937e416678a30d291b998"
+    },
+    {
+      "path": ".github/workflows/solo-darwin-inventory-diagnostic-temporary.yml",
+      "gitBlob": "f6e378ae7e67eb1c09f3bae1ec8dd96af91e3b31",
+      "bytes": 5604,
+      "sha256": "a5ab9ea37dd34b05d68ce86f6ec14253935ec9969a8e848f41750565e48fc48e"
+    }
+  ]
+}

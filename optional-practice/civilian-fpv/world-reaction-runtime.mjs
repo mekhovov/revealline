@@ -2,9 +2,13 @@
 // Native flight logic remains in its existing cores. No simulation clock or record recipe changes.
 const sourceHashes={
 'optional-practice/civilian-fpv/world-audio.mjs':
-'cc05ffc5e1b54f500efc17dccf77c96c608a2fc535e8947b8787eccb2103565f',
+'0682921ac27879c76a3b63666d9685ede0844db7d616109df31b6ade6b7301b7',
+'game/ui/gameplay-audio-output.mjs':
+'9aa56a400d417db362a366a74790c7703b3f2bcde720ef0cc8944dea8a42ebd2',
+'game/gameplay-audio-preferences.mjs':
+'e7e6f8ae31d760879d97dddf9bfc7fe27b38a48888c60bc9028fa2232fb4eb20',
+'game/ui/audio-output.mjs':'66047e07247684f9f3069f9561898f33b5566d0d997e950adac17c0eed0ff790',
 'game/audio/dialogue-mix.mjs':'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
-'game/ui/audio-output.mjs':'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
 'game/audio-preferences.mjs':'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
 'game/ui/encounter-audio.mjs':'ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd',
@@ -24,9 +28,9 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'78b0412a2a70d0d84e502d5240132c3b6324e80c9ae185121aeee353978f4d8a',
+'fca8aa1df6bcf4fafde73b5658ac5bd81877495084379f5d8100bcaac0aa9736',
 'game/ui/hunt-feedback-layout.mjs':
-'697525f452578880c62102b984da3ff51ec794913c3a2708187c62815c816de5',
+'54f9755b9fb40953d106b3c0d181948b5eb0983f6b360dba1a1435cf69808a53',
 'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
 'game/journey/reaction-portraits.mjs':
 '39cbf1428dca4e3d6f71e71fed4b41e280b3c0bc284e3bcacf580fca5552952f',
@@ -47,7 +51,8 @@ const sourceHashes={
 'game/ui/art/reactions/sentinel-react.svg':
 '34900da2d7a4782f0ee0d0da4eb483dc29724f757bdc73bac50e135422405e6d',
 'game/journey/reaction-voice-cache.mjs':
-'a9128e8139a965abc49e4327e56f8edb57fa3dab1c870caecc36292db0866496',
+'18e387079bf3409030f9ac5d7372614031c8bfaea2c286bd54419b24d707ca3b',
+'game/ui/media-preparation.mjs':'9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
 'game/journey/reactions.mjs':'5a467624ad95e59b30f6a339bfa7f66f82a3060356925adb5c85f9c7db7c459d',
@@ -58,7 +63,7 @@ const sourceHashes={
 'game/journey/reaction-preferences.mjs':
 'a14d2dcb99daffd83dcbf62311e6756d587db3134bf04c81cd2cd420b4f6809a',
 'game/journey/reaction-options.mjs':
-'78bc6b07aa9d2b2855093193a67c1bc9a1127fd2c85e6c1491a778cc07f0125d',
+'5f094620b86d758bfbd05fd14461e285bb823c727c0ee57f98eedbe729ff7949',
 'game/journey/reaction-voice-library.mjs':
 '366fe4931bf91315971873853cda38a487cb8501151ad36a25bc925031951afd',
 'game/audio/reactions/pilot.mjs':
@@ -137,17 +142,175 @@ import*as external17 from'./world-model.mjs';
 import*as external18 from'./flight-sectors.mjs';
 import*as external19 from'./world-content.mjs';
 const modules=Object.create(null);
-modules['game/audio/dialogue-mix.mjs']=(()=>{
-/** Decorative spoken reactions sit behind music and gameplay warnings.
- * The mix trim also applies to saved slider choices without rewriting preferences. */
-const DEFAULT_DIALOGUE_VOLUME=0.25;
-const DIALOGUE_MIX_GAIN=0.4;
-const DIALOGUE_MUSIC_GAIN=0.9;
+modules['game/gameplay-audio-preferences.mjs']=(()=>{
+// Separate from the strict legacy mute/volume record: older pages cannot erase
+// this new choice when they save their existing audio controls.
+const GAMEPLAY_AUDIO_KEY='revealline.gameplay-audio-output.v1';
+const format='GameplayAudioOutputV1';
+const observers=new WeakMap();
+
+function decode(raw){
+if(raw===null)return false;
+if(typeof raw!=='string'||raw.length>256)throw new Error('preserved');
+const value=JSON.parse(raw);
+if(
+!value||
+typeof value!=='object'||
+Array.isArray(value)||
+Object.keys(value).length!==2||
+value.format!==format||
+typeof value.monoEffects!=='boolean'
+)
+throw new Error('preserved');
+return value.monoEffects;
+}
+
+/** One output choice, no playback or profile writes. Failed intent survives
+ * peer/storage events; only explicit choice or Retry attempts persistence. */
+function createGameplayAudioPreferences({
+getStorage=()=>globalThis.localStorage,
+window:target=globalThis.window??globalThis,
+}={}){
+let monoEffects=false,
+durable=true,
+reason='',
+pending=false,
+disposed=false,
+revision=0;
+const listeners=new Set();
+const pageKey=target&&['object','function'].includes(typeof target)?target:null;
+const peers=(pageKey&&observers.get(pageKey))??new Set();
+if(pageKey)observers.set(pageKey,peers);
+const snapshot=()=>({monoEffects,durable,reason,pending});
+const notify=()=>{
+for(const listener of[...listeners])if(listeners.has(listener))listener(snapshot());
+return snapshot();
+};
+const read=()=>{
+const storage=getStorage();
+if(!storage?.getItem|| !storage?.setItem)throw new Error('unavailable');
+const raw=storage.getItem(GAMEPLAY_AUDIO_KEY);
+let value;
+try{
+value=decode(raw);
+}catch{
+throw new Error('preserved');
+}
+return{storage,raw,value};
+};
+const failure=(error)=>{
+durable=false;
+reason=['preserved','unconfirmed','unavailable'].includes(error?.message)
+?error.message
+:error?.name==='QuotaExceededError'
+?'full'
+:'blocked';
+};
+const load=()=>{
+const token=revision;
+try{
+const record=read();
+if(disposed||revision!==token||pending)return;
+monoEffects=record.value;
+durable=true;
+reason='';
+}catch(error){
+if(!disposed&&revision===token&& !pending)failure(error);
+}
+};
+load();
+const receivePage=(state)=>{
+if(disposed||pending)return;
+revision++;
+({monoEffects,durable,reason,pending}=state);
+notify();
+};
+peers.add(receivePage);
+const save=()=>{
+if(disposed|| !pending)return snapshot();
+const token=revision;
+try{
+const{storage}=read();
+if(disposed||revision!==token)return snapshot();
+const raw=JSON.stringify({format,monoEffects});
+storage.setItem(GAMEPLAY_AUDIO_KEY,raw);
+if(disposed)return snapshot();
+if(revision!==token){
+// A reentrant newer choice must not inherit this older write's success.
+if(read().value!==monoEffects){
+pending=true;
+failure(new Error('unconfirmed'));
+notify();
+}
+return snapshot();
+}
+if(storage.getItem(GAMEPLAY_AUDIO_KEY)!==raw)throw new Error('unconfirmed');
+if(disposed||revision!==token)return snapshot();
+durable=true;
+pending=false;
+reason='';
+}catch(error){
+if(!disposed&&revision===token)failure(error);
+}
+if(disposed||revision!==token)return snapshot();
+const result=notify();
+if(!disposed&&revision===token)
+for(const receive of[...peers])if(receive!==receivePage)receive(result);
+return snapshot();
+};
+const receive=(event)=>{
+if(disposed||pending)return;
+if(event.type==='pageshow'&&event.persisted!==true)return;
+if(event.type==='storage'){
+if(event.key!==null&&event.key!==GAMEPLAY_AUDIO_KEY)return;
+try{
+const current=read();
+if(
+current.storage!==event.storageArea||
+(event.key===null?current.raw!==null:current.raw!==event.newValue)
+)
+return;
+}catch{
+return;
+}
+}
+load();
+if(!disposed)notify();
+};
+target?.addEventListener?.('storage',receive);
+target?.addEventListener?.('pageshow',receive);
+return Object.freeze({
+snapshot,
+choose(value){
+if(disposed)return snapshot();
+if(typeof value!=='boolean')throw new TypeError('Mono effects must be a boolean.');
+revision++;
+monoEffects=value;
+pending=true;
+return save();
+},
+retry:save,
+subscribe(listener){
+if(disposed)return()=>{};
+listeners.add(listener);
+listener(snapshot());
+return()=>listeners.delete(listener);
+},
+dispose(){
+disposed=true;
+revision++;
+listeners.clear();
+peers.delete(receivePage);
+if(pageKey&& !peers.size)observers.delete(pageKey);
+target?.removeEventListener?.('storage',receive);
+target?.removeEventListener?.('pageshow',receive);
+},
+});
+}
 
 return{
-DEFAULT_DIALOGUE_VOLUME:DEFAULT_DIALOGUE_VOLUME,
-DIALOGUE_MIX_GAIN:DIALOGUE_MIX_GAIN,
-DIALOGUE_MUSIC_GAIN:DIALOGUE_MUSIC_GAIN,
+GAMEPLAY_AUDIO_KEY:GAMEPLAY_AUDIO_KEY,
+createGameplayAudioPreferences:createGameplayAudioPreferences,
 };
 })();
 modules['game/ui/audio-output.mjs']=(()=>{
@@ -162,6 +325,7 @@ function createGameAudioOutput(context){
 const output={};
 for(const key of[
 'master',
+'gameplayBus',
 'musicBus',
 'sfxBus',
 'menuBus',
@@ -170,8 +334,9 @@ for(const key of[
 'dialogueBus',
 ])
 output[key]=context.createGain();
-for(const key of['musicBus','sfxBus','menuBus','dialogueBus'])
-output[key].connect(output.master);
+output.musicBus.connect(output.master);
+for(const key of['sfxBus','menuBus','dialogueBus'])output[key].connect(output.gameplayBus);
+output.gameplayBus.connect(output.master);
 for(const key of['movementBus','radioBus'])output[key].connect(output.sfxBus);
 output.compressor=context.createDynamicsCompressor?.();
 if(output.compressor){
@@ -182,6 +347,39 @@ output.master.connect(output.compressor);
 output.compressor.connect(context.destination);
 }else output.master.connect(context.destination);
 return output;
+}
+
+/** Down-mix effects after their panners, without touching music, media elements,
+ * the master fader, or recording taps. A rejected configuration is not a pass. */
+function setGameEffectsMono(output,enabled){
+const node=output?.gameplayBus;
+if(!node||typeof enabled!=='boolean')return false;
+const previous={
+channelCount:node.channelCount,
+channelCountMode:node.channelCountMode,
+channelInterpretation:node.channelInterpretation,
+};
+try{
+node.channelInterpretation='speakers';
+node.channelCount=enabled?1:2;
+node.channelCountMode=enabled?'explicit':'max';
+if(
+node.channelCount!==(enabled?1:2)||
+node.channelCountMode!==(enabled?'explicit':'max')||
+node.channelInterpretation!=='speakers'
+)
+throw new Error('Channel configuration was not applied.');
+return true;
+}catch{
+for(const[key,value]of Object.entries(previous)){
+try{
+node[key]=value;
+}catch{
+/* Preserve the browser's accepted path. */
+}
+}
+return false;
+}
 }
 
 /** Request the same audible iOS playback category before creating/resuming audio. */
@@ -207,8 +405,81 @@ return false;
 return{
 createGameAudioContext:createGameAudioContext,
 createGameAudioOutput:createGameAudioOutput,
+setGameEffectsMono:setGameEffectsMono,
 requestPlaybackAudioSession:requestPlaybackAudioSession,
 releasePlaybackAudioSession:releasePlaybackAudioSession,
+};
+})();
+modules['game/ui/gameplay-audio-output.mjs']=(()=>{
+const createGameplayAudioPreferences=
+modules['game/gameplay-audio-preferences.mjs']['createGameplayAudioPreferences'];
+const setGameEffectsMono=modules['game/ui/audio-output.mjs']['setGameEffectsMono'];
+
+/** Presentation-only owner. Selecting a policy never constructs or resumes a
+ * context. The engine attaches its already gesture-created graph explicitly. */
+function createGameplayAudioOutput(options={}){
+const preferences=createGameplayAudioPreferences(options),
+listeners=new Set();
+let output=null,
+state=preferences.snapshot(),
+status='inactive',
+disposed=false;
+const snapshot=()=>({...state,status});
+const apply=()=>{
+if(disposed)return;
+status= !output
+?'inactive'
+:setGameEffectsMono(output,state.monoEffects)
+?state.monoEffects
+?'mono'
+:'original'
+:'unsupported';
+for(const listener of[...listeners])if(listeners.has(listener))listener(snapshot());
+};
+const stop=preferences.subscribe((next)=>{
+state=next;
+apply();
+});
+return Object.freeze({
+snapshot,
+choose:(enabled)=>preferences.choose(enabled),
+retry:()=>preferences.retry(),
+attach(graph){
+if(!disposed){
+output=graph;
+apply();
+}
+},
+subscribe(listener){
+if(disposed)return()=>{};
+listeners.add(listener);
+listener(snapshot());
+return()=>listeners.delete(listener);
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+stop();
+preferences.dispose();
+listeners.clear();
+output=null;
+},
+});
+}
+
+return{createGameplayAudioOutput:createGameplayAudioOutput};
+})();
+modules['game/audio/dialogue-mix.mjs']=(()=>{
+/** Decorative spoken reactions sit behind music and gameplay warnings.
+ * The mix trim also applies to saved slider choices without rewriting preferences. */
+const DEFAULT_DIALOGUE_VOLUME=0.25;
+const DIALOGUE_MIX_GAIN=0.4;
+const DIALOGUE_MUSIC_GAIN=0.9;
+
+return{
+DEFAULT_DIALOGUE_VOLUME:DEFAULT_DIALOGUE_VOLUME,
+DIALOGUE_MIX_GAIN:DIALOGUE_MIX_GAIN,
+DIALOGUE_MUSIC_GAIN:DIALOGUE_MUSIC_GAIN,
 };
 })();
 modules['game/ui/audio-master.mjs']=(()=>{
@@ -810,6 +1081,8 @@ kind:active?.radio?'radio':active?'dialogue':null,
 return{dialogueChannel:dialogueChannel};
 })();
 modules['optional-practice/civilian-fpv/world-audio.mjs']=(()=>{
+const createGameplayAudioOutput=
+modules['game/ui/gameplay-audio-output.mjs']['createGameplayAudioOutput'];
 const createHumanReactionPolicy=external0['createHumanReactionPolicy'];
 const HUMAN_REACTION_BANK=external1['HUMAN_REACTION_BANK'];
 const destructionBufferGain=external2['destructionBufferGain'];
@@ -848,6 +1121,7 @@ storage=options.storage??host.localStorage;
 }catch{
 // Sound works for this visit even when browser preferences are unavailable.
 }
+const gameplayOutput=createGameplayAudioOutput({window:host,getStorage:()=>storage});
 const AudioContext=host.AudioContext??host.webkitAudioContext;
 let enabled=false;
 try{
@@ -1093,6 +1367,7 @@ wind,
 hum,
 humGain,
 };
+gameplayOutput.attach(output);
 return true;
 }catch{
 candidate?.close().catch(()=>{});
@@ -1282,6 +1557,7 @@ releasePlaybackAudioSession(host.navigator?.audioSession);
 }
 
 return{
+gameplayOutput,
 get context(){
 return context;
 },
@@ -1566,6 +1842,7 @@ dispose(){
 if(disposed)return;
 disposed=true;
 humanBuffers.clear();
+gameplayOutput.dispose();
 pause();
 releaseMaster();
 host.removeEventListener?.('storage',changed);
@@ -4161,11 +4438,15 @@ typeof win?.requestAnimationFrame!=='function'
 )
 return()=>{};
 let frame=null,
-closed=false;
+closed=false,
+observedHeight=null;
 const measure=()=>{
 frame=null;
 if(closed)return;
-const height=Math.ceil(container.getBoundingClientRect().height);
+// The feedback rail uses horizontal writing, so blockSize is its height.
+// Reserve the border box (including padding), not just the text content.
+// Older observers without box sizes retain the original measurement path.
+const height=Math.ceil(observedHeight??container.getBoundingClientRect().height);
 const value=`${Math.max(0,height)}px`;
 if(body.style.getPropertyValue('--hunt-feedback-height')!==value)
 body.style.setProperty('--hunt-feedback-height',value);
@@ -4173,9 +4454,29 @@ body.style.setProperty('--hunt-feedback-height',value);
 const schedule=()=>{
 if(!closed&&frame===null)frame=win.requestAnimationFrame(measure);
 };
-const resize=win.ResizeObserver?new win.ResizeObserver(schedule):null;
-resize?.observe(container);
-const mutation=win.MutationObserver?new win.MutationObserver(schedule):null;
+const resize=win.ResizeObserver
+?new win.ResizeObserver((entries)=>{
+for(const entry of entries){
+if(entry.target!==container)continue;
+const boxes=entry.borderBoxSize,
+box=boxes?.[0]??boxes,
+height=box?.blockSize;
+observedHeight=Number.isFinite(height)&&height>=0?height:null;
+schedule();
+}
+})
+:null;
+if(resize){
+try{
+resize.observe(container,{box:'border-box'});
+}catch{
+// Early ResizeObserver implementations only accept a target.
+resize.observe(container);
+}
+}
+// Text/style mutations that do not resize the rail need no measurement.
+// ResizeObserver also covers font loading, wrapping and viewport changes.
+const mutation= !resize&&win.MutationObserver?new win.MutationObserver(schedule):null;
 mutation?.observe(container,{
 childList:true,
 subtree:true,
@@ -4183,8 +4484,10 @@ characterData:true,
 attributes:true,
 attributeFilter:['hidden','style'],
 });
+if(!resize){
 win.addEventListener('resize',schedule);
 schedule();
+}
 return()=>{
 closed=true;
 if(frame!==null)win.cancelAnimationFrame(frame);
@@ -4283,6 +4586,161 @@ journeyOwnsReactionCaption:journeyOwnsReactionCaption,
 reactionCaptionText:reactionCaptionText,
 renderResultReactionCaption:renderResultReactionCaption,
 };
+})();
+modules['game/ui/media-preparation.mjs']=(()=>{
+const aborted=()=>new DOMException('Media preparation cancelled.','AbortError');
+const phases=new Set(['menu','preparing','playing','paused','suspended']);
+const priorities={required:0,demand:1,background:2};
+
+/** Admission only: callers retain validation, ownership and playback policy.
+ * A cancelled native decode still owns its slot until the native promise settles.
+ */
+function createMediaPreparation({fetches=2,decodes=1,decodeBytes=16*1024*1024}={}){
+const limits={fetch:fetches,decode:decodes,inspect:1,main:1};
+const active={fetch:0,decode:0,inspect:0,main:0};
+const queue=[],
+unsettled=new Set();
+let phase='menu',
+closed=false,
+reservedBytes=0,
+sequence=0;
+function remove(task,error){
+const at=queue.indexOf(task);
+if(at>=0)queue.splice(at,1);
+task.signal?.removeEventListener('abort',task.cancel);
+task.reject(error);
+}
+function drain(){
+for(const task of[...queue])
+if(
+closed||
+task.signal?.aborted||
+!task.eligible()||
+(['playing','suspended'].includes(phase)&&task.priority==='background')
+)
+remove(task,aborted());
+queue.sort((a,b)=>priorities[a.priority]-priorities[b.priority]||a.sequence-b.sequence);
+for(const task of[...queue]){
+if(
+phase==='suspended'||
+active[task.kind]>=limits[task.kind]||
+(task.kind==='main'&&phase==='playing')
+)
+continue;
+if(task.kind==='decode'&&reservedBytes+task.bytes>decodeBytes)continue;
+queue.splice(queue.indexOf(task),1);
+task.signal?.removeEventListener('abort',task.cancel);
+active[task.kind]++;
+if(task.kind==='decode')reservedBytes+=task.bytes;
+let deferred=false;
+Promise.resolve()
+.then(()=>{
+if(
+closed||
+phase==='suspended'||
+task.signal?.aborted||
+!task.eligible()||
+(phase==='playing'&&task.priority==='background')
+)
+throw aborted();
+// Phase can change after admission but before this microtask runs.
+// Keep required fallback work pending until a safe phase instead of
+// starting a scan during gameplay or rejecting its playback request.
+if(task.kind==='main'&&phase==='playing'){
+deferred=true;
+queue.push(task);
+task.signal?.addEventListener('abort',task.cancel,{once:true});
+return;
+}
+return task.work();
+})
+.then((value)=>{
+if(deferred)return;
+if(closed||task.signal?.aborted|| !task.eligible())task.reject(aborted());
+else task.resolve(value);
+},task.reject)
+.finally(()=>{
+active[task.kind]--;
+if(task.kind==='decode')reservedBytes-=task.bytes;
+drain();
+});
+}
+}
+return Object.freeze({
+run(kind,work,{priority='demand',signal,bytes=0,eligible=()=>true}={}){
+if(
+!(kind in limits)||
+!(priority in priorities)||
+typeof work!=='function'||
+!Number.isFinite(bytes)||
+bytes<0
+)
+return Promise.reject(new TypeError('Invalid media preparation task.'));
+if(kind==='decode'&&bytes>decodeBytes)
+return Promise.reject(new RangeError('Media decode exceeds its memory budget.'));
+return new Promise((resolve,reject)=>{
+const task={
+kind,
+work,
+priority,
+signal,
+bytes,
+eligible,
+resolve(value){
+unsettled.delete(task);
+resolve(value);
+},
+reject(error){
+unsettled.delete(task);
+reject(error);
+},
+sequence:sequence++,
+};
+task.cancel=()=>{
+remove(task,aborted());
+drain();
+};
+unsettled.add(task);
+queue.push(task);
+signal?.addEventListener('abort',task.cancel,{once:true});
+drain();
+});
+},
+// Upgrade existing work only. Removed/cancelled tasks cannot be revived.
+promote(signal,priority='demand'){
+if(!signal||typeof signal.aborted!=='boolean'|| !(priority in priorities))
+throw new TypeError('Invalid media preparation promotion.');
+if(closed||signal.aborted)return 0;
+let promoted=0;
+for(const task of unsettled)
+if(task.signal===signal&&priorities[priority]<priorities[task.priority]&&task.eligible()){
+task.priority=priority;
+promoted++;
+}
+if(promoted)drain();
+return promoted;
+},
+setPhase(value){
+if(!phases.has(value))throw new TypeError('Invalid media preparation phase.');
+phase=value;
+drain();
+},
+refresh:drain,
+snapshot:()=>
+Object.freeze({
+phase,
+queued:queue.length,
+active:{...active},
+reservedDecodeBytes:reservedBytes,
+}),
+close(){
+closed=true;
+drain();
+},
+});
+}
+
+return{createMediaPreparation:createMediaPreparation};
 })();
 modules['game/journey/reaction-recording-format.mjs']=(()=>{
 /** Conservative pre-decode admission for local speech. Unknown containers stay
@@ -4478,6 +4936,7 @@ Math.max(channels,declaredChannels),
 return{inspectRecordingContainer:inspectRecordingContainer};
 })();
 modules['game/journey/reaction-voice-cache.mjs']=(()=>{
+const createMediaPreparation=modules['game/ui/media-preparation.mjs']['createMediaPreparation'];
 const inspectRecordingContainer=
 modules['game/journey/reaction-recording-format.mjs']['inspectRecordingContainer'];
 const REACTION_VOICE_LIMITS=Object.freeze({
@@ -4498,7 +4957,9 @@ if(!blob?.size||blob.size>REACTION_VOICE_LIMITS.bytes|| !document?.createElement
 return Promise.reject(
 new Error('A recording up to 2 MiB and browser media inspection are required.'),
 );
-const container=inspectRecordingContainer(await blob.arrayBuffer());
+const bytes=await blob.arrayBuffer();
+if(signal?.aborted)throw aborted();
+const container=inspectRecordingContainer(bytes);
 if(signal?.aborted)throw aborted();
 return new Promise((resolve,reject)=>{
 const media=document.createElement('audio');
@@ -4558,6 +5019,8 @@ library,
 inspect=inspectReactionRecording,
 now=()=>Date.now(),
 }){
+const preparation=sound.mediaPreparation??createMediaPreparation();
+const ownsPreparation= !sound.mediaPreparation;
 const buffers=new Map(),
 pending=new Map(),
 failures=new Map();
@@ -4577,7 +5040,7 @@ failures.clear();
 if(clear)clearBuffers();
 return Promise.allSettled([...pending.values()].map((request)=>request.promise));
 }
-async function load(lineId,locale){
+async function load(lineId,locale,{priority='demand'}={}){
 if(closed|| !sound.context)return false;
 if(context!==sound.context){
 context=sound.context;
@@ -4587,15 +5050,36 @@ const key=keyFor(lineId,locale),
 revision=generation,
 audioContext=context;
 if(buffers.has(key))return true;
-if(pending.has(key))return pending.get(key).promise;
+if(pending.has(key)){
+const request=pending.get(key);
+if(request.priority==='background'&&priority==='demand'){
+request.priority='demand';
+preparation.promote?.(request.abort.signal,'demand');
+}
+return request.promise;
+}
 if(pending.size>=REACTION_VOICE_LIMITS.loads||now()<(failures.get(key)??0))return false;
 const abort=new AbortController(),
 timeout=setTimeout(()=>abort.abort(),10000),
-request={abort,promise:null};
+request={abort,promise:null,priority};
+let cancelled=false;
+const eligible=()=>
+!closed&&
+revision===generation&&
+audioContext===sound.context&&
+!sound.audioMaster?.muted&&
+sound.audioMaster?.volume!==0&&
+(request.priority!=='background'||
+!['playing','suspended'].includes(preparation.snapshot().phase));
+const admission={signal:abort.signal,priority,eligible};
 request.promise=(async()=>{
 try{
-const recording=await library.resolve(lineId,locale,{signal:abort.signal});
-if(!recording||closed||abort.signal.aborted||revision!==generation)return false;
+const recording=await preparation.run(
+'fetch',
+()=>library.resolve(lineId,locale,{signal:abort.signal}),
+admission,
+);
+if(!recording|| !eligible()||abort.signal.aborted)return false;
 if(!recording.bytes?.byteLength||recording.bytes.byteLength>REACTION_VOICE_LIMITS.bytes)
 return false;
 const metadata=await inspect(
@@ -4605,8 +5089,12 @@ signal:abort.signal,
 },
 );
 if(closed||abort.signal.aborted||revision!==generation)return false;
-admitReactionDecode(metadata,audioContext.sampleRate);
-const buffer=await audioContext.decodeAudioData(recording.bytes.slice(0));
+const reservedBytes=admitReactionDecode(metadata,audioContext.sampleRate);
+const buffer=await preparation.run(
+'decode',
+()=>audioContext.decodeAudioData(recording.bytes.slice(0)),
+{...admission,priority:request.priority,bytes:reservedBytes},
+);
 if(closed||abort.signal.aborted||revision!==generation||audioContext!==sound.context)
 return false;
 const size=buffer.length*buffer.numberOfChannels*4;
@@ -4631,12 +5119,13 @@ buffers.delete(oldest);
 buffers.set(key,buffer);
 bytes+=size;
 return true;
-}catch{
+}catch(error){
+cancelled=error?.name==='AbortError';
 return false;
 }finally{
 clearTimeout(timeout);
 if(pending.get(key)===request)pending.delete(key);
-if(!closed&& !abort.signal.aborted&&revision===generation&& !buffers.has(key))
+if(!closed&& !cancelled&& !abort.signal.aborted&&revision===generation&& !buffers.has(key))
 failures.set(key,now()+30000);
 }
 })();
@@ -4660,12 +5149,16 @@ snapshot:()=>
 Object.freeze({
 buffers:buffers.size,
 decodedBytes:bytes,
+decodedBytesLimit:REACTION_VOICE_LIMITS.decodedBytes,
+buffersLimit:REACTION_VOICE_LIMITS.buffers,
+perDecodeBytesLimit:REACTION_VOICE_LIMITS.perDecodeBytes,
 loading:pending.size,
 generation,
 closed,
 }),
 dispose(){
 closed=true;
+if(ownsPreparation)preparation.close();
 void cancel({clear:true});
 },
 });
@@ -5311,22 +5804,34 @@ subtitles:true,
 volume:DEFAULT_DIALOGUE_VOLUME,
 scale:1,
 background:true,
+readingTime:1,
 });
-const format='ReactionPresentationV1';
+const format='ReactionPresentationV2';
 const pageObservers=new WeakMap();
 function validateReactionOptions(input){
 const value=boundedJSON(input,{maxBytes:1024,maxNodes:12,maxDepth:1});
-exactKeys(value,['format',...Object.keys(DEFAULT_REACTION_OPTIONS)],'Reaction presentation');
+const legacy=value.format==='ReactionPresentationV1';
+exactKeys(
+value,
+[
+'format',
+...Object.keys(DEFAULT_REACTION_OPTIONS).filter((key)=> !legacy||key!=='readingTime'),
+],
+'Reaction presentation',
+);
 if(
-value.format!==format||
+(!legacy&&value.format!==format)||
 ['sounds','speech','subtitles','background'].some((key)=>typeof value[key]!=='boolean')||
 !Number.isFinite(value.volume)||
 value.volume<0||
 value.volume>1||
-![1,1.5,2].includes(value.scale)
+![1,1.5,2].includes(value.scale)||
+(!legacy&& ![1,2].includes(value.readingTime))
 )
 throw new TypeError('Invalid reaction presentation options.');
-return Object.freeze(value);
+// Read the earlier record without rewriting it. Only an explicit choice or
+// Retry writes the current format to the same preference owner.
+return Object.freeze({...value,format,readingTime:legacy?1:value.readingTime});
 }
 
 /** Invalid/future bytes are retained; an unavailable store never disables play. */
@@ -7224,6 +7729,10 @@ modules['game/overflight/reactions.mjs']['OVERFLIGHT_REACTION_FAMILIES'];
 
 const recentLines=new Map();
 const HISTORY_KEY='revealline.reaction-recent.v1';
+const captionReadingDuration=(text,factor=1)=>
+Math.max(3000,Math.ceil((text.split(/\s+/u).length/2.5)*1000))*factor;
+const previewLineId='journey-incidental.v1/guide/capture/0';
+let settingsSequence=0;
 /** Warm the active cast first, then shared pilot lines. Unrelated enemy packs
  * must not displace the current encounter from the bounded decoded cache. */
 function reactionWarmupLineIds({families=[],originals=[],available=[],locale}){
@@ -7379,7 +7888,7 @@ player:Number.isInteger(event.player)?event.player:null,
 this.remember(line);
 this.families.add(family);
 this.count++;
-const duration=Math.max(3000,Math.ceil((selected.text.split(/\s+/u).length/2.5)*1000));
+const duration=captionReadingDuration(selected.text);
 this.busyUntil=time+duration;
 this.quietUntil=this.busyUntil+12000;
 const presented=this.present(selected,{duration,terminal:false});
@@ -7415,6 +7924,11 @@ this.cancel('suspend');
 resume(){
 this.suspended=false;
 }
+extendCaption(duration){
+if(this.suspended|| !Number.isFinite(duration)||duration<=0)return;
+this.busyUntil=Math.max(this.busyUntil,this.now()+duration);
+this.quietUntil=Math.max(this.quietUntil,this.busyUntil+12000);
+}
 }
 
 const labels={
@@ -7425,6 +7939,13 @@ subtitles:['Reaction captions','Субтитри реакцій'],
 volume:['Dialogue volume','Гучність діалогів'],
 scale:['Caption size','Розмір субтитрів'],
 background:['Solid caption background','Суцільне тло субтитрів'],
+readingTime:['Caption reading time','Час читання субтитрів'],
+readingStandard:['Standard','Звичайний'],
+readingExtended:['Extended (2×)','Подовжений (2×)'],
+readingHelp:[
+'Applies to new character captions during play and their timed preview. Result captions stay until you leave the result.',
+'Діє для нових субтитрів персонажів під час гри та їхнього перегляду з таймером. Субтитри результату залишаються до виходу з нього.',
+],
 preview:['Preview caption','Переглянути субтитри'],
 retry:['Retry saving','Зберегти повторно'],
 unavailable:[
@@ -7494,6 +8015,7 @@ activeVoice=null,
 lease=null,
 generation=0,
 captionUntil=0,
+captionTimerRevision=0,
 motion=null;
 const cache=createReactionVoiceCache({sound,library:voiceLibrary});
 const prepared=new Map(),
@@ -7503,8 +8025,13 @@ let settings=null,
 actorVoiceControls=null,
 status=null,
 pilot=null,
+readingHelp=null,
 previewSample=null,
-previewVisible=false;
+previewVisible=false,
+previewTimer=null,
+previewTimerRevision=0,
+previewUntil=0,
+previewReadingTime=1;
 const release=()=>{
 try{
 if(typeof lease==='function')lease();
@@ -7519,7 +8046,44 @@ activeVoice?.stop();
 activeVoice=null;
 release();
 }
+function clearCaptionTimer(){
+captionTimerRevision++;
+clearTimeout(timer);
+timer=null;
+}
+function scheduleCaption(until){
+clearCaptionTimer();
+captionUntil=until;
+const revision=captionTimerRevision;
+timer=setTimeout(
+()=>{
+if(!closed&&revision===captionTimerRevision)hide();
+},
+Math.max(0,until-Date.now()),
+);
+}
+function hidePreview(){
+previewTimerRevision++;
+clearTimeout(previewTimer);
+previewTimer=null;
+previewVisible=false;
+if(previewSample)
+renderResultReactionCaption(previewSample,null,options.snapshot(),false,getLocale());
+}
+function schedulePreview(until){
+previewTimerRevision++;
+clearTimeout(previewTimer);
+previewUntil=until;
+const revision=previewTimerRevision;
+previewTimer=setTimeout(
+()=>{
+if(!closed&&revision===previewTimerRevision)hidePreview();
+},
+Math.max(0,until-Date.now()),
+);
+}
 function hide(){
+clearCaptionTimer();
 motion?.cancel();
 motion=null;
 if(current?.terminal&&resultContainer&& !journeyOwnsReactionCaption(resultContainer))
@@ -7537,8 +8101,15 @@ prepared.clear();
 void cache.cancel();
 }
 if(reason==='danger')return;// Preserve readable text even when its audio is interrupted.
-clearTimeout(timer);
+hidePreview();
 hide();
+}
+function localizedCurrentLine(){
+return(
+(current.line.resultContext
+?journeyResultReaction(current.line.resultContext,getLocale())
+:reactionLine(current.line.id,getLocale()))??current.line
+);
 }
 function render(){
 if(closed)return;
@@ -7552,11 +8123,11 @@ prepared.clear();
 void cache.cancel();
 }
 if(!enabled){
-clearTimeout(timer);
 // Retain an accepted result so its shared checkbox can hide/show the
 // caption without replaying its voice. Incidental lines still expire.
 if(!current?.terminal)hide();
 }
+if(!enabled|| !state.subtitles)hidePreview();
 for(const[key,control]of controls){
 if(control.type==='checkbox')control.checked=state[key];
 else control.value=String(state[key]);
@@ -7564,6 +8135,11 @@ if(controlLabels.has(key))controlLabels.get(key).textContent=tr(key);
 }
 if(settings)settings.querySelector('legend').textContent=tr('title');
 if(pilot)pilot.textContent=tr('pilot');
+if(readingHelp)readingHelp.textContent=tr('readingHelp');
+const readingControl=controls.get('readingTime');
+if(readingControl)
+for(const option of readingControl.children)
+option.textContent=tr(option.value==='1'?'readingStandard':'readingExtended');
 actorVoiceControls?.refresh();
 if(settings){
 const preview=settings.querySelector('[data-reaction-preview]');
@@ -7574,7 +8150,7 @@ settings.querySelector('[data-reaction-retry]').textContent=tr('retry');
 if(previewVisible&&previewSample)
 renderResultReactionCaption(
 previewSample,
-reactionLine('journey-reaction.v1/guide/0',getLocale()),
+reactionLine(previewLineId,getLocale()),
 state,
 enabled,
 getLocale(),
@@ -7587,10 +8163,7 @@ panel.style.background=state.background?'var(--panel-bg, #172126)':'transparent'
 panel.style.color='var(--text-color, #fff)';
 caption.style.fontSize=`${state.scale}rem`;
 if(current){
-const localized=
-(current.line.resultContext
-?journeyResultReaction(current.line.resultContext,getLocale())
-:reactionLine(current.line.id,getLocale()))??current.line;
+const localized=localizedCurrentLine();
 caption.textContent=reactionCaptionText(
 {...localized,board:current.line.board,player:current.line.player},
 getLocale(),
@@ -7612,6 +8185,9 @@ closed||
 !preferences.snapshot().enabled||
 !options.snapshot().speech||
 !sound.context||
+sound.audioMaster?.muted||
+sound.audioMaster?.volume===0||
+['playing','suspended'].includes(sound.mediaPreparation?.snapshot().phase)||
 doc.hidden
 )
 return;
@@ -7654,9 +8230,10 @@ generation===revision&&
 warmup===warmupRevision&&
 getLocale()===locale&&
 !doc.hidden&&
+!['playing','suspended'].includes(sound.mediaPreparation?.snapshot().phase)&&
 sound.context===context
 )
-await cache.load(ids[index++],locale);
+await cache.load(ids[index++],locale,{priority:'background'});
 };
 await Promise.all([warm(),warm()]);
 })
@@ -7664,11 +8241,15 @@ await Promise.all([warm(),warm()]);
 }
 function present(line,{duration,terminal,speak=true}){
 if(closed|| !preferences.snapshot().enabled)return;
-clearTimeout(timer);
+clearCaptionTimer();
 stopSpeech();
 motion?.cancel();
 motion=null;
-current={line,terminal};
+// A setting change applies to the next accepted line, without truncating or
+// replaying the current one. A translated line retains this timing policy.
+current={line,terminal,readingTime:options.snapshot().readingTime};
+if(!terminal)
+duration=Math.max(duration,captionReadingDuration(line.text,current.readingTime));
 const appearance=REACTION_PORTRAITS[line.speaker]??REACTION_PORTRAITS.guide;
 portrait.src=getReduced()?appearance.idle:appearance.react;
 const actor=actorDefinition(line.speaker);
@@ -7720,8 +8301,7 @@ sound.feedbackDirector?.play('confirm',{gain:0.12,priority:1});
 }
 if(!buffer&&state.speech)void cache.load(line.id,getLocale());
 if(!terminal){
-captionUntil=Date.now()+duration;
-timer=setTimeout(hide,duration);
+scheduleCaption(Date.now()+duration);
 }else if(resultContainer){
 panel.hidden=true;
 panel.style.display='none';
@@ -7733,13 +8313,24 @@ if(settingsContainer){
 settings=create('fieldset');
 settings.dataset.reactionSettings='true';
 settings.append(create('legend',tr('title')));
-for(const key of['sounds','speech','subtitles','volume','scale','background']){
+for(const key of[
+'sounds',
+'speech',
+'subtitles',
+'volume',
+'scale',
+'background',
+'readingTime',
+]){
 const label=create('label'),
 text=create('span',tr(key)),
-control=create(key==='scale'?'select':'input');
-if(key==='scale')
-for(const value of[1,1.5,2]){
-const option=create('option',`${value*100}%`);
+control=create(['scale','readingTime'].includes(key)?'select':'input');
+if(['scale','readingTime'].includes(key))
+for(const value of key==='scale'?[1,1.5,2]:[1,2]){
+const option=create(
+'option',
+key==='scale'?`${value*100}%`:tr(value===1?'readingStandard':'readingExtended'),
+);
 option.value=String(value);
 control.append(option);
 }
@@ -7758,10 +8349,19 @@ prepare();
 };
 label.append(control,text);
 label.style.cssText='display:flex;align-items:center;gap:.5rem;margin:.5rem 0;';
+if(key==='readingTime'){
+label.style.flexWrap='wrap';
+control.style.maxWidth='100%';
+}
 settings.append(label);
 controls.set(key,control);
 controlLabels.set(key,text);
 }
+readingHelp=create('p',tr('readingHelp'));
+readingHelp.id=`reaction-reading-help-${++settingsSequence}`;
+readingHelp.dataset.reactionReadingHelp='true';
+controls.get('readingTime').setAttribute('aria-describedby',readingHelp.id);
+settings.append(readingHelp);
 const preview=create('button',tr('preview'));
 preview.type='button';
 preview.dataset.reactionPreview='true';
@@ -7770,8 +8370,14 @@ previewSample.dataset.reactionSettingsPreview='true';
 previewSample.hidden=true;
 previewSample.setAttribute('role','status');
 preview.onclick=()=>{
+if(closed|| !preferences.snapshot().enabled|| !options.snapshot().subtitles)return;
 previewVisible=true;
+previewReadingTime=options.snapshot().readingTime;
 render();
+schedulePreview(
+Date.now()+
+captionReadingDuration(reactionLine(previewLineId,getLocale()).text,previewReadingTime),
+);
 };
 const retry=create('button',tr('retry'));
 retry.type='button';
@@ -7803,9 +8409,21 @@ stopSpeech();
 render();
 prepare();
 if(current&& !current.terminal){
-clearTimeout(timer);
-timer=setTimeout(hide,Math.max(3000,captionUntil-Date.now()));
+const until=Math.max(
+captionUntil,
+Date.now()+captionReadingDuration(localizedCurrentLine().text,current.readingTime),
+);
+scheduleCaption(until);
+director.extendCaption(until-Date.now());
 }
+if(previewVisible)
+schedulePreview(
+Math.max(
+previewUntil,
+Date.now()+
+captionReadingDuration(reactionLine(previewLineId,getLocale()).text,previewReadingTime),
+),
+);
 });
 const visibility=()=>{
 if(doc.hidden)director.suspend();
@@ -7866,7 +8484,8 @@ dispose(){
 if(closed)return;
 closed=true;
 director.suspend();
-clearTimeout(timer);
+clearCaptionTimer();
+hidePreview();
 cache.dispose();
 prepared.clear();
 unsubPrefs();

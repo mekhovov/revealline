@@ -729,6 +729,7 @@ export function mountBeginnerCoach({
   locale = () => 'en',
   liveDisplay = true,
   onStart = () => {},
+  onLessonMode = null,
   onPause = () => {},
   onRetry = () => {},
   onNext = () => {},
@@ -755,6 +756,9 @@ export function mountBeginnerCoach({
     completedFlightStep = -1,
     stepAdvancedAt = 0;
   let refs = {};
+  let modeChanging = false,
+    modeChangeFailed = false,
+    modeChangeSerial = 0;
   let labMode = 'example',
     labSource = 'keyboard',
     labRunning = false,
@@ -809,6 +813,8 @@ export function mountBeginnerCoach({
     const el = node('button', className, label);
     el.type = 'button';
     el.dataset.coachAction = action;
+    if (modeChanging && ['start', 'lesson-mode'].includes(action))
+      el.setAttribute('aria-disabled', 'true');
     return el;
   };
   const axisName = (axis) =>
@@ -861,6 +867,15 @@ export function mountBeginnerCoach({
     Math.min(Math.max(0, snapshot.state?.step ?? 0), (lesson?.steps.length ?? 1) - 1);
   const currentStep = () => lesson?.steps[stage === 'guide' ? viewedStep : activeStep()];
   const mode = () => snapshot.mode ?? lesson?.mode ?? 'self-level';
+  // Recorded teaching examples retain their original model. A selected physical
+  // aircraft is flown only through the prepared host session, never by taking
+  // over this synchronous reference sandbox with different rates and PID gains.
+  const selectedAircraftPractice = () => Boolean(snapshot.practiceAircraftName && !replay);
+  const referencePreviewNotice = () =>
+    t(
+      `Reference aircraft example. To use ${snapshot.practiceAircraftName} with its saved physics, rates and controller tune, choose “Practice with ${snapshot.practiceAircraftName}”. Moving controls here does not start a flight.`,
+      `Приклад на навчальному дроні. Щоб літати на ${snapshot.practiceAircraftName} зі збереженою фізикою, рейтами та налаштуваннями контролера, виберіть «Практика з ${snapshot.practiceAircraftName}». Рухи керування тут не запускають політ.`,
+    );
   const criterion = (index = activeStep()) => lesson?.course?.steps?.[mode()]?.[index];
   const hasLessonPreview = () =>
     typeof createLessonPreview === 'function' &&
@@ -1062,7 +1077,7 @@ export function mountBeginnerCoach({
     radioIntentTicks = 0;
   }
   function takeControls(source, { focus = false } = {}) {
-    if (stage !== 'guide' || disposed) return;
+    if (stage !== 'guide' || disposed || selectedAircraftPractice()) return;
     if (labMode !== 'try' || labSource !== source) {
       ++previewActivityRevision;
       const previousStickMode = labStickMode();
@@ -1084,6 +1099,7 @@ export function mountBeginnerCoach({
     playPreview({ focus });
   }
   function observeRadio() {
+    if (selectedAircraftPractice()) return;
     if (!labRadioAvailable()) {
       radioBaseline = null;
       radioIntentTicks = 0;
@@ -1128,6 +1144,7 @@ export function mountBeginnerCoach({
     });
   }
   function observeController(now) {
+    if (selectedAircraftPractice()) return true;
     const value = pollController(now);
     if (value.actions.includes('reset')) {
       if (labLesson) viewedStep = 0;
@@ -1348,7 +1365,7 @@ export function mountBeginnerCoach({
       for (const axis of side === 0 ? ['yaw'] : ['roll', 'pitch']) labTouch[axis] = 0;
     };
     const down = (event) => {
-      if (stage !== 'guide' || pointer !== null) return;
+      if (stage !== 'guide' || pointer !== null || selectedAircraftPractice()) return;
       if (event.button !== undefined && event.button !== 0) return;
       takeControls('touch', { focus: true });
       // Radio takeover may redraw a different stick layout. Capture on the
@@ -1420,7 +1437,7 @@ export function mountBeginnerCoach({
         };
         control.setAttribute('aria-label', directions[axis][direction < 0 ? 0 : 1]);
         const down = (event) => {
-          if (stage !== 'guide') return;
+          if (stage !== 'guide' || selectedAircraftPractice()) return;
           if (event.type === 'keydown' && ![' ', 'Enter'].includes(event.key)) return;
           if (event.repeat && !labRunning) return;
           event.preventDefault();
@@ -1499,8 +1516,9 @@ export function mountBeginnerCoach({
         radio: t('Radio / controller', 'Пульт / контролер'),
         controller: t('Gamepad / Steam Deck', 'Геймпад / Steam Deck'),
       }[labSource];
-      const text =
-        labMode === 'example'
+      const text = selectedAircraftPractice()
+        ? t('Reference aircraft · teaching example', 'Навчальний дрон · навчальний приклад')
+        : labMode === 'example'
           ? t(
               'Move a stick, drag a gimbal or use the keyboard to take control. Esc pauses so you can browse.',
               'Рухайте стіком, перетягніть джойстик або натисніть клавішу, щоб керувати. Esc — пауза для навігації.',
@@ -1905,11 +1923,32 @@ export function mountBeginnerCoach({
     const card = node('section', 'coach-card');
     let notes = null;
     const startLabel = () =>
-      replay
-        ? t('Continue playback', 'Продовжити перегляд')
-        : activeStep() > 0 || (snapshot.state?.ticks ?? 0) > 0
-          ? t('Back to practice →', 'До практики →')
-          : t('Let’s fly →', 'Почнімо політ →');
+      modeChanging
+        ? t('Preparing lesson…', 'Підготовка уроку…')
+        : replay
+          ? t('Continue playback', 'Продовжити перегляд')
+          : mode() !== lesson.mode
+            ? selectedAircraftPractice()
+              ? t(
+                  `Practice with ${snapshot.practiceAircraftName} in ${mode() === 'acro' ? 'Acro' : 'Self-level'} · unscored →`,
+                  `Практика з ${snapshot.practiceAircraftName} ${mode() === 'acro' ? 'в Acro' : 'із самовирівнюванням'} · без заліку →`,
+                )
+              : snapshot.modePractice
+                ? t(
+                    'Continue in Self-level · unscored →',
+                    'Продовжити із самовирівнюванням · без заліку →',
+                  )
+                : mode() === 'acro'
+                  ? t('Continue in Acro →', 'Продовжити в Acro →')
+                  : t('Continue in Self-level →', 'Продовжити із самовирівнюванням →')
+            : selectedAircraftPractice()
+              ? t(
+                  `Practice with ${snapshot.practiceAircraftName} →`,
+                  `Практика з ${snapshot.practiceAircraftName} →`,
+                )
+              : activeStep() > 0 || (snapshot.state?.ticks ?? 0) > 0
+                ? t('Back to practice →', 'До практики →')
+                : t('Let’s fly →', 'Почнімо політ →');
     const heading = node('header', 'coach-heading'),
       eyebrow = node('p', 'coach-eyebrow', curriculumPosition());
     const headingText = node('div', '');
@@ -1943,12 +1982,13 @@ export function mountBeginnerCoach({
       refs.stepAdvance.hidden = true;
       card.append(refs.stepAdvance);
     }
-    if (stage === 'guide' && mode() !== lesson.mode)
-      card.append(
+    if (stage === 'guide' && mode() !== lesson.mode) {
+      const choice = node('div', 'coach-mode-choice');
+      choice.append(
         node(
           'p',
           'coach-pause-note',
-          snapshot.modePractice
+          snapshot.modePractice && !selectedAircraftPractice()
             ? t(
                 'Self-level practice · no score. These manoeuvres require Acro; the original objectives stay unchanged.',
                 'Практика із самовирівнюванням · без заліку. Для цих маневрів потрібен Acro; початкові цілі не змінюються.',
@@ -1959,6 +1999,45 @@ export function mountBeginnerCoach({
               ),
         ),
       );
+      if (typeof onLessonMode === 'function' && !replay) {
+        const actions = node('div', 'coach-actions');
+        actions.append(
+          button(
+            'lesson-mode',
+            modeChanging
+              ? t('Changing flight mode…', 'Зміна режиму польоту…')
+              : lesson.mode === 'acro'
+                ? t('Restart lesson in Acro', 'Почати урок заново в Acro')
+                : t('Restart lesson in Self-level', 'Почати урок заново із самовирівнюванням'),
+          ),
+          button('start', startLabel()),
+        );
+        choice.append(
+          actions,
+          node(
+            'p',
+            'coach-pause-note',
+            t(
+              'Changing mode restarts this lesson and keeps it paused. Choose when you are ready to fly.',
+              'Зміна режиму починає цей урок заново й залишає його на паузі. Почніть політ, коли будете готові.',
+            ),
+          ),
+        );
+        if (modeChangeFailed) {
+          const failure = node(
+            'p',
+            'coach-pause-note',
+            t(
+              'The mode could not be changed. Try again or continue in the current mode.',
+              'Не вдалося змінити режим. Спробуйте ще раз або продовжуйте в поточному режимі.',
+            ),
+          );
+          failure.setAttribute('role', 'status');
+          choice.append(failure);
+        }
+      }
+      card.append(choice);
+    }
     if (stage === 'complete') {
       card.append(
         node(
@@ -2039,8 +2118,12 @@ export function mountBeginnerCoach({
           'p',
           'coach-pause-note',
           t(
-            'Explore in a separate preview. The real lesson stays paused until you start practice.',
-            'Досліджуйте в окремому перегляді. Справжній урок залишається на паузі до початку практики.',
+            selectedAircraftPractice()
+              ? 'Watch the reference example, then practise the lesson with your selected aircraft. Its setup remains unchanged.'
+              : 'Explore in a separate preview. The real lesson stays paused until you start practice.',
+            selectedAircraftPractice()
+              ? 'Перегляньте навчальний приклад, потім тренуйте урок на вибраному дроні. Його налаштування залишаються незмінними.'
+              : 'Досліджуйте в окремому перегляді. Справжній урок залишається на паузі до початку практики.',
           ),
         ),
       );
@@ -2080,14 +2163,18 @@ export function mountBeginnerCoach({
         node(
           'div',
           'coach-radio-top',
-          t('CONTROL LAB · PREVIEW ONLY', 'КЕРУВАННЯ · ЛИШЕ ПЕРЕГЛЯД'),
+          selectedAircraftPractice()
+            ? t('REFERENCE AIRCRAFT · WATCH ONLY', 'НАВЧАЛЬНИЙ ДРОН · ЛИШЕ ПЕРЕГЛЯД')
+            : t('CONTROL LAB · PREVIEW ONLY', 'КЕРУВАННЯ · ЛИШЕ ПЕРЕГЛЯД'),
         ),
       );
       controller.append(
         node(
           'h3',
           '',
-          t(`YOUR CONTROLS · MODE ${stickMode}`, `ВАШЕ КЕРУВАННЯ · MODE ${stickMode}`),
+          selectedAircraftPractice()
+            ? t(`EXAMPLE CONTROLS · MODE ${stickMode}`, `КЕРУВАННЯ ПРИКЛАДУ · MODE ${stickMode}`)
+            : t(`YOUR CONTROLS · MODE ${stickMode}`, `ВАШЕ КЕРУВАННЯ · MODE ${stickMode}`),
         ),
       );
       refs.signal = node('p', 'coach-example-note');
@@ -2096,8 +2183,11 @@ export function mountBeginnerCoach({
       for (const side of [0, 1]) sticks.append(makeStick(side, STICK_LAYOUTS[stickMode], step));
       controller.append(sticks);
       const legend = node('p', 'coach-dot-legend');
+      if (!selectedAircraftPractice())
+        legend.append(
+          node('span', 'coach-legend-live', t('Your preview input', 'Ваш сигнал перегляду')),
+        );
       legend.append(
-        node('span', 'coach-legend-live', t('Your preview input', 'Ваш сигнал перегляду')),
         node('span', 'coach-legend-example-input', t('Example input', 'Сигнал прикладу')),
         node('span', 'coach-legend-example', t('Movement guide', 'Підказка руху')),
       );
@@ -2106,25 +2196,36 @@ export function mountBeginnerCoach({
         node(
           'p',
           'coach-example-note',
-          t(
-            'The small amber dot shows exact example input; the hollow ring follows its movement. The short trail shows where the stick came from. Your cyan dot responds immediately.',
-            'Мала жовта крапка показує точний сигнал прикладу; порожнє коло допомагає простежити рух. Короткий слід показує, звідки рухався стік. Ваша блакитна крапка реагує відразу.',
-          ),
+          selectedAircraftPractice()
+            ? t(
+                'The amber dot shows the example input; the hollow ring and trail show its movement.',
+                'Жовта крапка показує сигнал прикладу; порожнє коло та слід показують його рух.',
+              )
+            : t(
+                'The small amber dot shows exact example input; the hollow ring follows its movement. The short trail shows where the stick came from. Your cyan dot responds immediately.',
+                'Мала жовта крапка показує точний сигнал прикладу; порожнє коло допомагає простежити рух. Короткий слід показує, звідки рухався стік. Ваша блакитна крапка реагує відразу.',
+              ),
         ),
       );
-      notes.append(
-        node(
-          'p',
-          'coach-example-note',
-          t(
-            'Gamepad / Steam Deck: left stick turns the nose and adjusts thrust; centring holds the thrust setting. Right stick banks and pitches. D-pad moves roll/pitch; shoulder buttons turn; triggers lower/raise thrust. Move a centred controller to take over an example. Start or B / Circle pauses; Y / Triangle resets practice. Paused controls belong to the menus. These buttons never arm the real flight from this guide.',
-            'Геймпад / Steam Deck: лівий стік повертає ніс і змінює тягу; центр зберігає її рівень. Правий стік — крен і тангаж. Хрестовина — крен/тангаж; плечові кнопки — поворот; тригери зменшують/збільшують тягу. Центруйте геймпад і рухайте стіком, щоб перейняти приклад. Start або B / Circle — пауза; Y / Triangle — скидання практики. На паузі керування належить меню. Ці кнопки ніколи не вмикають справжній політ із пояснення.',
+      if (!selectedAircraftPractice())
+        notes.append(
+          node(
+            'p',
+            'coach-example-note',
+            t(
+              'Gamepad / Steam Deck: left stick turns the nose and adjusts thrust; centring holds the thrust setting. Right stick banks and pitches. D-pad moves roll/pitch; shoulder buttons turn; triggers lower/raise thrust. Move a centred controller to take over an example. Start or B / Circle pauses; Y / Triangle resets practice. Paused controls belong to the menus. These buttons never arm the real flight from this guide.',
+              'Геймпад / Steam Deck: лівий стік повертає ніс і змінює тягу; центр зберігає її рівень. Правий стік — крен і тангаж. Хрестовина — крен/тангаж; плечові кнопки — поворот; тригери зменшують/збільшують тягу. Центруйте геймпад і рухайте стіком, щоб перейняти приклад. Start або B / Circle — пауза; Y / Triangle — скидання практики. На паузі керування належить меню. Ці кнопки ніколи не вмикають справжній політ із пояснення.',
+            ),
           ),
-        ),
-      );
-      const touchControls = node('details', 'coach-lab-touch-controls');
-      touchControls.append(node('summary', '', t('Touch buttons', 'Сенсорні кнопки')), makeDpad());
-      controller.append(touchControls);
+        );
+      if (!selectedAircraftPractice()) {
+        const touchControls = node('details', 'coach-lab-touch-controls');
+        touchControls.append(
+          node('summary', '', t('Touch buttons', 'Сенсорні кнопки')),
+          makeDpad(),
+        );
+        controller.append(touchControls);
+      }
       visuals.append(controller);
       const behavior = node('section', 'coach-behavior coach-drone');
       refs.labPhase = node('p', 'coach-lab-phase coach-target');
@@ -2145,15 +2246,23 @@ export function mountBeginnerCoach({
       card.append(visuals);
       const labActions = node('div', 'coach-lab-actions coach-lab-toolbar');
       refs.labPlay = button('lab-play', '');
+      if (!selectedAircraftPractice())
+        labActions.append(
+          button(
+            'lab-immersive',
+            labImmersive
+              ? t('Back to lesson', 'До пояснення')
+              : t('Fullscreen practice', 'Повноекранна практика'),
+          ),
+        );
       labActions.append(
-        button(
-          'lab-immersive',
-          labImmersive
-            ? t('Back to lesson', 'До пояснення')
-            : t('Fullscreen practice', 'Повноекранна практика'),
-        ),
         refs.labPlay,
-        button('lab-reset', t('Reset controls', 'Скинути керування')),
+        button(
+          'lab-reset',
+          selectedAircraftPractice()
+            ? t('Restart example', 'Повторити приклад')
+            : t('Reset controls', 'Скинути керування'),
+        ),
         button(
           'lab-replay',
           hasLessonPreview()
@@ -2172,14 +2281,16 @@ export function mountBeginnerCoach({
         node(
           'p',
           'coach-lab-help',
-          t(
-            hasLessonPreview()
-              ? 'Watch the complete lesson, then move a control to take over at this exact point. Real objectives advance the instructions automatically. Select a named step to replay from its recorded entry. Watch lesson restarts the complete route. Practice is unscored; use Let’s fly for a recorded attempt. Your selected keyboard layout is shown below. Esc pauses.'
-              : 'Focus the drone and use the selected keyboard layout below, or move a calibrated radio stick. Drag either gimbal or open Touch buttons. Shift is gentle; throttle stays set. Esc pauses for menu navigation. Replay example returns to this step’s control technique.',
-            hasLessonPreview()
-              ? 'Перегляньте весь урок і рухайте керуванням, щоб продовжити саме з цієї позиції. Справжні цілі автоматично змінюють пояснення. Назва кроку починає показ із його записаного входу. «Переглянути урок» повторює весь маршрут. Практика без балів; для записаної спроби натисніть «Почнімо політ». Вибрана розкладка клавіатури показана нижче. Esc — пауза.'
-              : 'Виберіть схему дрона й користуйтеся розкладкою клавіатури нижче або рухайте каліброваним стіком пульта. Перетягніть джойстик або відкрийте сенсорні кнопки. Shift — плавно; газ зберігається. Esc — пауза для меню. «Повторити приклад» показує прийом цього кроку.',
-          ),
+          selectedAircraftPractice()
+            ? referencePreviewNotice()
+            : t(
+                hasLessonPreview()
+                  ? 'Watch the complete lesson, then move a control to take over at this exact point. Real objectives advance the instructions automatically. Select a named step to replay from its recorded entry. Watch lesson restarts the complete route. Practice is unscored; use Let’s fly for a recorded attempt. Your selected keyboard layout is shown below. Esc pauses.'
+                  : 'Focus the drone and use the selected keyboard layout below, or move a calibrated radio stick. Drag either gimbal or open Touch buttons. Shift is gentle; throttle stays set. Esc pauses for menu navigation. Replay example returns to this step’s control technique.',
+                hasLessonPreview()
+                  ? 'Перегляньте весь урок і рухайте керуванням, щоб продовжити саме з цієї позиції. Справжні цілі автоматично змінюють пояснення. Назва кроку починає показ із його записаного входу. «Переглянути урок» повторює весь маршрут. Практика без балів; для записаної спроби натисніть «Почнімо політ». Вибрана розкладка клавіатури показана нижче. Esc — пауза.'
+                  : 'Виберіть схему дрона й користуйтеся розкладкою клавіатури нижче або рухайте каліброваним стіком пульта. Перетягніть джойстик або відкрийте сенсорні кнопки. Shift — плавно; газ зберігається. Esc — пауза для меню. «Повторити приклад» показує прийом цього кроку.',
+              ),
         ),
       );
       const keys = node('p', 'coach-keys');
@@ -2197,7 +2308,7 @@ export function mountBeginnerCoach({
         ),
       );
       keys.title = keyboardFlightHelp(keyboardPreset().id, lang(), { actions: false });
-      if (keyboardPreset().arm)
+      if (keyboardPreset().arm && !selectedAircraftPractice())
         keys.append(
           node(
             'small',
@@ -2271,8 +2382,9 @@ export function mountBeginnerCoach({
     const input = stage === 'guide' ? labInput : controls();
     if (stage === 'guide') paintLab();
     if (refs.signal)
-      refs.signal.textContent =
-        labMode === 'try' && labSource === 'controller'
+      refs.signal.textContent = selectedAircraftPractice()
+        ? referencePreviewNotice()
+        : labMode === 'try' && labSource === 'controller'
           ? t(
               'The standard gamepad drives only this preview. Thrust is inherited at takeover, then changes only while you move the left stick vertically or use the triggers.',
               'Стандартний геймпад керує лише переглядом. Під час переходу тяга зберігається, а далі змінюється лише вертикальним рухом лівого стіка або тригерами.',
@@ -2364,6 +2476,7 @@ export function mountBeginnerCoach({
     }
   }
   function setPracticeView(enabled, { resume = true } = {}) {
+    if (enabled && selectedAircraftPractice()) return;
     if (enabled && (!lesson || stage !== 'guide' || disposed)) return;
     if (enabled === labImmersive) return;
     const owner = ++practiceViewRevision;
@@ -2439,12 +2552,39 @@ export function mountBeginnerCoach({
   function click(event) {
     const action = event.target.closest?.('[data-coach-action]')?.dataset.coachAction;
     if (!action || !lesson || disposed) return;
+    if (modeChanging && ['start', 'lesson-mode'].includes(action)) return;
     if (action === 'start') {
       setPracticeView(false, { resume: false });
       pausePreview();
       stage = 'live';
       render();
       onStart();
+    } else if (
+      action === 'lesson-mode' &&
+      stage === 'guide' &&
+      !replay &&
+      mode() !== lesson.mode &&
+      typeof onLessonMode === 'function'
+    ) {
+      pausePreview();
+      onPause();
+      const serial = ++modeChangeSerial,
+        selectedMode = lesson.mode;
+      modeChanging = true;
+      modeChangeFailed = false;
+      render();
+      void (async () => {
+        try {
+          await onLessonMode(selectedMode);
+        } catch {
+          if (serial === modeChangeSerial) modeChangeFailed = true;
+        } finally {
+          if (!disposed && serial === modeChangeSerial) {
+            modeChanging = false;
+            render();
+          }
+        }
+      })();
     } else if (action === 'lab-immersive') {
       setPracticeView(!labImmersive);
     } else if (action === 'lab-replay') {
@@ -2471,7 +2611,7 @@ export function mountBeginnerCoach({
       else playPreview();
     } else if (action === 'lab-reset') {
       const wasRunning = labRunning;
-      labMode = 'try';
+      labMode = selectedAircraftPractice() ? 'example' : 'try';
       if (labLesson) viewedStep = 0;
       resetPreview();
       rememberRadioBaseline();
@@ -2554,6 +2694,7 @@ export function mountBeginnerCoach({
       return;
     }
     if (!keyboardFlightKey(event.code, preset.id)) return;
+    if (selectedAircraftPractice()) return;
     // A held flight key can keep repeating while Explain opens. Only a fresh
     // keydown may take ownership from an example or a different input source.
     if (event.repeat && (labMode !== 'try' || labSource !== 'keyboard')) return;
@@ -2608,12 +2749,15 @@ export function mountBeginnerCoach({
     open(value, options = {}) {
       setPracticeView(false, { resume: false });
       if (disposed) return;
+      modeChangeSerial++;
+      modeChanging = modeChangeFailed = false;
       pausePreview();
       lesson = value;
       snapshot = {
         mode: options.mode ?? value.mode,
         modePractice: Boolean(options.modePractice),
         keyboardPreset: options.keyboardPreset,
+        practiceAircraftName: options.practiceAircraftName ?? null,
       };
       lessonDemonstration = options.demonstration ?? null;
       recommendedDemonstration = options.recommendedDemonstration ?? null;

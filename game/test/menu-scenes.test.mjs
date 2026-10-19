@@ -1040,7 +1040,7 @@ test('the image/canvas plane stays registered to original artwork through cover 
   f.api.dispose();
 });
 
-test('storage denial retains current-page preference and cross-tab updates are applied', () => {
+test('storage denial retains unsaved menu motion across remote updates until a new explicit save', () => {
   const f = fixture();
   f.win.localStorage = {
     getItem() {
@@ -1053,7 +1053,18 @@ test('storage denial retains current-page preference and cross-tab updates are a
   setMenuAnimation(false, f.win);
   assert.equal(getMenuAnimation(f.win), false);
   assert.equal(f.scene.dataset.motion, 'off');
-  f.win.localStorage = { getItem: () => 'on' };
+  let stored = 'on';
+  f.win.localStorage = {
+    getItem: () => stored,
+    setItem: (_key, value) => {
+      stored = value;
+    },
+  };
+  f.win.emit('storage', { key: MENU_ANIMATION_KEY });
+  assert.equal(f.scene.dataset.motion, 'off');
+  setMenuAnimation(false, f.win);
+  assert.equal(stored, 'off');
+  stored = 'on';
   f.win.emit('storage', { key: MENU_ANIMATION_KEY });
   assert.equal(f.scene.dataset.motion, 'on');
   f.api.dispose();
@@ -1092,4 +1103,51 @@ test('interface backdrops replace only fallback decoration and stop hidden artwo
     'An authored world scene is not application decoration',
   );
   f.api.dispose();
+});
+
+test('ephemeral title quality stops owned artwork and receiver without changing user preferences', () => {
+  const f = fixture();
+  f.load();
+  const owner = f.api.qualityObservationOwner;
+  assert.ok(owner);
+  const saved = f.win.localStorage.getItem(MENU_ANIMATION_KEY);
+  assert.equal(f.scene.dataset.motion, 'on');
+  f.api.setQuality('reduced');
+  assert.equal(f.scene.dataset.motion, 'off');
+  assert.equal(f.renderer.runs.at(-1), false);
+  assert.equal(f.receiver.runs.at(-1), false);
+  assert.strictEqual(
+    f.api.qualityObservationOwner,
+    owner,
+    'Cheap headroom still has the same title owner.',
+  );
+  assert.equal(f.win.localStorage.getItem(MENU_ANIMATION_KEY), saved);
+  f.reduced.matches = true;
+  f.reduced.emit('change');
+  f.api.setQuality('full');
+  assert.equal(f.scene.dataset.motion, 'off', 'System preference remains authoritative.');
+  f.reduced.matches = false;
+  f.reduced.emit('change');
+  assert.equal(f.scene.dataset.motion, 'on');
+  const cover = f.doc.createElement('dialog');
+  f.doc.body.append(cover);
+  cover.showModal();
+  f.mutate(cover, 'open');
+  assert.equal(f.api.qualityObservationOwner, null);
+  cover.close();
+  f.mutate(cover, 'open');
+  assert.strictEqual(f.api.qualityObservationOwner, owner);
+  f.doc.hidden = true;
+  f.doc.emit('visibilitychange');
+  assert.equal(f.api.qualityObservationOwner, null);
+  f.doc.hidden = false;
+  f.doc.emit('visibilitychange');
+  setMenuAnimation(false, f.win);
+  assert.equal(
+    f.api.qualityObservationOwner,
+    null,
+    'An explicit disabled animation has no load owner.',
+  );
+  f.api.dispose();
+  assert.equal(f.api.qualityObservationOwner, null);
 });

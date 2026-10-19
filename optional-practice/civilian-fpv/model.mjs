@@ -17,6 +17,7 @@ import { Q, attitude, clamp, integrateOrientation, isqrt, mul, roundDiv } from '
 import { createSectorTracker } from './flight-sectors.mjs';
 import { TUNED_RESPONSE_FORMAT, responseComparisonIdentity } from './flight-response.mjs';
 import { createRateEvaluator } from './rates.mjs';
+import { validateAircraftMissionCheckpoint } from './aircraft-mission-checkpoint.mjs';
 export const FLIGHT_MODEL = 'civilian-quad-fixed.v1';
 export const FLIGHT_HZ = 50;
 export const MAX_FLIGHT_TICKS = 50 * 60 * 12;
@@ -284,11 +285,13 @@ export function createFlight({
   mode = 'self-level',
   response = DEFAULT_RESPONSE,
   unscoredPractice = false,
+  physicalPractice = false,
 }) {
   const source = validateFlightCourse(course),
     rates = validateFlightResponse(response);
   required(FLIGHT_MODES.includes(mode), 'Unsupported flight mode');
   required(typeof unscoredPractice === 'boolean', 'Invalid unscored practice option');
+  required(!physicalPractice || unscoredPractice, 'Physical mission hosting requires practice');
   const identity = {
     model: FLIGHT_MODEL,
     course: source.id,
@@ -326,7 +329,7 @@ export function createFlight({
     target: structuredClone(source.steps[mode][state.step] ?? null),
     attitude: attitude(state.orientation),
   });
-  function step(input, { quantized = false } = {}) {
+  function step(input, { quantized = false, motion = null } = {}) {
     const command = quantized ? input : quantizeFlightInput(input);
     validateQuantized(command);
     if (state.status !== 'active') return snapshot();
@@ -336,12 +339,27 @@ export function createFlight({
     }
     const before = { ...state.position },
       next = {};
-    const nextAttitude = advanceFlightAir(state, command, mode, rates, next);
-    for (const axis of ['x', 'y', 'z']) next[axis] += before[axis];
+    required(Boolean(motion) === physicalPractice, 'Physical mission motion is required');
+    const nextAttitude = motion
+      ? attitude(motion.orientation)
+      : advanceFlightAir(state, command, mode, rates, next);
+    if (motion) {
+      state.velocity = { ...motion.velocity };
+      state.orientation = [...motion.orientation];
+      state.angular = { ...motion.angular };
+      state.contacts += motion.contacts.length;
+      state.landingSpeed = motion.landingSpeed;
+      state.landingTilt = motion.landingTilt;
+      state.grounded = motion.grounded;
+      state.support = structuredClone(motion.support);
+      Object.assign(next, motion.position);
+    } else for (const axis of ['x', 'y', 'z']) next[axis] += before[axis];
     const speed = isqrt(Object.values(state.velocity).reduce((n, v) => n + v * v, 0)),
       tilt = Math.max(Math.abs(nextAttitude.roll), Math.abs(nextAttitude.pitch));
     let collision = null;
-    for (const obstacle of [...source.obstacles].sort((a, b) => (a.id < b.id ? -1 : 1))) {
+    for (const obstacle of (motion ? [] : [...source.obstacles]).sort((a, b) =>
+      a.id < b.id ? -1 : 1,
+    )) {
       const hit = sweepBox(before, next, obstacle);
       if (hit && (!collision || hit.at < collision.at)) collision = hit;
     }
@@ -355,9 +373,10 @@ export function createFlight({
     }
     for (const axis of ['x', 'y', 'z']) {
       if (
-        next[axis] < source.bounds.min[axis] ||
-        next[axis] > source.bounds.max[axis] ||
-        (axis === 'y' && next.y === 0)
+        !motion &&
+        (next[axis] < source.bounds.min[axis] ||
+          next[axis] > source.bounds.max[axis] ||
+          (axis === 'y' && next.y === 0))
       ) {
         const floor = axis === 'y' && next.y <= 0;
         if (floor && before.y > 0) {
@@ -379,6 +398,7 @@ export function createFlight({
     state.heightRange.min = Math.min(state.heightRange.min, next.y);
     state.heightRange.max = Math.max(state.heightRange.max, next.y);
     const target = source.steps[mode][state.step];
+    if (!target) return snapshot();
     let accepted = false;
     if (target.type === 'gate') {
       accepted = crossesGate(before, next, target);
@@ -410,7 +430,7 @@ export function createFlight({
         (!target.centred ||
           ['pitch', 'roll', 'yaw'].every((key) => Math.abs(command[key]) <= 50)) &&
         (target.type !== 'land' ||
-          (next.y === 0 &&
+          ((motion ? motion.grounded : next.y === 0) &&
             command.throttle <= 100 &&
             state.landingSpeed <= target.maxSpeed &&
             state.landingTilt <= target.maxTilt));
@@ -428,7 +448,7 @@ export function createFlight({
         heading: heading <= 1500,
         centred:
           !target.centred || ['pitch', 'roll', 'yaw'].every((key) => Math.abs(command[key]) <= 50),
-        grounded: target.type !== 'land' || next.y === 0,
+        grounded: target.type !== 'land' || (motion ? motion.grounded : next.y === 0),
         throttle: target.type !== 'land' || command.throttle <= 100,
         landingSpeed: target.type !== 'land' || state.landingSpeed <= target.maxSpeed,
         landingTilt: target.type !== 'land' || state.landingTilt <= target.maxTilt,
@@ -449,7 +469,7 @@ export function createFlight({
         headingError: heading,
         centred: ['pitch', 'roll', 'yaw'].every((key) => Math.abs(command[key]) <= 50),
         throttle: command.throttle,
-        grounded: next.y === 0,
+        grounded: motion ? motion.grounded : next.y === 0,
         landingSpeed: state.landingSpeed,
         landingTilt: state.landingTilt,
         conditions,
@@ -458,7 +478,7 @@ export function createFlight({
     if (accepted) {
       state.step++;
       state.hold = 0;
-      if (state.step === source.steps[mode].length) state.status = 'complete';
+      if (state.step === source.steps[mode].length && !physicalPractice) state.status = 'complete';
     }
     return snapshot();
   }
@@ -478,6 +498,23 @@ export function createFlight({
     },
   };
   // An unbounded controls sandbox never produces scored/replay proof bytes.
+  if (physicalPractice) {
+    flight.physicalCheckpoint = () => ({
+      format: 'AircraftMissionCheckpoint.v1',
+      identity: dataIdentity(identity),
+      state: structuredClone(state),
+      feedback: structuredClone(lastObjectiveFeedback),
+    });
+    flight.validatePhysicalCheckpoint = (value) =>
+      validateAircraftMissionCheckpoint(value, { identity, source, mode });
+    flight.restorePhysicalCheckpoint = (value) => {
+      const saved = flight.validatePhysicalCheckpoint(value);
+      state = structuredClone(saved.state);
+      state.status = state.status === 'active' ? 'paused' : state.status;
+      lastObjectiveFeedback = structuredClone(saved.feedback);
+      return snapshot();
+    };
+  }
   // Keep its runtime policy outside the unchanged v1 identity and snapshots.
   if (unscoredPractice) unscoredFlights.add(flight);
   return flight;

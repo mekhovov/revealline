@@ -1,0 +1,890 @@
+{
+  "format": "SoloReplayPortabilityFixedCasesV1",
+  "sourceRun": 39109911286,
+  "sourceArtifact": 12130067688,
+  "sourceArtifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+  "nodeVersion": "v22.13.1",
+  "nodeSourceRevision": "1255a79a90268316f8ea768d3e0c56610b26df52",
+  "nodeModules": [
+    {
+      "path": "game/content-design/map.mjs",
+      "bytes": 9883,
+      "sha256": "fe62f83ab72b450a4e750bb68f5d44bbfe195a5aa6e7cc928a6265e265a041ba"
+    },
+    {
+      "path": "game/core/abilities.mjs",
+      "bytes": 3855,
+      "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde"
+    },
+    {
+      "path": "game/core/arcade-actions.mjs",
+      "bytes": 848,
+      "sha256": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726"
+    },
+    {
+      "path": "game/core/bonus-opportunity.mjs",
+      "bytes": 1787,
+      "sha256": "df7a08d3d965a445153881a3423c09b1cbfca5c91231d05570c59e7ef18baa90"
+    },
+    {
+      "path": "game/core/capture-regions.mjs",
+      "bytes": 6860,
+      "sha256": "82680114409789d83ad1af09ef18a61cacc8e86ee246d1937c87ecc7c7ecf575"
+    },
+    {
+      "path": "game/core/capture.mjs",
+      "bytes": 7509,
+      "sha256": "9ea5eec1db293445c3e93cf809ca08bded13062bbbdfe3ac6b7c1306a3cac731"
+    },
+    {
+      "path": "game/core/classic-contour.mjs",
+      "bytes": 7465,
+      "sha256": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8"
+    },
+    {
+      "path": "game/core/classic-definition.mjs",
+      "bytes": 11053,
+      "sha256": "a1663a97efb2d04dc2d3e9dc20983740c9be32bc6a84494612b77144892a9270"
+    },
+    {
+      "path": "game/core/classic-motion.mjs",
+      "bytes": 12889,
+      "sha256": "23ded4bc7e90cddb838ea08d320b6ac8a6df3755cf12dc362ea10e5d7bcc8c2b"
+    },
+    {
+      "path": "game/core/classic-state.mjs",
+      "bytes": 2896,
+      "sha256": "6b8001326238729541bb9515bfa1f92fdb4d18c961f49e7b2a6c68e41a42726f"
+    },
+    {
+      "path": "game/core/classic-step.mjs",
+      "bytes": 19358,
+      "sha256": "468441bee309496488e34497dcf673382197694610e596a89828bb0575aa61b6"
+    },
+    {
+      "path": "game/core/classic-topology.mjs",
+      "bytes": 6531,
+      "sha256": "c63830a351caa1c45938382d7793aa7ccbc308fac60b5cd477a14fb1962d5131"
+    },
+    {
+      "path": "game/core/combat-definition.mjs",
+      "bytes": 5663,
+      "sha256": "41e64dc55ef9bb88f2df6c8116dbd7ea01b0f171f4ae399e2a2593e7427f97d6"
+    },
+    {
+      "path": "game/core/combat-motion.mjs",
+      "bytes": 6172,
+      "sha256": "c5b7eb7da31040493b8c2c54ebe0e32a1b845b51b28ead193a4d20c0cc34e28b"
+    },
+    {
+      "path": "game/core/combat-patrols.mjs",
+      "bytes": 10644,
+      "sha256": "e7c68452b47910d5ae33fc38eb8c3b5dcbb81303556eede1548b3a635d2be472"
+    },
+    {
+      "path": "game/core/contacts.mjs",
+      "bytes": 5263,
+      "sha256": "d8c8294bf7141471a125dc325ab1202e2a705ca62ad7632d89129907c8072df4"
+    },
+    {
+      "path": "game/core/coverage.mjs",
+      "bytes": 5196,
+      "sha256": "9bd7899414967a00a5a46c32257fce0961ad2ea15eb91e65f2496aed4793db4b"
+    },
+    {
+      "path": "game/core/directional-fields.mjs",
+      "bytes": 3576,
+      "sha256": "b93cf46cd2a845ffa4792410d8d42852afca701dd07ee04a9969fecd417b5f17"
+    },
+    {
+      "path": "game/core/encounter.mjs",
+      "bytes": 10043,
+      "sha256": "5543956a0dc81a613c33e1244a6f02621d1c089ec6cade4e34ff1fcc569d279b"
+    },
+    {
+      "path": "game/core/enemy-pressure.mjs",
+      "bytes": 11725,
+      "sha256": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb"
+    },
+    {
+      "path": "game/core/field-course.mjs",
+      "bytes": 3605,
+      "sha256": "fbd86842f281334088a35e1793c65ba4d323fe64209f81546e47a06f87af0e0d"
+    },
+    {
+      "path": "game/core/foundations.mjs",
+      "bytes": 3614,
+      "sha256": "5bba8689aed68d43bafca509fbcb26e0783d96efbb1ed64a07083d3b7a86cd71"
+    },
+    {
+      "path": "game/core/geometry.mjs",
+      "bytes": 4290,
+      "sha256": "ad980ff30fef2cb8afd307f2a8dccf0329d1dc996dbd9fa3d13e3d2e9f2ae3d4"
+    },
+    {
+      "path": "game/core/index.mjs",
+      "bytes": 23285,
+      "sha256": "d5fead46c41a9651da86003f70417a9d2bbd5a61830c007011b205581b2a3330"
+    },
+    {
+      "path": "game/core/level.mjs",
+      "bytes": 18861,
+      "sha256": "4d0b9f171ace4d8ff4c35ae7d50b4fccaabee218605e422c098aa23d2c5c5b5c"
+    },
+    {
+      "path": "game/core/line-impact.mjs",
+      "bytes": 9142,
+      "sha256": "e3a11756a9fb7272ad660dbf9a2c175095f89e26f889e3f3edb25865b2b7c5a0"
+    },
+    {
+      "path": "game/core/movement.mjs",
+      "bytes": 11398,
+      "sha256": "216e03da20b388c8278be19a9829a8ef642fea30291125b645c5373e5902c261"
+    },
+    {
+      "path": "game/core/registry.mjs",
+      "bytes": 6661,
+      "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c"
+    },
+    {
+      "path": "game/core/relay-gates.mjs",
+      "bytes": 2369,
+      "sha256": "6ebaf6d4fbe5b2b53336d048a2e10a876c5f8f796c70b4474927185d55ee9117"
+    },
+    {
+      "path": "game/core/systems.mjs",
+      "bytes": 4621,
+      "sha256": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6"
+    },
+    {
+      "path": "game/core/timed-bonuses.mjs",
+      "bytes": 8967,
+      "sha256": "8a9330bce36416d3f9a3ac74c2876f90756f28995c9bbd38be4a9bc94d0ce0ea"
+    },
+    {
+      "path": "game/core/versions.mjs",
+      "bytes": 8109,
+      "sha256": "715a8990f897e7605e3fe045e5c1a064e163ccbbae7a26ba060214443d1b22f2"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/hunt/pursuit-goals-v2.mjs",
+      "bytes": 12361,
+      "sha256": "eaac4bfa6aa6552e43685d0c127d021d9919283d8cd9e77da870c2e3315221ea"
+    },
+    {
+      "path": "game/hunt/pursuit-goals.mjs",
+      "bytes": 11792,
+      "sha256": "0d7a2e719facb44a8488e6605c10b99a75092bfe301831b208eb67acda8be4d0"
+    },
+    {
+      "path": "game/hunt/pursuit-specialists.mjs",
+      "bytes": 7239,
+      "sha256": "a95fada7d546e2fdb622f6298889d193d30188ca1f664b5663c127ff22650f0f"
+    },
+    {
+      "path": "game/hunt/rules.mjs",
+      "bytes": 9065,
+      "sha256": "aef2f915ff67171c68b86a4940535fa6138bd882b1e06946b040959604dcb836"
+    },
+    {
+      "path": "game/hunt/running-enemy-definition.mjs",
+      "bytes": 6239,
+      "sha256": "7401951601412783f45434fa398c0218492e9ebb853bb36d5a76242ab28bfd7a"
+    },
+    {
+      "path": "game/hunt/running-enemy-placement.mjs",
+      "bytes": 3473,
+      "sha256": "eb2fc887469eb34787b2aeee420175bb06e96666ddd2d9b4e4ddf23571d1e40b"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "bytes": 13699,
+      "sha256": "f7757adb8ee1f9c53fc0f249bbed6bc9377ff175453543198d3561338fcfc3af"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1264959,
+      "sha256": "ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/mastery-equipment.mjs",
+      "bytes": 29233,
+      "sha256": "5d45dfb343754c728277ea83a6a32ff46547adf747da65eee5ec0aa30bd09d1a"
+    },
+    {
+      "path": "game/mastery.mjs",
+      "bytes": 16941,
+      "sha256": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504"
+    },
+    {
+      "path": "game/replay.mjs",
+      "bytes": 33108,
+      "sha256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41"
+    },
+    {
+      "path": "game/snake/rules.mjs",
+      "bytes": 13291,
+      "sha256": "d4e7a25942a7eecd7a2858fd5ef0529fb9b194de2c2b215f8977d0bb2ab95e63"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    }
+  ],
+  "cases": [
+    {
+      "id": "baseline-first30-chromium",
+      "engine": "chromium",
+      "sourceRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "browserVersion": "151.0.7922.34",
+      "recording": {
+        "member": "solo-linux-797e03-correctness/evidence/baseline-first30-chromium/report.json.replay.json",
+        "bytes": 9146,
+        "sha256": "c1fec0e1b2bf8098843ef311cd2b166eabe42157be5e3813ce9ca6bf51eaec87",
+        "ticks": 3477,
+        "segments": 31,
+        "text": "{\"format\":\"revealline-replay-presentation.v1\",\"execution\":{\"campaignKey\":\"prologue/candidate-9ab581acac5bf50a/835556ee0bc12ec0\",\"sourcePackId\":\"journey-opening\"},\"actorAppearancePin\":{\"format\":\"revealline-actor-appearance-pin.v1\",\"style\":\"fpv\",\"rendererPolicy\":\"actor-style.v1\",\"content\":{\"editionId\":\"opening\",\"contentThemeId\":\"horizon\",\"mode\":\"solo\",\"owner\":{\"kind\":\"journey\",\"projectId\":\"horizon-greybox-candidates\",\"projectRevision\":\"draft-1\",\"projectSha256\":\"54a6493fcc22dd41050b1c6e0547040ab1670c5bae901fb0cbbe806bdac0df11\",\"packId\":\"journey-opening\",\"campaignId\":\"prologue\",\"baseCampaignKey\":\"prologue/candidate-9ab581acac5bf50a/835556ee0bc12ec0\",\"policyId\":\"journey-arcade-v2\"},\"level\":{\"id\":\"first-return\",\"revision\":\"greybox-1\",\"sha256\":\"8ca185088875f5f57f40f343afe2f153572b0571e32f598b38b965b62ed1feb9\",\"simulationIdentity\":\"0822484529141ac9\"}},\"presentation\":{\"source\":{\"id\":\"field-kit\",\"revision\":62},\"theme\":{\"id\":\"fpv\",\"revision\":62},\"collection\":null,\"sha256\":\"b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f\"}},\"replay\":{\"version\":\"xonix-replay.v7\",\"build\":\"0.151.1\",\"ruleset\":\"xonix-core.v6\",\"level\":{\"version\":\"xonix-level.v5\",\"id\":\"first-return\",\"revision\":\"gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a\",\"name\":\"First return\",\"width\":72,\"height\":36,\"spawn\":{\"x\":24.5,\"y\":0.5},\"walls\":[],\"foundations\":[],\"goal\":{\"coverage\":0.3},\"encounter\":null,\"classic\":{\"version\":\"classic.v1\",\"terrain\":[],\"powerups\":[],\"arcadeActions\":{\"version\":\"arcade-actions.v1\"}},\"enemies\":[{\"id\":\"keeper\",\"type\":\"bouncer\",\"x\":58.5,\"y\":23.5,\"vx\":7.81352993211135,\"vy\":-7.81352993211135,\"course\":\"field-course.v2\"}],\"objectives\":[],\"supplies\":[],\"rules\":{\"lives\":3,\"moveSpeed\":8.84,\"boostMultiplier\":1.5,\"respawnSeconds\":0.65,\"graceSeconds\":1,\"playerRadius\":0.18,\"pointsPerCell\":10,\"objectivePoints\":500,\"timeMedals\":[90,150],\"switchCooldownSeconds\":2,\"timeLimitSeconds\":0,\"cutTimeLimitSeconds\":0,\"maxTrailCells\":0,\"stopOnCapture\":true},\"signalZones\":[],\"hangars\":[{\"id\":\"home-hangar\",\"x\":24.5,\"y\":0.5,\"radius\":2}]},\"options\":{\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"classRecipes\":[{\"id\":\"scout\",\"label\":\"Scout\",\"description\":\"Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.\",\"primitive\":\"scan\",\"capacity\":0,\"cooldown\":6,\"duration\":4,\"radius\":48,\"revision\":\"1\"},{\"id\":\"bomber\",\"label\":\"Light carrier\",\"description\":\"Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.\",\"primitive\":\"stun-field\",\"capacity\":1,\"cooldown\":2,\"duration\":2.5,\"radius\":3,\"revision\":\"1\"},{\"id\":\"carrier\",\"label\":\"Heavy carrier\",\"description\":\"Carry two charges; each creates the same temporary stun field.\",\"primitive\":\"stun-field\",\"capacity\":2,\"cooldown\":2,\"duration\":2.5,\"radius\":3,\"revision\":\"1\"},{\"id\":\"interceptor\",\"label\":\"Interceptor\",\"description\":\"Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.\",\"primitive\":\"shield\",\"capacity\":0,\"cooldown\":9,\"duration\":1.5,\"radius\":0,\"revision\":\"1\"},{\"id\":\"fiber\",\"label\":\"Fiber relay\",\"description\":\"Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.\",\"primitive\":\"scan\",\"capacity\":0,\"cooldown\":7,\"duration\":3,\"radius\":30,\"signalResistance\":true,\"moveSpeedMultiplier\":1,\"revision\":\"1\"},{\"id\":\"impact\",\"label\":\"Impact craft\",\"description\":\"Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.\",\"primitive\":\"impact-pulse\",\"capacity\":0,\"cooldown\":10,\"duration\":3,\"radius\":5,\"revision\":\"1\"},{\"id\":\"trapper\",\"label\":\"Trapper\",\"description\":\"Pick up one charge and place a four-second field that slows field enemies to one quarter speed.\",\"primitive\":\"slow-field\",\"capacity\":1,\"cooldown\":2,\"duration\":4,\"radius\":4,\"slowFactor\":0.25,\"revision\":\"1\"}]},\"segments\":[{\"ticks\":4,\"input\":{\"direction\":null,\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":60,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":21,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":124,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":126,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false}],\"releaseAfter\":false,\"ticks\":3477,\"summary\":{\"ruleset\":\"xonix-core.v6\",\"levelId\":\"first-return\",\"revision\":\"gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a\",\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"activeClassId\":\"scout\",\"rosterHash\":\"roster-v1-e159e435\",\"classHistory\":[{\"classId\":\"scout\",\"classRevision\":\"1\",\"loadoutHash\":\"loadout-v1-aaa4aadd\",\"tick\":0}],\"switches\":0,\"failureCause\":null,\"classRevision\":\"1\",\"loadoutHash\":\"loadout-v1-aaa4aadd\",\"status\":\"running\",\"won\":false,\"tick\":3477,\"time\":28.974999999998996,\"lives\":3,\"livesLost\":0,\"score\":0,\"coverage\":0,\"claimedCount\":0,\"totalClaimable\":2380,\"medal\":null,\"objectives\":{\"captured\":0,\"total\":0,\"required\":0}},\"checkpoint\":{\"algorithm\":\"fnv1a64-state-v6\",\"hash\":\"92895f8ab985355b\",\"sections\":{\"identity\":\"7f0adade50944b7a\",\"configuration\":\"1f76b7254ac7d495\",\"board\":\"1cdb1426df633e1f\",\"player\":\"92ac1201bf3468b6\",\"trail\":\"f0ca473df9efdcc8\",\"enemies\":\"6ba296b9b5d76f66\",\"objectives\":\"09612b07b5ecb5a5\",\"supplies\":\"09612b07b5ecb5a5\",\"ability\":\"f6b5aef539d929bb\",\"clock\":\"736c210ad74ea449\",\"continuation\":\"a1e7286b42b404e7\",\"result\":\"5b9bc4ba528108e4\",\"encounter\":\"5b9bc4ba528108e4\",\"classic\":\"46819e8b57ab65a7\",\"foundations\":\"60e21be6e6caf6b0\"}}}}"
+      },
+      "nativeCheckpoint": {
+        "algorithm": "fnv1a64-state-v6",
+        "hash": "92895f8ab985355b",
+        "sections": {
+          "identity": "7f0adade50944b7a",
+          "configuration": "1f76b7254ac7d495",
+          "board": "1cdb1426df633e1f",
+          "player": "92ac1201bf3468b6",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "6ba296b9b5d76f66",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "736c210ad74ea449",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "46819e8b57ab65a7",
+          "foundations": "60e21be6e6caf6b0"
+        }
+      },
+      "nodeObservation": {
+        "match": false,
+        "status": "fail",
+        "diagnostics": [
+          {
+            "code": "state-mismatch",
+            "section": "player",
+            "message": "Authoritative player differs.",
+            "expected": "92ac1201bf3468b6",
+            "actual": "2a5798b21e56d652"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "enemies",
+            "message": "Authoritative enemies differs.",
+            "expected": "6ba296b9b5d76f66",
+            "actual": "425a4d30314c5bc0"
+          }
+        ],
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v6",
+            "levelId": "first-return",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "running",
+            "won": false,
+            "tick": 3477,
+            "time": 28.974999999998996,
+            "lives": 3,
+            "livesLost": 0,
+            "score": 0,
+            "coverage": 0,
+            "claimedCount": 0,
+            "totalClaimable": 2380,
+            "medal": null,
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v6",
+            "hash": "2b9ddb7e193e99de",
+            "sections": {
+              "identity": "7f0adade50944b7a",
+              "configuration": "1f76b7254ac7d495",
+              "board": "1cdb1426df633e1f",
+              "player": "2a5798b21e56d652",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "425a4d30314c5bc0",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "09612b07b5ecb5a5",
+              "ability": "f6b5aef539d929bb",
+              "clock": "736c210ad74ea449",
+              "continuation": "a1e7286b42b404e7",
+              "result": "5b9bc4ba528108e4",
+              "encounter": "5b9bc4ba528108e4",
+              "classic": "46819e8b57ab65a7",
+              "foundations": "60e21be6e6caf6b0"
+            }
+          }
+        },
+        "recordedCheckpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "92895f8ab985355b",
+          "sections": {
+            "identity": "7f0adade50944b7a",
+            "configuration": "1f76b7254ac7d495",
+            "board": "1cdb1426df633e1f",
+            "player": "92ac1201bf3468b6",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "6ba296b9b5d76f66",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "736c210ad74ea449",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "46819e8b57ab65a7",
+            "foundations": "60e21be6e6caf6b0"
+          }
+        },
+        "features": null,
+        "checks": [],
+        "scope": "Strict artifact verifier rejected the unchanged recording. Mechanics are unobserved."
+      },
+      "nativeModuleOverrides": [
+        {
+          "path": "game/i18n/bootstrap.mjs",
+          "bytes": 13117,
+          "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+        },
+        {
+          "path": "game/i18n/catalogs.mjs",
+          "bytes": 1265063,
+          "sha256": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816"
+        },
+        {
+          "path": "game/replay.mjs",
+          "bytes": 26448,
+          "sha256": "c0bfc6842743f931dab1a9612e8799c240c542fcb7f9895ab6f866989ae41a6d"
+        }
+      ]
+    },
+    {
+      "id": "baseline-first30-webkit",
+      "engine": "webkit",
+      "sourceRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "browserVersion": "26.5",
+      "recording": {
+        "member": "solo-linux-797e03-correctness/evidence/baseline-first30-webkit/report.json.replay.json",
+        "bytes": 9145,
+        "sha256": "627a6000fdeb0b0b95d478a70bad57559a2aba5acc6a4bcf8bfd7b024056786f",
+        "ticks": 3491,
+        "segments": 31,
+        "text": "{\"format\":\"revealline-replay-presentation.v1\",\"execution\":{\"campaignKey\":\"prologue/candidate-9ab581acac5bf50a/835556ee0bc12ec0\",\"sourcePackId\":\"journey-opening\"},\"actorAppearancePin\":{\"format\":\"revealline-actor-appearance-pin.v1\",\"style\":\"fpv\",\"rendererPolicy\":\"actor-style.v1\",\"content\":{\"editionId\":\"opening\",\"contentThemeId\":\"horizon\",\"mode\":\"solo\",\"owner\":{\"kind\":\"journey\",\"projectId\":\"horizon-greybox-candidates\",\"projectRevision\":\"draft-1\",\"projectSha256\":\"54a6493fcc22dd41050b1c6e0547040ab1670c5bae901fb0cbbe806bdac0df11\",\"packId\":\"journey-opening\",\"campaignId\":\"prologue\",\"baseCampaignKey\":\"prologue/candidate-9ab581acac5bf50a/835556ee0bc12ec0\",\"policyId\":\"journey-arcade-v2\"},\"level\":{\"id\":\"first-return\",\"revision\":\"greybox-1\",\"sha256\":\"8ca185088875f5f57f40f343afe2f153572b0571e32f598b38b965b62ed1feb9\",\"simulationIdentity\":\"0822484529141ac9\"}},\"presentation\":{\"source\":{\"id\":\"field-kit\",\"revision\":62},\"theme\":{\"id\":\"fpv\",\"revision\":62},\"collection\":null,\"sha256\":\"b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f\"}},\"replay\":{\"version\":\"xonix-replay.v7\",\"build\":\"0.151.1\",\"ruleset\":\"xonix-core.v6\",\"level\":{\"version\":\"xonix-level.v5\",\"id\":\"first-return\",\"revision\":\"gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a\",\"name\":\"First return\",\"width\":72,\"height\":36,\"spawn\":{\"x\":24.5,\"y\":0.5},\"walls\":[],\"foundations\":[],\"goal\":{\"coverage\":0.3},\"encounter\":null,\"classic\":{\"version\":\"classic.v1\",\"terrain\":[],\"powerups\":[],\"arcadeActions\":{\"version\":\"arcade-actions.v1\"}},\"enemies\":[{\"id\":\"keeper\",\"type\":\"bouncer\",\"x\":58.5,\"y\":23.5,\"vx\":7.81352993211135,\"vy\":-7.81352993211135,\"course\":\"field-course.v2\"}],\"objectives\":[],\"supplies\":[],\"rules\":{\"lives\":3,\"moveSpeed\":8.84,\"boostMultiplier\":1.5,\"respawnSeconds\":0.65,\"graceSeconds\":1,\"playerRadius\":0.18,\"pointsPerCell\":10,\"objectivePoints\":500,\"timeMedals\":[90,150],\"switchCooldownSeconds\":2,\"timeLimitSeconds\":0,\"cutTimeLimitSeconds\":0,\"maxTrailCells\":0,\"stopOnCapture\":true},\"signalZones\":[],\"hangars\":[{\"id\":\"home-hangar\",\"x\":24.5,\"y\":0.5,\"radius\":2}]},\"options\":{\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"classRecipes\":[{\"id\":\"scout\",\"label\":\"Scout\",\"description\":\"Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.\",\"primitive\":\"scan\",\"capacity\":0,\"cooldown\":6,\"duration\":4,\"radius\":48,\"revision\":\"1\"},{\"id\":\"bomber\",\"label\":\"Light carrier\",\"description\":\"Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.\",\"primitive\":\"stun-field\",\"capacity\":1,\"cooldown\":2,\"duration\":2.5,\"radius\":3,\"revision\":\"1\"},{\"id\":\"carrier\",\"label\":\"Heavy carrier\",\"description\":\"Carry two charges; each creates the same temporary stun field.\",\"primitive\":\"stun-field\",\"capacity\":2,\"cooldown\":2,\"duration\":2.5,\"radius\":3,\"revision\":\"1\"},{\"id\":\"interceptor\",\"label\":\"Interceptor\",\"description\":\"Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.\",\"primitive\":\"shield\",\"capacity\":0,\"cooldown\":9,\"duration\":1.5,\"radius\":0,\"revision\":\"1\"},{\"id\":\"fiber\",\"label\":\"Fiber relay\",\"description\":\"Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.\",\"primitive\":\"scan\",\"capacity\":0,\"cooldown\":7,\"duration\":3,\"radius\":30,\"signalResistance\":true,\"moveSpeedMultiplier\":1,\"revision\":\"1\"},{\"id\":\"impact\",\"label\":\"Impact craft\",\"description\":\"Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.\",\"primitive\":\"impact-pulse\",\"capacity\":0,\"cooldown\":10,\"duration\":3,\"radius\":5,\"revision\":\"1\"},{\"id\":\"trapper\",\"label\":\"Trapper\",\"description\":\"Pick up one charge and place a four-second field that slows field enemies to one quarter speed.\",\"primitive\":\"slow-field\",\"capacity\":1,\"cooldown\":2,\"duration\":4,\"radius\":4,\"slowFactor\":0.25,\"revision\":\"1\"}]},\"segments\":[{\"ticks\":3,\"input\":{\"direction\":null,\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":4,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":69,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":116,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":123,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":123,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":117,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":127,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":118,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":123,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":123,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":137,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false}],\"releaseAfter\":false,\"ticks\":3491,\"summary\":{\"ruleset\":\"xonix-core.v6\",\"levelId\":\"first-return\",\"revision\":\"gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a\",\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"activeClassId\":\"scout\",\"rosterHash\":\"roster-v1-e159e435\",\"classHistory\":[{\"classId\":\"scout\",\"classRevision\":\"1\",\"loadoutHash\":\"loadout-v1-aaa4aadd\",\"tick\":0}],\"switches\":0,\"failureCause\":null,\"classRevision\":\"1\",\"loadoutHash\":\"loadout-v1-aaa4aadd\",\"status\":\"running\",\"won\":false,\"tick\":3491,\"time\":29.091666666665656,\"lives\":3,\"livesLost\":0,\"score\":0,\"coverage\":0,\"claimedCount\":0,\"totalClaimable\":2380,\"medal\":null,\"objectives\":{\"captured\":0,\"total\":0,\"required\":0}},\"checkpoint\":{\"algorithm\":\"fnv1a64-state-v6\",\"hash\":\"0596f497bb4834a4\",\"sections\":{\"identity\":\"7f0adade50944b7a\",\"configuration\":\"1f76b7254ac7d495\",\"board\":\"1cdb1426df633e1f\",\"player\":\"4609a798b94d711c\",\"trail\":\"f0ca473df9efdcc8\",\"enemies\":\"fb43ce572c1a21c9\",\"objectives\":\"09612b07b5ecb5a5\",\"supplies\":\"09612b07b5ecb5a5\",\"ability\":\"f6b5aef539d929bb\",\"clock\":\"b3a491c8d2000a06\",\"continuation\":\"a1e7286b42b404e7\",\"result\":\"5b9bc4ba528108e4\",\"encounter\":\"5b9bc4ba528108e4\",\"classic\":\"2cc3a1d7ff69bb7d\",\"foundations\":\"60e21be6e6caf6b0\"}}}}"
+      },
+      "nativeCheckpoint": {
+        "algorithm": "fnv1a64-state-v6",
+        "hash": "0596f497bb4834a4",
+        "sections": {
+          "identity": "7f0adade50944b7a",
+          "configuration": "1f76b7254ac7d495",
+          "board": "1cdb1426df633e1f",
+          "player": "4609a798b94d711c",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "fb43ce572c1a21c9",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "b3a491c8d2000a06",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "2cc3a1d7ff69bb7d",
+          "foundations": "60e21be6e6caf6b0"
+        }
+      },
+      "nodeObservation": {
+        "match": false,
+        "status": "fail",
+        "diagnostics": [
+          {
+            "code": "state-mismatch",
+            "section": "player",
+            "message": "Authoritative player differs.",
+            "expected": "4609a798b94d711c",
+            "actual": "25cf3b847d8a521d"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "enemies",
+            "message": "Authoritative enemies differs.",
+            "expected": "fb43ce572c1a21c9",
+            "actual": "3072f8179e936f49"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "classic",
+            "message": "Authoritative classic differs.",
+            "expected": "2cc3a1d7ff69bb7d",
+            "actual": "b864eff4d7f9c7e4"
+          }
+        ],
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v6",
+            "levelId": "first-return",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "running",
+            "won": false,
+            "tick": 3491,
+            "time": 29.091666666665656,
+            "lives": 3,
+            "livesLost": 0,
+            "score": 0,
+            "coverage": 0,
+            "claimedCount": 0,
+            "totalClaimable": 2380,
+            "medal": null,
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v6",
+            "hash": "7b123962b1b26ccc",
+            "sections": {
+              "identity": "7f0adade50944b7a",
+              "configuration": "1f76b7254ac7d495",
+              "board": "1cdb1426df633e1f",
+              "player": "25cf3b847d8a521d",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "3072f8179e936f49",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "09612b07b5ecb5a5",
+              "ability": "f6b5aef539d929bb",
+              "clock": "b3a491c8d2000a06",
+              "continuation": "a1e7286b42b404e7",
+              "result": "5b9bc4ba528108e4",
+              "encounter": "5b9bc4ba528108e4",
+              "classic": "b864eff4d7f9c7e4",
+              "foundations": "60e21be6e6caf6b0"
+            }
+          }
+        },
+        "recordedCheckpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "0596f497bb4834a4",
+          "sections": {
+            "identity": "7f0adade50944b7a",
+            "configuration": "1f76b7254ac7d495",
+            "board": "1cdb1426df633e1f",
+            "player": "4609a798b94d711c",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "fb43ce572c1a21c9",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "b3a491c8d2000a06",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "2cc3a1d7ff69bb7d",
+            "foundations": "60e21be6e6caf6b0"
+          }
+        },
+        "features": null,
+        "checks": [],
+        "scope": "Strict artifact verifier rejected the unchanged recording. Mechanics are unobserved."
+      },
+      "nativeModuleOverrides": [
+        {
+          "path": "game/i18n/bootstrap.mjs",
+          "bytes": 13117,
+          "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+        },
+        {
+          "path": "game/i18n/catalogs.mjs",
+          "bytes": 1265063,
+          "sha256": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816"
+        },
+        {
+          "path": "game/replay.mjs",
+          "bytes": 26448,
+          "sha256": "c0bfc6842743f931dab1a9612e8799c240c542fcb7f9895ab6f866989ae41a6d"
+        }
+      ]
+    },
+    {
+      "id": "candidate-first30-chromium",
+      "engine": "chromium",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "browserVersion": "151.0.7922.34",
+      "recording": {
+        "member": "solo-linux-797e03-correctness/evidence/candidate-first30-chromium/report.json.replay.json",
+        "bytes": 9024,
+        "sha256": "95e640c522595be2bb576507ee0d86b06dd4edd907d0acfa7433b690ad71c9e4",
+        "ticks": 3619,
+        "segments": 30,
+        "text": "{\"format\":\"revealline-replay-presentation.v1\",\"execution\":{\"campaignKey\":\"prologue/candidate-9ab581acac5bf50a/835556ee0bc12ec0\",\"sourcePackId\":\"journey-opening\"},\"actorAppearancePin\":{\"format\":\"revealline-actor-appearance-pin.v1\",\"style\":\"fpv\",\"rendererPolicy\":\"actor-style.v1\",\"content\":{\"editionId\":\"opening\",\"contentThemeId\":\"horizon\",\"mode\":\"solo\",\"owner\":{\"kind\":\"journey\",\"projectId\":\"horizon-greybox-candidates\",\"projectRevision\":\"draft-1\",\"projectSha256\":\"54a6493fcc22dd41050b1c6e0547040ab1670c5bae901fb0cbbe806bdac0df11\",\"packId\":\"journey-opening\",\"campaignId\":\"prologue\",\"baseCampaignKey\":\"prologue/candidate-9ab581acac5bf50a/835556ee0bc12ec0\",\"policyId\":\"journey-arcade-v2\"},\"level\":{\"id\":\"first-return\",\"revision\":\"greybox-1\",\"sha256\":\"8ca185088875f5f57f40f343afe2f153572b0571e32f598b38b965b62ed1feb9\",\"simulationIdentity\":\"0822484529141ac9\"}},\"presentation\":{\"source\":{\"id\":\"field-kit\",\"revision\":62},\"theme\":{\"id\":\"fpv\",\"revision\":62},\"collection\":null,\"sha256\":\"b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f\"}},\"replay\":{\"version\":\"xonix-replay.v7\",\"build\":\"0.151.1\",\"ruleset\":\"xonix-core.v6\",\"level\":{\"version\":\"xonix-level.v5\",\"id\":\"first-return\",\"revision\":\"gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a\",\"name\":\"First return\",\"width\":72,\"height\":36,\"spawn\":{\"x\":24.5,\"y\":0.5},\"walls\":[],\"foundations\":[],\"goal\":{\"coverage\":0.3},\"encounter\":null,\"classic\":{\"version\":\"classic.v1\",\"terrain\":[],\"powerups\":[],\"arcadeActions\":{\"version\":\"arcade-actions.v1\"}},\"enemies\":[{\"id\":\"keeper\",\"type\":\"bouncer\",\"x\":58.5,\"y\":23.5,\"vx\":7.81352993211135,\"vy\":-7.81352993211135,\"course\":\"field-course.v2\"}],\"objectives\":[],\"supplies\":[],\"rules\":{\"lives\":3,\"moveSpeed\":8.84,\"boostMultiplier\":1.5,\"respawnSeconds\":0.65,\"graceSeconds\":1,\"playerRadius\":0.18,\"pointsPerCell\":10,\"objectivePoints\":500,\"timeMedals\":[90,150],\"switchCooldownSeconds\":2,\"timeLimitSeconds\":0,\"cutTimeLimitSeconds\":0,\"maxTrailCells\":0,\"stopOnCapture\":true},\"signalZones\":[],\"hangars\":[{\"id\":\"home-hangar\",\"x\":24.5,\"y\":0.5,\"radius\":2}]},\"options\":{\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"classRecipes\":[{\"id\":\"scout\",\"label\":\"Scout\",\"description\":\"Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.\",\"primitive\":\"scan\",\"capacity\":0,\"cooldown\":6,\"duration\":4,\"radius\":48,\"revision\":\"1\"},{\"id\":\"bomber\",\"label\":\"Light carrier\",\"description\":\"Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.\",\"primitive\":\"stun-field\",\"capacity\":1,\"cooldown\":2,\"duration\":2.5,\"radius\":3,\"revision\":\"1\"},{\"id\":\"carrier\",\"label\":\"Heavy carrier\",\"description\":\"Carry two charges; each creates the same temporary stun field.\",\"primitive\":\"stun-field\",\"capacity\":2,\"cooldown\":2,\"duration\":2.5,\"radius\":3,\"revision\":\"1\"},{\"id\":\"interceptor\",\"label\":\"Interceptor\",\"description\":\"Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.\",\"primitive\":\"shield\",\"capacity\":0,\"cooldown\":9,\"duration\":1.5,\"radius\":0,\"revision\":\"1\"},{\"id\":\"fiber\",\"label\":\"Fiber relay\",\"description\":\"Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.\",\"primitive\":\"scan\",\"capacity\":0,\"cooldown\":7,\"duration\":3,\"radius\":30,\"signalResistance\":true,\"moveSpeedMultiplier\":1,\"revision\":\"1\"},{\"id\":\"impact\",\"label\":\"Impact craft\",\"description\":\"Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.\",\"primitive\":\"impact-pulse\",\"capacity\":0,\"cooldown\":10,\"duration\":3,\"radius\":5,\"revision\":\"1\"},{\"id\":\"trapper\",\"label\":\"Trapper\",\"description\":\"Pick up one charge and place a four-second field that slows field enemies to one quarter speed.\",\"primitive\":\"slow-field\",\"capacity\":1,\"cooldown\":2,\"duration\":4,\"radius\":4,\"slowFactor\":0.25,\"revision\":\"1\"}]},\"segments\":[{\"ticks\":119,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":124,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false}],\"releaseAfter\":false,\"ticks\":3619,\"summary\":{\"ruleset\":\"xonix-core.v6\",\"levelId\":\"first-return\",\"revision\":\"gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a\",\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"activeClassId\":\"scout\",\"rosterHash\":\"roster-v1-e159e435\",\"classHistory\":[{\"classId\":\"scout\",\"classRevision\":\"1\",\"loadoutHash\":\"loadout-v1-aaa4aadd\",\"tick\":0}],\"switches\":0,\"failureCause\":null,\"classRevision\":\"1\",\"loadoutHash\":\"loadout-v1-aaa4aadd\",\"status\":\"running\",\"won\":false,\"tick\":3619,\"time\":30.158333333332262,\"lives\":3,\"livesLost\":0,\"score\":0,\"coverage\":0,\"claimedCount\":0,\"totalClaimable\":2380,\"medal\":null,\"objectives\":{\"captured\":0,\"total\":0,\"required\":0}},\"checkpoint\":{\"algorithm\":\"fnv1a64-state-v6\",\"hash\":\"a1856e943adfc465\",\"sections\":{\"identity\":\"7f0adade50944b7a\",\"configuration\":\"1f76b7254ac7d495\",\"board\":\"1cdb1426df633e1f\",\"player\":\"370a4d1c000504b2\",\"trail\":\"f0ca473df9efdcc8\",\"enemies\":\"cbf61b3b25fc28be\",\"objectives\":\"09612b07b5ecb5a5\",\"supplies\":\"09612b07b5ecb5a5\",\"ability\":\"f6b5aef539d929bb\",\"clock\":\"70669258407c94f2\",\"continuation\":\"a1e7286b42b404e7\",\"result\":\"5b9bc4ba528108e4\",\"encounter\":\"5b9bc4ba528108e4\",\"classic\":\"9f8340c87292a764\",\"foundations\":\"60e21be6e6caf6b0\"}}}}"
+      },
+      "nativeCheckpoint": {
+        "algorithm": "fnv1a64-state-v6",
+        "hash": "a1856e943adfc465",
+        "sections": {
+          "identity": "7f0adade50944b7a",
+          "configuration": "1f76b7254ac7d495",
+          "board": "1cdb1426df633e1f",
+          "player": "370a4d1c000504b2",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "cbf61b3b25fc28be",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "70669258407c94f2",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "9f8340c87292a764",
+          "foundations": "60e21be6e6caf6b0"
+        }
+      },
+      "nodeObservation": {
+        "match": false,
+        "status": "fail",
+        "diagnostics": [
+          {
+            "code": "state-mismatch",
+            "section": "player",
+            "message": "Authoritative player differs.",
+            "expected": "370a4d1c000504b2",
+            "actual": "31d6148000027afe"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "enemies",
+            "message": "Authoritative enemies differs.",
+            "expected": "cbf61b3b25fc28be",
+            "actual": "4db80718516e5693"
+          }
+        ],
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v6",
+            "levelId": "first-return",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "running",
+            "won": false,
+            "tick": 3619,
+            "time": 30.158333333332262,
+            "lives": 3,
+            "livesLost": 0,
+            "score": 0,
+            "coverage": 0,
+            "claimedCount": 0,
+            "totalClaimable": 2380,
+            "medal": null,
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v6",
+            "hash": "3c3c281a7e6dd417",
+            "sections": {
+              "identity": "7f0adade50944b7a",
+              "configuration": "1f76b7254ac7d495",
+              "board": "1cdb1426df633e1f",
+              "player": "31d6148000027afe",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "4db80718516e5693",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "09612b07b5ecb5a5",
+              "ability": "f6b5aef539d929bb",
+              "clock": "70669258407c94f2",
+              "continuation": "a1e7286b42b404e7",
+              "result": "5b9bc4ba528108e4",
+              "encounter": "5b9bc4ba528108e4",
+              "classic": "9f8340c87292a764",
+              "foundations": "60e21be6e6caf6b0"
+            }
+          }
+        },
+        "recordedCheckpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "a1856e943adfc465",
+          "sections": {
+            "identity": "7f0adade50944b7a",
+            "configuration": "1f76b7254ac7d495",
+            "board": "1cdb1426df633e1f",
+            "player": "370a4d1c000504b2",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "cbf61b3b25fc28be",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "70669258407c94f2",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "9f8340c87292a764",
+            "foundations": "60e21be6e6caf6b0"
+          }
+        },
+        "features": null,
+        "checks": [],
+        "scope": "Strict artifact verifier rejected the unchanged recording. Mechanics are unobserved."
+      },
+      "nativeModuleOverrides": []
+    },
+    {
+      "id": "candidate-first30-webkit",
+      "engine": "webkit",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "browserVersion": "26.5",
+      "recording": {
+        "member": "solo-linux-797e03-correctness/evidence/candidate-first30-webkit/report.json.replay.json",
+        "bytes": 9024,
+        "sha256": "e54782605f5475bdc98bd4641797f113f8f33c7ee43b31115342a11d2c5008be",
+        "ticks": 3644,
+        "segments": 30,
+        "text": "{\"format\":\"revealline-replay-presentation.v1\",\"execution\":{\"campaignKey\":\"prologue/candidate-9ab581acac5bf50a/835556ee0bc12ec0\",\"sourcePackId\":\"journey-opening\"},\"actorAppearancePin\":{\"format\":\"revealline-actor-appearance-pin.v1\",\"style\":\"fpv\",\"rendererPolicy\":\"actor-style.v1\",\"content\":{\"editionId\":\"opening\",\"contentThemeId\":\"horizon\",\"mode\":\"solo\",\"owner\":{\"kind\":\"journey\",\"projectId\":\"horizon-greybox-candidates\",\"projectRevision\":\"draft-1\",\"projectSha256\":\"54a6493fcc22dd41050b1c6e0547040ab1670c5bae901fb0cbbe806bdac0df11\",\"packId\":\"journey-opening\",\"campaignId\":\"prologue\",\"baseCampaignKey\":\"prologue/candidate-9ab581acac5bf50a/835556ee0bc12ec0\",\"policyId\":\"journey-arcade-v2\"},\"level\":{\"id\":\"first-return\",\"revision\":\"greybox-1\",\"sha256\":\"8ca185088875f5f57f40f343afe2f153572b0571e32f598b38b965b62ed1feb9\",\"simulationIdentity\":\"0822484529141ac9\"}},\"presentation\":{\"source\":{\"id\":\"field-kit\",\"revision\":62},\"theme\":{\"id\":\"fpv\",\"revision\":62},\"collection\":null,\"sha256\":\"b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f\"}},\"replay\":{\"version\":\"xonix-replay.v7\",\"build\":\"0.151.1\",\"ruleset\":\"xonix-core.v6\",\"level\":{\"version\":\"xonix-level.v5\",\"id\":\"first-return\",\"revision\":\"gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a\",\"name\":\"First return\",\"width\":72,\"height\":36,\"spawn\":{\"x\":24.5,\"y\":0.5},\"walls\":[],\"foundations\":[],\"goal\":{\"coverage\":0.3},\"encounter\":null,\"classic\":{\"version\":\"classic.v1\",\"terrain\":[],\"powerups\":[],\"arcadeActions\":{\"version\":\"arcade-actions.v1\"}},\"enemies\":[{\"id\":\"keeper\",\"type\":\"bouncer\",\"x\":58.5,\"y\":23.5,\"vx\":7.81352993211135,\"vy\":-7.81352993211135,\"course\":\"field-course.v2\"}],\"objectives\":[],\"supplies\":[],\"rules\":{\"lives\":3,\"moveSpeed\":8.84,\"boostMultiplier\":1.5,\"respawnSeconds\":0.65,\"graceSeconds\":1,\"playerRadius\":0.18,\"pointsPerCell\":10,\"objectivePoints\":500,\"timeMedals\":[90,150],\"switchCooldownSeconds\":2,\"timeLimitSeconds\":0,\"cutTimeLimitSeconds\":0,\"maxTrailCells\":0,\"stopOnCapture\":true},\"signalZones\":[],\"hangars\":[{\"id\":\"home-hangar\",\"x\":24.5,\"y\":0.5,\"radius\":2}]},\"options\":{\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"classRecipes\":[{\"id\":\"scout\",\"label\":\"Scout\",\"description\":\"Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.\",\"primitive\":\"scan\",\"capacity\":0,\"cooldown\":6,\"duration\":4,\"radius\":48,\"revision\":\"1\"},{\"id\":\"bomber\",\"label\":\"Light carrier\",\"description\":\"Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.\",\"primitive\":\"stun-field\",\"capacity\":1,\"cooldown\":2,\"duration\":2.5,\"radius\":3,\"revision\":\"1\"},{\"id\":\"carrier\",\"label\":\"Heavy carrier\",\"description\":\"Carry two charges; each creates the same temporary stun field.\",\"primitive\":\"stun-field\",\"capacity\":2,\"cooldown\":2,\"duration\":2.5,\"radius\":3,\"revision\":\"1\"},{\"id\":\"interceptor\",\"label\":\"Interceptor\",\"description\":\"Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.\",\"primitive\":\"shield\",\"capacity\":0,\"cooldown\":9,\"duration\":1.5,\"radius\":0,\"revision\":\"1\"},{\"id\":\"fiber\",\"label\":\"Fiber relay\",\"description\":\"Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.\",\"primitive\":\"scan\",\"capacity\":0,\"cooldown\":7,\"duration\":3,\"radius\":30,\"signalResistance\":true,\"moveSpeedMultiplier\":1,\"revision\":\"1\"},{\"id\":\"impact\",\"label\":\"Impact craft\",\"description\":\"Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.\",\"primitive\":\"impact-pulse\",\"capacity\":0,\"cooldown\":10,\"duration\":3,\"radius\":5,\"revision\":\"1\"},{\"id\":\"trapper\",\"label\":\"Trapper\",\"description\":\"Pick up one charge and place a four-second field that slows field enemies to one quarter speed.\",\"primitive\":\"slow-field\",\"capacity\":1,\"cooldown\":2,\"duration\":4,\"radius\":4,\"slowFactor\":0.25,\"revision\":\"1\"}]},\"segments\":[{\"ticks\":118,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":123,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":120,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":119,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":121,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":122,\"input\":{\"direction\":\"left\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":136,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false}],\"releaseAfter\":false,\"ticks\":3644,\"summary\":{\"ruleset\":\"xonix-core.v6\",\"levelId\":\"first-return\",\"revision\":\"gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a\",\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"activeClassId\":\"scout\",\"rosterHash\":\"roster-v1-e159e435\",\"classHistory\":[{\"classId\":\"scout\",\"classRevision\":\"1\",\"loadoutHash\":\"loadout-v1-aaa4aadd\",\"tick\":0}],\"switches\":0,\"failureCause\":null,\"classRevision\":\"1\",\"loadoutHash\":\"loadout-v1-aaa4aadd\",\"status\":\"running\",\"won\":false,\"tick\":3644,\"time\":30.366666666665584,\"lives\":3,\"livesLost\":0,\"score\":0,\"coverage\":0,\"claimedCount\":0,\"totalClaimable\":2380,\"medal\":null,\"objectives\":{\"captured\":0,\"total\":0,\"required\":0}},\"checkpoint\":{\"algorithm\":\"fnv1a64-state-v6\",\"hash\":\"4c511d75121647ec\",\"sections\":{\"identity\":\"7f0adade50944b7a\",\"configuration\":\"1f76b7254ac7d495\",\"board\":\"1cdb1426df633e1f\",\"player\":\"213389e5936a5b85\",\"trail\":\"f0ca473df9efdcc8\",\"enemies\":\"4c5c44f2e26c2ff2\",\"objectives\":\"09612b07b5ecb5a5\",\"supplies\":\"09612b07b5ecb5a5\",\"ability\":\"f6b5aef539d929bb\",\"clock\":\"76c2f27090523277\",\"continuation\":\"a1e7286b42b404e7\",\"result\":\"5b9bc4ba528108e4\",\"encounter\":\"5b9bc4ba528108e4\",\"classic\":\"874996d3ac5bcf06\",\"foundations\":\"60e21be6e6caf6b0\"}}}}"
+      },
+      "nativeCheckpoint": {
+        "algorithm": "fnv1a64-state-v6",
+        "hash": "4c511d75121647ec",
+        "sections": {
+          "identity": "7f0adade50944b7a",
+          "configuration": "1f76b7254ac7d495",
+          "board": "1cdb1426df633e1f",
+          "player": "213389e5936a5b85",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "4c5c44f2e26c2ff2",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "76c2f27090523277",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "874996d3ac5bcf06",
+          "foundations": "60e21be6e6caf6b0"
+        }
+      },
+      "nodeObservation": {
+        "match": false,
+        "status": "fail",
+        "diagnostics": [
+          {
+            "code": "state-mismatch",
+            "section": "enemies",
+            "message": "Authoritative enemies differs.",
+            "expected": "4c5c44f2e26c2ff2",
+            "actual": "94972986d2036e7f"
+          },
+          {
+            "code": "state-mismatch",
+            "section": "classic",
+            "message": "Authoritative classic differs.",
+            "expected": "874996d3ac5bcf06",
+            "actual": "a030760284c24dc9"
+          }
+        ],
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v6",
+            "levelId": "first-return",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "running",
+            "won": false,
+            "tick": 3644,
+            "time": 30.366666666665584,
+            "lives": 3,
+            "livesLost": 0,
+            "score": 0,
+            "coverage": 0,
+            "claimedCount": 0,
+            "totalClaimable": 2380,
+            "medal": null,
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v6",
+            "hash": "c15c5c764a72db60",
+            "sections": {
+              "identity": "7f0adade50944b7a",
+              "configuration": "1f76b7254ac7d495",
+              "board": "1cdb1426df633e1f",
+              "player": "213389e5936a5b85",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "94972986d2036e7f",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "09612b07b5ecb5a5",
+              "ability": "f6b5aef539d929bb",
+              "clock": "76c2f27090523277",
+              "continuation": "a1e7286b42b404e7",
+              "result": "5b9bc4ba528108e4",
+              "encounter": "5b9bc4ba528108e4",
+              "classic": "a030760284c24dc9",
+              "foundations": "60e21be6e6caf6b0"
+            }
+          }
+        },
+        "recordedCheckpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "4c511d75121647ec",
+          "sections": {
+            "identity": "7f0adade50944b7a",
+            "configuration": "1f76b7254ac7d495",
+            "board": "1cdb1426df633e1f",
+            "player": "213389e5936a5b85",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "4c5c44f2e26c2ff2",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "76c2f27090523277",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "874996d3ac5bcf06",
+            "foundations": "60e21be6e6caf6b0"
+          }
+        },
+        "features": null,
+        "checks": [],
+        "scope": "Strict artifact verifier rejected the unchanged recording. Mechanics are unobserved."
+      },
+      "nativeModuleOverrides": []
+    }
+  ],
+  "columns": [
+    "player.x",
+    "player.y",
+    "player.direction",
+    "player.queuedDirection",
+    "player.speed",
+    "player.cutting",
+    "player.graceUntil",
+    "enemies[0].id",
+    "enemies[0].type",
+    "enemies[0].course",
+    "enemies[0].x",
+    "enemies[0].y",
+    "enemies[0].radius",
+    "enemies[0].vx",
+    "enemies[0].vy",
+    "enemies[0].speed",
+    "enemies[0].clockwise",
+    "enemies[0].perimeter",
+    "enemies[0].stunnedUntil",
+    "enemies[0].slowUntil",
+    "enemies[0].slowFactor",
+    "enemies[0].axis",
+    "enemies[0].period",
+    "enemies[0].warningSeconds",
+    "enemies[0].activeSeconds",
+    "enemies[0].laneWidth",
+    "enemies[0].bossPhase",
+    "enemies[0].lane",
+    "enemies[0].nextWarningAt",
+    "enemies[0].warningUntil",
+    "enemies[0].activeUntil"
+  ],
+  "nativeVerifier": {
+    "path": "scripts/solo-qualification-native-replay.mjs",
+    "sourceRevision": "1255a79a90268316f8ea768d3e0c56610b26df52",
+    "gitBlob": "3a73ab1789500e68492ac4bf7572ef84d7bf0ab3",
+    "bytes": 9513,
+    "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+  }
+}

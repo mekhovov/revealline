@@ -1,0 +1,137 @@
+{
+  "format": "SoloHostedWorkerConfirmationPlanV1",
+  "status": "reviewed-diagnostic-only",
+  "cohort": "linux-webkit-default-worker-confirmation-3ad-v1",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "setupTimeoutMs": 2400000,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 33554432,
+  "automaticRetries": 0,
+  "rows": [
+    {
+      "id": "candidate-webkit-worker-confirmation-p1",
+      "kind": "worker",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 1,
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-webkit-worker-confirmation-p2",
+      "kind": "worker",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 2,
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-webkit-worker-confirmation-p3",
+      "kind": "worker",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 3,
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-webkit-paused-confirmation-p4",
+      "kind": "paused",
+      "source": "candidate",
+      "engine": "webkit",
+      "repetition": 4,
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    }
+  ],
+  "candidate": {
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f"
+  },
+  "release": {
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "predecessorRun": 38985941469,
+    "firstEightAllCorrectnessPassed": false,
+    "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929",
+    "analysisSHA256": "4b8427ce16ddf6754efaba7055336b86cbf1393b84e91e625f4d1397aad17500",
+    "purpose": "Once-only ordinary worker confirmation after the separate instrumented three-worker/three-idle cohort. The original seven-of-eight failure and diagnostic204ms playing interval remain unresolved; no timing gate promotion.",
+    "dispatch": "One pull_request synchronize event whose before is69fdc854ecc07eca46a3becc3e38c233a3865fb0; actual toolinghead/run retained afterward. Later pushes cannot repeat this cohort.",
+    "scope": "default-worker-confirmation-with-paused-companion",
+    "diagnosticRun": 38990108478,
+    "diagnosticAnalysisSHA256": "e0dd826a388fcc6012dfe580cc715f5753d739b698286c1b6f79a7017a504c0c"
+  },
+  "scope": "Three serial fresh-context Linux WebKit ordinary worker smoke observations followed by one unchanged paused-render companion. Original worker inputs/20assertions/watchdogs and public Start retained. No --diagnostics, idle controls, added12s window or instrumentation export. All results retained, zero retries. Companion performs its existing Canvas2D instrumentation separately. No timing or physical-device qualification, first-eight gate promotion, or attribution of the retained204ms diagnostic interval.",
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "300s artifact transfer;600s outer/inner verification;480s source proof;40min setup/75min helper. Candidate full package admission required; baseline source checkout retained but no baseline browser/payload is used. Four240s row ceilings; no change to worker10s/12s transport deadlines.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824,
+    "scratch": "Fresh RUNNER_TEMP/sc-<random>/rNN owner, <=52 UTF-8 bytes per row; exact root/row device+inode recorded. Separate from descriptive output paths. No shared temporary profile.",
+    "workflowBudgetMinutes": {
+      "initialize": 1,
+      "threeCheckouts": 9,
+      "node": 3,
+      "sourceDependencies": 10,
+      "browserDependencies": 10,
+      "ownerTests": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "evidenceUpload": 10,
+      "sum": 127,
+      "job": 145
+    }
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-worker-diagnostic.mjs",
+      "bytes": 11151,
+      "sha256": "e04fa983d0dfaa9f9284bcdbce2fc8be280e753ca1a5f05dac28c3b36252a116"
+    },
+    {
+      "path": "scripts/verify-solo-mp3-worker.mjs",
+      "bytes": 13091,
+      "sha256": "ea9f18d14778fb5e979a1b32282a01dc1580e593a5c27f74f1b5d4a17da55bad"
+    },
+    {
+      "path": "scripts/solo-worker-diagnostics.mjs",
+      "bytes": 2694,
+      "sha256": "b15cba8d17c3dc4b31802ff87ff1cb97c71109991f8d729382e5b5374c9226fe"
+    },
+    {
+      "path": "scripts/verify-solo-paused-render.mjs",
+      "bytes": 9270,
+      "sha256": "4d07139b1e20fef9615e1325d9c8ff95631205e18a7f2dc311106eb0c5c7940d"
+    }
+  ]
+}
