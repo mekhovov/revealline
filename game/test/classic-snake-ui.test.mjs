@@ -1443,6 +1443,48 @@ test('the Snake library shows all missions and filters without changing the paus
   );
 });
 
+for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} Snake mission recovery preserves the paused native attempt and its accepted host`, async () => {
+    const state = await harness({ mode });
+    state.frame(0);
+    state.frame(200);
+    state.shell.open('missions');
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const location = state.location.href;
+    state.$('journey-lifecycle').value = 'archive';
+    state.$('journey-lifecycle').emit('change');
+    assert.equal(state.$('journey-lifecycle').value, 'archive');
+    state.$('journey-mode').value = mode === 'team' ? 'solo' : 'team';
+    state.$('journey-mode').emit('change');
+    state.$('journey-search').value = 'No such mission here';
+    state.$('journey-search').emit('input');
+    state.$('journey-filters-reset').focus();
+    state.$('journey-filters-reset').click();
+    assert.equal(state.$('journey-mode').value, mode);
+    assert.equal(state.$('journey-lifecycle').value, 'current');
+    assert.equal(state.$('journey-search').value, 'No such mission here');
+    assert.equal(state.$('journey-cards').children.length, 0);
+    assert.equal(state.document.activeElement, state.$('journey-search'));
+    state.frame(2000);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(state.location.href, location);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    state.$('journey-search-clear').focus();
+    state.$('journey-search-clear').click();
+    assert.ok(state.$('journey-cards').children.length > 0);
+    state.$('journey-back').click();
+    assert.equal(state.$('journey-chooser').open, false);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+}
+
 test('Snake library mode selection launches the exact chosen Team mission with one activation', async () => {
   const state = await harness();
   state.shell.open('missions');
@@ -1464,6 +1506,23 @@ test('Snake library mode selection launches the exact chosen Team mission with o
   assert.equal(state.shell.topDialog(), null);
   assert.equal(state.document.body.dataset.playing, 'true');
   state.shell.openHome();
+  state.shell.open('missions');
+  const accepted = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  state.$('journey-mode').value = 'solo';
+  state.$('journey-mode').emit('change');
+  state.$('journey-filters-reset').focus();
+  state.$('journey-filters-reset').click();
+  assert.equal(
+    state.$('journey-mode').value,
+    'team',
+    'The reused chooser follows the accepted Team owner.',
+  );
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    accepted,
+  );
+  assert.equal(state.document.body.dataset.playing, 'false');
+  state.$('journey-back').click();
   assert.equal(state.$('snake-navigation-context').textContent, 'SNAKE · Team · Campaign');
   assert.equal(
     state.shell.elements.home.querySelector('.mode-play-mission').textContent,

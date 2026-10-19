@@ -24,7 +24,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'e02752554b2651b19713c4039e31b4570c480bb0fad3c1093b953edfdfee1113',
+'fca8aa1df6bcf4fafde73b5658ac5bd81877495084379f5d8100bcaac0aa9736',
 'game/ui/hunt-feedback-layout.mjs':
 '54f9755b9fb40953d106b3c0d181948b5eb0983f6b360dba1a1435cf69808a53',
 'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
@@ -59,7 +59,7 @@ const sourceHashes={
 'game/journey/reaction-preferences.mjs':
 'a14d2dcb99daffd83dcbf62311e6756d587db3134bf04c81cd2cd420b4f6809a',
 'game/journey/reaction-options.mjs':
-'78bc6b07aa9d2b2855093193a67c1bc9a1127fd2c85e6c1491a778cc07f0125d',
+'5f094620b86d758bfbd05fd14461e285bb823c727c0ee57f98eedbe729ff7949',
 'game/journey/reaction-voice-library.mjs':
 '366fe4931bf91315971873853cda38a487cb8501151ad36a25bc925031951afd',
 'game/audio/reactions/pilot.mjs':
@@ -5528,22 +5528,34 @@ subtitles:true,
 volume:DEFAULT_DIALOGUE_VOLUME,
 scale:1,
 background:true,
+readingTime:1,
 });
-const format='ReactionPresentationV1';
+const format='ReactionPresentationV2';
 const pageObservers=new WeakMap();
 function validateReactionOptions(input){
 const value=boundedJSON(input,{maxBytes:1024,maxNodes:12,maxDepth:1});
-exactKeys(value,['format',...Object.keys(DEFAULT_REACTION_OPTIONS)],'Reaction presentation');
+const legacy=value.format==='ReactionPresentationV1';
+exactKeys(
+value,
+[
+'format',
+...Object.keys(DEFAULT_REACTION_OPTIONS).filter((key)=> !legacy||key!=='readingTime'),
+],
+'Reaction presentation',
+);
 if(
-value.format!==format||
+(!legacy&&value.format!==format)||
 ['sounds','speech','subtitles','background'].some((key)=>typeof value[key]!=='boolean')||
 !Number.isFinite(value.volume)||
 value.volume<0||
 value.volume>1||
-![1,1.5,2].includes(value.scale)
+![1,1.5,2].includes(value.scale)||
+(!legacy&& ![1,2].includes(value.readingTime))
 )
 throw new TypeError('Invalid reaction presentation options.');
-return Object.freeze(value);
+// Read the earlier record without rewriting it. Only an explicit choice or
+// Retry writes the current format to the same preference owner.
+return Object.freeze({...value,format,readingTime:legacy?1:value.readingTime});
 }
 
 /** Invalid/future bytes are retained; an unavailable store never disables play. */
@@ -7441,6 +7453,10 @@ modules['game/overflight/reactions.mjs']['OVERFLIGHT_REACTION_FAMILIES'];
 
 const recentLines=new Map();
 const HISTORY_KEY='revealline.reaction-recent.v1';
+const captionReadingDuration=(text,factor=1)=>
+Math.max(3000,Math.ceil((text.split(/\s+/u).length/2.5)*1000))*factor;
+const previewLineId='journey-incidental.v1/guide/capture/0';
+let settingsSequence=0;
 /** Warm the active cast first, then shared pilot lines. Unrelated enemy packs
  * must not displace the current encounter from the bounded decoded cache. */
 function reactionWarmupLineIds({families=[],originals=[],available=[],locale}){
@@ -7596,7 +7612,7 @@ player:Number.isInteger(event.player)?event.player:null,
 this.remember(line);
 this.families.add(family);
 this.count++;
-const duration=Math.max(3000,Math.ceil((selected.text.split(/\s+/u).length/2.5)*1000));
+const duration=captionReadingDuration(selected.text);
 this.busyUntil=time+duration;
 this.quietUntil=this.busyUntil+12000;
 const presented=this.present(selected,{duration,terminal:false});
@@ -7632,6 +7648,11 @@ this.cancel('suspend');
 resume(){
 this.suspended=false;
 }
+extendCaption(duration){
+if(this.suspended|| !Number.isFinite(duration)||duration<=0)return;
+this.busyUntil=Math.max(this.busyUntil,this.now()+duration);
+this.quietUntil=Math.max(this.quietUntil,this.busyUntil+12000);
+}
 }
 
 const labels={
@@ -7642,6 +7663,13 @@ subtitles:['Reaction captions','Субтитри реакцій'],
 volume:['Dialogue volume','Гучність діалогів'],
 scale:['Caption size','Розмір субтитрів'],
 background:['Solid caption background','Суцільне тло субтитрів'],
+readingTime:['Caption reading time','Час читання субтитрів'],
+readingStandard:['Standard','Звичайний'],
+readingExtended:['Extended (2×)','Подовжений (2×)'],
+readingHelp:[
+'Applies to new character captions during play and their timed preview. Result captions stay until you leave the result.',
+'Діє для нових субтитрів персонажів під час гри та їхнього перегляду з таймером. Субтитри результату залишаються до виходу з нього.',
+],
 preview:['Preview caption','Переглянути субтитри'],
 retry:['Retry saving','Зберегти повторно'],
 unavailable:[
@@ -7711,6 +7739,7 @@ activeVoice=null,
 lease=null,
 generation=0,
 captionUntil=0,
+captionTimerRevision=0,
 motion=null;
 const cache=createReactionVoiceCache({sound,library:voiceLibrary});
 const prepared=new Map(),
@@ -7720,8 +7749,13 @@ let settings=null,
 actorVoiceControls=null,
 status=null,
 pilot=null,
+readingHelp=null,
 previewSample=null,
-previewVisible=false;
+previewVisible=false,
+previewTimer=null,
+previewTimerRevision=0,
+previewUntil=0,
+previewReadingTime=1;
 const release=()=>{
 try{
 if(typeof lease==='function')lease();
@@ -7736,7 +7770,44 @@ activeVoice?.stop();
 activeVoice=null;
 release();
 }
+function clearCaptionTimer(){
+captionTimerRevision++;
+clearTimeout(timer);
+timer=null;
+}
+function scheduleCaption(until){
+clearCaptionTimer();
+captionUntil=until;
+const revision=captionTimerRevision;
+timer=setTimeout(
+()=>{
+if(!closed&&revision===captionTimerRevision)hide();
+},
+Math.max(0,until-Date.now()),
+);
+}
+function hidePreview(){
+previewTimerRevision++;
+clearTimeout(previewTimer);
+previewTimer=null;
+previewVisible=false;
+if(previewSample)
+renderResultReactionCaption(previewSample,null,options.snapshot(),false,getLocale());
+}
+function schedulePreview(until){
+previewTimerRevision++;
+clearTimeout(previewTimer);
+previewUntil=until;
+const revision=previewTimerRevision;
+previewTimer=setTimeout(
+()=>{
+if(!closed&&revision===previewTimerRevision)hidePreview();
+},
+Math.max(0,until-Date.now()),
+);
+}
 function hide(){
+clearCaptionTimer();
 motion?.cancel();
 motion=null;
 if(current?.terminal&&resultContainer&& !journeyOwnsReactionCaption(resultContainer))
@@ -7754,8 +7825,15 @@ prepared.clear();
 void cache.cancel();
 }
 if(reason==='danger')return;// Preserve readable text even when its audio is interrupted.
-clearTimeout(timer);
+hidePreview();
 hide();
+}
+function localizedCurrentLine(){
+return(
+(current.line.resultContext
+?journeyResultReaction(current.line.resultContext,getLocale())
+:reactionLine(current.line.id,getLocale()))??current.line
+);
 }
 function render(){
 if(closed)return;
@@ -7769,11 +7847,11 @@ prepared.clear();
 void cache.cancel();
 }
 if(!enabled){
-clearTimeout(timer);
 // Retain an accepted result so its shared checkbox can hide/show the
 // caption without replaying its voice. Incidental lines still expire.
 if(!current?.terminal)hide();
 }
+if(!enabled|| !state.subtitles)hidePreview();
 for(const[key,control]of controls){
 if(control.type==='checkbox')control.checked=state[key];
 else control.value=String(state[key]);
@@ -7781,6 +7859,11 @@ if(controlLabels.has(key))controlLabels.get(key).textContent=tr(key);
 }
 if(settings)settings.querySelector('legend').textContent=tr('title');
 if(pilot)pilot.textContent=tr('pilot');
+if(readingHelp)readingHelp.textContent=tr('readingHelp');
+const readingControl=controls.get('readingTime');
+if(readingControl)
+for(const option of readingControl.children)
+option.textContent=tr(option.value==='1'?'readingStandard':'readingExtended');
 actorVoiceControls?.refresh();
 if(settings){
 const preview=settings.querySelector('[data-reaction-preview]');
@@ -7791,7 +7874,7 @@ settings.querySelector('[data-reaction-retry]').textContent=tr('retry');
 if(previewVisible&&previewSample)
 renderResultReactionCaption(
 previewSample,
-reactionLine('journey-reaction.v1/guide/0',getLocale()),
+reactionLine(previewLineId,getLocale()),
 state,
 enabled,
 getLocale(),
@@ -7804,10 +7887,7 @@ panel.style.background=state.background?'var(--panel-bg, #172126)':'transparent'
 panel.style.color='var(--text-color, #fff)';
 caption.style.fontSize=`${state.scale}rem`;
 if(current){
-const localized=
-(current.line.resultContext
-?journeyResultReaction(current.line.resultContext,getLocale())
-:reactionLine(current.line.id,getLocale()))??current.line;
+const localized=localizedCurrentLine();
 caption.textContent=reactionCaptionText(
 {...localized,board:current.line.board,player:current.line.player},
 getLocale(),
@@ -7885,11 +7965,15 @@ await Promise.all([warm(),warm()]);
 }
 function present(line,{duration,terminal,speak=true}){
 if(closed|| !preferences.snapshot().enabled)return;
-clearTimeout(timer);
+clearCaptionTimer();
 stopSpeech();
 motion?.cancel();
 motion=null;
-current={line,terminal};
+// A setting change applies to the next accepted line, without truncating or
+// replaying the current one. A translated line retains this timing policy.
+current={line,terminal,readingTime:options.snapshot().readingTime};
+if(!terminal)
+duration=Math.max(duration,captionReadingDuration(line.text,current.readingTime));
 const appearance=REACTION_PORTRAITS[line.speaker]??REACTION_PORTRAITS.guide;
 portrait.src=getReduced()?appearance.idle:appearance.react;
 const actor=actorDefinition(line.speaker);
@@ -7941,8 +8025,7 @@ sound.feedbackDirector?.play('confirm',{gain:0.12,priority:1});
 }
 if(!buffer&&state.speech)void cache.load(line.id,getLocale());
 if(!terminal){
-captionUntil=Date.now()+duration;
-timer=setTimeout(hide,duration);
+scheduleCaption(Date.now()+duration);
 }else if(resultContainer){
 panel.hidden=true;
 panel.style.display='none';
@@ -7954,13 +8037,24 @@ if(settingsContainer){
 settings=create('fieldset');
 settings.dataset.reactionSettings='true';
 settings.append(create('legend',tr('title')));
-for(const key of['sounds','speech','subtitles','volume','scale','background']){
+for(const key of[
+'sounds',
+'speech',
+'subtitles',
+'volume',
+'scale',
+'background',
+'readingTime',
+]){
 const label=create('label'),
 text=create('span',tr(key)),
-control=create(key==='scale'?'select':'input');
-if(key==='scale')
-for(const value of[1,1.5,2]){
-const option=create('option',`${value*100}%`);
+control=create(['scale','readingTime'].includes(key)?'select':'input');
+if(['scale','readingTime'].includes(key))
+for(const value of key==='scale'?[1,1.5,2]:[1,2]){
+const option=create(
+'option',
+key==='scale'?`${value*100}%`:tr(value===1?'readingStandard':'readingExtended'),
+);
 option.value=String(value);
 control.append(option);
 }
@@ -7979,10 +8073,19 @@ prepare();
 };
 label.append(control,text);
 label.style.cssText='display:flex;align-items:center;gap:.5rem;margin:.5rem 0;';
+if(key==='readingTime'){
+label.style.flexWrap='wrap';
+control.style.maxWidth='100%';
+}
 settings.append(label);
 controls.set(key,control);
 controlLabels.set(key,text);
 }
+readingHelp=create('p',tr('readingHelp'));
+readingHelp.id=`reaction-reading-help-${++settingsSequence}`;
+readingHelp.dataset.reactionReadingHelp='true';
+controls.get('readingTime').setAttribute('aria-describedby',readingHelp.id);
+settings.append(readingHelp);
 const preview=create('button',tr('preview'));
 preview.type='button';
 preview.dataset.reactionPreview='true';
@@ -7991,8 +8094,14 @@ previewSample.dataset.reactionSettingsPreview='true';
 previewSample.hidden=true;
 previewSample.setAttribute('role','status');
 preview.onclick=()=>{
+if(closed|| !preferences.snapshot().enabled|| !options.snapshot().subtitles)return;
 previewVisible=true;
+previewReadingTime=options.snapshot().readingTime;
 render();
+schedulePreview(
+Date.now()+
+captionReadingDuration(reactionLine(previewLineId,getLocale()).text,previewReadingTime),
+);
 };
 const retry=create('button',tr('retry'));
 retry.type='button';
@@ -8024,9 +8133,21 @@ stopSpeech();
 render();
 prepare();
 if(current&& !current.terminal){
-clearTimeout(timer);
-timer=setTimeout(hide,Math.max(3000,captionUntil-Date.now()));
+const until=Math.max(
+captionUntil,
+Date.now()+captionReadingDuration(localizedCurrentLine().text,current.readingTime),
+);
+scheduleCaption(until);
+director.extendCaption(until-Date.now());
 }
+if(previewVisible)
+schedulePreview(
+Math.max(
+previewUntil,
+Date.now()+
+captionReadingDuration(reactionLine(previewLineId,getLocale()).text,previewReadingTime),
+),
+);
 });
 const visibility=()=>{
 if(doc.hidden)director.suspend();
@@ -8087,7 +8208,8 @@ dispose(){
 if(closed)return;
 closed=true;
 director.suspend();
-clearTimeout(timer);
+clearCaptionTimer();
+hidePreview();
 cache.dispose();
 prepared.clear();
 unsubPrefs();

@@ -85,8 +85,14 @@ test('Team browsing and live translation preserve a paused accepted hunt and its
   assert.match(f.$('journey-chooser-status').textContent, /Browsing Solo · from Capture · Team/);
   // Other-mode metadata uses a separate network owner. Returning to Team must
   // retain the accepted attempt even while that read-only request is pending.
-  f.$('journey-mode').value = 'team';
-  f.$('journey-mode').emit('change');
+  const reset = f.$('journey-filters-reset');
+  assert.equal(f.$('coop-library-preview').hidden, true);
+  reset.focus();
+  reset.click();
+  assert.equal(f.$('journey-mode').value, 'team');
+  assert.equal(f.$('coop-library-remote-status').hidden, true);
+  assert.equal(f.$('coop-library-remote-feedback').hidden, true);
+  assert.equal(f.$('coop-library-preview').hidden, false);
   f.$('journey-filter-details').querySelector('summary').focus();
   f.$('journey-filter-details').open = false;
   const card = [...f.$('journey-cards').querySelectorAll('.journey-card')].find(

@@ -1197,6 +1197,7 @@ function openMissionLibrary() {
       document: doc,
       library: missionLibrary,
       mode,
+      getHostMode: () => mode,
       browsingContext: ({ mode: browsedMode }) =>
         text('browsingContext', {
           mode: navigationMode(browsedMode),
