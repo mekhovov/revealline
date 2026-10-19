@@ -113,6 +113,45 @@ export function publishedRouteViews(route) {
     });
   };
   const navigation = route.navigation;
+  let supplemental;
+  if (navigation.supplemental !== undefined) {
+    // The optional extension replaces these exact native browsing owners. A
+    // partial extension must not silently suppress the source-preview fallback.
+    const expected = [
+      ['journey:team-expedition-v1', 'team-expedition-v1', 'team'],
+      ['team-journey:humanoid-hunt-v1', 'humanoid-hunt-v1', 'team'],
+      ['journey:humanoid-hunt-v1', 'humanoid-hunt-v1', 'versus'],
+      ['journey:duel-expedition-v1', 'duel-expedition-v1', 'versus'],
+    ];
+    if (
+      !Array.isArray(navigation.supplemental) ||
+      navigation.supplemental.length !== expected.length
+    )
+      throw new Error('Invalid published supplemental navigation.');
+    supplemental = Object.freeze(
+      navigation.supplemental.map((edition, index) => {
+        const [owner, routeId, mode] = expected[index];
+        if (
+          edition.sourceId !== owner ||
+          edition.route?.id !== routeId ||
+          edition.mode !== mode ||
+          (routeId === 'humanoid-hunt-v1'
+            ? edition.automaticContinuation !== false
+            : edition.automaticContinuation !== undefined)
+        )
+          throw new Error('Invalid published supplemental owner.');
+        const projected = view(edition.view);
+        if (
+          !projected.catalog.missions.length ||
+          projected.catalog.missions.some(
+            (mission) => mission.modes.length !== 1 || mission.modes[0] !== mode,
+          )
+        )
+          throw new Error('Published supplemental navigation has a different mode.');
+        return Object.freeze({ ...edition, view: projected });
+      }),
+    );
+  }
   const result = Object.freeze({
     solo: view(navigation.views.solo),
     versus: view(navigation.views.versus),
@@ -130,6 +169,7 @@ export function publishedRouteViews(route) {
         }),
       ),
     ),
+    supplemental,
   });
   views.set(route, result);
   return result;

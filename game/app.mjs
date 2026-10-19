@@ -14216,7 +14216,7 @@ try {
             ...teamSources,
           ];
         }
-        if (!runtimeContent) {
+        if (!runtimeContent && !views?.supplemental) {
           const [
             { duelExpeditionLibrarySources, teamExpeditionLibrarySource },
             { TEAM_EXPANSION_ROUTE },

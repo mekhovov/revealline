@@ -1,0 +1,15 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T00:17:16.320Z",
+  "checks": [],
+  "samples": [],
+  "errors": [],
+  "complete": false,
+  "failure": "Error: listen EADDRINUSE: address already in use 127.0.0.1:8773\n    at Server.setupListenHandle [as _listen2] (node:net:1908:16)\n    at listenInCluster (node:net:1965:12)\n    at doListen (node:net:2139:7)\n    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)",
+  "browserCloseAttempted": false,
+  "browserCloseCompleted": false,
+  "finished": "2026-10-19T00:17:22.458Z"
+}

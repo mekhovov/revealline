@@ -14,6 +14,10 @@ import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { publishedRouteViews } from '../content-design/published-journey.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { createJourneyVisualThemeIdentityAdapter } from '../presentation/journey-visual-theme-identities.mjs';
+import { publishedJourneyLibrarySources } from '../mission-library/published-routes.mjs';
+import { createRemoteTeamLibrarySources } from '../mission-library/remote-team.mjs';
+import { duelExpeditionLibrarySources } from '../mission-library/multiplayer-expeditions.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const entries = [
   {
@@ -35,6 +39,167 @@ const original = createCandidateSoloHost(generated.route.source, {
   themes,
   corePackIds: generated.route.corePackIds,
   optionalCampaignIds: generated.route.optionalCampaignIds,
+});
+
+function librarySources(selectedRoute, difficulty, launchRemote = (context) => context) {
+  return publishedJourneyLibrarySources({
+    route: selectedRoute,
+    views: publishedRouteViews(selectedRoute),
+    difficulty,
+    launchSolo: () => {
+      throw new Error('Remote metadata cannot launch a local Solo run.');
+    },
+    launchRemote,
+  });
+}
+
+async function alteredPublishedRoute(mutate) {
+  const value = structuredClone(generated.published);
+  mutate(value.navigation);
+  const bytes = Buffer.from(JSON.stringify(value));
+  return loadRouteSnapshot(
+    {
+      ...generated.navigationDescriptor,
+      bytes: bytes.length,
+      sha256: createHash('sha256').update(bytes).digest('hex'),
+    },
+    { fetchAsset: async () => new Response(bytes) },
+  );
+}
+
+test('published remote browsing matches every native Team and Duel owner, mission, preset and handoff in both languages', async (context) => {
+  const previousLocale = getLocale();
+  let difficulty = 'standard';
+  try {
+    for (const locale of ['en', 'uk']) {
+      setLocale(locale, { persist: false });
+      const native = [
+        ...createRemoteTeamLibrarySources({
+          launch: (value) => value,
+          difficulty: () => difficulty,
+        }),
+        ...duelExpeditionLibrarySources({
+          themes,
+          activeRouteId: route.id,
+          launch: (value) => value,
+          difficulty: () => difficulty,
+        }),
+      ];
+      const sources = librarySources(route, () => difficulty);
+      const actual = sources.slice(1 + publishedRouteViews(route).archives.length);
+      assert.deepEqual(
+        actual.map((source) => source.id),
+        native.map((source) => source.id),
+      );
+      for (const [index, expected] of native.entries()) {
+        const source = actual[index];
+        for (const key of [
+          'id',
+          'editionId',
+          'edition',
+          'collection',
+          'lifecycle',
+          'automaticContinuation',
+        ])
+          assert.equal(source[key], expected[key], `${locale} ${source.id} ${key}`);
+        assert.equal(source.entries.length, expected.entries.length, source.id);
+        if (source.collection !== 'Journey') continue; // Classic arena projection is unchanged.
+        assert.deepEqual(source.entries, expected.entries, source.id);
+        for (difficulty of ['gentle', 'standard', 'expert']) {
+          for (const [ordinal, mission] of source.entries.entries()) {
+            const nativeMission = expected.entries[ordinal];
+            const label = `${locale} ${source.id} ${mission.id} ${difficulty}`;
+            assert.deepEqual(source.describe(mission), expected.describe(nativeMission), label);
+            assert.deepEqual(
+              source.presentation(mission),
+              expected.presentation(nativeMission),
+              label,
+            );
+            assert.deepEqual(source.details(mission), expected.details(nativeMission), label);
+            assert.deepEqual(source.card(mission), expected.card(nativeMission), label);
+            assert.equal(
+              source.progress(mission, mission.modes[0]),
+              expected.progress(nativeMission, mission.modes[0]),
+              label,
+            );
+            assert.deepEqual(
+              source.progressState(mission, mission.modes[0]),
+              expected.progressState(nativeMission, mission.modes[0]),
+              label,
+            );
+          }
+          const mission = source.entries[0];
+          const handoff = { mode: mission.modes[0], libraryMissionId: mission.id, difficulty };
+          assert.equal(source.launch(mission, handoff), handoff);
+          assert.equal(expected.launch(expected.entries[0], handoff), handoff);
+        }
+      }
+    }
+    assert.ok(generated.navigationDescriptor.bytes < 8 * 1024 * 1024);
+    context.diagnostic(
+      `Complete pinned navigation: ${generated.navigationDescriptor.bytes} bytes; existing 8 MiB limit unchanged.`,
+    );
+  } finally {
+    setLocale(previousLocale, { persist: false });
+  }
+});
+
+test('published preset tags retain native Team and Hunt selection while Duel Expedition tags stay authored', async () => {
+  const tagged = await alteredPublishedRoute((navigation) => {
+    for (const projection of [
+      navigation.team.view,
+      ...navigation.supplemental.map((row) => row.view),
+    ])
+      for (const presets of Object.values(projection.presentations))
+        for (const [difficulty, presentation] of Object.entries(presets))
+          presentation.tags = [difficulty];
+  });
+  const sources = librarySources(tagged, () => 'expert');
+  for (const source of sources.filter((row) =>
+    [
+      'journey:team-expedition-v1',
+      'team-journey:humanoid-hunt-v1',
+      'journey:humanoid-hunt-v1',
+      'journey:team-cultural-specialist-originals-2',
+      'journey:duel-expedition-v1',
+    ].includes(row.id),
+  )) {
+    assert.deepEqual(
+      source.describe(source.entries[0]).tags,
+      [source.id === 'journey:duel-expedition-v1' ? 'standard' : 'expert'],
+      source.id,
+    );
+  }
+});
+
+test('older published navigation retains its fallback and incomplete supplemental ownership fails closed', async () => {
+  const legacy = await alteredPublishedRoute((navigation) => delete navigation.supplemental);
+  assert.equal(publishedRouteViews(legacy).supplemental, undefined);
+  assert.equal(
+    librarySources(legacy, () => 'standard').length,
+    librarySources(route, () => 'standard').length - route.navigation.supplemental.length,
+  );
+  for (const mutate of [
+    (navigation) => navigation.supplemental.pop(),
+    (navigation) => {
+      navigation.supplemental = [];
+    },
+    (navigation) => {
+      navigation.supplemental[1].sourceId = navigation.supplemental[2].sourceId;
+    },
+    (navigation) => {
+      navigation.supplemental[1].mode = 'versus';
+    },
+    (navigation) => {
+      delete navigation.supplemental[1].automaticContinuation;
+    },
+    (navigation) => {
+      navigation.supplemental[0].view.campaigns[0].modes = ['solo'];
+    },
+  ]) {
+    const invalid = await alteredPublishedRoute(mutate);
+    assert.throws(() => publishedRouteViews(invalid), /supplemental/);
+  }
 });
 
 test('published Solo materializes only Horizon and preserves full navigation, cards and exact execution identity', async () => {

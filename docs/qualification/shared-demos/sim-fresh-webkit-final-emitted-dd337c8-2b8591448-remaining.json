@@ -1,0 +1,31 @@
+{
+  "engine": "webkit",
+  "started": "2026-10-19T00:22:35.153Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "snake-hunt-weave-01",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "442da37b15f1a552",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "flight-03",
+      "mode": "acro",
+      "ticks": 0,
+      "courseIdentity": "1b240bb932f3f649",
+      "responseIdentity": "1dfb9ff688d5a15c",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T00:22:50.389Z"
+}
