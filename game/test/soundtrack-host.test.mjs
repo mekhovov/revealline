@@ -4,6 +4,7 @@ import { MessageChannel } from 'node:worker_threads';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { waitFor as waitForStage } from './helpers/wait-for.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { fixture, memoryIndexedDB, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
@@ -38,11 +39,85 @@ after(() => {
 async function holdAuthoringImport(t) {
   const id = ++importGateSequence;
   const state = { entered: 0, released: 0, acknowledged: new Set() };
+  const actions = [];
+  let page = null;
   importGates.set(id, state);
+  function diagnostic(stage) {
+    const text = (value) => String(value ?? '').slice(0, 160);
+    const element = (name) => page?.$(name);
+    t.diagnostic(
+      JSON.stringify({
+        stage,
+        gate: {
+          id,
+          entered: state.entered,
+          released: state.released,
+          acknowledged: [...state.acknowledged],
+        },
+        actions: actions.map((action) => ({
+          label: action.label,
+          settled: action.settled,
+          failed: action.failed,
+          error: action.failed ? text(action.error?.message ?? action.error) : null,
+        })),
+        page: page
+          ? {
+              hidden: page.doc.hidden,
+              active: page.doc.activeElement?.id ?? null,
+              flight: page.doc.body.dataset.flightState ?? null,
+              studioOpen: element('soundtrack-dialog')?.open ?? null,
+              studioConnected: element('soundtrack-dialog')?.isConnected ?? null,
+              closeDisabled: element('soundtrack-close')?.disabled ?? null,
+              tracksConnected: element('soundtrack-tracks')?.isConnected ?? null,
+              status: text(element('soundtrack-status')?.textContent),
+              authoring: text(element('soundtrack-authoring-status')?.textContent),
+              errors: page.errors.slice(0, 4).map((error) => text(error?.message ?? error)),
+            }
+          : null,
+      }),
+    );
+  }
+  async function waiting(stage, predicate, { pump = false } = {}) {
+    try {
+      if (pump) await settle(predicate, stage, { timeoutMs: 5000 });
+      else await waitForStage(predicate, { message: stage, timeoutMs: 5000 });
+    } catch (error) {
+      diagnostic(stage);
+      throw error;
+    }
+  }
+  function observe(promise, label) {
+    const action = { label, settled: false, failed: false, error: null, value: undefined };
+    actions.push(action);
+    void Promise.resolve(promise).then(
+      (value) => {
+        action.value = value;
+        action.settled = true;
+      },
+      (error) => {
+        action.error = error;
+        action.failed = true;
+        action.settled = true;
+      },
+    );
+    return action;
+  }
+  async function join(action, stage = action.label) {
+    await waiting(stage, () => action.settled);
+    if (action.failed) {
+      diagnostic(stage);
+      throw action.error;
+    }
+    return action.value;
+  }
   const send = async (action, fail = false) => {
     state.acknowledged.delete(action);
     port1.postMessage({ action, id, fail });
-    await settle(() => state.acknowledged.has(action));
+    await waiting(
+      'authoring gate ' + action + ' acknowledgement',
+      () => state.acknowledged.has(action),
+      { pump: true },
+    );
   };
   let released = false;
   const release = async (fail = false) => {
@@ -51,11 +126,34 @@ async function holdAuthoringImport(t) {
     await send('release', fail);
   };
   t.after(async () => {
-    await release();
+    const failures = [];
+    try {
+      await release();
+    } catch (error) {
+      failures.push(error);
+    }
+    for (const action of actions) {
+      try {
+        await join(action, 'cleanup: ' + action.label);
+      } catch (error) {
+        failures.push(error);
+      }
+    }
     importGates.delete(id);
+    if (failures.length === 1) throw failures[0];
+    if (failures.length > 1) throw new AggregateError(failures, 'Authoring action cleanup failed.');
   });
   await send('hold');
-  return { state, release };
+  return {
+    state,
+    release,
+    observe,
+    join,
+    waiting,
+    attach: (value) => {
+      page = value;
+    },
+  };
 }
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
@@ -1319,37 +1417,48 @@ for (const closeWhilePending of [false, true]) {
   });
 }
 
-test('cold Solo Start and Audio settings do not load or construct optional soundtrack authoring', async (t) => {
-  const gate = await holdAuthoringImport(t);
-  const { page } = await setup(t, {
-    fetchResponse: async (url) =>
-      String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL ? publicCatalogueResponse() : undefined,
-  });
-  assert.equal(gate.state.entered, 0);
-  assert.equal(page.$('soundtrack-tracks'), null);
-  assert.equal(page.$('soundtrack-audition'), null);
-  await startFlight(page);
-  ticks(page, 20);
-  assert.equal(page.doc.body.dataset.flightState, 'running');
-  assert.equal(gate.state.entered, 0);
-  assert.equal(page.$('soundtrack-tracks'), null);
-  page.$('settings-button').click();
-  page.$('settings-tab-audio').click();
-  await waitFor(
-    () => !page.$('soundtrack-settings-play-styles').disabled,
-    'Settings retains local listening controls without authoring',
-  );
-  assert.equal(gate.state.entered, 0);
-  assert.equal(page.$('soundtrack-audition'), null);
-  assert.deepEqual(page.errors, []);
-});
+test(
+  'cold Solo Start and Audio settings do not load or construct optional soundtrack authoring',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t, {
+      fetchResponse: async (url) =>
+        String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL ? publicCatalogueResponse() : undefined,
+    });
+    gate.attach(page);
+    assert.equal(gate.state.entered, 0);
+    assert.equal(page.$('soundtrack-tracks'), null);
+    assert.equal(page.$('soundtrack-audition'), null);
+    await gate.join(gate.observe(startFlight(page), 'cold Solo Start'));
+    ticks(page, 20);
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    assert.equal(gate.state.entered, 0);
+    assert.equal(page.$('soundtrack-tracks'), null);
+    page.$('settings-button').click();
+    page.$('settings-tab-audio').click();
+    await waitFor(
+      () => !page.$('soundtrack-settings-play-styles').disabled,
+      'Settings retains local listening controls without authoring',
+    );
+    assert.equal(gate.state.entered, 0);
+    assert.equal(page.$('soundtrack-audition'), null);
+    assert.deepEqual(page.errors, []);
+  },
+);
 
 async function openHeldAuthoring(page, gate) {
   page.$('settings-button').click();
   page.$('settings-tab-audio').click();
-  const opening = page.$('soundtrack-open').onclick();
-  await waitFor(
-    () => gate.state.entered === 1 && !page.$('soundtrack-close').disabled,
+  gate.attach(page);
+  const opening = gate.observe(page.$('soundtrack-open').onclick(), 'first Studio opening');
+  await gate.waiting(
+    'authoring import entry and local hydration',
+    () => opening.settled || (gate.state.entered === 1 && !page.$('soundtrack-close').disabled),
+  );
+  if (opening.settled) await gate.join(opening);
+  assert.ok(
+    gate.state.entered === 1 && !page.$('soundtrack-close').disabled,
     'The real optional import is held after local hydration',
   );
   assert.equal(page.$('soundtrack-dialog').open, true);
@@ -1357,114 +1466,142 @@ async function openHeldAuthoring(page, gate) {
   return { opening, dialog: page.$('soundtrack-dialog') };
 }
 
-test('held authoring leaves same-gesture Studio Play and Close owned by the existing host', async (t) => {
-  const gate = await holdAuthoringImport(t);
-  const { page, audio } = await setup(t);
-  const { opening, dialog } = await openHeldAuthoring(page, gate);
-  assert.equal(audio.context.state, 'suspended');
-  const playing = page.$('soundtrack-play').onclick();
-  assert.equal(audio.context.state, 'running', 'Play wakes audio before optional code completes');
-  await playing;
-  assert.equal(page.$('soundtrack-audition'), null);
-  page.$('soundtrack-close').click();
-  assert.equal(dialog.open, false);
-  assert.equal(page.$('settings-dialog').open, true);
-  await gate.release();
-  await opening;
-  assert.equal(page.$('soundtrack-tracks'), null, 'A closed visit cannot mount delayed authoring');
-  assert.equal(page.$('soundtrack-audition'), null);
-  assert.deepEqual(page.errors, []);
-});
+test(
+  'held authoring leaves same-gesture Studio Play and Close owned by the existing host',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page, audio } = await setup(t);
+    const { opening, dialog } = await openHeldAuthoring(page, gate);
+    assert.equal(audio.context.state, 'suspended');
+    const playing = gate.observe(
+      page.$('soundtrack-play').onclick(),
+      'Studio Play while import is held',
+    );
+    assert.equal(audio.context.state, 'running', 'Play wakes audio before optional code completes');
+    await gate.join(playing);
+    assert.equal(page.$('soundtrack-audition'), null);
+    page.$('soundtrack-close').click();
+    assert.equal(dialog.open, false);
+    assert.equal(page.$('settings-dialog').open, true);
+    await gate.release();
+    await gate.join(opening, 'Studio opening after gate release');
+    assert.equal(
+      page.$('soundtrack-tracks'),
+      null,
+      'A closed visit cannot mount delayed authoring',
+    );
+    assert.equal(page.$('soundtrack-audition'), null);
+    assert.deepEqual(page.errors, []);
+  },
+);
 
 for (const retirement of ['hidden', 'terminal']) {
-  test('late soundtrack authoring import cannot mount after ' + retirement, async (t) => {
+  test(
+    'late soundtrack authoring import cannot mount after ' + retirement,
+    { timeout: 20_000 },
+    async (t) => {
+      const gate = await holdAuthoringImport(t);
+      const { page } = await setup(t);
+      const { opening, dialog } = await openHeldAuthoring(page, gate);
+      if (retirement === 'hidden') {
+        page.doc.hidden = true;
+        page.doc.emit('visibilitychange');
+      } else page.win.emit('pagehide', { persisted: false });
+      await gate.release();
+      await gate.join(opening, 'Studio opening after gate release');
+      assert.equal(page.$('soundtrack-tracks'), null);
+      assert.equal(page.$('soundtrack-audition'), null);
+      if (retirement === 'hidden') {
+        page.doc.hidden = false;
+        page.doc.emit('visibilitychange');
+        await waitFor(
+          () => page.$('soundtrack-tracks')?.isConnected,
+          'The current visible paused Studio mounts its already loaded view',
+        );
+        assert.equal(page.$('soundtrack-dialog'), dialog);
+        assert.equal(gate.state.entered, 1);
+      } else assert.equal(dialog.isConnected, false);
+      assert.deepEqual(page.errors, []);
+    },
+  );
+}
+
+test(
+  'authoring import failure retries visibly without replacing the modal or source owner',
+  { timeout: 20_000 },
+  async (t) => {
     const gate = await holdAuthoringImport(t);
     const { page } = await setup(t);
     const { opening, dialog } = await openHeldAuthoring(page, gate);
-    if (retirement === 'hidden') {
-      page.doc.hidden = true;
-      page.doc.emit('visibilitychange');
-    } else page.win.emit('pagehide', { persisted: false });
+    const generation = page.$('soundtrack-draft-state').textContent;
+    const media = musicMedia(page);
+    await gate.release(true);
+    await gate.join(opening, 'Studio opening after gate release');
+    const retry = page.$('soundtrack-authoring-retry');
+    assert.equal(retry.hidden, false);
+    assert.equal(retry.disabled, false);
+    assert.equal(page.$('soundtrack-tracks'), null);
+    retry.focus();
+    await gate.join(gate.observe(retry.onclick(), 'explicit authoring retry'));
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.equal(musicMedia(page), media);
+    assert.equal(page.$('soundtrack-draft-state').textContent, generation);
+    assert.equal(page.doc.activeElement, page.$('soundtrack-close'));
+    assert.equal(page.$('soundtrack-tracks').isConnected, true);
+    assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
+    assert.equal(media.plays, 0);
+    assert.deepEqual(page.errors, []);
+  },
+);
+
+test(
+  'a newer Studio visit adopts a shared pending authoring module exactly once',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t);
+    const { opening: first, dialog } = await openHeldAuthoring(page, gate);
+    page.$('soundtrack-close').click();
+    const second = gate.observe(page.$('soundtrack-open').onclick(), 'reopened Studio visit');
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.equal(dialog.open, true);
     await gate.release();
-    await opening;
+    await gate.join(first, 'first Studio opening after gate release');
+    await gate.join(second, 'reopened Studio after gate release');
+    assert.equal(gate.state.entered, 1);
+    assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
+    const tracks = page.$('soundtrack-tracks');
+    assert.equal(tracks.isConnected, true);
+    page.$('soundtrack-close').click();
+    await gate.join(gate.observe(page.$('soundtrack-open').onclick(), 'cached Studio reopening'));
+    assert.equal(page.$('soundtrack-tracks'), tracks);
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.deepEqual(page.errors, []);
+  },
+);
+
+test(
+  'replacement of the pending Studio modal prevents late authoring attachment',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t);
+    const { opening, dialog } = await openHeldAuthoring(page, gate);
+    dialog.remove();
+    const replacement = page.doc.createElement('dialog');
+    replacement.id = dialog.id;
+    page.doc.body.append(replacement);
+    t.after(() => replacement.remove());
+    await gate.release();
+    await gate.join(opening, 'Studio opening after gate release');
+    assert.equal(page.$('soundtrack-dialog'), replacement);
     assert.equal(page.$('soundtrack-tracks'), null);
     assert.equal(page.$('soundtrack-audition'), null);
-    if (retirement === 'hidden') {
-      page.doc.hidden = false;
-      page.doc.emit('visibilitychange');
-      await waitFor(
-        () => page.$('soundtrack-tracks')?.isConnected,
-        'The current visible paused Studio mounts its already loaded view',
-      );
-      assert.equal(page.$('soundtrack-dialog'), dialog);
-      assert.equal(gate.state.entered, 1);
-    } else assert.equal(dialog.isConnected, false);
+    assert.equal(replacement.children.length, 0);
     assert.deepEqual(page.errors, []);
-  });
-}
-
-test('authoring import failure retries visibly without replacing the modal or source owner', async (t) => {
-  const gate = await holdAuthoringImport(t);
-  const { page } = await setup(t);
-  const { opening, dialog } = await openHeldAuthoring(page, gate);
-  const generation = page.$('soundtrack-draft-state').textContent;
-  const media = musicMedia(page);
-  await gate.release(true);
-  await opening;
-  const retry = page.$('soundtrack-authoring-retry');
-  assert.equal(retry.hidden, false);
-  assert.equal(retry.disabled, false);
-  assert.equal(page.$('soundtrack-tracks'), null);
-  retry.focus();
-  await retry.onclick();
-  assert.equal(page.$('soundtrack-dialog'), dialog);
-  assert.equal(musicMedia(page), media);
-  assert.equal(page.$('soundtrack-draft-state').textContent, generation);
-  assert.equal(page.doc.activeElement, page.$('soundtrack-close'));
-  assert.equal(page.$('soundtrack-tracks').isConnected, true);
-  assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
-  assert.equal(media.plays, 0);
-  assert.deepEqual(page.errors, []);
-});
-
-test('a newer Studio visit adopts a shared pending authoring module exactly once', async (t) => {
-  const gate = await holdAuthoringImport(t);
-  const { page } = await setup(t);
-  const { opening: first, dialog } = await openHeldAuthoring(page, gate);
-  page.$('soundtrack-close').click();
-  const second = page.$('soundtrack-open').onclick();
-  assert.equal(page.$('soundtrack-dialog'), dialog);
-  assert.equal(dialog.open, true);
-  await gate.release();
-  await Promise.all([first, second]);
-  assert.equal(gate.state.entered, 1);
-  assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
-  const tracks = page.$('soundtrack-tracks');
-  assert.equal(tracks.isConnected, true);
-  page.$('soundtrack-close').click();
-  await page.$('soundtrack-open').onclick();
-  assert.equal(page.$('soundtrack-tracks'), tracks);
-  assert.equal(page.$('soundtrack-dialog'), dialog);
-  assert.deepEqual(page.errors, []);
-});
-
-test('replacement of the pending Studio modal prevents late authoring attachment', async (t) => {
-  const gate = await holdAuthoringImport(t);
-  const { page } = await setup(t);
-  const { opening, dialog } = await openHeldAuthoring(page, gate);
-  dialog.remove();
-  const replacement = page.doc.createElement('dialog');
-  replacement.id = dialog.id;
-  page.doc.body.append(replacement);
-  t.after(() => replacement.remove());
-  await gate.release();
-  await opening;
-  assert.equal(page.$('soundtrack-dialog'), replacement);
-  assert.equal(page.$('soundtrack-tracks'), null);
-  assert.equal(page.$('soundtrack-audition'), null);
-  assert.equal(replacement.children.length, 0);
-  assert.deepEqual(page.errors, []);
-});
+  },
+);
 
 // Native dialog.close() changes open state immediately and queues its close event.
 // Deliver that event as a distinct host task without replacing production handlers.
@@ -1486,49 +1623,58 @@ function queuedNativeDialogClose(t, dialog) {
   };
 }
 
-test('a delayed native close event from the prior Studio visit cannot retire a reopened visit', async (t) => {
-  const gate = await holdAuthoringImport(t);
-  const { page } = await setup(t);
-  const { opening: first, dialog } = await openHeldAuthoring(page, gate);
-  const deliverClose = queuedNativeDialogClose(t, dialog);
-  page.$('soundtrack-close').click();
-  assert.equal(dialog.open, false);
-  const second = page.$('soundtrack-open').onclick();
-  assert.equal(dialog.open, true, 'The new visit is open before the old close task arrives');
-  await deliverClose();
-  assert.equal(dialog.open, true);
-  assert.equal(page.$('soundtrack-tracks'), null);
-  await gate.release();
-  await Promise.all([first, second]);
-  assert.equal(page.$('soundtrack-dialog'), dialog);
-  assert.equal(page.$('soundtrack-tracks').isConnected, true);
-  assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
-  assert.equal(gate.state.entered, 1, 'Both visits share the actual optional module request');
-  assert.equal(musicMedia(page).plays, 0);
-  assert.deepEqual(page.errors, []);
-});
+test(
+  'a delayed native close event from the prior Studio visit cannot retire a reopened visit',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t);
+    const { opening: first, dialog } = await openHeldAuthoring(page, gate);
+    const deliverClose = queuedNativeDialogClose(t, dialog);
+    page.$('soundtrack-close').click();
+    assert.equal(dialog.open, false);
+    const second = gate.observe(page.$('soundtrack-open').onclick(), 'reopened Studio visit');
+    assert.equal(dialog.open, true, 'The new visit is open before the old close task arrives');
+    await gate.join(gate.observe(deliverClose(), 'queued native close event'));
+    assert.equal(dialog.open, true);
+    assert.equal(page.$('soundtrack-tracks'), null);
+    await gate.release();
+    await gate.join(first, 'first Studio opening after gate release');
+    await gate.join(second, 'reopened Studio after gate release');
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.equal(page.$('soundtrack-tracks').isConnected, true);
+    assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
+    assert.equal(gate.state.entered, 1, 'Both visits share the actual optional module request');
+    assert.equal(musicMedia(page).plays, 0);
+    assert.deepEqual(page.errors, []);
+  },
+);
 
-test('a genuine external native close prevents pending Studio authoring from attaching', async (t) => {
-  const gate = await holdAuthoringImport(t);
-  const { page } = await setup(t);
-  const { opening, dialog } = await openHeldAuthoring(page, gate);
-  const deliverClose = queuedNativeDialogClose(t, dialog);
-  dialog.close();
-  assert.equal(dialog.open, false);
-  await deliverClose();
-  await gate.release();
-  await opening;
-  assert.equal(page.$('soundtrack-tracks'), null);
-  assert.equal(page.$('soundtrack-audition'), null);
-  await page.$('soundtrack-open').onclick();
-  assert.equal(page.$('soundtrack-dialog'), dialog);
-  assert.equal(page.$('soundtrack-tracks').isConnected, true);
-  assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
-  assert.equal(
-    gate.state.entered,
-    1,
-    'A later accepted visit reuses the module, not stale ownership',
-  );
-  assert.equal(musicMedia(page).plays, 0);
-  assert.deepEqual(page.errors, []);
-});
+test(
+  'a genuine external native close prevents pending Studio authoring from attaching',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t);
+    const { opening, dialog } = await openHeldAuthoring(page, gate);
+    const deliverClose = queuedNativeDialogClose(t, dialog);
+    dialog.close();
+    assert.equal(dialog.open, false);
+    await gate.join(gate.observe(deliverClose(), 'queued native close event'));
+    await gate.release();
+    await gate.join(opening, 'Studio opening after gate release');
+    assert.equal(page.$('soundtrack-tracks'), null);
+    assert.equal(page.$('soundtrack-audition'), null);
+    await gate.join(gate.observe(page.$('soundtrack-open').onclick(), 'cached Studio reopening'));
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.equal(page.$('soundtrack-tracks').isConnected, true);
+    assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
+    assert.equal(
+      gate.state.entered,
+      1,
+      'A later accepted visit reuses the module, not stale ownership',
+    );
+    assert.equal(musicMedia(page).plays, 0);
+    assert.deepEqual(page.errors, []);
+  },
+);

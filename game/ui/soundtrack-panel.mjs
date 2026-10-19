@@ -116,6 +116,7 @@ export function attachSoundtrackPanel({
   onMasterVolume = null,
   beforeAudio = async () => {},
   settingsRoot = null,
+  settingsOwner = settingsRoot,
   albumDownload = {},
   onlineCatalogueDownload = {},
   onlineSourceManager = null,
@@ -3775,7 +3776,7 @@ export function attachSoundtrackPanel({
   renderSources();
   renderSettingsStyleStatus();
   void loadSourcePreferences();
-  const settingsTab = doc.getElementById?.(settingsRoot?.getAttribute('aria-labelledby'));
+  const settingsTab = doc.getElementById?.(settingsOwner?.getAttribute('aria-labelledby'));
   let settingsBrowseQueued = false;
   const requestSettingsCatalogue = () => {
     if (disposed || settingsBrowseQueued) return;
@@ -3788,13 +3789,19 @@ export function attachSoundtrackPanel({
         doc.hidden ||
         doc.visibilityState === 'hidden' ||
         !settingsRoot?.isConnected ||
-        doc.getElementById?.(settingsRoot.id) !== settingsRoot ||
+        !settingsOwner?.isConnected ||
+        !settingsOwner.contains(settingsRoot) ||
+        doc.getElementById?.(settingsOwner.id) !== settingsOwner ||
         !settingsTab?.isConnected ||
         settingsTab.disabled ||
         settingsTab.getAttribute('aria-disabled') === 'true' ||
         doc.getElementById?.(settingsTab.id) !== settingsTab ||
-        settingsTab.getAttribute('aria-controls') !== settingsRoot.id ||
+        settingsTab.getAttribute('aria-controls') !== settingsOwner.id ||
         settingsTab.getAttribute('aria-selected') !== 'true' ||
+        settingsOwner.hidden ||
+        settingsOwner.inert ||
+        settingsOwner.closest('[hidden],[inert],[aria-hidden="true"]') ||
+        !settingsOwner.getClientRects?.().length ||
         settingsRoot.hidden ||
         settingsRoot.inert ||
         settingsRoot.closest('[hidden],[inert],[aria-hidden="true"]') ||
