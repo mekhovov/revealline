@@ -13,6 +13,7 @@ import {
 import {
   classicSnakeRatingForRecord,
   classicSnakeRatingCriteriaText,
+  classicSnakeRatingResultText,
 } from '../snake/classic-ratings.mjs';
 import {
   createEnemyStats,
@@ -138,6 +139,7 @@ async function harness({
   savedRound = null,
   legacySavedRound = null,
   recordReceipt = { verified: true, saved: true },
+  recordBest = null,
   catalogue = CLASSIC_SNAKE_LEVELS,
 } = {}) {
   const document = new Document();
@@ -259,6 +261,7 @@ async function harness({
     createClassicSnakeRatings: () => ({ refresh: async () => {}, close() {} }),
     classicSnakeRatingForRecord,
     classicSnakeRatingCriteriaText,
+    classicSnakeRatingResultText,
     ...replayHelpers,
     ...flowHelpers,
     continuousPlayPreferences: () =>
@@ -507,7 +510,7 @@ async function harness({
       },
       chapter: () => 0,
       cleared: () => false,
-      get: () => null,
+      get: () => recordBest,
       recent: () => null,
     }),
     createHuntDestruction: () => ({ reset() {}, advance() {}, draw() {} }),
@@ -2934,4 +2937,107 @@ test('actual Snake settings keep an unsaved menu animation choice and Retry the 
   assert.equal(status.textContent, 'Saved');
   assert.equal(h.document.activeElement, input);
   assert.equal(retry.hidden, true);
+});
+
+// Legal detours before the archived opening route preserve the same seed,
+// recipe and targets while producing independently earned lower ratings.
+function flyRatingRoute(state, circuits) {
+  const run = state.created[0];
+  let now = 0;
+  state.frame(now);
+  const turn = (direction) => {
+    const key = { up: 'w', right: 'd', down: 's', left: 'a' }[direction];
+    state.document.emit('keydown', {
+      target: state.document.querySelector('canvas'),
+      key,
+      code: `Key${key.toUpperCase()}`,
+      repeat: false,
+    });
+  };
+  const step = () => {
+    now += core.classicSnakeSummary(run).stepMs;
+    state.frame(now);
+  };
+  for (let circuit = 0; circuit < circuits; circuit++)
+    for (const direction of ['down', 'left', 'up', 'right']) {
+      turn(direction);
+      for (let move = 0; move < 3; move++) step();
+    }
+  let cursor = 0;
+  for (let tick = 0; tick < clearedReplay.steps; tick++) {
+    while (clearedReplay.turns[cursor]?.tick === tick)
+      turn(clearedReplay.turns[cursor++].direction);
+    step();
+  }
+  assert.equal(run.status, 'won');
+  assert.equal(run.tick, 93 + circuits * 12);
+  return now;
+}
+
+for (const [circuits, stars, expected] of [
+  [0, 3, /This attempt: 93 moves.*3 stars earned.*highest rating/],
+  [3, 2, /This attempt: 129 moves.*3 stars.*117 moves.*12 fewer moves/],
+  [7, 1, /This attempt: 177 moves.*2 stars.*163 moves.*14 fewer moves/],
+])
+  test(`Snake earned ${stars}-star result explains this attempt without substituting its historical best`, async (t) => {
+    const state = await harness({
+      liveLocale: true,
+      recordBest: { score: 800, fastest: { value: 18600 }, fewest: { value: 93 } },
+    });
+    t.after(() => state.disposeTools());
+    assert.equal(state.$('snake-rating-goal').hidden, true);
+    const now = flyRatingRoute(state, circuits);
+    await flush();
+    state.shell.open('results');
+    const goal = state.$('snake-rating-goal');
+    assert.equal(goal.hidden, false);
+    assert.equal(goal.parentNode.className, 'snake-result-summary');
+    assert.match(goal.textContent, expected);
+    assert.equal(state.$('snake-stars').textContent, '★'.repeat(stars) + '☆'.repeat(3 - stars));
+    const run = state.created[0],
+      replay = core.exportClassicSnakeReplay(run);
+    const saved = state.storage.get(SAVE_KEY);
+    const retry = state.shell.elements.buttons.retry;
+    retry.focus();
+    for (const locale of ['uk', 'en']) {
+      state.$('language').value = locale;
+      state.$('language').emit('change');
+      assert.match(goal.textContent, locale === 'uk' ? /Ця спроба:.*ход/ : expected);
+      assert.equal(state.document.activeElement, retry);
+      assert.equal(state.created[0], run);
+      assert.deepEqual(core.exportClassicSnakeReplay(run), replay);
+      assert.equal(state.storage.get(SAVE_KEY), saved);
+    }
+    const writes = observeLiveStatusWrites(goal);
+    for (let i = 1; i <= 4; i++) state.frame(now + i * 50);
+    assert.equal(
+      writes.text,
+      0,
+      'unchanged frames do not repeatedly replace the result explanation',
+    );
+    retry.click();
+    assert.equal(state.$('snake-rating-goal').hidden, true);
+    assert.equal(state.$('snake-rating-goal').textContent, '');
+    assert.equal(state.created.at(-1).levelIdentity, run.levelIdentity);
+    assert.equal(state.created.at(-1).tick, 0);
+  });
+
+test('Snake result waits for accepted completion and never advertises new star goals for imported recordings', async (t) => {
+  let accept;
+  const pending = new Promise((resolve) => {
+    accept = resolve;
+  });
+  const state = await harness({ recordReceipt: pending });
+  t.after(() => state.disposeTools());
+  flyRatingRoute(state, 3);
+  assert.equal(state.$('snake-rating-goal').hidden, true);
+  assert.equal(state.$('snake-rating-goal').textContent, '');
+  accept({ verified: true, saved: false });
+  await flush();
+  assert.match(state.$('snake-rating-goal').textContent, /12 fewer moves/);
+  assert.equal(state.$('result-save-notice').hidden, false);
+  await importSession(state.$, clearedSession());
+  assert.match(state.$('snake-stars').textContent, /no new awards/);
+  assert.equal(state.$('snake-rating-goal').hidden, true);
+  assert.equal(state.$('snake-rating-goal').textContent, '');
 });

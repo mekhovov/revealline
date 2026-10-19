@@ -539,18 +539,21 @@ export async function soloPage(
         return this;
       }
     };
-  const codecBlobs = new Map();
+  const codecBlobs = new Map(),
+    audioURLs = new Set();
   globals.URL = class extends globalThis.URL {
     static createObjectURL(blob) {
-      const url = audio?.URLImpl
-        ? audio.URLImpl.createObjectURL(blob)
-        : super.createObjectURL(blob);
+      // Image codecs read actual Blob bytes through Node's native URL registry.
+      // Only non-image sources keep the existing deterministic audio URL owner.
+      const useAudio = audio?.URLImpl && !blob.type.startsWith('image/');
+      const url = useAudio ? audio.URLImpl.createObjectURL(blob) : super.createObjectURL(blob);
+      if (useAudio) audioURLs.add(url);
       codecBlobs.set(url, blob);
       return url;
     }
     static revokeObjectURL(url) {
       codecBlobs.delete(url);
-      if (audio?.URLImpl) audio.URLImpl.revokeObjectURL(url);
+      if (audioURLs.delete(url)) audio.URLImpl.revokeObjectURL(url);
       else super.revokeObjectURL(url);
     }
   };
@@ -623,8 +626,14 @@ export async function soloPage(
     } else if (!rendering) BoardPainter.prototype[key] = () => {};
   }
   t.after(async () => {
-    win.emit('pagehide', { persisted: false });
-    await new Promise((resolve) => setImmediate(resolve));
+    try {
+      win.emit('pagehide', { persisted: false });
+      await new Promise((resolve) => setImmediate(resolve));
+    } finally {
+      // Model document destruction even if an owner never adopted a created URL.
+      // The creating registry decides whether native image or audio cleanup owns it.
+      for (const url of codecBlobs.keys()) globals.URL.revokeObjectURL(url);
+    }
     db.close();
     // Model the retired page, not a still-connected document in the next host's
     // JavaScript realm. Live locale bindings must not refresh detached controls.

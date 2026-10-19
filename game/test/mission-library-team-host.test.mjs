@@ -8,6 +8,7 @@ import { createTeamCulturalSpecialistV2OriginalCandidates } from '../content-des
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
+import { createRemoteTeamLibrarySources } from '../mission-library/remote-team.mjs';
 import { teamJourneyLibrarySource } from '../mission-library/team-source.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 
@@ -16,6 +17,22 @@ const journey = createCandidateTeamHost(source, {
   corePackIds: source.packs.map((pack) => pack.id),
 });
 const model = createMissionLibrary([teamJourneyLibrarySource({ journey, launch: () => true })]);
+// Independent metadata expectations: never derive the inventory from rendered
+// cards, launch a mission, or read media to decide which identities must exist.
+const metadataLibrary = createMissionLibrary(
+  createRemoteTeamLibrarySources({
+    launch: () => assert.fail('Catalog inventory must not launch a mission'),
+  }),
+);
+const builtinMissionIds = new Set(metadataLibrary.missions.map((row) => row.id));
+const collectionMissionIds = (collection) =>
+  new Set(
+    metadataLibrary.missions.filter((row) => row.collection === collection).map((row) => row.id),
+  );
+const classicMissionIds = collectionMissionIds('Classic');
+const journeyMissionIds = collectionMissionIds('Journey');
+const retainedJourneyMissionIds = new Set(model.missions.map((row) => row.id));
+metadataLibrary.dispose();
 const originals = new Map(
   await Promise.all(
     source.assets.map(async (asset) => [
@@ -94,6 +111,37 @@ async function open(f, paused = false) {
 const cards = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
 const card = (f, name) =>
   cards(f).find((button) => button.querySelector('strong').textContent === name);
+function assertInventory(f, customPack = null) {
+  const ids = cards(f).map((button) => button.dataset.missionId);
+  assert.equal(new Set(ids).size, ids.length, 'Every card has a unique opaque identity');
+  assert.deepEqual(
+    new Set(ids.filter((id) => builtinMissionIds.has(id))),
+    builtinMissionIds,
+    'Every independently catalogued Team mission appears exactly once',
+  );
+  const custom = ids.filter((id) => !builtinMissionIds.has(id)).map((id) => JSON.parse(id));
+  if (customPack) {
+    assert.equal(new Set(custom.map(([owner]) => owner)).size, 1);
+    for (const [owner] of custom)
+      assert.match(
+        owner,
+        /^team-custom:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:1$/i,
+        'The first local import has a distinct visit owner',
+      );
+    assert.deepEqual(
+      custom.map(([, ...identity]) => identity).sort(),
+      customPack.levels
+        .map((level) => [
+          `${customPack.id}@${customPack.revision}`,
+          customPack.id,
+          level.id,
+          String(customPack.revision),
+        ])
+        .sort(),
+      'Only the exact imported pack, edition, levels and revision supplement the catalog',
+    );
+  } else assert.deepEqual(custom, [], 'No unexpected or imported identities appear');
+}
 async function play(f, name) {
   const button = card(f, name);
   assert(button, name);
@@ -112,11 +160,19 @@ async function play(f, name) {
   );
 }
 
-test('Team unified chooser has12 missions plus2 retained arenas; browsing is artwork-lazy', async (t) => {
+test('Team unified chooser retains the exact catalog inventory; browsing is artwork-lazy', async (t) => {
   const f = await fixture(t);
   const reads = f.reads.length;
   await open(f);
-  assert.equal(cards(f).length, 14);
+  assertInventory(f);
+  assert.deepEqual(
+    new Set(
+      cards(f)
+        .filter((row) => row.textContent.includes('Classic'))
+        .map((row) => row.dataset.missionId),
+    ),
+    classicMissionIds,
+  );
   assert.equal(cards(f).filter((row) => row.textContent.includes('Classic')).length, 2);
   assert.equal(f.reads.length, reads);
   assert.equal(f.$('journey-mode').value, 'team');
@@ -131,8 +187,12 @@ test('explicit current Team handoff shows player-facing edition and retains ever
     href: `${base}?journey=team-cultural-specialist-originals-2`,
   });
   await open(f);
-  const journeyCards = cards(f).filter((row) => row.textContent.includes('Journey'));
-  assert.equal(journeyCards.length, 12);
+  assertInventory(f);
+  const allJourneyCards = cards(f).filter((row) => row.textContent.includes('Journey'));
+  assert.deepEqual(new Set(allJourneyCards.map((row) => row.dataset.missionId)), journeyMissionIds);
+  const journeyCards = allJourneyCards.filter((row) =>
+    retainedJourneyMissionIds.has(row.dataset.missionId),
+  );
   assert.deepEqual(
     journeyCards.map((row) => row.dataset.missionId),
     model.missions.map((row) => row.id),
@@ -185,7 +245,8 @@ for (const query of ['library-mission=retired-visit', 'library-mission=x&library
 
 test('same-ID imported Team edition stays Custom and launches its own preset', async (t) => {
   const f = await fixture(t);
-  const text = JSON.stringify(createTeamTestPack(source, 'twin-landings', 'expert')),
+  const customPack = createTeamTestPack(source, 'twin-landings', 'expert'),
+    text = JSON.stringify(customPack),
     file = new Blob([text], { type: 'application/json' });
   Object.defineProperty(file, 'name', { value: 'team-campaign.json' });
   f.$('coop-pack-file').closest('details').open = true;
@@ -193,7 +254,7 @@ test('same-ID imported Team edition stays Custom and launches its own preset', a
   await f.$('coop-pack-file').onchange();
   assert.equal(f.$('coop-selection-status').textContent, '');
   await open(f);
-  assert.equal(cards(f).length, 15);
+  assertInventory(f, customPack);
   const same = cards(f).filter(
     (button) => button.querySelector('strong').textContent === 'Twin landings',
   );
@@ -259,7 +320,7 @@ test('newer focus during held Team preparation cancels without replacing or reop
 test('Legacy Team library contains currentJourney metadata and fixed exact handoffs without eager artwork', async (t) => {
   const f = await fixture(t, { href: `${base}?journey=legacy` });
   await open(f);
-  assert.equal(cards(f).length, 14);
+  assertInventory(f);
   const target = card(f, 'Shared lookout');
   target.click();
   await waitFor(() => f.visits.length === 1);

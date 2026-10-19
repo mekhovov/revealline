@@ -9320,6 +9320,7 @@ export function mountWorldApp({
   });
 
   const cueSettings = {
+    gameplayOutput: audio.gameplayOutput,
     // This preference is global; the 3D engine has no separate radio bus.
     // The canonical Soundscape consumes the same record in supported modes.
     get radioSettings() {
