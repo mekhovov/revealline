@@ -1,0 +1,32 @@
+{
+  "observedAt": "2026-10-19T12:16:45.142694+00:00",
+  "head": "27138039f30d759aaf10d0b8c80564757bc9e905",
+  "job": 118047598852,
+  "name": "candidate",
+  "conclusion": "failure",
+  "startedAt": "2026-10-19T12:01:56Z",
+  "completedAt": "2026-10-19T12:14:17Z",
+  "issueLines": [
+    "2026-10-19T12:13:39.0268380Z # fail 0",
+    "2026-10-19T12:13:39.2038569Z # fail 0",
+    "2026-10-19T12:14:02.5952855Z # fail 0",
+    "2026-10-19T12:14:08.9968697Z # fail 0",
+    "2026-10-19T12:14:15.4410496Z # fail 0",
+    "2026-10-19T12:14:16.1203056Z not ok 47 - pull-request admission workflows do not require GitHub Pages",
+    "2026-10-19T12:14:16.1207682Z   name: 'AssertionError'",
+    "2026-10-19T12:14:16.4142925Z # fail 1"
+  ],
+  "issueLinesDropped": 0,
+  "files": [
+    {
+      "path": ".cache/hosted-27138039f-company-candidate-failure/job.json",
+      "bytes": 3694,
+      "sha256": "ad05e206f20bb1314182737c1ad37f8d36e922c6a1f23f65e143717443758104"
+    },
+    {
+      "path": ".cache/hosted-27138039f-company-candidate-failure/original.log.txt",
+      "bytes": 694557,
+      "sha256": "914c8041010fe0f45f3f46bcc95bf9aabde5218386daed63c9bbdfea9eb764e6"
+    }
+  ]
+}

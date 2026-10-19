@@ -1,0 +1,401 @@
+diff --git a/game/snake/classic-app.mjs b/game/snake/classic-app.mjs
+index 05f1f444ca..2b3a3b5fe3 100644
+--- a/game/snake/classic-app.mjs
++++ b/game/snake/classic-app.mjs
+@@ -183,9 +183,20 @@ const environmentCandidate = await prepareClassicEnvironments(CLASSIC_SNAKE_LEVE
+ });
+ let sessionWriter = await claimProfileWriter(globalThis.navigator.locks, `${SAVE_KEY}:writer`);
+ let writerRelease = Promise.resolve(),
+-  writerEpoch = 0;
++  writerEpoch = 0,
++  departingWriteLease = null,
++  demoHost = null,
++  disposed = false,
++  pageDeparted = false;
++// Async ordinary saves must recheck ownership at the storage boundary. An
++// explicitly ordinary departure may finish its pending work under that lease;
++// destroying a demo must never grant the departing page write authority again.
++const canWritePlayerProgress = () =>
++  sessionWriter.writable &&
++  !demoHost?.active &&
++  ((!disposed && !pageDeparted) || departingWriteLease === sessionWriter);
+ const pageActive = () => !doc.hidden && (typeof doc.hasFocus !== 'function' || doc.hasFocus());
+-const enemyStats = createEnemyStats({ canWrite: () => sessionWriter.writable });
++const enemyStats = createEnemyStats({ canWrite: canWritePlayerProgress });
+ let statsAttempt = null,
+   liveProvenance = 'live';
+ const statsViews = [];
+@@ -236,8 +247,7 @@ let entry =
+   ) ??
+   CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-snake-open-loop') ??
+   CLASSIC_SNAKE_LEVELS[0];
+-let demoHost = null,
+-  playShell = null,
++let playShell = null,
+   missionLibrary = null,
+   missionChooser = null,
+   libraryHostMode = null,
+@@ -250,8 +260,7 @@ let demoHost = null,
+   menuController = null,
+   boardLayoutObserver = null,
+   music = null,
+-  audioInactive = false,
+-  disposed = false;
++  audioInactive = false;
+ let match,
+   runs = [],
+   boards = [],
+@@ -260,8 +269,7 @@ let match,
+   paused = true,
+   previousFrame = null,
+   importEpoch = 0,
+-  pendingImports = 0,
+-  pageDeparted = false;
++  pendingImports = 0;
+ let offerSavedContinue = !params.has('level');
+ let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
+   saveNotice = '',
+@@ -350,6 +358,7 @@ const acceptedLevel = () => prepareClassicSnakeLevel(entry, settings());
+ const result = () => match?.result ?? null;
+ let ratings = null;
+ const records = createClassicSnakeRecords({
++  canWrite: canWritePlayerProgress,
+   ...(installedContent ? { contentPack: installedContent.pack } : {}),
+   onChange: () => {
+     if (match) {
+@@ -366,7 +375,7 @@ const records = createClassicSnakeRecords({
+ });
+ ratings = createClassicSnakeRatings({
+   records,
+-  canWrite: () => sessionWriter.writable,
++  canWrite: canWritePlayerProgress,
+   onWarning: () => {},
+ });
+ let touchControllers = [],
+@@ -2417,6 +2426,8 @@ landscapeControls?.addEventListener('change', () => {
+ });
+ globalThis.addEventListener('pagehide', (event) => {
+   const demoWasActive = demoHost?.active;
++  const departingWriter = sessionWriter;
++  if (!pageDeparted && !disposed && !demoWasActive) departingWriteLease = departingWriter;
+   pageDeparted = true;
+   importEpoch++;
+   writerEpoch++;
+@@ -2439,8 +2450,11 @@ globalThis.addEventListener('pagehide', (event) => {
+     audioMaster.dispose?.();
+   }
+   if (!demoWasActive) save();
+-  const departingWriter = sessionWriter;
+-  writerRelease = enemyStats.flush().finally(() => departingWriter.release());
++  const pendingRecords = departingWriteLease === departingWriter ? records.read() : null;
++  writerRelease = Promise.all([enemyStats.flush(), pendingRecords]).finally(() => {
++    if (departingWriteLease === departingWriter) departingWriteLease = null;
++    departingWriter.release();
++  });
+ });
+ globalThis.addEventListener('pageshow', async (event) => {
+   footprint?.refresh();
+diff --git a/game/snake/classic-records.mjs b/game/snake/classic-records.mjs
+index c3661d462a..bf6300957c 100644
+--- a/game/snake/classic-records.mjs
++++ b/game/snake/classic-records.mjs
+@@ -349,6 +349,7 @@ function availableDatabase() {
+ export function createClassicSnakeRecords({
+   onChange = () => {},
+   onWarning = () => {},
++  canWrite = () => true,
+   indexedDB = availableDatabase(),
+   contentPack = null,
+ } = {}) {
+@@ -364,6 +365,7 @@ export function createClassicSnakeRecords({
+       : CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY,
+     empty,
+     indexedDB,
++    canWrite,
+     // Replays never execute inside an IndexedDB transaction. Its timeout covers
+     // bounded profile parsing, cache checks and storage only.
+     validate: (source) => validate(source, { cachedOnly: true }),
+diff --git a/game/test/classic-snake-progress.test.mjs b/game/test/classic-snake-progress.test.mjs
+index deae24258c..a44c64b62b 100644
+--- a/game/test/classic-snake-progress.test.mjs
++++ b/game/test/classic-snake-progress.test.mjs
+@@ -193,6 +193,48 @@ test('a failed disk write remains visible and is retried before a later read can
+   assert.equal(reopened.get(match.runs[0], 'solo').score, 800);
+ });
+ 
++test('a delayed ordinary result retains its proof while demo ownership blocks writes and read retries', async (t) => {
++  const model = managedIndexedDB(),
++    pendingOpens = [];
++  let ordinaryOwnsWrites = true;
++  const records = recordsFor(t, model, {
++    canWrite: () => ordinaryOwnsWrites,
++    indexedDB: {
++      open(...args) {
++        return new Proxy(model.indexedDB.open(...args), {
++          set(request, key, value) {
++            request[key] =
++              key === 'onsuccess' ? (event) => pendingOpens.push(() => value(event)) : value;
++            return true;
++          },
++        });
++      },
++    },
++  });
++  const match = wonMatch();
++  const saving = records.remember(match.runs[0], context(match));
++  await new Promise((resolve) => setImmediate(resolve));
++  assert.equal(pendingOpens.length, 1, 'The ordinary result was accepted before storage opened.');
++  ordinaryOwnsWrites = false;
++  pendingOpens.shift()();
++  assert.equal((await saving).saved, false);
++  assert.equal(records.cleared(first.id), true, 'The accepted result remains visible in memory.');
++  const accepted = records.snapshot();
++  await records.read();
++  assert.equal(model.allPuts.length, 0, 'A focused demo cannot flush an older pending result.');
++  assert.deepEqual(records.snapshot(), accepted);
++  ordinaryOwnsWrites = true;
++  await records.read();
++  assert.deepEqual(model.allPuts, [['profiles', key]]);
++  const reopened = recordsFor(t, model);
++  await reopened.read();
++  assert.deepEqual(
++    reopened.snapshot(),
++    accepted,
++    'Ordinary ownership saves the exact retained proof.',
++  );
++});
++
+ test('a full catalogue profile stays verified across reads and updates, and discarded witnesses leave the cache', async (t) => {
+   const model = managedIndexedDB(),
+     source = recordsFor(t, model);
+diff --git a/game/test/classic-snake-ui.test.mjs b/game/test/classic-snake-ui.test.mjs
+index afd1ac0d88..1fcee56690 100644
+--- a/game/test/classic-snake-ui.test.mjs
++++ b/game/test/classic-snake-ui.test.mjs
+@@ -1,4 +1,7 @@
+-import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from '../snake/classic-campaign.mjs';
++import {
++  CLASSIC_SNAKE_CAMPAIGN_REVISION,
++  CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY,
++} from '../snake/classic-campaign.mjs';
+ import { demoLaunchURL } from '../demo-launch.mjs';
+ import { createDemoMusicTransport } from '../ui/demo-music-transport.mjs';
+ const SAVE_KEY = `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`;
+@@ -13,6 +16,7 @@ import {
+   mountTouchPresentationSettings,
+ } from '../ui/touch-controls-view.mjs';
+ import {
++  createClassicSnakeRatings,
+   classicSnakeRatingForRecord,
+   classicSnakeRatingCriteriaText,
+ } from '../snake/classic-ratings.mjs';
+@@ -39,6 +43,7 @@ import { Script, createContext } from 'node:vm';
+ import { parse as parseModule } from 'acorn';
+ import { parse as parseHTML } from 'parse5';
+ import { Document, Element, Events } from './helpers/couch-dom.mjs';
++import { managedIndexedDB } from './helpers/managed-idb.mjs';
+ import { boundedJSON, exactKeys, required } from '../data-json.mjs';
+ import * as core from '../snake/classic-core.mjs';
+ import { nextClassicHazardSeed } from '../snake/classic-attempt-seed.mjs';
+@@ -140,6 +145,8 @@ async function harness({
+   savedRound = null,
+   legacySavedRound = null,
+   recordReceipt = { verified: true, saved: true },
++  ratingsIndexedDB = null,
++  flushEnemyStats = null,
+   catalogue = CLASSIC_SNAKE_LEVELS,
+ } = {}) {
+   const document = new Document();
+@@ -147,6 +154,7 @@ async function harness({
+   const localeListeners = new Set();
+   document.hasFocus = () => focused;
+   const writerClaims = [];
++  const writeGuards = {};
+   document.createElement = (tag) => {
+     const node = new Element(document, tag);
+     if (tag === 'canvas')
+@@ -175,7 +183,7 @@ async function harness({
+   mount(parseHTML(html), document.body);
+   const window = new Events();
+   const pads = [];
+-  let tools, offlinePanel, offlineOptions, demoOptions;
++  let tools, offlinePanel, offlineOptions, demoOptions, demoBoundary, ratings;
+   const storage = new Map();
+   if (savedRound) storage.set(SAVE_KEY, JSON.stringify(savedRound));
+   if (legacySavedRound)
+@@ -226,7 +234,13 @@ async function harness({
+         return button;
+       });
+       options.registerActions(actions);
+-      return { active: false, update() {}, destroy() {} };
++      return (demoBoundary = {
++        active: false,
++        update() {},
++        destroy() {
++          this.active = false;
++        },
++      });
+     },
+     createClassicSnakeCommunityLibrary: () => ({
+       load: async () => ({ entries: [entry], pack: { title: { en: 'Community Snake' } } }),
+@@ -261,6 +275,7 @@ async function harness({
+       return lease;
+     },
+     createEnemyStats: (options) => {
++      writeGuards.statistics = options.canWrite;
+       const service = createEnemyStats({
+         ...options,
+         indexedDB: null,
+@@ -272,12 +287,18 @@ async function harness({
+       return {
+         ...service,
+         observe: (attempt, event) => service.observe(attempt, structuredClone(event)),
++        flush: flushEnemyStats ?? service.flush,
+       };
+     },
+     validateEnemyStatsSession,
+     forkEnemyStatsSession,
+     mountEnemyStats,
+-    createClassicSnakeRatings: () => ({ refresh: async () => {}, close() {} }),
++    createClassicSnakeRatings: (options) => {
++      writeGuards.ratings = options.canWrite;
++      return (ratings = ratingsIndexedDB
++        ? createClassicSnakeRatings({ ...options, indexedDB: ratingsIndexedDB })
++        : { refresh: async () => {}, close() {} });
++    },
+     classicSnakeRatingForRecord,
+     classicSnakeRatingCriteriaText,
+     ...replayHelpers,
+@@ -520,17 +541,22 @@ async function harness({
+       suspend() {}
+       encounter() {}
+     },
+-    createClassicSnakeRecords: () => ({
+-      async read() {},
+-      async visit() {},
+-      async remember() {
+-        return recordReceipt;
+-      },
+-      chapter: () => 0,
+-      cleared: () => false,
+-      get: () => null,
+-      recent: () => null,
+-    }),
++    createClassicSnakeRecords: (options) => {
++      writeGuards.records = options.canWrite;
++      return {
++        ratingScope: CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY,
++        async read() {},
++        async visit() {},
++        async remember() {
++          return recordReceipt;
++        },
++        chapter: () => 0,
++        cleared: () => false,
++        get: () => null,
++        recent: () => null,
++        ratingEvidence: () => [],
++      };
++    },
+     createHuntDestruction: () => ({ reset() {}, advance() {}, draw() {} }),
+     classicCatchMarks: () => [],
+     drawClassicBoard(canvas, run, options) {
+@@ -600,6 +626,16 @@ async function harness({
+     shell,
+     optionalEntries,
+     pads,
++    ratings,
++    writeGuards,
++    enterDemo() {
++      demoOptions.onEnter();
++      demoBoundary.active = true;
++    },
++    leaveDemo() {
++      demoBoundary.active = false;
++      demoOptions.onExit({});
++    },
+     offlinePanel,
+     canActivateOffline: () => offlineOptions.canActivate(),
+     canOpenDemo: () => demoOptions.canOpen(),
+@@ -622,6 +658,81 @@ async function harness({
+   };
+ }
+ 
++test('Snake demo ownership rejects a delayed ordinary rating write and allows later ordinary refresh', async (t) => {
++  const model = managedIndexedDB(),
++    pendingOpens = [];
++  // Delay the real rating backend's open completion after it admitted the
++  // ordinary saving lease. The host remains interactive in the meantime.
++  const delayedIndexedDB = {
++    open(...args) {
++      return new Proxy(model.indexedDB.open(...args), {
++        set(request, key, value) {
++          request[key] =
++            key === 'onsuccess' ? (event) => pendingOpens.push(() => value(event)) : value;
++          return true;
++        },
++      });
++    },
++  };
++  const state = await harness({ directEntry: false, ratingsIndexedDB: delayedIndexedDB });
++  t.after(() => state.ratings.close());
++  await flush();
++  assert.equal(pendingOpens.length, 1, 'Ordinary boot rating storage is still opening.');
++  assert.equal(model.allPuts.length, 0);
++  const storage = new Map(state.storage);
++  const checkpoint = state.created.map((run) => core.exportClassicSnakeReplay(run));
++  state.enterDemo();
++  pendingOpens.shift()();
++  await state.ratings.refresh();
++  state.window.dispatchEvent({ type: 'focus' });
++  await flush();
++  await state.ratings.refresh();
++  assert.equal(model.allPuts.length, 0, 'Neither delayed boot nor focused demo may write ratings.');
++  assert.deepEqual(state.storage, storage);
++  assert.deepEqual(
++    state.created.map((run) => core.exportClassicSnakeReplay(run)),
++    checkpoint,
++  );
++  assert.deepEqual(state.ratings.snapshot().best, {}, 'Derived ratings remain readable in memory.');
++  state.leaveDemo();
++  await state.ratings.refresh();
++  assert.deepEqual(model.allPuts, [
++    [
++      'profiles',
++      `classic-snake-ratings.v1/authored-seed17.v1/${CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY}`,
++    ],
++  ]);
++  assert.deepEqual(state.storage, storage, 'Rating recovery does not save a round or settings.');
++});
++
++for (const demoOrigin of [false, true]) {
++  test(`Snake ${demoOrigin ? 'demo' : 'ordinary'} departure retains only its authorized pending-write lease`, async () => {
++    let finishDrain;
++    const drain = new Promise((resolve) => (finishDrain = resolve));
++    const state = await harness({ directEntry: false, flushEnemyStats: () => drain });
++    const guards = Object.values(state.writeGuards);
++    assert.equal(guards.length, 3);
++    assert.ok(guards.every((canWrite) => canWrite()));
++    if (demoOrigin) {
++      state.enterDemo();
++      assert.ok(guards.every((canWrite) => !canWrite()));
++    }
++    state.window.dispatchEvent({ type: 'pagehide', persisted: false });
++    assert.equal(state.writerClaims[0].writable, true, 'Pending work retains its original lease.');
++    assert.ok(
++      guards.every((canWrite) => canWrite() === !demoOrigin),
++      'Destroying the demo must not restore its departing host write authority.',
++    );
++    finishDrain();
++    await flush();
++    assert.equal(state.writerClaims[0].writable, false);
++    assert.ok(
++      guards.every((canWrite) => !canWrite()),
++      'Every drain allowance ends with its lease.',
++    );
++  });
++}
++
+ for (const mode of ['solo', 'versus', 'team']) {
+   test(`${mode} Snake can finish offline setup from Ready but defers during a paused flight`, async (t) => {
+     const state = await harness({ mode, sharedTools: true, directEntry: false });

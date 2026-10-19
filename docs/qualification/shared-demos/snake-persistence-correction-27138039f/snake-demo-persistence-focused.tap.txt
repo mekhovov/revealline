@@ -1,0 +1,745 @@
+TAP version 13
+# Subtest: fresh official campaign leaves old and unrelated progress bytes untouched
+ok 1 - fresh official campaign leaves old and unrelated progress bytes untouched # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.415
+  ...
+# Subtest: score and survival duels never share their best-score bucket
+ok 2 - score and survival duels never share their best-score bucket # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037375
+  ...
+# Subtest: a verified completed catalogue match restores clear and mastery with one shared witness
+ok 3 - a verified completed catalogue match restores clear and mastery with one shared witness # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.061916
+  ...
+# Subtest: a caller cannot relabel a replay, forge its score, or substitute an easier same-ID recipe
+ok 4 - a caller cannot relabel a replay, forge its score, or substitute an easier same-ID recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032583
+  ...
+# Subtest: corrupt metrics and future records are preserved on disk instead of granting clears or being replaced
+ok 5 - corrupt metrics and future records are preserved on disk instead of granting clears or being replaced # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030958
+  ...
+# Subtest: independent tabs merge records, and a queued older read cannot erase a verified clear
+ok 6 - independent tabs merge records, and a queued older read cannot erase a verified clear # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027542
+  ...
+# Subtest: a failed disk write remains visible and is retried before a later read can replace it
+ok 7 - a failed disk write remains visible and is retried before a later read can replace it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029458
+  ...
+# Subtest: a delayed ordinary result retains its proof while demo ownership blocks writes and read retries
+ok 8 - a delayed ordinary result retains its proof while demo ownership blocks writes and read retries
+  ---
+  duration_ms: 81.583959
+  ...
+# Subtest: a full catalogue profile stays verified across reads and updates, and discarded witnesses leave the cache
+ok 9 - a full catalogue profile stays verified across reads and updates, and discarded witnesses leave the cache # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.067042
+  ...
+# Subtest: the actual 2048-row ceiling preserves existing proofs and returns a verified unsaved result without poisoning later reads
+ok 10 - the actual 2048-row ceiling preserves existing proofs and returns a verified unsaved result without poisoning later reads # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041959
+  ...
+# Subtest: the actual 24 MiB serialized-profile boundary remains untouched while a new clear is verified for this session
+ok 11 - the actual 24 MiB serialized-profile boundary remains untouched while a new clear is verified for this session # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028042
+  ...
+# Subtest: unavailable IndexedDB reports a verified unsaved clear and keeps the session record
+ok 12 - unavailable IndexedDB reports a verified unsaved clear and keeps the session record # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.061625
+  ...
+# Subtest: Snake demo ownership rejects a delayed ordinary rating write and allows later ordinary refresh
+ok 13 - Snake demo ownership rejects a delayed ordinary rating write and allows later ordinary refresh
+  ---
+  duration_ms: 78.515958
+  ...
+# Subtest: Snake ordinary departure retains only its authorized pending-write lease
+ok 14 - Snake ordinary departure retains only its authorized pending-write lease
+  ---
+  duration_ms: 38.598291
+  ...
+# Subtest: Snake demo departure retains only its authorized pending-write lease
+ok 15 - Snake demo departure retains only its authorized pending-write lease
+  ---
+  duration_ms: 33.709375
+  ...
+# Subtest: solo Snake can finish offline setup from Ready but defers during a paused flight
+ok 16 - solo Snake can finish offline setup from Ready but defers during a paused flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.058291
+  ...
+# Subtest: solo Snake sound choice persists without enabling gore or advancing the paused round
+ok 17 - solo Snake sound choice persists without enabling gore or advancing the paused round # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029083
+  ...
+# Subtest: solo accepts a changed military preset on the first Start without replacing the recipe
+ok 18 - solo accepts a changed military preset on the first Start without replacing the recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.078625
+  ...
+# Subtest: solo Retry retains accepted artwork; a new mission Start accepts the chosen military preset
+ok 19 - solo Retry retains accepted artwork; a new mission Start accepts the chosen military preset # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035875
+  ...
+# Subtest: solo mission and settings menus cannot start or steer the prepared Snake boards
+ok 20 - solo mission and settings menus cannot start or steer the prepared Snake boards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02925
+  ...
+# Subtest: solo Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe
+ok 21 - solo Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0755
+  ...
+# Subtest: versus Snake can finish offline setup from Ready but defers during a paused flight
+ok 22 - versus Snake can finish offline setup from Ready but defers during a paused flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034959
+  ...
+# Subtest: versus Snake sound choice persists without enabling gore or advancing the paused round
+ok 23 - versus Snake sound choice persists without enabling gore or advancing the paused round # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020417
+  ...
+# Subtest: versus accepts a changed military preset on the first Start without replacing the recipe
+ok 24 - versus accepts a changed military preset on the first Start without replacing the recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.054459
+  ...
+# Subtest: versus Retry retains accepted artwork; a new mission Start accepts the chosen military preset
+ok 25 - versus Retry retains accepted artwork; a new mission Start accepts the chosen military preset # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06125
+  ...
+# Subtest: versus mission and settings menus cannot start or steer the prepared Snake boards
+ok 26 - versus mission and settings menus cannot start or steer the prepared Snake boards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021583
+  ...
+# Subtest: versus Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe
+ok 27 - versus Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.058375
+  ...
+# Subtest: team Snake can finish offline setup from Ready but defers during a paused flight
+ok 28 - team Snake can finish offline setup from Ready but defers during a paused flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022083
+  ...
+# Subtest: team Snake sound choice persists without enabling gore or advancing the paused round
+ok 29 - team Snake sound choice persists without enabling gore or advancing the paused round # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.089917
+  ...
+# Subtest: team accepts a changed military preset on the first Start without replacing the recipe
+ok 30 - team accepts a changed military preset on the first Start without replacing the recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026833
+  ...
+# Subtest: team Retry retains accepted artwork; a new mission Start accepts the chosen military preset
+ok 31 - team Retry retains accepted artwork; a new mission Start accepts the chosen military preset # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020084
+  ...
+# Subtest: team mission and settings menus cannot start or steer the prepared Snake boards
+ok 32 - team mission and settings menus cannot start or steer the prepared Snake boards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018917
+  ...
+# Subtest: team Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe
+ok 33 - team Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015042
+  ...
+# Subtest: Classic Snake accepts the physical WASD key with a Ukrainian keyboard layout
+ok 34 - Classic Snake accepts the physical WASD key with a Ukrainian keyboard layout # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013542
+  ...
+# Subtest: Escape pauses Classic Snake even when a settings checkbox has focus
+ok 35 - Escape pauses Classic Snake even when a settings checkbox has focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.064792
+  ...
+# Subtest: a delayed Classic Snake import cannot replace a subsequently selected Team round
+ok 36 - a delayed Classic Snake import cannot replace a subsequently selected Team round # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015584
+  ...
+# Subtest: Snake offline activation accepts completed runs and refuses imports, lost ownership and departures
+ok 37 - Snake offline activation accepts completed runs and refuses imports, lost ownership and departures # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013625
+  ...
+# Subtest: Living Circuit links override cosmetics and changing paused scenes preserves the attempt
+ok 38 - Living Circuit links override cosmetics and changing paused scenes preserves the attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013291
+  ...
+# Subtest: Snake settings have one canonical enemy appearance selector inside shared appearance controls
+ok 39 - Snake settings have one canonical enemy appearance selector inside shared appearance controls # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012666
+  ...
+# Subtest: Battlefield appearance refreshes reopened mission previews and result replay without replacing the attempt
+ok 40 - Battlefield appearance refreshes reopened mission previews and result replay without replacing the attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012708
+  ...
+# Subtest: saved Living Circuit cosmetics apply when no explicit scene is linked
+ok 41 - saved Living Circuit cosmetics apply when no explicit scene is linked # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.073917
+  ...
+# Subtest: solo retries change only hazard timing while Continue preserves its accepted seed
+ok 42 - solo retries change only hazard timing while Continue preserves its accepted seed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.023625
+  ...
+# Subtest: team retries change only hazard timing while Continue preserves its accepted seed
+ok 43 - team retries change only hazard timing while Continue preserves its accepted seed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020208
+  ...
+# Subtest: versus retries change only hazard timing while Continue preserves its accepted seed
+ok 44 - versus retries change only hazard timing while Continue preserves its accepted seed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017416
+  ...
+# Subtest: new attempt seed remains fresh even if a random source repeats
+ok 45 - new attempt seed remains fresh even if a random source repeats # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.079958
+  ...
+# Subtest: Pause offers Skip and Random only when their current setup can launch another mission
+ok 46 - Pause offers Skip and Random only when their current setup can launch another mission # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015875
+  ...
+# Subtest: Choose mission card restarts the same completed mission directly
+ok 47 - Choose mission card restarts the same completed mission directly # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015958
+  ...
+# Subtest: Choose mission card after a jammer crash launches a fresh schedule for the same setup
+ok 48 - Choose mission card after a jammer crash launches a fresh schedule for the same setup # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012959
+  ...
+# Subtest: unfocused direct entry waits for the player and BFCache return reacquires saving ownership
+ok 49 - unfocused direct entry waits for the player and BFCache return reacquires saving ownership # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013083
+  ...
+# Subtest: completed local Continue shows its verified grade while imported recordings never auto-advance
+ok 50 - completed local Continue shows its verified grade while imported recordings never auto-advance # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044
+  ...
+# Subtest: Enter on celebration actions retains the focused button action
+ok 51 - Enter on celebration actions retains the focused button action # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0125
+  ...
+# Subtest: direct entry needs no briefing and ordinary defeat replays then retries within three seconds
+ok 52 - direct entry needs no briefing and ordinary defeat replays then retries within three seconds # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026709
+  ...
+# Subtest: victory keeps full celebration then countdown; Next during celebration launches in one activation
+ok 53 - victory keeps full celebration then countdown; Next during celebration launches in one activation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012167
+  ...
+# Subtest: Home and backgrounding permanently cancel automatic progression for the completed attempt
+ok 54 - Home and backgrounding permanently cancel automatic progression for the completed attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014667
+  ...
+# Subtest: dpad navigation during celebration cancels the later countdown without rearming it
+ok 55 - dpad navigation during celebration cancels the later countdown without rearming it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01325
+  ...
+# Subtest: stick navigation during celebration cancels the later countdown without rearming it
+ok 56 - stick navigation during celebration cancels the later countdown without rearming it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013709
+  ...
+# Subtest: controller Menu during celebration stops automatic progression and opens results
+ok 57 - controller Menu during celebration stops automatic progression and opens results # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013042
+  ...
+# Subtest: controller Menu during replay stops automatic progression and opens results
+ok 58 - controller Menu during replay stops automatic progression and opens results # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011625
+  ...
+# Subtest: controller steering during live play still moves immediately and Confirm launches Next during celebration
+ok 59 - controller steering during live play still moves immediately and Confirm launches Next during celebration # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011792
+  ...
+# Subtest: selecting a new library mission launches directly while retaining the older Workshop save
+ok 60 - selecting a new library mission launches directly while retaining the older Workshop save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011667
+  ...
+# Subtest: Snake demo actions follow mode changes and stay outside excluded menu navigation
+ok 61 - Snake demo actions follow mode changes and stay outside excluded menu navigation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012625
+  ...
+# Subtest: community Snake keeps both demo actions hidden even in Solo
+ok 62 - community Snake keeps both demo actions hidden even in Solo # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012583
+  ...
+# Subtest: the shared keyboard navigator moves menu focus without leaking directional input into Snake
+ok 63 - the shared keyboard navigator moves menu focus without leaking directional input into Snake # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013417
+  ...
+# Subtest: Snake Home identifies the accepted solo/campaign round without starting it
+ok 64 - Snake Home identifies the accepted solo/campaign round without starting it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012041
+  ...
+# Subtest: Snake Home identifies the accepted team/campaign round without starting it
+ok 65 - Snake Home identifies the accepted team/campaign round without starting it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019417
+  ...
+# Subtest: Snake Home identifies the accepted versus/campaign round without starting it
+ok 66 - Snake Home identifies the accepted versus/campaign round without starting it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012417
+  ...
+# Subtest: Snake Home identifies the accepted solo/endless round without starting it
+ok 67 - Snake Home identifies the accepted solo/endless round without starting it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011958
+  ...
+# Subtest: Snake Home identifies the accepted versus/endless&duel=score round without starting it
+ok 68 - Snake Home identifies the accepted versus/endless&duel=score round without starting it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011792
+  ...
+# Subtest: Snake Home identifies the accepted versus/endless&duel=survival round without starting it
+ok 69 - Snake Home identifies the accepted versus/endless&duel=survival round without starting it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012042
+  ...
+# Subtest: the Snake library shows all missions and filters without changing the paused attempt
+ok 70 - the Snake library shows all missions and filters without changing the paused attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011208
+  ...
+# Subtest: solo Snake mission recovery preserves the paused native attempt and its accepted host
+ok 71 - solo Snake mission recovery preserves the paused native attempt and its accepted host # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011625
+  ...
+# Subtest: versus Snake mission recovery preserves the paused native attempt and its accepted host
+ok 72 - versus Snake mission recovery preserves the paused native attempt and its accepted host # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011417
+  ...
+# Subtest: team Snake mission recovery preserves the paused native attempt and its accepted host
+ok 73 - team Snake mission recovery preserves the paused native attempt and its accepted host # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.010959
+  ...
+# Subtest: Snake library mode selection launches the exact chosen Team mission with one activation
+ok 74 - Snake library mode selection launches the exact chosen Team mission with one activation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011875
+  ...
+# Subtest: Snake team navigation context localizes without changing the paused owner or selected library mode
+ok 75 - Snake team navigation context localizes without changing the paused owner or selected library mode # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019833
+  ...
+# Subtest: Snake versus navigation context localizes without changing the paused owner or selected library mode
+ok 76 - Snake versus navigation context localizes without changing the paused owner or selected library mode # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014375
+  ...
+# Subtest: a mode change in Snake rules remains selected when returning to the existing library
+ok 77 - a mode change in Snake rules remains selected when returning to the existing library # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01275
+  ...
+# Subtest: Snake mission information and copied links follow the browsed row without selecting an attempt
+ok 78 - Snake mission information and copied links follow the browsed row without selecting an attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011958
+  ...
+# Subtest: final-moves playback freezes behind a newer menu and only returns to Results while visible
+ok 79 - final-moves playback freezes behind a newer menu and only returns to Results while visible # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011292
+  ...
+# Subtest: results replay the last eight moves automatically without hiding actions or changing the saved attempt
+ok 80 - results replay the last eight moves automatically without hiding actions or changing the saved attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011792
+  ...
+# Subtest: Next retires the completed result and directly launches the ordered next mission
+ok 81 - Next retires the completed result and directly launches the ordered next mission # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0115
+  ...
+# Subtest: legacy migration preserves a verified historical seed
+ok 82 - legacy migration preserves a verified historical seed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011541
+  ...
+# Subtest: Continue rejects retired unprofiled recipes in the fresh campaign
+ok 83 - Continue rejects retired unprofiled recipes in the fresh campaign # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011541
+  ...
+# Subtest: Continue rejects retired local-v1 recipes in the fresh campaign
+ok 84 - Continue rejects retired local-v1 recipes in the fresh campaign # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011542
+  ...
+# Subtest: Import rejects retired unprofiled recipes in the fresh campaign
+ok 85 - Import rejects retired unprofiled recipes in the fresh campaign # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011375
+  ...
+# Subtest: Import rejects retired local-v1 recipes in the fresh campaign
+ok 86 - Import rejects retired local-v1 recipes in the fresh campaign # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012542
+  ...
+# Subtest: fresh campaign ignores the old Continue channel and preserves its original bytes
+ok 87 - fresh campaign ignores the old Continue channel and preserves its original bytes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011042
+  ...
+# Subtest: a self-consistent same-ID old recipe cannot bypass exact archived admission
+ok 88 - a self-consistent same-ID old recipe cannot bypass exact archived admission # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011708
+  ...
+# Subtest: legacy migration rejects a tampered historical seed and keeps the current round
+ok 89 - legacy migration rejects a tampered historical seed and keeps the current round # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012084
+  ...
+# Subtest: a scheduled terminal result cannot be restored with a later host clock
+ok 90 - a scheduled terminal result cannot be restored with a later host clock # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011291
+  ...
+# Subtest: an input-limit result may restore between its final two scheduled grid times
+ok 91 - an input-limit result may restore between its final two scheduled grid times # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012167
+  ...
+# Subtest: a V2 round saves its accepted timeline and Continue launches directly
+ok 92 - a V2 round saves its accepted timeline and Continue launches directly # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012084
+  ...
+# Subtest: a valid match cannot be imported under a different host seat arrangement
+ok 93 - a valid match cannot be imported under a different host seat arrangement # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011083
+  ...
+# Subtest: Classic flight animation follows play, pause and effective Reduced effects without stopping movement
+ok 94 - Classic flight animation follows play, pause and effective Reduced effects without stopping movement # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.011459
+  ...
+# Subtest: a failed Versus score board freezes its flight clock while the surviving board continues
+ok 95 - a failed Versus score board freezes its flight clock while the surviving board continues # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012292
+  ...
+# Subtest: Snake nested tools preserve iframe input and controller Back returns to the exact paused Settings owner
+ok 96 - Snake nested tools preserve iframe input and controller Back returns to the exact paused Settings owner # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015291
+  ...
+# Subtest: Snake About returns to its visible panel after a compact resize without advancing the paused attempt
+ok 97 - Snake About returns to its visible panel after a compact resize without advancing the paused attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014208
+  ...
+# Subtest: Snake reading controls update the shared display owner without replacing or advancing an attempt
+ok 98 - Snake reading controls update the shared display owner without replacing or advancing an attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01625
+  ...
+# Subtest: actual Snake links and optional SIM launch retain an explicit native review without changing recipes
+ok 99 - actual Snake links and optional SIM launch retain an explicit native review without changing recipes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014542
+  ...
+# Subtest: solo keeps accepted chapter materials through Retry, export and Continue after preferences change
+ok 100 - solo keeps accepted chapter materials through Retry, export and Continue after preferences change # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013375
+  ...
+# Subtest: versus keeps accepted chapter materials through Retry, export and Continue after preferences change
+ok 101 - versus keeps accepted chapter materials through Retry, export and Continue after preferences change # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032333
+  ...
+# Subtest: team keeps accepted chapter materials through Retry, export and Continue after preferences change
+ok 102 - team keeps accepted chapter materials through Retry, export and Continue after preferences change # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036375
+  ...
+# Subtest: automatic defeat retry retains accepted artwork while renewing only the hazard schedule
+ok 103 - automatic defeat retry retains accepted artwork while renewing only the hazard schedule # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020458
+  ...
+# Subtest: keyboard defeat retry retains accepted artwork while renewing only the hazard schedule
+ok 104 - keyboard defeat retry retains accepted artwork while renewing only the hazard schedule # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016625
+  ...
+# Subtest: controller defeat retry retains accepted artwork while renewing only the hazard schedule
+ok 105 - controller defeat retry retains accepted artwork while renewing only the hazard schedule # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014959
+  ...
+# Subtest: continuation-button defeat retry retains accepted artwork while renewing only the hazard schedule
+ok 106 - continuation-button defeat retry retains accepted artwork while renewing only the hazard schedule # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014875
+  ...
+# Subtest: celebration Retry retains accepted artwork and launches the same mission immediately
+ok 107 - celebration Retry retains accepted artwork and launches the same mission immediately # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013708
+  ...
+# Subtest: a forged chapter pin is rejected before replacing the active mission or save
+ok 108 - a forged chapter pin is rejected before replacing the active mission or save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014125
+  ...
+# Subtest: local-burst-v1 host reception reflects actual coverage instead of a distant transmitter phase
+ok 109 - local-burst-v1 host reception reflects actual coverage instead of a distant transmitter phase # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013875
+  ...
+# Subtest: local-burst-v2 host reception reflects actual coverage instead of a distant transmitter phase
+ok 110 - local-burst-v2 host reception reflects actual coverage instead of a distant transmitter phase # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01375
+  ...
+# Subtest: reception live status writes only changed text and accessible labels
+ok 111 - reception live status writes only changed text and accessible labels # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025875
+  ...
+# Subtest: en pause announcements update only when their message changes
+ok 112 - en pause announcements update only when their message changes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016125
+  ...
+# Subtest: en completed grade and session-only saving status stay quiet between changes
+ok 113 - en completed grade and session-only saving status stay quiet between changes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014625
+  ...
+# Subtest: uk pause announcements update only when their message changes
+ok 114 - uk pause announcements update only when their message changes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01625
+  ...
+# Subtest: uk completed grade and session-only saving status stay quiet between changes
+ok 115 - uk completed grade and session-only saving status stay quiet between changes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013333
+  ...
+# Subtest: Versus reception belongs to each board rather than the most exposed opponent
+ok 116 - Versus reception belongs to each board rather than the most exposed opponent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015458
+  ...
+# Subtest: Team exposes one shared reception status when either living head enters local coverage
+ok 117 - Team exposes one shared reception status when either living head enters local coverage # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013375
+  ...
+# Subtest: original unprofiled jammer remains broadcast in the host instead of receiving invented range rules
+ok 118 - original unprofiled jammer remains broadcast in the host instead of receiving invented range rules # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01275
+  ...
+# Subtest: solo Snake uses shared touch settings and turns on pointermove before release
+ok 119 - solo Snake uses shared touch settings and turns on pointermove before release # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012875
+  ...
+# Subtest: team Snake uses shared touch settings and turns on pointermove before release
+ok 120 - team Snake uses shared touch settings and turns on pointermove before release # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013416
+  ...
+# Subtest: versus Snake uses shared touch settings and turns on pointermove before release
+ok 121 - versus Snake uses shared touch settings and turns on pointermove before release # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01325
+  ...
+# Subtest: Snake releases gestures when paused, resized and rebuilt; retired surfaces cannot steer
+ok 122 - Snake releases gestures when paused, resized and rebuilt; retired surfaces cannot steer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014709
+  ...
+# Subtest: Snake board gestures obey stick/swipe preferences and Team preserves separate steering seats
+ok 123 - Snake board gestures obey stick/swipe preferences and Team preserves separate steering seats # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012792
+  ...
+# Subtest: Snake D-pad steers on press and slide without duplicating its compatibility click
+ok 124 - Snake D-pad steers on press and slide without duplicating its compatibility click # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017333
+  ...
+# Subtest: Snake reveals shared controls for real touch on hybrid devices and hides them for keyboard or pause
+ok 125 - Snake reveals shared controls for real touch on hybrid devices and hides them for keyboard or pause # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013916
+  ...
+# Subtest: toybox changes paused scenery without a new attempt
+ok 126 - toybox changes paused scenery without a new attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01325
+  ...
+# Subtest: atmospheric-ruins changes paused scenery without a new attempt
+ok 127 - atmospheric-ruins changes paused scenery without a new attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012875
+  ...
+# Subtest: night-arcade changes paused scenery without a new attempt
+ok 128 - night-arcade changes paused scenery without a new attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01275
+  ...
+# Subtest: fpv-battlefield changes paused scenery without a new attempt
+ok 129 - fpv-battlefield changes paused scenery without a new attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018083
+  ...
+# Subtest: solo operation entry admits authored Mission Race and retains objectives through retry
+ok 130 - solo operation entry admits authored Mission Race and retains objectives through retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013625
+  ...
+# Subtest: team operation entry admits authored Mission Race and retains objectives through retry
+ok 131 - team operation entry admits authored Mission Race and retains objectives through retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013417
+  ...
+# Subtest: versus operation entry admits authored Mission Race and retains objectives through retry
+ok 132 - versus operation entry admits authored Mission Race and retains objectives through retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01575
+  ...
+# Subtest: solo restores accepted chapter artwork with an exact current campaign recipe
+ok 133 - solo restores accepted chapter artwork with an exact current campaign recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013791
+  ...
+# Subtest: versus restores accepted chapter artwork with an exact current campaign recipe
+ok 134 - versus restores accepted chapter artwork with an exact current campaign recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015208
+  ...
+# Subtest: team restores accepted chapter artwork with an exact current campaign recipe
+ok 135 - team restores accepted chapter artwork with an exact current campaign recipe # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016625
+  ...
+# Subtest: a verified session-only clear keeps its stars and localized visible saving notice without blocking Retry
+ok 136 - a verified session-only clear keeps its stars and localized visible saving notice without blocking Retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016417
+  ...
+# Subtest: en/solo an older optional courier never replaces the required-target HUD after a catch
+ok 137 - en/solo an older optional courier never replaces the required-target HUD after a catch # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014625
+  ...
+# Subtest: en/team an older optional courier never replaces the required-target HUD after a catch
+ok 138 - en/team an older optional courier never replaces the required-target HUD after a catch # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015334
+  ...
+# Subtest: en/versus an older optional courier never replaces the required-target HUD after a catch
+ok 139 - en/versus an older optional courier never replaces the required-target HUD after a catch # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013333
+  ...
+# Subtest: uk/solo an older optional courier never replaces the required-target HUD after a catch
+ok 140 - uk/solo an older optional courier never replaces the required-target HUD after a catch # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013417
+  ...
+# Subtest: uk/team an older optional courier never replaces the required-target HUD after a catch
+ok 141 - uk/team an older optional courier never replaces the required-target HUD after a catch # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013625
+  ...
+# Subtest: uk/versus an older optional courier never replaces the required-target HUD after a catch
+ok 142 - uk/versus an older optional courier never replaces the required-target HUD after a catch # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013375
+  ...
+# Subtest: en the opening turn cue applies to touch and controller without requiring a keyboard
+ok 143 - en the opening turn cue applies to touch and controller without requiring a keyboard # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013583
+  ...
+# Subtest: uk the opening turn cue applies to touch and controller without requiring a keyboard
+ok 144 - uk the opening turn cue applies to touch and controller without requiring a keyboard # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013333
+  ...
+# Subtest: transient status wrapping never inherits the operation-only rule that hides the catch quota
+ok 145 - transient status wrapping never inherits the operation-only rule that hides the catch quota # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013291
+  ...
+# Subtest: Snake live language refresh translates every stats view without changing the paused attempt
+ok 146 - Snake live language refresh translates every stats view without changing the paused attempt # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013083
+  ...
+# Subtest: actual Snake settings keep an unsaved menu animation choice and Retry the same checkbox
+ok 147 - actual Snake settings keep an unsaved menu animation choice and Retry the same checkbox # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013125
+  ...
+1..147
+# tests 147
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 143
+# todo 0
+# duration_ms 472.206917

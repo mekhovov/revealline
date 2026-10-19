@@ -1,0 +1,216 @@
+{
+  "format": "SharedDemoHostedFailureIndependentReviewV1",
+  "created": "2026-10-19T12:19:27.822182+00:00",
+  "auditComplete": true,
+  "qualificationComplete": false,
+  "reviewOutcome": "Consistent preserved failure; source/capture/report hash bindings and exact-owned cleanup are substantiated. Functional isolation failure remains unresolved by this audit.",
+  "runId": 39248755654,
+  "jobId": 118047056574,
+  "head": "27138039f30d759aaf10d0b8c80564757bc9e905",
+  "base": "403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+  "preservationManifest": {
+    "path": ".cache/hosted-browser-27138039f-review/original-artifact-preservation-manifest.json",
+    "sha256": "2f09769f2088033696019804e6addfe271036e37f788b2aef3945aaf752662f8",
+    "files": 16,
+    "bytes": 6456673
+  },
+  "sourceBindings": {
+    "runtime": {
+      "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+      "files": 10273,
+      "bytes": 410435495
+    },
+    "buildInput": {
+      "sha256": "883d10813042872743b17fe5c7de7228cd8c3a87dc60918011a989b10833fe4c",
+      "files": 9416,
+      "bytes": 348537612
+    },
+    "reportedBeforeAfterEqual": true,
+    "toolingBeforeAfterEqual": true,
+    "exactCommitPinnedFilesIndependentlyHashed": 946,
+    "exactCommitPinnedBytesIndependentlyHashed": 11333862,
+    "artifactPinHashesVerified": 3,
+    "selectedImplementationPins": {
+      "docs/qualification/shared-demos/source-freeze-latest.json": {
+        "bytes": 423,
+        "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5"
+      },
+      "scripts/qualify-demo-main-pages.mjs": {
+        "bytes": 33067,
+        "sha256": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a"
+      },
+      "scripts/qualify-demo-restoration-browser.mjs": {
+        "bytes": 23633,
+        "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83"
+      },
+      "scripts/qualify-shared-demo-hosted-browser.mjs": {
+        "bytes": 26354,
+        "sha256": "95c450ac55262623f5b2b3450a19f9493016b2b6eb92792acc116945b37be9d8"
+      },
+      "scripts/qualify-shared-demo-hosted-browser.py": {
+        "bytes": 22685,
+        "sha256": "185373074ebf52bf67150dac5dfe0001d5989c0f466eb4c3eee260120d0b5065"
+      },
+      "scripts/test-qualify-shared-demo-hosted-browser.py": {
+        "bytes": 12735,
+        "sha256": "fdfc592ca6cad920a2ee268970a24900e5cac3684181126fed87c84c652a584e"
+      }
+    },
+    "method": "Compared all reported script/declaration file hashes to already-local exact Git commit objects with lazy fetching and maintenance disabled; no working tree edits and no complete runtime/body reread.",
+    "preflightToolingMatchesBrowserRunner": true
+  },
+  "environment": {
+    "node": "v22.13.1",
+    "platform": "linux",
+    "arch": "x64",
+    "playwright": "1.62.1",
+    "webkit": "26.5",
+    "availableBytesBeforeCapture": 83707887616
+  },
+  "guardExecution": {
+    "nodePassed": 13,
+    "nodeSkipped": 0,
+    "pythonPassed": 17,
+    "pythonPortablePassed": 8,
+    "pythonActualLinuxLifetimePassed": 9,
+    "pythonSkipped": 0,
+    "pythonSeconds": 3.301
+  },
+  "capture": {
+    "stepConclusion": "success",
+    "workflowStepSeconds": 561.0,
+    "reportedStageSeconds": 551.056,
+    "complete": true,
+    "filesBeforeOverlaysAndMetadata": 6221,
+    "finalStaged": {
+      "files": 6229,
+      "bytes": 967468908,
+      "headroomBytes": 12531092,
+      "overlayFiles": 4,
+      "metadataFiles": 4
+    },
+    "payloadBytesIncludingManifest": 967460814,
+    "archiveModelBytes": 972666880,
+    "archiveLimitBytes": 980000000,
+    "archiveModelHeadroomBytes": 7333120,
+    "manifestSHA256": "0da69b845a18ae3d23c5c98f66535ed9f44dfbcba8ce2bfa88aa6f4d0db42392",
+    "inventorySHA256": "a95253f84b7f05835ff3a9d1475fc566dbac4bf4622901c68b507f0281a59ce2",
+    "emittedPreview": {
+      "complete": true,
+      "directory": ".cache/hosted-demo-emitted",
+      "manifestPath": ".cache/hosted-demo-emitted/manifest.json",
+      "manifestSHA256": "0da69b845a18ae3d23c5c98f66535ed9f44dfbcba8ce2bfa88aa6f4d0db42392",
+      "files": 6229,
+      "deltaFiles": 292,
+      "deltaBlobs": 286,
+      "deltaBytes": 142165892,
+      "inventorySHA256": "a95253f84b7f05835ff3a9d1475fc566dbac4bf4622901c68b507f0281a59ce2"
+    },
+    "requiredPayloadsAndDiagnostics": 2744,
+    "requiredNativePaths": 128,
+    "literalModuleFiles": 412,
+    "missingOrMismatched": 0,
+    "offlineSelection": {
+      "selectedFiles": 3172,
+      "selectedBytes": 456291844,
+      "coreFiles": 1752,
+      "groups": [
+        {
+          "id": "extras:demo",
+          "files": 1881,
+          "requires": [
+            "shared",
+            "extras:sim-fpv"
+          ]
+        },
+        {
+          "id": "extras:sim-fpv",
+          "files": 148,
+          "requires": [
+            "shared"
+          ]
+        }
+      ],
+      "browserInstallationVerified": false
+    },
+    "inventoryFileSHA256": "ba099a8512856f226a1a729ce5a82cea833e8e31f0684b22351debfdd6e3447e"
+  },
+  "browser": {
+    "selectedJobs": 11,
+    "startedJobs": 1,
+    "completeJobs": 0,
+    "failedJob": "restoration-webkit",
+    "childSHA256": "73c61a480a210bef1a21ecc1932ae9bf7caaba176e00901cee34c336f276b131",
+    "partialChecks": [
+      {
+        "type": "ordinary-control-reload",
+        "mode": "solo"
+      },
+      {
+        "type": "reload-from-demo",
+        "mode": "solo",
+        "stateName": "watching"
+      },
+      {
+        "type": "reload-from-demo",
+        "mode": "solo",
+        "stateName": "practice"
+      },
+      {
+        "type": "ordinary-control-reload",
+        "mode": "snake"
+      }
+    ],
+    "pageErrors": 0,
+    "functionalComplete": false,
+    "strictDiagnosticGate": false,
+    "failure": "AssertionError [ERR_ASSERTION]: snake watching cannot write player persistence.\n+ actual - expected\n\n+ [\n+   {\n+     api: 'IndexedDB',\n+     at: 1792412059323,\n+     id: '1792412057243-0.4695416987186056',\n+     key: 'classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1',\n+     kind: 'mutation',\n+     method: 'put',\n+     mode: 'snake',\n+     owner: 'revealline-journey-v1/profiles',\n+     path: '/game/snake/play.html',\n+     stage: 'watching'\n+   }\n+ ]\n- []\n\n    at file:///home/runner/work/revealline/revealline/scripts/qualify-demo-restoration-browser.mjs:453:14",
+    "activeStage": {
+      "mode": "snake",
+      "stage": "watching"
+    },
+    "browserClosed": true,
+    "previewClosed": true,
+    "additionalPhase": "skipped",
+    "offlinePhase": "skipped",
+    "screenshotsPreserved": false
+  },
+  "supervision": {
+    "complete": false,
+    "childExit": 1,
+    "childElapsedSeconds": 112.11137403999999,
+    "elapsedSeconds": 112.22713669899997,
+    "executionLimitSeconds": 1800,
+    "cleanupLimitSeconds": 14,
+    "ownedMethod": "Linux /proc startTicks/UID/full raw argv SHA256; pidfd signals; dedicated subreaper",
+    "rootObserved": true,
+    "observedIdentities": 9,
+    "uids": [
+      1001
+    ],
+    "actions": [],
+    "identityTransitions": 3,
+    "remaining": [],
+    "cleanupVerified": true,
+    "forcedCleanupRequired": false,
+    "boundsExceeded": false,
+    "log": {
+      "complete": true,
+      "error": null,
+      "limitBytes": 4194304,
+      "totalBytes": 1452,
+      "writtenBytes": 1452,
+      "overflow": false,
+      "sha256": "03b1d2307de9ed08f1158c0298d428524b4023a4113d12def73c132b67e8fffb"
+    }
+  },
+  "limitations": [
+    "This independent artifact audit is complete; the hosted browser qualification failed and no whole browser job passed. Four successful partial checks are not four completed jobs.",
+    "Capture bodies were intentionally not uploaded or downloaded; their hashes are bound by the canonical inventory and reported complete hosted reads. This audit independently recomputes manifest/inventory/report hashes, not the 967 MB body set.",
+    "All 946 reported exact-commit script/declaration inputs were independently checked; the 410 MB runtime and 348 MB build source trees were not rehashed locally. Their full before/after fingerprints are reported by the exact pinned hosted tools.",
+    "Historical process identities cannot be queried again on the finished hosted runner. Exact pinned supervisor output plus nine actual Linux lifetime guards support cleanup; no broad signalling, forced cleanup or process-group claim is made.",
+    "Capture supervision is ordinary successful workflow/stage completion; exact Linux identity supervision applies to the browser phase.",
+    "No screenshots, later matrix jobs, additional browser phase, actual-worker offline phase, uploaded Pages archive, deployment, human review or new endurance run are established.",
+    "Modeled GNU tar size is not an actual uploaded archive size. Synchronous I/O may delay polling; final elapsed checks remain part of the supervisor contract."
+  ]
+}

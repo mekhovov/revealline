@@ -193,6 +193,48 @@ test('a failed disk write remains visible and is retried before a later read can
   assert.equal(reopened.get(match.runs[0], 'solo').score, 800);
 });
 
+test('a delayed ordinary result retains its proof while demo ownership blocks writes and read retries', async (t) => {
+  const model = managedIndexedDB(),
+    pendingOpens = [];
+  let ordinaryOwnsWrites = true;
+  const records = recordsFor(t, model, {
+    canWrite: () => ordinaryOwnsWrites,
+    indexedDB: {
+      open(...args) {
+        return new Proxy(model.indexedDB.open(...args), {
+          set(request, key, value) {
+            request[key] =
+              key === 'onsuccess' ? (event) => pendingOpens.push(() => value(event)) : value;
+            return true;
+          },
+        });
+      },
+    },
+  });
+  const match = wonMatch();
+  const saving = records.remember(match.runs[0], context(match));
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(pendingOpens.length, 1, 'The ordinary result was accepted before storage opened.');
+  ordinaryOwnsWrites = false;
+  pendingOpens.shift()();
+  assert.equal((await saving).saved, false);
+  assert.equal(records.cleared(first.id), true, 'The accepted result remains visible in memory.');
+  const accepted = records.snapshot();
+  await records.read();
+  assert.equal(model.allPuts.length, 0, 'A focused demo cannot flush an older pending result.');
+  assert.deepEqual(records.snapshot(), accepted);
+  ordinaryOwnsWrites = true;
+  await records.read();
+  assert.deepEqual(model.allPuts, [['profiles', key]]);
+  const reopened = recordsFor(t, model);
+  await reopened.read();
+  assert.deepEqual(
+    reopened.snapshot(),
+    accepted,
+    'Ordinary ownership saves the exact retained proof.',
+  );
+});
+
 test('a full catalogue profile stays verified across reads and updates, and discarded witnesses leave the cache', async (t) => {
   const model = managedIndexedDB(),
     source = recordsFor(t, model);

@@ -1,4 +1,7 @@
-import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from '../snake/classic-campaign.mjs';
+import {
+  CLASSIC_SNAKE_CAMPAIGN_REVISION,
+  CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY,
+} from '../snake/classic-campaign.mjs';
 import { demoLaunchURL } from '../demo-launch.mjs';
 import { createDemoMusicTransport } from '../ui/demo-music-transport.mjs';
 const SAVE_KEY = `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`;
@@ -13,6 +16,7 @@ import {
   mountTouchPresentationSettings,
 } from '../ui/touch-controls-view.mjs';
 import {
+  createClassicSnakeRatings,
   classicSnakeRatingForRecord,
   classicSnakeRatingCriteriaText,
 } from '../snake/classic-ratings.mjs';
@@ -39,6 +43,7 @@ import { Script, createContext } from 'node:vm';
 import { parse as parseModule } from 'acorn';
 import { parse as parseHTML } from 'parse5';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import * as core from '../snake/classic-core.mjs';
 import { nextClassicHazardSeed } from '../snake/classic-attempt-seed.mjs';
@@ -140,6 +145,8 @@ async function harness({
   savedRound = null,
   legacySavedRound = null,
   recordReceipt = { verified: true, saved: true },
+  ratingsIndexedDB = null,
+  flushEnemyStats = null,
   catalogue = CLASSIC_SNAKE_LEVELS,
 } = {}) {
   const document = new Document();
@@ -147,6 +154,7 @@ async function harness({
   const localeListeners = new Set();
   document.hasFocus = () => focused;
   const writerClaims = [];
+  const writeGuards = {};
   document.createElement = (tag) => {
     const node = new Element(document, tag);
     if (tag === 'canvas')
@@ -175,7 +183,7 @@ async function harness({
   mount(parseHTML(html), document.body);
   const window = new Events();
   const pads = [];
-  let tools, offlinePanel, offlineOptions, demoOptions;
+  let tools, offlinePanel, offlineOptions, demoOptions, demoBoundary, ratings;
   const storage = new Map();
   if (savedRound) storage.set(SAVE_KEY, JSON.stringify(savedRound));
   if (legacySavedRound)
@@ -226,7 +234,13 @@ async function harness({
         return button;
       });
       options.registerActions(actions);
-      return { active: false, update() {}, destroy() {} };
+      return (demoBoundary = {
+        active: false,
+        update() {},
+        destroy() {
+          this.active = false;
+        },
+      });
     },
     createClassicSnakeCommunityLibrary: () => ({
       load: async () => ({ entries: [entry], pack: { title: { en: 'Community Snake' } } }),
@@ -261,6 +275,7 @@ async function harness({
       return lease;
     },
     createEnemyStats: (options) => {
+      writeGuards.statistics = options.canWrite;
       const service = createEnemyStats({
         ...options,
         indexedDB: null,
@@ -272,12 +287,18 @@ async function harness({
       return {
         ...service,
         observe: (attempt, event) => service.observe(attempt, structuredClone(event)),
+        flush: flushEnemyStats ?? service.flush,
       };
     },
     validateEnemyStatsSession,
     forkEnemyStatsSession,
     mountEnemyStats,
-    createClassicSnakeRatings: () => ({ refresh: async () => {}, close() {} }),
+    createClassicSnakeRatings: (options) => {
+      writeGuards.ratings = options.canWrite;
+      return (ratings = ratingsIndexedDB
+        ? createClassicSnakeRatings({ ...options, indexedDB: ratingsIndexedDB })
+        : { refresh: async () => {}, close() {} });
+    },
     classicSnakeRatingForRecord,
     classicSnakeRatingCriteriaText,
     ...replayHelpers,
@@ -520,17 +541,22 @@ async function harness({
       suspend() {}
       encounter() {}
     },
-    createClassicSnakeRecords: () => ({
-      async read() {},
-      async visit() {},
-      async remember() {
-        return recordReceipt;
-      },
-      chapter: () => 0,
-      cleared: () => false,
-      get: () => null,
-      recent: () => null,
-    }),
+    createClassicSnakeRecords: (options) => {
+      writeGuards.records = options.canWrite;
+      return {
+        ratingScope: CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY,
+        async read() {},
+        async visit() {},
+        async remember() {
+          return recordReceipt;
+        },
+        chapter: () => 0,
+        cleared: () => false,
+        get: () => null,
+        recent: () => null,
+        ratingEvidence: () => [],
+      };
+    },
     createHuntDestruction: () => ({ reset() {}, advance() {}, draw() {} }),
     classicCatchMarks: () => [],
     drawClassicBoard(canvas, run, options) {
@@ -600,6 +626,16 @@ async function harness({
     shell,
     optionalEntries,
     pads,
+    ratings,
+    writeGuards,
+    enterDemo() {
+      demoOptions.onEnter();
+      demoBoundary.active = true;
+    },
+    leaveDemo() {
+      demoBoundary.active = false;
+      demoOptions.onExit({});
+    },
     offlinePanel,
     canActivateOffline: () => offlineOptions.canActivate(),
     canOpenDemo: () => demoOptions.canOpen(),
@@ -620,6 +656,81 @@ async function harness({
     },
     $: (id) => document.getElementById(id),
   };
+}
+
+test('Snake demo ownership rejects a delayed ordinary rating write and allows later ordinary refresh', async (t) => {
+  const model = managedIndexedDB(),
+    pendingOpens = [];
+  // Delay the real rating backend's open completion after it admitted the
+  // ordinary saving lease. The host remains interactive in the meantime.
+  const delayedIndexedDB = {
+    open(...args) {
+      return new Proxy(model.indexedDB.open(...args), {
+        set(request, key, value) {
+          request[key] =
+            key === 'onsuccess' ? (event) => pendingOpens.push(() => value(event)) : value;
+          return true;
+        },
+      });
+    },
+  };
+  const state = await harness({ directEntry: false, ratingsIndexedDB: delayedIndexedDB });
+  t.after(() => state.ratings.close());
+  await flush();
+  assert.equal(pendingOpens.length, 1, 'Ordinary boot rating storage is still opening.');
+  assert.equal(model.allPuts.length, 0);
+  const storage = new Map(state.storage);
+  const checkpoint = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  state.enterDemo();
+  pendingOpens.shift()();
+  await state.ratings.refresh();
+  state.window.dispatchEvent({ type: 'focus' });
+  await flush();
+  await state.ratings.refresh();
+  assert.equal(model.allPuts.length, 0, 'Neither delayed boot nor focused demo may write ratings.');
+  assert.deepEqual(state.storage, storage);
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    checkpoint,
+  );
+  assert.deepEqual(state.ratings.snapshot().best, {}, 'Derived ratings remain readable in memory.');
+  state.leaveDemo();
+  await state.ratings.refresh();
+  assert.deepEqual(model.allPuts, [
+    [
+      'profiles',
+      `classic-snake-ratings.v1/authored-seed17.v1/${CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY}`,
+    ],
+  ]);
+  assert.deepEqual(state.storage, storage, 'Rating recovery does not save a round or settings.');
+});
+
+for (const demoOrigin of [false, true]) {
+  test(`Snake ${demoOrigin ? 'demo' : 'ordinary'} departure retains only its authorized pending-write lease`, async () => {
+    let finishDrain;
+    const drain = new Promise((resolve) => (finishDrain = resolve));
+    const state = await harness({ directEntry: false, flushEnemyStats: () => drain });
+    const guards = Object.values(state.writeGuards);
+    assert.equal(guards.length, 3);
+    assert.ok(guards.every((canWrite) => canWrite()));
+    if (demoOrigin) {
+      state.enterDemo();
+      assert.ok(guards.every((canWrite) => !canWrite()));
+    }
+    state.window.dispatchEvent({ type: 'pagehide', persisted: false });
+    assert.equal(state.writerClaims[0].writable, true, 'Pending work retains its original lease.');
+    assert.ok(
+      guards.every((canWrite) => canWrite() === !demoOrigin),
+      'Destroying the demo must not restore its departing host write authority.',
+    );
+    finishDrain();
+    await flush();
+    assert.equal(state.writerClaims[0].writable, false);
+    assert.ok(
+      guards.every((canWrite) => !canWrite()),
+      'Every drain allowance ends with its lease.',
+    );
+  });
 }
 
 for (const mode of ['solo', 'versus', 'team']) {

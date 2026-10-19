@@ -1,0 +1,51 @@
+{
+  "format": "SharedDemoWorkflowAdmissionGuardCorrectionV1",
+  "createdAt": "2026-10-19T12:07:36.561631+00:00",
+  "head": "27138039f30d759aaf10d0b8c80564757bc9e905",
+  "changedTrackedFiles": [
+    "publishing/source-workflow.test.mjs"
+  ],
+  "sources": [
+    {
+      "path": "publishing/source-workflow.test.mjs",
+      "bytes": 16191,
+      "sha256": "7d77a2cfb7d9a901f4152633ac88fc1fb8bbe1f959cd2559507cdac3ece1f564"
+    },
+    {
+      "path": ".github/workflows/shared-demo-browser-qualification.yml",
+      "bytes": 10261,
+      "sha256": "28c8906f781141a11f0785aa2ff2e5319b222ca0b15b3d4973226d792723cf67"
+    },
+    {
+      "path": ".cache/source-workflow-demo-capture-guard.patch",
+      "bytes": 5668,
+      "sha256": "7c0c5685b39362c8b8e82f0ca9621518548f19945b2b590b5adfa1b7e7e7116b"
+    },
+    {
+      "path": ".cache/source-workflow-demo-capture-guard.tap.txt",
+      "bytes": 2139,
+      "sha256": "4d1a6066f67e9be9829a9daa5ecb276d7d4d1e7874c21684879abaaf03c612a6"
+    }
+  ],
+  "changes": [
+    "Named contract validates exact PR-head checkout, read-only authority, absence of environment or Pages upload/deploy actions, local canonical capture, three bounded supervised phases and always-retained finite diagnostics.",
+    "Only three exact canonical local paths are normalized before the unchanged generic main-pages/stage-pages/pages-production prohibition; all other workflows retain the same safeguards.",
+    "Eight negative contract mutations prove write authority, environments, Pages artifacts, main checkout, nonlocal capture, missing offline phase, success-only artifacts and ignored missing evidence still fail."
+  ],
+  "verification": {
+    "node": "v20.19.5",
+    "command": "node --test publishing/source-workflow.test.mjs",
+    "tests": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 94.376042,
+    "eslint": "pass --max-warnings 0",
+    "prettier": "pass"
+  },
+  "limits": [
+    "No workflow/runtime/qualifier changes, commits, pushes, browser launches or hosted job actions.",
+    "Original hosted failure evidence remains unchanged; this is a local test-oracle correction, not a new hosted result."
+  ]
+}
