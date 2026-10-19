@@ -51,7 +51,10 @@
     "fpv:native:test": "node --test scripts/test-build-fpv-native.mjs scripts/native-cli.test.mjs game/test/platform.test.mjs platforms/desktop/test/*.test.mjs platforms/ios/test/*.test.mjs",
     "fpv:regional:capacity": "node scripts/fpv-regional-contact-capacity.mjs",
     "fpv:flight-log": "node scripts/fpv-flight-log-comparison.mjs",
-    "fpv:comparison:qualify": "node scripts/smoke-fpv-advanced-comparison.mjs"
+    "fpv:comparison:qualify": "node scripts/smoke-fpv-advanced-comparison.mjs",
+    "remote-team:display:produce": "node scripts/remote-team-navigation.mjs produce",
+    "remote-team:display:check": "node scripts/remote-team-navigation.mjs check",
+    "test:remote-team-display": "node --test --test-concurrency=1 scripts/test-remote-team-navigation.mjs scripts/remote-team-navigation-cultural.check.mjs scripts/remote-team-navigation-expedition.check.mjs scripts/remote-team-navigation-hunt.check.mjs"
   },
   "dependencies": {
     "i18next": "26.4.2",

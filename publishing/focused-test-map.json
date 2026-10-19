@@ -461,6 +461,24 @@
           "timeoutMs": 300000
         }
       ]
+    },
+    {
+      "id": "remote-team-display-authoring",
+      "pathPatterns": [
+        "^scripts/(?:remote-team-navigation(?:-test-fixture)?|test-remote-team-navigation)\\.mjs$",
+        "^scripts/remote-team-navigation-(?:cultural|expedition|hunt)\\.check\\.mjs$",
+        "^scripts/published-navigation\\.mjs$",
+        "^scripts/(?:remote-team-display-guard|test_remote_team_display_guard)\\.py$",
+        "^\\.github/workflows/remote-team-display-authoring\\.yml$"
+      ],
+      "commands": [
+        {
+          "id": "remote-team-display-contract",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "scripts/test-remote-team-navigation.mjs"],
+          "timeoutMs": 300000
+        }
+      ]
     }
   ],
   "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],
