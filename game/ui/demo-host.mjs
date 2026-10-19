@@ -1040,7 +1040,7 @@ export function attachDemoHost({
         onChange: changed,
         modeId: selectedMode,
         scope,
-        loading: { recoveryTimeoutMs: Math.max(1, 30000 - (performance.now() - began)) },
+        loading: { initialRecoveryTimeoutMs: Math.max(1, 30000 - (performance.now() - began)) },
       });
       busy = false;
       if (interrupted) {

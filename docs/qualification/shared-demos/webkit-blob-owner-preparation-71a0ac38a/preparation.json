@@ -1,0 +1,202 @@
+{
+  "format": "WebKitBlobOwnerObserverPreparationV1",
+  "created": "2026-10-19T05:05:54.765635+00:00",
+  "complete": true,
+  "scope": "Preparation only: no browser or simulation was run, no qualification result was upgraded. Ignored new-path observer derives the existing Solo-only ordinary/watch/practice restoration sequence with unchanged deadlines and strict native diagnostic gate.",
+  "sourceCopies": [
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-71a0ac38a/run.mjs",
+        "sha256": "abd3575e85a3f73d0b83b6b03a9a76335c3588d32689b2f44a0bf3d421579add",
+        "bytes": 17467
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-preparation-71a0ac38a/run.mjs.txt",
+        "sha256": "abd3575e85a3f73d0b83b6b03a9a76335c3588d32689b2f44a0bf3d421579add",
+        "bytes": 17467
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-71a0ac38a/projection.mjs",
+        "sha256": "101752892132729de6a78c69d113934a098cc39ad4aa6c0a0917a3575e99e99a",
+        "bytes": 11447
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-preparation-71a0ac38a/projection.mjs.txt",
+        "sha256": "101752892132729de6a78c69d113934a098cc39ad4aa6c0a0917a3575e99e99a",
+        "bytes": 11447
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-71a0ac38a/projection.test.mjs",
+        "sha256": "f9480fa2b72a4b58eb76a94f55e9d097f5d9fa13edfc00478bedb4800948d11b",
+        "bytes": 16142
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-preparation-71a0ac38a/projection.test.mjs.txt",
+        "sha256": "f9480fa2b72a4b58eb76a94f55e9d097f5d9fa13edfc00478bedb4800948d11b",
+        "bytes": 16142
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-71a0ac38a/supervise.py",
+        "sha256": "9e23c4e610dc21281132fe513856a6d21ae7df23be600f5e43c94a344539c2c0",
+        "bytes": 4597
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-preparation-71a0ac38a/supervise.py.txt",
+        "sha256": "9e23c4e610dc21281132fe513856a6d21ae7df23be600f5e43c94a344539c2c0",
+        "bytes": 4597
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-71a0ac38a/tests.tap.txt",
+        "sha256": "d125d8417a0e142be59bfce83c4f1acb3e1fb359dc1e1609f63e8e390c636a81",
+        "bytes": 3968
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-preparation-71a0ac38a/tests.tap.txt",
+        "sha256": "d125d8417a0e142be59bfce83c4f1acb3e1fb359dc1e1609f63e8e390c636a81",
+        "bytes": 3968
+      }
+    }
+  ],
+  "preservedOriginalObserver": [
+    {
+      "path": ".cache/shared-demo-scratch-c4c5fc3c/webkit-final-owner/run.mjs",
+      "sha256": "b6e34f28a686e36cc50cf81084150fd3a7704d6d7fd264dd61c068ff19f6712d",
+      "bytes": 16999
+    },
+    {
+      "path": ".cache/shared-demo-scratch-c4c5fc3c/webkit-final-owner/projection.mjs",
+      "sha256": "1cfdb53092aa52286ecd11b4aeb5af00bde72bb6f7b8cd76755e77ffccf49ef0",
+      "bytes": 8799
+    },
+    {
+      "path": ".cache/shared-demo-scratch-c4c5fc3c/webkit-final-owner/projection.test.mjs",
+      "sha256": "549c3829c2e4d0a306ffb805af05217d370ebe6d53b31f22678ce2ad85fc7f00",
+      "bytes": 11373
+    },
+    {
+      "path": ".cache/shared-demo-scratch-c4c5fc3c/webkit-final-owner/supervise.py",
+      "sha256": "301996d66775cdbba8429ca212f91de126113002910fd845a943fe6392294962",
+      "bytes": 4159
+    }
+  ],
+  "currentStrictFailure": {
+    "receipt": {
+      "path": "docs/qualification/shared-demos/restoration-webkit-final-emitted-16ebd7b-71a0ac38a-affected.json",
+      "sha256": "24d3b4a983a2165bdc6f58ceabc9fd4534177f93bc8089925ac2960602982b81",
+      "bytes": 64071
+    },
+    "complete": false,
+    "functionalChecksPassed": 12,
+    "pageErrors": 1,
+    "domErrorEvents": 0,
+    "stage": "ordinary-control-reload-1",
+    "nativeError": "Cannot load blob:http://127.0.0.1:8771/6bd27257-0cb8-4990-b559-f4fa3a0228f7 due to access control checks.\n    at browserDecode (http://127.0.0.1:8771/game/presentation/host.mjs:156:36)\n    at unknown (http://127.0.0.1:8771/game/presentation/host.mjs:581:28)",
+    "browserClosed": true,
+    "previewClosed": true
+  },
+  "extension": [
+    "The two existing decodeImage submissions receive metadata from already verified asset hash, slot, Blob size/type and codecSignalAbortedAtQueue. No new Blob read, URL creation or native decode wrapper.",
+    "An operation token is created at queue time and logged when existing work is actually submitted. The submitted row aborted value is the host controller state, not an actor-pool codec signal measurement.",
+    "Only the existing result.catch records the operation token and original error; load/rethrow/dispose/app-fallback tracing is unchanged. No additional Promise handler, transformed rejection or return-value replacement.",
+    "Passive DOM error/unhandledrejection listeners use the existing per-document error WeakMap without preventDefault. Existing raw page errors and WebKit protocol remain retained and strict.",
+    "New supervisor copy handles SIGTERM/SIGINT by marking incomplete and reaching existing exact-identity cleanup; old preserved supervisor stays unchanged."
+  ],
+  "checks": {
+    "projectionTests": {
+      "total": 16,
+      "passed": 16,
+      "failed": 0,
+      "actualLog": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-preparation-71a0ac38a/tests.tap.txt",
+        "sha256": "d125d8417a0e142be59bfce83c4f1acb3e1fb359dc1e1609f63e8e390c636a81",
+        "bytes": 3968
+      },
+      "includes": [
+        "same error/document identity only when DOM supplies the same object",
+        "native main call count/result/rejection/synchronous throw preservation",
+        "unchanged native decode call and Promise-handler counts",
+        "bounded metadata and collection completeness including strict-failed exit1",
+        "original gameplay functions/deadlines preserved in derived harness"
+      ]
+    },
+    "nodeSyntax": true,
+    "pythonSyntax": true,
+    "supervisorSignalHandlerPureTest": {
+      "passed": true,
+      "scope": "AST-extracted handler marks interrupted/incomplete and ignores repeated SIGINT/SIGTERM while bounded cleanup proceeds; no process or browser spawned."
+    },
+    "companionReview": "acceptance_review found no control-flow or ownership blocker; its signal-attribution caution was addressed by renaming codecSignalAbortedAtCall to codecSignalAbortedAtQueue and adding a regression assertion."
+  },
+  "preparationCorrection": "A new fixture initially found decode detail.kind overwrote the emitted row kind. Corrected the metadata name to operationKind, then all16 tests passed. No runtime/browser evidence was created by that failed helper test.",
+  "limits": [
+    "Matching DOM error/rejection object identity is possible only when the browser supplies that object. Current failed run reported no such DOM event.",
+    "Protocol/pageerror text\u2014even a unique blob URL with matching target/document timing\u2014is correlation, not proof of exact JavaScript error identity.",
+    "The browser-internal Blob URL cannot be inferred from the application Blob or public URL.createObjectURL; the observer never manufactures that association.",
+    "CollectionComplete can be true for a clean, fully drained strict-failed result; qualification complete remains false unless the unchanged strict gate passed. No automatic adjudication/filtering.",
+    "Missing old-document tail, catch, operation link, ambiguous candidate or overflow remains unresolved.",
+    "Existing production pagehide already closes presentationHost (game/app.mjs:2872\u20132876). A duplicate close is not an evidence-based fix."
+  ],
+  "ifUnresolved": "Preserve the current strict failure. First review whether the native message belongs to the departing document, whether its decode was submitted before retirement, whether the actual JS rejection reaches existing main/load/app ownership and cleanup, and whether the replacement document is healthy. Exact native-internal-URL-to-JS-error-object equality is neither available nor required. If that bounded run remains ambiguous, report the missing link; use a focused native createImageBitmap/navigation reproduction only if needed to choose a production decode/lifecycle fix. A nonreproduction is not retrospective clearance, and no console-message filter is introduced.",
+  "argvTemplate": [
+    "python3",
+    ".cache/webkit-blob-owner-71a0ac38a/supervise.py",
+    "--run=approved",
+    "--node=<absolute Node24 binary>",
+    "--runtime=<absolute playwright/index.mjs>",
+    "--executable=<absolute webkit-2336/pw_run.sh>",
+    "--report=<fresh JSON path>",
+    "--head=71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+    "--fingerprint=8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+    "--emitted-preview=.cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+    "--port=18776"
+  ],
+  "environment": "Use the already owned local TMPDIR. Await root browser-slot release; no runtime, harness or HEAD edits are required.",
+  "primarySourceBindings": {
+    "sources": [
+      {
+        "title": "WebKit ThreadableLoader",
+        "url": "https://raw.githubusercontent.com/WebKit/WebKit/main/Source/WebCore/loader/ThreadableLoader.cpp",
+        "sha256": "7dbd2fd967759478b59c92912d8addfe327cfc91fa149b100188f3264b26bc51",
+        "bytes": 7811,
+        "lines": "129-151",
+        "finding": "logError emits the access-control diagnostic as a JavaScript-source error console message; this emission does not inspect JavaScript promise handling.",
+        "readAt": "2026-10-19T05:07:26.419322+00:00"
+      },
+      {
+        "title": "WebKit FileReaderLoader",
+        "url": "https://raw.githubusercontent.com/WebKit/WebKit/main/Source/WebCore/fileapi/FileReaderLoader.cpp",
+        "sha256": "dc1643cf5fb9633eac4718f7f784793ad3100581180607eb9e48fb908762e519",
+        "bytes": 13511,
+        "lines": "83-120",
+        "finding": "Blob reads create a temporary public blob URL, register it and hide the request from the inspector; it is not an application-created URL.",
+        "readAt": "2026-10-19T05:07:26.725703+00:00"
+      },
+      {
+        "title": "Playwright WebKit adapter v1.62.1",
+        "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/playwright-core/src/server/webkit/wkPage.ts",
+        "sha256": "31a1492936ecb34cea00628827ed830763f8f7a58fd761d0c4ecf4db6f6a4c9c",
+        "bytes": 61995,
+        "lines": "499-523",
+        "finding": "JavaScript-source error console messages create a fresh Error for addPageError; an actual unhandled page exception is not a prerequisite.",
+        "readAt": "2026-10-19T05:07:27.213857+00:00"
+      }
+    ],
+    "installedPlaywright": {
+      "version": "1.62.1",
+      "path": "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright-core/lib/coreBundle.js",
+      "sha256": "9393fa79e1c67c74edc26b610d65a4f7ed73d345a762465cc88340a33a2454ac",
+      "lines": "49556-49590",
+      "verifiedBehavior": "Installed adapter independently confirms JS-source/error console conversion into a newly allocated Error and pageerror."
+    },
+    "limit": "WebKit main sources explain the mechanism; they are not claimed to be the exact source revision of installed WebKit2336/26.5. Matching source text is not same-run lifecycle/ownership proof."
+  },
+  "evidenceInterpretation": "A Playwright pageerror here is not itself proof of an unhandled JavaScript exception. Collect transport provenance (native Console.messageAdded target, document and lifecycle) separately from actual JS decode rejection ownership (existing main/load/app catches and disposal). A native internal URL cannot equal a JavaScript error identity by design; no such impossible equality is required. Same-document operation/error chains and target/document chronology can support explicitly labelled same-run correlation. Native raw diagnostics remain in the unchanged strict failure record."
+}

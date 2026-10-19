@@ -1,0 +1,99 @@
+{
+  "format": "SharedDemoRecoveryCorrectionV1",
+  "created": "2026-10-19T05:19:26.758789+00:00",
+  "baseHead": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+  "applied": true,
+  "committed": false,
+  "ownedPaths": [
+    "game/demo-director.mjs",
+    "game/ui/demo-host.mjs",
+    "game/test/demo-timeout-fallback.test.mjs"
+  ],
+  "sourcePins": {
+    "game/demo-director.mjs": {
+      "path": "game/demo-director.mjs",
+      "bytes": 14542,
+      "sha256": "f057b24ec7e878b5a8013a5aba26ab1398067e4aabcd14b8871f432f259f5b66"
+    },
+    "game/ui/demo-host.mjs": {
+      "path": "game/ui/demo-host.mjs",
+      "bytes": 57022,
+      "sha256": "7f2d09118885feef5614bfa906c206ab099964f943a692264187a97e1be87b3d"
+    },
+    "game/test/demo-timeout-fallback.test.mjs": {
+      "path": "game/test/demo-timeout-fallback.test.mjs",
+      "bytes": 23891,
+      "sha256": "5b2d9f2f93e6d1ffff85bd118c7510588b9bbe11575833144365677da31f9073"
+    }
+  },
+  "helperPin": {
+    "path": "game/test/helpers/demo-loading-clock.mjs",
+    "bytes": 1005,
+    "sha256": "32a09efefe9c3261b5fbfb5f872bcdd7e11a389c315b46dc53d0f26a1202121e"
+  },
+  "finalPatch": {
+    "path": ".cache/loading-recovery-71a0ac38a/combined-loading-recovery-final.patch",
+    "bytes": 23296,
+    "sha256": "bd94570aa4fc65399e872b443e1bfc9719aba013be344cf78e8021d76d46116b"
+  },
+  "proofs": {
+    "production-focused-final.tap.txt": {
+      "path": ".cache/loading-recovery-71a0ac38a/production-focused-final.tap.txt",
+      "bytes": 4565,
+      "sha256": "7c4753c9e1937f7c08aa7eeaf33b894ce92b2d49e74e11ddaee555d811b2965c",
+      "tests": 21,
+      "pass": 21,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "budget-red.tap.txt": {
+      "path": ".cache/loading-recovery-71a0ac38a/budget-red.tap.txt",
+      "bytes": 2338,
+      "sha256": "4948f69371efe503ba12051f1bcea254fd03143bb274c6e19e581eac7a49c896",
+      "tests": 3,
+      "pass": 1,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "verified-fallback-red.tap.txt": {
+      "path": ".cache/loading-recovery-71a0ac38a/verified-fallback-red.tap.txt",
+      "bytes": 7248,
+      "sha256": "8885f59a6d8f67d090e668f7de2504c941f0ef3e935157eee797e64154c86fb4",
+      "tests": 10,
+      "pass": 4,
+      "fail": 6,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "secondary-fallback-red.tap.txt": {
+      "path": ".cache/loading-recovery-71a0ac38a/secondary-fallback-red.tap.txt",
+      "bytes": 6155,
+      "sha256": "ed3ed15e446a637210c295a53877f0d8b58d3c2d9642ff5ef265a6b1e6391b26",
+      "tests": 21,
+      "pass": 0,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 20
+    }
+  },
+  "checks": {
+    "focusedTests": true,
+    "eslintThreePaths": true,
+    "prettierThreePaths": true,
+    "gitDiffCheckThreePaths": true
+  },
+  "behavior": [
+    "Catalog loading subtracts from first startup only; each subsequent Next/Retry retains min(30s, configured per-attempt cap); individual15s deadline unchanged.",
+    "At most one source/cost entry per distinct mode (four current modes); same-source cost refreshes, a quicker eligible source replaces the entry, and no player/payload is retained.",
+    "Timeout recovery chooses the quickest currently eligible recorded cost, then preserves the old lastVerified fallback if timing entries are kind-ineligible.",
+    "Ordinary chooser, balanced mode/level visits and one-payload prefetch remain unchanged. Fallback invokes full preparation and verification.",
+    "Failed/suspended/kind-ineligible sources stay excluded; disposal clears retained metadata."
+  ],
+  "evidenceScope": [
+    "Original current Chromium diagnostic succeeded with four recovered timeouts; the improvement is supported by measured fallback choices, not a claim to explain the earlier missing failure snapshot.",
+    "Final focused suite21 tests passes. Original budget reproduction1 pass/2 failures; fallback reproduction4 pass/6 failures; secondary bot/replay regression fails before the review correction.",
+    "No browser run, broad qualification, commit or source-declaration update performed by this subagent."
+  ]
+}

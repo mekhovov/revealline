@@ -66,10 +66,18 @@ export async function diagnoseQualificationFailure({
   error,
   page,
   screenshotPath,
+  readState,
   timeoutMs = 2000,
 }) {
   failed(report, error);
   if (!page) return;
+  if (readState) {
+    try {
+      report.failureState = await bounded(readState, timeoutMs);
+    } catch (failure) {
+      remember(report, 'failure-state', failure);
+    }
+  }
   try {
     report.visibleText = (
       await bounded(() => page.locator('body').innerText({ timeout: timeoutMs }), timeoutMs)

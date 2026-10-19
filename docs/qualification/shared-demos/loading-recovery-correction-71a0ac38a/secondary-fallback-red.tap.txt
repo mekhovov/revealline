@@ -1,0 +1,132 @@
+TAP version 13
+# Subtest: a source timeout prefers verified Snake and preserves the unvisited mode for the next transition
+ok 1 - a source timeout prefers verified Snake and preserves the unvisited mode for the next transition # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.480209
+  ...
+# Subtest: a verified fallback still shares the original thirty-second recovery deadline
+ok 2 - a verified fallback still shares the original thirty-second recovery deadline # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.05775
+  ...
+# Subtest: timeout recovery cannot reuse a verified source after demo-playback-failed
+ok 3 - timeout recovery cannot reuse a verified source after demo-playback-failed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043375
+  ...
+# Subtest: timeout recovery cannot reuse a verified source after demo-renderer-unavailable
+ok 4 - timeout recovery cannot reuse a verified source after demo-renderer-unavailable # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036583
+  ...
+# Subtest: cancelling a preferred verified fallback retires its late player without adoption
+ok 5 - cancelling a preferred verified fallback retires its late player without adoption # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.18775
+  ...
+# Subtest: initial catalog time does not shorten the next transition or its verified fallback
+ok 6 - initial catalog time does not shorten the next transition or its verified fallback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050292
+  ...
+# Subtest: the initial attempt still respects the catalog-subtracted startup remainder
+ok 7 - the initial attempt still respects the catalog-subtracted startup remainder # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042083
+  ...
+# Subtest: Retry after startup exhaustion receives a fresh budget without changing the source deadline
+ok 8 - Retry after startup exhaustion receives a fresh budget without changing the source deadline # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038375
+  ...
+# Subtest: a configured per-attempt cap still limits later transitions and Retry
+ok 9 - a configured per-attempt cap still limits later transitions and Retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.459541
+  ...
+# Subtest: cancelling initial preparation does not restore its startup deduction on resume
+ok 10 - cancelling initial preparation does not restore its startup deduction on resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.086958
+  ...
+# Subtest: timeout recovery prepares the quickest verified mode again without retaining another world
+ok 11 - timeout recovery prepares the quickest verified mode again without retaining another world # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037417
+  ...
+# Subtest: a retained source uses its latest successful cost after becoming slower
+ok 12 - a retained source uses its latest successful cost after becoming slower # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032041
+  ...
+# Subtest: each mode retains its quicker candidate when the second level costs 50ms
+ok 13 - each mode retains its quicker candidate when the second level costs 50ms # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.034625
+  ...
+# Subtest: each mode retains its quicker candidate when the second level costs 500ms
+ok 14 - each mode retains its quicker candidate when the second level costs 500ms # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.059292
+  ...
+# Subtest: timeout ranking excludes the quickest source after demo-playback-failed
+ok 15 - timeout ranking excludes the quickest source after demo-playback-failed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027291
+  ...
+# Subtest: timeout ranking excludes the quickest source after demo-renderer-unavailable
+ok 16 - timeout ranking excludes the quickest source after demo-renderer-unavailable # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.088917
+  ...
+# Subtest: timeout recovery after bot exhaustion keeps the required replay kind
+ok 17 - timeout recovery after bot exhaustion keeps the required replay kind # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029583
+  ...
+# Subtest: equal measured costs choose the first retained mode consistently
+ok 18 - equal measured costs choose the first retained mode consistently # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.13475
+  ...
+# Subtest: fastest recovery still enforces the individual and total loading deadlines
+ok 19 - fastest recovery still enforces the individual and total loading deadlines # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031334
+  ...
+# Subtest: quick verified sources do not bias ordinary mode/level rotation or its one-payload prefetch
+ok 20 - quick verified sources do not bias ordinary mode/level rotation or its one-payload prefetch # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06175
+  ...
+# Subtest: a kind-ineligible quickest bot preserves the most recent verified replay fallback
+not ok 21 - a kind-ineligible quickest bot preserves the most recent verified replay fallback
+  ---
+  duration_ms: 1.840125
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/demo-timeout-fallback.test.mjs:686:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'unknown-sim-replay'
+    - 'verified-solo-replay'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'verified-solo-replay'
+  actual: 'unknown-sim-replay'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/demo-timeout-fallback.test.mjs:717:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 20
+# todo 0
+# duration_ms 43.333666

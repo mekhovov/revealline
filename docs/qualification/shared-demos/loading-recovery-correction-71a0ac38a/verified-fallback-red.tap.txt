@@ -1,0 +1,175 @@
+TAP version 13
+# Subtest: timeout recovery prepares the quickest verified mode again without retaining another world
+not ok 1 - timeout recovery prepares the quickest verified mode again without retaining another world
+  ---
+  duration_ms: 2.554416
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:16:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'fast-snake',
+        'recent-survival',
+        'unknown-solo',
+    +   'recent-survival'
+    -   'fast-snake'
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'fast-snake'
+    1: 'recent-survival'
+    2: 'unknown-solo'
+    3: 'fast-snake'
+  actual:
+    0: 'fast-snake'
+    1: 'recent-survival'
+    2: 'unknown-solo'
+    3: 'recent-survival'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:40:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: a retained source uses its latest successful cost after becoming slower
+not ok 2 - a retained source uses its latest successful cost after becoming slower
+  ---
+  duration_ms: 1.120209
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:53:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The old ten-millisecond Snake cost is stale.
+    + actual - expected
+    
+    + 'fast-snake'
+    - 'pending-sim'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'pending-sim'
+  actual: 'fast-snake'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:76:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: each mode retains its quicker candidate when the second level costs 50ms
+ok 3 - each mode retains its quicker candidate when the second level costs 50ms
+  ---
+  duration_ms: 0.529417
+  ...
+# Subtest: each mode retains its quicker candidate when the second level costs 500ms
+not ok 4 - each mode retains its quicker candidate when the second level costs 500ms
+  ---
+  duration_ms: 0.342084
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:84:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'second-snake'
+    - 'fast-snake'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'fast-snake'
+  actual: 'second-snake'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:106:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: timeout ranking excludes the quickest source after demo-playback-failed
+ok 5 - timeout ranking excludes the quickest source after demo-playback-failed
+  ---
+  duration_ms: 0.321416
+  ...
+# Subtest: timeout ranking excludes the quickest source after demo-renderer-unavailable
+ok 6 - timeout ranking excludes the quickest source after demo-renderer-unavailable
+  ---
+  duration_ms: 0.24625
+  ...
+# Subtest: timeout recovery after bot exhaustion keeps the required replay kind
+not ok 7 - timeout recovery after bot exhaustion keeps the required replay kind
+  ---
+  duration_ms: 0.623416
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:145:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'pending-replay'
+    - 'verified-replay'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'verified-replay'
+  actual: 'pending-replay'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:173:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: equal measured costs choose the first retained mode consistently
+not ok 8 - equal measured costs choose the first retained mode consistently
+  ---
+  duration_ms: 0.282
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:181:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'recent-survival'
+    - 'fast-snake'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'fast-snake'
+  actual: 'recent-survival'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:198:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fastest recovery still enforces the individual and total loading deadlines
+not ok 9 - fastest recovery still enforces the individual and total loading deadlines
+  ---
+  duration_ms: 0.553792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:205:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'recent-survival'
+    - 'fast-snake'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'fast-snake'
+  actual: 'recent-survival'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/loading-recovery-71a0ac38a/verified-fallback-red.test.mjs:227:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: quick verified sources do not bias ordinary mode/level rotation or its one-payload prefetch
+ok 10 - quick verified sources do not bias ordinary mode/level rotation or its one-payload prefetch
+  ---
+  duration_ms: 1.483542
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 4
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 304.542292

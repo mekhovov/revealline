@@ -1,0 +1,202 @@
+{
+  "format": "SoloEmittedCorpusRunnerPreparationV1",
+  "created": "2026-10-19T04:46:17.686853+00:00",
+  "complete": true,
+  "scope": "Helper preparation only. No browser, simulation, emitted-build qualification or recording generation was run. Fresh full-corpus qualification remains pending explicit root release after the new build.",
+  "helperCopies": [
+    {
+      "source": {
+        "path": ".cache/reverify-solo-emitted.mjs",
+        "sha256": "81bf481d3a2bc98246e37648cc5710982e91d3e2d09ac9dec7cf2299e5c405f1",
+        "bytes": 14951
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/solo-corpus-reverify-preparation-71a0ac38a/reverify-solo-emitted.mjs.txt",
+        "sha256": "81bf481d3a2bc98246e37648cc5710982e91d3e2d09ac9dec7cf2299e5c405f1",
+        "bytes": 14951
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/reverify-solo-emitted.py",
+        "sha256": "89212bc352ff234d4c83c3ba92ffb7b3caa82eeb869359a137afe108c700bf93",
+        "bytes": 5686
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/solo-corpus-reverify-preparation-71a0ac38a/reverify-solo-emitted.py.txt",
+        "sha256": "89212bc352ff234d4c83c3ba92ffb7b3caa82eeb869359a137afe108c700bf93",
+        "bytes": 5686
+      }
+    }
+  ],
+  "originalQualifier": {
+    "path": "scripts/qualify-solo-browser.mjs",
+    "sha256": "03f1eb36169cc8dd7e3d82f2562fc30f1588bddd2309a66194f592c26618f972",
+    "bytes": 18228
+  },
+  "ownerSource": {
+    "path": ".cache/run-endurance-emitted-final.py",
+    "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+    "bytes": 26055
+  },
+  "providerEvidenceHelper": {
+    "path": ".cache/demo-probe-evidence.mjs",
+    "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+    "bytes": 2632
+  },
+  "currentCatalogInventory": {
+    "entries": 240,
+    "clips": 242,
+    "qualifiedStrict": 232,
+    "preservedReviewedNative": 10,
+    "derivedFrom": [
+      "game/demo-data/catalog.json",
+      "game/demo-data/catalog.journey-current.json",
+      "game/demo-data/catalog.journey-archive.json"
+    ],
+    "runtimeCountsDerivedDynamically": true
+  },
+  "checks": {
+    "pureValidation": {
+      "passed": 29,
+      "scope": "Argument whitelist/release guard, terminal/capture/cells requirements, exact IDs, revision/count/checkpoint consistency, no generated variants/performances, native candidate terminal tick/outcome, and compatibility with three existing reviewed-native JSON receipts. No playback."
+    },
+    "invocationReleaseGuards": {
+      "passed": 2,
+      "scope": "Both Node and Python reject an empty invocation before browser creation."
+    },
+    "syntax": {
+      "nodeCheck": true,
+      "pythonAstParse": true
+    },
+    "cancellation": {
+      "passed": true,
+      "sourcePin": "89212bc352ff234d4c83c3ba92ffb7b3caa82eeb869359a137afe108c700bf93",
+      "observedOwnedProcesses": 2,
+      "verifiedSignals": 2,
+      "remaining": 0,
+      "logDrained": true,
+      "strictCancelledResultStayedFalse": true,
+      "receipt": {
+        "source": {
+          "path": ".cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-cancellation-preparation.json",
+          "sha256": "08cb7f96db7054ac84e49fd8e42ab2d17d9004bbd350379e5b8bea785380f1ed",
+          "bytes": 1236
+        },
+        "copy": {
+          "path": "docs/qualification/shared-demos/solo-corpus-reverify-preparation-71a0ac38a/cancellation-preparation.json",
+          "sha256": "08cb7f96db7054ac84e49fd8e42ab2d17d9004bbd350379e5b8bea785380f1ed",
+          "bytes": 1236
+        }
+      }
+    },
+    "companionReview": "acceptance_review read-only review of exact current helper hashes found no material false-pass, cleanup or scope issue."
+  },
+  "toyReceipts": [
+    {
+      "source": {
+        "path": ".cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb/cancel.supervision.json",
+        "sha256": "5b81c755fa764e50ceccde6232e26cd33af6e9cb9e15b0fb363de216324d2473",
+        "bytes": 3794
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/solo-corpus-reverify-preparation-71a0ac38a/toy-1-supervision.json",
+        "sha256": "5b81c755fa764e50ceccde6232e26cd33af6e9cb9e15b0fb363de216324d2473",
+        "bytes": 3794
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-node-vxkjafyu/cancel.supervision.json",
+        "sha256": "28e580a033fd602f1e90360d9069d8278708c8cd863e50192633d029d6d4be0c",
+        "bytes": 6951
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/solo-corpus-reverify-preparation-71a0ac38a/toy-2-supervision.json",
+        "sha256": "28e580a033fd602f1e90360d9069d8278708c8cd863e50192633d029d6d4be0c",
+        "bytes": 6951
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-ymcp9ara/cancel.supervision.json",
+        "sha256": "61e55de8cdba56a2cab61a8cf24e9717ca703622c9df49f76d89d552825f5266",
+        "bytes": 3794
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/solo-corpus-reverify-preparation-71a0ac38a/toy-3-supervision.json",
+        "sha256": "61e55de8cdba56a2cab61a8cf24e9717ca703622c9df49f76d89d552825f5266",
+        "bytes": 3794
+      }
+    }
+  ],
+  "finalToyCleanup": {
+    "source": {
+      "path": ".cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-toy-cleanup.json",
+      "sha256": "3dd19a01521c84bec9f2a854af458ad2cc652075199ecf51062f40e6acc35107",
+      "bytes": 1628
+    },
+    "copy": {
+      "path": "docs/qualification/shared-demos/solo-corpus-reverify-preparation-71a0ac38a/toy-cleanup-observation.json",
+      "sha256": "3dd19a01521c84bec9f2a854af458ad2cc652075199ecf51062f40e6acc35107",
+      "bytes": 1628
+    }
+  },
+  "fixtureLimitations": [
+    "Initial readiness fixture incorrectly waited for buffered log contents. Corrected readiness to an owned file.",
+    "Python env shebang changed root argv at exec, so conservative identity owner deliberately declined ownership; strict result stayed false with undrained log. Replaced fixture with actual Node and a harmless preload, matching production root identity. Supervisor unchanged; failed toy receipts retained."
+  ],
+  "bounds": {
+    "enginesSequential": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "jobs": 6,
+    "perChildSeconds": 600,
+    "outerWatchdogSeconds": 2700,
+    "logBytes": 8388608,
+    "logTailBytes": 65536,
+    "cleanup": "Reused exact identity-aware owner; bounded teardown and final drainage after watchdog/cancellation. No name-wide/process-group kill. No later job starts after a child failure.",
+    "retries": 0
+  },
+  "qualificationAcceptance": "Both aggregate complete and outer supervision complete must be true. All catalog IDs exactly once per engine; each result terminal and positive captures/claimed cells. Strict clips match published engine-selected tick/outcome/checkpoint. Reviewed clips retain the existing native compatibility path and must match an allowed published candidate terminal tick/outcome. Exact input/candidate/diagnostic bytes, native recording/input identities, emitted capture, source, and helper pins are retained and checked stable.",
+  "proofLimits": [
+    "The unchanged qualifier uses a synthetic blank HTML document; it does not qualify ordinary UI/rendering/controller/audio/physical devices.",
+    "Historical Journey admission/presentation stays separate; this is full Solo simulation playback revalidation.",
+    "No browser pageerror observer exists in the unchanged qualifier; no zero-pageerror claim.",
+    "Reviewed native rows identify a matching allowed candidate terminal tick/outcome, not which candidate was selected.",
+    "Final process-owner verification is for the entire sequential batch. The unchanged child awaits browser.close before its finished report and clean exit."
+  ],
+  "plannedCandidate": {
+    "head": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+    "base": "16ebd7b51984387c39622380a8e51a60e745152e",
+    "runtime": {
+      "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+      "files": 9997,
+      "bytes": 404446327
+    },
+    "emittedPreview": ".cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+    "status": "Build in progress; not yet qualified by this helper."
+  },
+  "argvTemplate": [
+    "python3",
+    ".cache/reverify-solo-emitted.py",
+    "--run=approved",
+    "--node=<absolute Node24 binary>",
+    "--head=<held40>",
+    "--base=<integrated-main40>",
+    "--fingerprint=<runtime64>",
+    "--files=<runtimeCount>",
+    "--bytes=<runtimeBytes>",
+    "--emitted-preview=<fresh exact capture>",
+    "--report=<fresh absolute-or-relative JSON path>",
+    "--runtime=<absolute playwright/index.mjs>",
+    "--chromium=<absolute Chrome binary>",
+    "--firefox=<absolute Nightly binary>",
+    "--webkit=<absolute pw_run.sh>",
+    "--tmpdir=<owned local TMPDIR>",
+    "--port=18777"
+  ],
+  "environment": "TMPDIR must equal --tmpdir. Use actual Node binary (not an exec-changing shebang wrapper). No --write, --only, --skip-report or source URL is accepted. Do not add preload instrumentation to a real qualification run."
+}

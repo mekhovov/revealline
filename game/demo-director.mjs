@@ -65,7 +65,11 @@ export function createDemoDirector({
   const now = loading.now ?? (() => performance.now());
   let retirement = null;
   let recoveryTimer = null;
+  // Catalog loading reduces startup only; later attempts keep their normal cap.
+  let initialRecoveryTimeoutMs = loading.initialRecoveryTimeoutMs;
   let lastVerified = null;
+  // One source and measured preparation cost per mode; never retain a player or payload.
+  const quickestVerifiedByMode = new Map();
   let preparingCandidate = null;
   let source = null,
     player = null,
@@ -105,6 +109,17 @@ export function createDemoDirector({
         !suspendedModes.has(item.modeId) &&
         (!requiredNextKind || item.kind === requiredNextKind),
     );
+    if (error && preferVerified) {
+      let quickest = null;
+      for (const verified of quickestVerifiedByMode.values()) {
+        if (
+          available.includes(verified.source) &&
+          (!quickest || verified.loadingMs < quickest.loadingMs)
+        )
+          quickest = verified;
+      }
+      if (quickest) return quickest.source;
+    }
     if (
       error &&
       lastVerified &&
@@ -118,9 +133,13 @@ export function createDemoDirector({
   async function next({ play: resume = false } = {}) {
     if (disposed) return false;
     // Synchronous retirement belongs to the same recovery budget as loading.
-    const recoveryDeadline =
-      now() +
-      Math.min(DEMO_RECOVERY_TIMEOUT_MS, loading.recoveryTimeoutMs ?? DEMO_RECOVERY_TIMEOUT_MS);
+    const recoveryTimeoutMs = Math.min(
+      DEMO_RECOVERY_TIMEOUT_MS,
+      loading.recoveryTimeoutMs ?? DEMO_RECOVERY_TIMEOUT_MS,
+      initialRecoveryTimeoutMs ?? DEMO_RECOVERY_TIMEOUT_MS,
+    );
+    initialRecoveryTimeoutMs = null;
+    const recoveryDeadline = now() + recoveryTimeoutMs;
     if (resume) desired = true;
     cancel();
     const ticket = generation;
@@ -232,7 +251,16 @@ export function createDemoDirector({
         source = candidate;
         rotation.accept(candidate);
         lastVerified = candidate;
-        record('ready', candidate, null, now() - preparationStarted, preparation.finish('ready'));
+        const loadingMs = Math.max(0, now() - preparationStarted);
+        const quickest = quickestVerifiedByMode.get(candidate.modeId);
+        if (
+          !quickest ||
+          quickest.source === candidate ||
+          failed.has(quickest.source.id) ||
+          loadingMs < quickest.loadingMs
+        )
+          quickestVerifiedByMode.set(candidate.modeId, { source: candidate, loadingMs });
+        record('ready', candidate, null, loadingMs, preparation.finish('ready'));
         requiredNextKind = null;
         finishLoading();
         error = '';
@@ -256,7 +284,7 @@ export function createDemoDirector({
         if (candidate.kind !== 'bot' || failure?.code !== 'no-safe-macro') failed.add(candidate.id);
         rotation.defer(candidate);
         // A slow unknown source must not spend the remaining recovery budget
-        // ahead of a usable verified performance. Other unvisited modes stay
+        // ahead of the quickest eligible verified performance. Other unvisited modes stay
         // eligible for the next ordinary transition; content-error fairness is
         // unchanged, and failed/suspended sources remain excluded by choose().
         recoveryHadTimeout ||= timedOut(failure);
@@ -370,6 +398,8 @@ export function createDemoDirector({
       if (disposed) return;
       disposed = true;
       prefetch.clear();
+      quickestVerifiedByMode.clear();
+      lastVerified = null;
       desired = false;
       cancel();
       release(player);

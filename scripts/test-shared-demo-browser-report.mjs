@@ -173,6 +173,59 @@ test('a persistence-only failure fails qualification with bounded diagnostics', 
   assert.ok(summary.secondaryDiagnostics[0].error.length <= 2048);
 });
 
+test('failure state preserves the source and preparation that caused a readiness failure', async () => {
+  const report = { complete: true };
+  const state = {
+    phase: 'unavailable',
+    failureDetails: { sourceId: 'slow-recording', code: 'demo-load-timeout' },
+    preparationDetails: { stage: 'verification', elapsedMs: 15000 },
+  };
+  await diagnoseQualificationFailure({
+    report,
+    error: new Error('Readiness timed out'),
+    page: { locator: () => ({ innerText: async () => 'Retry' }), screenshot: async () => {} },
+    screenshotPath: 'unused.png',
+    readState: async () => state,
+  });
+  assert.deepEqual(report.failureState, state);
+  assert.equal(report.complete, false);
+  assert.match(report.failure, /Readiness timed out/);
+});
+
+for (const stalled of [false, true]) {
+  test(`a ${stalled ? 'hung' : 'rejected'} state read preserves failure and permits cleanup`, async () => {
+    const report = { complete: true };
+    let closed = false;
+    await diagnoseQualificationFailure({
+      report,
+      error: new Error('Original readiness failure'),
+      page: { locator: () => ({ innerText: async () => 'Retry' }), screenshot: async () => {} },
+      screenshotPath: 'unused.png',
+      readState: () => (stalled ? new Promise(() => {}) : Promise.reject(new Error('Page closed'))),
+      timeoutMs: 5,
+    });
+    await finishQualification({
+      report,
+      reportPath: 'unused.json',
+      browser: {
+        close: async () => {
+          closed = true;
+        },
+      },
+      writeReport: async () => {},
+      emit: () => {},
+    });
+    assert.equal(closed, true);
+    assert.equal(report.complete, false);
+    assert.equal(report.failureState, undefined);
+    assert.match(report.failure, /Original readiness failure/);
+    assert.deepEqual(
+      report.secondaryDiagnostics.map(({ stage }) => stage),
+      ['failure-state'],
+    );
+  });
+}
+
 test('the actual CLI closes a launched browser when context setup fails', async (t) => {
   const directory = await mkdtemp(join(tmpdir(), 'demo-harness-fixture-'));
   t.after(() => rm(directory, { recursive: true, force: true }));

@@ -1,0 +1,21 @@
+{
+  "capture": ".cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+  "manifestSHA256": "dc5b83bb9c0f3ca8ba6fc656cb8a06b25d3b5905a72aa8ac2e880ceaaba6ac2f",
+  "inventorySHA256": "7d436362db5ad2408fd1f1a8811404d4918b90473a001344551fa4961f0cdbba",
+  "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+  "scope": "Exact provider-admitted captured bytes. Runtime re-fingerprint deferred to runner; this preparation does not start browser or preview.",
+  "fixtures": [
+    {
+      "name": "game/presentation/host.mjs",
+      "file": ".cache/webkit-blob-owner-emitted-71a0ac38a/game__presentation__host.mjs.emitted.txt",
+      "sha256": "ae0ee1270b586807f0c96987988f970c0048c1844a085d748efe31e4de43b623",
+      "bytes": 29538
+    },
+    {
+      "name": "game/app.mjs",
+      "file": ".cache/webkit-blob-owner-emitted-71a0ac38a/game__app.mjs.emitted.txt",
+      "sha256": "8110efdf57db9a88236c0c293451db4ac3e4ea9369036bd538d15164f51d8ba7",
+      "bytes": 492495
+    }
+  ]
+}

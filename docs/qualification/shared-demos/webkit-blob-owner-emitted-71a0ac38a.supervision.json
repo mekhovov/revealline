@@ -1,0 +1,110 @@
+{
+  "format": "SharedDemoOwnerObserverSupervisionV1",
+  "complete": true,
+  "started": "2026-10-19T05:12:05.796464+00:00",
+  "ownerSource": {
+    "path": ".cache/run-endurance-emitted-final.py",
+    "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+  },
+  "supervisorSHA256": "9e23c4e610dc21281132fe513856a6d21ae7df23be600f5e43c94a344539c2c0",
+  "scope": "Identity-aware observed descendants only; exact source owner reused by AST selection. This does not change native browser diagnostics or qualification assertions.",
+  "childExit": 0,
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 4,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 6061,
+        "ppid": 6053,
+        "pgid": 6061,
+        "uid": 502,
+        "started": "Mon Oct 19 07:12:05 2026",
+        "argv": "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/webkit-blob-owner-emitted-71a0ac38a/run.mjs --run=approved --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --report=docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.json --head=71a0ac38a391ca1ec305a4ad7afc75527b8d2e23 --fingerprint=8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04 --emitted-preview=.cache/shared-demos-emitted-16ebd7b-71a0ac38a --port=18776",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T05:12:05.850033+00:00"
+      },
+      {
+        "pid": 6220,
+        "ppid": 6061,
+        "pgid": 6220,
+        "uid": 502,
+        "started": "Mon Oct 19 07:12:11 2026",
+        "argv": "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/derived-qualifier.mjs --browser=webkit --mode=solo --ordinary-reloads=1 --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --emitted-preview=.cache/shared-demos-emitted-16ebd7b-71a0ac38a --report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/restoration.json --port=18776",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          6061,
+          "Mon Oct 19 07:12:05 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/webkit-blob-owner-emitted-71a0ac38a/run.mjs --run=approved --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --report=docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.json --head=71a0ac38a391ca1ec305a4ad7afc75527b8d2e23 --fingerprint=8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04 --emitted-preview=.cache/shared-demos-emitted-16ebd7b-71a0ac38a --port=18776"
+        ],
+        "observedAt": "2026-10-19T05:12:11.884629+00:00"
+      },
+      {
+        "pid": 6287,
+        "ppid": 6220,
+        "pgid": 6287,
+        "uid": 502,
+        "started": "Mon Oct 19 07:12:14 2026",
+        "argv": "bash /Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --inspector-pipe --headless --no-startup-window",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          6220,
+          "Mon Oct 19 07:12:11 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/derived-qualifier.mjs --browser=webkit --mode=solo --ordinary-reloads=1 --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --emitted-preview=.cache/shared-demos-emitted-16ebd7b-71a0ac38a --report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.artifacts/restoration.json --port=18776"
+        ],
+        "observedAt": "2026-10-19T05:12:14.963301+00:00"
+      },
+      {
+        "pid": 6298,
+        "ppid": 6287,
+        "pgid": 6287,
+        "uid": 502,
+        "started": "Mon Oct 19 07:12:14 2026",
+        "argv": "/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/Playwright.app/Contents/MacOS/Playwright --inspector-pipe --headless --no-startup-window",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          6287,
+          "Mon Oct 19 07:12:14 2026",
+          502,
+          "bash /Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --inspector-pipe --headless --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T05:12:14.963323+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "ownerSourceUnchanged": true,
+  "observerReport": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/webkit-blob-owner-emitted-71a0ac38a.json",
+    "sha256": "e2d7353582f71220b7e8b18cb42590c788edc1d18c426a2638d2e1f72b6b5e60",
+    "complete": true,
+    "collectionComplete": true
+  },
+  "finished": "2026-10-19T05:12:33.262751+00:00"
+}

@@ -1,0 +1,433 @@
+{
+  "engine": "webkit",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T05:00:40.493Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-operation-heavy-crossing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Heavy Crossing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Зберіть обидві посилки перед розвантаженням за воротами. Довший кабель довше тримає плиту, але звужує поворот."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-c7131a2a20fe532d",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Neon Opishnia Ram",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:snake-hunt-heights-01-acro-7a0b520c505b369c",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "6",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low, high, low",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 1,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Спіймайте 3 вигаданих гуманоїдів дотиком у порядку номерів. Кожен дотик подовжує твердий слід пройденого шляху. Оминайте світлий хвіст або пролітайте над ним."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "pause",
+      "mode": "sim"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-d1a5994b174c9108",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Choose your share",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-46-acro-0c9d849f3be4be28",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Recognize inverted, recover",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-return-weave:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Edge Weave",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-reclaimer-court:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Reclaimer Court",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-relay-load:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Relay Load",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:garage-05-self-level-40b43e3a1e06d341",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Ground patrol",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-irrigation-courts:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Irrigation Courts",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-4b2800b5c31c2f3f",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Garden of Memory",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-shared-frequency:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Shared Frequency",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:courtyard-02-self-level-72f2754a35002534",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Garden markers",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:relay-ruins-antenna-court:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Antenna Court",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-d03c65948bb71da1",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Neon VICTORY DRONES",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+      "manifestSHA256": "dc5b83bb9c0f3ca8ba6fc656cb8a06b25d3b5905a72aa8ac2e880ceaaba6ac2f",
+      "inventorySHA256": "7d436362db5ad2408fd1f1a8811404d4918b90473a001344551fa4961f0cdbba",
+      "files": 5953,
+      "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+      "sourceFingerprint": {
+        "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+        "files": 9997,
+        "bytes": 404446327
+      },
+      "buildInputFingerprint": {
+        "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+        "files": 9406,
+        "bytes": 348394334
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+        "runtime": {
+          "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+          "files": 9997,
+          "bytes": 404446327
+        },
+        "buildInput": {
+          "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+          "files": 9406,
+          "bytes": 348394334
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "8f2518b89a1ab9511910494ddc1d7f81e8c0e28d841b1e8ad97bd4ba56d8ca00"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "0aaa882d7da7515b3009a8eca9e303a471d3ee38f0e4bbc0d6eba03267ba65fc"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "enduranceStarted": "2026-10-19T05:01:33.831Z",
+  "enduranceFinalObservation": {
+    "finalObservationGapMs": 0
+  },
+  "enduranceFinished": "2026-10-19T05:01:33.831Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T05:01:34.061Z",
+  "previewClosed": true
+}
