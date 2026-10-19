@@ -6032,5 +6032,8 @@
   "couchKeyboard.teamIntro": "Each physical key controls one player and action. Hold Support to help your partner. Escape or P always pauses. These choices apply to Team; Duel and other games keep their existing controls.",
   "couchKeyboard.support": "Support",
   "couchKeyboard.teamKeys": "{{player}}: {{move}} steer, {{boost}} Boost, {{support}} Support.",
+  "teamHomeRecommendation.first": "Suggested Team mission: {{mission}}. Start with the first mission in this Journey.",
+  "teamHomeRecommendation.selected": "Selected Team mission: {{mission}}. Start uses this exact mission and your current setup.",
+  "teamHomeRecommendation.recordedNext": "Suggested Team mission: {{mission}}. It follows {{previous}}, whose completion is recorded in your Team Journey progress.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }
