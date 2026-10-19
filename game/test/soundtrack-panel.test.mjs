@@ -5329,3 +5329,55 @@ test('the selected visible Audio owner coalesces focus and click into one demand
     false,
   );
 });
+
+test('soundtrack presentation notifies the committed open once and never rejected or repeated opens', async (t) => {
+  let presentations = 0,
+    reject = true,
+    h;
+  h = await setup(t, {
+    open: false,
+    callbacks: {
+      onOpen: () => {
+        if (reject) throw new Error('Settings owner rejected opening');
+      },
+      onPresentationChange: () => {
+        presentations++;
+        assert.equal(h.panel.isOpen(), true);
+        assert.equal(h.doc.activeElement === h.node('close'), true);
+      },
+    },
+  });
+  await assert.rejects(h.panel.open(), /Settings owner rejected opening/);
+  assert.equal(presentations, 0);
+  assert.equal(h.panel.isOpen(), false);
+  reject = false;
+  await h.panel.open();
+  assert.equal(presentations, 1);
+  await h.panel.open();
+  assert.equal(presentations, 1);
+  h.panel.close();
+  assert.equal(presentations, 1);
+  await h.panel.open();
+  assert.equal(presentations, 2);
+  h.panel.dispose();
+  await h.panel.open();
+  assert.equal(presentations, 2);
+});
+
+test('soundtrack presentation retires a transient successful native open before asynchronous reading', async (t) => {
+  let presentations = 0;
+  const h = await setup(t, {
+    open: false,
+    callbacks: {
+      onPresentationChange: () => presentations++,
+    },
+  });
+  const show = h.panel.element.showModal.bind(h.panel.element);
+  h.panel.element.showModal = () => {
+    show();
+    h.panel.element.close();
+  };
+  await h.panel.open();
+  assert.equal(h.panel.isOpen(), false);
+  assert.equal(presentations, 1);
+});

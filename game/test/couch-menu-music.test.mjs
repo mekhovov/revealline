@@ -20,6 +20,8 @@ async function setup(
     ready = true,
     twoTracks = false,
     creatorSource,
+    canOpen,
+    onPresentationChange,
   } = {},
 ) {
   const doc = new Document(),
@@ -92,6 +94,8 @@ async function setup(
     quickAfter: [`${prefix}-start`, `${prefix}-resume`],
     soundscape: audio.soundscape,
     audioMaster: master,
+    ...(canOpen ? { canOpen } : {}),
+    onPresentationChange,
   });
   t.after(async () => {
     host.dispose();
@@ -382,3 +386,31 @@ for (const prefix of ['race', 'coop'])
         menu.setActive(false);
       }
     });
+
+test('music host forwards committed library presentation while denied and already-open gestures stay no-ops', async (t) => {
+  let allowed = false,
+    presentations = 0,
+    h;
+  h = await setup(t, {
+    canOpen: () => allowed,
+    onPresentationChange: () => {
+      presentations++;
+      assert.equal(h.host.root()?.open, true);
+    },
+  });
+  const library = h.doc.getElementById('coop-music-library');
+  library.click();
+  await settleUntil(() => !h.host.root());
+  assert.equal(presentations, 0);
+  allowed = true;
+  await library.onclick();
+  await settleUntil(() => h.host.root()?.open);
+  assert.equal(presentations, 1);
+  library.click();
+  assert.equal(presentations, 1);
+  h.host.back();
+  assert.equal(h.host.root(), null);
+  await library.onclick();
+  await settleUntil(() => h.host.root()?.open);
+  assert.equal(presentations, 2);
+});
