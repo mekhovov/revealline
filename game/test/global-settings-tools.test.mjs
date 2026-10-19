@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 import { attachProfileRecoveryView } from '../ui/profile-recovery.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
@@ -175,4 +176,48 @@ test('unclaimed Escape crosses the tool frame boundary while an inner modal keep
     false,
     'Closing releases the old child key listener.',
   );
+});
+
+test('About uses plain localized copy through its nested title and returns focus to the same Settings row', async (context) => {
+  const previous = getLocale();
+  context.after(() => setLocale(previous, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = fixture(context),
+    opener = h.api.controls.about.querySelector('button');
+  assert.equal(opener.textContent, 'About & credits');
+  opener.focus();
+  opener.click();
+  const dialog = h.api.root(),
+    heading = h.doc.getElementById('test-tools-tool-title'),
+    frame = dialog.querySelector('iframe'),
+    back = h.doc.getElementById('test-tools-tool-back'),
+    route = frame.src;
+  assert.equal(route, 'https://game.invalid/site/about.html#versions');
+  assert.equal(h.settings.open, true);
+  assert.equal(h.doc.activeElement, back);
+  for (const [locale, title] of [
+    ['uk', 'Про гру й авторів'],
+    ['en', 'About & credits'],
+  ]) {
+    setLocale(locale, { persist: false });
+    assert.equal(opener.textContent, title);
+    assert.equal(heading.textContent, title);
+    assert.equal(frame.getAttribute('title'), title);
+    assert.equal(frame.src, route);
+    assert.equal(h.api.root(), dialog);
+    assert.equal(h.doc.activeElement, back);
+  }
+  back.click();
+  await settle();
+  assert.equal(h.api.root(), null);
+  assert.equal(h.settings.open, true);
+  assert.equal(h.doc.activeElement, opener);
+  assert.equal(frame.getAttribute('src'), null);
+  const creator = h.api.controls.creatorTools.querySelector('button');
+  creator.click();
+  setLocale('uk', { persist: false });
+  assert.equal(frame.getAttribute('title'), translate('interface:nativeMenu.creatorTools'));
+  assert.equal(heading.textContent, translate('interface:nativeMenu.creatorTools'));
+  assert.equal(h.calls.persist, 0);
+  assert.equal(h.calls.readers, 0);
 });

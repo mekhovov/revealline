@@ -1,0 +1,1076 @@
+{
+  "schema": "revealline.critical-cue-assessment.v1",
+  "feature": "F07a",
+  "sourceRevision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "date": "2026-10-18",
+  "status": "source_and_scoped_model_and_browser_assessment_remaining_scenarios_pending",
+  "scope": "Critical cue categories across current native game families, installed Custom, Rooms and optional assisted gym; authored/imported scenarios need separate admitted evidence.",
+  "scopeLimitations": [
+    "Two scoped actual-browser fixture receipts exist for C01/C02 and C03; remaining rows and listening are unqualified.",
+    "Model traces do not prove visual legibility, output audio or assistive technology.",
+    "Reaction captions are optional and cannot be the sole critical alternative.",
+    "Legacy company public entry redirects to native Solo; dormant company-player is not separately qualified.",
+    "D-dependent demo integration is not inferred from native-host evidence."
+  ],
+  "rows": [
+    {
+      "id": "C01",
+      "trigger": "Capture launch, pause, live exposed line",
+      "audio": "Shared FeedbackDirector launch/flight",
+      "visual": "`flight-state` distinguishes ready, paused, recovering, exposed and safe/reclaimed ground; a colored dot is supplementary",
+      "observationNeeded": "Muted launch → exposed line → pause; read text with compact chrome",
+      "source": [
+        {
+          "path": "game/app.mjs",
+          "line": 11254,
+          "anchor": "localizedText($('flight-state')",
+          "blob": "cdf5b96eebb02439c0fd35ea2786c1ec5d60838b",
+          "sha256": "3a8d65e5766ea85aee249594cb813bbd223587146c130d32b814f82b49f6c1af",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/app.mjs#L11254"
+        },
+        {
+          "path": "game/ui/feedback-director.mjs",
+          "line": 703,
+          "anchor": "if (!state.started)",
+          "blob": "f661a2d6f6fa02b168afba45ab872ffb81fed4d9",
+          "sha256": "c8aa9bdc55dd579dbf88f77d6c34c83c3521d50ccc8676d6270750994e2eeee0",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/ui/feedback-director.mjs#L703"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "scoped_actual_visible_capture_self_contact_compact; see browserRuns, not entire row qualification",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "C02",
+      "trigger": "Capture damage, shield use and recovery",
+      "audio": "`player.failed` / recovery event recipes",
+      "visual": "Event renderer paints failure/pickup/recovery labels; reduced effects retain static geometry. Recovery indicator reads simulation time",
+      "observationNeeded": "Damage during a crowded cut; verify cause survives recovery and newer notices",
+      "source": [
+        {
+          "path": "game/ui/event-feedback.mjs",
+          "line": 47,
+          "anchor": "export function drawEventFeedback",
+          "blob": "6bfd9dfdc5b4048d29011a5f977444d28a155bfe",
+          "sha256": "c19162c5db09c577094758b9785e279a2b900d92bf8e881c5da316db366ad827",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/ui/event-feedback.mjs#L47"
+        },
+        {
+          "path": "game/ui/event-feedback.mjs",
+          "line": 181,
+          "anchor": "export function drawRecoveryCue",
+          "blob": "6bfd9dfdc5b4048d29011a5f977444d28a155bfe",
+          "sha256": "c19162c5db09c577094758b9785e279a2b900d92bf8e881c5da316db366ad827",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/ui/event-feedback.mjs#L181"
+        },
+        {
+          "path": "game/ui/feedback-cues.mjs",
+          "line": 71,
+          "anchor": "'player.failed'",
+          "blob": "191df69ddb467d03d4448af94d4057be99454a61",
+          "sha256": "80a7f9c1ac51e35ac2bb25de2611dbac515be84c818497ae617ecc694473b633",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/ui/feedback-cues.mjs#L71"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "scoped_actual_visible_capture_self_contact_compact; see browserRuns, not entire row qualification",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "C03",
+      "trigger": "Capture enemy lock/projectile threat",
+      "audio": "`combat.locked` → warning; fired/impact recipes",
+      "visual": "Shared renderer explicitly draws combat warnings/projectiles independently of cosmetic actor artwork",
+      "observationNeeded": "Muted guard lock in normal/reduced effects; confirm direction/timing are usable",
+      "source": [
+        {
+          "path": "game/ui/render.mjs",
+          "line": 1490,
+          "anchor": "if (combat) drawCombatWarnings",
+          "blob": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+          "sha256": "ce86a96a38d9fc636ef11bd4cb7ff469b7592d8b25f0c695f646ebfbcb9f1798",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/ui/render.mjs#L1490"
+        },
+        {
+          "path": "game/ui/feedback-director.mjs",
+          "line": 423,
+          "anchor": "'combat.locked': 'warning'",
+          "blob": "f661a2d6f6fa02b168afba45ab872ffb81fed4d9",
+          "sha256": "c8aa9bdc55dd579dbf88f77d6c34c83c3521d50ccc8676d6270750994e2eeee0",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/ui/feedback-director.mjs#L423"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "scoped_actual_visible_optional_sentry_warning; impact and timing remain pending",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "C04",
+      "trigger": "Capture closure and objective/result",
+      "audio": "Closure/reveal/result recipes",
+      "visual": "Claimed area, objective counts/state and explicit terminal UI; retained flight information supplies accepted recent context",
+      "observationNeeded": "Verify a successful cut and win do not require the sound to be recognized",
+      "source": [
+        {
+          "path": "game/app.mjs",
+          "line": 11235,
+          "anchor": "localizedText($('objective-state')",
+          "blob": "cdf5b96eebb02439c0fd35ea2786c1ec5d60838b",
+          "sha256": "3a8d65e5766ea85aee249594cb813bbd223587146c130d32b814f82b49f6c1af",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/app.mjs#L11235"
+        },
+        {
+          "path": "game/ui/feedback-director.mjs",
+          "line": 414,
+          "anchor": "const capturing = events.some",
+          "blob": "f661a2d6f6fa02b168afba45ab872ffb81fed4d9",
+          "sha256": "c8aa9bdc55dd579dbf88f77d6c34c83c3521d50ccc8676d6270750994e2eeee0",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/ui/feedback-director.mjs#L414"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "V01",
+      "trigger": "Versus countdown / retry start",
+      "audio": "Existing shared launch cue",
+      "visual": "`3`, `2`, `1`, `GO` / `READY` cue blocks simulation until release",
+      "observationNeeded": "Two-seat view with sound off; verify each player sees the start",
+      "source": [
+        {
+          "path": "game/couch/start-cue.mjs",
+          "line": 9,
+          "anchor": "label: 'READY'",
+          "blob": "48bdd3b96760eb5b1f813b075b6e4a4255409d21",
+          "sha256": "20ce2d79f60de3e4a93acea36a165546495f75baad22a422a65c829e1f860c6c",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/start-cue.mjs#L9"
+        },
+        {
+          "path": "game/couch/couch.mjs",
+          "line": 1060,
+          "anchor": "function beginStartCue",
+          "blob": "6f4a12dba5296b1d1681b79742bc8a38daf93860",
+          "sha256": "9134b8348647b9ef3b8fa31b5e2aabe3a0f4d9d952e9e969e7d1d98135857d1f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/couch.mjs#L1060"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "V02",
+      "trigger": "Versus hazard, damage, result",
+      "audio": "One shared mixer; board positioning",
+      "visual": "Separate per-board stats/state, encounter instruction/phase and common board renderer",
+      "observationNeeded": "Simultaneous warnings on both boards; assess attribution without stereo",
+      "source": [
+        {
+          "path": "game/couch/couch.mjs",
+          "line": 891,
+          "anchor": "racer-stats-${i}",
+          "blob": "6f4a12dba5296b1d1681b79742bc8a38daf93860",
+          "sha256": "9134b8348647b9ef3b8fa31b5e2aabe3a0f4d9d952e9e969e7d1d98135857d1f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/couch.mjs#L891"
+        },
+        {
+          "path": "game/couch/couch.mjs",
+          "line": 5150,
+          "anchor": "sound.feedback(match.status === 'running'",
+          "blob": "6f4a12dba5296b1d1681b79742bc8a38daf93860",
+          "sha256": "9134b8348647b9ef3b8fa31b5e2aabe3a0f4d9d952e9e969e7d1d98135857d1f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/couch.mjs#L5150"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "T01",
+      "trigger": "Team downed player / rescue window",
+      "audio": "Cooperative event recipes",
+      "visual": "Per-seat downed/free-rescue/countdown text; explicit crawl/support guidance and rescue percentage",
+      "observationNeeded": "Muted down → crawl → hold rescue → interrupted rescue → complete",
+      "source": [
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "line": 2252,
+          "anchor": "localizedText($('coop-state-'",
+          "blob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+          "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L2252"
+        },
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "line": 6012,
+          "anchor": "if (event.type === 'rescue.completed')",
+          "blob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+          "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L6012"
+        },
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "line": 5879,
+          "anchor": "music?.sound.events(",
+          "blob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+          "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L5879"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "T02",
+      "trigger": "Team support role / recharge / outcome",
+      "audio": "Support/recovery/objective recipes",
+      "visual": "Per-seat Interceptor/Disruptor labels, recharge text, rescue/role geometry and event announcements",
+      "observationNeeded": "Verify seat/role attribution when both players act",
+      "source": [
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "line": 2288,
+          "anchor": "const recharge = Math.max",
+          "blob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+          "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L2288"
+        },
+        {
+          "path": "game/couch/coop-support-presentation.mjs",
+          "line": 81,
+          "anchor": "ctx.fillText(role === 'interceptor' ? 'I' : 'D', effect.x, effect.y);",
+          "blob": "b21509a9867e454ff1eaa60a15397a62369db931",
+          "sha256": "fa15bcfc3ad0268815f30c93521af8c165997f94eef271f53ac8555c08004335",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/coop-support-presentation.mjs#L81"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "T03",
+      "trigger": "Team enemy/emitter warning and dense cues",
+      "audio": "Accepted event stream to shared sound owner",
+      "visual": "Roamer/emitter announcements, board cues, overflow notice and paused Field Details",
+      "observationNeeded": "Dense imported fixture; distinguish critical cues from optional descriptions",
+      "source": [
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "line": 5952,
+          "anchor": "const roamerCaption = coopRoamerCaption",
+          "blob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+          "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L5952"
+        },
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "line": 849,
+          "anchor": "cueOverflowNotice",
+          "blob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+          "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L849"
+        },
+        {
+          "path": "game/couch/coop-cue-overflow.mjs",
+          "line": 7,
+          "anchor": "export function",
+          "blob": "789b8d11cf51f65c2c6590cefca96117d9bfd791",
+          "sha256": "0acb23d31aafe1ec9c4a2313bb598064be2d0eaf8ec1062b11751b3589440e23",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/coop-cue-overflow.mjs#L7"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "S01",
+      "trigger": "Snake warning target / blocked contact",
+      "audio": "`target.warning` and phase/catch recipes",
+      "visual": "Lane/guard telegraph geometry; target contact edges; explicit failure reason/hint",
+      "observationNeeded": "Muted warning → blocked target; assess shape/timing under reduced effects",
+      "source": [
+        {
+          "path": "game/snake/classic-view.mjs",
+          "line": 290,
+          "anchor": "target.kind === 'guard' && warning",
+          "blob": "53e1353a93b4a63d0afa997e913b4d9fa422f4f2",
+          "sha256": "1c95104ce33f9e790c6323d2506b26216d51c04b0eecf1ab538f79f84a28f4aa",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/snake/classic-view.mjs#L290"
+        },
+        {
+          "path": "game/snake/classic-audio.mjs",
+          "line": 27,
+          "anchor": "'target.warning': 'warning'",
+          "blob": "92a6824b9362b7802e1c580c45c9389d9215bbf0",
+          "sha256": "43721cc9a1ce0cff4fab563bc2d1d706d1c32e1265534abb6138e98a4706f323",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/snake/classic-audio.mjs#L27"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "S02",
+      "trigger": "Snake shutter closing/opening",
+      "audio": "Shutter transition / warning recipes",
+      "visual": "Closed crossbar geometry, open dashed outline and warning corner marks",
+      "observationNeeded": "Rapid shutter cycle; assess the warning without relying on color",
+      "source": [
+        {
+          "path": "game/snake/classic-view.mjs",
+          "line": 119,
+          "anchor": "function drawShutters",
+          "blob": "53e1353a93b4a63d0afa997e913b4d9fa422f4f2",
+          "sha256": "1c95104ce33f9e790c6323d2506b26216d51c04b0eecf1ab538f79f84a28f4aa",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/snake/classic-view.mjs#L119"
+        },
+        {
+          "path": "game/snake/classic-audio.mjs",
+          "line": 132,
+          "anchor": "previous && shutter.warning",
+          "blob": "92a6824b9362b7802e1c580c45c9389d9215bbf0",
+          "sha256": "43721cc9a1ce0cff4fab563bc2d1d706d1c32e1265534abb6138e98a4706f323",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/snake/classic-audio.mjs#L132"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "S03",
+      "trigger": "Snake jammer / concealed actors",
+      "audio": "Required warnings centered while hidden incidental direction is withheld",
+      "visual": "Reception text (`warning`, `jammed`, `stable`), accessible label, field interference and contact geometry",
+      "observationNeeded": "Verify equivalent warning information without revealing intentionally hidden actors",
+      "source": [
+        {
+          "path": "game/snake/classic-app.mjs",
+          "line": 1719,
+          "anchor": "const signalState = signal.suppressed",
+          "blob": "d1c00cdba5eec5d274f79a6226b20f3d8213644d",
+          "sha256": "cc145bb8ee42e84c75f7a484656594a43f97deca3cc0ac1fbc44cccca2ddaf97",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/snake/classic-app.mjs#L1719"
+        },
+        {
+          "path": "game/snake/classic-audio.mjs",
+          "line": 39,
+          "anchor": "Required warnings remain audible",
+          "blob": "92a6824b9362b7802e1c580c45c9389d9215bbf0",
+          "sha256": "43721cc9a1ce0cff4fab563bc2d1d706d1c32e1265534abb6138e98a4706f323",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/snake/classic-audio.mjs#L39"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "S04",
+      "trigger": "Snake catches, delivery, resource and result",
+      "audio": "Catch/supply/objective/ability recipes",
+      "visual": "Caught/goal, length, score, operation status, delivery/antenna acknowledgement and terminal failure text",
+      "observationNeeded": "Confirm loss reason and optional-vs-required progress with sound off",
+      "source": [
+        {
+          "path": "game/snake/classic-app.mjs",
+          "line": 1713,
+          "anchor": "const operationText =",
+          "blob": "d1c00cdba5eec5d274f79a6226b20f3d8213644d",
+          "sha256": "cc145bb8ee42e84c75f7a484656594a43f97deca3cc0ac1fbc44cccca2ddaf97",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/snake/classic-app.mjs#L1713"
+        },
+        {
+          "path": "game/snake/classic-app.mjs",
+          "line": 1517,
+          "anchor": "function failureText",
+          "blob": "d1c00cdba5eec5d274f79a6226b20f3d8213644d",
+          "sha256": "cc145bb8ee42e84c75f7a484656594a43f97deca3cc0ac1fbc44cccca2ddaf97",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/snake/classic-app.mjs#L1517"
+        },
+        {
+          "path": "game/snake/classic-audio.mjs",
+          "line": 31,
+          "anchor": "'cargo.delivered': 'objective'",
+          "blob": "92a6824b9362b7802e1c580c45c9389d9215bbf0",
+          "sha256": "43721cc9a1ce0cff4fab563bc2d1d706d1c32e1265534abb6138e98a4706f323",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/snake/classic-audio.mjs#L31"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "O01",
+      "trigger": "Survival/Raid enemy arrival, attack or offscreen warning",
+      "audio": "`warning`/`arrival` prioritized before other effects",
+      "visual": "On-field danger geometry and offscreen direction arrows; active lane/fan attack footprints; retained in reduced effects",
+      "observationNeeded": "Busy scene and edge attack, both quality/reduced settings",
+      "source": [
+        {
+          "path": "game/overflight/renderer.mjs",
+          "line": 327,
+          "anchor": "function danger(",
+          "blob": "541470641f5b539fda7122cc3ed3351280c0a716",
+          "sha256": "c488268b60b87f8a800e45a1379f88c6a5cbdcfd6222722c42b626dd76b0d725",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/overflight/renderer.mjs#L327"
+        },
+        {
+          "path": "game/overflight/renderer.mjs",
+          "line": 594,
+          "anchor": "for (const attack of run.priorityAttacks",
+          "blob": "541470641f5b539fda7122cc3ed3351280c0a716",
+          "sha256": "c488268b60b87f8a800e45a1379f88c6a5cbdcfd6222722c42b626dd76b0d725",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/overflight/renderer.mjs#L594"
+        },
+        {
+          "path": "game/overflight/audio.mjs",
+          "line": 92,
+          "anchor": "const prioritized =",
+          "blob": "4fb0d6e597af5df288601d84c7aa1dbd15e8c24d",
+          "sha256": "5112ee43cf34d40fc9b2a81d50daba1f76ff8fbd3d8e039ebf8c2b53d37c8835",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/overflight/audio.mjs#L92"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "O02",
+      "trigger": "Survival/Raid damage, low hull, armor/shield, boost",
+      "audio": "Impact/recovery/ready event recipes",
+      "visual": "Numeric hull/max, health meter and critical state, shield/armor text, boost cooldown/Ready",
+      "observationNeeded": "At ≤25% hull, determine whether severity is understandable without audio/color",
+      "source": [
+        {
+          "path": "game/overflight/app.mjs",
+          "line": 674,
+          "anchor": "$('hud-health').dataset.critical",
+          "blob": "4a7d1c5051aad3cc50c7488835804fb257b1c6dd",
+          "sha256": "709243781d606d8ecd35c2f84f2c2e8a3abeb17504ce72041594263cc897bfdb",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/overflight/app.mjs#L674"
+        },
+        {
+          "path": "game/overflight/app.mjs",
+          "line": 704,
+          "anchor": "$('hud-boost').textContent",
+          "blob": "4a7d1c5051aad3cc50c7488835804fb257b1c6dd",
+          "sha256": "709243781d606d8ecd35c2f84f2c2e8a3abeb17504ce72041594263cc897bfdb",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/overflight/app.mjs#L704"
+        },
+        {
+          "path": "game/overflight/audio.mjs",
+          "line": 46,
+          "anchor": "'rush-ready': 'notice'",
+          "blob": "4fb0d6e597af5df288601d84c7aa1dbd15e8c24d",
+          "sha256": "5112ee43cf34d40fc9b2a81d50daba1f76ff8fbd3d8e039ebf8c2b53d37c8835",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/overflight/audio.mjs#L46"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "O03",
+      "trigger": "Survival salvage → upgrade and final target",
+      "audio": "Supply/objective/upgrade-ready/result recipes",
+      "visual": "Collected salvage progress with numeric accessible values, draft UI, final-objective label and marker",
+      "observationNeeded": "Collect threshold; verify paused draft is discoverable and final target remains findable",
+      "source": [
+        {
+          "path": "game/overflight/survival-hud.mjs",
+          "line": 2,
+          "anchor": "export function updateOverflightSurvivalHUD",
+          "blob": "b2f6a45a9a54c80a90bdd4d81d0bdb9b53e29d5c",
+          "sha256": "79b349f8d4a04a16324363cfb519cca27ea1c4d1bead81ed5e07922675af75ad",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/overflight/survival-hud.mjs#L2"
+        },
+        {
+          "path": "game/overflight/audio.mjs",
+          "line": 108,
+          "anchor": "type === 'reroll' || type === 'upgrade-ready'",
+          "blob": "4fb0d6e597af5df288601d84c7aa1dbd15e8c24d",
+          "sha256": "5112ee43cf34d40fc9b2a81d50daba1f76ff8fbd3d8e039ebf8c2b53d37c8835",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/overflight/audio.mjs#L108"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "F01",
+      "trigger": "Academy current target/check/gate progress",
+      "audio": "Shared projected native flight mixer",
+      "visual": "Objective action, gauge, explicit checks, progress, details and world-direction labels",
+      "observationNeeded": "Muted missed gate/height constraint → corrected approach → completion",
+      "source": [
+        {
+          "path": "optional-practice/civilian-fpv/app.mjs",
+          "line": 1155,
+          "anchor": "flightHud.update(goal",
+          "blob": "9e9bc47504a7e32a13938b89aa6a06f9c65baea8",
+          "sha256": "ceafd793ec79d9d7eaa1c5fba8306b61b0822f18a1f9dd3492e4485ffc83d883",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/optional-practice/civilian-fpv/app.mjs#L1155"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+          "line": 5445,
+          "anchor": "export function mountFlightHud",
+          "blob": "3e71952d7509dabcab99b24e5687755b9d35d3a2",
+          "sha256": "a9f3e721c1e384eb0da45743e85e4565dbb48636b51ced0d7b329ac40b43eb05",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/optional-practice/civilian-fpv/sim-presentation.mjs#L5445"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/app.mjs",
+          "line": 1496,
+          "anchor": "audio.update(flight.snapshot()",
+          "blob": "9e9bc47504a7e32a13938b89aa6a06f9c65baea8",
+          "sha256": "ceafd793ec79d9d7eaa1c5fba8306b61b0822f18a1f9dd3492e4485ffc83d883",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/optional-practice/civilian-fpv/app.mjs#L1496"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "F02",
+      "trigger": "Worlds contact/health, route target and terminal state",
+      "audio": "Native contact/objective/catch recipes",
+      "visual": "Health telemetry, objective/navigation HUD, status and results; regional status-only mode differs from detailed Academy HUD",
+      "observationNeeded": "Inspect contact and health loss in the actual World variant, not just Academy",
+      "source": [
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "line": 5247,
+          "anchor": "flightHud.update(guidance",
+          "blob": "94af9cf01b7585bb9843c60e01b71eed5cd48a93",
+          "sha256": "051a0c22c65e7fa1b47b15cf58e3dc7c8d2a7540d71ce94d03fa7e733433e14e",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/optional-practice/civilian-fpv/world-app.mjs#L5247"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-audio.mjs",
+          "line": 739,
+          "anchor": "snapshot.contacts > lastContacts",
+          "blob": "ec18d8ce8d618886d76e77b1fd50282d6675ac32",
+          "sha256": "cc05ffc5e1b54f500efc17dccf77c96c608a2fc535e8947b8787eccb2103565f",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/optional-practice/civilian-fpv/world-audio.mjs#L739"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "F03",
+      "trigger": "Assisted 2D gym checkpoint/completion",
+      "audio": "Same flight mixer through centimetre projection",
+      "visual": "Status and checkpoint count plus drawn current/completed route points",
+      "observationNeeded": "Include this optional play host explicitly; do not infer from 3D SIM",
+      "source": [
+        {
+          "path": "optional-practice/civilian-flight/app.mjs",
+          "line": 372,
+          "anchor": "$('status').textContent = recordingFull",
+          "blob": "f754f5b35eef0ef9a2f9814b408d10ed5f8a1bc3",
+          "sha256": "19a06ecda20fbdc998844e6632fa68cfc393460c5e1d779f5fddb757e1c75824",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/optional-practice/civilian-flight/app.mjs#L372"
+        },
+        {
+          "path": "optional-practice/civilian-flight/audio.mjs",
+          "line": 6,
+          "anchor": "export function practiceAudioState",
+          "blob": "e4932395a549d9798a4965fefefabea88215de0e",
+          "sha256": "fb2de6273e41e2214b397154211c726ebe99d7fe60b515b22fbd5d7215e75ab4",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/optional-practice/civilian-flight/audio.mjs#L6"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "R01",
+      "trigger": "Private Rooms accepted state / team rescue",
+      "audio": "Received events + shared audio, primed cursor avoids replayed history",
+      "visual": "Room state notice, per-card summaries and per-player rescue/progress details; existing board renderers",
+      "observationNeeded": "Actual service/latency qualification remains separate from local presentation",
+      "source": [
+        {
+          "path": "game/online/room-ui.mjs",
+          "line": 462,
+          "anchor": "card.details.textContent",
+          "blob": "e9517a403e08cb24a75eb8156a8a1771814f68b2",
+          "sha256": "705c53e3065c32eb90e652bced6ada473e7dcc1ebca551f02f4d658841874c1d",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/online/room-ui.mjs#L462"
+        },
+        {
+          "path": "game/online/room-ui.mjs",
+          "line": 405,
+          "anchor": "sound.events(",
+          "blob": "e9517a403e08cb24a75eb8156a8a1771814f68b2",
+          "sha256": "705c53e3065c32eb90e652bced6ada473e7dcc1ebca551f02f4d658841874c1d",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/online/room-ui.mjs#L405"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "U01",
+      "trigger": "Installed Custom campaign play",
+      "audio": "No gameplay event-audio owner found in the installed player/menu source; do not infer the full Solo mixer",
+      "visual": "Common board event/recovery/warning rendering plus installed-player HUD and results",
+      "observationNeeded": "An installed fixture is not production-art or all-imported-content qualification",
+      "source": [
+        {
+          "path": "game/creator/player.mjs",
+          "line": 501,
+          "anchor": "painter.draw($('board')",
+          "blob": "03a39b89b7f0f35b92a2bdba9ac2457c1acdec72",
+          "sha256": "1083063be03209754acc48d661fb151c344de452e59c932ec85299fee078a781",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/creator/player.mjs#L501"
+        },
+        {
+          "path": "game/creator/player.mjs",
+          "line": 513,
+          "anchor": "$('hud').textContent",
+          "blob": "03a39b89b7f0f35b92a2bdba9ac2457c1acdec72",
+          "sha256": "1083063be03209754acc48d661fb151c344de452e59c932ec85299fee078a781",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/creator/player.mjs#L513"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    },
+    {
+      "id": "X01",
+      "trigger": "Decorative character reactions",
+      "audio": "Independently configurable speech/sounds",
+      "visual": "Optional reaction captions with scale/background controls; danger interruption preserves accepted readable text",
+      "observationNeeded": "Captions can be disabled; never count optional reactions as the sole critical warning",
+      "source": [
+        {
+          "path": "game/ui/contextual-reactions.mjs",
+          "line": 342,
+          "anchor": "if (reason === 'danger') return",
+          "blob": "9c68ce0aba148cc8ef013b76380d7cd6985ee402",
+          "sha256": "e02752554b2651b19713c4039e31b4570c480bb0fad3c1093b953edfdfee1113",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/ui/contextual-reactions.mjs#L342"
+        },
+        {
+          "path": "game/ui/contextual-reactions.mjs",
+          "line": 401,
+          "anchor": "const visible = enabled && state.subtitles",
+          "blob": "9c68ce0aba148cc8ef013b76380d7cd6985ee402",
+          "sha256": "e02752554b2651b19713c4039e31b4570c480bb0fad3c1093b953edfdfee1113",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/ui/contextual-reactions.mjs#L401"
+        }
+      ],
+      "evidence": {
+        "source": "inspected",
+        "model": "see scoped run receipts; not a blanket row pass",
+        "browser": "not_run_for_this_assessment",
+        "listening": "not_performed",
+        "physical": "not_tested"
+      }
+    }
+  ],
+  "modelRuns": [
+    {
+      "id": "cue-model-and-policy",
+      "sourceRevision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "command": "node --test --test-concurrency=2 game/test/hud-status-cues.test.mjs game/test/couch-start-cue-host.test.mjs game/test/coop-cue-overflow-host.test.mjs game/test/coop-cue-localization.test.mjs game/test/coop-rescue-presentation.test.mjs game/test/classic-snake-signal-rendering.test.mjs game/test/overflight-attack-readability.test.mjs game/test/overflight-survival-hud.test.mjs game/test/overflight-raid-hud.test.mjs game/test/shared-encounter-audio.test.mjs game/test/actor-reaction-director.test.mjs game/test/civilian-practice-ui.test.mjs publishing/test-policy.test.mjs",
+      "exitCode": 0,
+      "pass": 105,
+      "fail": 0,
+      "skipped": 0,
+      "durationMs": 40667.706625,
+      "logSha256": "ee4260614b423a39c5fd958794d1a8cdbcd1f3ff583dc26f0ff2e051cd337ea9",
+      "claimLimits": "Actual host callbacks/simulation where provided, finite DOM/canvas/Web Audio and storage boundaries; no perceptual, acoustics or device claim.",
+      "testFiles": [
+        {
+          "path": "game/test/hud-status-cues.test.mjs",
+          "blob": "1e31834985092605e97de223e76b50eda8385db7"
+        },
+        {
+          "path": "game/test/couch-start-cue-host.test.mjs",
+          "blob": "9b376155b13e3812bd11ecc171d624570fb32cc7"
+        },
+        {
+          "path": "game/test/coop-cue-overflow-host.test.mjs",
+          "blob": "1ffc6c070402ef18aebb9e8012f6515279816d25"
+        },
+        {
+          "path": "game/test/coop-cue-localization.test.mjs",
+          "blob": "39392a2b74510fa6732a53661baed9072e51d13c"
+        },
+        {
+          "path": "game/test/coop-rescue-presentation.test.mjs",
+          "blob": "e8a3a7a62b49b94e7ffe356414580c91c573bdb3"
+        },
+        {
+          "path": "game/test/classic-snake-signal-rendering.test.mjs",
+          "blob": "2953832aaacaf82a9a54af6824fe93bfcada6015"
+        },
+        {
+          "path": "game/test/overflight-attack-readability.test.mjs",
+          "blob": "be19c0d0869679649600a23205c692dc83d6cfd0"
+        },
+        {
+          "path": "game/test/overflight-survival-hud.test.mjs",
+          "blob": "7473baf1be5e6a26e7c3686105c10f34b23c4ade"
+        },
+        {
+          "path": "game/test/overflight-raid-hud.test.mjs",
+          "blob": "ad486e8217d1186f71fd119d5cff464f6cd008ba"
+        },
+        {
+          "path": "game/test/shared-encounter-audio.test.mjs",
+          "blob": "6a2c8b6b06dda07a86cef5de93b88d0f9863f59d"
+        },
+        {
+          "path": "game/test/actor-reaction-director.test.mjs",
+          "blob": "6a344d9bba4ce8204413703dd23155b2bb82c5c3"
+        },
+        {
+          "path": "game/test/civilian-practice-ui.test.mjs",
+          "blob": "811c3117c79e5cd0bcec277b9f70fb523c293f4f"
+        },
+        {
+          "path": "publishing/test-policy.test.mjs",
+          "blob": "1ef610358854792b3e86fb389dc3b33c19f981dd"
+        }
+      ],
+      "passedTests": [
+        "enemy recordings are registered in the same Studio/voice-library catalogue as existing reactions",
+        "enemy captions use existing priority, once-only events, cooldown and per-attempt budget",
+        "actual optional page is playable with canvas fallback and verifies a complete keyboard practice transcript",
+        "reading and failed imports pause the gym and cannot grant completions or resume a held control",
+        "final gym exit retires reparented controls before removing their shell",
+        "gym title and settings reuse the accepted drill without starting or resuming it",
+        "a gym Pause pointer keeps its intent when moving focus first pauses flight input",
+        "gym reuses neutral controller menu navigation without arming on device join",
+        "gym controller Pause requires a fresh explicit Continue and samples hardware once per frame",
+        "gym menu keyboard navigation owns arrows and returns from nested help without flight input",
+        "Gym native Help retains instructions across blur and focus",
+        "gym Select Mission starts the selected drill with one action",
+        "gym shared selector keeps search and pause state, rejects filtered cards and supports controller Back",
+        "gym imported catalogue replaces selector authority and exact route without inheriting completion",
+        "a flight arrow released inside a controller menu is usable on the first press after Resume",
+        "gym adopts the complete common preference inventory and keeps practice tools reachable without changing the drill",
+        "gym shares six ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice",
+        "gym cancels an imminent auto-next before a stalled animation timestamp",
+        "gym cancels an imminent auto-next before a stalled callback execution",
+        "jammer conceals enemy effects while retaining live players and source/radius cues",
+        "every enemy, including nearby prey and the jammer body, disappears before receiver sampling",
+        "the minimal source beacon survives concealment without exposing jammer sprite orientation",
+        "Solo, Team, Versus, and restored replay use the same all-enemy concealment",
+        "Pulse, radius exit, source capture and terminal outcomes immediately reveal actors",
+        "concealed moving prey continues turning with identical simulation and replay state",
+        "receiver strength follows local radius, broadcast scope, Pulse, and terminal outcomes",
+        "local reception and coverage markings cross the same wrap seams as the engine",
+        "broadcast source uses two antenna masts and terminal outcomes have no live warning frame",
+        "pixel interference is bounded and preserves heads, nearby collision geometry, and source cells",
+        "reduced effects freezes noise while new live source pixels still appear on every simulation tick",
+        "pixel work buffers stay bounded and reusable across live samples",
+        "the readable head neighbourhood crosses real wrap seams",
+        "receiver sampling cache refreshes the live board for changed ticks in reduced effects",
+        "Pulse stabilizes the live board and losses reveal their collision state",
+        "danger destination outlines are painted at native resolution after receiver interference",
+        "concealed contact hazards retain only truthful lethal edges above interference",
+        "diagnostic original filter comparison bounds the live terrain/player contrast fraction",
+        "reduced effects retains the same terrain/player contrast limit with a stationary mask",
+        "current terrain capture excludes actors and expires on tick, appearance, and run identity",
+        "native composition leaves overlapping Team neighbourhoods and wrap seams untouched",
+        "readback failure uses equally bounded procedural interference without a weak stripe bypass",
+        "paused receiver refreshes when asynchronous wall artwork becomes available",
+        "leaving an explicit original-comparison fixture cannot reuse its enemy-bearing receiver",
+        "real rescue of player 1 changes language in place (legacy role)",
+        "real rescue of player 1 changes language in place (progress)",
+        "real rescue of player 2 changes language in place (legacy role)",
+        "real rescue of player 2 changes language in place (progress)",
+        "actual Hunter lock names player 1 in the chosen language through pause",
+        "actual Hunter lock names player 2 in the chosen language through pause",
+        "reserve recovery of player 1 cannot retain a translated contact-rescue label",
+        "reserve recovery of player 2 cannot retain a translated contact-rescue label",
+        "a real slow pickup retains the compact downward marker on the localized locked target",
+        "actual imported maximum-density arena exposes all entries and one press enters paused reading",
+        "fresh controller Confirm enters overflow details once and Back preserves the paused attempt",
+        "clear ordinary Team canvas adds no overflow action or announcement",
+        "Field Details Done returns to its paused invoker, while ordinary Help stays in Settings",
+        "leaving Field Details for another Settings category does not close or steal the newer focus",
+        "player 1 rescue uses real state and preserves fixed identity cues",
+        "player 1 recovered uses real state and preserves fixed identity cues",
+        "player 2 rescue uses real state and preserves fixed identity cues",
+        "player 2 recovered uses real state and preserves fixed identity cues",
+        "decoration is below shared actor artwork; normal and reduced modes use the same actual rescue percentage",
+        "historical frames stay procedural; inactive and completed scenes show no custom rescue decoration",
+        "released contact rescue state disappears on real pause and returns only through public commands",
+        "full Team upgrade adds rescue slots atomically without replacing existing roles or exact historical revisions",
+        "Rescue team.rescue.progress preserves uploaded original bytes and history in bundle round trips",
+        "Rescue team.player.recovery preserves uploaded original bytes and history in bundle round trips",
+        "recovered player 1 advances through actual grace expiry before reset",
+        "recovered player 2 advances through actual grace expiry before reset",
+        "Versus starts over prepared boards without advancing either simulation before Go",
+        "Versus Retry uses the short cue and held launch input cannot advance the replacement",
+        "a backgrounded mission cue stays with its exact attempt and cannot leak into Retry",
+        "restored cut Resume replaces only its own instruction, newer notice false",
+        "restored cut Resume replaces only its own instruction, newer notice true",
+        "a real fresh cut retires only the prior caught-line cue, newer notice false",
+        "a real fresh cut retires only the prior caught-line cue, newer notice true",
+        "secured cut cue follows real motion and exposure: stop false, newer notice false",
+        "secured cut cue follows real motion and exposure: stop false, newer notice true",
+        "secured cut cue follows real motion and exposure: stop true, newer notice false",
+        "secured cut cue follows real motion and exposure: stop true, newer notice true",
+        "native Echo preparation shows all released centers and expires with each actual queued impact",
+        "native Fan preparation shows five lateral footprints at the release heading",
+        "older escort snapshots keep their single beam while inactive shots draw nothing",
+        "Rush instrument describes charge, stored activation and remaining time without stale accessible values",
+        "polite status announces milestones once rather than streaming score and countdown changes",
+        "Raid Studio messages require the exact parent, origin, protocol and request identity",
+        "salvage readout counts collected value, resets at each draft and handles a complete build",
+        "final objective appears at arrival and clears on defeat and retry; Ukrainian copy is native",
+        "final-tank marker keeps direction on every edge, uses a diamond and retires for dead targets",
+        "the shared graph routes movement through effects and dialogue through master",
+        "family tells, supplies and machine impacts have bounded shared recipes",
+        "Snake shares rotor/prey feedback and deduplicates catches, supplies and shutters",
+        "Snake observes mechanic cues at each simulation step without replaying duplicate events",
+        "flight shares master mute, creates one context and sounds the terminal catch once",
+        "offline encounter fallback retains its sweep and paired-board stereo position",
+        "kinematic gym projection shares sound without adding physics or changing native units",
+        "procedural encounter voices belong to the same Pause/Retry cleanup as samples",
+        "native flight movement accents use accepted vehicle material and prime restored observations",
+        "optional FPV flight retains all five destruction materials in one transaction with a bounded native output",
+        "the restored policy requires suites without manufacturing a passing verdict",
+        "restored policy or explicit full-test override requires suites without claiming a passing verdict",
+        "missing, malformed and broadened authorization fail closed",
+        "CLI records visible skipped policy and force-tests changes only the effective decision",
+        "CLI missing policy or malformed override cannot emit a waiver output",
+        "MinIO acceptance and its receipt lifecycle honor the explicit suite policy"
+      ]
+    },
+    {
+      "id": "sim-hud-focused",
+      "sourceRevision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "command": "NODE_PATH=/Users/oleksandr.mekhovov/work/my_projects/go_test/authoring/fpv-worlds/node_modules node --test --test-concurrency=1 --test-name-pattern='existing HUD guidance|native HUD details' game/test/fpv-flight-ui.test.mjs game/test/fpv-world-appearance-ui.test.mjs",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 124,
+      "durationMs": 1823.557375,
+      "logSha256": "0366c61432d5a5e3ad7291e91de53b9ef7588b60251bd1c5f14733bc37c16f8e",
+      "claimLimits": "Only existing HUD settings reachability in Academy/World and World detail retention across focus/blur. This does not validate every gate/contact/health cue.",
+      "testFiles": [
+        {
+          "path": "game/test/fpv-flight-ui.test.mjs",
+          "blob": "7cdca5cc7242d1f33bfbe2b500505d20c84e0862"
+        },
+        {
+          "path": "game/test/fpv-world-appearance-ui.test.mjs",
+          "blob": "12831ea9ffd05a5bdc82cdc25a060e1472c8174c"
+        }
+      ],
+      "passedTests": [
+        "Academy existing HUD guidance controls are reachable in Accessibility in EN and UK",
+        "World native HUD details retain instructions across blur and focus",
+        "Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK"
+      ]
+    }
+  ],
+  "browserRuns": [
+    {
+      "id": "capture-self-contact-compact",
+      "rows": ["C01", "C02"],
+      "observer": "root agent, actual in-app browser",
+      "sourceRevision": "e64c9c08cdf6cc9c41a0026a0ec7d4d7a517ede1",
+      "runtimeSourceRevision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "content": "Normal Solo host with the existing self-contact retry fixture admitted through its campaign response; real legal Down then Up, no game-state/event injection.",
+      "delivery": "Immutable task-owned HTTP server reads production Git objects at e64; fixture sources frozen separately.",
+      "settings": {
+        "masterMute": "on",
+        "reactionCaptions": "off",
+        "effects": "reduced",
+        "locale": "uk",
+        "innerViewport": {
+          "width": 316,
+          "height": 776
+        }
+      },
+      "visibleObserved": [
+        "Canvas recovery countdown 0.8s",
+        "Specific bottom cause: Твоя лінія перетнула себе. Обери новий маршрут."
+      ],
+      "domObserved": [
+        "2 lives after self-contact",
+        "run-message block / visible / opacity1 / fixed; x12 y735.609 width292 height36.391 inside 776px viewport"
+      ],
+      "screenshots": [
+        {
+          "filename": "f07-active-compact-self-contact.png",
+          "sha256": "05d10b70c25eb771e811901ac596cb9c2e0787dfefba749b37e975a86f5a082e"
+        }
+      ],
+      "limits": [
+        "Only this legal self-contact/recovery path; no shield, crowded-cue, every C01 transition or other-family pass.",
+        "Earlier paused/cropped screenshots and AX-only text were inconclusive about active visible cause; the active screenshot resolves this particular concern.",
+        "No audio listening, screen-reader, physical-device or input-hardware evidence."
+      ]
+    },
+    {
+      "id": "optional-sentry-warning",
+      "rows": ["C03"],
+      "observer": "root agent, actual in-app browser",
+      "sourceRevision": "e64c9c08cdf6cc9c41a0026a0ec7d4d7a517ede1",
+      "runtimeSourceRevision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "content": "F07 optional sentry review xonix-pack.v6 / xonix-core.v6; exact frozen packFor + e64 combat fixture, classes and first theme; normal Library → Expansion packs file import → validate → Play → Start.",
+      "pack": {
+        "filename": "revealline-f07-silent-guard-e64c9c08.json",
+        "bytes": 5784,
+        "sha256": "043d12c1664f10405ef0a99c6a42f1b506d7abe87927657b09aa3a32910f06f5",
+        "validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": []
+        }
+      },
+      "settings": {
+        "masterMute": "on in fixture; no acoustic test",
+        "viewport": "not retained in this receipt",
+        "effects": "no normal/reduced comparison retained"
+      },
+      "actions": "Legal Right held approximately 2 seconds then released; accepted continuous direction continues after release.",
+      "visibleObserved": [
+        "At 0:02, dashed diagonal sentry aim ray and bracketed shooter; 3 lives and LIVE LINE.",
+        "At 0:07, successful 50% completion / 11900 score / 3 lives."
+      ],
+      "screenshots": [
+        {
+          "filename": "f07-guard-silent-contact.png",
+          "sha256": "7828f54f3c68de4a96e65eb1f572c79816802b038c7d6da04246619ffe048a05"
+        },
+        {
+          "filename": "f07-guard-silent-result.png",
+          "sha256": "eeefa1a80dd7089728cef091ac846ac297b7cd48c255608464d505378548e157"
+        }
+      ],
+      "limits": [
+        "Visible threat geometry only; no projectile impact/damage/cause, manual evasion or measured warning timing claim.",
+        "Fixture instruction release-to-stationary-hit was incorrect under continuous steering. The filename contact does not establish a hit.",
+        "Initial incompatible-version fixture, hidden-Home staging helper and fixture MutationObserver failures are excluded; they are not product defects.",
+        "No listening, AT, physical device, production-art or other-host qualification."
+      ]
+    }
+  ],
+  "demonstratedRepairCandidates": [],
+  "openEvidence": [
+    "Remaining silent-play scenarios and busy-state normal/reduced comparisons; C01/C02 self-contact and C03 visible sentry warning are narrowly observed.",
+    "Admitted imported/specialist content and per-seat warning attribution.",
+    "F13 actual listening with stated speakers/headphones and mix settings.",
+    "F18 real AT navigation/announcements; no screen reader or switch hardware used.",
+    "F57 physical interruption routes: iPhone installed/tab, lock, Control Center, audio route and app switching."
+  ],
+  "environment": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "arch": "arm64"
+  }
+}
