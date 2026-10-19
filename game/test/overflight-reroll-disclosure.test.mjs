@@ -10,6 +10,7 @@ import { createOverflightRun, rerollOverflightUpgrades } from '../overflight/cor
 import { draftOverflightUpgrades } from '../overflight/upgrades.mjs';
 import { createOverflightUpgradeCard } from '../overflight/upgrade-card.mjs';
 import { overflightText } from '../overflight/copy.mjs';
+import { t } from '../i18n/index.mjs';
 import { OVERFLIGHT_HUNT_MODE } from '../overflight/raid-mode.mjs';
 import { draftOverflightHuntUpgrades } from '../overflight/raid-upgrades.mjs';
 
@@ -115,6 +116,7 @@ function host(entry, run) {
     offerKey: '',
     getLocale: () => locale,
     text: (key) => mode.text(locale, key),
+    t: (key, values) => t(key, { ...values, lng: locale }),
     review: { active: () => reviewing },
     display: { snapshot: () => ({ effectiveReducedEffects: true }) },
     moduleIcon: () => document.createElement('span'),
@@ -156,7 +158,10 @@ for (const entry of ['play', 'raid']) {
         'reroll-hint rerolls-left',
       );
       assert.equal(h.$('reroll-upgrades').textContent, modes[entry].text(locale, 'reroll'));
-      assert.equal(h.$('rerolls-left').textContent, `2 ${modes[entry].text(locale, 'rerolls')}`);
+      assert.equal(
+        h.$('rerolls-left').textContent,
+        locale === 'uk' ? 'Залишилося 2 заміни' : '2 rerolls left',
+      );
       assert.equal(h.$('reroll-upgrades').disabled, false);
       assert.equal(JSON.stringify(run), before);
       const first = h.$('upgrade-cards').children[0];
@@ -179,6 +184,7 @@ for (const entry of ['play', 'raid']) {
     h.$('reroll-upgrades').click();
     assert.equal(JSON.stringify(run), JSON.stringify(direct));
     assert.equal(run.progression.rerolls, 1);
+    assert.equal(h.$('rerolls-left').textContent, 'Залишилася 1 заміна');
     assert.equal(run.stats.rerollsUsed, 1);
     assert.equal(run.progression.choices, 0);
     assert.equal(run.phase, 'upgrade');
@@ -190,6 +196,10 @@ for (const entry of ['play', 'raid']) {
     h.$('reroll-upgrades').click();
     assert.equal(JSON.stringify(run), JSON.stringify(direct));
     assert.equal(run.progression.rerolls, 0);
+    assert.equal(h.$('rerolls-left').textContent, 'Залишилося 0 замін');
+    h.render('en');
+    assert.equal(h.$('rerolls-left').textContent, '0 rerolls left');
+    assert.equal(JSON.stringify(run), JSON.stringify(direct));
     assert.equal(h.$('reroll-upgrades').disabled, true);
     const exhausted = JSON.stringify(run);
     h.$('reroll-upgrades').click();
@@ -217,3 +227,41 @@ test('authored primary-only Survival retains a valid all-repeat reroll across le
     assert.equal(JSON.stringify(run), JSON.stringify(direct));
   }
 });
+
+// These projected counts exercise language boundaries. Values above native caps
+// and fractional counts are not earned tokens or new supported gameplay rules.
+for (const entry of ['play', 'raid']) {
+  test(`${entry}: native upgrade text uses real EN/UK plural forms without changing draft facts or focus`, () => {
+    const run = stagedRun(entry),
+      h = host(entry, run);
+    for (const [count, en, uk] of [
+      [0, '0 rerolls left', 'Залишилося 0 замін'],
+      [1, '1 reroll left', 'Залишилася 1 заміна'],
+      [2, '2 rerolls left', 'Залишилося 2 заміни'],
+      [4, '4 rerolls left', 'Залишилося 4 заміни'],
+      [5, '5 rerolls left', 'Залишилося 5 замін'],
+      [11, '11 rerolls left', 'Залишилося 11 замін'],
+      [21, '21 rerolls left', 'Залишилася 21 заміна'],
+      [22, '22 rerolls left', 'Залишилося 22 заміни'],
+      [25, '25 rerolls left', 'Залишилося 25 замін'],
+      [111, '111 rerolls left', 'Залишилося 111 замін'],
+      [1.5, '1.5 rerolls left', 'Залишилося 1,5 заміни'],
+    ]) {
+      run.progression.rerolls = count;
+      const before = JSON.stringify(run);
+      h.render('en');
+      const card = h.$('upgrade-cards').children[0];
+      card.focus();
+      for (const locale of ['en', 'uk', 'en']) {
+        h.render(locale);
+        assert.equal(h.$('rerolls-left').textContent, locale === 'uk' ? uk : en);
+        assert.equal(JSON.stringify(run), before);
+        assert.equal(h.document.activeElement.dataset.upgradeId, card.dataset.upgradeId);
+        assert.equal(h.$('reroll-upgrades').disabled, count <= 0);
+        assert.equal(run.phase, 'upgrade');
+        assert.equal(run.time, 0);
+        assert.equal(run.tick, 0);
+      }
+    }
+  });
+}
