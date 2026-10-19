@@ -5934,6 +5934,8 @@
   "captureMedal.shortfall": "Improve this time by {{seconds}} s (rounded up to 0.01 s).",
   "captureMedal.cleanMet": "No lives lost in this attempt.",
   "captureMedal.cleanMissing": "A life was lost; complete a retry without losing a life.",
+  "overflight.rerollsRemaining_one": "{{count}} reroll left",
+  "overflight.rerollsRemaining_other": "{{count}} rerolls left",
   "missionLibrary.search.resetFilters": "Reset filters",
   "missionLibrary.search.resetHint": "Reset collection, editions and mode. Keep the search text and card details.",
   "missionLibrary.search.filters": "Collection: {{collection}}; editions: {{editions}}; mode: {{mode}}",
