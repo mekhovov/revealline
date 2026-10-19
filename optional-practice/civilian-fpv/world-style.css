@@ -4786,6 +4786,11 @@
   max-height: none;
   overflow: visible;
 }
+/* Results share one scroll owner. A wrapped sticky action row can cover the
+   verified flight details and medal guidance, especially with larger text. */
+.sim-worlds #result-panel > .continuous-result-actions {
+  position: static;
+}
 @media (max-height: 500px) {
   .world-catalogue-cards {
     max-height: 180px;
