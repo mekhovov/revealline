@@ -140,6 +140,7 @@ import {
 import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
 import { drawResultPicture } from './ui/result-picture.mjs';
 import { resultContinuationLabel } from './ui/result-continuation.mjs';
+import { captureHomeRecommendation } from './ui/capture-home-recommendation.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -796,6 +797,7 @@ try {
     optionalVerificationPreparation
       ? optionalVerificationPreparation.run('main', work, { signal })
       : work();
+  let gameShell = null;
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
@@ -819,6 +821,7 @@ try {
           journeySaveNotice.update(
             previewSession ? { ...status, durable: false, error: null } : status,
           );
+          if (document.getElementById('shell-home')?.open) gameShell?.refreshHome();
         },
       })
     : null;
@@ -1566,8 +1569,7 @@ try {
     render: renderMasterPreferences,
   });
   let neutralResumeTick = false;
-  let gameShell = null,
-    missionPicker = null,
+  let missionPicker = null,
     enemyGuide = null,
     optionalWorlds = null,
     optionalWorldsDisposed = false;
@@ -6314,7 +6316,7 @@ try {
       }),
     );
   }
-  function journeyDestination() {
+  function journeyDestinationFacts() {
     const state = journeyProfile?.snapshot();
     const current = state && journeyCatalog.find(state.cursors.solo);
     const selected =
@@ -6325,9 +6327,57 @@ try {
           selected.campaign.levels.findIndex((level) => level.id === current.levelId),
         )?.id ?? current.id)
       : current?.id;
-    return current && Object.hasOwn(state.clears.solo, receiptId)
-      ? nextJourneyMission(current.id) || current
-      : current || (candidateHost ? journeyCatalog.missions[0] : null);
+    const recordedClear = !!current && Object.hasOwn(state.clears.solo, receiptId);
+    return {
+      destination: recordedClear
+        ? nextJourneyMission(current.id) || current
+        : current || (candidateHost ? journeyCatalog.missions[0] : null),
+      cursorId: state?.cursors.solo ?? null,
+      recordedClear,
+    };
+  }
+  function journeyDestination() {
+    return journeyDestinationFacts().destination;
+  }
+  function homeMissionRecommendation() {
+    if (
+      practice ||
+      scenario ||
+      courseSession ||
+      previewSession ||
+      runtimeContent ||
+      authoredRoute?.id !== DEFAULT_JOURNEY_ROUTES.solo ||
+      !candidateHost?.owns(activeEntry)
+    )
+      return '';
+    let storedAttempt;
+    try {
+      // Preserve recovery priority even when saved bytes cannot be previewed.
+      storedAttempt = profileStorage().getItem(sessionKey) !== null;
+    } catch {
+      return '';
+    }
+    const facts = journeyDestinationFacts();
+    const recommendation = captureHomeRecommendation({
+      ...facts,
+      catalog: journeyCatalog,
+      resume: (!started && storedAttempt) || (started && !['won', 'lost'].includes(run?.status)),
+      lastAttempt:
+        started && selectedJourneyRun === run
+          ? { status: run?.status, mission: journeyMission() }
+          : null,
+    });
+    if (!recommendation) return '';
+    const keys = {
+      first: 'interface:captureHomeRecommendation.first',
+      selected: 'interface:captureHomeRecommendation.selected',
+      retry: 'interface:captureHomeRecommendation.retry',
+      'recorded-next': 'interface:captureHomeRecommendation.recordedNext',
+    };
+    return t(keys[recommendation.reason], {
+      mission: contentText(recommendation.destination, 'name'),
+      previous: recommendation.current ? contentText(recommendation.current, 'name') : '',
+    });
   }
   function journeySkipMission() {
     return journeyEnabled && !practice && !scenario && !courseSession && !campaignOverview
@@ -7257,6 +7307,7 @@ try {
       'title',
       () => preview?.title || t('interface:loadSavedFlight2'),
     );
+    if (document.getElementById('shell-home')?.open) gameShell?.refreshHome();
   }
   function assertWriter() {
     if (courseSession) throw new Error(t('interface:trainingDoesNotWriteCampaignData'));
@@ -14973,6 +15024,7 @@ try {
       !started || ['won', 'lost'].includes(run?.status)
         ? contentText(journeyDestination(), 'name')
         : undefined,
+    titleRecommendation: homeMissionRecommendation,
     onTitleStart: (options) => {
       const destination = journeyDestination();
       if (destination && !started && $('continue-saved').hidden) {

@@ -5929,5 +5929,9 @@
   "captureMedal.shortfall": "Improve this time by {{seconds}} s (rounded up to 0.01 s).",
   "captureMedal.cleanMet": "No lives lost in this attempt.",
   "captureMedal.cleanMissing": "A life was lost; complete a retry without losing a life.",
+  "captureHomeRecommendation.first": "Suggested mission: {{mission}}. It is the first mission in this Journey.",
+  "captureHomeRecommendation.selected": "Suggested mission: {{mission}}. Continue your selected mission in this Journey.",
+  "captureHomeRecommendation.retry": "Suggested mission: {{mission}}. Your last attempt here ended; try this mission again.",
+  "captureHomeRecommendation.recordedNext": "Suggested mission: {{mission}}. It follows your recorded completion of {{previous}}.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

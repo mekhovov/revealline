@@ -6039,5 +6039,9 @@
   "captureMedal.shortfall": "Покращіть цей час на {{seconds}} с (округлено вгору до 0,01 с).",
   "captureMedal.cleanMet": "У цій спробі життів не втрачено.",
   "captureMedal.cleanMissing": "Життя було втрачено; завершіть повторну спробу без втрати життів.",
+  "captureHomeRecommendation.first": "Пропонована місія: {{mission}}. Це перша місія цієї Подорожі.",
+  "captureHomeRecommendation.selected": "Пропонована місія: {{mission}}. Продовжте вибрану місію цієї Подорожі.",
+  "captureHomeRecommendation.retry": "Пропонована місія: {{mission}}. Ваша остання спроба тут завершилася; спробуйте цю місію знову.",
+  "captureHomeRecommendation.recordedNext": "Пропонована місія: {{mission}}. Вона йде після {{previous}}, завершення якої записано у вашому прогресі.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }
