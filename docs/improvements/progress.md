@@ -1,34 +1,35 @@
 # Improvement delivery progress
 
-## Latest checkpoint · 19 October, bounded execution resumed
+## Latest checkpoint · 19 October, implementation continues
 
-**31 merged ·12 open for checks ·39 drafts =82 active/admitted feature candidates;1 withdrawn.** All **83 feature groups /113 deliverables** remain tracked. Seven delivery dependencies are separate. PR inventory is not plan completion.
+**31 merged · 12 open for checks · 41 drafts = 84 active/admitted feature candidates; 1 withdrawn.** All **83 feature groups / 113 deliverables** remain tracked. Seven delivery dependencies are separate. PR inventory is not plan completion.
 
-| Priority | Deliverable                   | Current result                                                                                                                 | Remaining                                                                                                                                                      |
-| -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P1       | Duel Home guidance            | Qualified fixture1735 integratednormally atb452; original11featureblobs preserved. Firstfour prior testfiles retainexactscope. | Five of seven remaining complete files pass; language and start-cue are pending. No feature PR yet. Newermain/source/package/admission remain.                 |
-| P1       | Single Drone/Riy text scaling | Widthdraft1738 published and sampledENUKbrowserclear; fullfamilyWIP preserved/resumed.                                         | Preserve newlymergedsuspend/reading owners, finishlayout/bootstrap/inventory/native/browser. Fullfield,criticalHUD andtouch visibility explicit.               |
-| P2       | Pause-music language1737      | Complete28/28 and actualDuel firstPause/retainedENUK Back reviewed. Qualifiedc127ref preserved.                                | Current-main integration is preserved and independently reviewed; repeat28 complete checks; actualTeam/browsercheckpoint/audibility and broadergates separate. |
-| P1       | Worlds/Rooms support1733/1734 | Complete245/152 focusedchecks, scopedENUKnativebrowserreview.                                                                  | Fullcurrent-source/package/admission, export/live-room andphysicalacceptance.                                                                                  |
-| P2       | Worlds storage language1736   | Verifieddisjointgroups cover139/139; actualENUKstatus/Back clear.                                                              | Partitionedcoverage is notuninterruptedfull-filepass; broadergates remain.                                                                                     |
-| P1       | Source reliability slices     | Offline1616, Survival suspend1663 and captionreading1691 now source-merged.                                                    | Existingexactsource/browserreceipts retained; no newlive/devicequalification inferred.                                                                         |
+| Priority | Deliverable                      | Current result                                                                                                                       | Next acceptance boundary                                                                      |
+| -------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| P1       | Text compatibility #1668         | Current-main integration frozen; 43 feature paths preserved, 39 JavaScript files pass lint, both bootstrap checks pass.              | Complete current-source native cohort and broader gates before updating draft.                |
+| P1       | Single Drone/Riy text scaling    | Current save/caption owners integrated; complete typography inventory and responsive layout authored.                                | Native tests, full field/HUD/touch visibility and actual compact EN/UK review.                |
+| P1       | Duel Home guidance #1741         | Clean 11-file draft on #1735. All 11 files ran at recorded scopes: 135 pass, one independently reproduced pre-existing Team failure. | Current-source, compact browser, package and admission checks; F10 lessons remain separate.   |
+| P1       | Team navigation repair #1740     | Separate current-main draft fixes that baseline ownership bug; complete localization file passes 5/5.                                | Independent review and broader source/browser gates.                                          |
+| P2       | Pause-music language #1737       | Current-source complete 28/28; actual Duel and Team first-pause/retained EN/UK language and Settings focus reviewed.                 | Full source/package/admission, listening and physical checks.                                 |
+| P2       | Academy terminal language        | Two real terminal cases reproduce lost result meaning after native language change.                                                  | Correct local painter and verify success/replay/reset controls; no new proof or record owner. |
+| P1       | Worlds/Rooms support #1733/#1734 | Complete 245/152 focused checks and sampled EN/UK browser review.                                                                    | Current-source/package/admission, exports, live rooms and physical acceptance.                |
 
-**Capacity:** actualfree2.6GiB atresume permitsboundedsourcework, integrations and focusedtests. Prior160MiBdrop/failures remain recorded; no largebuild/snapshot maybreach2GiB reserve. Originalwork and allWIP/evidence preserved; no externalcopy/unrelatedcleanup.
+**Capacity:** bounded source work and focused tests continue with a protected 2 GiB reserve. Large builds/source captures must fit that reserve. Original work and failed-run evidence remain preserved.
 
-**Currentmain:** cdbda99 includes9commits beyond2d24, includingnew suspend/reading runtimeowners. Currentintegrations explicitly preserve these; earlierpasses are not retagged as currentmain. PhysicaliPhonePWA/offline, SteamDeck and suspend/resume remain **Not tested** becausehardware isunavailable.
+**Current main:** `cdbda99ac881eb9cac62d536543d9078b92ac081`. Earlier receipts retain their actual source scope. Physical iPhone PWA offline cold launch, Steam Deck and suspend/resume remain **Not tested** because hardware is unavailable.
 
 ## Current priorities
 
-- P1 · Duel Home guidance: five of seven remaining test files now pass, including departure and recovery. Finish language and start-cue checks, then review the complete feature for a draft PR based on its separate test prerequisite.
-- P1 · Controller report: draft #1731 has 141 focused checks and sampled English/Ukrainian browser evidence. Finish current-source and package checks. Physical connected-controller behavior remains untested.
-- P1 · Shared foundations: support reconciliation #1661 has 81 focused checks. Qualify the current version before admitting dependent Team, Duel and Academy changes.
-- P1 · Capacity: 2.6 GiB is available. Continue bounded implementation and focused tests while protecting a 2 GiB reserve; avoid large builds or source copies that would breach it.
-- P1 · Single Drone/Riy text scaling: finish menus, HUD, upgrade comparisons and results. Preserve the newly merged save/resume and caption-reading features, existing Standard/Large text, and simultaneous field/HUD/touch visibility.
-- P1 · Review and admission: finish current-version checks for text compatibility, recovery and support adapters. Required CI still governs merge; draft status does not establish release readiness.
-- P1 · Support hosts: Worlds #1733 passes 245 focused checks; Rooms #1734 passes 152. Both have sampled English/Ukrainian browser review. Full source/package checks, live-room behavior, exports and physical acceptance remain.
-- P1 · Team launch checks: finish the separate test, guide and catalog corrections while preserving the intended one-click mission launch. The withdrawn runtime proposal stays closed.
-- P2 · Language: pause-music #1737 now preserves the latest main version and awaits its complete 28-case rerun. Academy terminal-result meaning is scoped next. Worlds storage #1736 retains partitioned coverage and browser evidence.
-- Continue the remaining eight-phase plan. All 83 feature groups and 113 deliverables remain tracked. Lesson recommendations still need Learn and shared demos; source, release and physical-device gates remain separate.
+- P1 · Text compatibility #1668: qualify the frozen current-main integration before updating its draft. Preserve desired text size, save/reentrancy behavior and all host fallbacks.
+- P1 · Single Drone/Riy: finish the complete Extra large menu, field/HUD, upgrade and result layouts, then actual compact English/Ukrainian review. Preserve simultaneous field, critical status and touch/action access.
+- P1 · Team repair #1740: five focused checks pass. Finish independent review and broader qualification for the retained navigation-context bug.
+- P1 · Duel Home #1741: review the clean draft on fixture prerequisite #1735. All11 files ran at recorded scopes (135 pass, one independently reproduced baseline Team failure). Compact/current-source/package gates remain.
+- P1 · Shared support foundations: #1661 has81 focused checks; controller #1731 has141; Worlds #1733 has245; Rooms #1734 has152. Complete current-source, package and admission gates before dependent delivery.
+- P1 · Capacity: continue bounded work while protecting2GiB free. Full builds and large captures require enough headroom; do not discard original work or evidence.
+- P2 · Academy language: fix the confirmed timeout/unscored result explanation, with ordinary success/replay/reset controls and unchanged proof/records.
+- P2 · Pause music #1737: complete28/28 current-source checks and actual Duel/Team EN/UK browser review pass. Full/package/admission, listening and physical acceptance remain.
+- P1 · Team launch prerequisites and remaining recovery adapters: preserve intended one-click play, exact checkpoints and existing owners. Required CI governs admission.
+- Continue all eight phases. All83 feature groups/113 deliverables remain tracked; lessons still need Learn/Demo dependencies. Physical iPhone PWA offline and Steam Deck checks remain Not tested.
 
 ## Phase picture
 

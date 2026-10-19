@@ -2,15 +2,15 @@
 
 **Review version: 19 October 2026**
 
-**Latest execution checkpoint:** **31 source slices merged ·12 feature PRs open for checks ·39 drafts =82 active/admitted candidates;1 withdrawn.** All83 feature groups /113 deliverables remain tracked; seven delivery dependencies are separate. These counts are not a completion percentage.
+**Latest execution checkpoint:** **31 source slices merged · 12 feature PRs open for checks · 41 drafts = 84 active/admitted candidates; 1 withdrawn.** All 83 feature groups / 113 deliverables remain tracked. Seven delivery dependencies are separate. These counts are not a completion percentage.
 
-**New reviewable delivery:** compact Single Drone/Riy Settings #1738 and shared pause-music language #1737 retain scoped browser evidence and focused tests. Independent Duel fixture #1735 now has complete per-file14/10/19/9 passes; its feature integrationb452 is qualifying the seven remaining files. Worlds/Rooms support and partitioned storage-language evidence remain reviewed drafts with explicit broader gates.
+**New reviewable delivery:** Duel Home explanation [#1741](https://github.com/mekhovov/revealline/pull/1741) is a clean 11-file draft on the independent fixture prerequisite. Its recorded complete files retain 135 passes and one confirmed pre-existing Team failure. Separate [Team repair #1740](https://github.com/mekhovov/revealline/pull/1740) passes 5/5; it does not retroactively make the original cohort green. Pause-music #1737 now passes current-source 28/28 and actual Duel/Team English/Ukrainian browser journeys.
 
-**Current priorities:** finish Duel Home qualification, reconcile pause-language with currentmain, and complete the whole Single Drone/Riy Extra large menu/HUD/upgrades/results group. Newly merged Survival suspend and caption-reading owners must be preserved and inventoried. Contextual lessons still require Learn/D.
+**Current priorities:** qualify the text-compatibility integration, complete the whole Single Drone/Riy Extra large menu/HUD/upgrades/results group, and repair Academy terminal language after two valid native reproductions. Current save/resume and caption-reading owners remain preserved. Contextual lessons still require Learn/Demo dependencies.
 
-**Compact correction:** initialzero-size selectedpanel is intentional categorynavigation. The independentwidthfix1738 restores controlsfrom154.77 to276px at320, with sampledEN/UK portrait/landscape scrolling/Back evidence. It does not establish full Extra large support.
+**Compact acceptance:** fit the complete field alongside critical HUD, Riy status/actions and touch controls. Persistent secondary copy may use the existing Pause reading owner; time-sensitive guidance stays live. Standard/Large semantics, accepted nodes, focus and gameplay input ownership remain intact. Extra large support is not complete until actual compact English/Ukrainian review passes.
 
-**Admission and limits:** current observedmaincdb includes source-merges offline1616, Survival suspend1663 and captionreading1691. Older receipts retain exactsource scope. Actualspace2.6GiB permitsboundedimplementation/focusedtests; protect2GiB reserve forlargebuilds/newsourcecapture. No bulkassets or externalcopy authorized. PhysicaliPhonePWA/offline, SteamDeck and suspend/resume remain **Not tested**. Source, browser,release anddevice gates stay separate.
+**Admission and limits:** observed main is `cdbda99ac881eb9cac62d536543d9078b92ac081`. Older receipts keep their exact source scope. Bounded work protects a 2 GiB reserve; no large build or source capture may breach it. Physical iPhone PWA/offline, Steam Deck and suspend/resume remain **Not tested**. Source, browser, release and device gates stay separate.
 
 ## 1. Summary, priorities and current evidence
 
