@@ -469,6 +469,318 @@ function host(configPatch = {}, storage = new Map(), options = {}) {
   };
 }
 
+test('cold launch recovers missing HTML or startup modules without downloading or touching other stores', async () => {
+  for (const missing of ['game/index.html', 'game/app.mjs']) {
+    const storage = new Map();
+    const h = host(
+      {
+        downloadFiles: [],
+        startupRoutes: [{ path: 'game/index.html', files: ['game/index.html', 'game/app.mjs'] }],
+      },
+      storage,
+    );
+    await h.dispatch('install');
+    const owned = storage.get(
+      `revealline-offline:${encodeURIComponent(scope)}:${h.config.buildId}`,
+    );
+    owned.delete(new URL(missing, scope).href);
+    const imported = new Map([['picture', new Response('imported original')]]);
+    storage.set('player-imports', imported);
+    storage.set(
+      'revealline-official-content-v1',
+      new Map([['music', new Response('saved music')]]),
+    );
+    const originalKeys = [...storage.keys()];
+    h.calls.length = 0;
+    const network = new Map(h.network);
+    h.network.clear();
+    const launchURL = `${scope}game/?journey=exact-owner&return-token=opaque%2Bvalue`;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const response = await h.dispatch('fetch', { request: navigationRequest(launchURL) });
+      assert.equal(response.status, 503);
+      assert.equal(response.headers.get('Location'), null, 'No automatic redirect loop');
+      const html = await response.text();
+      assert.match(html, /Your offline game needs repair/);
+      assert.match(html, /<button id="repair"/);
+      assert.doesNotMatch(html, /id="manage"/, 'No launcher is offered when none is shipped');
+      assert.match(html, /return-token=opaque%2Bvalue/);
+      assert.match(html, /Repair replaces game files only/);
+    }
+    assert.deepEqual(h.calls, [], 'Startup uses cache metadata only, with no network dependency');
+    const script = await h.dispatch('fetch', {
+      request: new Request(`${scope}.offline-recovery.mjs`),
+    });
+    assert.equal(script.status, 200);
+    assert.match(await script.text(), /revealline\.offline-prepare/);
+    assert.deepEqual(h.calls, [], 'The repair control survives evicted application modules');
+    for (const [url, body] of network) h.network.set(url, body);
+    let report;
+    await h.dispatch('message', {
+      data: { type: 'revealline.offline-prepare' },
+      source: { url: launchURL },
+      ports: [
+        {
+          postMessage: (value) => {
+            report = value;
+          },
+        },
+      ],
+    });
+    assert.equal(report.status, 'ready');
+    assert.deepEqual(
+      h.calls,
+      [new URL(missing, scope).href],
+      'Repair reuses every verified surviving core file',
+    );
+    h.network.clear();
+    assert.equal(
+      await (await h.dispatch('fetch', { request: navigationRequest(launchURL) })).text(),
+      '<title>Game</title>',
+    );
+    assert.deepEqual([...storage.keys()], originalKeys);
+    assert.equal(storage.get('player-imports'), imported);
+    assert.equal(
+      await storage.get('player-imports').get('picture').clone().text(),
+      'imported original',
+    );
+    assert.equal(
+      await storage.get('revealline-official-content-v1').get('music').clone().text(),
+      'saved music',
+    );
+  }
+});
+
+test('recovery is scoped, escapes the return URL, and leaves optional content out of startup checks', async () => {
+  const h = host({
+    startupRoutes: [{ path: 'game/index.html', files: ['game/index.html', 'game/app.mjs'] }],
+  });
+  await h.dispatch('install');
+  const owned = h.storage.get(
+    `revealline-offline:${encodeURIComponent(scope)}:${h.config.buildId}`,
+  );
+  owned.delete(new URL('authoring/motion-lab/animation.mjs', scope).href);
+  h.network.clear();
+  h.calls.length = 0;
+  assert.equal(
+    (await h.dispatch('fetch', { request: navigationRequest(`${scope}game/`) })).status,
+    200,
+  );
+  assert.deepEqual(h.calls, []);
+  assert.equal(
+    await h.dispatch('fetch', {
+      request: navigationRequest('https://outside.invalid/.offline-recovery.mjs'),
+    }),
+    null,
+  );
+  owned.delete(new URL('game/index.html', scope).href);
+  const response = await h.dispatch('fetch', {
+    request: navigationRequest(`${scope}game/?x=a&y=b`),
+  });
+  assert.match(await response.text(), /href="[^"\n]*\?x=a&amp;y=b"/);
+});
+
+test('the dependency-free recovery button repairs only after approval and reports a failed or successful repair', async () => {
+  const h = host({ downloadFiles: [] });
+  await h.dispatch('install');
+  const owned = h.storage.get(
+    `revealline-offline:${encodeURIComponent(scope)}:${h.config.buildId}`,
+  );
+  owned.delete(new URL('game/app.mjs', scope).href);
+  const network = new Map(h.network);
+  h.network.clear();
+  h.calls.length = 0;
+  const script = await (
+    await h.dispatch('fetch', { request: new Request(`${scope}.offline-recovery.mjs`) })
+  ).text();
+  const elements = new Map();
+  let operation;
+  class Channel {
+    constructor() {
+      this.port1 = { close() {} };
+      this.port2 = { close() {}, postMessage: (data) => this.port1.onmessage({ data }) };
+    }
+  }
+  vm.runInNewContext(script, {
+    document: {
+      documentElement: {},
+      getElementById: (id) => {
+        if (!elements.has(id)) elements.set(id, {});
+        return elements.get(id);
+      },
+    },
+    URL,
+    location: { href: `${scope}game/` },
+    navigator: {
+      language: 'en',
+      serviceWorker: {
+        controller: {
+          postMessage: (data, ports) => {
+            operation = h.dispatch('message', { data, ports, source: { url: `${scope}game/` } });
+          },
+        },
+      },
+    },
+    MessageChannel: Channel,
+    setTimeout: () => 1,
+    clearTimeout() {},
+    addEventListener() {},
+  });
+  assert.equal(elements.get('repair').disabled, false);
+  assert.deepEqual(h.calls, [], 'Opening recovery never starts a repair');
+  elements.get('repair').onclick();
+  assert.equal(elements.get('repair').disabled, true);
+  await operation;
+  assert.match(elements.get('status').textContent, /Repair could not finish/);
+  assert.equal(elements.get('repair').disabled, false);
+  assert.equal(owned.has(new URL('game/app.mjs', scope).href), false);
+  for (const [url, body] of network) h.network.set(url, body);
+  elements.get('repair').onclick();
+  await operation;
+  assert.match(elements.get('status').textContent, /Game files repaired/);
+  assert.equal(elements.get('repair').disabled, false);
+  assert.equal(owned.has(new URL('game/app.mjs', scope).href), true);
+});
+
+test('recovery Manage links stay in the shipped rolling, immutable, branded or standalone distribution', async () => {
+  for (const prefix of [
+    '/',
+    '/revealline/',
+    '/revealline/releases/v2/site/',
+    '/revealline/editions/droneaid/releases/v2/site/',
+    '/downloaded-zip/site/',
+  ]) {
+    const distribution = `https://game.example${prefix}`;
+    const h = host(
+      {
+        startupRoutes: [{ path: 'game/index.html', files: ['game/index.html', 'game/app.mjs'] }],
+      },
+      new Map(),
+      {
+        scope: distribution,
+        entries: [
+          ['game/index.html', 'Game'],
+          ['game/app.mjs', 'Game module'],
+          ['app/index.html', 'Bundled launcher'],
+        ],
+      },
+    );
+    await h.dispatch('install');
+    h.storage
+      .get(`revealline-offline:${encodeURIComponent(distribution)}:${h.config.buildId}`)
+      .delete(`${distribution}game/app.mjs`);
+    h.network.clear();
+    h.calls.length = 0;
+    const response = await h.dispatch('fetch', {
+      request: navigationRequest(`${distribution}game/`),
+    });
+    assert.ok((await response.text()).includes(`id="manage" href="${distribution}app/?manage"`));
+    assert.deepEqual(h.calls, [], 'Recovery does not probe a guessed parent launcher');
+  }
+});
+
+test('recovery controls handle timeout, late messages, page return, controller changes and locale preference', async () => {
+  const h = host();
+  const script = await (
+    await h.dispatch('fetch', { request: new Request(`${scope}.offline-recovery.mjs`) })
+  ).text();
+  function screen({ query = '', saved, language = 'en' } = {}) {
+    const elements = new Map(),
+      events = new Map(),
+      posted = [],
+      timers = new Map();
+    let timerId = 0;
+    const element = (id) => {
+      if (!elements.has(id))
+        elements.set(id, { ...(id === 'retry' ? { href: `${scope}game/${query}` } : {}) });
+      return elements.get(id);
+    };
+    class Channel {
+      constructor() {
+        this.port1 = {
+          closed: false,
+          close() {
+            this.closed = true;
+          },
+        };
+        this.port2 = {
+          postMessage: (data) => {
+            if (!this.port1.closed) this.port1.onmessage({ data });
+          },
+        };
+      }
+    }
+    const worker = { postMessage: (data, ports) => posted.push({ data, port: ports[0] }) };
+    const serviceWorker = {
+      controller: worker,
+      addEventListener: (type, listener) => events.set(type, listener),
+    };
+    const document = { documentElement: {}, getElementById: element };
+    vm.runInNewContext(script, {
+      document,
+      URL,
+      location: { href: `${scope}game/${query}` },
+      localStorage: { getItem: () => saved },
+      navigator: { language, serviceWorker },
+      MessageChannel: Channel,
+      setTimeout: (callback) => {
+        timers.set(++timerId, callback);
+        return timerId;
+      },
+      clearTimeout: (id) => timers.delete(id),
+      addEventListener: (type, listener) => events.set(type, listener),
+    });
+    const reply = (index, values) => {
+      const { data, port } = posted[index];
+      port.postMessage({
+        format: data.protocol,
+        requestId: data.requestId,
+        scope: data.scope,
+        buildId: data.buildId,
+        kind: 'terminal',
+        ...values,
+      });
+    };
+    return { element, events, posted, timers, reply, serviceWorker, worker, document };
+  }
+  const s = screen({ query: '?lang=en&return=kept', saved: 'uk', language: 'uk' });
+  assert.equal(s.document.documentElement.lang, 'en', 'Explicit English takes precedence');
+  assert.equal(new URL(s.element('retry').href).searchParams.get('return'), 'kept');
+  assert.equal(s.posted.length, 0);
+  s.element('repair').onclick();
+  assert.equal(s.posted.length, 1);
+  [...s.timers.values()][0]();
+  assert.match(s.element('status').textContent, /has not finished/);
+  assert.equal(s.element('repair').disabled, false);
+  s.element('repair').onclick();
+  s.reply(0, { status: 'ready' });
+  assert.match(
+    s.element('status').textContent,
+    /Checking and repairing/,
+    'Late results cannot complete a retry',
+  );
+  s.reply(1, { status: 'ready' });
+  assert.match(s.element('status').textContent, /Game files repaired/);
+  s.element('repair').onclick();
+  s.events.get('pagehide')();
+  s.events.get('pageshow')();
+  assert.equal(s.element('repair').disabled, false);
+  s.element('repair').onclick();
+  s.serviceWorker.controller = null;
+  s.events.get('controllerchange')();
+  assert.equal(s.element('repair').disabled, true);
+  s.serviceWorker.controller = s.worker;
+  s.events.get('controllerchange')();
+  assert.equal(s.element('repair').disabled, false);
+  s.element('repair').onclick();
+  s.reply(4, { status: 'error' });
+  assert.match(s.element('status').textContent, /Repair could not finish/);
+  const explicit = screen({ query: '?lang=uk', language: 'en' });
+  assert.equal(explicit.document.documentElement.lang, 'uk');
+  assert.match(explicit.element('repair').textContent, /Відновити/);
+  assert.equal(screen({ saved: 'uk' }).document.documentElement.lang, 'uk');
+  assert.equal(screen({ query: '?lang=invalid', saved: 'uk' }).document.documentElement.lang, 'uk');
+});
+
 test('offline source pages have no registration side effect and reject explicit preparation without build marker', async () => {
   let registrations = 0;
   const env = {

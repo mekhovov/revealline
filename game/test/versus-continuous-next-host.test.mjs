@@ -415,7 +415,7 @@ test('paused Journey can Stay and then explicitly Replace with exact Classic set
   assert.equal(p.state(), 'paused');
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
-  await openMissionLibrary(p, 'race-journey-find');
+  await openMissionLibrary(p, 'race-chapters');
   showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
