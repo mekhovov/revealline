@@ -1444,8 +1444,9 @@ for (const mode of ['solo', 'versus', 'team']) {
     state.shell.open('missions');
     const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
     const location = state.location.href;
-    state.$('journey-collection').value = 'Custom';
-    state.$('journey-collection').emit('change');
+    state.$('journey-lifecycle').value = 'archive';
+    state.$('journey-lifecycle').emit('change');
+    assert.equal(state.$('journey-lifecycle').value, 'archive');
     state.$('journey-mode').value = mode === 'team' ? 'solo' : 'team';
     state.$('journey-mode').emit('change');
     state.$('journey-search').value = 'No such mission here';
@@ -1453,6 +1454,7 @@ for (const mode of ['solo', 'versus', 'team']) {
     state.$('journey-filters-reset').focus();
     state.$('journey-filters-reset').click();
     assert.equal(state.$('journey-mode').value, mode);
+    assert.equal(state.$('journey-lifecycle').value, 'current');
     assert.equal(state.$('journey-search').value, 'No such mission here');
     assert.equal(state.$('journey-cards').children.length, 0);
     assert.equal(state.document.activeElement, state.$('journey-search'));
