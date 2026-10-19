@@ -1,3 +1,4 @@
+import { createGameplayAudioOutput } from '../../game/ui/gameplay-audio-output.mjs';
 import { createHumanReactionPolicy } from '../../game/ui/human-reaction-policy.mjs';
 import { HUMAN_REACTION_BANK } from '../../game/audio/human-reactions/portable.mjs';
 import { destructionBufferGain } from '../../game/ui/destruction-level.mjs';
@@ -33,6 +34,7 @@ export function createWorldAudio(options = {}) {
   } catch {
     // Sound works for this visit even when browser preferences are unavailable.
   }
+  const gameplayOutput = createGameplayAudioOutput({ window: host, getStorage: () => storage });
   const AudioContext = host.AudioContext ?? host.webkitAudioContext;
   let enabled = false;
   try {
@@ -283,6 +285,7 @@ export function createWorldAudio(options = {}) {
         hum,
         humGain,
       };
+      gameplayOutput.attach(output);
       return true;
     } catch {
       candidate?.close().catch(() => {});
@@ -478,6 +481,7 @@ export function createWorldAudio(options = {}) {
   }
 
   return {
+    gameplayOutput,
     get context() {
       return context;
     },
@@ -774,6 +778,7 @@ export function createWorldAudio(options = {}) {
       if (disposed) return;
       disposed = true;
       humanBuffers.clear();
+      gameplayOutput.dispose();
       pause();
       releaseMaster();
       host.removeEventListener?.('storage', changed);
