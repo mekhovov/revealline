@@ -756,7 +756,7 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
     }
   files = projectEditionLocalization(files);
   for (const file of enginePaths) {
-    if (files.has(file)) files.set(file, projectEditionRuntimeIndentation(file, files.get(file)));
+    if (compactCode && files.has(file)) files.set(file, projectEditionRuntimeIndentation(file, files.get(file)));
   }
   if (files.has('game/index.html')) {
     files.set('game/build-config.json', jsonBytes({ version, entry: 'game/company.html' }));
