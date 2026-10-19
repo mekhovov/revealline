@@ -14,16 +14,16 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Home guidance: Capture #1729 and independent Solo prerequisite #1732 retain their gates. Versus new host cases pass; independent fixture #1735 extension default10/10 passes; library14/19 failed caption/media assumptions and is being corrected before later native checks. Full lessons still need Learn/D.",
+    "P1 · Capacity: disk fell to about160MiB; about615MiB later recovered. New implementation/native runs and integration are on hold. User asked to free at least3GiB; no external copy or unrelated cleanup authorized. Small source checkpoints and read-only review preserve work.",
     "P1 · Controller report: the wording correction is published as draft #1731 with 141 targeted checks and scoped English/Ukrainian browser review. Complete remaining source/package admission; physical connected-controller behavior remains untested.",
     "P1 · Shared foundations: support reconciliation #1661 is published with 81 targeted checks. Complete current-source gates, then preserve all host states while updating dependent Team, Versus and Academy PRs.",
     "P1 · Available space: small source changes, bounded focused tests and browser review continue. Full builds/new snapshots require 2 GiB free; about 1.0 GiB is available. No external-drive copy is authorized.",
-    "P1 · Compact readability: Single Drone/Riy draft #1738 restores controls276px wide at320, with sampled EN/UK scrolling/Back acceptance. Complete their whole Extra large text group next. Duel/Team/Worlds acceptance and physical checks stay separate.",
+    "P1 · Compact readability: draft #1738 repairs width and sampled Back/scrolling. Single Drone/Riy full Extra large WIP preserved, incomplete; resume whole menu/HUD/upgrades/results group after capacity. Short-viewport field/HUD/touch visibility is an explicit gate.",
     "P1 · Review and admission: complete current-source checks for text compatibility, recovery and the reviewed support adapters when space permits. Required CI and merge admission still apply.",
     "P1 · Support hosts: Worlds #1733 passes245 and Rooms #1734 passes152 complete focused checks, with scoped English/Ukrainian native browser review. Both remain drafts for full source/package/admission; live-room and physical acceptance remain open.",
     "P1 · Team launch checks: finish the separate test, guide and catalog corrections while preserving the intended one-click native launch. The withdrawn runtime proposal stays closed.",
-    "P2 · Language and clarity: Worlds storage status #1736 passes partitioned139/139 plus actual EN/UK review. Shared pause-music draft #1737 passes complete28/28 and actual Duel first-Pause/EN/UK return review. Hunt, result/card language and remaining terminology continue.",
-    "Continue the remaining approved phases. Lesson recommendations still depend on the Learn hub and shared demos; PR inventory does not measure whole-plan completion."
+    "P2 · Language: Worlds storage #1736 retains139 partitioned passes. Pause-music #1737 complete28 and actual Duel EN/UK pass; bounded latest-main integration preflight ready. Academy terminal-result meaning is scoped next, unimplemented.",
+    "Continue all remaining approved phases after capacity release. Home guidance needs integration of now-qualified fixture1735 and remaining complete native cohort. Learn/D-dependent lessons, source/release/device gates and113 deliverables remain tracked; PR counts are not completion."
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -895,7 +895,7 @@
         "browser": "scoped_desktop_and_iframe_passed",
         "physical": "not_tested"
       },
-      "blocker": "Current-head source/admission gates remain; contextual lessons require F25/D.",
+      "blocker": "New source/test work on capacity hold after local disk fell to about160MiB; current free about615MiB. Independent fixture1735 qualified; F10 integration/remaining native cohort still pending. Full lessons remainF25/D dependent.",
       "pr": null,
       "commit": null,
       "next": "Finish Capture Home admission with independent fixture prerequisite1732. Develop a separate explained default Versus landing selection using its existing accepted owner. Team can follow separately; full lesson recommendations remain F25/D dependent.",
@@ -940,7 +940,7 @@
           "commit": null,
           "dependency": "Independent fixture1732 exact8704; existing native Journey initial-selection owner, not F25/D",
           "effort": "1–2d bounded reason/visibility slice plus native and compact browser review; queues excluded",
-          "next": "Independent fixture1735 extension actual captured-main default10/10 passes; complete MissionLibrary14/19 fails five cases (one introduced caption, three preparePack decoders, one obsolete PNG assumption). Continuous and later feature files NOTRUN; stop retained. Diagnose bounded fixture/artwork contract before rerun, then integrate unchanged F10 feature and finish cohort.",
+          "next": "Independent1735d5a346 per-file14/10/19/9 qualified. Clear readonlyintegrationpreflight intoF10de336; seven complete feature files remain after normal integration/capacity release. Preserve firstfour exactscope passes. No F10 PR/newer-main/full-source acceptance yet.",
           "evidence": [
             "Read-only assessment: actual journeyCursor/cursorEntry/progressMission/initialJourneyMission already choose default first/current/recorded successor. Bind captured reason facts to acceptedroundRecipe.entry; suppress pending, late/stale/endfallback, incominghandoff/continuation and actuallive/paused states. Later accepted manual recipe uses neutral selected wording, never earned progress or opponent mastery. Versus controller restore stores assignment, not a generic saved flight: do not invent a save owner. Existing resultNext already names destination and needs no duplicate recommendation.",
             "Frozen64d0d3b414e8fc6d28c2b5fe443e22d8988a7c82fbc755077e9dad9a1b1afdb6 on8704 preserves twelve original production owners,5937EN/6049UK values plus3messages each and canonical18. Actual accepted recipe remains sole selection owner. Complete pure5/5 passes.",
@@ -952,7 +952,9 @@
             "Localfeature27bfa1374531627fa0dad099fc824f84e19abc54 preserves39acaa11blobs. Actuale746 independent correctedcandidate14/14 pass87.15s, no skips/guards; exact2strings reverse to originaltestbytes. Separatedraftmain1735 exact24753ce6e646ceb8dea073fef2857bf97a0f2ea7,2paths, roothead/base/readback verified. F10cherry-picked predecessor→de336294392af5fec7602a19e676ece1a7afcb3e, all11featureblobs byteidentical. Correctedcandidate onactualF10 complete14/14 pass88.35s.",
             "Next complete versus-default-entry atde3367/10 FAIL27.83s, no skips/guards; three obsolete heading/hiddenMissions action/retired mode-description expectations. Remaining6 NOTRUN. Read-onlycohort audit finds related retainedmetadata literals/openers inlibrary/continuous-next. Independentlight source-hashed pack/campaign/mission IDs (notDOM/no fullprojectfactory) underpin cohesive1735 fixtureextension; runtime selection/launch policy unchanged. Latestmain9566 search-owner integration is separate, not qualified by e746 checks.",
             "Test-only extension refined a107e87 uses independently pinned membership, including164Original/132compatibleCurrent Classic identities, explicit mode/lifecycle/owners, source hashes and canonical ID primitives only. No production sourcefactory/createMissionLibrary/classicLibrarySources oracle, rendered counts or compiled geometry. Complete default-entry10/10 passes42.64s peak1145.3MiB on actuale746 runtime.",
-            "Next complete MissionLibrary file19cases14PASS/5FAIL,112.50s peak1483.1MiB, zero skips/cancellations/guards, exacta107 before/after. One introduced Legacy caption must remain original Select Mission, three installed cases fail decoder-unavailable in unchanged prehostpreparePack, optional case fails unchanged PNG-signature assumption. Independent exact inventories/shared order/Team IDs/held-owner lazy cases pass, but file/cohort does NOT. Continuous NOTRUN after stop; no timeouts/assertion weakening or hydration."
+            "Next complete MissionLibrary file19cases14PASS/5FAIL,112.50s peak1483.1MiB, zero skips/cancellations/guards, exacta107 before/after. One introduced Legacy caption must remain original Select Mission, three installed cases fail decoder-unavailable in unchanged prehostpreparePack, optional case fails unchanged PNG-signature assumption. Independent exact inventories/shared order/Team IDs/held-owner lazy cases pass, but file/cohort does NOT. Continuous NOTRUN after stop; no timeouts/assertion weakening or hydration.",
+            "Corrected complete MissionLibrary19/19PASS169.74s peak1837.2MiB, continuousNext9/9PASS57.66s peak1060MiB on exactedb999before/after, zero skips/cancellations/guards. Default10/10 earliera107 unchangedinputs and candidate14/14initialsource remain separateperfile evidence, not combinedrerun. Doc-onlyfinala72a4c changes no passingtest/helper/metadata bytes. Independent1735normalFFd5a346ebbb541787f27a2ccb625551ea196f5501/tree1611f581d705a4efc92e75e19719e84c1b4694fc remoteDRAFT/main/7pathreadback verified. Original14/19failure/7of10 and9of14 remain explicit; allfour untouched laternativefiles stillNotrun forF10.",
+            "ReadonlyF10integrationpreflight: all6d5afollowuppreimages exactlymatchpreservedde336;2newmetadata paths absentboth, no overwrite/conflict indicated. Projected11completefilemanifest1493cc145dbe12debd7c75f730f1961728b04d18ef07f6feeae457ad8f906cdd retainedintooloutput; first4(pure/newhost/shell/candidate) unchanged,3correctedfixturesfromd5a,last4departure/recovery/localization/startcue unchangedde336. All11runtimefeatureblobs pinned27bfa. Sevencompletefiles requirefeaturequalificationaftercapacity/integration; first4priorpasses retainexactscope, no gratuitouswholecohortrerunclaimed. No switch/cherrypick/native executed."
           ],
           "testPrerequisite": "https://github.com/mekhovov/revealline/pull/1735"
         }
@@ -2373,16 +2375,18 @@
         {
           "id": "single-drone-riy-extra-large-text",
           "priority": "P1",
-          "status": "assessment",
+          "status": "developing",
           "owner": "lane-a",
           "pr": null,
           "commit": null,
           "dependency": "Compatibility1668 and complete SingleDrone/Riy typography/layout inventory; follow independent width repair",
           "effort": "Within original6–10d totalF09, not a second full estimate",
-          "next": "Complete opt-in capability across menus/HUD/upgrades/SVGcaptions/results/reading for sharedSingleDrone/Riyhost, preserve otherfamilyfallback, same acceptedoffers/RNG/scoring/camera. Source plan ready; implementation follows compact width repair.",
+          "next": "Preservedf807 WIP has API/card/caption deltas,161 authored typography declarations across17loaded sheets plus3inlineowners and36KB inventory. New layout/bootstrap/hosttests incomplete; resume after disk capacity. Approved HUD design must show full FITfield/criticalHUD/touch together at320 and844 shortlandscape, preserving logical960x540/inputrect and Standard/Large.",
           "evidence": [
-            "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred."
-          ]
+            "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred.",
+            "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed."
+          ],
+          "blocker": "Capacity hold; current WIP is incomplete and not browser-ready."
         }
       ]
     },
@@ -2853,13 +2857,34 @@
             "Valid complete componentRED2existingpass/2newracecoopfail, then approved stable label producer +existinglocalizedText reuse inrefresh; complete4/4GREEN. Earlier wrongUKliteral and stale textnode identity fixture errors corrected separately, not counted as productionred. Actual buttonidentity, subsequenttextnode/focus/order, missing/disabledtransport, oneexplicitNext, destroy/no-revival preserved. No playback/global localization/API change.",
             "Final complete3file cohort28/28, zero skips/cancellations/guards, fresh serialized Node22 and exact24870 before/after manifest. Native2/2 includes actual Display select/change before first Pause in Versus/Team, paused checkpoints and repeated Back focus. Music22/22 preserves exact session/track/queue/preferences/writes/media plays. First broader native1/2 failure was pre-label cached-i18n fixture mounting; correction uses existing public attachLanguageControls via beforeImport and requires actualSELECT, no direct-locale bypass. Earlier failed attempt retained.",
             "Root independently reviewed stable producer/existing localizedText4line change and all5paths. Draft1737 exact7c4dd52 tree8afdfbc8 parentactuale746, remote head/main/draft/paths verified and attached. Finaldoc-only qualification update does not alter passing production/test blobs. Actual source browser8993 could not reach Pause because defaultFirstreturn picture did not load; this is not corrected-label browser acceptance. No audible/device/offline claim.",
-            "Exact missingtrackedFirstreturnPNG404 fixed with ONE2,366,738byte already-local APFSclone, distinctinode/fullSHA3acf496d.. andHEADGitblob94d94509e0bd3fca988e15fc000bc53af091a543 verified, nofetch/build/bulkcopy; runtime/testsourceunchanged. NativeRetry→readyUK, DisplayEN→Back exactSettingsfocus→Start→Escape realPAUSED, Next songEnglish, Resumeprimaryfocus, Bothplayerspaused, soundoff. PausedDisplayUK→Back retainsUKНаступнакомпозиція/exactSettingsfocus. Screenshot pause-music-7c4-duel-uk-mount-en-first-pause.png. NoNextactivation/listening or browsercheckpointbyte/Teamdeviceclaim. Doc-onlyordinaryFFc127/treebe014974 published, original28passingcode/testblobs exact. Latestmain2d24remotecompare11commits/25paths no5pathorbootstrap/music/shellowner overlap, butadjacentnativehost/settingschanged; notlatestintegrationqualification."
+            "Exact missingtrackedFirstreturnPNG404 fixed with ONE2,366,738byte already-local APFSclone, distinctinode/fullSHA3acf496d.. andHEADGitblob94d94509e0bd3fca988e15fc000bc53af091a543 verified, nofetch/build/bulkcopy; runtime/testsourceunchanged. NativeRetry→readyUK, DisplayEN→Back exactSettingsfocus→Start→Escape realPAUSED, Next songEnglish, Resumeprimaryfocus, Bothplayerspaused, soundoff. PausedDisplayUK→Back retainsUKНаступнакомпозиція/exactSettingsfocus. Screenshot pause-music-7c4-duel-uk-mount-en-first-pause.png. NoNextactivation/listening or browsercheckpointbyte/Teamdeviceclaim. Doc-onlyordinaryFFc127/treebe014974 published, original28passingcode/testblobs exact. Latestmain2d24remotecompare11commits/25paths no5pathorbootstrap/music/shellowner overlap, butadjacentnativehost/settingschanged; notlatestintegrationqualification.",
+            "Readonlyexact2d24aee29448667a2cbe0381ef1755529f59fb11 integrationpreflight:11commits/58trees already-local;25changedtextblobs4,735,889bytes,noasset/no5featureoverlap/untrackedcollision.15missingblobs4,591,343bytes; expected<=12MiBsource/objectgrowth, nofetchneeded. Preservequalifiedc127ref,OIDverifiedexplicittextobjects only, normalmergeNO_LAZY_FETCH then samecomplete28cohort/rootreviewbeforeFF. Not executed due capacity. RequiredCIatobservedc127/c4fdnewdraftheads all8checksqueued; noadmission/bypass."
           ],
           "deliveryState": "draft",
           "observedRemoteHead": "c127c384bfe00569afccd9b5d0d9498f5933b01d",
           "qualification": {
             "automated": "complete_focused_28_pass_full_pending",
             "browser": "actual_duel_first_pause_and_en_uk_back_pass",
+            "physical": "not_tested"
+          },
+          "blocker": "Bounded latest-main integration awaits local disk capacity."
+        },
+        {
+          "id": "academy-terminal-result-language",
+          "priority": "P2",
+          "status": "assessment",
+          "owner": "lane-c",
+          "pr": null,
+          "commit": null,
+          "dependency": "Existing Academy completed/translated terminal owners; after1737 latest-main integration and capacity release",
+          "effort": "0.5–1d bounded result-copy batch plus native/browser review; queues/hardware excluded",
+          "next": "Accepted three-path boundary: Academy app, fpv-flight-ui native tests, qualificationdoc. Keep actual expired/unscored meaning across EN/UK by one local painter using current terminalHandled/flight/tuning facts. No new result/proof/admission owner. Source/test edits Not started.",
+          "evidence": [
+            "Sourceconfirmed translated1085–1086 always replaces complete-title/lesson with ordinarycoursecopy, overwriting completed1351–1387 Flight ended/retry or Draft test finished/unscored meaning on localechange. paint never restores specialcopy. No live reproduction or automated red yet. Native plan real36000tickexpiry via publicrendererFactory withoutretaineddraws, validpubliccourses tuningterminal, realEOF/normalwinning controls; exact nodes/focus/actions/model/proof/records/I/O acrosslocale. No fake shortdeadline/injectedterminal/completedreentry. Capacityhold."
+          ],
+          "qualification": {
+            "automated": "not_run",
+            "browser": "not_run",
             "physical": "not_tested"
           }
         }
@@ -4261,6 +4286,11 @@
       "date": "2026-10-19",
       "item": "Pause-music1737 published; compact width browser verified; fixture failure retained",
       "reason": "Complete28/28 pause-language checks and exact5pathdraft published. Compact42e sampledENUK320/390/844 readability/focus passes after restored fieldlayout; draftpublication pending. Independent defaultfixture10/10passes, MissionLibrary14/19fails andcontinuousNOTRUN remain explicit. Whole113deliverables retained."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Fixture1735 extension qualified/published; current work preserved on capacity hold",
+      "reason": "Perfile14/10/19/9 exactscoped passes, prior14/19failure retained; ordinaryFFd5a346/7paths verified. F09 fullfamilyWIP partial/notbrowserready, HUDdesign refined beforeedit. Pause1737latest2d24 integration preflight15textblobs4.59MB/noassets ready butnotrun. Academyterminal-language3pathboundary sourceconfirmed/read-only. Diskfell160MiB then615MiB; useraskedfree3GiB, no newnative/build/sourcegeneration untilresolved."
     }
   ],
   "deliveryDependencies": [
@@ -4336,11 +4366,11 @@
       "status": "draft_review",
       "owner": "lane-b",
       "pr": "https://github.com/mekhovov/revealline/pull/1735",
-      "commit": "24753ce6e646ceb8dea073fef2857bf97a0f2ea7",
-      "scope": "Independent captured-main correction of two strict expected strings across five dynamic cases, preserving every other original test byte. Cohesive related fixture extension now developing for actual visible actions and independently registered opaque-ID inventories; no runtime or timeout change.",
-      "next": "Published2-path draft passes complete14/14 on actuale746; rootreview clear. Extend verified current-contract fixture scope and validate before ordinary FF; latestmain search-owner integration remains separate.",
+      "commit": "d5a346ebbb541787f27a2ccb625551ea196f5501",
+      "scope": "Seven-path independent captured-main fixture correction: strict context strings, visible native action contracts and independently pinned opaque-ID inventories; explicit modeled image headers/MIME/dimensions. No production/shared-helper/timeout changes.",
+      "next": "Published ordinaryFF d5a346. Complete per-file14candidate/10default/19library/9continuous passes retain exact source scopes, not one aggregate rerun. Integrate into preserved F10de336 and run remaining full feature cohort after capacity release; newer-main/full source gates remain.",
       "qualification": {
-        "automated": "scoped14_pass_extension_developing",
+        "automated": "complete_per_file_14_10_19_9_pass_scoped",
         "browser": "not_required_for_fixture_only",
         "physical": "not_tested"
       }
