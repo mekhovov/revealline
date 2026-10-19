@@ -1,0 +1,307 @@
+{
+  "format": "SharedDemoNativePortabilityEvidenceV1",
+  "observedAt": "2026-10-19T09:33:29.103162+00:00",
+  "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceBefore": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "sourceAfter": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsBefore": {
+    "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "buildInputsAfter": {
+    "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "files": [
+    {
+      "original": {
+        "path": ".cache/signal08-portability-assessment-b4688ca21.json",
+        "sha256": "95465cd8a19bb8b4dab6c5ae8e1959f1cfb8074dcc4d1455508f681f79617561",
+        "bytes": 5819
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-portability-assessment-b4688ca21.json",
+        "sha256": "95465cd8a19bb8b4dab6c5ae8e1959f1cfb8074dcc4d1455508f681f79617561",
+        "bytes": 5819
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/signal08-x86-emitted-b4688ca21.json",
+        "sha256": "87c27c6e55ae281618244495beac8d18bd1b1a7f554c91372bd3ebfca07270aa",
+        "bytes": 6936
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-x86-emitted-b4688ca21.json",
+        "sha256": "87c27c6e55ae281618244495beac8d18bd1b1a7f554c91372bd3ebfca07270aa",
+        "bytes": 6936
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/signal08-x86-emitted-b4688ca21.supervision.json",
+        "sha256": "0b95d125a8c7c16128f83d343ed626edcc74aa7691eda12efe5d465d191db55a",
+        "bytes": 51269
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-x86-emitted-b4688ca21.supervision.json",
+        "sha256": "0b95d125a8c7c16128f83d343ed626edcc74aa7691eda12efe5d465d191db55a",
+        "bytes": 51269
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/signal08-x86-emitted-b4688ca21.mjs.txt",
+        "sha256": "712832af005866e89e485a76b335e4f660a46740b1cb4edee8ec4c7aeea531d6",
+        "bytes": 9295
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-x86-emitted-b4688ca21.mjs.txt",
+        "sha256": "712832af005866e89e485a76b335e4f660a46740b1cb4edee8ec4c7aeea531d6",
+        "bytes": 9295
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/signal08-x86-emitted-b4688ca21.supervisor.py.txt",
+        "sha256": "85699d9b43fc222aac07eede79fb98447e98814257ecfd144a8569278cc5799d",
+        "bytes": 12737
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-x86-emitted-b4688ca21.supervisor.py.txt",
+        "sha256": "85699d9b43fc222aac07eede79fb98447e98814257ecfd144a8569278cc5799d",
+        "bytes": 12737
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/signal08-x86-native-emitted-b4688ca21.json",
+        "sha256": "809a1e97f9d6cc3de7eb284a5af534772d3acaba84268e19156c55f830debf03",
+        "bytes": 50387
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-x86-native-emitted-b4688ca21.json",
+        "sha256": "809a1e97f9d6cc3de7eb284a5af534772d3acaba84268e19156c55f830debf03",
+        "bytes": 50387
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/signal08-x86-native-emitted-b4688ca21.supervision.json",
+        "sha256": "2c21ebd149ceb214567be804848965af0830412ac35701d532a669dc053e81a4",
+        "bytes": 59078
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-x86-native-emitted-b4688ca21.supervision.json",
+        "sha256": "2c21ebd149ceb214567be804848965af0830412ac35701d532a669dc053e81a4",
+        "bytes": 59078
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/signal08-x86-native-emitted-b4688ca21.mjs.txt",
+        "sha256": "4026d4523f43448694b0969359e63ba6754d3b325dad0d37b1aef503fd042629",
+        "bytes": 10605
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-x86-native-emitted-b4688ca21.mjs.txt",
+        "sha256": "4026d4523f43448694b0969359e63ba6754d3b325dad0d37b1aef503fd042629",
+        "bytes": 10605
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/signal08-x86-native-emitted-b4688ca21.supervisor.py.txt",
+        "sha256": "85699d9b43fc222aac07eede79fb98447e98814257ecfd144a8569278cc5799d",
+        "bytes": 12737
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-x86-native-emitted-b4688ca21.supervisor.py.txt",
+        "sha256": "85699d9b43fc222aac07eede79fb98447e98814257ecfd144a8569278cc5799d",
+        "bytes": 12737
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/signal08-x86-native-emitted-b4688ca21.log",
+        "sha256": "f12269a9adbeef45609b8ca064c118f86351e41d5768047eecda9514ef0ff6b5",
+        "bytes": 1984
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/signal08-x86-native-emitted-b4688ca21.log",
+        "sha256": "f12269a9adbeef45609b8ca064c118f86351e41d5768047eecda9514ef0ff6b5",
+        "bytes": 1984
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/installed-solo-node22131-x64-b4688ca21.supervision.json",
+        "sha256": "a0c9258451d46d581d871d3b1d701d95a60f126fd1b8ff54ea89b48c754f06a7",
+        "bytes": 10503
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/installed-solo-node22131-x64-b4688ca21.supervision.json",
+        "sha256": "a0c9258451d46d581d871d3b1d701d95a60f126fd1b8ff54ea89b48c754f06a7",
+        "bytes": 10503
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/installed-solo-node22131-x64-b4688ca21.log",
+        "sha256": "915465056048bc7bb57216acda5b796f94ad9dc5a54d1e97a81114966bd8db51",
+        "bytes": 2889
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/installed-solo-node22131-x64-b4688ca21.log",
+        "sha256": "915465056048bc7bb57216acda5b796f94ad9dc5a54d1e97a81114966bd8db51",
+        "bytes": 2889
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/installed-solo-node22131-x64-b4688ca21.initial.mjs.txt",
+        "sha256": "94063b180c6901e0b6bbefaf7a8ab5bab74480bd44598e1b44f02d14a46606de",
+        "bytes": 9263
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/installed-solo-node22131-x64-b4688ca21.initial.mjs.txt",
+        "sha256": "94063b180c6901e0b6bbefaf7a8ab5bab74480bd44598e1b44f02d14a46606de",
+        "bytes": 9263
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/installed-solo-node22131-x64-b4688ca21.supervisor.py.txt",
+        "sha256": "a044fd75af5986605105d02b719623f3b267387c8e8d233c0d290f5079b9bc88",
+        "bytes": 10711
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/installed-solo-node22131-x64-b4688ca21.supervisor.py.txt",
+        "sha256": "a044fd75af5986605105d02b719623f3b267387c8e8d233c0d290f5079b9bc88",
+        "bytes": 10711
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/installed-solo-node22131-x64-native-b4688ca21.json",
+        "sha256": "888486f1f7f1df6747533d9e08b40f6e8017df9135e2caec7eb8b6b157aee099",
+        "bytes": 49765
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/installed-solo-node22131-x64-native-b4688ca21.json",
+        "sha256": "888486f1f7f1df6747533d9e08b40f6e8017df9135e2caec7eb8b6b157aee099",
+        "bytes": 49765
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/installed-solo-node22131-x64-native-b4688ca21.supervision.json",
+        "sha256": "455e19f224dd023a48abc8cd946e824f4806bd6075370d0856aff47d9926f22e",
+        "bytes": 24754
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/installed-solo-node22131-x64-native-b4688ca21.supervision.json",
+        "sha256": "455e19f224dd023a48abc8cd946e824f4806bd6075370d0856aff47d9926f22e",
+        "bytes": 24754
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/installed-solo-node22131-x64-native-b4688ca21.mjs.txt",
+        "sha256": "514cc0e26add6d098ffb442a80ebd04571d6769f889f8e96f5634ac9e1ea8965",
+        "bytes": 9297
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/installed-solo-node22131-x64-native-b4688ca21.mjs.txt",
+        "sha256": "514cc0e26add6d098ffb442a80ebd04571d6769f889f8e96f5634ac9e1ea8965",
+        "bytes": 9297
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/installed-solo-node22131-x64-native-b4688ca21.supervisor.py.txt",
+        "sha256": "a044fd75af5986605105d02b719623f3b267387c8e8d233c0d290f5079b9bc88",
+        "bytes": 10711
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/installed-solo-node22131-x64-native-b4688ca21.supervisor.py.txt",
+        "sha256": "a044fd75af5986605105d02b719623f3b267387c8e8d233c0d290f5079b9bc88",
+        "bytes": 10711
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/installed-solo-node22131-x64-native-b4688ca21.log",
+        "sha256": "0fa4915f8d9a9b8a94c6191d1458464e14229b9c087cd5cd92b05a158d523fae",
+        "bytes": 19508
+      },
+      "retained": {
+        "path": "docs/qualification/shared-demos/solo-native-portability-b4688ca21/installed-solo-node22131-x64-native-b4688ca21.log",
+        "sha256": "0fa4915f8d9a9b8a94c6191d1458464e14229b9c087cd5cd92b05a158d523fae",
+        "bytes": 19508
+      }
+    }
+  ],
+  "largeNativeSamplesRetainedInOwnedCache": [
+    {
+      "path": ".cache/signal08-x86-native-emitted-b4688ca21.browser.sample.txt",
+      "sha256": "6fabc92346dc970c86996814568779fdb1d2b8687fbc9a6250a5c5dbe74d59f6",
+      "bytes": 252882
+    },
+    {
+      "path": ".cache/signal08-x86-native-emitted-b4688ca21.renderer.sample.txt",
+      "sha256": "b40ccfe33979691b10bf870e6456a143005abcd828cd3f200db09bbfb685636f",
+      "bytes": 212770
+    }
+  ],
+  "completeObservation": true,
+  "strictInstalledQualification": false,
+  "counts": {
+    "targeted": 4,
+    "targetedMatch": 0,
+    "installed": 17,
+    "installedAdmitted": 14,
+    "installedFailed": 3
+  },
+  "failedSources": [
+    {
+      "id": "solo-qualified-478808a96f4fbf5e",
+      "levelId": "signal-08"
+    },
+    {
+      "id": "solo-qualified-d0257fa131665b79",
+      "levelId": "signal-12"
+    },
+    {
+      "id": "solo-qualified-cc8994b6f3d0482f",
+      "levelId": "courtyard-exits"
+    }
+  ],
+  "observedLinuxDiagnosticAgreement": true,
+  "cleanupVerified": true,
+  "bindingsStable": true,
+  "conclusions": [
+    "Exact Node22.13.1 macOS x64 reproduces all three published Linux signal-08 diagnostic hashes. This establishes a useful local reproduction, not a Linux pass.",
+    "All17 installed source creations were individually attempted:14 admitted and3 failed. The original strict verifier and existing reviewed-only compatibility remain unchanged.",
+    "Forced x86 Chrome reproduces the existing Chromium proof, not the Linux final enemy state; OS samples prove translated browser and renderer processes.",
+    "The original failed architecture guard and original x64 metadata subprocess failure are preserved; neither is counted as a replay run.",
+    "New candidate authoring is separate ignored evidence until independent review; no recording, catalog or simulation edits are included here."
+  ],
+  "writes": {
+    "production": false,
+    "tests": false,
+    "recordings": false,
+    "catalogs": false,
+    "head": false
+  }
+}

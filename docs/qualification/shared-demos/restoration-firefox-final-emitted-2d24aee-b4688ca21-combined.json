@@ -1,0 +1,2066 @@
+{
+  "format": "SharedDemoBrowserRestorationV2",
+  "engine": "firefox",
+  "started": "2026-10-19T09:00:05.507Z",
+  "complete": true,
+  "source": {
+    "binding": "The declared frozen manifest is checked before and after; this probe does not independently recompute the complete source tree fingerprint.",
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "manifestPath": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "created": "2026-10-19T08:31:26.187982+00:00",
+    "integrationBase": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "probe": {
+    "path": "scripts/qualify-demo-restoration-browser.mjs",
+    "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+    "helperSHA256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+  },
+  "functionalComplete": true,
+  "strictDiagnosticGate": true,
+  "checks": [
+    {
+      "type": "ordinary-control-reload",
+      "iteration": 1,
+      "mode": "solo",
+      "state": {
+        "documentId": "1792400411394-0.027856395043111548",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": "briefing",
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400411991,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "04d984ed8db8f884c363bbc321d115d6228bd2bea27e504b0a9b7dc83446fd59",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "mutationSignatures": []
+    },
+    {
+      "type": "reload-from-demo",
+      "mode": "solo",
+      "stateName": "watching",
+      "active": {
+        "documentId": "1792400411394-0.027856395043111548",
+        "open": true,
+        "practice": false,
+        "phase": "playing",
+        "mode": "solo",
+        "tick": "121",
+        "bodyState": "briefing",
+        "dialogs": [
+          "demo-dialog"
+        ],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400411991,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "restored": {
+        "documentId": "1792400416140-0.4991896974882589",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": "briefing",
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400416750,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "04d984ed8db8f884c363bbc321d115d6228bd2bea27e504b0a9b7dc83446fd59",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "activeMutations": [],
+      "reloadMutationSignatures": [],
+      "workers": 0
+    },
+    {
+      "type": "reload-from-demo",
+      "mode": "solo",
+      "stateName": "practice",
+      "active": {
+        "documentId": "1792400416140-0.4991896974882589",
+        "open": true,
+        "practice": true,
+        "phase": "playing",
+        "mode": "solo",
+        "tick": "241",
+        "bodyState": "briefing",
+        "dialogs": [
+          "demo-dialog"
+        ],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400416750,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "restored": {
+        "documentId": "1792400422157-0.9677571381281364",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": "briefing",
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400422748,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "04d984ed8db8f884c363bbc321d115d6228bd2bea27e504b0a9b7dc83446fd59",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "activeMutations": [],
+      "reloadMutationSignatures": [],
+      "workers": 0
+    },
+    {
+      "type": "ordinary-control-reload",
+      "iteration": 1,
+      "mode": "snake",
+      "state": {
+        "documentId": "1792400425743-0.6530385377836995",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": null,
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400426095,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "1608ef936cb172ad6306ff954d1d0f6b4165d3cf19c75ce342d19285f318b7ca",
+        "keys": {
+          "localStorage": [
+            "revealline-enemy-stats.v1:writer",
+            "revealline.access.revealline.v1",
+            "revealline.classic-snake.setup.v2"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "mutationSignatures": [
+        "[\"IndexedDB\",\"revealline-journey-v1/profiles\",\"put\",\"classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1\"]",
+        "[\"Storage\",\"localStorage\",\"setItem\",\"revealline.classic-snake.setup.v2\"]"
+      ]
+    },
+    {
+      "type": "reload-from-demo",
+      "mode": "snake",
+      "stateName": "watching",
+      "active": {
+        "documentId": "1792400425743-0.6530385377836995",
+        "open": true,
+        "practice": false,
+        "phase": "playing",
+        "mode": "snake",
+        "tick": "5",
+        "bodyState": null,
+        "dialogs": [
+          "demo-dialog",
+          "snake-home-dialog"
+        ],
+        "nativeSurfaces": 1,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400426095,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "restored": {
+        "documentId": "1792400428379-0.5602051596921043",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": null,
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400428728,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "1608ef936cb172ad6306ff954d1d0f6b4165d3cf19c75ce342d19285f318b7ca",
+        "keys": {
+          "localStorage": [
+            "revealline-enemy-stats.v1:writer",
+            "revealline.access.revealline.v1",
+            "revealline.classic-snake.setup.v2"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "activeMutations": [],
+      "reloadMutationSignatures": [
+        "[\"IndexedDB\",\"revealline-journey-v1/profiles\",\"put\",\"classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1\"]",
+        "[\"Storage\",\"localStorage\",\"setItem\",\"revealline.classic-snake.setup.v2\"]"
+      ],
+      "workers": 0
+    },
+    {
+      "type": "reload-from-demo",
+      "mode": "snake",
+      "stateName": "practice",
+      "active": {
+        "documentId": "1792400428379-0.5602051596921043",
+        "open": true,
+        "practice": true,
+        "phase": "playing",
+        "mode": "snake",
+        "tick": "10",
+        "bodyState": null,
+        "dialogs": [
+          "demo-dialog",
+          "snake-home-dialog"
+        ],
+        "nativeSurfaces": 1,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400428728,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "restored": {
+        "documentId": "1792400432134-0.6149494023376719",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": null,
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400432467,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "1608ef936cb172ad6306ff954d1d0f6b4165d3cf19c75ce342d19285f318b7ca",
+        "keys": {
+          "localStorage": [
+            "revealline-enemy-stats.v1:writer",
+            "revealline.access.revealline.v1",
+            "revealline.classic-snake.setup.v2"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "activeMutations": [],
+      "reloadMutationSignatures": [
+        "[\"IndexedDB\",\"revealline-journey-v1/profiles\",\"put\",\"classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1\"]",
+        "[\"Storage\",\"localStorage\",\"setItem\",\"revealline.classic-snake.setup.v2\"]"
+      ],
+      "workers": 0
+    },
+    {
+      "type": "ordinary-control-reload",
+      "iteration": 1,
+      "mode": "sim",
+      "state": {
+        "documentId": "1792400434253-0.8200321195059197",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": null,
+        "dialogs": [
+          "worlds-shell-home-dialog"
+        ],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400434785,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "9c14c921ce4a2593d56a96dfdb7985237296cd0d6647ccd15a3e3ea68fcd48dc",
+        "keys": {
+          "localStorage": [
+            "revealline-enemy-stats.v1:writer",
+            "revealline.access.revealline.v1",
+            "revealline.fpv.appearance.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "mutationSignatures": []
+    },
+    {
+      "type": "reload-from-demo",
+      "mode": "sim",
+      "stateName": "watching",
+      "active": {
+        "documentId": "1792400434253-0.8200321195059197",
+        "open": true,
+        "practice": false,
+        "phase": "playing",
+        "mode": "sim",
+        "tick": "1",
+        "bodyState": null,
+        "dialogs": [
+          "demo-dialog",
+          "worlds-shell-home-dialog"
+        ],
+        "nativeSurfaces": 1,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400434785,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "restored": {
+        "documentId": "1792400436481-0.6253980641594291",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": null,
+        "dialogs": [
+          "worlds-shell-home-dialog"
+        ],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400436983,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "9c14c921ce4a2593d56a96dfdb7985237296cd0d6647ccd15a3e3ea68fcd48dc",
+        "keys": {
+          "localStorage": [
+            "revealline-enemy-stats.v1:writer",
+            "revealline.access.revealline.v1",
+            "revealline.fpv.appearance.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "activeMutations": [],
+      "reloadMutationSignatures": [],
+      "workers": 0
+    },
+    {
+      "type": "reload-from-demo",
+      "mode": "sim",
+      "stateName": "practice",
+      "active": {
+        "documentId": "1792400436481-0.6253980641594291",
+        "open": true,
+        "practice": true,
+        "phase": "playing",
+        "mode": "sim",
+        "tick": "4",
+        "bodyState": null,
+        "dialogs": [
+          "demo-dialog",
+          "worlds-shell-home-dialog"
+        ],
+        "nativeSurfaces": 1,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400436983,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "restored": {
+        "documentId": "1792400439001-0.6128239709731341",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": null,
+        "dialogs": [
+          "worlds-shell-home-dialog"
+        ],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400439535,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "9c14c921ce4a2593d56a96dfdb7985237296cd0d6647ccd15a3e3ea68fcd48dc",
+        "keys": {
+          "localStorage": [
+            "revealline-enemy-stats.v1:writer",
+            "revealline.access.revealline.v1",
+            "revealline.fpv.appearance.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "activeMutations": [],
+      "reloadMutationSignatures": [],
+      "workers": 0
+    },
+    {
+      "type": "ordinary-control-reload",
+      "iteration": 1,
+      "mode": "survival",
+      "state": {
+        "documentId": "1792400441446-0.6816368833395583",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": null,
+        "dialogs": [
+          "overflight-home-dialog"
+        ],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400441926,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "7034762149d2ca43bd8bb582b3afaded8e33ff386cb19ed497ff7ad58e42dffd",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1",
+            "revealline.overflight.family-operation.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "mutationSignatures": [
+        "[\"Storage\",\"localStorage\",\"setItem\",\"revealline.overflight.family-operation.v1\"]"
+      ]
+    },
+    {
+      "type": "reload-from-demo",
+      "mode": "survival",
+      "stateName": "watching",
+      "active": {
+        "documentId": "1792400441446-0.6816368833395583",
+        "open": true,
+        "practice": false,
+        "phase": "playing",
+        "mode": "survival",
+        "tick": "60",
+        "bodyState": null,
+        "dialogs": [
+          "demo-dialog",
+          "overflight-home-dialog"
+        ],
+        "nativeSurfaces": 1,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400441926,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "restored": {
+        "documentId": "1792400447477-0.09811561428170579",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": null,
+        "dialogs": [
+          "overflight-home-dialog"
+        ],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400447945,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "7034762149d2ca43bd8bb582b3afaded8e33ff386cb19ed497ff7ad58e42dffd",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1",
+            "revealline.overflight.family-operation.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "activeMutations": [],
+      "reloadMutationSignatures": [
+        "[\"Storage\",\"localStorage\",\"setItem\",\"revealline.overflight.family-operation.v1\"]"
+      ],
+      "workers": 0
+    },
+    {
+      "type": "reload-from-demo",
+      "mode": "survival",
+      "stateName": "practice",
+      "active": {
+        "documentId": "1792400447477-0.09811561428170579",
+        "open": true,
+        "practice": true,
+        "phase": "playing",
+        "mode": "survival",
+        "tick": "119",
+        "bodyState": null,
+        "dialogs": [
+          "demo-dialog",
+          "overflight-home-dialog"
+        ],
+        "nativeSurfaces": 1,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400447945,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "restored": {
+        "documentId": "1792400454577-0.4142366285119232",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": null,
+        "dialogs": [
+          "overflight-home-dialog"
+        ],
+        "nativeSurfaces": 0,
+        "serviceWorkers": {
+          "supported": true,
+          "pending": false,
+          "observedAt": 1792400455055,
+          "registrations": [],
+          "error": null,
+          "controller": null
+        },
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "storage": {
+        "sha256": "7034762149d2ca43bd8bb582b3afaded8e33ff386cb19ed497ff7ad58e42dffd",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1",
+            "revealline.overflight.family-operation.v1"
+          ],
+          "sessionStorage": []
+        }
+      },
+      "activeMutations": [],
+      "reloadMutationSignatures": [
+        "[\"Storage\",\"localStorage\",\"setItem\",\"revealline.overflight.family-operation.v1\"]"
+      ],
+      "workers": 0
+    }
+  ],
+  "errors": [],
+  "bfcache": [],
+  "instrumentation": "Ephemeral init observers wrap Storage mutations and IndexedDB object-store writes without changing arguments/results. A context binding retains bounded mutation/lifecycle metadata across reload. A separate task-owned preview serves the verified emitted inventory with fixture credentials and public,max-age=0,must-revalidate headers. No Playwright routing is installed; a minimal away page is served by this test-only server.",
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity; service workers are observed, never blocked or unregistered.",
+    "Reload is not browser discard; no actual discard is claimed.",
+    "BFCache is proved only by pageshow.persisted=true and the original document identity; failed admission is reported separately.",
+    "Solo explicitly suspends Demo on pagehide, including persisted history navigation, in inherited upstream app.mjs behavior. A paused watching return documents that policy; it does not prove preservation of playing intent through freeze/resume.",
+    "Fresh ephemeral test profiles exercise ordinary entry and compare a control reload. This does not replay every possible saved-game recovery state.",
+    "Read/write observers detect API calls, not every browser-internal storage mechanism. Existing persistence and saved-flight tests remain complementary.",
+    "Background managed-media asset-cache writes (game/managed-media-store.mjs) are recorded separately from player progress, saves, recovery and tuning; the ordinary app can preload those assets independently of Demo."
+  ],
+  "preview": {
+    "port": 8771,
+    "cache": "revalidate",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-2d24aee-b4688ca21-combined",
+      "manifestSHA256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "files": 5956,
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+        "runtime": {
+          "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+          "files": 10000,
+          "bytes": 404485348
+        },
+        "buildInput": {
+          "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+          "files": 9406,
+          "bytes": 348401321
+        }
+      }
+    },
+    "observedCacheControl": "public, max-age=0, must-revalidate",
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "43d4661157e2d2d683fefcf981a10e859e980b740bd15a5fa5893f91d85fffee"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "a1b5a3f2495416809b59f5db97bd3e183d81d55f05fc09db523e16f746824002"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      },
+      {
+        "path": "game/snake/play.html",
+        "original": {
+          "bytes": 17647,
+          "sha256": "4bd6c8f22097d3c37a5ff2b965e6b941cf59a42ca22388583d4083d3d9a6d7d1"
+        },
+        "served": {
+          "bytes": 17621,
+          "sha256": "87387ee19d130e355d015487c0489cffb9049b1cdebae708424eafa4fc4e872b"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      },
+      {
+        "path": "optional-practice/fpv-worlds/index.html",
+        "original": {
+          "bytes": 49494,
+          "sha256": "f36752ecf688965c81db7828c0702fe4e41a3d2115602b8e6fd70ec8d085fe10"
+        },
+        "served": {
+          "bytes": 49468,
+          "sha256": "c793a25b5482c55229f65c9aafd7f784063063f71b0d9b5122a24ab2efd6d138"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      },
+      {
+        "path": "game/overflight/play.html",
+        "original": {
+          "bytes": 17685,
+          "sha256": "3d30586bfe242634ed91e8d85f97dbb7aac574ad36d1591a5b288452b7598c18"
+        },
+        "served": {
+          "bytes": 17659,
+          "sha256": "16bb953906f578d002962b7f6e901ae8f9db5961a3e4f1366012cbac93c1ae23"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "browserVersion": "153.0",
+  "events": [
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792400409515-0.7189418903960574",
+      "path": "blank",
+      "at": 1792400409550,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792400409515-0.7189418903960574",
+      "path": "blank",
+      "at": 1792400409697,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792400409702-0.5312212196783248",
+      "path": "/game/",
+      "at": 1792400409787,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792400409702-0.5312212196783248",
+      "path": "/game/",
+      "at": 1792400409887,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.access.revealline.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792400410790-0.4692546125331144",
+      "path": "blank",
+      "at": 1792400410791,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792400409702-0.5312212196783248",
+      "path": "/game/",
+      "at": 1792400410876,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792400409702-0.5312212196783248",
+      "path": "/game/",
+      "at": 1792400411311,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400409702-0.5312212196783248",
+      "path": "/game/",
+      "at": 1792400411360,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400410790-0.4692546125331144",
+      "path": "blank",
+      "at": 1792400411362,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400411988,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400412285-0.4205296834626122",
+      "path": "blank",
+      "at": 1792400412286,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400412353,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400412758,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400412907,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/reservations",
+      "method": "put",
+      "key": "744a3e8d-4461-4f8b-9d5e-518b31292083"
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400412907,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/managedState",
+      "method": "put",
+      "key": "ledger"
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400412959,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/mediaBlobs",
+      "method": "put",
+      "key": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce"
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400412959,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/mediaRecords",
+      "method": "put",
+      "key": "library"
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400412959,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/reservations",
+      "method": "delete",
+      "key": "744a3e8d-4461-4f8b-9d5e-518b31292083"
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400412959,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-soundtrack-v1/managedState",
+      "method": "put",
+      "key": "ledger"
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400413352,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792400411394-0.027856395043111548",
+      "path": "/game/",
+      "at": 1792400416073,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792400412285-0.4205296834626122",
+      "path": "blank",
+      "at": 1792400416092,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792400416140-0.4991896974882589",
+      "path": "/game/",
+      "at": 1792400416749,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792400417048-0.024240902984404067",
+      "path": "blank",
+      "at": 1792400417049,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792400416140-0.4991896974882589",
+      "path": "/game/",
+      "at": 1792400417121,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792400416140-0.4991896974882589",
+      "path": "/game/",
+      "at": 1792400417822,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-watching",
+      "id": "1792400416140-0.4991896974882589",
+      "path": "/game/",
+      "at": 1792400418186,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-practice",
+      "id": "1792400416140-0.4991896974882589",
+      "path": "/game/",
+      "at": 1792400422089,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-practice",
+      "id": "1792400417048-0.024240902984404067",
+      "path": "blank",
+      "at": 1792400422108,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-practice",
+      "id": "1792400422157-0.9677571381281364",
+      "path": "/game/",
+      "at": 1792400422748,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-practice",
+      "id": "1792400423039-0.9337149590378021",
+      "path": "blank",
+      "at": 1792400423040,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-practice",
+      "id": "1792400422157-0.9677571381281364",
+      "path": "/game/",
+      "at": 1792400423108,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-practice",
+      "id": "1792400422157-0.9677571381281364",
+      "path": "/game/",
+      "at": 1792400423758,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "reload-from-practice",
+      "id": "1792400422157-0.9677571381281364",
+      "path": "/game/",
+      "at": 1792400424124,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "snake",
+      "stage": "boot",
+      "id": "1792400424731-0.333660511912925",
+      "path": "blank",
+      "at": 1792400424735,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "snake",
+      "stage": "boot",
+      "id": "1792400424731-0.333660511912925",
+      "path": "blank",
+      "at": 1792400424740,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "snake",
+      "stage": "boot",
+      "id": "1792400424742-0.5179153843409081",
+      "path": "/game/snake/play.html",
+      "at": 1792400424774,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "snake",
+      "stage": "boot",
+      "id": "1792400424742-0.5179153843409081",
+      "path": "/game/snake/play.html",
+      "at": 1792400424837,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.access.revealline.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "snake",
+      "stage": "boot",
+      "id": "1792400424742-0.5179153843409081",
+      "path": "/game/snake/play.html",
+      "at": 1792400425173,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline-enemy-stats.v1:writer",
+      "absentRemoval": false
+    },
+    {
+      "mode": "snake",
+      "stage": "boot",
+      "id": "1792400424742-0.5179153843409081",
+      "path": "/game/snake/play.html",
+      "at": 1792400425180,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.classic-snake.setup.v2",
+      "absentRemoval": false
+    },
+    {
+      "mode": "snake",
+      "stage": "boot",
+      "id": "1792400424742-0.5179153843409081",
+      "path": "/game/snake/play.html",
+      "at": 1792400425338,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "snake",
+      "stage": "boot",
+      "id": "1792400424742-0.5179153843409081",
+      "path": "/game/snake/play.html",
+      "at": 1792400425368,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "mode": "snake",
+      "stage": "boot",
+      "id": "1792400424742-0.5179153843409081",
+      "path": "/game/snake/play.html",
+      "at": 1792400425369,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "mode": "snake",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400424742-0.5179153843409081",
+      "path": "/game/snake/play.html",
+      "at": 1792400425736,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "snake",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400425743-0.6530385377836995",
+      "path": "/game/snake/play.html",
+      "at": 1792400426095,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "snake",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400425743-0.6530385377836995",
+      "path": "/game/snake/play.html",
+      "at": 1792400426137,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.classic-snake.setup.v2",
+      "absentRemoval": false
+    },
+    {
+      "mode": "snake",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400425743-0.6530385377836995",
+      "path": "/game/snake/play.html",
+      "at": 1792400426223,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "snake",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400425743-0.6530385377836995",
+      "path": "/game/snake/play.html",
+      "at": 1792400426307,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "mode": "snake",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400425743-0.6530385377836995",
+      "path": "/game/snake/play.html",
+      "at": 1792400426310,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-watching",
+      "id": "1792400425743-0.6530385377836995",
+      "path": "/game/snake/play.html",
+      "at": 1792400428362,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-watching",
+      "id": "1792400428379-0.5602051596921043",
+      "path": "/game/snake/play.html",
+      "at": 1792400428728,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-watching",
+      "id": "1792400428379-0.5602051596921043",
+      "path": "/game/snake/play.html",
+      "at": 1792400428767,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.classic-snake.setup.v2",
+      "absentRemoval": false
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-watching",
+      "id": "1792400428379-0.5602051596921043",
+      "path": "/game/snake/play.html",
+      "at": 1792400428851,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-watching",
+      "id": "1792400428379-0.5602051596921043",
+      "path": "/game/snake/play.html",
+      "at": 1792400428922,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-watching",
+      "id": "1792400428379-0.5602051596921043",
+      "path": "/game/snake/play.html",
+      "at": 1792400428925,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-practice",
+      "id": "1792400428379-0.5602051596921043",
+      "path": "/game/snake/play.html",
+      "at": 1792400432112,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-practice",
+      "id": "1792400432134-0.6149494023376719",
+      "path": "/game/snake/play.html",
+      "at": 1792400432466,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-practice",
+      "id": "1792400432134-0.6149494023376719",
+      "path": "/game/snake/play.html",
+      "at": 1792400432513,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.classic-snake.setup.v2",
+      "absentRemoval": false
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-practice",
+      "id": "1792400432134-0.6149494023376719",
+      "path": "/game/snake/play.html",
+      "at": 1792400432591,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-practice",
+      "id": "1792400432134-0.6149494023376719",
+      "path": "/game/snake/play.html",
+      "at": 1792400432665,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "mode": "snake",
+      "stage": "reload-from-practice",
+      "id": "1792400432134-0.6149494023376719",
+      "path": "/game/snake/play.html",
+      "at": 1792400432669,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "classic-snake-ratings.v1/authored-seed17.v1/classic-snake-progress.proof.v2/campaign/tactical-remaster-1"
+    },
+    {
+      "mode": "sim",
+      "stage": "boot",
+      "id": "1792400433162-0.03760392480051322",
+      "path": "blank",
+      "at": 1792400433165,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "sim",
+      "stage": "boot",
+      "id": "1792400433162-0.03760392480051322",
+      "path": "blank",
+      "at": 1792400433171,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "sim",
+      "stage": "boot",
+      "id": "1792400433174-0.4939882517291525",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400433201,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "sim",
+      "stage": "boot",
+      "id": "1792400433174-0.4939882517291525",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400433270,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.access.revealline.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "sim",
+      "stage": "boot",
+      "id": "1792400433174-0.4939882517291525",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400433559,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline-enemy-stats.v1:writer",
+      "absentRemoval": false
+    },
+    {
+      "mode": "sim",
+      "stage": "boot",
+      "id": "1792400433174-0.4939882517291525",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400433568,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.fpv.appearance.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "sim",
+      "stage": "boot",
+      "id": "1792400433174-0.4939882517291525",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400433701,
+      "kind": "mutation",
+      "api": "IndexedDB",
+      "owner": "revealline-journey-v1/profiles",
+      "method": "put",
+      "key": "journey-civilian-fpv:rewards.v1"
+    },
+    {
+      "mode": "sim",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400433174-0.4939882517291525",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400434250,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "sim",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400434253-0.8200321195059197",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400434748,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "sim",
+      "stage": "reload-from-watching",
+      "id": "1792400434253-0.8200321195059197",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400436478,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "sim",
+      "stage": "reload-from-watching",
+      "id": "1792400436481-0.6253980641594291",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400436947,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "sim",
+      "stage": "reload-from-practice",
+      "id": "1792400436481-0.6253980641594291",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400438998,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "sim",
+      "stage": "reload-from-practice",
+      "id": "1792400439001-0.6128239709731341",
+      "path": "/optional-practice/fpv-worlds/index.html",
+      "at": 1792400439499,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "survival",
+      "stage": "boot",
+      "id": "1792400440145-0.31517328315938486",
+      "path": "blank",
+      "at": 1792400440149,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "survival",
+      "stage": "boot",
+      "id": "1792400440145-0.31517328315938486",
+      "path": "blank",
+      "at": 1792400440154,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "survival",
+      "stage": "boot",
+      "id": "1792400440158-0.7186938495911376",
+      "path": "/game/overflight/play.html",
+      "at": 1792400440190,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "survival",
+      "stage": "boot",
+      "id": "1792400440158-0.7186938495911376",
+      "path": "/game/overflight/play.html",
+      "at": 1792400440254,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.access.revealline.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "survival",
+      "stage": "boot",
+      "id": "1792400440158-0.7186938495911376",
+      "path": "/game/overflight/play.html",
+      "at": 1792400440549,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.overflight.family-operation.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "survival",
+      "stage": "boot",
+      "id": "1792400440158-0.7186938495911376",
+      "path": "/game/overflight/play.html",
+      "at": 1792400440694,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "survival",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400440158-0.7186938495911376",
+      "path": "/game/overflight/play.html",
+      "at": 1792400441422,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "survival",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400441446-0.6816368833395583",
+      "path": "/game/overflight/play.html",
+      "at": 1792400441784,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.overflight.family-operation.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "survival",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400441446-0.6816368833395583",
+      "path": "/game/overflight/play.html",
+      "at": 1792400441881,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "survival",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792400441446-0.6816368833395583",
+      "path": "/game/overflight/play.html",
+      "at": 1792400441909,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "survival",
+      "stage": "reload-from-watching",
+      "id": "1792400441446-0.6816368833395583",
+      "path": "/game/overflight/play.html",
+      "at": 1792400447440,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "survival",
+      "stage": "reload-from-watching",
+      "id": "1792400447477-0.09811561428170579",
+      "path": "/game/overflight/play.html",
+      "at": 1792400447803,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.overflight.family-operation.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "survival",
+      "stage": "reload-from-watching",
+      "id": "1792400447477-0.09811561428170579",
+      "path": "/game/overflight/play.html",
+      "at": 1792400447899,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "survival",
+      "stage": "reload-from-watching",
+      "id": "1792400447477-0.09811561428170579",
+      "path": "/game/overflight/play.html",
+      "at": 1792400447927,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "survival",
+      "stage": "reload-from-practice",
+      "id": "1792400447477-0.09811561428170579",
+      "path": "/game/overflight/play.html",
+      "at": 1792400454540,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "survival",
+      "stage": "reload-from-practice",
+      "id": "1792400454577-0.4142366285119232",
+      "path": "/game/overflight/play.html",
+      "at": 1792400454912,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.overflight.family-operation.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "survival",
+      "stage": "reload-from-practice",
+      "id": "1792400454577-0.4142366285119232",
+      "path": "/game/overflight/play.html",
+      "at": 1792400455009,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "survival",
+      "stage": "reload-from-practice",
+      "id": "1792400454577-0.4142366285119232",
+      "path": "/game/overflight/play.html",
+      "at": 1792400455037,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    }
+  ],
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T09:00:56.382Z",
+  "previewClosed": true
+}

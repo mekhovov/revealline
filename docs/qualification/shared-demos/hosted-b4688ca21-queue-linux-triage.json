@@ -1,0 +1,621 @@
+{
+  "format": "SharedDemoQueueAndLocalLinuxTriageV1",
+  "observedAt": "2026-10-19T08:51:18.611630+00:00",
+  "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "readOnly": true,
+  "workflows": [
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sha256": "cbdb72e7c93bc3ce268caa5641f87c94f566e3297b74a8dff6a8ed02dd44fa6f",
+      "runsOn": "ubuntu-latest",
+      "concurrencyGroupForPR": "appearance-preview-1615",
+      "cancelInProgress": true,
+      "additionalNotes": ""
+    },
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sha256": "8a0398db57717f2fc0109d4b9ec8f11ef14f3f448e1f30fd408dac9f5923d19e",
+      "runsOn": "ubuntu-latest",
+      "concurrencyGroupForPR": "company-candidate-1615",
+      "cancelInProgress": true,
+      "additionalNotes": ""
+    },
+    {
+      "path": ".github/workflows/industrial-feature-tests.yml",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sha256": "08a0d45b61439eac811424e3b0616ee24e89dbd62ab2a8e7ff6de050a74c0cd0",
+      "runsOn": "ubuntu-latest",
+      "concurrencyGroupForPR": "industrial-features-1615",
+      "cancelInProgress": true,
+      "additionalNotes": "Industrial matrix max-parallel is 3; this does not govern Appearance demo_admission."
+    }
+  ],
+  "olderRelevantWorkflowJobs": [
+    {
+      "runId": 39209203840,
+      "totalCount": 5,
+      "jobs": [
+        {
+          "id": 117918600362,
+          "name": "demo_admission",
+          "head_sha": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+          "status": "completed",
+          "conclusion": "success",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000044992,
+          "runner_name": "GitHub Actions 1000044992",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions",
+          "started_at": "2026-10-19T07:44:30Z",
+          "completed_at": "2026-10-19T07:47:09Z",
+          "html_url": "https://github.com/mekhovov/revealline/actions/runs/39209203840/job/117918600362"
+        },
+        {
+          "id": 117918600530,
+          "name": "team_admission",
+          "head_sha": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+          "status": "completed",
+          "conclusion": "success",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000045001,
+          "runner_name": "GitHub Actions 1000045001",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions",
+          "started_at": "2026-10-19T07:46:35Z",
+          "completed_at": "2026-10-19T07:50:56Z",
+          "html_url": "https://github.com/mekhovov/revealline/actions/runs/39209203840/job/117918600530"
+        },
+        {
+          "id": 117918600556,
+          "name": "admission",
+          "head_sha": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+          "status": "completed",
+          "conclusion": "success",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000045000,
+          "runner_name": "GitHub Actions 1000045000",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions",
+          "started_at": "2026-10-19T07:46:27Z",
+          "completed_at": "2026-10-19T07:48:48Z",
+          "html_url": "https://github.com/mekhovov/revealline/actions/runs/39209203840/job/117918600556"
+        },
+        {
+          "id": 117918600632,
+          "name": "installed_admission",
+          "head_sha": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+          "status": "completed",
+          "conclusion": "success",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000045008,
+          "runner_name": "GitHub Actions 1000045008",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions",
+          "started_at": "2026-10-19T07:47:46Z",
+          "completed_at": "2026-10-19T07:53:43Z",
+          "html_url": "https://github.com/mekhovov/revealline/actions/runs/39209203840/job/117918600632"
+        },
+        {
+          "id": 117949440943,
+          "name": "preview",
+          "head_sha": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+          "status": "in_progress",
+          "conclusion": null,
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000045224,
+          "runner_name": "GitHub Actions 1000045224",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions",
+          "started_at": "2026-10-19T08:41:47Z",
+          "completed_at": null,
+          "html_url": "https://github.com/mekhovov/revealline/actions/runs/39209203840/job/117949440943"
+        }
+      ]
+    },
+    {
+      "runId": 39215946751,
+      "totalCount": 2,
+      "jobs": [
+        {
+          "id": 117939700492,
+          "name": "candidate",
+          "head_sha": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+          "status": "in_progress",
+          "conclusion": null,
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000045159,
+          "runner_name": "GitHub Actions 1000045159",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions",
+          "started_at": "2026-10-19T08:25:53Z",
+          "completed_at": null,
+          "html_url": "https://github.com/mekhovov/revealline/actions/runs/39215946751/job/117939700492"
+        },
+        {
+          "id": 117939700767,
+          "name": "optional-practice",
+          "head_sha": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+          "status": "completed",
+          "conclusion": "success",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000045183,
+          "runner_name": "GitHub Actions 1000045183",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions",
+          "started_at": "2026-10-19T08:30:48Z",
+          "completed_at": "2026-10-19T08:47:39Z",
+          "html_url": "https://github.com/mekhovov/revealline/actions/runs/39215946751/job/117939700767"
+        }
+      ]
+    }
+  ],
+  "repositoryInProgressRuns": {
+    "totalCount": 15,
+    "runs": [
+      {
+        "id": 39218952998,
+        "name": "Company edition candidates",
+        "head_sha": "d5a346ebbb541787f27a2ccb625551ea196f5501",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T07:53:43Z",
+        "updated_at": "2026-10-19T08:46:14Z"
+      },
+      {
+        "id": 39218272924,
+        "name": "Company edition candidates",
+        "head_sha": "c127c384bfe00569afccd9b5d0d9498f5933b01d",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T07:47:32Z",
+        "updated_at": "2026-10-19T08:41:26Z"
+      },
+      {
+        "id": 39218024959,
+        "name": "Company edition candidates",
+        "head_sha": "c4fd7199b5ab4e5126cb5d9f60e439873f539eec",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T07:45:16Z",
+        "updated_at": "2026-10-19T08:48:08Z"
+      },
+      {
+        "id": 39215946751,
+        "name": "Company edition candidates",
+        "head_sha": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T07:26:00Z",
+        "updated_at": "2026-10-19T08:30:48Z"
+      },
+      {
+        "id": 39215946729,
+        "name": "Publish GitHub Pages from main",
+        "head_sha": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T07:26:00Z",
+        "updated_at": "2026-10-19T08:49:20Z"
+      },
+      {
+        "id": 39209203872,
+        "name": "Validate source for continuous main",
+        "head_sha": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T06:19:02Z",
+        "updated_at": "2026-10-19T08:35:31Z"
+      },
+      {
+        "id": 39209203840,
+        "name": "Appearance preview",
+        "head_sha": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T06:19:02Z",
+        "updated_at": "2026-10-19T08:41:47Z"
+      },
+      {
+        "id": 39209203920,
+        "name": "Industrial feature verification",
+        "head_sha": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T06:19:02Z",
+        "updated_at": "2026-10-19T08:48:58Z"
+      },
+      {
+        "id": 39208014766,
+        "name": "Appearance preview",
+        "head_sha": "5f500de8dd872b9c37127000c69ec27de67360a1",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T06:06:29Z",
+        "updated_at": "2026-10-19T08:43:04Z"
+      },
+      {
+        "id": 39207255020,
+        "name": "Appearance preview",
+        "head_sha": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T05:58:02Z",
+        "updated_at": "2026-10-19T08:30:52Z"
+      },
+      {
+        "id": 39207112932,
+        "name": "Appearance preview",
+        "head_sha": "0e9f9e92b22cee2b3234431c0498270a4936970e",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T05:56:19Z",
+        "updated_at": "2026-10-19T08:28:54Z"
+      },
+      {
+        "id": 39205632238,
+        "name": "Appearance preview",
+        "head_sha": "ad50a9b0a865851b4e666b1c47f9b719113577d1",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T05:38:51Z",
+        "updated_at": "2026-10-19T08:35:39Z"
+      },
+      {
+        "id": 39204906565,
+        "name": "Appearance preview",
+        "head_sha": "8a6601165df7938a7bb523cd44f3ba370b36c3d3",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T05:30:22Z",
+        "updated_at": "2026-10-19T08:27:13Z"
+      },
+      {
+        "id": 39203657562,
+        "name": "Appearance preview",
+        "head_sha": "a76a5e02a88f9cbc351d6d5e272705943079c7d1",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T05:16:08Z",
+        "updated_at": "2026-10-19T08:15:44Z"
+      },
+      {
+        "id": 39198701963,
+        "name": "Validate source for continuous main",
+        "head_sha": "479a5209b9c7bd56247c1258aff1d646149853b1",
+        "status": "in_progress",
+        "conclusion": null,
+        "created_at": "2026-10-19T04:17:11Z",
+        "updated_at": "2026-10-19T08:47:42Z"
+      }
+    ]
+  },
+  "localRuntime": {
+    "host": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "PATHCommandsFound": [],
+    "searchedPATHCommands": [
+      "docker",
+      "podman",
+      "colima",
+      "limactl",
+      "nerdctl",
+      "ctr",
+      "orb",
+      "orbctl",
+      "multipass"
+    ],
+    "knownPaths": [
+      {
+        "path": "/Applications/Docker.app/Contents/Resources/bin/docker",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/Applications/OrbStack.app/Contents/MacOS/bin/orb",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/Applications/Podman Desktop.app",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/usr/local/bin/docker",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/opt/homebrew/bin/docker",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/Users/oleksandr.mekhovov/.docker/bin/docker",
+        "exists": true,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": "/Applications/Docker.app/Contents/Resources/bin/docker"
+      },
+      {
+        "path": "/Users/oleksandr.mekhovov/.orbstack/bin/orb",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/Users/oleksandr.mekhovov/.orbstack/bin/docker",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/opt/homebrew/bin/podman",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/opt/homebrew/bin/colima",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/opt/homebrew/bin/limactl",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/var/run/docker.sock",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/Users/oleksandr.mekhovov/.docker/run/docker.sock",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/Users/oleksandr.mekhovov/.colima/default/docker.sock",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      },
+      {
+        "path": "/Users/oleksandr.mekhovov/.local/share/containers/podman/machine",
+        "exists": false,
+        "usableTargetExists": false,
+        "executable": false,
+        "symlinkTarget": null
+      }
+    ],
+    "result": "No existing usable local Linux container runtime found in PATH or checked standard locations; Docker user symlink targets absent Docker.app. No install, image pull, runtime start or container run attempted."
+  },
+  "githubPublicStatus": {
+    "url": "https://www.githubstatus.com/api/v2/summary.json",
+    "pageUpdatedAt": "2026-10-19T08:09:20.212Z",
+    "actionsComponent": "operational",
+    "activeIncidents": [],
+    "limit": "Public status observation does not establish account-specific runner capacity, quota or queue cause."
+  },
+  "finalDemoJob": {
+    "id": 117964159940,
+    "name": "demo_admission",
+    "head_sha": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "status": "queued",
+    "conclusion": null,
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 0,
+    "runner_name": "",
+    "runner_group_id": 0,
+    "runner_group_name": "",
+    "started_at": "2026-10-19T08:32:43Z",
+    "completed_at": null,
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964159940"
+  },
+  "finalJobSteps": [],
+  "finalPR": {
+    "baseRefOid": "d6e2bdb5b3e80d1df55cb42190e6550faa171d7d",
+    "headRefOid": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "mergeStateStatus": "UNSTABLE",
+    "mergeable": "MERGEABLE",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964160460",
+        "name": "admission",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Appearance preview"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515756/job/117964156839",
+        "name": "optional-practice",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Company edition candidates"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157637",
+        "name": "feature (gameplay)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157345",
+        "name": "feature (creator)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157484",
+        "name": "feature (presentation)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157428",
+        "name": "feature (recordings)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964156982",
+        "name": "feature (rooms)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157587",
+        "name": "feature (local-ux)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964159940",
+        "name": "demo_admission",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Appearance preview"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515756/job/117964157047",
+        "name": "candidate",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Company edition candidates"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964161426",
+        "name": "team_admission",
+        "startedAt": "2026-10-19T08:32:44Z",
+        "status": "QUEUED",
+        "workflowName": "Appearance preview"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964160422",
+        "name": "installed_admission",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Appearance preview"
+      }
+    ]
+  },
+  "apiRequests": [
+    {
+      "route": "repos/mekhovov/revealline/actions/runs/39209203840/jobs?per_page=100",
+      "observedAt": "2026-10-19T08:51:15.912347+00:00"
+    },
+    {
+      "route": "repos/mekhovov/revealline/actions/runs/39215946751/jobs?per_page=100",
+      "observedAt": "2026-10-19T08:51:16.471029+00:00"
+    },
+    {
+      "route": "repos/mekhovov/revealline/actions/runs?status=in_progress&per_page=20",
+      "observedAt": "2026-10-19T08:51:17.547324+00:00"
+    },
+    {
+      "route": "repos/mekhovov/revealline/actions/jobs/117964159940",
+      "observedAt": "2026-10-19T08:51:18.027143+00:00"
+    }
+  ],
+  "findings": [
+    "Exact demo job labels are ubuntu-latest, without an assigned runner. The source defines no demo needs/environment approval dependency; downstream preview waits for demo.",
+    "Workflow concurrency is scoped to PR1615 with cancel-in-progress; previous b286 job/run cancelled when b468 arrived. No evidenced same-group blocker or custom-label mismatch was found.",
+    "Other repository runs are active/queued; this supports a repository backlog observation but does not prove account concurrency saturation, billing restriction or a GitHub incident.",
+    "No usable local container runtime was found, so exact Node22.13.1 Linux replay cannot be obtained locally with the currently available environment."
+  ],
+  "pendingScope": [
+    "Exact b468 Node22.13.1/Linux installed Solo replay result and its source-tagged diagnostics remain pending unless finalDemoJob establishes otherwise.",
+    "Candidate and optional-practice hosted results must be evaluated on b468; old failed receipts remain unchanged.",
+    "Local macOS replay passes, new packaging tests, and prior browser corpus/endurance evidence cannot be presented as the pending Linux hosted result."
+  ],
+  "actionsNotTaken": [
+    "No job cancellation or rerun",
+    "No source/workflow/doc edits",
+    "No installation, image download, VM/container startup or run",
+    "No account billing or broad cross-repository queries"
+  ],
+  "monitoring": "One final b468 snapshot captured after bounded triage; no renewed 15-minute polling loop."
+}

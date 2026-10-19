@@ -23,6 +23,8 @@ Additional recordings and browser-specific strict performances do not increase t
 
 The default hosted build contains the complete SIM recording inventory. The standalone `fpv-worlds` download keeps its existing 210-file/20 MiB limit and omits the shared demo bridge and corpus. When that bridge is absent, its demo entry stays hidden and ordinary flight remains available. Opening a demo never installs the missing package.
 
+Company distributions project the reviewed Solo catalog to their selected campaign identities. Every recording variant and diagnostic for those campaigns stays available; unrelated recording bodies are omitted from both the runtime and selected-source archives. Snake coverage, personal Solo recordings and qualified bots retain their existing behavior. Optional packages keep one navigation module at the launcher path in both archives, bound to its canonical source bytes and checked through the existing dependency rules. These projections preserve the established package limits.
+
 ## Shared ownership
 
 `game/ui/demo-host.mjs` owns the modal, controls, focus, captions, audio controls, fullscreen, practice handoff, and scene retirement. `game/ui/demo-shell.mjs` is the canonical toolbar markup; `scripts/refresh-demo-shell.mjs` projects it into the main Solo page. Native pages install that same shell through `game/ui/demo-entry.mjs` and register its actions with their ordinary menu navigation.
@@ -43,6 +45,8 @@ The default hosted build contains the complete SIM recording inventory. The stan
 - Hidden watching preserves bounded playback and listening intent without painting. Freeze suspends scheduling; resume rebases time. Practice pauses on foreground loss. Reloaded/discarded pages boot through their ordinary entry flow.
 
 The host exposes bounded source/failure/loading diagnostics and compact owned-scene/resource snapshots. Browser qualification logs at most 800 endurance samples. These are diagnostics, not player progression.
+
+Deadlines are cooperative browser timers: overdue results are rejected when execution resumes. The completed endurance run recovered from a source timeout observed at 22.256 seconds after delayed timer servicing. Its cause remains unproven, so the recorded recovery is not a hard wall-clock guarantee; the [current plan](shared-game-demos-plan.md) retains this limitation.
 
 ## Practice and player data
 
@@ -100,6 +104,3 @@ These examples informed the agreed design; the numeric timing, inventory, and ac
 - [Factorio's determinism testing](https://factorio.com/blog/post/fff-55) combines inexpensive checks with deeper mismatch investigation. Here, sparse diagnostic checkpoints supplement full replay verification and never relax its acceptance criteria.
 - [MDN's WebGL guidance](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices#delete_objects_eagerly) recommends explicit resource retirement. Each adapter releases its owned scene before a replacement can mount.
 - [Chrome's lifecycle guidance](https://developer.chrome.com/docs/web-platform/page-lifecycle-api) distinguishes hidden, frozen, and discarded pages. The shared clock handles visibility and freezing separately, and ordinary boot handles a discarded page's reload.
-
-
-Solo Fresh preserves the existing progression and installation rules, as confirmed during qualification: locked missions keep the isolated-practice fallback, and uninstalled exact missions open the normal mission chooser. Demo watching and takeover do not install packs or unlock progress. Eligible installed missions use guarded ordinary preparation to Ready.

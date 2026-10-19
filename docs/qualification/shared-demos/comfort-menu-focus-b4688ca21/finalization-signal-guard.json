@@ -1,0 +1,8 @@
+{
+  "format": "ComfortFocusFinalizationSignalGuardV1",
+  "passed": 2,
+  "failed": 0,
+  "browserLaunched": false,
+  "supervisorSHA256": "bebc3654d166cd871db977b228260e84cffc67962c2369786e9c87a51445c629",
+  "scope": "Actual AST-extracted finalization handler receives interruption after simulated successful completion and before receipt write; revokes success and retains first signal on repeated cancellation."
+}
