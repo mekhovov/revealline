@@ -6,7 +6,7 @@
 
 **New reviewable delivery:** Academy result-language [#1742](https://github.com/mekhovov/revealline/pull/1742) passes all 78 native cases. Text compatibility [#1668](https://github.com/mekhovov/revealline/pull/1668) now preserves captured current main and passes the complete 456-case cohort and full configured lint. Duel Home #1741, Team repair #1740 and pause-music #1737 retain their separate scopes and remaining gates.
 
-**Current priorities:** complete Single Drone/Riy browser qualification after correcting offscreen Start and critical HUD wrapping; finish Team Home regression checks and existing admission work. Phase 5 private-room invitation Copy/Share/QR is now in development as an independent complete slice. Existing P1 and Learn/Demo-dependent work remains tracked.
+**Current priorities:** finish the remaining Riy landscape clipping correction and Single Drone/Riy browser qualification. Team Home's six difficulty failures reproduce identically on the unchanged baseline; a separate narrow fixture prerequisite is being prepared. Private-room Copy/Share/localQR has21 pure passes and bounded source review. Native tests, full checks and packages are now on **capacity hold** after Team Next hit the protected2GiB floor; source/browser work continues while at least3GiB is requested from the user.
 
 **Compact acceptance:** fit the complete field alongside critical HUD, Riy status/actions and touch controls. Persistent secondary copy may use the existing Pause reading owner; time-sensitive guidance stays live. Standard/Large semantics, accepted nodes, focus and gameplay input ownership remain intact. Extra large support is not complete until actual compact English/Ukrainian review passes.
 
