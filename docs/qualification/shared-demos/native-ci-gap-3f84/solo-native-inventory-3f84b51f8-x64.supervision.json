@@ -1,0 +1,214 @@
+{
+  "format": "SharedDemoSoloNativeInventorySupervisionV1",
+  "complete": true,
+  "started": "2026-10-19T09:45:36.767787+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+    ".cache/scan-native-solo-inventory.mjs",
+    "--run=approved",
+    "--head=3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "--fingerprint=64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa",
+    "--report=.cache/solo-native-inventory-3f84b51f8-x64.json"
+  ],
+  "timeoutSeconds": 930,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp",
+  "before": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa",
+      "files": 10011,
+      "bytes": 404639350
+    },
+    "buildInputs": {
+      "sha256": "b2a70eb2815b4b64acf0bf9d341ddab7044fa61ebed7f1b8a328d68f5d4e7634",
+      "files": 9408,
+      "bytes": 348406839
+    },
+    "helpers": {
+      ".cache/scan-native-solo-inventory.mjs": {
+        "sha256": "4585a5f09bca7fcffe7d40a6a347b94a7034cb44430dc2ea9ed324aad5c753ae",
+        "bytes": 6304
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-sources.test.mjs": {
+        "sha256": "5d81b06d373a8a3c680b6e45f2e8153e979041d06f7eb498afeeb26bd7e07be5",
+        "bytes": 26178
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/linux-capture-draft/scripts/capture-solo-native-candidates.mjs": {
+        "sha256": "7856e22bfa2619d557a2ab640352f064cca9c5ac5c4fb801bf1f2d2f4d74fe08",
+        "bytes": 22263
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "3bdcf9647a0b5d30ceeef4975c52e9720d5d0131305e92ecfb4f0c79fe80d33f",
+      "bytes": 10810
+    }
+  },
+  "limitations": [
+    "Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after960 seconds.",
+    "Read-only full-inventory macOSx64 Node22.13.1 observation underRosetta; notLinuxproof. Completion may include strict replay rejections."
+  ],
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 3,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 74966,
+        "ppid": 74931,
+        "pgid": 74966,
+        "uid": 502,
+        "started": "Mon Oct 19 11:45:36 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/scan-native-solo-inventory.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa --report=.cache/solo-native-inventory-3f84b51f8-x64.json",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T09:45:36.817517+00:00"
+      },
+      {
+        "pid": 85392,
+        "ppid": 74966,
+        "pgid": 74966,
+        "uid": 502,
+        "started": "Mon Oct 19 11:53:51 2026",
+        "argv": "(git)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          74966,
+          "Mon Oct 19 11:45:36 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/scan-native-solo-inventory.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa --report=.cache/solo-native-inventory-3f84b51f8-x64.json"
+        ],
+        "observedAt": "2026-10-19T09:53:52.092426+00:00"
+      },
+      {
+        "pid": 85419,
+        "ppid": 74966,
+        "pgid": 74966,
+        "uid": 502,
+        "started": "Mon Oct 19 11:53:53 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          74966,
+          "Mon Oct 19 11:45:36 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/scan-native-solo-inventory.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa --report=.cache/solo-native-inventory-3f84b51f8-x64.json"
+        ],
+        "observedAt": "2026-10-19T09:53:53.871975+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/solo-native-inventory-3f84b51f8-x64.log",
+    "byteLimit": 1048576,
+    "totalBytes": 31687,
+    "writtenBytes": 31687,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 16384,
+    "tailSHA256": "b3bb02f5927bb341e462daa074791494842ba6b39611b57fd892a8f14689ac11",
+    "tail": "6626042c502db\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":118,\"required\":242,\"id\":\"solo-qualified-b7b6ea7705c422d5\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":119,\"required\":242,\"id\":\"solo-qualified-70a708ee64355d75\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":120,\"required\":242,\"id\":\"solo-qualified-d87dc7be0d62a2b1\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":121,\"required\":242,\"id\":\"solo-qualified-7b3a3b7248f976ce\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":122,\"required\":242,\"id\":\"solo-qualified-a06599f68a914d16\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":123,\"required\":242,\"id\":\"solo-qualified-9dddcc84f7d60f65\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":124,\"required\":242,\"id\":\"solo-qualified-9aa30fcd0b3c8281\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":125,\"required\":242,\"id\":\"solo-qualified-f1f91fa91991d51b\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":126,\"required\":242,\"id\":\"solo-qualified-dd5c4beb661682f0\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":127,\"required\":242,\"id\":\"solo-qualified-bbd69e7ccb5526d9\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":128,\"required\":242,\"id\":\"solo-qualified-484de1d1d425f0c5\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":129,\"required\":242,\"id\":\"solo-qualified-0eafd68dc70ee8a8\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":130,\"required\":242,\"id\":\"solo-qualified-821bba1882552b03\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":131,\"required\":242,\"id\":\"solo-qualified-bbe0c5897adb725d\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":132,\"required\":242,\"id\":\"solo-qualified-dc59e6e76ae9df8b\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":133,\"required\":242,\"id\":\"solo-qualified-08bfbce48d50a5c0\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":134,\"required\":242,\"id\":\"solo-qualified-614567e280b3c780\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":135,\"required\":242,\"id\":\"solo-qualified-2df382183e2f00d6\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":136,\"required\":242,\"id\":\"solo-qualified-7e1cae99ddeff5f9\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":137,\"required\":242,\"id\":\"solo-qualified-2d3df26570caee45\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":138,\"required\":242,\"id\":\"solo-qualified-10d16d94f297eb0c\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":139,\"required\":242,\"id\":\"solo-qualified-8f766bd89a83be7e\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":140,\"required\":242,\"id\":\"solo-qualified-7ff2d0d3f752cf2b\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":141,\"required\":242,\"id\":\"solo-qualified-bcc2b9ca5521a87d\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":142,\"required\":242,\"id\":\"solo-qualified-86af557da6e8a323\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":143,\"required\":242,\"id\":\"solo-qualified-f223736d7f7b47b2\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":144,\"required\":242,\"id\":\"solo-qualified-1c903081aa79df1e\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":145,\"required\":242,\"id\":\"solo-qualified-a99c5711c5c1839d\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":146,\"required\":242,\"id\":\"solo-qualified-f96b30d71b0716cf\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":147,\"required\":242,\"id\":\"solo-qualified-30038742a961b399\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":148,\"required\":242,\"id\":\"solo-qualified-8812ad38e87d1a3e\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":149,\"required\":242,\"id\":\"solo-qualified-2e72fe1d788ce165\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":150,\"required\":242,\"id\":\"solo-qualified-86ee84d48134b04b\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":151,\"required\":242,\"id\":\"solo-qualified-e32d403f3f492be1\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":152,\"required\":242,\"id\":\"solo-qualified-ead64a471b9edd54\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":153,\"required\":242,\"id\":\"solo-qualified-cd19eddd5888061f\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":154,\"required\":242,\"id\":\"solo-qualified-84debdfc44a43699\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":155,\"required\":242,\"id\":\"solo-qualified-205560abb7070791\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":156,\"required\":242,\"id\":\"solo-qualified-0a95463cda39b995\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":157,\"required\":242,\"id\":\"solo-qualified-d5027ee8cc9ab251\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":158,\"required\":242,\"id\":\"solo-qualified-bfae960cf9bf13c8\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":159,\"required\":242,\"id\":\"solo-qualified-b03217288edf527a\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":160,\"required\":242,\"id\":\"solo-qualified-72dfbcf032b5ad25\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":161,\"required\":242,\"id\":\"solo-qualified-d4d010be74f4ff34\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":162,\"required\":242,\"id\":\"solo-qualified-4a4987306df02c59\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":163,\"required\":242,\"id\":\"solo-qualified-99b7fe8c6c02e8f5\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":164,\"required\":242,\"id\":\"solo-qualified-2d68ede8fad57f5b\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":165,\"required\":242,\"id\":\"solo-qualified-4301d76f85efb491\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":166,\"required\":242,\"id\":\"solo-qualified-86e49440668d32eb\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":167,\"required\":242,\"id\":\"solo-qualified-1045a071c392b17f\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":168,\"required\":242,\"id\":\"solo-qualified-26c083d6a304753c\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":169,\"required\":242,\"id\":\"solo-qualified-03e90b310d2bc700\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":170,\"required\":242,\"id\":\"solo-qualified-9bd405709d380bb7\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":171,\"required\":242,\"id\":\"solo-qualified-fe13ae38e227f3d4\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":172,\"required\":242,\"id\":\"solo-qualified-20e853301cb3ac52\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":173,\"required\":242,\"id\":\"solo-qualified-9b61f76591ea319f\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":174,\"required\":242,\"id\":\"solo-qualified-b8a409de0207c16a\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":175,\"required\":242,\"id\":\"solo-qualified-9a05e4f32fe3e8c3\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":176,\"required\":242,\"id\":\"solo-qualified-6066cc64f5796336\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":177,\"required\":242,\"id\":\"solo-qualified-f420d6e14fbac1ed\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":178,\"required\":242,\"id\":\"solo-qualified-45ff8eaac10d989c\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":179,\"required\":242,\"id\":\"solo-qualified-d658e2bd3c0d5c7e\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":180,\"required\":242,\"id\":\"solo-qualified-fabdfb2541546426\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":181,\"required\":242,\"id\":\"solo-qualified-acd938abf093e19a\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":182,\"required\":242,\"id\":\"solo-qualified-ab4de59fa240aa05\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":183,\"required\":242,\"id\":\"solo-qualified-f8e0d67f3ee24811\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":184,\"required\":242,\"id\":\"solo-qualified-4f9aec8fe9b37c0d\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":185,\"required\":242,\"id\":\"solo-qualified-17b6edccaf82b693\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":186,\"required\":242,\"id\":\"solo-qualified-512b66c5e6a7ca41\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":187,\"required\":242,\"id\":\"solo-qualified-d775783a12234789\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":188,\"required\":242,\"id\":\"solo-qualified-56165d770d83ee1e\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":189,\"required\":242,\"id\":\"solo-qualified-6bd31868bd8f9091\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":190,\"required\":242,\"id\":\"solo-qualified-a13b85ddde0f9663\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":191,\"required\":242,\"id\":\"solo-qualified-22874d7656ce6c3e\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":192,\"required\":242,\"id\":\"solo-qualified-dd80d3e78efbf350\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":193,\"required\":242,\"id\":\"solo-qualified-11ac088d9288363c\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":194,\"required\":242,\"id\":\"solo-qualified-c258ed926a320cc2\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":195,\"required\":242,\"id\":\"solo-qualified-b2087ebb50aee570\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":196,\"required\":242,\"id\":\"solo-qualified-3ab81dea52f12ba3\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":197,\"required\":242,\"id\":\"solo-qualified-3037b64d2bd5cd52\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":198,\"required\":242,\"id\":\"solo-qualified-d6bea0fb51f4d9b7\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":199,\"required\":242,\"id\":\"solo-qualified-30d8c82c95cfaa84\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":200,\"required\":242,\"id\":\"solo-qualified-896fc42fcd97192f\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":201,\"required\":242,\"id\":\"solo-qualified-8abdfdb8249526a1\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":202,\"required\":242,\"id\":\"solo-qualified-0c1decf0a2983bd4\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":203,\"required\":242,\"id\":\"solo-qualified-3e2c476ed99d280e\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":204,\"required\":242,\"id\":\"solo-qualified-2c530a2670b6a7f3\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":205,\"required\":242,\"id\":\"solo-qualified-47b82cbab227cd1f\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":206,\"required\":242,\"id\":\"solo-qualified-23166f06bb57b9b3\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":207,\"required\":242,\"id\":\"solo-qualified-fd3673e16fd6a8fb\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":208,\"required\":242,\"id\":\"solo-qualified-1c34f9397715919f\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":209,\"required\":242,\"id\":\"solo-qualified-08205883fcfeb6de\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":210,\"required\":242,\"id\":\"solo-qualified-29078bd0c9992bd0\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":211,\"required\":242,\"id\":\"solo-qualified-ebc3051ed29e5814\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":212,\"required\":242,\"id\":\"solo-qualified-5bd37fe7b93c3853\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":213,\"required\":242,\"id\":\"solo-qualified-a57cfb4b64844ce9\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":214,\"required\":242,\"id\":\"solo-qualified-ee5ba3df09bda042\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":215,\"required\":242,\"id\":\"solo-qualified-ee30594d88087e08\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":216,\"required\":242,\"id\":\"solo-qualified-5307e5f38725a0e3\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":217,\"required\":242,\"id\":\"solo-qualified-5915fde156c7fb92\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":218,\"required\":242,\"id\":\"solo-qualified-33e6a62cdaa16aaa\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":219,\"required\":242,\"id\":\"solo-qualified-f229f1af7ed82073\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":220,\"required\":242,\"id\":\"solo-qualified-81e24a32328f7a3c\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":221,\"required\":242,\"id\":\"solo-qualified-8cfed8cf70713745\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":222,\"required\":242,\"id\":\"solo-qualified-8d1b4bbb885d0b9d\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":223,\"required\":242,\"id\":\"solo-qualified-5aa8f6bd6fb84df2\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":224,\"required\":242,\"id\":\"solo-qualified-47cfdd798430bc97\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":225,\"required\":242,\"id\":\"solo-qualified-8fbfa21663542ea1\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":226,\"required\":242,\"id\":\"solo-qualified-93ffe1fc5a201d2e\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":227,\"required\":242,\"id\":\"solo-qualified-27223f09fed82eb2\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":228,\"required\":242,\"id\":\"solo-qualified-a922c6b22d771e68\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":229,\"required\":242,\"id\":\"solo-qualified-d3260fe50e480049\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":230,\"required\":242,\"id\":\"solo-qualified-b61cda337720b14d\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":231,\"required\":242,\"id\":\"solo-qualified-c4afd0fd10fd9d29\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":232,\"required\":242,\"id\":\"solo-qualified-d6b94392830623da\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":233,\"required\":242,\"id\":\"solo-qualified-bd23e3eb635875d1\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":234,\"required\":242,\"id\":\"solo-qualified-6ab3604dd6a03040\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":235,\"required\":242,\"id\":\"solo-qualified-84508838cf882427\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":236,\"required\":242,\"id\":\"solo-qualified-f1a05094f22dda3a\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":237,\"required\":242,\"id\":\"solo-qualified-61e28381c52a36af\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":238,\"required\":242,\"id\":\"solo-qualified-9695696535e4ee17\",\"strict\":false,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":239,\"required\":242,\"id\":\"solo-qualified-348cde9a8a95df59\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":240,\"required\":242,\"id\":\"solo-qualified-f57d5e1891de81f5\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":241,\"required\":242,\"id\":\"solo-qualified-53797d64463a8706\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n{\"finished\":242,\"required\":242,\"id\":\"solo-qualified-7c360a513791c0c5\",\"strict\":true,\"reviewedCompatibility\":false,\"failure\":null}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "after": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa",
+      "files": 10011,
+      "bytes": 404639350
+    },
+    "buildInputs": {
+      "sha256": "b2a70eb2815b4b64acf0bf9d341ddab7044fa61ebed7f1b8a328d68f5d4e7634",
+      "files": 9408,
+      "bytes": 348406839
+    },
+    "helpers": {
+      ".cache/scan-native-solo-inventory.mjs": {
+        "sha256": "4585a5f09bca7fcffe7d40a6a347b94a7034cb44430dc2ea9ed324aad5c753ae",
+        "bytes": 6304
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-sources.test.mjs": {
+        "sha256": "5d81b06d373a8a3c680b6e45f2e8153e979041d06f7eb498afeeb26bd7e07be5",
+        "bytes": 26178
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/linux-capture-draft/scripts/capture-solo-native-candidates.mjs": {
+        "sha256": "7856e22bfa2619d557a2ab640352f064cca9c5ac5c4fb801bf1f2d2f4d74fe08",
+        "bytes": 22263
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "3bdcf9647a0b5d30ceeef4975c52e9720d5d0131305e92ecfb4f0c79fe80d33f",
+      "bytes": 10810
+    }
+  },
+  "bindingsStable": true,
+  "result": {
+    "path": ".cache/solo-native-inventory-3f84b51f8-x64.json",
+    "sha256": "d800a59a7b4825c745eeb831d1a588f7a983bc5aacf8c070cb48929902e53172",
+    "complete": true,
+    "sources": 242,
+    "pageErrors": 0,
+    "failure": null,
+    "counts": {
+      "requiredEntries": 240,
+      "sources": 242,
+      "strictUsable": 120,
+      "strictFailed": 122,
+      "reviewedCompatibilityOnly": 2
+    }
+  },
+  "elapsedSeconds": 501.84011416700014,
+  "finished": "2026-10-19T09:53:58.604216+00:00"
+}

@@ -1,0 +1,132 @@
+"""Prepare or supervise the unchanged actual-worker proof with external owned browser data."""
+from pathlib import Path
+import ast, datetime, hashlib, json, os, re, signal, subprocess, sys, tempfile, threading, time
+
+args = dict(item[2:].split('=', 1) for item in sys.argv[1:])
+assert set(args) <= {'run','node','report','head','fingerprint','emitted-preview','runtime','executable','audit'}
+assert args.get('run') in {'approved','preflight'}
+assert all(args.get(k) for k in ('node','report','head','fingerprint','emitted-preview','runtime','executable','audit'))
+root = Path.cwd().resolve(); os.environ['GIT_NO_LAZY_FETCH']='1'
+assert re.fullmatch('[a-f0-9]{40}', args['head']) and re.fullmatch('[a-f0-9]{64}', args['fingerprint'])
+external = Path('/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412')
+report_path = (root/args['report']).resolve(); report_path.relative_to(root)
+assert report_path.suffix=='.json'
+supervision_path=report_path.with_suffix('.supervision.json'); log_path=report_path.with_suffix('.log')
+for p in (report_path,supervision_path,log_path,report_path.with_suffix('.png'),report_path.with_suffix('.mjs.txt'),report_path.with_suffix('.supervisor.py.txt')): assert not p.exists(), f'Refusing existing evidence: {p}'
+node=Path(args['node']); assert node.is_absolute() and node.is_file()
+capture=(root/args['emitted-preview']).resolve(strict=True); capture.relative_to(root)
+owner_name='.cache/run-endurance-emitted-final.py'; helper_name='.cache/demo-offline-browser/full-core-external-probe.mjs'; storage_name='.cache/demo-offline-browser/external-storage.mjs'
+owner_bytes=(root/owner_name).read_bytes(); assert hashlib.sha256(owner_bytes).hexdigest()=='0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c'
+supervisor_bytes=Path(__file__).read_bytes()
+sha=lambda body:hashlib.sha256(body).hexdigest()
+def pin(name):
+ b=(root/name).read_bytes(); return {'sha256':sha(b),'bytes':len(b)}
+def identity(p):
+ s=p.lstat(); assert p.is_dir() and not p.is_symlink() and p.resolve(strict=True)==p
+ return {'dev':s.st_dev,'ino':s.st_ino,'uid':s.st_uid}
+def free(p):
+ s=os.statvfs(p);return s.f_bavail*s.f_frsize
+mount_identity=identity(external.parent); external_identity=identity(external)
+assert external_identity['uid']==os.getuid() and external_identity['ino']==37530202
+assert external_identity['dev']==mount_identity['dev']!=root.stat().st_dev
+assert external.stat().st_mode&0o077==0
+assert external_identity['uid']==502
+
+def external_stable():
+ assert identity(external)==external_identity and identity(external.parent)==mount_identity
+ return True
+
+def fingerprint(directories):
+ names=sorted(p for p in subprocess.check_output(['rg','--files',*directories],text=True,timeout=15).splitlines() if Path(p).suffix in {'.mjs','.js','.json','.css','.html'} and '/test/' not in p and not p.endswith('.test.mjs') and not p.endswith('/coverage.json'))
+ h=hashlib.sha256(); size=0
+ for name in names:
+  b=(root/name).read_bytes();size+=len(b);h.update(name.encode()+b'\0');h.update(hashlib.sha256(b).digest())
+ return {'sha256':h.hexdigest(),'files':len(names),'bytes':size}
+
+def bindings():
+ manifest_name=str((capture/'manifest.json').relative_to(root));mb=(root/manifest_name).read_bytes();m=json.loads(mb)
+ audit_name=args['audit'];assert not Path(audit_name).is_absolute() and '..' not in Path(audit_name).parts
+ a=json.loads((root/audit_name).read_bytes()); inventory_name=str(Path(audit_name).with_suffix('.inventory.json'))
+ assert m['sourceRevision']==a['sourceRevision']==args['head'];assert m['sourceFingerprint']['sha256']==args['fingerprint']
+ assert a['complete'] and a['sourceStable'] and a['headStable'] and a['demoOfflineSelection']['complete']
+ assert m['sourceFingerprint']==a['sourceFingerprint']==a['finalSourceFingerprint']
+ assert m['buildInputFingerprint']==a['buildInputFingerprint']
+ assert a['emittedPreview']['manifestSHA256']==sha(mb) and a['emittedPreview']['inventorySHA256']==m['inventorySHA256']
+ names=[helper_name,storage_name,'.cache/demo-offline-browser/full-core-probe.mjs',owner_name,'scripts/serve-production-preview.mjs','scripts/shared-demo-browser-report.mjs','scripts/emitted-preview.mjs','docs/qualification/shared-demos/source-freeze-latest.json']
+ value={'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True,timeout=5).strip(),'runtime':fingerprint(['game','optional-practice','publishing']),'buildInputs':fingerprint(['scripts','authoring']),'helpers':{p:pin(p) for p in names},'emitted':{p:pin(p) for p in [manifest_name,audit_name,inventory_name]},'supervisor':{'sha256':sha(Path(__file__).read_bytes()),'bytes':len(Path(__file__).read_bytes())}}
+ assert value['head']==args['head']; assert value['runtime']==m['sourceFingerprint'];assert value['buildInputs']==m['buildInputFingerprint']
+ return value
+
+before=bindings(); external_stable()
+audit=json.loads((root/args['audit']).read_bytes()); rows=audit['demoOfflineSelection']; selection=sum(x['bytes'] for x in rows['coreDescriptors'])+sum(x['bytes'] for x in rows['selectedFiles'])
+MiB=1024**2;cap=((selection+64*MiB+16*MiB-1)//(16*MiB))*16*MiB
+assert 0<selection<=cap<=1024*MiB
+reserve=3*cap+256*MiB;floor=512*MiB;local_floor=200*MiB
+policy={'installedBodyBytes':selection,'installedBodyCapBytes':cap,'profileReservationBytes':reserve,'minimumExternalFreeBeforeBytes':reserve+floor,'minimumExternalFreeDuringBytes':floor,'minimumLocalFreeBytes':local_floor}
+assert free(external)>=reserve+floor and free(root)>=local_floor
+if args['run']=='preflight':
+ print(json.dumps({'preflight':True,'browserLaunched':False,'bindings':before,'external':{'root':str(external),'identity':external_identity,'mountIdentity':mount_identity,'freeBytes':free(external)},'policy':policy,'childTimeoutSeconds':540,'finalBudgetSeconds':600}));sys.exit(0)
+
+names={'owned_process_snapshot','owned_process_identity','OwnedProcessTree','BoundedChildLog'}
+selected=[item for item in ast.parse(owner_bytes,filename=owner_name).body if isinstance(item,(ast.FunctionDef,ast.ClassDef)) and item.name in names];assert {item.name for item in selected}==names
+scope=dict(globals());exec(compile(ast.Module(body=selected,type_ignores=[]),owner_name,'exec'),scope)
+OwnedProcessTree,BoundedChildLog=scope['OwnedProcessTree'],scope['BoundedChildLog']
+report={'format':'SharedDemoExternalFullCoreOfflineSupervisionV1','complete':False,'started':datetime.datetime.now(datetime.timezone.utc).isoformat(),'before':before,'policy':policy,'externalRoot':{'path':str(external),**external_identity},'timeoutSeconds':540,'finalBudgetSeconds':600,'cleanupGraceSeconds':16,'limitations':['Original actual worker, complete selection and product package limits are unchanged. Only owned browser storage placement and audit-derived observer capacity differ.','Chrome profile/SQLite operation on this SMB filesystem is untested. A failure is retained; it is not a product workaround.','Polled child execution and identity-owned process cleanup are bounded. Synchronous filesystem I/O can block beyond polling; no hard end-to-end I/O deadline is claimed. Late final validation fails.','Profile reservation is conservative capacity planning, not a hard total filesystem allocation cap. Installation bodies and logs have explicit caps; both local and external free-space floors are checked.']}
+log=BoundedChildLog(log_path,byte_limit=4*MiB,tail_limit=16384)
+child=owned=remaining=session=None;session_identity=None;started=time.monotonic();deferred={'active':False,'pending':None}
+def interrupt(signum,_frame):
+ if deferred['active']:deferred['pending']=signum;return
+ report['interruptedSignal']=signal.Signals(signum).name
+ signal.signal(signal.SIGTERM,signal.SIG_IGN);signal.signal(signal.SIGINT,signal.SIG_IGN)
+ raise InterruptedError(report['interruptedSignal'])
+signal.signal(signal.SIGTERM,interrupt);signal.signal(signal.SIGINT,interrupt)
+try:
+ external_stable();session=Path(tempfile.mkdtemp(prefix='demo-full-core-offline-',dir=external));os.chmod(session,0o700);session_identity=identity(session);assert session_identity['dev']==external_identity['dev'] and session_identity['uid']==os.getuid();(session/'tmp').mkdir(mode=0o700)
+ report['session']={'path':str(session),**session_identity};report['freeBefore']={'external':free(external),'local':free(root)}
+ command=[str(node),helper_name,'--run=approved',*[f'--{k}={args[k]}' for k in ['head','fingerprint','emitted-preview','runtime','executable','audit','report']],f'--external-session={session}',f'--session-dev={session_identity["dev"]}',f'--session-ino={session_identity["ino"]}',f'--session-uid={session_identity["uid"]}'];report['command']=command
+ deferred['active']=True
+ try:
+  child=subprocess.Popen(command,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,start_new_session=True,env={**os.environ,'OFFLINE_EXTERNAL_SUPERVISED':'1','NODE_DISABLE_COMPILE_CACHE':'1','TMPDIR':str(session/'tmp'),'TMP':str(session/'tmp'),'TEMP':str(session/'tmp')})
+  owned=OwnedProcessTree(child);owned.capture();log.start(child.stdout)
+ finally:
+  deferred['active']=False;pending=deferred['pending'];deferred['pending']=None
+  if pending is not None:interrupt(pending,None)
+ next_storage=0
+ while child.poll() is None:
+  owned.capture();owned.check_limits();log.check_limits()
+  if time.monotonic()-started>=540:report['watchdogExpired']=True;raise TimeoutError('External offline child exceeded540seconds.')
+  if time.monotonic()>=next_storage:
+   external_stable();assert free(external)>=floor and free(root)>=local_floor,'Free-space floor reached';next_storage=time.monotonic()+2
+  time.sleep(.2)
+ remaining=owned.wait_clear(3)
+ if remaining:report['cleanupNeededAfterNodeExit']=True;remaining=owned.cleanup()
+except BaseException as error:report['failure']=repr(error)
+finally:
+ def final_interrupt(signum,_frame):report.setdefault('interruptedSignal',signal.Signals(signum).name);report['complete']=False
+ signal.signal(signal.SIGTERM,final_interrupt);signal.signal(signal.SIGINT,final_interrupt)
+ if owned is not None:
+  if remaining is None:
+   try:remaining=owned.cleanup()
+   except BaseException as error:report['cleanupFailure']=repr(error)
+  report['ownedProcesses']=owned.evidence(remaining)
+ log.finish();report['log']={'path':str(log_path.relative_to(root)),**log.evidence()};report['childExit']=child.poll() if child else None
+ try:
+  external_stable();report['after']=bindings();report['bindingsStable']=report['after']==before;report['freeAfter']={'external':free(external),'local':free(root)}
+  report['sessionRetired']=session is not None and not session.exists()
+  if session is not None and session.exists():assert identity(session)==session_identity;report['retainedSession']=str(session)
+ except BaseException as error:report['bindingOrStorageFailure']=repr(error);report['bindingsStable']=False
+ try:
+  body=report_path.read_bytes();r=json.loads(body);report['result']={'path':str(report_path.relative_to(root)),'sha256':sha(body),'complete':r.get('complete'),'checks':len(r.get('checks',[])),'failure':r.get('failure')}
+  assert r['format']=='SharedDemoActualFullCoreInstalledOfflineV1';assert r['source']['before']==r['source']['after']
+  assert r['source']['before']['head']==args['head'] and r['source']['before']['runtime']==before['runtime'] and r['source']['before']['buildInput']==before['buildInputs']
+  assert all(r['storagePolicy'][k]==v for k,v in policy.items());assert r['profile']['removed'] and r['externalSession']['removed']
+  assert pin(str(report_path.with_suffix('.mjs.txt').relative_to(root)))==before['helpers'][helper_name]
+  report['complete']=(report['childExit']==0 and r['complete'] is True and len(r.get('checks',[]))==11 and not r.get('errors') and r.get('browserCloseCompleted') is True and r.get('serverClosed') is True and r.get('ownedProcessesAfterClose')==[] and report.get('sessionRetired') is True and report.get('bindingsStable') is True and report.get('ownedProcesses',{}).get('verified') is True and not report['ownedProcesses']['observationLimits']['exceeded'] and report['log']['complete'] and not report['log']['error'] and not report['log']['limitExceeded'] and not any(report.get(k) for k in ['failure','cleanupFailure','bindingOrStorageFailure','watchdogExpired','cleanupNeededAfterNodeExit','interruptedSignal']))
+ except BaseException as error:report['resultFailure']=repr(error);report['complete']=False
+ report['elapsedSeconds']=time.monotonic()-started
+ if report['elapsedSeconds']>=600:report['finalBudgetExceeded']=True;report['complete']=False
+ report['finished']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+ with report_path.with_suffix('.supervisor.py.txt').open('xb') as f:f.write(supervisor_bytes)
+ with supervision_path.open('x') as f:json.dump(report,f,indent=2);f.write('\n')
+ print(json.dumps({'supervision':str(supervision_path.relative_to(root)),'complete':report['complete'],'result':report.get('result')}))
+sys.exit(0 if report['complete'] else 1)

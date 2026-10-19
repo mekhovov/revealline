@@ -1,0 +1,214 @@
+{
+  "format": "SoloNativeMissingCandidateCaptureSupervisionV1",
+  "complete": true,
+  "started": "2026-10-19T10:02:11.956065+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+    ".cache/capture-missing-native-solo.mjs",
+    "--run=approved",
+    "--head=3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "--report=.cache/solo-native-missing-capture-3f84b51f8-x64.json"
+  ],
+  "timeoutSeconds": 930,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp",
+  "before": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "nativeInputs": {
+      "manifest": {
+        "path": ".cache/solo-native-capture-3f84b51f8-inputs.json",
+        "sha256": "760de8fad9e3c41710aea1dfd68b17da734d190d1bdcbe638ea5c829c68328e8",
+        "bytes": 524168
+      },
+      "sha256": "84c00f0ac85c6afa20f73daf1258df9796fdabe6dcbb62cdb04d475b151f1258",
+      "files": 2578,
+      "bytes": 162657591
+    },
+    "helpers": {
+      ".cache/capture-missing-native-solo.mjs": {
+        "sha256": "5925ee4e812a21fdd5101b4a352b02e332c3fd39d80869302f9009b123ae2bf3",
+        "bytes": 7310
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      ".cache/solo-native-capture-3f84b51f8-inputs.json": {
+        "sha256": "760de8fad9e3c41710aea1dfd68b17da734d190d1bdcbe638ea5c829c68328e8",
+        "bytes": 524168
+      },
+      ".cache/solo-native-inventory-3f84b51f8-x64.json": {
+        "sha256": "d800a59a7b4825c745eeb831d1a588f7a983bc5aacf8c070cb48929902e53172",
+        "bytes": 671634
+      },
+      ".cache/linux-capture-draft/scripts/capture-solo-native-candidates.mjs": {
+        "sha256": "fcc8313b1a2bae95c28ab1988e3dff53c20f77a7793ab98e7de185dbfb98e5f4",
+        "bytes": 22895
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "8ed4503da299fc66ea83300874176feeaf1d13345d92b68ecc816e5e30527a0a",
+      "bytes": 11038
+    }
+  },
+  "limitations": [
+    "Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after960 seconds.",
+    "Missing-source macOSx64 Node22.13.1 candidate collection underRosetta; notLinuxproof. Completion may include no-candidate failures; no catalogs are edited. Exact native closure/JSON source binding permits unrelated UI/test changes."
+  ],
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 3,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 88689,
+        "ppid": 88678,
+        "pgid": 88689,
+        "uid": 502,
+        "started": "Mon Oct 19 12:02:11 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-missing-native-solo.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --report=.cache/solo-native-missing-capture-3f84b51f8-x64.json",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T10:02:12.007400+00:00"
+      },
+      {
+        "pid": 88697,
+        "ppid": 88689,
+        "pgid": 88689,
+        "uid": 502,
+        "started": "Mon Oct 19 12:02:12 2026",
+        "argv": "(git)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          88689,
+          "Mon Oct 19 12:02:11 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-missing-native-solo.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --report=.cache/solo-native-missing-capture-3f84b51f8-x64.json"
+        ],
+        "observedAt": "2026-10-19T10:02:12.846188+00:00"
+      },
+      {
+        "pid": 1091,
+        "ppid": 88689,
+        "pgid": 88689,
+        "uid": 502,
+        "started": "Mon Oct 19 12:09:45 2026",
+        "argv": "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 rev-parse HEAD",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          88689,
+          "Mon Oct 19 12:02:11 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-missing-native-solo.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --report=.cache/solo-native-missing-capture-3f84b51f8-x64.json"
+        ],
+        "observedAt": "2026-10-19T10:09:46.087416+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/solo-native-missing-capture-3f84b51f8-x64.log",
+    "byteLimit": 1048576,
+    "totalBytes": 17439,
+    "writtenBytes": 17439,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 16384,
+    "tailSHA256": "b993d7d59d503efd08c3b83f60111ff5a08642546fbabeb121aa43b3de151442",
+    "tail": "ame-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":9,\"required\":122,\"id\":\"solo-qualified-6884a9c1bc511396\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":10,\"required\":122,\"id\":\"solo-qualified-1317cbb34f9f263d\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":11,\"required\":122,\"id\":\"solo-qualified-6d6735f53cea772c\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":12,\"required\":122,\"id\":\"solo-qualified-b48891e1132779ca\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":13,\"required\":122,\"id\":\"solo-qualified-1365c63c29f6f7b0\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":14,\"required\":122,\"id\":\"solo-qualified-0a838d0c1691b31f\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":15,\"required\":122,\"id\":\"solo-qualified-539f1ca4cc7249a8\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":16,\"required\":122,\"id\":\"solo-qualified-9f55f7092af5ad15\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":17,\"required\":122,\"id\":\"solo-qualified-34436b9f24286344\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":18,\"required\":122,\"id\":\"solo-qualified-5107ade9c5d366bb\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":19,\"required\":122,\"id\":\"solo-qualified-9f1b8ec355af25b9\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":20,\"required\":122,\"id\":\"solo-qualified-609112f5d34480ec\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":21,\"required\":122,\"id\":\"solo-qualified-6e585d1b8ae71b58\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":22,\"required\":122,\"id\":\"solo-qualified-a6bd03461640ac1f\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":23,\"required\":122,\"id\":\"solo-qualified-508a8b6278a54af2\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":24,\"required\":122,\"id\":\"solo-qualified-eb610c93d32ff955\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":25,\"required\":122,\"id\":\"solo-qualified-6831f1fd6349b2be\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":26,\"required\":122,\"id\":\"solo-qualified-fc70762275c737c3\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":27,\"required\":122,\"id\":\"solo-qualified-85b7fe2bd59f4ce6\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":28,\"required\":122,\"id\":\"solo-qualified-357575c079f7c22a\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":29,\"required\":122,\"id\":\"solo-qualified-67de5079eb3bf92d\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":30,\"required\":122,\"id\":\"solo-qualified-958579fbf73ab1f3\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":31,\"required\":122,\"id\":\"solo-qualified-11bae25f26fd63b2\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":32,\"required\":122,\"id\":\"solo-qualified-d03c65948bb71da1\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":33,\"required\":122,\"id\":\"solo-qualified-2d795f9b60e1e9ea\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":34,\"required\":122,\"id\":\"solo-qualified-6fc96345c2385275\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":35,\"required\":122,\"id\":\"solo-qualified-ed2912770fa96724\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":36,\"required\":122,\"id\":\"solo-qualified-1b7c6f1b1a4d7efd\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":37,\"required\":122,\"id\":\"solo-qualified-13346d4f3775859d\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":38,\"required\":122,\"id\":\"solo-qualified-0a05fdf1d370e239\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":39,\"required\":122,\"id\":\"solo-qualified-a1ce0aac4a4ba375\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":40,\"required\":122,\"id\":\"solo-qualified-1d6d571646ea58e8\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":41,\"required\":122,\"id\":\"solo-qualified-317c68e1e84b012b\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":42,\"required\":122,\"id\":\"solo-qualified-3edb8b3d29afe4e4\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":43,\"required\":122,\"id\":\"solo-qualified-6f9d15c9f157385c\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":44,\"required\":122,\"id\":\"solo-qualified-63cbda0ed7ddb858\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":45,\"required\":122,\"id\":\"solo-qualified-f85650a2f81b67ed\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":46,\"required\":122,\"id\":\"solo-qualified-014fa419dd4cee2b\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":47,\"required\":122,\"id\":\"solo-qualified-14d1e5097d455385\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":48,\"required\":122,\"id\":\"solo-qualified-e546fded69fb9336\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":49,\"required\":122,\"id\":\"solo-qualified-ae4fe97bb5a844f3\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":50,\"required\":122,\"id\":\"solo-qualified-b420aacc8400ae19\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":51,\"required\":122,\"id\":\"solo-qualified-9f0dd1a83a873b3a\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":52,\"required\":122,\"id\":\"solo-qualified-6a03bb8315594257\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":53,\"required\":122,\"id\":\"solo-qualified-209dd22e35205b41\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":54,\"required\":122,\"id\":\"solo-qualified-5fe1b2d2833db1f9\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":55,\"required\":122,\"id\":\"solo-qualified-58fa121c41ee9a76\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":56,\"required\":122,\"id\":\"solo-qualified-8c5a7d940162231c\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":57,\"required\":122,\"id\":\"solo-qualified-ec7912cb8caf199d\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":58,\"required\":122,\"id\":\"solo-qualified-01c45eb2a92b2a48\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":59,\"required\":122,\"id\":\"solo-qualified-906d14f392635406\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":60,\"required\":122,\"id\":\"solo-qualified-7cf943719a6391a9\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":61,\"required\":122,\"id\":\"solo-qualified-1d64e506d5980412\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":62,\"required\":122,\"id\":\"solo-qualified-11133b7849422018\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":63,\"required\":122,\"id\":\"solo-qualified-5678d483da29e23a\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":64,\"required\":122,\"id\":\"solo-qualified-7b3a3b7248f976ce\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":65,\"required\":122,\"id\":\"solo-qualified-a06599f68a914d16\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":66,\"required\":122,\"id\":\"solo-qualified-9dddcc84f7d60f65\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":67,\"required\":122,\"id\":\"solo-qualified-9aa30fcd0b3c8281\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":68,\"required\":122,\"id\":\"solo-qualified-f1f91fa91991d51b\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":69,\"required\":122,\"id\":\"solo-qualified-dd5c4beb661682f0\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":70,\"required\":122,\"id\":\"solo-qualified-bbd69e7ccb5526d9\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":71,\"required\":122,\"id\":\"solo-qualified-0eafd68dc70ee8a8\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":72,\"required\":122,\"id\":\"solo-qualified-821bba1882552b03\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":73,\"required\":122,\"id\":\"solo-qualified-bbe0c5897adb725d\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":74,\"required\":122,\"id\":\"solo-qualified-dc59e6e76ae9df8b\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":75,\"required\":122,\"id\":\"solo-qualified-08bfbce48d50a5c0\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":76,\"required\":122,\"id\":\"solo-qualified-614567e280b3c780\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":77,\"required\":122,\"id\":\"solo-qualified-2df382183e2f00d6\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":78,\"required\":122,\"id\":\"solo-qualified-7e1cae99ddeff5f9\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":79,\"required\":122,\"id\":\"solo-qualified-10d16d94f297eb0c\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":80,\"required\":122,\"id\":\"solo-qualified-8f766bd89a83be7e\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":81,\"required\":122,\"id\":\"solo-qualified-7ff2d0d3f752cf2b\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":82,\"required\":122,\"id\":\"solo-qualified-a99c5711c5c1839d\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":83,\"required\":122,\"id\":\"solo-qualified-8812ad38e87d1a3e\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":84,\"required\":122,\"id\":\"solo-qualified-2e72fe1d788ce165\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":85,\"required\":122,\"id\":\"solo-qualified-e32d403f3f492be1\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":86,\"required\":122,\"id\":\"solo-qualified-cd19eddd5888061f\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":87,\"required\":122,\"id\":\"solo-qualified-205560abb7070791\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":88,\"required\":122,\"id\":\"solo-qualified-d5027ee8cc9ab251\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":89,\"required\":122,\"id\":\"solo-qualified-b03217288edf527a\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":90,\"required\":122,\"id\":\"solo-qualified-72dfbcf032b5ad25\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":91,\"required\":122,\"id\":\"solo-qualified-d4d010be74f4ff34\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":92,\"required\":122,\"id\":\"solo-qualified-99b7fe8c6c02e8f5\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":93,\"required\":122,\"id\":\"solo-qualified-4301d76f85efb491\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":94,\"required\":122,\"id\":\"solo-qualified-86e49440668d32eb\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":95,\"required\":122,\"id\":\"solo-qualified-fe13ae38e227f3d4\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":96,\"required\":122,\"id\":\"solo-qualified-20e853301cb3ac52\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":97,\"required\":122,\"id\":\"solo-qualified-b8a409de0207c16a\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":98,\"required\":122,\"id\":\"solo-qualified-9a05e4f32fe3e8c3\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":99,\"required\":122,\"id\":\"solo-qualified-6066cc64f5796336\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":100,\"required\":122,\"id\":\"solo-qualified-f420d6e14fbac1ed\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":101,\"required\":122,\"id\":\"solo-qualified-45ff8eaac10d989c\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":102,\"required\":122,\"id\":\"solo-qualified-512b66c5e6a7ca41\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":103,\"required\":122,\"id\":\"solo-qualified-56165d770d83ee1e\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":104,\"required\":122,\"id\":\"solo-qualified-a13b85ddde0f9663\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":105,\"required\":122,\"id\":\"solo-qualified-22874d7656ce6c3e\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":106,\"required\":122,\"id\":\"solo-qualified-dd80d3e78efbf350\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":107,\"required\":122,\"id\":\"solo-qualified-11ac088d9288363c\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":108,\"required\":122,\"id\":\"solo-qualified-c258ed926a320cc2\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":109,\"required\":122,\"id\":\"solo-qualified-3ab81dea52f12ba3\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":110,\"required\":122,\"id\":\"solo-qualified-3e2c476ed99d280e\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":111,\"required\":122,\"id\":\"solo-qualified-08205883fcfeb6de\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":112,\"required\":122,\"id\":\"solo-qualified-29078bd0c9992bd0\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":113,\"required\":122,\"id\":\"solo-qualified-5bd37fe7b93c3853\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":114,\"required\":122,\"id\":\"solo-qualified-5307e5f38725a0e3\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":115,\"required\":122,\"id\":\"solo-qualified-33e6a62cdaa16aaa\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":116,\"required\":122,\"id\":\"solo-qualified-8cfed8cf70713745\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":117,\"required\":122,\"id\":\"solo-qualified-5aa8f6bd6fb84df2\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":118,\"required\":122,\"id\":\"solo-qualified-8fbfa21663542ea1\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":119,\"required\":122,\"id\":\"solo-qualified-93ffe1fc5a201d2e\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":120,\"required\":122,\"id\":\"solo-qualified-27223f09fed82eb2\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":121,\"required\":122,\"id\":\"solo-qualified-d3260fe50e480049\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n{\"finished\":122,\"required\":122,\"id\":\"solo-qualified-9695696535e4ee17\",\"candidate\":\"same-input-variant-candidate\",\"generic\":true,\"failure\":null}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "after": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "nativeInputs": {
+      "manifest": {
+        "path": ".cache/solo-native-capture-3f84b51f8-inputs.json",
+        "sha256": "760de8fad9e3c41710aea1dfd68b17da734d190d1bdcbe638ea5c829c68328e8",
+        "bytes": 524168
+      },
+      "sha256": "84c00f0ac85c6afa20f73daf1258df9796fdabe6dcbb62cdb04d475b151f1258",
+      "files": 2578,
+      "bytes": 162657591
+    },
+    "helpers": {
+      ".cache/capture-missing-native-solo.mjs": {
+        "sha256": "5925ee4e812a21fdd5101b4a352b02e332c3fd39d80869302f9009b123ae2bf3",
+        "bytes": 7310
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      ".cache/solo-native-capture-3f84b51f8-inputs.json": {
+        "sha256": "760de8fad9e3c41710aea1dfd68b17da734d190d1bdcbe638ea5c829c68328e8",
+        "bytes": 524168
+      },
+      ".cache/solo-native-inventory-3f84b51f8-x64.json": {
+        "sha256": "d800a59a7b4825c745eeb831d1a588f7a983bc5aacf8c070cb48929902e53172",
+        "bytes": 671634
+      },
+      ".cache/linux-capture-draft/scripts/capture-solo-native-candidates.mjs": {
+        "sha256": "fcc8313b1a2bae95c28ab1988e3dff53c20f77a7793ab98e7de185dbfb98e5f4",
+        "bytes": 22895
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "8ed4503da299fc66ea83300874176feeaf1d13345d92b68ecc816e5e30527a0a",
+      "bytes": 11038
+    }
+  },
+  "bindingsStable": true,
+  "result": {
+    "path": ".cache/solo-native-missing-capture-3f84b51f8-x64.json",
+    "sha256": "2fd4524adf1df05f41947c308132f33a01a9b48881bdd031f5426cd33e65e60e",
+    "complete": true,
+    "sources": 122,
+    "pageErrors": 0,
+    "failure": null,
+    "counts": {
+      "sources": 122,
+      "candidates": 122,
+      "sameInput": 122,
+      "independent": 0,
+      "noCandidate": 0,
+      "workerFailures": 0
+    }
+  },
+  "elapsedSeconds": 455.28899549999915,
+  "finished": "2026-10-19T10:09:47.247820+00:00"
+}

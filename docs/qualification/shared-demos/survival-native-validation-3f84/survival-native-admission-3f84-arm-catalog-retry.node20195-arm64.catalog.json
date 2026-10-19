@@ -1,0 +1,456 @@
+{
+  "format": "SurvivalNativeQualificationV1",
+  "complete": true,
+  "started": "2026-10-19T10:33:10.255Z",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "environment": {
+    "node": "v20.19.5",
+    "v8": "11.3.244.8-node.30",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "simulationIdentity": "e5f65192cdc4fd239d231b8e01f71233925dcb1a4e25ec749aeb0fc8390ab01f",
+  "timeoutMs": 300000,
+  "qualification": "Production candidate resolution performs full independent native replay, terminal outcome and meaningful-progress verification before returning a paused player. No renderer, persistence, capture, generation or adoption.",
+  "checks": [
+    {
+      "id": "survival:field-crossing-broken-crossroads:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/field-crossing-broken-crossroads.replay.json",
+      "recordingSHA256": "bd558dfe9d35b4254e56dbd8325535e90c218ef543786036f887455363b73a7c",
+      "contentIdentity": "f58d3caba411de4a",
+      "ticks": 19020,
+      "outcome": "won",
+      "checkpoints": 63,
+      "progress": {
+        "kills": 2681,
+        "xpCollected": 3966,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 3704.2145419999997
+    },
+    {
+      "id": "survival:field-crossing-shelterbelt-gaps:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/field-crossing-shelterbelt-gaps.replay.json",
+      "recordingSHA256": "67b4cbc346f84af4c573d2c1d0f57d5473e970345e3c4bccc03fc08835da11de",
+      "contentIdentity": "ff669dab0dd8a615",
+      "ticks": 19208,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2856,
+        "xpCollected": 4250,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 4877.070667000001
+    },
+    {
+      "id": "survival:field-crossing-supply-orchard-edge:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/field-crossing-supply-orchard-edge.replay.json",
+      "recordingSHA256": "e37802bb6413fc8f95ca09066c9906b5b248dbfa898ae78ffeb5d277e5e2a59e",
+      "contentIdentity": "5070970bf9677397",
+      "ticks": 19446,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2889,
+        "xpCollected": 4266,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 5487.258540999999
+    },
+    {
+      "id": "survival:freight-depot-shunting-yard:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/freight-depot-shunting-yard.replay.json",
+      "recordingSHA256": "e5ce9c14fa56765f2c7b4e76808d5c6253114682ffcd1ca8be27ed13427dd17c",
+      "contentIdentity": "42a985d6fadc7ac5",
+      "ticks": 19028,
+      "outcome": "won",
+      "checkpoints": 63,
+      "progress": {
+        "kills": 2783,
+        "xpCollected": 4242,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 4240.829791
+    },
+    {
+      "id": "survival:freight-depot-loading-loop:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/freight-depot-loading-loop.replay.json",
+      "recordingSHA256": "ee1bce9ae6030476b1727610f46fbcfe26e3863fdb1c530afeaa60fcc74171fd",
+      "contentIdentity": "149c35368d7de169",
+      "ticks": 19877,
+      "outcome": "won",
+      "checkpoints": 66,
+      "progress": {
+        "kills": 2956,
+        "xpCollected": 4007,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 5012.2641669999975
+    },
+    {
+      "id": "survival:freight-depot-dispatch-junction:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/freight-depot-dispatch-junction.replay.json",
+      "recordingSHA256": "923366000113acc1e8cd3f3598771692766110de27ecc8dc20b744d4f055171a",
+      "contentIdentity": "a4e52e3952c1223e",
+      "ticks": 19561,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 3055,
+        "xpCollected": 4479,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 6113.973875
+    },
+    {
+      "id": "survival:relay-ruins-antenna-court:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/relay-ruins-antenna-court.replay.json",
+      "recordingSHA256": "b4dcdf2ce6fc5c749f717d44e86e5281eab6a840e16e2b99753d3c6b3fdd6413",
+      "contentIdentity": "06f791f1fd2e86fb",
+      "ticks": 19188,
+      "outcome": "won",
+      "checkpoints": 63,
+      "progress": {
+        "kills": 2835,
+        "xpCollected": 4282,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 4106.301874999997
+    },
+    {
+      "id": "survival:relay-ruins-split-compound:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/relay-ruins-split-compound.replay.json",
+      "recordingSHA256": "3cbc11c29bfa5add71d444293c9be8a4464b6e6edf2f76a1a03c98da8ef081b5",
+      "contentIdentity": "fbc5b19faa30dff3",
+      "ticks": 19272,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2661,
+        "xpCollected": 3887,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 6276.201667000001
+    },
+    {
+      "id": "survival:relay-ruins-receiver-gardens:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/relay-ruins-receiver-gardens.replay.json",
+      "recordingSHA256": "a252ab6f44ae3ba07905457f1bcebf02e9b3c41b7a606e8d22545f650503f237",
+      "contentIdentity": "3a083474db46d91d",
+      "ticks": 19598,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 3132,
+        "xpCollected": 4342,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 5950.4888749999955
+    },
+    {
+      "id": "survival:river-port-pump-apron:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/river-port-pump-apron.replay.json",
+      "recordingSHA256": "65901ce2196b14afc3b66ffab579ffb8bd5f414df8242465c3420e72dda0188d",
+      "contentIdentity": "2d6c535ae347334a",
+      "ticks": 19130,
+      "outcome": "won",
+      "checkpoints": 63,
+      "progress": {
+        "kills": 2834,
+        "xpCollected": 4064,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 4221.443916999997
+    },
+    {
+      "id": "survival:river-port-twin-docks:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/river-port-twin-docks.replay.json",
+      "recordingSHA256": "0bccafe23f83f6a484d8d6a043368db504a33e2ba7a3392136d5b6b3b6d43c86",
+      "contentIdentity": "4666449a86d20ee4",
+      "ticks": 19460,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 3103,
+        "xpCollected": 4471,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 5454.697499999995
+    },
+    {
+      "id": "survival:river-port-floodgate-yard:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/river-port-floodgate-yard.replay.json",
+      "recordingSHA256": "ce1801ed3865996ff81bc2bb16234ff1b60c844a4038d8d69af64bd78cccd811",
+      "contentIdentity": "7fc0528a9d7d6ab9",
+      "ticks": 19478,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 3074,
+        "xpCollected": 4580,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 7627.445875000005
+    },
+    {
+      "id": "survival:chalk-quarry-survey-basin:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/chalk-quarry-survey-basin.replay.json",
+      "recordingSHA256": "da98b16bce6b2a926a728f092fe8f1c672798cfb28cd4061e2b6fbe35ecc79d0",
+      "contentIdentity": "0cc7b58044b11ae5",
+      "ticks": 19357,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2706,
+        "xpCollected": 3923,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 3994.707457999997
+    },
+    {
+      "id": "survival:chalk-quarry-haul-switchbacks:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/chalk-quarry-haul-switchbacks.replay.json",
+      "recordingSHA256": "01754e9348d8531b652a7e45a7ee2e51854561a045c1ba83370d428a8e0281ad",
+      "contentIdentity": "f4001a6ab6081cc2",
+      "ticks": 19598,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 2966,
+        "xpCollected": 4256,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 4687.073749999996
+    },
+    {
+      "id": "survival:chalk-quarry-reclaimer-court:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/chalk-quarry-reclaimer-court.replay.json",
+      "recordingSHA256": "a26c0659cdcc315b46bcbd7118da3d6b0dd18ae570c9bfd7838186b06c4745f1",
+      "contentIdentity": "2c942f0944b184e2",
+      "ticks": 19274,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2746,
+        "xpCollected": 4127,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 6015.013791999998
+    },
+    {
+      "id": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/orchard-strongpoint-harvest-clearing.replay.json",
+      "recordingSHA256": "28427fdde90d9c385baf243f338d0d9fb7f62acae970c57a553d1bdacde1baac",
+      "contentIdentity": "63fba71d0403a480",
+      "ticks": 19604,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 2865,
+        "xpCollected": 4151,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 4724.476582999996
+    },
+    {
+      "id": "survival:orchard-strongpoint-irrigation-courts:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/orchard-strongpoint-irrigation-courts.replay.json",
+      "recordingSHA256": "0bc8970508f0b2baa5295e2509262f3c674c4f84f2da6a441fd6d863d8142bf6",
+      "contentIdentity": "9bc8deee90de3d73",
+      "ticks": 19526,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 3000,
+        "xpCollected": 4201,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 6225.336333999992
+    },
+    {
+      "id": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+      "verified": true,
+      "variant": "default",
+      "replayFile": "game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.replay.json",
+      "recordingSHA256": "5e381c0348a8e8db865ba4c7cc3e0f734bed96b19ff51085cdcf5e655c390ecd",
+      "contentIdentity": "a8bdfbce7e8f185f",
+      "ticks": 19454,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2771,
+        "xpCollected": 4032,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 8411.680166999999
+    }
+  ],
+  "counts": {
+    "required": 18,
+    "checked": 18,
+    "verified": 18
+  },
+  "elapsedMs": 97861.5165,
+  "finished": "2026-10-19T10:34:48.117Z"
+}

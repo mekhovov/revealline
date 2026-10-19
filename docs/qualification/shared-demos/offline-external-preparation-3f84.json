@@ -1,0 +1,83 @@
+{
+  "format": "SharedDemoExternalOfflinePreparationPreservationV1",
+  "observedAt": "2026-10-19T10:35:13.925299+00:00",
+  "complete": true,
+  "browserLaunched": false,
+  "externalSessionCreated": false,
+  "files": [
+    {
+      "original": ".cache/demo-offline-browser/external-storage.mjs",
+      "retained": "docs/qualification/shared-demos/offline-external-preparation-3f84/external-storage.mjs.txt",
+      "sha256": "2fce78636e6856e4bd0d7ba06eadc9cf66f4d4d1e668e777d89237de3a7612ce",
+      "bytes": 3593
+    },
+    {
+      "original": ".cache/demo-offline-browser/full-core-external-probe.mjs",
+      "retained": "docs/qualification/shared-demos/offline-external-preparation-3f84/full-core-external-probe.mjs.txt",
+      "sha256": "852994a4724add5d48e17c32f34e5e2d56c94f071a1f83b9f42b851278c3e402",
+      "bytes": 37288
+    },
+    {
+      "original": ".cache/demo-offline-browser/supervise-external.py",
+      "retained": "docs/qualification/shared-demos/offline-external-preparation-3f84/supervise-external.py.txt",
+      "sha256": "a3790898bbfb611c5199a5774fae8f4e4048bb95b3f0082b303fb2cb42c2d0b5",
+      "bytes": 12927
+    },
+    {
+      "original": ".cache/demo-offline-browser/test-external-storage.mjs",
+      "retained": "docs/qualification/shared-demos/offline-external-preparation-3f84/test-external-storage.mjs.txt",
+      "sha256": "8cbb6d0ff52d94ba01cd21723e3c193c64cf78fdbf74f30f8361f7e403c6674e",
+      "bytes": 2115
+    },
+    {
+      "original": ".cache/demo-offline-browser/external-storage-guards.tap.txt",
+      "retained": "docs/qualification/shared-demos/offline-external-preparation-3f84/external-storage-guards.tap.txt",
+      "sha256": "ccf99d3930750ead9f895fc25db0bec71fb14e6a79d5d8772e84f2091c86d956",
+      "bytes": 1496
+    },
+    {
+      "original": ".cache/demo-offline-browser/external-preparation.json",
+      "retained": "docs/qualification/shared-demos/offline-external-preparation-3f84/external-preparation.json",
+      "sha256": "a522b6992c9ba52d593bef2be87081404d606b9f1ba78bc6fab058ec47d4a364",
+      "bytes": 2334
+    },
+    {
+      "original": ".cache/demo-offline-browser/external-command-template.json",
+      "retained": "docs/qualification/shared-demos/offline-external-preparation-3f84/external-command-template.json",
+      "sha256": "fd988866c523c4ec87e85b23f2885de921d1b4d5d1f1d9ebd294b002edd5fd6d",
+      "bytes": 1211
+    },
+    {
+      "retained": "docs/qualification/shared-demos/offline-external-preparation-3f84/observer-storage-only.patch.txt",
+      "sha256": "5822404ebb491d53df20f64948e5f2a27449d51d85aef1f3b0b1deb8f47722e6",
+      "bytes": 16020
+    }
+  ],
+  "originalObserver": {
+    "path": "docs/qualification/shared-demos/offline-full-core-emitted-693947ed1-public-api.mjs.txt",
+    "sha256": "a9ba68eb1b607942a75922fe3b6e4bc879b9018e813a0f4772bceaa30ae594b1",
+    "bytes": 35232
+  },
+  "independentReview": {
+    "reviewer": "storage_audit",
+    "scope": "Read-only current three-file storage/ownership/cleanup/false-success review",
+    "findings": [],
+    "limitations": "Chrome profile/SQLite on SMB remains untested; nonpreemptible external I/O can outlast polling. No browser pass is claimed."
+  },
+  "testResults": {
+    "pureStorageGuards": {
+      "pass": 7,
+      "fail": 0
+    },
+    "handlerGuards": {
+      "pass": 2,
+      "fail": 0
+    },
+    "syntax": {
+      "nodeFiles": 2,
+      "pythonFiles": 1
+    },
+    "originalScenarioBytesUnchanged": true
+  },
+  "executionGate": "Only after final fresh canonical internal capture, audit, source declaration and commit exist. First run preflight to bind measured complete installation and confirm exact external ownership/capacity; approved execution uses the same args. Do not reuse old report/capture or change product budgets."
+}

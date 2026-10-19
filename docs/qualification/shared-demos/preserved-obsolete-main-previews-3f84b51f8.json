@@ -1,0 +1,54 @@
+{
+  "format": "OwnedGeneratedPreviewRetirementV1",
+  "complete": true,
+  "preservedAt": "2026-10-19T09:38:01.216663+00:00",
+  "fullProof": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-obsolete-main-previews-20261019T093748Z-ac517b84/file-proof.json",
+    "sha256": "ade017e11518ef6bd5baa1122ab5f809ee50382d725a43f49747d9547c088cd8",
+    "bytes": 34769
+  },
+  "directories": [
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/main-conflicts-16eb-2d24-318b-readonly",
+      "sourceIdentity": {
+        "device": 16777235,
+        "inode": 148235007,
+        "uid": 502,
+        "mode": 16877,
+        "bytes": 384,
+        "mtimeNs": 1792397109059132865
+      },
+      "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-obsolete-main-previews-20261019T093748Z-ac517b84/main-conflicts-16eb-2d24-318b-readonly",
+      "files": 37,
+      "logicalBytes": 15079599,
+      "allFileHashesVerified": true,
+      "sourceUnchangedBeforeRemoval": true,
+      "noOpenHandlesBeforeRemoval": true,
+      "retired": true
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/main-conflicts-16eb-9566-readonly",
+      "sourceIdentity": {
+        "device": 16777235,
+        "inode": 148215050,
+        "uid": 502,
+        "mode": 16877,
+        "bytes": 352,
+        "mtimeNs": 1792393431521610451
+      },
+      "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-obsolete-main-previews-20261019T093748Z-ac517b84/main-conflicts-16eb-9566-readonly",
+      "files": 33,
+      "logicalBytes": 12591401,
+      "allFileHashesVerified": true,
+      "sourceUnchangedBeforeRemoval": true,
+      "noOpenHandlesBeforeRemoval": true,
+      "retired": true
+    }
+  ],
+  "freeBeforeBytes": 227819520,
+  "freeAfterBytes": 255250432,
+  "scope": "Only two explicitly authorized obsolete generated main-conflict preview directories. Current capture, Node executable, Git objects, active drafts and external backups preserved.",
+  "limitations": [
+    "Observed free-space change includes concurrent activity."
+  ]
+}

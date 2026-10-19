@@ -372,7 +372,10 @@ test('uncached optional bundled replays fall back to a retained recording or sta
             [
               clip.replayURL,
               ...(clip.id.startsWith('solo-qualified-')
-                ? (clip.runtimePerformances ?? []).map((performance) => performance.replayURL)
+                ? [
+                    ...(clip.replayVariants ?? []),
+                    ...(clip.runtimePerformances ?? []).map((performance) => performance.replayURL),
+                  ]
                 : []),
             ].map((url) => new URL(`../${url.slice(2)}`, import.meta.url).href),
           ),

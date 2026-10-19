@@ -1,0 +1,73 @@
+{
+  "format": "SoloCanonicalVariantCheckV1",
+  "complete": true,
+  "started": "2026-10-19T10:29:39.848955+00:00",
+  "sourceSHA256": "3ceba332f9bb8b6acc6a8829c9bee2f55e2d00d71b2a6e42f18a1432c194dab7",
+  "runs": [
+    {
+      "runtime": "node22131-x64",
+      "command": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+        "scripts/qualify-solo-demos.mjs",
+        "--level=signal-08"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 39.94820904200242,
+      "logSHA256": "8c82cfd6545ccee7aa68440a4f24633a5e3f66205abffaa8b3364df74fe68fd5",
+      "reportSHA256": "d3087a68bc2f005c8b3c6fb74ec75ef0146e2108cd6b9a737c1ba91c4e6e434e",
+      "entries": [
+        {
+          "id": "solo-qualified-478808a96f4fbf5e",
+          "levelId": "signal-08",
+          "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-08",
+          "catalogGroup": "base",
+          "qualified": true,
+          "attempts": [],
+          "outcome": "won",
+          "ticks": 7322,
+          "seconds": 61.016666666666666,
+          "captures": 12,
+          "capturedCells": 1183,
+          "coverage": 0.7632258064516129,
+          "progressEvents": 0,
+          "sourceId": "solo-qualified-478808a96f4fbf5e",
+          "diagnosticCheckpoints": 12
+        }
+      ],
+      "required": 240
+    },
+    {
+      "runtime": "node22222-arm64",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/qualify-solo-demos.mjs",
+        "--level=signal-08"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 26.956317041000148,
+      "logSHA256": "8c82cfd6545ccee7aa68440a4f24633a5e3f66205abffaa8b3364df74fe68fd5",
+      "reportSHA256": "d3087a68bc2f005c8b3c6fb74ec75ef0146e2108cd6b9a737c1ba91c4e6e434e",
+      "entries": [
+        {
+          "id": "solo-qualified-478808a96f4fbf5e",
+          "levelId": "signal-08",
+          "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-08",
+          "catalogGroup": "base",
+          "qualified": true,
+          "attempts": [],
+          "outcome": "won",
+          "ticks": 7322,
+          "seconds": 61.016666666666666,
+          "captures": 12,
+          "capturedCells": 1183,
+          "coverage": 0.7632258064516129,
+          "progressEvents": 0,
+          "sourceId": "solo-qualified-478808a96f4fbf5e",
+          "diagnosticCheckpoints": 12
+        }
+      ],
+      "required": 240
+    }
+  ],
+  "sourceStable": true
+}

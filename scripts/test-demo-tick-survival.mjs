@@ -1,21 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { resolveNativeSurvivalRecording } from './qualify-survival-native.mjs';
 import { createAdapter } from './demo-tick-adapters/survival.mjs';
 import { captureDemoTickTrace, demoTickSHA256 } from './demo-tick-trace.mjs';
 import { survivalDemoInventory } from '../game/demo-modes/survival-catalog.mjs';
 import { SURVIVAL_DEMO_MAX_TICKS } from '../game/demo-modes/survival-replay.mjs';
 
-const recording = JSON.parse(
-  await readFile(
-    new URL(
-      '../game/demo-data/survival/field-crossing-broken-crossroads.replay.json',
-      import.meta.url,
-    ),
-    'utf8',
-  ),
-);
-const entry = survivalDemoInventory().find((item) => item.levelId === recording.levelId);
+const entry = survivalDemoInventory()[0];
+const { recording } = await resolveNativeSurvivalRecording(entry);
 const noWait = async () => {};
 
 test('Survival exact trace independently verifies and observes every native tick, upgrade and reroll', async () => {

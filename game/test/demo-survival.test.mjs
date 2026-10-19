@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { resolveNativeSurvivalRecording } from '../../scripts/qualify-survival-native.mjs';
 import { OVERFLIGHT_BATTLEFIELDS } from '../overflight/battlefields.mjs';
 import { createOverflightRun, startOverflight } from '../overflight/core.mjs';
 import { survivalDemoInventory, survivalDemoCompiled } from '../demo-modes/survival-catalog.mjs';
@@ -14,11 +15,21 @@ import {
 } from '../demo-modes/survival-replay.mjs';
 
 const inventory = survivalDemoInventory();
-const readProof = (entry) =>
+const readDefaultProof = (entry) =>
   readFile(
     new URL(`../demo-data/survival/${entry.levelId}.replay.json`, import.meta.url),
     'utf8',
   ).then(JSON.parse);
+
+const verifiedProofs = new Map();
+const readProof = async (entry) => {
+  if (!verifiedProofs.has(entry.id))
+    verifiedProofs.set(
+      entry.id,
+      resolveNativeSurvivalRecording(entry).then(({ recording }) => recording),
+    );
+  return structuredClone(await verifiedProofs.get(entry.id));
+};
 
 test('Survival sources lazily cover exactly the ordinary authored mission inventory', async () => {
   let requests = 0;
@@ -36,7 +47,7 @@ test('Survival sources lazily cover exactly the ordinary authored mission invent
   );
   assert.equal(new Set(sources.map((entry) => entry.id)).size, sources.length);
   for (const source of sources) {
-    const proof = await readProof(source);
+    const proof = await readDefaultProof(source);
     assert.equal(source.modeId, 'survival');
     assert.equal(source.kind, 'replay');
     assert.equal(source.variantId, 'standard');

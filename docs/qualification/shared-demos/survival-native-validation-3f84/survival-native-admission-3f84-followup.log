@@ -1,0 +1,4 @@
+{"runtime":"node22131-x64","kind":"catalog","eligible":false,"elapsedMs":773.4262080000001}
+{"runtime":"node22131-x64","kind":"remaining-tests","eligible":false,"stats":{"tests":4,"pass":4,"fail":0,"cancelled":0,"skipped":0,"todo":0},"elapsedMs":17615.307042}
+{"runtime":"node20195-arm64","kind":"tests","eligible":true,"stats":{"tests":21,"pass":21,"fail":0,"cancelled":0,"skipped":0,"todo":0},"elapsedMs":281701.439333}
+{"runtime":"node20195-arm64","kind":"catalog","eligible":false,"elapsedMs":827.6273329999531}

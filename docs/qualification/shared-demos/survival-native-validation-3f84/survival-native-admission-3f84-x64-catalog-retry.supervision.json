@@ -1,0 +1,281 @@
+{
+  "format": "SurvivalNativeAdmissionSupervisionV1",
+  "complete": true,
+  "started": "2026-10-19T10:33:08.071523+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+    ".cache/verify-survival-native-catalog-retry.mjs",
+    "--run=approved",
+    "--head=3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "--fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+    "--report=.cache/survival-native-admission-3f84-x64-catalog-retry.json",
+    "--case=x64"
+  ],
+  "timeoutSeconds": 360,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21",
+  "before": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+      "files": 184,
+      "bytes": 16216065
+    },
+    "helpers": {
+      ".cache/verify-survival-native-catalog-retry.mjs": {
+        "sha256": "8868e1fd99511b6dbfc2f5e2de4129f64111679212f5b7fe48d72f97ffe7a9a2",
+        "bytes": 7082
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "scripts/generate-survival-demos.mjs": {
+        "sha256": "05d670f4fabbd95fdd842f2cb58f5309b30dfa6bd9fee90b1f7cf3ebcd597149",
+        "bytes": 4167
+      },
+      ".cache/survival-native-git-bin/git": {
+        "sha256": "fce4446c9fe5d49f79c6ba4a176075f92c04d7f56d474bc7cfbd51a26f868fc6",
+        "bytes": 54
+      },
+      "game/test/demo-survival.test.mjs": {
+        "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+        "bytes": 15602
+      },
+      "scripts/test-demo-tick-survival.mjs": {
+        "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+        "bytes": 5367
+      },
+      "scripts/qualify-survival-native.mjs": {
+        "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+        "bytes": 7832
+      },
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node": {
+        "sha256": "c37b0c15f83f1b63c4b162c6f47e586ed6b00ac9ed093037fe679f676f9d2195",
+        "bytes": 88452192
+      },
+      "game/data-json.mjs": {
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+        "bytes": 5594
+      },
+      "game/demo-preparation.mjs": {
+        "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+        "bytes": 3500
+      },
+      "game/demo-runtime.mjs": {
+        "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+        "bytes": 987
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "22b67543869dbeabfa540648d142671f33997689ddc949858c9032eff52bde8e",
+      "bytes": 11270
+    }
+  },
+  "limitations": [
+    "Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 420 seconds.",
+    "Read-only installed macOS x64 Node22.13.1 observation under Rosetta; not Linux proof. Completion may include strict replay rejections."
+  ],
+  "minimumFreeBytes": 310112256,
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 4,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 20930,
+        "ppid": 20911,
+        "pgid": 20930,
+        "uid": 502,
+        "started": "Mon Oct 19 12:33:08 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-catalog-retry.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-x64-catalog-retry.json --case=x64",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T10:33:08.179462+00:00"
+      },
+      {
+        "pid": 20989,
+        "ppid": 20930,
+        "pgid": 20930,
+        "uid": 502,
+        "started": "Mon Oct 19 12:33:09 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node -p JSON.stringify({version:process.version,v8:process.versions.v8,platform:process.platform,arch:process.arch})",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          20930,
+          "Mon Oct 19 12:33:08 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-catalog-retry.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-x64-catalog-retry.json --case=x64"
+        ],
+        "observedAt": "2026-10-19T10:33:10.020260+00:00"
+      },
+      {
+        "pid": 20996,
+        "ppid": 20930,
+        "pgid": 20930,
+        "uid": 502,
+        "started": "Mon Oct 19 12:33:10 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node scripts/qualify-survival-native.mjs --out=.cache/survival-native-admission-3f84-x64-catalog-retry.node22131-x64.catalog.json --timeout-ms=300000",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          20930,
+          "Mon Oct 19 12:33:08 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-catalog-retry.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-x64-catalog-retry.json --case=x64"
+        ],
+        "observedAt": "2026-10-19T10:33:10.545768+00:00"
+      },
+      {
+        "pid": 21007,
+        "ppid": 20996,
+        "pgid": 20930,
+        "uid": 502,
+        "started": "Mon Oct 19 12:33:11 2026",
+        "argv": "(bash)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          20996,
+          "Mon Oct 19 12:33:10 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node scripts/qualify-survival-native.mjs --out=.cache/survival-native-admission-3f84-x64-catalog-retry.node22131-x64.catalog.json --timeout-ms=300000"
+        ],
+        "observedAt": "2026-10-19T10:33:11.078180+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/survival-native-admission-3f84-x64-catalog-retry.log",
+    "byteLimit": 1048576,
+    "totalBytes": 139,
+    "writtenBytes": 139,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 139,
+    "tailSHA256": "9ae63c2dbb1ab7b3c2696816e33dd8d991c642cc4a0a33807e91ae92367909b9",
+    "tail": "{\"runtime\":\"node22131-x64\",\"kind\":\"catalog\",\"eligible\":true,\"counts\":{\"required\":18,\"checked\":18,\"verified\":18},\"elapsedMs\":129772.402834}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "after": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+      "files": 184,
+      "bytes": 16216065
+    },
+    "helpers": {
+      ".cache/verify-survival-native-catalog-retry.mjs": {
+        "sha256": "8868e1fd99511b6dbfc2f5e2de4129f64111679212f5b7fe48d72f97ffe7a9a2",
+        "bytes": 7082
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "scripts/generate-survival-demos.mjs": {
+        "sha256": "05d670f4fabbd95fdd842f2cb58f5309b30dfa6bd9fee90b1f7cf3ebcd597149",
+        "bytes": 4167
+      },
+      ".cache/survival-native-git-bin/git": {
+        "sha256": "fce4446c9fe5d49f79c6ba4a176075f92c04d7f56d474bc7cfbd51a26f868fc6",
+        "bytes": 54
+      },
+      "game/test/demo-survival.test.mjs": {
+        "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+        "bytes": 15602
+      },
+      "scripts/test-demo-tick-survival.mjs": {
+        "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+        "bytes": 5367
+      },
+      "scripts/qualify-survival-native.mjs": {
+        "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+        "bytes": 7832
+      },
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node": {
+        "sha256": "c37b0c15f83f1b63c4b162c6f47e586ed6b00ac9ed093037fe679f676f9d2195",
+        "bytes": 88452192
+      },
+      "game/data-json.mjs": {
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+        "bytes": 5594
+      },
+      "game/demo-preparation.mjs": {
+        "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+        "bytes": 3500
+      },
+      "game/demo-runtime.mjs": {
+        "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+        "bytes": 987
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "22b67543869dbeabfa540648d142671f33997689ddc949858c9032eff52bde8e",
+      "bytes": 11270
+    }
+  },
+  "bindingsStable": true,
+  "result": {
+    "path": ".cache/survival-native-admission-3f84-x64-catalog-retry.json",
+    "sha256": "27cff02a6eeebceab342877e35cd086f678a568c1f78f8cc816e2226853f9aa6",
+    "complete": true,
+    "checks": 1,
+    "pageErrors": 0,
+    "failure": null,
+    "counts": null
+  },
+  "elapsedSeconds": 132.68196275000082,
+  "finished": "2026-10-19T10:35:20.754516+00:00"
+}

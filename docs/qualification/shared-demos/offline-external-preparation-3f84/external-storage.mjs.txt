@@ -1,0 +1,61 @@
+import assert from 'node:assert/strict';
+import { lstat, realpath, statfs } from 'node:fs/promises';
+import path from 'node:path';
+
+export const OWNED_EXTERNAL_ROOT = '/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412';
+const MiB = 1024 ** 2;
+export function offlineStoragePolicy(installedBodyBytes) {
+  assert(Number.isSafeInteger(installedBodyBytes) && installedBodyBytes > 0);
+  const installedBodyCapBytes = Math.ceil((installedBodyBytes + 64 * MiB) / (16 * MiB)) * 16 * MiB;
+  assert(installedBodyCapBytes <= 1024 * MiB, 'Measured complete installation exceeds this observer’s 1 GiB body ceiling.');
+  // Reserve room for Cache Storage/SQLite writes, journals and browser metadata.
+  // This is capacity reservation, not a claim that total filesystem allocation is capped.
+  const profileReservationBytes = 3 * installedBodyCapBytes + 256 * MiB;
+  return { installedBodyBytes, installedBodyCapBytes, profileReservationBytes,
+    minimumExternalFreeBeforeBytes: profileReservationBytes + 512 * MiB,
+    minimumExternalFreeDuringBytes: 512 * MiB, minimumLocalFreeBytes: 200 * MiB,
+    formula: 'body cap = ceil((complete audited core+selected bytes +64MiB)/16MiB)*16MiB; maximum1GiB; reserve3x cap+256MiB plus512MiB free' };
+}
+export const directoryIdentity = stat => {
+  const value = { dev: stat.dev, ino: stat.ino, uid: stat.uid };
+  assert(Object.values(value).every(Number.isSafeInteger), 'Directory identity exceeds exact numeric representation.');
+  return value;
+};
+export function assertDirectoryIdentity(actual, expected, uid) {
+  assert(actual.isDirectory && !actual.isSymbolicLink, 'Expected an ordinary owned directory.');
+  assert.equal(actual.uid, uid, 'Directory owner changed.');
+  assert.deepEqual({ dev: actual.dev, ino: actual.ino, uid: actual.uid }, expected, 'Directory identity changed.');
+}
+const state = stat => ({ ...directoryIdentity(stat), isDirectory: stat.isDirectory(), isSymbolicLink: stat.isSymbolicLink() });
+export async function bindExternalSession(session, expected, workspace) {
+  assert(path.isAbsolute(session) && path.normalize(session) === session);
+  assert.equal(path.dirname(session), OWNED_EXTERNAL_ROOT);
+  assert(/^demo-full-core-offline-[A-Za-z0-9_-]+$/.test(path.basename(session)));
+  const mount = path.dirname(OWNED_EXTERNAL_ROOT), uid = process.getuid();
+  const names = [mount, OWNED_EXTERNAL_ROOT, session];
+  const identities = [];
+  const workspaceStat = await lstat(workspace);
+  for (const name of names) {
+    const stat = await lstat(name);
+    assert(stat.isDirectory() && !stat.isSymbolicLink());
+    assert.equal(await realpath(name), name, 'External path traverses a symlink.');
+    if (name !== mount) assert.equal(stat.uid, uid);
+    assert.notEqual(stat.dev, workspaceStat.dev, 'Bulk browser data must use the verified external filesystem.');
+    identities.push({ path: name, ...directoryIdentity(stat) });
+  }
+  assert.deepEqual(directoryIdentity(await lstat(session)), expected);
+  assert.equal((await lstat(session)).mode & 0o077, 0, 'Owned session must be private.');
+  const verify = async () => {
+    for (const identity of identities) {
+      const stat = await lstat(identity.path);
+      assertDirectoryIdentity(state(stat), { dev: identity.dev, ino: identity.ino, uid: identity.uid }, identity.uid);
+      assert.equal(await realpath(identity.path), identity.path);
+    }
+    return true;
+  };
+  return { session, identities, verify };
+}
+export async function availableBytes(directory) {
+  const value = await statfs(directory);
+  return Number(value.bavail) * Number(value.bsize);
+}

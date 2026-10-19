@@ -45,13 +45,16 @@ if (check) {
 }
 const { verifySurvivalDemo } = await import('../game/demo-modes/survival-replay.mjs');
 const { authorSurvivalDemo } = await import('../game/demo-modes/survival-authoring.mjs');
+const resolveNativeSurvivalRecording = check
+  ? (await import('./qualify-survival-native.mjs')).resolveNativeSurvivalRecording
+  : null;
 const inventory = survivalDemoInventory();
 const report = [];
 for (const entry of inventory.filter((item) => !selected || item.levelId === selected)) {
   const file = resolve(directory, `${entry.levelId}.replay.json`);
   const started = performance.now();
   let proof;
-  if (check) proof = JSON.parse(await readFile(file, 'utf8'));
+  if (check) proof = (await resolveNativeSurvivalRecording(entry)).recording;
   else {
     proof = await authorSurvivalDemo(entry, { yieldEvery: Infinity });
   }

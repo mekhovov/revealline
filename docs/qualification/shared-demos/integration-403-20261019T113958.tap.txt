@@ -1,0 +1,1465 @@
+TAP version 13
+# Subtest: actual loading Demo Back owns Enter through restored Home and releases fresh input
+ok 1 - actual loading Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1232.349625
+  type: 'test'
+  ...
+# Subtest: actual watching Demo Back owns Enter through restored Home and releases fresh input
+ok 2 - actual watching Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1373.981209
+  type: 'test'
+  ...
+# Subtest: actual practice Demo Back owns Enter through restored Home and releases fresh input
+ok 3 - actual practice Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1410.650958
+  type: 'test'
+  ...
+# Subtest: actual returned Demo Back owns Enter through restored Home and releases fresh input
+ok 4 - actual returned Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1373.631417
+  type: 'test'
+  ...
+# Subtest: actual loading Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 5 - actual loading Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 968.5235
+  type: 'test'
+  ...
+# Subtest: actual watching Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 6 - actual watching Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1316.839083
+  type: 'test'
+  ...
+# Subtest: actual practice Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 7 - actual practice Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1402.766958
+  type: 'test'
+  ...
+# Subtest: actual returned Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 8 - actual returned Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1299.582125
+  type: 'test'
+  ...
+# Subtest: actual loading Demo Back owns Space through restored Home and releases fresh input
+ok 9 - actual loading Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 943.278084
+  type: 'test'
+  ...
+# Subtest: actual watching Demo Back owns Space through restored Home and releases fresh input
+ok 10 - actual watching Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1245.314167
+  type: 'test'
+  ...
+# Subtest: actual practice Demo Back owns Space through restored Home and releases fresh input
+ok 11 - actual practice Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1313.186292
+  type: 'test'
+  ...
+# Subtest: actual returned Demo Back owns Space through restored Home and releases fresh input
+ok 12 - actual returned Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1324.499
+  type: 'test'
+  ...
+# Subtest: actual Demo audio UI retains native keyboard activation and range editing
+ok 13 - actual Demo audio UI retains native keyboard activation and range editing
+  ---
+  duration_ms: 1319.015458
+  type: 'test'
+  ...
+# Subtest: native watching advances without Solo effects and practice resumes on its visible surface
+ok 14 - native watching advances without Solo effects and practice resumes on its visible surface
+  ---
+  duration_ms: 21.50525
+  type: 'test'
+  ...
+# Subtest: native readouts use shared playback time when the engine exposes no time field
+ok 15 - native readouts use shared playback time when the engine exposes no time field
+  ---
+  duration_ms: 3.888166
+  type: 'test'
+  ...
+# Subtest: raw SIM-origin controller samples reach Snake practice through the mounted shared host
+ok 16 - raw SIM-origin controller samples reach Snake practice through the mounted shared host
+  ---
+  duration_ms: 10.786541
+  type: 'test'
+  ...
+# Subtest: a quick close and reopen awaits asynchronous scene disposal
+ok 17 - a quick close and reopen awaits asynchronous scene disposal
+  ---
+  duration_ms: 3.680958
+  type: 'test'
+  ...
+# Subtest: renderer disposal failure still retires physics and removes the owned surface
+ok 18 - renderer disposal failure still retires physics and removes the owned surface
+  ---
+  duration_ms: 8.315833
+  type: 'test'
+  ...
+# Subtest: a practice world returned after cancellation is disposed exactly once
+ok 19 - a practice world returned after cancellation is disposed exactly once
+  ---
+  duration_ms: 2.344875
+  type: 'test'
+  ...
+# Subtest: graphics loss retires the native engine and publishes its bounded diagnostic
+ok 20 - graphics loss retires the native engine and publishes its bounded diagnostic
+  ---
+  duration_ms: 10.638916
+  type: 'test'
+  ...
+# Subtest: native preparation forwards one bounded reporter through source and renderer ownership
+ok 21 - native preparation forwards one bounded reporter through source and renderer ownership
+  ---
+  duration_ms: 2.371167
+  type: 'test'
+  ...
+# Subtest: native entry supplies shared controller menu navigation, activation and Back without a page callback
+ok 22 - native entry supplies shared controller menu navigation, activation and Back without a page callback
+  ---
+  duration_ms: 5.6285
+  type: 'test'
+  ...
+# Subtest: shared host forwards an explicit page-owned menu exactly once and creates no fallback navigation
+ok 23 - shared host forwards an explicit page-owned menu exactly once and creates no fallback navigation
+  ---
+  duration_ms: 1.934125
+  type: 'test'
+  ...
+# Subtest: native adapters receive the shared menu and destroying its host removes owned document listeners
+ok 24 - native adapters receive the shared menu and destroying its host removes owned document listeners
+  ---
+  duration_ms: 8.237292
+  type: 'test'
+  ...
+# Subtest: a delayed optional catalog cannot starve available modes or freeze localization
+ok 25 - a delayed optional catalog cannot starve available modes or freeze localization
+  ---
+  duration_ms: 1.081834
+  type: 'test'
+  ...
+# Subtest: prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+ok 26 - prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+  ---
+  duration_ms: 0.638959
+  type: 'test'
+  ...
+# Subtest: the next prefetched recording is consumed once and never creates a second player early
+ok 27 - the next prefetched recording is consumed once and never creates a second player early
+  ---
+  duration_ms: 1.180583
+  type: 'test'
+  ...
+# Subtest: modes and level variants have equal performance weight despite duplicate recordings
+ok 28 - modes and level variants have equal performance weight despite duplicate recordings
+  ---
+  duration_ms: 1.45325
+  type: 'test'
+  ...
+# Subtest: an unavailable graphics engine is attempted once, not once per authored level
+ok 29 - an unavailable graphics engine is attempted once, not once per authored level
+  ---
+  duration_ms: 1.232417
+  type: 'test'
+  ...
+# Subtest: a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+ok 30 - a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+  ---
+  duration_ms: 0.789084
+  type: 'test'
+  ...
+# Subtest: a deferred mode returns with its next recording while healthy mode cycles keep progressing
+ok 31 - a deferred mode returns with its next recording while healthy mode cycles keep progressing
+  ---
+  duration_ms: 0.300084
+  type: 'test'
+  ...
+# Subtest: duplicate bad recordings cannot hold the next level behind repeated verified fallback
+ok 32 - duplicate bad recordings cannot hold the next level behind repeated verified fallback
+  ---
+  duration_ms: 0.259792
+  type: 'test'
+  ...
+# Subtest: all fallback attempts together stop at thirty seconds
+ok 33 - all fallback attempts together stop at thirty seconds
+  ---
+  duration_ms: 1.303333
+  type: 'test'
+  ...
+# Subtest: replacement waits for asynchronous graphics disposal
+ok 34 - replacement waits for asynchronous graphics disposal
+  ---
+  duration_ms: 0.342375
+  type: 'test'
+  ...
+# Subtest: fallback waits for cleanup of a source rejected after preparation
+ok 35 - fallback waits for cleanup of a source rejected after preparation
+  ---
+  duration_ms: 0.221709
+  type: 'test'
+  ...
+# Subtest: captions retain five explanations, stay six seconds, and discard stale warnings
+ok 36 - captions retain five explanations, stay six seconds, and discard stale warnings
+  ---
+  duration_ms: 0.231083
+  type: 'test'
+  ...
+# Subtest: caption history translates observed events without replaying or dropping their reading interval
+ok 37 - caption history translates observed events without replaying or dropping their reading interval
+  ---
+  duration_ms: 0.067125
+  type: 'test'
+  ...
+# Subtest: natural completion retains the last explanation and the recap for six seconds each
+ok 38 - natural completion retains the last explanation and the recap for six seconds each
+  ---
+  duration_ms: 0.184334
+  type: 'test'
+  ...
+# Subtest: Survival Fresh marker admits only finite authored standard setups
+ok 39 - Survival Fresh marker admits only finite authored standard setups
+  ---
+  duration_ms: 6.469833
+  type: 'test'
+  ...
+# Subtest: native Survival Fresh success preserves saved preferences and guarded ownership
+ok 40 - native Survival Fresh success preserves saved preferences and guarded ownership
+  ---
+  duration_ms: 10.20675
+  type: 'test'
+  ...
+# Subtest: native Survival Fresh refused preserves saved preferences and guarded ownership
+ok 41 - native Survival Fresh refused preserves saved preferences and guarded ownership
+  ---
+  duration_ms: 2.381583
+  type: 'test'
+  ...
+# Subtest: native Survival Fresh failed preserves saved preferences and guarded ownership
+ok 42 - native Survival Fresh failed preserves saved preferences and guarded ownership
+  ---
+  duration_ms: 4.809875
+  type: 'test'
+  ...
+# Subtest: native Survival Fresh cancelled preserves saved preferences and guarded ownership
+ok 43 - native Survival Fresh cancelled preserves saved preferences and guarded ownership
+  ---
+  duration_ms: 3.156459
+  type: 'test'
+  ...
+# Subtest: Survival Fresh loses ownership during theme readiness and restores its paused run
+ok 44 - Survival Fresh loses ownership during theme readiness and restores its paused run
+  ---
+  duration_ms: 7.234417
+  type: 'test'
+  ...
+# Subtest: Survival Fresh loses ownership during world readiness and restores its paused run
+ok 45 - Survival Fresh loses ownership during world readiness and restores its paused run
+  ---
+  duration_ms: 6.415916
+  type: 'test'
+  ...
+# Subtest: Survival Fresh loses ownership during renderer readiness and restores its paused run
+ok 46 - Survival Fresh loses ownership during renderer readiness and restores its paused run
+  ---
+  duration_ms: 5.909334
+  type: 'test'
+  ...
+# Subtest: a cancelled Fresh restoration cannot replace a newer ordinary preparation
+ok 47 - a cancelled Fresh restoration cannot replace a newer ordinary preparation
+  ---
+  duration_ms: 4.474583
+  type: 'test'
+  ...
+# Subtest: a failed renderer restoration retains the paused run behind explicit recovery state
+ok 48 - a failed renderer restoration retains the paused run behind explicit recovery state
+  ---
+  duration_ms: 6.186583
+  type: 'test'
+  ...
+# Subtest: Survival sources lazily cover exactly the ordinary authored mission inventory
+ok 49 - Survival sources lazily cover exactly the ordinary authored mission inventory
+  ---
+  duration_ms: 49.687042
+  type: 'test'
+  ...
+# Subtest: verified native playback pauses, forks exactly, and practice cannot mutate the performance
+ok 50 - verified native playback pauses, forks exactly, and practice cannot mutate the performance
+  ---
+  duration_ms: 3639.518292
+  type: 'test'
+  ...
+# Subtest: sparse diagnostics report the first differing checkpoint and reject stale content
+ok 51 - sparse diagnostics report the first differing checkpoint and reject stale content
+  ---
+  duration_ms: 37.812791
+  type: 'test'
+  ...
+# Subtest: cancelled preparation cannot adopt a Survival player
+ok 52 - cancelled preparation cannot adopt a Survival player
+  ---
+  duration_ms: 6.977583
+  type: 'test'
+  ...
+# Subtest: one prefetched payload can fall back only to another fully verified runtime performance
+ok 53 - one prefetched payload can fall back only to another fully verified runtime performance
+  ---
+  duration_ms: 3350.615292
+  type: 'test'
+  ...
+# Subtest: a failed preparation diagnostic observer cannot alter native verification
+ok 54 - a failed preparation diagnostic observer cannot alter native verification
+  ---
+  duration_ms: 3261.551917
+  type: 'test'
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback
+ok 55 - the browser-preferred Survival recording is strictly checked before fallback
+  ---
+  duration_ms: 6966.229958
+  type: 'test'
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback with prefetch
+ok 56 - the browser-preferred Survival recording is strictly checked before fallback with prefetch
+  ---
+  duration_ms: 6987.720542
+  type: 'test'
+  ...
+# Subtest: fresh keyboard or neutral-then-moved controller input is required for takeover
+ok 57 - fresh keyboard or neutral-then-moved controller input is required for takeover
+  ---
+  duration_ms: 0.59425
+  type: 'test'
+  ...
+# Subtest: fresh movement resumes paused native practice through the shared host
+ok 58 - fresh movement resumes paused native practice through the shared host
+  ---
+  duration_ms: 0.281291
+  type: 'test'
+  ...
+# Subtest: the initiating key remains owned through host handoff and its release stops movement
+ok 59 - the initiating key remains owned through host handoff and its release stops movement
+  ---
+  duration_ms: 0.205125
+  type: 'test'
+  ...
+# Subtest: a takeover touch keeps its origin through reconstruction and releases normally
+ok 60 - a takeover touch keeps its origin through reconstruction and releases normally
+  ---
+  duration_ms: 0.137666
+  type: 'test'
+  ...
+# Subtest: release during reconstruction updates movement and retains only the initiating action
+ok 61 - release during reconstruction updates movement and retains only the initiating action
+  ---
+  duration_ms: 0.059792
+  type: 'test'
+  ...
+# Subtest: foreground loss fully clears a handoff gesture even during the synchronous interrupt
+ok 62 - foreground loss fully clears a handoff gesture even during the synchronous interrupt
+  ---
+  duration_ms: 0.12
+  type: 'test'
+  ...
+# Subtest: practice consumes the initiating boost once despite controller samples before its first tick
+ok 63 - practice consumes the initiating boost once despite controller samples before its first tick
+  ---
+  duration_ms: 19.963625
+  type: 'test'
+  ...
+# Subtest: worker rejects malformed omission lists and collisions before accepting fetch events
+ok 64 - worker rejects malformed omission lists and collisions before accepting fetch events
+  ---
+  duration_ms: 7.08425
+  type: 'test'
+  ...
+# Subtest: only listed same-scope GET paths receive local404; unknown and no-store cache authorization stay unchanged
+ok 65 - only listed same-scope GET paths receive local404; unknown and no-store cache authorization stay unchanged
+  ---
+  duration_ms: 4.595208
+  type: 'test'
+  ...
+# Subtest: real worker supplies exact embedded fallback to both readers online and offline without writes
+ok 66 - real worker supplies exact embedded fallback to both readers online and offline without writes
+  ---
+  duration_ms: 4142.161625
+  type: 'test'
+  ...
+# Subtest: real worker supplies exact external fallback to both readers online and offline without writes
+ok 67 - real worker supplies exact external fallback to both readers online and offline without writes
+  ---
+  duration_ms: 1640.892
+  type: 'test'
+  ...
+# Subtest: an off-list offline original cannot acquire a fallback merely because native bytes are cached
+ok 68 - an off-list offline original cannot acquire a fallback merely because native bytes are cached
+  ---
+  duration_ms: 4.995583
+  type: 'test'
+  ...
+# Subtest: worker404 leaves pin mismatches and cancellation as failures without cache writes
+ok 69 - worker404 leaves pin mismatches and cancellation as failures without cache writes
+  ---
+  duration_ms: 13.079209
+  type: 'test'
+  ...
+# Subtest: standalone continuation selects the exact published owner and preserves opaque query values
+ok 70 - standalone continuation selects the exact published owner and preserves opaque query values
+  ---
+  duration_ms: 1.56725
+  type: 'test'
+  ...
+# Subtest: unknown, external, cross-edition and ambiguous continuations never acquire a fallback owner
+ok 71 - unknown, external, cross-edition and ambiguous continuations never acquire a fallback owner
+  ---
+  duration_ms: 0.528084
+  type: 'test'
+  ...
+# Subtest: standalone opening waits for local verification, never starts a download, and stays put on missing bytes
+ok 72 - standalone opening waits for local verification, never starts a download, and stays put on missing bytes
+  ---
+  duration_ms: 0.201458
+  type: 'test'
+  ...
+# Subtest: Cancel or Back during final verification cannot reopen the abandoned destination
+ok 73 - Cancel or Back during final verification cannot reopen the abandoned destination
+  ---
+  duration_ms: 0.171625
+  type: 'test'
+  ...
+# Subtest: explicit offline recovery preserves selection, then opens verified bytes
+ok 74 - explicit offline recovery preserves selection, then opens verified bytes
+  ---
+  duration_ms: 13.768916
+  type: 'test'
+  ...
+# Subtest: ordinary mode navigation and artwork use the network without download redirects
+ok 75 - ordinary mode navigation and artwork use the network without download redirects
+  ---
+  duration_ms: 0.920041
+  type: 'test'
+  ...
+# Subtest: a cached Solo shell opens archived bookmarks without requiring an offline bootstrap
+ok 76 - a cached Solo shell opens archived bookmarks without requiring an offline bootstrap
+  ---
+  duration_ms: 2.236042
+  type: 'test'
+  ...
+# Subtest: package editions load unseen artwork online without installing it
+ok 77 - package editions load unseen artwork online without installing it
+  ---
+  duration_ms: 1.184291
+  type: 'test'
+  ...
+# Subtest: a downloaded chapter is served locally even when every outbound request fails
+ok 78 - a downloaded chapter is served locally even when every outbound request fails
+  ---
+  duration_ms: 0.494875
+  type: 'test'
+  ...
+# Subtest: denied browser storage cannot block online gameplay assets or the core shell
+ok 79 - denied browser storage cannot block online gameplay assets or the core shell
+  ---
+  duration_ms: 1.336792
+  type: 'test'
+  ...
+# Subtest: explicit verified repair bypasses a same-sized corrupt official cache entry
+ok 80 - explicit verified repair bypasses a same-sized corrupt official cache entry
+  ---
+  duration_ms: 0.520292
+  type: 'test'
+  ...
+# Subtest: cold launch recovers missing HTML or startup modules without downloading or touching other stores
+ok 81 - cold launch recovers missing HTML or startup modules without downloading or touching other stores
+  ---
+  duration_ms: 5.658584
+  type: 'test'
+  ...
+# Subtest: recovery is scoped, escapes the return URL, and leaves optional content out of startup checks
+ok 82 - recovery is scoped, escapes the return URL, and leaves optional content out of startup checks
+  ---
+  duration_ms: 1.856833
+  type: 'test'
+  ...
+# Subtest: the dependency-free recovery button repairs only after approval and reports a failed or successful repair
+ok 83 - the dependency-free recovery button repairs only after approval and reports a failed or successful repair
+  ---
+  duration_ms: 3.258916
+  type: 'test'
+  ...
+# Subtest: recovery Manage links stay in the shipped rolling, immutable, branded or standalone distribution
+ok 84 - recovery Manage links stay in the shipped rolling, immutable, branded or standalone distribution
+  ---
+  duration_ms: 4.5665
+  type: 'test'
+  ...
+# Subtest: recovery controls handle timeout, late messages, page return, controller changes and locale preference
+ok 85 - recovery controls handle timeout, late messages, page return, controller changes and locale preference
+  ---
+  duration_ms: 1.628083
+  type: 'test'
+  ...
+# Subtest: offline source pages have no registration side effect and reject explicit preparation without build marker
+ok 86 - offline source pages have no registration side effect and reject explicit preparation without build marker
+  ---
+  duration_ms: 0.304791
+  type: 'test'
+  ...
+# Subtest: scope metadata rejects a remote worker or a sibling app
+ok 87 - scope metadata rejects a remote worker or a sibling app
+  ---
+  duration_ms: 0.105292
+  type: 'test'
+  ...
+# Subtest: install verifies all shipped bytes and activate removes only this exact scope previous versions
+ok 88 - install verifies all shipped bytes and activate removes only this exact scope previous versions
+  ---
+  duration_ms: 1.707666
+  type: 'test'
+  ...
+# Subtest: failed network or integrity prevents installation and preserves the active previous cache
+ok 89 - failed network or integrity prevents installation and preserves the active previous cache
+  ---
+  duration_ms: 0.721083
+  type: 'test'
+  ...
+# Subtest: a cached version supports nested navigations and sibling shipped assets with no network
+ok 90 - a cached version supports nested navigations and sibling shipped assets with no network
+  ---
+  duration_ms: 1.023042
+  type: 'test'
+  ...
+# Subtest: one installed PWA serves first-visit Survivor, Raid and Snake bookmarks and recorded audio offline
+ok 91 - one installed PWA serves first-visit Survivor, Raid and Snake bookmarks and recorded audio offline
+  ---
+  duration_ms: 10.297833
+  type: 'test'
+  ...
+# Subtest: durable runtime resumes verified files after quota failure and worker replacement
+ok 92 - durable runtime resumes verified files after quota failure and worker replacement
+  ---
+  duration_ms: 1.650166
+  type: 'test'
+  ...
+# Subtest: an edition update reuses verified hashes and only downloads changed runtime files
+ok 93 - an edition update reuses verified hashes and only downloads changed runtime files
+  ---
+  duration_ms: 2.756292
+  type: 'test'
+  ...
+# Subtest: identical runtime bytes at different URLs download once but remain addressable offline
+ok 94 - identical runtime bytes at different URLs download once but remain addressable offline
+  ---
+  duration_ms: 2.293875
+  type: 'test'
+  ...
+# Subtest: explicit pause stops durable preparation after its atomic file checkpoint
+ok 95 - explicit pause stops durable preparation after its atomic file checkpoint
+  ---
+  duration_ms: 3.074167
+  type: 'test'
+  ...
+# Subtest: the stable updater can prepare and inspect its exact immutable worker only
+ok 96 - the stable updater can prepare and inspect its exact immutable worker only
+  ---
+  duration_ms: 2.657792
+  type: 'test'
+  ...
+# (node:73068) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: an explicit updater awaits discovery before addressing a same-URL worker and rejects other builds
+ok 97 - an explicit updater awaits discovery before addressing a same-URL worker and rejects other builds
+  ---
+  duration_ms: 1.893083
+  type: 'test'
+  ...
+# Subtest: updater activation waits naturally and preserves bounded failure outcomes
+    # Subtest: activated
+    ok 1 - activated
+      ---
+      duration_ms: 0.774375
+      type: 'test'
+      ...
+    # Subtest: waiting
+    ok 2 - waiting
+      ---
+      duration_ms: 0.4085
+      type: 'test'
+      ...
+    # Subtest: activating
+    ok 3 - activating
+      ---
+      duration_ms: 0.244583
+      type: 'test'
+      ...
+    # Subtest: redundant
+    ok 4 - redundant
+      ---
+      duration_ms: 0.269583
+      type: 'test'
+      ...
+    # Subtest: replaced
+    ok 5 - replaced
+      ---
+      duration_ms: 0.314708
+      type: 'test'
+      ...
+    # Subtest: aborted
+    ok 6 - aborted
+      ---
+      duration_ms: 0.312667
+      type: 'test'
+      ...
+    1..6
+ok 98 - updater activation waits naturally and preserves bounded failure outcomes
+  ---
+  duration_ms: 2.638834
+  type: 'test'
+  ...
+# Subtest: outside-scope updater pause requires the exact streaming worker binding
+ok 99 - outside-scope updater pause requires the exact streaming worker binding
+  ---
+  duration_ms: 2.099583
+  type: 'test'
+  ...
+# Subtest: complete cached files serve audio byte ranges without caching a partial response
+ok 100 - complete cached files serve audio byte ranges without caching a partial response
+  ---
+  duration_ms: 2.302708
+  type: 'test'
+  ...
+# Subtest: worker never intercepts another release, remote URL, unknown route or mutating request
+ok 101 - worker never intercepts another release, remote URL, unknown route or mutating request
+  ---
+  duration_ms: 0.897583
+  type: 'test'
+  ...
+# Subtest: self-check detects corrupt and missing files without a network request
+ok 102 - self-check detects corrupt and missing files without a network request
+  ---
+  duration_ms: 0.828166
+  type: 'test'
+  ...
+# Subtest: a missing file may repair from its expected bytes but cannot mix another deployed version into active code
+ok 103 - a missing file may repair from its expected bytes but cannot mix another deployed version into active code
+  ---
+  duration_ms: 0.906083
+  type: 'test'
+  ...
+# Subtest: cached complete install is reused offline without redownloading resources
+ok 104 - cached complete install is reused offline without redownloading resources
+  ---
+  duration_ms: 2.177583
+  type: 'test'
+  ...
+# Subtest: explicit preparation and later verification expose a bounded worker report; waiting updates never skip waiting
+ok 105 - explicit preparation and later verification expose a bounded worker report; waiting updates never skip waiting
+  ---
+  duration_ms: 0.651125
+  type: 'test'
+  ...
+# Subtest: explicit prepare repairs an evicted file after reconnection without discarding other scopes
+ok 106 - explicit prepare repairs an evicted file after reconnection without discarding other scopes
+  ---
+  duration_ms: 1.386166
+  type: 'test'
+  ...
+# Subtest: network bodies are consumed once without cloning and reconstructed with decoded headers
+ok 107 - network bodies are consumed once without cloning and reconstructed with decoded headers
+  ---
+  duration_ms: 1.49825
+  type: 'test'
+  ...
+# Subtest: stream overruns are cancelled before copying and malformed bodies never create a cache
+ok 108 - stream overruns are cancelled before copying and malformed bodies never create a cache
+  ---
+  duration_ms: 2.527084
+  type: 'test'
+  ...
+# Subtest: generated byte and file budgets reject malformed inventory before body allocation or fetch
+ok 109 - generated byte and file budgets reject malformed inventory before body allocation or fetch
+  ---
+  duration_ms: 4.089042
+  type: 'test'
+  ...
+# Subtest: redirects, opaque/error and non-cacheable network responses remain rejected
+ok 110 - redirects, opaque/error and non-cacheable network responses remain rejected
+  ---
+  duration_ms: 2.246334
+  type: 'test'
+  ...
+# Subtest: valid empty 200, 204 and 205 bodies retain status and an accurate zero length
+ok 111 - valid empty 200, 204 and 205 bodies retain status and an accurate zero length
+  ---
+  duration_ms: 2.469917
+  type: 'test'
+  ...
+# Subtest: actual illustrated Workshop bytes survive both install and missing-file repair
+ok 112 - actual illustrated Workshop bytes survive both install and missing-file repair
+  ---
+  duration_ms: 55.771167
+  type: 'test'
+  ...
+# Subtest: native fetch gzip and brotli decoding produces cacheable owned payloads with preserved policy
+ok 113 - native fetch gzip and brotli decoding produces cacheable owned payloads with preserved policy
+  ---
+  duration_ms: 14.35625
+  type: 'test'
+  ...
+# Subtest: all downloads finish before a new cache exists and the older build stays exact until activation
+ok 114 - all downloads finish before a new cache exists and the older build stays exact until activation
+  ---
+  duration_ms: 2.729583
+  type: 'test'
+  ...
+# Subtest: installation overlaps at most four downloads and publishes in inventory order only after every body verifies
+ok 115 - installation overlaps at most four downloads and publishes in inventory order only after every body verifies
+  ---
+  duration_ms: 2.538125
+  type: 'test'
+  ...
+# Subtest: a failed parallel download aborts active requests, stops the queue and preserves the previous cache
+ok 116 - a failed parallel download aborts active requests, stops the queue and preserves the previous cache
+  ---
+  duration_ms: 1.037542
+  type: 'test'
+  ...
+# Subtest: simultaneous prepare requests share one install and can retry after a failed download
+ok 117 - simultaneous prepare requests share one install and can retry after a failed download
+  ---
+  duration_ms: 1.389792
+  type: 'test'
+  ...
+# Subtest: native streaming downloads abort after another file fails verification
+ok 118 - native streaming downloads abort after another file fails verification
+  ---
+  duration_ms: 4.5105
+  type: 'test'
+  ...
+# Subtest: asset and marker cache-write failures clean only the partial build and never claim clients
+ok 119 - asset and marker cache-write failures clean only the partial build and never claim clients
+  ---
+  duration_ms: 1.86475
+  type: 'test'
+  ...
+# Subtest: repair cache-write failure still serves verified online bytes and keeps existing entries
+ok 120 - repair cache-write failure still serves verified online bytes and keeps existing entries
+  ---
+  duration_ms: 0.87625
+  type: 'test'
+  ...
+# Subtest: published pack growth does not inherit the old twelve imported-pack slot limit
+ok 121 - published pack growth does not inherit the old twelve imported-pack slot limit
+  ---
+  duration_ms: 0.194583
+  type: 'test'
+  ...
+# Subtest: optional pack preparation and verification explicitly distinguish core cache from already-installed device packs
+ok 122 - optional pack preparation and verification explicitly distinguish core cache from already-installed device packs
+  ---
+  duration_ms: 0.654541
+  type: 'test'
+  ...
+# Subtest: optional Journey artwork never receives a core-offline readiness claim
+ok 123 - optional Journey artwork never receives a core-offline readiness claim
+  ---
+  duration_ms: 0.487708
+  type: 'test'
+  ...
+# Subtest: a measured installing-worker download survives more than sixty seconds and separates downloaded, verified and saved work
+ok 124 - a measured installing-worker download survives more than sixty seconds and separates downloaded, verified and saved work
+  ---
+  duration_ms: 24.578375
+  type: 'test'
+  ...
+# Subtest: an installation observation timeout is recoverable; reopening and two tabs rejoin the same download
+ok 125 - an installation observation timeout is recoverable; reopening and two tabs rejoin the same download
+  ---
+  duration_ms: 14.481958
+  type: 'test'
+  ...
+# Subtest: closing an observer aborts only that caller; background installation completes and cached reopening does not fetch
+ok 126 - closing an observer aborts only that caller; background installation completes and cached reopening does not fetch
+  ---
+  duration_ms: 7.680542
+  type: 'test'
+  ...
+# Subtest: separate report timeout and cancellation during cached verification preserve storage and do not start preparation
+ok 127 - separate report timeout and cancellation during cached verification preserve storage and do not start preparation
+  ---
+  duration_ms: 14.904708
+  type: 'test'
+  ...
+# Subtest: a historical terminal-only worker remains compatible while a silent old install times out truthfully
+ok 128 - a historical terminal-only worker remains compatible while a silent old install times out truthfully
+  ---
+  duration_ms: 7.073042
+  type: 'test'
+  ...
+# Subtest: versioned progress rejects mismatched build or scope before downloads and ignores a stale request completion
+ok 129 - versioned progress rejects mismatched build or scope before downloads and ignores a stale request completion
+  ---
+  duration_ms: 7.824666
+  type: 'test'
+  ...
+# Subtest: a changed or redundant worker cannot publish success to an old observation
+ok 130 - a changed or redundant worker cannot publish success to an old observation
+  ---
+  duration_ms: 20.582458
+  type: 'test'
+  ...
+# Subtest: streamed integrity, missing-file and quota failures remain real failures with no ready claim
+ok 131 - streamed integrity, missing-file and quota failures remain real failures with no ready claim
+  ---
+  duration_ms: 2.788667
+  type: 'test'
+  ...
+# Subtest: versioned subscribers release on detach, completion, expiry and capacity while shared install keeps running
+ok 132 - versioned subscribers release on detach, completion, expiry and capacity while shared install keeps running
+  ---
+  duration_ms: 8.274167
+  type: 'test'
+  ...
+# Subtest: aborting while registration is pending detaches promptly and never unregisters the eventual worker
+ok 133 - aborting while registration is pending detaches promptly and never unregisters the eventual worker
+  ---
+  duration_ms: 0.570583
+  type: 'test'
+  ...
+# Subtest: prepare joins a pending cached inspection before repair and final verification uses the repaired bytes
+ok 134 - prepare joins a pending cached inspection before repair and final verification uses the repaired bytes
+  ---
+  duration_ms: 7.459833
+  type: 'test'
+  ...
+# Subtest: fresh installed PWA serves all 18 real layouts in all five operations and their new native resources offline
+ok 135 - fresh installed PWA serves all 18 real layouts in all five operations and their new native resources offline
+  ---
+  duration_ms: 130.857375
+  type: 'test'
+  ...
+# Subtest: interrupted coordinated-movement update preserves prior native resources and retry commits the exact expanded sortie bytes
+ok 136 - interrupted coordinated-movement update preserves prior native resources and retry commits the exact expanded sortie bytes
+  ---
+  duration_ms: 28.905
+  type: 'test'
+  ...
+# Subtest: production checkpoint preserves the complete paused state {"legacy":true,"seed":7}
+ok 137 - production checkpoint preserves the complete paused state {"legacy":true,"seed":7}
+  ---
+  duration_ms: 448.770542
+  type: 'test'
+  ...
+# Subtest: production checkpoint preserves the complete paused state {"rulesVersion":2,"seed":42}
+ok 138 - production checkpoint preserves the complete paused state {"rulesVersion":2,"seed":42}
+  ---
+  duration_ms: 379.044834
+  type: 'test'
+  ...
+# Subtest: production checkpoint preserves the complete paused state {"rulesVersion":3,"seed":7,"world":"field-crossing"}
+ok 139 - production checkpoint preserves the complete paused state {"rulesVersion":3,"seed":7,"world":"field-crossing"}
+  ---
+  duration_ms: 418.129875
+  type: 'test'
+  ...
+# Subtest: production checkpoint preserves the complete paused state {"rulesVersion":4,"seed":7,"world":"freight-depot","difficulty":"relaxed"}
+ok 140 - production checkpoint preserves the complete paused state {"rulesVersion":4,"seed":7,"world":"freight-depot","difficulty":"relaxed"}
+  ---
+  duration_ms: 434.740792
+  type: 'test'
+  ...
+# Subtest: pending offers and reroll history restore without redrafting
+ok 141 - pending offers and reroll history restore without redrafting
+  ---
+  duration_ms: 400.996792
+  type: 'test'
+  ...
+# Subtest: all V4 worlds retain late-run movement, terrain, rewards and inactive pool state
+ok 142 - all V4 worlds retain late-run movement, terrain, rewards and inactive pool state
+  ---
+  duration_ms: 24511.454583
+  type: 'test'
+  ...
+# Subtest: a legal completed flight can round-trip only for durable result recovery
+ok 143 - a legal completed flight can round-trip only for durable result recovery
+  ---
+  duration_ms: 11736.633375
+  type: 'test'
+  ...
+# Subtest: untrusted checkpoint rejection does not mutate the active run
+ok 144 - untrusted checkpoint rejection does not mutate the active run
+  ---
+  duration_ms: 1918.236458
+  type: 'test'
+  ...
+# Subtest: writer refuses mismatched handling settings instead of silently rebinding the active craft
+ok 145 - writer refuses mismatched handling settings instead of silently rebinding the active craft
+  ---
+  duration_ms: 36.382625
+  type: 'test'
+  ...
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 146 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 1.079333
+  type: 'test'
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 147 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 26.148792
+  type: 'test'
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 148 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 37.328875
+  type: 'test'
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 149 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 13.721125
+  type: 'test'
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 150 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 209.750458
+  type: 'test'
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 151 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.392708
+  type: 'test'
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 152 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.061084
+  type: 'test'
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 153 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.108
+  type: 'test'
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 154 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.244
+  type: 'test'
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 155 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 1.512791
+  type: 'test'
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 156 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 0.536333
+  type: 'test'
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 157 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.110833
+  type: 'test'
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 158 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.127375
+  type: 'test'
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 159 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 6.54475
+  type: 'test'
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 160 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 1.045833
+  type: 'test'
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 161 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 0.447208
+  type: 'test'
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 162 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.069583
+  type: 'test'
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 163 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 0.190625
+  type: 'test'
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 164 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.09925
+  type: 'test'
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 165 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.207
+  type: 'test'
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 166 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.104208
+  type: 'test'
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 167 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.030416
+  type: 'test'
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 168 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 0.3935
+  type: 'test'
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 169 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 1.774375
+  type: 'test'
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 170 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 7.007333
+  type: 'test'
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 171 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.084875
+  type: 'test'
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 172 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.087334
+  type: 'test'
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 173 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 15.856125
+  type: 'test'
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 174 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.118417
+  type: 'test'
+  ...
+# Subtest: opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+ok 175 - opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+  ---
+  duration_ms: 75.840584
+  type: 'test'
+  ...
+# Subtest: finished review download captures terminal state instead of an older inspector snapshot
+ok 176 - finished review download captures terminal state instead of an older inspector snapshot
+  ---
+  duration_ms: 6.282042
+  type: 'test'
+  ...
+# Subtest: record retention preserves the current result within the existing aggregate byte budget
+ok 177 - record retention preserves the current result within the existing aggregate byte budget
+  ---
+  duration_ms: 74.32125
+  type: 'test'
+  ...
+# Subtest: Survivor records separate fastest victories, most cleared, failure details and chosen branches
+ok 178 - Survivor records separate fastest victories, most cleared, failure details and chosen branches
+  ---
+  duration_ms: 0.721791
+  type: 'test'
+  ...
+# Subtest: mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+ok 179 - mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+  ---
+  duration_ms: 0.800458
+  type: 'test'
+  ...
+# Subtest: storage failures retain session achievements and recover without dropping a stronger record
+ok 180 - storage failures retain session achievements and recover without dropping a stronger record
+  ---
+  duration_ms: 0.563
+  type: 'test'
+  ...
+# Subtest: record captures result before asynchronous profile access or retry changes the run
+ok 181 - record captures result before asynchronous profile access or retry changes the run
+  ---
+  duration_ms: 0.271167
+  type: 'test'
+  ...
+# Subtest: invalid and review results cannot overwrite records; disposal closes access
+ok 182 - invalid and review results cannot overwrite records; disposal closes access
+  ---
+  duration_ms: 0.410292
+  type: 'test'
+  ...
+# Subtest: actual native preparation adopts the admitted paused state and never launches it
+ok 183 - actual native preparation adopts the admitted paused state and never launches it
+  ---
+  duration_ms: 10.203708
+  type: 'test'
+  ...
+# Subtest: actual native preparation rejects changed appearance before retiring the current renderer or adopting settings
+ok 184 - actual native preparation rejects changed appearance before retiring the current renderer or adopting settings
+  ---
+  duration_ms: 11.025625
+  type: 'test'
+  ...
+# Subtest: native save entry is scoped to player Single Drone and requires retained appearance before adoption
+ok 185 - native save entry is scoped to player Single Drone and requires retained appearance before adoption
+  ---
+  duration_ms: 1.464375
+  type: 'test'
+  ...
+# Subtest: native result ownership reuses one durable journal promise across label refreshes
+ok 186 - native result ownership reuses one durable journal promise across label refreshes
+  ---
+  duration_ms: 0.26675
+  type: 'test'
+  ...
+# Subtest: renderer preparation failure keeps the old run and setup while exposing existing graphics recovery
+ok 187 - renderer preparation failure keeps the old run and setup while exposing existing graphics recovery
+  ---
+  duration_ms: 9.993042
+  type: 'test'
+  ...
+# Subtest: admission hashes real fetched manifest and exact runtime member bytes, bound to the visible build
+ok 188 - admission hashes real fetched manifest and exact runtime member bytes, bound to the visible build
+  ---
+  duration_ms: 16.532375
+  type: 'test'
+  ...
+# Subtest: missing development identity and unavailable storage package remain honestly unavailable
+ok 189 - missing development identity and unavailable storage package remain honestly unavailable
+  ---
+  duration_ms: 2.697583
+  type: 'test'
+  ...
+# Subtest: package mismatch, mixed host bytes, invalid manifest and oversized response all reject
+ok 190 - package mismatch, mixed host bytes, invalid manifest and oversized response all reject
+  ---
+  duration_ms: 25.861916
+  type: 'test'
+  ...
+# Subtest: caller cancellation including a final digest cannot return an admitted identity
+ok 191 - caller cancellation including a final digest cannot return an admitted identity
+  ---
+  duration_ms: 4.262917
+  type: 'test'
+  ...
+# Subtest: the declared verified closure includes every static dependency of state and durable result owners
+ok 192 - the declared verified closure includes every static dependency of state and durable result owners
+  ---
+  duration_ms: 55.989458
+  type: 'test'
+  ...
+# Subtest: separate processes restore production bytes and settle each interrupted result exactly once
+ok 193 - separate processes restore production bytes and settle each interrupted result exactly once
+  ---
+  duration_ms: 5183.434584
+  type: 'test'
+  ...
+# Subtest: saved flight uses explicit replace/restore confirmation, Cancel keeps flight and native Close returns focus
+ok 194 - saved flight uses explicit replace/restore confirmation, Cancel keeps flight and native Close returns focus
+  ---
+  duration_ms: 3.198333
+  type: 'test'
+  ...
+# Subtest: pending result recovery disables replacement and refreshes Ukrainian labels without replaying actions
+ok 195 - pending result recovery disables replacement and refreshes Ukrainian labels without replaying actions
+  ---
+  duration_ms: 0.651833
+  type: 'test'
+  ...
+# Subtest: unavailable package stays recoverable with Check again and never exposes active save actions
+ok 196 - unavailable package stays recoverable with Check again and never exposes active save actions
+  ---
+  duration_ms: 0.571708
+  type: 'test'
+  ...
+# Subtest: busy writes cannot be double submitted or dismissed as cancelled before their result is known
+ok 197 - busy writes cannot be double submitted or dismissed as cancelled before their result is known
+  ---
+  duration_ms: 0.582458
+  type: 'test'
+  ...
+# Subtest: a failed initial terminal journal still exposes result retry without restoring an older position
+ok 198 - a failed initial terminal journal still exposes result retry without restoring an older position
+  ---
+  duration_ms: 0.370625
+  type: 'test'
+  ...
+# Subtest: the Home action participates in controller navigation and returns focus without resuming the paused flight
+ok 199 - the Home action participates in controller navigation and returns focus without resuming the paused flight
+  ---
+  duration_ms: 4.0445
+  type: 'test'
+  ...
+# Subtest: explicit replacement, exact-package admission and reopen retain the previous paused state
+ok 200 - explicit replacement, exact-package admission and reopen retain the previous paused state
+  ---
+  duration_ms: 845.977083
+  type: 'test'
+  ...
+# Subtest: durable completion cannot be replayed or change its previous comparison after reopen
+ok 201 - durable completion cannot be replayed or change its previous comparison after reopen
+  ---
+  duration_ms: 463.587
+  type: 'test'
+  ...
+# Subtest: interruption after journal retains durable ownership and retries after reopen
+ok 202 - interruption after journal retains durable ownership and retries after reopen
+  ---
+  duration_ms: 862.082667
+  type: 'test'
+  ...
+# Subtest: interruption after records retains durable ownership and retries after reopen
+ok 203 - interruption after records retains durable ownership and retries after reopen
+  ---
+  duration_ms: 877.681834
+  type: 'test'
+  ...
+# Subtest: interruption after mastery retains durable ownership and retries after reopen
+ok 204 - interruption after mastery retains durable ownership and retries after reopen
+  ---
+  duration_ms: 841.593375
+  type: 'test'
+  ...
+# Subtest: storage rejection and lost writer never mutate the active flight or replace the old slot
+ok 205 - storage rejection and lost writer never mutate the active flight or replace the old slot
+  ---
+  duration_ms: 218.024791
+  type: 'test'
+  ...
+# Subtest: a full records profile can finish, recover after its receipt commits, and save the next flight
+ok 206 - a full records profile can finish, recover after its receipt commits, and save the next flight
+  ---
+  duration_ms: 1043.282083
+  type: 'test'
+  ...
+# Subtest: receipt and original schema commit atomically, deduplicate after reopen, and preserve old readers
+ok 207 - receipt and original schema commit atomically, deduplicate after reopen, and preserve old readers
+  ---
+  duration_ms: 6.751959
+  type: 'test'
+  ...
+# Subtest: simultaneous connections serialize duplicate ownership without double update
+ok 208 - simultaneous connections serialize duplicate ownership without double update
+  ---
+  duration_ms: 1.11
+  type: 'test'
+  ...
+# Subtest: abort after queued put 1 rolls back both receipt and profile
+ok 209 - abort after queued put 1 rolls back both receipt and profile
+  ---
+  duration_ms: 1.218458
+  type: 'test'
+  ...
+# Subtest: abort after queued put 2 rolls back both receipt and profile
+ok 210 - abort after queued put 2 rolls back both receipt and profile
+  ---
+  duration_ms: 1.168584
+  type: 'test'
+  ...
+# Subtest: cancellation, validation failure and a lost writer preserve both prior values
+ok 211 - cancellation, validation failure and a lost writer preserve both prior values
+  ---
+  duration_ms: 1.259792
+  type: 'test'
+  ...
+# Subtest: main-pages removes only a registered redundant original and retains offline fallback ownership
+ok 212 - main-pages removes only a registered redundant original and retains offline fallback ownership
+  ---
+  duration_ms: 3.644708
+  type: 'test'
+  ...
+# Subtest: complete releases keep authored originals and original download groups untouched
+ok 213 - complete releases keep authored originals and original download groups untouched
+  ---
+  duration_ms: 0.200916
+  type: 'test'
+  ...
+# Subtest: other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals
+ok 214 - other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals
+  ---
+  duration_ms: 1.718
+  type: 'test'
+  ...
+# Subtest: all native owners must retain an exact fallback before a shared original may be omitted
+ok 215 - all native owners must retain an exact fallback before a shared original may be omitted
+  ---
+  duration_ms: 0.280375
+  type: 'test'
+  ...
+# Subtest: emitted source catalog parsing admits static metadata and never evaluates executable expressions
+ok 216 - emitted source catalog parsing admits static metadata and never evaluates executable expressions
+  ---
+  duration_ms: 0.748417
+  type: 'test'
+  ...
+# Subtest: retained authoring registers cannot lose their original without the shared native reader
+ok 217 - retained authoring registers cannot lose their original without the shared native reader
+  ---
+  duration_ms: 0.421542
+  type: 'test'
+  ...
+# Subtest: an image pin cannot redirect the original identity or use the omitted original as fallback
+ok 218 - an image pin cannot redirect the original identity or use the omitted original as fallback
+  ---
+  duration_ms: 0.293625
+  type: 'test'
+  ...
+# Subtest: omitted-original callback reports only actual admitted removals and is absent for complete releases
+ok 219 - omitted-original callback reports only actual admitted removals and is absent for complete releases
+  ---
+  duration_ms: 0.30075
+  type: 'test'
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 220 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 87.318791
+  type: 'test'
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 221 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 85.891667
+  type: 'test'
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 222 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 87.466625
+  type: 'test'
+  ...
+# Subtest: actual native menu imports and styles remain in each mode offline closure
+ok 223 - actual native menu imports and styles remain in each mode offline closure
+  ---
+  duration_ms: 157.143333
+  type: 'test'
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 224 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 29.13175
+  type: 'test'
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 225 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 61.8675
+  type: 'test'
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 226 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 84.203291
+  type: 'test'
+  ...
+# Subtest: Solo startup graph retains boot styles and production assets while mode hosts stay separate
+ok 227 - Solo startup graph retains boot styles and production assets while mode hosts stay separate
+  ---
+  duration_ms: 0.889417
+  type: 'test'
+  ...
+# Subtest: catalogue references never pull selected chapter or soundtrack bytes back into core
+ok 228 - catalogue references never pull selected chapter or soundtrack bytes back into core
+  ---
+  duration_ms: 0.257958
+  type: 'test'
+  ...
+# Subtest: public community entries own their shared loader offline without opting into creator tools or company artwork
+ok 229 - public community entries own their shared loader offline without opting into creator tools or company artwork
+  ---
+  duration_ms: 0.535709
+  type: 'test'
+  ...
+# Subtest: decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+ok 230 - decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+  ---
+  duration_ms: 0.455542
+  type: 'test'
+  ...
+# Subtest: effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+ok 231 - effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+  ---
+  duration_ms: 0.111083
+  type: 'test'
+  ...
+# Subtest: radio redistribution metadata stays core while source recordings remain selectable
+ok 232 - radio redistribution metadata stays core while source recordings remain selectable
+  ---
+  duration_ms: 0.098625
+  type: 'test'
+  ...
+# Subtest: Riy operation keeps its dynamic runtime and authored package graph in offline core
+ok 233 - Riy operation keeps its dynamic runtime and authored package graph in offline core
+  ---
+  duration_ms: 47.949542
+  type: 'test'
+  ...
+# Subtest: six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+ok 234 - six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+  ---
+  duration_ms: 43.754208
+  type: 'test'
+  ...
+# Subtest: startup guards follow the static entry graph without requiring tools, media or another mode
+ok 235 - startup guards follow the static entry graph without requiring tools, media or another mode
+  ---
+  duration_ms: 4.41975
+  type: 'test'
+  ...
+# Subtest: nested mode guards resolve local imports and terminate cycles
+ok 236 - nested mode guards resolve local imports and terminate cycles
+  ---
+  duration_ms: 0.396708
+  type: 'test'
+  ...
+1..236
+# tests 242
+# suites 0
+# pass 242
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 102483.222875

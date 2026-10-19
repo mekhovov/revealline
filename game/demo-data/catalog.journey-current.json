@@ -207,6 +207,9 @@
           "durationSeconds": 46.583333333333336,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-1d64e506d5980412.node22131-x64.replay.json"
       ]
     },
     {
@@ -301,6 +304,9 @@
           "durationSeconds": 14.625,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-11133b7849422018.node22131-x64.replay.json"
       ]
     },
     {
@@ -395,6 +401,9 @@
           "durationSeconds": 57.71666666666667,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-5678d483da29e23a.node22131-x64.replay.json"
       ]
     },
     {
@@ -818,6 +827,9 @@
           "durationSeconds": 68.55833333333334,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-7b3a3b7248f976ce.node22131-x64.replay.json"
       ]
     },
     {
@@ -865,6 +877,9 @@
           "durationSeconds": 14.541666666666666,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-a06599f68a914d16.node22131-x64.replay.json"
       ]
     },
     {
@@ -912,6 +927,9 @@
           "durationSeconds": 12.583333333333334,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-9dddcc84f7d60f65.node22131-x64.replay.json"
       ]
     },
     {
@@ -959,6 +977,9 @@
           "durationSeconds": 65.075,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-9aa30fcd0b3c8281.node22131-x64.replay.json"
       ]
     },
     {
@@ -1006,6 +1027,9 @@
           "durationSeconds": 36.6,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-f1f91fa91991d51b.node22131-x64.replay.json"
       ]
     },
     {
@@ -1053,6 +1077,9 @@
           "durationSeconds": 56.13333333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-dd5c4beb661682f0.node22131-x64.replay.json"
       ]
     },
     {
@@ -1100,6 +1127,9 @@
           "durationSeconds": 42.5,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-bbd69e7ccb5526d9.node22131-x64.replay.json"
       ]
     },
     {
@@ -1194,6 +1224,9 @@
           "durationSeconds": 49.025,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-0eafd68dc70ee8a8.node22131-x64.replay.json"
       ]
     },
     {
@@ -1241,6 +1274,9 @@
           "durationSeconds": 39.00833333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-821bba1882552b03.node22131-x64.replay.json"
       ]
     },
     {
@@ -1288,6 +1324,9 @@
           "durationSeconds": 51.18333333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-bbe0c5897adb725d.node22131-x64.replay.json"
       ]
     },
     {
@@ -1335,6 +1374,9 @@
           "durationSeconds": 23.341666666666665,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-dc59e6e76ae9df8b.node22131-x64.replay.json"
       ]
     },
     {
@@ -1382,6 +1424,9 @@
           "durationSeconds": 41.916666666666664,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-08bfbce48d50a5c0.node22131-x64.replay.json"
       ]
     },
     {
@@ -1429,6 +1474,9 @@
           "durationSeconds": 63.00833333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-614567e280b3c780.node22131-x64.replay.json"
       ]
     },
     {
@@ -1476,6 +1524,9 @@
           "durationSeconds": 33.49166666666667,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-2df382183e2f00d6.node22131-x64.replay.json"
       ]
     },
     {
@@ -1523,6 +1574,9 @@
           "durationSeconds": 32.666666666666664,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-7e1cae99ddeff5f9.node22131-x64.replay.json"
       ]
     },
     {
@@ -1617,6 +1671,9 @@
           "durationSeconds": 87.275,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-10d16d94f297eb0c.node22131-x64.replay.json"
       ]
     },
     {
@@ -1664,6 +1721,9 @@
           "durationSeconds": 53.25833333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-8f766bd89a83be7e.node22131-x64.replay.json"
       ]
     },
     {
@@ -1702,6 +1762,9 @@
           "durationSeconds": 23.433333333333334,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-7ff2d0d3f752cf2b.node22131-x64.replay.json"
       ]
     },
     {
@@ -1964,6 +2027,9 @@
           "durationSeconds": 50.333333333333336,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-b03217288edf527a.node22131-x64.replay.json"
       ]
     },
     {
@@ -2011,6 +2077,9 @@
           "durationSeconds": 34.141666666666666,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-72dfbcf032b5ad25.node22131-x64.replay.json"
       ]
     },
     {
@@ -2152,6 +2221,9 @@
           "durationSeconds": 46.95,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-4301d76f85efb491.node22131-x64.replay.json"
       ]
     },
     {
@@ -2199,6 +2271,9 @@
           "durationSeconds": 28.991666666666667,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-20e853301cb3ac52.node22131-x64.replay.json"
       ]
     },
     {
@@ -2246,6 +2321,9 @@
           "durationSeconds": 30.383333333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-11ac088d9288363c.node22131-x64.replay.json"
       ]
     },
     {
@@ -2293,6 +2371,9 @@
           "durationSeconds": 90.06666666666666,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-a99c5711c5c1839d.node22131-x64.replay.json"
       ]
     },
     {
@@ -2387,6 +2468,9 @@
           "durationSeconds": 82.91666666666667,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-8812ad38e87d1a3e.node22131-x64.replay.json"
       ]
     },
     {
@@ -2434,6 +2518,9 @@
           "durationSeconds": 66.35,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-2e72fe1d788ce165.node22131-x64.replay.json"
       ]
     },
     {
@@ -2481,6 +2568,9 @@
           "durationSeconds": 66.06666666666666,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-e32d403f3f492be1.node22131-x64.replay.json"
       ]
     },
     {
@@ -2528,6 +2618,9 @@
           "durationSeconds": 86.575,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-205560abb7070791.node22131-x64.replay.json"
       ]
     },
     {
@@ -2622,6 +2715,9 @@
           "durationSeconds": 85.75,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-d5027ee8cc9ab251.node22131-x64.replay.json"
       ]
     },
     {
@@ -2669,6 +2765,9 @@
           "durationSeconds": 64.125,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-d4d010be74f4ff34.node22131-x64.replay.json"
       ]
     },
     {
@@ -2716,6 +2815,9 @@
           "durationSeconds": 57.24166666666667,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-99b7fe8c6c02e8f5.node22131-x64.replay.json"
       ]
     },
     {
@@ -2763,6 +2865,9 @@
           "durationSeconds": 66.81666666666666,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-86e49440668d32eb.node22131-x64.replay.json"
       ]
     },
     {
@@ -2882,6 +2987,9 @@
           "durationSeconds": 88.33333333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-fe13ae38e227f3d4.node22131-x64.replay.json"
       ]
     },
     {
@@ -2976,6 +3084,9 @@
           "durationSeconds": 60.3,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-b8a409de0207c16a.node22131-x64.replay.json"
       ]
     },
     {
@@ -3023,6 +3134,9 @@
           "durationSeconds": 76.975,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-9a05e4f32fe3e8c3.node22131-x64.replay.json"
       ]
     },
     {
@@ -3070,6 +3184,9 @@
           "durationSeconds": 58.025,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-6066cc64f5796336.node22131-x64.replay.json"
       ]
     },
     {
@@ -3117,6 +3234,9 @@
           "durationSeconds": 84.88333333333334,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-f420d6e14fbac1ed.node22131-x64.replay.json"
       ]
     },
     {
@@ -3164,6 +3284,9 @@
           "durationSeconds": 76.425,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-45ff8eaac10d989c.node22131-x64.replay.json"
       ]
     },
     {
@@ -3426,6 +3549,9 @@
           "durationSeconds": 91.23333333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-512b66c5e6a7ca41.node22131-x64.replay.json"
       ]
     },
     {
@@ -3520,6 +3646,9 @@
           "durationSeconds": 70.99166666666666,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-56165d770d83ee1e.node22131-x64.replay.json"
       ]
     },
     {
@@ -3614,6 +3743,9 @@
           "durationSeconds": 97.03333333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-a13b85ddde0f9663.node22131-x64.replay.json"
       ]
     },
     {
@@ -3661,6 +3793,9 @@
           "durationSeconds": 93.75833333333334,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-22874d7656ce6c3e.node22131-x64.replay.json"
       ]
     },
     {
@@ -3708,6 +3843,9 @@
           "durationSeconds": 91.3,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-dd80d3e78efbf350.node22131-x64.replay.json"
       ]
     },
     {
@@ -3755,6 +3893,9 @@
           "durationSeconds": 64.40833333333333,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-c258ed926a320cc2.node22131-x64.replay.json"
       ]
     },
     {
@@ -3896,6 +4037,9 @@
           "durationSeconds": 54.3,
           "turnPolicy": "immediate"
         }
+      ],
+      "replayVariants": [
+        "./demo-data/solo-qualified-cd19eddd5888061f.node22131-x64.replay.json"
       ]
     },
     {

@@ -1,0 +1,31 @@
+{
+  "format": "SoloDemoCoverageV1",
+  "required": 240,
+  "groups": {
+    "base": 12,
+    "current": 77,
+    "archive": 12,
+    "journey-current": 91,
+    "journey-archive": 48
+  },
+  "entries": [
+    {
+      "id": "solo-qualified-478808a96f4fbf5e",
+      "levelId": "signal-08",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-08",
+      "catalogGroup": "base",
+      "qualified": true,
+      "attempts": [],
+      "outcome": "won",
+      "ticks": 7322,
+      "seconds": 61.016666666666666,
+      "captures": 12,
+      "capturedCells": 1183,
+      "coverage": 0.7632258064516129,
+      "progressEvents": 0,
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "diagnosticCheckpoints": 12
+    }
+  ],
+  "passed": false
+}

@@ -1,0 +1,229 @@
+{
+  "format": "SharedDemoNativeRuntimePreservationV1",
+  "complete": true,
+  "started": "20261019T103628Z",
+  "finished": "2026-10-19T10:36:37.809932+00:00",
+  "elapsedSeconds": 9.604830749998655,
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac",
+  "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-node22131-darwin-x64-20261019T103628Z-fc6aef2f",
+  "externalParent": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "device": 905969668,
+    "inode": 37530202,
+    "uid": 502,
+    "mode": 16832,
+    "size": 16384,
+    "mtimeNs": 1792402931354835400
+  },
+  "files": 3,
+  "directories": 2,
+  "fileBytes": 113997825,
+  "knownBinarySHA256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+  "sourceBefore": [
+    {
+      "path": ".",
+      "kind": "directory",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264115,
+        "uid": 502,
+        "mode": 16832,
+        "size": 160,
+        "mtimeNs": 1792402526350494611
+      }
+    },
+    {
+      "path": "SHASUMS256.txt",
+      "kind": "file",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264116,
+        "uid": 502,
+        "mode": 33188,
+        "size": 3777,
+        "mtimeNs": 1792401763358635956
+      },
+      "sha256": "308707f67db68e671979d8849f997f1bd9c7111b5d78ec1e49957dedb44d450f"
+    },
+    {
+      "path": "bin",
+      "kind": "directory",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264163,
+        "uid": 502,
+        "mode": 16832,
+        "size": 96,
+        "mtimeNs": 1792401804618529729
+      }
+    },
+    {
+      "path": "bin/node",
+      "kind": "file",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264164,
+        "uid": 502,
+        "mode": 33216,
+        "size": 113991760,
+        "mtimeNs": 1792401806466958053
+      },
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd"
+    },
+    {
+      "path": "provenance.json",
+      "kind": "file",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264546,
+        "uid": 502,
+        "mode": 33188,
+        "size": 2288,
+        "mtimeNs": 1792401818212767534
+      },
+      "sha256": "a20eba8e2811a6b32dba8edd6bf4063010cfd8aa61d84161906a21eccdc6e7c4"
+    }
+  ],
+  "sourceAfter": [
+    {
+      "path": ".",
+      "kind": "directory",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264115,
+        "uid": 502,
+        "mode": 16832,
+        "size": 160,
+        "mtimeNs": 1792402526350494611
+      }
+    },
+    {
+      "path": "SHASUMS256.txt",
+      "kind": "file",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264116,
+        "uid": 502,
+        "mode": 33188,
+        "size": 3777,
+        "mtimeNs": 1792401763358635956
+      },
+      "sha256": "308707f67db68e671979d8849f997f1bd9c7111b5d78ec1e49957dedb44d450f"
+    },
+    {
+      "path": "bin",
+      "kind": "directory",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264163,
+        "uid": 502,
+        "mode": 16832,
+        "size": 96,
+        "mtimeNs": 1792401804618529729
+      }
+    },
+    {
+      "path": "bin/node",
+      "kind": "file",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264164,
+        "uid": 502,
+        "mode": 33216,
+        "size": 113991760,
+        "mtimeNs": 1792401806466958053
+      },
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd"
+    },
+    {
+      "path": "provenance.json",
+      "kind": "file",
+      "identity": {
+        "device": 16777235,
+        "inode": 148264546,
+        "uid": 502,
+        "mode": 33188,
+        "size": 2288,
+        "mtimeNs": 1792401818212767534
+      },
+      "sha256": "a20eba8e2811a6b32dba8edd6bf4063010cfd8aa61d84161906a21eccdc6e7c4"
+    }
+  ],
+  "destinationInventory": [
+    {
+      "path": ".",
+      "kind": "directory",
+      "identity": {
+        "device": 905969668,
+        "inode": 37577046,
+        "uid": 502,
+        "mode": 16832,
+        "size": 16384,
+        "mtimeNs": 1792402526350494600
+      }
+    },
+    {
+      "path": "SHASUMS256.txt",
+      "kind": "file",
+      "identity": {
+        "device": 905969668,
+        "inode": 37577047,
+        "uid": 502,
+        "mode": 33188,
+        "size": 3777,
+        "mtimeNs": 1792401763358635900
+      },
+      "sha256": "308707f67db68e671979d8849f997f1bd9c7111b5d78ec1e49957dedb44d450f"
+    },
+    {
+      "path": "bin",
+      "kind": "directory",
+      "identity": {
+        "device": 905969668,
+        "inode": 37577048,
+        "uid": 502,
+        "mode": 16832,
+        "size": 16384,
+        "mtimeNs": 1792401804618529700
+      }
+    },
+    {
+      "path": "bin/node",
+      "kind": "file",
+      "identity": {
+        "device": 905969668,
+        "inode": 37577049,
+        "uid": 502,
+        "mode": 33216,
+        "size": 113991760,
+        "mtimeNs": 1792401806466958000
+      },
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd"
+    },
+    {
+      "path": "provenance.json",
+      "kind": "file",
+      "identity": {
+        "device": 905969668,
+        "inode": 37577050,
+        "uid": 502,
+        "mode": 33188,
+        "size": 2288,
+        "mtimeNs": 1792401818212767500
+      },
+      "sha256": "a20eba8e2811a6b32dba8edd6bf4063010cfd8aa61d84161906a21eccdc6e7c4"
+    }
+  ],
+  "everyPathKindModeSizeAndSHA256Matches": true,
+  "sourceUnchanged": true,
+  "localRemoved": false,
+  "limits": [
+    "Copy-only preservation; the source runtime may still be in active use. No deletion authorization is consumed.",
+    "File mtimes were requested at original precision and both observed inventories are retained; different filesystem timestamp precision is not byte-integrity evidence.",
+    "No architecture execution or Linux proof is added by this storage copy."
+  ],
+  "externalProof": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-node22131-darwin-x64-20261019T103628Z-fc6aef2f.preservation.json",
+    "sha256": "57f629bac22b35cab69a5ac24ac25664ad9efafb68d666881d635192dcdd2fc0"
+  }
+}

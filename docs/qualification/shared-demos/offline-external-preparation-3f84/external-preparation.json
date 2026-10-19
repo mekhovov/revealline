@@ -1,0 +1,52 @@
+{
+  "format": "ExternalOfflineObserverPreparationV1",
+  "preparedAt": "2026-10-19T10:33:44.215521+00:00",
+  "browserLaunched": false,
+  "complete": true,
+  "checks": {
+    "pureStorageGuards": 7,
+    "failureSafeFinalizationHandlers": 2,
+    "actualInstallationGameplayPersistenceBodyByteIdentical": true,
+    "nodeSyntax": 2,
+    "pythonSyntax": 1
+  },
+  "historicalMeasurement": {
+    "source": "docs/qualification/shared-demos/offline-full-core-emitted-693947ed1-public-api.json",
+    "coreBytes": 70486383,
+    "selectedBytes": 450460300,
+    "total": 520946683,
+    "old500MiBCap": 524288000
+  },
+  "freshPolicy": "Fresh audit coreDescriptors+selectedFiles total is recomputed by supervisor and by emitted worker/catalog input admission; body cap=ceil((total+64MiB)/16MiB)*16MiB, ceiling1GiB. External reservation3xcap+256MiB+512MiB; local floor200MiB. No product package limits change.",
+  "files": {
+    ".cache/demo-offline-browser/full-core-probe.mjs": {
+      "sha256": "a9ba68eb1b607942a75922fe3b6e4bc879b9018e813a0f4772bceaa30ae594b1",
+      "bytes": 35232
+    },
+    ".cache/demo-offline-browser/full-core-external-probe.mjs": {
+      "sha256": "852994a4724add5d48e17c32f34e5e2d56c94f071a1f83b9f42b851278c3e402",
+      "bytes": 37288
+    },
+    ".cache/demo-offline-browser/external-storage.mjs": {
+      "sha256": "2fce78636e6856e4bd0d7ba06eadc9cf66f4d4d1e668e777d89237de3a7612ce",
+      "bytes": 3593
+    },
+    ".cache/demo-offline-browser/supervise-external.py": {
+      "sha256": "a3790898bbfb611c5199a5774fae8f4e4048bb95b3f0082b303fb2cb42c2d0b5",
+      "bytes": 12927
+    },
+    ".cache/demo-offline-browser/test-external-storage.mjs": {
+      "sha256": "8cbb6d0ff52d94ba01cd21723e3c193c64cf78fdbf74f30f8361f7e403c6674e",
+      "bytes": 2115
+    },
+    ".cache/demo-offline-browser/external-storage-guards.tap.txt": {
+      "sha256": "ccf99d3930750ead9f895fc25db0bec71fb14e6a79d5d8772e84f2091c86d956",
+      "bytes": 1496
+    }
+  },
+  "limitations": [
+    "Preparation only. No fresh capture or actual browser/SMB profile acceptance exists yet.",
+    "Canonical emitted capture stays internal; only browser profile/download/temp use a fresh owned external child.",
+    "Synchronous SMB I/O can exceed polled timing bounds; late final completion fails. Exact owned process cleanup remains separately checked."
+  ]
+}

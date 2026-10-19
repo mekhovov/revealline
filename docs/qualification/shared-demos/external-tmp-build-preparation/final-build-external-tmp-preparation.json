@@ -1,0 +1,96 @@
+{
+  "format": "SharedDemoExternalTmpBuildPreparationV1",
+  "preparedAt": "2026-10-19T10:34:42.465064+00:00",
+  "prepared": true,
+  "buildLaunched": false,
+  "externalChildCreated": false,
+  "files": [
+    {
+      "path": ".cache/run-final-build-external-tmp.mjs",
+      "bytes": 11827,
+      "sha256": "aec32600eb10623ff3c0a25eec6f4d0ccb2db43c50cc5026511048205bb32533"
+    },
+    {
+      "path": ".cache/final-build-external-tmp.mjs",
+      "bytes": 4315,
+      "sha256": "76d87ce26f2ed9c5873e3ee75c9f9ae296aa8fc6c2485ed39c4aa0d16df7480f"
+    },
+    {
+      "path": ".cache/test-final-build-external-tmp.mjs",
+      "bytes": 5519,
+      "sha256": "96f13c78a0d798d880db85e370a1c209a2b058ad06d915a267f4ad06c3f0b7c1"
+    },
+    {
+      "path": ".cache/final-build-external-tmp-guards.tap.txt",
+      "bytes": 1952,
+      "sha256": "3dc2c21fd969b647daff49579eba0544563b12a592767565d16636d0672a5d66"
+    },
+    {
+      "path": ".cache/run-final-build-current.mjs",
+      "bytes": 10929,
+      "sha256": "dfbcb74bbff73b4a50af80e35cbbec8e99da7748abb41d83d55ad8d592f4c56d"
+    },
+    {
+      "path": ".cache/final-build-scratch.mjs",
+      "bytes": 4580,
+      "sha256": "1c8c537e0e9c68a57a5d568fccd641b6c26a7c5458115755c2125afd4546d6e7"
+    },
+    {
+      "path": ".cache/final-build-wrapper-support.mjs",
+      "bytes": 1742,
+      "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e"
+    }
+  ],
+  "storage": {
+    "externalParent": {
+      "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+      "device": 905969668,
+      "inode": 37530202,
+      "uid": 502,
+      "mode": "0o700",
+      "ordinaryDirectory": true,
+      "realPath": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+      "availableBytes": 45056000000
+    },
+    "source": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos",
+      "device": 16777235,
+      "inode": 146196130,
+      "uid": 502,
+      "mode": "0o755",
+      "ordinaryDirectory": true,
+      "realPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos",
+      "availableBytes": 322195456
+    },
+    "placement": "Canonical emitted capture stays internal under .cache; only TMPDIR/TMP/TEMP use one fresh private external child.",
+    "admission": "Exact existing parent path/UID/inode, freshly observed device; every ancestor and child must be real directories. Existing children are refused; no recursive creation, replacement or removal."
+  },
+  "limits": {
+    "sourceAndTmpFloorBytes": 209715200,
+    "retainedLogBytesPerStage": 2097152,
+    "stageTimeoutMs": 1200000
+  },
+  "validation": {
+    "guardTests": 9,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 41.221083,
+    "wrapperSyntaxCheck": "passed",
+    "independentReview": {
+      "agent": "acceptance_review",
+      "result": "No new actionable issue; exact ownership, internal capture admission, unchanged floors/budgets and late-monitor guards verified read-only."
+    }
+  },
+  "pending": [
+    "Root must supply the new clean committed HEAD, base and source declaration.",
+    "Keep the exact x64 runtime until webkit_review releases its CLI use and root authorizes preservation/retirement.",
+    "Reobserve storage and require enough internal headroom for the complete capture plus evidence above the unchanged floor.",
+    "No build or browser qualification is credited by this preparation."
+  ],
+  "limitations": [
+    "Original stage-close/process-group stop supervision is retained; this is not an exact-process-cleanup proof.",
+    "Synchronous external filesystem calls are not hard-preemptive.",
+    "Temporary child remains retained; no automatic cleanup is introduced."
+  ]
+}

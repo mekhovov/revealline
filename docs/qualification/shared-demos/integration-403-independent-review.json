@@ -1,0 +1,104 @@
+{
+  "format": "SharedDemoScopedIntegrationIndependentReviewV1",
+  "reviewedAt": "2026-10-19T09:49:38.609831+00:00",
+  "complete": true,
+  "findings": [],
+  "sourceReceipt": {
+    "path": "docs/qualification/shared-demos/integration-403-20261019T113958.json",
+    "sha256": "787559f430814cbfee74fb95ccee958ec7f6d613912d7f3074aff6cd7f986bd3",
+    "bytes": 116372
+  },
+  "retentionReceipt": {
+    "path": "docs/qualification/shared-demos/integration-403-20261019T113958-retention.json",
+    "sha256": "bc43f3c54aadff5ea238ae7c248b6d4f5d2140c27bf2580b36c622b0f3d76929",
+    "bytes": 1727
+  },
+  "tap": {
+    "path": "docs/qualification/shared-demos/integration-403-20261019T113958.tap.txt",
+    "sha256": "c4fc5fd9266968ba15f35ee70973f6413464df32aa26b950f0bf7dd80179b3c2",
+    "bytes": 58736
+  },
+  "wrapper": {
+    "path": "docs/qualification/shared-demos/integration-403-20261019T113958.py.txt",
+    "sha256": "121dbc105c5d40f254c093d4b0efb469574d53dda9da2db00c62812208794018",
+    "bytes": 9329
+  },
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "runtime": {
+    "sha256": "64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa",
+    "files": 10011,
+    "bytes": 404639350
+  },
+  "buildInputs": {
+    "sha256": "b2a70eb2815b4b64acf0bf9d341ddab7044fa61ebed7f1b8a328d68f5d4e7634",
+    "files": 9408,
+    "bytes": 348406839
+  },
+  "environment": {
+    "nodeVersion": "v22.22.2",
+    "platform": "darwin",
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "sha256": "5c899797c4eb8f1db5563eea56538342ddb3e9276ee1b04a5a1f0f1023d2b011",
+      "bytes": 112989184
+    }
+  },
+  "stats": {
+    "tests": 242,
+    "pass": 242,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "topLevelPasses": 236,
+  "nestedPasses": 6,
+  "testFiles": [
+    "game/test/offline.test.mjs",
+    "game/test/overflight-checkpoint.test.mjs",
+    "game/test/overflight-host.test.mjs",
+    "game/test/overflight-records.test.mjs",
+    "game/test/overflight-suspend-host.test.mjs",
+    "game/test/overflight-suspend-package.test.mjs",
+    "game/test/overflight-suspend-process.test.mjs",
+    "game/test/overflight-suspend-view.test.mjs",
+    "game/test/overflight-suspend.test.mjs",
+    "game/test/profile-storage-receipts.test.mjs",
+    "scripts/test-offline-startup.mjs",
+    "game/test/demo-survival-fresh.test.mjs",
+    "game/test/demo-survival.test.mjs",
+    "game/test/demo-native-host.test.mjs",
+    "game/test/demo-back-host.test.mjs",
+    "game/test/demo-shared.test.mjs",
+    "game/test/offline-art-fallback.test.mjs",
+    "game/test/offline-navigation-recovery.test.mjs",
+    "scripts/test-offline-core-closure.mjs",
+    "scripts/test-main-pages-source-originals.mjs"
+  ],
+  "boundHelperCount": 100,
+  "normalExit": 0,
+  "elapsedSeconds": 105.50697879200015,
+  "bindingsStable": true,
+  "retainedBytesMatchOriginals": true,
+  "finiteLogBytes": 58736,
+  "streamsDrained": true,
+  "observedOwnedProcesses": 30,
+  "ownedCleanupVerified": true,
+  "readOnlyCurrentIdentityMatchesRemaining": 0,
+  "cleanupSignals": 0,
+  "fixtureDirectoryEmpty": true,
+  "localStorage": {
+    "freeFloorBytes": 209715200,
+    "allocationCapBytes": 33554432,
+    "freeBeforeBytes": 264810496,
+    "minimumObservedFreeBytes": 247701504,
+    "maximumObservedFixtureBytes": 3760128,
+    "freeAfterBytes": 255246336,
+    "tmpEntriesAfter": 0
+  },
+  "limits": [
+    "Audit of existing 20-file execution only; no tests, build or browser rerun.",
+    "Runtime snapshot includes the three pending qualified variants; it precedes the two proposed reviewed variants and is not a hosted Linux claim.",
+    "The separately failing reviewed-recording admission remains preserved and is not covered by this 242-pass result."
+  ]
+}

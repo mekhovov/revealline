@@ -1,0 +1,602 @@
+{
+  "format": "SurvivalNativeCaptureSupervisionV1",
+  "complete": true,
+  "started": "2026-10-19T10:05:01.084913+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+    ".cache/capture-survival-node22131-x64.mjs",
+    "--run=approved",
+    "--head=3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "--fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3",
+    "--report=.cache/survival-node22131-x64-capture-3f84.json"
+  ],
+  "timeoutSeconds": 600,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21",
+  "before": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3",
+      "files": 166,
+      "bytes": 13259406
+    },
+    "helpers": {
+      ".cache/capture-survival-node22131-x64.mjs": {
+        "sha256": "b08def815507bf231b53de3fd4bf908858c21c35a7d68e2af7c0deefd09f31d8",
+        "bytes": 8525
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-survival.test.mjs": {
+        "sha256": "16d8aae7b72753b97479be5cf75a134ba7ec8ab7015b40fe4426c399e7d4fdf9",
+        "bytes": 15195
+      },
+      "game/data-json.mjs": {
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+        "bytes": 5594
+      },
+      "game/demo-preparation.mjs": {
+        "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+        "bytes": 3500
+      },
+      "game/demo-runtime.mjs": {
+        "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+        "bytes": 987
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "eddfecc206fcc0a60af32f9e2514d73e6e1a6d58e9d2338acdf1fd4a4174e047",
+      "bytes": 10998
+    }
+  },
+  "limitations": [
+    "Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 660 seconds.",
+    "Read-only installed macOS x64 Node22.13.1 observation under Rosetta; not Linux proof. Completion may include strict replay rejections."
+  ],
+  "minimumFreeBytes": 333533184,
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 25,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 96672,
+        "ppid": 96649,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:05:01 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T10:05:01.133543+00:00"
+      },
+      {
+        "pid": 97161,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:05:15 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/field-crossing-broken-crossroads.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:05:15.285001+00:00"
+      },
+      {
+        "pid": 97438,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:05:40 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/field-crossing-shelterbelt-gaps.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:05:40.282007+00:00"
+      },
+      {
+        "pid": 97928,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:06:09 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/field-crossing-supply-orchard-edge.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:06:09.272630+00:00"
+      },
+      {
+        "pid": 98585,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:06:37 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/freight-depot-shunting-yard.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:06:37.455893+00:00"
+      },
+      {
+        "pid": 98585,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:06:37 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:06:48.920570+00:00"
+      },
+      {
+        "pid": 98863,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:07:05 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/freight-depot-loading-loop.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:07:05.429185+00:00"
+      },
+      {
+        "pid": 99176,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:07:36 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/freight-depot-dispatch-junction.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:07:36.538285+00:00"
+      },
+      {
+        "pid": 99475,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:08:05 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/relay-ruins-antenna-court.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:08:05.417235+00:00"
+      },
+      {
+        "pid": 99475,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:08:05 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:08:17.219188+00:00"
+      },
+      {
+        "pid": 99894,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:08:36 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/relay-ruins-split-compound.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:08:36.253925+00:00"
+      },
+      {
+        "pid": 540,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:09:10 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/relay-ruins-receiver-gardens.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:09:10.494287+00:00"
+      },
+      {
+        "pid": 1016,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:09:38 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/river-port-pump-apron.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:09:39.118252+00:00"
+      },
+      {
+        "pid": 1016,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:09:38 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:09:50.592523+00:00"
+      },
+      {
+        "pid": 1235,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:10:06 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/river-port-twin-docks.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:10:06.490992+00:00"
+      },
+      {
+        "pid": 1436,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:10:38 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/river-port-floodgate-yard.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:10:38.401738+00:00"
+      },
+      {
+        "pid": 1634,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:11:07 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/chalk-quarry-survey-basin.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:11:07.968204+00:00"
+      },
+      {
+        "pid": 1857,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:11:33 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/chalk-quarry-haul-switchbacks.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:11:33.506709+00:00"
+      },
+      {
+        "pid": 2102,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:12:02 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/chalk-quarry-reclaimer-court.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:12:03.014241+00:00"
+      },
+      {
+        "pid": 2355,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:12:32 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/orchard-strongpoint-harvest-clearing.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:12:32.985149+00:00"
+      },
+      {
+        "pid": 2355,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:12:32 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:12:44.961358+00:00"
+      },
+      {
+        "pid": 2839,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:13:02 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/orchard-strongpoint-irrigation-courts.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:13:02.238136+00:00"
+      },
+      {
+        "pid": 2839,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:13:02 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:13:16.876375+00:00"
+      },
+      {
+        "pid": 3134,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:13:37 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-survival-node22131-x64.mjs --mode=verify-child --candidate=.cache/survival-node22131-x64-capture-3f84-candidates/orchard-strongpoint-glasshouse-ruins.node22131-x64.replay.json",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:13:38.127473+00:00"
+      },
+      {
+        "pid": 3336,
+        "ppid": 96672,
+        "pgid": 96672,
+        "uid": 502,
+        "started": "Mon Oct 19 12:13:57 2026",
+        "argv": "/usr/bin/arch -arm64 /usr/bin/git rev-parse HEAD",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          96672,
+          "Mon Oct 19 12:05:01 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/capture-survival-node22131-x64.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3 --report=.cache/survival-node22131-x64-capture-3f84.json"
+        ],
+        "observedAt": "2026-10-19T10:13:57.351174+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/survival-node22131-x64-capture-3f84.log",
+    "byteLimit": 1048576,
+    "totalBytes": 3733,
+    "writtenBytes": 3733,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 3733,
+    "tailSHA256": "b5ac8ed314b7d094c1c9275c77cdd61c758b6e564bef440789a2265fe06e3b5d",
+    "tail": "{\"id\":\"survival:field-crossing-broken-crossroads:standard\",\"eligible\":true,\"ticks\":19020,\"outcome\":\"won\",\"kills\":2681,\"xpCollected\":3966,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":63,\"elapsedMs\":23544.861792}\n{\"id\":\"survival:field-crossing-shelterbelt-gaps:standard\",\"eligible\":true,\"ticks\":19208,\"outcome\":\"won\",\"kills\":2856,\"xpCollected\":4250,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":64,\"elapsedMs\":27055.598332999998}\n{\"id\":\"survival:field-crossing-supply-orchard-edge:standard\",\"eligible\":true,\"ticks\":19446,\"outcome\":\"won\",\"kills\":2889,\"xpCollected\":4266,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":64,\"elapsedMs\":30663.205625000002}\n{\"id\":\"survival:freight-depot-shunting-yard:standard\",\"eligible\":true,\"ticks\":19028,\"outcome\":\"won\",\"kills\":2783,\"xpCollected\":4242,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":63,\"elapsedMs\":25364.904458000005}\n{\"id\":\"survival:freight-depot-loading-loop:standard\",\"eligible\":true,\"ticks\":19877,\"outcome\":\"won\",\"kills\":2956,\"xpCollected\":4007,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":66,\"elapsedMs\":29919.115709000005}\n{\"id\":\"survival:freight-depot-dispatch-junction:standard\",\"eligible\":true,\"ticks\":19561,\"outcome\":\"won\",\"kills\":3055,\"xpCollected\":4479,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":65,\"elapsedMs\":32875.505000000005}\n{\"id\":\"survival:relay-ruins-antenna-court:standard\",\"eligible\":true,\"ticks\":19188,\"outcome\":\"won\",\"kills\":2835,\"xpCollected\":4282,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":63,\"elapsedMs\":25537.59150000001}\n{\"id\":\"survival:relay-ruins-split-compound:standard\",\"eligible\":true,\"ticks\":19272,\"outcome\":\"won\",\"kills\":2661,\"xpCollected\":3887,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":64,\"elapsedMs\":35455.85183299999}\n{\"id\":\"survival:relay-ruins-receiver-gardens:standard\",\"eligible\":true,\"ticks\":19598,\"outcome\":\"won\",\"kills\":3132,\"xpCollected\":4342,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":65,\"elapsedMs\":32215.501666999975}\n{\"id\":\"survival:river-port-pump-apron:standard\",\"eligible\":true,\"ticks\":19130,\"outcome\":\"won\",\"kills\":2834,\"xpCollected\":4064,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":63,\"elapsedMs\":25686.816500000015}\n{\"id\":\"survival:river-port-twin-docks:standard\",\"eligible\":true,\"ticks\":19460,\"outcome\":\"won\",\"kills\":3103,\"xpCollected\":4471,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":64,\"elapsedMs\":28558.77925000002}\n{\"id\":\"survival:river-port-floodgate-yard:standard\",\"eligible\":true,\"ticks\":19478,\"outcome\":\"won\",\"kills\":3074,\"xpCollected\":4580,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":64,\"elapsedMs\":35707.01525}\n{\"id\":\"survival:chalk-quarry-survey-basin:standard\",\"eligible\":true,\"ticks\":19357,\"outcome\":\"won\",\"kills\":2706,\"xpCollected\":3923,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":64,\"elapsedMs\":24095.80487500003}\n{\"id\":\"survival:chalk-quarry-haul-switchbacks:standard\",\"eligible\":true,\"ticks\":19598,\"outcome\":\"won\",\"kills\":2966,\"xpCollected\":4256,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":65,\"elapsedMs\":26439.944000000018}\n{\"id\":\"survival:chalk-quarry-reclaimer-court:standard\",\"eligible\":true,\"ticks\":19274,\"outcome\":\"won\",\"kills\":2746,\"xpCollected\":4127,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":64,\"elapsedMs\":32914.687208999996}\n{\"id\":\"survival:orchard-strongpoint-harvest-clearing:standard\",\"eligible\":true,\"ticks\":19604,\"outcome\":\"won\",\"kills\":2865,\"xpCollected\":4151,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":65,\"elapsedMs\":26632.20200000005}\n{\"id\":\"survival:orchard-strongpoint-irrigation-courts:standard\",\"eligible\":true,\"ticks\":19526,\"outcome\":\"won\",\"kills\":3000,\"xpCollected\":4201,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":65,\"elapsedMs\":31921.25566700002}\n{\"id\":\"survival:orchard-strongpoint-glasshouse-ruins:standard\",\"eligible\":true,\"ticks\":19454,\"outcome\":\"won\",\"kills\":2771,\"xpCollected\":4032,\"upgrades\":10,\"rerolls\":1,\"checkpoints\":64,\"elapsedMs\":40431.315458}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "after": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "6d74fc993b51276737619349ac6a52af71124b8a7f0b22a1b2c712d9ee124bb3",
+      "files": 166,
+      "bytes": 13259406
+    },
+    "helpers": {
+      ".cache/capture-survival-node22131-x64.mjs": {
+        "sha256": "b08def815507bf231b53de3fd4bf908858c21c35a7d68e2af7c0deefd09f31d8",
+        "bytes": 8525
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-survival.test.mjs": {
+        "sha256": "16d8aae7b72753b97479be5cf75a134ba7ec8ab7015b40fe4426c399e7d4fdf9",
+        "bytes": 15195
+      },
+      "game/data-json.mjs": {
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+        "bytes": 5594
+      },
+      "game/demo-preparation.mjs": {
+        "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+        "bytes": 3500
+      },
+      "game/demo-runtime.mjs": {
+        "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+        "bytes": 987
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "eddfecc206fcc0a60af32f9e2514d73e6e1a6d58e9d2338acdf1fd4a4174e047",
+      "bytes": 10998
+    }
+  },
+  "bindingsStable": true,
+  "result": {
+    "path": ".cache/survival-node22131-x64-capture-3f84.json",
+    "sha256": "f2fc7ba2d3ab1e14b969d230fcc67e596a8caf03a85d7a036efb1eec4461d2af",
+    "complete": true,
+    "checks": 18,
+    "pageErrors": 0,
+    "failure": null,
+    "counts": {
+      "entries": 18,
+      "candidates": 18,
+      "candidateBytes": 2956650,
+      "eligible": 18
+    }
+  },
+  "elapsedSeconds": 536.857444792,
+  "finished": "2026-10-19T10:13:57.945460+00:00"
+}

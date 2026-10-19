@@ -1,0 +1,36 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { offlineStoragePolicy, directoryIdentity, assertDirectoryIdentity } from './external-storage.mjs';
+const MiB=1024**2;
+test('historical complete real-worker selection yields explicit bounded capacity',()=>{
+ const p=offlineStoragePolicy(520946683);
+ assert.equal(p.installedBodyCapBytes,576*MiB);
+ assert.equal(p.minimumExternalFreeBeforeBytes,3*576*MiB+768*MiB);
+ assert.equal(p.minimumLocalFreeBytes,200*MiB);
+});
+test('new body bytes are retained and budget rounds upward without dropping selection',()=>{
+ const p=offlineStoragePolicy(520946683+5843959);
+ assert.equal(p.installedBodyBytes,526790642);
+ assert.equal(p.installedBodyCapBytes,576*MiB);
+ assert(p.installedBodyCapBytes>p.installedBodyBytes);
+});
+test('observer ceiling rejects oversized complete selections',()=>{
+ assert.equal(offlineStoragePolicy(960*MiB).installedBodyCapBytes,1024*MiB);
+ assert.throws(()=>offlineStoragePolicy(960*MiB+1),/ceiling/);
+});
+test('invalid sizes cannot produce a misleading capacity pass',()=>{
+ for(const bytes of [0,-1,NaN,Infinity,1.5,Number.MAX_SAFE_INTEGER+1])assert.throws(()=>offlineStoragePolicy(bytes));
+});
+test('directory identities must remain exactly representable',()=>{
+ assert.deepEqual(directoryIdentity({dev:3,ino:4,uid:502}),{dev:3,ino:4,uid:502});
+ assert.throws(()=>directoryIdentity({dev:3,ino:Number.MAX_SAFE_INTEGER+1,uid:502}),/representation/);
+});
+test('owned ordinary directory passes while changed inode/device/owner reject',()=>{
+ const good={dev:3,ino:4,uid:502,isDirectory:true,isSymbolicLink:false};
+ assertDirectoryIdentity(good,{dev:3,ino:4,uid:502},502);
+ for(const changed of [{dev:8},{ino:9},{uid:9}])assert.throws(()=>assertDirectoryIdentity({...good,...changed},{dev:3,ino:4,uid:502},502));
+});
+test('symlinks and non-directories cannot be cleanup targets',()=>{
+ const good={dev:3,ino:4,uid:502,isDirectory:true,isSymbolicLink:false};
+ for(const changed of [{isSymbolicLink:true},{isDirectory:false}])assert.throws(()=>assertDirectoryIdentity({...good,...changed},{dev:3,ino:4,uid:502},502));
+});

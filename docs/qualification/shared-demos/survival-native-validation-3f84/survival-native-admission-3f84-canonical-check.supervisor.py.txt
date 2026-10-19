@@ -1,0 +1,207 @@
+"""Bound the real emitted Survival native availability observation check using the reviewed exact process owner."""
+from pathlib import Path
+import ast
+import datetime
+import hashlib
+import json
+import os
+import re
+import signal
+import shutil
+import subprocess
+import sys
+import threading
+import time
+
+arguments = dict(item[2:].split('=', 1) for item in sys.argv[1:])
+assert set(arguments) <= {'run', 'node', 'report', 'tmpdir', 'head', 'fingerprint', 'case'}
+assert arguments.get('run') in {'approved', 'preflight'}
+for key in ('node', 'report', 'tmpdir', 'head', 'fingerprint'):
+    assert arguments.get(key), f'Missing --{key}'
+root = Path.cwd().resolve()
+os.environ['GIT_NO_LAZY_FETCH'] = '1'
+report_path = Path(arguments['report']).resolve()
+report_path.relative_to(root)
+assert report_path.suffix == '.json'
+supervision_path, log_path = report_path.with_suffix('.supervision.json'), report_path.with_suffix('.log')
+for path in (report_path, supervision_path, log_path, report_path.with_suffix('.png'), report_path.with_suffix('.mjs.txt'), report_path.with_suffix('.supervisor.py.txt')):
+    assert not path.exists(), f'Refusing existing evidence: {path}'
+tmpdir = Path(arguments['tmpdir']).resolve(strict=True)
+assert tmpdir.is_dir() and Path(os.environ.get('TMPDIR', '')).resolve(strict=True) == tmpdir
+node = Path(arguments['node'])
+assert node.is_absolute() and node.is_file()
+owner_name = '.cache/run-endurance-emitted-final.py'
+helper_name = '.cache/verify-survival-native-catalog-retry.mjs'
+original_name = '.cache/qualify-demo-menu-focus-emitted.mjs'
+owner_sha = '0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c'
+owner_bytes = (root / owner_name).read_bytes()
+assert hashlib.sha256(owner_bytes).hexdigest() == owner_sha
+supervisor_bytes = Path(__file__).read_bytes()
+
+
+def sha(body):
+    return hashlib.sha256(body).hexdigest()
+
+
+def pin(name):
+    body = (root / name).read_bytes()
+    return {'sha256': sha(body), 'bytes': len(body)}
+
+
+def fingerprint(directories):
+    names = sorted(name for name in subprocess.check_output(['rg', '--files', *directories], text=True, timeout=15).splitlines()
+                   if Path(name).suffix in {'.mjs', '.js', '.json', '.css', '.html'}
+                   and '/test/' not in name and not name.endswith('.test.mjs') and not name.endswith('/coverage.json'))
+    digest, byte_count = hashlib.sha256(), 0
+    for name in names:
+        body = (root / name).read_bytes()
+        byte_count += len(body)
+        digest.update(name.encode() + b'\0')
+        digest.update(hashlib.sha256(body).digest())
+    return {'sha256': digest.hexdigest(), 'files': len(names), 'bytes': byte_count}
+
+
+def bindings():
+    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True, timeout=5).strip()
+    paths = [helper_name, owner_name, 'scripts/generate-survival-demos.mjs', '.cache/survival-native-git-bin/git', 'game/test/demo-survival.test.mjs', 'scripts/test-demo-tick-survival.mjs', 'scripts/qualify-survival-native.mjs', '/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node', 'game/data-json.mjs', 'game/demo-preparation.mjs', 'game/demo-runtime.mjs', 'scripts/demo-source-fingerprint.mjs',
+             '.cache/hosted-demo-admission-failure-b4688ca21.json']
+    value = {'head': head, 'runtime': fingerprint(['game/overflight', 'game/demo-modes', 'game/demo-data/survival']),
+             'helpers': {name: pin(name) for name in paths},
+             'node': {'path': str(node), **pin(str(node))},
+             'supervisor': {'sha256': sha(Path(__file__).read_bytes()), 'bytes': len(Path(__file__).read_bytes())}}
+    assert value['head'] == arguments['head']
+    assert value['runtime']['sha256'] == arguments['fingerprint']
+    return value
+
+
+before = bindings()
+names = {'owned_process_snapshot', 'owned_process_identity', 'OwnedProcessTree', 'BoundedChildLog'}
+selected = [item for item in ast.parse(owner_bytes, filename=owner_name).body
+            if isinstance(item, (ast.FunctionDef, ast.ClassDef)) and item.name in names]
+assert {item.name for item in selected} == names
+scope = dict(globals())
+exec(compile(ast.Module(body=selected, type_ignores=[]), owner_name, 'exec'), scope)
+OwnedProcessTree, BoundedChildLog = scope['OwnedProcessTree'], scope['BoundedChildLog']
+command = [str(node), helper_name, '--run=approved', '--head=' + arguments['head'],
+           '--fingerprint=' + arguments['fingerprint'],
+           '--report=' + str(report_path.relative_to(root)), '--case=' + arguments['case']]
+if arguments['run'] == 'preflight':
+    print(json.dumps({'preflight': True, 'browserLaunched': False, 'bindings': before, 'command': command,
+                      'childTimeoutSeconds': 360, 'cleanupGraceSeconds': 16}))
+    sys.exit(0)
+
+report = {'format': 'SurvivalNativeAdmissionSupervisionV1', 'complete': False,
+          'started': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'command': command,
+          'timeoutSeconds': 360, 'cleanupGraceSeconds': 16, 'tmpdir': str(tmpdir), 'before': before,
+          'limitations': ['Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 420 seconds.',
+                         'Read-only installed macOS x64 Node22.13.1 observation under Rosetta; not Linux proof. Completion may include strict replay rejections.']}
+log = BoundedChildLog(log_path, byte_limit=1024 * 1024, tail_limit=16384)
+child, owned, remaining = None, None, None
+deferred = {'active': False, 'pending': None}
+started = time.monotonic()
+
+
+def interrupt(signum, _frame):
+    if deferred['active']:
+        deferred['pending'] = signum
+        return
+    report['interruptedSignal'] = signal.Signals(signum).name
+    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    raise InterruptedError('Survival native availability qualification interrupted by ' + signal.Signals(signum).name)
+
+
+signal.signal(signal.SIGTERM, interrupt)
+signal.signal(signal.SIGINT, interrupt)
+try:
+    # Defer Python exceptions only through owner registration; never mask signals inherited by Node.
+    deferred['active'] = True
+    try:
+        child = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                 env={**os.environ, 'NODE_DISABLE_COMPILE_CACHE': '1'}, start_new_session=True)
+        owned = OwnedProcessTree(child)
+        owned.capture()
+        log.start(child.stdout)
+    finally:
+        deferred['active'] = False
+        pending = deferred['pending']
+        deferred['pending'] = None
+        if pending is not None:
+            interrupt(pending, None)
+    while child.poll() is None:
+        owned.capture()
+        owned.check_limits()
+        log.check_limits()
+        report['minimumFreeBytes'] = min(report.get('minimumFreeBytes', float('inf')), shutil.disk_usage(root).free)
+        if report['minimumFreeBytes'] < 208 * 1024 * 1024:
+            raise RuntimeError('Storage fell below the 200MiB floor plus 8MiB evidence reserve.')
+        if time.monotonic() - started >= report['timeoutSeconds']:
+            report['watchdogExpired'] = True
+            raise TimeoutError('Survival native availability child exceeded 360 seconds.')
+        time.sleep(0.2)
+    remaining = owned.wait_clear(3)
+    if remaining:
+        report['cleanupNeededAfterNodeExit'] = True
+        remaining = owned.cleanup()
+    owned.check_limits()
+except BaseException as error:
+    report['failure'] = repr(error)
+finally:
+    # Preserve cancellation as a failure without interrupting bounded cleanup/evidence writing.
+    def finish_interrupt(signum, _frame):
+        report.setdefault('interruptedSignal', signal.Signals(signum).name)
+        report['complete'] = False
+    signal.signal(signal.SIGTERM, finish_interrupt)
+    signal.signal(signal.SIGINT, finish_interrupt)
+    if owned is not None:
+        if remaining is None:
+            try:
+                remaining = owned.cleanup()
+            except BaseException as error:
+                report['cleanupFailure'] = repr(error)
+        report['ownedProcesses'] = owned.evidence(remaining)
+    log.finish()
+    report['log'] = {'path': str(log_path.relative_to(root)), **log.evidence()}
+    report['childExit'] = child.poll() if child else None
+    try:
+        report['after'] = bindings()
+        report['bindingsStable'] = report['after'] == before
+    except BaseException as error:
+        report['bindingsFailure'] = repr(error)
+        report['bindingsStable'] = False
+    try:
+        body = report_path.read_bytes()
+        result = json.loads(body)
+        report['result'] = {'path': str(report_path.relative_to(root)), 'sha256': sha(body),
+                            'complete': result.get('complete'), 'checks': len(result.get('checks', [])),
+                            'pageErrors': len(result.get('errors', [])), 'failure': result.get('failure'),
+                            'counts': result.get('counts')}
+        assert result['format'] == 'SurvivalNativeAdmissionV1'
+        assert result['headBefore'] == result['headAfter'] == arguments['head']
+        assert result['sourceBefore'] == result['sourceAfter'] == before['runtime']
+        assert result['observerSHA256'] == result['observerSHA256After'] == before['helpers'][helper_name]['sha256']
+        assert pin(str(report_path.with_suffix('.mjs.txt').relative_to(root))) == before['helpers'][helper_name]
+        report['complete'] = (report['childExit'] == 0 and result.get('complete') is True and len(result.get('checks', [])) == 1
+                              and result.get('errors') == [] 
+                              and result.get('sourceUnchanged') is True and all(row.get('eligible') is True for row in result.get('checks', [])) and report['bindingsStable'] is True
+                              and report.get('ownedProcesses', {}).get('verified') is True
+                              and not report['ownedProcesses']['observationLimits']['exceeded']
+                              and report['log']['complete'] is True and not report['log']['error'] and not report['log']['limitExceeded']
+                              and not any(report.get(key) for key in ('watchdogExpired', 'interruptedSignal', 'cleanupNeededAfterNodeExit',
+                                                                    'failure', 'cleanupFailure', 'bindingsFailure')))
+    except BaseException as error:
+        report['resultFailure'] = repr(error)
+        report['complete'] = False
+    report['elapsedSeconds'] = time.monotonic() - started
+    if report['elapsedSeconds'] >= 420:
+        report['finalBudgetExceeded'] = True
+        report['complete'] = False
+    report['finished'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    with report_path.with_suffix('.supervisor.py.txt').open('xb') as output:
+        output.write(supervisor_bytes)
+    with supervision_path.open('x') as output:
+        json.dump(report, output, indent=2)
+        output.write('\n')
+    print(json.dumps({'supervision': str(supervision_path.relative_to(root)), 'complete': report['complete'],
+                      'childExit': report['childExit'], 'result': report.get('result')}))
+sys.exit(0 if report['complete'] else 1)
