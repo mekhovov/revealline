@@ -11,12 +11,48 @@ const helper = 'game/test/helpers/fpv-aircraft-regional-worker-qualification.mjs
 const worker = 'optional-practice/civilian-fpv/advanced-worker.mjs';
 const serverPath = 'scripts/serve-fpv-regional-worker-qualification.mjs';
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
-function walk(node, visit) {
+function walk(node, visit, ancestors = []) {
   if (!node || typeof node !== 'object') return;
-  visit(node);
+  visit(node, ancestors);
   for (const child of Object.values(node))
-    if (Array.isArray(child)) child.forEach((item) => walk(item, visit));
-    else if (child && typeof child === 'object') walk(child, visit);
+    if (Array.isArray(child)) child.forEach((item) => walk(item, visit, [node, ...ancestors]));
+    else if (child && typeof child === 'object') walk(child, visit, [node, ...ancestors]);
+}
+// The existing verifier compares two known worker identities without loading them.
+// Fail closed if that one inert expression changes; it is not a dynamic dependency.
+function knownIdentityComparison(node, ancestors, filename) {
+  const [member, comparison, arrow, call] = ancestors;
+  return (
+    filename === 'optional-practice/civilian-fpv/aircraft-archive-verifier.mjs' &&
+    node.arguments[0]?.type === 'Identifier' &&
+    node.arguments[0].name === 'path' &&
+    member?.type === 'MemberExpression' &&
+    !member.computed &&
+    member.property?.name === 'href' &&
+    member.object === node &&
+    comparison?.type === 'BinaryExpression' &&
+    comparison.operator === '===' &&
+    comparison.left === member &&
+    comparison.right?.name === 'url' &&
+    arrow?.type === 'ArrowFunctionExpression' &&
+    !arrow.async &&
+    arrow.body === comparison &&
+    arrow.params.length === 1 &&
+    arrow.params[0].name === 'path' &&
+    call?.type === 'CallExpression' &&
+    call.arguments.length === 1 &&
+    call.arguments[0] === arrow &&
+    call.callee?.type === 'MemberExpression' &&
+    !call.callee.computed &&
+    call.callee.property?.name === 'some' &&
+    call.callee.object?.type === 'ArrayExpression' &&
+    call.callee.object.elements.length === 2 &&
+    call.callee.object.elements.every(
+      (value, index) =>
+        value?.type === 'Literal' &&
+        value.value === ['./advanced-worker.mjs', '../fpv-worlds/advanced-worker.mjs'][index],
+    )
+  );
 }
 export function qualificationDependencies(text, filename) {
   const result = new Set();
@@ -27,7 +63,7 @@ export function qualificationDependencies(text, filename) {
       throw new Error(`Invalid qualification dependency: ${name}`);
     result.add(name);
   };
-  walk(parse(text, { ecmaVersion: 'latest', sourceType: 'module' }), (node) => {
+  walk(parse(text, { ecmaVersion: 'latest', sourceType: 'module' }), (node, ancestors) => {
     if (
       ['ImportDeclaration', 'ExportNamedDeclaration', 'ExportAllDeclaration'].includes(node.type) &&
       node.source
@@ -41,8 +77,9 @@ export function qualificationDependencies(text, filename) {
     if (node.type === 'NewExpression' && node.callee?.name === 'URL') {
       const [first, second] = node.arguments;
       if (second?.type === 'MemberExpression' && second.object?.type === 'MetaProperty') {
+        if (knownIdentityComparison(node, ancestors, filename)) return;
         if (first?.type !== 'Literal' || typeof first.value !== 'string')
-          throw new Error('Unpinned worker/resource URL');
+          throw new Error(`Unpinned worker/resource URL: ${filename}`);
         add(first.value);
       }
     }

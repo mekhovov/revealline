@@ -16,6 +16,8 @@ for (const source of [
   "import '../../outside.mjs'",
   'import(variable)',
   'new URL(variable, import.meta.url)',
+  'new Worker(new URL(variable, import.meta.url))',
+  'fetch(new URL(variable, import.meta.url))',
   "import './unsafe.txt'",
 ])
   test(`qualification rejects unpinned source: ${source}`, () => {
@@ -24,3 +26,23 @@ for (const source of [
       /Unpinned|Invalid qualification/,
     );
   });
+
+test('qualification recognizes only the existing inert known-worker identity comparison', () => {
+  const filename = 'optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
+  const expression =
+    "['./advanced-worker.mjs', '../fpv-worlds/advanced-worker.mjs'].some((path) => new URL(path, import.meta.url).href === url)";
+  assert.deepEqual(qualificationDependencies(expression, filename), []);
+  assert.throws(() => qualificationDependencies(expression, 'scripts/other.mjs'), /Unpinned/);
+  assert.throws(
+    () =>
+      qualificationDependencies(
+        expression.replace('../fpv-worlds/advanced-worker.mjs', './unknown.mjs'),
+        filename,
+      ),
+    /Unpinned/,
+  );
+  assert.throws(
+    () => qualificationDependencies(expression.replace('=== url', '=== fetch(url)'), filename),
+    /Unpinned/,
+  );
+});
