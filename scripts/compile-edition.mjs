@@ -1,3 +1,4 @@
+import { validateEditionContentPackages } from './edition-content-inputs.mjs';
 import { createRewardCosmeticRegistry, resolveRewardCosmetic } from '../game/rewards/cosmetics.mjs';
 import { inspectImageDataUrl } from '../game/content.mjs';
 import { rewardMediaReferences, inspectRewardMediaBytes } from '../game/rewards/media-format.mjs';
@@ -412,6 +413,7 @@ export async function compileEdition({
   sourceRevision = 'development',
   validateCode = true,
   compactCode = true,
+  contentPackages = [],
   offline = null,
 } = {}) {
   required(sourceFiles instanceof Map, 'Edition compilation requires original source bytes.');
@@ -546,7 +548,8 @@ export async function compileEdition({
     runtimeCatalog,
     new Map([...selectedData].map((name) => [name, sourceFiles.get(name)])),
   );
-  const selectedMedia = new Set(publicationAssets.map((asset) => asset.path));
+  const packagePaths = validateEditionContentPackages(contentPackages, sourceFiles);
+  const selectedMedia = new Set([...publicationAssets.map((asset) => asset.path), ...packagePaths]);
   const excluded = new Set([
     ...catalog.campaigns
       .flatMap((campaign) => [
@@ -944,6 +947,7 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
     .map(([name, bytes]) => ({ path: name, bytes: bytes.length, sha256: hash(bytes) }))
     .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
   const manifest = Object.freeze({
+    ...(contentPackages.length ? { contentPackages: structuredClone(contentPackages) } : {}),
     format: 'revealline-edition-build.v1',
     editionIds: [...editionIds],
     version,
