@@ -1291,9 +1291,6 @@
           "2"
         ],
         [
-          "2"
-        ],
-        [
           "neon-social-drone-pack",
           "2"
         ],
@@ -1451,9 +1448,6 @@
         ],
         [
           "neon-drone-aid-pack",
-          "2"
-        ],
-        [
           "2"
         ],
         [
@@ -1907,46 +1901,6 @@
       ]
     },
     {
-      "owner": "[\"classic\", \"optional\", \"current-line-impact.v1\"]",
-      "edition": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac:current-line-impact.v1",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "current",
-      "missions": [
-        [
-          "1"
-        ],
-        [
-          "1"
-        ],
-        [
-          "1"
-        ]
-      ]
-    },
-    {
-      "owner": "[\"classic\", \"optional\"]",
-      "edition": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "archive",
-      "missions": [
-        [
-          "1"
-        ],
-        [
-          "1"
-        ],
-        [
-          "1"
-        ]
-      ]
-    },
-    {
       "owner": "[\"classic\",\"optional\",\"fpv-route-choices\",\"current-line-impact.v1\"]",
       "edition": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989:current-line-impact.v1",
       "campaign": "fpv-route-choices/1/4a7f15a0b07d557d::current-line-impact.v1",
@@ -2139,46 +2093,6 @@
       ]
     },
     {
-      "owner": "[\"classic\", \"external\", \"current-line-impact.v1\"]",
-      "edition": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813:current-line-impact.v1",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "current",
-      "missions": [
-        [
-          "1"
-        ],
-        [
-          "1"
-        ],
-        [
-          "1"
-        ]
-      ]
-    },
-    {
-      "owner": "[\"classic\", \"external\"]",
-      "edition": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "archive",
-      "missions": [
-        [
-          "1"
-        ],
-        [
-          "1"
-        ],
-        [
-          "1"
-        ]
-      ]
-    },
-    {
       "owner": "[\"classic\",\"external\",\"sentinel-circuit-fpv\",\"current-line-impact.v1\"]",
       "edition": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb:current-line-impact.v1",
       "campaign": "sentinel-circuit-fpv/1/398c82081d2d49df::current-line-impact.v1",
@@ -2318,46 +2232,6 @@
         ],
         [
           "sentinel-circuit-retro-open-circuit",
-          "1"
-        ]
-      ]
-    },
-    {
-      "owner": "[\"classic\", \"external\", \"current-line-impact.v1\"]",
-      "edition": "0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c:current-line-impact.v1",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "current",
-      "missions": [
-        [
-          "1"
-        ],
-        [
-          "1"
-        ],
-        [
-          "1"
-        ]
-      ]
-    },
-    {
-      "owner": "[\"classic\", \"external\"]",
-      "edition": "0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "archive",
-      "missions": [
-        [
-          "1"
-        ],
-        [
-          "1"
-        ],
-        [
           "1"
         ]
       ]
@@ -2507,52 +2381,6 @@
       ]
     },
     {
-      "owner": "[\"classic\", \"external\", \"current-line-impact.v1\"]",
-      "edition": "d9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9:current-line-impact.v1",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "current",
-      "missions": [
-        [
-          "fracture-lines-split-ring",
-          "1"
-        ],
-        [
-          "fracture-lines-fault-fan",
-          "1"
-        ],
-        [
-          "fracture-lines-frayed-causeway",
-          "1"
-        ]
-      ]
-    },
-    {
-      "owner": "[\"classic\", \"external\"]",
-      "edition": "d9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "archive",
-      "missions": [
-        [
-          "fracture-lines-split-ring",
-          "1"
-        ],
-        [
-          "fracture-lines-fault-fan",
-          "1"
-        ],
-        [
-          "fracture-lines-frayed-causeway",
-          "1"
-        ]
-      ]
-    },
-    {
       "owner": "[\"classic\",\"external\",\"countercurrent-fpv\",\"current-line-impact.v1\"]",
       "edition": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38:current-line-impact.v1",
       "campaign": "countercurrent-fpv/1/7359effa888ca945::current-line-impact.v1",
@@ -2676,52 +2504,6 @@
       "owner": "[\"classic\",\"external\",\"countercurrent-retro\"]",
       "edition": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe",
       "campaign": "countercurrent-retro/1/84d11a16c0585605",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "archive",
-      "missions": [
-        [
-          "countercurrent-offset-docks",
-          "1"
-        ],
-        [
-          "countercurrent-sandbar-braid",
-          "1"
-        ],
-        [
-          "countercurrent-crossing-watch",
-          "1"
-        ]
-      ]
-    },
-    {
-      "owner": "[\"classic\", \"external\", \"current-line-impact.v1\"]",
-      "edition": "625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5:current-line-impact.v1",
-      "modes": [
-        "solo",
-        "versus"
-      ],
-      "lifecycle": "current",
-      "missions": [
-        [
-          "countercurrent-offset-docks",
-          "1"
-        ],
-        [
-          "countercurrent-sandbar-braid",
-          "1"
-        ],
-        [
-          "countercurrent-crossing-watch",
-          "1"
-        ]
-      ]
-    },
-    {
-      "owner": "[\"classic\", \"external\"]",
-      "edition": "625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5",
       "modes": [
         "solo",
         "versus"

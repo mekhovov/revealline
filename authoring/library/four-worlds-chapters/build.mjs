@@ -154,12 +154,14 @@ export async function readOriginalChapters() {
   ]);
   assert.deepEqual(
     recipe.chapters.map((c) => [c.id, c.themeId, c.sourceTheme]),
-    [['original-fpv-pressure', 'fpv', 'fpv'],
-['original-ukraine-atlas', 'ukraine', 'heritage'],
-['original-retro-1994', 'retro', 'retro']],
+    [
+      ['original-fpv-pressure', 'fpv', 'fpv'],
+      ['original-ukraine-atlas', 'ukraine', 'heritage'],
+      ['original-retro-1994', 'retro', 'retro'],
+    ],
   );
   const catalog = inputs['authoring/library/four-worlds-source/catalog.json'];
-  assert.equal(catalog.images.length, 12);
+  assert.equal(catalog.images.length, 9);
   const images = new Map();
   for (const record of catalog.images) {
     const bytes = await ordinaryFile(record.source, record.sha256);

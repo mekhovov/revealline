@@ -9,10 +9,7 @@
     "sha256": "d6af87beb11f55b81cf33b6b07254c51d19923d8823d2d80c17606db0e4c1245"
   },
   "mode": "Tactical",
-  "themes": [
-    "ukraine",
-    "retro"
-  ],
+  "themes": ["ukraine", "retro"],
   "layoutsReused": 3,
   "newlyAuthoredGeometry": 0,
   "worlds": [
@@ -243,10 +240,6 @@
           "pixelsSha256": "b1bc1b2a0a3ac4cfa0c785ba115b8a08b4a96160d7ea757571fcafcbe7e78b2c"
         }
       ]
-    },
-    {
-      "originalInputs": [],
-      "images": []
     }
   ],
   "routes": [
@@ -3733,9 +3726,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -3963,9 +3954,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -4170,9 +4159,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -4377,9 +4364,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -5031,9 +5016,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": false,
           "speedFactor": 0.25,
           "boostBlocked": true,
@@ -5251,9 +5234,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": false,
           "speedFactor": 0.25,
           "boostBlocked": true,
@@ -7935,9 +7916,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -8165,9 +8144,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -8372,9 +8349,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -8579,9 +8554,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -12577,9 +12550,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -12807,9 +12778,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -13014,9 +12983,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -13221,9 +13188,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -13875,9 +13840,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": false,
           "speedFactor": 0.25,
           "boostBlocked": true,
@@ -14095,9 +14058,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": false,
           "speedFactor": 0.25,
           "boostBlocked": true,
@@ -16779,9 +16740,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -17009,9 +16968,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -17216,9 +17173,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -17423,9 +17378,7 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": [
-            "switchback-band"
-          ],
+          "zoneIds": ["switchback-band"],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,

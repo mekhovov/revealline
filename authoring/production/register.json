@@ -1,6 +1,6 @@
 {
   "format": "revealline-production-register.v1",
-  "revision": 1,
+  "revision": 2,
   "basis": {
     "maps": 29,
     "themes": [
@@ -29,12 +29,13 @@
   "context": {
     "sourceCommit": "62a92651b1dc51fc74ca25a545dd9bde35c2574c",
     "limitations": [
+      "Selected ownership scope from the prior register. Retained evidence is historical context; this selection does not award new approvals.",
       "Nine proposed geometry families are not an approved final 29-map campaign. Theme editions reuse those families.",
       "Historical delivery is recorded separately from unfilled final production quality assessments; no visual, human balance or listening approval is fabricated.",
       "The twelve Route Worlds/Sentinel originals are source integrated at 0106; release 036 was not accepted when this register was authored.",
       "The five external entries carry fifteen originals, including three reused FPV Pressure originals. They do not add fifteen new pictures.",
       "Dawn is one silent eight-second story. Native export-to-disk and full backup qualification retain the stated delivery limits.",
-      "Seven player classes times four themes times two treatments defines 56 slots. Enemies are supporting handles, not a second completed set.",
+      "Seven player classes times three themes times two treatments defines 42 slots. Enemies are supporting handles, not a second completed set.",
       "Thirteen licensed candidate songs remain separate unregistered intake context. Five synth recipes are not five finished, listened recordings.",
       "Files and source references do not perform inspection or permit changing saved, earned or released ownership."
     ]
@@ -1083,8 +1084,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1136,8 +1137,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1189,8 +1190,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1242,8 +1243,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1295,8 +1296,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1348,8 +1349,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1397,7 +1398,7 @@
         {
           "path": "authoring/library/sentinel-circuit-external/build.mjs",
           "bytes": 10172,
-          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+          "sha256": "06bca8ebd9572d52671a336c02db986f5a50dae266ad5b5bff4097ca5f319cfb"
         }
       ]
     },
@@ -1445,7 +1446,7 @@
         {
           "path": "authoring/library/sentinel-circuit-external/build.mjs",
           "bytes": 10172,
-          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+          "sha256": "06bca8ebd9572d52671a336c02db986f5a50dae266ad5b5bff4097ca5f319cfb"
         }
       ]
     },
@@ -1493,7 +1494,7 @@
         {
           "path": "authoring/library/sentinel-circuit-external/build.mjs",
           "bytes": 10172,
-          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+          "sha256": "06bca8ebd9572d52671a336c02db986f5a50dae266ad5b5bff4097ca5f319cfb"
         }
       ]
     },
@@ -2048,33 +2049,6 @@
       }
     },
     {
-      "revision": 1,
-      "workId": "picture-shared-value-harbor",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture"
-      }
-    },
-    {
-      "revision": 1,
-      "workId": "picture-city-savings-observatory",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture"
-      }
-    },
-    {
-      "revision": 1,
-      "workId": "picture-thoughtful-market-workshop",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture"
-      }
-    },
-    {
       "slotId": "picture.route-foundry.fpv",
       "revision": 1,
       "workId": "picture-split-signal-foundry",
@@ -2216,30 +2190,6 @@
           "levelRevision": "1",
           "themeId": "retro"
         }
-      }
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture"
-      }
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture"
-      }
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture"
       }
     },
     {
@@ -2921,76 +2871,6 @@
       }
     },
     {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
-      "revision": 1,
-      "workRevision": 1,
-      "previous": null
-    },
-    {
       "slotId": "story.fpv.1",
       "revision": 1,
       "workId": "story-dawn-signal",
@@ -3068,7 +2948,7 @@
   "deliveries": [
     {
       "id": "prior035-pictures",
-      "title": "Fifteen optional originals delivered before v036; historical milestone only",
+      "title": "12 retained works from prior035-pictures; selected historical references only",
       "works": [
         {
           "workId": "picture-orchard-crossing",
@@ -3104,18 +2984,6 @@
         },
         {
           "workId": "picture-last-train-cassette",
-          "workRevision": 1
-        },
-        {
-          "workId": "picture-shared-value-harbor",
-          "workRevision": 1
-        },
-        {
-          "workId": "picture-city-savings-observatory",
-          "workRevision": 1
-        },
-        {
-          "workId": "picture-thoughtful-market-workshop",
           "workRevision": 1
         },
         {

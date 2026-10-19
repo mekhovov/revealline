@@ -10,6 +10,7 @@
   "rawOriginalsPreserved": true,
   "pixelTransformations": [],
   "generation": "Twelve independent text-only generation calls, in four groups of three. No generation retries, image edits, original crop/stretch/resampling/re-encoding. Separate review thumbnails are declared in derivatives.json.",
+  "rightsScope": "Original fictional AI-generated project illustrations. No input reference images, copied game art, named artist imitation or authentic historical/product representation. Ukraine uses broad material/craft cues; Retro equipment is invented. No exclusive-rights or human-quality certification.",
   "layoutAuthority": {
     "path": "authoring/library/countercurrent/layouts.json",
     "sha256": "daaeb40b6260ada3632d602d42b41788fb0c36de109bcc0a1f648018112f3abc",

@@ -14,22 +14,22 @@ import { prepareExternalChapter, externalChapterHash } from '../external-chapter
 const raw = await readFile(path.join(ROOT, PROOF_FILE));
 const proof = JSON.parse(raw);
 
-test('76 exact retained themed routes preserve physical outcomes, full replays and real serialized v4 saved continuations', async () => {
+test('114 exact themed routes preserve physical outcomes, full replays and real serialized v4 saved continuations', async () => {
   const candidate = structuredClone(proof);
   const before = JSON.stringify(candidate);
   const checked = await verifyRouteWorlds({ candidate });
   assert.deepEqual(checked.totals, {
-    contexts: 76,
-    wins: 56,
-    failures: 20,
-    ticks: 61080,
-    savedContinuations: 76,
-    originalPictures: 6,
+    contexts: 114,
+    wins: 84,
+    failures: 30,
+    ticks: 91620,
+    savedContinuations: 114,
+    originalPictures: 9,
   });
   assert.equal(JSON.stringify(candidate), before);
   assert.equal(checked.layoutsReused, 3);
   assert.equal(checked.newlyAuthoredGeometry, 0);
-  assert.equal(new Set(checked.routes.map((r) => r.id)).size, 76);
+  assert.equal(new Set(checked.routes.map((r) => r.id)).size, 114);
   for (const themeId of THEME_IDS) {
     const routes = checked.routes.filter((r) => r.themeId === themeId);
     assert.equal(routes.filter((r) => r.difficulty === 'standard').length, 24);

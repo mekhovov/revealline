@@ -49,7 +49,7 @@ function recording(level, options, segments) {
   return exportReplay(recorder, run);
 }
 
-test('workshop retains proven geometry and equipment with two retained independent themes and original illustrated rewards', () => {
+test('workshop retains proven geometry and equipment with three independent themes and original illustrated rewards', () => {
   assert.equal(
     createHash('sha256').update(proofBytes).digest('hex'),
     '63a77908b1ce98b480f9fd0431894e4f1d58ad56e4266ae0860206de564d8c1a',
@@ -60,7 +60,7 @@ test('workshop retains proven geometry and equipment with two retained independe
   assert.deepEqual(pack.visualOverrides, {});
   assert.deepEqual(
     pack.levelVisuals.map((entry) => entry.levelId),
-    ['workshop-01', 'workshop-02'],
+    ['workshop-01', 'workshop-02', 'workshop-03'],
   );
   assert.deepEqual(pack.classRecipes, homeward.classRecipes);
   assert.deepEqual(
@@ -99,8 +99,7 @@ test('prepared practice scenarios select the actual per-map theme, music and aut
 });
 
 for (const route of proof.routes.filter(
-  (value) =>
-    levelFor(value.levelId) && (value.variant === 'specialty' || value.classId === 'interceptor'),
+  (value) => value.variant === 'specialty' || value.classId === 'interceptor',
 ))
   test(`${levelFor(route.levelId).id}/${route.turnPolicy}/${route.classId}: legal ${route.variant} route`, async () => {
     const level = levelFor(route.levelId),
@@ -152,7 +151,7 @@ for (const route of proof.routes.filter(
     }
   });
 
-for (const comparison of proof.comparisons.filter((row) => levelFor(row.levelId)))
+for (const comparison of proof.comparisons)
   test(`${levelFor(comparison.levelId).id}/${comparison.turnPolicy}: omitted equipment stays unqualified`, async () => {
     const level = levelFor(comparison.levelId),
       definition = goalFor(comparison.levelId);

@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
 # Round 08 — character collections and component recipes
 
 This supplement adds **16 templates** for selectable and earned characters, configurable attachments, applied-asset review and deeper game planning. Round 08 brought the CLI to **104 templates**: 56 base + 16 source/asset variations + 16 animation variants + these 16 collection templates. The shared CLI now includes [Round 09 abilities and world templates](round-09-abilities-and-world.md), for 124 total. These are reusable instructions, not executed AI runs or evidence of completed art.
@@ -40,7 +42,6 @@ The following IDs and labels come from the current collection definitions. The t
 
 Character IDs are stable across visual replacements. A new paint treatment or propeller recipe should not discard a player's collection identity. The collection definitions own availability and acquisition; renderer presets own body/attachment references. Do not insert image, animation or stat fields into a collection record that rejects them.
 
-Current component recipe IDs live in [presets.json](../motion-lab/presets.json), with validation and pose sampling in [animation.mjs](../motion-lab/animation.mjs): `fpv-tri`, `fpv-two`, `fpv-four`, `night-tri`, `swallow-flight`, `falcon-trim`, `retro-thruster`, `vector-thruster` and `still`. Rotor `bladeCount` accepts 2, 3 or 4; `bladeShape` accepts `swept`, `tapered` or `paddle`. `phaseDegrees` is a cosmetic phase offset. `idleRps` is the baseline visual revolutions per second, `travelRps` adds a rate per normalized travel-speed ratio, and `maxVisualRps` caps the visual rate; none is physical rotor RPM or a gameplay travel-speed setting. The lab limits displayed phase steps to reduce sampled-motion aliasing. Use its actual anchor convention and parameter bounds when editing recipes.
 
 The current UI separates inspecting a character from explicit Equip, and can save a choice for the context, theme or global scope in its isolated lab profile. Recipe/blade/shape/radius edits are temporary preview changes; they are not a saved collection format or a production export. The enlarged north-facing inspection view supports slower motion review. Palette and terrain controls remain independent of equipment, and applying a family look preserves equipment preferences. Verify actual painting/playback before describing these controls as evidence that a particular asset works.
 

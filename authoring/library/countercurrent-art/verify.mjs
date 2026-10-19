@@ -23,9 +23,7 @@ const documents = [
   'render-previews.mjs',
   'verify.mjs',
 ];
-const themes = ['fpv',
-'ukraine',
-'retro'];
+const themes = ['fpv', 'ukraine', 'retro'];
 const slots = ['offset-docks', 'sandbar-braid', 'crossing-watch'];
 const expectedIds = themes.flatMap((theme) =>
   slots.map((slot) => `countercurrent/${slot}/${theme}`),

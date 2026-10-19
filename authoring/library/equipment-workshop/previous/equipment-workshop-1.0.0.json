@@ -7,7 +7,8 @@
   "dependencies": [],
   "metadata": {
     "author": "Reveal Line",
-    "license": "Original project content"
+    "license": "Original project content",
+    "rightsStatus": "Original project content."
   },
   "themes": [
     {
@@ -470,25 +471,6 @@
           "type": "hangar-switch",
           "hangarId": "south-hangar",
           "classId": "carrier"
-        }
-      ]
-    },
-    {
-      "version": "xonix-mastery-definition.v2",
-      "id": "workshop-safe-reconcile",
-      "revision": "1",
-      "campaignId": "equipment-workshop",
-      "levelId": "workshop-03",
-      "name": "Safe Reconcile",
-      "description": "Use an impact pulse from a live cut of at least three cells to stun the cable-cutter, return home, then win without losing a life.",
-      "all": [
-        {
-          "type": "clean-win"
-        },
-        {
-          "type": "live-cut-impact",
-          "actorId": "cable-cutter",
-          "minTrailCells": 3
         }
       ]
     }

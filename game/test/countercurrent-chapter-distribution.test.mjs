@@ -27,8 +27,8 @@ const themes = ['fpv', 'ukraine', 'retro'];
 const entries = [];
 for (const [index, theme] of themes.entries()) {
   const result = await buildCountercurrentTheme(theme);
-  assert.deepEqual(result.descriptor, SOURCE_EXTERNAL_CHAPTERS[index + 9]);
-  const item = EXTERNAL_CATALOG.chapters[index + 9];
+  assert.deepEqual(result.descriptor, SOURCE_EXTERNAL_CHAPTERS[index + 12]);
+  const item = EXTERNAL_CATALOG.chapters[index + 12];
   for (const kind of ['pack', 'media'])
     entries.push({
       name: item[kind].path,
@@ -46,32 +46,33 @@ const decodeImage = async (blob) => {
   return { naturalWidth: bytes.readUInt32BE(16), naturalHeight: bytes.readUInt32BE(20) };
 };
 
-test('three Countercurrent producers preserve the nine retained earlier authorities', async () => {
-  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 12);
-  assert.equal(entries.length, 6);
-  assert.equal(bodies.size, 6);
-  // Exact identities of the retained descriptor and catalog subsets.
+test('four Countercurrent producers supply exact pairs without changing the twelve earlier authorities', async () => {
+  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 16);
+  assert.equal(entries.length, 8);
+  assert.equal(bodies.size, 8);
+  // Independently extracted literal descriptors/catalog from accepted merged UI
+  // 7c6e0d684d11cb0e6894e303beb8ff4ea8e08688, before this adoption.
   assert.equal(
-    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 9))),
-    '784e2dad4fde23da8f263a85294309cafa4430946226b866a3ffc41164ec29e3',
+    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 12))),
+    'ab91ff15ec5ace5dc9b4ba2d6d9b006a886cab59b2226bb9cfedfcc6e34e9bbd',
   );
   assert.equal(
-    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 9))),
-    '83e18acf383da9b71a237b8b103a7c6b0daa7cd3d538117c477c41c94cc2ac67',
+    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 12))),
+    'dc168fbcb680663a94fe31becf5bea69cc723a58e25afa244ba0c83059f1156a',
   );
   // All earlier body bytes and cumulative totals are checked once by the real-source
   // loose/ZIP/manifest audit in scripts/test-external-distribution.mjs.
   assert.equal(
     entries.reduce((n, entry) => n + entry.bytes.length, 0),
-    23233023,
+    31768658,
   );
-  for (const entry of EXTERNAL_CATALOG.chapters.slice(9))
+  for (const entry of EXTERNAL_CATALOG.chapters.slice(12))
     for (const kind of ['pack', 'media']) {
       assert.equal(bodies.get(entry[kind].path).length, entry[kind].bytes);
       assert.equal(sha(bodies.get(entry[kind].path)), entry[kind].sha256);
     }
   for (const [index, theme] of themes.entries()) {
-    const descriptor = SOURCE_EXTERNAL_CHAPTERS[index + 9];
+    const descriptor = SOURCE_EXTERNAL_CHAPTERS[index + 12];
     const source = `../../authoring/library/countercurrent-chapters/descriptors/${theme}.json`;
     assert.deepEqual(descriptor, JSON.parse(await readFile(new URL(source, import.meta.url))));
     assert.equal(descriptor.id, `countercurrent-${theme}`);
@@ -80,8 +81,8 @@ test('three Countercurrent producers preserve the nine retained earlier authorit
       descriptor.originals.map((original) => original.levelId),
       levels,
     );
-    assert.equal(SOURCE_EXTERNAL_EDITIONS[index + 9].mode, 'Arcade');
-    assert.equal(SOURCE_EXTERNAL_EDITIONS[index + 9].levels, 3);
+    assert.equal(SOURCE_EXTERNAL_EDITIONS[index + 12].mode, 'Arcade');
+    assert.equal(SOURCE_EXTERNAL_EDITIONS[index + 12].levels, 3);
   }
   assert.equal(
     prepareExternalCatalog(
@@ -101,8 +102,8 @@ test('three Countercurrent producers preserve the nine retained earlier authorit
 
 for (const [index, theme] of themes.entries())
   test(`exact ${theme} pair remains within its edition prefix and authenticates its three originals`, async () => {
-    const item = EXTERNAL_CATALOG.chapters[index + 9];
-    const descriptor = SOURCE_EXTERNAL_CHAPTERS[index + 9];
+    const item = EXTERNAL_CATALOG.chapters[index + 12];
+    const descriptor = SOURCE_EXTERNAL_CHAPTERS[index + 12];
     const baseURL = [
       'https://example.test/',
       'https://example.test/revealline/',
@@ -148,8 +149,8 @@ for (const [index, theme] of themes.entries())
   });
 
 test('a Countercurrent owner cannot accept a sibling pair or a cancelled originals response', async () => {
-  const item = EXTERNAL_CATALOG.chapters[9],
-    foreign = EXTERNAL_CATALOG.chapters[10];
+  const item = EXTERNAL_CATALOG.chapters[12],
+    foreign = EXTERNAL_CATALOG.chapters[13];
   for (const crossed of ['pack', 'media']) {
     await assert.rejects(
       prepareExternalDownload(item.id, {
@@ -179,14 +180,11 @@ test('a Countercurrent owner cannot accept a sibling pair or a cancelled origina
   );
 });
 
-test('the retained catalog keeps the exact twelve-installed and storage budgets', () => {
+test('sixteen browsable authorities keep the exact twelve-installed and storage budgets', () => {
   const index = { ...emptyExternalChapterIndex(), chapters: SOURCE_EXTERNAL_CHAPTERS.slice(0, 12) };
   assert.equal(validateExternalChapterIndex(index).chapters.length, 12);
   assert.throws(() =>
-    validateExternalChapterIndex({
-      ...index,
-      chapters: [...SOURCE_EXTERNAL_CHAPTERS, structuredClone(SOURCE_EXTERNAL_CHAPTERS[0])],
-    }),
+    validateExternalChapterIndex({ ...index, chapters: SOURCE_EXTERNAL_CHAPTERS.slice(0, 13) }),
   );
   assert.equal(EXTERNAL_CHAPTER_LIMITS.catalogChoices, 36);
   assert.equal(EXTERNAL_CHAPTER_LIMITS.packBytes, 1048576);

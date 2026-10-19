@@ -2,7 +2,8 @@ import { t } from '../../../game/i18n/index.mjs';
 
 // Explicit, immutable source pins. This is a review gallery, not an asset importer
 // or a declaration of runtime adoption. Historical manifest/artwork stay intact.
-export const COUNTERCURRENT_SOURCES = Object.freeze([Object.freeze({
+export const COUNTERCURRENT_SOURCES = Object.freeze([
+  Object.freeze({
     id: 'fpv-offset-docks',
     kind: 'image',
     title: 'Lanterns at the Offset Piers',
@@ -12,7 +13,7 @@ export const COUNTERCURRENT_SOURCES = Object.freeze([Object.freeze({
     width: 1774,
     height: 887,
   }),
-Object.freeze({
+  Object.freeze({
     id: 'fpv-sandbar-braid',
     kind: 'image',
     title: 'The Four Sandbar Relays',
@@ -22,7 +23,7 @@ Object.freeze({
     width: 1774,
     height: 887,
   }),
-Object.freeze({
+  Object.freeze({
     id: 'fpv-crossing-watch',
     kind: 'image',
     title: 'Two Quiet Signal Posts',
@@ -32,7 +33,7 @@ Object.freeze({
     width: 1774,
     height: 887,
   }),
-Object.freeze({
+  Object.freeze({
     id: 'ukraine-offset-docks',
     kind: 'image',
     title: 'The Boatbuilders’ Morning',
@@ -42,7 +43,7 @@ Object.freeze({
     width: 1774,
     height: 887,
   }),
-Object.freeze({
+  Object.freeze({
     id: 'ukraine-sandbar-braid',
     kind: 'image',
     title: 'Four Gardens beside the River',
@@ -52,7 +53,7 @@ Object.freeze({
     width: 1774,
     height: 887,
   }),
-Object.freeze({
+  Object.freeze({
     id: 'ukraine-crossing-watch',
     kind: 'image',
     title: 'The Ferry Lights Return',
@@ -62,7 +63,7 @@ Object.freeze({
     width: 1774,
     height: 887,
   }),
-Object.freeze({
+  Object.freeze({
     id: 'retro-offset-docks',
     kind: 'image',
     title: 'Records across the Canal',
@@ -72,7 +73,7 @@ Object.freeze({
     width: 1774,
     height: 887,
   }),
-Object.freeze({
+  Object.freeze({
     id: 'retro-sandbar-braid',
     kind: 'image',
     title: 'Last Platforms of Summer',
@@ -82,7 +83,7 @@ Object.freeze({
     width: 1774,
     height: 887,
   }),
-Object.freeze({
+  Object.freeze({
     id: 'retro-crossing-watch',
     kind: 'image',
     title: 'After-Hours Rooftop Exchange',
@@ -92,11 +93,12 @@ Object.freeze({
     width: 1774,
     height: 887,
   }),
-Object.freeze({
+  Object.freeze({
     id: 'guide',
     kind: 'text',
     title: () => t('tools:countercurrentGuideAndCaveats'),
     path: 'authoring/library/countercurrent-art/README.md',
     bytes: 5552,
     sha256: '58f9b5ae620949b1070e0ba165e07bf5d776113f54f2ead53c7f2d412ec6bc66',
-  })]);
+  }),
+]);
