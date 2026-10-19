@@ -4,7 +4,9 @@ import {
   createOverflightRecords,
   OVERFLIGHT_RECORDS_FORMAT,
   validateOverflightRecords,
+  overflightRecordContext,
 } from '../overflight/records.mjs';
+import { dataIdentity } from '../data-json.mjs';
 const run = (patch = {}) => ({
   compiled: {
     format: 'OverflightCompiledV3',
@@ -41,6 +43,48 @@ function memory() {
     },
   };
 }
+
+test('record retention preserves the current result within the existing aggregate byte budget', async () => {
+  const backend = memory(),
+    records = createOverflightRecords({ backend });
+  const large = run({
+    progression: {
+      history: Array.from({ length: 32 }, (_, index) => ({ id: `${index}:${'x'.repeat(96)}` })),
+    },
+  });
+  const template = await records.record(large);
+  const entries = {};
+  let count = 0;
+  for (let seed = 1000; seed < 1256; seed++) {
+    const context = overflightRecordContext({ ...large, seed }),
+      key = dataIdentity(context);
+    entries[key] = {
+      context,
+      last: template.last,
+      bestScore: template.bestScore,
+      fastestClear: template.fastestClear,
+    };
+    try {
+      validateOverflightRecords({ format: OVERFLIGHT_RECORDS_FORMAT, entries });
+      count++;
+    } catch {
+      delete entries[key];
+      break;
+    }
+  }
+  assert.ok(
+    count > 10 && count < 256,
+    'This profile reaches the byte budget before the count limit.',
+  );
+  await backend.update(() => ({ format: OVERFLIGHT_RECORDS_FORMAT, entries }));
+  const saved = await records.record(large);
+  assert.equal(saved.durable, true);
+  assert.equal(saved.last.outcome, 'won');
+  const state = validateOverflightRecords(await backend.read());
+  assert.equal(Object.keys(state.entries).length, count);
+  assert.deepEqual(state.entries[dataIdentity(overflightRecordContext(large))].last, template.last);
+  records.dispose();
+});
 test('Survivor records separate fastest victories, most cleared, failure details and chosen branches', async () => {
   const records = createOverflightRecords({ backend: memory() });
   await records.record(run());
