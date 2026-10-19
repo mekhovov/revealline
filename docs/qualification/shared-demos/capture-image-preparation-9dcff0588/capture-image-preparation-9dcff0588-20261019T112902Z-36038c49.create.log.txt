@@ -1,0 +1,1 @@
+hdiutil: create failed - Operation not supported by device

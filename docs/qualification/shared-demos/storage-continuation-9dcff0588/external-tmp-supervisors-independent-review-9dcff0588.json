@@ -1,0 +1,50 @@
+{
+  "format": "SharedDemoExternalTmpObserverIndependentReviewV1",
+  "complete": true,
+  "reviewedAt": "2026-10-19T11:09:19.550558+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "method": "Read-only diff and source review of both adapted supervisors against their previously reviewed original-root supervisors; no browser launch or tests in this review.",
+  "files": {
+    ".cache/run-final-demo-refresh-owned.py": {
+      "sha256": "ba21ca31df72f86013e2c150873ac141b5ccc8caa3325ea1f2cd30193a5624f1",
+      "bytes": 16721
+    },
+    ".cache/reverify-affected-emitted.py": {
+      "sha256": "4eec9edfd00b843d3dece4d33582b437374b292c0172915474ba9b1beee91731",
+      "bytes": 14214
+    },
+    ".cache/run-final-demo-refresh-external-tmp.py": {
+      "sha256": "eff3705acad8c3933d242e6c6b953d721885019bd3ebd9cf108a5451ae3454a9",
+      "bytes": 18819
+    },
+    ".cache/reverify-affected-emitted-external-tmp.py": {
+      "sha256": "a66855cdc60d770c90aea1dac49a47132f1c19bf739b34315a3df996c5adde85",
+      "bytes": 15726
+    },
+    ".cache/run-final-demo-refresh-owned.mjs": {
+      "sha256": "3da84ad80c5aa679ed6fcc43192b0d5e8e82f01a08dbcff5f508effa50516730",
+      "bytes": 16059
+    },
+    ".cache/reverify-affected-emitted.mjs": {
+      "sha256": "bed681930ea1a014e97b1fb76ddea2dde4b59708e8b4951f80c7c82a67a5b7eb",
+      "bytes": 15380
+    },
+    ".cache/matrix-carry-forward-9dcff0588.json": {
+      "sha256": "5c3879a69da4ed15dbcb0e626e1e107aaeb4427e1c448876149524bfd995e0cb",
+      "bytes": 4784
+    }
+  },
+  "findings": [],
+  "verifiedContracts": [
+    "Canonical local source/capture admission and source/helper pins retained.",
+    "Node qualifier wrappers unchanged; six remaining matrix jobs selected through existing --only interface.",
+    "Five prior passes and incomplete original group remain separately bound by carry-forward manifest.",
+    "Existing identity-owned child cleanup and1800/1860second execution/final limits retained.",
+    "Local200MiB floor retained; exact owned external parent,mount,TMP identities and512MiB external floor added."
+  ],
+  "limitations": [
+    "This is observer preparation review, not browser qualification.",
+    "External browser profile/SQLite behavior remains unproven until actual execution.",
+    "Synchronous SMB filesystem calls are not hard-preemptible; existing final deadline rejects late results."
+  ]
+}

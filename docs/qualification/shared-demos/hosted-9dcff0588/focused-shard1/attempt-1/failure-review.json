@@ -1,0 +1,152 @@
+{
+  "format": "SharedDemoHostedFocusedFailureV1",
+  "observedAt": "2026-10-19T11:02:07.726862+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "jobID": 118015194690,
+  "jobURL": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118015194690",
+  "result": "failed",
+  "rawLog": {
+    "path": ".cache/hosted-9dcff0588-job-118015194690.log.txt",
+    "sha256": "023fa941b64ed99be71e15b499239642693a2d687ad54fb5e4e8674d6f8b343f",
+    "bytes": 1090575
+  },
+  "failures": [
+    {
+      "line": 2365,
+      "text": "2026-10-19T10:44:32.2808774Z not ok 1 - an accessible demo on an idle Legacy host prepares the same level without automatic Start"
+    }
+  ],
+  "failingTest": {
+    "path": "game/test/demo-fresh-handoff.test.mjs",
+    "line": 9,
+    "assertionLine": 15,
+    "message": "Fresh must finish exact mission preparation on the Legacy owner.",
+    "predicate": "demo-dialog is closed after Fresh",
+    "waitBudgetMs": 30000,
+    "wholeCaseDurationMs": 43133.35722,
+    "fileStats": {
+      "tests": 8,
+      "pass": 7,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "retainedExcerpt": [
+    {
+      "line": 2364,
+      "text": "2026-10-19T10:44:32.2766603Z # Subtest: an accessible demo on an idle Legacy host prepares the same level without automatic Start"
+    },
+    {
+      "line": 2365,
+      "text": "2026-10-19T10:44:32.2808774Z not ok 1 - an accessible demo on an idle Legacy host prepares the same level without automatic Start"
+    },
+    {
+      "line": 2366,
+      "text": "2026-10-19T10:44:32.2837978Z   ---"
+    },
+    {
+      "line": 2367,
+      "text": "2026-10-19T10:44:32.2868005Z   duration_ms: 43133.35722"
+    },
+    {
+      "line": 2368,
+      "text": "2026-10-19T10:44:32.2888677Z   location: '/home/runner/work/revealline/revealline/source/game/test/demo-fresh-handoff.test.mjs:9:1'"
+    },
+    {
+      "line": 2369,
+      "text": "2026-10-19T10:44:32.2968165Z   failureType: 'testCodeFailure'"
+    },
+    {
+      "line": 2370,
+      "text": "2026-10-19T10:44:32.2978416Z   error: 'Fresh must finish exact mission preparation on the Legacy owner.'"
+    },
+    {
+      "line": 2371,
+      "text": "2026-10-19T10:44:32.3008229Z   code: 'ERR_ASSERTION'"
+    },
+    {
+      "line": 2372,
+      "text": "2026-10-19T10:44:32.3038226Z   name: 'AssertionError'"
+    },
+    {
+      "line": 2373,
+      "text": "2026-10-19T10:44:32.3043180Z   expected: true"
+    },
+    {
+      "line": 2374,
+      "text": "2026-10-19T10:44:32.3068132Z   actual: false"
+    },
+    {
+      "line": 2375,
+      "text": "2026-10-19T10:44:32.3098064Z   operator: '=='"
+    },
+    {
+      "line": 2376,
+      "text": "2026-10-19T10:44:32.3107979Z   stack: |-"
+    },
+    {
+      "line": 2377,
+      "text": "2026-10-19T10:44:32.3128715Z     waitFor (file:///home/runner/work/revealline/revealline/source/game/test/helpers/wait-for.mjs:15:12)"
+    },
+    {
+      "line": 2378,
+      "text": "2026-10-19T10:44:32.3158610Z     runNextTicks (node:internal/process/task_queues:60:5)"
+    },
+    {
+      "line": 2379,
+      "text": "2026-10-19T10:44:32.3188236Z     process.processTimers (node:internal/timers:516:9)"
+    },
+    {
+      "line": 2380,
+      "text": "2026-10-19T10:44:32.3198789Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/demo-fresh-handoff.test.mjs:15:3)"
+    },
+    {
+      "line": 2381,
+      "text": "2026-10-19T10:44:32.3218394Z     async Test.run (node:internal/test_runner/test:797:9)"
+    },
+    {
+      "line": 2382,
+      "text": "2026-10-19T10:44:32.3248426Z     async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "line": 2383,
+      "text": "2026-10-19T10:44:32.3257964Z   ..."
+    }
+  ],
+  "otherEvidence": [
+    "All15 demo-survival cases passed in this same exact shard (log2733-2738); prior native checkpoint failure is not repeated.",
+    "The other7 Fresh handoff cases/subcases passed, including Ready state, unchanged origin and locked-mission protection.",
+    "Later successful Journey/Legacy host setups took31-38 seconds. This is consistent with hosted CPU cost, but does not prove the Fresh timeout was only slowness.",
+    "The logged Fixture font decode failed message belongs to a passing negative case; it is not another not-ok result."
+  ],
+  "readOnlyAssessment": {
+    "path": "fresh() awaits prepareDemoFresh -> exact unified mission library preparation/launch; caught exception becomes UI takeoverError rather than console error.",
+    "unknown": "Failure reports only the dialog-open predicate. No status, loading stage, focus, caught reason or resource snapshot was attached; cannot distinguish still-pending preparation from refused/cancelled/failed handoff.",
+    "next": "Reproduce exact case with bounded state diagnostics while preserving Ready/checkpoint/persistence assertions. Do not assume replay corruption, silently retry, or call an increased wait a confirmed fix."
+  },
+  "sourcePins": [
+    {
+      "path": "game/test/demo-fresh-handoff.test.mjs",
+      "sha256": "b7195cb839e3b31448cec0ad2f593aa88ceebedf90aa6da1337869eb1ff1775f"
+    },
+    {
+      "path": "game/test/helpers/demo-host-fixture.mjs",
+      "sha256": "fae1e6fd7d355f527379697be17cd9de57ef9267523fd899d8a5a07ca1e636bd"
+    },
+    {
+      "path": "game/test/helpers/wait-for.mjs",
+      "sha256": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "sha256": "7f2d09118885feef5614bfa906c206ab099964f943a692264187a97e1be87b3d"
+    },
+    {
+      "path": "game/app.mjs",
+      "sha256": "bcd024dac248be1510de40b67f2af72519944b9a845304fc303cb72a4ea4a43a"
+    }
+  ],
+  "noSourceChanges": true,
+  "noTestOrJobRerun": true
+}

@@ -1,0 +1,82 @@
+{
+  "format": "SharedDemoFreshHandoffFailureObservationV1",
+  "recordedAt": "2026-10-19T11:10:44.216919+00:00",
+  "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "originalHostedFailure": {
+    "job": 118015194690,
+    "case": "an accessible demo on an idle Legacy host prepares the same level without automatic Start",
+    "waitMs": 30000,
+    "testElapsedMs": 43133.35722
+  },
+  "localObservations": [
+    {
+      "kind": "unchanged isolated test",
+      "runtime": "Node22.22.2 arm64",
+      "passed": 1,
+      "failed": 0,
+      "testElapsedMs": 8843.229125,
+      "rawOutputScope": "Tool execution transcript, no separate persisted TAP."
+    },
+    {
+      "kind": "unchanged two-file concurrent test",
+      "runtime": "Node22.22.2 arm64",
+      "CI": true,
+      "concurrency": 2,
+      "passed": 11,
+      "failed": 0,
+      "totalElapsedMs": 39129.695916,
+      "rawOutputScope": "Tool execution transcript, no separate persisted TAP."
+    },
+    {
+      "kind": "ignored diagnostic copy with automaticPreparationFrames:false",
+      "passed": 1,
+      "failed": 0,
+      "testElapsedMs": 8588.315375,
+      "rawTAP": ".cache/fresh-handoff-no-auto-frames-before.tap",
+      "changes": "Relocate imports for ignored copy and disable optional automatic preparation intervals. Original waitFor30s and all result/persistence assertions unchanged."
+    }
+  ],
+  "pins": [
+    {
+      "path": "game/test/demo-fresh-handoff.test.mjs",
+      "bytes": 6445,
+      "sha256": "b7195cb839e3b31448cec0ad2f593aa88ceebedf90aa6da1337869eb1ff1775f"
+    },
+    {
+      "path": "game/test/demo-classic-fresh-host.test.mjs",
+      "bytes": 3799,
+      "sha256": "01c193afcf2cb920514cefb406ada47eeb9ae691decf53d319d4d6c5de3b9122"
+    },
+    {
+      "path": "game/test/helpers/demo-host-fixture.mjs",
+      "bytes": 5157,
+      "sha256": "fae1e6fd7d355f527379697be17cd9de57ef9267523fd899d8a5a07ca1e636bd"
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "bytes": 35098,
+      "sha256": "3d2fb5ffdbad7edffca39e2606eddbbabc4757b390c56b44497edfe679071a29"
+    },
+    {
+      "path": "game/test/helpers/wait-for.mjs",
+      "bytes": 714,
+      "sha256": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6"
+    },
+    {
+      "path": ".cache/fresh-handoff-no-auto-frames-before.mjs",
+      "bytes": 6521,
+      "sha256": "02800ee954c332213f660e9c7429c5b3789e7067445380e435014b925fd1cdcc"
+    },
+    {
+      "path": ".cache/fresh-handoff-no-auto-frames-before.tap",
+      "bytes": 371,
+      "sha256": "abfffd77ed44d73987df3e6c4fe766ca1a9568fae93c3b710631c35ec86cae62"
+    }
+  ],
+  "finding": "Original timeout is not reproduced locally. Disabling automatic preparation frames did not reproduce a mandatory frame deadlock. No production/test timeout or source change is justified by these observations.",
+  "limits": [
+    "Does not identify the exact cause of the hosted failure.",
+    "Local macOS observations do not establish a hosted Linux pass.",
+    "Single-job retry failed before tests due to an absent attempt-specific admission artifact; retained separately."
+  ]
+}

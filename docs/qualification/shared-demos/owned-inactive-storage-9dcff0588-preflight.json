@@ -1,0 +1,1445 @@
+{
+  "format": "SharedDemoOwnedInactiveStoragePreflightV1",
+  "observedAt": "2026-10-19T10:44:03.468064+00:00",
+  "readOnly": true,
+  "copiedOrRemoved": false,
+  "candidates": [
+    {
+      "path": ".cache/admission-inventory-draft/live",
+      "identity": {
+        "device": 16777235,
+        "inode": 146980140,
+        "uid": 502,
+        "mode": 16877,
+        "mtimeNs": 1792349447654595344
+      },
+      "files": [
+        {
+          "path": ".cache/admission-inventory-draft/live/10088a3b5d736e6c6fb6eb45e751a5d73b453fec9b4c79b5712e5a4eaccaa635.json",
+          "device": 16777235,
+          "inode": 146980182,
+          "uid": 502,
+          "size": 2762,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792349051280695880,
+          "sha256": "8201a386412699ea5436a66aa8864f47f47589eecea6273c093dab78fa0623ee"
+        },
+        {
+          "path": ".cache/admission-inventory-draft/live/509c838e3193c280c996005933589634427d8644b2cf754af713716ecc784b53.json",
+          "device": 16777235,
+          "inode": 146980168,
+          "uid": 502,
+          "size": 19527,
+          "allocatedBytes": 20480,
+          "mtimeNs": 1792349050302415552,
+          "sha256": "3e2c46c807566032b9d2de636fd8511feeaebe00725dcef9720f101758498c8a"
+        },
+        {
+          "path": ".cache/admission-inventory-draft/live/ad75408d250db1c07a422d5688ebccc05d35876efe6d1cd74391abd9654b322d.json",
+          "device": 16777235,
+          "inode": 146980193,
+          "uid": 502,
+          "size": 1133,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792349055194193988,
+          "sha256": "c43767d085a2669fb346aabcf23d7cd6e3decd7ec25a6b9d875dacd83dad7023"
+        },
+        {
+          "path": ".cache/admission-inventory-draft/live/ae09323003a862c2e43d448f5c923bf5e59fb6727f61731ee8ba72560fb9d04b.json",
+          "device": 16777235,
+          "inode": 146980190,
+          "uid": 502,
+          "size": 13806048,
+          "allocatedBytes": 13807616,
+          "mtimeNs": 1792349054771680782,
+          "sha256": "2f98e58fd83598685e7a0fb026eeb9535710ebd4ca55fa196f3f5163200c6fba"
+        },
+        {
+          "path": ".cache/admission-inventory-draft/live/da8d64e260fadba1e0958ca6da54cfd0a89c7538aa34441855252e6163f1adec.json",
+          "device": 16777235,
+          "inode": 146980181,
+          "uid": 502,
+          "size": 14142,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792349050817795774,
+          "sha256": "df6006c6a3c85d1f62116e9e2adee21caf171a2eae774cfc849c8c558d90497f"
+        },
+        {
+          "path": ".cache/admission-inventory-draft/live/ec4e53bd7356b6215c077d473261ddf31bf16f9d19f03100f4e0754c30a6b9e4.json",
+          "device": 16777235,
+          "inode": 146980198,
+          "uid": 502,
+          "size": 14662408,
+          "allocatedBytes": 14663680,
+          "mtimeNs": 1792349057687265305,
+          "sha256": "5ad04e6bd27f44116a6987bb0997af4d854e0c5318d92f60fce42a2f31bbe2ac"
+        },
+        {
+          "path": ".cache/admission-inventory-draft/live/fresh-pull.json",
+          "device": 16777235,
+          "inode": 146980199,
+          "uid": 502,
+          "size": 19527,
+          "allocatedBytes": 20480,
+          "mtimeNs": 1792349058608691470,
+          "sha256": "3453e8057cc75c7165f6d59657c70e012b09196b2d1561d196bb098106b31112"
+        },
+        {
+          "path": ".cache/admission-inventory-draft/live/requests.json",
+          "device": 16777235,
+          "inode": 146980200,
+          "uid": 502,
+          "size": 824,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792349058608899555,
+          "sha256": "0ff1ef905a2e2105fce20c18d54c0d23e7349b916531eaf61fb3b9f72b86431f"
+        },
+        {
+          "path": ".cache/admission-inventory-draft/live/single-commit-compare.json",
+          "device": 16777235,
+          "inode": 146991001,
+          "uid": 502,
+          "size": 7196,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792349447654699552,
+          "sha256": "2f08fcb295b6691e67598ae220cdf250af2f07ad7cfc4806543aeed73d842bfa"
+        }
+      ],
+      "fileCount": 9,
+      "logicalBytes": 28533567,
+      "allocatedBytes": 28549120,
+      "openHandles": {
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "existingExternalBackupVerified": false,
+      "preservationRequiredBeforeRetirement": true
+    },
+    {
+      "path": ".cache/webkit-context-source",
+      "identity": {
+        "device": 16777235,
+        "inode": 147076749,
+        "uid": 502,
+        "mode": 16877,
+        "mtimeNs": 1792353232190830568
+      },
+      "files": [
+        {
+          "path": ".cache/webkit-context-source/Modules__cache__CacheStorageConnection.cpp",
+          "device": 16777235,
+          "inode": 147093384,
+          "uid": 502,
+          "size": 3137,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353086583356162,
+          "sha256": "22f2d32b2c9760c34b434db1a914ab8535cf40f97faed39ad5887d1255308ef5"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__cache__DOMCache.cpp",
+          "device": 16777235,
+          "inode": 147093375,
+          "uid": 502,
+          "size": 26108,
+          "allocatedBytes": 28672,
+          "mtimeNs": 1792353085894682578,
+          "sha256": "7a5447dbfcefcfaff843e5735aa494c2e7f1d684edc88e72a9db96a47f24ddda"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__cache__DOMCacheEngine.cpp",
+          "device": 16777235,
+          "inode": 147094534,
+          "uid": 502,
+          "size": 7320,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353119306859044,
+          "sha256": "b056ff8431016e729280a6c4b03a340116307746060941d6af24a7020dbe95ac"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__cache__DOMCacheEngine.h",
+          "device": 16777235,
+          "inode": 147094537,
+          "uid": 502,
+          "size": 6421,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353119597516807,
+          "sha256": "cb6bd5ac131b1e8e361fa2be339d5ea144226004530706f4f022f46fb5a66648"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__cache__DOMCacheStorage.cpp",
+          "device": 16777235,
+          "inode": 147093382,
+          "uid": 502,
+          "size": 13524,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792353086261658193,
+          "sha256": "cd7655ec0d20733168360089c396b40b6b9c0934247132cb221e09d95954ed99"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__fetch__FetchBody.idl",
+          "device": 16777235,
+          "inode": 147093390,
+          "uid": 502,
+          "size": 2112,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353087151436498,
+          "sha256": "4f5f6f4b6a9513f2122deab8cefec5184a7fb1c62ab6bc1a7f3e9b2a3115d4c7"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__fetch__FetchResponse.cpp",
+          "device": 16777235,
+          "inode": 147093124,
+          "uid": 502,
+          "size": 26979,
+          "allocatedBytes": 28672,
+          "mtimeNs": 1792353059963093796,
+          "sha256": "aed13b819ffc85c109651af31cd9cd0f45057fa3bdd426c487d47f06bba03f56"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__fetch__FetchResponse.h",
+          "device": 16777235,
+          "inode": 147093125,
+          "uid": 502,
+          "size": 9142,
+          "allocatedBytes": 12288,
+          "mtimeNs": 1792353060111705464,
+          "sha256": "c8f4ab962c2096457bf4e4e3684fb87f3134de67e2cb8917237ab166d2547192"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__fetch__FetchResponse.idl",
+          "device": 16777235,
+          "inode": 147093387,
+          "uid": 502,
+          "size": 3060,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353086864256605,
+          "sha256": "0937101cb0c02f2cbfedb9fbfc45d3227ecce69fa815760fb01e8d7288137a52"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__fetch__FetchResponseBodyLoader.h",
+          "device": 16777235,
+          "inode": 147093126,
+          "uid": 502,
+          "size": 1868,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353060126980526,
+          "sha256": "5a4f8dcb1abc9bca796dcc43c986a6fe01410fdb01ab313608dd9b3925110a38"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ByteLengthQueuingStrategy.cpp",
+          "device": 16777235,
+          "inode": 147093127,
+          "uid": 502,
+          "size": 1982,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353060150470119,
+          "sha256": "534d1d2be7c714c83d99e632c2d066fc4784c76e035aa98fea4de7e553c9d3eb"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ByteLengthQueuingStrategy.h",
+          "device": 16777235,
+          "inode": 147093128,
+          "uid": 502,
+          "size": 1926,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353060245670111,
+          "sha256": "cf202ea8bc6e7a755bca5c4dce7975946111cbeeba76d269aae6523cd9b93f15"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ByteLengthQueuingStrategy.js",
+          "device": 16777235,
+          "inode": 147093129,
+          "uid": 502,
+          "size": 1913,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353060383716420,
+          "sha256": "49ca8d74fb3160f92681d96810dbd4dd0b3c694782e2b8f0b7612daa405f5b73"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__CountQueuingStrategy.js",
+          "device": 16777235,
+          "inode": 147093130,
+          "uid": 502,
+          "size": 1849,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353060412989587,
+          "sha256": "0a23bd92b81a8601b0d52fb2da9fac1ea68165b962a7c12f6a0c8b36dfd3381c"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__QueuingStrategy.h",
+          "device": 16777235,
+          "inode": 147093131,
+          "uid": 502,
+          "size": 1532,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353060422569365,
+          "sha256": "f4d7dcb95d5afc25c0243a6414f2d29b5db9e8c87a91000e83c9b67ed3c773bf"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__QueuingStrategySize.h",
+          "device": 16777235,
+          "inode": 147093134,
+          "uid": 502,
+          "size": 2093,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353060594288502,
+          "sha256": "a926eb0d5fc86ed7aab5b14be8474e7423b345485aac10d6e7eb4a9a6e4e095b"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableByteStreamController.cpp",
+          "device": 16777235,
+          "inode": 147093136,
+          "uid": 502,
+          "size": 41191,
+          "allocatedBytes": 45056,
+          "mtimeNs": 1792353060707016178,
+          "sha256": "8cc91447ddc1f2bfb5ed8fe97092f04065c884401d8ea08d3b8782e5780606af"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableByteStreamController.h",
+          "device": 16777235,
+          "inode": 147093135,
+          "uid": 502,
+          "size": 7762,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353060706323429,
+          "sha256": "cd96c7fdf42d963d9133355e06c93c64346bda1c0be4f57bfae581a8c67f0fed"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStream.cpp",
+          "device": 16777235,
+          "inode": 147093137,
+          "uid": 502,
+          "size": 32172,
+          "allocatedBytes": 32768,
+          "mtimeNs": 1792353060726133277,
+          "sha256": "88855c32086dbdae3c199234712ed16fc52ca2d32ecbcf6592d7f1d5e2466aed"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStream.h",
+          "device": 16777235,
+          "inode": 147093138,
+          "uid": 502,
+          "size": 9153,
+          "allocatedBytes": 12288,
+          "mtimeNs": 1792353060876508151,
+          "sha256": "23e2cd1a3dee8afb26b34452c0d88c6e5daa02248e0e88d46c146d176e0fa0d4"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamBYOBReader.cpp",
+          "device": 16777235,
+          "inode": 147093139,
+          "uid": 502,
+          "size": 11358,
+          "allocatedBytes": 12288,
+          "mtimeNs": 1792353060990521826,
+          "sha256": "60d2d24a54ad4c3d28524bde63d6e39196da9f0239022223261ee279b4603521"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamBYOBReader.h",
+          "device": 16777235,
+          "inode": 147093140,
+          "uid": 502,
+          "size": 3827,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061005658805,
+          "sha256": "50e949ce9118477b35f8690fba60165bdde466e0c6c9b758a88f15d883bd8adf"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamBYOBRequest.cpp",
+          "device": 16777235,
+          "inode": 147093141,
+          "uid": 502,
+          "size": 3908,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061085856818,
+          "sha256": "27a14d9c22f1e7b02310793a7beea1ded6f907eb58a6279a8d08a834f01c6854"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamBYOBRequest.h",
+          "device": 16777235,
+          "inode": 147093142,
+          "uid": 502,
+          "size": 2250,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061190859047,
+          "sha256": "a1a1b577ec2682b12491017268fee47592694eb2ac29dff7fa129c401888bff1"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamDefaultController.js",
+          "device": 16777235,
+          "inode": 147093143,
+          "uid": 502,
+          "size": 3179,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061263058572,
+          "sha256": "3c8efd74b1c0f89cd484651dc5a361767897ce14eb836671870a433019d64061"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamDefaultReader.cpp",
+          "device": 16777235,
+          "inode": 147093144,
+          "uid": 502,
+          "size": 15493,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792353061293130614,
+          "sha256": "e1d42eb39f79ae9ce8814ab96c6ebfbd5462407e90a5245265fbd0345cf37f93"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamDefaultReader.h",
+          "device": 16777235,
+          "inode": 147093146,
+          "uid": 502,
+          "size": 4087,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061411391741,
+          "sha256": "6e33f8b4b3bc6fabf59e3061a625770c4d00e0c1d5c4f26e41e4ce0cc754eecd"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamDefaultReader.js",
+          "device": 16777235,
+          "inode": 147093147,
+          "uid": 502,
+          "size": 3412,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061465029875,
+          "sha256": "90285fcf057e92953519f1bb750eed9cf4a5ff0b066b86f9043e4f4d98c136c5"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamInternals.js",
+          "device": 16777235,
+          "inode": 147093150,
+          "uid": 502,
+          "size": 27945,
+          "allocatedBytes": 28672,
+          "mtimeNs": 1792353061630247770,
+          "sha256": "e71ba3cd275a7037a06222874e0bc2d563976633e4343f085163878c20219c95"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamReadRequest.cpp",
+          "device": 16777235,
+          "inode": 147093151,
+          "uid": 502,
+          "size": 4828,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353061671388504,
+          "sha256": "8db32aba9101f670a94a33e7a9b385409a1902786a2684e9b91c7d7cb5fe562d"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamReadRequest.h",
+          "device": 16777235,
+          "inode": 147093152,
+          "uid": 502,
+          "size": 2289,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061703786793,
+          "sha256": "14e71d0a393344ba819622b95ea8fed5eda1d577ffa78c51093b3439fc691220"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamReadResult.h",
+          "device": 16777235,
+          "inode": 147093153,
+          "uid": 502,
+          "size": 1507,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061732440378,
+          "sha256": "da2082755ebe174ad80a04ed6b0a8acab0fabf8b3cd4da561070a4127c489246"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamSink.cpp",
+          "device": 16777235,
+          "inode": 147093160,
+          "uid": 502,
+          "size": 2493,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353062183542709,
+          "sha256": "ae01cd1efa285b5fe88be299d426c54cde206a28fa06203b1751a2bb2c788d4d"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamSink.h",
+          "device": 16777235,
+          "inode": 147093154,
+          "uid": 502,
+          "size": 2542,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061951815364,
+          "sha256": "5b87e994fc7fa97719cf6b7bd76a80442a826255d170c853ccab9da84512439c"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamSource.cpp",
+          "device": 16777235,
+          "inode": 147093155,
+          "uid": 502,
+          "size": 4027,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353061985490859,
+          "sha256": "26f73504b5ded31d8406f95ee93dbb6510774d2a930100e8a6bcdad52fb9165d"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamSource.h",
+          "device": 16777235,
+          "inode": 147093157,
+          "uid": 502,
+          "size": 3851,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353062024092556,
+          "sha256": "0f00a2e1f2173b87146fc2ebf3120a8da5dd7a5387dc067c7153372b59102c80"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamToSharedBufferSink.cpp",
+          "device": 16777235,
+          "inode": 147093161,
+          "uid": 502,
+          "size": 6386,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353062223604862,
+          "sha256": "ab5e3de7fc50740b547122279c77ade0f20a5009b21c0287a5a206e73d609b0f"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamToSharedBufferSink.h",
+          "device": 16777235,
+          "inode": 147093162,
+          "uid": 502,
+          "size": 2706,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353062256709732,
+          "sha256": "ba5eb4eda46205b8a60dd8fb3e8e9588d80771d68e536b926119e24388c62ade"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__ReadableStreamType.h",
+          "device": 16777235,
+          "inode": 147093163,
+          "uid": 502,
+          "size": 1433,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353062334206291,
+          "sha256": "38f4c00b1cb56536321fbbf4a7da784dd48de27ba340b20de29f906d3d4d7a6f"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__StreamInternals.js",
+          "device": 16777235,
+          "inode": 147093164,
+          "uid": 502,
+          "size": 5989,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353062452278710,
+          "sha256": "2183707faedfed39213fffa75c4a0f9ef8d952f438f12653f1dc107a2f1f9d03"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__StreamPipeOptions.h",
+          "device": 16777235,
+          "inode": 147093166,
+          "uid": 502,
+          "size": 1579,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353062523713569,
+          "sha256": "69eb559fdaec07490caad3042d85d6e6b54e70c5fcbd3d7099daf1fb7d8037e1"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__StreamPipeToUtilities.cpp",
+          "device": 16777235,
+          "inode": 147093168,
+          "uid": 502,
+          "size": 27223,
+          "allocatedBytes": 28672,
+          "mtimeNs": 1792353062572095877,
+          "sha256": "e11d303141da09c9727f71a4a00ac458fb4512ae158aad10bc187a6ff1280da1"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__StreamPipeToUtilities.h",
+          "device": 16777235,
+          "inode": 147093169,
+          "uid": 502,
+          "size": 1731,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353062704093610,
+          "sha256": "c52c745eff75b8ce464d9f4d1def37aa26ea584997d0d01dbbc38ef4e58492cf"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__StreamTeeUtilities.cpp",
+          "device": 16777235,
+          "inode": 147093172,
+          "uid": 502,
+          "size": 25843,
+          "allocatedBytes": 28672,
+          "mtimeNs": 1792353062763841152,
+          "sha256": "33530f23355d1b791c1f70ecd3878dd2eb5765e273a3d307c19bf4ca00e914bb"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__StreamTeeUtilities.h",
+          "device": 16777235,
+          "inode": 147093173,
+          "uid": 502,
+          "size": 1655,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353062782500460,
+          "sha256": "86699459b33b69cf12b15a55b05943681831ae5594cddd141b870b88804febdb"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__StreamTransferUtilities.cpp",
+          "device": 16777235,
+          "inode": 147093174,
+          "uid": 502,
+          "size": 14813,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792353062865984552,
+          "sha256": "79aa6d3d0e4d47e09e104e4649717e432679808b0122ab4d7162a625620f571d"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__StreamTransferUtilities.h",
+          "device": 16777235,
+          "inode": 147093179,
+          "uid": 502,
+          "size": 1906,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353063045552719,
+          "sha256": "a208e3ae4edc4386e815dd3f21c0a67a006ad2b7b274e4addec09ce4bb361fac"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__TransformStream.cpp",
+          "device": 16777235,
+          "inode": 147093180,
+          "uid": 502,
+          "size": 8032,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353063068303521,
+          "sha256": "09af0930be5f5179abbc1251c64cda5b638349e2e31b3d082affe6cd2483c3d4"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__TransformStream.h",
+          "device": 16777235,
+          "inode": 147093181,
+          "uid": 502,
+          "size": 3001,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353063086921995,
+          "sha256": "8f563aed3693ad2e11b88c9ecfeac5937e2a2be9391ac95ecd6d6ba2bbd51fce"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__TransformStreamDefaultController.js",
+          "device": 16777235,
+          "inode": 147093187,
+          "uid": 502,
+          "size": 2883,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353063833585665,
+          "sha256": "7b143584c946b6fb2580644c3bb1316f00aba0db74641ce2f6b510ea32c69c9d"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__TransformStreamInternals.js",
+          "device": 16777235,
+          "inode": 147093184,
+          "uid": 502,
+          "size": 16936,
+          "allocatedBytes": 20480,
+          "mtimeNs": 1792353063497199383,
+          "sha256": "c755a3b8cde098a1c30057912a98a5d3d8f6973c7e8f2abf882651f887940108"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__UnderlyingSource.h",
+          "device": 16777235,
+          "inode": 147093183,
+          "uid": 502,
+          "size": 1822,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353063497164716,
+          "sha256": "63479fddd5705b6bc91fdfaed3bd263ec2fc26a07edefc4a8a7f2d01de9664f5"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__UnderlyingSourceCancelCallback.h",
+          "device": 16777235,
+          "inode": 147093185,
+          "uid": 502,
+          "size": 2086,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353063497379799,
+          "sha256": "b339974e1eed84e78d0bcb7fb4f6eda0cdf20f68ac6095aef077910ed547cd57"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__UnderlyingSourcePullCallback.h",
+          "device": 16777235,
+          "inode": 147093188,
+          "uid": 502,
+          "size": 2117,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353063863731581,
+          "sha256": "11557572cba7064c6605c34809122a7717d00fbc47c9d01e1f44856d8a8a59af"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__UnderlyingSourceStartCallback.h",
+          "device": 16777235,
+          "inode": 147093190,
+          "uid": 502,
+          "size": 2235,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353063892933791,
+          "sha256": "5738a2a664080db24ef8909ed4a2a35d8b6d430bf8a1ba183c0a1021a1bfca1b"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__WritableStream.cpp",
+          "device": 16777235,
+          "inode": 147093189,
+          "uid": 502,
+          "size": 6640,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353063884296844,
+          "sha256": "c7e7796bc5f70b6b2f15359e841640abae4107848a52895dbc64a7c9a18b31bd"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__WritableStream.h",
+          "device": 16777235,
+          "inode": 147093193,
+          "uid": 502,
+          "size": 3336,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353064103816706,
+          "sha256": "da9e2ebe80d774920c163b95a1444db6a2e718ecc6161dcfc86f1adbe76704c8"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__WritableStreamDefaultController.js",
+          "device": 16777235,
+          "inode": 147093194,
+          "uid": 502,
+          "size": 2673,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353064137559909,
+          "sha256": "c72ca3a4518136ec018ddc3969c6b8d0002f9b4b0bfe37e8fbf293ed9b8f9647"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__WritableStreamDefaultWriter.js",
+          "device": 16777235,
+          "inode": 147093195,
+          "uid": 502,
+          "size": 4712,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353064243392220,
+          "sha256": "8831ac5b0c99692534fef0b159558c0328a800fac6feac7a8080edccd7b93a5e"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__WritableStreamInternals.js",
+          "device": 16777235,
+          "inode": 147093196,
+          "uid": 502,
+          "size": 32433,
+          "allocatedBytes": 32768,
+          "mtimeNs": 1792353064311715750,
+          "sha256": "e70e27e574a33498b9aac5cfde8db84051537f4ddfaa132259cfd93a2555c475"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__WritableStreamSink.cpp",
+          "device": 16777235,
+          "inode": 147093198,
+          "uid": 502,
+          "size": 5316,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353064410938071,
+          "sha256": "e976ac14dda65f8e9294d5ef1f3864cb3f686f1391f664eba1c50484db7d962f"
+        },
+        {
+          "path": ".cache/webkit-context-source/Modules__streams__WritableStreamSink.h",
+          "device": 16777235,
+          "inode": 147093199,
+          "uid": 502,
+          "size": 2923,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353064429614378,
+          "sha256": "5b133a725cc6fd620cee0fd7a2575eb06407cf45c369ad73f0e779a596b3008a"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__Modules__fetch__FetchBody.cpp",
+          "device": 16777235,
+          "inode": 147076758,
+          "uid": 502,
+          "size": 14685,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792352869531904497,
+          "sha256": "c28853dc5138156f14c7f4cb7f5312c7cb7d57a1a15f2431f15370580e281f5d"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__Modules__fetch__FetchBodyConsumer.cpp",
+          "device": 16777235,
+          "inode": 147076759,
+          "uid": 502,
+          "size": 22956,
+          "allocatedBytes": 24576,
+          "mtimeNs": 1792352869535145285,
+          "sha256": "33854d70e2ea3f8008256c4d0b4eb2d6b1c22a321a4a331b9d0c77b76e427934"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__Modules__fetch__FetchBodyOwner.cpp",
+          "device": 16777235,
+          "inode": 147076763,
+          "uid": 502,
+          "size": 15930,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792352869792160011,
+          "sha256": "9f316560a20f089c1a220375210cac8c08193dcf0f248ecdcf7368a369313936"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__Modules__fetch__FetchLoader.cpp",
+          "device": 16777235,
+          "inode": 147076764,
+          "uid": 502,
+          "size": 8432,
+          "allocatedBytes": 12288,
+          "mtimeNs": 1792352869814991395,
+          "sha256": "2ed7c475562ae161d4f5bd7ebc20e8d74ccc4e3b18ee77c1f00084736b5c5e2c"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__Modules__fetch__FetchRequest.cpp",
+          "device": 16777235,
+          "inode": 147076762,
+          "uid": 502,
+          "size": 16082,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792352869791899178,
+          "sha256": "0e0a3ffa63376b3c74b1072366a0d3e60576e376657de0543d6bc2496dd44c33"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__Modules__fetch__FetchResponse.cpp",
+          "device": 16777235,
+          "inode": 147076761,
+          "uid": 502,
+          "size": 26979,
+          "allocatedBytes": 28672,
+          "mtimeNs": 1792352869791665095,
+          "sha256": "aed13b819ffc85c109651af31cd9cd0f45057fa3bdd426c487d47f06bba03f56"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__Modules__webaudio__AudioContext.cpp",
+          "device": 16777235,
+          "inode": 147076771,
+          "uid": 502,
+          "size": 26497,
+          "allocatedBytes": 28672,
+          "mtimeNs": 1792352870081695358,
+          "sha256": "972d94f80c810e50ee217818acff6103633fc2c0116bae9f1b45718dacc9165b"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__Modules__webaudio__AudioWorklet.cpp",
+          "device": 16777235,
+          "inode": 147076772,
+          "uid": 502,
+          "size": 3430,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792352870337820794,
+          "sha256": "f7736195d33bb7e088e75397a0a13dd0e562bc3e3c8fadeaffc0068f9caa0d56"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__Modules__webaudio__BaseAudioContext.cpp",
+          "device": 16777235,
+          "inode": 147076770,
+          "uid": 502,
+          "size": 36295,
+          "allocatedBytes": 36864,
+          "mtimeNs": 1792352870081639358,
+          "sha256": "20da19c781255e9052242040b0ff3f69d159fe4a02b50ef216bd836a17ac3772"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__bindings__js__DOMPromiseProxy.h",
+          "device": 16777235,
+          "inode": 147076753,
+          "uid": 502,
+          "size": 13483,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792352869197879337,
+          "sha256": "b2111401438637c77f96d5be38350b32d7218ea5659a4c89fa791b3dbd462fa7"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__bindings__js__JSDOMGlobalObject.cpp",
+          "device": 16777235,
+          "inode": 147076754,
+          "uid": 502,
+          "size": 43896,
+          "allocatedBytes": 45056,
+          "mtimeNs": 1792352869221311388,
+          "sha256": "951d1424e11814d1f2bab2e411a54e5b55b91171fa3196926ad55c33c43f4119"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__bindings__js__JSDOMPromise.cpp",
+          "device": 16777235,
+          "inode": 147076752,
+          "uid": 502,
+          "size": 4362,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792352869193038343,
+          "sha256": "617545c6fb84a606411387cf92fa7a38883761a703dffe124b75d07eddabe30c"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__bindings__js__JSDOMPromiseDeferred.cpp",
+          "device": 16777235,
+          "inode": 147076750,
+          "uid": 502,
+          "size": 13472,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792352869173447579,
+          "sha256": "432768ef2dfb9828b2e847705bea51272a2b45baf4b79d9992af989465ae2a08"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__bindings__js__JSDOMPromiseDeferred.h",
+          "device": 16777235,
+          "inode": 147076751,
+          "uid": 502,
+          "size": 18201,
+          "allocatedBytes": 20480,
+          "mtimeNs": 1792352869191776137,
+          "sha256": "1003c8118a68147d774b5c9085cdcc7aeb7737b6c2d32f9d1789c96478c09ce9"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__bindings__js__ScriptController.cpp",
+          "device": 16777235,
+          "inode": 147076760,
+          "uid": 502,
+          "size": 41935,
+          "allocatedBytes": 45056,
+          "mtimeNs": 1792352869550938263,
+          "sha256": "76f82d964c3a1468d74b484a1dac1dc439f9504a683ae169a7c049299eb36a81"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__dom__ActiveDOMObject.cpp",
+          "device": 16777235,
+          "inode": 147076757,
+          "uid": 502,
+          "size": 7431,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792352869512141650,
+          "sha256": "ebf045828a1718e2c7e05c83da309e5a53770b99261a326c9b8bae8a6e662871"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__dom__Document.cpp",
+          "device": 16777235,
+          "inode": 147076768,
+          "uid": 502,
+          "size": 442712,
+          "allocatedBytes": 446464,
+          "mtimeNs": 1792352870075901658,
+          "sha256": "57fcc0f0d06e06c7147c5d2f6eeb80eb2fb3f26f0020fd948afb92b01371ab99"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__dom__ScriptExecutionContext.cpp",
+          "device": 16777235,
+          "inode": 147076756,
+          "uid": 502,
+          "size": 39896,
+          "allocatedBytes": 40960,
+          "mtimeNs": 1792352869511291026,
+          "sha256": "3b2fb2d5fe5721ce376d5e9b4ef3633d65fb6c2ef468b6ab5563d7e99099d7b3"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__html__ImageBitmap.cpp",
+          "device": 16777235,
+          "inode": 147076765,
+          "uid": 502,
+          "size": 47882,
+          "allocatedBytes": 49152,
+          "mtimeNs": 1792352869834705035,
+          "sha256": "a3df18f7e299ff0aca33f7515134d444ba55cd44d60cbeee8f07399291110eed"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__html__canvas__ImageBitmapRenderingContext.cpp",
+          "device": 16777235,
+          "inode": 147076769,
+          "uid": 502,
+          "size": 4654,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792352870075663825,
+          "sha256": "2f8e74f994fd0237985e9d6af2b3ac80d589e8ae56d80098b6068845a9ebb85a"
+        },
+        {
+          "path": ".cache/webkit-context-source/Source__WebCore__workers__WorkerGlobalScope.cpp",
+          "device": 16777235,
+          "inode": 147076773,
+          "uid": 502,
+          "size": 29741,
+          "allocatedBytes": 32768,
+          "mtimeNs": 1792352870353979605,
+          "sha256": "db852f8cd85a3ac7faa4ca3b7a46fdaf48b0fbde57b466418200e97bbec69413"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__DOMPromiseProxy.h",
+          "device": 16777235,
+          "inode": 147093197,
+          "uid": 502,
+          "size": 13483,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792353064316255827,
+          "sha256": "b2111401438637c77f96d5be38350b32d7218ea5659a4c89fa791b3dbd462fa7"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__ExceptionDetails.h",
+          "device": 16777235,
+          "inode": 147093201,
+          "uid": 502,
+          "size": 1958,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353064611863583,
+          "sha256": "e626226556c60341cb47f899524e37cc6a24601ee1e8a6adede3481bf01051ff"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__InternalReadableStream.cpp",
+          "device": 16777235,
+          "inode": 147093200,
+          "uid": 502,
+          "size": 10092,
+          "allocatedBytes": 12288,
+          "mtimeNs": 1792353064585395287,
+          "sha256": "0231dadd7b8feaecd16a789f6f2cbd3b7c194084384bd938e2ab30b33078d53c"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__InternalReadableStream.h",
+          "device": 16777235,
+          "inode": 147093205,
+          "uid": 502,
+          "size": 2562,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353064876698215,
+          "sha256": "4f99e40ebf8360ed03ab1d8121ac970b730be51d7b1831c8778ccc69ad16b7ce"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__InternalReadableStreamDefaultReader.cpp",
+          "device": 16777235,
+          "inode": 147093203,
+          "uid": 502,
+          "size": 8322,
+          "allocatedBytes": 12288,
+          "mtimeNs": 1792353064773787108,
+          "sha256": "2ab51b5357c9ac27e4e993dae9c019fbe16d1741423ef519d643628b79271032"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__InternalReadableStreamDefaultReader.h",
+          "device": 16777235,
+          "inode": 147093204,
+          "uid": 502,
+          "size": 2371,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353064843846427,
+          "sha256": "5a0a6478ac92f3fa48d082f5894224520b6facecf46fbb94c89d3ac64d723f62"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__InternalWritableStream.cpp",
+          "device": 16777235,
+          "inode": 147093206,
+          "uid": 502,
+          "size": 13046,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792353064877589464,
+          "sha256": "71b7a4415eb78fb108adbfaf079fc3c6975362841fcc9cab1ddbf75ce8c1049e"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__InternalWritableStream.h",
+          "device": 16777235,
+          "inode": 147093207,
+          "uid": 502,
+          "size": 2699,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353065070658237,
+          "sha256": "5d2278412d465d5f841a636dd37f1f46feb6190bcffc534469894ac305816870"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__InternalWritableStreamWriter.cpp",
+          "device": 16777235,
+          "inode": 147093208,
+          "uid": 502,
+          "size": 9400,
+          "allocatedBytes": 12288,
+          "mtimeNs": 1792353065149724919,
+          "sha256": "5aa42f1a0e1019d51f2cb094c08e6a2bf61293753c40e79155f4dd29836cbf44"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__InternalWritableStreamWriter.h",
+          "device": 16777235,
+          "inode": 147093210,
+          "uid": 502,
+          "size": 2580,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353065165734063,
+          "sha256": "95b823f9ecb97b0e6cb8a9944e55ea7ec21f04de8c432a43f1bad21fa69ac4f9"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMConvertPromise.h",
+          "device": 16777235,
+          "inode": 147093209,
+          "uid": 502,
+          "size": 4685,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353065157909449,
+          "sha256": "38cf2f6b87e05caa4075884cb98b966205bd81eb7b5a2f8d3a38eb8d8e29c5ea"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMExceptionHandling.cpp",
+          "device": 16777235,
+          "inode": 147093214,
+          "uid": 502,
+          "size": 16902,
+          "allocatedBytes": 20480,
+          "mtimeNs": 1792353065341644319,
+          "sha256": "544a8d338755840daac0b4a99dce3d60567aa3b530e0255cbd00f21279183c33"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMExceptionHandling.h",
+          "device": 16777235,
+          "inode": 147093215,
+          "uid": 502,
+          "size": 6209,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353065435174230,
+          "sha256": "a8ea9606ee16e27c52a83e91038431165f8912ba3d9dff7d86223689178fd5b1"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMGlobalObject.cpp",
+          "device": 16777235,
+          "inode": 147093211,
+          "uid": 502,
+          "size": 43896,
+          "allocatedBytes": 45056,
+          "mtimeNs": 1792353065255074647,
+          "sha256": "951d1424e11814d1f2bab2e411a54e5b55b91171fa3196926ad55c33c43f4119"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMGlobalObject.h",
+          "device": 16777235,
+          "inode": 147093216,
+          "uid": 502,
+          "size": 8453,
+          "allocatedBytes": 12288,
+          "mtimeNs": 1792353065435215938,
+          "sha256": "4df3b1a8b484f1b7fcc2804b8dc7c7cf918fe1782af35e87df700e467185fadc"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMGlobalObjectInlines.h",
+          "device": 16777235,
+          "inode": 147093218,
+          "uid": 502,
+          "size": 3788,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353065593174844,
+          "sha256": "ebb49b0652dac530389099f9858e17bea59a94fc8a3547e9aaea6d205fae14d2"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMOperationReturningPromise.h",
+          "device": 16777235,
+          "inode": 147093219,
+          "uid": 502,
+          "size": 6664,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353065604297787,
+          "sha256": "8f8095325d0e8c36ca639481ea1ae26987567b53030c405b1f2415482de7a85d"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMPromise.cpp",
+          "device": 16777235,
+          "inode": 147093217,
+          "uid": 502,
+          "size": 4362,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353065508543503,
+          "sha256": "617545c6fb84a606411387cf92fa7a38883761a703dffe124b75d07eddabe30c"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMPromise.h",
+          "device": 16777235,
+          "inode": 147093224,
+          "uid": 502,
+          "size": 2831,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353065680987680,
+          "sha256": "3f039676cd66ee58d21f48ed6df751e450f5d196c4294a0e7c617be85e4e8aa8"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMPromiseDeferred.cpp",
+          "device": 16777235,
+          "inode": 147093222,
+          "uid": 502,
+          "size": 13472,
+          "allocatedBytes": 16384,
+          "mtimeNs": 1792353065657710296,
+          "sha256": "432768ef2dfb9828b2e847705bea51272a2b45baf4b79d9992af989465ae2a08"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMPromiseDeferred.h",
+          "device": 16777235,
+          "inode": 147093223,
+          "uid": 502,
+          "size": 18201,
+          "allocatedBytes": 20480,
+          "mtimeNs": 1792353065680648097,
+          "sha256": "1003c8118a68147d774b5c9085cdcc7aeb7737b6c2d32f9d1789c96478c09ce9"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSDOMPromiseDeferredForward.h",
+          "device": 16777235,
+          "inode": 147093225,
+          "uid": 502,
+          "size": 2859,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353065873167204,
+          "sha256": "43a9b5179f14a603ccc1e9eddb4d190306720c178cea5916f7f13d9216ab5734"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSIDBSerializationGlobalObject.cpp",
+          "device": 16777235,
+          "inode": 147093227,
+          "uid": 502,
+          "size": 3081,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353065929755667,
+          "sha256": "50ae4b564aef0dc89fc9f416834d5e3023d309eddc89decd7e1b74497f147232"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSIDBSerializationGlobalObject.h",
+          "device": 16777235,
+          "inode": 147093229,
+          "uid": 502,
+          "size": 2456,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353065967766740,
+          "sha256": "2f5cfb03f817ddab765deb0f852f9cd0b810f8cc47781fd6731f192d0f6db6e0"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSPaymentResponseCustom.cpp",
+          "device": 16777235,
+          "inode": 147093228,
+          "uid": 502,
+          "size": 2184,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353065964623577,
+          "sha256": "26c21f6c105416f25610b1a6cfcbc523751ae0add8bf7ef4d597319ea7c6975a"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSPromiseRejectionEventCustom.cpp",
+          "device": 16777235,
+          "inode": 147093230,
+          "uid": 502,
+          "size": 1925,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353066163690467,
+          "sha256": "0b361fcd94bc411b40119de66b6c34c21cca018c8b9d07f537d5a2a15f55d467"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__JSReadableStreamSourceCustom.cpp",
+          "device": 16777235,
+          "inode": 147093232,
+          "uid": 502,
+          "size": 2677,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353066243390065,
+          "sha256": "9223e530dbd0a9444162bb33f5f14cd3ab78d475d4472d8fa6af167c1939bff8"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__ReadableStreamDefaultController.cpp",
+          "device": 16777235,
+          "inode": 147093234,
+          "uid": 502,
+          "size": 6377,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353066350374041,
+          "sha256": "810a50638070f975e41c421bcbdbf3c2866eb9ce219023233f1cc42ec1a90df2"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__ReadableStreamDefaultController.h",
+          "device": 16777235,
+          "inode": 147093235,
+          "uid": 502,
+          "size": 2947,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353066354157203,
+          "sha256": "2247664f1f10f0185e4c4164d42ae0120cfaf37ca246a07fa38eef8a7a07d22f"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__ScriptController.cpp",
+          "device": 16777235,
+          "inode": 147093233,
+          "uid": 502,
+          "size": 41935,
+          "allocatedBytes": 45056,
+          "mtimeNs": 1792353066264879952,
+          "sha256": "76f82d964c3a1468d74b484a1dac1dc439f9504a683ae169a7c049299eb36a81"
+        },
+        {
+          "path": ".cache/webkit-context-source/bindings__js__ScriptController.h",
+          "device": 16777235,
+          "inode": 147093238,
+          "uid": 502,
+          "size": 8595,
+          "allocatedBytes": 12288,
+          "mtimeNs": 1792353066523743300,
+          "sha256": "ade3d7c4ebbb862a51fe4cff5a643e507f9a5001331d6ae48eafb40eb97f9476"
+        },
+        {
+          "path": ".cache/webkit-context-source/cache-engine-inventory.json",
+          "device": 16777235,
+          "inode": 147094538,
+          "uid": 502,
+          "size": 1598,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353119598301639,
+          "sha256": "ff0b53bb099b0514617d54f23f12b45e9005eaec9a8cc62bc974ce691b4dfb74"
+        },
+        {
+          "path": ".cache/webkit-context-source/cache-inventory.json",
+          "device": 16777235,
+          "inode": 147093391,
+          "uid": 502,
+          "size": 1956,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353087197533184,
+          "sha256": "88d77a4b1d4ead6ce944dc7454367b45a8c21a09455bd4a0c2bd257026919342"
+        },
+        {
+          "path": ".cache/webkit-context-source/dom__EmptyScriptExecutionContext.h",
+          "device": 16777235,
+          "inode": 147093239,
+          "uid": 502,
+          "size": 6032,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353066547021518,
+          "sha256": "53a25b70cd3da9189ef0a7326aa0001a0dfce7b256b5b9e7510045e3a6b5c6f2"
+        },
+        {
+          "path": ".cache/webkit-context-source/dom__ScriptExecutionContext.cpp",
+          "device": 16777235,
+          "inode": 147093237,
+          "uid": 502,
+          "size": 39896,
+          "allocatedBytes": 40960,
+          "mtimeNs": 1792353066431166845,
+          "sha256": "3b2fb2d5fe5721ce376d5e9b4ef3633d65fb6c2ef468b6ab5563d7e99099d7b3"
+        },
+        {
+          "path": ".cache/webkit-context-source/dom__ScriptExecutionContext.h",
+          "device": 16777235,
+          "inode": 147093240,
+          "uid": 502,
+          "size": 20423,
+          "allocatedBytes": 20480,
+          "mtimeNs": 1792353066663056107,
+          "sha256": "320a87dbdf8f165a89d4f1800ec279bd9e096573cc1647647ae2410e0a115a27"
+        },
+        {
+          "path": ".cache/webkit-context-source/dom__ScriptExecutionContextInlines.h",
+          "device": 16777235,
+          "inode": 147093241,
+          "uid": 502,
+          "size": 4459,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353066702859926,
+          "sha256": "1a449a3325624b5fc2faa2458fa7855be3252c8816880e276e5eb25a43d534b3"
+        },
+        {
+          "path": ".cache/webkit-context-source/focused-inventory.json",
+          "device": 16777235,
+          "inode": 147093252,
+          "uid": 502,
+          "size": 31449,
+          "allocatedBytes": 32768,
+          "mtimeNs": 1792353067939170082,
+          "sha256": "7b66d0b6b2d1755dc83a25350692b3620010f6d6db4eaf29417488ace922c98a"
+        },
+        {
+          "path": ".cache/webkit-context-source/inventory.json",
+          "device": 16777235,
+          "inode": 147076774,
+          "uid": 502,
+          "size": 4516,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792352870355861019,
+          "sha256": "73e609a58c4d95d2ecac292f093df7c246dcd12834c60a281f7f2faafa7181a3"
+        },
+        {
+          "path": ".cache/webkit-context-source/platform__ScriptExecutionContextIdentifier.h",
+          "device": 16777235,
+          "inode": 147093242,
+          "uid": 502,
+          "size": 4155,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353066867038239,
+          "sha256": "c2baf2fa27d6f8837874b0566b3ae7d7e607a56276a7724ff028f1c497c1963d"
+        },
+        {
+          "path": ".cache/webkit-context-source/playwright-bootstrap.diff",
+          "device": 16777235,
+          "inode": 147093251,
+          "uid": 502,
+          "size": 926295,
+          "allocatedBytes": 929792,
+          "mtimeNs": 1792353067933370632,
+          "sha256": "1945532bbf1af8c91fafd580b0b5c0f33b14f4060f3891141f8fbc4805ab866a"
+        },
+        {
+          "path": ".cache/webkit-context-source/playwright-inventory.json",
+          "device": 16777235,
+          "inode": 147099390,
+          "uid": 502,
+          "size": 2107,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353232191069651,
+          "sha256": "1e2c336dd4a9f69fde1a5674392c2f3318371d555db86332ec7cd238f0e1a0d5"
+        },
+        {
+          "path": ".cache/webkit-context-source/playwright__browser_patches__webkit__UPSTREAM_CONFIG.sh",
+          "device": 16777235,
+          "inode": 147099389,
+          "uid": 502,
+          "size": 126,
+          "allocatedBytes": 4096,
+          "mtimeNs": 1792353232190544277,
+          "sha256": "3554c5b666ed87032fb22e78956f8a2fffe1faede63ae8dcae60a26961f6419c"
+        },
+        {
+          "path": ".cache/webkit-context-source/playwright__packages__playwright-core__src__server__webkit__wkPage.ts",
+          "device": 16777235,
+          "inode": 147099387,
+          "uid": 502,
+          "size": 61995,
+          "allocatedBytes": 65536,
+          "mtimeNs": 1792353231916895949,
+          "sha256": "31a1492936ecb34cea00628827ed830763f8f7a58fd761d0c4ecf4db6f6a4c9c"
+        },
+        {
+          "path": ".cache/webkit-context-source/playwright__packages__utils__stackTrace.ts",
+          "device": 16777235,
+          "inode": 147099384,
+          "uid": 502,
+          "size": 7996,
+          "allocatedBytes": 8192,
+          "mtimeNs": 1792353231495137369,
+          "sha256": "fd74bd690ad37498ad3b676025129b38c08c5bffb190c8d96f228a2be7b5210b"
+        },
+        {
+          "path": ".cache/webkit-context-source/webcore-tree.json",
+          "device": 16777235,
+          "inode": 147080250,
+          "uid": 502,
+          "size": 4132454,
+          "allocatedBytes": 4132864,
+          "mtimeNs": 1792352911819526166,
+          "sha256": "2b5c07bbb002f66f0d71e3abd7f35b0b56fc6926fa80f1d9b9b8f9139b13cd6a"
+        }
+      ],
+      "fileCount": 129,
+      "logicalBytes": 6882069,
+      "allocatedBytes": 7135232,
+      "openHandles": {
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "existingExternalBackupVerified": false,
+      "preservationRequiredBeforeRetirement": true
+    }
+  ],
+  "provenance": {
+    "admission": ".cache/admission-inventory-draft/REVIEW.md: historical PR1615 exact-tree API inventory; preserve entire live directory including response/request mapping.",
+    "webkit": "docs/qualification/shared-demos/webkit-context-stopped-source-audit.json: sourceFilesCached and cacheDirectory reference this old native-source investigation."
+  },
+  "excluded": [
+    "Current source/capture/build outputs, all active helpers, Git packs and user files.",
+    "Small retained native capture/adoption evidence and original observer helpers."
+  ],
+  "limitations": [
+    "Snapshot proves no current lsof handle only; final source identity/hash/handle checks must repeat before any root-authorized retirement.",
+    "No prior backup is assumed for these two directories.",
+    "Allocated bytes may include filesystem clones; actual free-space increase must be observed separately."
+  ]
+}

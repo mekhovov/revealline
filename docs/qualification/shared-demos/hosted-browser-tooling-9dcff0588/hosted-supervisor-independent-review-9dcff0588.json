@@ -1,0 +1,46 @@
+{
+  "format": "SharedDemoHostedSupervisorIndependentReviewV1",
+  "reviewedAt": "2026-10-19T11:51:06.423887+00:00",
+  "reviewer": "webkit_review",
+  "sources": [
+    {
+      "path": "scripts/qualify-shared-demo-hosted-browser.py",
+      "sha256": "185373074ebf52bf67150dac5dfe0001d5989c0f466eb4c3eee260120d0b5065",
+      "bytes": 22685
+    },
+    {
+      "path": "scripts/test-qualify-shared-demo-hosted-browser.py",
+      "sha256": "fdfc592ca6cad920a2ee268970a24900e5cac3684181126fed87c84c652a584e",
+      "bytes": 12735
+    }
+  ],
+  "materialFindings": [],
+  "reviewed": [
+    "Baseline exclusion, exited-root PID reuse rejection and ownership by observed ancestry or dedicated subreaper adoption.",
+    "Linux /proc startTicks/UID/full-argv identity plus retained pidfd signalling; argv transitions preserve kernel process identity and signals revalidate the full observed tuple.",
+    "Popen alone reaps the managed root; only exact registered adopted descendant zombies are explicitly reaped.",
+    "Cancellation is deferred only through spawn/registration, remains incomplete through final receipt writing, and does not abandon cleanup.",
+    "Existing report/log refusal, bounded regular-file reads, full stream drainage and finite process/action/transition logs.",
+    "Strict exact job inventory, child report hashes, source/tool binding equality and successful aggregate required.",
+    "Watchdog, late child exit, nonzero exit, overflow, incomplete cleanup, signal, failed validation or post-exit cleanup cannot establish success."
+  ],
+  "verification": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/test-qualify-shared-demo-hosted-browser.py",
+    "platform": "Darwin",
+    "python": "3.14.4",
+    "total": 16,
+    "passed": 7,
+    "skipped": 9,
+    "failed": 0,
+    "rawLog": {
+      "path": ".cache/hosted-supervisor-independent-guards-9dcff0588.log.txt",
+      "sha256": "24673470d64f86c6369e891a243569a775f85b83635800e79defa86d848e0ecf",
+      "bytes": 3208
+    }
+  },
+  "limits": [
+    "No actual Linux pidfd/subreaper execution on this macOS host. All nine Linux lifetime guards must execute successfully on the hosted runner before capture.",
+    "No browser, build or qualification pass is claimed.",
+    "Synchronous filesystem operations can delay polling; final elapsed checks reject overtime. Time budgets are failure bounds, not guaranteed response times."
+  ]
+}

@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: hosted plan covers every engine and the complete11+9 existing job scopes without retries
+ok 1 - hosted plan covers every engine and the complete11+9 existing job scopes without retries
+  ---
+  duration_ms: 1.053209
+  type: 'test'
+  ...
+# Subtest: partial, error-bearing and unclosed browser results cannot satisfy the hosted gate
+ok 2 - partial, error-bearing and unclosed browser results cannot satisfy the hosted gate
+  ---
+  duration_ms: 2.287
+  type: 'test'
+  ...
+# Subtest: unequal mode coverage and lost lifecycle observations cannot be hidden by complete=true
+ok 3 - unequal mode coverage and lost lifecycle observations cannot be hidden by complete=true
+  ---
+  duration_ms: 0.392708
+  type: 'test'
+  ...
+# Subtest: reviewed proof must actually terminate with progress at a published candidate boundary
+ok 4 - reviewed proof must actually terminate with progress at a published candidate boundary
+  ---
+  duration_ms: 0.750667
+  type: 'test'
+  ...
+# Subtest: hosted CLI rejects duplicate authority, unknown flags, source URLs and unbounded phases
+ok 5 - hosted CLI rejects duplicate authority, unknown flags, source URLs and unbounded phases
+  ---
+  duration_ms: 0.30375
+  type: 'test'
+  ...
+# Subtest: real child nonzero exit is preserved for strict result validation
+ok 6 - real child nonzero exit is preserved for strict result validation
+  ---
+  duration_ms: 204.574375
+  type: 'test'
+  ...
+# Subtest: child deadline fails promptly and retains the spawned identity for outer cleanup
+ok 7 - child deadline fails promptly and retains the spawned identity for outer cleanup
+  ---
+  duration_ms: 104.024
+  type: 'test'
+  ...
+# Subtest: cancellation fails promptly and cannot turn an unfinished child into success
+ok 8 - cancellation fails promptly and cannot turn an unfinished child into success
+  ---
+  duration_ms: 104.120542
+  type: 'test'
+  ...
+# Subtest: actual-worker offline evidence cannot pass with unretired storage or changed bindings
+ok 9 - actual-worker offline evidence cannot pass with unretired storage or changed bindings
+  ---
+  duration_ms: 0.554042
+  type: 'test'
+  ...
+# Subtest: full audited installation determines rounded body cap and conservative local reserve
+ok 10 - full audited installation determines rounded body cap and conservative local reserve
+  ---
+  duration_ms: 3.0775
+  type: 'test'
+  ...
+# Subtest: fresh local session removes only its own verified private tree
+ok 11 - fresh local session removes only its own verified private tree
+  ---
+  duration_ms: 5.246417
+  type: 'test'
+  ...
+# Subtest: a replacement session or symlink is refused before recursive cleanup
+ok 12 - a replacement session or symlink is refused before recursive cleanup
+  ---
+  duration_ms: 2.617291
+  type: 'test'
+  ...
+# Subtest: the browser qualifier rejects unsafe invocation before creating a profile
+ok 13 - the browser qualifier rejects unsafe invocation before creating a profile
+  ---
+  duration_ms: 361.68125
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1289.410708

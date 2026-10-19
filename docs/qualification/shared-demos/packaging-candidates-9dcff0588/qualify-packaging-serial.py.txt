@@ -1,0 +1,324 @@
+"""Prepare/run 21 serial canonical packaging jobs; never publish or change source."""
+from pathlib import Path
+import argparse
+import ast
+import datetime
+import hashlib
+import json
+import os
+import re
+import signal
+import subprocess
+import sys
+import threading
+import time
+
+
+def stamp():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def sha(body):
+    return hashlib.sha256(body).hexdigest()
+
+
+def require(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def bounded_json(file, limit=8 * 1024 * 1024):
+    require(file.is_file() and file.stat().st_size <= limit, f'Missing/oversized JSON: {file}')
+    body = file.read_bytes()
+    return json.loads(body), {'path': str(file), 'bytes': len(body), 'sha256': sha(body)}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--run', choices=['approved'], required=True)
+    parser.add_argument('--head', required=True)
+    parser.add_argument('--node', required=True)
+    parser.add_argument('--out', required=True, help='New absolute directory on a mounted external filesystem.')
+    parser.add_argument('--report', required=True, help='New small receipt in ignored scratch; survives external unmount.')
+    parser.add_argument('--base-path', default='/revealline/')
+    parser.add_argument('--company-child-seconds', type=int, default=300)
+    parser.add_argument('--company-total-seconds', type=int, default=3600)
+    parser.add_argument('--optional-child-seconds', type=int, default=300)
+    parser.add_argument('--optional-total-seconds', type=int, default=900)
+    args = parser.parse_args()
+    require(re.fullmatch(r'[a-f0-9]{40}', args.head), 'An exact committed HEAD is required.')
+    require(args.base_path == '/revealline/', 'Use the reviewed production base path.')
+    require(1 <= args.company_child_seconds <= 600 and 1 <= args.company_total_seconds <= 3600,
+            'Company bounds cannot exceed 10 minutes per child or one hour total.')
+    require(1 <= args.optional_child_seconds <= 600 and 1 <= args.optional_total_seconds <= 1800,
+            'Optional bounds cannot exceed 10 minutes per child or 30 minutes total.')
+    root = Path.cwd().resolve()
+    helper = Path(__file__).resolve()
+    helper_body = helper.read_bytes()
+    env = {**os.environ, 'GIT_NO_LAZY_FETCH': '1', 'NODE_DISABLE_COMPILE_CACHE': '1'}
+
+    def git(*args):
+        return subprocess.check_output(['git', *args], cwd=root, env=env, timeout=20, text=True).strip()
+
+    def binding():
+        require(git('rev-parse', '--show-toplevel') == str(root), 'Run from the exact checkout root.')
+        require(not git('status', '--porcelain', '--untracked-files=normal'), 'Tracked/untracked source must be clean.')
+        head = git('rev-parse', 'HEAD')
+        require(head == args.head, 'HEAD changed or differs from the explicit release pin.')
+        return {'sourceRevision': head, 'sourceTree': git('rev-parse', 'HEAD^{tree}')}
+
+    before = binding()
+    node = Path(args.node)
+    require(node.is_absolute() and node.is_file(), 'Node must be an existing absolute executable.')
+    node = node.resolve(strict=True)
+    node_version = subprocess.check_output([str(node), '--version'], env=env, timeout=10, text=True).strip()
+    output = Path(args.out)
+    require(output.is_absolute() and not output.exists(), 'Output must be a new absolute directory.')
+    external_parent = output.parent.resolve(strict=True)
+    require(output.parent == external_parent, 'Output parent must use its real absolute path.')
+    require(external_parent.is_dir(), 'Output parent must already exist.')
+    require(root not in (external_parent, *external_parent.parents), 'Output must be outside the checkout.')
+    require(external_parent not in (root, *root.parents), 'Output cannot contain the checkout.')
+    parent_stat = external_parent.stat()
+    require(parent_stat.st_dev != root.stat().st_dev, 'Bulk output must be on a different filesystem from the checkout.')
+    parent_identity = (parent_stat.st_dev, parent_stat.st_ino)
+    report_path = Path(args.report)
+    require(report_path.is_absolute() and report_path.suffix == '.json' and not report_path.exists(),
+            'Use a new absolute JSON receipt path.')
+    require(report_path.parent.resolve(strict=True) == report_path.parent, 'Receipt parent must already be real.')
+    require(root in report_path.parents, 'The small receipt must be in this checkout ignored scratch.')
+    require(git('check-ignore', '--', str(report_path.relative_to(root))) == str(report_path.relative_to(root)),
+            'The small receipt must be ignored so canonical frozen-source checks stay clean.')
+    require(report_path.parent.stat().st_dev == root.stat().st_dev, 'Keep the small receipt on the stable checkout filesystem.')
+    owner_path = root / '.cache/run-endurance-emitted-final.py'
+    owner_body = owner_path.read_bytes()
+    names = {'owned_process_snapshot', 'owned_process_identity', 'OwnedProcessTree', 'BoundedChildLog'}
+    selected = [item for item in ast.parse(owner_body, filename=str(owner_path)).body
+                if isinstance(item, (ast.FunctionDef, ast.ClassDef)) and item.name in names]
+    require({item.name for item in selected} == names, 'The reviewed process owner is incomplete.')
+    scope = dict(globals())
+    exec(compile(ast.Module(body=selected, type_ignores=[]), str(owner_path), 'exec'), scope)
+    OwnedProcessTree, BoundedChildLog = scope['OwnedProcessTree'], scope['BoundedChildLog']
+    pins = {}
+    for name in ['scripts/bundle-editions.mjs', 'scripts/bundle-optional-practice.mjs',
+                 'scripts/frozen-source.mjs', 'game/editions/catalog.json',
+                 'game/editions/package-budget.mjs', 'publishing/optional-package-policy.mjs']:
+        pins[name] = sha((root / name).read_bytes())
+    catalog, _ = bounded_json(root / 'game/editions/catalog.json')
+    edition_ids = sorted(row['id'] for row in catalog['editions'] if row.get('publication') == 'public')
+    # Metadata import only: no builds, fetches, installed-package changes or publication.
+    metadata_code = """import {OPTIONAL_PACKAGE_POLICIES} from './publishing/optional-package-policy.mjs';
+import {COMPANY_PACKAGE_BUDGET} from './game/editions/package-budget.mjs';
+console.log(JSON.stringify({company:COMPANY_PACKAGE_BUDGET, optional:Object.fromEntries(
+Object.entries(OPTIONAL_PACKAGE_POLICIES).map(([id,p])=>[id,p.limits]))}));"""
+    metadata_body = subprocess.check_output([str(node), '--input-type=module', '-e', metadata_code],
+                                            cwd=root, env=env, timeout=20)
+    require(len(metadata_body) <= 16384, 'Policy metadata exceeds its bound.')
+    policy = json.loads(metadata_body)
+    package_ids = sorted(policy['optional'])
+    require(len(edition_ids) == 18 and len(set(edition_ids)) == 18, 'Public edition scope changed; review it before running.')
+    require(package_ids == ['civilian-flight', 'civilian-fpv', 'fpv-worlds'], 'Optional scope changed; review it before running.')
+    require(all(re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', value) for value in edition_ids), 'Unsafe edition ID.')
+    require(policy['company']['maxFiles'] == 2000 and policy['company']['maxBytes'] == 80 * 1024 * 1024,
+            'Company package budgets must remain unchanged.')
+    require(policy['optional'] == {
+        'civilian-flight': {'files': 98, 'bytes': 8 * 1024 * 1024},
+        'civilian-fpv': {'files': 150, 'bytes': 12 * 1024 * 1024 + 512 * 1024},
+        'fpv-worlds': {'files': 210, 'bytes': 20 * 1024 * 1024}}, 'Optional package budgets must remain unchanged.')
+    require(binding() == before, 'Source changed during preparation.')
+    report = {'format': 'SharedDemoSerialPackagingQualificationV1', 'complete': False,
+              'started': stamp(), 'sourceBefore': before, 'node': {'path': str(node), 'version': node_version},
+              'platform': sys.platform, 'output': str(output), 'basePath': args.base_path,
+              'selection': {'company': edition_ids, 'optional': package_ids}, 'budgets': policy,
+              'limits': {'companyChildSeconds': args.company_child_seconds,
+                         'companyTotalSeconds': args.company_total_seconds,
+                         'optionalChildSeconds': args.optional_child_seconds,
+                         'optionalTotalSeconds': args.optional_total_seconds, 'childLogBytes': 1024 * 1024,
+                         'deadlineScope': 'Child execution is polled; group deadline is also checked after validation. '
+                                          'Synchronous filesystem/system calls can delay a check, so this is not a hard end-to-end I/O timeout.'},
+              'externalParent': {'path': str(external_parent), 'device': parent_identity[0], 'inode': parent_identity[1]},
+              'sourcePins': pins, 'supervisorSHA256': sha(helper_body),
+              'ownerSource': {'path': str(owner_path.relative_to(root)), 'sha256': sha(owner_body)},
+              'jobs': [], 'publicEligible': False,
+              'scope': 'Each edition/package gets its own canonical process and immutable candidate. '
+                       'Each CLI builds twice, verifies original committed inputs and admits real source/runtime ZIP members. '
+                       'No combined release envelope, publication, device evidence or human signoff is claimed.'}
+    external_identity = None
+    output_fd = None
+
+    def stable_external():
+        current = external_parent.stat()
+        require((current.st_dev, current.st_ino) == parent_identity, 'External output parent disappeared or changed identity.')
+        if external_identity is not None:
+            current = output.stat()
+            require((current.st_dev, current.st_ino) == external_identity, 'Owned output directory disappeared or changed identity.')
+
+    deferred_signal = {'active': False, 'pending': None}
+
+    def interrupt(signum, _frame):
+        if deferred_signal['active']:
+            deferred_signal['pending'] = signum
+            return
+        report['interruptedSignal'] = signal.Signals(signum).name
+        signal.signal(signal.SIGTERM, signal.SIG_IGN)
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+        raise InterruptedError(f'Packaging interrupted by {signal.Signals(signum).name}')
+
+    def same_source(value):
+        return all(value.get(key) == before[key] for key in before)
+
+    def validate_result(job, destination, kind, identifier):
+        prefix = '' if kind == 'company' else 'optional-'
+        envelope_name = 'editions.json' if kind == 'company' else 'optional-packages.json'
+        envelope, epin = bounded_json(destination / envelope_name)
+        verification, vpin = bounded_json(destination / (prefix + 'candidate-verification.json'))
+        key = 'editions' if kind == 'company' else 'packages'
+        require(same_source(envelope) and same_source(verification), 'Candidate source pins differ.')
+        require(verification['envelopeSha256'] == epin['sha256'], 'Verification does not bind the exact envelope.')
+        require(verification.get('reproducibleBuilds') == 2 and verification.get('publicEligible') is False,
+                'Candidate lacks two-build evidence or changed publication eligibility.')
+        require([row['id'] for row in envelope[key]] == [identifier], 'Candidate selection differs.')
+        admission = verification['admission']
+        require(same_source(admission) and admission.get('zipMembersVerified') is True and admission.get('publicEligible') is False,
+                'Original archive admission/source binding failed.')
+        require([row['id'] for row in admission[key]] == [identifier], 'Admitted selection differs.')
+        if kind == 'company':
+            require(verification['sourceEligibility']['status'] == 'verified' and len(verification['presentationReceipts']) == 1,
+                    'Company public-source or provider parity receipt missing.')
+        else:
+            require(verification.get('committedInputsVerified') is True, 'Optional committed-input verification missing.')
+        item = envelope[key][0]
+        inventory, ipin = bounded_json(destination / item['sourceInventory']['path'])
+        manifest, mpin = bounded_json(destination / item['manifest']['path'])
+        for descriptor, pin in [(item['sourceInventory'], ipin), (item['manifest'], mpin)]:
+            require(descriptor['bytes'] == pin['bytes'] and descriptor['sha256'] == pin['sha256'], 'Metadata descriptor mismatch.')
+        # Member contents were already inspected twice by the canonical CLI. Retain exact original artifacts,
+        # while copying only their authenticated descriptors into this bounded supervisory receipt.
+        job['result'] = {'envelope': epin, 'verification': vpin, 'manifest': mpin, 'sourceInventory': ipin,
+                         'admission': admission, 'reproducibleBuilds': 2,
+                         'distribution': item['distribution'], 'sourceArchive': item['sourceArchive'],
+                         'runtimeInventoryFiles': len(manifest['files']),
+                         'runtimeInventoryBytes': sum(row['bytes'] for row in manifest['files']),
+                         'sourceInventoryFiles': len(inventory['files']),
+                         'sourceInventoryBytes': sum(row['bytes'] for row in inventory['files']),
+                         'completeSourceArchiveFiles': len(inventory['files']) + 1,
+                         'completeSourceArchiveBytes': sum(row['bytes'] for row in inventory['files']) + ipin['bytes']}
+
+    def run_job(kind, identifier, group_deadline):
+        stable_external()
+        require(binding() == before, 'Source changed before a canonical child.')
+        destination = output / f'{kind}-{identifier}'
+        child_limit = args.company_child_seconds if kind == 'company' else args.optional_child_seconds
+        script = 'scripts/bundle-editions.mjs' if kind == 'company' else 'scripts/bundle-optional-practice.mjs'
+        flag = '--editions' if kind == 'company' else '--packages'
+        command = [str(node), script, flag, identifier, '--out', str(destination), '--base-path', args.base_path]
+        log_path = output / f'{kind}-{identifier}.log'
+        job = {'kind': kind, 'id': identifier, 'started': stamp(), 'command': command, 'complete': False}
+        report['jobs'].append(job)
+        log = BoundedChildLog(log_path, byte_limit=1024 * 1024, tail_limit=16384)
+        child = None
+        owned = None
+        remaining = None
+        try:
+            require(time.monotonic() < group_deadline, f'{kind} total deadline expired before child.')
+            # Defer handler exceptions, not the OS signal mask: the exec'd child must retain ordinary
+            # SIGTERM behavior. Any pending interruption is delivered only after ownership is attached.
+            deferred_signal['active'] = True
+            try:
+                child = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                         env={**env, 'TMPDIR': str(output / 'tmp'), 'TMP': str(output / 'tmp'), 'TEMP': str(output / 'tmp')},
+                                         start_new_session=True)
+                owned = OwnedProcessTree(child)
+                owned.capture()
+                log.start(child.stdout)
+            finally:
+                deferred_signal['active'] = False
+                pending = deferred_signal['pending']
+                deferred_signal['pending'] = None
+                if pending is not None:
+                    interrupt(pending, None)
+            deadline = min(group_deadline, time.monotonic() + child_limit)
+            while child.poll() is None:
+                owned.capture()
+                owned.check_limits()
+                log.check_limits()
+                stable_external()
+                if time.monotonic() >= deadline:
+                    job['watchdogExpired'] = True
+                    raise TimeoutError(f'{kind}/{identifier} exceeded its bounded deadline.')
+                time.sleep(0.2)
+            remaining = owned.wait_clear(3)
+            if remaining:
+                job['cleanupNeededAfterExit'] = True
+                remaining = owned.cleanup()
+            job['childExit'] = child.poll()
+            require(job['childExit'] == 0, f'{kind}/{identifier} failed with exit {job["childExit"]}; see original log.')
+        except BaseException as error:
+            job['failure'] = repr(error)
+        finally:
+            if owned is not None:
+                if remaining is None:
+                    try:
+                        remaining = owned.cleanup()
+                    except BaseException as error:
+                        job['cleanupFailure'] = repr(error)
+                job['ownedProcesses'] = owned.evidence(remaining)
+                job['childExit'] = child.poll()
+            log.finish()
+            job['log'] = {'path': str(log_path), **log.evidence()}
+            job['finished'] = stamp()
+        require(not job.get('failure') and not job.get('cleanupFailure') and not job.get('cleanupNeededAfterExit'),
+                f'{kind}/{identifier} did not finish cleanly.')
+        require(job['ownedProcesses']['verified'] and not job['ownedProcesses']['observationLimits']['exceeded'], 'Owned process evidence failed.')
+        require(job['log']['complete'] and not job['log']['error'] and not job['log']['limitExceeded'], 'Bounded log failed.')
+        stable_external()
+        require(binding() == before, 'Source changed during canonical build/admission.')
+        validate_result(job, destination, kind, identifier)
+        require(time.monotonic() < group_deadline, f'{kind} group budget expired during final validation.')
+        job['complete'] = True
+        print(json.dumps({'id': identifier, 'kind': kind, 'complete': True, 'completedJobs': len(report['jobs'])}), flush=True)
+
+    signal.signal(signal.SIGTERM, interrupt)
+    signal.signal(signal.SIGINT, interrupt)
+    try:
+        stable_external()
+        output.mkdir()
+        stat = output.stat()
+        external_identity = (stat.st_dev, stat.st_ino)
+        output_fd = os.open(output, os.O_RDONLY)
+        (output / 'tmp').mkdir()
+        for kind, identifiers, total in [('company', edition_ids, args.company_total_seconds),
+                                          ('optional', package_ids, args.optional_total_seconds)]:
+            deadline = time.monotonic() + total
+            for identifier in identifiers:
+                run_job(kind, identifier, deadline)
+        report['sourceAfter'] = binding()
+        report['bindingsStable'] = (report['sourceAfter'] == before and helper.read_bytes() == helper_body and
+                                    owner_path.read_bytes() == owner_body and
+                                    all(sha((root / name).read_bytes()) == digest for name, digest in pins.items()))
+        stable_external()
+        report['complete'] = report['bindingsStable'] and len(report['jobs']) == 21 and all(job['complete'] for job in report['jobs'])
+    except BaseException as error:
+        report['failure'] = repr(error)
+        try:
+            report['sourceAfter'] = binding()
+        except BaseException as source_error:
+            report['sourceAfterFailure'] = repr(source_error)
+    finally:
+        if output_fd is not None:
+            os.close(output_fd)
+        report['finished'] = stamp()
+        report['remaining'] = [{'kind': kind, 'id': identifier}
+                               for kind, identifiers in [('company', edition_ids), ('optional', package_ids)]
+                               for identifier in identifiers if not any(job['kind'] == kind and job['id'] == identifier and job['complete']
+                                                                        for job in report['jobs'])]
+        # Preserve all candidate/log/temp evidence on failure; no recursive cleanup of artifact directories.
+        with report_path.open('x') as handle:
+            json.dump(report, handle, indent=2)
+            handle.write('\n')
+        print(json.dumps({'report': str(report_path), 'complete': report['complete'], 'completedJobs': sum(job['complete'] for job in report['jobs'])}), flush=True)
+    return 0 if report['complete'] else 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())

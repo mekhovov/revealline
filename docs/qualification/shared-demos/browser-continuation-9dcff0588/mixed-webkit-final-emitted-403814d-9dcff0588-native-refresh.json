@@ -1,0 +1,196 @@
+{
+  "engine": "webkit",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T10:53:07.216Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-snake-open-loop:standard",
+        "modeId": "snake",
+        "at": 1792407192903,
+        "loadingMs": 10,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 10,
+          "durationsMs": {
+            "preparation": 1,
+            "prefetch": 0,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 9,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Порожнє поле: рухайтеся широкими петлями, ловіть єдину ціль і стежте за зростанням хвоста."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-f420d6e14fbac1ed",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "solo-qualified-f420d6e14fbac1ed",
+        "modeId": "solo",
+        "at": 1792407201968,
+        "loadingMs": 6641,
+        "preparation": {
+          "status": "ready",
+          "stage": "source",
+          "elapsedMs": 6641,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 6641,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Winding channels",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": false,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh",
+      "manifestSHA256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3",
+      "inventorySHA256": "20e51e1ae9bfd6b9916b86978e0a3b212c40724d81612b376a38ccd944621279",
+      "files": 6229,
+      "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "sourceFingerprint": {
+        "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+        "files": 10273,
+        "bytes": 410435495
+      },
+      "buildInputFingerprint": {
+        "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+        "files": 9411,
+        "bytes": 348449477
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+        "runtime": {
+          "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+          "files": 10273,
+          "bytes": 410435495
+        },
+        "buildInput": {
+          "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+          "files": 9411,
+          "bytes": 348449477
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "5612b0450f58e1f3d19f60d2d3509737424f5f837d40e55aebdaa7f72206efa9"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "282789ae93daeb36060ca7de9b294caae44a796e49f53302369c23127e05ef85"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "failure": "page.waitForFunction: Target page, context or browser has been closed\n    at ready (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:74:8)\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:155:11",
+  "secondaryDiagnostics": [
+    {
+      "stage": "failure-state",
+      "error": "locator.evaluate: Target page, context or browser has been closed\n    at snapshot (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:52:32)\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:18:12)\n    at async diagnoseQualificationFailure (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:76:29)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:398:3"
+    },
+    {
+      "stage": "failure-body-text",
+      "error": "locator.innerText: Target page, context or browser has been closed\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:83:48\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:18:12)\n    at async diagnoseQualificationFailure (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:83:7)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:398:3"
+    },
+    {
+      "stage": "failure-screenshot",
+      "error": "page.screenshot: Target page, context or browser has been closed\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:89:30\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:18:12)\n    at async diagnoseQualificationFailure (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:89:5)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:398:3"
+    }
+  ],
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T10:53:24.607Z",
+  "previewClosed": true
+}

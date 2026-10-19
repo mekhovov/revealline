@@ -1,0 +1,333 @@
+--- a/game/test/helpers/demo-host-fixture.mjs
++++ b/game/test/helpers/demo-host-fixture.mjs
+@@ -8,6 +8,160 @@
+ // native loading phase. Observe their real readiness without shortening the
+ // product's per-phase deadline to the generic five-second fixture wait.
+ export const DEMO_HOST_READY_TIMEOUT_MS = 3 * DEMO_LOAD_TIMEOUT_MS;
++
++// Observe only existing public state at a failed boundary. This collector does
++// not wait, pump modeled frames, retry preparation, or replace the caller's Error.
++export function reportDemoHostFailure(
++  t,
++  page,
++  { phase, timeoutMs, lastOrdinaryRender = () => page.rendered } = {},
++) {
++  try {
++    const read = (get, fallback = null) => {
++      try {
++        return get();
++      } catch {
++        return fallback;
++      }
++    };
++    const text = (value, limit = 96) => (typeof value === 'string' ? value.slice(0, limit) : null);
++    const number = (value) => (Number.isFinite(value) ? value : null);
++    const flag = (get) => {
++      const value = read(get);
++      return typeof value === 'boolean' ? value : null;
++    };
++    const element = (id) => read(() => page.$(id));
++    const status = (id) => {
++      const node = element(id);
++      return {
++        id,
++        hidden: flag(() => node.hidden),
++        state: text(
++          read(() => node.dataset.state),
++          32,
++        ),
++        stage: text(
++          read(() => node.dataset.stage),
++          48,
++        ),
++        message: text(
++          read(() => node.textContent),
++          160,
++        ),
++      };
++    };
++    const dialog = element('demo-dialog');
++    const frame = read(lastOrdinaryRender);
++    const run = read(() => frame.run);
++    const errorCount = read(() => page.errors.length, 0);
++    const count = Number.isSafeInteger(errorCount) && errorCount >= 0 ? errorCount : 0;
++    const errors = [];
++    for (let index = Math.max(0, count - 4); index < count; index++)
++      errors.push(
++        text(
++          read(() =>
++            typeof page.errors[index] === 'string'
++              ? page.errors[index]
++              : page.errors[index]?.message,
++          ),
++          160,
++        ),
++      );
++    const diagnostic = {
++      format: 'DemoHostFailureV1',
++      phase: text(phase),
++      timeoutMs: number(timeoutMs),
++      page: {
++        hidden: flag(() => page.doc.hidden),
++        focused: flag(() => page.doc.hasFocus()),
++        connected: flag(() => page.doc.documentElement.isConnected),
++        documentOwned: flag(() => globalThis.document === page.doc),
++        windowOwned: flag(() => globalThis.window === page.win),
++        activeId: text(read(() => page.doc.activeElement?.id)),
++        flight: text(
++          read(() => page.doc.body.dataset.flightState),
++          32,
++        ),
++        picture: text(
++          read(() => page.doc.body.dataset.pictureState),
++          32,
++        ),
++        overlayKind: text(
++          read(() => element('game-overlay').dataset.kind),
++          32,
++        ),
++      },
++      // Demo watching deliberately retains this ordinary frame. It is evidence
++      // of the last drawn checkpoint, not a claim about the current internal owner.
++      lastOrdinaryRender: {
++        level: text(read(() => run.levelId)),
++        tick: number(read(() => run.tick)),
++        status: text(
++          read(() => run.status),
++          32,
++        ),
++        paused: flag(() => frame.paused),
++      },
++      demo: {
++        open: flag(() => dialog.open),
++        scene: text(
++          read(() => dialog.dataset.scene),
++          32,
++        ),
++        mode: text(
++          read(() => dialog.dataset.demoMode),
++          32,
++        ),
++        source: text(
++          read(() => dialog.dataset.demoSource),
++          128,
++        ),
++        phase: text(
++          read(() => dialog.dataset.demoPhase),
++          32,
++        ),
++        tick: text(
++          read(() => dialog.dataset.demoTick),
++          32,
++        ),
++        status: text(
++          read(() => element('demo-status').textContent),
++          160,
++        ),
++        availability: text(
++          read(() => element('demo-availability').textContent),
++          160,
++        ),
++        preparationDetailsText: text(
++          read(() => dialog.dataset.demoPreparationDetails),
++          768,
++        ),
++        failureDetailsText: text(
++          read(() => dialog.dataset.demoFailureDetails),
++          512,
++        ),
++        freshDisabled: flag(() => element('demo-fresh').disabled),
++        resumeDisabled: flag(() => element('demo-resume').disabled),
++        watchPauseDisabled: flag(() => element('demo-watch-pause').disabled),
++        actionsHidden: flag(() => element('demo-actions').hidden),
++        panelHidden: flag(() => element('demo-panel').hidden),
++      },
++      preparation: [
++        'flight-preparation-status',
++        'presentation-preparation-status',
++        'theme-preparation-status',
++        'craft-preparation-status',
++      ].map(status),
++      errors,
++      omittedErrors: count - errors.length,
++    };
++    const encoded = JSON.stringify(diagnostic);
++    if (Buffer.byteLength(encoded, 'utf8') <= 8192) t.diagnostic(encoded);
++  } catch {
++    // Observation, serialization and the diagnostic sink must never replace
++    // the original wait failure. The caller rethrows the exact Error unchanged.
++  }
++}
+ 
+ /** Actual solo app, replay transport and painter. Canvas, image decode and the
+  * physical pad boundary are modeled; this makes no browser pixel/device claim. */
+@@ -101,11 +255,10 @@
+       timeoutMs: DEMO_HOST_READY_TIMEOUT_MS,
+       message: 'The native demo must finish catalogue, library and scene preparation.',
+     }).catch((error) => {
+-      error.message += JSON.stringify({
+-        scene: page.$('demo-dialog').dataset.scene,
+-        status: page.$('demo-status').textContent,
+-        availability: page.$('demo-availability').textContent,
+-        errors: page.errors.map((value) => String(value?.stack ?? value)),
++      reportDemoHostFailure(t, page, {
++        phase: 'demo catalogue, library and scene preparation',
++        timeoutMs: DEMO_HOST_READY_TIMEOUT_MS,
++        lastOrdinaryRender: () => ordinaryFrame,
+       });
+       throw error;
+     });
+--- a/game/test/demo-fresh-handoff.test.mjs
++++ b/game/test/demo-fresh-handoff.test.mjs
+@@ -1,6 +1,6 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+-import { demoPage } from './helpers/demo-host-fixture.mjs';
++import { demoPage, reportDemoHostFailure } from './helpers/demo-host-fixture.mjs';
+ import { waitFor } from './helpers/wait-for.mjs';
+ import { authoritativeCheckpoint } from '../replay.mjs';
+ import { readMissionLibraryHandoff, readMissionLibraryReady } from '../mission-library/handoff.mjs';
+@@ -15,6 +15,12 @@
+   await waitFor(() => !page.$('demo-dialog').open, {
+     timeoutMs: 30000,
+     message: 'Fresh must finish exact mission preparation on the Legacy owner.',
++  }).catch((error) => {
++    reportDemoHostFailure(t, page, {
++      phase: 'Fresh exact mission preparation on the Legacy owner',
++      timeoutMs: 30000,
++    });
++    throw error;
+   });
+   page.frame(0);
+   assert.equal(page.$('mission-replace-dialog').open, false);
+--- /dev/null
++++ b/game/test/demo-host-diagnostics.test.mjs
+@@ -0,0 +1,128 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { reportDemoHostFailure } from './helpers/demo-host-fixture.mjs';
++
++function fixture() {
++  const long = 'observed-'.repeat(2000);
++  const node = {
++    hidden: false,
++    disabled: true,
++    open: true,
++    textContent: long,
++    dataset: {
++      scene: 'loading',
++      demoMode: 'solo',
++      demoSource: 'first-signal-left',
++      demoPhase: 'paused',
++      demoTick: '9',
++      demoPreparationDetails: long,
++      demoFailureDetails: long,
++      state: 'loading',
++      stage: 'images',
++    },
++  };
++  const page = {
++    $: () => node,
++    doc: {
++      hidden: false,
++      hasFocus: () => true,
++      documentElement: { isConnected: true },
++      body: { dataset: { flightState: 'briefing', pictureState: 'loading' } },
++    },
++    rendered: { run: { levelId: 'ordinary', tick: 0, status: 'playing' }, paused: true },
++    errors: Array.from({ length: 12 }, (_, index) => new Error(`${index}:${long}`)),
++    frame() {
++      assert.fail('Failure observation must not pump a frame.');
++    },
++  };
++  return { page, node };
++}
++
++test('failed demo observation retains bounded public state and the designated ordinary frame', () => {
++  const { page } = fixture();
++  const ordinary = { run: { levelId: 'retained', tick: 7, status: 'playing' }, paused: true };
++  const rows = [];
++  reportDemoHostFailure({ diagnostic: (value) => rows.push(value) }, page, {
++    phase: 'Fresh preparation',
++    timeoutMs: 30000,
++    lastOrdinaryRender: () => ordinary,
++  });
++  assert.equal(rows.length, 1);
++  assert.ok(Buffer.byteLength(rows[0], 'utf8') <= 8192);
++  const result = JSON.parse(rows[0]);
++  assert.equal(result.timeoutMs, 30000);
++  assert.equal(result.lastOrdinaryRender.level, 'retained');
++  assert.equal(result.lastOrdinaryRender.tick, 7);
++  assert.equal(result.lastOrdinaryRender.paused, true);
++  assert.equal(result.page.picture, 'loading');
++  assert.equal(result.demo.scene, 'loading');
++  assert.equal(result.demo.freshDisabled, true);
++  assert.equal(result.preparation[0].stage, 'images');
++  assert.equal(result.errors.length, 4);
++  assert.equal(result.omittedErrors, 8);
++  assert.match(result.errors[0], /^8:/);
++  assert.ok(result.errors.every((value) => value.length <= 160));
++  assert.equal(page.rendered.run.tick, 0, 'Observation does not change the ordinary run.');
++});
++
++test('missing or throwing public state and a throwing diagnostic sink cannot escape', () => {
++  const broken = new Proxy(
++    {},
++    {
++      get() {
++        throw new Error('Unavailable public state');
++      },
++    },
++  );
++  const rows = [];
++  assert.doesNotThrow(() =>
++    reportDemoHostFailure({ diagnostic: (value) => rows.push(value) }, broken, {
++      phase: 'Failed boundary',
++      timeoutMs: 30000,
++    }),
++  );
++  assert.equal(rows.length, 1);
++  const result = JSON.parse(rows[0]);
++  assert.equal(result.lastOrdinaryRender.level, null);
++  assert.equal(result.demo.open, null);
++  assert.deepEqual(result.errors, []);
++  assert.doesNotThrow(() =>
++    reportDemoHostFailure(
++      {
++        diagnostic() {
++          throw new Error('Unavailable diagnostic sink');
++        },
++      },
++      broken,
++      { phase: 'Failed boundary', timeoutMs: 30000 },
++    ),
++  );
++});
++
++test('reporting before rethrow preserves the original failure, message, stack and cause', async () => {
++  const { page } = fixture();
++  const cause = new Error('original cause');
++  const original = new Error('Original wait failure', { cause });
++  const stack = original.stack;
++  await assert.rejects(
++    Promise.reject(original).catch((error) => {
++      reportDemoHostFailure(
++        {
++          diagnostic() {
++            throw new Error('Observation must remain secondary');
++          },
++        },
++        page,
++        { phase: 'Fresh preparation', timeoutMs: 30000 },
++      );
++      throw error;
++    }),
++    (error) => {
++      assert.equal(error, original);
++      assert.equal(error.message, 'Original wait failure');
++      assert.equal(error.stack, stack);
++      assert.equal(error.cause, cause);
++      return true;
++    },
++  );
++});

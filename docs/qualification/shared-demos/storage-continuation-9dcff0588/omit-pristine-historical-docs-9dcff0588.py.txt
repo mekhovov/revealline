@@ -1,0 +1,150 @@
+from pathlib import Path
+import datetime, hashlib, json, os, stat, subprocess, time
+
+root = Path.cwd().resolve()
+assert root == Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos')
+head = '9dcff05887ed573a9fef4037c8d451c8043653a9'
+prefixes = ['docs/qualification/overflight', 'docs/verification/cross-mode']
+patterns = '/*\n!/docs/qualification/overflight/\n!/docs/verification/cross-mode/\n'
+out = root / '.cache/task-worktree-sparse-historical-docs-9dcff0588.json'
+proof_path = out.with_suffix('.files.json')
+assert not out.exists() and not proof_path.exists()
+env = {**os.environ, 'GIT_NO_LAZY_FETCH': '1', 'GIT_OPTIONAL_LOCKS': '0', 'GIT_TERMINAL_PROMPT': '0'}
+git = ['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0', '-c', 'core.hooksPath=/dev/null']
+def run(args, data=None, timeout=45):
+    result = subprocess.run(git + args, input=data, env=env, cwd=root, capture_output=True, timeout=timeout)
+    assert result.returncode == 0, (args, result.returncode, result.stderr.decode(errors='replace'))
+    return result.stdout
+def sha(body): return hashlib.sha256(body).hexdigest()
+def free():
+    value = os.statvfs(root)
+    return value.f_bavail * value.f_frsize
+def pin(path):
+    body = path.read_bytes()
+    return {'bytes': len(body), 'sha256': sha(body)}
+def config():
+    return {name: run(['config', '--show-origin', '--show-scope', '--get', name]).decode().strip()
+            for name in ('extensions.worktreeConfig', 'core.sparseCheckout', 'core.sparseCheckoutCone')}
+def tags():
+    return {row[2:].decode(): row[:1].decode() for row in run(['ls-files', '-t', '-z']).split(b'\0') if row}
+
+report = {'format': 'SharedDemoPristineHistoricalDocsSparseOmissionV1', 'complete': False,
+          'started': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'head': head,
+          'worktree': str(root), 'excludedPrefixes': prefixes, 'patterns': patterns,
+          'restorationCommand': 'GIT_NO_LAZY_FETCH=1 git -c maintenance.auto=false -c gc.auto=0 sparse-checkout disable',
+          'limitations': ['Only pristine tracked historical documentation is omitted from this managed task worktree. Git objects, the primary checkout, current source/capture, unrelated untracked files and other worktrees remain untouched.',
+                         'The restore command rematerializes tracked files from existing local Git objects; it requires sufficient local free space. No fetch or package download is needed.',
+                         'Free-space changes are contemporaneous observations, not attribution of every system allocation to this operation.']}
+started = time.monotonic()
+try:
+    assert run(['rev-parse', 'HEAD']).decode().strip() == head
+    assert run(['rev-parse', '--show-object-format']).decode().strip() == 'sha1'
+    gitdir = Path(run(['rev-parse', '--git-dir']).decode().strip())
+    common = Path(run(['rev-parse', '--git-common-dir']).decode().strip())
+    assert gitdir == Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/worktrees/shared-game-demos')
+    assert common == Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.git')
+    report['gitDirectory'] = str(gitdir)
+    report['beforeConfig'] = config()
+    assert report['beforeConfig']['extensions.worktreeConfig'].endswith('\ttrue')
+    assert report['beforeConfig']['core.sparseCheckout'].endswith('\tfalse')
+    assert report['beforeConfig']['core.sparseCheckoutCone'].endswith('\tfalse')
+    assert str(gitdir / 'config.worktree') in report['beforeConfig']['core.sparseCheckout']
+    common_config = pin(common / 'config')
+    primary_head = pin(common / 'HEAD')
+    before_status = run(['status', '--porcelain=v1', '--untracked-files=normal'])
+    assert not run(['diff', '--name-only', 'HEAD'])
+    before_tags = tags()
+    capture_manifest = root / '.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh/manifest.json'
+    declaration = root / 'docs/qualification/shared-demos/source-freeze-latest.json'
+    report['preservedPins'] = {str(p.relative_to(root)): pin(p) for p in (capture_manifest, declaration)}
+    manifest = json.loads(capture_manifest.read_bytes())
+    assert not any(any(item['path'] == p or item['path'].startswith(p + '/') for p in prefixes) for item in manifest['files'])
+    tree = {}
+    for row in run(['ls-tree', '-r', '-z', head, '--', *prefixes]).split(b'\0'):
+        if not row: continue
+        metadata, name = row.split(b'\t', 1)
+        mode, kind, oid = metadata.decode().split()
+        assert kind == 'blob' and mode in ('100644', '100755')
+        tree[name.decode()] = (mode, oid)
+    assert tree
+    index = {}
+    for row in run(['ls-files', '--stage', '-z', '--', *prefixes]).split(b'\0'):
+        if not row: continue
+        metadata, name = row.split(b'\t', 1)
+        mode, oid, stage = metadata.decode().split()
+        assert stage == '0'
+        index[name.decode()] = (mode, oid)
+    assert tree == index, 'Target index must exactly match committed tree.'
+    objects = sorted({oid for _, oid in tree.values()})
+    checked = run(['cat-file', '--batch-check=%(objectname) %(objecttype) %(objectsize)'], ('\n'.join(objects) + '\n').encode())
+    assert len(checked.splitlines()) == len(objects)
+    for row in checked.decode().splitlines():
+        oid, kind, size = row.split()
+        assert oid in objects and kind == 'blob' and int(size) >= 0
+    proofs = []
+    actual = set()
+    for prefix in prefixes:
+        directory = root / prefix
+        assert directory.is_dir() and not directory.is_symlink() and directory.resolve(strict=True) == directory
+        expected_dirs = {str(Path(name).parent) for name in tree if name.startswith(prefix + '/')}
+        for item in list(expected_dirs):
+            expected_dirs.update(str(p) for p in Path(item).parents if str(p) == prefix or str(p).startswith(prefix + '/'))
+        expected_dirs.add(prefix)
+        for current, dirs, files in os.walk(directory, followlinks=False):
+            current = Path(current)
+            assert str(current.relative_to(root)) in expected_dirs, 'Untracked directory inside proposed omission.'
+            for name in dirs:
+                p = current / name
+                assert not p.is_symlink() and p.resolve(strict=True) == p
+            for name in files:
+                p = current / name
+                rel = str(p.relative_to(root))
+                assert rel in tree, 'Untracked or ignored file inside proposed omission.'
+                value = p.lstat()
+                assert stat.S_ISREG(value.st_mode) and value.st_uid == os.getuid() and not p.is_symlink()
+                body = p.read_bytes()
+                after = p.lstat()
+                assert (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns, value.st_ctime_ns) == (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_ctime_ns)
+                oid = hashlib.sha1(('blob ' + str(len(body)) + '\0').encode() + body).hexdigest()
+                assert oid == tree[rel][1], 'Tracked file differs from committed blob.'
+                assert bool(value.st_mode & stat.S_IXUSR) == (tree[rel][0] == '100755')
+                actual.add(rel)
+                proofs.append({'path': rel, 'object': oid, 'mode': tree[rel][0], 'bytes': len(body), 'sha256': sha(body), 'allocatedBytes': value.st_blocks * 512, 'device': value.st_dev, 'inode': value.st_ino, 'mtimeNs': value.st_mtime_ns})
+        handles = subprocess.run(['lsof', '-n', '-P', '+D', str(directory)], capture_output=True, text=True, timeout=30)
+        assert handles.returncode == 1 and not handles.stdout and not handles.stderr, 'Live handles or incomplete handle inspection.'
+    assert actual == set(tree), 'Every committed target path must exist and be verified.'
+    report['targets'] = [{'prefix': prefix, 'files': sum(x['path'].startswith(prefix + '/') for x in proofs), 'bytes': sum(x['bytes'] for x in proofs if x['path'].startswith(prefix + '/')), 'allocatedBytes': sum(x['allocatedBytes'] for x in proofs if x['path'].startswith(prefix + '/'))} for prefix in prefixes]
+    proof_path.write_text(json.dumps({'head': head, 'files': sorted(proofs, key=lambda x: x['path'])}, indent=2) + '\n')
+    report['fileProof'] = {'path': str(proof_path.relative_to(root)), **pin(proof_path)}
+    report['freeBytesBefore'] = free()
+    report['command'] = git + ['sparse-checkout', 'set', '--no-cone', '--stdin']
+    run(['sparse-checkout', 'set', '--no-cone', '--stdin'], patterns.encode(), timeout=60)
+    report['afterConfig'] = config()
+    assert report['afterConfig']['core.sparseCheckout'].endswith('\ttrue')
+    assert str(gitdir / 'config.worktree') in report['afterConfig']['core.sparseCheckout']
+    pattern_path = gitdir / 'info/sparse-checkout'
+    report['actualPatterns'] = pattern_path.read_text()
+    assert report['actualPatterns'] == patterns
+    assert all(not (root / name).exists() for name in tree)
+    after_tags = tags()
+    assert set(after_tags) == set(before_tags)
+    assert all(after_tags[name] == ('S' if name in tree else before_tags[name]) for name in before_tags), 'Unexpected sparse index path change.'
+    assert run(['status', '--porcelain=v1', '--untracked-files=normal']) == before_status
+    assert not run(['diff', '--name-only', 'HEAD'])
+    assert run(['rev-parse', 'HEAD']).decode().strip() == head
+    assert common_config == pin(common / 'config') and primary_head == pin(common / 'HEAD')
+    assert report['preservedPins'] == {str(p.relative_to(root)): pin(p) for p in (capture_manifest, declaration)}
+    report['originalPrimaryConfigAndHeadUnchanged'] = True
+    report['allOtherIndexFlagsUnchanged'] = True
+    report['trackedAndUntrackedStatusUnchanged'] = True
+    report['freeBytesAfter'] = free()
+    report['complete'] = True
+except BaseException as error:
+    report['failure'] = repr(error)
+    report['freeBytesAfter'] = free()
+finally:
+    report['finished'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    report['elapsedSeconds'] = time.monotonic() - started
+    out.write_text(json.dumps(report, indent=2) + '\n')
+    print(json.dumps({'receipt': str(out.relative_to(root)), 'complete': report['complete'], 'targets': report.get('targets'), 'freeBytesBefore': report.get('freeBytesBefore'), 'freeBytesAfter': report.get('freeBytesAfter'), 'failure': report.get('failure')}))
+raise SystemExit(0 if report['complete'] else 1)

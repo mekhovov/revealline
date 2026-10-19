@@ -1,0 +1,191 @@
+{
+  "format": "SharedDemoHostedEvidencePreservationV1",
+  "createdAt": "2026-10-19T11:07:18.466895+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "byteExactOriginalCopies": true,
+  "files": [
+    {
+      "path": "native-node-22.13.1/review.json",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-22.13.1.json",
+      "sha256": "259b648816d6aabeb55988cfe0f88ba8b67816140a64ce4454dc3599784f8c55",
+      "bytes": 3074
+    },
+    {
+      "path": "native-node-22.13.1/solo-native-candidates/report.json",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-22.13.1/solo-native-candidates/report.json",
+      "sha256": "9f20ac8bef6a5d7a65835457e8d30887357491018cfe0c6fac84af6ece4cf1a0",
+      "bytes": 392742
+    },
+    {
+      "path": "native-node-22.13.1/survival-native-qualification.json",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-22.13.1/survival-native-qualification.json",
+      "sha256": "5842183783dae1b58c7e16ce4aec4cafebffbaeae998ed32b4939a10ecc4d3f8",
+      "bytes": 21160
+    },
+    {
+      "path": "native-node-22.13.1/solo-native-verification/scan.log",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-22.13.1/solo-native-verification/scan.log",
+      "sha256": "c287082661291456f214ceb029a01ebbc6032405588e177a577fc1f6a96f3809",
+      "bytes": 31096
+    },
+    {
+      "path": "native-node-22.13.1/survival-native-qualification.log",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-22.13.1/survival-native-qualification.log",
+      "sha256": "5967ffe8f54b2fc7463ac85cfcca4af644ecf2e35a27f64a1f5d476ac0c04fb1",
+      "bytes": 4420
+    },
+    {
+      "path": "native-node-20.19.6/review.json",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-20.19.6.json",
+      "sha256": "451c686463cf8ebbc853fb02276f6d97a0d883c813dce97806c9d2f2dd1ad54d",
+      "bytes": 3074
+    },
+    {
+      "path": "native-node-20.19.6/solo-native-candidates/report.json",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-20.19.6/solo-native-candidates/report.json",
+      "sha256": "bf1be3700adbe0f8e50b478206a6dc49770736745335d33bc1b9f1aad89b177e",
+      "bytes": 392547
+    },
+    {
+      "path": "native-node-20.19.6/solo-native-verification/scan.log",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-20.19.6/solo-native-verification/scan.log",
+      "sha256": "c287082661291456f214ceb029a01ebbc6032405588e177a577fc1f6a96f3809",
+      "bytes": 31096
+    },
+    {
+      "path": "native-node-20.19.6/survival-native-qualification.json",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-20.19.6/survival-native-qualification.json",
+      "sha256": "abff5dd8a7fb5d2124481bb38b23ff78db01ccd5f367903351f8ac9693440772",
+      "bytes": 21153
+    },
+    {
+      "path": "native-node-20.19.6/survival-native-qualification.log",
+      "originalPath": ".cache/hosted-9dcff0588-native-node-20.19.6/survival-native-qualification.log",
+      "sha256": "045b4215c2e1f7373db88d1611ec4b2a52b05be8dc01c106055f79e03cbcb3f9",
+      "bytes": 4414
+    },
+    {
+      "path": "demo-admission/review.json",
+      "originalPath": ".cache/hosted-demo-admission-pass-9dcff0588.json",
+      "sha256": "f3a660ddd389c53804ffe19f987caec02bac4becb02947cd26dec7db936afe8a",
+      "bytes": 517
+    },
+    {
+      "path": "demo-admission/demo-admission-proof.json",
+      "originalPath": ".cache/hosted-9dcff0588-demo-admission/demo-admission-proof.json",
+      "sha256": "da1d7b76e3d33fcf6332dc0064c5c49cd2e33ab6e91f9112e5b9d78243c48618",
+      "bytes": 1672
+    },
+    {
+      "path": "demo-admission/demo-admission-tests.tap",
+      "originalPath": ".cache/hosted-9dcff0588-demo-admission/demo-admission-tests.tap",
+      "sha256": "f837e4ac8a1e6d63cc2b065f7ea30283289f014e5e1a4ce6c8a8670d72ac1d53",
+      "bytes": 21180
+    },
+    {
+      "path": "focused-shard1/attempt-1/failure-review.json",
+      "originalPath": ".cache/hosted-focused-shard1-failure-9dcff0588.json",
+      "sha256": "90177f69d4596cbb540886a58191b4cedb8f1049a40b59bb18c6185f38e1db9b",
+      "bytes": 5765
+    },
+    {
+      "path": "focused-shard1/attempt-1/job-118015194690.log.txt",
+      "originalPath": ".cache/hosted-9dcff0588-job-118015194690.log.txt",
+      "sha256": "023fa941b64ed99be71e15b499239642693a2d687ad54fb5e4e8674d6f8b343f",
+      "bytes": 1090575
+    },
+    {
+      "path": "focused-shard1/attempt-2/before-single-retry.json",
+      "originalPath": ".cache/hosted-9dcff0588-shard1-before-single-retry.json",
+      "sha256": "e9c43a1fd828252c9a5788ca7d21603794042b469df3f4e8a9e2ad68e235c915",
+      "bytes": 5596
+    },
+    {
+      "path": "focused-shard1/attempt-2/single-retry-request.json",
+      "originalPath": ".cache/hosted-9dcff0588-shard1-single-retry-request.json",
+      "sha256": "f528f45324a93a36fc42f3afa2c1d9163e8c2e7a87e6ff1c8936ba557abf03b6",
+      "bytes": 5072
+    },
+    {
+      "path": "focused-shard1/attempt-2/initial-retry-identity.json",
+      "originalPath": ".cache/hosted-9dcff0588-shard1-retry-identity.json",
+      "sha256": "9ee6d97a51398c364940847232090bf6b0567173187d5dd0a59663a2311e130f",
+      "bytes": 27569
+    },
+    {
+      "path": "focused-shard1/attempt-2/failure-review.json",
+      "originalPath": ".cache/hosted-9dcff0588-shard1-retry-failure.json",
+      "sha256": "eb7f57a41c01ab2fb76b6993aee203f0f060554203d26947b282f74c5642ce73",
+      "bytes": 4946
+    },
+    {
+      "path": "focused-shard1/attempt-2/job-118024521796.log.txt",
+      "originalPath": ".cache/hosted-9dcff0588-job-118024521796.log.txt",
+      "sha256": "d0510408a011465cdfe800b1f41f9903d111ad7bb3f9a44b9b9bbd1ab8b7fe77",
+      "bytes": 34968
+    },
+    {
+      "path": "focused-shard1/attempt-2/final-job.json",
+      "originalPath": ".cache/hosted-9dcff0588-shard1-retry-final-job.json",
+      "sha256": "12b8f3ddaeb6a6e1928597ff17e575a204f71c565783ea28bdfd179db97008ec",
+      "bytes": 3944
+    },
+    {
+      "path": "focused-shard1/attempt-2/artifact-inventory.json",
+      "originalPath": ".cache/hosted-9dcff0588-shard1-retry-artifacts.json",
+      "sha256": "61e335f9b1911ab00b62ef3fa2b85a40fc21643e7052fc383cac2b35749b8f1f",
+      "bytes": 3595
+    },
+    {
+      "path": "focused-shard1/attempt-2/focused-aggregate.log.txt",
+      "originalPath": ".cache/hosted-9dcff0588-job-118025237119.log.txt",
+      "sha256": "5698b41648fc7dddb16bc0923049740805c2b2ab4ba776d047af2f8a22ab5455",
+      "bytes": 2916
+    },
+    {
+      "path": "focused-shard1/attempt-2/release-ready.log.txt",
+      "originalPath": ".cache/hosted-9dcff0588-job-118025285739.log.txt",
+      "sha256": "8a6f89199e85c71ae2cbce755bc068a76501a99e63007aa82db029dbaa8d0368",
+      "bytes": 4934
+    },
+    {
+      "path": "final-status/rollup-112513.json",
+      "originalPath": ".cache/hosted-9dcff0588-monitor-112513.json",
+      "sha256": "1e0b0e571837095ada9ae73253f04297e32a5a538c8dbf0c72bd332681b2e305",
+      "bytes": 34301
+    },
+    {
+      "path": "final-status/appearance-preview-job.json",
+      "originalPath": ".cache/hosted-9dcff0588-preview-final-job.json",
+      "sha256": "06ff292fef616d0ce82581d8890805826e29503120027930e71b69f6ba00c13a",
+      "bytes": 4829
+    },
+    {
+      "path": "final-status/company-candidate-job.json",
+      "originalPath": ".cache/hosted-9dcff0588-company-final-job.json",
+      "sha256": "d9690ac2ca14907319189decf7da38518ff2d02fd60be341b38bf15daf426f0b",
+      "bytes": 3694
+    },
+    {
+      "path": "final-status/review.json",
+      "originalPath": ".cache/hosted-9dcff0588-final-status-review.json",
+      "sha256": "f9e5399ad156308d141d5f58640b3b59f2e9c26fce47534615a1d7f5df1bebc3",
+      "bytes": 3059
+    }
+  ],
+  "summary": {
+    "node22Native": "strict pass: Solo240 entries/242 sources; Survival18",
+    "node20Native": "strict pass: Solo240 entries/242 sources; Survival18",
+    "demoAdmission": "85/85 pass",
+    "focusedShard1Original": "failed: Legacy Fresh dialog did not close within30s predicate budget",
+    "focusedShard1Retry": "attempt2 failed before tests: missing attempt2 admission artifact; original test failure unresolved",
+    "finalStatus": "28 settled: {\"FAILURE\": 3, \"SKIPPED\": 2, \"SUCCESS\": 23}. Focused chain remains failed; no functional claim for policy skips."
+  },
+  "limits": [
+    "Native proof is hosted Linux x64 for the exact recorded Node versions and source revision; no browser or packaging claim.",
+    "Original failure remains failed. Attempt2 is separately retained as infrastructure failure before test execution.",
+    "No source changes, timeout relaxation or repeat rerun occurred while collecting this evidence.",
+    "Original receipts retain original ignored paths; this manifest maps the durable byte-exact copies."
+  ],
+  "updatedAt": "2026-10-19T11:27:36.981204+00:00"
+}

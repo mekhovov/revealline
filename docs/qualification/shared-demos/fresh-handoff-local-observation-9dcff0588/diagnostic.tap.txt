@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: an accessible demo on an idle Legacy host prepares the same level without automatic Start
+ok 1 - an accessible demo on an idle Legacy host prepares the same level without automatic Start
+  ---
+  duration_ms: 8588.315375
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8820.34475

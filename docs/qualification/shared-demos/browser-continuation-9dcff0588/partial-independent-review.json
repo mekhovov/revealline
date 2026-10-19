@@ -1,0 +1,153 @@
+{
+  "format": "SharedDemoPartialBrowserIndependentReviewV1",
+  "reviewedAt": "2026-10-19T11:31:19.236695+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "reviewScope": "Independent receipt/source/hash/cleanup audit only; no browser execution and no visual inspection by this reviewer.",
+  "partialEvidenceAccepted": true,
+  "matrixComplete": false,
+  "acceptedJobs": [
+    {
+      "id": "restoration-webkit",
+      "checks": 12,
+      "sha256": "65c724bb324df60926d867200a17f8b4b2b2df8cba677435496634c6a77a8ae1",
+      "errors": 0,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserAndPreviewClosed": true,
+      "exactCaptureAndSource": true
+    },
+    {
+      "id": "restoration-chromium",
+      "checks": 12,
+      "sha256": "90599fa15e09ccee7d0ecf4a5b75e2be96b1debfe728999c47e3e1a43a5fde41",
+      "errors": 0,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserAndPreviewClosed": true,
+      "exactCaptureAndSource": true
+    },
+    {
+      "id": "restoration-firefox",
+      "checks": 12,
+      "sha256": "47d8e7a48a93ea3e4d07c0a144b467343afd6602e19d3fcf460185840095fffd",
+      "errors": 0,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserAndPreviewClosed": true,
+      "exactCaptureAndSource": true
+    },
+    {
+      "id": "mixed-chromium",
+      "checks": 28,
+      "sha256": "e0b584f0fa7819614ffd4d8199e6d3d35e4b2226891d23d24e9b07481ad1ab77",
+      "errors": 0,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserAndPreviewClosed": true,
+      "exactCaptureAndSource": true
+    },
+    {
+      "id": "mixed-firefox",
+      "checks": 27,
+      "sha256": "288a8fab20068b03222277885ce1ab634de14227f82df1fb50be4220528f941b",
+      "errors": 0,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserAndPreviewClosed": true,
+      "exactCaptureAndSource": true
+    }
+  ],
+  "acceptedChecks": 91,
+  "remainingJobs": [
+    "mixed-webkit",
+    "sim-fresh-chromium",
+    "sim-fresh-firefox",
+    "sim-fresh-webkit",
+    "graphics-chromium",
+    "listeners-chromium"
+  ],
+  "interruptedAttempts": [
+    {
+      "attempt": "native-refresh",
+      "overallComplete": false,
+      "failure": "AssertionError('Local free storage below 200 MiB.')",
+      "childExit": -15,
+      "bindingsStable": true,
+      "observedOwnedProcesses": 66,
+      "remainingOwnedProcesses": 0,
+      "identityCheckedCleanup": true,
+      "logsFullyDrainedWithinBounds": true,
+      "interruptedJob": "mixed-webkit",
+      "interruptedChecksNotCounted": 6,
+      "interruptedBrowserAndPreviewClosed": true
+    },
+    {
+      "attempt": "remaining-external-tmp",
+      "overallComplete": false,
+      "failure": "AssertionError('Local free storage below 200 MiB.')",
+      "childExit": -15,
+      "bindingsStable": true,
+      "observedOwnedProcesses": 4,
+      "remainingOwnedProcesses": 0,
+      "identityCheckedCleanup": true,
+      "logsFullyDrainedWithinBounds": true,
+      "interruptedJob": "mixed-webkit",
+      "interruptedChecksNotCounted": 9,
+      "interruptedBrowserAndPreviewClosed": true
+    }
+  ],
+  "currentSourceRecomputed": {
+    "runtime": {
+      "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+      "files": 10273,
+      "bytes": 410435495
+    },
+    "buildInputs": {
+      "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+      "files": 9411,
+      "bytes": 348449477
+    },
+    "harness": {
+      "sha256": "21995b73b4982b8335fc2fe198059371fa4a89ba956f00dcced2c8951b8a56b9",
+      "files": 938,
+      "bytes": 11209884
+    },
+    "trackedDiffClean": true
+  },
+  "capture": {
+    "manifestSHA256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3",
+    "inventorySHA256": "20e51e1ae9bfd6b9916b86978e0a3b212c40724d81612b376a38ccd944621279",
+    "files": 6229,
+    "durableManifest": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/manifest.json",
+    "fullCaptureInventoryReplayedByThisAudit": false
+  },
+  "rootVisualReview": {
+    "receipt": "narrow-visual-review-9dcff0588-partial.json",
+    "reviewer": "/root",
+    "sha256": "2aa4e1daeccd2f56daafa6663168b120708c5bd0e0a51d032e4998835a9587de",
+    "engines": [
+      "chromium",
+      "firefox"
+    ],
+    "webkitPending": true
+  },
+  "limits": [
+    "Only five completed jobs are accepted. Six remaining jobs and all other separately scoped gates remain pending in this immutable partial review.",
+    "Both original aggregate attempts remain incomplete. Their6 and9 interrupted WebKit observations contribute no acceptance credit.",
+    "Each accepted leaf confirms browser and preview cleanup; supervisors verify only processes observed within their owned descendant scope, bounded by identity and observation limits.",
+    "Full source fingerprints were independently recomputed now; both recorded before/after supervisor bindings agree. Existing build receipts retain full emitted inventory validation; this audit checks capture/receipt hash bindings without reading every emitted asset again.",
+    "Local HTML access-credential fixture substitution is declared by the existing qualifiers; this is not a general offline HTML integrity proof.",
+    "Parent visual inspection is attributed to /root; this reviewer only checks screenshot bytes/hashes.",
+    "No two-hour endurance, physical controller/radio, mobile-device, audible playback or unfamiliar-player proof is added here."
+  ]
+}

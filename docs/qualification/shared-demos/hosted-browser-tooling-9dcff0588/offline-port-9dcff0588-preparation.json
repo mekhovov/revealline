@@ -1,0 +1,78 @@
+{
+  "format": "SharedDemoPortableOfflinePreparationV1",
+  "preparedAt": "2026-10-19T11:42:03.367Z",
+  "baseHead": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "browserRun": false,
+  "original": {
+    "path": ".cache/demo-offline-browser/full-core-external-probe.mjs",
+    "sha256": "852994a4724add5d48e17c32f34e5e2d56c94f071a1f83b9f42b851278c3e402",
+    "bytes": 37288
+  },
+  "sources": [
+    {
+      "path": "scripts/qualify-shared-demo-offline-browser.mjs",
+      "sha256": "34f07f27d51dab86a6ee346e900a9cf874ac5ef79db32f4505b7774df73cebd8",
+      "bytes": 45447
+    },
+    {
+      "path": "scripts/shared-demo-offline-storage.mjs",
+      "sha256": "b1dfe68e2d412cfb5e92a0f34c1f0ea7f81f940df18195e3d0489acac4b16776",
+      "bytes": 3810
+    },
+    {
+      "path": "scripts/test-shared-demo-offline-storage.mjs",
+      "sha256": "0bb7310f389e101a12a73b84023bda617bc1ae4e74faa26a302e5bb7c95db4c2",
+      "bytes": 4123
+    }
+  ],
+  "browserCallbacks": {
+    "count": 27,
+    "canonicalASTEqual": true,
+    "sha256": "f95aadef82137bca437f6aa08dddd470ffc6a20e1574e18e68eed692eda07f2e",
+    "scope": "Actual worker installation, full selection, cold offline entry, persistence/native-origin comparisons and browser observation callbacks remain AST-equal; local process/storage/cleanup bindings were reviewed separately."
+  },
+  "validation": {
+    "node": "v20.19.5",
+    "syntax": true,
+    "eslint": true,
+    "prettier": true,
+    "guardTests": {
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "tapPath": ".cache/offline-port-9dcff0588-tests.tap.txt",
+      "tapSHA256": "603d62326d9da0c7953d123e4495ae3fe63e9d4720a4634c6bbcf7fb1339f9f7"
+    }
+  },
+  "contract": {
+    "cli": [
+      "head",
+      "fingerprint",
+      "emitted-preview",
+      "audit",
+      "runtime",
+      "executable",
+      "report"
+    ],
+    "environment": "SHARED_DEMO_BROWSER_SUPERVISED=1",
+    "scenarioMs": 480000,
+    "installationMs": 180000,
+    "requiredOuterChildSeconds": 540,
+    "expectedChecks": 11,
+    "requiredSuccess": [
+      "complete",
+      "bindingsStable",
+      "serverClosed",
+      "browserCloseCompleted",
+      "profile.removed",
+      "localSession.removed",
+      "errors.length===0"
+    ]
+  },
+  "limits": [
+    "Tooling-only port; no runtime, replay, build contents or workflow edits by this agent.",
+    "No hosted/Linux/browser execution or offline completion is claimed.",
+    "Local process snapshots are observation only; hard timeout, stream drainage and process ownership/kill safety remain the outer supervisor responsibility.",
+    "Three tests from the first helper pass were repeated only after adding the actual unsupervised-CLI rejection test."
+  ]
+}

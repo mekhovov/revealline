@@ -1,0 +1,43 @@
+{
+  "format": "LegacyFreshFailureDiagnosticDraftV1",
+  "createdAt": "2026-10-19T11:24:53.466027+00:00",
+  "baseHead": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "status": "Ignored, formatted draft; three syntax checks and3 isolated collector robustness cases passed. No tracked adoption or full host test.",
+  "paths": [
+    {
+      "source": "game/test/helpers/demo-host-fixture.mjs",
+      "sourceSHA256": "fae1e6fd7d355f527379697be17cd9de57ef9267523fd899d8a5a07ca1e636bd",
+      "draft": ".cache/legacy-fresh-diagnostics-draft-9dcff/demo-host-fixture.mjs",
+      "draftSHA256": "95609e06be37ed3b47b5f6281604a495074186a244e0dcdf1969d23acee616c7"
+    },
+    {
+      "source": "game/test/demo-fresh-handoff.test.mjs",
+      "sourceSHA256": "b7195cb839e3b31448cec0ad2f593aa88ceebedf90aa6da1337869eb1ff1775f",
+      "draft": ".cache/legacy-fresh-diagnostics-draft-9dcff/demo-fresh-handoff.test.mjs",
+      "draftSHA256": "c9e937933a3e432ddde1010392c2ce73c399fd50a589e2fe7fe3580352f5ed1a"
+    },
+    {
+      "source": "game/test/demo-host-diagnostics.test.mjs",
+      "sourceSHA256": null,
+      "draft": ".cache/legacy-fresh-diagnostics-draft-9dcff/demo-host-diagnostics.test.mjs",
+      "draftSHA256": "6e41c83fe3d42d4e500d3b722cfcf67394fd3238a0ebcefa26b2c9b9d21da030"
+    }
+  ],
+  "scope": [
+    "One synchronous read-only public-state collector shared by existing fixture ready catch and original30s Fresh wait catch.",
+    "Wait predicates, timeout allowances, assertions, original Error identity/message/stack and gameplay are unchanged.",
+    "lastOrdinaryRender explicitly denotes the paused fixture's retained last ordinary drawing.",
+    "No frames, retries, work scheduling, writes to storage or simulation occur on failure."
+  ],
+  "patchSHA256": "c28924dc4b83a151a56e8e5a0ccc91e5c993d157c8c92b35fec29d5b9547dbf8",
+  "isolatedCollectorSHA256": "d022f9d8bdc7c8efb1610eef5a6fd333659e8d31b79d756aed07a84b8d7a9230",
+  "syntaxChecks": "All three draft modules pass Node20.19.5 --check before formatting; formatted through repository Prettier.",
+  "validation": {
+    "node": "v20.19.5",
+    "syntaxFiles": 3,
+    "isolatedTests": 3,
+    "isolatedPass": 3,
+    "tapSHA256": "10ef1c82b29bf39aefb004bb86798539da5e1236dbd8fc4b22de455aec24c0c7",
+    "scope": "Exact collector text extracted without edits; test import changed only to load this isolated copy. Full fixture integration remains pending after adoption."
+  }
+}

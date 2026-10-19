@@ -1,0 +1,13 @@
+{
+  "complete": true,
+  "testedHelperSHA256": "5d3c5637c9de7779f8f9f548a972f0aaefbf3d0588b704a8cbf5e1fe311e12ad",
+  "finalHelperSHA256": "405a83143fd8fd74afe758f06b29f4ca5ba6712b8d9ef47db69368bd40a17bc3",
+  "guardReceiptSHA256": "d314ab527f0e491af7aa506f962571f522eaf678fe830aaf09d9efa9a4a956b7",
+  "onlyChangeAfterGuard": "Preserve and verify the new mounted-volume root directory mode; guarded lifecycle functions unchanged.",
+  "guardedFunctionsSHA256": {
+    "interrupt": "3d8d910128152a0fbdd02b812aeae30d25fab3fdba6fe007ddaf767eb70b4c7d",
+    "command": "719e9a9e4ae243a8a1260e868fd637701a96b34174c1f8317e6f69f5cb9d80e5",
+    "retire_image_owners": "adabad65e095d5f7a7bfb60a26326f5cb3bcd01825dd4dcd03ca77e371ed239d",
+    "final_interrupt": "02ad54cd45984c8dc36b4a839ec63b8061dc139840dba18d91aaf8e5d9f57203"
+  }
+}

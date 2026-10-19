@@ -1,0 +1,245 @@
+{
+  "format": "SharedDemoCaptureImageLifetimeGuardsV1",
+  "complete": true,
+  "helperSHA256": "5d3c5637c9de7779f8f9f548a972f0aaefbf3d0588b704a8cbf5e1fe311e12ad",
+  "cases": [
+    {
+      "name": "persistent resource owner remains registered and alive after successful attach command",
+      "passed": true
+    },
+    {
+      "name": "failed detach cannot kill the still-mounted resource owner",
+      "passed": true
+    },
+    {
+      "name": "cancellation revokes success; explicit detach releases the owner before final cleanup proof",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Real owned synthetic subprocesses simulate a mounted resource lifetime. No image creation, mount, source copy, browser or capture swap occurs in these guards."
+  ],
+  "ownedProcessesAfterDetach": [
+    {
+      "rootObserved": true,
+      "identityFields": [
+        "pid",
+        "started",
+        "uid",
+        "argv"
+      ],
+      "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+      "observationLimits": {
+        "ownershipLimit": 256,
+        "ownershipCount": 2,
+        "actionLimit": 1024,
+        "actionCount": 0,
+        "exceeded": false
+      },
+      "observed": [
+        {
+          "pid": 71286,
+          "ppid": 71278,
+          "pgid": 71286,
+          "uid": 502,
+          "started": "Mon Oct 19 13:27:57 2026",
+          "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import subprocess,sys,time; p=subprocess.Popen([sys.executable,\"-c\",\"from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\nwhile not p.exists(): time.sleep(.02)\"],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True); print(p.pid,flush=True); time.sleep(.3)",
+          "profile": null,
+          "ownership": "exact newly spawned child",
+          "observedAt": "2026-10-19T11:27:57.185938+00:00"
+        },
+        {
+          "pid": 71288,
+          "ppid": 71286,
+          "pgid": 71288,
+          "uid": 502,
+          "started": "Mon Oct 19 13:27:57 2026",
+          "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\012while not p.exists(): time.sleep(.02)",
+          "profile": null,
+          "ownership": "observed descendant",
+          "parentIdentity": [
+            71286,
+            "Mon Oct 19 13:27:57 2026",
+            502,
+            "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import subprocess,sys,time; p=subprocess.Popen([sys.executable,\"-c\",\"from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\nwhile not p.exists(): time.sleep(.02)\"],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True); print(p.pid,flush=True); time.sleep(.3)"
+          ],
+          "observedAt": "2026-10-19T11:27:57.227754+00:00"
+        }
+      ],
+      "actions": [],
+      "ownershipEvidenceTruncated": false,
+      "actionEvidenceTruncated": false,
+      "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "remaining": [],
+      "remainingCount": 0,
+      "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "remainingEvidenceTruncated": false,
+      "verified": true
+    }
+  ],
+  "commandEvidence": [
+    {
+      "label": "synthetic-attach",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-c",
+        "import subprocess,sys,time; p=subprocess.Popen([sys.executable,\"-c\",\"from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\nwhile not p.exists(): time.sleep(.02)\"],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True); print(p.pid,flush=True); time.sleep(.3)"
+      ],
+      "timeoutSeconds": 5,
+      "complete": true,
+      "ownerRetainedUntilExplicitDetach": true,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 2,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 71286,
+            "ppid": 71278,
+            "pgid": 71286,
+            "uid": 502,
+            "started": "Mon Oct 19 13:27:57 2026",
+            "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import subprocess,sys,time; p=subprocess.Popen([sys.executable,\"-c\",\"from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\nwhile not p.exists(): time.sleep(.02)\"],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True); print(p.pid,flush=True); time.sleep(.3)",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T11:27:57.185938+00:00"
+          },
+          {
+            "pid": 71288,
+            "ppid": 71286,
+            "pgid": 71288,
+            "uid": 502,
+            "started": "Mon Oct 19 13:27:57 2026",
+            "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\012while not p.exists(): time.sleep(.02)",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              71286,
+              "Mon Oct 19 13:27:57 2026",
+              502,
+              "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import subprocess,sys,time; p=subprocess.Popen([sys.executable,\"-c\",\"from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\nwhile not p.exists(): time.sleep(.02)\"],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True); print(p.pid,flush=True); time.sleep(.3)"
+            ],
+            "observedAt": "2026-10-19T11:27:57.227754+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [
+          {
+            "pid": 71288,
+            "ppid": 1,
+            "pgid": 71288,
+            "uid": 502,
+            "started": "Mon Oct 19 13:27:57 2026",
+            "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\012while not p.exists(): time.sleep(.02)",
+            "profile": null
+          }
+        ],
+        "remainingCount": 1,
+        "remainingSHA256": "ba85bb70d0c0d48dc5600ce072ca5297415ead680fa0a7ba8e8a527137262b7d",
+        "remainingEvidenceTruncated": false,
+        "verified": false
+      },
+      "log": {
+        "path": ".cache/capture-image-lifetime-guards-7bc24967/commands.synthetic-attach.log.txt",
+        "byteLimit": 1048576,
+        "totalBytes": 6,
+        "writtenBytes": 6,
+        "truncatedBytes": 0,
+        "tailLimit": 4096,
+        "tailBytes": 6,
+        "tailSHA256": "890fed28afc10593d0320c4e29e2b03d18c9de684f4e47c4a615c64be7d620a6",
+        "tail": "71288\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 0.8281458749988815,
+      "finalLog": {
+        "path": ".cache/capture-image-lifetime-guards-7bc24967/commands.synthetic-attach.log.txt",
+        "byteLimit": 1048576,
+        "totalBytes": 6,
+        "writtenBytes": 6,
+        "truncatedBytes": 0,
+        "tailLimit": 4096,
+        "tailBytes": 6,
+        "tailSHA256": "890fed28afc10593d0320c4e29e2b03d18c9de684f4e47c4a615c64be7d620a6",
+        "tail": "71288\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "ownerAfterDetach": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 2,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 71286,
+            "ppid": 71278,
+            "pgid": 71286,
+            "uid": 502,
+            "started": "Mon Oct 19 13:27:57 2026",
+            "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import subprocess,sys,time; p=subprocess.Popen([sys.executable,\"-c\",\"from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\nwhile not p.exists(): time.sleep(.02)\"],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True); print(p.pid,flush=True); time.sleep(.3)",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T11:27:57.185938+00:00"
+          },
+          {
+            "pid": 71288,
+            "ppid": 71286,
+            "pgid": 71288,
+            "uid": 502,
+            "started": "Mon Oct 19 13:27:57 2026",
+            "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\012while not p.exists(): time.sleep(.02)",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              71286,
+              "Mon Oct 19 13:27:57 2026",
+              502,
+              "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import subprocess,sys,time; p=subprocess.Popen([sys.executable,\"-c\",\"from pathlib import Path; import time; p=Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-lifetime-guards-7bc24967/explicit-detach');\\nwhile not p.exists(): time.sleep(.02)\"],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True); print(p.pid,flush=True); time.sleep(.3)"
+            ],
+            "observedAt": "2026-10-19T11:27:57.227754+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "format": "FinalMatrixStorageInterruptionV1",
+  "observedAt": "2026-10-19T10:54:16.723818+00:00",
+  "sourceSupervision": {
+    "path": ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.supervision.json",
+    "sha256": "ca4c88e9a68030e9c5c24e291edb550988eaf78d98982901472c9893274482e2"
+  },
+  "failure": "AssertionError('Local free storage below 200 MiB.')",
+  "complete": false,
+  "bindingsStable": true,
+  "ownedCleanup": {
+    "verified": true,
+    "remainingCount": 0,
+    "remaining": [],
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 66,
+      "actionLimit": 1024,
+      "actionCount": 4,
+      "exceeded": false
+    }
+  },
+  "temporaryFiles": [],
+  "localFreeBytes": 183676928,
+  "manualProcessSignals": false,
+  "manualFilesRemoved": false,
+  "nextBrowserGroupStarted": false
+}

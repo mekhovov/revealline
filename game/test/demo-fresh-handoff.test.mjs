@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { demoPage } from './helpers/demo-host-fixture.mjs';
+import { demoPage, reportDemoHostFailure } from './helpers/demo-host-fixture.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { readMissionLibraryHandoff, readMissionLibraryReady } from '../mission-library/handoff.mjs';
@@ -15,6 +15,12 @@ test('an accessible demo on an idle Legacy host prepares the same level without 
   await waitFor(() => !page.$('demo-dialog').open, {
     timeoutMs: 30000,
     message: 'Fresh must finish exact mission preparation on the Legacy owner.',
+  }).catch((error) => {
+    reportDemoHostFailure(t, page, {
+      phase: 'Fresh exact mission preparation on the Legacy owner',
+      timeoutMs: 30000,
+    });
+    throw error;
   });
   page.frame(0);
   assert.equal(page.$('mission-replace-dialog').open, false);

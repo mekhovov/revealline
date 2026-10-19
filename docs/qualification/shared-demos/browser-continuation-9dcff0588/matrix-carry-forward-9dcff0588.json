@@ -1,0 +1,115 @@
+{
+  "format": "MatrixCarryForwardEvidenceV1",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "runtime": {
+    "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "files": 10273,
+    "bytes": 410435495
+  },
+  "passedJobs": [
+    {
+      "id": "restoration-webkit",
+      "checks": 12,
+      "reportPath": ".cache/native-matrix-evidence/restoration-webkit-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "sha256": "65c724bb324df60926d867200a17f8b4b2b2df8cba677435496634c6a77a8ae1"
+    },
+    {
+      "id": "restoration-chromium",
+      "checks": 12,
+      "reportPath": ".cache/native-matrix-evidence/restoration-chromium-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "sha256": "90599fa15e09ccee7d0ecf4a5b75e2be96b1debfe728999c47e3e1a43a5fde41"
+    },
+    {
+      "id": "restoration-firefox",
+      "checks": 12,
+      "reportPath": ".cache/native-matrix-evidence/restoration-firefox-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "sha256": "47d8e7a48a93ea3e4d07c0a144b467343afd6602e19d3fcf460185840095fffd"
+    },
+    {
+      "id": "mixed-chromium",
+      "checks": 28,
+      "reportPath": ".cache/native-matrix-evidence/mixed-chromium-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "sha256": "e0b584f0fa7819614ffd4d8199e6d3d35e4b2226891d23d24e9b07481ad1ab77"
+    },
+    {
+      "id": "mixed-firefox",
+      "checks": 27,
+      "reportPath": ".cache/native-matrix-evidence/mixed-firefox-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "sha256": "288a8fab20068b03222277885ce1ab634de14227f82df1fb50be4220528f941b"
+    }
+  ],
+  "passedChecks": 91,
+  "remainingJobs": [
+    "mixed-webkit",
+    "sim-fresh-chromium",
+    "sim-fresh-firefox",
+    "sim-fresh-webkit",
+    "graphics-chromium",
+    "listeners-chromium"
+  ],
+  "originalRunComplete": false,
+  "interruptedJob": "mixed-webkit",
+  "sourceSupervisionReason": "Local free storage below200MiB; owned process cleanup verified.",
+  "files": [
+    {
+      "path": ".cache/native-matrix-evidence/restoration-webkit-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "bytes": 62984,
+      "sha256": "65c724bb324df60926d867200a17f8b4b2b2df8cba677435496634c6a77a8ae1"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/restoration-chromium-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "bytes": 54260,
+      "sha256": "90599fa15e09ccee7d0ecf4a5b75e2be96b1debfe728999c47e3e1a43a5fde41"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/restoration-firefox-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "bytes": 59178,
+      "sha256": "47d8e7a48a93ea3e4d07c0a144b467343afd6602e19d3fcf460185840095fffd"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/mixed-chromium-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "bytes": 32620,
+      "sha256": "e0b584f0fa7819614ffd4d8199e6d3d35e4b2226891d23d24e9b07481ad1ab77"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/mixed-firefox-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "bytes": 25683,
+      "sha256": "288a8fab20068b03222277885ce1ab634de14227f82df1fb50be4220528f941b"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "bytes": 29187,
+      "sha256": "0d888dc6eb375711c333dec344b9b5d2e1a62ba7fc7aff0a36a2e59c7e9d0d26"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.supervision.json",
+      "bytes": 177613,
+      "sha256": "ca4c88e9a68030e9c5c24e291edb550988eaf78d98982901472c9893274482e2"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.log",
+      "bytes": 1001,
+      "sha256": "6857adbcddb9a6bec82b03373a923e3d3bcfc0a7a44fe0cf3141b450645e6531"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.mjs.txt",
+      "bytes": 16059,
+      "sha256": "3da84ad80c5aa679ed6fcc43192b0d5e8e82f01a08dbcff5f508effa50516730"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.supervisor.py.txt",
+      "bytes": 16721,
+      "sha256": "ba21ca31df72f86013e2c150873ac141b5ccc8caa3325ea1f2cd30193a5624f1"
+    },
+    {
+      "path": ".cache/native-matrix-evidence/mixed-webkit-final-emitted-403814d-9dcff0588-native-refresh.json",
+      "bytes": 8332,
+      "sha256": "cc4924578470105b3dca09f637cc7425be7c93cc269e5a3586180f21893d4a7c"
+    },
+    {
+      "path": ".cache/final-matrix-storage-interruption-9dcff0588.json",
+      "bytes": 867,
+      "sha256": "e1d67650a2de1d29bdf707941348eb96ddebc37c053cee90828df4803304c087"
+    }
+  ]
+}
