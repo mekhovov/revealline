@@ -30,6 +30,49 @@ function displayStorage() {
   store.map.set('revealline-enemy-stats.v1:writer', 'display-host-fixture');
   return store;
 }
+
+test('actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer', async (t) => {
+  const store = memoryStorage(),
+    page = await soloPage(t, { campaign, storage: store, waitForPictures: false });
+  await activateHostAction(page.$('start-button'));
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  page.key('ArrowDown', false);
+  for (let n = 0; n < 13; n++) page.frame();
+  page.$('settings-button').click();
+  page.$('settings-tab-accessibility').click();
+  page.frame(0);
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run),
+    suspended = store.getItem(sessionKey),
+    before = loadLibrary(store, profileKey).library.preferences,
+    writes = store.writes.length,
+    prefix = 'settings-panel-accessibility-comfort-';
+  page.$(`${prefix}choice`).value = 'comfort';
+  page.$(`${prefix}choice`).emit('change');
+  assert.equal(store.writes.length, writes, 'A preset preview never writes preferences.');
+  page.$(`${prefix}apply`).click();
+  reflects(page, 'plain', 'large', true);
+  assert.equal(page.$('settings-background-animation').checked, false);
+  assert.deepEqual(loadLibrary(store, profileKey).library.preferences, {
+    ...before,
+    textFace: 'plain',
+    textSize: 'large',
+    reducedEffects: true,
+  });
+  page.$(`${prefix}undo`).focus();
+  page.$(`${prefix}undo`).click();
+  reflects(page, before.textFace, before.textSize, before.reducedEffects);
+  assert.deepEqual(loadLibrary(store, profileKey).library.preferences, before);
+  assert.equal(page.doc.activeElement, page.$(`${prefix}apply`));
+  page.frame(0);
+  assert.strictEqual(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.equal(store.getItem(sessionKey), suspended);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
+
 function change(page, id, value) {
   const control = page.$(id);
   if (typeof value === 'boolean') control.checked = value;
@@ -409,4 +452,33 @@ for (const mode of ['team', 'versus'])
     assert.equal(store.getItem(DISPLAY_PREFERENCES_KEY), raw);
     change(page, `${prefix}-text-face`, 'pixel');
     assert.equal(JSON.parse(store.getItem(DISPLAY_PREFERENCES_KEY)).textSize, 'extra-large');
+  });
+
+for (const mode of ['Team', 'Versus'])
+  test(`actual ${mode} comfort preview and Apply/Undo preserve the existing display controls and Solo profile`, async (t) => {
+    const store = memoryStorage(),
+      initial = { textFace: 'pixel', textSize: 'standard', reducedEffects: false };
+    store.setItem(DISPLAY_PREFERENCES_KEY, JSON.stringify(initial));
+    saveLibrary(store, profileKey, emptyLibrary());
+    const page =
+        mode === 'Team' ? await teamPage(t, store) : await couchPage(t, { storage: store }),
+      prefix =
+        mode === 'Team'
+          ? 'coop-settings-panel-accessibility-comfort-'
+          : 'race-settings-panel-accessibility-comfort-',
+      fieldPrefix = mode === 'Team' ? 'coop-' : 'race-',
+      face = page.$(`${fieldPrefix}text-face`),
+      profile = store.getItem(profileKey),
+      writes = store.writes.length;
+    page.$(`${prefix}choice`).value = 'clear';
+    page.$(`${prefix}choice`).emit('change');
+    assert.equal(store.writes.length, writes);
+    page.$(`${prefix}apply`).click();
+    reflects(page, 'plain', 'large', false);
+    assert.equal(page.$(`${fieldPrefix}text-face`), face);
+    assert.deepEqual(raw(store), { ...initial, textFace: 'plain', textSize: 'large' });
+    page.$(`${prefix}undo`).click();
+    reflects(page, 'pixel', 'standard', false);
+    assert.deepEqual(raw(store), initial);
+    assert.equal(store.getItem(profileKey), profile);
   });
