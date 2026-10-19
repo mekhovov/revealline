@@ -1173,6 +1173,19 @@ button:disabled {
   line-height: 1.4;
   margin: 5px 0 12px;
 }
+.overflight-player:not(.overflight-raid) #overflight-settings-dialog .mode-settings-content {
+  flex-direction: column;
+}
+.overflight-player:not(.overflight-raid) #overflight-settings-dialog [data-operation-context] {
+  flex: 0 0 auto;
+}
+.overflight-player:not(.overflight-raid)
+  #overflight-settings-dialog
+  .field-kit-settings-panel
+  > label:not(.overflight-check) {
+  display: grid;
+  gap: 6px;
+}
 .overflight-hud-operation {
   position: absolute;
   bottom: 37px;
@@ -1383,6 +1396,30 @@ button:disabled {
   min-height: 44px;
   background: #e6b85c;
   color: #10231d;
+}
+
+.overflight-suspend-dialog {
+  box-sizing: border-box;
+  width: min(36rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  padding: 1.25rem;
+  border: 1px solid #9ba994;
+  background: #10231d;
+  color: #eef0d9;
+}
+.overflight-suspend-dialog::backdrop {
+  background: rgb(0 0 0 / 70%);
+}
+.overflight-suspend-dialog > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.overflight-suspend-dialog button {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
 }
 
 .overflight-reroll-hint {
