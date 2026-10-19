@@ -52,12 +52,12 @@ opener focused.
 Final browser review used stylesheet blob
 `42e249023d30144a1766e817d5e66807442b272c` with the direct-label refinement:
 
-| Host and viewport       | Presentation                  | Observed result                                                                                                                                                                              |
-| ----------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Single Drone, 320 × 720 | English, Standard, Theme font | Gameplay panel 276 px wide; difficulty label/control rows readable. Keyboard navigation through Airframes scrolled the panel (200 px client height / 707 px scroll height) and exposed Back. |
-| Single Drone, 320 × 720 | Ukrainian, Large, Plain font  | Gameplay panel 276 px wide; select 268 px wide with 18 px text.                                                                                                                              |
-| Riy, 844 × 390          | English, Large, Plain font    | Panel 529.31 × 117.21 px with 662 px scroll height; keyboard navigation through Airframes scrolled to visible Back.                                                                          |
-| Riy, 390 × 844          | Ukrainian, Large, Plain font  | Panel 346 px wide; Escape returned to the Gameplay tab, then Home with the Settings opener focused.                                                                                          |
+| Host and viewport       | Presentation                  | Observed result                                                                                                                                                                                |
+| ----------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Single Drone, 320 × 720 | English, Standard, Theme font | Gameplay panel 276 px wide and 507.69 px high; difficulty label/control rows readable. Keyboard navigation through Airframes reached scrollTop 200 px (707 px scroll height) and exposed Back. |
+| Single Drone, 320 × 720 | Ukrainian, Large, Plain font  | Gameplay panel 276 px wide; select 268 px wide with 18 px text.                                                                                                                                |
+| Riy, 844 × 390          | English, Large, Plain font    | Panel 529.31 × 117.21 px with 662 px scroll height; keyboard navigation through Airframes scrolled to visible Back.                                                                            |
+| Riy, 390 × 844          | Ukrainian, Large, Plain font  | Panel 346 px wide; Escape returned to the Gameplay tab, then Home with the Settings opener focused.                                                                                            |
 
 Retained screenshots are named
 `overflight-42e-320-standard-drilled-settings.png`,
