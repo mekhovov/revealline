@@ -65,7 +65,6 @@ async function projectGlobalServices() {
     'game/profile-database.mjs',
     'game/hunt/actor-art.mjs',
     'game/presentation/actor-animation.mjs',
-    'game/ui/enemy-appearance-controls.mjs',
     'game/ui/mission-library-goal.mjs',
     'game/mission-library/goal-preferences.mjs',
     'game/mission-library/opening-intent.mjs',
@@ -80,6 +79,8 @@ async function projectGlobalServices() {
     ['game/i18n/index.mjs', 'simGlobalI18n'],
     ['game/presentation/theme-system.mjs', 'simGlobalThemes'],
     ['game/hunt/preferences.mjs', 'simGlobalActorPreferences'],
+    // Already shipped by every SIM; share its ID allocator with standalone controls.
+    ['game/ui/enemy-appearance-controls.mjs', 'simGlobalEnemyAppearance'],
   ]);
   const modules = new Map(),
     visiting = new Set();
