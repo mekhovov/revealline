@@ -2090,6 +2090,84 @@
       "blob": "674fb80ee89254d6aaae5a14ec86910c7d2edb06",
       "bytes": 734,
       "sha256": "997bbbd95c390ab9e08ca6f09cc9e058d491216000e78a2c32ad67a42a3e97ae"
+    },
+    {
+      "path": "field-kit-candidate-route-initial-proposal-20261019.json",
+      "blob": "f1e6a21e99906a999742e45b682bba6c3539a19f",
+      "bytes": 67936,
+      "sha256": "475d6e1c958a3806c2f9a0da1e2ab4b7a29156304980296e558d43cce5dcf9a8"
+    },
+    {
+      "path": "field-kit-candidate-route-reviewed-proposal-20261019.json",
+      "blob": "807beefd43f468e44ff6aeb2aec36ca99fd673ff",
+      "bytes": 68246,
+      "sha256": "5c0332dc6102ae5dae0d88b969ba5b775510735665158bb1786104f88ec8250a"
+    },
+    {
+      "path": "field-kit-candidate-route-peer-review-20261019.json",
+      "blob": "7001ee09063ebb158840c12f6351319d4dff7ecf",
+      "bytes": 5153,
+      "sha256": "a2ab0212b00ce615247e78a803277ef9a28fabf1bbf765e1cec97c159d5c0ada"
+    },
+    {
+      "path": "field-kit-candidate-route-draft-publication-20261019.json",
+      "blob": "4823be0c04e3fe9f8cef81732a8032dd34fd6241",
+      "bytes": 1220,
+      "sha256": "b0399a88596abb6579597a36f5fa37e23f6e38159b44c68e9fb787196a1d7d3d"
+    },
+    {
+      "path": "field-kit-candidate-route-focused-selection-20261019.json",
+      "blob": "8f510f0c860d98fd878951b4d6e0622045a8cae9",
+      "bytes": 3859,
+      "sha256": "f7a06d1eb62739ed3e28cc949c2ce529181bbeee8799d313aa94d7c439b9604d"
+    },
+    {
+      "path": "exact-head-source-inventory-20261019-0450.json",
+      "blob": "9820b7445ec3c19b9958463e560143951846437c",
+      "bytes": 9974,
+      "sha256": "324205c1c10b0c9aaa29e8bc2c98b607b04fa1a31d33fe2e424bf72469935152"
+    },
+    {
+      "path": "binary-artwork-trail-source-artifacts-20261019.json",
+      "blob": "38323488f452174bcbdda56d2a2b23c0dcdb8a8c",
+      "bytes": 402163,
+      "sha256": "5744e967b2f09ae88744f67b77abb9ade728065ef7a28f44f5479dd13690f8ca"
+    },
+    {
+      "path": "binary-artwork-trail-source-controls-20261019.json",
+      "blob": "8193a6f87ec32b4817d69cb61275e8da38b9f958",
+      "bytes": 6874,
+      "sha256": "959bbc40e92f497685d90fd6beb1a9a1bc33a2aea83defe1b3eec6bd533d7904"
+    },
+    {
+      "path": "mask-recovery-owner-final-proposal-20261019.json",
+      "blob": "8e13a33f7b852055217eeb81770cf8275f1fc981",
+      "bytes": 199565,
+      "sha256": "1f59d91bf3a1ce02fcd203cf293b335948f8a1e33f414a4a7a3cbc7c587f53d8"
+    },
+    {
+      "path": "mask-recovery-owner-independent-review-20261019.json",
+      "blob": "68638894b471004bb8fa6a705cba82b593dad6d8",
+      "bytes": 8120,
+      "sha256": "dae23133c6113f1146987c3fda9f13bf19ec1a07d0bcf89cbb0a885e33d72cca"
+    },
+    {
+      "path": "mask-recovery-owner-source-audit-20261019.json",
+      "blob": "2d551903b1d98bc58dcfe2b7caff840c209ecdfa",
+      "bytes": 5189,
+      "sha256": "08b083d52eefddf18bcc02a5811e62f001a511ed00fb32c284c556c277f0b8cc"
+    },
+    {
+      "path": "mask-recovery-owner-draft-publication-20261019.json",
+      "blob": "088cac224133f4e9d972316e426bf728f44f8697",
+      "bytes": 2616,
+      "sha256": "1c5794dbb2fa338d5f9d462ad1bfa6ab5c58b51d6a96c63c763cc4b962160790"
+    },
+    {
+      "path": "actor-continuation-finite-integration-audit-20261019.json",
+      "blob": "cb4cab0147df3e44fda9b411e731a0aceee155cb",
+      "bytes": 23834,
+      "sha256": "050435abe6cc3128e12f511a13561634b78331df3d37d21e9bb42910b1aec834"
     }
   ]
 }

@@ -1,0 +1,35 @@
+{
+  "kind": "field-kit-source-bound-artifact-route-draft-publication",
+  "observedUTC": "2026-10-19T04:43:43.816001+00:00",
+  "pr": 1716,
+  "url": "https://github.com/mekhovov/revealline/pull/1716",
+  "base": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "head": "cc022314aa7f1763e1079a12930c92edb71ab4ab",
+  "tree": "ffd96ebc284ea93e9e664cf7066065fecccb38c2",
+  "branch": "codex/solo-field-kit-candidate-route",
+  "changedPaths": [
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c71551d8eac8cfb27428398f3f6c858c0b2b32ff"
+    },
+    {
+      "path": "publishing/source-workflow.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b915a60f1f43741169c9d33d24ed791fcaa7fd5a"
+    }
+  ],
+  "allOtherFilesPreserved": true,
+  "proposal": "807beefd43f468e44ff6aeb2aec36ca99fd673ff",
+  "review": {
+    "label": "field-kit-candidate-route-peer-review-20261019",
+    "blob": "7001ee09063ebb158840c12f6351319d4dff7ecf",
+    "bytes": 5153,
+    "sha256": "a2ab0212b00ce615247e78a803277ef9a28fabf1bbf765e1cec97c159d5c0ada"
+  },
+  "functionalTestsExecuted": false,
+  "generatorExecuted": false,
+  "productionMetadataAdopted": false
+}

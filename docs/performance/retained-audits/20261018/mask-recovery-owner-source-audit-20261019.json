@@ -1,0 +1,117 @@
+{
+  "kind": "mask-owner-source-only-audit",
+  "at": "2026-10-19T04:51:08.962Z",
+  "proposal": {
+    "blob": "8e13a33f7b852055217eeb81770cf8275f1fc981",
+    "bytes": 199565,
+    "sha256": "1f59d91bf3a1ce02fcd203cf293b335948f8a1e33f414a4a7a3cbc7c587f53d8",
+    "base": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a"
+  },
+  "files": [
+    {
+      "path": "game/ui/body-backing.mjs",
+      "beforeBlob": "e7446c574737dc6d8b89842fb643feb8043742e1",
+      "afterBlob": "e57914bae845ab3b13165ae94c79064591e28d2b",
+      "bytes": 7798,
+      "sha256": "a771b3d2fd4bc6de8d8afffb0d76c5e17aeed07dabaf4c5beecb5da449e83dd8"
+    },
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "beforeBlob": "6eb8b5f1011ed43ac1dce8249498f9d48a793ddd",
+      "afterBlob": "182833a5fc47f311e896174f89f1c6a8af8a5f0b",
+      "bytes": 6830,
+      "sha256": "f17c3da2a19ab02ff114825c5ed48501610325dde70bd3d0869a930dd1ddf870"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "beforeBlob": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+      "afterBlob": "7140abb1952d1964395e041b25c77ebe35d2e74d",
+      "bytes": 65310,
+      "sha256": "723fe51d11c98d8163d33811549bb4967a11871b2b414b09d6d9a56de56c24ea"
+    },
+    {
+      "path": "game/test/body-backing-recovery.test.mjs",
+      "beforeBlob": "eec40ee04a8531956156ec7bf1b88f123e13930f",
+      "afterBlob": "d29ba052ff3eb2e37b48934aec4061b6b51b7042",
+      "bytes": 24340,
+      "sha256": "d2b3c2d957317ef769dfb669e1c84e0247bd43aa5f433c722ad7f8bbdcffb589"
+    }
+  ],
+  "exactPreservation": {
+    "originalTestStatements": 8,
+    "originalExpandedTestCases": 10,
+    "unchangedBoardPainterMethods": [
+      "setInterfaceProvider",
+      "setArcadeProvider",
+      "artSnapshot",
+      "setLook",
+      "whenReady",
+      "prepare",
+      "retireLayer",
+      "resourceSnapshot",
+      "cacheStats",
+      "paintLayer",
+      "boardCells",
+      "reportAssets",
+      "enemyBody",
+      "releaseBackgroundArt",
+      "setBackgroundArt",
+      "makeArt",
+      "setAttemptAppearance",
+      "acceptEnemyArtwork",
+      "startCelebration",
+      "skipCelebration",
+      "celebrationStatus",
+      "drawGallery",
+      "effectsFor",
+      "drawActor"
+    ]
+  },
+  "newAuthoredControls": [
+    "shared masks notify distinct live owners once and preserve loss through cache invalidation",
+    "initially lost eventless storage recovers owned holds without another paint",
+    "a premature restore event cannot release ownership while native storage is lost",
+    "retiring one shared lease preserves another hold and last retirement cancels stale probes",
+    "failed owned mask preparation detaches its callbacks before replacement",
+    "BoardPainter character leases survive loss invalidation and retire on replacement or disposal",
+    "an inert native loss query cannot emit restoration or schedule recovery for healthy storage",
+    "a masked character surface pauses Solo and repaints before explicit Resume"
+  ],
+  "sourceReviewFacts": [
+    "Surface event/probe closures capture the surface, not the source image. Detachable owner callbacks reach only their live painter and are unlinked at retirement; dispose clears callback references.",
+    "Each painter owns detachable subscriptions with distinct tokens; shared surfaces and other live painters survive retirement.",
+    "Normal cache invalidation retains both notified lost tokens and not-yet-notified tokens of an already-lost shared surface.",
+    "Appearance/level replacement and disposal retire all subscriptions; callbacks are detached before retirement notifications.",
+    "Healthy event-supported masks do no native polling; one 250ms native probe exists only for lost storage with live owners and a native query.",
+    "Restoration does no pixel work; the existing paused scene submits the rebuilt mask before explicit Resume can advance authority.",
+    "Stale timer token identity cannot clear or orphan a successor timer.",
+    "Native Canvas2D events never call preventDefault; premature restoration cannot override a true isContextLost.",
+    "The Solo host control exercises real scene pause/Resume and real character/backing helpers; full BoardPainter draw and native pixels remain fixture-modeled.",
+    "Company producer04bcc741a03e5d7d9a54c4d44179639aa3e74805 fingerprints the three production inputs in motion/effects/team; final source revision requires isolated candidate metadata continuation."
+  ],
+  "staticChecks": {
+    "acorn": true,
+    "prettier": true,
+    "eslint": true,
+    "executedTests": false,
+    "notes": [
+      "No source/ref/index/PR mutations.",
+      "Native raster, real devices and hosted test execution remain pending.",
+      "Company source fingerprint closure required."
+    ]
+  },
+  "restrictions": {
+    "localWrites": false,
+    "functionalExecution": false,
+    "sourcePush": false,
+    "refChanges": false,
+    "workflowDispatch": false
+  },
+  "remaining": [
+    "Independent final peer receipt",
+    "Guarded successor draft from fresh main; PR1712 is externally merged",
+    "Hosted exact-head source controls/build checks",
+    "Company source fingerprint continuation",
+    "Native raster and physical-device qualification"
+  ]
+}

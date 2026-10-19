@@ -1,0 +1,287 @@
+{
+  "kind": "bounded-exact-head-source-artifact-inventory",
+  "observedUTC": "2026-10-19T04:48:13.234593+00:00",
+  "targets": [
+    {
+      "pr": 1696,
+      "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+      "merged": true,
+      "merge": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+      "merged_at": "2026-10-19T03:41:23Z",
+      "runs": [
+        {
+          "run": 39184548434,
+          "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "artifacts": [
+            {
+              "id": 12164010898,
+              "name": "focused-shard-39184548434-1-4",
+              "size_in_bytes": 1071,
+              "expired": false,
+              "created_at": "2026-10-19T04:42:04Z",
+              "digest": "sha256:e8cc2ac568708d9488d5b6ee490865a838b1e5ab859ba7661ef17a302fdd38ee",
+              "workflow_run": {
+                "id": 39184548434,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-trail-allocation",
+                "head_sha": "73d56d3b674bcfba890656143c810f10ffd233b3"
+              }
+            },
+            {
+              "id": 12163850204,
+              "name": "focused-shard-39184548434-1-2",
+              "size_in_bytes": 2426,
+              "expired": false,
+              "created_at": "2026-10-19T04:36:20Z",
+              "digest": "sha256:bbd3c91bb7350b994c4059fb27228c8440b43b6c69e04787a0f91820b19f00f0",
+              "workflow_run": {
+                "id": 39184548434,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-trail-allocation",
+                "head_sha": "73d56d3b674bcfba890656143c810f10ffd233b3"
+              }
+            },
+            {
+              "id": 12161013192,
+              "name": "admission-39184548434-1",
+              "size_in_bytes": 425,
+              "expired": false,
+              "created_at": "2026-10-19T03:19:18Z",
+              "digest": "sha256:36a4a08ac1cddbec88b4c0519e81aad723f5160bac7d2abf6d5be192b99c32c4",
+              "workflow_run": {
+                "id": 39184548434,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-trail-allocation",
+                "head_sha": "73d56d3b674bcfba890656143c810f10ffd233b3"
+              }
+            }
+          ]
+        }
+      ],
+      "totalRuns": 5
+    },
+    {
+      "pr": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "merged": true,
+      "merge": "4dc5abeb4aac9d3cf405ede364f71c615b13c370",
+      "merged_at": "2026-10-19T04:23:06Z",
+      "runs": [
+        {
+          "run": 39196032363,
+          "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "artifacts": []
+        }
+      ],
+      "totalRuns": 7
+    },
+    {
+      "pr": 1673,
+      "head": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+      "merged": true,
+      "merge": "a94f2a6c3dac43ebeead58036a7b890414dfff37",
+      "merged_at": "2026-10-19T04:14:22Z",
+      "runs": [
+        {
+          "run": 39198371389,
+          "head": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "artifacts": []
+        }
+      ],
+      "totalRuns": 6
+    },
+    {
+      "pr": 1712,
+      "head": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a",
+      "merged": true,
+      "merge": "16ebd7b51984387c39622380a8e51a60e745152e",
+      "merged_at": "2026-10-19T04:28:17Z",
+      "runs": [
+        {
+          "run": 39197989826,
+          "head": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "artifacts": []
+        }
+      ],
+      "totalRuns": 5
+    },
+    {
+      "pr": 1674,
+      "head": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+      "merged": false,
+      "merge": null,
+      "merged_at": null,
+      "runs": [
+        {
+          "run": 39190329073,
+          "head": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "artifacts": [
+            {
+              "id": 12162473053,
+              "name": "admission-39190329073-1",
+              "size_in_bytes": 688,
+              "expired": false,
+              "created_at": "2026-10-19T04:20:30Z",
+              "digest": "sha256:a0c5e9f39e1272de64e1b7563d441e2d499b3aaf5b1771a9e161a73993b7f3a5",
+              "workflow_run": {
+                "id": 39190329073,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-menu-preparation-split",
+                "head_sha": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff"
+              }
+            }
+          ]
+        }
+      ],
+      "totalRuns": 7
+    },
+    {
+      "pr": 1675,
+      "head": "34761ede2f39de93a4d125995b63f65a64ac7b0b",
+      "merged": false,
+      "merge": null,
+      "merged_at": null,
+      "runs": [
+        {
+          "run": 39192365339,
+          "head": "34761ede2f39de93a4d125995b63f65a64ac7b0b",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "artifacts": [
+            {
+              "id": 12163096584,
+              "name": "admission-39192365339-1",
+              "size_in_bytes": 511,
+              "expired": false,
+              "created_at": "2026-10-19T04:22:58Z",
+              "digest": "sha256:4396ecb70641f147f555408151d0a13e6f3719dfc4315fbac1fb80c6d4600c13",
+              "workflow_run": {
+                "id": 39192365339,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-lazy-soundtrack-authoring",
+                "head_sha": "34761ede2f39de93a4d125995b63f65a64ac7b0b"
+              }
+            }
+          ]
+        }
+      ],
+      "totalRuns": 6
+    },
+    {
+      "pr": 1695,
+      "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+      "merged": false,
+      "merge": null,
+      "merged_at": null,
+      "runs": [
+        {
+          "run": 39184462903,
+          "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "artifacts": [
+            {
+              "id": 12163916850,
+              "name": "focused-shard-39184462903-1-3",
+              "size_in_bytes": 65622,
+              "expired": false,
+              "created_at": "2026-10-19T04:46:13Z",
+              "digest": "sha256:224feefb92e3cc16c18eae19504e6b80997ba92df8003efef14b91f9c2964dbd",
+              "workflow_run": {
+                "id": 39184462903,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-owned-binary-artwork",
+                "head_sha": "7d964856a2ee46b8b6ca245d6b66154ab697543b"
+              }
+            },
+            {
+              "id": 12163379202,
+              "name": "focused-shard-39184462903-1-2",
+              "size_in_bytes": 4756,
+              "expired": false,
+              "created_at": "2026-10-19T04:41:20Z",
+              "digest": "sha256:460bb4afcf694db7ab79eb9117e47bf65cad2c25a3c852a3b01708f7635e4273",
+              "workflow_run": {
+                "id": 39184462903,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-owned-binary-artwork",
+                "head_sha": "7d964856a2ee46b8b6ca245d6b66154ab697543b"
+              }
+            },
+            {
+              "id": 12163024789,
+              "name": "focused-shard-39184462903-1-1",
+              "size_in_bytes": 7533,
+              "expired": false,
+              "created_at": "2026-10-19T04:36:07Z",
+              "digest": "sha256:b70162ef6bcc8f9dd27e1dc7180f6e07a70749bb840db9e85016866df6e649a5",
+              "workflow_run": {
+                "id": 39184462903,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-owned-binary-artwork",
+                "head_sha": "7d964856a2ee46b8b6ca245d6b66154ab697543b"
+              }
+            },
+            {
+              "id": 12162479609,
+              "name": "focused-shard-39184462903-1-4",
+              "size_in_bytes": 2790,
+              "expired": false,
+              "created_at": "2026-10-19T04:21:47Z",
+              "digest": "sha256:4aee12dee2c8c67748072f31a662a5cd887adbc5fdc37320976581f4ab948dbf",
+              "workflow_run": {
+                "id": 39184462903,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-owned-binary-artwork",
+                "head_sha": "7d964856a2ee46b8b6ca245d6b66154ab697543b"
+              }
+            },
+            {
+              "id": 12160430967,
+              "name": "admission-39184462903-1",
+              "size_in_bytes": 501,
+              "expired": false,
+              "created_at": "2026-10-19T02:49:55Z",
+              "digest": "sha256:b7082fbcd551c0584540c1ad407fa8aaf6b87d1fa9c5ffa8305d3c7415d7509a",
+              "workflow_run": {
+                "id": 39184462903,
+                "repository_id": 1367404328,
+                "head_repository_id": 1367404328,
+                "head_branch": "codex/solo-owned-binary-artwork",
+                "head_sha": "7d964856a2ee46b8b6ca245d6b66154ab697543b"
+              }
+            }
+          ]
+        }
+      ],
+      "totalRuns": 5
+    }
+  ],
+  "scope": "Read-only exact head inventory; terminal artifacts must be inspected before any test pass claim."
+}

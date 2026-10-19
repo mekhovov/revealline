@@ -1,0 +1,112 @@
+{
+  "sources": [
+    {
+      "path": "publishing/focused-test-map.json",
+      "blob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "blob": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+    },
+    {
+      "path": "publishing/test-policy.json",
+      "blob": "e067e704a165e16e449761989e3e1b611dc35181"
+    }
+  ],
+  "paths": [
+    ".github/workflows/company-edition-candidate.yml",
+    "publishing/source-workflow.test.mjs"
+  ],
+  "matchingCategories": [
+    "publishing"
+  ],
+  "command": {
+    "id": "publishing-controller",
+    "command": "node",
+    "args": [
+      "--test",
+      "publishing/focused-tests.test.mjs",
+      "publishing/fastline-merge-controller.test.mjs",
+      "publishing/fastline-release-inputs.test.mjs",
+      "publishing/fastline-release-objects.test.mjs",
+      "publishing/fastline-release-publisher.test.mjs",
+      "publishing/source-workflow.test.mjs",
+      "scripts/test-pages-capacity-evidence.mjs",
+      "scripts/test-pages-archive-evidence.mjs",
+      "scripts/test-pages-recovery.mjs",
+      "scripts/test-pages-capacity-report.mjs",
+      "scripts/test-main-pages-metadata.mjs",
+      "scripts/test-pages-candidate-contract.mjs",
+      "scripts/test-pages-candidate-overlay.mjs",
+      "scripts/test-pages-candidate-archive.mjs",
+      "scripts/test-pages-candidate-measurement.mjs",
+      "scripts/test-pages-candidate-stack.mjs",
+      "scripts/test-pages-stack-contract.mjs",
+      "scripts/test-pages-stack-source.mjs",
+      "scripts/test-pages-stack-packet.mjs",
+      "scripts/test-pages-stack-measurement.mjs",
+      "scripts/test-pages-stack-artifacts.mjs",
+      "scripts/test-pages-stack-e2e.mjs",
+      "publishing/test-policy.test.mjs"
+    ]
+  },
+  "mode": "required",
+  "method": "Read-only evaluation of trusted JSON path patterns and review of selector logic; no repository code, tests or generator executed.",
+  "format": "revealline-source-selection-review.v1",
+  "base": "ac0a06f76a048bbcd0701c0c990785989673080c",
+  "proposal": "807beefd43f468e44ff6aeb2aec36ca99fd673ff",
+  "reviewedSelection": "Both changed paths select publishing-controller, whose unfiltered node --test argument list includes the entire source-workflow.test.mjs; all 13 top-level groups including the four new groups are eligible. Required policy prevents an automated-suite waiver.",
+  "lineRefs": [
+    {
+      "path": "publishing/focused-test-map.json",
+      "lines": [
+        {
+          "line": 242,
+          "text": "          \"id\": \"publishing-controller\","
+        },
+        {
+          "line": 251,
+          "text": "            \"publishing/source-workflow.test.mjs\","
+        }
+      ]
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "lines": [
+        {
+          "line": 80,
+          "text": "    paths.some((changed) => category.patterns.some((pattern) => pattern.test(changed))),"
+        },
+        {
+          "line": 84,
+          "text": "      categories.some((category) => category.patterns.some((pattern) => pattern.test(changed))),"
+        },
+        {
+          "line": 93,
+          "text": "  const commands = [...categories.flatMap((category) => category.commands)];"
+        },
+        {
+          "line": 182,
+          "text": "  if (parsed.mode !== 'waived') return { commands: [...commands], waivedTests: [] };"
+        }
+      ]
+    },
+    {
+      "path": "publishing/test-policy.json",
+      "lines": [
+        {
+          "line": 3,
+          "text": "  \"mode\": \"required\","
+        }
+      ]
+    }
+  ],
+  "noPolicyMutation": true,
+  "execution": {
+    "repositoryCode": false,
+    "functionalTests": false,
+    "generators": false,
+    "dispatches": false
+  },
+  "limits": "Static selection proof only. Hosted execution and exact run results are still required; no pass inferred from eligibility."
+}

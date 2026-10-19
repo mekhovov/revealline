@@ -1,0 +1,136 @@
+{
+  "kind": "independent-mask-owner-bridge-source-review",
+  "reviewedAt": "2026-10-19T04:51:22.138Z",
+  "reviewer": "source_results_now",
+  "verdict": "Approved for source-only draft admission; no remaining source-review blocker in the final exact proposal.",
+  "proposal": {
+    "proposal": "8e13a33f7b852055217eeb81770cf8275f1fc981",
+    "bytes": 199565,
+    "sha256": "1f59d91bf3a1ce02fcd203cf293b335948f8a1e33f414a4a7a3cbc7c587f53d8",
+    "checks": [
+      {
+        "path": "game/ui/body-backing.mjs",
+        "before": "e7446c574737dc6d8b89842fb643feb8043742e1",
+        "after": "e57914bae845ab3b13165ae94c79064591e28d2b",
+        "identities": true,
+        "bytes": 7798,
+        "sha256": "a771b3d2fd4bc6de8d8afffb0d76c5e17aeed07dabaf4c5beecb5da449e83dd8",
+        "parse": true,
+        "formatted": true
+      },
+      {
+        "path": "authoring/motion-lab/render-character.mjs",
+        "before": "6eb8b5f1011ed43ac1dce8249498f9d48a793ddd",
+        "after": "182833a5fc47f311e896174f89f1c6a8af8a5f0b",
+        "identities": true,
+        "bytes": 6830,
+        "sha256": "f17c3da2a19ab02ff114825c5ed48501610325dde70bd3d0869a930dd1ddf870",
+        "parse": true,
+        "formatted": true
+      },
+      {
+        "path": "game/ui/render.mjs",
+        "before": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+        "after": "7140abb1952d1964395e041b25c77ebe35d2e74d",
+        "identities": true,
+        "bytes": 65310,
+        "sha256": "723fe51d11c98d8163d33811549bb4967a11871b2b414b09d6d9a56de56c24ea",
+        "parse": true,
+        "formatted": true
+      },
+      {
+        "path": "game/test/body-backing-recovery.test.mjs",
+        "before": "eec40ee04a8531956156ec7bf1b88f123e13930f",
+        "after": "d29ba052ff3eb2e37b48934aec4061b6b51b7042",
+        "identities": true,
+        "bytes": 24340,
+        "sha256": "d2b3c2d957317ef769dfb669e1c84e0247bd43aa5f433c722ad7f8bbdcffb589",
+        "parse": true,
+        "formatted": true
+      }
+    ],
+    "changesSince8ac10": [
+      {
+        "path": "game/test/body-backing-recovery.test.mjs",
+        "diff": "--- \n\n+++ \n\n@@ -596,6 +596,21 @@\n\n   assert.equal(timers.pending.size, 0);\n });\n \n+test('an inert native loss query cannot emit restoration or schedule recovery for healthy storage', (t) => {\n+  const timers = controlledTimers(t),\n+    f = fixture(t, { events: false, query: true }),\n+    image = f.image(),\n+    held = ownedBacking(t);\n+  f.paint(image);\n+  const query = t.mock.method(f.surfaces[0].context, 'isContextLost', () => undefined);\n+  for (let frame = 0; frame < 20; frame++) f.paint(image, f.body, held.owner);\n+  assert.equal(query.mock.callCount(), 20);\n+  assert.deepEqual(held.events, [], 'A neutral native query does not restore an unlost owner.');\n+  assert.equal(timers.pending.size, 0);\n+  assert.equal(f.surfaces.length, 1);\n+  assert.deepEqual(f.draws, { source: 1, read: 1, write: 1 });\n+});\n+\n test(\n   'a masked character surface pauses Solo and repaints before explicit Resume',\n   { timeout: 120000 },"
+      }
+    ]
+  },
+  "base": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a",
+  "baseBindings": [
+    {
+      "path": "game/ui/body-backing.mjs",
+      "sha": "e7446c574737dc6d8b89842fb643feb8043742e1",
+      "matchesBefore": true
+    },
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "sha": "6eb8b5f1011ed43ac1dce8249498f9d48a793ddd",
+      "matchesBefore": true
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "sha": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+      "matchesBefore": true
+    },
+    {
+      "path": "game/test/body-backing-recovery.test.mjs",
+      "sha": "eec40ee04a8531956156ec7bf1b88f123e13930f",
+      "matchesBefore": true
+    }
+  ],
+  "scope": [
+    "Read-only remote source review plus syntax, formatting, hashes and source projections in RAM. No tests, app, generators, build or native renderer executed.",
+    "Reviewed final proposal 8e13a33f7b852055217eeb81770cf8275f1fc981, superseding 00322, 459aaaa and 8ac10."
+  ],
+  "review": [
+    "Cache remains WeakMap keyed by image; surface/listener/probe code does not directly capture image or decoded source buffers. Painter lifetime is an explicit detachable lease.",
+    "One token per painter and shared surface; independent owners receive separate recovery identities. Ordinary invalidation preserves known lost tokens and tokens whose shared surface is already lost before notification.",
+    "Explicit look, presentation or level replacement and disposal detach all retired tokens before restoration callbacks; last owner cancels native recovery probe. Disposed owner cannot reacquire.",
+    "Loss sets shared state before callbacks; restoration marks pixels dirty and native true defeats a premature restored event. Boolean normalization avoids false restore events from inert undefined-returning native queries.",
+    "Native recovery uses at most one 250 ms timer per lost shared surface with live owners. Callback identity guards against stale canceled timers changing successor state. Probe performs no image decoding or pixel readback.",
+    "Healthy event-supported cache hits do not call the native loss query or readback; eventless fallback remains supported. Lost storage is neither painted nor repeatedly allocated.",
+    "Failed readback releases subscriptions before cache replacement, preserving visible errors and preventing stale surface callbacks restoring a replacement.",
+    "interiorAlphaMask AST unchanged; character forwarding adds only optional bodyBackingOwner; actor geometry, pixel concealment algorithm and simulation rules unchanged.",
+    "Exact Solo source 7a5873d60ec10a4e86ec84f1a8a6086ea9186baa joins owner tokens into rendererLost; loss pauses/reset clocks; Resume refuses outstanding loss; restore invalidates for paused repaint and never resumes itself."
+  ],
+  "corrections": [
+    "Initial 459aaaa shared-owner reentrancy issue: first owner's callback clearing both owners detached the second token before its loss notification. Final helper checks token.lost OR surface.lost, and the shared-owner test now makes first callback clear both owners.",
+    "Final extra control covers isContextLost returning undefined: twenty paints must produce no events/timers and exactly one allocation/readback."
+  ],
+  "authoredControls": {
+    "newGroups": 8,
+    "executed": false,
+    "coverage": [
+      "shared ownership/reentrant invalidation and ordinary hit counters",
+      "initial eventless Offscreen loss and native-only restoration",
+      "premature restore ignored while native storage remains lost",
+      "partial/final retirement, disposed owners and stale timer callbacks",
+      "readback failure/replacement callback isolation",
+      "real BoardPainter lease forwarding and retirement",
+      "inert native query cannot generate false restoration",
+      "real Solo host callback integration, paused authoritative checkpoint, blocked Start, paused rebuild, explicit Resume and exact twelve-tick checkpoint"
+    ],
+    "limitations": [
+      "Solo host intentionally models BoardPainter.draw; wrapper forwards its recording and exercises actual paintCharacter/backing using its real owner lease. It is not full native draw/raster validation.",
+      "Existing ten helper controls retained by author; no current-head TAP result is inferred from source review.",
+      "Company source fingerprint metadata closure and exact-head hosted controls remain required.",
+      "Native browser raster, sustained performance and physical iPhone/Steam Deck qualification remain required.",
+      "Couch creates BoardPainter without recovery callbacks at this inspected head; this proposal is not evidence that shared modes acquire scene-level explicit-Resume recovery."
+    ]
+  },
+  "additionalSources": [
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "blob": "11edae6ed89c9fa2d74034a4912112277bf13e03"
+    },
+    {
+      "path": "game/app.mjs",
+      "blob": "7a5873d60ec10a4e86ec84f1a8a6086ea9186baa"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "blob": "18cb6a8a9a369ee2937e43316669ebeea0baa124"
+    }
+  ]
+}

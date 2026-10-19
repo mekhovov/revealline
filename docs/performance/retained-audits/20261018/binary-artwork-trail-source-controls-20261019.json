@@ -1,0 +1,222 @@
+{
+  "kind": "binary-artwork-trail-exact-source-results",
+  "at": "2026-10-19T04:49:50.413286+00:00",
+  "rawEvidence": {
+    "blob": "38323488f452174bcbdda56d2a2b23c0dcdb8a8c",
+    "bytes": 402163,
+    "sha256": "5744e967b2f09ae88744f67b77abb9ade728065ef7a28f44f5479dd13690f8ca"
+  },
+  "reports": [
+    {
+      "pr": 1695,
+      "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+      "sourceTree": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5",
+      "shards": [
+        {
+          "artifact": 12163916850,
+          "shard": {
+            "index": 3,
+            "total": 4
+          },
+          "indices": [
+            2,
+            6
+          ],
+          "passes": [
+            1364
+          ]
+        },
+        {
+          "artifact": 12163379202,
+          "shard": {
+            "index": 2,
+            "total": 4
+          },
+          "indices": [
+            1,
+            5
+          ],
+          "passes": [
+            51
+          ]
+        },
+        {
+          "artifact": 12163024789,
+          "shard": {
+            "index": 1,
+            "total": 4
+          },
+          "indices": [
+            0,
+            4,
+            8
+          ],
+          "passes": [
+            54,
+            54,
+            15
+          ]
+        },
+        {
+          "artifact": 12162479609,
+          "shard": {
+            "index": 4,
+            "total": 4
+          },
+          "indices": [
+            3,
+            7
+          ],
+          "passes": [
+            16,
+            4
+          ]
+        }
+      ],
+      "newControlsIncludingChild": [
+        {
+          "path": "game/test/content-assets.test.mjs",
+          "title": "binary artwork retains verified original bytes without preview encoding or a serializable background",
+          "passed": true
+        },
+        {
+          "path": "game/test/content-assets.test.mjs",
+          "title": "binary artwork keeps exact length, digest, raster, dimensions and redirect rejection",
+          "passed": true
+        },
+        {
+          "path": "game/test/content-assets.test.mjs",
+          "title": "binary artwork cancellation settles while an admitted digest is still held",
+          "passed": true
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "title": "binary picture URLs survive complete decode and display transfer until their single owner releases",
+          "passed": true
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "title": "binary picture verification rejects forged, mismatched and serialized media before URL allocation",
+          "passed": true
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "title": "binary decode failures and wrong dimensions revoke their URL without publishing a picture",
+          "passed": true
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "title": "binary abort and decode deadline revoke promptly while late decoded images are disposed once",
+          "passed": true
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "title": "binary attempt preparation preserves default preview serialization, authoritative runs and recorder contents",
+          "passed": true
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "title": "binary preparation options remain explicit and never accept a missing injected loader",
+          "passed": true
+        },
+        {
+          "path": "game/test/solo-cadence-readiness-host.test.mjs",
+          "title": "actual Main Start decodes owned binary artwork before play and retains it through paused Resume",
+          "passed": true
+        },
+        {
+          "path": "game/test/solo-cadence-readiness-host.test.mjs",
+          "title": "Solo fixture teardown retires unadopted native image and audio URL references",
+          "passed": true
+        },
+        {
+          "path": "game/test/solo-cadence-readiness-host.test.mjs",
+          "title": "create page-owned URL references without a runtime picture owner",
+          "passed": true
+        }
+      ],
+      "verifiedCommands": [
+        "content-artwork-preparation",
+        "company-generated-source-and-media",
+        "company-runtime-and-publication",
+        "company-review-measurements",
+        "edition-appearance-contracts",
+        "edition-persistence-compatibility",
+        "unknown-runtime-validate",
+        "changed-test:game/test/gameplay-pressure-host.test.mjs",
+        "changed-test:game/test/solo-cadence-readiness-host.test.mjs"
+      ],
+      "remainingCommands": [],
+      "completePlan": true,
+      "tapPassesAcrossSeparateCommands": 1558
+    },
+    {
+      "pr": 1696,
+      "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+      "sourceTree": "ffe78c5631b3c7f23f8a3d31512d9de696d31fc1",
+      "shards": [
+        {
+          "artifact": 12164010898,
+          "shard": {
+            "index": 4,
+            "total": 4
+          },
+          "indices": [],
+          "passes": []
+        },
+        {
+          "artifact": 12163850204,
+          "shard": {
+            "index": 2,
+            "total": 4
+          },
+          "indices": [
+            1
+          ],
+          "passes": [
+            22
+          ]
+        }
+      ],
+      "newControlsIncludingChild": [
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "title": "empty movement leaves an idle or live trail unchanged without constructing cell sets",
+          "passed": true
+        },
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "title": "long immutable bent trails retain exact earliest-contact horizons without changing run state",
+          "passed": true
+        },
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "title": "contact checks include earlier additions in the same movement and preserve reversal timing",
+          "passed": true
+        },
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "title": "cell-only contact preserves consecutive-cell immunity, repeated-cell failure and horizon order",
+          "passed": true
+        },
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "title": "contact reads retain tail ownership until append clips and merges the accepted movement",
+          "passed": true
+        }
+      ],
+      "verifiedCommands": [
+        "changed-test:game/test/core-capture.test.mjs"
+      ],
+      "remainingCommands": [
+        "unknown-runtime-validate"
+      ],
+      "completePlan": false,
+      "tapPassesAcrossSeparateCommands": 22
+    }
+  ],
+  "limits": [
+    "Final aggregate, Industrial, guarded release and native results are not inferred.",
+    "This is hosted source evidence; no local functional execution."
+  ]
+}

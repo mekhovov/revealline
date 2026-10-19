@@ -1,0 +1,69 @@
+{
+  "format": "revealline-field-kit-artifact-route-peer-review.v1",
+  "proposal": {
+    "blob": "807beefd43f468e44ff6aeb2aec36ca99fd673ff",
+    "bytes": 68246,
+    "sha256": "5c0332dc6102ae5dae0d88b969ba5b775510735665158bb1786104f88ec8250a",
+    "base": "ac0a06f76a048bbcd0701c0c990785989673080c",
+    "files": [
+      {
+        "path": ".github/workflows/company-edition-candidate.yml",
+        "beforeBlob": "e3578b3b6b18984d0d3af21956a04fdd7aba9ead",
+        "afterBlob": "c71551d8eac8cfb27428398f3f6c858c0b2b32ff",
+        "afterBytes": 19174,
+        "afterSha256": "eafa2c8366cb07a6f3417fb6a6a0dbfa4c8f10ee3f38b4bdf3ac200c55f864c5"
+      },
+      {
+        "path": "publishing/source-workflow.test.mjs",
+        "beforeBlob": "df7bc414870c0a6130035b6793f7b3e290e027c6",
+        "afterBlob": "b915a60f1f43741169c9d33d24ed791fcaa7fd5a",
+        "afterBytes": 20764,
+        "afterSha256": "cb9ccff4882e38e3da949667b291ba5f76279d58a28982df6c198d2250892fd3"
+      }
+    ]
+  },
+  "verdict": "Approved for source-only draft publication of this exact two-file map. No behavioral blocker found in the reviewed scope. Hosted execution of the new controls and an exact-source artifact remains required.",
+  "independentStatic": {
+    "hashesVerified": true,
+    "workflowYamlParsed": true,
+    "actualConfigFormatting": true,
+    "originalWorkflowBytesPreservedAfterRemovingAdditions": true,
+    "oldTestPrefixByteIdentical": true,
+    "oldTests": 9,
+    "newTotalTests": 13,
+    "testAndVerifierParsed": true,
+    "finalVerifierASTEqualsReviewedInitial": true,
+    "changedFiles": [
+      ".github/workflows/company-edition-candidate.yml",
+      "publishing/source-workflow.test.mjs"
+    ]
+  },
+  "formattingConfig": {
+    "blob": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+    "value": {
+      "singleQuote": true,
+      "printWidth": 100,
+      "trailingComma": "all"
+    }
+  },
+  "findings": [
+    "The two inputs are optional and default disabled. Both added steps require workflow_dispatch, the explicit boolean and the repository identity; upload additionally requires successful candidate generation. Original workflow bytes are exactly restored after removing these additions.",
+    "The selected lowercase40-hex source must match GITHUB_SHA, github.workflow_sha and actual checkout HEAD before generation. Source/tree and clean tracked/untracked status are checked around the work; user input is passed through environment values rather than interpolated shell code. No arbitrary checkout, write token or new job is introduced.",
+    "The existing producer creates isolated ledger/compiled output and independently recreates it in --check-candidate. Read-only review of producer blobb471ec8ca42a4912017db90b794c2669053def17 confirmed committed-input/source binding, exact output inventory and byte comparison; no --write or production adoption is invoked.",
+    "The verifier rejects source/tree/repository/run mismatch, receipt type/size problems, path traversal, duplicate/unlisted/missing files, links and special files. It enforces512files including review,64MiB/file,128MiB total and2MiB receipt; files are streamed and bound by exact bytes/hash.",
+    "Binding creation is exclusive and outside candidate reproduction. Manifest and artifact name bind source, workflow, repository, run and attempt; flags explicitly deny production adoption and continuation approval.",
+    "Time bounds remain finite: existing60-minute job, added15-minute generation step, two300-second producer subprocesses with30-second forced termination, and5-minute upload.",
+    "Nine original source-workflow test bodies remain a byte-identical prefix. Four new groups cover optional/manual topology, exact successful binding and refusal to overwrite, thirteen identity/output failures, and five size/count/link failures. They execute the exact extracted verifier when hosted tests run, rather than a duplicate implementation.",
+    "The final map changes only verifier line wrapping relative to the initially reviewed map; complete verifier ASTs compare equal. Actual fixed-base printWidth100 configuration now passes for both whole files before/after."
+  ],
+  "reviewedPrimarySources": [
+    "https://raw.githubusercontent.com/actions/upload-artifact/b7c566a772e6b6bfb58ed0dc250532a479d7789f/README.md",
+    "https://raw.githubusercontent.com/actions/upload-artifact/b7c566a772e6b6bfb58ed0dc250532a479d7789f/src/shared/search.ts"
+  ],
+  "limitations": [
+    "No app, generator, workflow, test or build was executed. Syntax, formatting and source structure checks do not establish passing controls or a produced artifact.",
+    "The route still follows normal Company checks and edition compilation; source review does not predict queue or generation duration.",
+    "Dispatch must select a revision containing the reviewed route and intended body-backing source. A successful artifact is technical evidence only; continuation integration, adoption, native raster and physical-device performance remain separate.",
+    "No source push, dispatch, cancellation, merge or local write was performed. Only remote evidence retention is authorized for this review."
+  ]
+}

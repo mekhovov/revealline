@@ -1,0 +1,526 @@
+{
+  "format": "revealline-actor-continuation-integration-audit.v1",
+  "reviewedBase": "ac0a06f76a048bbcd0701c0c990785989673080c",
+  "unchangedAtRoutePR": {
+    "number": 1716,
+    "head": "cc022314aa7f1763e1079a12930c92edb71ab4ab",
+    "pins": [
+      {
+        "path": "scripts/actor-presentation-continuation.mjs",
+        "blob": "d4576396ae3241efa47a2268cd976a820d5c5fa1",
+        "size": 9607
+      },
+      {
+        "path": "scripts/produce-field-kit-theme.mjs",
+        "blob": "04bcc741a03e5d7d9a54c4d44179639aa3e74805",
+        "size": 68404
+      },
+      {
+        "path": "scripts/team-recipe-review.mjs",
+        "blob": "580fbacac93c62e9a8d73d55bf25247cdfad6200",
+        "size": 5952
+      },
+      {
+        "path": "scripts/test-actor-presentation-continuation.mjs",
+        "blob": "0e01ab96d6028b35e84c7f8e320dac99b1beeebe",
+        "size": 19467
+      }
+    ]
+  },
+  "scope": "Read-only source and protocol audit. No source edits, tests, generators, dispatches, authority pins or metadata adoption.",
+  "conclusion": "No safe production-quality integration can be finalized without the generated candidate at the final owner-bridge source and a separately reviewed new code-owned record. The existing reader is ready to authenticate a record; it deliberately returns no quality stage and is not imported by the producer. Retain current fail-closed source/produced stages until the evidence exists.",
+  "groupClosure": {
+    "motion": {
+      "paths": [
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/actor-presentation.mjs",
+        "game/ui/rotor-presentation.mjs",
+        "game/presentation/journey-actor-materials.mjs",
+        "game/ui/body-backing.mjs",
+        "game/ui/body-motion.mjs",
+        "game/ui/actor-recipes.mjs",
+        "game/ui/fpv-body-recipes.mjs",
+        "authoring/motion-lab/animation.mjs",
+        "authoring/motion-lab/presets.json",
+        "authoring/library/fpv-role-presentations/originals/scout.png",
+        "authoring/library/fpv-role-presentations/originals/bomber.png",
+        "authoring/library/fpv-role-presentations/originals/carrier.png",
+        "authoring/library/fpv-role-presentations/originals/interceptor.png",
+        "authoring/library/fpv-role-presentations/originals/fiber.png",
+        "authoring/library/fpv-role-presentations/originals/impact.png",
+        "authoring/library/fpv-role-presentations/originals/trapper.png"
+      ],
+      "inputCount": 17,
+      "slotCount": 7,
+      "slots": [
+        "player.scout.rotors",
+        "player.bomber.rotors",
+        "player.carrier.rotors",
+        "player.interceptor.rotors",
+        "player.fiber.rotors",
+        "player.impact.rotors",
+        "player.trapper.rotors"
+      ],
+      "priorSHA256": "5e32f549e39ecdabc7a5449b320f703c40aa23a87889ea27b3594187e69f2f7f",
+      "changedOwnerFiles": [
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/body-backing.mjs"
+      ]
+    },
+    "effects": {
+      "paths": [
+        "game/ui/classic-view.mjs",
+        "game/ui/event-feedback.mjs",
+        "game/content-design/actor-marker.mjs",
+        "game/ui/lane-presentation.mjs",
+        "game/ui/render.mjs",
+        "game/ui/contact-cue.mjs",
+        "game/ui/relay-view.mjs",
+        "game/ui/directional-view.mjs",
+        "game/ui/enemy-body-assets.mjs",
+        "game/ui/enemy-body-motion.mjs",
+        "game/enemy-catalog.mjs",
+        "game/ui/body-motion.mjs",
+        "game/ui/actor-recipes.mjs",
+        "game/ui/fpv-body-recipes.mjs",
+        "game/ui/body-backing.mjs",
+        "authoring/motion-lab/animation.mjs",
+        "game/ui/combat-view.mjs",
+        "game/ui/combat-presentation.mjs",
+        "game/ui/actor-presentation.mjs",
+        "game/data-json.mjs",
+        "game/core/registry.mjs",
+        "game/core/combat-definition.mjs",
+        "game/core/geometry.mjs",
+        "game/core/classic-motion.mjs",
+        "game/core/classic-topology.mjs",
+        "game/core/movement.mjs",
+        "game/core/versions.mjs"
+      ],
+      "inputCount": 27,
+      "slotCount": 10,
+      "slots": [
+        "trail.active",
+        "trail.secured",
+        "trail.head",
+        "effect.capture",
+        "effect.failure",
+        "effect.victory",
+        "effect.pickup",
+        "effect.shield",
+        "effect.respawn",
+        "effect.pressure"
+      ],
+      "priorSHA256": "b7aa3a6b9bc2302df0309e90acddf899766a9b9406f93bd266a94b685940a5eb",
+      "changedOwnerFiles": [
+        "game/ui/render.mjs",
+        "game/ui/body-backing.mjs"
+      ]
+    },
+    "team": {
+      "paths": [
+        "game/couch/coop-view.mjs",
+        "game/couch/coop-actor-presentation.mjs",
+        "game/couch/coop-pilot-cues.mjs",
+        "game/ui/contact-cue.mjs",
+        "game/couch/coop-anchor-presentation.mjs",
+        "game/couch/coop-core-presentation.mjs",
+        "game/couch/coop-support-presentation.mjs",
+        "game/couch/coop-emitter-presentation.mjs",
+        "game/couch/coop-rescue-presentation.mjs",
+        "game/couch/coop-pilot-slots.mjs",
+        "game/couch/coop-enemy-slots.mjs",
+        "game/couch/coop-outcome-presentation.mjs",
+        "game/presentation/team-runtime-slots.mjs",
+        "game/ui/actor-presentation.mjs",
+        "game/ui/rotor-presentation.mjs",
+        "game/presentation/catalog.mjs",
+        "game/couch/coop-actor-layout.mjs",
+        "game/text-size.mjs",
+        "game/couch/coop-terrain-trail.mjs",
+        "game/couch/coop-bonus-view.mjs",
+        "game/couch/candidate-team-pictures.mjs",
+        "game/content-design/material-markers.mjs",
+        "game/presentation/journey-actor-materials.mjs",
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/classic-view.mjs",
+        "game/ui/presentation-draw-image.mjs",
+        "game/ui/enemy-body-assets.mjs",
+        "game/ui/enemy-body-motion.mjs",
+        "authoring/motion-lab/animation.mjs",
+        "game/content-design/actor-marker.mjs",
+        "game/enemy-catalog.mjs",
+        "game/ui/actor-recipes.mjs",
+        "game/ui/fpv-body-recipes.mjs",
+        "game/ui/body-backing.mjs",
+        "game/ui/body-motion.mjs"
+      ],
+      "inputCount": 35,
+      "slotCount": 37,
+      "slots": [
+        "team.enemy.drifter",
+        "team.enemy.hunter.patrol",
+        "team.enemy.hunter.warning",
+        "team.enemy.hunter.charge",
+        "team.enemy.hunter.recovery",
+        "team.support.pulse",
+        "team.enemy.slowed",
+        "team.emitter.warning",
+        "team.emitter.spark",
+        "team.rescue.progress",
+        "team.player.recovery",
+        "team.capture.joint",
+        "team.recovery",
+        "team.pilot.p1.normal.compact",
+        "team.pilot.p1.normal.detailed",
+        "team.pilot.p1.cutting.compact",
+        "team.pilot.p1.cutting.detailed",
+        "team.pilot.p1.downed.compact",
+        "team.pilot.p1.downed.detailed",
+        "team.pilot.p1.crawling.compact",
+        "team.pilot.p1.crawling.detailed",
+        "team.pilot.p1.rescuing.compact",
+        "team.pilot.p1.rescuing.detailed",
+        "team.pilot.p1.recovery.compact",
+        "team.pilot.p1.recovery.detailed",
+        "team.pilot.p2.normal.compact",
+        "team.pilot.p2.normal.detailed",
+        "team.pilot.p2.cutting.compact",
+        "team.pilot.p2.cutting.detailed",
+        "team.pilot.p2.downed.compact",
+        "team.pilot.p2.downed.detailed",
+        "team.pilot.p2.crawling.compact",
+        "team.pilot.p2.crawling.detailed",
+        "team.pilot.p2.rescuing.compact",
+        "team.pilot.p2.rescuing.detailed",
+        "team.pilot.p2.recovery.compact",
+        "team.pilot.p2.recovery.detailed"
+      ],
+      "priorSHA256": "c162660dcc177f6d975704920513d8171a9190ea708c61b1a5189adbb3b67980",
+      "changedOwnerFiles": [
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/body-backing.mjs"
+      ]
+    },
+    "equipment": {
+      "paths": [
+        "game/presentation/team-equipment-art.mjs",
+        "game/presentation/pixel-art.mjs",
+        "scripts/produce-field-kit-sprites.mjs",
+        "game/couch/coop-view.mjs",
+        "game/couch/coop-actor-presentation.mjs",
+        "game/couch/coop-pilot-cues.mjs",
+        "game/ui/contact-cue.mjs",
+        "game/couch/coop-anchor-presentation.mjs",
+        "game/couch/coop-core-presentation.mjs",
+        "game/couch/coop-support-presentation.mjs",
+        "game/couch/coop-emitter-presentation.mjs",
+        "game/couch/coop-rescue-presentation.mjs",
+        "game/couch/coop-pilot-slots.mjs",
+        "game/couch/coop-enemy-slots.mjs",
+        "game/couch/coop-outcome-presentation.mjs",
+        "game/presentation/team-runtime-slots.mjs",
+        "game/ui/actor-presentation.mjs",
+        "game/ui/rotor-presentation.mjs",
+        "game/presentation/catalog.mjs",
+        "game/couch/coop-actor-layout.mjs",
+        "game/text-size.mjs",
+        "game/couch/coop-terrain-trail.mjs",
+        "game/couch/coop-bonus-view.mjs",
+        "game/couch/candidate-team-pictures.mjs",
+        "game/content-design/material-markers.mjs",
+        "game/presentation/journey-actor-materials.mjs",
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/classic-view.mjs",
+        "game/ui/presentation-draw-image.mjs",
+        "game/ui/enemy-body-assets.mjs",
+        "game/ui/enemy-body-motion.mjs",
+        "authoring/motion-lab/animation.mjs",
+        "game/content-design/actor-marker.mjs",
+        "game/enemy-catalog.mjs",
+        "game/ui/actor-recipes.mjs",
+        "game/ui/fpv-body-recipes.mjs",
+        "game/ui/body-backing.mjs",
+        "game/ui/body-motion.mjs"
+      ],
+      "inputCount": 38,
+      "slotCount": 5,
+      "slots": [
+        "team.anchor.available",
+        "team.anchor.captured",
+        "team.core.shielded",
+        "team.core.exposed",
+        "team.core.secured"
+      ],
+      "priorSHA256": "2a0c092afb5011939008e2f5fd20f554fd74c1307ea35e06fe583a1b992e6306",
+      "changedOwnerFiles": [
+        "authoring/motion-lab/render-character.mjs",
+        "game/ui/body-backing.mjs"
+      ]
+    }
+  },
+  "immutablePredecessors": [
+    {
+      "path": "docs/verification/bulk-integration-presentation-continuation-2026-09-27/review.json",
+      "blob": "59df49b5f92a28da4d614b1b6a33825b5f73b888",
+      "bytes": 32234,
+      "sha256": "ad469766d926795fddca108b77042b226282cc17b3a130429ad2b548b5e2edf5",
+      "format": "revealline-bulk-presentation-continuation.v1",
+      "fingerprints": {
+        "motion": {
+          "currentSHA256": "5e32f549e39ecdabc7a5449b320f703c40aa23a87889ea27b3594187e69f2f7f",
+          "slots": [
+            "player.scout.rotors",
+            "player.bomber.rotors",
+            "player.carrier.rotors",
+            "player.interceptor.rotors",
+            "player.fiber.rotors",
+            "player.impact.rotors",
+            "player.trapper.rotors"
+          ]
+        },
+        "effects": {
+          "currentSHA256": "732ee9b5a46bbfe1bce8ee74f29aace278cd4da67ae59871a2771f0c197b5e3f",
+          "slots": [
+            "trail.active",
+            "trail.secured",
+            "trail.head",
+            "effect.capture",
+            "effect.failure",
+            "effect.victory",
+            "effect.pickup",
+            "effect.shield",
+            "effect.respawn",
+            "effect.pressure"
+          ]
+        },
+        "team": {
+          "currentSHA256": "c162660dcc177f6d975704920513d8171a9190ea708c61b1a5189adbb3b67980",
+          "slots": [
+            "team.enemy.drifter",
+            "team.enemy.hunter.patrol",
+            "team.enemy.hunter.warning",
+            "team.enemy.hunter.charge",
+            "team.enemy.hunter.recovery",
+            "team.support.pulse",
+            "team.enemy.slowed",
+            "team.emitter.warning",
+            "team.emitter.spark",
+            "team.rescue.progress",
+            "team.player.recovery",
+            "team.capture.joint",
+            "team.recovery",
+            "team.pilot.p1.normal.compact",
+            "team.pilot.p1.normal.detailed",
+            "team.pilot.p1.cutting.compact",
+            "team.pilot.p1.cutting.detailed",
+            "team.pilot.p1.downed.compact",
+            "team.pilot.p1.downed.detailed",
+            "team.pilot.p1.crawling.compact",
+            "team.pilot.p1.crawling.detailed",
+            "team.pilot.p1.rescuing.compact",
+            "team.pilot.p1.rescuing.detailed",
+            "team.pilot.p1.recovery.compact",
+            "team.pilot.p1.recovery.detailed",
+            "team.pilot.p2.normal.compact",
+            "team.pilot.p2.normal.detailed",
+            "team.pilot.p2.cutting.compact",
+            "team.pilot.p2.cutting.detailed",
+            "team.pilot.p2.downed.compact",
+            "team.pilot.p2.downed.detailed",
+            "team.pilot.p2.crawling.compact",
+            "team.pilot.p2.crawling.detailed",
+            "team.pilot.p2.rescuing.compact",
+            "team.pilot.p2.rescuing.detailed",
+            "team.pilot.p2.recovery.compact",
+            "team.pilot.p2.recovery.detailed"
+          ]
+        },
+        "equipment": {
+          "currentSHA256": "2a0c092afb5011939008e2f5fd20f554fd74c1307ea35e06fe583a1b992e6306",
+          "slots": [
+            "team.anchor.available",
+            "team.anchor.captured",
+            "team.core.shielded",
+            "team.core.exposed",
+            "team.core.secured"
+          ]
+        }
+      }
+    },
+    {
+      "path": "docs/verification/bulk-queue-audio-effects-2026-09-28/review.json",
+      "blob": "4524b74705a9f320b8b1b060fbead8b57654f97b",
+      "bytes": 17540,
+      "sha256": "5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3",
+      "format": "revealline-bulk-queue-audio-effects-continuation.v1",
+      "fingerprints": {
+        "effects": {
+          "currentSHA256": "b7aa3a6b9bc2302df0309e90acddf899766a9b9406f93bd266a94b685940a5eb",
+          "slots": [
+            "trail.active",
+            "trail.secured",
+            "trail.head",
+            "effect.capture",
+            "effect.failure",
+            "effect.victory",
+            "effect.pickup",
+            "effect.shield",
+            "effect.respawn",
+            "effect.pressure"
+          ]
+        }
+      }
+    },
+    {
+      "path": "docs/verification/team37/review.json",
+      "blob": "fa401377ff8c95c01dad9989fdbc313f68babf2c",
+      "bytes": 41679,
+      "sha256": "7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
+      "format": "revealline-scoped-team-recipe-review.v1",
+      "recipes": 37,
+      "inheritedImages": [
+        {
+          "asset": {
+            "id": "enemy.border-patrol.field-kit",
+            "revision": 2
+          },
+          "assemblyRecordSHA256": "f1ac440aa192559a7e0d657f1e1d74d90c24762898198086b86b28a297c60a0c"
+        },
+        {
+          "asset": {
+            "id": "enemy.bouncer.field-kit",
+            "revision": 2
+          },
+          "assemblyRecordSHA256": "89ba65269065f039cafd09bac58d226e0f729415f18126a1a90f68dcae3758c3"
+        },
+        {
+          "asset": {
+            "id": "player.scout.compact.field-kit",
+            "revision": 2
+          },
+          "assemblyRecordSHA256": "81ed158e8f243758d4f0eb7ed76b4c3e8ab6d3fb309000cd4c60c4f9b82c2790"
+        },
+        {
+          "asset": {
+            "id": "player.scout.detailed.field-kit",
+            "revision": 2
+          },
+          "assemblyRecordSHA256": "9931422545778f66202390f212693e8e8e1f17bd659ec6a9969a76d3ba2e3e8c"
+        }
+      ]
+    },
+    {
+      "path": "docs/verification/team-equipment-five-review/review.json",
+      "blob": "33dc695c812ab2b728c259c011fafd07758222e0",
+      "bytes": 3083,
+      "sha256": "a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
+      "format": null
+    }
+  ],
+  "readerGuards": [
+    "Caller-owned pin path/sha is descriptor-checked, copied and frozen before any await. Production must provide a fixed code-owned pin, never a bundle option, workflow input or self-declared record.",
+    "Use the effects20 immutable predecessor for this successor. Its 17-record chain authenticates all ancestors; effects inherits effects20, while motion, Team and equipment retain their bulk predecessor.",
+    "Record keys are exactly format/status/priorReview/fingerprints; per-group keys are exactly group/priorSHA256/currentSHA256/paths/inputs/slots/payloads. Additional evidence references belong in an adjacent review document or receipt.",
+    "All 59 slot IDs and their order are preserved. The matcher grants only its declared group subset; this final helper closure affects all four groups.",
+    "Every ordered source input retains its exact byte count and SHA256; the aggregate is the ordered concatenation hash. Shared files are read once into owned snapshots; mismatched per-group declarations fail closed.",
+    "Motion/effects/Team source strings bind both ordered path text and aggregate SHA; equipment binds the aggregate generated from its separate 38-input closure.",
+    "The reader returns only frozen record and matches. A matching synthetic or candidate record is not itself an artwork, native, physical-device or release approval."
+  ],
+  "integrationFindings": [
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "line": 226,
+      "finding": "recipeQuality uses historic fixed source approvals. Current motion/effects successors must consult the validated actor handle with a code-defined full payload; do not overwrite REVIEWED_RECIPE_INPUTS historical pins."
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "line": 491,
+      "finding": "Load the actor handle once inside production assembly from a new fixed code-owned pin after the exact record exists. Keep the byte reader under existing frozen-source ownership. Do not expose an approval option on createFieldKitProduction."
+    },
+    {
+      "path": "scripts/team-recipe-review.mjs",
+      "line": 36,
+      "finding": "Unknown current sources exit before semantic checks. Factor/reuse the authenticated original recipe/default/inherited-image validation without substituting an old source string or accepting an arbitrary matches callback. The local producer may assign the narrowly evidenced new stage only when both the validated handle and original semantic guards match."
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "line": 78,
+      "finding": "Equipment advancement must retain reviewedEquipmentOriginals for all five slots. Current source matching alone must never approve altered PNG bytes, unknown slots or changed image contracts."
+    },
+    {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "line": 816,
+      "finding": "Team evidence uses exact recipe payloads, revision-1 default assets and the four freshly assembled inherited image records. Retained revision-2 image history is a separate ledger concern; do not compare the wrong generation."
+    },
+    {
+      "path": "scripts/actor-presentation-continuation.mjs",
+      "line": 214,
+      "finding": "No current live helper defect blocks the planned integration. Optional dormant hardening: top-level matcher input getters are currently evaluated during destructuring, unlike descriptors inside payload. The reader is unwired and production callers are not present; no speculative patch was included."
+    },
+    {
+      "path": "scripts/presentation-production-history.mjs",
+      "line": 15,
+      "finding": "Review changes append a new immutable asset revision; previous approvals and payloads remain byte-exact. The existing picture migration wrapper additionally preserves production104 prefixes and all 54 picture contracts."
+    }
+  ],
+  "requiredReviewInputs": {
+    "notAnAdmissionManifest": true,
+    "status": "evidence-not-yet-available",
+    "finalIntegratedSourceRevision": null,
+    "finalIntegratedSourceTree": null,
+    "successfulCandidateRunId": null,
+    "successfulCandidateRunAttempt": null,
+    "candidateArtifactId": null,
+    "candidateBindingSha256": null,
+    "newReviewedRecordPath": null,
+    "newReviewedRecordSha256": null,
+    "perGroupCurrentFingerprints": null,
+    "perSlotCanonicalPayloadDigests": null,
+    "note": "Null values are explicit missing dependencies, not placeholders to copy into accepted records. No current source hash, approved status, evidence pass or authority pin is invented."
+  },
+  "nextSteps": [
+    {
+      "priority": "P0 prerequisite",
+      "action": "Finish and independently review the mask owner bridge. Combine that final source with #1716's reviewed route in one immutable revision H1. Passing route-only or earlier #1712 helper-only output cannot close this source gap."
+    },
+    {
+      "priority": "P1 artifact",
+      "action": "After hosted route controls pass, run the existing Company manual candidate route at H1 with field_kit_candidate=true and field_kit_source_sha=H1. Keep original automatic checks and exact-source guards. Retain the isolated candidate, byte-identical reproduction and source/run binding; no --write."
+    },
+    {
+      "priority": "P1 review inputs",
+      "action": "Inspect the bounded exact artifact and compare all four ordered closures, 59 selected slots, recipes/defaults/inherited images and five equipment PNGs with their immutable predecessors. Define one code-owned canonical payload projection per kind; hash actual candidate values only. Keep original trace/native and physical-device gates separate and unresolved where evidence is absent."
+    },
+    {
+      "priority": "P1 reviewed authority",
+      "action": "Create a fresh strict-schema continuation record only after its exact evidence has been reviewed. Preserve effects20/bulk ancestry and all original approved records. Add a separately reviewed fixed pin plus narrow producer wiring and semantic-guard reuse. Do not accept caller-provided authority or old-source substitution."
+    },
+    {
+      "priority": "P1 integration controls",
+      "action": "Add meaningful controls for missing/draft/tampered record, every changed renderer input, all four source groups, unknown/cross-group slots, changed recipe/default/inherited image/PNG, unchanged other groups and exact append-only history. Existing actor-reader tests and original Team/equipment guards remain mandatory."
+    },
+    {
+      "priority": "P1 final artifact",
+      "action": "Reproduce the isolated candidate at integration revision H2. H2 changes the overall source tree through the reviewed record/wiring; the four renderer closures must still match their reviewed bytes. Verify new evidence and stage changes only, unchanged payloads and preserved historical prefixes."
+    },
+    {
+      "priority": "P2 separately reviewed adoption",
+      "action": "Only then review the actual generated ledger/compiled output and any required theme-bootstrap refresh. Copying these verified artifacts into tracked production is a separate adoption change; do not relabel older output or revise approved source hashes to make checks pass."
+    }
+  ],
+  "expectedFutureFiles": [
+    "scripts/produce-field-kit-theme.mjs",
+    "scripts/team-recipe-review.mjs",
+    "scripts/test-field-kit-recipe-sources.mjs",
+    "scripts/test-actor-presentation-continuation.mjs (only if integration needs additional reader controls)",
+    "a new exact docs/verification/<review>/review.json and adjacent evidence explanation",
+    "later, separately reviewed authoring/library/fpv-field-kit/production.rltheme, game/presentation/compiled/* and game/presentation/theme-bootstrap.mjs"
+  ],
+  "limits": [
+    "No generated final owner-bridge artifact exists in this audit.",
+    "No new approval record or pin was created.",
+    "No source code, tests, generators or workflow executions were run locally.",
+    "Native raster, original-trace ordering, sustained performance, physical device and release qualification are unchanged independent gates."
+  ]
+}

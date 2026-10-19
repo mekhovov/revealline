@@ -1,0 +1,64 @@
+{
+  "kind": "mask-recovery-owner-source-publication",
+  "observedUTC": "2026-10-19T04:52:14.152495+00:00",
+  "predecessorPR": 1712,
+  "pr": 1720,
+  "url": "https://github.com/mekhovov/revealline/pull/1720",
+  "base": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "head": "9c834ceabbb0cb7d2ca700b322959ebee5516735",
+  "tree": "383c1d0db84014a50c368a0df08c2d81c4867570",
+  "branch": "codex/solo-actor-mask-recovery-owner",
+  "files": [
+    {
+      "path": "game/ui/body-backing.mjs",
+      "beforeBlob": "e7446c574737dc6d8b89842fb643feb8043742e1",
+      "afterBlob": "e57914bae845ab3b13165ae94c79064591e28d2b",
+      "bytes": 7798,
+      "sha256": "a771b3d2fd4bc6de8d8afffb0d76c5e17aeed07dabaf4c5beecb5da449e83dd8"
+    },
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "beforeBlob": "6eb8b5f1011ed43ac1dce8249498f9d48a793ddd",
+      "afterBlob": "182833a5fc47f311e896174f89f1c6a8af8a5f0b",
+      "bytes": 6830,
+      "sha256": "f17c3da2a19ab02ff114825c5ed48501610325dde70bd3d0869a930dd1ddf870"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "beforeBlob": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+      "afterBlob": "7140abb1952d1964395e041b25c77ebe35d2e74d",
+      "bytes": 65310,
+      "sha256": "723fe51d11c98d8163d33811549bb4967a11871b2b414b09d6d9a56de56c24ea"
+    },
+    {
+      "path": "game/test/body-backing-recovery.test.mjs",
+      "beforeBlob": "eec40ee04a8531956156ec7bf1b88f123e13930f",
+      "afterBlob": "d29ba052ff3eb2e37b48934aec4061b6b51b7042",
+      "bytes": 24340,
+      "sha256": "d2b3c2d957317ef769dfb669e1c84e0247bd43aa5f433c722ad7f8bbdcffb589"
+    }
+  ],
+  "proposal": "8e13a33f7b852055217eeb81770cf8275f1fc981",
+  "independentReview": {
+    "blob": "68638894b471004bb8fa6a705cba82b593dad6d8",
+    "bytes": 8120,
+    "sha256": "dae23133c6113f1146987c3fda9f13bf19ec1a07d0bcf89cbb0a885e33d72cca"
+  },
+  "rootReview": [
+    "Loss state is stored before notification; ordinary invalidation preserves pending shared owner obligations.",
+    "Last retirement cancels native availability probe; stale probe identity cannot cancel a successor.",
+    "Character lease uses existing BoardPainter callbacks; unchanged flood-fill and character geometry.",
+    "Complete tree proves only the four reviewed source/test paths changed; no metadata adoption."
+  ],
+  "controls": {
+    "existing": 10,
+    "additional": 8,
+    "executed": false
+  },
+  "remaining": [
+    "Hosted source/full build gates",
+    "Four-group exact source candidate and reviewed metadata continuation",
+    "Native recovery/raster and device qualification"
+  ],
+  "localFunctionalExecution": false
+}
