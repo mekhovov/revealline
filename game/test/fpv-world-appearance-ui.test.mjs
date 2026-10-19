@@ -34,7 +34,7 @@ import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fp
 const requireAuthoring = createRequire(
   new URL('../../authoring/fpv-worlds/package.json', import.meta.url),
 );
-const { IDBFactory } = requireAuthoring('fake-indexeddb');
+const { IDBFactory, IDBDatabase } = requireAuthoring('fake-indexeddb');
 const html = parse(
   await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url), 'utf8'),
 );
@@ -4085,3 +4085,298 @@ for (const api of ['empty', 'missing', 'throwing'])
         'No connected controller was observed.',
       );
   });
+
+const WORLD_STORAGE_COPY = {
+  ready: {
+    en: 'Worlds and recordings are saved on this device. Export backups before clearing browser data.',
+    uk: 'Світи та записи збережено на цьому пристрої. Експортуйте копії перед очищенням даних браузера.',
+  },
+  unavailable: {
+    en: 'Durable storage is unavailable. Export your work before leaving.',
+    uk: 'Постійне сховище недоступне. Експортуйте роботу перед виходом.',
+  },
+  granted: {
+    en: 'Persistent storage granted. Keep an exported backup too.',
+    uk: 'Постійне сховище надано. Зберігайте також експортовану копію.',
+  },
+  denied: {
+    en: 'Persistent storage was not granted. Export packs and recordings as backups.',
+    uk: 'Постійне сховище не надано. Експортуйте пакунки та записи.',
+  },
+};
+function worldStorageDeferred() {
+  let resolve, reject;
+  const promise = new Promise((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+}
+async function completeWorldStorageRequest(request, value, error = false) {
+  if (error) request.reject(value);
+  else request.resolve(value);
+  // Await the exact permission result and the native event wrapper's rejection
+  // continuation; no game frame, database refresh or arbitrary timer is needed.
+  await request.promise.catch(() => {});
+  await Promise.resolve();
+}
+function worldStorageFixture(t, { unavailable = [], holdHydration = false, ...options } = {}) {
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(previous, { persist: false }));
+  const database = new IDBFactory(),
+    observations = [],
+    requests = [];
+  let releaseHydration,
+    hydrationReleased = false;
+  const release = () => {
+    hydrationReleased = true;
+    const finish = releaseHydration;
+    releaseHydration = null;
+    finish?.();
+  };
+  t.after(release);
+  const transaction = IDBDatabase.prototype.transaction;
+  t.mock.method(IDBDatabase.prototype, 'transaction', function (...args) {
+    observations.push(['transaction', this.name, args[0], args[1]]);
+    return transaction.apply(this, args);
+  });
+  const indexedDB = {
+    open(name, version) {
+      observations.push(['open', name]);
+      if (unavailable.includes(name)) throw new Error(`Unavailable test store: ${name}`);
+      const request = database.open(name, version);
+      if (holdHydration && name === 'revealline-fpv-worlds-v1')
+        request.addEventListener(
+          'success',
+          (event) => {
+            if (!hydrationReleased) {
+              event.stopImmediatePropagation();
+              releaseHydration = () => request.onsuccess.call(request, event);
+            }
+          },
+          { once: true },
+        );
+      return request;
+    },
+  };
+  const h = fixture(t, { indexedDB, ...options });
+  h.win.navigator.storage = {
+    persist() {
+      assert.equal(
+        this === h.win.navigator.storage,
+        true,
+        'The native storage API keeps its receiver.',
+      );
+      const request = worldStorageDeferred();
+      requests.push(request);
+      return request.promise;
+    },
+  };
+  return {
+    ...h,
+    observations,
+    requests,
+    releaseHydration: release,
+    hydrationHeld: () => Boolean(releaseHydration),
+  };
+}
+function worldStorageLanguage(h, language, expected) {
+  const field = h.$('world-language'),
+    before = h.observations.length,
+    prompts = h.requests.length;
+  field.focus();
+  field.value = language;
+  field.emit('change');
+  assert.equal(
+    h.$('storage-status').textContent,
+    expected ? WORLD_STORAGE_COPY[expected][language] : '',
+  );
+  assert.equal(
+    h.doc.activeElement === field,
+    true,
+    `Repainting status preserves language focus (actual #${h.doc.activeElement?.id ?? 'none'}).`,
+  );
+  assert.equal(
+    h.observations.length,
+    before,
+    'Language changes add no database open or transaction.',
+  );
+  assert.equal(h.requests.length, prompts, 'Language changes add no persistence request.');
+}
+for (const unavailable of [
+  [],
+  ['revealline-fpv-worlds-v1'],
+  ['revealline.fpv.world-records.v1'],
+  ['revealline-fpv-worlds-v1', 'revealline.fpv.world-records.v1'],
+])
+  test(`World storage status translates hydrated availability with ${unavailable.length ? unavailable.join('+') : 'both stores'}`, async (t) => {
+    const h = worldStorageFixture(t, { unavailable });
+    await h.app.ready;
+    const state = unavailable.length ? 'unavailable' : 'ready';
+    assert.equal(h.$('storage-status').textContent, WORLD_STORAGE_COPY[state].en);
+    for (const language of ['uk', 'en', 'uk']) worldStorageLanguage(h, language, state);
+  });
+for (const granted of [true, false])
+  test(`World storage status translates a pending and completed ${granted ? 'granted' : 'denied'} request without a second prompt`, async (t) => {
+    const h = worldStorageFixture(t);
+    await h.app.ready;
+    h.$('persistent-storage').click();
+    assert.equal(h.requests.length, 1);
+    worldStorageLanguage(h, 'uk', 'ready');
+    await completeWorldStorageRequest(h.requests[0], granted);
+    const state = granted ? 'granted' : 'denied';
+    assert.equal(h.$('storage-status').textContent, WORLD_STORAGE_COPY[state].uk);
+    for (const language of ['en', 'uk', 'en']) worldStorageLanguage(h, language, state);
+    assert.equal(h.requests.length, 1);
+  });
+for (const granted of [true, false])
+  test(`World storage status retains an early ${granted ? 'granted' : 'denied'} result when older hydration completes`, async (t) => {
+    const h = worldStorageFixture(t, { holdHydration: true });
+    await waitFor(h.hydrationHeld);
+    h.$('persistent-storage').click();
+    await completeWorldStorageRequest(h.requests[0], granted);
+    const state = granted ? 'granted' : 'denied';
+    worldStorageLanguage(h, 'uk', state);
+    h.releaseHydration();
+    await h.app.ready;
+    assert.equal(h.$('storage-status').textContent, WORLD_STORAGE_COPY[state].uk);
+    worldStorageLanguage(h, 'en', state);
+  });
+test('World storage status still hydrates while a permission request is pending and preserves that result on rejection', async (t) => {
+  const h = worldStorageFixture(t, { holdHydration: true });
+  await waitFor(h.hydrationHeld);
+  h.$('persistent-storage').click();
+  assert.equal(h.$('storage-status').textContent, '');
+  worldStorageLanguage(h, 'uk', null);
+  h.releaseHydration();
+  await h.app.ready;
+  worldStorageLanguage(h, 'uk', 'ready');
+  await completeWorldStorageRequest(h.requests[0], new Error('Permission test rejected'), true);
+  assert.equal(h.$('studio-status').textContent, 'Permission test rejected');
+  assert.equal(h.$('storage-status').textContent, WORLD_STORAGE_COPY.ready.uk);
+  worldStorageLanguage(h, 'en', 'ready');
+});
+for (const stale of ['granted', 'denied', 'error'])
+  test(`World storage status ignores an older ${stale} request after a newer accepted result`, async (t) => {
+    const h = worldStorageFixture(t);
+    await h.app.ready;
+    h.$('persistent-storage').click();
+    h.$('persistent-storage').click();
+    assert.equal(h.requests.length, 2);
+    const granted = stale !== 'granted',
+      state = granted ? 'granted' : 'denied';
+    await completeWorldStorageRequest(h.requests[1], granted);
+    worldStorageLanguage(h, 'uk', state);
+    const errorBefore = h.$('studio-status').textContent;
+    await completeWorldStorageRequest(
+      h.requests[0],
+      stale === 'error' ? new Error('Stale rejection') : stale === 'granted',
+      stale === 'error',
+    );
+    assert.equal(h.$('storage-status').textContent, WORLD_STORAGE_COPY[state].uk);
+    assert.equal(
+      h.$('studio-status').textContent,
+      errorBefore,
+      'A retired request cannot publish an error.',
+    );
+    worldStorageLanguage(h, 'en', state);
+  });
+test('World storage status preserves the previous accepted result when the newest request rejects', async (t) => {
+  const h = worldStorageFixture(t);
+  await h.app.ready;
+  h.$('persistent-storage').click();
+  await completeWorldStorageRequest(h.requests[0], true);
+  h.$('persistent-storage').click();
+  worldStorageLanguage(h, 'uk', 'granted');
+  await completeWorldStorageRequest(h.requests[1], new Error('Newest rejection'), true);
+  assert.equal(h.$('studio-status').textContent, 'Newest rejection');
+  worldStorageLanguage(h, 'en', 'granted');
+});
+test('World storage status cannot revive an older request after the latest request rejects', async (t) => {
+  const h = worldStorageFixture(t);
+  await h.app.ready;
+  h.$('persistent-storage').click();
+  h.$('persistent-storage').click();
+  await completeWorldStorageRequest(h.requests[1], new Error('Latest pending rejection'), true);
+  assert.equal(h.$('studio-status').textContent, 'Latest pending rejection');
+  worldStorageLanguage(h, 'uk', 'ready');
+  await completeWorldStorageRequest(h.requests[0], true);
+  worldStorageLanguage(h, 'en', 'ready');
+  assert.equal(h.$('studio-status').textContent, 'Latest pending rejection');
+});
+for (const missing of [true, false])
+  test(`World storage status preserves the existing ${missing ? 'missing persistence API' : 'synchronous API error'} behavior`, async (t) => {
+    const h = worldStorageFixture(t);
+    await h.app.ready;
+    if (missing) delete h.win.navigator.storage.persist;
+    else
+      h.win.navigator.storage.persist = () => {
+        throw new Error('Native persistence error');
+      };
+    h.$('persistent-storage').click();
+    if (missing)
+      await waitFor(() => h.$('storage-status').textContent === WORLD_STORAGE_COPY.denied.en);
+    else await waitFor(() => h.$('studio-status').textContent === 'Native persistence error');
+    worldStorageLanguage(h, 'uk', missing ? 'denied' : 'ready');
+    assert.equal(h.requests.length, 0);
+  });
+for (const rejected of [false, true])
+  test(`World storage status ignores ${rejected ? 'rejected' : 'granted'} permission completion after synchronous disposal`, async (t) => {
+    const h = worldStorageFixture(t);
+    await h.app.ready;
+    const output = h.$('storage-status'),
+      errors = h.$('studio-status');
+    h.$('persistent-storage').click();
+    const before = output.textContent,
+      errorBefore = errors.textContent;
+    const closing = h.app.dispose();
+    h.$('persistent-storage').click();
+    assert.equal(
+      h.requests.length,
+      1,
+      'Disposal blocks another prompt before async listener cleanup.',
+    );
+    await completeWorldStorageRequest(
+      h.requests[0],
+      rejected ? new Error('Disposed permission rejection') : true,
+      rejected,
+    );
+    assert.equal(output.textContent, before);
+    assert.equal(errors.textContent, errorBefore);
+    await closing;
+    assert.equal(output.textContent, before);
+  });
+test('World storage status language repaint preserves a real paused flight, checkpoint, records and native focus', async (t) => {
+  const values = new Map(),
+    writes = [];
+  const h = worldStorageFixture(t, {
+    storage: {
+      get: (key) => values.get(key),
+      set(key, value) {
+        writes.push(key);
+        values.set(key, value);
+      },
+    },
+  });
+  await h.app.ready;
+  await h.app.startFlight(WORLD_CATALOGUE.find((entry) => !entry.legacy && !entry.beginner));
+  h.$('world-arm').click();
+  h.tick(5);
+  const recoveryKey = 'revealline.world-enemy-stats-recovery.v1',
+    checkpointWrites = writes.filter((key) => key === recoveryKey).length;
+  h.app.pause();
+  openWorldsSupport(h);
+  await waitFor(() => writes.filter((key) => key === recoveryKey).length === checkpointWrites + 2);
+  const before = h.app.snapshot(),
+    checkpoint = values.get(recoveryKey);
+  assert.equal(before.state.status, 'paused');
+  for (const language of ['uk', 'en', 'uk']) worldStorageLanguage(h, language, 'ready');
+  const after = h.app.snapshot();
+  assert.deepEqual(after.state, before.state);
+  assert.deepEqual(after.records, before.records);
+  assert.deepEqual(after.checkpointPractice, before.checkpointPractice);
+  assert.equal(values.get(recoveryKey), checkpoint);
+  assert.equal(writes.filter((key) => key === recoveryKey).length, checkpointWrites + 2);
+  assert.equal(h.$('sim-settings').open, true);
+});
