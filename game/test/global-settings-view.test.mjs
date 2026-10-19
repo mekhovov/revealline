@@ -168,6 +168,13 @@ test('generated SIM-style control preserves desired extra size across locale ref
   input.focus();
   assert.equal(input.value, 'extra-large');
   assert.equal(input.querySelector('[data-text-size-retained]').disabled, true);
+  const status = input.closest('[data-global-setting]').querySelector('[role="status"]'),
+    fallback = input.parentElement.querySelector('[data-text-size-fallback]');
+  assert.deepEqual(
+    input.getAttribute('aria-describedby').split(/\s+/),
+    [status.id, fallback.id],
+    'the retained-size notice supplements the shared persistence status',
+  );
   settings.refresh('uk');
   assert.equal(input.value, 'extra-large');
   assert.match(input.querySelector('[data-text-size-retained]').textContent, /Дуже великий/);
@@ -182,5 +189,7 @@ test('generated SIM-style control preserves desired extra size across locale ref
   assert.equal(owner.get(), 'large');
   assert.equal(owner.writes(), 1);
   assert.equal(input.querySelector('[data-text-size-retained]'), null);
+  assert.equal(input.getAttribute('aria-describedby'), status.id);
+  assert.equal(fallback.hidden, true);
   settings.destroy();
 });

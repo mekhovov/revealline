@@ -4026,6 +4026,10 @@ try {
       entry: {
         available: !practice && !courseSession && !started && !courseEntry,
         helpAvailable: !practice && !courseSession,
+        homeAvailable:
+          !practice &&
+          !courseSession &&
+          !['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id),
         pending: !!courseEntry,
         message: courseEntryMessage,
       },
@@ -14383,9 +14387,16 @@ try {
             ? {
                 supportedModes: runtimeContent.selection.edition.modes,
                 availableCollectionsOnly: true,
-                description: runtimeContent.selection.edition.name,
               }
             : {}),
+          description: () =>
+            `${runtimeContent?.selection.edition.name ?? t('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir')} ${t('interface:captureNavigation.browseHint')}`,
+          browsingContext: ({ label }) => {
+            const context = soloNavigationContext();
+            return context
+              ? t('interface:captureNavigation.browsing', { mode: label, context })
+              : label;
+          },
           getCurrentId: () => {
             const mission = candidateHost && journeyMission();
             if (mission)
@@ -14913,7 +14924,14 @@ try {
       close: () => unifiedChooser?.close(),
     };
   }
+  function soloNavigationContext() {
+    // These authored Hunt libraries share this host without becoming Capture.
+    // Their existing edition and mission identity remains authoritative.
+    if (['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)) return '';
+    return t('interface:captureNavigation.context', { mode: t('interface:solo2') });
+  }
   gameShell = attachGameShell({
+    navigationContext: soloNavigationContext,
     getAppearanceDefault: () => {
       const pin = currentAppearanceDefault();
       return pin && runtimeContent?.appearanceThemes.length
