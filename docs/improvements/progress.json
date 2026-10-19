@@ -17,6 +17,7 @@
     "P1: finish the Team input-test and guide reconciliation to current one-click launch; the withdrawn runtime proposal remains historical evidence",
     "P1: admit the separate Team catalog-test repairs and preserve all original preview, save, focus and controller assertions",
     "P1: reconcile current-main conflicts in reviewed foundations and complete required checks for text compatibility and Survival suspend",
+    "P1: develop the explained Capture Home recommendation without competing with Resume or inventing Learn routes",
     "P1: review compact Duel, Team and Worlds screens when browser controls return; iPhone and Steam Deck physical checks remain Not tested",
     "P1: finish Versus support-summary review, then full checks for Team and Versus when disk space permits; SIM and Rooms adapters remain",
     "P2: review search recovery and field-card wording in English/Ukrainian; develop the Hunt attempt-versus-achievement slice",
@@ -884,8 +885,8 @@
       "impact": "H/H",
       "effort": "**3–5d**; F02, F25",
       "featureId": "F10",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -894,8 +895,26 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Develop one explained Capture-Journey Home recommendation on the existing Start/Continue action. Preserve genuine Resume priority and Browse all. Full lesson/context recommendations remain dependent on the Learn hub and shared demos.",
+      "evidence": [
+        "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced."
+      ],
+      "implementationSlices": [
+        {
+          "id": "capture-journey-home-recommendation",
+          "priority": "P1",
+          "status": "developing",
+          "owner": "lane-b",
+          "pr": null,
+          "commit": null,
+          "effort": "1–2d bounded Home slice plus independent/source/browser qualification; overall F10 remains partial",
+          "dependency": "Existing Journey destination owner and merged FirstFlight1655; future lesson recommendations still requireF25/D",
+          "next": "Attach a read-only localized reason to the existing named primary action, with exact mission ownership, safe Resume precedence and no extra asset/storage/award reads or writes. Complete actual-host and pure-policy cases, then independent review.",
+          "evidence": [
+            "No new CTA or result action. Explain first mission, exact uncleared cursor, same accepted failed mission, or existing recorded-clear successor only when owned facts support it. Unknown/end/stale ownership produces no fabricated next mission. Unified-library rows are not progression order. Actual compact/landscape acceptance remains pending."
+          ]
+        }
+      ]
     },
     {
       "id": "F77",
@@ -1721,21 +1740,24 @@
         {
           "id": "native-versus-host",
           "priority": "P1",
-          "status": "developing",
+          "status": "draft_review",
           "owner": "lane-c",
-          "pr": null,
-          "commit": null,
+          "pr": "https://github.com/mekhovov/revealline/pull/1726",
+          "commit": "a76a5e02a88f9cbc351d6d5e272705943079c7d1",
           "dependency": "PR1721 exact03af2ad9145b2c9aaf322c55f9abbec74ac8fb08",
           "effort": "1–2d bounded source/native verification, independent full/browser qualification separate",
-          "next": "Fix the resize lifecycle gap found in review, repeat the complete affected tests, then independent review. Preserve real Settings ownership and one export at a time; no new full validation while disk space is below reserve.",
+          "next": "Published reviewed draft: all 251 affected cases and 68 independent cases pass. Full source checks are held by disk space; actual native Settings, export and device acceptance remain.",
           "evidence": [
-            "Read-only exact03af assessment identifies non-dialog hidden/inert Settings, CSS-only compact category retirement, precommit shell transition and update-driven retirement, stopped category event propagation, and explicit controller action allowlist. Optional native-dialog defaults must remain exact; observe committed owner changes, not arbitrary clicks/MutationObserver/synthetic.open. No extra hardware reads/current-lease inference. /tmp/revealline-f58-versus-03af-readonly-assessment.md."
+            "Read-only exact03af assessment identifies non-dialog hidden/inert Settings, CSS-only compact category retirement, precommit shell transition and update-driven retirement, stopped category event propagation, and explicit controller action allowlist. Optional native-dialog defaults must remain exact; observe committed owner changes, not arbitrary clicks/MutationObserver/synthetic.open. No extra hardware reads/current-lease inference. /tmp/revealline-f58-versus-03af-readonly-assessment.md.",
+            "Independent review found four real CSS-breakpoint retirement gaps in unpublished772a: pending/prepared report could survive1000→320→1000 withData-tab/outsidefocus andunchangedcategoriesattribute. Complete native red11/15 retained. Correcteda76 tracks committedcompactboundary independentoffocus;701→700 andsame-sidenoop covered, existingfocus/normalframe/exportowners preserved. Finalcomplete17-file251/251 passes0skips; rootcomplete4-file68/68 independentlypass. All15featureGitblobs unchanged,18decodednamespaceparity andexactSiblingfinishedcopy verified. /tmp/revealline-f58-versus-a76a-review-receipt.json; /tmp/revealline-f58-versus-a76a-root-independent-review.json. Fullsource/browser/device notrun."
           ],
           "qualification": {
             "automated": "developing",
             "browser": "not_run",
             "physical": "not_tested"
-          }
+          },
+          "deliveryState": "draft",
+          "observedRemoteHead": "a76a5e02a88f9cbc351d6d5e272705943079c7d1"
         }
       ]
     },
@@ -3927,6 +3949,14 @@
     {
       "date": "2026-10-19",
       "summary": "Closed1718 afterverifiedlaterdirect-cardlaunchcontract; preservedoldcandidate/evidenceandbegantest/docsonlyoraclecorrection. Fieldcardlanguage1723publishedrevieweddraft109/109+14independent, no deterministiccore/offermutation. NativeVersussupportprogressingwithcommittedSettingsownerAPI. Active/admittedfeaturePRsnapshot73(25merged/16ready/32draft)+1withdrawn separate;113deliverablesunchanged."
+    },
+    {
+      "date": "2026-10-19",
+      "summary": "Fresh remote source merges: compactSettings1707 at55393 and menuanimation1636 at278; all18originalmenuanimationfeaturedeltas independently preserved, no new278localfull/browserclaim. D refreshed toopen draft71a0 withtwo owner-reported browser failures; F25remainsplanned,notmerged. Versusreview reproduced four breakpoint-retirement gaps before publication; correctedcandidate under complete affectedtests."
+    },
+    {
+      "date": "2026-10-19",
+      "summary": "Versus support a76 corrected four independently reproduced CSS breakpoint gaps beforepublication;251 completeaffected+68independent casespass, canonicalSIM/catalog proof clear. Source/candidateprivacy andnativeowner reviewpassed. F10 bounded Capture Home slice began with existing destination authority; full Learn/lessonrecommendations staypartialandDdependent. F64 Hunt progress developing with unchanged recordmilestonecriteria."
     }
   ],
   "deliveryDependencies": [
@@ -3970,11 +4000,21 @@
       "scope": "Reconcile stale held-Confirm input oracle and historical briefing guide to later merged1108 deliberate direct-card launch; no production change.",
       "next": "Published reviewed test/docs-only draft on the exact library-fixture predecessor. Complete input5/5 independently passes; earlier20/20 and17/17 evidence remains separate. Broader local checks hit a missing PNG before cases ran; full validation is held by disk space.",
       "evidence": "Latercommittedsharedselector guide3–6/18–20 andPR1108 explicitlydirectlaunch;20/20unchangeddiscovery+installed cases independently corroboratebookmarks/checkpoints/journals. Theolder5ac6READYtest wasnotreconciled. Candidate1718waswithdrawn,notmerged."
+    },
+    {
+      "id": "D-shared-demos",
+      "priority": "P1",
+      "status": "draft_review",
+      "pr": "https://github.com/mekhovov/revealline/pull/1615",
+      "commit": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+      "scope": "Existing shared demos/practice predecessor, owned separately. Original work remains preserved; dependent learning/demo slices stay open.",
+      "next": "Its owner is investigating two current browser failures, then endurance and hosted checks. Preserve its source and failed receipts; do not treat the reported build success as completed player/device acceptance.",
+      "evidence": "Fresh remote read confirms open draft71a0 on pinned main16eb. Owner reports305 affected assertions, stable official generation and all4 build stages pass; current browser refresh is failed overall (WebKit blob-decode error, Chromium source-readiness timeout). Two-hour endurance has not started; hosted CI queued and physical/listening review pending. Reported main-pages960929013 staged/965908480 archive bytes are that candidate only, not a new measurement for these feature PRs."
     }
   ],
   "deliverySnapshot": {
     "featurePRsReady": 16,
-    "featurePRsDraft": 30,
+    "featurePRsDraft": 31,
     "deliverablesMerged": 27,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
