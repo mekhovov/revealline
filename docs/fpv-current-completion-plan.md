@@ -74,16 +74,30 @@ history remain. Their disappearance is not diagnosed by this integration. Missin
 changing assertions. Protected public archives remain untouched; R13 is still
 unresolved and its previously denied storage-inspection route remains unused.
 
+**Publication update — 06:13 CEST:** the combined correction is pushed to
+[PR #1698](https://github.com/mekhovov/revealline/pull/1698) at
+`fba38cb9630113e63ccaaee882e1e8d34f4f39fa`. Its documentation-only successor
+retains all 243 qualified runtime inputs. #1679, #1685 and #1698 are now
+mergeable; each has twelve checks queued and no completed new-head result.
+The public metadata still reports `dd337c8120fd`. No deployment acceptance is
+claimed and no run was manually reset. This local publication note does not
+change the queued PR source merely to record its own publication.
+
+A fresh Expert-view observation also identified long floating-point tails in
+some PID fields. A separate R3 follow-up is investigating display-only
+formatting that preserves untouched values, raw edits and flight identities;
+it does not alter the qualified release while its checks are queued.
+
 ### Current priorities and conditional estimates
 
-| Priority                    | Remaining work                                                                                                                                  | Estimate and dependency                                                                                                                                                                          |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **P1 — release**            | Publish the qualified #1698 integration; complete normal exact-head checks, integration and deployment; accept flights on that deployed source. | Capacity repair and local qualification complete; hosted queue ETA unknown. Allow **1–2 working days after a stable deployment** for the shared available-desktop acceptance scope, fixes extra. |
-| **P1 — Firefox**            | Identify a trajectory-preserving remedy from the sampled/minimized reproduction, then requalify the unchanged performance gate.                 | Reproduction and sampling complete; fix ETA **unknown**. No timing or performance gate is relaxed.                                                                                               |
-| **P1 — archive incident**   | Account for six protected older records and establish recovery/cause using a permitted diagnostic route.                                        | **1–3 investigation days after access**, recovery ETA unknown. No further deletion or public-state mutation.                                                                                     |
-| **P2 — available software** | Native World proof integration, local comparison admission, command mapping/allocation and versioned propulsion preparation.                    | Continue independently. Scored local-record/public-competition scope needs explicit definition; **1–2 engineering weeks provisional** after that scope, promotion gates separate.                |
-| **P2 — broader acceptance** | Installed/offline/update behavior, rendered hosts and streamed Regional transitions; actual additional platforms when available.                | **3–5 working days** for the accessible agreed matrix; **1–2 days per extra target**, access and fixes extra.                                                                                    |
-| **Evidence-dependent**      | Matched propulsion/aircraft measurements, physical radios/touch, pilot comparison and signed native targets.                                    | User deferred radio/pilot evidence. One reference aircraft fit is **5–10 engineering days after suitable matched data**; acquisition/all-aircraft fidelity and signed targets remain undated.    |
+| Priority                    | Remaining work                                                                                                                   | Estimate and dependency                                                                                                                                                                          |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **P1 — release**            | Complete the queued exact-head checks, normal integration and deployment; accept flights on that deployed source.                | Capacity repair and local qualification complete; hosted queue ETA unknown. Allow **1–2 working days after a stable deployment** for the shared available-desktop acceptance scope, fixes extra. |
+| **P1 — Firefox**            | Identify a trajectory-preserving remedy from the sampled/minimized reproduction, then requalify the unchanged performance gate.  | Reproduction and sampling complete; fix ETA **unknown**. No timing or performance gate is relaxed.                                                                                               |
+| **P1 — archive incident**   | Account for six protected older records and establish recovery/cause using a permitted diagnostic route.                         | **1–3 investigation days after access**, recovery ETA unknown. No further deletion or public-state mutation.                                                                                     |
+| **P2 — available software** | Native World proof integration, local comparison admission, command mapping/allocation and versioned propulsion preparation.     | Continue independently. Scored local-record/public-competition scope needs explicit definition; **1–2 engineering weeks provisional** after that scope, promotion gates separate.                |
+| **P2 — broader acceptance** | Installed/offline/update behavior, rendered hosts and streamed Regional transitions; actual additional platforms when available. | **3–5 working days** for the accessible agreed matrix; **1–2 days per extra target**, access and fixes extra.                                                                                    |
+| **Evidence-dependent**      | Matched propulsion/aircraft measurements, physical radios/touch, pilot comparison and signed native targets.                     | User deferred radio/pilot evidence. One reference aircraft fit is **5–10 engineering days after suitable matched data**; acquisition/all-aircraft fidelity and signed targets remain undated.    |
 
 ## Earlier continuation — 19 October, 03:26 CEST
 
@@ -711,7 +725,7 @@ The [inventory](fpv-civilian-source-inventory.md) records each public record and
 tab, its exact title and disposition, along with the first-party feed/loading-shell
 and bounded sheet-header inspection limits.
 
-Current sequence: **#1665 merged → #1679 / #1685 updated and rechecking → #1698 qualified integration publication → normal checks/integration/deployment → source-bound public acceptance**. Parent #1626's Pages workflow is complete. The flight correction branch is `codex/fpv-flight-integration-20261019`; #1685 is `codex/fpv-qualification-followup-20261019`; #1698 is `codex/fpv-workbench-integrity-20261019`. Unrelated main lesson-mode changes are retained. A direct stacked diff against #1665's original branch would not represent this rebased history correctly.
+Current sequence: **#1665 merged → #1679 / #1685 updated and rechecking → #1698 published → normal checks/integration/deployment → source-bound public acceptance**. Parent #1626's Pages workflow is complete. The flight correction branch is `codex/fpv-flight-integration-20261019`; #1685 is `codex/fpv-qualification-followup-20261019`; #1698 is `codex/fpv-workbench-integrity-20261019`. Unrelated main lesson-mode changes are retained. A direct stacked diff against #1665's original branch would not represent this rebased history correctly.
 
 R13 remains an independent P1 investigation; R4 has no safe cleanup path until the inventory is understood. R2’s bounded inventory and R3’s local narrow/200% EN/UK checks are complete; physical touch, virtual keyboard and public acceptance remain separate. R6 software preparation can proceed independently of deferred physical radios/pilots, but measured activation cannot. Delivered R11A–E and R17–R21 corrections need normal publication and scoped public acceptance; R18’s capacity reduction and exact combined-package qualification are complete locally. Do not wait for R6–R12 to improve released practice or treat them as passed because the local release is ready.
 
