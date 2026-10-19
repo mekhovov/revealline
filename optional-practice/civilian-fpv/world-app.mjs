@@ -1044,6 +1044,9 @@ export function mountWorldApp({
     missionChooser = null,
     missionLibrary = null,
     missionLaunchGeneration = 0,
+    randomContext = 'flight',
+    randomLevelChoice = 'auto',
+    randomLevelControl = null,
     runtimeOfflineFeedback = null,
     regionalRecoveryControls = null,
     regionalStartControls = null,
@@ -1140,6 +1143,8 @@ export function mountWorldApp({
     flowCelebration = null;
   const learningById = new Map(BEGINNER_LESSONS.map((lesson) => [lesson.id, lesson]));
   const learningEntries = new Map(BEGINNER_CATALOGUE.map((entry) => [entry.id, entry]));
+  const learningMissionKeys = new Set(BEGINNER_CATALOGUE.map(keyOf));
+  const randomLevelsKey = 'revealline.sim.worlds.random-levels.v1';
   const primaryLearning = PRIMARY_LESSON_ORDER.map((id) => learningEntries.get(id));
   const learningSequence = (entry) =>
     learningById.get(entry?.id)?.mode === 'acro' ? PRIMARY_LESSON_ORDER : SELF_LEVEL_LESSON_ORDER;
@@ -1162,6 +1167,11 @@ export function mountWorldApp({
     storage = win.localStorage;
   } catch {
     /* Browser can deny local preference access. */
+  }
+  try {
+    if (storage?.getItem(randomLevelsKey) === 'mixed') randomLevelChoice = 'mixed';
+  } catch {
+    /* Random still follows the current activity without storage. */
   }
   const enemyStatistics = createSimEnemyStatsHost({ gameType: 'worlds', storage });
   void enemyStatistics.stats.read();
@@ -2682,13 +2692,31 @@ export function mountWorldApp({
           .includes(search),
     );
   }
+  function includesRandomLevel(isLearning, context = randomContext) {
+    return randomLevelChoice === 'mixed' || isLearning === (context === 'learning');
+  }
+  function paintRandomLevels() {
+    if (!randomLevelControl) return;
+    const { label, select, automatic, mixed } = randomLevelControl;
+    label.textContent = txt('Random levels', 'Випадкові рівні');
+    automatic.textContent =
+      randomContext === 'learning'
+        ? txt('Learning levels only', 'Лише навчальні рівні')
+        : txt('Flight levels only', 'Лише рівні польоту');
+    mixed.textContent = txt('Learning + flight levels', 'Навчання + польоти');
+    select.value = randomLevelChoice;
+  }
   function randomFlightCandidates(worldId) {
-    return filteredCatalogue().filter((entry) => !worldId || entry.world === worldId);
+    return filteredCatalogue().filter(
+      (entry) =>
+        (!worldId || entry.world === worldId) &&
+        includesRandomLevel(Boolean(entry.beginner), current?.beginner ? 'learning' : 'flight'),
+    );
   }
   async function startRandomFlight(worldId) {
     await ready;
     if (!worldId && missionChooser) {
-      openMissionChooser();
+      openMissionChooser(current?.beginner ? 'learn' : 'explore');
       return missionChooser.playRandom();
     }
     if (disposed) return;
@@ -3049,6 +3077,7 @@ export function mountWorldApp({
     presentation.refresh();
   }
   function renderCatalogue() {
+    paintRandomLevels();
     renderSchool();
     $('world-grid').replaceChildren();
     $('level-count').textContent = catalogue.filter((entry) => !entry.archived).length;
@@ -3120,6 +3149,8 @@ export function mountWorldApp({
   }
   function openMissionChooser(section = 'explore') {
     if (!missionChooser) return;
+    randomContext = section === 'learn' ? 'learning' : 'flight';
+    paintRandomLevels();
     missionLaunchGeneration++;
     pauseFlight();
     missionChooser.open();
@@ -8638,6 +8669,10 @@ export function mountWorldApp({
     library: missionLibrary,
     supportedModes: ['solo'],
     randomDownloadable: true,
+    randomFilter: (row) =>
+      includesRandomLevel(
+        row.ownerId === 'worlds:builtin' && learningMissionKeys.has(row.runtimeId),
+      ),
     browsingContext: ({ label }) => `${navigationContext()} · ${label}`,
     description: () =>
       txt(
@@ -8653,12 +8688,23 @@ export function mountWorldApp({
     },
     goalPreferenceOptions: { editionId: 'sim-worlds', getStorage: () => storage },
     onPause: pauseFlight,
-    getCurrentId: () =>
-      current && missionLibrary.missions.find((row) =>
-        row.runtimeId === keyOf(current) ||
-        (current.regional && row.ownerId === 'worlds:regions' && row.runtimeId === `${current.course.id}:${current.packIdentity.slice(19)}`) ||
-        (row.ownerId === 'worlds:downloads' && row.runtimeId === `${current.packIdentity.slice(9)}:${revisions.find((pack) => `fpv-pack:${pack.sha256}` === current.packIdentity)?.project.courses.findIndex((course) => course.id === current.id)}`)
-      )?.id,
+    getCurrentId: () => {
+      // Leaving a flight clears current; Random still avoids its last catalogue level.
+      const entry = current ?? catalogue.find((row) => keyOf(row) === lastCatalogueFlightKey);
+      return (
+        entry &&
+        missionLibrary.missions.find(
+          (row) =>
+            row.runtimeId === keyOf(entry) ||
+            (entry.regional &&
+              row.ownerId === 'worlds:regions' &&
+              row.runtimeId === `${entry.course.id}:${entry.packIdentity.slice(19)}`) ||
+            (row.ownerId === 'worlds:downloads' &&
+              row.runtimeId ===
+                `${entry.packIdentity.slice(9)}:${revisions.find((pack) => `fpv-pack:${pack.sha256}` === entry.packIdentity)?.project.courses.findIndex((course) => course.id === entry.id)}`),
+        )?.id
+      );
+    },
     readState: () => {
       try {
         return JSON.parse(storage?.getItem('revealline.sim.worlds.mission-browser.v1') ?? 'null');
@@ -8757,6 +8803,34 @@ export function mountWorldApp({
         }),
       );
     },
+  });
+  const randomLevelsField = el('label', undefined, 'sim-random-levels');
+  const randomLevelsCaption = el('span');
+  const randomLevelsSelect = el('select');
+  randomLevelsSelect.id = 'world-random-levels';
+  const randomAutomatic = el('option'),
+    randomMixed = el('option');
+  randomAutomatic.value = 'auto';
+  randomMixed.value = 'mixed';
+  randomLevelsSelect.append(randomAutomatic, randomMixed);
+  randomLevelsField.append(randomLevelsCaption, randomLevelsSelect);
+  randomLevelControl = {
+    label: randomLevelsCaption,
+    select: randomLevelsSelect,
+    automatic: randomAutomatic,
+    mixed: randomMixed,
+  };
+  paintRandomLevels();
+  missionChooser.elements.footer.querySelector('#journey-random-level').before(randomLevelsField);
+  on(randomLevelsSelect, 'change', () => {
+    randomLevelChoice = randomLevelsSelect.value === 'mixed' ? 'mixed' : 'auto';
+    try {
+      storage?.setItem(randomLevelsKey, randomLevelChoice);
+    } catch {
+      /* Keep this session's choice. */
+    }
+    paintRandomLevels();
+    missionChooser.refresh();
   });
   // Keep both catalogues inside the chooser's one allocated scrolling row.
   // An unassigned grid child would create an implicit row beneath the action dock.

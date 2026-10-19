@@ -2270,6 +2270,7 @@ description=localizedMessage(
 browsingContext=null,
 random=Math.random,
 randomDownloadable=false,
+randomFilter=()=>true,
 renderPreview=()=>null,
 createArtworkView=null,
 retune={},
@@ -2829,6 +2830,7 @@ collection:collection.value,
 lifecycle:lifecycle.value,
 })
 .filter((row)=>{
+if(!randomFilter(row))return false;
 const state=library.availability(row,modeFilter.value);
 return(
 state.state==='ready'||
