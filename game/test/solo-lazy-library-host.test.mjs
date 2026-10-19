@@ -30,12 +30,53 @@ after(() => {
 });
 async function holdWorldsImport(t) {
   const id = ++importGateSequence;
-  const state = { entered: 0, released: 0, acknowledged: new Set() };
+  const state = { entered: 0, released: 0, acknowledged: new Set(), stage: 'hold' };
+  let observedPage = null;
+  const actions = new Set();
+  const mark = (stage, page = observedPage) => {
+    state.stage = stage;
+    observedPage = page;
+  };
+  const diagnostic = () => ({
+    stage: state.stage,
+    entered: state.entered,
+    released: state.released,
+    acknowledged: [...state.acknowledged],
+    page: observedPage
+      ? {
+          hidden: observedPage.doc.hidden,
+          focused: observedPage.doc.hasFocus(),
+          activeId: observedPage.doc.activeElement?.id ?? null,
+          paused: observedPage.rendered?.paused ?? null,
+          settingsOpen: observedPage.$('settings-dialog')?.open ?? false,
+          loading:
+            observedPage.$('optional-worlds-opening-status')?.textContent?.slice(0, 120) ?? null,
+          worldsOpen: observedPage.$('optional-worlds-dialog')?.open ?? false,
+          errors: observedPage.errors
+            .slice(0, 3)
+            .map((error) => String(error?.message ?? error).slice(0, 160)),
+        }
+      : null,
+  });
+  const wait = async (stage, predicate, page = observedPage) => {
+    mark(stage, page);
+    try {
+      // Report the specific stalled boundary before the unchanged 20-second
+      // test limit; the five-minute admission owner is unchanged too.
+      await settle(predicate, `Worlds import stalled during ${stage}.`, { timeoutMs: 5000 });
+    } catch (error) {
+      t.diagnostic(JSON.stringify(diagnostic()));
+      throw error;
+    }
+  };
+  t.after(() => {
+    if (t.signal.aborted) t.diagnostic(JSON.stringify(diagnostic()));
+  });
   importGates.set(id, state);
   const send = async (action, fail = false) => {
     state.acknowledged.delete(action);
     port1.postMessage({ action, id, fail });
-    await settle(() => state.acknowledged.has(action));
+    await wait(`${action}-acknowledgement`, () => state.acknowledged.has(action));
   };
   let released = false;
   const release = async (fail = false) => {
@@ -44,11 +85,29 @@ async function holdWorldsImport(t) {
     await send('release', fail);
   };
   t.after(async () => {
-    await release();
-    importGates.delete(id);
+    const failures = [];
+    try {
+      try {
+        await release();
+      } catch (error) {
+        failures.push(error);
+      }
+      for (const action of actions) {
+        try {
+          await wait('cleanup-action-completion', () => action.settled);
+          if (action.failed) throw action.error;
+        } catch (error) {
+          failures.push(error);
+        }
+      }
+    } finally {
+      importGates.delete(id);
+    }
+    if (failures.length === 1) throw failures[0];
+    if (failures.length > 1) throw new AggregateError(failures, 'Worlds import cleanup failed.');
   });
   await send('hold');
-  return { state, release };
+  return { state, release, wait, mark, observe: (action) => actions.add(action) };
 }
 async function worldsPage(t, options = {}) {
   return soloPage(t, {
@@ -60,6 +119,55 @@ async function worldsPage(t, options = {}) {
     ...options,
   });
 }
+function observeWorldsAction(gate, button) {
+  const action = {
+    settled: false,
+    failed: false,
+    error: null,
+    pending: activateHostAction(button),
+  };
+  // Observe immediately so a rejected real click is not hidden behind an
+  // unrelated loader wait. Every successful path still joins pending below.
+  action.pending.then(
+    () => {
+      action.settled = true;
+    },
+    (error) => {
+      action.settled = true;
+      action.failed = true;
+      action.error = error;
+    },
+  );
+  gate.observe(action);
+  return action;
+}
+async function joinWorldsAction(gate, page, action, stage = 'action-completion') {
+  await gate.wait(
+    stage,
+    () => {
+      if (action.failed) throw action.error;
+      return action.settled;
+    },
+    page,
+  );
+  await action.pending;
+}
+async function waitForWorldsImport(gate, page, action) {
+  await gate.wait(
+    'accepted-action-and-import-entry',
+    () => {
+      if (action.failed) throw action.error;
+      assert.equal(action.settled, false, 'The held import must keep its accepted action pending.');
+      assert.equal(
+        page.$('optional-worlds-opening-status')?.textContent,
+        translate('interface:loading'),
+        'The real Worlds action must publish loading feedback before requesting its module.',
+      );
+      return gate.state.entered === 1;
+    },
+    page,
+  );
+}
 function worldsOpener(page) {
   page.$('settings-button').click();
   page.$('settings-tab-content').click();
@@ -67,6 +175,12 @@ function worldsOpener(page) {
   assert.equal(button.closest('#settings-panel-content'), page.$('settings-panel-content'));
   assert.equal(page.$('settings-dialog').open, true);
   button.focus();
+  assert.equal(page.doc.activeElement, button, 'The actual Worlds opener must receive focus.');
+  assert.equal(
+    button.closest('[hidden],[inert]'),
+    null,
+    'Worlds must be reached through visible Settings.',
+  );
   return button;
 }
 test('Main Solo leaves Library unconstructed through Start, then public Workshop opens the same paused run', async (t) => {
@@ -205,15 +319,17 @@ test(
   { timeout: 20000 },
   async (t) => {
     const gate = await holdWorldsImport(t);
+    gate.mark('host-boot');
     const page = await worldsPage(t);
+    gate.mark('host-ready', page);
     const run = page.rendered.run;
     const checkpoint = authoritativeCheckpoint(run);
     assert.equal(gate.state.entered, 0, 'Boot must not request the optional module.');
     assert.equal(page.$('optional-worlds-dialog'), null);
     const opener = worldsOpener(page);
     const storage = [...page.storage.map];
-    const firstOpening = activateHostAction(opener);
-    await settle(() => gate.state.entered === 1);
+    const firstOpening = observeWorldsAction(gate, opener);
+    await waitForWorldsImport(gate, page, firstOpening);
     assert.equal(page.$('settings-dialog').open, true);
     assert.equal(page.doc.activeElement, opener);
     assert.equal(page.$('optional-worlds-dialog'), null);
@@ -221,15 +337,16 @@ test(
       page.$('optional-worlds-opening-status').textContent,
       translate('interface:loading'),
     );
-    const secondOpening = activateHostAction(opener);
+    const secondOpening = observeWorldsAction(gate, opener);
     await new Promise((resolve) => setImmediate(resolve));
     assert.equal(gate.state.entered, 1, 'A second current opening shares the pending import.');
     await gate.release();
-    await Promise.all([firstOpening, secondOpening]);
-    await settle(() => page.$('optional-worlds-dialog')?.open);
+    await joinWorldsAction(gate, page, firstOpening, 'superseded-action-completion');
+    await joinWorldsAction(gate, page, secondOpening, 'current-action-completion');
+    await gate.wait('panel-mount', () => page.$('optional-worlds-dialog')?.open, page);
     assert.equal(gate.state.released, 1);
     const panel = page.$('optional-worlds-dialog');
-    await settle(() => !page.$('optional-worlds-reload').disabled);
+    await gate.wait('panel-catalogue', () => !page.$('optional-worlds-reload').disabled, page);
     assert.equal(page.doc.activeElement, page.$('optional-worlds-top-back'));
     assert.equal(page.$('optional-worlds-opening-status'), null);
     assert.equal(page.doc.querySelectorAll('.optional-worlds-dialog').length, 1);
@@ -250,26 +367,30 @@ test(
   { timeout: 20000 },
   async (t) => {
     const first = await holdWorldsImport(t);
+    first.mark('host-boot');
     const page = await worldsPage(t);
+    first.mark('host-ready', page);
     const opener = worldsOpener(page);
-    const failedOpening = activateHostAction(opener);
-    await settle(() => first.state.entered === 1);
+    const failedOpening = observeWorldsAction(first, opener);
+    await waitForWorldsImport(first, page, failedOpening);
     await first.release(true);
-    await failedOpening;
-    await settle(
+    await joinWorldsAction(first, page, failedOpening, 'failed-import-action-completion');
+    await first.wait(
+      'retry-feedback',
       () =>
         page.$('optional-worlds-opening-status')?.textContent ===
         translate('interface:loadingInterruptedRetryWhenReady'),
+      page,
     );
     assert.equal(first.state.released, 1);
     assert.equal(page.$('settings-dialog').open, true);
     assert.equal(page.$('optional-worlds-dialog'), null);
     const second = await holdWorldsImport(t);
-    const retriedOpening = activateHostAction(opener);
-    await settle(() => second.state.entered === 1);
+    const retriedOpening = observeWorldsAction(second, opener);
+    await waitForWorldsImport(second, page, retriedOpening);
     await second.release();
-    await retriedOpening;
-    await settle(() => page.$('optional-worlds-dialog')?.open);
+    await joinWorldsAction(second, page, retriedOpening, 'retry-action-completion');
+    await second.wait('retry-panel-mount', () => page.$('optional-worlds-dialog')?.open, page);
     assert.equal(second.state.released, 1);
     assert.equal(page.$('optional-worlds-opening-status'), null);
     assert.deepEqual(page.errors, []);
@@ -308,19 +429,21 @@ for (const [name, retire] of [
     { timeout: 20000 },
     async (t) => {
       const gate = await holdWorldsImport(t);
+      gate.mark('host-boot');
       const page = await worldsPage(t);
+      gate.mark('host-ready', page);
       const opener = worldsOpener(page);
       const run = page.rendered.run;
       const checkpoint = authoritativeCheckpoint(run);
-      const opening = activateHostAction(opener);
-      await settle(() => gate.state.entered === 1);
+      const opening = observeWorldsAction(gate, opener);
+      await waitForWorldsImport(gate, page, opening);
       const pending = page.$('optional-worlds-opening-status');
       assert.ok(pending);
       retire(page);
       const focused = page.doc.activeElement;
       await gate.release();
-      await opening;
-      await settle(() => !page.$('optional-worlds-opening-status'));
+      await joinWorldsAction(gate, page, opening);
+      await gate.wait('retired-feedback', () => !page.$('optional-worlds-opening-status'), page);
       assert.equal(gate.state.released, 1);
       assert.equal(page.$('optional-worlds-dialog'), null);
       assert.equal(page.doc.activeElement, focused, 'Retired work cannot reclaim focus.');
@@ -336,7 +459,9 @@ test(
   { timeout: 20000 },
   async (t) => {
     const gate = await holdWorldsImport(t);
+    gate.mark('host-boot');
     const page = await worldsPage(t);
+    gate.mark('host-ready', page);
     const staleOpen = page.$('shell-worlds').onclick;
     await activateHostAction(page.$('shell-featured'));
     await settle(() => {
@@ -361,9 +486,11 @@ test(
   { timeout: 20000 },
   async (t) => {
     const gate = await holdWorldsImport(t);
+    gate.mark('host-boot');
     const page = await worldsPage(t);
-    const opening = activateHostAction(worldsOpener(page));
-    await settle(() => gate.state.entered === 1);
+    gate.mark('host-ready', page);
+    const opening = observeWorldsAction(gate, worldsOpener(page));
+    await waitForWorldsImport(gate, page, opening);
     page.$('settings-dialog').close();
     await activateHostAction(page.$('shell-featured'));
     await settle(() => {
@@ -373,8 +500,8 @@ test(
     const run = page.rendered.run;
     const checkpoint = authoritativeCheckpoint(run);
     await gate.release();
-    await opening;
-    await settle(() => !page.$('optional-worlds-opening-status'));
+    await joinWorldsAction(gate, page, opening);
+    await gate.wait('retired-feedback', () => !page.$('optional-worlds-opening-status'), page);
     assert.equal(gate.state.released, 1);
     page.frame(0);
     assert.equal(page.rendered.paused, false);
