@@ -1,0 +1,53 @@
+TAP version 13
+# Subtest: Team recording verification retains its owning build after page retirement and locale changes
+ok 1 - Team recording verification retains its owning build after page retirement and locale changes
+  ---
+  duration_ms: 252.347792
+  type: 'test'
+  ...
+# Subtest: Solo legacy → selected Team owner retains source route and exact mission
+ok 2 - Solo legacy → selected Team owner retains source route and exact mission
+  ---
+  duration_ms: 8360.884208
+  type: 'test'
+  ...
+# Subtest: Versus legacy Team cards use saved Expert and retain source edition
+ok 3 - Versus legacy Team cards use saved Expert and retain source edition
+  ---
+  duration_ms: 6149.174709
+  type: 'test'
+  ...
+# Subtest: unfinished Legacy library departure checks its saved attempt before minting the Team return token
+ok 4 - unfinished Legacy library departure checks its saved attempt before minting the Team return token
+  ---
+  duration_ms: 7767.710125
+  type: 'test'
+  ...
+# Subtest: late Classic checked return without saved browse state uses the retained mission as a focus fallback
+    # Subtest: play the late selectable Base mission and depart through its actual library
+    ok 1 - play the late selectable Base mission and depart through its actual library
+      ---
+      duration_ms: 8949.868833
+      type: 'test'
+      ...
+    # Subtest: checked return focuses that exact late edition, keeping progress bytes and attempt untouched
+    ok 2 - checked return focuses that exact late edition, keeping progress bytes and attempt untouched
+      ---
+      duration_ms: 6745.411166
+      type: 'test'
+      ...
+    1..2
+ok 5 - late Classic checked return without saved browse state uses the retained mission as a focus fallback
+  ---
+  duration_ms: 15695.606125
+  type: 'test'
+  ...
+1..5
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46691.265166
