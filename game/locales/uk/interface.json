@@ -6109,5 +6109,9 @@
   "supportSummary.game.won": "Завершено",
   "supportSummary.game.lost": "Спробу закінчено",
   "supportSummary.game.unavailable": "Недоступно",
-  "supportSummary.preparedWaiting": "Звіт підготовлено нижче. Попередній експорт ще очікує на місце призначення; наступний буде доступний після його завершення."
+  "supportSummary.preparedWaiting": "Звіт підготовлено нижче. Попередній експорт ще очікує на місце призначення; наступний буде доступний після його завершення.",
+  "overflight.fieldRerolls_one": "{{count}} перевибір",
+  "overflight.fieldRerolls_few": "{{count}} перевибори",
+  "overflight.fieldRerolls_many": "{{count}} перевиборів",
+  "overflight.fieldRerolls_other": "{{count}} перевибору"
 }
