@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: a rejected upgrade does not fabricate a tick after its failed action
+ok 1 - a rejected upgrade does not fabricate a tick after its failed action
+  ---
+  duration_ms: 8563.306042
+  ...
+# Subtest: the observer is awaited and cancellation retires observation before another native tick
+ok 2 - the observer is awaited and cancellation retires observation before another native tick
+  ---
+  duration_ms: 36.692167
+  ...
+# Subtest: a comparator failure at a checkpoint boundary remains the exact observer failure
+ok 3 - a comparator failure at a checkpoint boundary remains the exact observer failure
+  ---
+  duration_ms: 2239.402084
+  ...
+# Subtest: tick diagnosis rejects stale content, unknown missions and nonstandard variants
+ok 4 - tick diagnosis rejects stale content, unknown missions and nonstandard variants
+  ---
+  duration_ms: 43.634708
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17345.134542

@@ -1,0 +1,239 @@
+{
+  "format": "SurvivalNativeAdmissionV1",
+  "complete": false,
+  "started": "2026-10-19T10:25:44.427Z",
+  "checks": [
+    {
+      "runtime": "node22131-x64",
+      "kind": "catalog",
+      "command": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+        "scripts/qualify-survival-native.mjs",
+        "--out=.cache/survival-native-admission-3f84-followup.node22131-x64.catalog.json",
+        "--timeout-ms=300000"
+      ],
+      "eligible": false,
+      "exitCode": 1,
+      "signal": null,
+      "output": {
+        "path": ".cache/survival-native-admission-3f84-followup.node22131-x64.catalog.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "path": ".cache/survival-native-admission-3f84-followup.node22131-x64.catalog.log.stderr.txt",
+        "sha256": "4f06cab6b17d37e33052e344b052e7c181030d842d77e7967ef65d24478864ea",
+        "bytes": 2875
+      },
+      "validationFailure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/verify-survival-native-followup.mjs:37:14",
+      "elapsedMs": 773.4262080000001
+    },
+    {
+      "runtime": "node22131-x64",
+      "kind": "remaining-tests",
+      "command": [
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "--test-name-pattern=a rejected upgrade|the observer is awaited|a comparator failure|tick diagnosis rejects",
+        "scripts/test-demo-tick-survival.mjs"
+      ],
+      "eligible": false,
+      "exitCode": 0,
+      "signal": null,
+      "output": {
+        "path": ".cache/survival-native-admission-3f84-followup.node22131-x64.remaining-tests.tap.txt",
+        "sha256": "933e490e48e12aad59a4d16c6394cbb1e234e7ac0b49bee76822b6bdcacb2890",
+        "bytes": 981
+      },
+      "stats": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "validationFailure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n    cancelled: 0,\n    fail: 0,\n    pass: 4,\n+   skipped: 0,\n+   tests: 4,\n-   skipped: 2,\n-   tests: 6,\n    todo: 0\n  }\n\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/verify-survival-native-followup.mjs:40:16",
+      "elapsedMs": 17615.307042
+    },
+    {
+      "runtime": "node20195-arm64",
+      "kind": "tests",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "game/test/demo-survival.test.mjs",
+        "scripts/test-demo-tick-survival.mjs"
+      ],
+      "eligible": true,
+      "exitCode": 0,
+      "signal": null,
+      "output": {
+        "path": ".cache/survival-native-admission-3f84-followup.node20195-arm64.tests.tap.txt",
+        "sha256": "7e40bd55784adb086ac2275a4a3cd6c7abbc11430fe6bc7e701554efd0a072d6",
+        "bytes": 4713
+      },
+      "stats": {
+        "tests": 21,
+        "pass": 21,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedMs": 281701.439333
+    },
+    {
+      "runtime": "node20195-arm64",
+      "kind": "catalog",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-survival-native.mjs",
+        "--out=.cache/survival-native-admission-3f84-followup.node20195-arm64.catalog.json",
+        "--timeout-ms=300000"
+      ],
+      "eligible": false,
+      "exitCode": 1,
+      "signal": null,
+      "output": {
+        "path": ".cache/survival-native-admission-3f84-followup.node20195-arm64.catalog.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "path": ".cache/survival-native-admission-3f84-followup.node20195-arm64.catalog.log.stderr.txt",
+        "sha256": "56a5efe40c97dc621cf439333d607a206658420c7258f75ee3c448d8255af1f5",
+        "bytes": 2875
+      },
+      "validationFailure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/verify-survival-native-followup.mjs:37:14",
+      "elapsedMs": 827.6273329999531
+    }
+  ],
+  "errors": [],
+  "headBefore": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceScope": [
+    "game/overflight",
+    "game/demo-modes",
+    "game/demo-data/survival"
+  ],
+  "sourceBefore": {
+    "sha256": "cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+    "files": 184,
+    "bytes": 16216065
+  },
+  "supplementalBefore": [
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594
+    },
+    {
+      "path": "game/demo-preparation.mjs",
+      "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+      "bytes": 3500
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+      "bytes": 987
+    },
+    {
+      "path": "scripts/demo-source-fingerprint.mjs",
+      "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+      "bytes": 1064
+    },
+    {
+      "path": "scripts/qualify-survival-native.mjs",
+      "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+      "bytes": 7832
+    },
+    {
+      "path": "game/test/demo-survival.test.mjs",
+      "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+      "bytes": 15602
+    },
+    {
+      "path": "scripts/test-demo-tick-survival.mjs",
+      "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+      "bytes": 5367
+    }
+  ],
+  "observerSHA256": "e0d07334cb3f083abb905de9b289c30b64d32f7daf9e3b3f28666c2ccb979939",
+  "nodes": [
+    {
+      "label": "node22131-x64",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760,
+      "environment": {
+        "version": "v22.13.1",
+        "v8": "12.4.254.21-node.22",
+        "platform": "darwin",
+        "arch": "x64"
+      }
+    },
+    {
+      "label": "node20195-arm64",
+      "path": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "sha256": "c37b0c15f83f1b63c4b162c6f47e586ed6b00ac9ed093037fe679f676f9d2195",
+      "bytes": 88452192,
+      "environment": {
+        "version": "v20.19.5",
+        "v8": "11.3.244.8-node.30",
+        "platform": "darwin",
+        "arch": "arm64"
+      }
+    }
+  ],
+  "scope": "Follow-up after retained330s timeout: remaining4 native tick cases (2 already-passed cases intentionally filtered), full21 ARM tests, and full18 production-resolver qualification on both runtimes. No Linux/browser claim or authoring.",
+  "headAfter": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceAfter": {
+    "sha256": "cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+    "files": 184,
+    "bytes": 16216065
+  },
+  "supplementalAfter": [
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594
+    },
+    {
+      "path": "game/demo-preparation.mjs",
+      "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+      "bytes": 3500
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+      "bytes": 987
+    },
+    {
+      "path": "scripts/demo-source-fingerprint.mjs",
+      "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+      "bytes": 1064
+    },
+    {
+      "path": "scripts/qualify-survival-native.mjs",
+      "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+      "bytes": 7832
+    },
+    {
+      "path": "game/test/demo-survival.test.mjs",
+      "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+      "bytes": 15602
+    },
+    {
+      "path": "scripts/test-demo-tick-survival.mjs",
+      "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+      "bytes": 5367
+    }
+  ],
+  "observerSHA256After": "e0d07334cb3f083abb905de9b289c30b64d32f7daf9e3b3f28666c2ccb979939",
+  "sourceUnchanged": true,
+  "finished": "2026-10-19T10:30:47.512Z"
+}

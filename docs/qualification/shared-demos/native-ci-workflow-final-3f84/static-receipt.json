@@ -1,0 +1,87 @@
+{
+  "format": "NativeDemoWorkflowStaticValidationV1",
+  "observedAt": "2026-10-19T10:18:02.962867+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourcePins": {
+    ".github/workflows/solo-native-candidates.yml": {
+      "sha256": "dfda7a500e07fbf2e9298c359b07abdab9ba0eb2e5c59c5fe95db0f5efaa546f",
+      "bytes": 6977
+    },
+    "scripts/capture-solo-native-candidates.mjs": {
+      "sha256": "714061bbb34d3758a1e0dd28280045c6d828ba395bf75e5b7c42825e712558d9",
+      "bytes": 22948
+    },
+    "scripts/test-capture-solo-native-candidates.mjs": {
+      "sha256": "29161366a8b098f0abeacfc8e88dabb89a540ed1db647b18597c5c09d4130c13",
+      "bytes": 11114
+    },
+    "scripts/qualify-survival-native.mjs": {
+      "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+      "bytes": 7832
+    }
+  },
+  "checks": [
+    {
+      "command": [
+        "bash",
+        "-n",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/native-ci-workflow-final-static-3f84/run-0.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/native-ci-workflow-final-static-3f84/validator-0.mjs"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bash",
+        "-n",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/native-ci-workflow-final-static-3f84/run-1.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/native-ci-workflow-final-static-3f84/validator-1.mjs"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "extractedPins": {
+    ".cache/native-ci-workflow-final-static-3f84/run-0.sh": {
+      "sha256": "f55ff23f29e7ba200ff37ea8d527dc7763f0265bf2829cd53634a5cd850b9d7c",
+      "bytes": 1890
+    },
+    ".cache/native-ci-workflow-final-static-3f84/run-1.sh": {
+      "sha256": "f105ba2013e2f6a7b0ed41ec7d20da6a73edacec034c82431bfaa1787bf4b6e0",
+      "bytes": 1792
+    },
+    ".cache/native-ci-workflow-final-static-3f84/validator-0.mjs": {
+      "sha256": "3135a52ae00e3edcb183b80961948d3111b174ea61eea645d46593970df28197",
+      "bytes": 1192
+    },
+    ".cache/native-ci-workflow-final-static-3f84/validator-1.mjs": {
+      "sha256": "1da13bc19b24a06806f757653b1a0b00238b717e9eb22b5fc98a7f98bb5e826b",
+      "bytes": 1105
+    }
+  },
+  "complete": true,
+  "limitations": [
+    "Syntax and existing workflow guard tests only. No actual GitHub Actions runner or full native catalog scan in this validation."
+  ]
+}

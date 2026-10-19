@@ -1,0 +1,55 @@
+TAP version 13
+# Subtest: observes current device and binds a single fresh private external tmp child
+ok 1 - observes current device and binds a single fresh private external tmp child
+  ---
+  duration_ms: 1.63325
+  ...
+# Subtest: only the exact owned absolute parent and safe child name are accepted
+ok 2 - only the exact owned absolute parent and safe child name are accepted
+  ---
+  duration_ms: 0.911917
+  ...
+# Subtest: missing, symlinked, wrong-owned, replaced or local fallback parent fails before writes
+ok 3 - missing, symlinked, wrong-owned, replaced or local fallback parent fails before writes
+  ---
+  duration_ms: 0.530041
+  ...
+# Subtest: both unchanged200MiB floors fail closed, including invalid capacity
+ok 4 - both unchanged200MiB floors fail closed, including invalid capacity
+  ---
+  duration_ms: 0.570416
+  ...
+# Subtest: existing child is never reused or overwritten
+ok 5 - existing child is never reused or overwritten
+  ---
+  duration_ms: 0.218
+  ...
+# Subtest: creation race or incorrect new child properties fail without deleting anything
+ok 6 - creation race or incorrect new child properties fail without deleting anything
+  ---
+  duration_ms: 0.888542
+  ...
+# Subtest: monitor rejects changed parent/child identity and symlink or owner replacements
+ok 7 - monitor rejects changed parent/child identity and symlink or owner replacements
+  ---
+  duration_ms: 1.4625
+  ...
+# Subtest: monitor exposes a low current capacity without silently lowering the threshold
+ok 8 - monitor exposes a low current capacity without silently lowering the threshold
+  ---
+  duration_ms: 0.170584
+  ...
+# Subtest: observer retains canonical internal capture/jobs/budgets and disables late stop after close
+ok 9 - observer retains canonical internal capture/jobs/budgets and disables late stop after close
+  ---
+  duration_ms: 3.925917
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 41.221083

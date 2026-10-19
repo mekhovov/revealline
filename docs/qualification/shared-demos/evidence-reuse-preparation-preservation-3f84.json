@@ -1,0 +1,20 @@
+{
+  "format": "SharedDemoReadOnlyRefreshPreparationPreservationV1",
+  "observedAt": "2026-10-19T10:27:34.119433+00:00",
+  "complete": true,
+  "files": [
+    {
+      "original": ".cache/evidence-reuse-scope-3f84b51f8.json",
+      "retained": "docs/qualification/shared-demos/evidence-reuse-scope-3f84b51f8.json",
+      "sha256": "d83a67b2dc45c5307caca4aede6b7840bc83e6a2ce39eb7b4a5017082c8e0501",
+      "bytes": 85673
+    },
+    {
+      "original": ".cache/affected-browser-refresh-3f84.commands.json",
+      "retained": "docs/qualification/shared-demos/affected-browser-refresh-3f84.commands.json",
+      "sha256": "b711dd9ed6f561a2c9d328bafee9299d129ba19c23bc1c3d11d47bc9ed0f6e2e",
+      "bytes": 15743
+    }
+  ],
+  "scope": "Read-only source comparison and exact unexecuted command templates. No browser/build/test/replay run is implied. Observer storage adaptation is separate pending preparation; original frozen evidence remains unchanged."
+}

@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /** Author and independently verify exact browser-native complete performances. */
 import assert from 'node:assert/strict';
-import { readFile, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { pbkdf2Sync } from 'node:crypto';
 import { survivalDemoInventory } from '../game/demo-modes/survival-catalog.mjs';
+import { SURVIVAL_DEMO_RUNTIME_VARIANTS } from '../game/demo-modes/survival-runtime-variants.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).map((arg) => arg.replace(/^--/, '').split('=')),
@@ -86,14 +87,11 @@ try {
       `${JSON.stringify({ engine, version: browser.version(), entries: reports }, null, 2)}\n`,
     );
     const index = new URL('../game/demo-modes/survival-runtime-variants.mjs', import.meta.url);
-    const previous = await readFile(index, 'utf8');
-    const variants = [...previous.matchAll(/['"](chromium|firefox|webkit)['"]/g)].map(
-      (match) => match[1],
-    );
+    const variants = [...SURVIVAL_DEMO_RUNTIME_VARIANTS];
     if (!variants.includes(engine)) variants.push(engine);
     await writeFile(
       index,
-      `// Generated only after complete native browser authoring and independent verification.\nexport const SURVIVAL_DEMO_RUNTIME_VARIANTS = ${JSON.stringify(variants.sort())};\n`,
+      `// Generated only after complete native authoring and independent verification.\nexport const SURVIVAL_DEMO_RUNTIME_VARIANTS = ${JSON.stringify(variants)};\n`,
     );
   }
 } finally {

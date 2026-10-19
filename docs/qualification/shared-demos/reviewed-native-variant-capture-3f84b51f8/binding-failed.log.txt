@@ -1,0 +1,10 @@
+{"id":"first-signal-left","existingStrictMatch":"./demo-data/first-signal-left.replay.json"}
+{"id":"first-signal-right","newCandidate":{"path":".cache/reviewed-node22131-x64-capture-3f84b51f8-candidates/first-signal-right.node22131-x64.replay.json","sha256":"e8c63af3440feff2d430b02d93f26c86c58acd94e135f92affcf44bc9c54f22a","bytes":6966},"natural":{"status":"won","tick":3829,"captures":4,"capturedCells":793},"strict":true,"diagnosticCheckpoints":6}
+{"id":"relay-orchard-loop","existingStrictMatch":"./demo-data/relay-orchard-loop.replay.json"}
+{"id":"relay-orchard-stairs","existingStrictMatch":"./demo-data/relay-orchard-stairs.replay.json"}
+{"id":"crosswind-openings","existingStrictMatch":"./demo-data/crosswind-openings.replay.json"}
+{"id":"night-patrol-loop","existingStrictMatch":"./demo-data/night-patrol-loop.replay.json"}
+{"id":"stone-lanes-detour","existingStrictMatch":"./demo-data/stone-lanes-detour.replay.json"}
+{"id":"hidden-frequency-search","newCandidate":{"path":".cache/reviewed-node22131-x64-capture-3f84b51f8-candidates/hidden-frequency-search.node22131-x64.replay.json","sha256":"dac59e429e2e95214f46b3e52059d880d8fab24a3b1697ad5bf7d28395705369","bytes":7370},"natural":{"status":"won","tick":5327,"captures":5,"capturedCells":1328},"strict":true,"diagnosticCheckpoints":8}
+{"id":"the-crossing-windows","existingStrictMatch":"./demo-data/the-crossing-windows.replay.json"}
+{"id":"signal-garden-route","existingStrictMatch":"./demo-data/signal-garden-route.replay.json"}

@@ -1,0 +1,2 @@
+Qualified base/signal-08: won, 12 captures, 61s
+1/1 selected; 240 required across {"base":12,"current":77,"archive":12,"journey-current":91,"journey-archive":48}.

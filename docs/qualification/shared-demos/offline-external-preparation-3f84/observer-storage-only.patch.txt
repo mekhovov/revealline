@@ -1,0 +1,96 @@
+--- .cache/demo-offline-browser/full-core-probe.mjs	2026-10-19 03:16:53.886894942 +0200
++++ .cache/demo-offline-browser/full-core-external-probe.mjs	2026-10-19 12:31:43.490647974 +0200
+@@ -1,7 +1,8 @@
+ /* global window, document, navigator, location, localStorage, sessionStorage, caches, Storage, IDBObjectStore */
+ // Ignored, bounded actual-product qualification. Prepare only until root releases a browser slot.
+ import assert from 'node:assert/strict';
+-import { readFile, lstat, mkdtemp, rm, statfs } from 'node:fs/promises';
++import { readFile, lstat, mkdir, mkdtemp, rm, statfs, writeFile } from 'node:fs/promises';
++import { bindExternalSession, offlineStoragePolicy, availableBytes, directoryIdentity, assertDirectoryIdentity } from './external-storage.mjs';
+ import { createHash } from 'node:crypto';
+ import { execFileSync } from 'node:child_process';
+ import path from 'node:path';
+@@ -17,15 +18,18 @@
+ const root = fileURLToPath(new URL('../../', import.meta.url));
+ const sha = value => createHash('sha256').update(value).digest('hex');
+ const args = Object.fromEntries(process.argv.slice(2).map(arg => { const i=arg.indexOf('='); assert(i>2); return [arg.slice(2,i),arg.slice(i+1)]; }));
+-for(const key of ['audit','emitted-preview','runtime','executable','report','head','fingerprint']) assert(args[key],`Missing --${key}`);
++assert.equal(args.run,'approved','Await fresh emitted capture and explicit browser release.');
++assert.equal(process.env.OFFLINE_EXTERNAL_SUPERVISED,'1','Use the bounded external-storage supervisor.');
++for(const key of ['audit','emitted-preview','runtime','executable','report','head','fingerprint','external-session','session-dev','session-ino','session-uid']) assert(args[key],`Missing --${key}`);
+ assert.match(args.head,/^[a-f0-9]{40}$/); assert.match(args.fingerprint,/^[a-f0-9]{64}$/);
+ const output=path.resolve(root,args.report);
+ try { await lstat(output); throw Error('Refusing to overwrite an existing receipt.'); } catch(error) { if(error.code!=='ENOENT') throw error; }
+ const git=(...values)=>execFileSync('git',values,{cwd:root,encoding:'utf8',maxBuffer:8*1024*1024}).trim();
+-const MAX_INSTALL_BYTES=500*1024*1024, MIN_FREE_BYTES=1024*1024*1024;
++let MAX_INSTALL_BYTES, MIN_FREE_BYTES, externalSession, storagePolicy, profileIdentity;
++const expectedSession={dev:Number(args['session-dev']),ino:Number(args['session-ino']),uid:Number(args['session-uid'])};
+ const MAX_RUN_MS=360000, MAX_INSTALL_MS=180000;
+ const route='game/snake/play.html?level=classic-snake-open-loop&ready=1&lang=en';
+-const sourcePaths=['.cache/demo-offline-browser/full-core-probe.mjs','scripts/emitted-preview.mjs','scripts/demo-source-fingerprint.mjs','scripts/serve-production-preview.mjs','scripts/qualify-demo-main-pages.mjs','scripts/qualify-demo-packaging.mjs','scripts/shared-demo-browser-report.mjs','scripts/shared-demo-download.mjs','scripts/demo-restoration-observation.mjs','game/offline/service-worker.template.js','game/download-catalogue.mjs','game/official-downloads.mjs','game/offline.mjs'];
++const sourcePaths=['.cache/demo-offline-browser/full-core-external-probe.mjs','.cache/demo-offline-browser/full-core-probe.mjs','.cache/demo-offline-browser/external-storage.mjs','scripts/emitted-preview.mjs','scripts/demo-source-fingerprint.mjs','scripts/serve-production-preview.mjs','scripts/qualify-demo-main-pages.mjs','scripts/qualify-demo-packaging.mjs','scripts/shared-demo-browser-report.mjs','scripts/shared-demo-download.mjs','scripts/demo-restoration-observation.mjs','game/offline/service-worker.template.js','game/download-catalogue.mjs','game/official-downloads.mjs','game/offline.mjs'];
+ const auxiliary=async()=>Object.fromEntries(await Promise.all(sourcePaths.map(async name=>[name,sha(await readFile(path.join(root,name)))])));
+ const binding=async()=>({head:git('rev-parse','HEAD'),runtime:await fingerprintDemoSources(root),buildInput:await fingerprintDemoSources(root,['scripts','authoring']),auxiliary:await auxiliary()});
+ const pins=files=>files.map(({path,bytes,sha256})=>({path,bytes,sha256})).sort((a,b)=>a.path.localeCompare(b.path));
+@@ -33,7 +37,7 @@
+ const report={format:'SharedDemoActualFullCoreInstalledOfflineV1',started:new Date().toISOString(),complete:false,checks:[],errors:[],events:[],
+  source:{expectedHead:args.head,expectedRuntimeFingerprint:args.fingerprint},
+  scope:'Unmodified actual emitted Snake HTML and generated worker; complete real core plus the normal extras:demo selection and its required SIM package. Cold offline ordinary Snake entry, one current-mode performance and one four-mode mixed cycle, Snake practice and return, complete native paused-match export comparison, and player-persistence isolation after installation.',
+- limits:{installedBodyBytes:MAX_INSTALL_BYTES,minimumFreeBytes:MIN_FREE_BYTES,totalBrowserMs:MAX_RUN_MS,explicitInstallMs:MAX_INSTALL_MS},
++ limits:{totalBrowserMs:MAX_RUN_MS,explicitInstallMs:MAX_INSTALL_MS},
+  limitations:['This is one ordinary entry and five observed performances, not browser playback of all 890 required entries. The complete selected dependency closure remains bound to the emitted audit.','Uses normal core/package installation APIs directly; it does not assert the downloads-screen or stable-launcher activation UI.','The fresh isolated profile receives only the original access-gate verifier through its existing storage contract. No HTML, worker, config, catalog, module, response, or password verifier is rewritten.','The browser uses reduced motion, so default automatic idle entry stays off without a demo-settings seed.','Player mutation observers cover Storage and IndexedDB write APIs, with the four exact managed-media stores classified separately. They are not an exhaustive browser-internal storage audit.','No actual browser discard, physical input hardware, audio listening, or unfamiliar-human review is claimed.']};
+ let capture,audit,auditBytes,inventoryBytes,inventoryPath,preview,context,page,browser,profileDirectory,timer,stage='preflight',offline=false,closing=false,offlineServerClosed=false;
+ const network={serverRequests:0,serverResponses:0,activeServerRequests:0,offlineRequests:[],offlineResponses:[],browserOfflineResponses:0,browserOfflineNonWorkerResponses:[]};
+@@ -64,8 +68,11 @@
+  const coreBytes=config.files.reduce((n,file)=>n+file.bytes,0),selectedBytes=files.reduce((n,file)=>n+file.bytes,0),installedBodyUpperBound=coreBytes+selectedBytes;
+  report.selection={ids:['extras:demo'],requires:catalog.groups.find(group=>group.id==='extras:demo').requires,coreFiles:config.files.length,coreBytes,selectedFiles:files.length,selectedBytes,installedBodyUpperBound,accounting:'Full core sum plus SHA-deduplicated selected package sum; cross-cache duplicates are conservatively counted twice.'};
+  report.productPins=[];for(const name of ['service-worker.js','offline-cache.json','offline-content.json','game/snake/play.html','game/build-info.json']){const bytes=await capture.read(name);report.productPins.push({path:name,bytes:bytes.length,sha256:sha(bytes)});}
+- if(installedBodyUpperBound>MAX_INSTALL_BYTES){report.deferred={reason:'The actual complete selection exceeds the authorized 500 MiB cap.',measuredBytes:installedBodyUpperBound};throw Error(report.deferred.reason);}
+- report.diskBeforeProfile=await disk(root);if(report.diskBeforeProfile.availableBytes<MIN_FREE_BYTES){report.deferred={reason:'Less than 1 GiB free before creating the isolated browser profile.',...report.diskBeforeProfile};throw Error(report.deferred.reason);}
++ storagePolicy=offlineStoragePolicy(installedBodyUpperBound);MAX_INSTALL_BYTES=storagePolicy.installedBodyCapBytes;MIN_FREE_BYTES=storagePolicy.minimumExternalFreeBeforeBytes;report.storagePolicy=storagePolicy;
++ externalSession=await bindExternalSession(args['external-session'],expectedSession,root);report.externalSession={directory:externalSession.session,identities:externalSession.identities};
++ report.diskBeforeProfile=await disk(externalSession.session);assert(report.diskBeforeProfile.availableBytes>=MIN_FREE_BYTES,'Insufficient reserved external capacity before the complete actual installation.');
++ assert(await availableBytes(root)>=storagePolicy.minimumLocalFreeBytes,'Local evidence free-space floor reached.');
++ console.log(JSON.stringify({stage:'verified-external-storage-policy',policy:storagePolicy,session:report.externalSession}));
+  const html=(await capture.read('game/snake/play.html')).toString('utf8');
+  const meta=name=>{const match=html.match(new RegExp(`<meta\\s+name="${name}"\\s+content="([^"]+)"\\s*/?>`));assert(match,`Exact emitted HTML missing ${name}`);return match[1];};
+  const access={key:`revealline.access.${meta('revealline-access-id')}.v1`,value:meta('revealline-access-verifier')};
+@@ -74,9 +81,12 @@
+  assert.equal(preview.mode,'generated-build');assert.equal(preview.fixtureAccess,false);assert.equal(preview.emittedPreview.sourceVerified,true);assert.equal(preview.emittedPreview.manifestSHA256,capture.manifestSHA256);report.server={url:preview.url,mode:preview.mode,fixtureAccess:preview.fixtureAccess,cache:preview.cache,emittedPreview:preview.emittedPreview};
+  // Observation only: leave the exact preview request listener and all emitted bytes untouched.
+  preview.server.prependListener('request',(request,response)=>{network.serverRequests++;network.activeServerRequests++;let done=false;const ended=()=>{if(!done){done=true;network.activeServerRequests--;}};response.once('close',ended);response.once('finish',ended);const duringOffline=offline;if(duringOffline&&network.offlineRequests.length<32)network.offlineRequests.push(request.url);response.once('finish',()=>{network.serverResponses++;if(duringOffline&&network.offlineResponses.length<32)network.offlineResponses.push({url:request.url,status:response.statusCode});});});
+- profileDirectory=await mkdtemp(path.join(root,'.cache/demo-offline-browser/full-core-profile-'));report.profile={directory:path.relative(root,profileDirectory),fresh:true};
++ await externalSession.verify();
++ profileDirectory=await mkdtemp(path.join(externalSession.session,'profile-'));profileIdentity=directoryIdentity(await lstat(profileDirectory));report.profile={directory:profileDirectory,identity:profileIdentity,fresh:true};
++ const downloadsDirectory=path.join(externalSession.session,'downloads');await mkdir(downloadsDirectory,{mode:0o700});
++ for(const key of ['TMPDIR','TMP','TEMP'])assert.equal(process.env[key],path.join(externalSession.session,'tmp'),'Supervisor must redirect owned browser temporary data externally.');
+  const runtime=await import(pathToFileURL(args.runtime).href);
+- context=await runtime.chromium.launchPersistentContext(profileDirectory,{executablePath:args.executable,headless:true,viewport:{width:1280,height:800},reducedMotion:'reduce',acceptDownloads:true,args:['--disable-gpu-shader-disk-cache','--disk-cache-size=1048576','--media-cache-size=1048576']});
++ context=await runtime.chromium.launchPersistentContext(profileDirectory,{downloadsPath:downloadsDirectory,executablePath:args.executable,headless:true,viewport:{width:1280,height:800},reducedMotion:'reduce',acceptDownloads:true,args:['--disable-gpu-shader-disk-cache','--disk-cache-size=1048576','--media-cache-size=1048576']});
+  report.browserVersion=context.browser()?.version()??null;
+  // Closing the persistent context closes its owned browser process as well.
+  browser={close:async()=>{closing=true;await context.close();}};
+@@ -99,7 +109,7 @@
+  assert.equal(await page.evaluate(()=>document.documentElement.dataset.accessState),'unlocked');assert.deepEqual(await page.evaluate(async()=>(await navigator.serviceWorker.getRegistrations()).map(r=>r.scope)),[],'Fresh task profile must have no prior service-worker installation.');
+  const beforeInstall=await page.evaluate(async()=>{const {downloadFiles}=await import('/game/download-catalogue.mjs');const response=await fetch('/offline-content.json');if(!response.ok)throw Error('Real download metadata unavailable');const catalogue=await response.json();const files=downloadFiles(catalogue,['extras:demo']);return files.map(({path,bytes,sha256})=>({path,bytes,sha256}));});
+  assert.deepEqual(pins(beforeInstall),pins(files),'Browser normal selection must match actual audited emitted pins.');
+- report.diskBeforeInstall=await disk(profileDirectory);if(report.diskBeforeInstall.availableBytes<MIN_FREE_BYTES){report.deferred={reason:'Less than 1 GiB free immediately before real installation.',...report.diskBeforeInstall};throw Error(report.deferred.reason);}
++ await externalSession.verify();report.diskBeforeInstall=await disk(profileDirectory);assert(report.diskBeforeInstall.availableBytes>=MIN_FREE_BYTES,'External reserve changed before real installation.');assert(await availableBytes(root)>=storagePolicy.minimumLocalFreeBytes,'Local evidence floor reached before installation.');
+  stage='explicit-authorized-install';
+  report.installation=await bounded(()=>page.evaluate(async({expected,maximum,buildId})=>{
+   const [{prepareOffline,checkOffline},{downloadFiles},{createOfficialDownloads}]=await Promise.all([import('/game/offline.mjs'),import('/game/download-catalogue.mjs'),import('/game/official-downloads.mjs')]);
+@@ -185,11 +195,13 @@
+   if(auditBytes)assert.equal(sha(await readFile(path.resolve(root,args.audit))),sha(auditBytes));
+   if(inventoryBytes)assert.equal(sha(await readFile(path.resolve(root,inventoryPath))),sha(inventoryBytes));
+  }catch(error){secondary('source-binding',error);}
++ if(externalSession){try{await externalSession.verify();}catch(error){secondary('external-session-identity',error);}}
+  if(profileDirectory){try{report.ownedProcessesBeforeClose=processes();}catch(error){secondary('process-observation',error);}}
+  const summary=await finishQualification({report,reportPath:output,browser,writeReport:async(filename,value,options)=>{
+   if(preview){try{if(offlineServerClosed&&preview.server.listening===false)report.offlineNetworkBoundary.serverStillStoppedAtCleanup=true;else{await bounded(()=>new Promise((resolve,reject)=>{preview.server.close(error=>error?reject(error):resolve());preview.server.closeAllConnections();}),3000,'Owned preview server close');assert.equal(preview.server.listening,false);report.serverClosed=true;}}catch(error){secondary('server-close',error);}}
+-  if(profileDirectory&&report.browserCloseCompleted){try{let remaining=processes();for(let i=0;remaining.length&&i<20;i++){await new Promise(resolve=>setTimeout(resolve,100));remaining=processes();}report.ownedProcessesAfterClose=remaining;assert.deepEqual(remaining,[],'Owned browser processes must exit.');await rm(profileDirectory,{recursive:true});report.profile.removed=true;report.diskAfterCleanup=await disk(root);}catch(error){secondary('profile-cleanup',error);}}
++  if(profileDirectory&&report.browserCloseCompleted){try{let remaining=processes();for(let i=0;remaining.length&&i<20;i++){await new Promise(resolve=>setTimeout(resolve,100));remaining=processes();}report.ownedProcessesAfterClose=remaining;assert.deepEqual(remaining,[],'Owned browser processes must exit.');await externalSession.verify();const actual=await lstat(profileDirectory);assertDirectoryIdentity({...directoryIdentity(actual),isDirectory:actual.isDirectory(),isSymbolicLink:actual.isSymbolicLink()},profileIdentity,process.getuid());await bounded(()=>rm(externalSession.session,{recursive:true}),10000,'Exact owned external session removal');report.profile.removed=true;report.externalSession.removed=true;report.diskAfterCleanup=await disk(path.dirname(externalSession.session));}catch(error){secondary('profile-cleanup',error);}}
+   if(!restorationDiagnosticGate(report.errors,report.events))secondary('final-diagnostic-gate',Error('Page/window/rejection diagnostics were observed, including cleanup.'));
++  await writeFile(output.replace(/\.json$/,'.mjs.txt'),await readFile(new URL(import.meta.url)),{flag:'wx'});
+   await writeQualificationReport(filename,value,options);
+  }});
+  if(!summary.complete)process.exitCode=1;

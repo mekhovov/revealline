@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: Solo required coverage comes from base, active and archived authored catalogs
+ok 1 - Solo required coverage comes from base, active and archived authored catalogs
+  ---
+  duration_ms: 39947.431416
+  ...
+# Subtest: Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification
+ok 2 - Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification
+  ---
+  duration_ms: 1314.071875
+  ...
+# Subtest: independent browser performances bind their own exact trace and cannot relax native verification
+ok 3 - independent browser performances bind their own exact trace and cannot relax native verification
+  ---
+  duration_ms: 1084.222458
+  ...
+# Subtest: browser engine hints only prioritize fully verified qualified performances and retain fallbacks
+ok 4 - browser engine hints only prioritize fully verified qualified performances and retain fallbacks
+  ---
+  duration_ms: 1119.2225
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 44403.738416

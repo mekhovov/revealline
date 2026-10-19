@@ -1,0 +1,75 @@
+{
+  "format": "SharedDemoAdmittedSoloRegressionV1",
+  "complete": true,
+  "created": "2026-10-19T10:17:13.597217+00:00",
+  "scope": [
+    "game/test/demo-recordings.test.mjs",
+    "game/test/demo-sources.test.mjs",
+    "game/test/demo-solo-coverage.test.mjs"
+  ],
+  "reports": [
+    {
+      "receipt": "docs/qualification/shared-demos/solo-native-admission-3f84/solo-native-admitted-node22131-x64-3f84b51f8-20261019T121408.json",
+      "runtime": "v22.13.1",
+      "tests": 31,
+      "passed": 31,
+      "failed": 0,
+      "sourceStable": true,
+      "cleanupVerified": true
+    },
+    {
+      "receipt": "docs/qualification/shared-demos/solo-native-admission-3f84/solo-native-admitted-node22222-arm64-3f84b51f8-20261019T121408.json",
+      "runtime": "v22.22.2",
+      "tests": 31,
+      "passed": 31,
+      "failed": 0,
+      "sourceStable": true,
+      "cleanupVerified": true
+    }
+  ],
+  "checks": {
+    "formatting": "Passed changed catalogs, provenance and test source; native body files retain exact authoring bytes."
+  },
+  "limitations": [
+    "Two independent local native runs; not Linux proof.",
+    "Full 240-entry/242-clip admitted scan is separate."
+  ],
+  "copies": [
+    {
+      "source": ".cache/solo-native-admitted-node22131-x64-3f84b51f8-20261019T121408.json",
+      "path": "docs/qualification/shared-demos/solo-native-admission-3f84/solo-native-admitted-node22131-x64-3f84b51f8-20261019T121408.json",
+      "bytes": 604622,
+      "sha256": "d5b11a6876b7dcc6aa8bc47db05bb6c3b15294ae91fd6e662fefe7f2d9b61b7d"
+    },
+    {
+      "source": ".cache/solo-native-admitted-node22131-x64-3f84b51f8-20261019T121408.tap.txt",
+      "path": "docs/qualification/shared-demos/solo-native-admission-3f84/solo-native-admitted-node22131-x64-3f84b51f8-20261019T121408.tap.txt",
+      "bytes": 7420,
+      "sha256": "3f909fdacd07068cb174a3306ca50d066d6d0ab9895a490b947efaee9e57214b"
+    },
+    {
+      "source": ".cache/run-solo-admitted-x64.py",
+      "path": "docs/qualification/shared-demos/solo-native-admission-3f84/run-solo-admitted-x64.py.txt",
+      "bytes": 6931,
+      "sha256": "acf7615d73da60743e91f1fed66f85a1a866589049cbc9921180a6d1afbce94d"
+    },
+    {
+      "source": ".cache/solo-native-admitted-node22222-arm64-3f84b51f8-20261019T121408.json",
+      "path": "docs/qualification/shared-demos/solo-native-admission-3f84/solo-native-admitted-node22222-arm64-3f84b51f8-20261019T121408.json",
+      "bytes": 605164,
+      "sha256": "980497d6c86f4502cd2ce01320e285939213063db7d6393c713954673d3be4dc"
+    },
+    {
+      "source": ".cache/solo-native-admitted-node22222-arm64-3f84b51f8-20261019T121408.tap.txt",
+      "path": "docs/qualification/shared-demos/solo-native-admission-3f84/solo-native-admitted-node22222-arm64-3f84b51f8-20261019T121408.tap.txt",
+      "bytes": 7872,
+      "sha256": "00d71b9857c60dcf78acc65072e56b10137ab7befdeb24aade3a22be60e0a27f"
+    },
+    {
+      "source": ".cache/run-solo-admitted-arm.py",
+      "path": "docs/qualification/shared-demos/solo-native-admission-3f84/run-solo-admitted-arm.py.txt",
+      "bytes": 6932,
+      "sha256": "2d2ff3d7447357de6684eb68f6ce74a741fb8bed14c16752cc3d1c42ca611909"
+    }
+  ]
+}

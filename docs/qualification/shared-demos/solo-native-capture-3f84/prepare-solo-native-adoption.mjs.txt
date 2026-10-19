@@ -1,0 +1,44 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, mkdir, lstat } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import { inventorySources } from './linux-capture-draft/scripts/capture-solo-native-candidates.mjs';
+import { demoDescriptor, demoInputTraceIdentity, validateDemoCatalog } from '../game/demo-catalog.mjs';
+import { FIXED_DT } from '../game/core/index.mjs';
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const pin=async name=>{const b=await readFile(name);return{path:name,bytes:b.length,sha256:sha(b)};};
+const load=async name=>JSON.parse(await readFile(name,'utf8'));
+const reportPath='.cache/solo-native-missing-capture-3f84b51f8-x64.json',report=await load(reportPath),supervisionPath=reportPath.replace('.json','.supervision.json'),supervision=await load(supervisionPath);
+assert(report.complete&&report.sourceUnchanged&&supervision.complete&&supervision.bindingsStable&&supervision.ownedProcesses.verified);assert.equal(supervision.result.sha256,(await pin(reportPath)).sha256);
+assert.equal(report.counts.candidates,report.requiredSources);assert.equal(report.counts.independent,0);assert.equal(report.counts.workerFailures,0);
+const inventory=await inventorySources(process.cwd()),byId=new Map(inventory.sources.map(i=>[i.clip.id,i]));
+const catalogBefore=await Promise.all(inventory.catalogs.map(x=>pin(x.path)));assert.deepEqual(catalogBefore,inventory.catalogs);
+const catalogs=new Map();for(const x of catalogBefore)catalogs.set(x.path,await load(x.path));
+const legacyPath='.cache/reviewed-node22131-metadata-proposal.json',legacy=await load(legacyPath),provenancePath=legacy.provenanceBefore.path,provenance=await load(provenancePath);
+assert.deepEqual(await pin(provenancePath),legacy.provenanceBefore);assert.deepEqual(await pin(legacy.catalogBefore.path),legacy.catalogBefore);
+const priorIds=['solo-qualified-478808a96f4fbf5e','solo-qualified-d0257fa131665b79','solo-qualified-cc8994b6f3d0482f'];
+assert(!report.sources.some(r=>priorIds.includes(r.id)));
+const output='.cache/solo-native-adoption-3f84b51f8';await mkdir(output);await mkdir(`${output}/game/demo-data`,{recursive:true});
+const proposal={format:'SoloNativeCandidateAdoptionProposalV1',automaticallyApplied:false,complete:false,head:report.headAfter,
+ reports:[await pin(reportPath),await pin(supervisionPath),await pin(legacyPath)],nativeInputManifest:report.nativeInputsAfter,
+ catalogBefore,provenanceBefore:await pin(provenancePath),additions:[],metadata:[],priorQualifiedVariantIdsRetained:priorIds,
+ limitations:['Candidate recordings are Darwin x64 Node22.13.1 evidence; actual Linux qualification remains a separate gate.','No replay engine/schema changes. Existing recordings and browser performances remain byte-for-byte in place.','This proposal stages new files and replacement metadata only under .cache; root must review and apply separately.']};
+const assertAbsent=async file=>{try{await lstat(file);assert.fail(`Refuse existing output ${file}`);}catch(error){if(error.code!=='ENOENT')throw error;}};
+for(const row of report.sources){const c=row.candidate,item=byId.get(row.id);assert(item&&c.genericVariantEligible&&c.classification==='same-input-variant-candidate');assert(c.genericVariantSlotAvailable);assert.equal(c.automaticallyAdmitted,false);assert(['won','lost'].includes(c.metrics.outcome)&&c.metrics.captures>0&&c.metrics.capturedCells>0);if(item.clip.outcome!==undefined)assert.equal(c.metrics.outcome,item.clip.outcome);
+ for(const artifact of c.artifacts)assert.deepEqual(await pin(artifact.path),artifact);
+ const replay=await load(c.artifacts[0].path),diagnostics=await load(c.artifacts[1].path),original=await load(c.originalInput.path),primary=await load('game/'+item.clip.replayURL.slice(2));assert.deepEqual(await pin(c.originalInput.path),c.originalInput);
+ for(const key of ['version','build','ruleset','level','options','segments','ticks','releaseAfter']){assert.deepEqual(replay[key],original[key],`${row.id}: source ${key}`);assert.deepEqual(replay[key],primary[key],`${row.id}: primary ${key}`);}
+ const descriptor=demoDescriptor(replay,item.entry);for(const key of ['campaignKey','campaignId','levelId','levelRevision','identity','recordingIdentity','inputTraceIdentity','durationSeconds','turnPolicy'])assert.deepEqual(descriptor[key],item.clip[key],`${row.id}: descriptor ${key}`);
+ assert.equal(c.metrics.outcome,replay.summary.status);assert.equal(c.metrics.ticks,replay.ticks);assert.equal(c.metrics.seconds,replay.ticks*FIXED_DT);assert.equal(demoInputTraceIdentity(replay),c.inputTraceIdentity);assert.equal(c.sourceInputTraceIdentity,c.inputTraceIdentity);assert.equal(diagnostics.inputTraceIdentity,c.inputTraceIdentity);assert.equal(diagnostics.format,'SoloDemoDiagnosticsV1');assert.equal(diagnostics.checkpoints.length,Math.floor(replay.ticks/600));for(const [index,p]of diagnostics.checkpoints.entries()){assert.equal(p.tick,(index+1)*600);assert(p.algorithm&&p.hash&&p.sections);}
+ const additions=c.artifacts.map((a,index)=>({source:a.path,destination:`game/demo-data/${row.id}.node22131-x64.${index?'diagnostics':'replay'}.json`,bytes:a.bytes,sha256:a.sha256}));
+ const replayURL='./demo-data/'+path.basename(additions[0].destination);let metadataName,clip;for(const [name,cat]of catalogs){const found=cat.clips.find(v=>v.id===row.id);if(found){assert(!clip);metadataName=name;clip=found;}}assert(clip);const originalClip=structuredClone(clip);const next=clip.replayVariants??[];assert(next.length<3&&!next.includes(replayURL));let legacyCheck=null;
+ if(!row.qualified){const peer=legacy.additions.find(v=>v.id===row.id);assert(peer);assert.equal(peer.replayURL,replayURL);assert.deepEqual(await pin(peer.candidate.path),peer.candidate);assert.deepEqual(await pin(peer.diagnostic.path),peer.diagnostic);assert.equal(peer.candidate.sha256,c.artifacts[0].sha256);assert.equal(peer.diagnostic.sha256,c.artifacts[1].sha256);assert.deepEqual(replay.summary,primary.summary);assert.equal(replay.checkpoint.algorithm,primary.checkpoint.algorithm);const nonEnemy=v=>Object.fromEntries(Object.entries(v.checkpoint.sections).filter(([key])=>key!=='enemies'));assert.deepEqual(nonEnemy(replay),nonEnemy(primary));assert.equal(next.at(-1),peer.insertBefore);next.splice(next.length-1,0,replayURL);const idx=provenance.variants.findIndex(v=>v.id===row.id&&v.replayURL===peer.insertBefore);assert(idx>=0);provenance.variants.splice(idx,0,peer.provenance);legacyCheck={independentBytesMatched:true,summaryUnchanged:true,nonEnemySectionsUnchanged:true,originalFinalFallback:peer.insertBefore};
+ }else next.push(replayURL);
+ clip.replayVariants=next;const retained=structuredClone(clip);if(Object.hasOwn(originalClip,'replayVariants'))retained.replayVariants=originalClip.replayVariants;else delete retained.replayVariants;assert.deepEqual(retained,originalClip);for(const add of additions){await assertAbsent(add.destination);const staged=`${output}/${add.destination}`;await writeFile(staged,await readFile(add.source),{flag:'wx'});assert.equal((await pin(staged)).sha256,add.sha256);add.stagedPath=staged;}
+ proposal.additions.push({id:row.id,requiredEntry:row.requiredEntry,catalog:metadataName,replayURL,classification:c.classification,inputTraceIdentity:c.inputTraceIdentity,descriptor,metrics:c.metrics,source:c.originalInput,files:additions,legacy:legacyCheck});
+}
+provenance.provenance=legacy.provenanceText;
+for(const [name,value]of [...catalogs,[provenancePath,provenance]]){if(name!==provenancePath)validateDemoCatalog(value);const staged=`${output}/${name}`;await writeFile(staged,JSON.stringify(value,null,2)+'\n',{flag:'wx'});proposal.metadata.push({destination:name,stagedPath:staged,before:await pin(name),after:await pin(staged)});}
+for(const before of catalogBefore)assert.deepEqual(await pin(before.path),before);assert.deepEqual(await pin(provenancePath),proposal.provenanceBefore);
+proposal.counts={clips:proposal.additions.length,qualified:proposal.additions.filter(a=>!a.legacy).length,reviewed:proposal.additions.filter(a=>a.legacy).length,files:proposal.additions.reduce((n,a)=>n+a.files.length,0),bytes:proposal.additions.reduce((n,a)=>n+a.files.reduce((m,f)=>m+f.bytes,0),0),catalogs:catalogs.size,metadataFiles:proposal.metadata.length};proposal.complete=true;
+await writeFile(`${output}/proposal.json`,JSON.stringify(proposal,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({path:`${output}/proposal.json`,counts:proposal.counts,complete:proposal.complete}));

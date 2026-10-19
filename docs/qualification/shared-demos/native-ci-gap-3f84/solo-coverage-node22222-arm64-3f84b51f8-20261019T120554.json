@@ -1,0 +1,135 @@
+{
+  "format": "SharedDemoNativeReplayAdmissionV1",
+  "complete": true,
+  "started": "2026-10-19T10:05:54.584767+00:00",
+  "headBefore": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceBefore": {
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/demo-catalog.mjs": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+    "game/replay.mjs": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/demo-replay-diagnostics.mjs": "c213fc37a6270fc5b6ed4f467f8730e04835acdba8ba94c2be20b8ff27dc4145",
+    "game/test/demo-sources.test.mjs": "5d81b06d373a8a3c680b6e45f2e8153e979041d06f7eb498afeeb26bd7e07be5",
+    "game/test/demo-recordings.test.mjs": "022f4c995b0fda4f28b7144ce1e2f6a58a52cd9c98fae15810d66d75c2b9db8d",
+    "game/test/demo-solo-coverage.test.mjs": "d6d23fd1b53cb136697926456edd8725e1a08324c25670e153fcb6501fa5d518",
+    "game/demo-data/catalog.json": "9dbec5b1f6d1a02e919d2515f784565cab119db0da0b92a653bec181d6a13421",
+    "game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.diagnostics.json": "ddb54ef6cecb562a3553ef908b67b38d66174971f2db854dbd3014b8a746bbe0",
+    "game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json": "535e03c1b709735d7b785405b08da3f98e543654e11724ec297059fad63c820a",
+    "game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.diagnostics.json": "c735e57fe3fc77c161dfd26bbf0e6f8bf469a22feff5186e1e3fe804269d067e",
+    "game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json": "9236667cf96c04697692dcc7047dd570d9ab0e39cb0ccb5d5cdc373c2f626406",
+    "game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.diagnostics.json": "3a2aa4dd2510602f6b3ce92133b923d2c69bac744b8a5c4517c39a13f2f09f10",
+    "game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.replay.json": "dc5b3eb14c36352bd5e7a7d63ac6da64eb687fe6d33735d2383e8b426c02db44"
+  },
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "--test-timeout=120000",
+    "game/test/demo-solo-coverage.test.mjs"
+  ],
+  "nodeVersion": "v22.22.2",
+  "platform": "darwin",
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/solo-coverage-node22222-arm64-3f84b51f8-20261019T120554-tmp",
+  "timeoutSeconds": 300,
+  "localStorage": {
+    "freeFloorBytes": 209715200,
+    "allocationCapBytes": 314572800,
+    "freeBeforeBytes": 373886976,
+    "minimumObservedFreeBytes": 362008576,
+    "maximumObservedFixtureBytes": 0
+  },
+  "ownerSHA256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+  "wrapperSHA256": "0ae984f24c2ff2c2aa714c572776b5ef02e88badf3c54e23ed760cbd8408b8dc",
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 2,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 97626,
+        "ppid": 97615,
+        "pgid": 97626,
+        "uid": 502,
+        "started": "Mon Oct 19 12:05:54 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap --test-timeout=120000 game/test/demo-solo-coverage.test.mjs",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T10:05:54.654408+00:00"
+      },
+      {
+        "pid": 97630,
+        "ppid": 97626,
+        "pgid": 97626,
+        "uid": 502,
+        "started": "Mon Oct 19 12:05:54 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 --test-timeout=120000 game/test/demo-solo-coverage.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          97626,
+          "Mon Oct 19 12:05:54 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap --test-timeout=120000 game/test/demo-solo-coverage.test.mjs"
+        ],
+        "observedAt": "2026-10-19T10:05:54.702784+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/solo-coverage-node22222-arm64-3f84b51f8-20261019T120554.tap.txt",
+    "byteLimit": 4194304,
+    "totalBytes": 1153,
+    "writtenBytes": 1153,
+    "truncatedBytes": 0,
+    "tailLimit": 32768,
+    "tailBytes": 1153,
+    "tailSHA256": "871815736c931e614464160202ed718ad7489755e7ea9ca5ff7c9f79240c2f43",
+    "tail": "TAP version 13\n# Subtest: Solo required coverage comes from base, active and archived authored catalogs\nok 1 - Solo required coverage comes from base, active and archived authored catalogs\n  ---\n  duration_ms: 28372.539833\n  type: 'test'\n  ...\n# Subtest: Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification\nok 2 - Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification\n  ---\n  duration_ms: 811.266417\n  type: 'test'\n  ...\n# Subtest: independent browser performances bind their own exact trace and cannot relax native verification\nok 3 - independent browser performances bind their own exact trace and cannot relax native verification\n  ---\n  duration_ms: 697.230166\n  type: 'test'\n  ...\n# Subtest: browser engine hints only prioritize fully verified qualified performances and retain fallbacks\nok 4 - browser engine hints only prioritize fully verified qualified performances and retain fallbacks\n  ---\n  duration_ms: 705.604583\n  type: 'test'\n  ...\n1..4\n# tests 4\n# suites 0\n# pass 4\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 30847.323167\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "sourceAfter": {
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/demo-catalog.mjs": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+    "game/replay.mjs": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/demo-replay-diagnostics.mjs": "c213fc37a6270fc5b6ed4f467f8730e04835acdba8ba94c2be20b8ff27dc4145",
+    "game/test/demo-sources.test.mjs": "5d81b06d373a8a3c680b6e45f2e8153e979041d06f7eb498afeeb26bd7e07be5",
+    "game/test/demo-recordings.test.mjs": "022f4c995b0fda4f28b7144ce1e2f6a58a52cd9c98fae15810d66d75c2b9db8d",
+    "game/test/demo-solo-coverage.test.mjs": "d6d23fd1b53cb136697926456edd8725e1a08324c25670e153fcb6501fa5d518",
+    "game/demo-data/catalog.json": "9dbec5b1f6d1a02e919d2515f784565cab119db0da0b92a653bec181d6a13421",
+    "game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.diagnostics.json": "ddb54ef6cecb562a3553ef908b67b38d66174971f2db854dbd3014b8a746bbe0",
+    "game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json": "535e03c1b709735d7b785405b08da3f98e543654e11724ec297059fad63c820a",
+    "game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.diagnostics.json": "c735e57fe3fc77c161dfd26bbf0e6f8bf469a22feff5186e1e3fe804269d067e",
+    "game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json": "9236667cf96c04697692dcc7047dd570d9ab0e39cb0ccb5d5cdc373c2f626406",
+    "game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.diagnostics.json": "3a2aa4dd2510602f6b3ce92133b923d2c69bac744b8a5c4517c39a13f2f09f10",
+    "game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.replay.json": "dc5b3eb14c36352bd5e7a7d63ac6da64eb687fe6d33735d2383e8b426c02db44"
+  },
+  "sourceStable": true,
+  "headAfter": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "finished": "2026-10-19T10:06:25.777059+00:00"
+}

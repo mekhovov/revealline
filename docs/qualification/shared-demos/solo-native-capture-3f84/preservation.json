@@ -1,0 +1,120 @@
+{
+  "format": "SoloNativeCaptureDurableEvidenceV1",
+  "complete": true,
+  "createdAt": "2026-10-19T10:15:20.916375+00:00",
+  "files": [
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.json",
+      "durablePath": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.json",
+      "bytes": 671634,
+      "sha256": "d800a59a7b4825c745eeb831d1a588f7a983bc5aacf8c070cb48929902e53172"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.supervision.json",
+      "durablePath": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.supervision.json",
+      "bytes": 26988,
+      "sha256": "10bd9b5312368d787919f306f76021e44f3f2c4c2d35b62bb5e7db35079536bd"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.log",
+      "durablePath": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.log",
+      "bytes": 31687,
+      "sha256": "195acc9562ae7fcd344f51c4283237278f18757aea93bc8e47ed254bcc8849b2"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.mjs.txt",
+      "durablePath": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.mjs.txt",
+      "bytes": 6304,
+      "sha256": "4585a5f09bca7fcffe7d40a6a347b94a7034cb44430dc2ea9ed324aad5c753ae"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.supervisor.py.txt",
+      "durablePath": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.supervisor.py.txt",
+      "bytes": 10810,
+      "sha256": "3bdcf9647a0b5d30ceeef4975c52e9720d5d0131305e92ecfb4f0c79fe80d33f"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.collector.mjs.txt",
+      "durablePath": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.collector.mjs.txt",
+      "bytes": 22263,
+      "sha256": "7856e22bfa2619d557a2ab640352f064cca9c5ac5c4fb801bf1f2d2f4d74fe08"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.corrected-aggregation.json",
+      "durablePath": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.corrected-aggregation.json",
+      "bytes": 10568,
+      "sha256": "365c389f65540cf13d5ebc9b6fb5bf3bdaa419e57acac42cc691644febd559af"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64.json",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/solo-native-missing-capture-3f84b51f8-x64.json",
+      "bytes": 732405,
+      "sha256": "2fd4524adf1df05f41947c308132f33a01a9b48881bdd031f5426cd33e65e60e"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64.supervision.json",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/solo-native-missing-capture-3f84b51f8-x64.supervision.json",
+      "bytes": 27134,
+      "sha256": "b43289466a0aaac09900c87f5a35324c69ec3134f914e67f57925a28c15611c4"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64.log",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/solo-native-missing-capture-3f84b51f8-x64.log",
+      "bytes": 17439,
+      "sha256": "dc39bb4aa6bc88029746b858b500ad5102392a9b5c46b36f62a47d8444165cff"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64.mjs.txt",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/solo-native-missing-capture-3f84b51f8-x64.mjs.txt",
+      "bytes": 7310,
+      "sha256": "5925ee4e812a21fdd5101b4a352b02e332c3fd39d80869302f9009b123ae2bf3"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64.supervisor.py.txt",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/solo-native-missing-capture-3f84b51f8-x64.supervisor.py.txt",
+      "bytes": 11038,
+      "sha256": "8ed4503da299fc66ea83300874176feeaf1d13345d92b68ecc816e5e30527a0a"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64.collector.mjs.txt",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/solo-native-missing-capture-3f84b51f8-x64.collector.mjs.txt",
+      "bytes": 22895,
+      "sha256": "fcc8313b1a2bae95c28ab1988e3dff53c20f77a7793ab98e7de185dbfb98e5f4"
+    },
+    {
+      "source": ".cache/solo-native-capture-3f84b51f8-inputs.json",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/solo-native-capture-3f84b51f8-inputs.json",
+      "bytes": 524168,
+      "sha256": "760de8fad9e3c41710aea1dfd68b17da734d190d1bdcbe638ea5c829c68328e8"
+    },
+    {
+      "source": ".cache/solo-native-candidate-guards-aggregation-fix.tap.txt",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/solo-native-candidate-guards-aggregation-fix.tap.txt",
+      "bytes": 2714,
+      "sha256": "c8292b89acf9dad87c1bb5d0773256f53852d7ed7e0b8a509e408b948aca87da"
+    },
+    {
+      "source": ".cache/solo-native-evidence-preservation-3f84b51f8.json",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/solo-native-evidence-preservation-3f84b51f8.json",
+      "bytes": 3577,
+      "sha256": "14de85de9052296b8c80374984258fb17ebcff78e3609effaf7e7a157485b348"
+    },
+    {
+      "source": ".cache/solo-native-adoption-3f84b51f8/proposal.json",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/proposal.json",
+      "bytes": 309761,
+      "sha256": "7505f3b5752a3ecba137f2e94eb26595e76ca458a45678c0b9ef1e5357227d3a"
+    },
+    {
+      "source": ".cache/prepare-solo-native-adoption.mjs",
+      "durablePath": "docs/qualification/shared-demos/solo-native-capture-3f84/prepare-solo-native-adoption.mjs.txt",
+      "bytes": 8511,
+      "sha256": "1a8b3d6dba04cccaf0d13c3fac418a11fb28e4bef98fba1c81652ca461652fdc"
+    }
+  ],
+  "candidateBodies": "Already adopted under game/demo-data; proposal maps each source artifact to byte-identical committed destination, avoiding duplicate payloads.",
+  "limitations": [
+    "Full admitted catalog availability and actual Linux qualification remain separate gates.",
+    "Original scan entry aggregation is superseded only by its separate corrected aggregation."
+  ]
+}

@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+
+export function buildAttemptSuffix(attempt) {
+  if (attempt === undefined) return '';
+  assert.match(attempt, /^[a-z0-9](?:[a-z0-9-]{0,30}[a-z0-9])?$/, 'Attempt must be 1–32 lowercase letters, digits or interior hyphens.');
+  return `-${attempt}`;
+}
+
+export async function inspectBuildReceipt(path, { read = readFile } = {}) {
+  if (!path) return {};
+  let bytes;
+  try { bytes = await read(path); }
+  catch (error) {
+    return { receipt: { path, missing: error?.code === 'ENOENT' }, receiptError: String(error?.message ?? error).slice(0, 2048) };
+  }
+  const receipt = { path, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
+  try { receipt.complete = JSON.parse(bytes).complete; }
+  catch (error) { return { receipt, receiptError: String(error?.message ?? error).slice(0, 2048) }; }
+  return { receipt };
+}
+
+export function buildStageFailure(row, { requiresReceipt = false } = {}) {
+  const exit = `exit code ${row.exitCode}, signal ${row.exitSignal ?? 'none'}`;
+  const evidence = `preserved ${row.logPath}`;
+  if (row.stopReason) return `${row.name} stopped: ${row.stopReason} (${exit}); ${evidence}`;
+  if (row.exitCode !== 0) return `${row.name} failed (${exit}); ${evidence}`;
+  if (requiresReceipt && row.receiptError) return `${row.name} required receipt could not be read: ${row.receiptError}; ${evidence}`;
+  if (requiresReceipt && row.receipt?.complete !== true) return `${row.name} required receipt is missing or incomplete; ${evidence}`;
+  if (row.logTruncated) return `${row.name} qualification output exceeded its evidence bound; ${evidence}`;
+  return null;
+}

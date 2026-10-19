@@ -1,0 +1,182 @@
+{
+  "format": "SurvivalNativeAdmissionV1",
+  "complete": true,
+  "started": "2026-10-19T10:33:08.993Z",
+  "checks": [
+    {
+      "runtime": "node20195-arm64",
+      "kind": "catalog",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-survival-native.mjs",
+        "--out=.cache/survival-native-admission-3f84-arm-catalog-retry.node20195-arm64.catalog.json",
+        "--timeout-ms=300000"
+      ],
+      "eligible": true,
+      "exitCode": 0,
+      "signal": null,
+      "output": {
+        "path": ".cache/survival-native-admission-3f84-arm-catalog-retry.node20195-arm64.catalog.log",
+        "sha256": "256d21e4a4974e76a29fc9ed60585bcf532b545c3847c142271f029b0091a2f4",
+        "bytes": 4393
+      },
+      "receipt": {
+        "path": ".cache/survival-native-admission-3f84-arm-catalog-retry.node20195-arm64.catalog.json",
+        "sha256": "b765543100bc7be64356e1dc4b34767276dcc4a7c459a51faea79c10f83173c8",
+        "bytes": 13339
+      },
+      "counts": {
+        "required": 18,
+        "checked": 18,
+        "verified": 18
+      },
+      "variants": [
+        "default"
+      ],
+      "elapsedMs": 98026.512083
+    }
+  ],
+  "errors": [],
+  "headBefore": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceScope": [
+    "game/overflight",
+    "game/demo-modes",
+    "game/demo-data/survival"
+  ],
+  "sourceBefore": {
+    "sha256": "cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+    "files": 184,
+    "bytes": 16216065
+  },
+  "supplementalBefore": [
+    {
+      "path": "scripts/generate-survival-demos.mjs",
+      "sha256": "05d670f4fabbd95fdd842f2cb58f5309b30dfa6bd9fee90b1f7cf3ebcd597149",
+      "bytes": 4167
+    },
+    {
+      "path": ".cache/survival-native-git-bin/git",
+      "sha256": "fce4446c9fe5d49f79c6ba4a176075f92c04d7f56d474bc7cfbd51a26f868fc6",
+      "bytes": 54
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594
+    },
+    {
+      "path": "game/demo-preparation.mjs",
+      "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+      "bytes": 3500
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+      "bytes": 987
+    },
+    {
+      "path": "scripts/demo-source-fingerprint.mjs",
+      "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+      "bytes": 1064
+    },
+    {
+      "path": "scripts/qualify-survival-native.mjs",
+      "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+      "bytes": 7832
+    },
+    {
+      "path": "game/test/demo-survival.test.mjs",
+      "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+      "bytes": 15602
+    },
+    {
+      "path": "scripts/test-demo-tick-survival.mjs",
+      "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+      "bytes": 5367
+    }
+  ],
+  "observerSHA256": "8868e1fd99511b6dbfc2f5e2de4129f64111679212f5b7fe48d72f97ffe7a9a2",
+  "nodes": [
+    {
+      "label": "node22131-x64",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760,
+      "environment": {
+        "version": "v22.13.1",
+        "v8": "12.4.254.21-node.22",
+        "platform": "darwin",
+        "arch": "x64"
+      }
+    },
+    {
+      "label": "node20195-arm64",
+      "path": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "sha256": "c37b0c15f83f1b63c4b162c6f47e586ed6b00ac9ed093037fe679f676f9d2195",
+      "bytes": 88452192,
+      "environment": {
+        "version": "v20.19.5",
+        "v8": "11.3.244.8-node.30",
+        "platform": "darwin",
+        "arch": "arm64"
+      }
+    }
+  ],
+  "scope": "Bounded read-only full inventory or canonical check retry with explicit native ARM Git shim; no test rerun, authoring or Linux/browser claim.",
+  "headAfter": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceAfter": {
+    "sha256": "cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+    "files": 184,
+    "bytes": 16216065
+  },
+  "supplementalAfter": [
+    {
+      "path": "scripts/generate-survival-demos.mjs",
+      "sha256": "05d670f4fabbd95fdd842f2cb58f5309b30dfa6bd9fee90b1f7cf3ebcd597149",
+      "bytes": 4167
+    },
+    {
+      "path": ".cache/survival-native-git-bin/git",
+      "sha256": "fce4446c9fe5d49f79c6ba4a176075f92c04d7f56d474bc7cfbd51a26f868fc6",
+      "bytes": 54
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594
+    },
+    {
+      "path": "game/demo-preparation.mjs",
+      "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+      "bytes": 3500
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+      "bytes": 987
+    },
+    {
+      "path": "scripts/demo-source-fingerprint.mjs",
+      "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+      "bytes": 1064
+    },
+    {
+      "path": "scripts/qualify-survival-native.mjs",
+      "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+      "bytes": 7832
+    },
+    {
+      "path": "game/test/demo-survival.test.mjs",
+      "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+      "bytes": 15602
+    },
+    {
+      "path": "scripts/test-demo-tick-survival.mjs",
+      "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+      "bytes": 5367
+    }
+  ],
+  "observerSHA256After": "8868e1fd99511b6dbfc2f5e2de4129f64111679212f5b7fe48d72f97ffe7a9a2",
+  "sourceUnchanged": true,
+  "finished": "2026-10-19T10:34:48.249Z"
+}

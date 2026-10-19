@@ -1,0 +1,310 @@
+{
+  "format": "SurvivalNativeCaptureReviewV1",
+  "created": "2026-10-19T10:19:03.627600+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "review": "Root independently inspected executed helper, complete capture and supervision before authorizing exact-hash adoption; this receipt preserves that reviewed source-bound work.",
+  "environment": {
+    "version": "v22.13.1",
+    "platform": "darwin",
+    "arch": "x64",
+    "versions": {
+      "node": "22.13.1",
+      "acorn": "8.14.0",
+      "ada": "2.9.2",
+      "amaro": "0.2.0",
+      "ares": "1.34.4",
+      "brotli": "1.1.0",
+      "cjs_module_lexer": "1.4.1",
+      "cldr": "46.0",
+      "icu": "76.1",
+      "llhttp": "9.2.1",
+      "modules": "127",
+      "napi": "9",
+      "nbytes": "0.1.1",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.64.0",
+      "nghttp3": "1.6.0",
+      "ngtcp2": "1.9.1",
+      "openssl": "3.0.15+quic",
+      "simdjson": "3.10.1",
+      "simdutf": "5.6.4",
+      "sqlite": "3.47.2",
+      "tz": "2024b",
+      "undici": "6.21.1",
+      "unicode": "16.0",
+      "uv": "1.49.2",
+      "uvwasi": "0.0.21",
+      "v8": "12.4.254.21-node.22",
+      "zlib": "1.3.0.1-motley-82a5fec"
+    },
+    "executable": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    }
+  },
+  "originalAvailability": {
+    "entries": 18,
+    "bodies": 72,
+    "strictMatches": 0,
+    "availableEntries": 0,
+    "completeScan": true,
+    "firstDefaultMismatch": {
+      "tick": 900,
+      "phase": "playing",
+      "expectedCheckpoint": "1815513a5a4aff16",
+      "actualCheckpoint": "466205ed5d87ee91",
+      "reproduced": true
+    }
+  },
+  "capture": {
+    "complete": true,
+    "counts": {
+      "entries": 18,
+      "candidates": 18,
+      "candidateBytes": 2956650,
+      "eligible": 18
+    },
+    "started": "2026-10-19T10:05:01.741Z",
+    "finished": "2026-10-19T10:13:57.577Z",
+    "elapsedSeconds": 536.857444792,
+    "minimumFreeBytes": 333533184,
+    "sourceStable": true,
+    "ownedCleanupVerified": true,
+    "controls": "Unchanged ordinary Survival authoring review pilot; exact authored standard projects, legal movement/boost, upgrades and rerolls through native simulation.",
+    "verification": "Each authored body is independently replayed by verifySurvivalDemo, then loaded and played to its natural terminal state in a separate Node process. Full final state, summary, progress and every300tick checkpoint remain strict.",
+    "outcomes": {
+      "won": 18,
+      "lost": 0
+    },
+    "defaultRelationship": {
+      "sameTicks": 18,
+      "sameOutcome": 18,
+      "sameInputs": 18,
+      "sameChoices": 18,
+      "sameSummary": 18
+    }
+  },
+  "adoption": {
+    "bodies": [
+      {
+        "id": "survival:field-crossing-broken-crossroads:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/field-crossing-broken-crossroads.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/field-crossing-broken-crossroads.node22131-x64.replay.json",
+        "sha256": "f7d5f443063f3b71ac54efa04f081569cd99a41fbfde44968188846e9ea5e669",
+        "bytes": 161450
+      },
+      {
+        "id": "survival:field-crossing-shelterbelt-gaps:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/field-crossing-shelterbelt-gaps.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/field-crossing-shelterbelt-gaps.node22131-x64.replay.json",
+        "sha256": "9b0f9b78ff7590b9273172d10b34fbe89c2cb3dafb7415e202fc66a2caf9128a",
+        "bytes": 162768
+      },
+      {
+        "id": "survival:field-crossing-supply-orchard-edge:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/field-crossing-supply-orchard-edge.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/field-crossing-supply-orchard-edge.node22131-x64.replay.json",
+        "sha256": "5ede98fa4e3f051a49f319374c693a0eff0b05f32af0d46f71ef57b9afb3e338",
+        "bytes": 164757
+      },
+      {
+        "id": "survival:freight-depot-shunting-yard:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/freight-depot-shunting-yard.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/freight-depot-shunting-yard.node22131-x64.replay.json",
+        "sha256": "bb9145e7845345687b49af615f124dd904ef63739d98eb447561a56589b2c673",
+        "bytes": 160361
+      },
+      {
+        "id": "survival:freight-depot-loading-loop:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/freight-depot-loading-loop.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/freight-depot-loading-loop.node22131-x64.replay.json",
+        "sha256": "5d58d8a733a6a5184f3ed95d2fbc2825b8c7fa7c03fda1cd8aea3d4b9900dd0d",
+        "bytes": 167016
+      },
+      {
+        "id": "survival:freight-depot-dispatch-junction:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/freight-depot-dispatch-junction.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/freight-depot-dispatch-junction.node22131-x64.replay.json",
+        "sha256": "6d4a7008b1c07e290b31d63382e9ef8849457ce0ae00057f3df98859cd98a4d4",
+        "bytes": 165700
+      },
+      {
+        "id": "survival:relay-ruins-antenna-court:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/relay-ruins-antenna-court.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/relay-ruins-antenna-court.node22131-x64.replay.json",
+        "sha256": "ebb6982d148c9a1a07705cee4785469e9538f46862da0b3881851a100f2ecb76",
+        "bytes": 163421
+      },
+      {
+        "id": "survival:relay-ruins-split-compound:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/relay-ruins-split-compound.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/relay-ruins-split-compound.node22131-x64.replay.json",
+        "sha256": "170142ccdc9b5e1019dc6ffe9b1d71f58bd509fd864ff214a2123bdd1ca99954",
+        "bytes": 164563
+      },
+      {
+        "id": "survival:relay-ruins-receiver-gardens:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/relay-ruins-receiver-gardens.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/relay-ruins-receiver-gardens.node22131-x64.replay.json",
+        "sha256": "2f7bca7daa6483ca9f0ba3d381b9a0c49f7364c7ffd110c35d7dfca715e926b0",
+        "bytes": 166439
+      },
+      {
+        "id": "survival:river-port-pump-apron:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/river-port-pump-apron.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/river-port-pump-apron.node22131-x64.replay.json",
+        "sha256": "ece032a213abfb469f4b282d0242f01aefabbc28585ec3af2bfa4a4241e3c843",
+        "bytes": 162559
+      },
+      {
+        "id": "survival:river-port-twin-docks:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/river-port-twin-docks.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/river-port-twin-docks.node22131-x64.replay.json",
+        "sha256": "270caaf551e5f21036c6a392d35935f99cb04ade674d6789b886aa64b9de4fed",
+        "bytes": 165844
+      },
+      {
+        "id": "survival:river-port-floodgate-yard:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/river-port-floodgate-yard.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/river-port-floodgate-yard.node22131-x64.replay.json",
+        "sha256": "744f1c683659b85ece90a218442d6c5389b9bddeca1642ed26bd10c42b086283",
+        "bytes": 165093
+      },
+      {
+        "id": "survival:chalk-quarry-survey-basin:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/chalk-quarry-survey-basin.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/chalk-quarry-survey-basin.node22131-x64.replay.json",
+        "sha256": "c9b3f80f68669f4e57896e852793654d9bcbba68a5a4745b27f509b21d01ad40",
+        "bytes": 164016
+      },
+      {
+        "id": "survival:chalk-quarry-haul-switchbacks:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/chalk-quarry-haul-switchbacks.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/chalk-quarry-haul-switchbacks.node22131-x64.replay.json",
+        "sha256": "46c427ee1bfea2f30919489e6e5a61d95a9f06a24fcae11aa7195c2c952a2d33",
+        "bytes": 164064
+      },
+      {
+        "id": "survival:chalk-quarry-reclaimer-court:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/chalk-quarry-reclaimer-court.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/chalk-quarry-reclaimer-court.node22131-x64.replay.json",
+        "sha256": "ae5232f47b9c56bf0e3e2db15d118d4a24f0182e9bce5001e2b765bed399ebde",
+        "bytes": 163348
+      },
+      {
+        "id": "survival:orchard-strongpoint-harvest-clearing:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/orchard-strongpoint-harvest-clearing.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/orchard-strongpoint-harvest-clearing.node22131-x64.replay.json",
+        "sha256": "7c23674ee8f258cedc718435d02fd1716111a7c9c3e330f90501ca22741fa26c",
+        "bytes": 166257
+      },
+      {
+        "id": "survival:orchard-strongpoint-irrigation-courts:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/orchard-strongpoint-irrigation-courts.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/orchard-strongpoint-irrigation-courts.node22131-x64.replay.json",
+        "sha256": "275982a4a091deb7033037d96cbaf07e324c9b217001fd2b66073424bd016d2f",
+        "bytes": 164681
+      },
+      {
+        "id": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "source": ".cache/survival-node22131-x64-capture-3f84-candidates/orchard-strongpoint-glasshouse-ruins.node22131-x64.replay.json",
+        "target": "game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.node22131-x64.replay.json",
+        "sha256": "5f5d740e6004f11f6050968ec9dd819209bc24fe19e00b30ae19284cc6a2ba1b",
+        "bytes": 164313
+      }
+    ],
+    "variants": {
+      "path": "game/demo-modes/survival-runtime-variants.mjs",
+      "beforeSHA256": "1b3506374d14911c6834fada5672dceae81dbddb7c2008c1c39ad5ea198d87ad",
+      "afterContents": "// Generated only after complete native authoring and independent verification.\nexport const SURVIVAL_DEMO_RUNTIME_VARIANTS = [\n  'chromium',\n  'firefox',\n  'webkit',\n  'node22131-x64',\n];\n",
+      "afterSHA256": "ad4abcea2c87b2146e48ec1742f6e1dc88c4b00bb5d85fd051c18e40d2679564"
+    },
+    "complete": true
+  },
+  "sourceCopies": [
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.json",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-availability-3f84.json",
+      "sha256": "fa099d0b9aa3fa9572768e30ff89ccf3530cce7bfcacbde2b24bb1a5487b69cd",
+      "bytes": 75260
+    },
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.supervision.json",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-availability-3f84.supervision.json",
+      "sha256": "07ff85b78acf132c8227f3f8daaee081191838a4f1da86bae2ecbd9140facec4",
+      "bytes": 16699
+    },
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.log",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-availability-3f84.log",
+      "sha256": "391cff8eaee7e0455a52447cb7bc17102af5604178f8b723732e2bb0addba8ad",
+      "bytes": 7373
+    },
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.mjs.txt",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-availability-3f84.mjs.txt",
+      "sha256": "d0e2870edbb6b9dc175863d1a962784bdca018b8352f21937c997406fb67098f",
+      "bytes": 6702
+    },
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.supervisor.py.txt",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-availability-3f84.supervisor.py.txt",
+      "sha256": "ee393493dddddca7bad1ced2b67d55a21a11c8f2d04aed87a3299f4acf6b8424",
+      "bytes": 10714
+    },
+    {
+      "source": ".cache/survival-node22131-x64-capture-3f84.json",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-capture-3f84.json",
+      "sha256": "f2fc7ba2d3ab1e14b969d230fcc67e596a8caf03a85d7a036efb1eec4461d2af",
+      "bytes": 253022
+    },
+    {
+      "source": ".cache/survival-node22131-x64-capture-3f84.supervision.json",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-capture-3f84.supervision.json",
+      "sha256": "c5d7bb1a78050a909e9a0aa07d9910ed5697d8f3804fb300b8bc16c0810e8d05",
+      "bytes": 38921
+    },
+    {
+      "source": ".cache/survival-node22131-x64-capture-3f84.log",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-capture-3f84.log",
+      "sha256": "b5ac8ed314b7d094c1c9275c77cdd61c758b6e564bef440789a2265fe06e3b5d",
+      "bytes": 3733
+    },
+    {
+      "source": ".cache/survival-node22131-x64-capture-3f84.mjs.txt",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-capture-3f84.mjs.txt",
+      "sha256": "b08def815507bf231b53de3fd4bf908858c21c35a7d68e2af7c0deefd09f31d8",
+      "bytes": 8525
+    },
+    {
+      "source": ".cache/survival-node22131-x64-capture-3f84.supervisor.py.txt",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-capture-3f84.supervisor.py.txt",
+      "sha256": "eddfecc206fcc0a60af32f9e2514d73e6e1a6d58e9d2338acdf1fd4a4174e047",
+      "bytes": 10998
+    },
+    {
+      "source": ".cache/run-endurance-emitted-final.py",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/run-endurance-emitted-final.py.txt",
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+      "bytes": 26055
+    },
+    {
+      "source": ".cache/survival-node22131-x64-adoption-proposal.json",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-adoption-proposal.json",
+      "sha256": "bf945fa28bd0afbc11a2a5682a31acf71b459a421099b75d0ccb31d1b1959538",
+      "bytes": 8646
+    },
+    {
+      "source": ".cache/survival-node22131-x64-adoption.json",
+      "path": "docs/qualification/shared-demos/survival-native-capture-3f84b51f8/survival-node22131-x64-adoption.json",
+      "sha256": "510ce1eed572f08dc5302dc32a0f4a1305413944cd675330d2dd67e984dfaea6",
+      "bytes": 8803
+    }
+  ],
+  "limitations": [
+    "macOS x64 Node22.13.1 under Rosetta is not Linux qualification. Linux20.19.6/22.13.1 gates remain pending.",
+    "Existing browser-native recordings and their source-bound browser evidence are unchanged; this capture does not rerun browser verification.",
+    "Original hosted strict failures and the72 rejected native attempts are retained. Read-only native and arm acceptance is running separately after adoption."
+  ]
+}

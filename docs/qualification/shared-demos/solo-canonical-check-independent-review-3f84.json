@@ -1,0 +1,35 @@
+{
+  "format": "SoloCanonicalCheckIndependentReviewV1",
+  "observedAt": "2026-10-19T10:32:35.951Z",
+  "source": {
+    "path": "scripts/qualify-solo-demos.mjs",
+    "sha256": "3ceba332f9bb8b6acc6a8829c9bee2f55e2d00d71b2a6e42f18a1432c194dab7",
+    "bytes": 12999
+  },
+  "originalHead": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "exportedFunctions": [
+    {
+      "name": "soloDemoInventory",
+      "unchanged": true,
+      "beforeSHA256": "e66798c7304f57f9a81aba2030852666fddeb0784fb3b949d53985def9bd7d3d",
+      "afterSHA256": "e66798c7304f57f9a81aba2030852666fddeb0784fb3b949d53985def9bd7d3d"
+    },
+    {
+      "name": "qualifySoloPerformance",
+      "unchanged": true,
+      "beforeSHA256": "a03d582caeb92805ecff8b244d8db2b0cac0df9ac9e5f90bccb6d7d4212e6bca",
+      "afterSHA256": "a03d582caeb92805ecff8b244d8db2b0cac0df9ac9e5f90bccb6d7d4212e6bca"
+    }
+  ],
+  "findings": [],
+  "assessment": [
+    "Check-only chooses a candidate through production loadDemoSources/source.create with no library/worker or engine guess, exports the actual admitted replay, and runs unchanged strict qualifySoloPerformance again. Legacy reviewed compatibility therefore cannot satisfy this strict final qualifier on its own.",
+    "The authoring/write branch still reads its original primary body and retains all original generation/import/metadata-write behavior. Temporary players are disposed in finally on success and rejection.",
+    "Prior native full inventory scan retains original exact source pins. Its exported inventory and strict performance predicates are byte-identical, and native engines/data remain separately bound, so the result remains scoped evidence for those unchanged semantics. New exact-source Linux jobs remain required."
+  ],
+  "executedByReviewer": "Read-only AST/source comparison only. No replay simulation or tests rerun.",
+  "parentReceipt": {
+    "path": "docs/qualification/shared-demos/solo-canonical-check-3f84/review.json",
+    "sha256": "d5910be23599cc4e84873d2d3258de23b354784f8cd7b08cd49d5913b59e75a9"
+  }
+}

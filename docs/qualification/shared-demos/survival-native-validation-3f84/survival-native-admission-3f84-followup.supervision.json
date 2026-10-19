@@ -1,0 +1,485 @@
+{
+  "format": "SurvivalNativeAdmissionSupervisionV1",
+  "complete": false,
+  "started": "2026-10-19T10:25:43.824706+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+    ".cache/verify-survival-native-followup.mjs",
+    "--run=approved",
+    "--head=3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "--fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+    "--report=.cache/survival-native-admission-3f84-followup.json"
+  ],
+  "timeoutSeconds": 1320,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21",
+  "before": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+      "files": 184,
+      "bytes": 16216065
+    },
+    "helpers": {
+      ".cache/verify-survival-native-followup.mjs": {
+        "sha256": "e0d07334cb3f083abb905de9b289c30b64d32f7daf9e3b3f28666c2ccb979939",
+        "bytes": 6580
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-survival.test.mjs": {
+        "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+        "bytes": 15602
+      },
+      "scripts/test-demo-tick-survival.mjs": {
+        "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+        "bytes": 5367
+      },
+      "scripts/qualify-survival-native.mjs": {
+        "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+        "bytes": 7832
+      },
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node": {
+        "sha256": "c37b0c15f83f1b63c4b162c6f47e586ed6b00ac9ed093037fe679f676f9d2195",
+        "bytes": 88452192
+      },
+      "game/data-json.mjs": {
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+        "bytes": 5594
+      },
+      "game/demo-preparation.mjs": {
+        "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+        "bytes": 3500
+      },
+      "game/demo-runtime.mjs": {
+        "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+        "bytes": 987
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "d315fe4e7c43ff00578ecee8187148744c12494cd7b44628a268632b5706189b",
+      "bytes": 11154
+    }
+  },
+  "limitations": [
+    "Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 1380 seconds.",
+    "Read-only installed macOS x64 Node22.13.1 observation under Rosetta; not Linux proof. Completion may include strict replay rejections."
+  ],
+  "minimumFreeBytes": 294658048,
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 17,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 11277,
+        "ppid": 11267,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:25:43 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T10:25:43.871487+00:00"
+      },
+      {
+        "pid": 11301,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:25:45 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node -p JSON.stringify({version:process.version,v8:process.versions.v8,platform:process.platform,arch:process.arch})",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:25:45.239562+00:00"
+      },
+      {
+        "pid": 11303,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:25:45 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node scripts/qualify-survival-native.mjs --out=.cache/survival-native-admission-3f84-followup.node22131-x64.catalog.json --timeout-ms=300000",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:25:45.503424+00:00"
+      },
+      {
+        "pid": 11310,
+        "ppid": 11303,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:25:45 2026",
+        "argv": "git rev-parse HEAD",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11303,
+          "Mon Oct 19 12:25:45 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node scripts/qualify-survival-native.mjs --out=.cache/survival-native-admission-3f84-followup.node22131-x64.catalog.json --timeout-ms=300000"
+        ],
+        "observedAt": "2026-10-19T10:25:46.024412+00:00"
+      },
+      {
+        "pid": 11313,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:25:46 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node --test --test-concurrency=1 --test-reporter=tap --test-name-pattern=a rejected upgrade|the observer is awaited|a comparator failure|tick diagnosis rejects scripts/test-demo-tick-survival.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:25:46.291674+00:00"
+      },
+      {
+        "pid": 11315,
+        "ppid": 11313,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:25:46 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node --test-concurrency=1 --test-name-pattern=a rejected upgrade|the observer is awaited|a comparator failure|tick diagnosis rejects scripts/test-demo-tick-survival.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11313,
+          "Mon Oct 19 12:25:46 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node --test --test-concurrency=1 --test-reporter=tap --test-name-pattern=a rejected upgrade|the observer is awaited|a comparator failure|tick diagnosis rejects scripts/test-demo-tick-survival.mjs"
+        ],
+        "observedAt": "2026-10-19T10:25:46.558758+00:00"
+      },
+      {
+        "pid": 11419,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:26:03 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/demo-survival.test.mjs scripts/test-demo-tick-survival.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:26:03.837603+00:00"
+      },
+      {
+        "pid": 11420,
+        "ppid": 11419,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:26:03 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --test-concurrency=1 /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/demo-survival.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11419,
+          "Mon Oct 19 12:26:03 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/demo-survival.test.mjs scripts/test-demo-tick-survival.mjs"
+        ],
+        "observedAt": "2026-10-19T10:26:03.837626+00:00"
+      },
+      {
+        "pid": 11719,
+        "ppid": 11419,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:26:33 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --test-concurrency=1 /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/test-demo-tick-survival.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11419,
+          "Mon Oct 19 12:26:03 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/demo-survival.test.mjs scripts/test-demo-tick-survival.mjs"
+        ],
+        "observedAt": "2026-10-19T10:26:33.798300+00:00"
+      },
+      {
+        "pid": 11419,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:26:03 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:30:45.441695+00:00"
+      },
+      {
+        "pid": 11719,
+        "ppid": 11419,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:26:33 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11419,
+          "Mon Oct 19 12:26:03 2026",
+          502,
+          "(node)"
+        ],
+        "observedAt": "2026-10-19T10:30:45.441707+00:00"
+      },
+      {
+        "pid": 20307,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:30:45 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node scripts/qualify-survival-native.mjs --out=.cache/survival-native-admission-3f84-followup.node20195-arm64.catalog.json --timeout-ms=300000",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:30:45.692733+00:00"
+      },
+      {
+        "pid": 20313,
+        "ppid": 20307,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:30:45 2026",
+        "argv": "git rev-parse HEAD",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          20307,
+          "Mon Oct 19 12:30:45 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node scripts/qualify-survival-native.mjs --out=.cache/survival-native-admission-3f84-followup.node20195-arm64.catalog.json --timeout-ms=300000"
+        ],
+        "observedAt": "2026-10-19T10:30:45.977426+00:00"
+      },
+      {
+        "pid": 20317,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:30:46 2026",
+        "argv": "/usr/bin/arch -arm64 /usr/bin/git rev-parse HEAD",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:30:46.487568+00:00"
+      },
+      {
+        "pid": 20317,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:30:46 2026",
+        "argv": "/usr/bin/git rev-parse HEAD",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:30:46.744802+00:00"
+      },
+      {
+        "pid": 20317,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:30:46 2026",
+        "argv": "/Library/Developer/CommandLineTools/usr/bin/git rev-parse HEAD",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:30:46.995459+00:00"
+      },
+      {
+        "pid": 20335,
+        "ppid": 11277,
+        "pgid": 11277,
+        "uid": 502,
+        "started": "Mon Oct 19 12:30:47 2026",
+        "argv": "rg --files game/overflight game/demo-modes game/demo-data/survival",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11277,
+          "Mon Oct 19 12:25:43 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/verify-survival-native-followup.mjs --run=approved --head=3f84b51f8aa2d568bae22295fb45c227488397e3 --fingerprint=cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42 --report=.cache/survival-native-admission-3f84-followup.json"
+        ],
+        "observedAt": "2026-10-19T10:30:47.248999+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/survival-native-admission-3f84-followup.log",
+    "byteLimit": 1048576,
+    "totalBytes": 516,
+    "writtenBytes": 516,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 516,
+    "tailSHA256": "7a607d0b4bcd52f2cf2bfcd4cf283946ea878b6b815ac04e4b513c2ee8fad338",
+    "tail": "{\"runtime\":\"node22131-x64\",\"kind\":\"catalog\",\"eligible\":false,\"elapsedMs\":773.4262080000001}\n{\"runtime\":\"node22131-x64\",\"kind\":\"remaining-tests\",\"eligible\":false,\"stats\":{\"tests\":4,\"pass\":4,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0},\"elapsedMs\":17615.307042}\n{\"runtime\":\"node20195-arm64\",\"kind\":\"tests\",\"eligible\":true,\"stats\":{\"tests\":21,\"pass\":21,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0},\"elapsedMs\":281701.439333}\n{\"runtime\":\"node20195-arm64\",\"kind\":\"catalog\",\"eligible\":false,\"elapsedMs\":827.6273329999531}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 1,
+  "after": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "cd9d5da43570c42e55f4747852000a0c0bb441fcf528279c06bd1da08c49ba42",
+      "files": 184,
+      "bytes": 16216065
+    },
+    "helpers": {
+      ".cache/verify-survival-native-followup.mjs": {
+        "sha256": "e0d07334cb3f083abb905de9b289c30b64d32f7daf9e3b3f28666c2ccb979939",
+        "bytes": 6580
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-survival.test.mjs": {
+        "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+        "bytes": 15602
+      },
+      "scripts/test-demo-tick-survival.mjs": {
+        "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+        "bytes": 5367
+      },
+      "scripts/qualify-survival-native.mjs": {
+        "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+        "bytes": 7832
+      },
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node": {
+        "sha256": "c37b0c15f83f1b63c4b162c6f47e586ed6b00ac9ed093037fe679f676f9d2195",
+        "bytes": 88452192
+      },
+      "game/data-json.mjs": {
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+        "bytes": 5594
+      },
+      "game/demo-preparation.mjs": {
+        "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268",
+        "bytes": 3500
+      },
+      "game/demo-runtime.mjs": {
+        "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+        "bytes": 987
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "d315fe4e7c43ff00578ecee8187148744c12494cd7b44628a268632b5706189b",
+      "bytes": 11154
+    }
+  },
+  "bindingsStable": true,
+  "result": {
+    "path": ".cache/survival-native-admission-3f84-followup.json",
+    "sha256": "63fac6b2a27bfbf9de8e425b6e73171793474ba023e1817886b1ba761ea6e75b",
+    "complete": false,
+    "checks": 4,
+    "pageErrors": 0,
+    "failure": null,
+    "counts": null
+  },
+  "elapsedSeconds": 304.0465307909981,
+  "finished": "2026-10-19T10:30:47.873124+00:00"
+}

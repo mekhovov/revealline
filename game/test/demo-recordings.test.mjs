@@ -59,7 +59,7 @@ test('curated complete routes reproduce current Standard tuning without scripted
     const frozen = candidates.find((candidate) => verifyReplay(candidate).match);
     assert.ok(
       frozen,
-      'At least one independently frozen strict recording must match this runtime.',
+      `${descriptor.id}: at least one independently frozen strict recording must match this runtime.`,
     );
     assert.ok(demoReplayMatchesEntry(replay, entry));
     const mistake = descriptor.tags.includes('failure');
@@ -173,7 +173,7 @@ test('personal replay compatibility reconstructs tuning from installed originals
   player.dispose();
 });
 
-test('frozen browser variants preserve the exact reviewed trace and every non-enemy outcome', async () => {
+test('frozen runtime variants preserve the exact reviewed trace and every non-enemy outcome', async () => {
   const provenance = await json('../demo-data/variant-provenance.json');
   assert.equal(provenance.format, 'revealline-demo-runtime-variants.v1');
   assert.equal(

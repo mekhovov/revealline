@@ -1,0 +1,89 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, stat, mkdir } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { survivalDemoInventory, survivalDemoCompiled, SURVIVAL_DEMO_OPTIONS } from '../game/demo-modes/survival-catalog.mjs';
+import { SURVIVAL_DEMO_SIMULATION_IDENTITY } from '../game/demo-modes/survival-simulation-identity.mjs';
+import { authorSurvivalDemo } from '../game/demo-modes/survival-authoring.mjs';
+import { verifySurvivalDemo, prepareSurvivalDemoPlayer, survivalDemoStateIdentity, SURVIVAL_DEMO_CHECKPOINT_TICKS } from '../game/demo-modes/survival-replay.mjs';
+import { overflightSummary } from '../game/overflight/core.mjs';
+import { fingerprintDemoSources } from '../scripts/demo-source-fingerprint.mjs';
+
+const args=Object.fromEntries(process.argv.slice(2).map(arg=>arg.replace(/^--/,'').split('=')));
+assert.equal(process.version,'v22.13.1'); assert.equal(process.arch,'x64'); assert.equal(process.platform,'darwin');
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const pin=async path=>{const bytes=await readFile(path);return {path,sha256:sha(bytes),bytes:bytes.length};};
+const progress=summary=>summary.stats.kills>0&&summary.stats.xpCollected>0&&summary.stats.upgradesChosen>0;
+const entries=survivalDemoInventory();
+assert.equal(entries.length,18);
+if(args.mode==='verify-child') {
+  const proof=JSON.parse(await readFile(args.candidate,'utf8'));
+  const entry=entries.find(entry=>entry.levelId===proof.levelId); assert.ok(entry);
+  const player=await prepareSurvivalDemoPlayer(entry,proof,{yieldEvery:Infinity});
+  try {
+    let advances=0; player.play();
+    while(player.phase==='playing') {
+      player.advance(.25);
+      assert.ok(++advances<=Math.ceil(proof.ticks/15)+proof.choices.length*8+4);
+    }
+    assert.equal(player.phase,'complete'); assert.equal(player.state.tick,proof.ticks);
+    assert.equal(player.state.phase,proof.outcome); assert.equal(survivalDemoStateIdentity(player.state),proof.finalState);
+    const summary=overflightSummary(player.state); assert.deepEqual(summary,proof.summary); assert.ok(progress(summary));
+    console.log(JSON.stringify({environment:{version:process.version,arch:process.arch,platform:process.platform},candidate:await pin(args.candidate),verified:true,phase:player.phase,ticks:player.state.tick,outcome:player.state.phase,finalState:survivalDemoStateIdentity(player.state),summary,advances}));
+  } finally { await player.dispose(); }
+} else {
+  assert.equal(args.run,'approved');
+  const scope=['game/overflight','game/demo-modes','game/demo-data/survival'];
+  const head=()=>execFileSync('/usr/bin/arch',['-arm64','/usr/bin/git','rev-parse','HEAD'],{encoding:'utf8'}).trim();
+  const script=await readFile(new URL(import.meta.url));
+  for(const name of [args.report,args.report.replace(/\.json$/,'.mjs.txt')]) {
+    try { await stat(name); throw Error('Refusing existing '+name); } catch(error) { if(error.code!=='ENOENT') throw error; }
+  }
+  const report={format:'SurvivalNativeCandidateCaptureV1',complete:false,started:new Date().toISOString(),checks:[],errors:[],
+    scope:'Ignored genuine performances from the unchanged ordinary review pilot, movement, upgrades and rerolls; independent native full verification and separate-process player completion. Existing runtime/native format/checkpoint validation unchanged. No Linux or browser qualification claim.',
+    sourceScope:scope,environment:{version:process.version,platform:process.platform,arch:process.arch,versions:process.versions,executable:await pin(process.execPath)},
+    headBefore:head(),sourceBefore:await fingerprintDemoSources(process.cwd(),scope),observerSHA256:sha(script)};
+  assert.equal(report.headBefore,args.head); assert.equal(report.sourceBefore.sha256,args.fingerprint);
+  const directory=args.report.replace(/\.json$/,'-candidates'); await mkdir(directory,{mode:0o700}); report.directory=directory;
+  const catalog=JSON.parse(await readFile('game/demo-data/survival/catalog.json','utf8'));
+  const supplemental=['game/data-json.mjs','game/demo-preparation.mjs','game/demo-runtime.mjs','scripts/demo-source-fingerprint.mjs'];
+  report.supplementalBefore=await Promise.all(supplemental.map(pin));
+  try {
+    assert.equal(catalog.simulationIdentity,SURVIVAL_DEMO_SIMULATION_IDENTITY); report.simulationIdentity=catalog.simulationIdentity;
+    report.nativeBindings=await Promise.all(catalog.bindings.map(async binding=>{const current=await pin(binding.path); assert.equal(current.sha256,binding.sha256,binding.path); return current;}));
+    let candidateBytes=0;
+    for(const entry of entries) {
+      const started=performance.now();
+      const proof=await authorSurvivalDemo(entry,{yieldEvery:Infinity});
+      assert.equal(proof.contentIdentity,survivalDemoCompiled(entry).projectIdentity);
+      assert.equal(proof.simulationIdentity,SURVIVAL_DEMO_SIMULATION_IDENTITY);
+      assert.deepEqual(proof.options,SURVIVAL_DEMO_OPTIONS);
+      assert.ok(['won','lost'].includes(proof.outcome)&&progress(proof.summary));
+      assert.equal(proof.checkpoints.length,Math.floor(proof.ticks/SURVIVAL_DEMO_CHECKPOINT_TICKS));
+      const summary=await verifySurvivalDemo(entry,proof,{yieldEvery:Infinity}); assert.deepEqual(summary,proof.summary);
+      const bytes=Buffer.from(JSON.stringify(proof)+'\n'); candidateBytes+=bytes.length; assert.ok(candidateBytes<8*1024*1024);
+      const path=directory+'/'+entry.levelId+'.node22131-x64.replay.json';
+      await writeFile(path,bytes,{flag:'wx'});
+      const original=JSON.parse(await readFile(`game/demo-data/survival/${entry.levelId}.replay.json`,'utf8'));
+      const row={id:entry.id,levelId:entry.levelId,candidate:await pin(path),natural:{ticks:proof.ticks,outcome:proof.outcome,summary},checkpoints:proof.checkpoints.length,
+        inputIdentity:sha(JSON.stringify({inputs:proof.inputs,choices:proof.choices})),contentIdentity:proof.contentIdentity,simulationIdentity:proof.simulationIdentity,
+        relationToDefault:{sameTicks:proof.ticks===original.ticks,sameOutcome:proof.outcome===original.outcome,sameInputs:JSON.stringify(proof.inputs)===JSON.stringify(original.inputs),sameChoices:JSON.stringify(proof.choices)===JSON.stringify(original.choices),sameSummary:JSON.stringify(proof.summary)===JSON.stringify(original.summary)},
+        authoringVerification:{match:true,summary},eligible:false};
+      const output=execFileSync(process.execPath,[new URL(import.meta.url).pathname,'--mode=verify-child','--candidate='+path],{encoding:'utf8',timeout:90000,maxBuffer:1024*1024,env:{...process.env,NODE_DISABLE_COMPILE_CACHE:'1'}});
+      row.independent=JSON.parse(output); assert.deepEqual(row.independent.candidate,row.candidate); assert.equal(row.independent.verified,true); assert.deepEqual(row.independent.summary,proof.summary);
+      row.eligible=true; row.elapsedMs=performance.now()-started; report.checks.push(row);
+      console.log(JSON.stringify({id:row.id,eligible:true,ticks:proof.ticks,outcome:proof.outcome,kills:summary.stats.kills,xpCollected:summary.stats.xpCollected,upgrades:summary.stats.upgradesChosen,rerolls:summary.stats.rerollsUsed,checkpoints:row.checkpoints,elapsedMs:row.elapsedMs}));
+    }
+    report.counts={entries:entries.length,candidates:report.checks.length,candidateBytes,eligible:report.checks.filter(row=>row.eligible).length};
+    report.complete=report.checks.length===entries.length&&report.checks.every(row=>row.eligible);
+  } catch(error) { report.complete=false; report.failure=String(error.stack??error); }
+  finally {
+    try {
+      report.headAfter=head(); report.sourceAfter=await fingerprintDemoSources(process.cwd(),scope); report.supplementalAfter=await Promise.all(supplemental.map(pin));
+      report.observerSHA256After=sha(await readFile(new URL(import.meta.url)));
+      assert.equal(report.headBefore,report.headAfter); assert.deepEqual(report.sourceBefore,report.sourceAfter); assert.deepEqual(report.supplementalBefore,report.supplementalAfter);
+      assert.equal(report.observerSHA256,report.observerSHA256After); report.sourceUnchanged=true;
+    } catch(error) { report.complete=false; report.sourceUnchanged=false; report.bindingFailure=String(error.stack??error); }
+    report.finished=new Date().toISOString(); await writeFile(args.report.replace(/\.json$/,'.mjs.txt'),script,{flag:'wx'}); await writeFile(args.report,JSON.stringify(report,null,2)+'\n',{flag:'wx'}); if(!report.complete) process.exitCode=1;
+  }
+}

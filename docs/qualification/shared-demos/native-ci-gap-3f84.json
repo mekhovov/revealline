@@ -1,0 +1,146 @@
+{
+  "format": "SharedDemoNativeCIGapRetentionV1",
+  "created": "2026-10-19T10:05:19.650863+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "solo": {
+    "entries": 240,
+    "sources": 242,
+    "strictUsableEntries": 119,
+    "strictMissingEntries": 121,
+    "strictUsableSources": 120,
+    "strictMissingSources": 122,
+    "aggregation": "Separate corrected aggregate groups by required entry; original observation remains unchanged."
+  },
+  "survival": {
+    "entries": 18,
+    "bodies": 72,
+    "strictMatches": 0
+  },
+  "fixtureCorrection": {
+    "file": "game/test/demo-solo-coverage.test.mjs",
+    "passed": 4,
+    "failed": 0,
+    "scope": "Existing strict runtime resolution selects the real fixture; content, progress, checkpoint mismatch, laziness and hinted fallback assertions remain.",
+    "additionalRuntime": {
+      "version": "22.22.2",
+      "architecture": "arm64",
+      "passed": 4,
+      "failed": 0
+    }
+  },
+  "limits": [
+    "Node22.13.1 Darwin x64 reproduction; no Linux passing claim.",
+    "Candidate authoring and final catalog admission are pending.",
+    "Browser coverage remains bound to prior evidence."
+  ],
+  "artifacts": [
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.json",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.json",
+      "bytes": 671634,
+      "sha256": "d800a59a7b4825c745eeb831d1a588f7a983bc5aacf8c070cb48929902e53172"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.corrected-aggregation.json",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.corrected-aggregation.json",
+      "bytes": 10568,
+      "sha256": "365c389f65540cf13d5ebc9b6fb5bf3bdaa419e57acac42cc691644febd559af"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.supervision.json",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.supervision.json",
+      "bytes": 26988,
+      "sha256": "10bd9b5312368d787919f306f76021e44f3f2c4c2d35b62bb5e7db35079536bd"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.collector.mjs.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.collector.mjs.txt",
+      "bytes": 22263,
+      "sha256": "7856e22bfa2619d557a2ab640352f064cca9c5ac5c4fb801bf1f2d2f4d74fe08"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.mjs.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.mjs.txt",
+      "bytes": 6304,
+      "sha256": "4585a5f09bca7fcffe7d40a6a347b94a7034cb44430dc2ea9ed324aad5c753ae"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.supervisor.py.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.supervisor.py.txt",
+      "bytes": 10810,
+      "sha256": "3bdcf9647a0b5d30ceeef4975c52e9720d5d0131305e92ecfb4f0c79fe80d33f"
+    },
+    {
+      "source": ".cache/solo-native-inventory-3f84b51f8-x64.log",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-native-inventory-3f84b51f8-x64.log",
+      "bytes": 31687,
+      "sha256": "195acc9562ae7fcd344f51c4283237278f18757aea93bc8e47ed254bcc8849b2"
+    },
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.json",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/survival-node22131-x64-availability-3f84.json",
+      "bytes": 75260,
+      "sha256": "fa099d0b9aa3fa9572768e30ff89ccf3530cce7bfcacbde2b24bb1a5487b69cd"
+    },
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.supervision.json",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/survival-node22131-x64-availability-3f84.supervision.json",
+      "bytes": 16699,
+      "sha256": "07ff85b78acf132c8227f3f8daaee081191838a4f1da86bae2ecbd9140facec4"
+    },
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.mjs.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/survival-node22131-x64-availability-3f84.mjs.txt",
+      "bytes": 6702,
+      "sha256": "d0e2870edbb6b9dc175863d1a962784bdca018b8352f21937c997406fb67098f"
+    },
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.supervisor.py.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/survival-node22131-x64-availability-3f84.supervisor.py.txt",
+      "bytes": 10714,
+      "sha256": "ee393493dddddca7bad1ced2b67d55a21a11c8f2d04aed87a3299f4acf6b8424"
+    },
+    {
+      "source": ".cache/survival-node22131-x64-availability-3f84.log",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/survival-node22131-x64-availability-3f84.log",
+      "bytes": 7373,
+      "sha256": "391cff8eaee7e0455a52447cb7bc17102af5604178f8b723732e2bb0addba8ad"
+    },
+    {
+      "source": ".cache/solo-coverage-node22131-x64-3f84b51f8-20261019T120249.json",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-coverage-node22131-x64-3f84b51f8-20261019T120249.json",
+      "bytes": 9038,
+      "sha256": "8392c89db2f8d73a6944c11b303af48df3e1cb0a4ab75f040c5dab72e3ebd581"
+    },
+    {
+      "source": ".cache/solo-coverage-node22131-x64-3f84b51f8-20261019T120249.tap.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-coverage-node22131-x64-3f84b51f8-20261019T120249.tap.txt",
+      "bytes": 1094,
+      "sha256": "9e9679087f55ce48cd1c0c35bf2ad01842cf20095009f89b8323ea10f905e17c"
+    },
+    {
+      "source": ".cache/run-solo-coverage-native.py",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/run-solo-coverage-native.py.txt",
+      "bytes": 7279,
+      "sha256": "cc40e219ca89363017e41179bfa4793f330319fe436f5748365a76cb7e983976"
+    },
+    {
+      "source": ".cache/solo-coverage-node22222-arm64-3f84b51f8-20261019T120554.json",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-coverage-node22222-arm64-3f84b51f8-20261019T120554.json",
+      "bytes": 8797,
+      "sha256": "04af02c19ad47803948ca50d3ba173c0abb2d399ffdf2ee85c1b209c2a1d3ce5"
+    },
+    {
+      "source": ".cache/solo-coverage-node22222-arm64-3f84b51f8-20261019T120554.tap.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/solo-coverage-node22222-arm64-3f84b51f8-20261019T120554.tap.txt",
+      "bytes": 1153,
+      "sha256": "871815736c931e614464160202ed718ad7489755e7ea9ca5ff7c9f79240c2f43"
+    },
+    {
+      "source": ".cache/run-solo-coverage-arm.py",
+      "retained": "docs/qualification/shared-demos/native-ci-gap-3f84/run-solo-coverage-arm.py.txt",
+      "bytes": 7280,
+      "sha256": "0ae984f24c2ff2c2aa714c572776b5ef02e88badf3c54e23ed760cbd8408b8dc"
+    }
+  ]
+}

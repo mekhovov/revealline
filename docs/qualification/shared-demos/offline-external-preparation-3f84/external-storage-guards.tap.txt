@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: historical complete real-worker selection yields explicit bounded capacity
+ok 1 - historical complete real-worker selection yields explicit bounded capacity
+  ---
+  duration_ms: 0.343375
+  type: 'test'
+  ...
+# Subtest: new body bytes are retained and budget rounds upward without dropping selection
+ok 2 - new body bytes are retained and budget rounds upward without dropping selection
+  ---
+  duration_ms: 0.08975
+  type: 'test'
+  ...
+# Subtest: observer ceiling rejects oversized complete selections
+ok 3 - observer ceiling rejects oversized complete selections
+  ---
+  duration_ms: 0.625875
+  type: 'test'
+  ...
+# Subtest: invalid sizes cannot produce a misleading capacity pass
+ok 4 - invalid sizes cannot produce a misleading capacity pass
+  ---
+  duration_ms: 2.348417
+  type: 'test'
+  ...
+# Subtest: directory identities must remain exactly representable
+ok 5 - directory identities must remain exactly representable
+  ---
+  duration_ms: 0.667125
+  type: 'test'
+  ...
+# Subtest: owned ordinary directory passes while changed inode/device/owner reject
+ok 6 - owned ordinary directory passes while changed inode/device/owner reject
+  ---
+  duration_ms: 0.792333
+  type: 'test'
+  ...
+# Subtest: symlinks and non-directories cannot be cleanup targets
+ok 7 - symlinks and non-directories cannot be cleanup targets
+  ---
+  duration_ms: 0.093583
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 40.058333

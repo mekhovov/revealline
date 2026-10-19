@@ -17,6 +17,7 @@ import {
 import { createRun, stepRun, releaseInputs, FIXED_DT } from '../game/core/index.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../game/replay.mjs';
 import { prepareImprovPlayer } from '../game/demo-improv-player.mjs';
+import { loadDemoSources } from '../game/demo-sources.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../game/gameplay-tuning.mjs';
 import { soloJourneyDemoInventory } from './audit-solo-demo-scope.mjs';
 import { commitDemoMetadata } from './build-demo-recordings.mjs';
@@ -220,14 +221,33 @@ if (!isMainThread && workerData?.soloDemo) {
     const existing = resolveDemoCatalog(catalog, [target.entry]).filter(
       (clip) => clip.levelId === target.levelId,
     );
+    const runtimeSources = write
+      ? null
+      : await loadDemoSources({
+          entries: [target.entry],
+          catalogs: [catalog],
+          library: { list: async () => [] },
+          WorkerClass: null,
+          engineHint: null,
+          fetch: async (url) => ({ ok: true, text: () => readFile(url, 'utf8') }),
+        });
     for (const clip of existing) {
+      let player;
       try {
-        replay = await json(`game/${clip.replayURL.replace(/^\.\//, '')}`);
+        if (write) replay = await json(`game/${clip.replayURL.replace(/^\.\//, '')}`);
+        else {
+          const source = runtimeSources.find((source) => source.id === clip.id);
+          if (!source) throw new Error('No admitted source for the authored catalog entry.');
+          player = await source.create({});
+          replay = player.exportRecording();
+        }
         metrics = qualifySoloPerformance(replay);
         descriptor = clip;
         break;
       } catch (error) {
         entry.attempts.push({ sourceId: clip.id, error: error.message });
+      } finally {
+        await player?.dispose();
       }
     }
     if (!metrics && write) {

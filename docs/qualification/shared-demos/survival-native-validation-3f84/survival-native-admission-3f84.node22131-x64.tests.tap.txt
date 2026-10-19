@@ -1,0 +1,86 @@
+TAP version 13
+# Subtest: Survival sources lazily cover exactly the ordinary authored mission inventory
+ok 1 - Survival sources lazily cover exactly the ordinary authored mission inventory
+  ---
+  duration_ms: 153.83775
+  ...
+# Subtest: verified native playback pauses, forks exactly, and practice cannot mutate the performance
+ok 2 - verified native playback pauses, forks exactly, and practice cannot mutate the performance
+  ---
+  duration_ms: 11134.847583
+  ...
+# Subtest: sparse diagnostics report the first differing checkpoint and reject stale content
+ok 3 - sparse diagnostics report the first differing checkpoint and reject stale content
+  ---
+  duration_ms: 58.528834
+  ...
+# Subtest: cancelled preparation cannot adopt a Survival player
+ok 4 - cancelled preparation cannot adopt a Survival player
+  ---
+  duration_ms: 13.110375
+  ...
+# Subtest: one prefetched payload can fall back only to another fully verified runtime performance
+ok 5 - one prefetched payload can fall back only to another fully verified runtime performance
+  ---
+  duration_ms: 4937.278209
+  ...
+# Subtest: a failed preparation diagnostic observer cannot alter native verification
+ok 6 - a failed preparation diagnostic observer cannot alter native verification
+  ---
+  duration_ms: 4730.493791
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback
+ok 7 - the browser-preferred Survival recording is strictly checked before fallback
+  ---
+  duration_ms: 10249.018708
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback with prefetch
+ok 8 - the browser-preferred Survival recording is strictly checked before fallback with prefetch
+  ---
+  duration_ms: 10178.983375
+  ...
+# Subtest: fresh keyboard or neutral-then-moved controller input is required for takeover
+ok 9 - fresh keyboard or neutral-then-moved controller input is required for takeover
+  ---
+  duration_ms: 1.84375
+  ...
+# Subtest: fresh movement resumes paused native practice through the shared host
+ok 10 - fresh movement resumes paused native practice through the shared host
+  ---
+  duration_ms: 1.423333
+  ...
+# Subtest: the initiating key remains owned through host handoff and its release stops movement
+ok 11 - the initiating key remains owned through host handoff and its release stops movement
+  ---
+  duration_ms: 1.002959
+  ...
+# Subtest: a takeover touch keeps its origin through reconstruction and releases normally
+ok 12 - a takeover touch keeps its origin through reconstruction and releases normally
+  ---
+  duration_ms: 0.663875
+  ...
+# Subtest: release during reconstruction updates movement and retains only the initiating action
+ok 13 - release during reconstruction updates movement and retains only the initiating action
+  ---
+  duration_ms: 0.544833
+  ...
+# Subtest: foreground loss fully clears a handoff gesture even during the synchronous interrupt
+ok 14 - foreground loss fully clears a handoff gesture even during the synchronous interrupt
+  ---
+  duration_ms: 0.392334
+  ...
+# Subtest: practice consumes the initiating boost once despite controller samples before its first tick
+ok 15 - practice consumes the initiating boost once despite controller samples before its first tick
+  ---
+  duration_ms: 32.710208
+  ...
+# Subtest: Survival exact trace independently verifies and observes every native tick, upgrade and reroll
+ok 16 - Survival exact trace independently verifies and observes every native tick, upgrade and reroll
+  ---
+  duration_ms: 274936.477542
+  ...
+# Subtest: a rejected five-second checkpoint still emits the actual advanced boundary tick
+ok 17 - a rejected five-second checkpoint still emits the actual advanced boundary tick
+  ---
+  duration_ms: 2462.911458
+  ...

@@ -3,8 +3,30 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloDemoInventory, qualifySoloPerformance } from '../../scripts/qualify-solo-demos.mjs';
 import { diagnoseDemoReplay } from '../demo-replay-diagnostics.mjs';
-import { demoReplayMatchesEntry, validateDemoCatalog } from '../demo-catalog.mjs';
+import { demoDescriptor, demoReplayMatchesEntry, validateDemoCatalog } from '../demo-catalog.mjs';
 import { loadDemoSources, demoRuntimeEngineHint } from '../demo-sources.mjs';
+
+async function verifiedPerformance(target) {
+  const catalog = JSON.parse(
+    await readFile(new URL('../demo-data/catalog.json', import.meta.url), 'utf8'),
+  );
+  const sources = await loadDemoSources({
+    entries: [target.entry],
+    catalogs: [catalog],
+    library: { list: async () => [] },
+    WorkerClass: null,
+    engineHint: null,
+    fetch: async (url) => ({ ok: true, text: () => readFile(url, 'utf8') }),
+  });
+  const source = sources.find((source) => source.id === target.id);
+  assert.ok(source, 'The authored entry must have a bundled recording.');
+  const player = await source.create({});
+  try {
+    return player.exportRecording();
+  } finally {
+    await player.dispose();
+  }
+}
 
 test('Solo required coverage comes from base, active and archived authored catalogs', async () => {
   const inventory = await soloDemoInventory();
@@ -18,9 +40,7 @@ test('Solo required coverage comes from base, active and archived authored catal
     ),
   );
   const target = inventory.find((entry) => entry.levelId === 'signal-08');
-  const replay = JSON.parse(
-    await readFile(new URL(`../demo-data/${target.id}.replay.json`, import.meta.url), 'utf8'),
-  );
+  const replay = await verifiedPerformance(target);
   assert.ok(demoReplayMatchesEntry(replay, target.entry));
   const metrics = qualifySoloPerformance(replay);
   assert.ok(metrics.captures > 0);
@@ -31,9 +51,7 @@ test('Solo required coverage comes from base, active and archived authored catal
 test('Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification', async () => {
   const inventory = await soloDemoInventory({ includeJourney: false });
   const target = inventory.find((entry) => entry.levelId === 'signal-08');
-  const replay = JSON.parse(
-    await readFile(new URL(`../demo-data/${target.id}.replay.json`, import.meta.url), 'utf8'),
-  );
+  const replay = await verifiedPerformance(target);
   const { diagnostics } = qualifySoloPerformance(replay);
   assert.equal(await diagnoseDemoReplay(replay, diagnostics), null);
   diagnostics.checkpoints[1].hash = '0000000000000000';
@@ -48,15 +66,14 @@ test('Solo sparse diagnostics identify the first mismatching checkpoint without 
 test('independent browser performances bind their own exact trace and cannot relax native verification', async () => {
   const inventory = await soloDemoInventory({ includeJourney: false });
   const target = inventory.find((entry) => entry.levelId === 'signal-11');
-  const complete = JSON.parse(
-    await readFile(new URL(`../demo-data/${target.id}.replay.json`, import.meta.url), 'utf8'),
-  );
+  const complete = await verifiedPerformance(target);
   const damaged = structuredClone(complete);
   damaged.checkpoint.hash = '0000000000000000';
   const all = JSON.parse(
     await readFile(new URL('../demo-data/catalog.json', import.meta.url), 'utf8'),
   );
   const clip = structuredClone(all.clips.find((clip) => clip.id === target.id));
+  Object.assign(clip, demoDescriptor(complete, target.entry, { id: clip.id }));
   const performance = {
     engine: 'chromium',
     replayURL: `./demo-data/${target.id}.chromium.replay.json`,
@@ -118,15 +135,14 @@ test('browser engine hints only prioritize fully verified qualified performances
   assert.equal(demoRuntimeEngineHint('unknown runtime'), null);
   const inventory = await soloDemoInventory({ includeJourney: false });
   const target = inventory.find((entry) => entry.levelId === 'signal-11');
-  const complete = JSON.parse(
-    await readFile(new URL(`../demo-data/${target.id}.replay.json`, import.meta.url), 'utf8'),
-  );
+  const complete = await verifiedPerformance(target);
   const damaged = structuredClone(complete);
   damaged.checkpoint.hash = '0000000000000000';
   const catalog = JSON.parse(
     await readFile(new URL('../demo-data/catalog.json', import.meta.url), 'utf8'),
   );
   const clip = structuredClone(catalog.clips.find((entry) => entry.id === target.id));
+  Object.assign(clip, demoDescriptor(complete, target.entry, { id: clip.id }));
   clip.replayVariants = [];
   clip.runtimePerformances = [
     {
