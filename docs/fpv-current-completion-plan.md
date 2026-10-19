@@ -6,7 +6,7 @@ It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
 unrelated world-expansion or demonstration-authoring projects.
 
-## Status review — 19 October, 02:18 CEST
+## Status review — 19 October, 02:18 CEST (publication note added after submission)
 
 **The core features are released. The latest flight corrections are implemented
 and locally verified, but are not live yet. The whole plan is not complete.**
@@ -36,6 +36,14 @@ bundled bytes**, leaving **1,367** and **35,149** respectively. World input marg
 is **1,178,836 bytes**. Source-file inventories stay at 98/151/211; no cap or
 admission changed. Disk headroom is about **2.1 GiB**. The non-activating surface
 module is deliberately outside the runtime package closure.
+
+The reviewed follow-up is now **[PR #1685](https://github.com/mekhovov/revealline/pull/1685)**,
+published at `1129b1a0e537d9b57ea4fa3bdf187831b4c63c57` with explicit
+`Depends on #1679` ordering. Its normal checks are queued, including source
+preflight; this does not mean the changes are live. The release sequence is
+**#1665 → #1679 → #1685 → source-bound public acceptance**. This publication
+bookkeeping changes documentation only and is retained locally without resetting
+the published source's already queued checks.
 
 ### Prioritized remaining work and conditional estimates
 
@@ -482,7 +490,7 @@ The [inventory](fpv-civilian-source-inventory.md) records each public record and
 tab, its exact title and disposition, along with the first-party feed/loading-shell
 and bounded sheet-header inspection limits.
 
-Current sequence: **PR #1679 submitted with an explicit #1665 dependency → complete normal prerequisite integration → accept any required protected-main update and fresh checks → deploy → perform source-bound public acceptance**. Parent #1626's Pages workflow is complete. Current published integration branch is `codex/fpv-flight-integration-20261019`; unrelated main lesson-mode changes are retained. A direct stacked diff against #1665's original branch would not represent this rebased history correctly.
+Current sequence: **#1665 → #1679 → #1685 → accept required protected-main updates and fresh checks → deploy → source-bound public acceptance**. Parent #1626's Pages workflow is complete. The flight correction branch is `codex/fpv-flight-integration-20261019`; the reviewed follow-up is `codex/fpv-qualification-followup-20261019`; unrelated main lesson-mode changes are retained. A direct stacked diff against #1665's original branch would not represent this rebased history correctly.
 
 R13 remains an independent P1 investigation; R4 has no safe cleanup path until the inventory is understood. R2's bounded inventory, R3's existing local zoom checks and the newer inspector's narrow EN/UK check are locally complete; physical touch, inspector-specific zoom and public acceptance remain separate. R6 preparation can proceed independently of deferred physical radios/pilots, but measured activation cannot. The delivered R11A–E and R17–R21 corrections need normal publication and scoped public acceptance; R18’s additional capacity work remains open. Do not wait for R6–R12 to improve released practice, or treat them as passed because the local release is ready.
 
