@@ -3716,11 +3716,6 @@ return value;
 /** A locally played branch retains its visible run totals and replay boundary,
      * but cannot share receipt identity with another tab's continued simulation.
      * This pure helper neither awards counters nor retires an existing token. */
-function forkEnemyStatsSession(source,{randomId=uid}={}){
-const fork=validateEnemyStatsSession(source);
-fork.attemptId=randomId();
-return validateEnemyStatsSession(fork);
-}
 
 function add(table,key,n=1){
 const next=(table[key]??0)+n;
@@ -4202,7 +4197,6 @@ validateEnemyStats,
 inspectEnemyStatsBackup,
 mergeEnemyStats,
 validateEnemyStatsSession,
-forkEnemyStatsSession,
 createEnemyStats,
 createEnemyStatsHost,
 };
@@ -5955,17 +5949,7 @@ reduced:!!reduced,
 skipped:false,
 };
 }
-function advanceCelebration(state,dt,{paused=false,reduced=false}={}){
-if(!state)return null;
-if(!Number.isFinite(dt)||dt<0)
-throw new TypeError(t('interface:celebrationDtMustBeFiniteAndNonnegative'));
-if(reduced)return{...state,reduced:true,elapsed:state.duration};
-if(paused||state.elapsed>=state.duration)return state;
-return{...state,elapsed:Math.min(state.duration,state.elapsed+Math.min(dt,0.25))};
-}
-function skipCelebration(state){
-return state?{...state,elapsed:state.duration,skipped:true}:null;
-}
+
 function celebrationFrame(state){
 if(!state)
 return{
@@ -6096,8 +6080,6 @@ return{
 CELEBRATION_SECONDS,
 finaleKind,
 createCelebration,
-advanceCelebration,
-skipCelebration,
 celebrationFrame,
 drawCelebration,
 };
@@ -6661,16 +6643,7 @@ if(!TEXT_FACES.includes(value))throw new TypeError('Unsupported text style.');
 return value;
 }
 
-function canvasTextFonts(face,themeFonts,{useThemeFont=false}={}){
-if(resolveTextFace(face)==='plain')return PLAIN_CANVAS_FONTS;
-return Object.freeze({
-...themeFonts,
-ui:useThemeFont&&themeFonts?.ui?themeFonts.ui:PIXEL_CANVAS_UI,
-numeric:themeFonts?.numeric??"'Field Kit Mono', ui-monospace, monospace",
-});
-}
-
-return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace,canvasTextFonts};
+return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace};
 })();
 modules['game/text-size.mjs']=(()=>{
 const TEXT_SIZES=Object.freeze(['standard','large']);
@@ -7734,23 +7707,8 @@ return{RADIO_AUDIO_KEY,readRadioAudio};
 })();
 modules['game/ui/movement-audio.mjs']=(()=>{
 const MOVEMENT_AUDIO_KEY='revealline.movement-audio.v1';
-function readMovementAudio(storage){
-try{
-storage??=globalThis.localStorage;
-const value=JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY)??'null');
-return{
-enabled:typeof value?.enabled==='boolean'?value.enabled:true,
-volume:
-Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
-?value.volume
-:0.5,
-};
-}catch{
-return{enabled:true,volume:0.5};
-}
-}
 
-return{MOVEMENT_AUDIO_KEY,readMovementAudio};
+return{MOVEMENT_AUDIO_KEY};
 })();
 modules['game/ui/menu-audio.mjs']=(()=>{
 const MOVEMENT_AUDIO_KEY=modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
@@ -7774,13 +7732,7 @@ Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
 return{enabled:true,volume:0.35};
 }
 }
-function saveMenuAudio(value){
-try{
-globalThis.localStorage?.setItem(MENU_AUDIO_KEY,JSON.stringify(value));
-}catch{
-/* Session intent stays on Soundscape. */
-}
-}
+
 function attachMenuAudioSettings(sound,doc=globalThis.document,options={}){
 const menu=attachPreference(
 sound,
@@ -7896,7 +7848,7 @@ group.remove();
 };
 }
 
-return{MENU_AUDIO_KEY,readMenuAudio,saveMenuAudio,attachMenuAudioSettings};
+return{MENU_AUDIO_KEY,readMenuAudio,attachMenuAudioSettings};
 })();
 return{
 createSimMissionLibrary:modules['game/mission-library/library.mjs']['createMissionLibrary'],

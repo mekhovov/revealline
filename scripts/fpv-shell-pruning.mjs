@@ -3,6 +3,11 @@ import path from 'node:path';
 import { parse } from 'acorn';
 
 const unused = new Map([
+  ['game/ui/celebration.mjs', ['advanceCelebration', 'skipCelebration']],
+  ['game/ui/movement-audio.mjs', ['readMovementAudio']],
+  ['game/text-face.mjs', ['canvasTextFonts']],
+  ['game/enemy-stats.mjs', ['forkEnemyStatsSession']],
+  ['game/ui/menu-audio.mjs', ['saveMenuAudio']],
   [
     'game/edition-context.mjs',
     [

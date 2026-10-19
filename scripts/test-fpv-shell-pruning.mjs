@@ -20,6 +20,21 @@ import { simShellPruningPlan } from './fpv-shell-pruning.mjs';
 
 const file = 'game/edition-context.mjs';
 const canonical = await readFile(new URL('../game/edition-context.mjs', import.meta.url), 'utf8');
+const additionalNames = new Map([
+  ['game/ui/celebration.mjs', ['advanceCelebration', 'skipCelebration']],
+  ['game/ui/movement-audio.mjs', ['readMovementAudio']],
+  ['game/text-face.mjs', ['canvasTextFonts']],
+  ['game/enemy-stats.mjs', ['forkEnemyStatsSession']],
+  ['game/ui/menu-audio.mjs', ['saveMenuAudio']],
+]);
+const additionalSources = new Map(
+  await Promise.all(
+    [...additionalNames.keys()].map(async (name) => [
+      name,
+      await readFile(new URL('../' + name, import.meta.url), 'utf8'),
+    ]),
+  ),
+);
 const expectedNames = [
   'editionIdentityId',
   'editionPublicSlug',
@@ -31,14 +46,11 @@ const expectedNames = [
   'officialContentOwner',
 ];
 const sourceMap = (text = canonical, consumer = '') =>
-  new Map([
-    [file, text],
-    ['game/consumer.mjs', consumer],
-  ]);
+  new Map([...additionalSources, [file, text], ['game/consumer.mjs', consumer]]);
 const plan = (text = canonical, consumer = '', roots = {}) =>
   simShellPruningPlan(sourceMap(text, consumer), roots);
 
-test('SIM pruning removes only eight explicit unused function declarations', () => {
+test('edition pruning retains its eight explicit unused function declarations', () => {
   const removals = plan().get(file);
   assert.deepEqual(
     removals.map(({ name }) => name),
@@ -123,7 +135,7 @@ function normalize(value) {
     );
   return value;
 }
-function findProjectedModule(tree) {
+function findProjectedModule(tree, target = file) {
   let result;
   const visit = (node) => {
     if (!node || typeof node !== 'object') return;
@@ -131,7 +143,7 @@ function findProjectedModule(tree) {
       node.type === 'AssignmentExpression' &&
       node.left.type === 'MemberExpression' &&
       node.left.object.name === 'modules' &&
-      node.left.property.value === file
+      node.left.property.value === target
     ) {
       assert.equal(result, undefined, 'Exactly one private module projection');
       result = node.right.callee;
@@ -145,6 +157,92 @@ function findProjectedModule(tree) {
   assert.ok(result);
   return result;
 }
+
+test('six additional private helpers remain explicit whole-function omissions and fail closed on new use', () => {
+  const removals = plan();
+  for (const [target, names] of additionalNames) {
+    const text = additionalSources.get(target),
+      rows = removals.get(target);
+    assert.deepEqual(
+      rows.map(({ name }) => name),
+      names,
+    );
+    for (const row of rows) {
+      const node = parse(text.slice(row.start, row.end), {
+        sourceType: 'module',
+        ecmaVersion: 'latest',
+      }).body[0];
+      assert.equal(node.declaration.type, 'FunctionDeclaration');
+      assert.equal(node.declaration.id.name, row.name);
+      const used = sourceMap();
+      used.set(target, text + `\nexport function futureUse() { return ${row.name}; }`);
+      assert.throws(() => simShellPruningPlan(used, {}), /retained reference/);
+      assert.throws(
+        () => simShellPruningPlan(sourceMap(), { [target]: { [row.name]: 'futureRoot' } }),
+        /root export/,
+      );
+      const changed = sourceMap();
+      changed.set(
+        target,
+        text.slice(0, row.start) + `export const ${row.name} = () => null;` + text.slice(row.end),
+      );
+      assert.throws(() => simShellPruningPlan(changed, {}), /changed declaration/);
+      const dependency = './' + target.slice('game/'.length);
+      for (const consumer of [
+        `import { ${row.name} as renamed } from '${dependency}';`,
+        `import * as future from '${dependency}';`,
+        `export { ${row.name} } from '${dependency}';`,
+      ])
+        assert.throws(() => plan(canonical, consumer), /SIM projection pruning needs review/);
+    }
+  }
+});
+
+test('all newly pruned projections retain canonical imports, declarations and remaining exports', async () => {
+  const source = await readFile(
+    new URL('../optional-practice/civilian-fpv/flight-fullscreen.mjs', import.meta.url),
+    'utf8',
+  );
+  const tree = parse(source, { sourceType: 'module', ecmaVersion: 'latest' }),
+    removals = plan();
+  for (const [target, text] of additionalSources) {
+    const projected = findProjectedModule(tree, target),
+      omitted = new Set(removals.get(target).map(({ start }) => start)),
+      canonicalNodes = parse(text, { sourceType: 'module', ecmaVersion: 'latest' }).body,
+      importedNames = canonicalNodes
+        .filter((node) => node.type === 'ImportDeclaration')
+        .flatMap((node) => node.specifiers.map((specifier) => specifier.local.name));
+    // The generator's import bindings precede the retained module declarations.
+    assert.deepEqual(
+      projected.body.body
+        .slice(0, importedNames.length)
+        .flatMap((node) => node.declarations.map(({ id }) => id.name)),
+      importedNames,
+      target,
+    );
+    const retained = canonicalNodes.filter(
+      (node) => node.type !== 'ImportDeclaration' && !omitted.has(node.start),
+    );
+    assert.deepEqual(
+      normalize(projected.body.body.slice(importedNames.length, -1)),
+      normalize(retained.map((node) => node.declaration ?? node)),
+      target,
+    );
+    const exported = retained
+      .filter((node) => node.type === 'ExportNamedDeclaration')
+      .flatMap(({ declaration }) =>
+        declaration.type === 'VariableDeclaration'
+          ? declaration.declarations.map(({ id }) => id.name)
+          : [declaration.id.name],
+      );
+    assert.deepEqual(
+      projected.body.body.at(-1).argument.properties.map((property) => property.key.name),
+      exported,
+      target,
+    );
+    for (const name of additionalNames.get(target)) assert.ok(!exported.includes(name));
+  }
+});
 
 test('generated edition context exactly retains canonical declarations and behavior', async () => {
   const source = await readFile(
