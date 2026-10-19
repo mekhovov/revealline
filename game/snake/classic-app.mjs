@@ -183,9 +183,20 @@ const environmentCandidate = await prepareClassicEnvironments(CLASSIC_SNAKE_LEVE
 });
 let sessionWriter = await claimProfileWriter(globalThis.navigator.locks, `${SAVE_KEY}:writer`);
 let writerRelease = Promise.resolve(),
-  writerEpoch = 0;
+  writerEpoch = 0,
+  departingWriteLease = null,
+  demoHost = null,
+  disposed = false,
+  pageDeparted = false;
+// Async ordinary saves must recheck ownership at the storage boundary. An
+// explicitly ordinary departure may finish its pending work under that lease;
+// destroying a demo must never grant the departing page write authority again.
+const canWritePlayerProgress = () =>
+  sessionWriter.writable &&
+  !demoHost?.active &&
+  ((!disposed && !pageDeparted) || departingWriteLease === sessionWriter);
 const pageActive = () => !doc.hidden && (typeof doc.hasFocus !== 'function' || doc.hasFocus());
-const enemyStats = createEnemyStats({ canWrite: () => sessionWriter.writable });
+const enemyStats = createEnemyStats({ canWrite: canWritePlayerProgress });
 let statsAttempt = null,
   liveProvenance = 'live';
 const statsViews = [];
@@ -236,8 +247,7 @@ let entry =
   ) ??
   CLASSIC_SNAKE_LEVELS.find((item) => item.id === 'classic-snake-open-loop') ??
   CLASSIC_SNAKE_LEVELS[0];
-let demoHost = null,
-  playShell = null,
+let playShell = null,
   missionLibrary = null,
   missionChooser = null,
   libraryHostMode = null,
@@ -250,8 +260,7 @@ let demoHost = null,
   menuController = null,
   boardLayoutObserver = null,
   music = null,
-  audioInactive = false,
-  disposed = false;
+  audioInactive = false;
 let match,
   runs = [],
   boards = [],
@@ -260,8 +269,7 @@ let match,
   paused = true,
   previousFrame = null,
   importEpoch = 0,
-  pendingImports = 0,
-  pageDeparted = false;
+  pendingImports = 0;
 let offerSavedContinue = !params.has('level');
 let savedRound = readLocal(SAVE_KEY) ?? readLocal(OLD_SAVE_KEY),
   saveNotice = '',
@@ -350,6 +358,7 @@ const acceptedLevel = () => prepareClassicSnakeLevel(entry, settings());
 const result = () => match?.result ?? null;
 let ratings = null;
 const records = createClassicSnakeRecords({
+  canWrite: canWritePlayerProgress,
   ...(installedContent ? { contentPack: installedContent.pack } : {}),
   onChange: () => {
     if (match) {
@@ -366,7 +375,7 @@ const records = createClassicSnakeRecords({
 });
 ratings = createClassicSnakeRatings({
   records,
-  canWrite: () => sessionWriter.writable,
+  canWrite: canWritePlayerProgress,
   onWarning: () => {},
 });
 let touchControllers = [],
@@ -2417,6 +2426,8 @@ landscapeControls?.addEventListener('change', () => {
 });
 globalThis.addEventListener('pagehide', (event) => {
   const demoWasActive = demoHost?.active;
+  const departingWriter = sessionWriter;
+  if (!pageDeparted && !disposed && !demoWasActive) departingWriteLease = departingWriter;
   pageDeparted = true;
   importEpoch++;
   writerEpoch++;
@@ -2439,8 +2450,11 @@ globalThis.addEventListener('pagehide', (event) => {
     audioMaster.dispose?.();
   }
   if (!demoWasActive) save();
-  const departingWriter = sessionWriter;
-  writerRelease = enemyStats.flush().finally(() => departingWriter.release());
+  const pendingRecords = departingWriteLease === departingWriter ? records.read() : null;
+  writerRelease = Promise.all([enemyStats.flush(), pendingRecords]).finally(() => {
+    if (departingWriteLease === departingWriter) departingWriteLease = null;
+    departingWriter.release();
+  });
 });
 globalThis.addEventListener('pageshow', async (event) => {
   footprint?.refresh();
