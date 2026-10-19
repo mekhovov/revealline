@@ -5933,5 +5933,12 @@
   "captureMedal.tiny": "Less than 0.01 s over the time target.",
   "captureMedal.shortfall": "Improve this time by {{seconds}} s (rounded up to 0.01 s).",
   "captureMedal.cleanMet": "No lives lost in this attempt.",
-  "captureMedal.cleanMissing": "A life was lost; complete a retry without losing a life."
+  "captureMedal.cleanMissing": "A life was lost; complete a retry without losing a life.",
+  "touchSave.session": "Session only. These touch controls apply for this visit; saving is disabled here.",
+  "touchSave.unconfirmed": "Session only. The browser did not confirm the save. Your selected touch controls remain active for this visit.",
+  "touchSave.full": "Session only. Browser storage is full. Your selected touch controls remain active for this visit.",
+  "touchSave.blocked": "Session only. Browser storage blocked saving. Your selected touch controls remain active for this visit.",
+  "touchSave.unavailable": "Session only. Saving is unavailable. Your selected touch controls remain active for this visit.",
+  "touchSave.preserved": "Session only. Existing saved touch settings could not be read safely and were kept. Your selected controls apply for this visit.",
+  "touchSave.changed": "Session only. Touch settings changed while saving. Retry to save your current selection."
 }

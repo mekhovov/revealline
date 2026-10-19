@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { createTouchPreferences, TOUCH_PREFERENCES_KEY } from '../touch-preferences.mjs';
 import {
@@ -7,7 +8,7 @@ import {
   mountTouchPresentationSettings,
 } from '../ui/touch-controls-view.mjs';
 
-function fixture() {
+function fixture({ silent = false } = {}) {
   const document = new Document(),
     eventTarget = new Events(),
     storage = new Map();
@@ -17,12 +18,15 @@ function fixture() {
     idPrefix: 'test-flight',
     actionLabel: 'Boost',
   });
-  let settings;
+  let settings,
+    failWrite = silent;
   const preferences = createTouchPreferences({
     eventTarget,
     storage: {
       getItem: (key) => storage.get(key) ?? null,
-      setItem: (key, value) => storage.set(key, value),
+      setItem: (key, value) => {
+        if (!failWrite) storage.set(key, value);
+      },
     },
     onChange: (value) => {
       view.apply(value);
@@ -36,7 +40,16 @@ function fixture() {
     idPrefix: 'test-preferences',
   });
   view.apply(preferences.snapshot());
-  return { document, view, preferences, settings, storage };
+  return {
+    document,
+    view,
+    preferences,
+    settings,
+    storage,
+    working: () => {
+      failWrite = false;
+    },
+  };
 }
 
 test('shared controls retain an independent action and expose only the chosen steering surface', () => {
@@ -86,4 +99,44 @@ test('settings persist all four shared fields without clamping opacity and detac
   assert.equal(preferences.snapshot().mode, 'swipe');
   preferences.destroy();
   view.dispose();
+});
+
+test('touch recovery translates existing status, preserves field focus, and retires cleanly', (t) => {
+  const original = getLocale();
+  setLocale('en', { persist: false });
+  const f = fixture({ silent: true });
+  t.after(() => {
+    f.settings.dispose();
+    f.preferences.destroy();
+    f.view.dispose();
+    setLocale(original, { persist: false });
+  });
+  const mode = f.document.getElementById('test-preferences-touch-mode');
+  const status = f.document.getElementById('test-preferences-touch-save-status');
+  const retry = f.document.getElementById('test-preferences-touch-save-retry');
+  assert.equal(status.hidden, true);
+  mode.focus();
+  mode.value = 'swipe';
+  mode.emit('change');
+  assert.equal(f.document.activeElement, mode);
+  assert.match(status.textContent, /Session only.*did not confirm/);
+  assert.equal(mode.getAttribute('aria-describedby'), status.id);
+  assert.equal(retry.hidden, false);
+  setLocale('uk', { persist: false });
+  assert.match(status.textContent, /Лише на цей сеанс/);
+  assert.equal(f.document.activeElement, mode);
+  assert.equal(mode.value, 'swipe');
+  retry.focus();
+  f.working();
+  retry.click();
+  assert.equal(f.document.activeElement, mode);
+  assert.equal(retry.hidden, true);
+  assert.equal(f.preferences.persistence().status, 'saved');
+  assert.equal(JSON.parse(f.storage.get(TOUCH_PREFERENCES_KEY)).mode, 'swipe');
+  const saved = status.textContent;
+  f.settings.dispose();
+  setLocale('en', { persist: false });
+  assert.equal(status.textContent, saved, 'Disposed settings no longer react to locale changes.');
+  retry.click();
+  assert.equal(f.preferences.persistence().status, 'saved');
 });
