@@ -13903,10 +13903,13 @@ try {
     assertCurrent();
     return host.refreshInstalled({ assertCurrent });
   }
-  async function getUnifiedMissionLibrary(isCurrent = () => true) {
+  async function getUnifiedMissionLibrary(isCurrent = () => true, trace = null) {
     const callerCurrent = unifiedLibraryGuard(isCurrent);
     callerCurrent();
-    if (unifiedLibrary) return unifiedLibrary;
+    if (unifiedLibrary) {
+      trace?.mark('missions-build-cached');
+      return unifiedLibrary;
+    }
     let attempt = unifiedLibraryLoading;
     if (attempt) {
       // A new explicit owner may join a still-admitted request. A retired
@@ -13927,7 +13930,11 @@ try {
         attempt = null;
       }
     }
-    if (attempt) return attempt.promise;
+    if (attempt) {
+      // Its original observer retains ownership; a joining request does not inherit its stamps.
+      trace?.mark('missions-build-joined');
+      return attempt.promise;
+    }
     const callers = new Set([callerCurrent]);
     const admitted = unifiedLibraryGuard();
     const assertCurrent = () => {
@@ -13950,6 +13957,7 @@ try {
         result = null,
         committed = false;
       try {
+        trace?.mark('missions-imports-begin');
         const [
           { attachJourneyChooser },
           { createInstalledMissionLibrary },
@@ -13963,7 +13971,9 @@ try {
           import('./mission-library/cross-mode-journey.mjs'),
           import('./multiplayer.mjs'),
         ]);
+        trace?.mark('missions-imports-end');
         assertCurrent();
+        trace?.mark('missions-data-begin');
         const index =
           runtimeContent?.missionIndex ??
           (await getJSON('content/mission-library-index.json', assertCurrent));
@@ -13978,6 +13988,8 @@ try {
           runtimeContent?.themes ??
           (await getJSON('content-design/themes.json', assertCurrent)).themes;
         assertCurrent();
+        trace?.mark('missions-data-end');
+        trace?.mark('missions-sources-begin');
         const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
           ? journeyActorThemeCandidates(originalThemes, {
               includeOriginals: route.preserveOriginalThemes === true,
@@ -14181,7 +14193,9 @@ try {
             ...teamSources,
           ];
         }
+        trace?.mark('missions-sources-end');
         if (!runtimeContent) {
+          trace?.mark('missions-supplemental-imports-begin');
           const [
             { duelExpeditionLibrarySources, teamExpeditionLibrarySource },
             { TEAM_EXPANSION_ROUTE },
@@ -14191,9 +14205,11 @@ try {
             import('./content-design/multiplayer-expansion.mjs'),
             import('./mission-library/team-source.mjs'),
           ]);
+          trace?.mark('missions-supplemental-imports-end');
           assertCurrent();
           const expansionSources = [
             ...duelExpeditionLibrarySources({
+              onStage: trace?.mark,
               themes: originalThemes,
               activeRouteId: route.id,
               launch: departLibraryMission,
@@ -14205,6 +14221,7 @@ try {
               ? []
               : [
                   teamExpeditionLibrarySource({
+                    onStage: trace?.mark,
                     launch: departLibraryMission,
                     difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
                   }),
@@ -14244,6 +14261,7 @@ try {
         };
         const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
         assertCurrent();
+        trace?.mark('missions-installed-begin');
         result = await createInstalledMissionLibrary({
           assertCurrent,
           getProjectSources: async ({ assertCurrent }) => {
@@ -14352,6 +14370,7 @@ try {
               : { state: 'new', bestStars: null };
           },
         });
+        trace?.mark('missions-installed-end');
         assertCurrent();
         const state = createMissionLibrarySessionState({ mode: 'solo' });
         // Checked return restores the retained runtime independently of browsing.
@@ -14374,6 +14393,7 @@ try {
               );
             })
           : null;
+        trace?.mark('missions-chooser-build-begin');
         unifiedChooser = attachJourneyChooser({
           library: result.library,
           profile,
@@ -14447,6 +14467,7 @@ try {
             });
           },
         });
+        trace?.mark('missions-chooser-build-end');
         if (!journeyPreferences)
           browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
         // Keep the native settings and their guarded handlers, but not the old
@@ -14540,9 +14561,60 @@ try {
     const homeWasOpen = $('shell-home').open,
       oldRun = run,
       wasStarted = started;
+    // No trace, closure, payload or extra clock read exists on the ordinary path.
+    // Console delivery is supplementary, best effort evidence: a received begin
+    // survives a later unresponsive page; an undelivered end stays unobserved.
+    const trace = performanceSession
+      ? {
+          sequence: 0,
+          closed: false,
+          generation: performanceRunGeneration,
+          tick: run?.tick ?? 0,
+          build: unifiedBuildRevision,
+          mark(kind) {
+            if (trace.closed) return;
+            if (++trace.sequence >= 64) {
+              kind = 'missions-observer-overflow';
+              trace.closed = true;
+            }
+            let atMs = null;
+            try {
+              atMs = performance.now();
+              if (trace.generation > 0)
+                performanceSession.markEvent(kind, trace.generation, trace.tick, atMs);
+            } catch {
+              // Diagnostics never cancel or admit a library operation.
+            }
+            try {
+              console.debug(
+                'RevealLineMissionsStageV1 ' +
+                  JSON.stringify([
+                    revision,
+                    trace.build,
+                    trace.sequence,
+                    kind,
+                    trace.generation,
+                    trace.tick,
+                    atMs,
+                    performance.timeOrigin,
+                  ]),
+              );
+            } catch {
+              // The retained numeric ring remains independent of console delivery.
+            }
+          },
+          finish(kind) {
+            if (trace.closed) return;
+            trace.mark(kind);
+            trace.closed = true;
+          },
+        }
+      : null;
+    trace?.mark('missions-opening');
     ++unifiedLaunchRevision;
     pause(true);
     clearInput();
+    trace?.mark('missions-after-pause');
     const feedback = document.createElement('span');
     feedback.id = 'mission-library-opening-status';
     feedback.className = 'micro-note';
@@ -14551,6 +14623,7 @@ try {
     (opener?.isConnected ? opener : $('shell-play')).after(feedback);
     let failed = false;
     const cancel = () => {
+      trace?.finish('missions-cancelled');
       if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
       opening.dispose();
       feedback.remove();
@@ -14568,13 +14641,18 @@ try {
       run === oldRun &&
       started === wasStarted;
     try {
-      const host = await getUnifiedMissionLibrary(isCurrent);
+      const host = await getUnifiedMissionLibrary(isCurrent, trace);
       // The installed-card refresh may move focus while it reconciles an owned
       // catalogue. Claim the still-current opener before that internal work;
       // newer input still retires the claim while the state/revision checks
       // below also reject replaced navigation and game state.
-      if (!opening.claim()) return;
+      if (!opening.claim()) {
+        trace?.finish('missions-cancelled');
+        return;
+      }
+      trace?.mark('missions-refresh-begin');
       await refreshUnifiedInstalled(host, isCurrent);
+      trace?.mark('missions-refresh-end');
       const openingCurrent = opening.current();
       opening.dispose();
       if (
@@ -14588,9 +14666,13 @@ try {
         run !== oldRun ||
         started !== wasStarted ||
         !paused
-      )
+      ) {
+        trace?.finish('missions-cancelled');
         return;
-      unifiedChooser.open(opener, options);
+      }
+      trace?.mark('missions-open-begin');
+      unifiedChooser.open(opener, trace ? { ...options, onOpeningStage: trace.mark } : options);
+      trace?.finish('missions-complete');
       if (options?.random) {
         unifiedChooser.playRandom({ resetFilters: true });
         return;
@@ -14605,6 +14687,7 @@ try {
         }
       }
     } catch (error) {
+      trace?.finish(error?.name === 'AbortError' ? 'missions-cancelled' : 'missions-failed');
       if (revision === unifiedOpenRevision) {
         failed = true;
         localizedText(feedback, () => t('interface:missionsCouldNotLoadChooseMissionsToRetry'));
