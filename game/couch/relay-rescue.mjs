@@ -153,7 +153,8 @@ import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
-import { onNativeInactive, exportJSONFile } from '../platform.mjs';
+import { onNativeInactive, exportJSONFile, nativePlatform } from '../platform.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
 import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-policy.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
@@ -483,6 +484,7 @@ export function bootCoop({
     accumulator = 0,
     last = null,
     framePads = [],
+    supportController = null,
     frame = null,
     disposed = false,
     generation = 0,
@@ -1663,6 +1665,7 @@ export function bootCoop({
   }
   window.addEventListener('resize', revealMenuAction);
   function clear() {
+    supportController = null;
     controllerSession.clear();
     input.clear();
     batch.release();
@@ -1735,6 +1738,27 @@ export function bootCoop({
     isOwnerCurrent: (owner) => !!owner && settingsCurrent(owner),
     onOpen: clear,
     offlinePanel: installOfflinePanel,
+  });
+  const supportSummary = attachLocalSupportSummary({
+    document,
+    window,
+    root: $('coop-support-summary-root'),
+    settings: settingsDialog,
+    getHost: () => {
+      const offline = offlineAvailability();
+      return {
+        version: buildVersion,
+        kind: 'capture-team',
+        state: loopStopped ? null : !run || run.status === 'ready' ? 'idle' : run.status,
+        locale: getLocale(),
+        // Attempt generations/durable writes are not a current writer lease.
+        writable: null,
+        writerReason: null,
+        platform: nativePlatform() ?? 'browser',
+        offline: offline.available ? 'configured' : offline.messageCode,
+        controller: supportController,
+      };
+    },
   });
   music = attachCouchMusicHost({
     document,
@@ -6377,18 +6401,35 @@ export function bootCoop({
         );
         music?.update(running(), { family: acceptedPicture?.request.themeId ?? 'fpv' });
       }
-      let readError = null;
+      let readError = null,
+        physicalControllerConnected = false;
       try {
         if (typeof navigator.getGamepads !== 'function') throw new Error('Gamepad API unavailable');
         framePads = [...navigator.getGamepads()];
+        physicalControllerConnected = framePads.some((pad) => pad?.connected === true);
       } catch (error) {
         framePads = [];
         readError = error;
       }
-      framePads = controllerSession.sample(framePads, { active: running(), error: readError }).pads;
+      const controllerFrame = controllerSession.sample(framePads, {
+        active: running(),
+        error: readError,
+      });
+      framePads = controllerFrame.pads;
       controllerSetup.refresh();
       input.poll();
       const routed = router.sample({ scope: scope(), timeMs: now });
+      // Observe the existing frame once. Team's virtual menu owner does not
+      // establish aggregate physical neutral/Confirm readiness for both seats.
+      supportController = {
+        sampledAt: now,
+        status: readError
+          ? 'unavailable'
+          : physicalControllerConnected
+            ? 'connected'
+            : 'disconnected',
+        assigned: controllerFrame.slots.some((slot) => slot !== null),
+      };
       controllerConfirmGuard.observe(routed.confirmHeld || controllerSession.frame().confirmHeld);
       if (
         routed.disconnected ||
@@ -7156,6 +7197,8 @@ export function bootCoop({
     .catch((error) => console.error(t('interface:nativeLifecycleUnavailable'), error));
   const dispose = () => {
     if (disposed) return;
+    supportController = null;
+    supportSummary.destroy();
     continuousPlay.dispose();
     flowControls.dispose();
     flowCelebration.dispose();

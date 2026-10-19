@@ -2,7 +2,7 @@
 
 In the primary game shell, open **Settings → Progress & Collection → Local support summary** and choose **Prepare / refresh summary**. Preparation reads a fixed set of local observations. Review the readable facts and the exact JSON before choosing **Download summary**. The existing platform export owner handles a browser download or the native iOS share sheet; a requested download does not prove a file reached its destination.
 
-This first slice covers the Solo/Journey shell, including installed editions and practice hosted there. It does not claim to diagnose the separate Team, Snake, online or SIM hosts. No support endpoint, automatic transmission or persistent diagnostics store is added.
+This slice covers the Solo/Journey shell, including installed editions and practice hosted there, and the native Capture Team host. In Team, open **Settings → Game data → Local support summary**. It does not claim to diagnose the separate Versus, Snake, online or SIM hosts. No support endpoint, automatic transmission or persistent diagnostics store is added.
 
 ## Included observations
 
@@ -23,6 +23,16 @@ Only an explicit prepare/refresh action starts the optional observations. Refres
 
 The preview and export use the same captured document. Downloading does not silently refresh its facts. Keep the capture time when sharing it; the game and browser can change afterward.
 
+## Capture Team observations
+
+Team supplies its actual declared build, run state, locale and platform owner. Its current save permission remains unknown: an attempt generation, checkpoint or successful durable write does not establish a current writer lease. Offline configuration is only configuration; content is not verified.
+
+The ordinary Team controller frame caches only sample time, physical connected/disconnected/unavailable status and whether any seat is assigned. Presence is observed before virtual seat mapping. Preparing a summary adds no hardware poll, session sample, raw button/axis read or consumed edge. Team's virtual menu owner cannot establish both players' physical neutral/Confirm readiness, so those values remain unknown. Device identity, seats, profiles and raw controls never enter the cache or report.
+
+The cache clears with the host's existing input/lifecycle clear and disposal. Clearing the cache does not refresh or erase an already prepared preview: preview and export retain the same captured document. The shared view clears prepared reports on native Settings close, hidden page and page exit, and rejects late results when the page is no longer focused. Team attaches that view to its explicit native dialog and Data root; no private reset API or new export owner is introduced.
+
+Sibling Snake and Overflight adapters extend the same collector. Future integration must union their host kinds, state/reason allowlists and scope mappings with Team rather than replace any adapter's collector. Versus uses a hidden/inert Settings section and needs a separate explicit view visibility contract.
+
 ## Qualification boundaries
 
-Unit/component coverage checks the allowlist, absence of input/storage-content reads, unavailable states, bounded reads, sample freshness, exact preview/export matching, cancellation, replacement, page lifecycle and native export ownership. Actual-host modeled tests exercise paused Solo state, its real controller router, readiness/disconnection, unchanged flight/storage and English/Ukrainian copy. These do not establish native layout, physical controller compatibility, native iOS transfer, offline cold start or other mode coverage.
+Unit/component coverage checks the allowlist, absence of input/storage-content reads, unavailable states, bounded reads, sample freshness, exact preview/export matching, cancellation, replacement, page lifecycle and native export ownership. Actual-host modeled tests exercise paused Solo state and its real controller router, plus Team physical presence, native Controls assignment, unknown readiness/save permission, paused Hunt checkpoint preservation, lifecycle retirement, exact preview/export and English/Ukrainian focus/copy. Preparing Team support adds zero controller observations, game ticks or storage writes. These do not establish native layout, physical controller compatibility, native iOS transfer, offline cold start or other mode coverage.
