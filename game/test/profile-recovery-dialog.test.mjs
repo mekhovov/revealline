@@ -396,14 +396,19 @@ test('recovery does not notify when its pre-open owner rejects admission', async
   assert.equal(presentations, 0);
 });
 
-test('recovery retires a committed departure even when native opening focus immediately closes it', async (t) => {
-  let presentations = 0;
+test('recovery retires a committed native open when public Back immediately returns to Settings', async (t) => {
+  let presentations = 0,
+    closing;
   const h = fixture({
-    afterNativeOpen: ({ dialog }) => dialog.close(),
+    afterNativeOpen: () => {
+      closing = h.$('back').onclick();
+    },
     onPresentationChange: () => presentations++,
   });
   t.after(() => h.host.dispose());
   assert.equal(await h.host.open(), false);
+  assert.equal(typeof closing?.then, 'function');
+  await closing;
   assert.equal(h.dialog.open, false);
   assert.equal(presentations, 1);
 });

@@ -411,3 +411,43 @@ test('tool return notifies only committed view changes and keeps the original fo
   assert.deepEqual(events, ['panel'], 'An unchanged visible panel is not retired.');
   panels.destroy();
 });
+
+test('desktop panel focus and same-side resize keep bookkeeping without retiring its visible report', () => {
+  const f = fixture();
+  f.root.classList.add('native-settings');
+  f.document.defaultView.innerWidth = 1000;
+  const input = f.document.createElement('input');
+  input.value = 'unchanged preference';
+  f.panels.data.append(input);
+  let notifications = 0;
+  const panels = attachSettingsPanels({ ...f, onPresentationChange: () => notifications++ });
+  panels.select(f.tabs.data.id);
+  notifications = 0;
+  assert.equal(f.root.dataset.settingsView, 'categories');
+  input.focus();
+  for (const width of [1000, 900, 701]) {
+    f.document.defaultView.innerWidth = width;
+    f.document.defaultView.emit('resize');
+    assert.equal(f.root.dataset.settingsView, 'panel');
+    assert.deepEqual(visiblePanels(f), ['data']);
+    assert.equal(f.document.activeElement === input, true);
+    assert.equal(notifications, 0);
+  }
+  f.tabs.data.focus();
+  f.document.defaultView.emit('resize');
+  assert.equal(f.root.dataset.settingsView, 'categories');
+  assert.equal(notifications, 0);
+  input.focus();
+  f.document.defaultView.innerWidth = 700;
+  f.document.defaultView.emit('resize');
+  assert.equal(f.root.dataset.settingsView, 'panel');
+  assert.equal(notifications, 1);
+  f.tabs.data.focus();
+  f.document.defaultView.innerWidth = 699;
+  f.document.defaultView.emit('resize');
+  assert.equal(f.root.dataset.settingsView, 'categories');
+  assert.equal(notifications, 2);
+  assert.equal(input.value, 'unchanged preference');
+  assert.deepEqual(visiblePanels(f), ['data']);
+  panels.destroy();
+});

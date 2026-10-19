@@ -445,6 +445,22 @@
           ]
         }
       ]
+    },
+    {
+      "id": "mission-library-solo-cold-opening-diagnostic",
+      "pathPatterns": ["^game/test/mission-library-solo-cold-opening\\.probe\\.mjs$"],
+      "commands": [
+        {
+          "id": "mission-library-solo-cold-opening-diagnostic",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-cold-opening.probe.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
     }
   ],
   "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],

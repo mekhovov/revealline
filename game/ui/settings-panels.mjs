@@ -225,7 +225,7 @@ export function attachSettingsPanels({
         : list?.contains(doc.activeElement)
           ? view('categories')
           : false;
-    if (breakpointChanged || viewChanged) {
+    if (breakpointChanged || (nextCompact && viewChanged)) {
       generation++;
       onPresentationChange();
     }
