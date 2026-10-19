@@ -15,11 +15,11 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Capture Home: earlier 113 checks across nine files remain valid for that version. The ordinary opening cohort passes 18/22. The new probe narrows its delay to Team mission-source construction (16.62 seconds in the test process). Inspect that owner and compare latest main, then fix and rerun the full cohort. Three picture-setup failures and player/package checks remain.",
-    "P1 · Single Drone/Riy: 28 checks pass across two complete files; a third is incomplete and 25 have not run. Source is restored. The preparation guard correction passes 10 isolated checks; a fresh attempt stops before source changes because space fell again. Resume the full cohort when capacity permits, then fonts, languages, controls and full player journeys.",
-    "P1 · Text compatibility #1668: refreshed draft 55901ae preserves current main and passes all six asset-generation/check stages, formatting of 40 files and syntax of 39 JavaScript files. Fresh complete tests, configured source checks, browser, package and hosted admission remain. Preserve the separately pending Replay fixture correction; earlier 461-case results retain their old version.",
+    "P1 · Capture Home/menu performance: producer, sender adapter and complete qualification remain separate phases. Twelve producer/guard source files are reviewed;19 small guard checks pass and formatting is corrected. Real authoring tests and sender activation have not run. Preserve113 historical local checks, ordinary opening18/22 and three picture-setup failures; rerun the complete journey after implementation.",
+    "P1 · Single Drone/Riy: all54 authored files reconcile with the current compatibility draft and pass formatting; all30 JavaScript syntax checks pass. Four canonical outputs and all28 complete test files are next, followed by fonts/languages/controls/player/package checks. Prior28-case and reader64 results remain historical.",
+    "P1 · Text compatibility #1668: current source checks finish22/23 commands successfully, including validation/localization. Replay has9 known fixture failures; its new Extra Large case passes. Four admission groups664/664 pass separately. Resolve the fixture dependency, then remaining preview/browser/package/admission gates; no physical-device pass.",
     "P1 · Team Home #1747: source now merged. All nine admitted files match the independently reviewed local reconciliation. Prior 11 source checks remain bound to 22c553; finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
-    "P1 · Shared support #1762: current 8e33404 passes all eight complete files, 414/414, and the overall source workflow, validation, localization and company checks. Preview remains pending, then browser Data/modal/navigation, packages and remaining hosts. Previous 7b9ec7 passes 411/411 but its separate preview fails 15/1,872; retain both historical scopes.",
+    "P1 · Shared support #1762: 8e33404 passes all eight complete changed files414/414 and overall source workflow. Separate preview1877/1889 fails:9Replay,2FPVbudgets,1newSettings-to-Studio test error under diagnosis. Packaging skipped. Resolve exact causes/current-source integration, then browser Data/modal/navigation and remaining hosts.",
     "P2 · Room invitations #1744: source merged; 108 scoped checks, tracked-module lint and delayed QR focus review pass. Full source, Ukrainian host, manual fallback, package, sharing, scanning and device checks remain.",
     "P2 · Audio and terminology: preserve merged changes; finish remaining host copy, listening and player acceptance.",
     "Continue phases 0–8 with all 83 feature groups and 113 deliverables in their original priority order and estimates. Source merge is not full feature completion. Protect 2 GiB; physical iPhone offline startup, Steam Deck and suspend/resume remain Not tested."
@@ -1118,10 +1118,10 @@
         "browser": "scoped_desktop_and_iframe_passed",
         "physical": "not_tested"
       },
-      "blocker": "Team and Capture need current-source/native/browser/package/CI qualification. Team draft1747 reports current-main conflicts. Duel explanation1741 and allthree fixture prerequisites are source merged. Full lessons remain F25/Learn/D dependent.",
+      "blocker": "Capture cold Team-source construction and three picture-setup failures need correction and current complete-cohort qualification. Team Home1747 is source merged; earned-result/full-host/browser/package acceptance remains. Full lessons depend on F25/Learn.",
       "pr": null,
       "commit": null,
-      "next": "P1: review independent test-memory prerequisite after baseline reproduction; exact validation source and original inodes are restored. Team Home is source merged and needs current player/package acceptance. Keep lesson and hardware gates separate.",
+      "next": "P1: implement the staged cold-menu display producer, sender adapter and complete qualification. Preserve historical113 local checks and18/22 ordinary opening cohort. Team Home source is merged; finish its current player/package gates. Keep lesson and hardware gates separate.",
       "evidence": [
         "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced."
       ],
@@ -1287,7 +1287,8 @@
             "estimate": "Depends on finite checks, failures and browser/package capacity; no completion-date promise"
           }
         ],
-        "scope": "ExistingF10 prerequisite, not newfeature/deliverable count; original definitions/priorities/estimates retained. Source proposal and hosted runner require review before execution/publication."
+        "scope": "ExistingF10 prerequisite, not newfeature/deliverable count; original definitions/priorities/estimates retained. Source proposal and hosted runner require review before execution/publication.",
+        "sourceReviewProgress": "12 authored paths with dedicated guarded PR-only workflow; toy guard19/19 passes. First readonly static attempt stops on mapJSONformat afterworkflow/doc/packagepass; remaining14commandsNotrun. Bounded AST/comment/JSON-preserving formatting successor under preparation; no real factory/producer/native phases executed."
       }
     },
     {
@@ -2058,7 +2059,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "P1 · Shared support #1762: refreshed draft 8e33404 preserves current main and passes source formatting/syntax checks. Six of its eight complete files now pass, 236/236; two files and preview remain pending. Previous 7b9ec7 passes all eight complete files (411/411), while its separate preview fails 15/1,872 and skips packaging. Keep those scopes separate; then complete browser Data/modal/navigation, packages and remaining hosts.",
+      "next": "P1 · Shared support #1762: 8e33404 passes all eight complete changed files414/414 and overall source workflow. Separate preview1877/1889 fails:9Replay,2FPVbudgets,1newSettings-to-Studio test error under diagnosis. Packaging skipped. Resolve exact causes/current-source integration, then browser Data/modal/navigation and remaining hosts.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim.",
@@ -2274,13 +2275,13 @@
         {
           "id": "shared-report-lifecycle-foundation-snake",
           "priority": "P1",
-          "status": "draft_current8e_all_eight414_and_source_workflow_pass_preview_pending",
+          "status": "draft_current8e_source_pass_preview12fail_diagnosis",
           "owner": "lane-c",
           "pr": "https://github.com/mekhovov/revealline/pull/1762",
           "phaseBoundary": "Shared report visibility/invalidate foundation plus Snake integration only. Reuse existing1726/1730 callbacks and current shell ownership; other host acceptance remains separately tracked.",
-          "next": "P1 · Shared support #1762: current 8e33404 passes all eight complete files, 414/414, and the overall source workflow, validation, localization and company checks. Preview remains pending, then browser Data/modal/navigation, packages and remaining hosts. Previous 7b9ec7 passes 411/411 but its separate preview fails 15/1,872; retain both historical scopes.",
+          "next": "P1 · Shared support #1762: 8e33404 passes all eight complete changed files414/414 and overall source workflow. Separate preview1877/1889 fails:9Replay,2FPVbudgets,1newSettings-to-Studio test error under diagnosis. Packaging skipped. Resolve exact causes/current-source integration, then browser Data/modal/navigation and remaining hosts.",
           "qualification": {
-            "automated": "current8e_all_eight414_and_overall_source_workflow_pass_preview_pending",
+            "automated": "current8e8files414_and_source_workflow_pass_preview1877of1889_12fail",
             "browser": "not_run",
             "physical": "not_tested"
           },
@@ -2526,7 +2527,7 @@
             "overallSourceWorkflow": "success",
             "terminalSourceProofSHA256": "63f461fcf1d0de76123b9a967f547e20cfb824c70e645d5aa5007ec6a743ea49",
             "broadTestBuild": "SKIPPED notPASS",
-            "previewPackage": "pending separate run39330463032"
+            "previewPackage": "preview failed1877/1889;12fail; package/build/archive/identityskipped"
           },
           "previousPreviewResults": {
             "head": "7b9ec7e6ccd7bae9594c5c4085ec0ed59de05f52",
@@ -2538,9 +2539,47 @@
             "cancelled": 0,
             "packaging": "not_run_after_test_failure",
             "proofSHA256": "fdff6a0b1ffd96874c31da87a5c22423bb161852ffef467ee5069f1b704d25fb"
+          },
+          "newHeadPreviewResults": {
+            "head": "8e3340484c184401a555f257b2ba5f2007ed4f1c",
+            "run": "https://github.com/mekhovov/revealline/actions/runs/39330463032",
+            "status": "failed",
+            "tests": 1889,
+            "passed": 1877,
+            "failed": 12,
+            "skipped": 0,
+            "cancelled": 0,
+            "failureGroups": {
+              "ReplayPreferenceReads": 9,
+              "FPVRuntimeSourceBudget": 2,
+              "SettingsStudioModalNullSize": 1
+            },
+            "newModalAttribution": "unestablished_read_only_owner_trace_in_progress",
+            "buildArchiveIdentity": "SKIPPED notPASS",
+            "receipt": "/tmp/revealline-f58-1762-8e-hosted-results/terminal-preview-failure-proof.json",
+            "receiptSHA256": "233d62d8b14b290ce1ab793e591d46d89458662949c61e82a7605b119e3e1338"
+          },
+          "latestMainOwnerMap": {
+            "main": "8dc13432984e48dbda2c26beb84d49f4fc78318c",
+            "SHA256": "d1af71bb961f46f66a901c636ebc5e65dcf14efa7ad0a5da3099c3f912816c9c",
+            "ownedBefore18AndCanonical49": "unchanged",
+            "unownedMainDeltaPaths": 6,
+            "sourceUpdate": "not_run",
+            "Replay1769": "open_not_included"
           }
         }
-      ]
+      ],
+      "studioFixturePrerequisite": {
+        "status": "source_review_format_and_statics_pass_native_unrun_unpublished",
+        "source": "public opener completion within original wait deadline; all existing assertions/controller flow retained",
+        "manifestSHA256": "65233b91a96b1aeb383ed901aa78a9cced12f9f386387c662824ed4976d9ca0f",
+        "formatReceiptSHA256": "e8995d4df3f412531445bd783ee186996f0e42abab4a7e38e35f0f79b81e29f3",
+        "productionChanges": 0,
+        "nativeExecuted": false,
+        "delivery": "unpublished; possible coherent1769 successor only after original runterminal and reviewedintegration",
+        "staticReceiptSHA256": "0140dba7d6f94c23b8b1f6a676bf5118aa913030726dc2b0139ac772526617ad",
+        "heldFourPathManifestSHA256": "db0e34ab6fc7d2c2cdcb2ebd0b615bd9e12dbe133aa26fd33a01696459da931b"
+      }
     },
     {
       "id": "F58b",
@@ -2840,7 +2879,7 @@
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1668",
       "commit": "55901aeb76886fc7ee3e6dd7bc252ca6cae89fbe",
-      "next": "P1 · Text compatibility #1668: refreshed draft 55901ae preserves current main and passes all six asset-generation/check stages, formatting of 40 files and syntax of 39 JavaScript files. Fresh complete tests, configured source checks, browser, package and hosted admission remain. Preserve the separately pending Replay fixture correction; earlier 461-case results retain their old version.",
+      "next": "P1: draft559 currentsource attempts23selectedcommands,22exit0 includingvalidate/i18n/company/13otherwholefiles. Replay12=3pass9knownfixturefailures; newXLcasepasses. Fourappearanceadmissions664/664 separatelypass; remainingpreview/browser/package/hostedadmissionpending. Integrate reviewedfixture prerequisite only afteradmission/currentownerunion; preserveexactversions.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
         "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
@@ -3003,6 +3042,31 @@
         "receiptSHA256": "66c5cdcf14a035171e507a8bc42ab6e047137be624a3bcdde2cf9c420ffb954f",
         "fullSourceAndPreview": "pending",
         "browserPackagePhysical": "not_run_on_this_head"
+      },
+      "currentSourceChecks": {
+        "head": "55901aeb76886fc7ee3e6dd7bc252ca6cae89fbe",
+        "run": "https://github.com/mekhovov/revealline/actions/runs/39332274409",
+        "shard2": "failed: completeReplay12 cases3pass9UnexpectedReadFailures; newdesiredXLcasepassed",
+        "shards3and4": "success",
+        "shard1AndOverall": "shard1success;overallfailedReplayfixture",
+        "attribution": "separateknownReplayfixture1769; no productfault inferred",
+        "rawFailureSHA256": "c1bcde5111a950b3fec85599e2b57fbf69a047f141cf98b4abebfef4a54312d8",
+        "status": "completed_failed_knownReplayfixture",
+        "commandsAttempted": 23,
+        "commandsExit0": 22,
+        "commandsFailed": 1,
+        "sourceReceiptSHA256": "11aaf92388ad8d41a386bf745c0887de22bb2e8b57a7aa9f98962c741ba32012",
+        "selectedFullValidate": "pass",
+        "selectedFullI18n": "pass",
+        "fullConfiguredLint": "not_selected",
+        "caseExecutions": {
+          "tests": 2270,
+          "passed": 2261,
+          "failed": 9,
+          "skipped": 0,
+          "cancelled": 0,
+          "note": "20completeTAPgroups; repeatedfileexecutionspossible; notuniqueaggregate"
+        }
       }
     },
     {
@@ -3023,7 +3087,7 @@
       "blocker": null,
       "pr": null,
       "commit": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
-      "next": "P1: preserve latest2complete-file/28case dock pass; recovery-only exact-source/inode restoration verified; resume incomplete/25Notrun files when capacity permits. Complete fonts/languages/player journeys/source/package; next Overflight family remains Raid/TimeAttack/Marathon.",
+      "next": "P1: all54 current-stack family artifacts pass formatting and30 freshJavaScript syntax checks. Generate/check4 canonical outputs from separately reviewed current closures; rerun all28 complete files, then EN/UK/fonts/player/source/package. Original2-file28-case and reader64 scopes remain historical.",
       "evidence": [
         "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json.",
         "Frozen627 on e40: complete play-family preference/first-paint/settings integration,377-module/21-sheet inventory,41 readable absolute declarations scaled once and2 arrow-art exclusions.138 host/bootstrap/global plus120 shared regressions and3 closure/runtime-theme tests pass; full lint pass, full validation/source/browser review pending. Thin source fixture8810, no automatic progress injection. No200% or device acceptance claimed.",
@@ -3212,7 +3276,31 @@
             "next": "Review successor task-owned preparation allocation ledger; global2GiBfloor/native limits unchanged."
           }
         }
-      ]
+      ],
+      "sourceReconciliation": {
+        "explicitStack": "55901aeb76886fc7ee3e6dd7bc252ca6cae89fbe",
+        "sourceFeature": "0d30169a43b7deb8368c1f8a2642d00ea89284c1",
+        "authoredReviewArtifacts": 54,
+        "derivedOutputsExcluded": 4,
+        "manifestSHA256": "f4417746cc59b3cea0acb07a9b89f5482687e8f95a3fd84edb33c392870972c4",
+        "currentOverlapsPreserved": 6,
+        "upgradeCard": "bounded union reverses exactly to both current consequence contract and old family contract",
+        "sourceReview": "clear",
+        "formatSyntaxCanonicalNative": "all54format+30syntaxPASS; canonical4/native28notrun",
+        "completeRequiredFiles": 28,
+        "productionCheckoutWrites": 0,
+        "staticAttempt1": {
+          "scope": "formatCHECK54 inspectedall54;30syntaxNOTRUN",
+          "result": "failed_only_FPVfullscreenCSS_format",
+          "receiptSHA256": "10d776ebe942558217ff039fb41054d1d1c85bc5f7f51cfab1f29d8a8391847b",
+          "other53Formatting": "matched",
+          "sourceCandidateWrites": 0,
+          "nativeOrDerivedQualification": false
+        },
+        "raw54ManifestSHA256": "6f811705a3f4fe33a393291f82674be9b2ccdb6fff75c5ce9de9c5fc77b7a7de",
+        "formatReceiptSHA256": "ee1376306923bcb3620fd2b2150318c66b8ba9886f54172b18b0b99c47307c4e",
+        "staticReceiptSHA256": "3525e3dbd860bae0d32c18f29b36281bf2dd4e24b87675ef748f7b5180ad07ff"
+      }
     },
     {
       "id": "F18a",
@@ -5390,6 +5478,16 @@
     {
       "date": "2026-10-20",
       "summary": "SeparateReplayfixtureprerequisite1769 published d408 over8dc:2paths/all5runtimeowners/allunownedmain entriesexact,sourceformat/syntaxpass,nativepending; original9failuresretained. Prerequisitecount15→16only; original83featuregroups/113deliverables and90featurePRinventoryunchanged. Externally8dcFPVruntime/sourcecaps increased512KiB; older7b/8e previewresults remainoldpolicyscope,notnewfit."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "Current source qualification and staged delivery",
+      "reason": "Support8e all8wholefiles414 and overallsource pass; compatibility559 fouradmissiongroups664 pass/fullchecks pending; Replay1769 complete11pass/overallpending. Nexttext54-source union proposal and coldTeam producer/guard sourceauthoring continue. All83groups/113deliverables unchanged; otherchatsremainrunning."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "Bounded source progress and complete CI outcomes",
+      "reason": "Support8e source414pass/preview1877of1889with12failures retained; Studiofixture now source/staticclear with originaldeadline, nativeunrun. Replayd40811+overallsourcepass/previewpending. Compatibility55922of23commands0, soleReplay9fixturefails,664admissionsseparate. Readability54format30syntaxPASS/fourcanonical+28nativepending. Menuauthoringautomaticheavytestdiscoverycaughtbeforepublication; onlynewheavywrappersreroutedtodedicatedguard"
     }
   ],
   "deliveryDependencies": [
@@ -5684,7 +5782,7 @@
       "commit": "d408beddda1d04b742aac4e99cb116998961b1d6",
       "observedRemoteHead": "d408beddda1d04b742aac4e99cb116998961b1d6",
       "scope": "Exactlyone nativeReplaytest+qualificationdoc; admit onlyexactGAMEPLAY_AUDIO_KEY presentationread, assertone constructionread atfirstnativecontentfetch andzero writes. Everyoriginalread/write/profile/saved-flight/recording/paused/focus assertion retained. No production/helper/timeouts/playerstate change.",
-      "next": "Collect exacthead completeReplayfile andconfiguredsourceCI. Preserveall9redcases. Afteradmissionreconciledependentfeatureheads, keepingtwo oldFPVsizefailures andexternalnewpolicyseparate.",
+      "next": "Complete Replay11/11 and overall source workflow/validation/verifier pass atd408; separate preview remains pending. Held Studio public-completion fixture passes source/static review but is not native-tested or included in d408. Preserve exact scopes and originalfailures.",
       "qualification": {
         "automated": "format_and_syntax_source_only_pass_native_and_configured_CI_pending",
         "browser": "not_required_fixture_only",
@@ -5695,7 +5793,21 @@
         "Bothformat2outputs byte-identical; receipt822812951e116b994b3e9f09166fc68a64195bfc6f1360be635cf94b10130118. Complete2stageformatCHECK2+syntax1pass530e3ede16bafa117f9acccae5db179ce31e82d1b11d1f592aee8b1c6013c66f; fullcapture/zeroerrors/nochildren/original/deps exact. Nativeunrun.",
         "Publishedd408/tree332d8419 soleparent8dc exact2sourceblobs/everyunownedmainentry preserved; localoriginalsource/index/refs untouched. Manifest33e0d79b30a29a23dc7a074196d0ab21df363b18a12bc4e47458102ca11f4333; separatePR1769 draftnativepending."
       ],
-      "mergeState": "UNSTABLE"
+      "mergeState": "UNSTABLE",
+      "nativeQualification": {
+        "head": "d408beddda1d04b742aac4e99cb116998961b1d6",
+        "run": "https://github.com/mekhovov/revealline/actions/runs/39333180640",
+        "completeFiles": 1,
+        "cases": 11,
+        "passed": 11,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "proofSHA256": "7f160089b7d76eed16e7d761e4b984c33eb0a9269f0734d259b8df46a9fc4b96",
+        "sourceBeforeAfterExact": true,
+        "overallSourceAndPreview": "overall sourceSUCCESS includingnpmvalidate; separate previewpending",
+        "terminalSourceProofSHA256": "2497f304ba080206493e656185db0c0b3de7970bcf2dee7aad5f3c68daf31321"
+      }
     }
   ],
   "deliverySnapshot": {
@@ -5720,7 +5832,7 @@
       1617, 1622, 1624, 1627, 1632, 1638, 1642, 1667, 1669, 1671, 1682, 1686, 1702, 1704, 1721, 1729
     ],
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1669, 1682, 1686],
-    "note": "48 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn. Sixteen prerequisites separate. Compatibility559 source preparation and four admission groups664 pass; full checks pending. Support8e all8wholefiles414 and overall source workflow pass; preview pending. Replay1769 source-only/static pass, native pending. No manual merge/promotion/check bypass.",
+    "note": "48 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn. Sixteen prerequisites separate. Compatibility559 source preparation and four admission groups664 pass; full checks pending. Support8e all8wholefiles414 and overall source workflow pass; preview1877/1889 with12fail. Replay1769 complete11pass, overall source pending. No manual merge/promotion/check bypass.",
     "latestMain": {
       "revision": "8dc13432984e48dbda2c26beb84d49f4fc78318c",
       "note": "Six newer docs/package-policy/test paths are preserved. No compatibility43/78 overlap. Support8e remains version-specific; compatibility55901ae now published against8dc. Documentation1767 merged separately; not a feature-count increase."
