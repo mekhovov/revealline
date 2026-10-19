@@ -2254,6 +2254,7 @@ function attachMissionLibraryBrowser({
 document:doc=globalThis.document,
 library,
 mode='solo',
+getHostMode=()=>mode,
 onPause,
 onReturn,
 readState=()=>null,
@@ -2439,7 +2440,18 @@ t('interface:playRandomLevelFromVisibleResults'),
 const back=node('button','journey-back',localizedMessage('common:navigation.backToGame'));
 back.type='button';
 back.className='button secondary';
-footer.append(randomLevel,back);
+const resetFilters=node(
+'button',
+'journey-filters-reset',
+localizedMessage('interface:missionLibrary.search.resetFilters'),
+);
+resetFilters.type='button';
+resetFilters.className='button secondary';
+resetFilters.setAttribute('aria-controls','journey-cards');
+localizedAttribute(resetFilters,'title',()=>
+t('interface:missionLibrary.search.resetHint'),
+);
+footer.append(resetFilters,randomLevel,back);
 dialog.append(heading,copy,filters,status,campaignRail,list,footer);
 doc.body.append(dialog);
 const cards=new Map(),
@@ -2935,6 +2947,42 @@ artwork:null,
 completion:null,
 };
 }
+function hostMode(){
+try{
+const accepted=getHostMode();
+if(modes.includes(accepted))return accepted;
+}catch{
+// A retired host callback must not make browse-only recovery unusable.
+}
+return mode;
+}
+const filtersActive=()=>
+!!collection.value||modeFilter.value!==hostMode()||lifecycle.value!=='current';
+function filterDescription(){
+return t('interface:missionLibrary.search.filters',{
+collection:collection.value?t(LIBRARY_TAG_KEYS[collection.value]):t('interface:all'),
+editions:
+lifecycle.value==='current'
+?t('interface:current')
+:lifecycle.value==='archive'
+?t('interface:missionLibrary.lifecycle.archive')
+:t('interface:missionLibrary.lifecycle.all'),
+mode:modeLabel(modeFilter.value),
+});
+}
+function emptyDescription(){
+const query= !!search.value.trim();
+const key= !library.missions.length
+?'emptyLibrary'
+:query&&filtersActive()
+?'emptySearchFilters'
+:query
+?'emptySearch'
+:filtersActive()
+?'emptyFilters'
+:'emptyView';
+return t(`interface:missionLibrary.search.${key}`);
+}
 function render(){
 if(destroyed)return;
 clearSearch.hidden= !search.value;
@@ -2956,15 +3004,21 @@ const matches=railRows;
 randomLevel.disabled= !matches.some(
 (row)=>library.availability(row,modeFilter.value).state==='ready',
 );
-localizedText(
-status,
-()=>
-`${t('common:counts.missions',{count:matches.length})} · ${browsingContext?.({mode:modeFilter.value,label:modeLabel(modeFilter.value)})??modeLabel(modeFilter.value)}${message?` · ${renderMessage(message)}`:''}`,
+resetFilters.hidden= !filtersActive();
+localizedText(status,()=>
+[
+t('common:counts.missions',{count:matches.length}),
+browsingContext?.({mode:modeFilter.value,label:modeLabel(modeFilter.value)})??
+modeLabel(modeFilter.value),
+filtersActive()|| !matches.length?filterDescription():'',
+!matches.length?emptyDescription():'',
+message?renderMessage(message):'',
+]
+.filter(Boolean)
+.join(' · '),
 );
-const filtersActive=
-!!collection.value||modeFilter.value!==mode||lifecycle.value!=='current';
 localizedText(filterSummary,()=>
-filtersActive?t('interface:filtersActive'):t('interface:filters'),
+filtersActive()?t('interface:filtersActive'):t('interface:filters'),
 );
 const campaignChoices=new Map();
 for(const row of railRows)
@@ -3429,6 +3483,42 @@ const first=[...list.querySelectorAll('.journey-card')].find(
 (first??(compact?filterSummary:collection)).focus({
 preventScroll:true,
 });
+remember();
+};
+resetFilters.onclick=()=>{
+if(
+destroyed||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false||
+!filtersActive()
+)
+return;
+const ticket=visit,
+focused=doc.activeElement,
+acceptedMode=hostMode();
+collection.value='';
+lifecycle.value='current';
+modeFilter.value=acceptedMode;
+// One ordinary filter event owns retirement/rendering and informs native
+// hosts which keep remote metadata or preview controls for the browsed mode.
+const EventType=doc.defaultView?.Event||Event;
+modeFilter.dispatchEvent(new EventType('change',{bubbles:true}));
+if(
+destroyed||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false||
+visit!==ticket+1||
+modeFilter.value!==acceptedMode||
+(doc.activeElement!==focused&&
+!(focused===resetFilters&&doc.activeElement===doc.body))
+)
+return;
+const first=[...list.querySelectorAll('.journey-card')].find(
+(button)=> !button.disabled,
+);
+(first??search).focus({preventScroll:true});
 remember();
 };
 campaign.addEventListener('change',()=>{
@@ -7680,6 +7770,7 @@ let disposed=false,
 explicit=false,
 stored=false,
 unsaved=false,
+writing=false,
 warning='',
 warningKey='',
 systemReduced=false;
@@ -7742,8 +7833,21 @@ onWarning(message,key);
 }
 };
 const persist=()=>{
+if(writing)return;
+writing=true;
+const revision=state.revision,
+current=()=> !disposed&&state.revision===revision;
+const failed=()=>{
+unsaved=true;
+notice(
+'Display changed for this session, but could not be saved for another page.',
+'common:preferences.displaySaveFailed',
+);
+};
 try{
-if(!writable()){
+const allowed=writable();
+if(!current())return;
+if(!allowed){
 unsaved=true;
 notice(
 'Display changes apply only to this session; saving is disabled here.',
@@ -7752,17 +7856,24 @@ notice(
 return;
 }
 const storage=getStorage();
+if(!current())return;
 if(!storage)throw new Error('Storage unavailable.');
-storage.setItem(DISPLAY_PREFERENCES_KEY,JSON.stringify(raw()));
+const encoded=JSON.stringify(raw());
+storage.setItem(DISPLAY_PREFERENCES_KEY,encoded);
+if(!current())return;
+const confirmed=storage.getItem(DISPLAY_PREFERENCES_KEY);
+if(!current())return;
+if(confirmed!==encoded)throw new Error('The display save could not be confirmed.');
 stored=true;
 unsaved=false;
 notice('');
 }catch{
-unsaved=true;
-notice(
-'Display changed for this session, but could not be saved for another page.',
-'common:preferences.displaySaveFailed',
-);
+if(current())failed();
+}finally{
+writing=false;
+// A nested explicit action is already visible but did not join this write.
+// Never let an older save acknowledge or replace that newer session intent.
+if(!disposed&&state.revision!==revision)failed();
 }
 };
 const receive=(event)=>{
@@ -7832,6 +7943,7 @@ set(value){
 if(disposed)throw new Error('Display preferences are disposed.');
 const next={...raw(),...patch(value)};
 explicit=true;
+unsaved=true;
 try{
 apply(next);
 }finally{
@@ -8004,6 +8116,7 @@ reason:state.pending?state.reason:'',
 };
 return{
 get:()=>getMenuAnimation(win),
+revision:()=>owner(win).action,
 set:(value)=>setMenuAnimation(value,win),
 subscribe:(listener)=>subscribeMenuAnimation(listener,win),
 persistence,
