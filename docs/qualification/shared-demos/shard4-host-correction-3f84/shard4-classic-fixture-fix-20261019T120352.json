@@ -1,0 +1,1014 @@
+{
+  "format": "SharedDemoTargetedHostRegressionV1",
+  "complete": true,
+  "started": "2026-10-19T10:03:52.219045+00:00",
+  "before": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "51230003c795e20e4f099d4e767faa9fef69e01415a4b7775006221e9a30e732",
+      "files": 477,
+      "bytes": 6902555
+    },
+    "tests": {
+      "game/test/localization-couch-host.test.mjs": {
+        "sha256": "dab6f4a10801861ae24e6ee3bbc4c1f886f12f5c7b16d063224e21b37d9c15a8",
+        "bytes": 5543
+      },
+      "game/test/mission-library-return-intent-host.test.mjs": {
+        "sha256": "e51a46ddfa0e3973ca45129c93bcf0b68fd85d16d912c8d3957673ef3512ae3a",
+        "bytes": 29665
+      }
+    },
+    "testHelpers": {
+      "game/test/helpers/actor-appearance-transport.mjs": {
+        "sha256": "596cd9d7298ddf3dc9bb97832ebfddf0983a35134086834139974ac88161d89a",
+        "bytes": 3096
+      },
+      "game/test/helpers/apex-field-route.mjs": {
+        "sha256": "bdb555f0960398e5f6b2054ce4e45fadcdeb8f0e59c63f884b7a55b1e9259ce0",
+        "bytes": 6198
+      },
+      "game/test/helpers/apex-goal.mjs": {
+        "sha256": "4b3840358a04b7ca9a93d528e7f75cb4baa40013a0e437d62a7397c80da53ae3",
+        "bytes": 3487
+      },
+      "game/test/helpers/apex-spatial-route.mjs": {
+        "sha256": "4afe94fda83418a8ded5c91a508d66e684eefc701a1d7e8144511ba3171f08f5",
+        "bytes": 5412
+      },
+      "game/test/helpers/audio-view-writes.mjs": {
+        "sha256": "d40b8e3c08141b4e936dac34455ff1ea75dcc4544accbf2d9bc4f2748c23244f",
+        "bytes": 1747
+      },
+      "game/test/helpers/backup-preflight.mjs": {
+        "sha256": "9e4f093f1fa8775f8388b2dc216d1b19bba24264fbde7a891e95e0103a8b0dd9",
+        "bytes": 632
+      },
+      "game/test/helpers/backup-review-readiness.mjs": {
+        "sha256": "4e6458a70f88c2278688145cc3e3f33c5197da7fa1b66692b2c00b8632dd75df",
+        "bytes": 2364
+      },
+      "game/test/helpers/backup-set-fixture.mjs": {
+        "sha256": "43983c59cfc1a70c105aa0ee375b0058a137ab7d82acd279941f6bc0bea18a4d",
+        "bytes": 5662
+      },
+      "game/test/helpers/candidate-team-picture-transport.mjs": {
+        "sha256": "6a6a42b83d113a6e5db96335b7f5bec040d7ee331b9c781b23fa53d7c399d754",
+        "bytes": 1315
+      },
+      "game/test/helpers/chapter-install-wait.mjs": {
+        "sha256": "764f39fc341ed6197ea5d0f30126cb2ac1365345a27f1e975178374f7f16f968",
+        "bytes": 1563
+      },
+      "game/test/helpers/classic-snake-v4-playthrough.mjs": {
+        "sha256": "d0752ccb884e52e36e0d5f139f98ee9dcaa38c9d11f41a8feef83257f6a76f0f",
+        "bytes": 101
+      },
+      "game/test/helpers/combat-fixture.mjs": {
+        "sha256": "a2c22fd9fae8a416e2d4e610ed23c119d58686f41358b6997b3117a02480948c",
+        "bytes": 1962
+      },
+      "game/test/helpers/combat-route-evidence.mjs": {
+        "sha256": "9cbacd318bbce09fc64d10b4355360a26ddd864c4e56ba5f50692c888dd08066",
+        "bytes": 1834
+      },
+      "game/test/helpers/committed-caches.mjs": {
+        "sha256": "21e7ad378283825915bd8c3d3d5232a44bb017d2cfacb1813019d69bfed2c763",
+        "bytes": 1027
+      },
+      "game/test/helpers/coop-host.mjs": {
+        "sha256": "2b59cce7aeea73e487754754ad95e066c5df596da2ab08b60120732d95cbcbdf",
+        "bytes": 14868
+      },
+      "game/test/helpers/coop-import-win.mjs": {
+        "sha256": "5f5656dd59a57b7e250d9b90f83a9c4f4e21959e98bef95c288c7b9f7166455f",
+        "bytes": 5425
+      },
+      "game/test/helpers/coop-presentation-fixture.mjs": {
+        "sha256": "480934679b354208d3fb9f7a893a6e90f4ac6f4a4e0fbad47edb3f5ba25bac51",
+        "bytes": 4630
+      },
+      "game/test/helpers/coop-route-search.mjs": {
+        "sha256": "6455903fc25131a355ca56d3d3dacc20f2d6549621cd9a829f74828b7450070f",
+        "bytes": 9197
+      },
+      "game/test/helpers/coop-win.mjs": {
+        "sha256": "d62a398996d395584df460bca5e088b66a982e70ee80e82ff47416e596f322b8",
+        "bytes": 6386
+      },
+      "game/test/helpers/couch-dom.mjs": {
+        "sha256": "63e5281b573f58da58c87708f0477bc92b51dfae701dafd6e187b6a5a99a34c9",
+        "bytes": 20230
+      },
+      "game/test/helpers/couch-host.mjs": {
+        "sha256": "7bdf0d7724b22ac891b7a63e5ea695624a574c97d0b3298a977e3fc0b3d8db96",
+        "bytes": 10258
+      },
+      "game/test/helpers/crosswind-goal.mjs": {
+        "sha256": "7924a4d5f3c6b96c9a9e7b6c0c82b0721c71c6402c60a42c32ead3af1e3f828f",
+        "bytes": 3493
+      },
+      "game/test/helpers/current-team-route.mjs": {
+        "sha256": "7f0fb633d61a7cd68ced61ef10e122655dbc2cb67eb0d1121eb3522646cc80f6",
+        "bytes": 3433
+      },
+      "game/test/helpers/demo-host-fixture.mjs": {
+        "sha256": "fae1e6fd7d355f527379697be17cd9de57ef9267523fd899d8a5a07ca1e636bd",
+        "bytes": 5157
+      },
+      "game/test/helpers/demo-loading-clock.mjs": {
+        "sha256": "32a09efefe9c3261b5fbfb5f872bcdd7e11a389c315b46dc53d0f26a1202121e",
+        "bytes": 1005
+      },
+      "game/test/helpers/earned-picture-fixture.mjs": {
+        "sha256": "4c8eeecd9b3209414ff2e082a06f421517a1e3332fc5d403f095ae12e1b1291f",
+        "bytes": 2528
+      },
+      "game/test/helpers/edition-provider-fixture.mjs": {
+        "sha256": "d28e3c7185a7b0287f517888e5d80fffb54696d1540e3d29d59a2b532d947482",
+        "bytes": 3399
+      },
+      "game/test/helpers/external-current-host-route.mjs": {
+        "sha256": "1007a0be58c5372e0c5660b88fe0f7788c8d1e2a36fcbf4aabd843d46e8a2cbe",
+        "bytes": 6778
+      },
+      "game/test/helpers/fpv-advanced-qualification.mjs": {
+        "sha256": "118adfa7f7bc27ff455a636ee0b960d98b781afa332204c5c899e57463f242b5",
+        "bytes": 13152
+      },
+      "game/test/helpers/fpv-advanced-regional-qualification.mjs": {
+        "sha256": "34e844c1cbf25221dbf3b5135466497baa7693093fddf771ce49a8b6f1cfde68",
+        "bytes": 9404
+      },
+      "game/test/helpers/fpv-aircraft-flight-qualification.mjs": {
+        "sha256": "0f6a19e022dfcc72a1597218421a93ab300010cd983da5d740ff48451d718b43",
+        "bytes": 6452
+      },
+      "game/test/helpers/fpv-aircraft-qualification.mjs": {
+        "sha256": "97391d3264c4e8b8402964b31058ecb4c2dc80b20bd7c65a8c832c0581d7136c",
+        "bytes": 9107
+      },
+      "game/test/helpers/fpv-aircraft-sustained-qualification.mjs": {
+        "sha256": "2b0d3290411c25dde735757e2a2597efa13c36c961dd48839c1763c93966c6e6",
+        "bytes": 16672
+      },
+      "game/test/helpers/fpv-portability.mjs": {
+        "sha256": "5d240e8cd065ef1c01f0bada60e984d7a9335fb0d94ec220bc214f34a2ebdfe0",
+        "bytes": 6422
+      },
+      "game/test/helpers/fpv-regional-real-geometry.mjs": {
+        "sha256": "85e52e017b02d2dbf4773448691eac3415eee46e93a9876bb42a0e35555c4414",
+        "bytes": 2515
+      },
+      "game/test/helpers/fracture-goal.mjs": {
+        "sha256": "ffc8b94f193e89c27d30aeabc67dd0c92f3230d69f7567bd707b0f983dfa74aa",
+        "bytes": 2734
+      },
+      "game/test/helpers/global-tools-fixture.mjs": {
+        "sha256": "dccfaac00e3ef98d3f7329a05fc45f0076ee9f162c2c9808250d65c4230af8e1",
+        "bytes": 862
+      },
+      "game/test/helpers/host-action.mjs": {
+        "sha256": "04594d07c2b574a23cf6a09517cadf0333dfdcf3cc32d953eaf9fa86c69c7b7e",
+        "bytes": 1343
+      },
+      "game/test/helpers/immutable-presentation-fixture.mjs": {
+        "sha256": "3f161f0ccb6b1b9a9d50fed8a1a9f336081388ed64ef738107f92258e8669dd1",
+        "bytes": 5985
+      },
+      "game/test/helpers/jpeg-image.mjs": {
+        "sha256": "a7576a36f0906468433d54bc905c9c67d3dd6e7a35ba9bfd596a14e487be80e3",
+        "bytes": 669
+      },
+      "game/test/helpers/keyboard-route.mjs": {
+        "sha256": "1e445422192044e9cbe114c09cf026a97cbd711b8225a0cc75c27f27fea114fa",
+        "bytes": 3017
+      },
+      "game/test/helpers/library-selection.mjs": {
+        "sha256": "dfeff564ef1061a58df395c7e72c85296f1ba85ec2496dbd1fa7af89b51798b1",
+        "bytes": 1812
+      },
+      "game/test/helpers/livewire-goal.mjs": {
+        "sha256": "d5ed378f9d3e8d8e641aae5926a281515a15d5c5d0edf21461539f13d59e1af8",
+        "bytes": 2404
+      },
+      "game/test/helpers/managed-idb.mjs": {
+        "sha256": "387d5f8bc31ffec0de6584b7919d38cc1253a32e19bdee0b3ba73bea20f078a5",
+        "bytes": 7733
+      },
+      "game/test/helpers/media-fixtures.mjs": {
+        "sha256": "1189b0885583cd075c63b46d48b493a61c8bf72ebe9f235a003691c3fc5931a2",
+        "bytes": 3271
+      },
+      "game/test/helpers/middle-pressure-evidence.mjs": {
+        "sha256": "3cc08c89a47c85b7387637859e4127872d48c88a89a2bdf0e4d8ba32379bd472",
+        "bytes": 4037
+      },
+      "game/test/helpers/mode-return-host-cases.mjs": {
+        "sha256": "6ddb91fd191dbea7a6879eebab16ff2636f9c550027162ea9043839861ab90c7",
+        "bytes": 25727
+      },
+      "game/test/helpers/mount-html.mjs": {
+        "sha256": "4bb218c075fe54c1110365bbd497355f07f1abb0dd721557cc0b7b358e792e68",
+        "bytes": 1789
+      },
+      "game/test/helpers/multiplayer-expansion-checkpoint.mjs": {
+        "sha256": "f8db8c221d0c57c00a01028603d7bbea0a3b0532df5bae8c64ee144dd8c857d9",
+        "bytes": 1573
+      },
+      "game/test/helpers/multiplayer-finale-qualification.mjs": {
+        "sha256": "869d6e6ca15c230e98a3454b465171346d358d1d8c990147692c1687082f3fc6",
+        "bytes": 6044
+      },
+      "game/test/helpers/multiplayer-studio-fixture.mjs": {
+        "sha256": "1f2394337dcebbf42db61ae109601d4af69198be4cd0cb7ff1a5484d49cfade3",
+        "bytes": 4264
+      },
+      "game/test/helpers/neon-goal.mjs": {
+        "sha256": "dd342696add24a0191099e86c33da9f940227f2ca4e21a1f3e0060162703d6e4",
+        "bytes": 3471
+      },
+      "game/test/helpers/official-caches.mjs": {
+        "sha256": "cd1a865c625a0bf222ed091f3198e9e8edb5a518e994192dc7ef34304a08790e",
+        "bytes": 833
+      },
+      "game/test/helpers/opening-boundary-observations.mjs": {
+        "sha256": "bfb6af5c1dbbe43e0602425adca5859af2ebc469231b8799afe70a7d677240c6",
+        "bytes": 2593
+      },
+      "game/test/helpers/opening-route-observations.mjs": {
+        "sha256": "738ea26a11cd53f099c5d2a5990020631f176f9356530930e1f563eda4e766d0",
+        "bytes": 2567
+      },
+      "game/test/helpers/pcm-wave.mjs": {
+        "sha256": "3715c9d4d7b496149b02bb4b8dd66e885caca1b2568fe703e1686c3e8dfbe842",
+        "bytes": 1379
+      },
+      "game/test/helpers/phase-goal.mjs": {
+        "sha256": "96df7272191a8fecc185517e0a7d07f532f58602a6cc89383482b6b84386adcb",
+        "bytes": 2806
+      },
+      "game/test/helpers/png-image.mjs": {
+        "sha256": "bdd88771548acce9266a085c29e5ea2351bf765ce12a39dcc0e7d09c209e9c24",
+        "bytes": 1471
+      },
+      "game/test/helpers/profile-channel-idb.mjs": {
+        "sha256": "7be33c6deaea2d85506f4108997269c5cebed72ad80c179b1e65528313c9d3c8",
+        "bytes": 3511
+      },
+      "game/test/helpers/published-replay-loader.mjs": {
+        "sha256": "31d5dadd980ccb518063ee9d160fe9990c9a68bc547490c28ac61f3f69723949",
+        "bytes": 628
+      },
+      "game/test/helpers/published-solo-loader.mjs": {
+        "sha256": "8ba636006ae81ae1754fbaba47bfb5e1518803bc3f8f53bc4da398dbf9c6d5b2",
+        "bytes": 1780
+      },
+      "game/test/helpers/raster-fixtures.mjs": {
+        "sha256": "10af8d805084718fd8d1fa826d8aaab1ab83d831483edb5676a62a868fd0ea45",
+        "bytes": 600
+      },
+      "game/test/helpers/raster-image.mjs": {
+        "sha256": "eab7e854639c38c93cf6ccf6f881b607a75695e70ea266ea1402e228e745af86",
+        "bytes": 1969
+      },
+      "game/test/helpers/recovery-media-idb.mjs": {
+        "sha256": "1a5315e74c8c8ee35425dccfaa9a9df5dd7f96f26fcb78751bcc63961a5e65b2",
+        "bytes": 4041
+      },
+      "game/test/helpers/relay-goal.mjs": {
+        "sha256": "bb38db22d3209f753efcf010b261e148e29248ffbd28a95912037daeea1392b3",
+        "bytes": 3313
+      },
+      "game/test/helpers/released-original.mjs": {
+        "sha256": "b3cf77e7172a2c4e1b67ced3d1e9d1eaf377603d3c8e1afa37b76aa484a1607e",
+        "bytes": 1401
+      },
+      "game/test/helpers/retained-edition-fixture.mjs": {
+        "sha256": "16953b8e11f7d5fa420cf235ce975c84bc6a8e672c7699bf32f16b79297214ef",
+        "bytes": 3110
+      },
+      "game/test/helpers/reward-audio-fixture.mjs": {
+        "sha256": "d1a70193c515c729b00d1894acf68e6b7718c91ba521eeb782d777c4ec542e89",
+        "bytes": 732
+      },
+      "game/test/helpers/room-service-http-fixture.mjs": {
+        "sha256": "24ac173ef6b81a7318e056cdb2f8b182aeb5ee0c04a2776bcd566c715b05c7f3",
+        "bytes": 6302
+      },
+      "game/test/helpers/route-evidence.mjs": {
+        "sha256": "e9f813c4485ac5ab4f7ddf8c15e9f2bc10a64fddd0ae5ca91ab2c156c4365bcb",
+        "bytes": 3337
+      },
+      "game/test/helpers/route-module-probe.mjs": {
+        "sha256": "f7d48e2eede0b6a64b716468abda7b13c8d870599cd7ef384e6bb0684c34577b",
+        "bytes": 534
+      },
+      "game/test/helpers/rover-goal.mjs": {
+        "sha256": "91ad8086609f7bf9bb692579b0fbd685e6200ea98a7f6268cffced1a074aa8a1",
+        "bytes": 3498
+      },
+      "game/test/helpers/sentinel-goal.mjs": {
+        "sha256": "37d457ab2b72c4985ec3a01c5f2691e99ef8abea4a3dbc38f5c2a4c795a06dae",
+        "bytes": 3261
+      },
+      "game/test/helpers/sentinel-project.mjs": {
+        "sha256": "15a2fbbc08728ed20f15d78aacfff94f47e7d2c0b03cffcf558d418358e00d4d",
+        "bytes": 977
+      },
+      "game/test/helpers/signal-goal.mjs": {
+        "sha256": "7f2cdea05fe689b262fd665437c0e98c5b45dc4ab585039af20d8041b61f93cc",
+        "bytes": 2403
+      },
+      "game/test/helpers/solo-dom.mjs": {
+        "sha256": "3d2fb5ffdbad7edffca39e2606eddbbabc4757b390c56b44497edfe679071a29",
+        "bytes": 35098
+      },
+      "game/test/helpers/solo-opening-win.mjs": {
+        "sha256": "12c38963932148a06b6c573191e0bde62ba6df88605a7cb92b11d7f3901ca86d",
+        "bytes": 1781
+      },
+      "game/test/helpers/sorting-goal.mjs": {
+        "sha256": "dfa6d623359ddf760bae5515e029efb7f94aca9e9aef1a8191cc471546070044",
+        "bytes": 2129
+      },
+      "game/test/helpers/soundtrack-albums.mjs": {
+        "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+        "bytes": 1805
+      },
+      "game/test/helpers/soundtrack-audio.mjs": {
+        "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+        "bytes": 3039
+      },
+      "game/test/helpers/soundtrack-fixtures.mjs": {
+        "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+        "bytes": 2032
+      },
+      "game/test/helpers/soundtrack-public-catalogue.mjs": {
+        "sha256": "baf4ce9fc18d111140d3bdf229ada66b0a92c03a7b0e014c4b8396a240c5eef6",
+        "bytes": 1866
+      },
+      "game/test/helpers/still-workshop.mjs": {
+        "sha256": "432fcb1feee330994a3865666402e81057155adadc82f1f5bde527822728137e",
+        "bytes": 4791
+      },
+      "game/test/helpers/survival-roundtrip.mjs": {
+        "sha256": "301b8e9a0b138b7d3a0c55e935054e87f2c83c5fd3cebf365712e535991af13c",
+        "bytes": 6240
+      },
+      "game/test/helpers/survival-suspend-process.mjs": {
+        "sha256": "5720a1e4326be80d9c96d9f4f10ace55a2c319de9e1cc2b0c48cb7b3964d57ce",
+        "bytes": 5528
+      },
+      "game/test/helpers/team-edition-host-route.mjs": {
+        "sha256": "d0797f927604b1361ca92840cd5d97600e914cd2a9643bf5eeca0b38d33fda3f",
+        "bytes": 5150
+      },
+      "game/test/helpers/team-foundation-goal.mjs": {
+        "sha256": "b1734dbb91feb354adf3b2268a59471ac5743d2a865fcb56a8bad05d3d5fae04",
+        "bytes": 3414
+      },
+      "game/test/helpers/team-foundation-route.mjs": {
+        "sha256": "0e526a0bbada12790a82ec6cdc971b64386f34671ecf5222c783841c19997adc",
+        "bytes": 2112
+      },
+      "game/test/helpers/team-material-goal.mjs": {
+        "sha256": "92f3a70585f8f6d9d93a41d90a0ec333e2080a2db36f5df813f251f1e02f79c5",
+        "bytes": 1363
+      },
+      "game/test/helpers/team-partner-return.mjs": {
+        "sha256": "b9b8420e36d990da0da713b0086bd0ddfe482218b7979dfb87bbddb1eeb1b4c7",
+        "bytes": 3635
+      },
+      "game/test/helpers/team-pressure-fixtures.mjs": {
+        "sha256": "1488f743e71f53ad6369248d36ee08900df3041fbcb2079e8ec3c51b2daaa5dc",
+        "bytes": 1233
+      },
+      "game/test/helpers/team-roamer-goal.mjs": {
+        "sha256": "e6b3eda8fc7a5c3dc799bb3de1a00d5c1b87a7518738f4e3e67485c8e8d926f3",
+        "bytes": 1345
+      },
+      "game/test/helpers/team-roamer-spatial-evidence.mjs": {
+        "sha256": "f3529cff589bfeafcb7a0382b11c12e418a115353280faf07c97e67607f7b8a5",
+        "bytes": 5752
+      },
+      "game/test/helpers/team-spatial-host-route.mjs": {
+        "sha256": "1b38ce7884831aa3c60645e3e7c2135e7109ac0d4499c67d406896693f9204b4",
+        "bytes": 4705
+      },
+      "game/test/helpers/team-specialized-host-route.mjs": {
+        "sha256": "5e8add72931a2b3bda4a758bb287c6a083c5acf147424d930fc9586504fe099f",
+        "bytes": 16255
+      },
+      "game/test/helpers/team-timed-route.mjs": {
+        "sha256": "535a116a6f8a740b333da364930fa62723d0b3d29ae483a849dcc2cf36e61e35",
+        "bytes": 7108
+      },
+      "game/test/helpers/timed-taking-evidence.mjs": {
+        "sha256": "33e8fa9320f0d9cc2dff99cf27f5dc2dba0581b42f641f9c47c2763af10cf955",
+        "bytes": 4073
+      },
+      "game/test/helpers/variety-routes.mjs": {
+        "sha256": "fa22834f6387c2d03d772d1983dbba2146c2d7c7189961aa95218699d6b3eb6b",
+        "bytes": 1426
+      },
+      "game/test/helpers/victory-story-fixture.mjs": {
+        "sha256": "7e4d1737e6fdabb98ce4c5b639c466b60f48d1a3a326eff7d977e81861cb545f",
+        "bytes": 3413
+      },
+      "game/test/helpers/wait-for.mjs": {
+        "sha256": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6",
+        "bytes": 714
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "sha256": "5c899797c4eb8f1db5563eea56538342ddb3e9276ee1b04a5a1f0f1023d2b011",
+      "bytes": 112989184
+    },
+    "owner": {
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+      "bytes": 26055
+    },
+    "helper": {
+      "sha256": "6a33ffff0e604bb8e6b2e9b3ebab921bd9f3e77ce345fc8c78058eaca0e18183",
+      "bytes": 8758
+    }
+  },
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "--test-name-pattern=Solo whole-spatial-v5 \u2192|Solo opening \u2192",
+    "game/test/localization-couch-host.test.mjs",
+    "game/test/mission-library-return-intent-host.test.mjs"
+  ],
+  "nodeVersion": "v22.22.2",
+  "platform": "darwin",
+  "tmpdir": ".cache/shard4-classic-fixture-fix-20261019T120352-tmp",
+  "timeoutSeconds": 300,
+  "cleanupGraceSeconds": 16,
+  "localStorage": {
+    "freeFloorBytes": 209715200,
+    "allocationCapBytes": 33554432,
+    "freeBeforeBytes": 372797440,
+    "minimumObservedFreeBytes": 371458048,
+    "maximumObservedFixtureBytes": 0,
+    "freeAfterBytes": 371412992,
+    "tmpEntriesAfter": 0
+  },
+  "limitations": [
+    "No full build or browser execution. Scope is five failing behaviors in two existing host-test files; native replay catalogs are outside the unchanged source binding. Test fixtures are in memory except small suspend-process JSON files.",
+    "Child execution and exact owned cleanup are bounded. Synchronous filesystem finalization is not preemptible; validation after360seconds revokes completion."
+  ],
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 4,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 89998,
+        "ppid": 89973,
+        "pgid": 89998,
+        "uid": 502,
+        "started": "Mon Oct 19 12:03:52 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap --test-name-pattern=Solo whole-spatial-v5 \u2192|Solo opening \u2192 game/test/localization-couch-host.test.mjs game/test/mission-library-return-intent-host.test.mjs",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T10:03:52.283215+00:00"
+      },
+      {
+        "pid": 90000,
+        "ppid": 89998,
+        "pgid": 89998,
+        "uid": 502,
+        "started": "Mon Oct 19 12:03:52 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 --test-name-pattern=Solo whole-spatial-v5 \u2192|Solo opening \u2192 game/test/localization-couch-host.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          89998,
+          "Mon Oct 19 12:03:52 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap --test-name-pattern=Solo whole-spatial-v5 \u2192|Solo opening \u2192 game/test/localization-couch-host.test.mjs game/test/mission-library-return-intent-host.test.mjs"
+        ],
+        "observedAt": "2026-10-19T10:03:52.321994+00:00"
+      },
+      {
+        "pid": 90000,
+        "ppid": 89998,
+        "pgid": 89998,
+        "uid": 502,
+        "started": "Mon Oct 19 12:03:52 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          89998,
+          "Mon Oct 19 12:03:52 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap --test-name-pattern=Solo whole-spatial-v5 \u2192|Solo opening \u2192 game/test/localization-couch-host.test.mjs game/test/mission-library-return-intent-host.test.mjs"
+        ],
+        "observedAt": "2026-10-19T10:03:52.582198+00:00"
+      },
+      {
+        "pid": 90007,
+        "ppid": 89998,
+        "pgid": 89998,
+        "uid": 502,
+        "started": "Mon Oct 19 12:03:52 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 --test-name-pattern=Solo whole-spatial-v5 \u2192|Solo opening \u2192 game/test/mission-library-return-intent-host.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          89998,
+          "Mon Oct 19 12:03:52 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap --test-name-pattern=Solo whole-spatial-v5 \u2192|Solo opening \u2192 game/test/localization-couch-host.test.mjs game/test/mission-library-return-intent-host.test.mjs"
+        ],
+        "observedAt": "2026-10-19T10:03:52.847117+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/shard4-classic-fixture-fix-20261019T120352.tap.txt",
+    "byteLimit": 4194304,
+    "totalBytes": 749,
+    "writtenBytes": 749,
+    "truncatedBytes": 0,
+    "tailLimit": 32768,
+    "tailBytes": 749,
+    "tailSHA256": "209eb7df19a3606c9adae6e6c9a376df451cc0d1193080aa9d6e8cd32d78b94a",
+    "tail": "TAP version 13\n1..0\n# Subtest: game/test/localization-couch-host.test.mjs\nok 1 - game/test/localization-couch-host.test.mjs\n  ---\n  duration_ms: 280.713958\n  type: 'test'\n  ...\n# Subtest: Solo whole-spatial-v5 \u2192 selected Team owner retains source route and exact mission\nok 2 - Solo whole-spatial-v5 \u2192 selected Team owner retains source route and exact mission\n  ---\n  duration_ms: 7205.530916\n  type: 'test'\n  ...\n# Subtest: Solo opening \u2192 selected Team owner retains source route and exact mission\nok 3 - Solo opening \u2192 selected Team owner retains source route and exact mission\n  ---\n  duration_ms: 4267.029834\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 12025.815583\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "after": {
+    "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+    "runtime": {
+      "sha256": "51230003c795e20e4f099d4e767faa9fef69e01415a4b7775006221e9a30e732",
+      "files": 477,
+      "bytes": 6902555
+    },
+    "tests": {
+      "game/test/localization-couch-host.test.mjs": {
+        "sha256": "dab6f4a10801861ae24e6ee3bbc4c1f886f12f5c7b16d063224e21b37d9c15a8",
+        "bytes": 5543
+      },
+      "game/test/mission-library-return-intent-host.test.mjs": {
+        "sha256": "e51a46ddfa0e3973ca45129c93bcf0b68fd85d16d912c8d3957673ef3512ae3a",
+        "bytes": 29665
+      }
+    },
+    "testHelpers": {
+      "game/test/helpers/actor-appearance-transport.mjs": {
+        "sha256": "596cd9d7298ddf3dc9bb97832ebfddf0983a35134086834139974ac88161d89a",
+        "bytes": 3096
+      },
+      "game/test/helpers/apex-field-route.mjs": {
+        "sha256": "bdb555f0960398e5f6b2054ce4e45fadcdeb8f0e59c63f884b7a55b1e9259ce0",
+        "bytes": 6198
+      },
+      "game/test/helpers/apex-goal.mjs": {
+        "sha256": "4b3840358a04b7ca9a93d528e7f75cb4baa40013a0e437d62a7397c80da53ae3",
+        "bytes": 3487
+      },
+      "game/test/helpers/apex-spatial-route.mjs": {
+        "sha256": "4afe94fda83418a8ded5c91a508d66e684eefc701a1d7e8144511ba3171f08f5",
+        "bytes": 5412
+      },
+      "game/test/helpers/audio-view-writes.mjs": {
+        "sha256": "d40b8e3c08141b4e936dac34455ff1ea75dcc4544accbf2d9bc4f2748c23244f",
+        "bytes": 1747
+      },
+      "game/test/helpers/backup-preflight.mjs": {
+        "sha256": "9e4f093f1fa8775f8388b2dc216d1b19bba24264fbde7a891e95e0103a8b0dd9",
+        "bytes": 632
+      },
+      "game/test/helpers/backup-review-readiness.mjs": {
+        "sha256": "4e6458a70f88c2278688145cc3e3f33c5197da7fa1b66692b2c00b8632dd75df",
+        "bytes": 2364
+      },
+      "game/test/helpers/backup-set-fixture.mjs": {
+        "sha256": "43983c59cfc1a70c105aa0ee375b0058a137ab7d82acd279941f6bc0bea18a4d",
+        "bytes": 5662
+      },
+      "game/test/helpers/candidate-team-picture-transport.mjs": {
+        "sha256": "6a6a42b83d113a6e5db96335b7f5bec040d7ee331b9c781b23fa53d7c399d754",
+        "bytes": 1315
+      },
+      "game/test/helpers/chapter-install-wait.mjs": {
+        "sha256": "764f39fc341ed6197ea5d0f30126cb2ac1365345a27f1e975178374f7f16f968",
+        "bytes": 1563
+      },
+      "game/test/helpers/classic-snake-v4-playthrough.mjs": {
+        "sha256": "d0752ccb884e52e36e0d5f139f98ee9dcaa38c9d11f41a8feef83257f6a76f0f",
+        "bytes": 101
+      },
+      "game/test/helpers/combat-fixture.mjs": {
+        "sha256": "a2c22fd9fae8a416e2d4e610ed23c119d58686f41358b6997b3117a02480948c",
+        "bytes": 1962
+      },
+      "game/test/helpers/combat-route-evidence.mjs": {
+        "sha256": "9cbacd318bbce09fc64d10b4355360a26ddd864c4e56ba5f50692c888dd08066",
+        "bytes": 1834
+      },
+      "game/test/helpers/committed-caches.mjs": {
+        "sha256": "21e7ad378283825915bd8c3d3d5232a44bb017d2cfacb1813019d69bfed2c763",
+        "bytes": 1027
+      },
+      "game/test/helpers/coop-host.mjs": {
+        "sha256": "2b59cce7aeea73e487754754ad95e066c5df596da2ab08b60120732d95cbcbdf",
+        "bytes": 14868
+      },
+      "game/test/helpers/coop-import-win.mjs": {
+        "sha256": "5f5656dd59a57b7e250d9b90f83a9c4f4e21959e98bef95c288c7b9f7166455f",
+        "bytes": 5425
+      },
+      "game/test/helpers/coop-presentation-fixture.mjs": {
+        "sha256": "480934679b354208d3fb9f7a893a6e90f4ac6f4a4e0fbad47edb3f5ba25bac51",
+        "bytes": 4630
+      },
+      "game/test/helpers/coop-route-search.mjs": {
+        "sha256": "6455903fc25131a355ca56d3d3dacc20f2d6549621cd9a829f74828b7450070f",
+        "bytes": 9197
+      },
+      "game/test/helpers/coop-win.mjs": {
+        "sha256": "d62a398996d395584df460bca5e088b66a982e70ee80e82ff47416e596f322b8",
+        "bytes": 6386
+      },
+      "game/test/helpers/couch-dom.mjs": {
+        "sha256": "63e5281b573f58da58c87708f0477bc92b51dfae701dafd6e187b6a5a99a34c9",
+        "bytes": 20230
+      },
+      "game/test/helpers/couch-host.mjs": {
+        "sha256": "7bdf0d7724b22ac891b7a63e5ea695624a574c97d0b3298a977e3fc0b3d8db96",
+        "bytes": 10258
+      },
+      "game/test/helpers/crosswind-goal.mjs": {
+        "sha256": "7924a4d5f3c6b96c9a9e7b6c0c82b0721c71c6402c60a42c32ead3af1e3f828f",
+        "bytes": 3493
+      },
+      "game/test/helpers/current-team-route.mjs": {
+        "sha256": "7f0fb633d61a7cd68ced61ef10e122655dbc2cb67eb0d1121eb3522646cc80f6",
+        "bytes": 3433
+      },
+      "game/test/helpers/demo-host-fixture.mjs": {
+        "sha256": "fae1e6fd7d355f527379697be17cd9de57ef9267523fd899d8a5a07ca1e636bd",
+        "bytes": 5157
+      },
+      "game/test/helpers/demo-loading-clock.mjs": {
+        "sha256": "32a09efefe9c3261b5fbfb5f872bcdd7e11a389c315b46dc53d0f26a1202121e",
+        "bytes": 1005
+      },
+      "game/test/helpers/earned-picture-fixture.mjs": {
+        "sha256": "4c8eeecd9b3209414ff2e082a06f421517a1e3332fc5d403f095ae12e1b1291f",
+        "bytes": 2528
+      },
+      "game/test/helpers/edition-provider-fixture.mjs": {
+        "sha256": "d28e3c7185a7b0287f517888e5d80fffb54696d1540e3d29d59a2b532d947482",
+        "bytes": 3399
+      },
+      "game/test/helpers/external-current-host-route.mjs": {
+        "sha256": "1007a0be58c5372e0c5660b88fe0f7788c8d1e2a36fcbf4aabd843d46e8a2cbe",
+        "bytes": 6778
+      },
+      "game/test/helpers/fpv-advanced-qualification.mjs": {
+        "sha256": "118adfa7f7bc27ff455a636ee0b960d98b781afa332204c5c899e57463f242b5",
+        "bytes": 13152
+      },
+      "game/test/helpers/fpv-advanced-regional-qualification.mjs": {
+        "sha256": "34e844c1cbf25221dbf3b5135466497baa7693093fddf771ce49a8b6f1cfde68",
+        "bytes": 9404
+      },
+      "game/test/helpers/fpv-aircraft-flight-qualification.mjs": {
+        "sha256": "0f6a19e022dfcc72a1597218421a93ab300010cd983da5d740ff48451d718b43",
+        "bytes": 6452
+      },
+      "game/test/helpers/fpv-aircraft-qualification.mjs": {
+        "sha256": "97391d3264c4e8b8402964b31058ecb4c2dc80b20bd7c65a8c832c0581d7136c",
+        "bytes": 9107
+      },
+      "game/test/helpers/fpv-aircraft-sustained-qualification.mjs": {
+        "sha256": "2b0d3290411c25dde735757e2a2597efa13c36c961dd48839c1763c93966c6e6",
+        "bytes": 16672
+      },
+      "game/test/helpers/fpv-portability.mjs": {
+        "sha256": "5d240e8cd065ef1c01f0bada60e984d7a9335fb0d94ec220bc214f34a2ebdfe0",
+        "bytes": 6422
+      },
+      "game/test/helpers/fpv-regional-real-geometry.mjs": {
+        "sha256": "85e52e017b02d2dbf4773448691eac3415eee46e93a9876bb42a0e35555c4414",
+        "bytes": 2515
+      },
+      "game/test/helpers/fracture-goal.mjs": {
+        "sha256": "ffc8b94f193e89c27d30aeabc67dd0c92f3230d69f7567bd707b0f983dfa74aa",
+        "bytes": 2734
+      },
+      "game/test/helpers/global-tools-fixture.mjs": {
+        "sha256": "dccfaac00e3ef98d3f7329a05fc45f0076ee9f162c2c9808250d65c4230af8e1",
+        "bytes": 862
+      },
+      "game/test/helpers/host-action.mjs": {
+        "sha256": "04594d07c2b574a23cf6a09517cadf0333dfdcf3cc32d953eaf9fa86c69c7b7e",
+        "bytes": 1343
+      },
+      "game/test/helpers/immutable-presentation-fixture.mjs": {
+        "sha256": "3f161f0ccb6b1b9a9d50fed8a1a9f336081388ed64ef738107f92258e8669dd1",
+        "bytes": 5985
+      },
+      "game/test/helpers/jpeg-image.mjs": {
+        "sha256": "a7576a36f0906468433d54bc905c9c67d3dd6e7a35ba9bfd596a14e487be80e3",
+        "bytes": 669
+      },
+      "game/test/helpers/keyboard-route.mjs": {
+        "sha256": "1e445422192044e9cbe114c09cf026a97cbd711b8225a0cc75c27f27fea114fa",
+        "bytes": 3017
+      },
+      "game/test/helpers/library-selection.mjs": {
+        "sha256": "dfeff564ef1061a58df395c7e72c85296f1ba85ec2496dbd1fa7af89b51798b1",
+        "bytes": 1812
+      },
+      "game/test/helpers/livewire-goal.mjs": {
+        "sha256": "d5ed378f9d3e8d8e641aae5926a281515a15d5c5d0edf21461539f13d59e1af8",
+        "bytes": 2404
+      },
+      "game/test/helpers/managed-idb.mjs": {
+        "sha256": "387d5f8bc31ffec0de6584b7919d38cc1253a32e19bdee0b3ba73bea20f078a5",
+        "bytes": 7733
+      },
+      "game/test/helpers/media-fixtures.mjs": {
+        "sha256": "1189b0885583cd075c63b46d48b493a61c8bf72ebe9f235a003691c3fc5931a2",
+        "bytes": 3271
+      },
+      "game/test/helpers/middle-pressure-evidence.mjs": {
+        "sha256": "3cc08c89a47c85b7387637859e4127872d48c88a89a2bdf0e4d8ba32379bd472",
+        "bytes": 4037
+      },
+      "game/test/helpers/mode-return-host-cases.mjs": {
+        "sha256": "6ddb91fd191dbea7a6879eebab16ff2636f9c550027162ea9043839861ab90c7",
+        "bytes": 25727
+      },
+      "game/test/helpers/mount-html.mjs": {
+        "sha256": "4bb218c075fe54c1110365bbd497355f07f1abb0dd721557cc0b7b358e792e68",
+        "bytes": 1789
+      },
+      "game/test/helpers/multiplayer-expansion-checkpoint.mjs": {
+        "sha256": "f8db8c221d0c57c00a01028603d7bbea0a3b0532df5bae8c64ee144dd8c857d9",
+        "bytes": 1573
+      },
+      "game/test/helpers/multiplayer-finale-qualification.mjs": {
+        "sha256": "869d6e6ca15c230e98a3454b465171346d358d1d8c990147692c1687082f3fc6",
+        "bytes": 6044
+      },
+      "game/test/helpers/multiplayer-studio-fixture.mjs": {
+        "sha256": "1f2394337dcebbf42db61ae109601d4af69198be4cd0cb7ff1a5484d49cfade3",
+        "bytes": 4264
+      },
+      "game/test/helpers/neon-goal.mjs": {
+        "sha256": "dd342696add24a0191099e86c33da9f940227f2ca4e21a1f3e0060162703d6e4",
+        "bytes": 3471
+      },
+      "game/test/helpers/official-caches.mjs": {
+        "sha256": "cd1a865c625a0bf222ed091f3198e9e8edb5a518e994192dc7ef34304a08790e",
+        "bytes": 833
+      },
+      "game/test/helpers/opening-boundary-observations.mjs": {
+        "sha256": "bfb6af5c1dbbe43e0602425adca5859af2ebc469231b8799afe70a7d677240c6",
+        "bytes": 2593
+      },
+      "game/test/helpers/opening-route-observations.mjs": {
+        "sha256": "738ea26a11cd53f099c5d2a5990020631f176f9356530930e1f563eda4e766d0",
+        "bytes": 2567
+      },
+      "game/test/helpers/pcm-wave.mjs": {
+        "sha256": "3715c9d4d7b496149b02bb4b8dd66e885caca1b2568fe703e1686c3e8dfbe842",
+        "bytes": 1379
+      },
+      "game/test/helpers/phase-goal.mjs": {
+        "sha256": "96df7272191a8fecc185517e0a7d07f532f58602a6cc89383482b6b84386adcb",
+        "bytes": 2806
+      },
+      "game/test/helpers/png-image.mjs": {
+        "sha256": "bdd88771548acce9266a085c29e5ea2351bf765ce12a39dcc0e7d09c209e9c24",
+        "bytes": 1471
+      },
+      "game/test/helpers/profile-channel-idb.mjs": {
+        "sha256": "7be33c6deaea2d85506f4108997269c5cebed72ad80c179b1e65528313c9d3c8",
+        "bytes": 3511
+      },
+      "game/test/helpers/published-replay-loader.mjs": {
+        "sha256": "31d5dadd980ccb518063ee9d160fe9990c9a68bc547490c28ac61f3f69723949",
+        "bytes": 628
+      },
+      "game/test/helpers/published-solo-loader.mjs": {
+        "sha256": "8ba636006ae81ae1754fbaba47bfb5e1518803bc3f8f53bc4da398dbf9c6d5b2",
+        "bytes": 1780
+      },
+      "game/test/helpers/raster-fixtures.mjs": {
+        "sha256": "10af8d805084718fd8d1fa826d8aaab1ab83d831483edb5676a62a868fd0ea45",
+        "bytes": 600
+      },
+      "game/test/helpers/raster-image.mjs": {
+        "sha256": "eab7e854639c38c93cf6ccf6f881b607a75695e70ea266ea1402e228e745af86",
+        "bytes": 1969
+      },
+      "game/test/helpers/recovery-media-idb.mjs": {
+        "sha256": "1a5315e74c8c8ee35425dccfaa9a9df5dd7f96f26fcb78751bcc63961a5e65b2",
+        "bytes": 4041
+      },
+      "game/test/helpers/relay-goal.mjs": {
+        "sha256": "bb38db22d3209f753efcf010b261e148e29248ffbd28a95912037daeea1392b3",
+        "bytes": 3313
+      },
+      "game/test/helpers/released-original.mjs": {
+        "sha256": "b3cf77e7172a2c4e1b67ced3d1e9d1eaf377603d3c8e1afa37b76aa484a1607e",
+        "bytes": 1401
+      },
+      "game/test/helpers/retained-edition-fixture.mjs": {
+        "sha256": "16953b8e11f7d5fa420cf235ce975c84bc6a8e672c7699bf32f16b79297214ef",
+        "bytes": 3110
+      },
+      "game/test/helpers/reward-audio-fixture.mjs": {
+        "sha256": "d1a70193c515c729b00d1894acf68e6b7718c91ba521eeb782d777c4ec542e89",
+        "bytes": 732
+      },
+      "game/test/helpers/room-service-http-fixture.mjs": {
+        "sha256": "24ac173ef6b81a7318e056cdb2f8b182aeb5ee0c04a2776bcd566c715b05c7f3",
+        "bytes": 6302
+      },
+      "game/test/helpers/route-evidence.mjs": {
+        "sha256": "e9f813c4485ac5ab4f7ddf8c15e9f2bc10a64fddd0ae5ca91ab2c156c4365bcb",
+        "bytes": 3337
+      },
+      "game/test/helpers/route-module-probe.mjs": {
+        "sha256": "f7d48e2eede0b6a64b716468abda7b13c8d870599cd7ef384e6bb0684c34577b",
+        "bytes": 534
+      },
+      "game/test/helpers/rover-goal.mjs": {
+        "sha256": "91ad8086609f7bf9bb692579b0fbd685e6200ea98a7f6268cffced1a074aa8a1",
+        "bytes": 3498
+      },
+      "game/test/helpers/sentinel-goal.mjs": {
+        "sha256": "37d457ab2b72c4985ec3a01c5f2691e99ef8abea4a3dbc38f5c2a4c795a06dae",
+        "bytes": 3261
+      },
+      "game/test/helpers/sentinel-project.mjs": {
+        "sha256": "15a2fbbc08728ed20f15d78aacfff94f47e7d2c0b03cffcf558d418358e00d4d",
+        "bytes": 977
+      },
+      "game/test/helpers/signal-goal.mjs": {
+        "sha256": "7f2cdea05fe689b262fd665437c0e98c5b45dc4ab585039af20d8041b61f93cc",
+        "bytes": 2403
+      },
+      "game/test/helpers/solo-dom.mjs": {
+        "sha256": "3d2fb5ffdbad7edffca39e2606eddbbabc4757b390c56b44497edfe679071a29",
+        "bytes": 35098
+      },
+      "game/test/helpers/solo-opening-win.mjs": {
+        "sha256": "12c38963932148a06b6c573191e0bde62ba6df88605a7cb92b11d7f3901ca86d",
+        "bytes": 1781
+      },
+      "game/test/helpers/sorting-goal.mjs": {
+        "sha256": "dfa6d623359ddf760bae5515e029efb7f94aca9e9aef1a8191cc471546070044",
+        "bytes": 2129
+      },
+      "game/test/helpers/soundtrack-albums.mjs": {
+        "sha256": "00d3881f8572e2b2d77bce024dbb917906e69867b10b6de500e22878381704bf",
+        "bytes": 1805
+      },
+      "game/test/helpers/soundtrack-audio.mjs": {
+        "sha256": "026a8695b8fd25042450a4df442985763b93df67dad2856085f3ccf6aa5c2dbe",
+        "bytes": 3039
+      },
+      "game/test/helpers/soundtrack-fixtures.mjs": {
+        "sha256": "19b29494ac5e17ceb6cc066d28ffb53215c43008055a9f861e21eb9769ff26d6",
+        "bytes": 2032
+      },
+      "game/test/helpers/soundtrack-public-catalogue.mjs": {
+        "sha256": "baf4ce9fc18d111140d3bdf229ada66b0a92c03a7b0e014c4b8396a240c5eef6",
+        "bytes": 1866
+      },
+      "game/test/helpers/still-workshop.mjs": {
+        "sha256": "432fcb1feee330994a3865666402e81057155adadc82f1f5bde527822728137e",
+        "bytes": 4791
+      },
+      "game/test/helpers/survival-roundtrip.mjs": {
+        "sha256": "301b8e9a0b138b7d3a0c55e935054e87f2c83c5fd3cebf365712e535991af13c",
+        "bytes": 6240
+      },
+      "game/test/helpers/survival-suspend-process.mjs": {
+        "sha256": "5720a1e4326be80d9c96d9f4f10ace55a2c319de9e1cc2b0c48cb7b3964d57ce",
+        "bytes": 5528
+      },
+      "game/test/helpers/team-edition-host-route.mjs": {
+        "sha256": "d0797f927604b1361ca92840cd5d97600e914cd2a9643bf5eeca0b38d33fda3f",
+        "bytes": 5150
+      },
+      "game/test/helpers/team-foundation-goal.mjs": {
+        "sha256": "b1734dbb91feb354adf3b2268a59471ac5743d2a865fcb56a8bad05d3d5fae04",
+        "bytes": 3414
+      },
+      "game/test/helpers/team-foundation-route.mjs": {
+        "sha256": "0e526a0bbada12790a82ec6cdc971b64386f34671ecf5222c783841c19997adc",
+        "bytes": 2112
+      },
+      "game/test/helpers/team-material-goal.mjs": {
+        "sha256": "92f3a70585f8f6d9d93a41d90a0ec333e2080a2db36f5df813f251f1e02f79c5",
+        "bytes": 1363
+      },
+      "game/test/helpers/team-partner-return.mjs": {
+        "sha256": "b9b8420e36d990da0da713b0086bd0ddfe482218b7979dfb87bbddb1eeb1b4c7",
+        "bytes": 3635
+      },
+      "game/test/helpers/team-pressure-fixtures.mjs": {
+        "sha256": "1488f743e71f53ad6369248d36ee08900df3041fbcb2079e8ec3c51b2daaa5dc",
+        "bytes": 1233
+      },
+      "game/test/helpers/team-roamer-goal.mjs": {
+        "sha256": "e6b3eda8fc7a5c3dc799bb3de1a00d5c1b87a7518738f4e3e67485c8e8d926f3",
+        "bytes": 1345
+      },
+      "game/test/helpers/team-roamer-spatial-evidence.mjs": {
+        "sha256": "f3529cff589bfeafcb7a0382b11c12e418a115353280faf07c97e67607f7b8a5",
+        "bytes": 5752
+      },
+      "game/test/helpers/team-spatial-host-route.mjs": {
+        "sha256": "1b38ce7884831aa3c60645e3e7c2135e7109ac0d4499c67d406896693f9204b4",
+        "bytes": 4705
+      },
+      "game/test/helpers/team-specialized-host-route.mjs": {
+        "sha256": "5e8add72931a2b3bda4a758bb287c6a083c5acf147424d930fc9586504fe099f",
+        "bytes": 16255
+      },
+      "game/test/helpers/team-timed-route.mjs": {
+        "sha256": "535a116a6f8a740b333da364930fa62723d0b3d29ae483a849dcc2cf36e61e35",
+        "bytes": 7108
+      },
+      "game/test/helpers/timed-taking-evidence.mjs": {
+        "sha256": "33e8fa9320f0d9cc2dff99cf27f5dc2dba0581b42f641f9c47c2763af10cf955",
+        "bytes": 4073
+      },
+      "game/test/helpers/variety-routes.mjs": {
+        "sha256": "fa22834f6387c2d03d772d1983dbba2146c2d7c7189961aa95218699d6b3eb6b",
+        "bytes": 1426
+      },
+      "game/test/helpers/victory-story-fixture.mjs": {
+        "sha256": "7e4d1737e6fdabb98ce4c5b639c466b60f48d1a3a326eff7d977e81861cb545f",
+        "bytes": 3413
+      },
+      "game/test/helpers/wait-for.mjs": {
+        "sha256": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6",
+        "bytes": 714
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "sha256": "5c899797c4eb8f1db5563eea56538342ddb3e9276ee1b04a5a1f0f1023d2b011",
+      "bytes": 112989184
+    },
+    "owner": {
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+      "bytes": 26055
+    },
+    "helper": {
+      "sha256": "6a33ffff0e604bb8e6b2e9b3ebab921bd9f3e77ce345fc8c78058eaca0e18183",
+      "bytes": 8758
+    }
+  },
+  "bindingsStable": true,
+  "stats": {
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "elapsedSeconds": 12.394258457999968,
+  "finished": "2026-10-19T10:04:04.625597+00:00"
+}

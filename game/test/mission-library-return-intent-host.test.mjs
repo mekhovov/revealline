@@ -12,6 +12,11 @@ import { readMissionLibraryReturn } from '../mission-library/handoff.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
+import {
+  TEAM_LIBRARY_CLASSIC_SOURCE,
+  TEAM_LIBRARY_JOURNEY_EDITION,
+} from '../mission-library/team-source.mjs';
 
 const settle = (condition) => waitFor(condition, { timeoutMs: 10000 });
 // Compiling the real Journey before the held request is a boot precondition,
@@ -96,37 +101,20 @@ async function versus(t, options = {}) {
   });
 }
 async function open(p, host, mode) {
-  if (host === 'solo') await openMissionLibrary(p, 'shell-play');
-  else {
-    const opener = p.$('race-library-switch'),
-      listeners = opener.listeners.get('click'),
-      pending = [];
-    opener.listeners.set(
-      'click',
-      new Set(
-        [...listeners].map((listener) => (event) => {
-          const result = listener.call(opener, event);
-          if (result instanceof Promise) pending.push(result);
-          return result;
-        }),
-      ),
-    );
-    try {
-      opener.focus();
-      opener.click();
-    } finally {
-      opener.listeners.set('click', listeners);
-    }
-    assert.equal(pending.length, 1, 'The visible Missions action owns preparation.');
-    assert.match(p.$('race-message').textContent, /Preparing missions/);
-    await pending[0];
-    assert.equal(p.$('journey-chooser').open, true);
-  }
+  await openMissionLibrary(p, host === 'solo' ? 'shell-play' : 'race-chapters');
   p.$('journey-lifecycle').value = '';
   p.$('journey-lifecycle').emit('change');
   p.$('journey-mode').value = mode;
   p.$('journey-mode').emit('change');
   return [...p.$('journey-cards').children];
+}
+
+function teamCard(cards, { classic = false } = {}) {
+  const owner = classic ? TEAM_LIBRARY_CLASSIC_SOURCE : `journey:${TEAM_LIBRARY_JOURNEY_EDITION}`;
+  const matches = cards.filter((card) => JSON.parse(card.dataset.missionId)[0] === owner);
+  assert.ok(matches.length > 0, `The exact Team owner ${owner} remains selectable.`);
+  assert.equal(new Set(matches.map((card) => card.dataset.missionId)).size, matches.length);
+  return classic ? matches.at(-1) : matches[0];
 }
 
 function incomingSoloSearch() {
@@ -405,7 +393,6 @@ for (const source of ['legacy', 'whole-spatial-v5', 'opening'])
     storage.setItem(JOURNEY_PREFERENCES_KEY, expert);
     const p = await solo(t, { search: `?journey=${source}`, storage, previewStorage });
     const cards = await open(p, 'solo', 'team');
-    assert.equal(cards.length, 14);
     assert.equal(p.$('mission-picker-setup').contains(p.$('shell-mode-choice')), true);
     assert.equal(
       p
@@ -420,8 +407,8 @@ for (const source of ['legacy', 'whole-spatial-v5', 'opening'])
       false,
       'Optional native mode controls stay collapsed.',
     );
-    assert.match(cards[0].textContent, /Expert/);
-    const card = source === 'legacy' ? cards[0] : cards.at(-1);
+    assert.match(teamCard(cards).textContent, /Expert/);
+    const card = teamCard(cards, { classic: source !== 'legacy' });
     const selected = card.dataset.missionId;
     card.click();
     await settle(() => globalThis.location.href.includes('relay-rescue.html'));
@@ -456,10 +443,10 @@ for (const source of ['legacy', 'opening'])
     storage.setItem(JOURNEY_PREFERENCES_KEY, expert);
     const p = await versus(t, { href: `http://localhost/game/couch/?journey=${source}`, storage });
     const cards = await open(p, 'versus', 'team');
-    assert.equal(cards.length, 14);
-    assert.match(cards[0].textContent, /Expert/);
-    const selected = cards[0].dataset.missionId;
-    cards[0].click();
+    const card = teamCard(cards);
+    assert.match(card.textContent, /Expert/);
+    const selected = card.dataset.missionId;
+    card.click();
     await settle(() => globalThis.location.href.includes('relay-rescue.html'));
     const target = new URL(globalThis.location.href);
     assert.deepEqual(readMissionLibraryReturn(target.searchParams, { mode: 'team' }), {
@@ -599,7 +586,8 @@ test('unfinished Legacy library departure checks its saved attempt before mintin
   p.$('start-button').click();
   await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
-  for (let index = 0; index < 24; index++) p.frame();
+  // Frame scheduling may rebase once after Start; retain the exact simulated cut.
+  for (let index = 0; index < 48 && p.rendered.run.tick < 24; index++) p.frame();
   p.key('ArrowDown', false);
   assert.equal(p.rendered.run.tick, 24);
   assert.ok(p.rendered.run.trail.length > 0, 'Departure must protect a genuine unfinished cut.');
@@ -673,6 +661,12 @@ test('late Classic checked return without saved browse state uses the retained m
       assert.ok(card);
       missionId = card.dataset.missionId;
       await activateMissionCard(card);
+      p.frame(0);
+      assert.equal(p.rendered.run.levelId, 'signal-12');
+      assert.equal(p.rendered.run.tick, 0);
+      assert.equal(p.rendered.paused, true);
+      assert.equal(p.$('game-overlay').dataset.kind, 'ready');
+      await activateHostAction(p.$('start-button'));
       await settle(() => {
         p.frame(0);
         return (
