@@ -13,7 +13,7 @@ import {
 import { createFlightRenderer } from '../../optional-practice/civilian-fpv/renderer.mjs';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from '../../optional-practice/civilian-fpv/demonstrations.mjs';
-import { replayFlight } from '../../optional-practice/civilian-fpv/model.mjs';
+import { MAX_FLIGHT_TICKS, replayFlight } from '../../optional-practice/civilian-fpv/model.mjs';
 import {
   createFlightProfileStore,
   defaultRadioProfile,
@@ -2719,4 +2719,255 @@ test('actual Academy settings keep an unsaved menu animation choice and Retry th
   assert.equal(data.get(key), 'off');
   assert.equal(status.textContent, 'Saved');
   assert.equal(retry.hidden, true);
+});
+
+async function academyTerminalLanguageFixture(t, options = {}) {
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(previous, { persist: false }));
+  const records = new Map(),
+    writes = [];
+  let lastDraw = null;
+  const h = await fixture(t, {
+    storage: {
+      getItem: (key) => records.get(key) ?? null,
+      setItem(key, value) {
+        writes.push([key, value]);
+        records.set(key, value);
+      },
+    },
+    // Keep the real scheduler/model. This long expiry fixture does not retain
+    // every renderer draw in the ordinary fixture's diagnostic array.
+    rendererFactory: () => ({
+      available: true,
+      setCourse() {},
+      setPath() {},
+      draw(state) {
+        lastDraw = state;
+      },
+      dispose() {},
+    }),
+    ...options,
+  });
+  let downloads = 0;
+  h.win.URL.createObjectURL = () => {
+    downloads++;
+    return 'blob:unexpected-terminal-recording';
+  };
+  return { ...h, records, writes, downloads: () => downloads, lastDraw: () => lastDraw };
+}
+
+function academyTerminalLanguage(h, locale, expected, proof) {
+  const outcome = h.$('complete'),
+    title = h.$('complete-title'),
+    lesson = h.$('lesson'),
+    state = h.view.snapshot(),
+    records = [...h.records],
+    writes = h.writes.length,
+    deliveries = h.deliveries.length;
+  const opener = h.$('academy-shell-action-settings');
+  h.$('academy-shell-action-menu').click();
+  assert.equal(h.$('academy-shell-home-dialog').open, true);
+  assert.equal(opener.getClientRects().length > 0, true, 'Use the visible Home Settings opener.');
+  opener.focus();
+  opener.click();
+  assert.equal(h.$('academy-shell-settings-dialog').open, true);
+  h.$('academy-settings-tab-display').click();
+  const field = h.$('language');
+  assert.equal(field.tagName, 'SELECT');
+  assert.equal(h.$('academy-shell-settings-dialog').contains(field), true);
+  field.focus();
+  field.value = locale;
+  field.emit('change');
+  assert.equal(getLocale(), locale);
+  assert.equal(h.$('complete-title').textContent, expected.title);
+  assert.equal(h.$('lesson').textContent, expected.lesson);
+  assert.equal(h.$('complete') === outcome, true, 'Keep the exact native result region.');
+  assert.equal(h.$('complete-title') === title, true, 'Keep the exact result heading.');
+  assert.equal(h.$('lesson') === lesson, true, 'Keep the exact result advice node.');
+  assert.equal(h.doc.activeElement === field, true, 'Language refresh must retain field focus.');
+  assert.equal(outcome.hidden, expected.outcomeHidden ?? false);
+  assert.equal(h.$('next').hidden, expected.nextHidden ?? true);
+  assert.equal(h.$('review').hidden, expected.reviewHidden ?? true);
+  assert.deepEqual(
+    h.view.snapshot(),
+    state,
+    'The existing language pause cannot restart a terminal flight.',
+  );
+  if (proof !== null) assert.equal(JSON.stringify(h.view.exportAttempt()), proof);
+  assert.deepEqual([...h.records], records);
+  assert.equal(
+    h.writes.length,
+    writes,
+    'Repainting terminal copy must not write records or preferences.',
+  );
+  assert.equal(h.deliveries.length, deliveries, 'Language must not readmit a result.');
+  assert.equal(h.downloads(), 0);
+  h.$('academy-shell-action-settings-back').click();
+  assert.equal(h.$('academy-shell-settings-dialog').open, false);
+  assert.equal(
+    h.doc.activeElement === opener,
+    true,
+    `Back restores #${opener.id}; received #${h.doc.activeElement?.id ?? 'none'}.`,
+  );
+  assert.deepEqual(h.view.snapshot(), state);
+}
+
+async function academyTerminalResetLanguage(h, course) {
+  h.view.reset();
+  await h.view.settled();
+  assert.equal(h.view.snapshot().status, 'disarmed');
+  assert.equal(h.view.snapshot().ticks, 0);
+  assert.equal(h.$('complete').hidden, true);
+  academyTerminalLanguage(
+    h,
+    'uk',
+    {
+      ...course.locales.uk,
+      outcomeHidden: true,
+      nextHidden: h.$('next').hidden,
+      reviewHidden: h.$('review').hidden,
+    },
+    JSON.stringify(h.view.exportAttempt()),
+  );
+  assert.equal(h.$('complete').hidden, true, 'Translation cannot revive the previous result.');
+}
+
+test('Academy expired result retains terminal meaning through native language changes after all 36000 model ticks', async (t) => {
+  const h = await academyTerminalLanguageFixture(t);
+  assert.equal(h.view.arm(), true);
+  for (
+    let frame = 0;
+    frame < MAX_FLIGHT_TICKS + 4 && h.view.snapshot().status !== 'expired';
+    frame++
+  )
+    h.tick();
+  assert.equal(h.view.snapshot().status, 'expired');
+  assert.equal(h.view.snapshot().ticks, MAX_FLIGHT_TICKS);
+  assert.equal(
+    h.renders.length,
+    0,
+    'The renderer option avoids retaining the full timed-out flight.',
+  );
+  assert.equal(h.$('complete-title').textContent, 'Flight ended');
+  assert.equal(h.$('lesson').textContent, 'Your next route starts with another try.');
+  assert.equal(h.deliveries.length, 0);
+  const proof = JSON.stringify(h.view.exportAttempt());
+  for (const [locale, title, lesson] of [
+    ['uk', 'Політ завершено', 'Новий маршрут починається з наступної спроби.'],
+    ['en', 'Flight ended', 'Your next route starts with another try.'],
+  ])
+    academyTerminalLanguage(h, locale, { title, lesson }, proof);
+  // The live owner remains expired while an unfinished recording owns the
+  // presentation. Its EOF must not borrow the live flight's terminal meaning.
+  const demonstration = FLIGHT_DEMONSTRATIONS.find(
+    (item) => item.course === 'flight-01' && item.mode === 'self-level',
+  );
+  await h.view.review({ ...demonstration, frames: demonstration.frames.slice(0, 4) });
+  h.tick(6);
+  assert.equal(h.doc.querySelector('[data-mode-play-shell]').dataset.phase, 'results');
+  assert.equal(h.lastDraw().status, 'active');
+  assert.equal(h.lastDraw().ticks, 4);
+  assert.equal(h.$('complete').hidden, true);
+  const playback = h.lastDraw();
+  for (const locale of ['uk', 'en']) {
+    academyTerminalLanguage(
+      h,
+      locale,
+      {
+        ...FLIGHT_COURSES[0].locales[locale],
+        outcomeHidden: true,
+      },
+      proof,
+    );
+    assert.deepEqual(
+      h.lastDraw(),
+      playback,
+      'Locale cannot complete or advance the four-frame recording.',
+    );
+    assert.equal(h.view.snapshot().status, 'expired', 'The actual live owner is still distinct.');
+  }
+  await academyTerminalResetLanguage(h, FLIGHT_COURSES[0]);
+});
+
+test('Academy unscored terminal retains draft-test meaning through native language changes after a real public-course objective', async (t) => {
+  const course = structuredClone(FLIGHT_COURSES[0]),
+    landing = { ...course.steps['self-level'].at(-1), ticks: 1 };
+  course.steps = { 'self-level': [landing], acro: [landing] };
+  const h = await academyTerminalLanguageFixture(t, { courses: [course], demonstrations: [] });
+  await openAcademyTuning(h);
+  await academyTuningClick(h, 'Test draft · unscored');
+  await h.view.settled();
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, false);
+  assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+  assert.equal(h.view.arm(), true);
+  h.tick(3);
+  assert.equal(h.view.snapshot().status, 'complete');
+  assert.equal(h.view.snapshot().step, 1);
+  assert.equal(h.$('complete-title').textContent, 'Draft test finished');
+  assert.equal(
+    h.$('lesson').textContent,
+    'Unscored, without a recording. Return to tuning to compare.',
+  );
+  assert.equal(h.deliveries.length, 0);
+  h.$('export-attempt').click();
+  assert.equal(h.downloads(), 0, 'An unscored draft cannot export proof.');
+  for (const [locale, title, lesson] of [
+    [
+      'uk',
+      'Перевірку чернетки завершено',
+      'Без заліку й запису. Поверніться до рейтів для порівняння.',
+    ],
+    ['en', 'Draft test finished', 'Unscored, without a recording. Return to tuning to compare.'],
+  ])
+    academyTerminalLanguage(h, locale, { title, lesson }, null);
+  assert.equal(h.records.has('revealline.fpv.tuning.v1'), false);
+  await academyTerminalResetLanguage(h, course);
+});
+
+test('Academy ordinary verified success retains current course copy and one admission across native language changes', async (t) => {
+  const h = await academyTerminalLanguageFixture(t),
+    pad = {
+      id: 'Fixture USB',
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0, 0, 0, -1],
+      buttons: [],
+    };
+  h.setPads([pad]);
+  h.$('input-source').value = 'radio';
+  h.$('input-source').emit('change');
+  await h.view.settled();
+  h.view.radio.select(0);
+  h.view.radio.setProfile(radioProfile(pad));
+  h.view.radio.verify();
+  assert.equal(h.view.arm(), true);
+  h.tick();
+  const example = FLIGHT_DEMONSTRATIONS.find(
+    (item) => item.course === 'flight-01' && item.mode === 'self-level',
+  );
+  for (const values of example.frames) {
+    pad.axes = [values[0] / 1000, values[1] / 1000, values[2] / 1000, values[3] / 500 - 1];
+    h.tick();
+  }
+  await h.view.settled();
+  assert.equal(h.view.snapshot().status, 'complete');
+  assert.equal(h.deliveries.length, 1);
+  assert.equal(h.$('next').hidden, false);
+  assert.equal(h.$('review').hidden, false);
+  const proof = JSON.stringify(h.view.exportAttempt());
+  for (const locale of ['uk', 'en'])
+    academyTerminalLanguage(
+      h,
+      locale,
+      {
+        ...FLIGHT_COURSES[0].locales[locale],
+        nextHidden: false,
+        reviewHidden: false,
+      },
+      proof,
+    );
+  assert.equal(h.deliveries.length, 1);
+  await academyTerminalResetLanguage(h, FLIGHT_COURSES[0]);
 });

@@ -1,6 +1,11 @@
 import { OVERFLIGHT_BATTLEFIELDS } from './battlefields.mjs';
 import { updateOverflightSurvivalHUD } from './survival-hud.mjs';
 import { createOverflightRecords } from './records.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { claimProfileWriter, ownsProfileWriter } from '../profile-writer.mjs';
+import { createSurvivalSuspend, SURVIVAL_SUSPEND_WRITER } from './suspend.mjs';
+import { readSurvivalSuspendPackage } from './suspend-package.mjs';
+import { createSurvivalSuspendView } from './suspend-view.mjs';
 import { createOverflightMastery } from './mastery.mjs';
 import { renderOverflightRunReport } from './mastery-view.mjs';
 import { overflightFlightProfile, overflightFlightProfileHint } from './flight-profile.mjs';
@@ -320,6 +325,15 @@ let run = null,
   controller = null,
   controllerStatus = null,
   appearance = null;
+let suspendCoordinator = null,
+  suspendView = null,
+  suspendLease = null,
+  suspendRecords = null,
+  suspendMastery = null,
+  suspendChecking = null,
+  suspendBusy = false;
+const suspendAbort = new AbortController();
+const savedResultPromises = new WeakMap();
 let preparing = false,
   retired = false,
   runtimeFailed = false,
@@ -457,6 +471,7 @@ function releaseInput() {
 }
 function activeModal() {
   return (
+    (suspendView?.dialog.open ? suspendView.dialog : null) ??
     (changeDialog?.root.open ? changeDialog.root : null) ??
     settingsTools?.root() ??
     offlinePanel?.root() ??
@@ -472,6 +487,7 @@ function hasLiveSortie() {
   );
 }
 async function confirmSortieChange() {
+  if (suspendBusy) return false;
   if (!hasLiveSortie()) return true;
   pause({ menu: false });
   return changeDialog.ask();
@@ -501,6 +517,7 @@ function reviewLabel() {
     : '';
 }
 function updateShell() {
+  suspendView?.refresh();
   touchInput?.refresh();
   shell?.update({
     phase: phaseForShell(),
@@ -516,7 +533,8 @@ function updateShell() {
       ['playing', 'paused', 'upgrade'].includes(run.phase),
   });
   if (shell) {
-    const unavailable = preparing || runtimeFailed || !renderer || contextGuard.blocked();
+    const unavailable =
+      preparing || suspendBusy || runtimeFailed || !renderer || contextGuard.blocked();
     for (const name of ['primary', 'start']) shell.elements.buttons[name].disabled = unavailable;
     if (unavailable) shell.elements.buttons.pause.disabled = true;
     if (runtimeFailed) shell.elements.buttons.primary.disabled = false;
@@ -551,7 +569,16 @@ function pause({ menu = true } = {}) {
   else if (run.phase === 'paused') showStatus(text('paused'));
 }
 function start({ retainRun = false } = {}) {
-  if (!run || !renderer || preparing || runtimeFailed || contextGuard.blocked() || retired) return;
+  if (
+    !run ||
+    !renderer ||
+    preparing ||
+    suspendBusy ||
+    runtimeFailed ||
+    contextGuard.blocked() ||
+    retired
+  )
+    return;
   if (
     !retainRun &&
     run.phase === 'ready' &&
@@ -593,6 +620,74 @@ function start({ retainRun = false } = {}) {
       audio.update(run);
     }
   });
+}
+async function ensureSuspend() {
+  if (suspendCoordinator) return suspendCoordinator;
+  if (suspendChecking) return suspendChecking;
+  suspendChecking = (async () => {
+    let packageIdentity;
+    try {
+      packageIdentity = await readSurvivalSuspendPackage({
+        documentRef: doc,
+        signal: suspendAbort.signal,
+      });
+    } catch (error) {
+      error.playerMessage = text(
+        doc.querySelector('meta[name="revealline-offline"]')
+          ? 'suspendRetryHelp'
+          : 'suspendUnavailable',
+      );
+      throw error;
+    }
+    if (retired) throw new Error('Host is closed.');
+    suspendLease ??= await claimProfileWriter(win.navigator?.locks, SURVIVAL_SUSPEND_WRITER);
+    const canWrite = () => !retired && ownsProfileWriter(suspendLease, SURVIVAL_SUSPEND_WRITER);
+    if (!canWrite()) {
+      const error = new Error('Saved flight writer unavailable.');
+      error.playerMessage = text('suspendWriter');
+      throw error;
+    }
+    suspendRecords = createOverflightRecords({ canWrite });
+    suspendMastery = createOverflightMastery({ canWrite });
+    suspendCoordinator = createSurvivalSuspend({
+      packageIdentity,
+      canWrite,
+      records: suspendRecords,
+      mastery: suspendMastery,
+    });
+    return suspendCoordinator;
+  })();
+  try {
+    return await suspendChecking;
+  } finally {
+    suspendChecking = null;
+  }
+}
+async function withSuspend(action) {
+  if (suspendBusy) throw new Error('Saved flight operation is busy.');
+  suspendBusy = true;
+  releaseInput();
+  updateShell();
+  try {
+    await new Promise((resolve) => win.setTimeout(resolve, 0));
+    if (retired) throw new Error('Host is closed.');
+    return await action();
+  } finally {
+    suspendBusy = false;
+    releaseInput();
+    updateShell();
+  }
+}
+function savedResult(owner) {
+  if (!suspendCoordinator?.owns(owner)) return null;
+  if (!savedResultPromises.has(owner)) {
+    const pending = suspendCoordinator.finish(owner);
+    savedResultPromises.set(owner, pending);
+    void pending.catch(() => {
+      if (!retired && run === owner) showStatus(text('suspendResultPending'));
+    });
+  }
+  return savedResultPromises.get(owner);
 }
 function formatTime(seconds) {
   const value = Math.floor(Math.max(0, seconds ?? 0));
@@ -866,7 +961,13 @@ function result() {
   }
   if (run.review || run.fixture) personal.textContent = text('automatedReview');
   else if (records) {
-    if (!resultRecordPromises.has(run)) resultRecordPromises.set(run, records.record(run));
+    if (!resultRecordPromises.has(run)) {
+      const saved = savedResult(run);
+      resultRecordPromises.set(
+        run,
+        saved ? saved.then((value) => value.records) : records.record(run),
+      );
+    }
     const completedRun = run;
     void resultRecordPromises
       .get(run)
@@ -919,7 +1020,15 @@ function updateRunReport() {
   };
   render(null, null);
   if (owner.review || owner.fixture || owner.raidVariant?.status === 'decision') return;
-  if (!masteryReports.has(owner)) masteryReports.set(owner, mastery.record(owner));
+  if (!masteryReports.has(owner)) {
+    const saved = savedResult(owner);
+    masteryReports.set(owner, saved ? saved.then((value) => value.mastery) : mastery.record(owner));
+    if (saved)
+      priorResultRecords.set(
+        owner,
+        saved.then((value) => ({ last: value.records.previous })),
+      );
+  }
   void Promise.all([masteryReports.get(owner), priorResultRecords.get(owner)])
     .then(([record, previous]) => {
       render(
@@ -1031,8 +1140,13 @@ async function prepare({
   nextProject = projectForSortie(nextSeed),
   launch = false,
   retainedRun = null,
+  restoreOptions = null,
+  expectedAppearance = null,
+  restoreAuthored = null,
 } = {}) {
   const nextCompiled = mode.compileProject(nextProject);
+  const nextOptions = restoreOptions ?? options;
+  let rendererTouched = false;
   if (!Number.isSafeInteger(nextSeed) || nextSeed < 1 || nextSeed > 0xffffffff)
     throw new TypeError('Invalid preview seed.');
   const ticket = ++epoch;
@@ -1060,7 +1174,7 @@ async function prepare({
       const resolvedTheme = theme.snapshot();
       const collection = selectedArcadeCollection(theme.effectivePreferences());
       const cast = castPreferences.snapshot().cast;
-      const selectedCharacter = resolveOverflightCharacter(base, options.characterId);
+      const selectedCharacter = resolveOverflightCharacter(base, nextOptions.characterId);
       const frozenIdentity = {
         manifestSha256: base.manifestSha256,
         presentation: base.source,
@@ -1079,6 +1193,16 @@ async function prepare({
         cast,
         visualIdentity: nextCompiled.visualIdentity,
       };
+      if (
+        expectedAppearance &&
+        canonicalJSON(expectedAppearance) !==
+          canonicalJSON({ projectIdentity: nextCompiled.projectIdentity, ...frozenIdentity })
+      ) {
+        const error = new Error('Saved flight appearance differs.');
+        error.playerMessage = text('suspendAppearance');
+        throw error;
+      }
+      rendererTouched = true;
       const nextRenderer = await rendererOwner.acquire(JSON.stringify(frozenIdentity), async () => {
         renderer = null;
         contextGuard.restore();
@@ -1134,6 +1258,11 @@ async function prepare({
         ...frozenIdentity,
       });
       music?.setContext(overflightMusicContext(nextCompiled, frozenIdentity));
+      if (restoreOptions) {
+        options = { ...restoreOptions };
+        selectedInstalled = restoreAuthored === true;
+        restoreSortieControls();
+      }
       project = nextProject;
       compiled = nextCompiled;
       seed = nextSeed;
@@ -1183,7 +1312,7 @@ async function prepare({
     if (ticket !== epoch || retired) return false;
     preparing = false;
     refreshCharacters();
-    runtimeFailed = true;
+    if (rendererTouched) runtimeFailed = true;
     updateShell();
     showStatus(`${text('prepareFailed')} ${error.message}`);
     throw error;
@@ -1560,6 +1689,13 @@ shell = mountModePlayShell({
   idPrefix: 'overflight',
   modeName: { en: 'FPV Survivals', uk: 'FPV Survivals' },
   locale: getLocale(),
+  homeAction:
+    mode.id === 'overflight' && !mode.prototype && !studio && !fixture && !reviewBuild
+      ? {
+          label: (language) => mode.text(language, 'suspendOpen'),
+          activate: () => suspendView?.open(),
+        }
+      : null,
   wordmarkURL: new URL('../ui/art/identity/fpv-line/wordmark.png', import.meta.url).href,
   slots: Object.fromEntries(
     ['missions', 'briefing', 'settings', 'help', 'workshop', 'results']
@@ -1588,6 +1724,7 @@ shell = mountModePlayShell({
     resume: start,
     continue: start,
     retry: () => {
+      if (suspendBusy) return;
       void prepare({ launch: true }).catch(() => {});
     },
     canResume: () =>
@@ -1617,6 +1754,77 @@ cleanup.push(() => changeDialog.dispose());
 const homeSetup = el('p', '', 'overflight-home-setup');
 homeSetup.id = 'overflight-home-setup';
 shell.elements.home.querySelector('.mode-play-mission').after(homeSetup);
+if (mode.id === 'overflight' && !mode.prototype && !studio && !fixture && !reviewBuild) {
+  suspendView = createSurvivalSuspendView({
+    document: doc,
+    opener: shell.elements.buttons['home-extra'],
+    text,
+    onOpen: () => pause({ menu: false }),
+    canSave: () => !!run && run.phase === 'paused' && !run.review && !preparing && !runtimeFailed,
+    inspect: async () => {
+      const coordinator = await ensureSuspend();
+      const state = await coordinator.read();
+      return {
+        ...state,
+        resultPending:
+          state.phase !== 'consumed' &&
+          coordinator.owns(run) &&
+          ['won', 'lost'].includes(run.phase),
+      };
+    },
+    save: async (replace) =>
+      withSuspend(async () => {
+        const coordinator = await ensureSuspend();
+        return coordinator.save(run, project, {
+          replace,
+          settings: {
+            seed: run.seed,
+            airframes: run.airframes,
+            slowResume: run.slowResume,
+            characterId: run.appearance?.characterId ?? options.characterId,
+            flightTraits: options.flightTraits,
+            authored: selectedInstalled,
+          },
+        });
+      }),
+    restore: async () =>
+      withSuspend(async () => {
+        const coordinator = await ensureSuspend();
+        const restored = await coordinator.prepareRestore();
+        if (!restored.appearance) throw new Error('Saved flight appearance is missing.');
+        await coordinator.admitRestore(restored);
+        const { seed: restoredSeed, authored, ...restoredOptions } = restored.settings;
+        const accepted = await prepare({
+          nextSeed: restoredSeed,
+          nextProject: restored.project,
+          retainedRun: restored.run,
+          restoreOptions: {
+            ...options,
+            ...restoredOptions,
+            difficulty: restored.project.difficulty,
+          },
+          expectedAppearance: restored.appearance,
+          restoreAuthored: authored,
+        });
+        if (!accepted) throw new Error('Saved flight preparation was interrupted.');
+        releaseInput();
+        return coordinator.read();
+      }),
+    recover: async () =>
+      withSuspend(async () => {
+        const coordinator = await ensureSuspend();
+        if (coordinator.owns(run) && ['won', 'lost'].includes(run.phase)) {
+          savedResultPromises.delete(run);
+          resultRecordPromises.delete(run);
+          masteryReports.delete(run);
+          await savedResult(run);
+          result();
+        } else await coordinator.recoverResults();
+        return coordinator.read();
+      }),
+  });
+}
+
 // A review URL selects a demonstration, but only an explicit action enables it.
 if (reviewBuild) {
   for (const parent of [shell.elements.content.briefing, shell.elements.content.home]) {
@@ -2471,6 +2679,12 @@ async function dispose() {
   touchInput?.dispose();
   missionChooser?.destroy();
   missionRegistry?.dispose();
+  suspendAbort.abort();
+  suspendLease?.release();
+  suspendView?.dispose();
+  suspendCoordinator?.close();
+  suspendRecords?.dispose();
+  suspendMastery?.dispose();
   mastery.dispose();
   offlinePanel?.dispose();
   modeChoices?.dispose();
@@ -2502,6 +2716,7 @@ async function dispose() {
   delete win.RevealLineOverflight;
 }
 listen(win, 'pagehide', (event) => {
+  suspendLease?.release();
   held.clear();
   clipRecorder?.cancel();
   pause({ menu: false });

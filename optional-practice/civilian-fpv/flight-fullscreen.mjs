@@ -3417,9 +3417,16 @@ if(retune&& !dialog.open)commitMenuRetune(dialog,retuneOrigin);
 }
 function open(
 origin=doc.activeElement,
-{returnLabel=t('common:navigation.backToGame'),retune=true}={},
+{returnLabel=t('common:navigation.backToGame'),retune=true,onOpeningStage}={},
 ){
 if(destroyed)return;
+const observe=onOpeningStage
+?(kind)=>{
+try{
+onOpeningStage(kind);
+}catch{}
+}
+:null;
 const changed= !dialog.open;
 const landing=retune&&changed?menuRetuneOrigin(origin):null;
 retirePendingSelection();
@@ -3432,10 +3439,16 @@ initialOpen=false;
 localizedText(back,()=>returnLabel);
 onPause?.();
 invalidateDiagrams();
+observe?.('missions-campaigns-begin');
 rebuildCampaigns();
+observe?.('missions-campaigns-end');
+observe?.('missions-render-begin');
 render();
+observe?.('missions-render-end');
 if(!dialog.open)nativeReturnFocus=doc.activeElement;
+observe?.('missions-modal-begin');
 dialog.showModal();
+observe?.('missions-modal-end');
 observeDiagrams();
 restoreSelection();
 if(landing){
@@ -3672,6 +3685,9 @@ const JOURNEY_PROFILE_DATABASE='revealline-journey-v1';
 return{JOURNEY_PROFILE_DATABASE};
 })();
 modules['game/profile-storage.mjs']=(()=>{
+const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
+const canonicalJSON=modules['game/data-json.mjs']['canonicalJSON'];
+const exactKeys=modules['game/data-json.mjs']['exactKeys'];
 const required=modules['game/data-json.mjs']['required'];
 const JOURNEY_PROFILE_DATABASE=
 modules['game/profile-database.mjs']['JOURNEY_PROFILE_DATABASE'];
@@ -3737,6 +3753,7 @@ validate,
 indexedDB=globalThis.indexedDB,
 canWrite=()=>true,
 operationTimeoutMs=1500,
+validateReceipt,
 }={}){
 required(
 typeof key==='string'&&key.length>0&&key.length<=256,
@@ -3748,6 +3765,28 @@ typeof empty==='function'&&typeof validate==='function',
 );
 required(typeof canWrite==='function','Rewards require a write guard.');
 validateTimeout(operationTimeoutMs);
+if(validateReceipt!==undefined)
+required(typeof validateReceipt==='function','A receipt validator is required.');
+const receiptKey=`${key}.receipt.v1`;
+const receiptOf=(source)=>{
+const value=boundedJSON(source,{
+maxBytes:64*1024,
+maxDepth:16,
+maxArray:256,
+maxString:32768,
+});
+exactKeys(value,['format','id','input','result'],'Profile write receipt');
+required(value.format==='profile-write-receipt.v1','Unsupported profile write receipt.');
+required(
+typeof value.id==='string'&& /^[a-zA-Z0-9._-]{1,128}$/.test(value.id),
+'Invalid profile write identity.',
+);
+required(
+typeof value.input==='string'&&value.input.length<=32768,
+'Invalid profile write input.',
+);
+return{...value,result:validateReceipt(value.result)};
+};
 let opening=null,
 connection=null,
 closed=false;
@@ -3799,7 +3838,7 @@ request.onblocked=()=>fail(new Error('Reward storage is busy in another tab.'));
 });
 return attempt.promise;
 };
-function transaction(update,{signal}={}){
+function transaction(update,{signal}={},once=null){
 let tx,pendingOpen;
 return boundedOperation(
 async(boundedSignal)=>{
@@ -3814,18 +3853,47 @@ if(update)required(canWrite(),'This tab does not own the saving lease.');
 return new Promise((resolve,reject)=>{
 tx=db.transaction('profiles',update?'readwrite':'readonly');
 const store=tx.objectStore('profiles'),
-request=store.get(key);
-let state,failure;
-request.onsuccess=()=>{
+request=store.get(key),
+receiptRequest=once?store.get(receiptKey):null;
+let state,
+result,
+failure,
+remaining=once?2:1;
+const received=()=>{
+if(--remaining)return;
 try{
 boundedSignal.throwIfAborted();
 state=request.result===undefined?empty():validate(request.result);
 if(update){
 required(canWrite(),'This tab does not own the saving lease.');
-state=validate(update(state));
+const previous=
+receiptRequest?.result===undefined
+?null
+:receiptOf(receiptRequest.result);
+if(once&&previous?.id===once.id){
+required(
+previous.input===once.input,
+'A saved result identity cannot describe a different result.',
+);
+result={state,receipt:previous.result,replayed:true};
+}else{
+const updated=update(state);
+state=validate(once?updated.state:updated);
 boundedSignal.throwIfAborted();
+required(canWrite(),'This tab does not own the saving lease.');
+if(once){
+const receipt=receiptOf({
+format:'profile-write-receipt.v1',
+...once,
+result:updated.receipt,
+});
+store.put(receipt,receiptKey);
+result={state,receipt:receipt.result,replayed:false};
+}
 store.put(state,key);
 }
+}
+result??=state;
 }catch(error){
 failure=error;
 try{
@@ -3835,7 +3903,9 @@ tx.abort();
 }
 }
 };
-tx.oncomplete=()=>resolve(state);
+request.onsuccess=received;
+if(receiptRequest)receiptRequest.onsuccess=received;
+tx.oncomplete=()=>resolve(result);
 tx.onerror=tx.onabort=()=>
 reject(failure??tx.error??new Error('Rewards could not be saved.'));
 });
@@ -3859,7 +3929,25 @@ tx.abort();
 return{
 key,
 read:(options)=>transaction(null,options),
-update:transaction,
+update:(update,options)=>transaction(update,options),
+/** Commit one result and its receipt in the same transaction. Historical
+         * profile records retain their exact schema. The caller owns attempt
+         * ordering; this receipt only deduplicates its current durable attempt. */
+updateOnce({id,input},update,options){
+required(
+typeof validateReceipt==='function',
+'This store does not accept result receipts.',
+);
+required(
+typeof id==='string'&& /^[a-zA-Z0-9._-]{1,128}$/.test(id),
+'Invalid profile write identity.',
+);
+const snapshot=canonicalJSON(
+boundedJSON(input,{maxBytes:32768,maxDepth:12,maxArray:256}),
+);
+required(snapshot.length<=32768,'Profile write input is too large.');
+return transaction(update,options,{id,input:snapshot});
+},
 close(){
 if(closed)return;
 closed=true;
