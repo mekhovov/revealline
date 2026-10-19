@@ -75,9 +75,9 @@ test('Duel mission browsing, locale and Back preserve the paused accepted round'
   assert.deepEqual(p.checkpoint(), before);
 });
 
-for (const [route, label] of [
-  ['humanoid-hunt-v1', 'Hunt lessons'],
-  ['snake-hunt-v1', 'Snake Hunt'],
+for (const [route, label, translated] of [
+  ['humanoid-hunt-v1', 'Hunt lessons · six missions', 'Уроки полювання · шість місій'],
+  ['snake-hunt-v1', 'Snake Hunt', 'Зміїне полювання'],
 ]) {
   test(`Duel retains the accepted ${route} identity instead of calling it Capture`, async (t) => {
     english(t);
@@ -89,5 +89,8 @@ for (const [route, label] of [
     assert.equal(summary.parentElement.className, 'landing-commands');
     assert.ok(summary.textContent.startsWith(`${label} · Duel · `), summary.textContent);
     assert.doesNotMatch(summary.textContent, /^Capture/);
+    setLocale('uk', { persist: false });
+    assert.ok(summary.textContent.startsWith(`${translated} · Дуель · `), summary.textContent);
+    assert.doesNotMatch(summary.textContent, /^Захоплення/);
   });
 }

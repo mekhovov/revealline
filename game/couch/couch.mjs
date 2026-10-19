@@ -1,6 +1,7 @@
 import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { huntText } from '../hunt/copy.mjs';
 import { loadBaseArtwork } from '../base-artwork.mjs';
 import { createEnemyStatsHost } from '../enemy-stats.mjs';
 import { mountEnemyStats } from '../ui/enemy-stats.mjs';
@@ -2810,8 +2811,13 @@ try {
     if (
       candidateJourney?.owns(roundRecipe?.entry) &&
       ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)
-    )
-      return `${contentText(authoredRoute.source, 'name')} · ${mode}`;
+    ) {
+      const name =
+        authoredRoute.id === 'humanoid-hunt-v1'
+          ? huntText('lessons')
+          : contentText(authoredRoute.source, 'name');
+      return `${name} · ${mode}`;
+    }
     return t('interface:captureNavigation.context', { mode });
   }
   shell = createCouchShell({
