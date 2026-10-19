@@ -10,9 +10,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { ENEMY_STATS_KEY } from '../enemy-stats.mjs';
+import { t as translate } from '../i18n/index.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
-import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { soloPage, memoryStorage, settle, installSoloStylesheets } from './helpers/solo-dom.mjs';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
@@ -21,6 +23,8 @@ const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', i
 const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
 const profileKey = 'revealline.library.dev.v1';
 const sessionKey = 'revealline.suspended.dev.v1';
+// Isolate display writes from the ordinary first-use statistics writer allocation.
+const existingEnemyStatsWriter = { [`${ENEMY_STATS_KEY}:writer`]: 'display-host-existing-writer' };
 const raw = (store) => JSON.parse(store.getItem(DISPLAY_PREFERENCES_KEY));
 let sequence = 0;
 
@@ -105,6 +109,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
   doc.parentNode = win;
   mountCouch(doc, teamHTML);
   modelTeamDialogs(doc);
+  const stopStylesheets = installSoloStylesheets(doc);
   const $ = (id) => doc.getElementById(id),
     frames = new Map(),
     originals = new Map();
@@ -152,6 +157,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
   }
   t.after(() => {
     win.emit('pagehide', { persisted: false });
+    stopStylesheets();
     frames.clear();
     for (const [key, descriptor] of originals)
       if (descriptor) Object.defineProperty(globalThis, key, descriptor);
@@ -170,6 +176,10 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
   await waitForTeamPicture(
     () => $('coop-picture-status').dataset.state === 'ready',
     () => $('coop-picture-status').textContent,
+  );
+  await waitForTeamPicture(
+    () => !!doc.documentElement.style.getPropertyValue('--iw-font-mono'),
+    () => 'The current interface stylesheet must be accepted.',
   );
   assert.equal(doc.documentElement.dataset.toolState, 'ready');
   const tick = (count = 1) => {
@@ -251,7 +261,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 }
 
 test('Solo to Team to Versus and back restores one display record without Couch profile writes', async (t) => {
-  const store = memoryStorage();
+  const store = memoryStorage(existingEnemyStatsWriter);
   saveLibrary(
     store,
     profileKey,
@@ -285,7 +295,9 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     change(page, 'coop-text-face', 'pixel');
     page.tick(120);
     assert.deepEqual(page.geometry(), geometry);
-    assert.ok(page.fonts().some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
+    const numericFont = page.doc.documentElement.style.getPropertyValue('--iw-font-mono');
+    assert.ok(numericFont, 'The accepted interface publishes its numeric font.');
+    assert.ok(page.fonts().some((font) => font.includes(numericFont)));
     change(page, 'coop-text-size', 'standard');
     page.tick(120);
     assert.notDeepEqual(page.geometry(), geometry, 'Large changes canvas label geometry');
@@ -304,7 +316,8 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       );
     }
     assert.equal(page.$('coop-clock').textContent, clock);
-    assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+    assert.equal(page.$('coop-overlay-title').textContent, translate('interface:paused3'));
+    assert.equal(page.doc.body.dataset.coopPaused, 'true');
     assert.equal(store.getItem(profileKey), profile);
     assert.equal(store.getItem(sessionKey), session);
   });
@@ -363,7 +376,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
 });
 
 test('Team system reduction preserves a raw false choice and a denied shared save stays session-only', async (t) => {
-  const store = memoryStorage(),
+  const store = memoryStorage(existingEnemyStatsWriter),
     initial = { textFace: 'plain', textSize: 'large', reducedEffects: false };
   store.setItem(DISPLAY_PREFERENCES_KEY, JSON.stringify(initial));
   const before = new Map(store.map),

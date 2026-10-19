@@ -1,0 +1,3369 @@
+TAP version 13
+# Subtest: solo Snake can finish offline setup from Ready but defers during a paused flight
+ok 1 - solo Snake can finish offline setup from Ready but defers during a paused flight
+  ---
+  duration_ms: 90.605084
+  ...
+# Subtest: solo Snake sound choice persists without enabling gore or advancing the paused round
+ok 2 - solo Snake sound choice persists without enabling gore or advancing the paused round
+  ---
+  duration_ms: 42.184042
+  ...
+# Subtest: solo accepts a changed military preset on the first Start without replacing the recipe
+ok 3 - solo accepts a changed military preset on the first Start without replacing the recipe
+  ---
+  duration_ms: 43.220625
+  ...
+# Subtest: solo Retry retains accepted artwork; a new mission Start accepts the chosen military preset
+ok 4 - solo Retry retains accepted artwork; a new mission Start accepts the chosen military preset
+  ---
+  duration_ms: 467.645
+  ...
+# Subtest: solo mission and settings menus cannot start or steer the prepared Snake boards
+ok 5 - solo mission and settings menus cannot start or steer the prepared Snake boards
+  ---
+  duration_ms: 550.459709
+  ...
+# Subtest: solo Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe
+ok 6 - solo Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe
+  ---
+  duration_ms: 43.277875
+  ...
+# Subtest: versus Snake can finish offline setup from Ready but defers during a paused flight
+ok 7 - versus Snake can finish offline setup from Ready but defers during a paused flight
+  ---
+  duration_ms: 36.8025
+  ...
+# Subtest: versus Snake sound choice persists without enabling gore or advancing the paused round
+ok 8 - versus Snake sound choice persists without enabling gore or advancing the paused round
+  ---
+  duration_ms: 29.433875
+  ...
+# Subtest: versus accepts a changed military preset on the first Start without replacing the recipe
+ok 9 - versus accepts a changed military preset on the first Start without replacing the recipe
+  ---
+  duration_ms: 33.936125
+  ...
+# Subtest: versus Retry retains accepted artwork; a new mission Start accepts the chosen military preset
+ok 10 - versus Retry retains accepted artwork; a new mission Start accepts the chosen military preset
+  ---
+  duration_ms: 433.967583
+  ...
+# Subtest: versus mission and settings menus cannot start or steer the prepared Snake boards
+ok 11 - versus mission and settings menus cannot start or steer the prepared Snake boards
+  ---
+  duration_ms: 553.268417
+  ...
+# Subtest: versus Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe
+ok 12 - versus Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe
+  ---
+  duration_ms: 50.837417
+  ...
+# Subtest: team Snake can finish offline setup from Ready but defers during a paused flight
+ok 13 - team Snake can finish offline setup from Ready but defers during a paused flight
+  ---
+  duration_ms: 34.186042
+  ...
+# Subtest: team Snake sound choice persists without enabling gore or advancing the paused round
+ok 14 - team Snake sound choice persists without enabling gore or advancing the paused round
+  ---
+  duration_ms: 31.705042
+  ...
+# Subtest: team accepts a changed military preset on the first Start without replacing the recipe
+ok 15 - team accepts a changed military preset on the first Start without replacing the recipe
+  ---
+  duration_ms: 36.335667
+  ...
+# Subtest: team Retry retains accepted artwork; a new mission Start accepts the chosen military preset
+ok 16 - team Retry retains accepted artwork; a new mission Start accepts the chosen military preset
+  ---
+  duration_ms: 434.824083
+  ...
+# Subtest: team mission and settings menus cannot start or steer the prepared Snake boards
+ok 17 - team mission and settings menus cannot start or steer the prepared Snake boards
+  ---
+  duration_ms: 553.708167
+  ...
+# Subtest: team Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe
+ok 18 - team Back leaves a paused board frozen and explicit Start/Retry retain the accepted recipe
+  ---
+  duration_ms: 41.629875
+  ...
+# Subtest: Classic Snake accepts the physical WASD key with a Ukrainian keyboard layout
+ok 19 - Classic Snake accepts the physical WASD key with a Ukrainian keyboard layout
+  ---
+  duration_ms: 32.061708
+  ...
+# Subtest: Escape pauses Classic Snake even when a settings checkbox has focus
+ok 20 - Escape pauses Classic Snake even when a settings checkbox has focus
+  ---
+  duration_ms: 31.8255
+  ...
+# Subtest: a delayed Classic Snake import cannot replace a subsequently selected Team round
+ok 21 - a delayed Classic Snake import cannot replace a subsequently selected Team round
+  ---
+  duration_ms: 43.686875
+  ...
+# Subtest: Snake offline activation accepts completed runs and refuses imports, lost ownership and departures
+ok 22 - Snake offline activation accepts completed runs and refuses imports, lost ownership and departures
+  ---
+  duration_ms: 142.763666
+  ...
+# Subtest: Living Circuit links override cosmetics and changing paused scenes preserves the attempt
+ok 23 - Living Circuit links override cosmetics and changing paused scenes preserves the attempt
+  ---
+  duration_ms: 30.380959
+  ...
+# Subtest: Snake settings have one canonical enemy appearance selector inside shared appearance controls
+ok 24 - Snake settings have one canonical enemy appearance selector inside shared appearance controls
+  ---
+  duration_ms: 54.345791
+  ...
+# Subtest: Battlefield appearance refreshes reopened mission previews and result replay without replacing the attempt
+ok 25 - Battlefield appearance refreshes reopened mission previews and result replay without replacing the attempt
+  ---
+  duration_ms: 554.679292
+  ...
+# Subtest: saved Living Circuit cosmetics apply when no explicit scene is linked
+ok 26 - saved Living Circuit cosmetics apply when no explicit scene is linked
+  ---
+  duration_ms: 29.424583
+  ...
+# Subtest: solo retries change only hazard timing while Continue preserves its accepted seed
+ok 27 - solo retries change only hazard timing while Continue preserves its accepted seed
+  ---
+  duration_ms: 38.910375
+  ...
+# Subtest: team retries change only hazard timing while Continue preserves its accepted seed
+ok 28 - team retries change only hazard timing while Continue preserves its accepted seed
+  ---
+  duration_ms: 33.823834
+  ...
+# Subtest: versus retries change only hazard timing while Continue preserves its accepted seed
+ok 29 - versus retries change only hazard timing while Continue preserves its accepted seed
+  ---
+  duration_ms: 36.090916
+  ...
+# Subtest: new attempt seed remains fresh even if a random source repeats
+ok 30 - new attempt seed remains fresh even if a random source repeats
+  ---
+  duration_ms: 0.125792
+  ...
+# Subtest: Pause offers Skip and Random only when their current setup can launch another mission
+ok 31 - Pause offers Skip and Random only when their current setup can launch another mission
+  ---
+  duration_ms: 241.731542
+  ...
+# Subtest: Choose mission card restarts the same completed mission directly
+ok 32 - Choose mission card restarts the same completed mission directly
+  ---
+  duration_ms: 436.781709
+  ...
+# Subtest: Choose mission card after a jammer crash launches a fresh schedule for the same setup
+ok 33 - Choose mission card after a jammer crash launches a fresh schedule for the same setup
+  ---
+  duration_ms: 456.805041
+  ...
+# Subtest: unfocused direct entry waits for the player and BFCache return reacquires saving ownership
+ok 34 - unfocused direct entry waits for the player and BFCache return reacquires saving ownership
+  ---
+  duration_ms: 35.246416
+  ...
+# Subtest: completed local Continue shows its verified grade while imported recordings never auto-advance
+ok 35 - completed local Continue shows its verified grade while imported recordings never auto-advance
+  ---
+  duration_ms: 225.363042
+  ...
+# Subtest: Enter on celebration actions retains the focused button action
+ok 36 - Enter on celebration actions retains the focused button action
+  ---
+  duration_ms: 134.055125
+  ...
+# Subtest: direct entry needs no briefing and ordinary defeat replays then retries within three seconds
+ok 37 - direct entry needs no briefing and ordinary defeat replays then retries within three seconds
+  ---
+  duration_ms: 128.13975
+  ...
+# Measured default defeat-to-retry: 3000 ms, 0 activations (50 ms host frame).
+# Subtest: victory keeps full celebration then countdown; Next during celebration launches in one activation
+ok 38 - victory keeps full celebration then countdown; Next during celebration launches in one activation
+  ---
+  duration_ms: 385.117125
+  ...
+# Subtest: Home and backgrounding permanently cancel automatic progression for the completed attempt
+ok 39 - Home and backgrounding permanently cancel automatic progression for the completed attempt
+  ---
+  duration_ms: 365.776667
+  ...
+# Subtest: dpad navigation during celebration cancels the later countdown without rearming it
+ok 40 - dpad navigation during celebration cancels the later countdown without rearming it
+  ---
+  duration_ms: 187.238542
+  ...
+# Subtest: stick navigation during celebration cancels the later countdown without rearming it
+ok 41 - stick navigation during celebration cancels the later countdown without rearming it
+  ---
+  duration_ms: 179.929291
+  ...
+# Subtest: controller Menu during celebration stops automatic progression and opens results
+ok 42 - controller Menu during celebration stops automatic progression and opens results
+  ---
+  duration_ms: 177.36125
+  ...
+# Subtest: controller Menu during replay stops automatic progression and opens results
+ok 43 - controller Menu during replay stops automatic progression and opens results
+  ---
+  duration_ms: 147.922
+  ...
+# Subtest: controller steering during live play still moves immediately and Confirm launches Next during celebration
+ok 44 - controller steering during live play still moves immediately and Confirm launches Next during celebration
+  ---
+  duration_ms: 176.238625
+  ...
+# Subtest: selecting a new library mission launches directly while retaining the older Workshop save
+ok 45 - selecting a new library mission launches directly while retaining the older Workshop save
+  ---
+  duration_ms: 438.507
+  ...
+# Subtest: Snake demo actions follow mode changes and stay outside excluded menu navigation
+ok 46 - Snake demo actions follow mode changes and stay outside excluded menu navigation
+  ---
+  duration_ms: 75.671084
+  ...
+# Subtest: community Snake keeps both demo actions hidden even in Solo
+ok 47 - community Snake keeps both demo actions hidden even in Solo
+  ---
+  duration_ms: 6.205084
+  ...
+# Subtest: the shared keyboard navigator moves menu focus without leaking directional input into Snake
+ok 48 - the shared keyboard navigator moves menu focus without leaking directional input into Snake
+  ---
+  duration_ms: 40.627958
+  ...
+# Subtest: Snake Home identifies the accepted solo/campaign round without starting it
+ok 49 - Snake Home identifies the accepted solo/campaign round without starting it
+  ---
+  duration_ms: 41.531625
+  ...
+# Subtest: Snake Home identifies the accepted team/campaign round without starting it
+ok 50 - Snake Home identifies the accepted team/campaign round without starting it
+  ---
+  duration_ms: 35.72025
+  ...
+# Subtest: Snake Home identifies the accepted versus/campaign round without starting it
+ok 51 - Snake Home identifies the accepted versus/campaign round without starting it
+  ---
+  duration_ms: 30.455958
+  ...
+# Subtest: Snake Home identifies the accepted solo/endless round without starting it
+ok 52 - Snake Home identifies the accepted solo/endless round without starting it
+  ---
+  duration_ms: 38.951667
+  ...
+# Subtest: Snake Home identifies the accepted versus/endless&duel=score round without starting it
+ok 53 - Snake Home identifies the accepted versus/endless&duel=score round without starting it
+  ---
+  duration_ms: 42.784166
+  ...
+# Subtest: Snake Home identifies the accepted versus/endless&duel=survival round without starting it
+ok 54 - Snake Home identifies the accepted versus/endless&duel=survival round without starting it
+  ---
+  duration_ms: 22.435833
+  ...
+# Subtest: the Snake library shows all missions and filters without changing the paused attempt
+ok 55 - the Snake library shows all missions and filters without changing the paused attempt
+  ---
+  duration_ms: 810.33425
+  ...
+# Subtest: solo Snake mission recovery preserves the paused native attempt and its accepted host
+ok 56 - solo Snake mission recovery preserves the paused native attempt and its accepted host
+  ---
+  duration_ms: 834.16475
+  ...
+# Subtest: versus Snake mission recovery preserves the paused native attempt and its accepted host
+ok 57 - versus Snake mission recovery preserves the paused native attempt and its accepted host
+  ---
+  duration_ms: 777.385667
+  ...
+# Subtest: team Snake mission recovery preserves the paused native attempt and its accepted host
+ok 58 - team Snake mission recovery preserves the paused native attempt and its accepted host
+  ---
+  duration_ms: 764.430292
+  ...
+# Subtest: Snake library mode selection launches the exact chosen Team mission with one activation
+ok 59 - Snake library mode selection launches the exact chosen Team mission with one activation
+  ---
+  duration_ms: 1897.975333
+  ...
+# Subtest: Snake team navigation context localizes without changing the paused owner or selected library mode
+ok 60 - Snake team navigation context localizes without changing the paused owner or selected library mode
+  ---
+  duration_ms: 1490.407875
+  ...
+# Subtest: Snake versus navigation context localizes without changing the paused owner or selected library mode
+ok 61 - Snake versus navigation context localizes without changing the paused owner or selected library mode
+  ---
+  duration_ms: 1512.242458
+  ...
+# Subtest: a mode change in Snake rules remains selected when returning to the existing library
+ok 62 - a mode change in Snake rules remains selected when returning to the existing library
+  ---
+  duration_ms: 1154.06375
+  ...
+# Subtest: Snake mission information and copied links follow the browsed row without selecting an attempt
+ok 63 - Snake mission information and copied links follow the browsed row without selecting an attempt
+  ---
+  duration_ms: 438.662542
+  ...
+# Subtest: final-moves playback freezes behind a newer menu and only returns to Results while visible
+ok 64 - final-moves playback freezes behind a newer menu and only returns to Results while visible
+  ---
+  duration_ms: 45.125833
+  ...
+# Subtest: results replay the last eight moves automatically without hiding actions or changing the saved attempt
+ok 65 - results replay the last eight moves automatically without hiding actions or changing the saved attempt
+  ---
+  duration_ms: 39.835625
+  ...
+# Subtest: Next retires the completed result and directly launches the ordered next mission
+ok 66 - Next retires the completed result and directly launches the ordered next mission
+  ---
+  duration_ms: 42.359917
+  ...
+# Subtest: legacy migration preserves a verified historical seed
+ok 67 - legacy migration preserves a verified historical seed
+  ---
+  duration_ms: 40.695209
+  ...
+# Subtest: Continue rejects retired unprofiled recipes in the fresh campaign
+ok 68 - Continue rejects retired unprofiled recipes in the fresh campaign
+  ---
+  duration_ms: 35.916209
+  ...
+# Subtest: Continue rejects retired local-v1 recipes in the fresh campaign
+ok 69 - Continue rejects retired local-v1 recipes in the fresh campaign
+  ---
+  duration_ms: 35.068125
+  ...
+# Subtest: Import rejects retired unprofiled recipes in the fresh campaign
+ok 70 - Import rejects retired unprofiled recipes in the fresh campaign
+  ---
+  duration_ms: 36.691917
+  ...
+# Subtest: Import rejects retired local-v1 recipes in the fresh campaign
+ok 71 - Import rejects retired local-v1 recipes in the fresh campaign
+  ---
+  duration_ms: 37.025791
+  ...
+# Subtest: fresh campaign ignores the old Continue channel and preserves its original bytes
+ok 72 - fresh campaign ignores the old Continue channel and preserves its original bytes
+  ---
+  duration_ms: 32.965958
+  ...
+# Subtest: a self-consistent same-ID old recipe cannot bypass exact archived admission
+ok 73 - a self-consistent same-ID old recipe cannot bypass exact archived admission
+  ---
+  duration_ms: 36.016917
+  ...
+# Subtest: legacy migration rejects a tampered historical seed and keeps the current round
+ok 74 - legacy migration rejects a tampered historical seed and keeps the current round
+  ---
+  duration_ms: 35.303375
+  ...
+# Subtest: a scheduled terminal result cannot be restored with a later host clock
+ok 75 - a scheduled terminal result cannot be restored with a later host clock
+  ---
+  duration_ms: 32.086708
+  ...
+# Subtest: an input-limit result may restore between its final two scheduled grid times
+ok 76 - an input-limit result may restore between its final two scheduled grid times
+  ---
+  duration_ms: 274.526166
+  ...
+# Subtest: a V2 round saves its accepted timeline and Continue launches directly
+ok 77 - a V2 round saves its accepted timeline and Continue launches directly
+  ---
+  duration_ms: 64.821834
+  ...
+# Subtest: a valid match cannot be imported under a different host seat arrangement
+ok 78 - a valid match cannot be imported under a different host seat arrangement
+  ---
+  duration_ms: 50.4545
+  ...
+# Subtest: Classic flight animation follows play, pause and effective Reduced effects without stopping movement
+ok 79 - Classic flight animation follows play, pause and effective Reduced effects without stopping movement
+  ---
+  duration_ms: 44.022917
+  ...
+# Subtest: a failed Versus score board freezes its flight clock while the surviving board continues
+ok 80 - a failed Versus score board freezes its flight clock while the surviving board continues
+  ---
+  duration_ms: 48.943875
+  ...
+# Subtest: Snake nested tools preserve iframe input and controller Back returns to the exact paused Settings owner
+ok 81 - Snake nested tools preserve iframe input and controller Back returns to the exact paused Settings owner
+  ---
+  duration_ms: 38.291708
+  ...
+# Subtest: Snake About returns to its visible panel after a compact resize without advancing the paused attempt
+ok 82 - Snake About returns to its visible panel after a compact resize without advancing the paused attempt
+  ---
+  duration_ms: 38.537083
+  ...
+# Subtest: Snake reading controls update the shared display owner without replacing or advancing an attempt
+ok 83 - Snake reading controls update the shared display owner without replacing or advancing an attempt
+  ---
+  duration_ms: 32.241708
+  ...
+# Subtest: actual Snake links and optional SIM launch retain an explicit native review without changing recipes
+ok 84 - actual Snake links and optional SIM launch retain an explicit native review without changing recipes
+  ---
+  duration_ms: 176.104458
+  ...
+# Subtest: solo keeps accepted chapter materials through Retry, export and Continue after preferences change
+ok 85 - solo keeps accepted chapter materials through Retry, export and Continue after preferences change
+  ---
+  duration_ms: 71.172916
+  ...
+# Subtest: versus keeps accepted chapter materials through Retry, export and Continue after preferences change
+ok 86 - versus keeps accepted chapter materials through Retry, export and Continue after preferences change
+  ---
+  duration_ms: 69.955625
+  ...
+# Subtest: team keeps accepted chapter materials through Retry, export and Continue after preferences change
+ok 87 - team keeps accepted chapter materials through Retry, export and Continue after preferences change
+  ---
+  duration_ms: 67.010625
+  ...
+# Subtest: automatic defeat retry retains accepted artwork while renewing only the hazard schedule
+ok 88 - automatic defeat retry retains accepted artwork while renewing only the hazard schedule
+  ---
+  duration_ms: 85.0445
+  ...
+# Subtest: keyboard defeat retry retains accepted artwork while renewing only the hazard schedule
+ok 89 - keyboard defeat retry retains accepted artwork while renewing only the hazard schedule
+  ---
+  duration_ms: 74.829333
+  ...
+# Subtest: controller defeat retry retains accepted artwork while renewing only the hazard schedule
+ok 90 - controller defeat retry retains accepted artwork while renewing only the hazard schedule
+  ---
+  duration_ms: 74.9735
+  ...
+# Subtest: continuation-button defeat retry retains accepted artwork while renewing only the hazard schedule
+ok 91 - continuation-button defeat retry retains accepted artwork while renewing only the hazard schedule
+  ---
+  duration_ms: 73.678708
+  ...
+# Subtest: celebration Retry retains accepted artwork and launches the same mission immediately
+ok 92 - celebration Retry retains accepted artwork and launches the same mission immediately
+  ---
+  duration_ms: 152.857458
+  ...
+# Subtest: a forged chapter pin is rejected before replacing the active mission or save
+ok 93 - a forged chapter pin is rejected before replacing the active mission or save
+  ---
+  duration_ms: 30.944084
+  ...
+# Subtest: local-burst-v1 host reception reflects actual coverage instead of a distant transmitter phase
+ok 94 - local-burst-v1 host reception reflects actual coverage instead of a distant transmitter phase
+  ---
+  duration_ms: 25.867375
+  ...
+# Subtest: local-burst-v2 host reception reflects actual coverage instead of a distant transmitter phase
+ok 95 - local-burst-v2 host reception reflects actual coverage instead of a distant transmitter phase
+  ---
+  duration_ms: 25.288958
+  ...
+# Subtest: reception live status writes only changed text and accessible labels
+ok 96 - reception live status writes only changed text and accessible labels
+  ---
+  duration_ms: 27.725917
+  ...
+# Subtest: en pause announcements update only when their message changes
+ok 97 - en pause announcements update only when their message changes
+  ---
+  duration_ms: 37.848
+  ...
+# Subtest: en completed grade and session-only saving status stay quiet between changes
+ok 98 - en completed grade and session-only saving status stay quiet between changes
+  ---
+  duration_ms: 147.36625
+  ...
+# Subtest: uk pause announcements update only when their message changes
+ok 99 - uk pause announcements update only when their message changes
+  ---
+  duration_ms: 35.289417
+  ...
+# Subtest: uk completed grade and session-only saving status stay quiet between changes
+ok 100 - uk completed grade and session-only saving status stay quiet between changes
+  ---
+  duration_ms: 144.429
+  ...
+# Subtest: Versus reception belongs to each board rather than the most exposed opponent
+ok 101 - Versus reception belongs to each board rather than the most exposed opponent
+  ---
+  duration_ms: 24.702583
+  ...
+# Subtest: Team exposes one shared reception status when either living head enters local coverage
+ok 102 - Team exposes one shared reception status when either living head enters local coverage
+  ---
+  duration_ms: 24.714834
+  ...
+# Subtest: original unprofiled jammer remains broadcast in the host instead of receiving invented range rules
+ok 103 - original unprofiled jammer remains broadcast in the host instead of receiving invented range rules
+  ---
+  duration_ms: 23.8115
+  ...
+# Subtest: solo Snake uses shared touch settings and turns on pointermove before release
+ok 104 - solo Snake uses shared touch settings and turns on pointermove before release
+  ---
+  duration_ms: 35.071917
+  ...
+# Subtest: team Snake uses shared touch settings and turns on pointermove before release
+ok 105 - team Snake uses shared touch settings and turns on pointermove before release
+  ---
+  duration_ms: 37.692625
+  ...
+# Subtest: versus Snake uses shared touch settings and turns on pointermove before release
+ok 106 - versus Snake uses shared touch settings and turns on pointermove before release
+  ---
+  duration_ms: 33.507334
+  ...
+# Subtest: Snake releases gestures when paused, resized and rebuilt; retired surfaces cannot steer
+ok 107 - Snake releases gestures when paused, resized and rebuilt; retired surfaces cannot steer
+  ---
+  duration_ms: 41.019375
+  ...
+# Subtest: Snake board gestures obey stick/swipe preferences and Team preserves separate steering seats
+ok 108 - Snake board gestures obey stick/swipe preferences and Team preserves separate steering seats
+  ---
+  duration_ms: 69.671292
+  ...
+# Subtest: Snake D-pad steers on press and slide without duplicating its compatibility click
+ok 109 - Snake D-pad steers on press and slide without duplicating its compatibility click
+  ---
+  duration_ms: 35.160292
+  ...
+# Subtest: Snake reveals shared controls for real touch on hybrid devices and hides them for keyboard or pause
+ok 110 - Snake reveals shared controls for real touch on hybrid devices and hides them for keyboard or pause
+  ---
+  duration_ms: 35.897083
+  ...
+# Subtest: toybox changes paused scenery without a new attempt
+ok 111 - toybox changes paused scenery without a new attempt
+  ---
+  duration_ms: 32.6005
+  ...
+# Subtest: atmospheric-ruins changes paused scenery without a new attempt
+ok 112 - atmospheric-ruins changes paused scenery without a new attempt
+  ---
+  duration_ms: 33.930666
+  ...
+# Subtest: night-arcade changes paused scenery without a new attempt
+ok 113 - night-arcade changes paused scenery without a new attempt
+  ---
+  duration_ms: 30.6735
+  ...
+# Subtest: fpv-battlefield changes paused scenery without a new attempt
+ok 114 - fpv-battlefield changes paused scenery without a new attempt
+  ---
+  duration_ms: 33.273375
+  ...
+# Subtest: solo operation entry admits authored Mission Race and retains objectives through retry
+ok 115 - solo operation entry admits authored Mission Race and retains objectives through retry
+  ---
+  duration_ms: 113.204625
+  ...
+# Subtest: team operation entry admits authored Mission Race and retains objectives through retry
+ok 116 - team operation entry admits authored Mission Race and retains objectives through retry
+  ---
+  duration_ms: 110.512959
+  ...
+# Subtest: versus operation entry admits authored Mission Race and retains objectives through retry
+ok 117 - versus operation entry admits authored Mission Race and retains objectives through retry
+  ---
+  duration_ms: 117.203167
+  ...
+# Subtest: solo restores accepted chapter artwork with an exact current campaign recipe
+ok 118 - solo restores accepted chapter artwork with an exact current campaign recipe
+  ---
+  duration_ms: 44.01775
+  ...
+# Subtest: versus restores accepted chapter artwork with an exact current campaign recipe
+ok 119 - versus restores accepted chapter artwork with an exact current campaign recipe
+  ---
+  duration_ms: 48.097875
+  ...
+# Subtest: team restores accepted chapter artwork with an exact current campaign recipe
+ok 120 - team restores accepted chapter artwork with an exact current campaign recipe
+  ---
+  duration_ms: 42.243208
+  ...
+# Subtest: a verified session-only clear keeps its stars and localized visible saving notice without blocking Retry
+ok 121 - a verified session-only clear keeps its stars and localized visible saving notice without blocking Retry
+  ---
+  duration_ms: 288.328
+  ...
+# Subtest: en/solo an older optional courier never replaces the required-target HUD after a catch
+ok 122 - en/solo an older optional courier never replaces the required-target HUD after a catch
+  ---
+  duration_ms: 62.388958
+  ...
+# Subtest: en/team an older optional courier never replaces the required-target HUD after a catch
+ok 123 - en/team an older optional courier never replaces the required-target HUD after a catch
+  ---
+  duration_ms: 51.445375
+  ...
+# Subtest: en/versus an older optional courier never replaces the required-target HUD after a catch
+ok 124 - en/versus an older optional courier never replaces the required-target HUD after a catch
+  ---
+  duration_ms: 54.893417
+  ...
+# Subtest: uk/solo an older optional courier never replaces the required-target HUD after a catch
+ok 125 - uk/solo an older optional courier never replaces the required-target HUD after a catch
+  ---
+  duration_ms: 54.05525
+  ...
+# Subtest: uk/team an older optional courier never replaces the required-target HUD after a catch
+ok 126 - uk/team an older optional courier never replaces the required-target HUD after a catch
+  ---
+  duration_ms: 50.029416
+  ...
+# Subtest: uk/versus an older optional courier never replaces the required-target HUD after a catch
+ok 127 - uk/versus an older optional courier never replaces the required-target HUD after a catch
+  ---
+  duration_ms: 52.710875
+  ...
+# Subtest: en the opening turn cue applies to touch and controller without requiring a keyboard
+ok 128 - en the opening turn cue applies to touch and controller without requiring a keyboard
+  ---
+  duration_ms: 31.234458
+  ...
+# Subtest: uk the opening turn cue applies to touch and controller without requiring a keyboard
+ok 129 - uk the opening turn cue applies to touch and controller without requiring a keyboard
+  ---
+  duration_ms: 32.201958
+  ...
+# Subtest: transient status wrapping never inherits the operation-only rule that hides the catch quota
+ok 130 - transient status wrapping never inherits the operation-only rule that hides the catch quota
+  ---
+  duration_ms: 0.764667
+  ...
+# Subtest: Snake live language refresh translates every stats view without changing the paused attempt
+ok 131 - Snake live language refresh translates every stats view without changing the paused attempt
+  ---
+  duration_ms: 52.618958
+  ...
+# Subtest: actual Snake settings keep an unsaved menu animation choice and Retry the same checkbox
+ok 132 - actual Snake settings keep an unsaved menu animation choice and Retry the same checkbox
+  ---
+  duration_ms: 30.871334
+  ...
+# Subtest: solo native presets preview without writes and Apply/Undo retain the host display writer
+ok 133 - solo native presets preview without writes and Apply/Undo retain the host display writer
+  ---
+  duration_ms: 25.971959
+  ...
+# Subtest: team native presets preview without writes and Apply/Undo retain the host display writer
+ok 134 - team native presets preview without writes and Apply/Undo retain the host display writer
+  ---
+  duration_ms: 5.963
+  ...
+# Subtest: versus native presets preview without writes and Apply/Undo retain the host display writer
+ok 135 - versus native presets preview without writes and Apply/Undo retain the host display writer
+  ---
+  duration_ms: 4.313625
+  ...
+# Subtest: failed silent preset saving retains session choices, localized feedback and original Undo through Retry
+ok 136 - failed silent preset saving retains session choices, localized feedback and original Undo through Retry
+  ---
+  duration_ms: 9.593458
+  ...
+# Subtest: failed QuotaExceededError preset saving retains session choices, localized feedback and original Undo through Retry
+ok 137 - failed QuotaExceededError preset saving retains session choices, localized feedback and original Undo through Retry
+  ---
+  duration_ms: 6.66625
+  ...
+# Subtest: a newer explicit same-value display edit keeps its whole record while Undo restores only owned menu motion
+ok 138 - a newer explicit same-value display edit keeps its whole record while Undo restores only owned menu motion
+  ---
+  duration_ms: 7.073875
+  ...
+# Subtest: a newer explicit same-value menu choice stays while Undo restores only owned display fields
+ok 139 - a newer explicit same-value menu choice stays while Undo restores only owned display fields
+  ---
+  duration_ms: 6.450042
+  ...
+# Subtest: newer other-tab values revoke Undo and stale events cannot revoke current ownership
+ok 140 - newer other-tab values revoke Undo and stale events cannot revoke current ownership
+  ---
+  duration_ms: 7.354084
+  ...
+# Subtest: system reduced motion remains active through preset Undo without being persisted as player intent
+ok 141 - system reduced motion remains active through preset Undo without being persisted as player intent
+  ---
+  duration_ms: 7.284375
+  ...
+# Subtest: a reentrant newer menu choice during display Undo is preserved
+ok 142 - a reentrant newer menu choice during display Undo is preserved
+  ---
+  duration_ms: 6.086417
+  ...
+# Subtest: Clear text never retries an unrelated failed menu choice
+ok 143 - Clear text never retries an unrelated failed menu choice
+  ---
+  duration_ms: 7.233667
+  ...
+# Subtest: a persisted page return retires Undo even when missed other-tab choices return to the same values
+ok 144 - a persisted page return retires Undo even when missed other-tab choices return to the same values
+  ---
+  duration_ms: 9.782667
+  ...
+# Subtest: solo Apply preserves a newer explicit menu choice true during the display callback
+ok 145 - solo Apply preserves a newer explicit menu choice true during the display callback
+  ---
+  duration_ms: 7.491209
+  ...
+# Subtest: solo Apply preserves a newer explicit menu choice false during the display callback
+ok 146 - solo Apply preserves a newer explicit menu choice false during the display callback
+  ---
+  duration_ms: 7.659375
+  ...
+# Subtest: team Apply preserves a newer explicit menu choice true during the display callback
+ok 147 - team Apply preserves a newer explicit menu choice true during the display callback
+  ---
+  duration_ms: 4.232417
+  ...
+# Subtest: team Apply preserves a newer explicit menu choice false during the display callback
+ok 148 - team Apply preserves a newer explicit menu choice false during the display callback
+  ---
+  duration_ms: 5.402542
+  ...
+# Subtest: versus Apply preserves a newer explicit menu choice true during the display callback
+ok 149 - versus Apply preserves a newer explicit menu choice true during the display callback
+  ---
+  duration_ms: 3.971333
+  ...
+# Subtest: versus Apply preserves a newer explicit menu choice false during the display callback
+ok 150 - versus Apply preserves a newer explicit menu choice false during the display callback
+  ---
+  duration_ms: 5.14325
+  ...
+# Subtest: Retry does not save a newer failed menu choice true made during its display callback
+ok 151 - Retry does not save a newer failed menu choice true made during its display callback
+  ---
+  duration_ms: 8.795833
+  ...
+# Subtest: Retry does not save a newer failed menu choice false made during its display callback
+ok 152 - Retry does not save a newer failed menu choice false made during its display callback
+  ---
+  duration_ms: 6.941458
+  ...
+# Subtest: Retry preserves a pre-existing newer failed menu choice true and its partial status
+ok 153 - Retry preserves a pre-existing newer failed menu choice true and its partial status
+  ---
+  duration_ms: 11.422958
+  ...
+# Subtest: Retry preserves a pre-existing newer failed menu choice false and its partial status
+ok 154 - Retry preserves a pre-existing newer failed menu choice false and its partial status
+  ---
+  duration_ms: 17.927542
+  ...
+# Subtest: menu-only Retry preserves a newer failed display record and reports its partial scope
+ok 155 - menu-only Retry preserves a newer failed display record and reports its partial scope
+  ---
+  duration_ms: 9.959958
+  ...
+# Subtest: fresh Apply records display supersession inside its own callback and keeps menu-only Undo
+ok 156 - fresh Apply records display supersession inside its own callback and keeps menu-only Undo
+  ---
+  duration_ms: 7.508792
+  ...
+# Subtest: fresh Apply records menu supersession inside its own callback and keeps display-only Undo
+ok 157 - fresh Apply records menu supersession inside its own callback and keeps display-only Undo
+  ---
+  duration_ms: 8.354125
+  ...
+# Subtest: Creator retains its menu-motion control and pending choice until Retry verifies persistence
+ok 158 - Creator retains its menu-motion control and pending choice until Retry verifies persistence
+  ---
+  duration_ms: 8.322875
+  ...
+# Subtest: Custom Solo shows only real landing actions and retains actual settings controls
+ok 159 - Custom Solo shows only real landing actions and retains actual settings controls
+  ---
+  duration_ms: 1.81475
+  ...
+# Subtest: every Custom dialog pauses the real scene; compact Back returns categories before closing
+ok 160 - every Custom dialog pauses the real scene; compact Back returns categories before closing
+  ---
+  duration_ms: 2.588459
+  ...
+# Subtest: mission replacement Cancel is inert and stale guards cannot launch
+ok 161 - mission replacement Cancel is inert and stale guards cannot launch
+  ---
+  duration_ms: 2.556167
+  ...
+# Subtest: qualified Versus URLs preserve exact edition and mission; unsupported bundles expose no handoff
+ok 162 - qualified Versus URLs preserve exact edition and mission; unsupported bundles expose no handoff
+  ---
+  duration_ms: 1.713417
+  ...
+# Subtest: existing Plain/Large/reduced reading policy is adopted without writes, and display changes are explicit
+ok 163 - existing Plain/Large/reduced reading policy is adopted without writes, and display changes are explicit
+  ---
+  duration_ms: 1.259583
+  ...
+# Subtest: shared fullscreen controls synchronize, and Escape exits without leaving the menu
+ok 164 - shared fullscreen controls synchronize, and Escape exits without leaving the menu
+  ---
+  duration_ms: 1.469042
+  ...
+# Subtest: semantic home arrows reach each action and mode without entering closed settings
+ok 165 - semantic home arrows reach each action and mode without entering closed settings
+  ---
+  duration_ms: 4.619166
+  ...
+# Subtest: successful Install focuses Play only while it still owns the foreground interaction
+ok 166 - successful Install focuses Play only while it still owns the foreground interaction
+  ---
+  duration_ms: 0.254666
+  ...
+# Subtest: Custom menu labels follow English and Ukrainian without changing mission identity
+ok 167 - Custom menu labels follow English and Ukrainian without changing mission identity
+  ---
+  duration_ms: 4.864875
+  ...
+# Subtest: result actions and earned media stay reachable while flight hides home and moves the real Pause button
+ok 168 - result actions and earned media stay reachable while flight hides home and moves the real Pause button
+  ---
+  duration_ms: 1.149625
+  ...
+# Subtest: save failures remain visible on the compact home and busy state cancels old replacement approval
+ok 169 - save failures remain visible on the compact home and busy state cancels old replacement approval
+  ---
+  duration_ms: 1.121333
+  ...
+# Subtest: loading to ready retires the temporary primary Up override and keeps the complete action stack
+ok 170 - loading to ready retires the temporary primary Up override and keeps the complete action stack
+  ---
+  duration_ms: 1.749125
+  ...
+# Subtest: winning presentation keeps the original board in place until Continue releases it
+ok 171 - winning presentation keeps the original board in place until Continue releases it
+  ---
+  duration_ms: 0.762
+  ...
+# Subtest: actual loading Demo Back owns Enter through restored Home and releases fresh input
+ok 172 - actual loading Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1254.590833
+  ...
+# Subtest: actual watching Demo Back owns Enter through restored Home and releases fresh input
+ok 173 - actual watching Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1435.645208
+  ...
+# Subtest: actual practice Demo Back owns Enter through restored Home and releases fresh input
+ok 174 - actual practice Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1481.6085
+  ...
+# Subtest: actual returned Demo Back owns Enter through restored Home and releases fresh input
+ok 175 - actual returned Demo Back owns Enter through restored Home and releases fresh input
+  ---
+  duration_ms: 1438.590709
+  ...
+# Subtest: actual loading Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 176 - actual loading Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1018.955417
+  ...
+# Subtest: actual watching Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 177 - actual watching Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1363.608542
+  ...
+# Subtest: actual practice Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 178 - actual practice Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1480.770458
+  ...
+# Subtest: actual returned Demo Back owns NumpadEnter through restored Home and releases fresh input
+ok 179 - actual returned Demo Back owns NumpadEnter through restored Home and releases fresh input
+  ---
+  duration_ms: 1451.981708
+  ...
+# Subtest: actual loading Demo Back owns Space through restored Home and releases fresh input
+ok 180 - actual loading Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1021.016709
+  ...
+# Subtest: actual watching Demo Back owns Space through restored Home and releases fresh input
+ok 181 - actual watching Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1363.215416
+  ...
+# Subtest: actual practice Demo Back owns Space through restored Home and releases fresh input
+ok 182 - actual practice Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1430.233625
+  ...
+# Subtest: actual returned Demo Back owns Space through restored Home and releases fresh input
+ok 183 - actual returned Demo Back owns Space through restored Home and releases fresh input
+  ---
+  duration_ms: 1441.309041
+  ...
+# Subtest: actual Demo audio UI retains native keyboard activation and range editing
+ok 184 - actual Demo audio UI retains native keyboard activation and range editing
+  ---
+  duration_ms: 1451.320584
+  ...
+# Subtest: native watching advances without Solo effects and practice resumes on its visible surface
+ok 185 - native watching advances without Solo effects and practice resumes on its visible surface
+  ---
+  duration_ms: 21.091542
+  ...
+# Subtest: native readouts use shared playback time when the engine exposes no time field
+ok 186 - native readouts use shared playback time when the engine exposes no time field
+  ---
+  duration_ms: 4.089292
+  ...
+# Subtest: raw SIM-origin controller samples reach Snake practice through the mounted shared host
+ok 187 - raw SIM-origin controller samples reach Snake practice through the mounted shared host
+  ---
+  duration_ms: 11.918625
+  ...
+# Subtest: a quick close and reopen awaits asynchronous scene disposal
+ok 188 - a quick close and reopen awaits asynchronous scene disposal
+  ---
+  duration_ms: 5.479
+  ...
+# Subtest: renderer disposal failure still retires physics and removes the owned surface
+ok 189 - renderer disposal failure still retires physics and removes the owned surface
+  ---
+  duration_ms: 10.263
+  ...
+# Subtest: a practice world returned after cancellation is disposed exactly once
+ok 190 - a practice world returned after cancellation is disposed exactly once
+  ---
+  duration_ms: 2.661959
+  ...
+# Subtest: graphics loss retires the native engine and publishes its bounded diagnostic
+ok 191 - graphics loss retires the native engine and publishes its bounded diagnostic
+  ---
+  duration_ms: 9.987375
+  ...
+# Subtest: native preparation forwards one bounded reporter through source and renderer ownership
+ok 192 - native preparation forwards one bounded reporter through source and renderer ownership
+  ---
+  duration_ms: 2.495041
+  ...
+# Subtest: native entry supplies shared controller menu navigation, activation and Back without a page callback
+ok 193 - native entry supplies shared controller menu navigation, activation and Back without a page callback
+  ---
+  duration_ms: 5.93025
+  ...
+# Subtest: shared host forwards an explicit page-owned menu exactly once and creates no fallback navigation
+ok 194 - shared host forwards an explicit page-owned menu exactly once and creates no fallback navigation
+  ---
+  duration_ms: 2.346709
+  ...
+# Subtest: native adapters receive the shared menu and destroying its host removes owned document listeners
+ok 195 - native adapters receive the shared menu and destroying its host removes owned document listeners
+  ---
+  duration_ms: 9.554208
+  ...
+# Subtest: native demo entry reads canonical touch choices and refreshes its read-only snapshot on reopen
+ok 196 - native demo entry reads canonical touch choices and refreshes its read-only snapshot on reopen
+  ---
+  duration_ms: 18.19075
+  ...
+# Subtest: read-only touch admission rejects malformed, oversized and unavailable values without changing caller defaults
+ok 197 - read-only touch admission rejects malformed, oversized and unavailable values without changing caller defaults
+  ---
+  duration_ms: 0.18025
+  ...
+# Subtest: native mixed entry reads saved shared controls without writes (legacy profile)
+ok 198 - native mixed entry reads saved shared controls without writes (legacy profile)
+  ---
+  duration_ms: 15.413459
+  ...
+# Subtest: native mixed entry reads saved shared controls without writes (generation profile)
+ok 199 - native mixed entry reads saved shared controls without writes (generation profile)
+  ---
+  duration_ms: 14.881959
+  ...
+# Subtest: shared demo control snapshots reject malformed or inaccessible profiles without writes
+ok 200 - shared demo control snapshots reject malformed or inaccessible profiles without writes
+  ---
+  duration_ms: 0.322917
+  ...
+# Subtest: native device guidance replaces generic pad mappings and updates while paused
+ok 201 - native device guidance replaces generic pad mappings and updates while paused
+  ---
+  duration_ms: 3.95075
+  ...
+# Subtest: Solo and native entries share dev settings without writes until an explicit change
+ok 202 - Solo and native entries share dev settings without writes until an explicit change
+  ---
+  duration_ms: 11.027125
+  ...
+# Subtest: Solo and native entries share release-0.145.0 settings without writes until an explicit change
+ok 203 - Solo and native entries share release-0.145.0 settings without writes until an explicit change
+  ---
+  duration_ms: 11.757084
+  ...
+# Subtest: native small metadata agrees with Solo edition and release channel isolation
+ok 204 - native small metadata agrees with Solo edition and release channel isolation
+  ---
+  duration_ms: 0.586125
+  ...
+# Subtest: legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+ok 205 - legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+  ---
+  duration_ms: 0.095958
+  ...
+# Subtest: denied storage uses reduced-motion defaults and explicit changes stay session-only
+ok 206 - denied storage uses reduced-motion defaults and explicit changes stay session-only
+  ---
+  duration_ms: 0.814166
+  ...
+# Subtest: stalled and oversized metadata cannot hold startup or change the settings channel
+ok 207 - stalled and oversized metadata cannot hold startup or change the settings channel
+  ---
+  duration_ms: 7.0385
+  ...
+# Subtest: a delayed optional catalog cannot starve available modes or freeze localization
+ok 208 - a delayed optional catalog cannot starve available modes or freeze localization
+  ---
+  duration_ms: 1.228917
+  ...
+# Subtest: prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+ok 209 - prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+  ---
+  duration_ms: 0.949709
+  ...
+# Subtest: the next prefetched recording is consumed once and never creates a second player early
+ok 210 - the next prefetched recording is consumed once and never creates a second player early
+  ---
+  duration_ms: 1.123583
+  ...
+# Subtest: modes and level variants have equal performance weight despite duplicate recordings
+ok 211 - modes and level variants have equal performance weight despite duplicate recordings
+  ---
+  duration_ms: 2.221875
+  ...
+# Subtest: an unavailable graphics engine is attempted once, not once per authored level
+ok 212 - an unavailable graphics engine is attempted once, not once per authored level
+  ---
+  duration_ms: 1.453667
+  ...
+# Subtest: a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+ok 213 - a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+  ---
+  duration_ms: 0.93025
+  ...
+# Subtest: a deferred mode returns with its next recording while healthy mode cycles keep progressing
+ok 214 - a deferred mode returns with its next recording while healthy mode cycles keep progressing
+  ---
+  duration_ms: 0.397792
+  ...
+# Subtest: duplicate bad recordings cannot hold the next level behind repeated verified fallback
+ok 215 - duplicate bad recordings cannot hold the next level behind repeated verified fallback
+  ---
+  duration_ms: 0.294417
+  ...
+# Subtest: all fallback attempts together stop at thirty seconds
+ok 216 - all fallback attempts together stop at thirty seconds
+  ---
+  duration_ms: 1.52475
+  ...
+# Subtest: replacement waits for asynchronous graphics disposal
+ok 217 - replacement waits for asynchronous graphics disposal
+  ---
+  duration_ms: 0.235708
+  ...
+# Subtest: fallback waits for cleanup of a source rejected after preparation
+ok 218 - fallback waits for cleanup of a source rejected after preparation
+  ---
+  duration_ms: 0.262417
+  ...
+# Subtest: captions retain five explanations, stay six seconds, and discard stale warnings
+ok 219 - captions retain five explanations, stay six seconds, and discard stale warnings
+  ---
+  duration_ms: 0.453083
+  ...
+# Subtest: caption history translates observed events without replaying or dropping their reading interval
+ok 220 - caption history translates observed events without replaying or dropping their reading interval
+  ---
+  duration_ms: 0.101625
+  ...
+# Subtest: natural completion retains the last explanation and the recap for six seconds each
+ok 221 - natural completion retains the last explanation and the recap for six seconds each
+  ---
+  duration_ms: 0.133042
+  ...
+# Subtest: SIM classic keyboard leaves focused Demo UI activation and navigation owned by UI
+ok 222 - SIM classic keyboard leaves focused Demo UI activation and navigation owned by UI
+  ---
+  duration_ms: 4.13975
+  ...
+# Subtest: SIM two-stick keyboard leaves focused Demo UI activation and navigation owned by UI
+ok 223 - SIM two-stick keyboard leaves focused Demo UI activation and navigation owned by UI
+  ---
+  duration_ms: 0.822875
+  ...
+# Subtest: SIM toolbar ownership blocks controller takeover and requires neutral pickup after focus leaves
+ok 224 - SIM toolbar ownership blocks controller takeover and requires neutral pickup after focus leaves
+  ---
+  duration_ms: 1.5005
+  ...
+# Subtest: SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+ok 225 - SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+  ---
+  duration_ms: 0.714834
+  ...
+# Subtest: SIM foreground loss pauses practice and requires a fresh keyboard edge
+ok 226 - SIM foreground loss pauses practice and requires a fresh keyboard edge
+  ---
+  duration_ms: 0.456208
+  ...
+# Subtest: SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+ok 227 - SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+  ---
+  duration_ms: 0.6785
+  ...
+# Subtest: SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+ok 228 - SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+  ---
+  duration_ms: 0.720959
+  ...
+# Subtest: SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+ok 229 - SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+  ---
+  duration_ms: 2.397375
+  ...
+# Subtest: SIM explicit radio practice button retains its accepted handoff while its fork prepares
+ok 230 - SIM explicit radio practice button retains its accepted handoff while its fork prepares
+  ---
+  duration_ms: 1.0855
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 231 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 1818.587125
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 232 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 37.719333
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 233 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 2347.86525
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 234 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 2187.836583
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 235 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 32.286625
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 236 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 99.142375
+  ...
+# Subtest: personal recording rotation metadata preserves its admitted difficulty identity
+ok 237 - personal recording rotation metadata preserves its admitted difficulty identity
+  ---
+  duration_ms: 0.240541
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 238 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 139.608375
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 239 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 12.433416
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 240 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.297208
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 241 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 304.156666
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 242 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 533.075709
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 243 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 17.626459
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 244 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.319167
+  ...
+# Subtest: resource diagnostic reaches live source rehearsal before its player can be returned
+ok 245 - resource diagnostic reaches live source rehearsal before its player can be returned
+  ---
+  duration_ms: 13.603791
+  ...
+# Subtest: a source timeout prefers verified Snake and preserves the unvisited mode for the next transition
+ok 246 - a source timeout prefers verified Snake and preserves the unvisited mode for the next transition
+  ---
+  duration_ms: 2.233459
+  ...
+# Subtest: a verified fallback still shares the original thirty-second recovery deadline
+ok 247 - a verified fallback still shares the original thirty-second recovery deadline
+  ---
+  duration_ms: 0.88925
+  ...
+# Subtest: timeout recovery cannot reuse a verified source after demo-playback-failed
+ok 248 - timeout recovery cannot reuse a verified source after demo-playback-failed
+  ---
+  duration_ms: 0.463375
+  ...
+# Subtest: timeout recovery cannot reuse a verified source after demo-renderer-unavailable
+ok 249 - timeout recovery cannot reuse a verified source after demo-renderer-unavailable
+  ---
+  duration_ms: 0.364458
+  ...
+# Subtest: cancelling a preferred verified fallback retires its late player without adoption
+ok 250 - cancelling a preferred verified fallback retires its late player without adoption
+  ---
+  duration_ms: 0.563833
+  ...
+# Subtest: initial catalog time does not shorten the next transition or its verified fallback
+ok 251 - initial catalog time does not shorten the next transition or its verified fallback
+  ---
+  duration_ms: 0.32275
+  ...
+# Subtest: the initial attempt still respects the catalog-subtracted startup remainder
+ok 252 - the initial attempt still respects the catalog-subtracted startup remainder
+  ---
+  duration_ms: 0.626166
+  ...
+# Subtest: Retry after startup exhaustion receives a fresh budget without changing the source deadline
+ok 253 - Retry after startup exhaustion receives a fresh budget without changing the source deadline
+  ---
+  duration_ms: 0.574792
+  ...
+# Subtest: a configured per-attempt cap still limits later transitions and Retry
+ok 254 - a configured per-attempt cap still limits later transitions and Retry
+  ---
+  duration_ms: 0.540291
+  ...
+# Subtest: cancelling initial preparation does not restore its startup deduction on resume
+ok 255 - cancelling initial preparation does not restore its startup deduction on resume
+  ---
+  duration_ms: 0.355791
+  ...
+# Subtest: timeout recovery prepares the quickest verified mode again without retaining another world
+ok 256 - timeout recovery prepares the quickest verified mode again without retaining another world
+  ---
+  duration_ms: 0.3275
+  ...
+# Subtest: a retained source uses its latest successful cost after becoming slower
+ok 257 - a retained source uses its latest successful cost after becoming slower
+  ---
+  duration_ms: 0.292459
+  ...
+# Subtest: each mode retains its quicker candidate when the second level costs 50ms
+ok 258 - each mode retains its quicker candidate when the second level costs 50ms
+  ---
+  duration_ms: 0.278667
+  ...
+# Subtest: each mode retains its quicker candidate when the second level costs 500ms
+ok 259 - each mode retains its quicker candidate when the second level costs 500ms
+  ---
+  duration_ms: 0.312167
+  ...
+# Subtest: timeout ranking excludes the quickest source after demo-playback-failed
+ok 260 - timeout ranking excludes the quickest source after demo-playback-failed
+  ---
+  duration_ms: 0.215041
+  ...
+# Subtest: timeout ranking excludes the quickest source after demo-renderer-unavailable
+ok 261 - timeout ranking excludes the quickest source after demo-renderer-unavailable
+  ---
+  duration_ms: 0.187
+  ...
+# Subtest: timeout recovery after bot exhaustion keeps the required replay kind
+ok 262 - timeout recovery after bot exhaustion keeps the required replay kind
+  ---
+  duration_ms: 0.54625
+  ...
+# Subtest: equal measured costs choose the first retained mode consistently
+ok 263 - equal measured costs choose the first retained mode consistently
+  ---
+  duration_ms: 0.411
+  ...
+# Subtest: fastest recovery still enforces the individual and total loading deadlines
+ok 264 - fastest recovery still enforces the individual and total loading deadlines
+  ---
+  duration_ms: 0.261125
+  ...
+# Subtest: quick verified sources do not bias ordinary mode/level rotation or its one-payload prefetch
+ok 265 - quick verified sources do not bias ordinary mode/level rotation or its one-payload prefetch
+  ---
+  duration_ms: 1.386375
+  ...
+# Subtest: a kind-ineligible quickest bot preserves the most recent verified replay fallback
+ok 266 - a kind-ineligible quickest bot preserves the most recent verified replay fallback
+  ---
+  duration_ms: 0.281041
+  ...
+# Subtest: actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer
+ok 267 - actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer
+  ---
+  duration_ms: 1917.489208
+  ...
+# Subtest: immediate: shared display edits preserve the actual paused Solo cut and replay
+ok 268 - immediate: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 1805.713125
+  ...
+# Subtest: grid-center: shared display edits preserve the actual paused Solo cut and replay
+ok 269 - grid-center: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 1814.742875
+  ...
+# Subtest: Solo to Team to Versus and back restores one display record without Couch profile writes
+    # Subtest: Solo explicitly opts into the shared record
+    ok 1 - Solo explicitly opts into the shared record
+      ---
+      duration_ms: 1039.378208
+      ...
+    # Subtest: Team adopts and edits from its real paused Options
+    not ok 2 - Team adopts and edits from its real paused Options
+      ---
+      duration_ms: 185.432167
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:269:11'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        4 !== 3
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 3
+      actual: 4
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:272:12)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:269:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: Versus adopts, exposes controls to keyboard and changes only display state
+    not ok 3 - Versus adopts, exposes controls to keyboard and changes only display state
+      ---
+      duration_ms: 1999.640125
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:311:11'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + 'plain'
+        - 'pixel'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'pixel'
+      actual: 'plain'
+      operator: 'strictEqual'
+      stack: |-
+        reflects (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:96:10)
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:317:7)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:311:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: fresh Solo prefers the shared record over its older profile
+    not ok 4 - fresh Solo prefers the shared record over its older profile
+      ---
+      duration_ms: 1023.217834
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:355:11'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + 'reduced'
+        - 'full'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'full'
+      actual: 'reduced'
+      operator: 'strictEqual'
+      stack: |-
+        reflects (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:98:10)
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:358:5)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:355:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    1..4
+not ok 270 - Solo to Team to Versus and back restores one display record without Couch profile writes
+  ---
+  duration_ms: 4249.10725
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:253:1'
+  failureType: 'subtestsFailed'
+  error: '3 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Team system reduction preserves a raw false choice and a denied shared save stays session-only
+not ok 271 - Team system reduction preserves a raw false choice and a denied shared save stays session-only
+  ---
+  duration_ms: 130.273542
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:365:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + Map(2) {
+    +   'revealline-enemy-stats.v1:writer' => '899e2873-c20c-4348-98f0-a06c12a93389',
+    - Map(1) {
+        'revealline.display.v1' => '{"textFace":"plain","textSize":"large","reducedEffects":false}'
+      }
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:374:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Versus controller selects the real display control without replacing or starting the duel
+ok 272 - Versus controller selects the real display control without replacing or starting the duel
+  ---
+  duration_ms: 2075.120916
+  ...
+# Subtest: actual Team comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+ok 273 - actual Team comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+  ---
+  duration_ms: 138.145125
+  ...
+# Subtest: actual Versus comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+ok 274 - actual Versus comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+  ---
+  duration_ms: 1964.20325
+  ...
+# Subtest: display silent writes retain session intent until an explicit verified save
+ok 275 - display silent writes retain session intent until an explicit verified save
+  ---
+  duration_ms: 0.886834
+  ...
+# Subtest: display unreadable writes retain session intent until an explicit verified save
+ok 276 - display unreadable writes retain session intent until an explicit verified save
+  ---
+  duration_ms: 0.108
+  ...
+# Subtest: a newer display edit during write cannot be acknowledged by an older write
+ok 277 - a newer display edit during write cannot be acknowledged by an older write
+  ---
+  duration_ms: 0.113833
+  ...
+# Subtest: a newer display edit during verify cannot be acknowledged by an older write
+ok 278 - a newer display edit during verify cannot be acknowledged by an older write
+  ---
+  duration_ms: 0.136417
+  ...
+# Subtest: shared display record overrides legacy synchronously and startup never writes
+ok 279 - shared display record overrides legacy synchronously and startup never writes
+  ---
+  duration_ms: 0.3435
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: not json
+ok 280 - invalid stored value preserves original bytes and legacy fallback: not json
+  ---
+  duration_ms: 0.426333
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: null
+ok 281 - invalid stored value preserves original bytes and legacy fallback: null
+  ---
+  duration_ms: 0.131
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: []
+ok 282 - invalid stored value preserves original bytes and legacy fallback: []
+  ---
+  duration_ms: 0.071833
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"plain","textSize":"large"}
+ok 283 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"plain","textSize":"large"}
+  ---
+  duration_ms: 0.196917
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"serif","textSize":"standard","reducedEffec
+ok 284 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"serif","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.125709
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"huge","reducedEffects":
+ok 285 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"huge","reducedEffects":
+  ---
+  duration_ms: 0.064542
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 286 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.051333
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 287 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.100291
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 288 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.123084
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback:                                                        
+ok 289 - invalid stored value preserves original bytes and legacy fallback:                                                        
+  ---
+  duration_ms: 0.051292
+  ...
+# Subtest: legacy seed reads only display fields; explicit change saves three fields before navigation
+ok 290 - legacy seed reads only display fields; explicit change saves three fields before navigation
+  ---
+  duration_ms: 0.135
+  ...
+# Subtest: late legacy snapshots cannot replace explicit same-value intent or a newer seed
+ok 291 - late legacy snapshots cannot replace explicit same-value intent or a newer seed
+  ---
+  duration_ms: 0.071292
+  ...
+# Subtest: a current shared record wins a delayed legacy read even before its storage event
+ok 292 - a current shared record wins a delayed legacy read even before its storage event
+  ---
+  duration_ms: 0.141208
+  ...
+# Subtest: system reduction combines conservatively without changing raw intent or saving
+ok 293 - system reduction combines conservatively without changing raw intent or saving
+  ---
+  duration_ms: 0.209959
+  ...
+# Subtest: injected and legacy media query APIs use current matches and detach on disposal
+ok 294 - injected and legacy media query APIs use current matches and detach on disposal
+  ---
+  duration_ms: 0.089042
+  ...
+# Subtest: missing media query capability still permits explicit reduction
+ok 295 - missing media query capability still permits explicit reduction
+  ---
+  duration_ms: 0.217334
+  ...
+# Subtest: storage events require exact key, area and still-current bounded raw bytes
+ok 296 - storage events require exact key, area and still-current bounded raw bytes
+  ---
+  duration_ms: 0.485416
+  ...
+# Subtest: practice mode changes memory with a warning and protects unsaved intent
+ok 297 - practice mode changes memory with a warning and protects unsaved intent
+  ---
+  duration_ms: 0.079792
+  ...
+# Subtest: quota failures preserve memory, and a later successful save restores sharing
+ok 298 - quota failures preserve memory, and a later successful save restores sharing
+  ---
+  duration_ms: 0.090958
+  ...
+# Subtest: unavailable storage and throwing warning callbacks cannot undo display intent
+ok 299 - unavailable storage and throwing warning callbacks cannot undo display intent
+  ---
+  duration_ms: 0.074125
+  ...
+# Subtest: patch validation is atomic and rejects accessors, symbols and hidden or unknown fields
+ok 300 - patch validation is atomic and rejects accessors, symbols and hidden or unknown fields
+  ---
+  duration_ms: 0.220625
+  ...
+# Subtest: subscribers see immutable current state and newer reentrant intent reaches storage
+ok 301 - subscribers see immutable current state and newer reentrant intent reaches storage
+  ---
+  duration_ms: 0.153625
+  ...
+# Subtest: a failed observer does not block other observers or persistence
+ok 302 - a failed observer does not block other observers or persistence
+  ---
+  duration_ms: 0.0685
+  ...
+# Subtest: reentrant explicit intent during legacy adoption wins and reports the seed superseded
+ok 303 - reentrant explicit intent during legacy adoption wins and reports the seed superseded
+  ---
+  duration_ms: 0.050708
+  ...
+# Subtest: disposal detaches both event sources and rejects later mutation or subscription
+ok 304 - disposal detaches both event sources and rejects later mutation or subscription
+  ---
+  duration_ms: 0.081625
+  ...
+# Subtest: persisted return reads current shared state and cap without resaving or duplicate notifications
+ok 305 - persisted return reads current shared state and cap without resaving or duplicate notifications
+  ---
+  duration_ms: 0.110875
+  ...
+# Subtest: persisted return preserves unsaved intent while refreshing current system reduction
+ok 306 - persisted return preserves unsaved intent while refreshing current system reduction
+  ---
+  duration_ms: 0.065083
+  ...
+# Subtest: persisted return ignores malformed and deleted shared data while updating only the effective cap
+ok 307 - persisted return ignores malformed and deleted shared data while updating only the effective cap
+  ---
+  duration_ms: 0.111375
+  ...
+# Subtest: ordinary pageshow and a disposed authority cannot consume restored-page changes
+ok 308 - ordinary pageshow and a disposed authority cannot consume restored-page changes
+  ---
+  duration_ms: 0.043708
+  ...
+# Subtest: persisted return respects a newer explicit choice made by an observer
+ok 309 - persisted return respects a newer explicit choice made by an observer
+  ---
+  duration_ms: 0.0595
+  ...
+# Subtest: Academy prepares a saved aircraft and waits for a pending flight step before explicit resume
+ok 310 - Academy prepares a saved aircraft and waits for a pending flight step before explicit resume
+  ---
+  duration_ms: 517.183458
+  ...
+# Subtest: SIM world selection freezes on first arm and applies queued preference only on reset
+ok 311 - SIM world selection freezes on first arm and applies queued preference only on reset
+  ---
+  duration_ms: 69.428292
+  ...
+# Subtest: a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+ok 312 - a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+  ---
+  duration_ms: 80.301875
+  ...
+# Subtest: unavailable recorded appearance remains visible after graphics preparation without altering its proof
+ok 313 - unavailable recorded appearance remains visible after graphics preparation without altering its proof
+  ---
+  duration_ms: 68.389542
+  ...
+# Subtest: Academy explicit keyboard resume keeps consumed throttle and releases held keys
+    # Subtest: button
+    ok 1 - button
+      ---
+      duration_ms: 81.547625
+      ...
+    # Subtest: shortcut
+    ok 2 - shortcut
+      ---
+      duration_ms: 79.879375
+      ...
+    1..2
+ok 314 - Academy explicit keyboard resume keeps consumed throttle and releases held keys
+  ---
+  duration_ms: 161.662833
+  ...
+# Subtest: native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+ok 315 - native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+  ---
+  duration_ms: 120.950709
+  ...
+# Subtest: synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+ok 316 - synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+  ---
+  duration_ms: 714.504125
+  ...
+# Subtest: radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+ok 317 - radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+  ---
+  duration_ms: 78.65225
+  ...
+# Subtest: immediate Retry preserves the completed proof while notebook verification yields
+ok 318 - immediate Retry preserves the completed proof while notebook verification yields
+  ---
+  duration_ms: 280.377583
+  ...
+# Subtest: Controls camera chooser and toolbar stay synchronized for the narrow layout
+ok 319 - Controls camera chooser and toolbar stay synchronized for the narrow layout
+  ---
+  duration_ms: 52.080125
+  ...
+# Subtest: Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+ok 320 - Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+  ---
+  duration_ms: 234.419875
+  ...
+# Subtest: radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+ok 321 - radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+  ---
+  duration_ms: 63.851708
+  ...
+# Subtest: graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+ok 322 - graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+  ---
+  duration_ms: 114.603333
+  ...
+# Subtest: replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+ok 323 - replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+  ---
+  duration_ms: 90.607
+  ...
+# Subtest: Academy shared menu resumes paused playback without restarting or granting practice evidence
+ok 324 - Academy shared menu resumes paused playback without restarting or granting practice evidence
+  ---
+  duration_ms: 79.859208
+  ...
+# Subtest: Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+ok 325 - Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+  ---
+  duration_ms: 72.382208
+  ...
+# Subtest: touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+ok 326 - touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+  ---
+  duration_ms: 0.37375
+  ...
+# Subtest: input diagnostics retain raw touch and controller values separately from shaping and never invent hardware cadence
+ok 327 - input diagnostics retain raw touch and controller values separately from shaping and never invent hardware cadence
+  ---
+  duration_ms: 0.434209
+  ...
+# Subtest: committed diagnostics separate input owners, new attempts and a live radio preview from achieved flight response
+ok 328 - committed diagnostics separate input owners, new attempts and a live radio preview from achieved flight response
+  ---
+  duration_ms: 0.128625
+  ...
+# Subtest: full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+ok 329 - full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+  ---
+  duration_ms: 985.622417
+  ...
+# Subtest: pending review aborts on reset, input change, dialog close and disposal without late playback
+ok 330 - pending review aborts on reset, input change, dialog close and disposal without late playback
+  ---
+  duration_ms: 219.380209
+  ...
+# Subtest: closing a replay import during file reading prevents verification and late playback
+ok 331 - closing a replay import during file reading prevents verification and late playback
+  ---
+  duration_ms: 51.984334
+  ...
+# Subtest: actual renderer detects unavailable WebGL without allocating a running fallback simulation
+ok 332 - actual renderer detects unavailable WebGL without allocating a running fallback simulation
+  ---
+  duration_ms: 0.727542
+  ...
+# Subtest: disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+ok 333 - disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+  ---
+  duration_ms: 55.930875
+  ...
+# Subtest: stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+ok 334 - stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+  ---
+  duration_ms: 279.11725
+  ...
+# Subtest: cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+ok 335 - cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+  ---
+  duration_ms: 53.456542
+  ...
+# Subtest: cached radio restore requires a fresh arm edge and matching control pickup
+ok 336 - cached radio restore requires a fresh arm edge and matching control pickup
+  ---
+  duration_ms: 60.087
+  ...
+# Subtest: game return keeps scoped offline controls available and serializes preparation/removal
+ok 337 - game return keeps scoped offline controls available and serializes preparation/removal
+  ---
+  duration_ms: 56.981958
+  ...
+# Subtest: disposing Academy cancels an owned offline verification and releases its progress panel
+ok 338 - disposing Academy cancels an owned offline verification and releases its progress panel
+  ---
+  duration_ms: 55.149083
+  ...
+# Subtest: unavailable offline capability stays explanatory and a failed prepare never reports ready
+ok 339 - unavailable offline capability stays explanatory and a failed prepare never reports ready
+  ---
+  duration_ms: 129.505416
+  ...
+# Subtest: ordinary unload disposes permanently and a late pageshow cannot revive it
+ok 340 - ordinary unload disposes permanently and a late pageshow cannot revive it
+  ---
+  duration_ms: 44.482292
+  ...
+# Subtest: selecting USB radio restores saved axis arm and button reset after reload
+ok 341 - selecting USB radio restores saved axis arm and button reset after reload
+  ---
+  duration_ms: 66.288875
+  ...
+# Subtest: tested TX15 default loads without saved calibration and does not auto-arm
+ok 342 - tested TX15 default loads without saved calibration and does not auto-arm
+  ---
+  duration_ms: 63.464875
+  ...
+# Subtest: TX15 default does not match an unrelated joystick
+ok 343 - TX15 default does not match an unrelated joystick
+  ---
+  duration_ms: 56.557125
+  ...
+# Subtest: camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+ok 344 - camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+  ---
+  duration_ms: 383.74325
+  ...
+# Subtest: pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+ok 345 - pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+  ---
+  duration_ms: 0.267708
+  ...
+# Subtest: Academy title focus loss before flight initialization keeps the menu usable and disarmed
+ok 346 - Academy title focus loss before flight initialization keeps the menu usable and disarmed
+  ---
+  duration_ms: 57.918084
+  ...
+# Subtest: Academy Home context stays localized with its current flight while browsing and returning
+ok 347 - Academy Home context stays localized with its current flight while browsing and returning
+  ---
+  duration_ms: 82.737959
+  ...
+# Subtest: Academy shell keeps menu input out of native flight and requires explicit Start
+ok 348 - Academy shell keeps menu input out of native flight and requires explicit Start
+  ---
+  duration_ms: 64.345625
+  ...
+# Subtest: Academy native tool dialogs retain instructions across blur and focus
+    # Subtest: help-dialog
+    ok 1 - help-dialog
+      ---
+      duration_ms: 61.608334
+      ...
+    # Subtest: notebook-dialog
+    ok 2 - notebook-dialog
+      ---
+      duration_ms: 60.126
+      ...
+    1..2
+ok 349 - Academy native tool dialogs retain instructions across blur and focus
+  ---
+  duration_ms: 121.958541
+  ...
+# Subtest: Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 350 - Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 154.657542
+  ...
+# Subtest: Academy categories retain every authored preference control and restore nested dialog focus
+ok 351 - Academy categories retain every authored preference control and restore nested dialog focus
+  ---
+  duration_ms: 74.474
+  ...
+# Subtest: Academy global settings bind canonical records without startup writes or duplicate fields
+ok 352 - Academy global settings bind canonical records without startup writes or duplicate fields
+  ---
+  duration_ms: 178.206916
+  ...
+# Subtest: Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+ok 353 - Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+  ---
+  duration_ms: 73.831584
+  ...
+# Subtest: fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+ok 354 - fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+  ---
+  duration_ms: 62.390584
+  ...
+# Subtest: Academy flight feedback and shared menu sound retain separate sliders and preference records
+ok 355 - Academy flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 53.353667
+  ...
+# Subtest: Academy result shortcuts choose once and launch a random prepared lesson directly
+ok 356 - Academy result shortcuts choose once and launch a random prepared lesson directly
+  ---
+  duration_ms: 63.191041
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled animation timestamp
+ok 357 - Academy cancels an imminent auto-next before a stalled animation timestamp
+  ---
+  duration_ms: 422.60025
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled callback execution
+ok 358 - Academy cancels an imminent auto-next before a stalled callback execution
+  ---
+  duration_ms: 424.082166
+  ...
+# Subtest: Academy shared library shows every course, previews the selected flight mode, and launches once
+ok 359 - Academy shared library shows every course, previews the selected flight mode, and launches once
+  ---
+  duration_ms: 65.105333
+  ...
+# Subtest: Academy mission library owns controller navigation and isolated pinned goals
+ok 360 - Academy mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 65.758583
+  ...
+# Subtest: Academy Apply & restart retains Legacy settings and waits for explicit Arm
+ok 361 - Academy Apply & restart retains Legacy settings and waits for explicit Arm
+  ---
+  duration_ms: 91.03
+  ...
+# Subtest: Academy Apply & restart retains Actual settings and waits for explicit Arm
+ok 362 - Academy Apply & restart retains Actual settings and waits for explicit Arm
+  ---
+  duration_ms: 99.102542
+  ...
+# Subtest: Academy mode, reset and input changes preserve the tested draft until a normal course launch
+ok 363 - Academy mode, reset and input changes preserve the tested draft until a normal course launch
+  ---
+  duration_ms: 140.974208
+  ...
+# Subtest: Academy tuning diagnostics follow keyboard ownership with a different calibrated radio connected
+ok 364 - Academy tuning diagnostics follow keyboard ownership with a different calibrated radio connected
+  ---
+  duration_ms: 78.471333
+  ...
+# Subtest: Academy tuning diagnostics follow touch ownership with a different calibrated radio connected
+ok 365 - Academy tuning diagnostics follow touch ownership with a different calibrated radio connected
+  ---
+  duration_ms: 81.576958
+  ...
+# Subtest: Academy tuning diagnostics follow controller ownership with a different calibrated radio connected
+ok 366 - Academy tuning diagnostics follow controller ownership with a different calibrated radio connected
+  ---
+  duration_ms: 78.963042
+  ...
+# Subtest: Academy tuning diagnostics follow radio ownership with a different calibrated radio connected
+ok 367 - Academy tuning diagnostics follow radio ownership with a different calibrated radio connected
+  ---
+  duration_ms: 82.129208
+  ...
+# Subtest: Academy tuning saves new rates for reset while the active recording retains its frozen legacy configuration
+ok 368 - Academy tuning saves new rates for reset while the active recording retains its frozen legacy configuration
+  ---
+  duration_ms: 78.860542
+  ...
+# Subtest: Academy draft flight is unscored, cannot export a recording, and returns to its unchanged editor draft
+ok 369 - Academy draft flight is unscored, cannot export a recording, and returns to its unchanged editor draft
+  ---
+  duration_ms: 79.663625
+  ...
+# Subtest: Academy tuning owns menu navigation and Back closes it before the underlying settings
+ok 370 - Academy tuning owns menu navigation and Back closes it before the underlying settings
+  ---
+  duration_ms: 72.773042
+  ...
+# Subtest: Academy tuning keeps its hint through pointer blur and releases it after closing
+ok 371 - Academy tuning keeps its hint through pointer blur and releases it after closing
+  ---
+  duration_ms: 63.832959
+  ...
+# Subtest: Academy captures legacy camera before its first tuning configuration
+ok 372 - Academy captures legacy camera before its first tuning configuration
+  ---
+  duration_ms: 59.039042
+  ...
+# Subtest: Academy captures saved drone camera before its first tuning configuration
+ok 373 - Academy captures saved drone camera before its first tuning configuration
+  ---
+  duration_ms: 58.652667
+  ...
+# Subtest: Academy captures unreadable camera before its first tuning configuration
+ok 374 - Academy captures unreadable camera before its first tuning configuration
+  ---
+  duration_ms: 59.054625
+  ...
+# Subtest: Academy captures missing camera before its first tuning configuration
+ok 375 - Academy captures missing camera before its first tuning configuration
+  ---
+  duration_ms: 58.166459
+  ...
+# Subtest: explicit keyboard resume restores only the accepted throttle for the same flight
+ok 376 - explicit keyboard resume restores only the accepted throttle for the same flight
+  ---
+  duration_ms: 0.265541
+  ...
+# Subtest: keyboard pause shortcut can retain explicit host eligibility after releasing its keys
+ok 377 - keyboard pause shortcut can retain explicit host eligibility after releasing its keys
+  ---
+  duration_ms: 0.151583
+  ...
+# Subtest: lost ownership, reset and a different flight invalidate keyboard resume eligibility
+ok 378 - lost ownership, reset and a different flight invalidate keyboard resume eligibility
+  ---
+  duration_ms: 0.338375
+  ...
+# Subtest: keyboard resume never grants another input owner throttle or changes checkpoint seeding
+ok 379 - keyboard resume never grants another input owner throttle or changes checkpoint seeding
+  ---
+  duration_ms: 0.076291
+  ...
+# Subtest: actual Academy settings keep an unsaved menu animation choice and Retry the same checkbox
+ok 380 - actual Academy settings keep an unsaved menu animation choice and Retry the same checkbox
+  ---
+  duration_ms: 62.142042
+  ...
+# Subtest: World lesson mode action restarts paused in the matching mode and preserves unscored continuation
+ok 381 - World lesson mode action restarts paused in the matching mode and preserves unscored continuation
+  ---
+  duration_ms: 413.326292
+  ...
+# Subtest: World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+ok 382 - World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+  ---
+  duration_ms: 1966.618625
+  ...
+# Subtest: World random flight includes the active installed revision and excludes retained archived courses
+ok 383 - World random flight includes the active installed revision and excludes retained archived courses
+  ---
+  duration_ms: 228.799042
+  ...
+# Subtest: World ordinary results offer a filtered random next flight through unarmed preparation
+ok 384 - World ordinary results offer a filtered random next flight through unarmed preparation
+  ---
+  duration_ms: 207.5575
+  ...
+# Subtest: World disposal retires menu and renderer owners before their reparented controls disappear
+ok 385 - World disposal retires menu and renderer owners before their reparented controls disappear
+  ---
+  duration_ms: 126.288792
+  ...
+# Subtest: World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+ok 386 - World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+  ---
+  duration_ms: 141.071167
+  ...
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 387 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 334.475541
+  ...
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 388 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 94.098542
+  ...
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 389 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 138.687542
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 390 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 137.792708
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 391 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 128.39975
+  ...
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 392 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 140.334792
+  ...
+# Subtest: World Home context stays localized with its current flight while browsing and returning
+ok 393 - World Home context stays localized with its current flight while browsing and returning
+  ---
+  duration_ms: 400.717167
+  ...
+# Subtest: World title retains connected catalogue nodes and transfers the common bar into native flight
+ok 394 - World title retains connected catalogue nodes and transfers the common bar into native flight
+  ---
+  duration_ms: 196.515042
+  ...
+# Subtest: World keyboard and native pause actions open the same shared menu without resuming on Back
+ok 395 - World keyboard and native pause actions open the same shared menu without resuming on Back
+  ---
+  duration_ms: 138.490833
+  ...
+# Subtest: World language refresh preserves native mission ownership and menu phase without another animation frame
+ok 396 - World language refresh preserves native mission ownership and menu phase without another animation frame
+  ---
+  duration_ms: 244.593292
+  ...
+# Subtest: World terminal preview offers Retry and prepares a fresh disarmed attempt
+ok 397 - World terminal preview offers Retry and prepares a fresh disarmed attempt
+  ---
+  duration_ms: 153.566
+  ...
+# Subtest: World native HUD details retain instructions across blur and focus
+ok 398 - World native HUD details retain instructions across blur and focus
+  ---
+  duration_ms: 140.798042
+  ...
+# Subtest: World menu Back dismisses the visible surface without closing its paused native flight
+ok 399 - World menu Back dismisses the visible surface without closing its paused native flight
+  ---
+  duration_ms: 156.73075
+  ...
+# Subtest: World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+ok 400 - World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+  ---
+  duration_ms: 169.010708
+  ...
+# Subtest: World exhausted unfinished playback keeps native Results reachable without Continue
+ok 401 - World exhausted unfinished playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 163.32775
+  ...
+# Subtest: World exhausted section playback keeps native Results reachable without Continue
+ok 402 - World exhausted section playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 161.106125
+  ...
+# Subtest: native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+ok 403 - native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+  ---
+  duration_ms: 179.424542
+  ...
+# Subtest: native host rejects changed retained source before replacing the active renderer
+ok 404 - native host rejects changed retained source before replacing the active renderer
+  ---
+  duration_ms: 143.57
+  ...
+# Subtest: Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+ok 405 - Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+  ---
+  duration_ms: 162.826583
+  ...
+# Subtest: an explicit native mode change prepares a new mode pin while Retry keeps that pin
+ok 406 - an explicit native mode change prepares a new mode pin while Retry keeps that pin
+  ---
+  duration_ms: 184.093458
+  ...
+# Subtest: World categories retain every authored preference and restore Home and Pause openers
+ok 407 - World categories retain every authored preference and restore Home and Pause openers
+  ---
+  duration_ms: 157.237709
+  ...
+# Subtest: Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 408 - Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 260.076042
+  ...
+# Subtest: World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+ok 409 - World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+  ---
+  duration_ms: 218.628958
+  ...
+# Subtest: World Library records controller confirmation cannot activate backup or resume its paused flight
+ok 410 - World Library records controller confirmation cannot activate backup or resume its paused flight
+  ---
+  duration_ms: 240.36825
+  ...
+# Subtest: World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+ok 411 - World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+  ---
+  duration_ms: 143.460083
+  ...
+# Subtest: Worlds uses shared display and master settings ahead of old SIM-local preferences
+ok 412 - Worlds uses shared display and master settings ahead of old SIM-local preferences
+  ---
+  duration_ms: 149.431042
+  ...
+# Subtest: World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+ok 413 - World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+  ---
+  duration_ms: 160.345083
+  ...
+# Subtest: fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+ok 414 - fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+  ---
+  duration_ms: 171.13325
+  ...
+# Subtest: World flight feedback and shared menu sound retain separate sliders and preference records
+ok 415 - World flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 129.502583
+  ...
+# Subtest: World result shortcuts are immediately available while the result is being verified
+ok 416 - World result shortcuts are immediately available while the result is being verified
+  ---
+  duration_ms: 202.550125
+  ...
+# Subtest: World defeat focuses Retry and verification preserves the connected action row and chosen focus
+ok 417 - World defeat focuses Retry and verification preserves the connected action row and chosen focus
+  ---
+  duration_ms: 172.187792
+  ...
+# Subtest: World results embed one compact live statistics disclosure without replacing verified actions
+ok 418 - World results embed one compact live statistics disclosure without replacing verified actions
+  ---
+  duration_ms: 261.08275
+  ...
+# Subtest: Worlds and School share one complete scrollable library with direct native launches
+ok 419 - Worlds and School share one complete scrollable library with direct native launches
+  ---
+  duration_ms: 370.815792
+  ...
+# Subtest: World aircraft class advice narrows browsing and All courses restores every launch
+ok 420 - World aircraft class advice narrows browsing and All courses restores every launch
+  ---
+  duration_ms: 449.330292
+  ...
+# Subtest: World route preview uses the selected Acro route and changes no course geometry
+ok 421 - World route preview uses the selected Acro route and changes no course geometry
+  ---
+  duration_ms: 147.62475
+  ...
+# Subtest: World mission library owns controller navigation and isolated pinned goals
+ok 422 - World mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 211.387709
+  ...
+# Subtest: World mission launch cannot steal Home focus after deferred scene preparation
+ok 423 - World mission launch cannot steal Home focus after deferred scene preparation
+  ---
+  duration_ms: 284.509542
+  ...
+# Subtest: SIM cancelled Fresh preserves its paused origin after delayed native preparation (resolved)
+ok 424 - SIM cancelled Fresh preserves its paused origin after delayed native preparation (resolved)
+  ---
+  duration_ms: 170.774583
+  ...
+# Subtest: SIM cancelled Fresh preserves its paused origin after delayed native preparation (rejected)
+ok 425 - SIM cancelled Fresh preserves its paused origin after delayed native preparation (rejected)
+  ---
+  duration_ms: 170.988375
+  ...
+# Subtest: World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+ok 426 - World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+  ---
+  duration_ms: 118.668959
+  ...
+# Subtest: World shared chooser remains usable when native scene loading fails
+ok 427 - World shared chooser remains usable when native scene loading fails
+  ---
+  duration_ms: 272.382917
+  ...
+# Subtest: World tuning retains the committed keyboard sample and never presents radio data for that owner
+ok 428 - World tuning retains the committed keyboard sample and never presents radio data for that owner
+  ---
+  duration_ms: 276.127875
+  ...
+# Subtest: World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration
+ok 429 - World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration
+  ---
+  duration_ms: 281.702458
+  ...
+# Subtest: SIM demo Fresh preserves exact course and response with saved custom aircraft tuning
+ok 430 - SIM demo Fresh preserves exact course and response with saved custom aircraft tuning
+  ---
+  duration_ms: 319.358709
+  ...
+# Subtest: World draft testing enters unscored free flight and returns to the unsaved camera and rate draft
+ok 431 - World draft testing enters unscored free flight and returns to the unsaved camera and rate draft
+  ---
+  duration_ms: 271.412208
+  ...
+# Subtest: a normal World launch replaces the prior tuning-test origin
+ok 432 - a normal World launch replaces the prior tuning-test origin
+  ---
+  duration_ms: 264.665
+  ...
+# Subtest: a normal Regional launch replaces the prior tuning-test origin
+ok 433 - a normal Regional launch replaces the prior tuning-test origin
+  ---
+  duration_ms: 286.396084
+  ...
+# Subtest: Regional host freezes its assigned rates and camera until the next flight
+ok 434 - Regional host freezes its assigned rates and camera until the next flight
+  ---
+  duration_ms: 281.776084
+  ...
+# Subtest: Apply & restart waits for explicit Arm after delayed World, Legacy and Regional preparation
+    # Subtest: World / Legacy
+    ok 1 - World / Legacy
+      ---
+      duration_ms: 266.051375
+      ...
+    # Subtest: World / Actual
+    ok 2 - World / Actual
+      ---
+      duration_ms: 286.714792
+      ...
+    # Subtest: World / Meteor75
+    ok 3 - World / Meteor75
+      ---
+      duration_ms: 344.84875
+      ...
+    # Subtest: Legacy / Legacy
+    ok 4 - Legacy / Legacy
+      ---
+      duration_ms: 332.306292
+      ...
+    # Subtest: Legacy / Actual
+    ok 5 - Legacy / Actual
+      ---
+      duration_ms: 288.264833
+      ...
+    # Subtest: Legacy / Meteor75
+    ok 6 - Legacy / Meteor75
+      ---
+      duration_ms: 311.840833
+      ...
+    # Subtest: Regional / Legacy
+    ok 7 - Regional / Legacy
+      ---
+      duration_ms: 333.362333
+      ...
+    # Subtest: Regional / Actual
+    ok 8 - Regional / Actual
+      ---
+      duration_ms: 281.205291
+      ...
+    # Subtest: Regional / Meteor75
+    ok 9 - Regional / Meteor75
+      ---
+      duration_ms: 347.29225
+      ...
+    1..9
+ok 435 - Apply & restart waits for explicit Arm after delayed World, Legacy and Regional preparation
+  ---
+  duration_ms: 2853.715875
+  ...
+# Subtest: World and Regional explicit keyboard resume keeps accepted aircraft throttle only
+    # Subtest: World button
+    ok 1 - World button
+      ---
+      duration_ms: 300.614333
+      ...
+    # Subtest: World shortcut
+    ok 2 - World shortcut
+      ---
+      duration_ms: 298.713584
+      ...
+    # Subtest: World pending-button
+    ok 3 - World pending-button
+      ---
+      duration_ms: 314.485166
+      ...
+    # Subtest: Regional button
+    ok 4 - Regional button
+      ---
+      duration_ms: 369.977333
+      ...
+    # Subtest: Regional shortcut
+    ok 5 - Regional shortcut
+      ---
+      duration_ms: 377.867208
+      ...
+    # Subtest: Regional pending-button
+    ok 6 - Regional pending-button
+      ---
+      duration_ms: 389.867708
+      ...
+    1..6
+ok 436 - World and Regional explicit keyboard resume keeps accepted aircraft throttle only
+  ---
+  duration_ms: 2099.414583
+  ...
+# Subtest: World mode preserves the tested draft aircraft until an explicit normal launch
+ok 437 - World mode preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 285.905083
+  ...
+# Subtest: World retry preserves the tested draft aircraft until an explicit normal launch
+ok 438 - World retry preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 451.561375
+  ...
+# Subtest: Regional mode preserves the tested draft aircraft until an explicit normal launch
+ok 439 - Regional mode preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 416.921917
+  ...
+# Subtest: Regional retry preserves the tested draft aircraft until an explicit normal launch
+ok 440 - Regional retry preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 598.467041
+  ...
+# Subtest: Flight School explicit practice uses the selected aircraft and exact customized rates and PID tune
+    # Subtest: meteor75-analog-2022
+    ok 1 - meteor75-analog-2022
+      ---
+      duration_ms: 274.405375
+      ...
+    # Subtest: helion-pro-o4
+    ok 2 - helion-pro-o4
+      ---
+      duration_ms: 253.978042
+      ...
+    1..2
+ok 441 - Flight School explicit practice uses the selected aircraft and exact customized rates and PID tune
+  ---
+  duration_ms: 582.368917
+  ...
+# Subtest: saved aircraft prepares World, Beginner and Regional hosts with physical geometry and continuous controls
+    # Subtest: World
+    ok 1 - World
+      ---
+      duration_ms: 492.849708
+      ...
+    # Subtest: Beginner
+    ok 2 - Beginner
+      ---
+      duration_ms: 329.01525
+      ...
+    # Subtest: Regional
+    ok 3 - Regional
+      ---
+      duration_ms: 490.795208
+      ...
+    1..3
+ok 442 - saved aircraft prepares World, Beginner and Regional hosts with physical geometry and continuous controls
+  ---
+  duration_ms: 1377.369833
+  ...
+# Subtest: Regional host explicitly switches into the real Advanced worker and preserves pause, export and recovery ownership
+ok 443 - Regional host explicitly switches into the real Advanced worker and preserves pause, export and recovery ownership
+  ---
+  duration_ms: 559.184208
+  ...
+# Subtest: Regional aircraft stops explain disabled Resume in both languages and Restart prepares a fresh flight
+    # Subtest: region-edge · en
+    ok 1 - region-edge · en
+      ---
+      duration_ms: 347.532792
+      ...
+    # Subtest: worker-error · en
+    ok 2 - worker-error · en
+      ---
+      duration_ms: 345.121875
+      ...
+    # Subtest: terrain-error · en
+    ok 3 - terrain-error · en
+      ---
+      duration_ms: 235.648375
+      ...
+    # Subtest: region-edge · uk
+    ok 4 - region-edge · uk
+      ---
+      duration_ms: 352.916667
+      ...
+    # Subtest: worker-error · uk
+    ok 5 - worker-error · uk
+      ---
+      duration_ms: 358.532583
+      ...
+    # Subtest: terrain-error · uk
+    ok 6 - terrain-error · uk
+      ---
+      duration_ms: 248.435959
+      ...
+    1..6
+ok 444 - Regional aircraft stops explain disabled Resume in both languages and Restart prepares a fresh flight
+  ---
+  duration_ms: 1921.232459
+  ...
+# Subtest: Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+    # Subtest: ADVANCED_DURATION_LIMIT · en
+    ok 1 - ADVANCED_DURATION_LIMIT · en
+      ---
+      duration_ms: 382.717667
+      ...
+    # Subtest: ADVANCED_RECORDING_LIMIT · uk
+    ok 2 - ADVANCED_RECORDING_LIMIT · uk
+      ---
+      duration_ms: 380.155125
+      ...
+    # Subtest: UNKNOWN_LIMIT · en
+    ok 3 - UNKNOWN_LIMIT · en
+      ---
+      duration_ms: 321.812958
+      ...
+    # Subtest: untyped limit text · en
+    ok 4 - untyped limit text · en
+      ---
+      duration_ms: 321.031208
+      ...
+    1..4
+ok 445 - Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+  ---
+  duration_ms: 1444.829416
+  ...
+# Subtest: Regional Advanced is explicitly unavailable when workers cannot run
+ok 446 - Regional Advanced is explicitly unavailable when workers cannot run
+  ---
+  duration_ms: 169.365208
+  ...
+# Subtest: World tuning owns Back without closing the underlying settings dialog
+ok 447 - World tuning owns Back without closing the underlying settings dialog
+  ---
+  duration_ms: 156.627458
+  ...
+# Subtest: World tuning keeps its hint through pointer blur and releases it after closing
+ok 448 - World tuning keeps its hint through pointer blur and releases it after closing
+  ---
+  duration_ms: 229.995417
+  ...
+# Subtest: World captures legacy comfort camera before its first tuning configuration
+ok 449 - World captures legacy comfort camera before its first tuning configuration
+  ---
+  duration_ms: 224.428083
+  ...
+# Subtest: World captures saved drone camera before its first tuning configuration
+ok 450 - World captures saved drone camera before its first tuning configuration
+  ---
+  duration_ms: 229.694958
+  ...
+# Subtest: World captures unreadable comfort camera before its first tuning configuration
+ok 451 - World captures unreadable comfort camera before its first tuning configuration
+  ---
+  duration_ms: 225.664125
+  ...
+# Subtest: World captures World settings camera before its first tuning configuration
+ok 452 - World captures World settings camera before its first tuning configuration
+  ---
+  duration_ms: 227.52575
+  ...
+# Subtest: actual World settings keep an unsaved menu animation choice and Retry the same checkbox
+ok 453 - actual World settings keep an unsaved menu animation choice and Retry the same checkbox
+  ---
+  duration_ms: 182.258834
+  ...
+# Subtest: shared generated menu-motion row preserves failed choice and returns Retry focus only to its checkbox
+ok 454 - shared generated menu-motion row preserves failed choice and returns Retry focus only to its checkbox
+  ---
+  duration_ms: 2.726916
+  ...
+# Subtest: SIM generated menu-motion row preserves failed choice and returns Retry focus only to its checkbox
+ok 455 - SIM generated menu-motion row preserves failed choice and returns Retry focus only to its checkbox
+  ---
+  duration_ms: 117.921542
+  ...
+# Subtest: two hosts share one preference owner without startup writes and release subscriptions
+ok 456 - two hosts share one preference owner without startup writes and release subscriptions
+  ---
+  duration_ms: 0.612792
+  ...
+# Subtest: adoption preserves handlers and paired labels, retires duplicate shortcuts and restores ownership
+ok 457 - adoption preserves handlers and paired labels, retires duplicate shortcuts and restores ownership
+  ---
+  duration_ms: 0.523833
+  ...
+# Subtest: lazy providers keep canonical order, replace generated fallbacks and preserve locale focus
+ok 458 - lazy providers keep canonical order, replace generated fallbacks and preserve locale focus
+  ---
+  duration_ms: 0.350958
+  ...
+# Subtest: disposing the registry never resurrects a control retired by its owner
+ok 459 - disposing the registry never resurrects a control retired by its owner
+  ---
+  duration_ms: 0.124583
+  ...
+# Subtest: storage warnings and rejected changes stay visible without falsely applying values
+ok 460 - storage warnings and rejected changes stay visible without falsely applying values
+  ---
+  duration_ms: 0.288542
+  ...
+# Subtest: menu motion reads never write or claim a save
+ok 461 - menu motion reads never write or claim a save
+  ---
+  duration_ms: 0.8155
+  ...
+# Subtest: menu motion keeps the explicit choice through QuotaExceededError, remote events and restoration until Retry saves
+ok 462 - menu motion keeps the explicit choice through QuotaExceededError, remote events and restoration until Retry saves
+  ---
+  duration_ms: 0.248833
+  ...
+# Subtest: menu motion keeps the explicit choice through SecurityError, remote events and restoration until Retry saves
+ok 463 - menu motion keeps the explicit choice through SecurityError, remote events and restoration until Retry saves
+  ---
+  duration_ms: 0.482584
+  ...
+# Subtest: menu motion keeps the explicit choice through silent, remote events and restoration until Retry saves
+ok 464 - menu motion keeps the explicit choice through silent, remote events and restoration until Retry saves
+  ---
+  duration_ms: 0.151375
+  ...
+# Subtest: an unreadable verification keeps session intent; a later explicit Retry clears the real reason
+ok 465 - an unreadable verification keeps session intent; a later explicit Retry clears the real reason
+  ---
+  duration_ms: 0.135666
+  ...
+# Subtest: a newer menu choice during write cannot be acknowledged by the older save
+ok 466 - a newer menu choice during write cannot be acknowledged by the older save
+  ---
+  duration_ms: 0.14625
+  ...
+# Subtest: a newer menu choice during verify cannot be acknowledged by the older save
+ok 467 - a newer menu choice during verify cannot be acknowledged by the older save
+  ---
+  duration_ms: 0.105
+  ...
+# Subtest: a newer explicit intent during a storage read cannot be replaced by the captured old value
+ok 468 - a newer explicit intent during a storage read cannot be replaced by the captured old value
+  ---
+  duration_ms: 0.086458
+  ...
+# Subtest: the projected SIM menu owner also keeps failed local intent and verifies Retry
+ok 469 - the projected SIM menu owner also keeps failed local intent and verifies Retry
+  ---
+  duration_ms: 121.990958
+  ...
+# Subtest: all 18 themes resolve explicitly, company mapping works, unknown IDs safely fall back
+ok 470 - all 18 themes resolve explicitly, company mapping works, unknown IDs safely fall back
+  ---
+  duration_ms: 0.627375
+  ...
+# Subtest: fpv mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+ok 471 - fpv mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+  ---
+  duration_ms: 0.119375
+  ...
+# Subtest: ukraine mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+ok 472 - ukraine mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+  ---
+  duration_ms: 0.109875
+  ...
+# Subtest: retro mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+ok 473 - retro mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+  ---
+  duration_ms: 0.04925
+  ...
+# Subtest: coupa mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+ok 474 - coupa mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+  ---
+  duration_ms: 0.046959
+  ...
+# Subtest: fpv mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+ok 475 - fpv mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+  ---
+  duration_ms: 2.229417
+  ...
+# Subtest: ukraine mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+ok 476 - ukraine mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+  ---
+  duration_ms: 0.503958
+  ...
+# Subtest: retro mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+ok 477 - retro mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+  ---
+  duration_ms: 0.3015
+  ...
+# Subtest: coupa mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+ok 478 - coupa mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+  ---
+  duration_ms: 0.362625
+  ...
+# Subtest: every scene retains bounded artwork anchors, one shared image plane and an authored capture route
+ok 479 - every scene retains bounded artwork anchors, one shared image plane and an authored capture route
+  ---
+  duration_ms: 2.975583
+  ...
+# Subtest: actual portrait and landscape crops retain a visible full-strength artwork motion region
+ok 480 - actual portrait and landscape crops retain a visible full-strength artwork motion region
+  ---
+  duration_ms: 7.503167
+  ...
+# Subtest: every landing has restrained signal styling, with all drone and technical scenes stronger
+ok 481 - every landing has restrained signal styling, with all drone and technical scenes stronger
+  ---
+  duration_ms: 0.400917
+  ...
+# Subtest: the CSS noise atlas is reproducible, small, opaque monochrome and contains four distinct frames
+ok 482 - the CSS noise atlas is reproducible, small, opaque monochrome and contains four distinct frames
+  ---
+  duration_ms: 38.114584
+  ...
+# Subtest: scene files and provenance match checksums and fit 2 MiB including the shared atlas
+ok 483 - scene files and provenance match checksums and fit 2 MiB including the shared atlas
+  ---
+  duration_ms: 59.263041
+  ...
+# Subtest: fpv mode originals, style references and prompts are bound to their delivered derivatives
+ok 484 - fpv mode originals, style references and prompts are bound to their delivered derivatives
+  ---
+  duration_ms: 22.499583
+  ...
+# Subtest: ukraine mode originals, style references and prompts are bound to their delivered derivatives
+ok 485 - ukraine mode originals, style references and prompts are bound to their delivered derivatives
+  ---
+  duration_ms: 26.349
+  ...
+# Subtest: retro mode originals, style references and prompts are bound to their delivered derivatives
+ok 486 - retro mode originals, style references and prompts are bound to their delivered derivatives
+  ---
+  duration_ms: 21.710083
+  ...
+# Subtest: coupa mode originals, style references and prompts are bound to their delivered derivatives
+ok 487 - coupa mode originals, style references and prompts are bound to their delivered derivatives
+  ---
+  duration_ms: 26.895709
+  ...
+# Subtest: DroneAid lossless runtime derivative retains the exact supplied original and pixel provenance
+ok 488 - DroneAid lossless runtime derivative retains the exact supplied original and pixel provenance
+  ---
+  duration_ms: 4.161291
+  ...
+# Subtest: DroneAid photograph keeps a full static source in both orientations and WebGL fallback
+ok 489 - DroneAid photograph keeps a full static source in both orientations and WebGL fallback
+  ---
+  duration_ms: 2.067709
+  ...
+# Subtest: mode requests on a Solo-only edition preserve focus, the artwork source and a single renderer
+ok 490 - mode requests on a Solo-only edition preserve focus, the artwork source and a single renderer
+  ---
+  duration_ms: 0.443083
+  ...
+# Subtest: a ready decoded image creates one renderer and handoff follows its readiness without taking focus
+ok 491 - a ready decoded image creates one renderer and handoff follows its readiness without taking focus
+  ---
+  duration_ms: 0.300833
+  ...
+# Subtest: receiver interference samples the original artwork into its own canvas and keeps that source after handoff
+ok 492 - receiver interference samples the original artwork into its own canvas and keeps that source after handoff
+  ---
+  duration_ms: 0.209458
+  ...
+# Subtest: receiver source generation resets on changed artwork but not resize, pause or repeated load
+ok 493 - receiver source generation resets on changed artwork but not resize, pause or repeated load
+  ---
+  duration_ms: 0.2235
+  ...
+# Subtest: hidden defers renderer creation until a loaded scene can actually animate
+ok 494 - hidden defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.242417
+  ...
+# Subtest: pagehide defers renderer creation until a loaded scene can actually animate
+ok 495 - pagehide defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.110625
+  ...
+# Subtest: reduced defers renderer creation until a loaded scene can actually animate
+ok 496 - reduced defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.103333
+  ...
+# Subtest: local-setting defers renderer creation until a loaded scene can actually animate
+ok 497 - local-setting defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.103459
+  ...
+# Subtest: gameplay defers renderer creation until a loaded scene can actually animate
+ok 498 - gameplay defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.080583
+  ...
+# Subtest: body-effects defers renderer creation until a loaded scene can actually animate
+ok 499 - body-effects defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.106625
+  ...
+# Subtest: body-reduced-effects defers renderer creation until a loaded scene can actually animate
+ok 500 - body-reduced-effects defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.097708
+  ...
+# Subtest: html-reduced-motion defers renderer creation until a loaded scene can actually animate
+ok 501 - html-reduced-motion defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.154458
+  ...
+# Subtest: reduced motion, local setting, hidden menu, gameplay and background tab stop ambient motion
+ok 502 - reduced motion, local setting, hidden menu, gameplay and background tab stop ambient motion
+  ---
+  duration_ms: 0.441917
+  ...
+# Subtest: portrait selection, error fallback and cleanup never replace interactive content
+ok 503 - portrait selection, error fallback and cleanup never replace interactive content
+  ---
+  duration_ms: 0.117542
+  ...
+# Subtest: visible decoration keeps moving without keyboard focus, but stops while hidden or suspended
+ok 504 - visible decoration keeps moving without keyboard focus, but stops while hidden or suspended
+  ---
+  duration_ms: 0.113541
+  ...
+# Subtest: a sibling settings dialog pauses the actual visible landing owner and closes without recreating it
+ok 505 - a sibling settings dialog pauses the actual visible landing owner and closes without recreating it
+  ---
+  duration_ms: 0.193834
+  ...
+# Subtest: the image/canvas plane stays registered to original artwork through cover crops and orientation changes
+ok 506 - the image/canvas plane stays registered to original artwork through cover crops and orientation changes
+  ---
+  duration_ms: 0.139333
+  ...
+# Subtest: storage denial retains unsaved menu motion across remote updates until a new explicit save
+ok 507 - storage denial retains unsaved menu motion across remote updates until a new explicit save
+  ---
+  duration_ms: 0.155
+  ...
+# Subtest: interface backdrops replace only fallback decoration and stop hidden artwork renderers
+ok 508 - interface backdrops replace only fallback decoration and stop hidden artwork renderers
+  ---
+  duration_ms: 0.182375
+  ...
+# Subtest: ephemeral title quality stops owned artwork and receiver without changing user preferences
+ok 509 - ephemeral title quality stops owned artwork and receiver without changing user preferences
+  ---
+  duration_ms: 0.185292
+  ...
+# Subtest: zero results explain query and selected filters in the existing status; recovery never starts play
+ok 510 - zero results explain query and selected filters in the existing status; recovery never starts play
+  ---
+  duration_ms: 15.737084
+  ...
+# Subtest: reset retains the accepted host mode and query with compact=false
+ok 511 - reset retains the accepted host mode and query with compact=false
+  ---
+  duration_ms: 2.330416
+  ...
+# Subtest: reset retains the accepted host mode and query with compact=true
+ok 512 - reset retains the accepted host mode and query with compact=true
+  ---
+  duration_ms: 2.194375
+  ...
+# Subtest: Clear search remains query-only when reset is offered
+ok 513 - Clear search remains query-only when reset is offered
+  ---
+  duration_ms: 1.730667
+  ...
+# Subtest: a genuinely empty library differs from a current-mode view with no missions
+ok 514 - a genuinely empty library differs from a current-mode view with no missions
+  ---
+  duration_ms: 3.639875
+  ...
+# Subtest: visible unavailable missions retain their real cards rather than a false empty explanation
+ok 515 - visible unavailable missions retain their real cards rather than a false empty explanation
+  ---
+  duration_ms: 1.384583
+  ...
+# Subtest: reset cannot change browsing state while closed
+ok 516 - reset cannot change browsing state while closed
+  ---
+  duration_ms: 1.684458
+  ...
+# Subtest: reset cannot change browsing state while hidden
+ok 517 - reset cannot change browsing state while hidden
+  ---
+  duration_ms: 1.466542
+  ...
+# Subtest: reset cannot change browsing state while blurred
+ok 518 - reset cannot change browsing state while blurred
+  ---
+  duration_ms: 1.164584
+  ...
+# Subtest: reset cannot change browsing state while destroyed
+ok 519 - reset cannot change browsing state while destroyed
+  ---
+  duration_ms: 1.045167
+  ...
+# Subtest: reset retires pending download authority without admitting its later ready result
+ok 520 - reset retires pending download authority without admitting its later ready result
+  ---
+  duration_ms: 5.0915
+  ...
+# Subtest: reset does not reclaim focus from reentrant host persistence
+ok 521 - reset does not reclaim focus from reentrant host persistence
+  ---
+  duration_ms: 0.950708
+  ...
+# Subtest: existing controller can reach and activate browse-only Reset filters
+ok 522 - existing controller can reach and activate browse-only Reset filters
+  ---
+  duration_ms: 6.648958
+  ...
+# Subtest: Ukrainian recovery updates the existing status and buttons without moving field focus
+ok 523 - Ukrainian recovery updates the existing status and buttons without moving field focus
+  ---
+  duration_ms: 2.775875
+  ...
+# Subtest: an empty refreshed list preserves the current failed-download feedback
+ok 524 - an empty refreshed list preserves the current failed-download feedback
+  ---
+  duration_ms: 2.115292
+  ...
+# Subtest: reset emits one native mode change after all filters reset and retains host-observable query
+ok 525 - reset emits one native mode change after all filters reset and retains host-observable query
+  ---
+  duration_ms: 1.097
+  ...
+# Subtest: a reused browser resets to the latest accepted supported host mode and rejects an invalid getter result
+ok 526 - a reused browser resets to the latest accepted supported host mode and rejects an invalid getter result
+  ---
+  duration_ms: 1.532417
+  ...
+# Subtest: solo keeps its actual menu-motion checkbox and offers a localized save Retry
+ok 527 - solo keeps its actual menu-motion checkbox and offers a localized save Retry
+  ---
+  duration_ms: 23.275
+  ...
+# Subtest: team keeps its actual menu-motion checkbox and offers a localized save Retry
+ok 528 - team keeps its actual menu-motion checkbox and offers a localized save Retry
+  ---
+  duration_ms: 5.984458
+  ...
+# Subtest: versus keeps its actual menu-motion checkbox and offers a localized save Retry
+ok 529 - versus keeps its actual menu-motion checkbox and offers a localized save Retry
+  ---
+  duration_ms: 7.388375
+  ...
+# Subtest: solo adopts the complete common inventory without replacing preference owners
+ok 530 - solo adopts the complete common inventory without replacing preference owners
+  ---
+  duration_ms: 8.254209
+  ...
+# Subtest: team adopts the complete common inventory without replacing preference owners
+ok 531 - team adopts the complete common inventory without replacing preference owners
+  ---
+  duration_ms: 4.435167
+  ...
+# Subtest: versus adopts the complete common inventory without replacing preference owners
+ok 532 - versus adopts the complete common inventory without replacing preference owners
+  ---
+  duration_ms: 3.180917
+  ...
+# Subtest: native aliases retire only redundant actions, retaining their listeners and distinct music actions
+ok 533 - native aliases retire only redundant actions, retaining their listeners and distinct music actions
+  ---
+  duration_ms: 8.877084
+  ...
+# Subtest: isolated Solo courses keep their home sound action when common Settings are adopted
+ok 534 - isolated Solo courses keep their home sound action when common Settings are adopted
+  ---
+  duration_ms: 6.746041
+  ...
+# Subtest: native common rows remain reachable through controller categories and return to the category on Back
+ok 535 - native common rows remain reachable through controller categories and return to the category on Back
+  ---
+  duration_ms: 8.048375
+  ...
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 536 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 1.253292
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 537 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 25.550792
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 538 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 38.730125
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 539 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 13.364208
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 540 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 221.045208
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 541 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.373584
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 542 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.05275
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 543 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.094458
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 544 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.127625
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 545 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 1.811542
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 546 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 0.467458
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 547 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.11075
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 548 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.160792
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 549 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 7.22475
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 550 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 1.222541
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 551 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 0.495166
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 552 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.081667
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 553 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 0.188667
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 554 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.090209
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 555 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.247542
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 556 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.106417
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 557 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.031375
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 558 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 0.531708
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 559 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 1.628917
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 560 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 5.898042
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 561 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.080125
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 562 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.097792
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 563 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 17.359375
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 564 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.150542
+  ...
+# Subtest: opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+ok 565 - opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+  ---
+  duration_ms: 77.485916
+  ...
+# Subtest: finished review download captures terminal state instead of an older inspector snapshot
+ok 566 - finished review download captures terminal state instead of an older inspector snapshot
+  ---
+  duration_ms: 5.921208
+  ...
+# Subtest: projected SIM browser keeps every campaign in one gallery and launches the exact owner once
+ok 567 - projected SIM browser keeps every campaign in one gallery and launches the exact owner once
+  ---
+  duration_ms: 20.723875
+  ...
+# Subtest: projected preview services are lazy, disposable and retire stale filtered cards
+ok 568 - projected preview services are lazy, disposable and retire stale filtered cards
+  ---
+  duration_ms: 4.067375
+  ...
+# Subtest: projected SIM search recovery resets filters without clearing query or launching a course
+ok 569 - projected SIM search recovery resets filters without clearing query or launching a course
+  ---
+  duration_ms: 5.471458
+  ...
+# Subtest: SIM selector projection stays inside existing optional executable and stylesheet slots
+ok 570 - SIM selector projection stays inside existing optional executable and stylesheet slots
+  ---
+  duration_ms: 104.372458
+  ...
+# Subtest: offline selector locale admission covers both languages, plural counts and exact-owner errors
+ok 571 - offline selector locale admission covers both languages, plural counts and exact-owner errors
+  ---
+  duration_ms: 99.231959
+  ...
+# Subtest: starter Classic Team cards browse without artwork; explicit full preview returns directly without awards
+ok 572 - starter Classic Team cards browse without artwork; explicit full preview returns directly without awards
+  ---
+  duration_ms: 2989.2695
+  ...
+# Subtest: previewing a different arena keeps the paused attempt, original picture and explicit Resume intact
+ok 573 - previewing a different arena keeps the paused attempt, original picture and explicit Resume intact
+  ---
+  duration_ms: 2971.178792
+  ...
+# Subtest: Back cancels a held full decode immediately; late completion cannot paint or steal the card focus
+ok 574 - Back cancels a held full decode immediately; late completion cannot paint or steal the card focus
+  ---
+  duration_ms: 2766.683167
+  ...
+# Subtest: required preview read failure offers an exact Retry without starting play or replacing setup
+ok 575 - required preview read failure offers an exact Retry without starting play or replacing setup
+  ---
+  duration_ms: 2704.779416
+  ...
+# Subtest: a newer Back focus survives expanded preview readiness without automatic navigation
+ok 576 - a newer Back focus survives expanded preview readiness without automatic navigation
+  ---
+  duration_ms: 2684.342333
+  ...
+# Subtest: a cancelled old visit cannot overwrite a newer expanded preview or its focus
+ok 577 - a cancelled old visit cannot overwrite a newer expanded preview or its focus
+  ---
+  duration_ms: 2797.059458
+  ...
+# Subtest: local .rlteam artwork with exact starter IDs keeps its own teaser and full original without a compiled substitute
+ok 578 - local .rlteam artwork with exact starter IDs keeps its own teaser and full original without a compiled substitute
+  ---
+  duration_ms: 2760.7575
+  ...
+# Subtest: an earned Team result survives another arena preview and its original Next still starts the accepted successor
+ok 579 - an earned Team result survives another arena preview and its original Next still starts the accepted successor
+  ---
+  duration_ms: 11248.777
+  ...
+# {"boundary":"rehearsed keyboard host; finite DOM/inert Canvas, no native or human-win claim","level":"first-connection","coreReferenceCommands":2081,"hostCommandTicks":2081}
+# Subtest: Team Home identifies the selected arena and keeps card focus separate from launch
+ok 580 - Team Home identifies the selected arena and keeps card focus separate from launch
+  ---
+  duration_ms: 4194.385541
+  ...
+# Subtest: Team browsing and live translation preserve a paused accepted hunt and its Back owner
+ok 581 - Team browsing and live translation preserve a paused accepted hunt and its Back owner
+  ---
+  duration_ms: 3262.187959
+  ...
+# Team picture preparation failed. TypeError: fetch failed
+#     at node:internal/deps/undici/undici:13510:13
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:151:26
+#     at async loadPreviewArtwork (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:146:12)
+#     at async acquireCandidatePicture (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/picture.mjs:52:17)
+#     at async Object.stage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-pictures.mjs:70:24)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-team-pictures.mjs:115:22)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=3:2727:29)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=3:2921:25 {
+#   [cause]: Error: not implemented... yet...
+#       at makeNetworkError (node:internal/deps/undici/undici:9277:35)
+#       at schemeFetch (node:internal/deps/undici/undici:10673:34)
+#       at node:internal/deps/undici/undici:10522:26
+#       at mainFetch (node:internal/deps/undici/undici:10541:11)
+#       at fetching (node:internal/deps/undici/undici:10489:7)
+#       at fetch (node:internal/deps/undici/undici:10358:20)
+#       at fetch (node:internal/deps/undici/undici:13508:10)
+#       at fetch (node:internal/bootstrap/web/exposed-window-or-worker:72:12)
+#       at fetch (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/actor-appearance-transport.mjs:45:39)
+#       at fetchAsset (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:121:37)
+# }
+# Subtest: Team keeps the authored humanoid-hunt-v1 identity
+ok 582 - Team keeps the authored humanoid-hunt-v1 identity
+  ---
+  duration_ms: 278.222166
+  ...
+# Team picture preparation failed. TypeError: fetch failed
+#     at node:internal/deps/undici/undici:13510:13
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:151:26
+#     at async loadPreviewArtwork (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:146:12)
+#     at async acquireCandidatePicture (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/picture.mjs:52:17)
+#     at async Object.stage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-pictures.mjs:70:24)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-team-pictures.mjs:115:22)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=4:2727:29)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=4:2921:25 {
+#   [cause]: Error: not implemented... yet...
+#       at makeNetworkError (node:internal/deps/undici/undici:9277:35)
+#       at schemeFetch (node:internal/deps/undici/undici:10673:34)
+#       at node:internal/deps/undici/undici:10522:26
+#       at mainFetch (node:internal/deps/undici/undici:10541:11)
+#       at fetching (node:internal/deps/undici/undici:10489:7)
+#       at fetch (node:internal/deps/undici/undici:10358:20)
+#       at fetch (node:internal/deps/undici/undici:13508:10)
+#       at fetch (node:internal/bootstrap/web/exposed-window-or-worker:72:12)
+#       at fetch (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/actor-appearance-transport.mjs:45:39)
+#       at fetchAsset (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:121:37)
+# }
+# Subtest: Team keeps the authored snake-hunt-v1 identity
+ok 583 - Team keeps the authored snake-hunt-v1 identity
+  ---
+  duration_ms: 834.044584
+  ...
+# Subtest: an imported Team pack keeps its own identity instead of borrowing the authored edition
+ok 584 - an imported Team pack keeps its own identity instead of borrowing the authored edition
+  ---
+  duration_ms: 2810.021041
+  ...
+# Team picture preparation failed. TypeError: fetch failed
+#     at node:internal/deps/undici/undici:13510:13
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:151:26
+#     at async loadPreviewArtwork (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:146:12)
+#     at async acquireCandidatePicture (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/picture.mjs:52:17)
+#     at async Object.stage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-pictures.mjs:70:24)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-team-pictures.mjs:115:22)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=6:2727:29)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=6:2921:25 {
+#   [cause]: Error: not implemented... yet...
+#       at makeNetworkError (node:internal/deps/undici/undici:9277:35)
+#       at schemeFetch (node:internal/deps/undici/undici:10673:34)
+#       at node:internal/deps/undici/undici:10522:26
+#       at mainFetch (node:internal/deps/undici/undici:10541:11)
+#       at fetching (node:internal/deps/undici/undici:10489:7)
+#       at fetch (node:internal/deps/undici/undici:10358:20)
+#       at fetch (node:internal/deps/undici/undici:13508:10)
+#       at fetch (node:internal/bootstrap/web/exposed-window-or-worker:72:12)
+#       at fetch (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/actor-appearance-transport.mjs:45:39)
+#       at fetchAsset (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:121:37)
+# }
+# Subtest: default Team Home uses concise Capture identity in English and Ukrainian
+ok 585 - default Team Home uses concise Capture identity in English and Ukrainian
+  ---
+  duration_ms: 1241.7035
+  ...
+# Team picture preparation failed. TypeError: fetch failed
+#     at node:internal/deps/undici/undici:13510:13
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:151:26
+#     at async loadPreviewArtwork (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:146:12)
+#     at async acquireCandidatePicture (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/picture.mjs:52:17)
+#     at async Object.stage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-pictures.mjs:70:24)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-team-pictures.mjs:115:22)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=7:2727:29)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=7:2921:25 {
+#   [cause]: Error: not implemented... yet...
+#       at makeNetworkError (node:internal/deps/undici/undici:9277:35)
+#       at schemeFetch (node:internal/deps/undici/undici:10673:34)
+#       at node:internal/deps/undici/undici:10522:26
+#       at mainFetch (node:internal/deps/undici/undici:10541:11)
+#       at fetching (node:internal/deps/undici/undici:10489:7)
+#       at fetch (node:internal/deps/undici/undici:10358:20)
+#       at fetch (node:internal/deps/undici/undici:13508:10)
+#       at fetch (node:internal/bootstrap/web/exposed-window-or-worker:72:12)
+#       at fetch (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/actor-appearance-transport.mjs:45:39)
+#       at fetchAsset (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:121:37)
+# }
+# Subtest: explicit team-cultural-specialist-originals-2 keeps its short owned navigation identity
+ok 586 - explicit team-cultural-specialist-originals-2 keeps its short owned navigation identity
+  ---
+  duration_ms: 1199.040875
+  ...
+# Team picture preparation failed. TypeError: fetch failed
+#     at node:internal/deps/undici/undici:13510:13
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:151:26
+#     at async loadPreviewArtwork (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:146:12)
+#     at async acquireCandidatePicture (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/picture.mjs:52:17)
+#     at async Object.stage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-pictures.mjs:70:24)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-team-pictures.mjs:115:22)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=8:2727:29)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=8:2921:25 {
+#   [cause]: Error: not implemented... yet...
+#       at makeNetworkError (node:internal/deps/undici/undici:9277:35)
+#       at schemeFetch (node:internal/deps/undici/undici:10673:34)
+#       at node:internal/deps/undici/undici:10522:26
+#       at mainFetch (node:internal/deps/undici/undici:10541:11)
+#       at fetching (node:internal/deps/undici/undici:10489:7)
+#       at fetch (node:internal/deps/undici/undici:10358:20)
+#       at fetch (node:internal/deps/undici/undici:13508:10)
+#       at fetch (node:internal/bootstrap/web/exposed-window-or-worker:72:12)
+#       at fetch (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/actor-appearance-transport.mjs:45:39)
+#       at fetchAsset (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:121:37)
+# }
+# Subtest: explicit team-pressure-originals-1 keeps its short owned navigation identity
+ok 587 - explicit team-pressure-originals-1 keeps its short owned navigation identity
+  ---
+  duration_ms: 356.590708
+  ...
+# Team picture preparation failed. TypeError: fetch failed
+#     at node:internal/deps/undici/undici:13510:13
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:151:26
+#     at async loadPreviewArtwork (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:146:12)
+#     at async acquireCandidatePicture (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/picture.mjs:52:17)
+#     at async Object.stage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-pictures.mjs:70:24)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/candidate-team-pictures.mjs:115:22)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=9:2727:29)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=9:2921:25 {
+#   [cause]: Error: not implemented... yet...
+#       at makeNetworkError (node:internal/deps/undici/undici:9277:35)
+#       at schemeFetch (node:internal/deps/undici/undici:10673:34)
+#       at node:internal/deps/undici/undici:10522:26
+#       at mainFetch (node:internal/deps/undici/undici:10541:11)
+#       at fetching (node:internal/deps/undici/undici:10489:7)
+#       at fetch (node:internal/deps/undici/undici:10358:20)
+#       at fetch (node:internal/deps/undici/undici:13508:10)
+#       at fetch (node:internal/bootstrap/web/exposed-window-or-worker:72:12)
+#       at fetch (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/actor-appearance-transport.mjs:45:39)
+#       at fetchAsset (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/content-design/assets.mjs:121:37)
+# }
+# Subtest: explicit team-timed-originals keeps its short owned navigation identity
+ok 588 - explicit team-timed-originals keeps its short owned navigation identity
+  ---
+  duration_ms: 297.291125
+  ...
+# Subtest: explicit pursuit-pilots-v1 retains the source-owned Pursuit identity
+ok 589 - explicit pursuit-pilots-v1 retains the source-owned Pursuit identity
+  ---
+  duration_ms: 275.031
+  ...
+# Subtest: explicit pursuit-campaigns-v1 retains the source-owned Pursuit identity
+ok 590 - explicit pursuit-campaigns-v1 retains the source-owned Pursuit identity
+  ---
+  duration_ms: 1732.225375
+  ...
+1..590
+# tests 628
+# suites 0
+# pass 623
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 186286.039041
