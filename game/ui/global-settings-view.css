@@ -57,3 +57,8 @@
 .global-settings-option [hidden] {
   display: none !important;
 }
+.global-settings-save-retry {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+}

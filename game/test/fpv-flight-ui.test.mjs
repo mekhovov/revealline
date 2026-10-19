@@ -1660,6 +1660,55 @@ test('Academy title focus loss before flight initialization keeps the menu usabl
   assert.equal(f.view.snapshot().status, 'active');
 });
 
+test('Academy Home context stays localized with its current flight while browsing and returning', async (t) => {
+  const h = await fixture(t, { home: true });
+  const context = h.$('academy-shell-navigation-context');
+  const home = h.$('academy-shell-home-dialog');
+  assert.equal(context.textContent, 'FPV SIM · Academy');
+  assert.equal(context.hidden, false);
+  assert.ok(home.querySelector('nav').getAttribute('aria-describedby').includes(context.id));
+  const prepared = h.view.snapshot();
+  const mission = home.querySelector('.mode-play-mission').textContent;
+  const browse = () => {
+    h.$('academy-shell-action-missions').focus();
+    h.$('academy-shell-action-missions').click();
+    assert.equal(h.$('journey-chooser').open, true);
+    assert.ok(
+      h.$('journey-chooser-status').textContent.includes(`${context.textContent} · `),
+      'The chooser keeps the exact localized host context while browsing.',
+    );
+    h.doc.querySelectorAll('.journey-card')[1].focus();
+    h.tick(2);
+    h.$('journey-back').click();
+    assert.equal(home.open, true);
+    assert.ok(
+      h.doc.activeElement === h.$('academy-shell-action-missions'),
+      `Back must return focus to the mission opener, received ${h.doc.activeElement?.id}`,
+    );
+  };
+  browse();
+  assert.deepEqual(
+    h.view.snapshot(),
+    prepared,
+    'focus-only browsing cannot start or replace a flight',
+  );
+  assert.equal(home.querySelector('.mode-play-mission').textContent, mission);
+  h.$('academy-shell-action-primary').click();
+  h.tick(3);
+  h.$('academy-shell-action-menu').click();
+  const paused = h.view.snapshot();
+  assert.equal(paused.status, 'paused');
+  assert.ok(paused.ticks > 0);
+  h.$('language').value = 'uk';
+  h.$('language').emit('change');
+  assert.equal(context.textContent, 'FPV SIM · Академія');
+  const translatedMission = home.querySelector('.mode-play-mission').textContent;
+  browse();
+  assert.deepEqual(h.view.snapshot(), paused);
+  assert.equal(home.querySelector('.mode-play-mission').textContent, translatedMission);
+  assert.equal(context.textContent, 'FPV SIM · Академія');
+});
+
 test('Academy shell keeps menu input out of native flight and requires explicit Start', async (t) => {
   const f = await fixture(t, { home: true });
   assert.equal(f.$('academy-shell-home-dialog').open, true);
