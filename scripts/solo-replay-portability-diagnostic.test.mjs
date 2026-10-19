@@ -1,12 +1,14 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, rm, stat, symlink, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 import test from 'node:test';
 import {
   traceReplayPortability,
   loadReplayPortabilityCase,
   createReplayPortabilityReference,
+  withReplayPortabilityNodeSource,
   prepareReplayPortabilityRequest,
   assertReplayPortabilityNativeModules,
 } from './solo-replay-portability-diagnostic.mjs';
@@ -457,6 +459,101 @@ test('native source readback and original strict checkpoint are mandatory, not d
     const bad = structuredClone(report);
     change(bad);
     assert.throws(() => assertReplayPortabilityNativeModules(row, bad));
+  }
+});
+
+test('historical Node mirror executes its checked modules and removes all owned files', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  let root;
+  await withReplayPortabilityNodeSource(fixture, async (rootURL) => {
+    root = new URL(rootURL);
+    assert(root.href.startsWith('file:'));
+    assert.notEqual(root.href, new URL('../', import.meta.url).href);
+    const catalog = await readFile(new URL('game/i18n/catalogs.mjs', root));
+    assert.equal(catalog.length, 1264959);
+    assert.equal(sha(catalog), 'ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224');
+    const core = await import(new URL('game/core/index.mjs', root));
+    const replay = await import(new URL('game/replay.mjs', root));
+    assert.equal(typeof core.createRun, 'function');
+    assert.equal(typeof replay.verifyReplay, 'function');
+  });
+  await assert.rejects(stat(root), { code: 'ENOENT' });
+});
+
+test('changed owned Node bytes are refused after execution and still removed', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  let root;
+  await assert.rejects(
+    withReplayPortabilityNodeSource(fixture, async (rootURL) => {
+      root = new URL(rootURL);
+      const target = new URL('game/core/index.mjs', root);
+      const bytes = await readFile(target);
+      bytes[0] ^= 1;
+      await writeFile(target, bytes);
+    }),
+    /Node source differs/,
+  );
+  await assert.rejects(stat(root), { code: 'ENOENT' });
+});
+
+test('owned Node source cannot borrow a symlink to the tooling checkout', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  let root;
+  await assert.rejects(
+    withReplayPortabilityNodeSource(fixture, async (rootURL) => {
+      root = new URL(rootURL);
+      const target = new URL('game/core/index.mjs', root);
+      await rm(target);
+      await symlink(fileURLToPath(new URL('../game/core/index.mjs', import.meta.url)), target);
+    }),
+    /Node source must be a regular file/,
+  );
+  await assert.rejects(stat(root), { code: 'ENOENT' });
+});
+
+test('Node reference failure removes the owned mirror without importing a fallback', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  let root;
+  await assert.rejects(
+    withReplayPortabilityNodeSource(fixture, async (rootURL) => {
+      root = new URL(rootURL);
+      throw new Error('modeled reference failure');
+    }),
+    /modeled reference failure/,
+  );
+  await assert.rejects(stat(root), { code: 'ENOENT' });
+});
+
+test('historical Node catalog, borrowed modules, closure and source identity cannot be repinned', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  for (const change of [
+    (value) => {
+      value.nodeSourceRevision = '0'.repeat(40);
+    },
+    (value) => {
+      value.nodeModules.find((item) => item.path === 'game/i18n/catalogs.mjs').sha256 = '0'.repeat(
+        64,
+      );
+    },
+    (value) => {
+      value.nodeModules.find((item) => item.path === 'game/core/index.mjs').sha256 = '0'.repeat(64);
+    },
+    (value) => {
+      value.nodeModules.pop();
+    },
+    (value) => {
+      value.nodeModules[0].path = 'game/../outside.mjs';
+    },
+  ]) {
+    const invalid = structuredClone(fixture);
+    change(invalid);
+    let called = false;
+    await assert.rejects(
+      withReplayPortabilityNodeSource(invalid, async () => {
+        called = true;
+      }),
+    );
+    assert.equal(called, false, 'Changed source must be refused before execution');
   }
 });
 
