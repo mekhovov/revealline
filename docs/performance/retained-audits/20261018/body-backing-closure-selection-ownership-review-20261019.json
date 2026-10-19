@@ -1,0 +1,93 @@
+{
+  "format": "SoloBodyBackingRecoveryClosureReviewV1",
+  "base": "a2c0b33c43d56adbdbb666c618d5f489cbdd32e7",
+  "proposal": {
+    "blob": "75639d4ea7d575a93dd8c8da4810e43d338b1c87",
+    "bytes": 24558,
+    "sha256": "fa88820170e299817f4a5fd5e540932d317c705f8657c66949146d8b57833ebf"
+  },
+  "method": "Read-only source/API inspection and RAM source analysis only; no repository application, test, generator or build execution.",
+  "focusedSelection": {
+    "selector": {
+      "path": "publishing/focused-tests.mjs",
+      "blob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "lines": "96-121"
+    },
+    "manifest": {
+      "path": "publishing/focused-test-map.json",
+      "blob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    "newTest": "game/test/body-backing-recovery.test.mjs",
+    "selectedAutomatically": true,
+    "reason": "Changed game/test/*.test.mjs is added as node --test unless already selected or deferred; no manifest deferrals exist.",
+    "productionCategory": "company-editions",
+    "execution": false
+  },
+  "generatedJavascript": {
+    "worldReaction": {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "blob": "83e5c1248a24e6d7e73173cdfa6bdbe097c4fb1c"
+    },
+    "simPresentation": {
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "blob": "3e71952d7509dabcab99b24e5687755b9d35d3a2"
+    },
+    "result": "Neither source contains body-backing, paintBodyBacking or interiorAlphaMask; no compiled JavaScript projection identified.",
+    "playShell": {
+      "path": "scripts/refresh-fpv-play-shell.mjs",
+      "blob": "3c16fe0e7f450cde67af9d241875afdf28414d56",
+      "result": "Finite source list excludes body-backing."
+    }
+  },
+  "presentationMetadata": {
+    "producer": {
+      "path": "scripts/produce-field-kit-theme.mjs",
+      "blob": "04bcc741a03e5d7d9a54c4d44179639aa3e74805"
+    },
+    "sourceGroups": [
+      "motion",
+      "effects",
+      "team"
+    ],
+    "sourceListLines": "43-46",
+    "fingerprintLines": "479-488",
+    "reviewLines": "226-233",
+    "candidate": {
+      "path": "scripts/field-kit-production-candidate.mjs",
+      "blob": "b471ec8ca42a4912017db90b794c2669053def17",
+      "lines": "61-84"
+    },
+    "result": "Changed source bytes reopen group source identity and require candidate/continuation qualification. No hash-only hand projection or approval is valid; no metadata was mutated.",
+    "completed": false
+  },
+  "sceneOwnership": {
+    "board": {
+      "path": "game/ui/render.mjs",
+      "blob": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+      "constructor": "236-265",
+      "dispose": "310-340",
+      "invalidate": "483-496",
+      "draw": "1631-1639"
+    },
+    "sharedRenderer": {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "blob": "6eb8b5f1011ed43ac1dce8249498f9d48a793ddd",
+      "backingCall": 164,
+      "originalImageCall": 169
+    },
+    "finding": "The shared body backing WeakMap has no BoardPainter owner. The narrow helper repair cannot notify the scene when an independent backing-only surface is lost or restored.",
+    "possibleNextBoundary": "An explicit per-painter cache or detachable lease passed through paintCharacter and released on invalidate/dispose could reuse existing loss/restoration callbacks without globally retaining painter/image owners. Requires separate design and multi-owner/disposal controls.",
+    "notImplemented": true
+  },
+  "limits": [
+    "Ten new deterministic controls are authored but unexecuted.",
+    "No native raster, loss injection, sustained performance or physical device result is claimed.",
+    "Independent backing-only loss still lacks scene pause/repaint/explicit Resume integration; full owned-surface recovery gate remains open.",
+    "Full source/build and presentation metadata qualification remain pending."
+  ],
+  "sources": [
+    "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/isContextLost",
+    "https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas/contextrestored_event"
+  ],
+  "recordedAt": "2026-10-19T04:06:48.397947+00:00"
+}

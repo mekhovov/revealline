@@ -1,0 +1,705 @@
+{
+  "collectorExecuted": false,
+  "kind": "all-cohort-skipped-run-trigger-base-proof",
+  "proposalBlob": "289ceabc55a53f7b58cc273067603eee80dee5f7",
+  "requestBudgetPerSweepWithAncestry": {
+    "1620": 12,
+    "1621": 55,
+    "1628": 57
+  },
+  "results": [
+    {
+      "allAssociationsValid": true,
+      "comparisons": [
+        {
+          "ahead_by": 5,
+          "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "behind_by": 0,
+          "mergeBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "status": "ahead",
+          "total_commits": 5,
+          "url": "https://api.github.com/repos/mekhovov/revealline/compare/c2930c544d7e1353cbc5aae10c0b77d121a32164...eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+        }
+      ],
+      "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "pr": 1620,
+      "runs": [
+        {
+          "associationValid": true,
+          "path": ".github/workflows/published-pages-smoke.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39159253001,
+          "suiteId": 106115660712
+        }
+      ]
+    },
+    {
+      "allAssociationsValid": true,
+      "comparisons": [
+        {
+          "ahead_by": 4,
+          "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "behind_by": 0,
+          "mergeBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "status": "ahead",
+          "total_commits": 4,
+          "url": "https://api.github.com/repos/mekhovov/revealline/compare/c2930c544d7e1353cbc5aae10c0b77d121a32164...4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+        }
+      ],
+      "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "pr": 1621,
+      "runs": [
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220174,
+          "suiteId": 106107653932
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-auxiliary-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220205,
+          "suiteId": 106107654032
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-cpu-profile-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220207,
+          "suiteId": 106107654040
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-current-transitions-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220081,
+          "suiteId": 106107653392
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-audio-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220160,
+          "suiteId": 106107653893
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-audio-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220242,
+          "suiteId": 106107654124
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-journal-cost-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220102,
+          "suiteId": 106107653794
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-journal-cost-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220070,
+          "suiteId": 106107653713
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-large-profile-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220203,
+          "suiteId": 106107654031
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156219931,
+          "suiteId": 106107653348
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220017,
+          "suiteId": 106107653540
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220058,
+          "suiteId": 106107653678
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220152,
+          "suiteId": 106107653862
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-recovery-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220117,
+          "suiteId": 106107653813
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-recovery-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220200,
+          "suiteId": 106107654025
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-soak-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220155,
+          "suiteId": 106107653871
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220269,
+          "suiteId": 106107654205
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220159,
+          "suiteId": 106107653891
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220187,
+          "suiteId": 106107653987
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220056,
+          "suiteId": 106107653681
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220031,
+          "suiteId": 106107653630
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220093,
+          "suiteId": 106107653768
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156219970,
+          "suiteId": 106107653464
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220121,
+          "suiteId": 106107653818
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156219930,
+          "suiteId": 106107653345
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-first-victory-cpu-239-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220171,
+          "suiteId": 106107653934
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220134,
+          "suiteId": 106107653844
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-next-geometric-39774-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220153,
+          "suiteId": 106107653856
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-next-geometric-c696-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156219952,
+          "suiteId": 106107653413
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-next-geometric-e1cc-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220167,
+          "suiteId": 106107653915
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220149,
+          "suiteId": 106107653866
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156219947,
+          "suiteId": 106107653390
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v3-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156219963,
+          "suiteId": 106107653438
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v4-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220138,
+          "suiteId": 106107653843
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-preparation-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156219903,
+          "suiteId": 106107653273
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-readiness-ab45-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220211,
+          "suiteId": 106107654056
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220028,
+          "suiteId": 106107653621
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-readiness-diagnosed-239-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220127,
+          "suiteId": 106107653822
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-readiness-preparation-e1cc-v2-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156219965,
+          "suiteId": 106107653447
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-selected-font-direct-sheet-e1cc-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220262,
+          "suiteId": 106107654180
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-selected-font-settlement-e1cc-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220227,
+          "suiteId": 106107654099
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-supplemental-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220151,
+          "suiteId": 106107653867
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-sustained-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156219995,
+          "suiteId": 106107653508
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-timing-temporary.yml",
+          "recordedBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "runId": 39156220139,
+          "suiteId": 106107653841
+        }
+      ]
+    },
+    {
+      "allAssociationsValid": true,
+      "comparisons": [
+        {
+          "ahead_by": 7,
+          "base": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "behind_by": 0,
+          "mergeBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "status": "ahead",
+          "total_commits": 7,
+          "url": "https://api.github.com/repos/mekhovov/revealline/compare/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465...62be652ce70b11f840b491c218609d5225374be4"
+        }
+      ],
+      "head": "62be652ce70b11f840b491c218609d5225374be4",
+      "pr": 1628,
+      "runs": [
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-native-package-consumer.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633097,
+          "suiteId": 106127062552
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-auxiliary-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633151,
+          "suiteId": 106127062660
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-cpu-profile-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633208,
+          "suiteId": 106127062717
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-current-transitions-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633253,
+          "suiteId": 106127062813
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-demo-active-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633111,
+          "suiteId": 106127062584
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-demo-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633201,
+          "suiteId": 106127062773
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-audio-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633368,
+          "suiteId": 106127063044
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-audio-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633189,
+          "suiteId": 106127062750
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-journal-cost-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633409,
+          "suiteId": 106127063119
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-journal-cost-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633202,
+          "suiteId": 106127062777
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-large-profile-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633205,
+          "suiteId": 106127062782
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633026,
+          "suiteId": 106127062393
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633265,
+          "suiteId": 106127062865
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633283,
+          "suiteId": 106127062913
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633169,
+          "suiteId": 106127062712
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-recovery-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633349,
+          "suiteId": 106127063021
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-recovery-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633027,
+          "suiteId": 106127062392
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-soak-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633370,
+          "suiteId": 106127063059
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633032,
+          "suiteId": 106127062395
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633145,
+          "suiteId": 106127062652
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633235,
+          "suiteId": 106127062780
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633212,
+          "suiteId": 106127062733
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633084,
+          "suiteId": 106127062526
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633176,
+          "suiteId": 106127062732
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633428,
+          "suiteId": 106127063169
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633072,
+          "suiteId": 106127062428
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633114,
+          "suiteId": 106127062525
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-first-victory-cpu-239-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633178,
+          "suiteId": 106127062725
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633252,
+          "suiteId": 106127062827
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-next-geometric-39774-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633418,
+          "suiteId": 106127063136
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-next-geometric-c696-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633132,
+          "suiteId": 106127062619
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-next-geometric-e1cc-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633384,
+          "suiteId": 106127063072
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633161,
+          "suiteId": 106127062696
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633362,
+          "suiteId": 106127063040
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v3-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633079,
+          "suiteId": 106127062508
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v4-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633236,
+          "suiteId": 106127062850
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-preparation-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633121,
+          "suiteId": 106127062600
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-readiness-ab45-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633394,
+          "suiteId": 106127063094
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633390,
+          "suiteId": 106127063090
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-readiness-diagnosed-239-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633193,
+          "suiteId": 106127062754
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-readiness-preparation-e1cc-v2-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633365,
+          "suiteId": 106127063042
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-selected-font-direct-sheet-e1cc-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633157,
+          "suiteId": 106127062678
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-selected-font-settlement-e1cc-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633233,
+          "suiteId": 106127062849
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-supplemental-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633081,
+          "suiteId": 106127062515
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-sustained-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633274,
+          "suiteId": 106127062886
+        },
+        {
+          "associationValid": true,
+          "path": ".github/workflows/solo-remote-timing-temporary.yml",
+          "recordedBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+          "runId": 39163633203,
+          "suiteId": 106127062779
+        }
+      ]
+    }
+  ],
+  "sourceOnly": true,
+  "testsExecuted": false
+}

@@ -1,0 +1,189 @@
+{
+  "kind": "merged-mp3-source-shard2-exact-artifact-scope",
+  "observedUTC": "2026-10-19T04:19:43.777067+00:00",
+  "pr": 1694,
+  "artifact": {
+    "id": 12162702919,
+    "node_id": "MDg6QXJ0aWZhY3QxMjE2MjcwMjkxOQ==",
+    "name": "focused-shard-39183587745-1-2",
+    "size_in_bytes": 5817,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12162702919",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12162702919/zip",
+    "expired": false,
+    "digest": "sha256:a679ac5c969b3b571dbd068ccdfd500cfb735baf480105f3465a13157224ed84",
+    "created_at": "2026-10-19T04:14:10Z",
+    "updated_at": "2026-10-19T04:14:10Z",
+    "expires_at": "2026-10-26T04:14:09Z",
+    "workflow_run": {
+      "id": 39183587745,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "codex/solo-playback-inspection-owner",
+      "head_sha": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500"
+    }
+  },
+  "archiveSHA256": "a679ac5c969b3b571dbd068ccdfd500cfb735baf480105f3465a13157224ed84",
+  "receipt": {
+    "format": "revealline-focused-shard.v1",
+    "state": "complete",
+    "shard": {
+      "index": 2,
+      "total": 4
+    },
+    "identity": {
+      "sourceRevision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "workflowRevision": "7f80f912e01eba26ae727ae2771cdcba8799bed5",
+      "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+      "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+      "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "changedPathsSha256": "6db3d722e728f9708b4965c7668e4d5bfb49a5cbdbbbee72120a46f43d8fa8cc",
+      "fallbackHandled": false,
+      "sourceTree": "c11225baa8c0dcca055f058d31889c98a999ad04"
+    },
+    "plan": {
+      "commands": [
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": [
+            "run",
+            "validate"
+          ],
+          "timeoutMs": 1800000
+        },
+        {
+          "id": "changed-test:game/test/soundtrack-player.test.mjs",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/soundtrack-player.test.mjs"
+          ]
+        },
+        {
+          "id": "changed-test:game/test/soundtrack-source.test.mjs",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/soundtrack-source.test.mjs"
+          ]
+        }
+      ],
+      "sha256": "e068219fb15258789fa5d572e8952919ba69938307efec139844cf1eb9d51c85"
+    },
+    "indices": [
+      1
+    ],
+    "result": {
+      "attempted": 1,
+      "failures": [],
+      "exitCode": 0
+    }
+  },
+  "logSHA256": "f035a4dcf5c2aae0bb9ca9140f1df9c451b745b7f081248ef24ba23f2989bb7d",
+  "tapFooters": [
+    "# tests 96",
+    "# suites 0",
+    "# pass 96",
+    "# fail 0",
+    "# skipped 0",
+    "# duration_ms 2051.507805"
+  ],
+  "subtests": [
+    "verified external archive playback requests anonymous CORS and remains mixable",
+    "local gameplay skips uninstalled catalogue recordings without changing saved listening preferences",
+    "transport settling refuses a predicate that never becomes ready",
+    "transport construction/settings/selection stay silent until explicit Play",
+    "online archive playback streams its exact HTTPS object through the shared transport",
+    "online archive honors shuffle, repeat and an explicitly chosen first song",
+    "online archive playback accepts the complete bounded 512-recording catalogue",
+    "online archive playback rejects a queue beyond the supported 512-recording limit",
+    "online archive playback rejects forged hosts, hashes and duplicate recordings",
+    "Recording mode excludes online tracks without verified gameplay-video and Content ID clearance",
+    "enabling Recording mode through a library refresh retires restricted remote playback",
+    "invalid local selections preserve active online playback",
+    "ordinary scene context remains valid beside trusted online selection",
+    "preparing a local MP3 keeps playback silent, then a gesture wake starts it before context resume settles",
+    "published gesture calls media play before context settlement (prepared play)",
+    "published gesture calls media play before context settlement (startAt after read)",
+    "published gesture denial pauses silent media and observes a later rejected play",
+    "published gesture retains master mute and volume changes across successful activation",
+    "published gesture cancellation cannot restore playback after pause, suspend or disposal",
+    "published gesture replacement and newer intent own their own mute and resource",
+    "published gesture observes immediate media rejection while activation is still pending",
+    "published gesture preserves an unbound adapter mute and denied activation",
+    "published gesture late play settlement cannot disturb a newer successful play",
+    "published gesture observes activation after synchronous media failure or reentrant cancellation",
+    "synth song boundary signals once at actual audio deadline and does not schedule the next song early",
+    "music-only pause freezes position while gameplay SFX remain available; full lifecycle suspends both",
+    "ordered mixed queue advances synth\u2192MP3\u2192end without another element or album decode",
+    "repeat-one repeats only on natural end, while Next explicitly advances",
+    "authored game music is the automatic fallback and changes only at a song boundary",
+    "scope assignments beat authored fallback and context updates wait for current song",
+    "library metadata edits preserve current owned MP3 and object URL until natural boundary",
+    "paused MP3 resumes the same URL/position and its ended handler remains active",
+    "one broken original is skipped once and a finite builtin fallback remains observable",
+    "autoplay denial is observable, preserves current track, and requires another explicit Play",
+    "a stale pending asset load cannot publish audio after explicit selection or disposal",
+    "volume owns the music fader only, combines with master for MP3, and preserves SFX volume",
+    "steady callbacks leave gains and media volume untouched but reconcile changed controls and leases",
+    "seeking a paused synth before creating audio is retained for its first permitted playback",
+    "a complete synth rendition advances through real scheduler steps on a controlled audio clock",
+    "repeat-all wraps and shuffled sessions preserve the exact authored entry multiset",
+    "explicit switch fades only music and a pause during its fade cannot publish late playback",
+    "lifecycle suspension of MP3 preserves listening intent and resumes the SFX context too",
+    "unsupported or corrupt originals never reach an object URL and fallback attempts stay finite",
+    "a changed stored selection is adopted on the next boundary while unrelated metadata edits preserve a session choice",
+    "disposal aborts a pending storage load and its late original cannot allocate a URL",
+    "a delayed media play promise cannot restore playing status after transport pause",
+    "returning explicitly to automatic selection restores the authored map recipe immediately",
+    "a delayed synth enable denial cannot overwrite pause, suspend or dispose state",
+    "restoring inactive listening intent after an audition never starts audio until host resume",
+    "silent audio preparation reports a delayed read and stale completion cannot reclaim its status",
+    "earlier cached play settlement cannot clear a newer play preparation observer",
+    "manual preparation diagnostics follow both owned originals through pause, transfer and replacement",
+    "manual preparation diagnostics retain blocked originals and report failed revocation uncertainty",
+    "a failed media source installation clears the actual original and its diagnostic ownership",
+    "remote natural boundary reuses the permitted deck and never touches the crossfade deck",
+    "Next while a remote queue is paused switches tracks without resuming playback",
+    "a remote media error advances on one deck and a stall cannot poison later playback",
+    "remote no-progress recovery falls back to included music and remains switchable",
+    "a remote play promise which never settles cannot leave the transport loading forever",
+    "online and included tracks form one trusted ordered session queue",
+    "Recording mode filters restricted remote tracks without dropping included mixed tracks",
+    "two streaming decks preload only the next track and genuinely overlap the audible boundary",
+    "pause during a crossfade cancels the outgoing deck and preserves the incoming position",
+    "seek cancels next-track acquisition and late bytes cannot allocate a deck",
+    "library cancels next-track acquisition and late bytes cannot allocate a deck",
+    "context cancels next-track acquisition and late bytes cannot allocate a deck",
+    "suspend cancels next-track acquisition and late bytes cannot allocate a deck",
+    "dispose cancels next-track acquisition and late bytes cannot allocate a deck",
+    "a browser denying the second element reuses the permitted first deck for the entire queue",
+    "scene selection switches menu/gameplay music without changing paused listening intent",
+    "empty Ukrainian/fusion selections stay silent with an explanation instead of unrelated fallback",
+    "an offline Ukrainian queue tries each original once and stops without mislabelled fallback",
+    "failed restricted mixes and explicit v2 playlists preserve the selected music families",
+    "an explicit catalogue playlist with no installed recordings stays empty offline",
+    "offloaded bonus tracks are skipped without fetching and an empty explicit album asks for Download again",
+    "catalogue metadata drives playback and same-ID theme selection changes the next rendition",
+    "short clips preserve their opening before entering the default crossfade window",
+    "choosing an available genre clears the previous unavailable selection notice",
+    "invalid catalogue construction leaves media and master ownership available for a valid retry",
+    "selection reuse follows owned library, context and override changes and rejects invalid setters atomically",
+    "scene transitions reuse validated library metadata with local playback false",
+    "scene transitions reuse validated library metadata with local playback true",
+    "selection reuse invalidates installed IDs and listening permissions while snapshots retain live position",
+    "raw mutable catalogue policy revocation remains live for same-hash uploaded aliases",
+    "base selection reuse never caches dynamic published permissions, authored replacement or failed adapters",
+    "user-owned local MP3 playback still accepts an upload without a public licence",
+    "downloaded playback uses one real worker inspection and no main-realm Blob materialization",
+    "local originals still receive worker validation without acquisition",
+    "custom reader inspection reuse is bound to one successful exact Blob: ignored",
+    "custom reader inspection reuse is bound to one successful exact Blob: same",
+    "custom reader inspection reuse is bound to one successful exact Blob: different",
+    "custom reader inspection reuse is bound to one successful exact Blob: failed",
+    "worker-unavailable playback holds fetch and inspection until a safe fallback phase",
+    "the unchanged acquisition deadline cancels queued fallback and releases both reservations",
+    "transport cancellation retires inspection even when a custom reader supplies another signal",
+    "active current-plus-next loading reuses one worker but never carries facts across acquisitions"
+  ]
+}

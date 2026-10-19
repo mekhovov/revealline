@@ -1,0 +1,328 @@
+{
+  "kind": "published-critical-file-readback",
+  "observedAt": "2026-10-19T03:59:54.505035+00:00",
+  "sourceRevision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "buildVersion": "main-dd337c8120fd",
+  "manifest": {
+    "bytes": 513954,
+    "sha256": "65ac516cb95d32064500b9c82e84a201c508b206028e9dae6fff6aa19cc59691",
+    "metadata": {
+      "status": 200,
+      "mime": "application/json; charset=utf-8",
+      "url": "https://mekhovov.github.io/revealline/manifest.json"
+    }
+  },
+  "identityStableBeforeAfter": true,
+  "selectedCount": 19,
+  "selectedBytes": 1982378,
+  "concurrency": 2,
+  "requestDeadlineSeconds": 15,
+  "files": [
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "expected": {
+        "path": "authoring/motion-lab/render-character.mjs",
+        "bytes": 6790,
+        "sha256": "f853baf14aa57aba2419404cd3495325c6ddb5486ebfb8e832196bff423ea939"
+      },
+      "actual": {
+        "bytes": 6790,
+        "sha256": "f853baf14aa57aba2419404cd3495325c6ddb5486ebfb8e832196bff423ea939",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/authoring/motion-lab/render-character.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/app.mjs",
+      "expected": {
+        "path": "game/app.mjs",
+        "bytes": 488824,
+        "sha256": "39e7cf264aa2e5d1c48612a0fcea4ed800ada277ef66a99aa8a5e6ca5daf9069"
+      },
+      "actual": {
+        "bytes": 488824,
+        "sha256": "39e7cf264aa2e5d1c48612a0fcea4ed800ada277ef66a99aa8a5e6ca5daf9069",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/app.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "expected": {
+        "path": "game/couch/couch.mjs",
+        "bytes": 207485,
+        "sha256": "9134b8348647b9ef3b8fa31b5e2aabe3a0f4d9d952e9e969e7d1d98135857d1f"
+      },
+      "actual": {
+        "bytes": 207485,
+        "sha256": "9134b8348647b9ef3b8fa31b5e2aabe3a0f4d9d952e9e969e7d1d98135857d1f",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/couch/couch.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/couch/index.html",
+      "expected": {
+        "path": "game/couch/index.html",
+        "bytes": 51275,
+        "sha256": "9c5bb8f7db1ee26c494452a94d7ccee2153b442e3efdb053864389d2f16c99db"
+      },
+      "actual": {
+        "bytes": 51275,
+        "sha256": "9c5bb8f7db1ee26c494452a94d7ccee2153b442e3efdb053864389d2f16c99db",
+        "status": 200,
+        "mime": "text/html; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/couch/index.html"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "expected": {
+        "path": "game/couch/relay-rescue.html",
+        "bytes": 61798,
+        "sha256": "3adc1460fe9b68de3718829026c0e0604294ea6db5ffab1cb6602391f2cb71f1"
+      },
+      "actual": {
+        "bytes": 61798,
+        "sha256": "3adc1460fe9b68de3718829026c0e0604294ea6db5ffab1cb6602391f2cb71f1",
+        "status": 200,
+        "mime": "text/html; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/couch/relay-rescue.html"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "expected": {
+        "path": "game/couch/relay-rescue.mjs",
+        "bytes": 289352,
+        "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f"
+      },
+      "actual": {
+        "bytes": 289352,
+        "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/couch/relay-rescue.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/index.html",
+      "expected": {
+        "path": "game/index.html",
+        "bytes": 147488,
+        "sha256": "550726fa5fe84680bf9e00d1ac54120edaaafb80a76c12f12f80dd15e3a37063"
+      },
+      "actual": {
+        "bytes": 147488,
+        "sha256": "550726fa5fe84680bf9e00d1ac54120edaaafb80a76c12f12f80dd15e3a37063",
+        "status": 200,
+        "mime": "text/html; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/index.html"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/journey/reaction-voice-cache.mjs",
+      "expected": {
+        "path": "game/journey/reaction-voice-cache.mjs",
+        "bytes": 9031,
+        "sha256": "efd1d95cc6e80a11f39e6a1f1489d213eefb647d2de906d39a7240fbcc2c88f5"
+      },
+      "actual": {
+        "bytes": 9031,
+        "sha256": "efd1d95cc6e80a11f39e6a1f1489d213eefb647d2de906d39a7240fbcc2c88f5",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/journey/reaction-voice-cache.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/mp3-inspection-worker.mjs",
+      "expected": {
+        "path": "game/mp3-inspection-worker.mjs",
+        "bytes": 540,
+        "sha256": "ef71ab1a354d36928de1ecb4f8ace3d432be084cdfe7209d2a3ecc2a98cee1fc"
+      },
+      "actual": {
+        "bytes": 540,
+        "sha256": "ef71ab1a354d36928de1ecb4f8ace3d432be084cdfe7209d2a3ecc2a98cee1fc",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/mp3-inspection-worker.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/mp3-inspection.mjs",
+      "expected": {
+        "path": "game/mp3-inspection.mjs",
+        "bytes": 5487,
+        "sha256": "ca767a143f1aa51a8327c63df0926af3a197f90b08e8965c60f9514331b14fa1"
+      },
+      "actual": {
+        "bytes": 5487,
+        "sha256": "ca767a143f1aa51a8327c63df0926af3a197f90b08e8965c60f9514331b14fa1",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/mp3-inspection.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/ui/body-backing.mjs",
+      "expected": {
+        "path": "game/ui/body-backing.mjs",
+        "bytes": 2924,
+        "sha256": "e44500ef2099abfee97860a57c577e87034e769184328821d6f6f75950fbccc5"
+      },
+      "actual": {
+        "bytes": 2924,
+        "sha256": "e44500ef2099abfee97860a57c577e87034e769184328821d6f6f75950fbccc5",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/ui/body-backing.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/ui/media-preparation.mjs",
+      "expected": {
+        "path": "game/ui/media-preparation.mjs",
+        "bytes": 5332,
+        "sha256": "9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad"
+      },
+      "actual": {
+        "bytes": 5332,
+        "sha256": "9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/ui/media-preparation.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/ui/mp3-inspector.mjs",
+      "expected": {
+        "path": "game/ui/mp3-inspector.mjs",
+        "bytes": 4084,
+        "sha256": "55e366fab87020cf84176b6fec678e62abd5fbdbe8b44be5715d48bd19ef2533"
+      },
+      "actual": {
+        "bytes": 4084,
+        "sha256": "55e366fab87020cf84176b6fec678e62abd5fbdbe8b44be5715d48bd19ef2533",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/ui/mp3-inspector.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/ui/performance-session.mjs",
+      "expected": {
+        "path": "game/ui/performance-session.mjs",
+        "bytes": 20211,
+        "sha256": "d72edbd4de5ee96b3f7e892b54e7d0fb416f2a231a950379081fa8e4b1b9d810"
+      },
+      "actual": {
+        "bytes": 20211,
+        "sha256": "d72edbd4de5ee96b3f7e892b54e7d0fb416f2a231a950379081fa8e4b1b9d810",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/ui/performance-session.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "expected": {
+        "path": "game/ui/render.mjs",
+        "bytes": 50263,
+        "sha256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e"
+      },
+      "actual": {
+        "bytes": 50263,
+        "sha256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/ui/render.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/ui/scene-clock.mjs",
+      "expected": {
+        "path": "game/ui/scene-clock.mjs",
+        "bytes": 1190,
+        "sha256": "7b7169b39ec3c56dc366aacf4837393c216384dfcd247a025f021452c70bb0be"
+      },
+      "actual": {
+        "bytes": 1190,
+        "sha256": "7b7169b39ec3c56dc366aacf4837393c216384dfcd247a025f021452c70bb0be",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/ui/scene-clock.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "expected": {
+        "path": "game/ui/soundtrack-player.mjs",
+        "bytes": 48598,
+        "sha256": "09f3f651e71052fdea4352e7e1d1dd418c6b89e10eef47f5de7fb53774cfd70c"
+      },
+      "actual": {
+        "bytes": 48598,
+        "sha256": "09f3f651e71052fdea4352e7e1d1dd418c6b89e10eef47f5de7fb53774cfd70c",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/ui/soundtrack-player.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "game/ui/visual-quality-policy.mjs",
+      "expected": {
+        "path": "game/ui/visual-quality-policy.mjs",
+        "bytes": 4876,
+        "sha256": "4804297bc797e5933e46a44437e513aa0993c61111ad3a649443c4fde5b1c5b9"
+      },
+      "actual": {
+        "bytes": 4876,
+        "sha256": "4804297bc797e5933e46a44437e513aa0993c61111ad3a649443c4fde5b1c5b9",
+        "status": 200,
+        "mime": "text/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/game/ui/visual-quality-policy.mjs"
+      },
+      "pass": true
+    },
+    {
+      "path": "service-worker.js",
+      "expected": {
+        "path": "service-worker.js",
+        "bytes": 576830,
+        "sha256": "72d35178ca0ac2bb9eb8032488af9159ec51029f97efcb55e7c645d2b1ebc75f"
+      },
+      "actual": {
+        "bytes": 576830,
+        "sha256": "72d35178ca0ac2bb9eb8032488af9159ec51029f97efcb55e7c645d2b1ebc75f",
+        "status": 200,
+        "mime": "application/javascript; charset=utf-8",
+        "url": "https://mekhovov.github.io/revealline/service-worker.js"
+      },
+      "pass": true
+    }
+  ],
+  "passed": true,
+  "scope": "Read-only HTTPS byte/hash/MIME checks for 19 selected Solo/shared-mode/audio/worker/service-worker files against the served manifest. No browser, app, game, offline installation or physical-device execution. Not whole-app functional or performance qualification."
+}

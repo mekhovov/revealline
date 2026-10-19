@@ -1886,6 +1886,102 @@
       "blob": "9f27525cfea6ee1d0294f8d7ce0e57acdfb4c030",
       "bytes": 1168,
       "sha256": "954716e56c97b07bf8458a591db9295999b29c2a4d2503d18f1bbab3fb3fe982"
+    },
+    {
+      "path": "draft-source-terminal-delta-20261019-0353.json",
+      "blob": "b243a3e2af0cb98c5ea30de5ab1d1a3406307fa3",
+      "bytes": 26861,
+      "sha256": "4b68fc3d774cddf91442119692ce3cc73944c7ee4f93739a9cb2a9641a333289"
+    },
+    {
+      "path": "provenance-finite-predecessor-recommendation-20261019.json",
+      "blob": "d36a5305f97416cdb7d8edf662bdcfe44c508062",
+      "bytes": 40056,
+      "sha256": "a1b50b0945cb4038bb2c27fa0266b661722a92ef77b72ec9e7477c9efeda79e5"
+    },
+    {
+      "path": "ready-cohort-skipped-workflow-provenance-20261019.json",
+      "blob": "e5f6bd8c92a151ddcb592438c0aab7edac73177e",
+      "bytes": 134722,
+      "sha256": "a8d7116bc90267ba98fc17fe1f9467abe879971b0c71c37119726b337ea13b25"
+    },
+    {
+      "path": "published-critical-file-readback-20261019-0359.json",
+      "blob": "f977308189895232a9d2aa866a5e084e18f49709",
+      "bytes": 11375,
+      "sha256": "8121e04e50b014cd5e41500096c6f649356c926fbaae31cdc7235acfd7c95b37"
+    },
+    {
+      "path": "body-backing-initial-source-proposal-20261019.json",
+      "blob": "a1f3fc845eda67194d9cf420f22a63c32032a736",
+      "bytes": 22303,
+      "sha256": "fbd98ac70a446e097a5b67e0756b7d1223f503563ac71407c239630abf012ded"
+    },
+    {
+      "path": "body-backing-reviewed-source-proposal-20261019.json",
+      "blob": "75639d4ea7d575a93dd8c8da4810e43d338b1c87",
+      "bytes": 24558,
+      "sha256": "fa88820170e299817f4a5fd5e540932d317c705f8657c66949146d8b57833ebf"
+    },
+    {
+      "path": "body-backing-closure-selection-ownership-review-20261019.json",
+      "blob": "26bb0f131d52e76e697faf245a9f8207e479fea7",
+      "bytes": 4107,
+      "sha256": "bfd9f72b807271d86405be7584e6cdab0bc60d4c8a7ccd514693f02420e1bac5"
+    },
+    {
+      "path": "body-backing-reviewed-draft-publication-20261019.json",
+      "blob": "159be6411d3ab188740e8dd2d3b34ad5443ed731",
+      "bytes": 1826,
+      "sha256": "0b86e2bcee835e35a4c81512d4a57d2dce4a53eaeb5cb97176d1143f481f5a6f"
+    },
+    {
+      "path": "ready-cohort-exact-attempt-batch-budget-audit-20261019.json",
+      "blob": "f66e028e1baed6d501725e16875cb1a5d1ec8fb9",
+      "bytes": 154398,
+      "sha256": "c8f78a3f1afbfe6ed948268886b12fb72ddbccaa8e9e76b47d05029be66584b5"
+    },
+    {
+      "path": "ready-cohort-finite-workflow-registry-20261019.json",
+      "blob": "03bfea5d878435f4765b3692a94ac2f6fb228b99",
+      "bytes": 87514,
+      "sha256": "1b49e876fe3fa3db5a836a1dcf9ade393a41bae2b8940b418a410abf16d326f0"
+    },
+    {
+      "path": "ready-cohort-finite-workflow-registry-review-20261019.json",
+      "blob": "44e56a8908c1d226bec107e474a9744e13ae5ba8",
+      "bytes": 12069,
+      "sha256": "c2c9b54bf86cb8947686df8875682012557beef5edc1609bb5faca40c205117e"
+    },
+    {
+      "path": "ready-cohort-independent-complete-registry-review-20261019.json",
+      "blob": "5ee571c6b02673eb41fa15e08f3c207f737f0609",
+      "bytes": 18265,
+      "sha256": "c31f6332c351158f594e0ff996123d79421046f376262c301fbe92d87214e770"
+    },
+    {
+      "path": "merged-mp3-source-validation-snapshot-20261019-0416.json",
+      "blob": "d827b872d86c6aeea3d76f7fdb341f9f50f8b5e5",
+      "bytes": 7420,
+      "sha256": "91b14d075f54467fe56f8c3bca2a65a60dfcbc1728a0e721a1a48447dae91a9b"
+    },
+    {
+      "path": "couch-source-shard4-exact-artifact-scope-20261019.json",
+      "blob": "9226cdbaa3ee20f668fce5a235a9a6b1ba88e57f",
+      "bytes": 19023,
+      "sha256": "e3cfed4f9fd1a05c81597222669fdcec6e8d3d2f76aa5ead03e0f227bbe0f9a6"
+    },
+    {
+      "path": "merged-mp3-source-shard2-exact-artifact-scope-20261019.json",
+      "blob": "1dfc9300774450d59d33587043dfefa36eb1ad66",
+      "bytes": 11856,
+      "sha256": "568d89d509fabcd74236e421bbda82f54e8069013bea71c9ff3cbaca4700f6ab"
+    },
+    {
+      "path": "ready-cohort-all-run-association-ancestry-audit-20261019.json",
+      "blob": "2afb27c9a864e7827d9a24faf1f86887f2f89c7a",
+      "bytes": 27422,
+      "sha256": "695f45bfb4ffb608c5e25c64e5fd92fa09b21b4ee7b1c98c9a7f0400a7d8c19a"
     }
   ]
 }

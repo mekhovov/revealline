@@ -1,0 +1,270 @@
+{
+  "kind": "SoloFiniteSkippedJobRegistrySourceReviewV1",
+  "purpose": "Finite source registry proposal for an explicit inapplicable skipped-job role; no execution-pass or native qualification claim.",
+  "registry": {
+    "blob": "03bfea5d878435f4765b3692a94ac2f6fb228b99",
+    "bytes": 87514,
+    "sha256": "1b49e876fe3fa3db5a836a1dcf9ade393a41bae2b8940b418a410abf16d326f0"
+  },
+  "sourceCensus": {
+    "blob": "e5f6bd8c92a151ddcb592438c0aab7edac73177e",
+    "bytes": 134722,
+    "sha256": "a8d7116bc90267ba98fc17fe1f9467abe879971b0c71c37119726b337ea13b25",
+    "fixedMain": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+    "heads": {
+      "1620": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "1621": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "1628": "62be652ce70b11f840b491c218609d5225374be4"
+    }
+  },
+  "sourceVerification": {
+    "mode": "Remote Git blob reads into RAM; each decoded byte sequence verified against its Git SHA1 and recorded length/SHA256; Prettier YAML AST extraction only.",
+    "parsedSources": 64,
+    "rawYamlTextArchiveRetained": false,
+    "exactSourceBodies": "Retrievable by each immutable Git blob identity recorded in registry.",
+    "appOrControllerExecution": false,
+    "workflowDispatch": false,
+    "localWrites": false,
+    "codeOrPlanOrIndexPublication": false
+  },
+  "schema": {
+    "key": "registry[workflowPath][exactWorkflowGitBlob]",
+    "sourceFields": [
+      "bytes",
+      "sha256",
+      "requiredSuccessfulJobs",
+      "jobs"
+    ],
+    "jobFields": [
+      "name",
+      "checkNames",
+      "needs",
+      "condition",
+      "proof"
+    ],
+    "condition": "Exact parsed YAML if scalar, or null for an absent explicit if; descriptive evidence, never a runtime general expression evaluator.",
+    "checkNames": "Finite observed skipped-job names, not prefixes, regexes, or arbitrary matrix expansion."
+  },
+  "summary": {
+    "paths": 48,
+    "blobs": 64,
+    "jobs": 165,
+    "typeCounts": {
+      "required-or-existing-policy": 11,
+      "manual-only": 47,
+      "needs-inapplicable": 49,
+      "other-pr": 58
+    }
+  },
+  "proofSemantics": {
+    "common": [
+      "Only for a completed skipped check and completed skipped job bound to the same exact run/attempt/head/repository/workflow ID/path, verified pull_request event and unique exact PR association.",
+      "Require positive integer candidate PR identity and verified candidate head; missing or conflicting identities fail closed.",
+      "Require exact registered source blob. Changed or unknown path/blob/job/name is ineligible.",
+      "Every same-source candidate job matching an ambiguous display name must prove inapplicable; one matching rule never authorizes another eligible job.",
+      "All requiredSuccessfulJobs must be completed success in the same run and independently check-bound; their own null-proof records cannot be exempted.",
+      "Keep existing source-policy skip proof separate, with its existing required evidence; no registry role for deploy test/build or release-ready.",
+      "Preserve two independent sweeps and the 64-request bound. This registry does not change collection limits, policy scope, or manual native protocol bytes."
+    ],
+    "manualOnly": "Pinned root conditions require workflow_dispatch as an AND term, while the observed and associated run must be pull_request. Reject workflow_dispatch, push, pull_request_target, unknown or missing events.",
+    "otherPR": "Pinned frozen protocol root conditions require PR1544 as an AND term. Only a verified positive integer candidate PR different from1544 may be proved inapplicable. Deny PR1544 at every head, including the original eligible before/head combination; fixed before SHA and event action are never used as an alternate exemption.",
+    "needsInapplicable": "Pinned dependent has no explicit if and exact needs:['declare']; its same-source declare root has a direct manual-only or other-pr proof. Require the prerequisite dependency proof to close. No support for always(), custom conditional descendants, empty or unknown dependencies, cycles, or arbitrary transitive runtime expressions.",
+    "requiredSourceGuard": "published-pages-smoke requires source success; every solo-native-package-consumer exemption requires replay-portability-source success. This includes manual jobs not declaring that source job in YAML needs as a conservative collector guard."
+  },
+  "staticCensusCoverage": {
+    "totalSkippedChecks": 193,
+    "existingPolicyChecks": 6,
+    "proposedInapplicableCandidates": 187,
+    "byPR": {
+      "1620": {
+        "total": 3,
+        "existingPolicy": 2,
+        "newRole": 1
+      },
+      "1621": {
+        "total": 94,
+        "existingPolicy": 2,
+        "newRole": 92
+      },
+      "1628": {
+        "total": 96,
+        "existingPolicy": 2,
+        "newRole": 94
+      }
+    },
+    "ambiguousObservedChecks": [
+      {
+        "pr": 1621,
+        "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+        "workflow": ".github/workflows/solo-native-package-consumer.yml",
+        "workflowBlob": "0c3ebd54783fe5537c2077199347b584a1fe127c",
+        "runId": 39156220174,
+        "event": "pull_request",
+        "checkId": 117759898285,
+        "checkName": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+        "jobCandidates": [
+          "timing",
+          "lifecycle"
+        ],
+        "proofKinds": [
+          "manual-only",
+          "manual-only"
+        ]
+      },
+      {
+        "pr": 1621,
+        "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+        "workflow": ".github/workflows/solo-native-package-consumer.yml",
+        "workflowBlob": "0c3ebd54783fe5537c2077199347b584a1fe127c",
+        "runId": 39156220174,
+        "event": "pull_request",
+        "checkId": 117759873076,
+        "checkName": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+        "jobCandidates": [
+          "timing",
+          "lifecycle"
+        ],
+        "proofKinds": [
+          "manual-only",
+          "manual-only"
+        ]
+      },
+      {
+        "pr": 1621,
+        "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+        "workflow": ".github/workflows/solo-native-package-consumer.yml",
+        "workflowBlob": "0c3ebd54783fe5537c2077199347b584a1fe127c",
+        "runId": 39156220174,
+        "event": "pull_request",
+        "checkId": 117759873066,
+        "checkName": "matrix.engine",
+        "jobCandidates": [
+          "app-overhead",
+          "journal-cost"
+        ],
+        "proofKinds": [
+          "manual-only",
+          "manual-only"
+        ]
+      },
+      {
+        "pr": 1621,
+        "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+        "workflow": ".github/workflows/solo-native-package-consumer.yml",
+        "workflowBlob": "0c3ebd54783fe5537c2077199347b584a1fe127c",
+        "runId": 39156220174,
+        "event": "pull_request",
+        "checkId": 117759872864,
+        "checkName": "matrix.engine",
+        "jobCandidates": [
+          "app-overhead",
+          "journal-cost"
+        ],
+        "proofKinds": [
+          "manual-only",
+          "manual-only"
+        ]
+      },
+      {
+        "pr": 1628,
+        "head": "62be652ce70b11f840b491c218609d5225374be4",
+        "workflow": ".github/workflows/solo-native-package-consumer.yml",
+        "workflowBlob": "f267efe7f6b771a25065072229e715f825278a3a",
+        "runId": 39163633097,
+        "event": "pull_request",
+        "checkId": 117781975201,
+        "checkName": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+        "jobCandidates": [
+          "timing",
+          "lifecycle"
+        ],
+        "proofKinds": [
+          "manual-only",
+          "manual-only"
+        ]
+      },
+      {
+        "pr": 1628,
+        "head": "62be652ce70b11f840b491c218609d5225374be4",
+        "workflow": ".github/workflows/solo-native-package-consumer.yml",
+        "workflowBlob": "f267efe7f6b771a25065072229e715f825278a3a",
+        "runId": 39163633097,
+        "event": "pull_request",
+        "checkId": 117781943251,
+        "checkName": "matrix.engine",
+        "jobCandidates": [
+          "app-overhead",
+          "journal-cost"
+        ],
+        "proofKinds": [
+          "manual-only",
+          "manual-only"
+        ]
+      },
+      {
+        "pr": 1628,
+        "head": "62be652ce70b11f840b491c218609d5225374be4",
+        "workflow": ".github/workflows/solo-native-package-consumer.yml",
+        "workflowBlob": "f267efe7f6b771a25065072229e715f825278a3a",
+        "runId": 39163633097,
+        "event": "pull_request",
+        "checkId": 117781942831,
+        "checkName": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+        "jobCandidates": [
+          "timing",
+          "lifecycle"
+        ],
+        "proofKinds": [
+          "manual-only",
+          "manual-only"
+        ]
+      },
+      {
+        "pr": 1628,
+        "head": "62be652ce70b11f840b491c218609d5225374be4",
+        "workflow": ".github/workflows/solo-native-package-consumer.yml",
+        "workflowBlob": "f267efe7f6b771a25065072229e715f825278a3a",
+        "runId": 39163633097,
+        "event": "pull_request",
+        "checkId": 117781942822,
+        "checkName": "matrix.engine",
+        "jobCandidates": [
+          "app-overhead",
+          "journal-cost"
+        ],
+        "proofKinds": [
+          "manual-only",
+          "manual-only"
+        ]
+      }
+    ],
+    "dependencyRecordsValidated": 49,
+    "label": "Static mapping of retained source and check metadata, not controller execution, CI validation, or current status refresh."
+  },
+  "requiredUnexecutedControls": [
+    "Original PR1544 is refused at every head for frozen protocols, including originally eligible condition values.",
+    "Candidate PR absent, noninteger, zero, mismatch, duplicate or conflicting run association fails closed.",
+    "workflow_dispatch/push/pull_request_target or wrong repo/head/base/workflow identity cannot use this role.",
+    "Changed workflow blob, unregistered path, unknown job, extra matrix name or same name in another workflow fails closed.",
+    "Null-proof source guards remain required and cannot be exempted; wrong run/attempt/head/check binding or non-success guard fails.",
+    "Ambiguous display name with any eligible or unproven sibling fails closed; all valid inapplicable siblings are accepted only with complete joins.",
+    "Dependent condition changed to always/custom if, changed needs, missing root, cyclic root or unproved root fails closed.",
+    "Incomplete, duplicate, contradictory, stale-attempt or paginated job metadata fails closed without elevating request limits.",
+    "Two sweeps must agree on source/run/association/job/check evidence; changes or omissions fail closed."
+  ],
+  "integrationCaveat": "The registry proves conditions in exact source bytes. The collector must separately establish that its selected source is authoritative for the evaluated run. PR merge-revision execution and candidate-head identity are distinct; a candidate-head directory blob alone must not be described as proof of executed merge-revision bytes. Existing trusted-source binding must close this distinction or the collector must conservatively reject the unresolved case.",
+  "primarySources": [
+    {
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idneeds",
+      "finding": "A skipped dependency normally skips jobs needing it unless a conditional allows continuation."
+    },
+    {
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idif",
+      "finding": "Job-level conditions are evaluated before matrix expansion; this explains observed unexpanded skipped names but does not authorize wildcard matching."
+    },
+    {
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request",
+      "finding": "The pull_request event uses the PR merge ref/commit; head.sha identifies the head separately."
+    }
+  ]
+}

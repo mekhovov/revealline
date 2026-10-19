@@ -1,0 +1,45 @@
+{
+  "kind": "body-backing-source-review-and-draft-publication",
+  "at": "2026-10-19T04:08:34.184602+00:00",
+  "pr": 1712,
+  "url": "https://github.com/mekhovov/revealline/pull/1712",
+  "branch": "codex/solo-backing-context-recovery",
+  "base": "ac0a06f76a048bbcd0701c0c990785989673080c",
+  "head": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a",
+  "tree": "774401964ccef9601b9b70afa76f0308363c9588",
+  "files": [
+    {
+      "path": "game/ui/body-backing.mjs",
+      "before": "c4a8b86b081606b33c65221032002cb09ad52795",
+      "after": {
+        "bytes": 4495,
+        "sha256": "c6f57988b14b62b8ce5036542007a6a9c0e7b5b22d402f9f6657a4303c832554",
+        "gitBlob": "e7446c574737dc6d8b89842fb643feb8043742e1"
+      }
+    },
+    {
+      "path": "game/test/body-backing-recovery.test.mjs",
+      "before": null,
+      "after": {
+        "bytes": 11927,
+        "sha256": "4dc00608643b4655692d8193fea8efb8d82d4f3b44ef2dfc146ea6ac3d0e8672",
+        "gitBlob": "eec40ee04a8531956156ec7bf1b88f123e13930f"
+      }
+    }
+  ],
+  "proposal": "75639d4ea7d575a93dd8c8da4810e43d338b1c87",
+  "closure": "26bb0f131d52e76e697faf245a9f8207e479fea7",
+  "rootReview": [
+    "Unchanged flood-fill prefix, alpha/geometry preservation, same-surface recovery and image-free event closures reviewed.",
+    "Loss feature detection includes both event-handler properties; generic EventTarget uses native fallback.",
+    "Ten new deterministic controls reviewed; none executed.",
+    "Complete parent/after tree comparison proves only two source/test paths changed."
+  ],
+  "remaining": [
+    "Hosted execution and full build checks",
+    "Motion/effects/team production fingerprint continuation and qualification",
+    "Native raster/device checks",
+    "Scene pause/Resume for an independently lost helper mask"
+  ],
+  "localFunctionalExecution": false
+}
