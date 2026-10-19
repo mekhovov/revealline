@@ -1,3 +1,4 @@
+import { readDeclaredPreHeapTool } from './solo-readiness-rejoin-declared-source.mjs';
 import { createExecutedFrameReader } from './solo-frame-trace-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -205,7 +206,8 @@ test('each lane binds current or retained qualifier bytes and all declared reads
     ])
       assert(sparse.includes(path), `${lane}: ${path}`);
     for (const ref of refs) {
-      const bytes = await declaredRead(ref.path);
+      const bytes =
+        (await readDeclaredPreHeapTool(lanes[lane].path, ref)) ?? (await declaredRead(ref.path));
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(sha(bytes), ref.sha256, ref.path);
     }
