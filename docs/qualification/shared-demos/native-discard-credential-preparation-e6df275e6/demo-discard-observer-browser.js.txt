@@ -1,0 +1,102 @@
+/* Diagnostic observer only: no game state changes. */
+(function () {
+
+      if (!['http:', 'https:'].includes(location.protocol)) return;
+
+      const id = crypto.randomUUID();
+      const config = document.currentScript.dataset;
+      const lifecycle = [], buffer = [];
+      const observation = { id, lifecycle, buffer, mode: config.mode, stage: config.stage, overflow: 0, transportRejected: 0, observerFailures: 0 };
+      window.demoRestorationObservation = observation;
+      // Observation must never change native API completion or exceptions.
+      const observe = work => {
+        try { return work(); }
+        catch { observation.observerFailures++; return undefined; }
+      };
+      const send = event => observe(() => {
+        if (buffer.length >= 2000) { observation.overflow++; return; }
+        const detail = typeof event === 'function' ? event() : event;
+        const row = { id, seq: buffer.length + 1, mode: observation.mode, stage: observation.stage, path: location.pathname, at: Date.now(), ...detail };
+        const payload = JSON.stringify([row]);
+        buffer.push(row);
+        if (!navigator.sendBeacon(config.collector, payload)) observation.transportRejected++;
+      });
+      // Native methods already coerce their arguments. Do not repeat user-defined coercion.
+      const keyLabel = value => value === undefined ? null :
+        value !== null && (typeof value === 'object' || typeof value === 'function') ? '[non-primitive key]' : String(value);
+      observation.flush = async () => {
+        const cutoff = buffer.slice();
+        for (let i = 0; i < cutoff.length; i += 32) {
+          const response = await fetch(config.collector, { method: 'POST', headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(cutoff.slice(i, i + 32)), keepalive: true });
+          if (!response.ok) throw new Error('Observation collector rejected a flush.');
+        }
+        return { id, cutoff: cutoff.length, buffer: cutoff, overflow: observation.overflow,
+          transportRejected: observation.transportRejected, observerFailures: observation.observerFailures };
+      };
+      send({ kind: 'observer-installed' });
+      window.addEventListener('error', (e) =>
+        send(() => ({
+          kind: 'window-error',
+          message: e.message,
+          source: e.filename,
+          line: e.lineno,
+          column: e.colno,
+          stack: String(e.error?.stack ?? '').slice(0, 2000),
+        })),
+      );
+      window.addEventListener('unhandledrejection', (e) =>
+        send(() => ({
+          kind: 'unhandledrejection',
+          message: String(e.reason?.stack ?? e.reason).slice(0, 2000),
+        })),
+      );
+      window.addEventListener('rejectionhandled', (e) =>
+        send(() => ({
+          kind: 'rejectionhandled',
+          message: String(e.reason?.stack ?? e.reason).slice(0, 2000),
+        })),
+      );
+      for (const type of ['pageshow', 'pagehide', 'freeze', 'resume', 'visibilitychange'])
+        (['freeze', 'resume'].includes(type) ? document : window).addEventListener(type, (e) => observe(() => {
+          const row = { type, persisted: e.persisted ?? null, hidden: document.hidden, wasDiscarded: document.wasDiscarded };
+          lifecycle.push(row);
+          send({ kind: 'lifecycle', ...row });
+        }));
+      for (const method of ['setItem', 'removeItem', 'clear']) {
+        const original = Storage.prototype[method];
+        Storage.prototype[method] = function (...args) {
+          const absentRemoval = method === 'removeItem' ? observe(() =>
+            (args[0] !== null && ['object', 'function'].includes(typeof args[0])) ? null : this.getItem(args[0]) === null) : false;
+          const result = Reflect.apply(original, this, args);
+          send(() => ({
+            kind: 'mutation',
+            api: 'Storage',
+            owner: this === localStorage ? 'localStorage' : 'sessionStorage',
+            method,
+            key: keyLabel(args[0]),
+            absentRemoval,
+          }));
+          return result;
+        };
+      }
+      for (const method of ['add', 'put', 'delete', 'clear']) {
+        const original = IDBObjectStore.prototype[method];
+        IDBObjectStore.prototype[method] = function (...args) {
+          const result = Reflect.apply(original, this, args);
+          send(() => ({
+            kind: 'mutation',
+            api: 'IndexedDB',
+            owner: `${this.transaction.db.name}/${this.name}`,
+            method,
+            key:
+              method === 'delete'
+                ? keyLabel(args[0])
+                : args[1] === undefined
+                  ? null
+                  : keyLabel(args[1]),
+          }));
+          return result;
+        };
+      }
+})();

@@ -1,0 +1,77 @@
+{
+  "format": "SharedDemoFinalBuildWrapperPreparationV1",
+  "created": "2026-10-19T02:04:24.504763+00:00",
+  "preparationOnly": true,
+  "browserStarted": false,
+  "buildStarted": false,
+  "observedHEAD": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+  "sourcePins": {
+    ".cache/run-final-build-current.mjs": {
+      "bytes": 8928,
+      "sha256": "a717cf42d8c3890fd6478cebaa1f4f8ac37b261ec6d9c1d3bae004409805ba73"
+    },
+    ".cache/final-build-wrapper-support.mjs": {
+      "bytes": 1742,
+      "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e"
+    },
+    ".cache/test-final-build-wrapper-support.mjs": {
+      "bytes": 3650,
+      "sha256": "5164a52791e8a30846aef413631ad6e4e887dc23e87a482b10ab73c4b0fe2640"
+    }
+  },
+  "originalWrapper": {
+    "path": "docs/qualification/shared-demos/final-build-wrapper-before-attempt-fix-e6df275e6.mjs.txt",
+    "sha256": "bf532ec4f438568ab6f6e5bcdb6e5610b0660b58f3c607ddb9eb96097318aead"
+  },
+  "preservedStoppedBuild": {
+    "path": "docs/qualification/shared-demos/shared-demos-build-validation-dd337c8-e6df275e6.json",
+    "sha256": "1474d1ec7d3099c7e5d795089245e52005d94b3388c4c0858e1328e334f8da98",
+    "originalMisleadingFailurePreserved": true,
+    "primaryStopReason": "Available disk fell below200MiB.",
+    "exitSignal": "SIGTERM"
+  },
+  "changes": [
+    "Read child receipt if available and retain its bytes/hash/complete or bounded read/parse diagnostic.",
+    "Stopped and nonzero child outcomes remain primary; a successful child still requires a readable complete receipt.",
+    "Optional --attempt uses a bounded validated path component on report/log/capture names, without changing sourceRevision.",
+    "Existing evidence and capture directories are refused before work.",
+    "The ignored support helper is pinned before and after alongside the wrapper."
+  ],
+  "checks": {
+    "command": [
+      "node",
+      "--test",
+      ".cache/test-final-build-wrapper-support.mjs"
+    ],
+    "passed": 6,
+    "failed": 0,
+    "durationMs": 36.960583,
+    "syntaxCommand": [
+      "node",
+      "--check",
+      ".cache/run-final-build-current.mjs"
+    ],
+    "syntaxExitCode": 0,
+    "testScope": [
+      "Disk stop and missing receipt",
+      "Nonzero exit and malformed receipt",
+      "Stopped child with existing completed receipt",
+      "Successful child missing/incomplete receipt rejection",
+      "Bounded secondary diagnostics",
+      "Safe distinct optional attempt suffix"
+    ]
+  },
+  "unchanged": [
+    "Tracked runtime/build scripts/source manifest",
+    "200 MiB disk floor",
+    "20-minute per-stage deadline",
+    "2 MiB per-stage retained log cap",
+    "Exact HEAD/runtime/build before-and-after source checks"
+  ],
+  "limitations": [
+    "No build or browser was run.",
+    "The original failed build receipt is unchanged and remains failed.",
+    "Current full runtime fingerprint was not recomputed by this wrapper-only preparation.",
+    "No unrelated files, caches or processes were deleted."
+  ]
+}
