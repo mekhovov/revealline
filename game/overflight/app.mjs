@@ -36,11 +36,7 @@ import {
   settingsTabOwnsKey,
 } from '../ui/settings-panels.mjs';
 import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
-import {
-  getMenuAnimation,
-  setMenuAnimation,
-  subscribeMenuAnimation,
-} from '../ui/menu-animation-preferences.mjs';
+import { menuAnimationBinding } from '../ui/menu-animation-preferences.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
@@ -993,7 +989,9 @@ function syncUpgrade(force = false) {
     $('reroll-upgrades').textContent = text('reroll');
     $('reroll-hint').textContent = text('rerollHint');
     const remaining = run.progression.rerolls;
-    $('rerolls-left').textContent = `${remaining} ${text('rerolls')}`;
+    $('rerolls-left').textContent = t('interface:overflight.rerollsRemaining', {
+      count: remaining,
+    });
     $('reroll-upgrades').disabled = review.active() || remaining <= 0;
   }
   if (!$('upgrade-dialog').open) {
@@ -2123,6 +2121,7 @@ settingsView = mountModeSettings({
       $('difficulty-help'),
       field('airframes'),
       $('overflight-settings').querySelector('[data-copy="nextSortie"]'),
+      shell.elements.buttons['home-retry'],
     ],
     controls: [touchSettings],
     audio: [
@@ -2142,7 +2141,12 @@ settingsView = mountModeSettings({
     ],
     data: [el('section')],
     content: [offlineSettings],
-    extras: [$('overflight-studios'), shell.elements.buttons.help, shell.elements.buttons.workshop],
+    extras: [
+      $('overflight-studios'),
+      shell.elements.buttons.expert,
+      shell.elements.buttons.help,
+      shell.elements.buttons.workshop,
+    ],
   },
 });
 globalSettings = mountGlobalSettings({
@@ -2165,11 +2169,7 @@ globalSettings = mountGlobalSettings({
     offlineTools: offlineSettings,
   },
   bindings: {
-    menuAnimation: {
-      get: () => getMenuAnimation(win),
-      set: (value) => setMenuAnimation(value, win),
-      subscribe: (listener) => subscribeMenuAnimation(listener, win),
-    },
+    menuAnimation: menuAnimationBinding(win),
   },
 });
 settingsTools = mountGlobalSettingsTools({

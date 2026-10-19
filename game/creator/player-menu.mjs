@@ -7,6 +7,7 @@ import { attachMenuScene, getMenuAnimation, setMenuAnimation } from '../ui/menu-
 import { libraryMissionId } from '../mission-library/library.mjs';
 import { missionLibraryHref } from '../mission-library/handoff.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
+import { attachMenuAnimationFeedback } from '../ui/menu-animation-feedback.mjs';
 
 /** Preserve the qualified installed-edition lookup used by the ordinary Versus host. */
 export function creatorVersusHref(pack, missionId, baseURL) {
@@ -157,6 +158,8 @@ export function attachCreatorPlayerMenu({
   listen($('creator-background-animation'), 'change', () =>
     setMenuAnimation($('creator-background-animation').checked, win),
   );
+  const animationFeedback = attachMenuAnimationFeedback($('creator-background-animation'), win);
+  listeners.push(() => animationFeedback.destroy());
   listen($('creator-open-settings'), 'click', () => {
     open(settings, panels.primary());
     panels.focusCategories();

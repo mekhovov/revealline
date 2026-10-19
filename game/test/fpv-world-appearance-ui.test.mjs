@@ -106,6 +106,7 @@ function fixture(t, options = {}) {
     ...doc.getElementById('sim-flight-controls').querySelectorAll('button,select,input'),
   ].filter((node) => node.id !== 'close-sim-settings');
   Object.assign(win, {
+    CustomEvent,
     location: new URL(url),
     performance: { now: () => now },
     navigator: { getGamepads: () => pads },
@@ -3663,6 +3664,35 @@ for (const kind of [
     assert.deepEqual(JSON.parse(data.get('revealline.flight-profiles.v1')).response, response);
   });
 }
+
+test('actual World settings keep an unsaved menu animation choice and Retry the same checkbox', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const h = fixture(t),
+    key = 'revealline.menu-animation.v1',
+    write = h.win.localStorage.setItem;
+  let working = false;
+  h.win.localStorage.setItem = (key, value) => {
+    if (key === 'revealline.menu-animation.v1' && !working)
+      throw new DOMException('Modeled blocked storage', 'SecurityError');
+    write(key, value);
+  };
+  await waitFor(() => h.$('worlds-global-menuAnimation'));
+  const input = h.$('worlds-global-menuAnimation');
+  input.checked = false;
+  input.emit('change');
+  const status = h.$(`${input.id}-status`),
+    retry = status.parentNode.querySelector('.global-settings-save-retry');
+  assert.equal(input.checked, false);
+  assert.match(status.textContent, /Session only.*blocked/);
+  assert.equal(h.doc.documentElement.dataset.menuAnimation, 'off');
+  working = true;
+  retry.click();
+  assert.equal(h.win.localStorage.getItem(key), 'off');
+  assert.equal(status.textContent, 'Saved');
+  assert.equal(retry.hidden, true);
+});
 
 test('World preserves incoming extra-large through generated controls and an unrelated display change', async (t) => {
   const storage = new Map([
