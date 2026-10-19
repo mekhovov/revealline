@@ -2,11 +2,11 @@
 
 **Review version: 19 October 2026**
 
-**Latest execution checkpoint:** **31 source slices merged · 12 feature PRs open for checks · 41 drafts = 84 active/admitted candidates; 1 withdrawn.** All 83 feature groups / 113 deliverables remain tracked. Seven delivery dependencies are separate. These counts are not a completion percentage.
+**Latest execution checkpoint:** **31 source slices merged · 12 feature PRs open for checks · 42 drafts = 85 active/admitted candidates; 1 withdrawn.** All 83 feature groups / 113 deliverables remain tracked. Seven delivery dependencies are separate. These counts are not a completion percentage.
 
-**New reviewable delivery:** Duel Home explanation [#1741](https://github.com/mekhovov/revealline/pull/1741) is a clean 11-file draft on the independent fixture prerequisite. Its recorded complete files retain 135 passes and one confirmed pre-existing Team failure. Separate [Team repair #1740](https://github.com/mekhovov/revealline/pull/1740) passes 5/5; it does not retroactively make the original cohort green. Pause-music #1737 now passes current-source 28/28 and actual Duel/Team English/Ukrainian browser journeys.
+**New reviewable delivery:** Academy result-language [#1742](https://github.com/mekhovov/revealline/pull/1742) passes all 78 native cases. Text compatibility [#1668](https://github.com/mekhovov/revealline/pull/1668) now preserves captured current main and passes the complete 456-case cohort and full configured lint. Duel Home #1741, Team repair #1740 and pause-music #1737 retain their separate scopes and remaining gates.
 
-**Current priorities:** qualify the text-compatibility integration, complete the whole Single Drone/Riy Extra large menu/HUD/upgrades/results group, and repair Academy terminal language after two valid native reproductions. Current save/resume and caption-reading owners remain preserved. Contextual lessons still require Learn/Demo dependencies.
+**Current priorities:** complete Single Drone/Riy browser qualification after correcting offscreen Start and critical HUD wrapping; finish Team Home regression checks and existing admission work. Phase 5 private-room invitation Copy/Share/QR is now in development as an independent complete slice. Existing P1 and Learn/Demo-dependent work remains tracked.
 
 **Compact acceptance:** fit the complete field alongside critical HUD, Riy status/actions and touch controls. Persistent secondary copy may use the existing Pause reading owner; time-sensitive guidance stays live. Standard/Large semantics, accepted nodes, focus and gameplay input ownership remain intact. Extra large support is not complete until actual compact English/Ukrainian review passes.
 
@@ -377,7 +377,7 @@ At this earlier checkpoint, disk exhaustion blocked implementation and current-h
 - **P1 — F15b:** actual Solo, Versus, Team, Survival and Raid menus pass sampled failed-save/session-only/Retry paths with modeled storage; local intent and the modeled peer change are retained. Browser source203 is unchanged by fd940 reason correction; fd940 has50 focused tests,18 independent owner tests and7 projection checks. Main reconciliation/full exact-head CI remain pending. No iPhone/PWA-offline/Steam Deck qualification inferred.
 - **Delivery:** Snake context#1637 and SIM Home#1652 are now merged. The JSON snapshot uses refreshed remote PR states; ready remains subject to exact-head checks and current-main reconciliation.
 
-### Current implementation checkpoint · 19 October, resumed checks
+### Earlier implementation checkpoint · superseded by the latest checkpoint above
 
 Disk recovered to6.9GiB after earlier failures; full checks resumed serially after restoring629 missing exact Git build inputs(545MB). Earlier failures are retained. Browser review cannot currently attach a webview, so new visual acceptance remains pending.
 

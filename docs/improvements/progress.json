@@ -15,16 +15,16 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Text compatibility #1668: qualify the frozen current-main integration before updating its draft. Preserve desired text size, save/reentrancy behavior and all host fallbacks.",
-    "P1 · Single Drone/Riy: finish the complete Extra large menu, field/HUD, upgrade and result layouts, then actual compact English/Ukrainian review. Preserve simultaneous field, critical status and touch/action access.",
-    "P1 · Team repair #1740: five focused checks pass. Finish independent review and broader qualification for the retained navigation-context bug.",
-    "P1 · Duel Home #1741: review the clean draft on fixture prerequisite #1735. All11 files ran at recorded scopes (135 pass, one independently reproduced baseline Team failure). Compact/current-source/package gates remain.",
-    "P1 · Shared support foundations: #1661 has81 focused checks; controller #1731 has141; Worlds #1733 has245; Rooms #1734 has152. Complete current-source, package and admission gates before dependent delivery.",
-    "P1 · Capacity: continue bounded work while protecting2GiB free. Full builds and large captures require enough headroom; do not discard original work or evidence.",
-    "P2 · Academy language: fix the confirmed timeout/unscored result explanation, with ordinary success/replay/reset controls and unchanged proof/records.",
-    "P2 · Pause music #1737: complete28/28 current-source checks and actual Duel/Team EN/UK browser review pass. Full/package/admission, listening and physical acceptance remain.",
-    "P1 · Team launch prerequisites and remaining recovery adapters: preserve intended one-click play, exact checkpoints and existing owners. Required CI governs admission.",
-    "Continue all eight phases. All83 feature groups/113 deliverables remain tracked; lessons still need Learn/Demo dependencies. Physical iPhone PWA offline and Steam Deck checks remain Not tested."
+    "P1 · Single Drone/Riy scaling: fix the demonstrated critical HUD wrapping, then finish actual compact English/Ukrainian field, touch, reading, upgrade and result review. The initial offscreen Start is corrected; 33 focused cases pass at their recorded scopes.",
+    "P1 · Text compatibility #1668: current-main integration passes the complete 456-case cohort, full configured lint, canonical catalogs and both bootstrap checks. Finish full source/package/rendered checks, required CI and admission.",
+    "P1 · Team Home guidance: pure 8/8 and complete new host 13/13 pass; continue the seven existing regression files. Preserve the independently verified current mission route and all progress/launch owners.",
+    "P1 · Shared support/recovery and existing drafts: reconcile current-source predecessors and finish required qualification for controller #1731, primary #1661, Worlds #1733 and Rooms #1734.",
+    "P2 · Academy language #1742: complete native 78/78 passes, including terminal/replay/reset controls. Actual browser, full source, package and physical gates remain.",
+    "P2 · Private-room invitations F49: implement Copy, native Share and local QR with truthful fallback, cancellation and stale-owner handling; keep transport and room credentials unchanged.",
+    "P1 · Capacity: roughly 2.2 GiB remains. Protect the 2 GiB reserve; stop guarded work if it is breached. Avoid large builds/captures and retain original work and evidence.",
+    "P2 · Pause music #1737: complete current-source 28/28 and actual Duel/Team EN/UK browser review pass. Full/package/admission, listening and hardware acceptance remain.",
+    "P1 · Review Capture #1729, Duel #1741 and Team repair #1740 with their explicit prerequisites. Source PR counts do not establish whole-feature completion.",
+    "Continue all eight phases and retain all 83 feature groups / 113 deliverables. Contextual lessons still require Learn/Demo dependencies; physical iPhone PWA offline and Steam Deck checks remain Not tested."
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -900,7 +900,7 @@
       "blocker": "Capture and Duel explanations are separate drafts. Full lesson recommendations still require F25/Learn and Demo dependencies; later current-source, package, browser and admission checks remain.",
       "pr": null,
       "commit": null,
-      "next": "Review Capture #1729 and Duel #1741 with their independent test prerequisites. Team recommendations and contextual lessons remain separate deliverables.",
+      "next": "Capture #1729 and Duel #1741 remain reviewable drafts with independent prerequisites. Finish Team Home qualification as the next bounded slice; contextual lessons still require F25/Learn and Demo dependencies.",
       "evidence": [
         "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced."
       ],
@@ -970,6 +970,28 @@
           "observedRemoteHead": "0f6497f8dd777f6ddd2e566afa7d9959d02a0877",
           "deliveryState": "draft",
           "mergeState": "UNSTABLE"
+        },
+        {
+          "id": "team-journey-home-recommendation",
+          "priority": "P1",
+          "status": "developing",
+          "owner": "lane-b",
+          "pr": null,
+          "commit": null,
+          "dependency": "Independent Team retained-context repair #1740; existing prepared-picture and Team progress owners, no Learn/Demo dependency for this slice",
+          "effort": "1–2d bounded Home slice within F10, plus qualification/review queues",
+          "next": "Corrected complete new host13/13 and pure8/8 pass. Existing default13/13, navigation11/11 and progress8/8 pass; difficulty host3/9 fails and is being attributed on exact baseline. Final Next/briefing/localization files Not run. No aggregate green or feature PR yet.",
+          "evidence": [
+            "Nine-path presentation-only source on1740 captures reason facts from existing initial/profile selection and accepted picture. Exactready row/pack/level guards; no extra next/initial calls, progress/save/launch owner. Preserve native landing column, ownaria-description token and restoreoriginalparagraphbefore nativeMenu teardown.114originalnamedfunctions byte-identical;5945EN/6057UKoldvalues preserved+3messages/language,18canonicalnamespaces.",
+            "Initial complete newhost10/13PASS; earned-clear fixture rejected obsolete route identity before attempting a win, so successor child alsofailed. Current authored/tuned hashes differ from all oldroute rows; not productionred. New-host-only local8segmentcandidate independently replayed twice against exactcurrentTwinlandings rules/seed/recipe:2154legalcommands win, exactfullcheckpointba24c2b8a75347e6cf966ad4464b5e1ed10c0d4b3d2a1b26fead1fce128f87b5. Oldhelper/JSONimmutable; no injectedrun/status/terminal.",
+            "Corrected complete newhost13/13PASS26.132s TAP/28.416s wall,peak473.3MiB,zero skips/guards/stderr; source9manifestaff199dbf67c402b088f261f737aaee0c28127b642602088eaacb40703a04aa1 and77sourceaudit unchanged beforeafter. Actual2154hostcommands earnTeamclear, reentryselects exactSteppingexchange/noputs. First2of7existing completefiles pass default13/13/navigation11/11; furtherfilespending, no aggregategreen. Navigation identity-only cases intentionally omit artwork and are not artwork/play proof.",
+            "Existing cohort thirdfile Teamprogress8/8PASS. Fourth complete difficulty-host3pass/6fail9cases16.116s TAP/18.077s wall,peak336.4MiB,no guards/skips/source drift. Fivefailures include existing enemy-stats writerlease in all-storage-write expectations; one hidden-save Retry wait expires. Baseline attribution not established; no expectations/runtime changed. Final3files Notrun. Frozen9featuremanifest unchanged; rootapproved read-only baseline diagnosis before further edits."
+          ],
+          "qualification": {
+            "automated": "pure_8_and_complete_new_host_13_pass_regression_in_progress",
+            "browser": "not_run",
+            "physical": "not_tested"
+          }
         }
       ]
     },
@@ -2212,8 +2234,8 @@
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1668",
-      "commit": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33",
-      "next": "Compatibility1668 returned to draft and published bounded main-e746 reconciliationf807:446/446 full feature cohort; current-head full source/package gates pending. Earlier full-source passes remain e216-only.",
+      "commit": "4b5f2cf49b7c558568a3883727ffdf430f31da6f",
+      "next": "Draft #1668 now preserves captured current main and passes all456 checks in the complete14-file cohort, full configured lint, canonical catalogs and both bootstrap checks. Final documentation-only head retains all42 non-document feature blobs. Full source validation, package, browser, required CI and admission remain.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
         "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
@@ -2230,18 +2252,21 @@
           "id": "compatibility",
           "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1668",
-          "commit": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33",
+          "commit": "4b5f2cf49b7c558568a3883727ffdf430f31da6f",
           "evidence": [
             "All current readers preserve desiredXL/effectiveLarge, including legacy import. Source and actual browser evidence scoped above; old immutable published binaries excluded.",
             "Root independentlyverified40/43 nonlocale/nongenerated feature added/removed deltas unchanged vsbeb9; all5935EN/6045UKmainvalues+3compatibilitykeys/languagepreserved. RootcatalogBundle(current18namespaceJSON) byte-identicaltoactualcompressedcatalog; VMdecode18deep-equal. Receipts/tmp/revealline-f09a-e216-root-independent-review.json and-root-canonical-review.json. Currentfullgatesqueued; historicalbeb457/fullpass staysscopedtooldhead.",
             "Current e216:439/439 complete14-file cohort, zero skips, after repairing existing fake-indexeddb dependency link; initial339+file-import failure retained,54-case subset not added. Full lint/uninterrupted validation PASS, source clean before/after. Raw formatting check retains4 existing policy findings, canonical18-namespace generation independently identical. Promoted ready; required CI pending.",
             "f807 tree959b16ba7d100814083b4586f22ebcd0629876d9 merges exacte746. Root independently preserves all40ordinary deltas,43feature paths, current-main values+3keys/language,18canonical namespaces and original appended host cases. Initial446total440pass/6ENOENTfail and diagnostic130total124pass/6fail retained; only missing unchanged tracked51KB Snake proofJSON restored after blobSHA verification. Final whole14files446/446 zero skips117.11s. PR returned draft before FF push; no bypass/force/manual merge. Current-head full gates pending.",
-            "Normal merge2e0cfde9d56690273db7aff0d453c8a96b3f196e/tree28102c6d4b1d9954c6f8bd8f7ca5baf3f517d049 preserves exact captured main cdbda99ac881eb9cac62d536543d9078b92ac081 with original43 compatibility paths. Four conflict resolutions exactly match reviewed50c2b888c179bbbe42cabe6979b9c226c194dd77 foundation unions; all main locale values plus3keys/language and read/persist/receive/notice/motionChanged owners preserved. All39 changedJS lint pass, cached diff clear, theme/SIM bootstrap checks byte-identical (305701bytes, no added package slots).43-file manifest4221231c019e658a69a966483d2f41c9c85cc4ab5bfe88de07e3ccaca2f49a6d. No current native/full gate inferred. Original untracked documents reversibly preserved with hashes before switching root-owned integration checkout."
+            "Normal merge2e0cfde9d56690273db7aff0d453c8a96b3f196e/tree28102c6d4b1d9954c6f8bd8f7ca5baf3f517d049 preserves exact captured main cdbda99ac881eb9cac62d536543d9078b92ac081 with original43 compatibility paths. Four conflict resolutions exactly match reviewed50c2b888c179bbbe42cabe6979b9c226c194dd77 foundation unions; all main locale values plus3keys/language and read/persist/receive/notice/motionChanged owners preserved. All39 changedJS lint pass, cached diff clear, theme/SIM bootstrap checks byte-identical (305701bytes, no added package slots).43-file manifest4221231c019e658a69a966483d2f41c9c85cc4ab5bfe88de07e3ccaca2f49a6d. No current native/full gate inferred. Original untracked documents reversibly preserved with hashes before switching root-owned integration checkout.",
+            "Current normal integration2e0cfde9d56690273db7aff0d453c8a96b3f196e/tree28102c6d4b1d9954c6f8bd8f7ca5baf3f517d049 complete14-file cohort456/456PASS, zero skips/cancellations/todos,119.011s TAP/119.894s wall, peak1972416KiB, minimumfree2344841216bytes; no1536heap/2048RSS/180wall/2GiBdisk guard. Exacthead/status/43sourceaudit beforeafter; full109112byte stdoutSHA9a7641b73c08fdf09fe33a8f0ed29174b1c65cf5e1ec251ea9b768732d159d95, stderr0, no truncation.",
+            "Retained failed current-source attempts: firstcomplete302/311; second435/443; three-filediagnostic22/31; nextcomplete447/456. Two one-case Start probes failed downloading; complete required presentation closure was absent. Restored only exact already-local Git bytes: historicalSnakeproof51349bytes plus116inputs206797bytes including79requiredpresentationimages17621bytes; inputOID/size/SHA audited. No runtime, assertions or timeouts changed. Afterrestoration unchangedStartdiagnostic1/1PASS then complete456casePASS. Priorfailedruns remainfailures, no additiveaggregate.",
+            "Full configured lintPASS at2e0cfde9d56690273db7aff0d453c8a96b3f196e,16.648s,peak396384KiB,zero warnings/stdout/stderr/guards; all4441trackedmodules inconfiguredscopes present. Canonical18namespaces/27646messages byte/deepdecodeexact; bothbootstrapchecksPASS/SIM305701bytes/noaddedslot. NormalFF #1668 remotehead4b5f2cf49b7c558568a3883727ffdf430f31da6f/treedb01ec9b7f4f732aa298c583de414c19ccc32f84, draft/main/exact43paths independentlyreadback. Finaldoc-onlycommit retains all42non-docpassingblobs. Fullsource/package/currentbrowser/device gates remain."
           ],
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
-          "observedRemoteHead": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33",
-          "next": "Current-main integration2e0cfde9d56690273db7aff0d453c8a96b3f196e is frozen and independently source-reviewed:43 feature paths, current save/reentrancy owners retained,39JS lint and both bootstrap checks pass. Current14-file cohort and full gates remain pending; remote #1668 still retains earlier f807 qualification.",
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "4b5f2cf49b7c558568a3883727ffdf430f31da6f",
+          "next": "Draft #1668 now preserves captured current main and passes all456 checks in the complete14-file cohort, full configured lint, canonical catalogs and both bootstrap checks. Final documentation-only head retains all42 non-document feature blobs. Full source validation, package, browser, required CI and admission remain.",
           "candidateCommit": "2e0cfde9d56690273db7aff0d453c8a96b3f196e"
         },
         {
@@ -2263,13 +2288,13 @@
           "pr": "https://github.com/mekhovov/revealline/pull/1672",
           "next": "Await compatibility1668 admission and current required checks; remaining game families are F09b.",
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
+          "mergeState": "UNKNOWN",
           "observedRemoteHead": "e40b8983c1a94605beb1376fa85741ac5d40bf1c"
         }
       ],
       "deliveryState": "draft",
-      "mergeState": "DIRTY",
-      "observedRemoteHead": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33"
+      "mergeState": "UNSTABLE",
+      "observedRemoteHead": "4b5f2cf49b7c558568a3883727ffdf430f31da6f"
     },
     {
       "id": "F09b",
@@ -2409,11 +2434,15 @@
           "commit": null,
           "dependency": "Compatibility1668 and complete SingleDrone/Riy typography/layout inventory; follow independent width repair",
           "effort": "Within original6–10d totalF09, not a second full estimate",
-          "next": "Complete Single Drone/Riy responsive field/HUD, upgrade comparisons and existing Pause reading route, then native and actual compact EN/UK browser checks. Current-main save/caption owners are preserved. Keep critical HUD, complete field and touch/actions simultaneously reachable; do not add gameplay key routing.",
+          "next": "Current33 feature cases across6 complete files pass at recorded source scopes. Actual compact review found and corrected offscreen initial Start; now improve critical HUD wrapping without reducing font size, then finish EN/UK portrait/landscape/field/touch/upgrade/result review. Full source/package/device gates remain.",
           "evidence": [
             "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred.",
             "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed.",
-            "Source resumed on normal current-main integration50c2b888c179bbbe42cabe6979b9c226c194dd77 after preserving partialcb461c6a639ed865043cad53b45cb7a45303b38a. Reinventory387modules/21stylesheets; suspend inherited text covered, unrelated comfort CSS not imported. Responsive CSS, exact-node secondary-copy helper and native-entry tests authored; theme/bootstrap and existing SIM slots regenerated306068bytes/no package slots. No native tests launched yet. Persistent secondary copy uses existing Pause reading/scroll owner; live timed notices, Riy actions/focus/cooldown remain live. Actual geometry remains a required gate."
+            "Source resumed on normal current-main integration50c2b888c179bbbe42cabe6979b9c226c194dd77 after preserving partialcb461c6a639ed865043cad53b45cb7a45303b38a. Reinventory387modules/21stylesheets; suspend inherited text covered, unrelated comfort CSS not imported. Responsive CSS, exact-node secondary-copy helper and native-entry tests authored; theme/bootstrap and existing SIM slots regenerated306068bytes/no package slots. No native tests launched yet. Persistent secondary copy uses existing Pause reading/scroll owner; live timed notices, Riy actions/focus/cooldown remain live. Actual geometry remains a required gate.",
+            "Root independently verifies48featurepaths versus currentcompat2e0 foundation, actualsourcehashes and50originalOverflight namedfunctions:49exact; onlysyncUpgrade adds intendedexpandedcomparison. RequirednewsharedAPI opt-in/persistence and currentmainowners retained. Nativefixture uses actualapp/renderer/core with local originalbytes; no CSS/WebGL/hardware claim.",
+            "Initial five/view/declaration sequence8/9 emittedcases, one formatting-only declaration membership mismatch. Test-only property+value quote-aware whitespace normalization preserves161expectations/arithmetic/source. Nextcompletefiles declaration2/2/card5/5/preview11/11PASS; native5/7 failed wrongnewPauseResumefixtureID. One-tokencorrect actualpause-resume ID preservesallstate assertions; complete7/7PASS. Historicalfailedruns retained separately.",
+            "Actual320x720ExtraLargePlainEN firstHomefocus Start wasoffscreen:rect[16,2023.83,272,65.59], Home304x704/scrollHeight2725/scrollTop0. Screenshot overflight-xl-320-home-primary-offscreen.png. Approvedlocalpresentation reveal keeps existingfocus/DOM/navigationorder with one cancellableframe and stale/dispose/sizeguards. Currentcompleteaffectedview3+native7 pass10/10; unchangedpolicy5/declaration2/card5/preview11 retainexactscopes, total33cases across6completefiles. Manifest55c89ae107d17e3b879e272d6293c137f0f315b39151c520cb6396d8f3adcd2a. Bothgeneratorchecks exact/noaddedslot.",
+            "Actualreload320x720ExtraLargePlainEN at55c89: sameacceptedStartfocus, rect[16,622.33,272,65.59] nowinside704highHome, scrollTop1401.5. Screenshot overflight-xl-320-home-primary-visible.png. ActualpublicStart entersrealgame andlater earnslevel2upgrade with visible NOW/NEXT DOMcomparison; screenshot overflight-xl-320-earned-upgrade.png. BrowseralsofoundthreecolumnHUD splits clockdigits/words at320; two-column/fullwidthtally CSS correction approved butnotyetqualified. Controls-on/touch, UK, landscape, result/save dialogs and fullviewport/device acceptance remain. These are iframeCSSreviews, not device emulation."
           ],
           "blocker": null,
           "candidateCommit": "50c2b888c179bbbe42cabe6979b9c226c194dd77"
@@ -2769,7 +2798,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Pause-music #1737 has current-source28/28 and actual Duel/Team EN/UK browser review. Team retired-context repair #1740 has5/5. Academy terminal meaning is in development after two valid baseline failures. Remaining language slices and broader gates continue.",
+      "next": "Pause-music #1737 has current28/28 and actual Duel/Team EN/UK browser review; Academy #1742 passes78/78 native cases; Team context #1740 passes5/5. Broader qualification and remaining terminology work continue.",
       "evidence": [
         "Browser review confirms existing singular grammar \"1 rerolls left\" and \"1 замін залишилося\". Track bounded count-aware localization in a later F59 batch; F19c adds disclosure only.",
         "Actual Worlds5363 native language switch after a verified result translates the new medal paragraph and enemy stats but leaves existing result heading, recording status, medal/score and action labels in English. Track bounded retained-result live-locale ownership; do not claim F23 new-paragraph fix covers existing nodes.",
@@ -2907,28 +2936,34 @@
             "physical": "not_tested"
           },
           "blocker": null,
-          "mergeState": "UNSTABLE",
+          "mergeState": "CLEAN",
           "candidateCommit": "41870f0d1997624da54059deca4370fc236efc22"
         },
         {
           "id": "academy-terminal-result-language",
           "priority": "P2",
-          "status": "developing",
+          "status": "draft_review",
           "owner": "lane-c",
-          "pr": null,
-          "commit": null,
+          "pr": "https://github.com/mekhovov/revealline/pull/1742",
+          "commit": "56f38d13ba40fb2a1254b75f78a7894aff1f9e83",
           "dependency": "Existing Academy terminal owners on captured main cdbda99ac881eb9cac62d536543d9078b92ac081; independent of pause-music stack",
           "effort": "0.5–1d bounded result-copy batch plus native/browser review; queues/hardware excluded",
-          "next": "Both selected native cases reproduce the result-copy bug on unchanged current-main production: real36000tick expiry and a real public-course unscored completion. Implement one local semantic painter, then cover ordinary success, replay and reset without new proof/admission/focus owners.",
+          "next": "Separate draft #1742 preserves timeout/unscored result meaning through native language changes. The complete native file passes78/78, including ordinary success, unfinished replay and reset. Actual browser, full-source, package and device checks remain.",
           "evidence": [
             "Sourceconfirmed translated1085–1086 always replaces complete-title/lesson with ordinarycoursecopy, overwriting completed1351–1387 Flight ended/retry or Draft test finished/unscored meaning on localechange. paint never restores specialcopy. No live reproduction or automated red yet. Native plan real36000tickexpiry via publicrendererFactory withoutretaineddraws, validpubliccourses tuningterminal, realEOF/normalwinning controls; exact nodes/focus/actions/model/proof/records/I/O acrosslocale. No fake shortdeadline/injectedterminal/completedreentry. Capacityhold.",
-            "Selected2 complete cases:0pass/2semanticfail/0skip/cancel/todo, exit1,25.395s, peak250944KiB, no guards. Original appGitOID436de86a7d18c7005221b266fb4e3372572fc8ed unchanged. Both real terminal states initially show correct EN meaning, then native Display Ukrainian incorrectly restores ordinary course title. Source/test2pathmanifestd04debf0fa6eedc70f89cc44a4f7022f4bdbe2313689c93e457ba5743318dbd4 exact before/after. Full2752byte stdoutSHA62f11ef9f944091259ab4e11322f2e5288289e42e99fd6e631d817e783858a36, stderr0, no truncation. Root reviewed valid RED and authorized bounded painter/control tests; no whole-file green yet."
+            "Selected2 complete cases:0pass/2semanticfail/0skip/cancel/todo, exit1,25.395s, peak250944KiB, no guards. Original appGitOID436de86a7d18c7005221b266fb4e3372572fc8ed unchanged. Both real terminal states initially show correct EN meaning, then native Display Ukrainian incorrectly restores ordinary course title. Source/test2pathmanifestd04debf0fa6eedc70f89cc44a4f7022f4bdbe2313689c93e457ba5743318dbd4 exact before/after. Full2752byte stdoutSHA62f11ef9f944091259ab4e11322f2e5288289e42e99fd6e631d817e783858a36, stderr0, no truncation. Root reviewed valid RED and authorized bounded painter/control tests; no whole-file green yet.",
+            "Reviewed local painter shares only resultheading/advice refresh between translated/completed, derives current !replay/terminalHandled/actualterminalsnapshot with tuning-firstprecedence and originalstrings. No storedoutcome, proof/admission, focus/input or localeowner change. Originalnativecases remain byte-identical exceptMAX_FLIGHT_TICKS import.",
+            "First complete corrected-production file75/78PASS: three newcases passed semantic/model/proof/record predicates then failed new Backfocus assertion because fixture activated Settings inside closedHome. Corrected actualpublic path Menu→visibleHome→Settings→Display/lang/Back retains strictopeneridentity; productionunchanged. Historical2validRED and75/78failure retained separately.",
+            "Final complete native78/78PASS (74top+4nested),33.265s,peak1055728KiB,no skips/cancel/todo/guards/stderr/truncation. Exactpassing2pathmanifest71ac02d0340566f6a3525573fbdb6eeafb06ea579f491c56e0b2d6777744980e beforeafter. Full19218byte stdoutSHAfafbc2d080b3aee29371279b73dce77fa747fede7e625de6f5a9169ae4189c2c. Actual36000expiry/unscoredcomplete, 4frameincompleteEOF whileliveownerexpired, normalverifiedwinoneadmission and reset/hidden controls allpass. Draft1742head56f38d13ba40fb2a1254b75f78a7894aff1f9e83/tree8ee88d65b66cab86e1a4e08b37f701a7614b4714/parentcdb/exact3paths independentlyreadback; doc-onlyfinal3manifestf2ba8ef0fc50d2c33bce78e3c836f717dad4171e862f37a7b1af9235778ea4cb. Parsing/ESLint/native+docformat/newpainterformat/diffPASS; unchangedbaselineappwholefileformatdebt explicit."
           ],
           "qualification": {
-            "automated": "two_valid_baseline_red_cases_fix_in_progress",
+            "automated": "complete_native_78_pass_full_pending",
             "browser": "not_run",
             "physical": "not_tested"
-          }
+          },
+          "observedRemoteHead": "56f38d13ba40fb2a1254b75f78a7894aff1f9e83",
+          "deliveryState": "draft",
+          "mergeState": "UNSTABLE"
         },
         {
           "id": "team-retired-navigation-context",
@@ -2951,7 +2986,7 @@
             "Retained connected localization producer read selectedLevel through the later global document after page retirement. Failure reproduced on unchanged fixture-only base, F10 integration and captured current main. Capture the existing native selector once; retain selection policy, translator, save and input owners. Original4 test bytes retained exactly; fifth case supplies a conflicting legal foreign document and checks EN/UK while preserving both selections.",
             "Current-main baseline complete4cases3pass/1fail; corrected complete5/5 pass12.900s TAP/14.717s wall, peak631.1MiB, no skips/cancellations/guards/stderr. Source audit unchanged before/after. Final doc-only manifestd727a1f3748e1a2dade5861466e8cefbe0dfc0dd6b9d693b5b0bb96aa037c812. Root independently verified draft/main/head/tree5299f1b686413d325dd32bcf1a7a89b5569ad578/exact3 paths."
           ],
-          "mergeState": "UNSTABLE"
+          "mergeState": "CLEAN"
         }
       ]
     },
@@ -3110,8 +3145,8 @@
       "impact": "H/H",
       "effort": "**2–3d**",
       "featureId": "F49",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-c",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -3120,8 +3155,12 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Implement the approved complete private-room invitation Copy/Share/QR slice. Reuse existing canonical invitation ownership and local QR vendor; preserve room transport, Ready, input, records and invitation expiry. Source review and focused/browser qualification follow.",
+      "evidence": [
+        "Current private-room UI exposes only readonly invite input. Existing room-content owner builds the accepted invite/content URL without seatcredentials; current room lifecycle retires it on leave/replacement. No existing Copy/Share/QR slice or PR. Phase5 implementation authorized while remaining P1 admission/device work continues.",
+        "Nine-path scope reuses localqrcodegen-1.8.0 (45421bytes), no install/service/assets. Clipboard promise success/manualselect fallback, directgesture nativeShare withAbortError cancellation, explicit QR, exactacceptedURL only. Existing native surface notification invalidates stale work across away→back; no duplicated surface/transport state. Keep singlependingjob untilsettled, no tokenlog/storage/telemetry. Existing room-ui textfallback/Rooms1734futurecallback union preserved. Component/QR +real room-client/presentation tests planned; unchangedcontentvalidation remains incohort. No native pass/browser/native-share/scan/device acceptance yet.",
+        "First pure component/localQR file21/21PASS0.378s,peak174256KiB,zero failures/skips/guards/source drift; full5030byte stdout/stderr0. Actualhost/lifecycle/presentation files stillNotrun and sourceunderdevelopment; no browser/native-share/scan/device claim."
+      ]
     },
     {
       "id": "F52",
@@ -4374,6 +4413,11 @@
       "date": "2026-10-19",
       "item": "Two reviewable drafts and current-source language qualification",
       "reason": "Duel Home1741 published clean11paths;135pass/1confirmedbaselinefailure retained. IndependentTeam1740complete5/5. Pause1737current28/28 and both-mode ENUKbrowserpass. Academy2validRED cases nowinfix; compatcurrentmain frozen/lint/generatorclear; SingleDrone/Riy completefamily layoutcontinues.85candidateinventory31merged12ready41draft1withdrawn;113deliverables retained."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Current compatibility qualification, Academy draft and next independent phase",
+      "reason": "1668currentcomplete456/456/fullconfiguredlintpass; failed sparse-input attempts preserved. Academy1742complete78/78draft. SingleDrone/Riy33cases, actualHomefocusfix and HUDwrapfinding. Teamcurrentlegalroute13/13/regressioncontinues. Phase5F49sharingimplementationstarted.86candidateinventory31merged12ready42draft1withdrawn;113deliverables retained."
     }
   ],
   "deliveryDependencies": [
@@ -4461,7 +4505,7 @@
   ],
   "deliverySnapshot": {
     "featurePRsReady": 12,
-    "featurePRsDraft": 41,
+    "featurePRsDraft": 42,
     "deliverablesMerged": 31,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
@@ -4470,11 +4514,11 @@
   },
   "admissionReview": {
     "observedDate": "2026-10-19",
-    "scope": "All85 unique task-referenced candidates; seven delivery dependencies and documentation follow-up excluded",
+    "scope": "All86 task-referenced candidates; seven delivery dependencies and documentation follow-up excluded",
     "counts": {
       "merged": 31,
       "ready": 12,
-      "draft": 41,
+      "draft": 42,
       "withdrawn": 1
     },
     "conflictedOpenPRs": [
@@ -4482,10 +4526,10 @@
       1686, 1690, 1702, 1704, 1721, 1729
     ],
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1662, 1669, 1682, 1686, 1690],
-    "note": "Remote metadata independently rechecked after #1740/#1741 publication.31merged/12ready/41draft/1withdrawn; source PR inventory is not plan completion. Ready is authoring status, not passed CI or mergeability. No manual merges or bypasses.",
+    "note": "Independent metadata refresh after1742 and1668successor:31merged/12ready/42draft/1withdrawn. No promotion, manual merge or CI bypass. All plan deliverables remain tracked.",
     "latestMain": {
       "revision": "cdbda99ac881eb9cac62d536543d9078b92ac081",
-      "note": "Captured current main rechecked; earlier test and browser receipts retain exact source scopes."
+      "note": "Captured main unchanged at independent recheck; exact-source receipts remain separate."
     }
   }
 }
