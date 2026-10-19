@@ -816,5 +816,19 @@
       "path": "game/ui/direct-tool-launch.js",
       "source": "import(moduleURL)"
     }
+  ],
+  "runtimeStyles": [
+    {
+      "path": "game/ui/continuous-play.mjs",
+      "styleId": "continuous-play-style",
+      "absoluteCount": 1,
+      "scope": "Runtime-mounted transition status; Snake-only override. Inherited cancel text follows this parent."
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "styleId": "enemy-stats-shared-style",
+      "absoluteCount": 5,
+      "scope": "Runtime-mounted statistics, including both responsive sizes; Snake-only overrides. Panel/HUD mounted by Classic Snake; collection projection is defensive and not a host reachability claim."
+    }
   ]
 }

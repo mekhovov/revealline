@@ -81,6 +81,14 @@ html[data-text-scaling='snake']
   gap: 12px;
 }
 
+/* The shared landing owner places utilities by column. With one enlarged
+ * explicit track that would create a second, squeezed implicit column. */
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .mode-play-utilities:not([hidden]) {
+  grid-auto-flow: row;
+}
+
 html[data-text-scaling='snake']
   body[data-text-size='extra-large']
   #snake-results-dialog
@@ -89,6 +97,63 @@ html[data-text-scaling='snake']
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
+}
+
+/* Result content has a legacy ID-scoped scroll owner, while the transition
+ * controls install a sticky footer at runtime. Enlarged results use one outer
+ * scroll region so that footer cannot cover the focused More actions button. */
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #snake-results-dialog[open]
+  > .mode-play-content {
+  overflow: visible;
+  flex: none;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #snake-results-dialog[open]
+  > .continuous-result-actions:not([hidden]) {
+  position: static;
+}
+
+/* The transition status is authored by a runtime stylesheet, outside the
+ * linked-sheet inventory. Keep its inherited button size on the same factor. */
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .continuous-play-controls {
+  font-size: calc(0.85rem * var(--primary-text-scale, 1));
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .enemy-stats[data-variant='panel'] {
+  font-size: calc(0.875rem * var(--primary-text-scale, 1));
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .enemy-stats[data-variant='hud'] {
+  font-size: calc(0.8rem * var(--primary-text-scale, 1));
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .enemy-stats[data-variant='collection']
+  .enemy-stats-total {
+  font-size: calc(clamp(1.7rem, 3vw, 2.8rem) * var(--primary-text-scale, 1));
+}
+
+@media (max-width: 360px) {
+  html[data-text-scaling='snake']
+    body[data-text-size='extra-large']
+    .enemy-stats[data-variant='panel'] {
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
+  }
+
+  html[data-text-scaling='snake']
+    body[data-text-size='extra-large']
+    .enemy-stats[data-variant='hud'] {
+    font-size: calc(0.75rem * var(--primary-text-scale, 1));
+  }
 }
 
 html[data-text-scaling='snake']
@@ -100,6 +165,7 @@ html[data-text-scaling='snake']
 
 html[data-text-scaling='snake']
   body[data-text-size='extra-large']
+  #snake-pause-dialog[open]
   :is(.pause-command-grid, [data-pause-group='missions'] .pause-command-grid):not([hidden]) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
@@ -107,6 +173,7 @@ html[data-text-scaling='snake']
 
 html[data-text-scaling='snake']
   body[data-text-size='extra-large']
+  #snake-pause-dialog[open]
   [data-pause-group='missions']
   :is(button, a) {
   white-space: normal;

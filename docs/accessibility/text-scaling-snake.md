@@ -15,7 +15,12 @@ launcher are explicit dynamic boundaries; this is not a runtime coverage claim.
 
 Existing shared sheets already consume the default-one text multiplier. This
 slice wraps 41 remaining readable absolute declarations in Classic Snake and
-the shared play/settings/touch-control sheets. Each authored Standard size is
+the shared play/settings/touch-control sheets. An additional runtime-style scan
+identified six absolute declarations in transition status and enemy statistics,
+including their responsive variants. Snake-only overrides wrap these sizes; the
+regression executes both style owners instead of relying on linked CSS alone.
+The collection-stat projection is defensive, not a Snake-host navigation claim.
+Each authored Standard size is
 multiplied once by two, including responsive `clamp()`/`max()` results. Unitless
 line heights stay unchanged. `em` and `inherit` follow their enlarged parent.
 Snake's inherited body text uses the same multiplier. Theme tokens retain their
@@ -39,7 +44,11 @@ The extra-large family sheet gives dialogs one outer scroll owner, lets headers
 and actions grow, and keeps native `[open]`, `[hidden]` and settings-category
 ownership. The chooser preserves its existing focus/list controller while cards,
 filters and footer actions receive sufficient width. Result actions wrap and the
-result summary follows the picture. Live HUD groups wrap; numeric values do not
+result summary follows the picture. Its legacy nested scroller and runtime sticky
+footer become ordinary flow inside the outer dialog, so an enlarged footer cannot
+cover focused result actions. Compact Home utilities explicitly place by row, and
+Pause rules target the actual native dialog to outrank the shared ID branch.
+Live HUD groups wrap; numeric values do not
 split into separate digits. The stage can scroll when enlarged HUD text needs
 more height, retaining a minimum visible board region without changing its logical
 cells or the player's seat arrangement. Touch-control dimensions remain separate.
