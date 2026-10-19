@@ -6028,5 +6028,11 @@
   "flightDetails.progress.target": "Ціль відкриття: {{value}}% зображення.",
   "flightDetails.progress.remaining": "Ще потрібно відкрити: {{value}}% зображення.",
   "flightDetails.progress.lessThan": "До цілі відкриття залишилося менше ніж {{value}}% зображення.",
-  "flightDetails.progress.reached": "Ціль відкриття досягнуто. Решту обов’язкових цілей усе ще потрібно виконати."
+  "flightDetails.progress.reached": "Ціль відкриття досягнуто. Решту обов’язкових цілей усе ще потрібно виконати.",
+  "flightDetails.progress.routes.revealed": "Захоплено доступних маршрутів: {{value}}%.",
+  "flightDetails.progress.routes.target": "Ціль захоплення маршрутів: {{value}}% доступних маршрутів.",
+  "flightDetails.progress.routes.remaining": "Ще потрібно захопити: {{value}}% доступних маршрутів.",
+  "flightDetails.progress.routes.lessThan": "До цілі залишилося менше ніж {{value}}% доступних маршрутів.",
+  "flightDetails.progress.routes.reached": "Ціль захоплення маршрутів досягнуто. Решту обов’язкових цілей усе ще потрібно виконати.",
+  "flightDetails.progress.routes.bonus": "Небезпечні ділянки — бонусна територія відкриття."
 }

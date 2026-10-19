@@ -79,24 +79,26 @@ const progressSection = (progress) => {
   const text = (key, values) => t(`interface:flightDetails.progress.${key}`, values),
     number = (value) => formatNumber(value, { maximumFractionDigits: 1, useGrouping: false });
   if (!progress) return section('progress', text('title'), [text('unavailable')]);
-  const { kind, current, target, remaining } = progress,
+  const { kind, basis, current, target, remaining } = progress,
     lines = [];
   if (kind === 'hunt') {
     if (current !== null && target !== null)
       lines.push(text('hunt', { current: number(current), target: number(target) }));
     else lines.push(text('unavailable'));
-  } else {
-    if (current !== null) lines.push(text('revealed', { value: number(current * 100) }));
-    if (target !== null) lines.push(text('target', { value: number(target * 100) }));
+  } else if (['picture', 'routes'].includes(basis)) {
+    const coverageText = (key, values) => text(basis === 'routes' ? `routes.${key}` : key, values);
+    if (current !== null) lines.push(coverageText('revealed', { value: number(current * 100) }));
+    if (target !== null) lines.push(coverageText('target', { value: number(target * 100) }));
     if (remaining === null) lines.push(text('unavailable'));
-    else if (remaining === 0) lines.push(text('reached'));
+    else if (remaining === 0) lines.push(coverageText('reached'));
     else
       lines.push(
         remaining * 100 < 0.1
-          ? text('lessThan', { value: number(0.1) })
-          : text('remaining', { value: number(remaining * 100) }),
+          ? coverageText('lessThan', { value: number(0.1) })
+          : coverageText('remaining', { value: number(remaining * 100) }),
       );
-  }
+    if (basis === 'routes') lines.push(text('routes.bonus'));
+  } else lines.push(text('unavailable'));
   return section('progress', text('title'), lines);
 };
 const group = (lines) => {
