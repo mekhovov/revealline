@@ -5906,5 +5906,14 @@
   "flightLimits.recordingWarning": "Recording and new recoverable saves end at 30 minutes of play. Pause and check Flight saves before leaving the game.",
   "flightLimits.collectionWarning": "Approaching two hours of play: a later completion cannot be kept in the Classic collection. Pause and check Flight saves.",
   "flightLimits.collectionExpired": "The two-hour Classic collection limit has passed. This flight can continue, but its completion cannot be kept in the Classic collection. Earlier progress is unchanged.",
+  "captureMedal.unavailable": "Medal comparison is unavailable for this result.",
+  "captureMedal.highest": "Gold earned — the highest medal for this mission.",
+  "captureMedal.gold": "Next: Gold. Finish in {{target}} s or less without losing a life.",
+  "captureMedal.silver": "Next: Silver. Finish in {{target}} s or less.",
+  "captureMedal.timeMet": "Your time already meets this target.",
+  "captureMedal.tiny": "Less than 0.01 s over the time target.",
+  "captureMedal.shortfall": "Improve this time by {{seconds}} s (rounded up to 0.01 s).",
+  "captureMedal.cleanMet": "No lives lost in this attempt.",
+  "captureMedal.cleanMissing": "A life was lost; complete a retry without losing a life.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }
