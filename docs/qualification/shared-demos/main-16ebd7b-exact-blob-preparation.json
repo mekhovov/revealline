@@ -1,0 +1,242 @@
+{
+  "at": "2026-10-19T04:33:05.939033+00:00",
+  "base": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+  "target": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "sourceHead": "b691aee66f875ec83477e161841362665b618f22",
+  "incomingPaths": [
+    "docs/overflight-reroll-count-language.md",
+    "docs/performance/solo-performance-followup-plan.md",
+    "game/core/capture.mjs",
+    "game/couch/couch.mjs",
+    "game/i18n/catalogs.mjs",
+    "game/journey/reaction-voice-cache.mjs",
+    "game/locales/en/interface.json",
+    "game/locales/uk/interface.json",
+    "game/overflight/app.mjs",
+    "game/overflight/raid-upgrade-card.mjs",
+    "game/soundtrack-source.mjs",
+    "game/test/body-backing-recovery.test.mjs",
+    "game/test/classic-snake-ui.test.mjs",
+    "game/test/core-capture.test.mjs",
+    "game/test/couch-enemy-stats-locale.test.mjs",
+    "game/test/global-settings-tools.test.mjs",
+    "game/test/overflight-raid-refit-shield.test.mjs",
+    "game/test/overflight-reroll-disclosure.test.mjs",
+    "game/test/reaction-recording-cancellation.test.mjs",
+    "game/test/soundtrack-player.test.mjs",
+    "game/test/soundtrack-source.test.mjs",
+    "game/ui/body-backing.mjs",
+    "game/ui/global-settings-tools.mjs",
+    "game/ui/settings-panels.mjs",
+    "game/ui/soundtrack-player.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+  ],
+  "featureOverlapPaths": [
+    "game/i18n/catalogs.mjs",
+    "game/overflight/app.mjs",
+    "game/test/classic-snake-ui.test.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+  ],
+  "checkedBlobs": 53,
+  "missingBefore": [
+    {
+      "oid": "30a907c63d1724d341e34347205db363eb8eb6f1",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "game/journey/reaction-voice-cache.mjs"
+        }
+      ]
+    },
+    {
+      "oid": "eec40ee04a8531956156ec7bf1b88f123e13930f",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "game/test/body-backing-recovery.test.mjs"
+        }
+      ]
+    },
+    {
+      "oid": "bb8585adb5812a3a73723fc1e938f2e884c2880c",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "game/test/reaction-recording-cancellation.test.mjs"
+        }
+      ]
+    },
+    {
+      "oid": "e7446c574737dc6d8b89842fb643feb8043742e1",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "game/ui/body-backing.mjs"
+        }
+      ]
+    },
+    {
+      "oid": "8226ca941523b3af1190be8fb287e0a25a43c6b4",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+        }
+      ]
+    }
+  ],
+  "nativeScope": [
+    {
+      "path": "game/demo-data",
+      "featureObject": "fe4780393e107e63ee14d122ce1d59024b8ae731",
+      "mainObject": "56c45355251911b6b6b6da6dba0e6690dd0a4042",
+      "incomingPaths": []
+    },
+    {
+      "path": "game/demo-modes",
+      "featureObject": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+      "mainObject": null,
+      "incomingPaths": []
+    },
+    {
+      "path": "game/content",
+      "featureObject": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+      "mainObject": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+      "incomingPaths": []
+    },
+    {
+      "path": "game/content-design/assets",
+      "featureObject": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183",
+      "mainObject": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183",
+      "incomingPaths": []
+    },
+    {
+      "path": "game/core",
+      "featureObject": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+      "mainObject": "bf56faec341bd33c7633cd707decc5c86783763b",
+      "incomingPaths": [
+        "game/core/capture.mjs"
+      ]
+    },
+    {
+      "path": "game/replay.mjs",
+      "featureObject": "fa473c568bec333395636541cc82fe3dd8b597f6",
+      "mainObject": "fa473c568bec333395636541cc82fe3dd8b597f6",
+      "incomingPaths": []
+    },
+    {
+      "path": "game/snake/classic-core.mjs",
+      "featureObject": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5",
+      "mainObject": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5",
+      "incomingPaths": []
+    },
+    {
+      "path": "game/snake/classic-match.mjs",
+      "featureObject": "cd47d4660228b5e8968d6aef3d3d7700b48d432c",
+      "mainObject": "cd47d4660228b5e8968d6aef3d3d7700b48d432c",
+      "incomingPaths": []
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "featureObject": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6",
+      "mainObject": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6",
+      "incomingPaths": []
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "featureObject": "c87f15cdc632a1bfd7592e8075974558d776fb88",
+      "mainObject": "c87f15cdc632a1bfd7592e8075974558d776fb88",
+      "incomingPaths": []
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-data",
+      "featureObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86",
+      "mainObject": null,
+      "incomingPaths": []
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "featureObject": "e9ee1383ebe909ce7993da499f07b33d486c9605",
+      "mainObject": "e9ee1383ebe909ce7993da499f07b33d486c9605",
+      "incomingPaths": []
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "featureObject": "fa254c168037003881a41f881f270465a09d8f05",
+      "mainObject": "fa254c168037003881a41f881f270465a09d8f05",
+      "incomingPaths": []
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/shared-demos-generated",
+      "featureObject": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179",
+      "mainObject": null,
+      "incomingPaths": []
+    }
+  ],
+  "lazyFetchEnabled": false,
+  "complete": true,
+  "hydrated": [
+    {
+      "oid": "30a907c63d1724d341e34347205db363eb8eb6f1",
+      "bytes": 9094,
+      "sha256": "18e387079bf3409030f9ac5d7372614031c8bfaea2c286bd54419b24d707ca3b",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "game/journey/reaction-voice-cache.mjs"
+        }
+      ],
+      "method": "Exact GitHub Git blob API with size and Git SHA1 verification before additive local object insertion"
+    },
+    {
+      "oid": "eec40ee04a8531956156ec7bf1b88f123e13930f",
+      "bytes": 11927,
+      "sha256": "4dc00608643b4655692d8193fea8efb8d82d4f3b44ef2dfc146ea6ac3d0e8672",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "game/test/body-backing-recovery.test.mjs"
+        }
+      ],
+      "method": "Exact GitHub Git blob API with size and Git SHA1 verification before additive local object insertion"
+    },
+    {
+      "oid": "bb8585adb5812a3a73723fc1e938f2e884c2880c",
+      "bytes": 8113,
+      "sha256": "70908dc18b24cfbe20b177c015ff85905660d843e0d48615ce81f199fbbe1a1f",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "game/test/reaction-recording-cancellation.test.mjs"
+        }
+      ],
+      "method": "Exact GitHub Git blob API with size and Git SHA1 verification before additive local object insertion"
+    },
+    {
+      "oid": "e7446c574737dc6d8b89842fb643feb8043742e1",
+      "bytes": 4495,
+      "sha256": "c6f57988b14b62b8ce5036542007a6a9c0e7b5b22d402f9f6657a4303c832554",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "game/ui/body-backing.mjs"
+        }
+      ],
+      "method": "Exact GitHub Git blob API with size and Git SHA1 verification before additive local object insertion"
+    },
+    {
+      "oid": "8226ca941523b3af1190be8fb287e0a25a43c6b4",
+      "bytes": 920513,
+      "sha256": "5e0980ee2e68a4cd45c45b380afbbab514937bb29385ac4ba4ec8dcd9234a262",
+      "uses": [
+        {
+          "revision": "16ebd7b51984387c39622380a8e51a60e745152e",
+          "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+        }
+      ],
+      "method": "Exact GitHub Git blob API with size and Git SHA1 verification before additive local object insertion"
+    }
+  ],
+  "finished": "2026-10-19T04:33:19.696499+00:00"
+}

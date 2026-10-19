@@ -1,0 +1,267 @@
+{
+  "format": "SharedDemoScopedSemanticReviewV1",
+  "reviewedAt": "2026-10-19T04:42:27.441Z",
+  "result": "pass-with-follow-up-qualification",
+  "scope": "Independent read-only review of the exact 27-path incoming delta and generated resolutions after scoped integration. No source/test edits, test runs, browser runs, fetch or HEAD changes.",
+  "head": "c647da2b9de6fb158004f06459afda926ba24028",
+  "oldHead": "b691aee66f875ec83477e161841362665b618f22",
+  "oldBase": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+  "main": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "exactIncomingDeltaPaths": [
+    "docs/overflight-reroll-count-language.md",
+    "docs/performance/solo-performance-followup-plan.md",
+    "game/core/capture.mjs",
+    "game/couch/couch.mjs",
+    "game/i18n/catalogs.mjs",
+    "game/journey/reaction-voice-cache.mjs",
+    "game/locales/en/interface.json",
+    "game/locales/uk/interface.json",
+    "game/overflight/app.mjs",
+    "game/overflight/raid-upgrade-card.mjs",
+    "game/soundtrack-source.mjs",
+    "game/test/body-backing-recovery.test.mjs",
+    "game/test/classic-snake-ui.test.mjs",
+    "game/test/core-capture.test.mjs",
+    "game/test/couch-enemy-stats-locale.test.mjs",
+    "game/test/global-settings-tools.test.mjs",
+    "game/test/overflight-raid-refit-shield.test.mjs",
+    "game/test/overflight-reroll-disclosure.test.mjs",
+    "game/test/reaction-recording-cancellation.test.mjs",
+    "game/test/soundtrack-player.test.mjs",
+    "game/test/soundtrack-source.test.mjs",
+    "game/ui/body-backing.mjs",
+    "game/ui/global-settings-tools.mjs",
+    "game/ui/settings-panels.mjs",
+    "game/ui/soundtrack-player.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+  ],
+  "nativeObjects": [
+    {
+      "path": "game/demo-data",
+      "before": "fe4780393e107e63ee14d122ce1d59024b8ae731",
+      "after": "fe4780393e107e63ee14d122ce1d59024b8ae731",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes",
+      "before": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+      "after": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+      "unchanged": true
+    },
+    {
+      "path": "game/content",
+      "before": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+      "after": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+      "unchanged": true
+    },
+    {
+      "path": "game/content-design/assets",
+      "before": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183",
+      "after": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183",
+      "unchanged": true
+    },
+    {
+      "path": "game/replay.mjs",
+      "before": "fa473c568bec333395636541cc82fe3dd8b597f6",
+      "after": "fa473c568bec333395636541cc82fe3dd8b597f6",
+      "unchanged": true
+    },
+    {
+      "path": "game/snake/classic-core.mjs",
+      "before": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5",
+      "after": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5",
+      "unchanged": true
+    },
+    {
+      "path": "game/snake/classic-match.mjs",
+      "before": "cd47d4660228b5e8968d6aef3d3d7700b48d432c",
+      "after": "cd47d4660228b5e8968d6aef3d3d7700b48d432c",
+      "unchanged": true
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "before": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6",
+      "after": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6",
+      "unchanged": true
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "before": "c87f15cdc632a1bfd7592e8075974558d776fb88",
+      "after": "c87f15cdc632a1bfd7592e8075974558d776fb88",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-data",
+      "before": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86",
+      "after": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "before": "e9ee1383ebe909ce7993da499f07b33d486c9605",
+      "after": "e9ee1383ebe909ce7993da499f07b33d486c9605",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "before": "fa254c168037003881a41f881f270465a09d8f05",
+      "after": "fa254c168037003881a41f881f270465a09d8f05",
+      "unchanged": true
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/shared-demos-generated",
+      "before": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179",
+      "after": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179",
+      "unchanged": true
+    }
+  ],
+  "changedCore": {
+    "path": "game/core",
+    "before": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+    "after": "bf56faec341bd33c7633cd707decc5c86783763b",
+    "incomingMain": "bf56faec341bd33c7633cd707decc5c86783763b",
+    "changedPaths": [
+      "game/core/capture.mjs"
+    ]
+  },
+  "generatedFullscreen": {
+    "sources": [
+      "game/ui/mode-choice-view.mjs",
+      "game/ui/settings-panels.mjs",
+      "game/ui/mode-settings-view.mjs",
+      "game/ui/mode-play-shell.mjs"
+    ],
+    "canonicalSHA256": "ebf75d702677d63fd0c2bea53fae061e931725fb5e6646541f8607c9cdb0461a",
+    "markerMatches": true,
+    "implementationDeltaMatchesIncomingExceptGeneratedMarker": true
+  },
+  "unchangedScopedObjects": [
+    {
+      "path": "game/replay.mjs",
+      "gitObject": "fa473c568bec333395636541cc82fe3dd8b597f6",
+      "unchanged": true
+    },
+    {
+      "path": "game/core/versions.mjs",
+      "gitObject": "43cc2ec42a06d076609cb36d154d16fe546b8b54",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-catalog.mjs",
+      "gitObject": "f792e3774940a103e79c058d958e4ccdbf8a5460",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-sources.mjs",
+      "gitObject": "ee94d0d8a7ae06c4da77cb8e0388a23c88384d52",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "gitObject": "210d037ecee2fae3a445239a195b8a35a2280c37",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-controller.mjs",
+      "gitObject": "e52d85b79c3719c851c0aef497270af26042ebd8",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-entry.mjs",
+      "gitObject": "1edd6b5dd5366f1621d759e59e9cf68b0b3c5345",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-input.mjs",
+      "gitObject": "44691d4797e5d297b15dee45acc5ba7c7ed54b7d",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/qualify-solo-browser.mjs",
+      "gitObject": "819318aefa94e8867667c104653deb9815319adc",
+      "unchanged": true
+    }
+  ],
+  "runtime": {
+    "sourceFingerprint": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+    "files": 9997,
+    "bytes": 404446327,
+    "integrationBase": "16ebd7b51984387c39622380a8e51a60e745152e",
+    "sourceDeclaration": "source-freeze-latest.json"
+  },
+  "reviewedAreas": [
+    {
+      "paths": [
+        "game/core/capture.mjs",
+        "game/core/index.mjs",
+        "game/core/classic-step.mjs"
+      ],
+      "conclusion": "Allocation-only semantics are consistent with existing callers: cell Set insertion preserves order, empty traces skip only empty loops, and selfContact uses an owned shallow array without mutating its segment objects. Both callers complete contact selection synchronously before appendTrail mutates accepted tail endpoints. Contact arithmetic, horizons, failure ordering and accepted-trail mutation are unchanged.",
+      "limit": "This is semantic inspection and passing focused boundary tests, not proof that every existing recording still reaches its terminal checkpoint on changed simulation bytes."
+    },
+    {
+      "paths": [
+        "game/ui/body-backing.mjs"
+      ],
+      "conclusion": "Render-only cached backing recovery retains one surface per weak image/color cache entry. Lost surfaces are withheld; restoration marks them dirty and regenerates pixels. Failed readback removes the cache entry. Event closures retain the surface, not the source-image key; no document/global listener or simulation scheduler is introduced. Existing sprite placement and disc geometry remain unchanged."
+    },
+    {
+      "paths": [
+        "game/soundtrack-source.mjs",
+        "game/ui/soundtrack-player.mjs"
+      ],
+      "conclusion": "Downloaded playback can reuse the current acquisition's inspector result only for the exact returned immutable Blob. The pinned asset comparison remains in source and playback, mismatched/custom-returned Blobs take ordinary validation, and generation/disposal/abort guards prevent retained callbacks installing stale work. Inspector abort listeners are removed in finally; no new persistence or music-intent writer is added."
+    },
+    {
+      "paths": [
+        "game/journey/reaction-voice-cache.mjs",
+        "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+      ],
+      "conclusion": "Cancellation is checked after arrayBuffer resolves and before container parsing. The generated optional runtime reflects the same boundary. Ordinary media ownership remains unchanged."
+    },
+    {
+      "paths": [
+        "game/ui/settings-panels.mjs",
+        "game/ui/global-settings-tools.mjs",
+        "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+      ],
+      "conclusion": "Nested-tool return reveals only the already selected Settings panel, checks owner/visibility/focus eligibility, and otherwise returns to category focus. It does not step gameplay or change demo takeover ownership. The merged fullscreen implementation adds exactly the incoming focus behavior; its only distinct changed marker is independently reproduced from the four canonical sources."
+    },
+    {
+      "paths": [
+        "game/i18n/catalogs.mjs"
+      ],
+      "conclusion": "The two conflict resolutions are generated-output changes. The official merged-locale i18n check passes without tracked changes, so the final catalog agrees with merged canonical locale sources; no generated conflict side is accepted as manually authoritative."
+    }
+  ],
+  "actionableFindings": [],
+  "compatibility": {
+    "unchanged": "Recorded payloads, authored content, replay parser/checkpoint algorithm, version constants, catalog/input trace identity, demo adapters and shared host/controller ownership are exact unchanged Git objects.",
+    "changed": "The Solo core tree changes only capture.mjs and exactly matches incoming main. Preserve the previous native corpus receipts as historical evidence; do not claim all14 original native scopes or all simulation bytes are unchanged.",
+    "rationale": "The reviewed allocation change does not require a replay version bump if existing terminal checkpoint results remain identical. A ruleset label alone cannot establish that equivalence; current-source playback must verify it.",
+    "required": "Reverify the exact current Solo inventory in Chromium, Firefox and WebKit with unchanged recordings and existing narrowly scoped reviewed-source compatibility. Require terminal outcome and meaningful capture progress for every clip, strict final checkpoint matching for qualified clips, and preserve failures without generating replacement outcomes.",
+    "retainedScope": "Snake Solo uses its separate unchanged classic-match/core implementation; SIM and Survival engines/content are unchanged by this 27-path delta. The remaining650 native entries do not need blanket full-corpus replay solely because of this Solo allocation edit. This does not replace current emitted UI/resource/browser checks."
+  },
+  "validationAlreadyAvailable": [
+    {
+      "receipt": "main-integration-16ebd7b5-generated.json",
+      "result": "All three official i18n, FPV shell and demo shell checks passed with unchanged HEAD and no tracked source output changes."
+    },
+    {
+      "receipt": "main-integration-16eb-c647da2b9.json",
+      "result": "305/305 assertions across the ten changed incoming test files passed on the exact candidate and runtime, with no skips/failures and stable source/build inputs. Reviewed receipt and capture boundary tests; this agent did not rerun them."
+    }
+  ],
+  "nextVerification": [
+    "Fresh build/package validation on the declared new runtime, using existing limits.",
+    "Exact full-Solo inventory replay in three engines, as above; retain all payload and compatibility identities.",
+    "Planned emitted browser checks cover current Canvas/WebGL transitions, recovery/listener cleanup, mixed practice and SIM/menu focus. No additional arbitrary broad regression suite is required by this review.",
+    "Complete the still-required uninterrupted two-hour rotation and separate external human/device checks."
+  ],
+  "limitations": [
+    "No dynamic browser or physical-device claim is made by this semantic review.",
+    "Generated conflict resolution was verified by final object/delta checks and the existing official-generator receipts, not by repeating the rebase.",
+    "Any future changes require scope-based reassessment; this review is pinned to c647da2b9de6fb158004f06459afda926ba24028 on fixed16ebd7b51984387c39622380a8e51a60e745152e."
+  ]
+}

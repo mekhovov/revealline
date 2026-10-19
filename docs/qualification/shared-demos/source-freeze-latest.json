@@ -1,8 +1,8 @@
 {
-  "created": "2026-10-19T03:52:18.708Z",
-  "integrationBase": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+  "created": "2026-10-19T04:39:54.115494Z",
+  "integrationBase": "16ebd7b51984387c39622380a8e51a60e745152e",
   "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
-  "sourceFingerprint": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+  "sourceFingerprint": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
   "files": 9997,
-  "bytes": 404434188
+  "bytes": 404446327
 }
