@@ -1,39 +1,10 @@
 name: Temporary Solo final timing-sentry-v2 diagnostics
 
+# Retired after the single admitted PR #1544 release edge was merged.
+# Keep the diagnostic definition and exact execution guard for historical review.
+# No automatic event starts this workflow; no repository workflow calls it.
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml'
-      - 'docs/performance/solo-final-timing-sentry-v2-plan.json'
-      - 'scripts/calibrate-solo-performance.mjs'
-      - 'scripts/external-distribution.mjs'
-      - 'scripts/game-cli.mjs'
-      - 'scripts/optional-artwork.mjs'
-      - 'scripts/optional-distribution.mjs'
-      - 'scripts/qualify-solo-runtime.mjs'
-      - 'scripts/run-solo-remote-correctness.mjs'
-      - 'scripts/serve-production-preview.mjs'
-      - 'scripts/solo-owned-resource-assessment.mjs'
-      - 'scripts/solo-qualification-hitch-journal.mjs'
-      - 'scripts/solo-qualification-replay.mjs'
-      - 'scripts/solo-qualification-snapshot-store.mjs'
-      - 'scripts/solo-remote-baseline.mjs'
-      - 'scripts/solo-remote-sustained.mjs'
-      - 'scripts/soundtrack-distribution.mjs'
-      - 'scripts/test-solo-final-lifecycle-admission.mjs'
-      - 'scripts/test-solo-final-soak-admission.mjs'
-      - 'scripts/test-solo-final-timing-release.mjs'
-      - 'scripts/test-solo-final-timing-v2-release.mjs'
-      - 'scripts/test-solo-owned-resource-assessment.mjs'
-      - 'scripts/test-solo-qualification-hitch-journal.mjs'
-      - 'scripts/test-solo-qualification-snapshot-store.mjs'
-      - 'scripts/test-solo-remote-baseline.mjs'
-      - 'scripts/test-solo-remote-correctness.mjs'
-      - 'scripts/test-solo-remote-sustained.mjs'
-      - 'scripts/test-solo-remote-timing.mjs'
-      - 'scripts/test-solo-source-verifier-smoke.mjs'
-      - 'scripts/test-solo-timing-setup-successor.mjs'
-      - 'scripts/verify-solo-build.mjs'
+  workflow_call:
 
 permissions:
   contents: read

@@ -424,11 +424,28 @@ export async function readOfficialOriginal(hash, { pin = false } = {}) {
 
 export async function localOfficialRecordingIds(catalogue) {
   try {
+    const tracks = [...catalogue.tracks];
+    if (!tracks.length) return [];
     const store = createOfficialDownloads(),
-      ids = [];
-    for (const track of catalogue.tracks)
-      if ((await store.inspect([track.asset])).ready) ids.push(track.id);
-    return ids;
+      assets = tracks.map((track) => track.asset),
+      sizes = new Map();
+    const conflictingSizes = assets.some((asset) => {
+      checkFile(asset);
+      const previous = sizes.get(asset.sha256);
+      sizes.set(asset.sha256, asset.bytes);
+      return previous !== undefined && previous !== asset.bytes;
+    });
+    // inspect deduplicates by hash. Preserve per-track readiness if descriptors
+    // disagree about the same asset's size instead of letting the last one win.
+    if (conflictingSizes) {
+      const ids = [];
+      for (const track of tracks)
+        if ((await store.inspect([track.asset])).ready) ids.push(track.id);
+      return ids;
+    }
+    const report = await store.inspect(assets),
+      unavailable = new Set([...report.missing, ...report.corrupt].map((file) => file.sha256));
+    return tracks.filter((track) => !unavailable.has(track.asset.sha256)).map((track) => track.id);
   } catch {
     return [];
   }
