@@ -203,10 +203,12 @@ async function runningYard(f) {
   await waitFor(() => f.$('coop-overlay').hidden);
 }
 
-test('pointer selection survives native restoration and a fresh Start focuses the new Team board', async (t) => {
+test('pointer Play survives native opener restoration and focuses the accepted Team board', async (t) => {
   const f = await fixture(t);
   await openLibrary(f, 'coop-discovery-open');
   await operation(relayCard(f), () => pointerClick(relayCard(f), 'touch'));
+  assert.equal(f.$('coop-overlay').hidden, true, 'One deliberate card activation starts play.');
+  assert.equal(f.doc.activeElement.id, 'coop-canvas');
   await runningYard(f);
   const closed = f.restorations.find((entry) => entry.dialog === 'journey-chooser');
   assert.ok(closed);
@@ -219,31 +221,147 @@ test('pointer selection survives native restoration and a fresh Start focuses th
   assert.deepEqual(f.visits, []);
 });
 
-test('holding controller Confirm through Team preparation cannot start the accepted briefing', async (t) => {
+test('one controller card Play starts once; held Confirm and release cannot activate another transition', async (t) => {
   const f = await fixture(t);
-  const controls = joinedController(f);
-  controls.seek((element) => element.id === 'coop-discovery-open', 'Missions');
-  await openLibrary(f, 'coop-discovery-open', () => controls.press(0));
-  assert.equal(f.doc.activeElement, arenaCard(f, 'first-connection'));
-  controls.press(15); // The second card is to the right in the modeled four-column grid.
-  assert.equal(f.doc.activeElement, relayCard(f));
-  const selecting = operation(relayCard(f), () => {
-    controls.pad.buttons[0] = { pressed: true, value: 1 };
-    f.tick();
-  });
-  await selecting;
-  await waitFor(() => f.$('coop-stage').textContent === 'RELAY YARD' && !dialog(f).open);
-  f.tick(120);
-  assert.equal(f.$('coop-overlay').hidden, false);
-  assert.match(f.$('coop-resume').textContent, /Start together/);
-  assert.equal(f.doc.activeElement.id, 'coop-resume');
-  assert.equal(f.$('coop-clock').textContent, '0:00');
-  const acceptedPicture = teamImage(f);
-  controls.pad.buttons[0] = { pressed: false, value: 0 };
-  f.tick(2);
-  controls.press(0);
-  assert.equal(f.$('coop-overlay').hidden, true);
-  assert.equal(teamImage(f), acceptedPicture);
+  const actions = [],
+    originalHandlers = [];
+  try {
+    for (const id of [
+      'coop-start',
+      'coop-resume',
+      'coop-retry',
+      'coop-lobby',
+      'coop-next',
+      'coop-discard-confirm',
+    ]) {
+      const button = f.$(id),
+        handler = button.onclick;
+      assert.equal(typeof handler, 'function');
+      const wrapped = (...args) => {
+        actions.push(id);
+        return handler.apply(button, args);
+      };
+      originalHandlers.push({ button, handler, wrapped });
+      button.onclick = wrapped;
+    }
+    const controls = joinedController(f);
+    controls.seek((element) => element.id === 'coop-discovery-open', 'Missions');
+    await openLibrary(f, 'coop-discovery-open', () => controls.press(0));
+    assert.equal(f.doc.activeElement, arenaCard(f, 'first-connection'));
+    controls.press(15); // The second card is to the right in the modeled four-column grid.
+    const play = relayCard(f),
+      missionId = play.dataset.missionId,
+      handler = play.onclick;
+    let cardActivations = 0;
+    const wrapped = (...args) => {
+      cardActivations++;
+      return handler.apply(play, args);
+    };
+    originalHandlers.push({ button: play, handler, wrapped });
+    play.onclick = wrapped;
+    assert.equal(f.doc.activeElement, play);
+    const search = f.$('journey-search');
+    search.focus();
+    search.value = 'Relay Yard';
+    search.emit('input');
+    f.tick(30);
+    assert.equal(dialog(f).open, true);
+    assert.equal(f.$('coop-menu').hidden, false);
+    assert.equal(f.drawImages.length, 0, 'Filtering and focus do not adopt a playing attempt.');
+    assert.equal(cardActivations, 0);
+    assert.deepEqual(actions, []);
+    assert.ok(cards(f).includes(play));
+    play.focus();
+    f.tick(2);
+    assert.equal(
+      cardActivations,
+      0,
+      'Focusing a card is separate from its deliberate Play action.',
+    );
+
+    const selecting = operation(play, () => {
+      controls.pad.buttons[0] = { pressed: true, value: 1 };
+      f.tick();
+    });
+    await selecting;
+    await waitFor(() => f.$('coop-stage').textContent === 'RELAY YARD' && !dialog(f).open);
+    assert.equal(f.$('coop-overlay').hidden, true, 'The owned card activation starts directly.');
+    assert.equal(f.$('coop-menu').hidden, true);
+    assert.equal(f.doc.activeElement.id, 'coop-canvas');
+    const acceptedPicture = teamImage(f),
+      recipe = ['coop-level', 'coop-difficulty', 'coop-experiment'].map((id) => f.$(id).value),
+      controllerCaption = f.$('coop-pads').textContent;
+    assert.equal(acceptedPicture.sha256, yard.picture.sha256);
+    assert.equal(recipe[0], 'relay-yard');
+    f.tick(240);
+    assert.equal(cardActivations, 1);
+    assert.deepEqual(
+      actions,
+      [],
+      'Held Confirm cannot dispatch Start, Resume or replacement actions.',
+    );
+    assert.equal(
+      f.$('coop-overlay').hidden,
+      true,
+      'Held Confirm cannot pause or replace the flight.',
+    );
+    assert.equal(f.$('coop-discard-dialog').open, false);
+    assert.equal(dialog(f).open, false);
+    assert.equal(f.doc.activeElement.id, 'coop-canvas');
+    assert.notEqual(f.$('coop-clock').textContent, '0:00', 'The accepted running clock advances.');
+    assert.equal(teamImage(f), acceptedPicture);
+    assert.equal(play.dataset.missionId, missionId);
+    assert.deepEqual(
+      ['coop-level', 'coop-difficulty', 'coop-experiment'].map((id) => f.$(id).value),
+      recipe,
+    );
+    assert.equal(f.$('coop-pads').textContent, controllerCaption);
+    assert.equal(f.pads[0], controls.pad);
+    assert.equal(f.$('coop-coverage').textContent, '0.0%');
+    assert.equal(
+      f.earnedDrawImages.length,
+      0,
+      'Starting without a completed arena awards no picture.',
+    );
+
+    controls.pad.buttons[0] = { pressed: false, value: 0 };
+    f.tick(2);
+    assert.equal(cardActivations, 1);
+    assert.deepEqual(actions, [], 'Release alone cannot activate another transition.');
+    assert.equal(f.$('coop-overlay').hidden, true);
+    assert.equal(teamImage(f), acceptedPicture);
+    controls.press(0);
+    assert.deepEqual(actions, [], 'A fresh Confirm during flight does not become a menu action.');
+    assert.equal(f.$('coop-overlay').hidden, true);
+
+    controls.press(9);
+    assert.equal(f.$('coop-overlay').hidden, false);
+    assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
+    assert.equal(f.doc.activeElement.id, 'coop-resume');
+    const paused = heldAttempt(f);
+    f.tick(60);
+    assert.deepEqual(
+      heldAttempt(f),
+      paused,
+      'Only the deliberate Pause owns the stationary attempt.',
+    );
+    assert.deepEqual(actions, []);
+    controls.press(0);
+    assert.deepEqual(actions, ['coop-resume'], 'A fresh Confirm activates the real Resume once.');
+    assert.equal(f.$('coop-overlay').hidden, true);
+    assert.equal(f.doc.activeElement.id, 'coop-canvas');
+    assert.equal(teamImage(f), acceptedPicture);
+    assert.deepEqual(
+      ['coop-level', 'coop-difficulty', 'coop-experiment'].map((id) => f.$(id).value),
+      recipe,
+    );
+    assert.equal(cardActivations, 1);
+    assert.equal(f.pads[0], controls.pad);
+    assert.deepEqual(f.visits, []);
+  } finally {
+    for (const { button, handler, wrapped } of originalHandlers.reverse())
+      if (button.onclick === wrapped) button.onclick = handler;
+  }
 });
 
 test('pointer Stay returns through outer Cancel; a separate Replace starts once with native focus restoration enabled', async (t) => {
