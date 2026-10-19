@@ -228,6 +228,7 @@ import {
 } from './ui/controller-boost-settings.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
+import { readingInputPrompt } from './ui/reading-input-prompt.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';
@@ -3450,19 +3451,11 @@ try {
     });
   }
   function readingPrompt({ scrollable }) {
-    const mode = document.body.dataset.inputMode;
-    const scroll = !scrollable
-      ? t('interface:allTextIsVisible')
-      : mode === 'controller' || mode === 'keyboard'
-        ? t('interface:upDownScroll')
-        : t('interface:scrollToRead');
-    const exit =
-      mode === 'controller'
-        ? `${controllerLabels.menu.confirm} or ${controllerLabels.menu.back}`
-        : mode === 'keyboard'
-          ? t('interface:enterSpaceOrEscape')
-          : t('interface:doneReading');
-    return `${scroll} · ${exit} returns`;
+    return readingInputPrompt({
+      modality: document.body.dataset.inputMode,
+      scrollable,
+      controls: controllerLabels.menu,
+    });
   }
   function setInputModality(mode) {
     if (document.body.dataset.inputMode === mode) return;
