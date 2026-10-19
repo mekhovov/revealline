@@ -1490,7 +1490,7 @@ try {
     record: !practiceSession,
   });
   huntResultStatus = attachHuntStatus({
-    container: $('journey-reactions').parentElement,
+    container: $('overlay-reading'),
     mode: 'solo',
     records: huntRecords,
     record: false,
