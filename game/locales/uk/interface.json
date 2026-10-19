@@ -6039,5 +6039,9 @@
   "captureMedal.shortfall": "Покращіть цей час на {{seconds}} с (округлено вгору до 0,01 с).",
   "captureMedal.cleanMet": "У цій спробі життів не втрачено.",
   "captureMedal.cleanMissing": "Життя було втрачено; завершіть повторну спробу без втрати життів.",
+  "overflight.fieldRerolls_one": "{{count}} перевибір",
+  "overflight.fieldRerolls_few": "{{count}} перевибори",
+  "overflight.fieldRerolls_many": "{{count}} перевиборів",
+  "overflight.fieldRerolls_other": "{{count}} перевибору",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

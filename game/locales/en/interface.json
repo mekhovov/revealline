@@ -5929,5 +5929,7 @@
   "captureMedal.shortfall": "Improve this time by {{seconds}} s (rounded up to 0.01 s).",
   "captureMedal.cleanMet": "No lives lost in this attempt.",
   "captureMedal.cleanMissing": "A life was lost; complete a retry without losing a life.",
+  "overflight.fieldRerolls_one": "{{count}} reroll",
+  "overflight.fieldRerolls_other": "{{count}} rerolls",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }
