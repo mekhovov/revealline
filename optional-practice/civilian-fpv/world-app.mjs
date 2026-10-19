@@ -1296,6 +1296,7 @@ export function mountWorldApp({
     }
   };
   const txt = (en, uk) => (locale === 'uk' ? uk : en);
+  const navigationContext = () => txt('FPV SIM · Worlds', 'FPV SIM · Світи');
   const localized = (value) =>
     typeof value === 'string' ? value : (value?.[locale] ?? value?.en ?? '');
   // Creator labels may use the current theme name; exact authored/recorded
@@ -4184,6 +4185,7 @@ export function mountWorldApp({
         ),
         muted: !audio.enabled(),
         transitionActive: !['idle', 'cancelled'].includes(continuousPlay.snapshot().phase),
+        navigationContext,
         missionName: titleCourse?.locales?.[locale]?.title ?? '',
         summary: titleCourse?.locales?.[locale]?.brief ?? '',
         phase: 'ready',
@@ -5213,6 +5215,7 @@ export function mountWorldApp({
             ? 'playing'
             : state.status,
       pauseOpensMenu: Boolean(current?.regional),
+      navigationContext,
       missionName: $('flight-title').textContent,
       summary: $('flight-menu-brief').textContent,
       canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status) &&
@@ -8476,6 +8479,7 @@ export function mountWorldApp({
     document: doc,
     library: missionLibrary,
     supportedModes: ['solo'],
+    browsingContext: ({ label }) => `${navigationContext()} · ${label}`,
     description: () =>
       txt(
         'Every world and school lesson in one list. Choose a route; your flight settings and lesson coach stay with it.',
@@ -8633,7 +8637,7 @@ export function mountWorldApp({
     wordmarkURL: shellWordmarkURL,
     // The arcade return can be outside a standalone package's offline scope.
     artworkURL: new URL('../../menu-scenes/fpv.webp', shellWordmarkURL).href,
-    modeName: () => (locale === 'uk' ? 'FPV SIM · Світи' : 'FPV SIM · Worlds'),
+    modeName: navigationContext,
     locale,
     services: {
       settingsPanelBack: simSettingsPanelBack,

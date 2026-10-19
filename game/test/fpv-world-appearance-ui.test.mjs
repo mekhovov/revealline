@@ -671,6 +671,52 @@ test('World pre-arm appearance refresh keeps focus on the control the player is 
   );
 });
 
+test('World Home context stays localized with its current flight while browsing and returning', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const context = h.$('worlds-shell-navigation-context');
+  const home = h.$('worlds-shell-home-dialog');
+  assert.equal(context.textContent, 'FPV SIM · Worlds');
+  assert.equal(context.hidden, false);
+  assert.ok(home.querySelector('nav').getAttribute('aria-describedby').includes(context.id));
+  const mission = home.querySelector('.mode-play-mission').textContent;
+  const browse = () => {
+    h.$('worlds-shell-action-missions').focus();
+    h.$('worlds-shell-action-missions').click();
+    assert.equal(h.$('journey-chooser').open, true);
+    assert.ok(
+      h.$('journey-chooser-status').textContent.includes(`${context.textContent} · `),
+      'The chooser keeps the exact localized host context while browsing.',
+    );
+    h.doc.querySelectorAll('.journey-card')[1].focus();
+    h.tick(2);
+    h.$('journey-back').click();
+    assert.equal(home.open, true);
+    assert.ok(
+      h.doc.activeElement === h.$('worlds-shell-action-missions'),
+      `Back must return focus to the mission opener, received ${h.doc.activeElement?.id}`,
+    );
+  };
+  browse();
+  assert.equal(h.app.snapshot().state, undefined, 'focus-only browsing cannot allocate a flight');
+  assert.equal(home.querySelector('.mode-play-mission').textContent, mission);
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-arm').click();
+  h.tick(3);
+  h.$('worlds-shell-action-menu').click();
+  const paused = h.app.snapshot().state;
+  assert.equal(paused.status, 'paused');
+  assert.ok(paused.ticks > 0);
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.equal(context.textContent, 'FPV SIM · Світи');
+  const translatedMission = home.querySelector('.mode-play-mission').textContent;
+  browse();
+  assert.deepEqual(h.app.snapshot().state, paused);
+  assert.equal(home.querySelector('.mode-play-mission').textContent, translatedMission);
+  assert.equal(context.textContent, 'FPV SIM · Світи');
+});
+
 test('World title retains connected catalogue nodes and transfers the common bar into native flight', async (t) => {
   const h = fixture(t);
   await h.app.ready;
