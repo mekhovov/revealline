@@ -53,6 +53,16 @@ export function projectEditionBrandIdentity(bytes, logoPath) {
   );
 }
 
+// A standalone edition can select only its own validated campaign closure.
+// Keep every recording variant and diagnostic for any retained clip.
+export function projectEditionDemoCatalog(source, campaignIds) {
+  if (!Array.isArray(campaignIds) || campaignIds.some((id) => typeof id !== 'string'))
+    throw new Error('Edition demo projection needs selected campaign IDs.');
+  const catalog = validateDemoCatalog(source),
+    selected = new Set(campaignIds);
+  return { ...catalog, clips: catalog.clips.filter((clip) => selected.has(clip.campaignId)) };
+}
+
 /** Resolve only the reviewed catalogue's bounded local recording paths. Keep
  * this build inventory derived from the same data the runtime will select. */
 export function editionDemoResources(source) {

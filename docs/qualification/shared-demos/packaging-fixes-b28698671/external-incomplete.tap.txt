@@ -1,0 +1,221 @@
+TAP version 13
+# Subtest: selected Company demo metadata uses execution campaign identity and preserves retained keys
+ok 1 - selected Company demo metadata uses execution campaign identity and preserves retained keys
+  ---
+  duration_ms: 162.701542
+  type: 'test'
+  ...
+# Subtest: Company projection accepts an empty catalog but still rejects malformed excluded clips
+ok 2 - Company projection accepts an empty catalog but still rejects malformed excluded clips
+  ---
+  duration_ms: 3.352625
+  type: 'test'
+  ...
+# Subtest: compiler derives selected demo bodies from its supplied catalog and keeps Snake resources
+ok 3 - compiler derives selected demo bodies from its supplied catalog and keeps Snake resources
+  ---
+  duration_ms: 54.48325
+  type: 'test'
+  ...
+# Subtest: public runtime verifies original asset bytes and excludes private or authoring history
+ok 4 - public runtime verifies original asset bytes and excludes private or authoring history
+  ---
+  duration_ms: 0.949333
+  type: 'test'
+  ...
+# Subtest: source archive gate includes unselected assets and permits public repository metadata
+ok 5 - source archive gate includes unselected assets and permits public repository metadata
+  ---
+  duration_ms: 0.674334
+  type: 'test'
+  ...
+# Subtest: public development template requires the exact reviewed bytes
+ok 6 - public development template requires the exact reviewed bytes
+  ---
+  duration_ms: 2.958292
+  type: 'test'
+  ...
+# Subtest: edition envelope binds exact source and original descriptors without changing legacy artifacts
+ok 7 - edition envelope binds exact source and original descriptors without changing legacy artifacts
+  ---
+  duration_ms: 2.304625
+  type: 'test'
+  ...
+# Subtest: Company Snake entry projections survive original-byte archive admission
+ok 8 - Company Snake entry projections survive original-byte archive admission
+  ---
+  duration_ms: 1.121375
+  type: 'test'
+  ...
+# Subtest: missing, duplicate, over-budget and mismatched source bindings reject admission
+ok 9 - missing, duplicate, over-budget and mismatched source bindings reject admission
+  ---
+  duration_ms: 1.384709
+  type: 'test'
+  ...
+# Subtest: Company admission independently rejects runtime overflow before inspecting archive members
+ok 10 - Company admission independently rejects runtime overflow before inspecting archive members
+  ---
+  duration_ms: 2.236125
+  type: 'test'
+  ...
+# Subtest: original ZIP inspection rejects injected undeclared members even with a valid outer hash
+ok 11 - original ZIP inspection rejects injected undeclared members even with a valid outer hash
+  ---
+  duration_ms: 0.2995
+  type: 'test'
+  ...
+# Subtest: source archive cannot self-attest private inputs eligible
+ok 12 - source archive cannot self-attest private inputs eligible
+  ---
+  duration_ms: 0.710083
+  type: 'test'
+  ...
+# Subtest: undeclared company font originals cannot enter a public source archive
+ok 13 - undeclared company font originals cannot enter a public source archive
+  ---
+  duration_ms: 0.232541
+  type: 'test'
+  ...
+# Subtest: whole-source eligibility permits existing Unicode and native scale filenames without relaxing runtime paths
+ok 14 - whole-source eligibility permits existing Unicode and native scale filenames without relaxing runtime paths
+  ---
+  duration_ms: 0.35025
+  type: 'test'
+  ...
+# Subtest: archive admission rejects a missing transitive import even when member hashes and counts match
+ok 15 - archive admission rejects a missing transitive import even when member hashes and counts match
+  ---
+  duration_ms: 166.232083
+  type: 'test'
+  ...
+# Subtest: SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+ok 16 - SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+  ---
+  duration_ms: 1180.320459
+  type: 'test'
+  ...
+# Subtest: optional candidate is byte-reproducible and inventories only its selected public dependency closure
+ok 17 - optional candidate is byte-reproducible and inventories only its selected public dependency closure
+  ---
+  duration_ms: 272.995834
+  type: 'test'
+  ...
+# Subtest: tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+ok 18 - tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+  ---
+  duration_ms: 356.704708
+  type: 'test'
+  ...
+# Subtest: source and generated-worker provenance are mandatory and bounded
+ok 19 - source and generated-worker provenance are mandatory and bounded
+  ---
+  duration_ms: 434.394125
+  type: 'test'
+  ...
+# Subtest: pinned generated launcher code still must match its committed template and isolated closure
+ok 20 - pinned generated launcher code still must match its committed template and isolated closure
+  ---
+  duration_ms: 413.070875
+  type: 'test'
+  ...
+# Subtest: pending human/device gates never become promotion approval and reviewed evidence pins are exact
+ok 21 - pending human/device gates never become promotion approval and reviewed evidence pins are exact
+  ---
+  duration_ms: 417.17875
+  type: 'test'
+  ...
+# Subtest: civilian-flight retains one complete launcher navigation module with its original input pin
+ok 22 - civilian-flight retains one complete launcher navigation module with its original input pin
+  ---
+  duration_ms: 269.648833
+  type: 'test'
+  ...
+# Subtest: civilian-fpv retains one complete launcher navigation module with its original input pin
+ok 23 - civilian-fpv retains one complete launcher navigation module with its original input pin
+  ---
+  duration_ms: 1230.979292
+  type: 'test'
+  ...
+# Subtest: fpv-worlds retains one complete launcher navigation module with its original input pin
+ok 24 - fpv-worlds retains one complete launcher navigation module with its original input pin
+  ---
+  duration_ms: 1734.293667
+  type: 'test'
+  ...
+# Subtest: launcher alias admission rejects forged canonical input pins and unknown projection inputs
+ok 25 - launcher alias admission rejects forged canonical input pins and unknown projection inputs
+  ---
+  duration_ms: 441.863875
+  type: 'test'
+  ...
+# Subtest: explicit launcher inputs retain the optional-package no-network admission rule
+ok 26 - explicit launcher inputs retain the optional-package no-network admission rule
+  ---
+  duration_ms: 18526.2575
+  type: 'test'
+  ...
+# Subtest: candidate CI defaults cover every currently public company audience edition
+ok 27 - candidate CI defaults cover every currently public company audience edition
+  ---
+  duration_ms: 2.64825
+  type: 'test'
+  ...
+# Subtest: candidate CI keeps separate bounded budgets for edition and optional-practice qualification
+ok 28 - candidate CI keeps separate bounded budgets for edition and optional-practice qualification
+  ---
+  duration_ms: 0.486083
+  type: 'test'
+  ...
+# Subtest: capacity CI artifact whitelists small metadata after qualification checks without replacing full candidates
+ok 29 - capacity CI artifact whitelists small metadata after qualification checks without replacing full candidates
+  ---
+  duration_ms: 0.422042
+  type: 'test'
+  ...
+# Subtest: complete candidate files reproduce byte for byte regardless of source Map insertion order
+ok 30 - complete candidate files reproduce byte for byte regardless of source Map insertion order
+  ---
+  duration_ms: 3.435083
+  type: 'test'
+  ...
+# Subtest: ZIP reader independently verifies structures, original CRCs, hashes, names and closed inventory
+ok 31 - ZIP reader independently verifies structures, original CRCs, hashes, names and closed inventory
+  ---
+  duration_ms: 5.275958
+  type: 'test'
+  ...
+# Subtest: candidate construction fails closed for private source sentinels and unapproved media
+ok 32 - candidate construction fails closed for private source sentinels and unapproved media
+  ---
+  duration_ms: 0.38175
+  type: 'test'
+  ...
+# Subtest: source archive ships exact selected projections with original input hashes, never aggregate content
+ok 33 - source archive ships exact selected projections with original input hashes, never aggregate content
+  ---
+  duration_ms: 1.258875
+  type: 'test'
+  ...
+# Subtest: candidate sources bind the selected demo catalog and exclude unselected recording bodies
+ok 34 - candidate sources bind the selected demo catalog and exclude unselected recording bodies
+  ---
+  duration_ms: 3.165292
+  type: 'test'
+  ...
+# Subtest: sparse publication checkouts include the full admitted directory import closure
+ok 35 - sparse publication checkouts include the full admitted directory import closure
+  ---
+  duration_ms: 8488.930083
+  type: 'test'
+  ...
+# Subtest: maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+not ok 36 - maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+  ---
+  duration_ms: 532640.853292
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/test-bundle-optional-practice.mjs:58:1'
+  failureType: 'hookFailed'
+  error: "EBUSY: resource busy or locked, unlink '/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-focused-f51d2597a-20261019T101408/practice-fourth-app-YcXzdV/.git/objects/.smbdeleteAAA23d2e20'"
+  code: 'EBUSY'
+  ...

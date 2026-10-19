@@ -1,0 +1,161 @@
+{
+  "format": "SharedDemoPackagingFixQualificationV1",
+  "status": "FOCUSED_PASS_CANDIDATE_BATCH_PENDING",
+  "recordedAt": "2026-10-19T08:31:10.747129+00:00",
+  "sourceHead": "b28698671b997060f73509ff622e6b7bc57d5e89",
+  "testHead": "b28698671b997060f73509ff622e6b7bc57d5e89",
+  "nodeVersion": "v22.22.2",
+  "platform": "darwin",
+  "changes": [
+    "Company catalogs and recording resources are projected to selected execution campaign IDs, retaining compatible current/retained variants and Snake resources.",
+    "Optional navigation ships once at its existing launcher module path; canonical input hashes, source module closure, no-network validation, licensing and package budgets remain enforced.",
+    "Discovery builds retain canonical alias inputs for subsequent frozen builds without restoring duplicate runtime files."
+  ],
+  "verification": {
+    "firstFinalProductionRun": {
+      "files": 6,
+      "tests": 45,
+      "pass": 44,
+      "fail": 1,
+      "soleFailure": "Existing exact runtime inventory assertion expected96; intended duplicate removal yields95."
+    },
+    "correctedFileRun": {
+      "files": [
+        "scripts/test-optional-practice.mjs"
+      ],
+      "tests": 7,
+      "pass": 7,
+      "fail": 0
+    },
+    "combinedCoverage": "All38 checks in the other five unchanged test files passed; all7 checks in the corrected file passed. This is composed source-bound evidence, not a claim of one 45/45 run.",
+    "unchangedOwnedFilesBetweenRuns": true,
+    "sourcePinsStable": true,
+    "cleanupVerified": true,
+    "format": "All13 modified files passed Prettier.",
+    "lint": "All13 modified files passed ESLint.",
+    "diffCheck": "PASS"
+  },
+  "priorEvidence": {
+    "externalRun": "INCOMPLETE; preserves35 passed checks and later fourth-app cleanup EBUSY on the external SMB fixture. No pass inferred.",
+    "directContractProbe": {
+      "sourceBinding": "b09e5779e466cd7f20be8dbb9a36c6acae24172e9269fe849b7ee6b4c83b0f4d",
+      "canonicalNavigationInput": false,
+      "inputFiles": 87,
+      "inputBytes": 4984403,
+      "interpretation": "Observed non-frozen input contract regression; distinct from the external cleanup failure."
+    },
+    "externalCleanupVerified": true,
+    "externalRemainingCount": 0
+  },
+  "finalOwnedFileSHA256": {
+    "publishing/edition-admission.mjs": "cffaa70c3613e9f0408df59132891c908c52447106e29ccc39c2d87754e3854c",
+    "publishing/edition-candidate.mjs": "2c1823bcb047f171ba16fcf92aa6613731014652b428b62e62e055d510c48d51",
+    "publishing/optional-package-admission.mjs": "552e4aaaa99c7479ffbb29d5663e1f77d6879ae73331eda3b141adaa5da367df",
+    "publishing/optional-package-candidate.mjs": "1c0defba04673d4b43ff31141d5d34257f9be1b088ccdec2ffa67a4fd1dddaf1",
+    "publishing/optional-package-policy.mjs": "d617d8105a6cbf25c691c0ffd1cc0a5f6dcfc0ef40982c83fdd22f26dd3267b3",
+    "scripts/build-optional-practice.mjs": "1b83312718bbc14dbed7c4be0a9e13ae578204a06773ed89bd32d4ec01670789",
+    "scripts/compile-edition.mjs": "5a1ab37ba578fa0d3b91a704b8920ef326395bbfaa8e7e84656caf7dfb42ab6b",
+    "scripts/edition-runtime.mjs": "1e1010ac4ee56154024e13357fec4bcb1b32af726f5f780193d17c2056592049",
+    "scripts/optional-launcher.mjs": "c5c030d44953a8ea0c1d051de536e650a018bb598eb283fffb2a7b3ce0ced325",
+    "game/test/edition-demo-packaging.test.mjs": "ee80cb6ef9635d040b67549f6ab8ce89e7c1e907a137f6b10caf94359e020197",
+    "publishing/optional-package-admission.test.mjs": "05b8745f3ab272e7053e4f06fef7c3ff377cf2d1221aed9142c54b16b7a645c0",
+    "scripts/test-bundle-editions.mjs": "960ac694e9e03c675638a116ce71b1511a493cf81aa1e8060f386845b56f66c5",
+    "scripts/test-optional-practice.mjs": "9c4e412d523422c341557986709c6442e4d91cd0d8f2434a84b484f8f255f973"
+  },
+  "sourceBoundary": {
+    "readOnlyCheck": "git diff --name-only -- game optional-practice returned no tracked runtime changes; the new game/test fixture is test-only.",
+    "gameAndOptionalRuntimeSourceUnchangedFromTestHead": true,
+    "fullRuntimeFingerprintUnchanged": false,
+    "note": "Publishing/build modules changed, so the full qualification runtime fingerprint changes. Prior browser evidence is not relabelled as a new artifact build."
+  },
+  "storage": {
+    "firstLocalRun": {
+      "freeFloorBytes": 209715200,
+      "allocationCapBytes": 314572800,
+      "freeBeforeBytes": 724996096,
+      "minimumObservedFreeBytes": 649842688,
+      "maximumObservedFixtureBytes": 48619520
+    },
+    "correctedFileRun": {
+      "freeFloorBytes": 209715200,
+      "allocationCapBytes": 314572800,
+      "freeBeforeBytes": 719880192,
+      "minimumObservedFreeBytes": 719613952,
+      "maximumObservedFixtureBytes": 0
+    },
+    "externalAllocationSnapshotKiB": 55196
+  },
+  "serialBatch": {
+    "status": "PREPARED_NOT_RUN",
+    "helperSHA256": "40cec0f2d26b26bfb6563e5ca48a37c0f07fdc428615fcaf7e632b68f5582f88",
+    "canonicalChildren": 21,
+    "scope": "18 separate Company candidates plus3 separate optional candidates. Clean committed HEAD and external output are required.",
+    "pureGuards": 4,
+    "independentReview": "storage_audit reviewed exact40cec0f2d26b26bfb6563e5ca48a37c0f07fdc428615fcaf7e632b68f5582f88; both signal-registration and final-deadline findings resolved; no remaining actionable issue.",
+    "deadlineLimitation": "Polled execution/group bounds do not preempt synchronous filesystem I/O."
+  },
+  "artifacts": [
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/external-incomplete.json",
+      "bytes": 28450,
+      "sha256": "e425eec71060a8b7f8d5c294cc8d14997d6c35717260f922bc743a376148c3c4"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/external-incomplete.tap.txt",
+      "bytes": 9333,
+      "sha256": "0c34ee87289e44cbdc2dc843a6481886657bc475977f599ca36b49b09087be1c"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/external-owned-cleanup.json",
+      "bytes": 13631,
+      "sha256": "72f2f4355f3c95eade3717152572985c196ceff247a2fe22230f6400e28fe1f2"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/focused-count-red.json",
+      "bytes": 33439,
+      "sha256": "0c673eef6238c1d9d4602801a6f84db5f65fc1aee76129be921f8a77b7dadc97"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/focused-count-red.tap.txt",
+      "bytes": 11898,
+      "sha256": "f9ca25bd7be61cc096e43d1dcb87c99ea91e2667b1dda9c779e198cac049d36e"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/focused-count-correction.json",
+      "bytes": 8610,
+      "sha256": "88641b625aeab53370b154d8c9369884a082a1c07928d80f02a8d11d84de5a90"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/focused-count-correction.tap.txt",
+      "bytes": 1821,
+      "sha256": "83035869beb7d20f9ba6f51c107be931e0bf2e497c9e6fc35ac6da0de89c7022"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/serial-supervisor.py.txt",
+      "bytes": 20317,
+      "sha256": "40cec0f2d26b26bfb6563e5ca48a37c0f07fdc428615fcaf7e632b68f5582f88"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/serial-supervisor-guards.py.txt",
+      "bytes": 3135,
+      "sha256": "197553d86dd0c249896111abb8d7c9b8298739279a75cbc9795a43e46ae83ae2"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/serial-supervisor-preparation.json",
+      "bytes": 999,
+      "sha256": "1041c8deda84c70147463ca008d5333ad5af3aca31f6630e6804cdbaa3ad54ea"
+    },
+    {
+      "path": "docs/qualification/shared-demos/packaging-fixes-b28698671/serial-supervisor-notes.md",
+      "bytes": 3980,
+      "sha256": "56576c161f75a925fd930d8d803c0a72f90a196d358813fbb83d350c0b3c1f14"
+    }
+  ],
+  "publicEligible": false,
+  "remaining": [
+    "21 canonical clean-commit candidate builds and admissions",
+    "fresh emitted build/browser qualification requested by root",
+    "hosted Linux qualification",
+    "external manual/device checks"
+  ]
+}

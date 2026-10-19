@@ -1,7 +1,11 @@
 import path from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 import { editionHash, inspectEditionZip } from './edition-zip.mjs';
-import { OPTIONAL_PACKAGE_POLICIES, optionalRuntimePaths } from './optional-package-policy.mjs';
+import {
+  OPTIONAL_PACKAGE_POLICIES,
+  OPTIONAL_SOURCE_INPUT_ALIASES,
+  optionalRuntimePaths,
+} from './optional-package-policy.mjs';
 import { validatePublicSourceEligibility } from './edition-admission.mjs';
 import { validatePracticeDescription } from '../game/optional-practice-details.mjs';
 import { validateOptionalModuleClosure } from './optional-module-closure.mjs';
@@ -258,6 +262,7 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       ...policy.sharedFiles.filter((name) => name !== 'game/i18n/catalogs.mjs'),
       policy.template,
       policy.launcherTemplate,
+      ...Object.keys(OPTIONAL_SOURCE_INPUT_ALIASES),
       ...policy.localeInputs,
     ];
     rows(
@@ -293,7 +298,11 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
         matches(row, source.get(row.path), policy.limits.bytes);
     for (const row of inventory.inputs)
       if (!policy.localeInputs.includes(row.path))
-        matches(row, source.get(row.path), policy.limits.bytes);
+        matches(
+          row,
+          source.get(OPTIONAL_SOURCE_INPUT_ALIASES[row.path] ?? row.path),
+          policy.limits.bytes,
+        );
     const expectedProjection = [
       {
         kind: 'stable-installation-identity',
@@ -308,6 +317,11 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
         output: editionDescriptor('game/i18n/catalogs.mjs', runtime.get('game/i18n/catalogs.mjs')),
         inputs: policy.localeInputs,
       },
+      ...Object.entries(OPTIONAL_SOURCE_INPUT_ALIASES).map(([input, output]) => ({
+        kind: 'shared-launcher-source',
+        output: editionDescriptor(output, runtime.get(output)),
+        inputs: [input],
+      })),
     ];
     if (
       !isDeepStrictEqual(inventory.projections, expectedProjection) ||
@@ -357,12 +371,12 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       )
     )
       fail('Optional launcher context differs from the shared installation adapter.');
-    if (
-      !Buffer.from(runtime.get('launcher/navigation.mjs')).equals(
-        Buffer.from(source.get('optional-practice/navigation.mjs')),
-      )
-    )
-      fail('Optional launcher navigation differs from its admitted source.');
+    for (const [input, output] of Object.entries(OPTIONAL_SOURCE_INPUT_ALIASES))
+      matches(
+        inventory.inputs.find((row) => row.path === input),
+        runtime.get(output),
+        policy.limits.bytes,
+      );
     for (const size of [192, 512])
       if (
         !Buffer.from(runtime.get(`launcher/icons/icon-${size}.png`)).equals(

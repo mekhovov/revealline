@@ -35,7 +35,9 @@ export function createEditionCandidate({
   validateEditionSourceInventory({ files: runtime, assets });
   validateEditionSourceInventory({ files: sourceFiles, assets });
   validatePublicSourceEligibility({ files: sourceFiles, assets });
-  const selectedSource = new Map(sourceFiles),
+  const selectedSource = new Map(
+      [...sourceFiles].filter(([name]) => !name.startsWith('game/demo-data/') || runtime.has(name)),
+    ),
     projections = [];
   for (const [name, original] of sourceFiles) {
     const output = runtime.get(name);
@@ -51,9 +53,11 @@ export function createEditionCandidate({
             ? 'selected-themes'
             : name === 'game/content/scenarios/line-impact-demo.json'
               ? 'selected-practice-presentation'
-              : /\.(?:mjs|js)$/.test(name)
-                ? 'selected-runtime-imports'
-                : null;
+              : name === 'game/demo-data/catalog.json'
+                ? 'selected-demo-catalog'
+                : /\.(?:mjs|js)$/.test(name)
+                  ? 'selected-runtime-imports'
+                  : null;
     if (!kind) throw new Error(`Unclassified selected source projection: ${name}`);
     selectedSource.set(name, output);
     projections.push({

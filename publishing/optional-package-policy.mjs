@@ -786,7 +786,6 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                 ]
               : []),
             'optional-practice/guide.mjs',
-            'optional-practice/navigation.mjs',
             'game/ui/menu-navigation-groups.mjs',
             'game/ui/art/identity/fpv-line/wordmark.png',
             'game/ui/art/menu-scenes/fpv.webp',
@@ -806,6 +805,12 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
     ]),
   ),
 );
+
+// Canonical inputs used only by the generated launcher. Keep the full source
+// module at its runtime alias, with its committed input hash bound separately.
+export const OPTIONAL_SOURCE_INPUT_ALIASES = Object.freeze({
+  'optional-practice/navigation.mjs': 'launcher/navigation.mjs',
+});
 
 export function optionalRuntimePaths(policy, { launcher = false } = {}) {
   return [
