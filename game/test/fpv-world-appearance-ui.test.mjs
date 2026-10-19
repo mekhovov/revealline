@@ -304,7 +304,12 @@ test('World lesson mode action restarts paused in the matching mode and preserve
 });
 
 test('World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats', async (t) => {
-  const priorLocale = getLocale();
+  const priorLocale = getLocale(),
+    priorRandom = Math.random;
+  Math.random = () => 0;
+  t.after(() => {
+    Math.random = priorRandom;
+  });
   const h = fixture(t);
   await h.app.ready;
   const originals = structuredClone(WORLD_CATALOGUE),
@@ -3851,4 +3856,90 @@ test('Unified map cards and search follow the current language without changing 
   const cards = h.doc.querySelectorAll('.journey-card');
   assert.deepEqual(cards.map((card) => card.dataset.missionId), ids);
   assert.ok(cards.every((card) => card.textContent.includes('Залізнична долина')));
+});
+
+for (const context of ['learning', 'flight']) {
+  test(`Random defaults to ${context} levels in that activity`, async (t) => {
+    const priorRandom = Math.random;
+    Math.random = () => (context === 'learning' ? 0 : 0.999);
+    t.after(() => {
+      Math.random = priorRandom;
+    });
+    const h = fixture(t);
+    await h.app.ready;
+    h.$(
+      context === 'learning' ? 'worlds-shell-action-home-extra' : 'worlds-shell-action-missions',
+    ).click();
+    assert.equal(h.$('world-random-levels').value, 'auto');
+    assert.match(
+      h.$('world-random-levels').options[0].textContent,
+      context === 'learning' ? /Learning|навчальні/ : /Flight|польоту/,
+    );
+    h.$('journey-collection').value = 'Classic';
+    h.$('journey-collection').emit('change');
+    h.$('journey-random-level').click();
+    await settleUntil(() => Boolean(h.app.snapshot().course), 'Random prepares an eligible level');
+    assert.equal(
+      BEGINNER_CATALOGUE.some((entry) => entry.id === h.app.snapshot().course),
+      context === 'learning',
+    );
+    assert.equal(h.app.snapshot().state.ticks, 0);
+  });
+}
+
+test('Mixed Random can choose a learning level from flight mode and remembers the explicit choice', async (t) => {
+  const priorRandom = Math.random;
+  Math.random = () => 0.999;
+  t.after(() => {
+    Math.random = priorRandom;
+  });
+  const storage = new Map(),
+    h = fixture(t, { storage });
+  await h.app.ready;
+  h.$('worlds-shell-action-missions').click();
+  h.$('journey-collection').value = 'Classic';
+  h.$('journey-collection').emit('change');
+  h.$('world-random-levels').value = 'mixed';
+  h.$('world-random-levels').emit('change');
+  h.$('journey-random-level').click();
+  await settleUntil(
+    () => Boolean(h.app.snapshot().learning),
+    'Mixed selection can prepare a learning level',
+  );
+  const restored = fixture(t, { storage });
+  await restored.app.ready;
+  restored.$('worlds-shell-action-missions').click();
+  assert.equal(restored.$('world-random-levels').value, 'mixed');
+  restored.$('world-random-levels').value = 'auto';
+  restored.$('world-random-levels').emit('change');
+  assert.equal(storage.get('revealline.sim.worlds.random-levels.v1'), 'auto');
+});
+
+test('Random from a paused lesson keeps the learning context and can exclude all mismatched search results', async (t) => {
+  const priorLocale = getLocale();
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const h = fixture(t);
+  await h.app.ready;
+  h.$('world-language').value = 'en';
+  h.$('world-language').emit('change');
+  const lesson = BEGINNER_CATALOGUE[1];
+  await h.app.startFlight(lesson);
+  h.$('world-flight-menu').click();
+  h.$('worlds-shell-action-pause-random').click();
+  await settleUntil(
+    () => h.app.snapshot().course !== lesson.id,
+    'Pause Random selects another lesson',
+  );
+  assert.ok(BEGINNER_CATALOGUE.some((entry) => entry.id === h.app.snapshot().course));
+  h.$('worlds-shell-action-missions').click();
+  h.$('journey-search').value = 'Flight School';
+  h.$('journey-search').emit('input');
+  assert.equal(
+    h.$('journey-random-level').disabled,
+    true,
+    'Flight mode must not fall back to learning when search has no eligible flight results',
+  );
+  h.$('world-random-levels').value = 'mixed';
+  h.$('world-random-levels').emit('change');
+  assert.equal(h.$('journey-random-level').disabled, false);
 });

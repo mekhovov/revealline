@@ -177,3 +177,48 @@ for (const randomDownloadable of [false, true]) {
     library.dispose();
   });
 }
+
+test('Host Random filter scopes candidates without removing manually selectable levels', async () => {
+  const doc = new Document();
+  const entries = ['flight', 'learning'].map((id, levelIndex) => ({
+    id,
+    levelIndex,
+    name: id,
+    campaignKey: 'sim',
+    campaignTitle: 'SIM',
+    modes: ['solo'],
+  }));
+  const launches = [];
+  const library = createMissionLibrary([
+    {
+      id: 'sim',
+      editionId: 'sim',
+      edition: 'SIM',
+      collection: 'Classic',
+      entries,
+      describe: (entry) => entry,
+      availability: () => ({ state: 'ready' }),
+      launch: (entry) => launches.push(entry.id),
+    },
+  ]);
+  let selectedType = 'learning';
+  const chooser = attachMissionLibraryBrowser({
+    document: doc,
+    library,
+    random: () => 0,
+    randomFilter: (row) => row.runtimeId === selectedType,
+  });
+  chooser.open();
+  assert.equal(chooser.elements.list.children.length, 2);
+  chooser.playRandom();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(launches, ['learning']);
+  chooser.open();
+  selectedType = 'flight';
+  chooser.refresh();
+  chooser.playRandom();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(launches, ['learning', 'flight']);
+  chooser.destroy();
+  library.dispose();
+});

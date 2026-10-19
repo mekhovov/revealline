@@ -8,8 +8,16 @@
 - Menu remains accessible in compact flight. Ready regional flights use Resume; active flights use Pause, with the corresponding icon. A map that cannot resume still opens its recovery menu and explains why.
 - Radio arming instructions remain visible while paused even with guidance disabled. Polling retains the correct instruction for an OFF arm switch. A saved verified radio is selected by default only if the player has no saved control-source preference.
 - One selector now covers built-in lessons, installed packs, downloadable world routes and regional maps. The initial catalogue contains 269 entries: 204 built-in courses/lessons, 41 published routes from 20 downloadable worlds, and 24 regional editions. Saved regional editions outside current offers are included too. Regional families group editions without merging their exact content identities.
-- Download & play prepares the selected exact revision in place. Random uses the visible search, collection and edition results, including downloadable content in the SIM. Campaign controls remain navigation anchors. Other games retain their existing ready-content-only Random behavior.
+- Download & play prepares the selected exact revision in place. Random uses the visible search, collection and edition results, including downloadable content in the SIM. It defaults to learning levels in Flight School and flight levels elsewhere; an explicit Learning + flight levels choice enables a mix. Campaign controls remain navigation anchors. Other games retain their existing ready-content-only Random behavior.
 - Missing or corrupt regional scenery can repair the exact offered revision. Other saved versions remain intact. Downloads retain size/hash validation, cancellation, bounded deadlines and deliberate arming.
+
+## Random level grouping follow-up
+
+- The new Random levels control sits beside Random level in the common selector. Its default follows the activity: learning levels in Flight School, flight levels in other flight modes. Pause-menu Random preserves the current lesson context.
+- Learning + flight levels explicitly enables a mix, and the choice survives reloads. Selecting the first option restores activity-based selection. Both English and Ukrainian labels update with the current activity.
+- Random also keeps the previous catalogue level after leaving a flight, so it avoids immediately repeating that level when alternatives exist.
+- Manual level selection still shows all levels. Random respects the existing search, collection and edition filters, and disables itself if there are no eligible results instead of choosing from the other group.
+- Browser verification opened Random from Flight School and reached a lesson. The activity default and mixed option were also checked in the local selector.
 
 ## Causes
 
@@ -21,7 +29,7 @@ The mission registry was populated only from built-in and installed WorldPack co
 
 - The player confirmed that the physical radio controls Railway Valley. The local UI also showed active radio input, changing flight telemetry and a Pause control during flight.
 - Desktop browser: restored guidance from Accessibility, dismissed it directly, checked the corrected close control and larger sticks, and downloaded/opened Railway Valley regional preview directly from the common selector.
-- All 300 automated checks passed. Coverage includes both SIM hosts, guided/manual radio regressions, paused switch feedback, regional arming/recovery, common selector Random, exact downloads, cancellation, corrupt downloads, repair, HUD persistence, shared trails and generated optional-package projections.
+- All 305 automated checks passed. Coverage includes both SIM hosts, guided/manual radio regressions, paused switch feedback, regional arming/recovery, common selector Random grouping/mixed preferences and repeat prevention, exact downloads, cancellation, corrupt downloads, repair, HUD persistence, shared trails and generated optional-package projections.
 - Route-label snapshot generation verifies every published pack hash and course count. `scripts/refresh-fpv-world-library.mjs --check` checks that snapshot. Shared shell and reaction projections have their own `--check` commands.
 
 The local source server runs at `http://127.0.0.1:8768/optional-practice/fpv-worlds/index.html?lang=en`. Its download worker uses the canonical generated-worker handler; offline runtime preparation still requires a full built package.
