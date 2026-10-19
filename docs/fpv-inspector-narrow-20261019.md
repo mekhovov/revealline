@@ -42,7 +42,7 @@ gains, recording identities, saved settings or physics calculations change.
 
 Source changes add **828 bytes** (818 CSS, 10 inline grid). The previous exact
 Academy original-input margin was 2,195 bytes, so the calculated remaining margin
-is **1,367 bytes**, pending a fresh committed-input measurement. Package caps and
+is **1,367 bytes**, confirmed by the [fresh committed-input measurement](fpv-followup-package-20261019.json) at integrated source `4e1959a4a`. Package caps and
 admissions remain unchanged. The isolated course-result provenance work exceeds
 this margin and must not be silently included in this release.
 
