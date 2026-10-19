@@ -33,10 +33,10 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
     // The installed archive includes the reviewed launcher, access gate and
-    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 96 files; the
+    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 98 files; the
     // selected source archive adds two reviewed templates within this finite
     // envelope.
-    limits: Object.freeze({ files: 98, bytes: 8 * 1024 * 1024 }),
+    limits: Object.freeze({ files: 100, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -51,6 +51,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'README.md',
     ]),
     sharedFiles: Object.freeze([
+      'game/gameplay-audio-preferences.mjs',
+      'game/ui/gameplay-audio-output.mjs',
       'game/ui/mode-play-shell.mjs',
       'game/ui/mode-play-shell.css',
       'game/ui/mode-choice.css',
@@ -725,7 +727,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
               : id === 'fpv-worlds'
                 ? 210 // Includes World's same-scope flight and response-bench workers.
                 : id === 'civilian-flight'
-                  ? 98
+                  ? 100
                   : policy.limits.files,
           bytes:
             id === 'fpv-worlds'

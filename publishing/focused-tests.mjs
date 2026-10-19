@@ -73,9 +73,24 @@ export function validateFocusedTestMap(manifest) {
   };
 }
 
-export function focusedTestPlan(paths, manifest, { fallbackHandled = false } = {}) {
+export function focusedTestPlan(
+  paths,
+  manifest,
+  { fallbackHandled = false, deletedTests = [] } = {},
+) {
   if (!Array.isArray(paths) || !paths.length || paths.some((item) => !safeChangedPath(item)))
     throw new Error('Focused-test selection requires bounded repository-relative paths.');
+  if (
+    !Array.isArray(deletedTests) ||
+    deletedTests.some(
+      (item) =>
+        !paths.includes(item) ||
+        !item.endsWith('.test.mjs') ||
+        !/^(game\/test|publishing(?:\/pages-controller)?|scripts)\//u.test(item),
+    )
+  )
+    throw new Error('Deleted focused tests must be admitted changed test paths.');
+  const deleted = new Set(deletedTests);
   const map = validateFocusedTestMap(manifest);
   const categories = map.categories.filter((category) =>
     paths.some((changed) => category.patterns.some((pattern) => pattern.test(changed))),
@@ -96,6 +111,9 @@ export function focusedTestPlan(paths, manifest, { fallbackHandled = false } = {
 
   const deferredTests = [];
   for (const changed of paths) {
+    // Only trusted source-tree acquisition may supply these omissions. Category
+    // commands and unknown-runtime validation still cover the removed feature.
+    if (deleted.has(changed)) continue;
     if (!changed.endsWith('.test.mjs')) continue;
     if (!/^(game\/test|publishing(?:\/pages-controller)?|scripts)\//u.test(changed)) continue;
     if (
@@ -127,6 +145,7 @@ export function focusedTestPlan(paths, manifest, { fallbackHandled = false } = {
     categories: categories.map((category) => category.id),
     unknownRuntime,
     deferredTests,
+    ...(deleted.size ? { deletedTests: [...deleted].sort() } : {}),
     commands: uniqueCommands,
   };
 }
@@ -321,6 +340,7 @@ export function focusedCommandExecutionPlan(
 // must supply source-bound inputs; no candidate planner or command is executed.
 export function prepareCompactFocusedExecution({
   paths,
+  deletedTests = [],
   manifestBytes,
   testPolicyBytes,
   inputs,
@@ -362,7 +382,10 @@ export function prepareCompactFocusedExecution({
     throw new Error('Focused preparation inputs exceed their bound.');
   const manifest = JSON.parse(manifestBytes.toString());
   const testPolicy = parseTestPolicy(testPolicyBytes.toString());
-  const selected = focusedTestPlan(paths, manifest, { fallbackHandled: identity.fallbackHandled });
+  const selected = focusedTestPlan(paths, manifest, {
+    fallbackHandled: identity.fallbackHandled,
+    deletedTests,
+  });
   const policy = applyFocusedTestPolicy(selected.commands, testPolicy, normalizedInputs);
   const execution = focusedCommandExecutionPlan(policy.commands, normalizedInputs);
   const selection = {

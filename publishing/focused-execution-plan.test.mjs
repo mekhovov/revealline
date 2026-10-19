@@ -115,6 +115,37 @@ test('unknown runtime paths keep the original fallback command', () => {
   assert.equal(plan.shardCount, 1);
 });
 
+test('source-confirmed deleted tests omit only automatic commands and bind the omission', () => {
+  const x = fixture();
+  x.paths = ['scripts/removed.test.mjs', 'game/test/removed.test.mjs', 'game/test/new.test.mjs'];
+  x.identity.changedPathsSha256 = sha(JSON.stringify(x.paths));
+  const before = prepareCompactFocusedExecution(x);
+  x.deletedTests = x.paths.slice(0, 2);
+  const { plan, selection } = prepareCompactFocusedExecution(x);
+  assert.deepEqual(selection.selected.deletedTests, x.deletedTests.slice().sort());
+  assert.deepEqual(
+    plan.commands.map(({ id }) => id),
+    ['package', 'fallback', 'changed-test:game/test/new.test.mjs'],
+  );
+  assert.notEqual(plan.identity.selectionSha256, before.plan.identity.selectionSha256);
+  assert.ok(selection.selected.commands.some(({ id }) => id === 'direct'));
+  x.deletedTests.push('game/not-admitted.test.mjs');
+  assert.throws(() => prepareCompactFocusedExecution(x), /admitted changed test/);
+});
+
+test('a deleted file cannot waive a category-declared test command', () => {
+  const x = fixture();
+  x.paths = ['game/test/example.test.mjs'];
+  x.identity.changedPathsSha256 = sha(JSON.stringify(x.paths));
+  x.deletedTests = [...x.paths];
+  x.inputs.repositoryFiles = [];
+  const { plan } = prepareCompactFocusedExecution(x);
+  assert.deepEqual(
+    plan.commands.map(({ id }) => id),
+    ['package', 'direct'],
+  );
+});
+
 test('a selector-proven docs-only case records typed no-work without test receipts', () => {
   const x = fixture();
   x.paths = ['docs/example.md'];
