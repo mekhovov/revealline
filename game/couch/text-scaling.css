@@ -123,11 +123,11 @@ html[data-text-scaling='versus'] body[data-text-size='extra-large'] #race-help-r
   flex: none;
   overflow: auto;
 }
-/* HUD text may require more than one viewport. The actual arena measurement
- * still fits each complete logical bitmap; neither world nor seats transforms. */
+/* Both live boards share the remaining viewport after actual HUD/readout
+ * heights. The existing footprint owner fits each complete logical bitmap. */
 html[data-text-scaling='versus'] body[data-text-size='extra-large'].race-focus #couch-app {
-  block-size: auto;
-  min-block-size: 100dvh;
+  block-size: 100dvh;
+  min-block-size: 0;
   grid-template-columns: minmax(0, 1fr);
   min-inline-size: 0;
   max-inline-size: 100%;
@@ -145,7 +145,7 @@ html[data-text-scaling='versus'] body[data-text-size='extra-large'].race-focus .
   overflow-wrap: anywhere;
 }
 html[data-text-scaling='versus'] body[data-text-size='extra-large'] .race-arena {
-  min-block-size: 10rem;
+  min-block-size: 0;
 }
 html[data-text-scaling='versus']
   body[data-text-size='extra-large']
@@ -354,5 +354,15 @@ html[data-text-scaling='versus']
     #race-pause.compact-track-pause {
     flex-basis: 100%;
     inline-size: 100%;
+  }
+}
+/* Compact play keeps the primary Pause/Results action. Full soundtrack
+ * details remain in Pause Sound and the existing accessible description. */
+@media (max-width: 680px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
+  html[data-text-scaling='versus']
+    body[data-text-size='extra-large'].race-focus
+    #race-pause.compact-track-pause::after {
+    display: none;
   }
 }

@@ -271,6 +271,14 @@ test('Duel active and result-review layout contains the actual compact song and 
   assert.ok(app);
   assert.equal(app.layer, '', 'The explicit column overrides the legacy implicit track.');
   assert.equal(value(app.rule, 'max-inline-size'), '100%');
+  assert.equal(value(app.rule, 'block-size'), value(actualApp.rule, 'height'));
+  assert.equal(value(app.rule, 'min-block-size'), '0');
+  const arena = enlarged.find(({ rule }) => rule.raws.selector.endsWith('.race-arena'));
+  assert.equal(
+    value(arena.rule, 'min-block-size'),
+    '0',
+    'The existing footprint owner fits the remaining slot instead of pushing a live board below the viewport.',
+  );
   assert.ok(app.rule.raws.selector.includes('.race-focus'));
   assert.ok(
     !app.rule.raws.selector.includes('data-couch-status'),
@@ -316,6 +324,18 @@ test('Duel active and result-review layout contains the actual compact song and 
   assert.equal(narrow.media.replace(/\s/g, ''), '(max-width:700px)');
   assert.equal(value(narrow.rule, 'flex-basis'), '100%');
   assert.equal(value(narrow.rule, 'inline-size'), '100%');
+  const compactHidden = enlarged.find(
+    ({ rule }) =>
+      rule.raws.selector.endsWith(compact + '::after') && value(rule, 'display') === 'none',
+  );
+  assert.equal(
+    compactHidden.media.replace(/\s/g, ''),
+    before.media.replace(/\s/g, ''),
+    'Only the same compact layouts omit the secondary song line.',
+  );
+  assert.ok(compactHidden.rule.raws.selector.includes('.race-focus'));
+  assert.ok(!compactHidden.rule.raws.selector.includes('data-couch-status'));
+  assert.ok(compactHidden.rule.nodes.every((node) => node.prop !== 'font-size'));
   for (const { rule } of [app, containment, stats, caption, button, narrow]) {
     assert.ok(rule.raws.selector.includes("[data-text-scaling='versus']"));
     assert.ok(rule.raws.selector.includes("[data-text-size='extra-large']"));

@@ -40,18 +40,23 @@ selector outranks the existing shared ID branch. Result transition actions flow
 with the outer screen. The help reader retains its keyboard owner and gets a
 practical multiline viewport, not a normative minimum-size claim.
 
-Live HUD labels may grow beyond one viewport. The HUD reserves its actual height
-instead of the handheld 44px row, while complete bitmaps remain fitted by the
-existing footprint owner. A minimum arena region and document scrolling keep
-both seats reachable; responsive seat order and touch-input ownership stay intact.
-There is no board transform. Actual browser review must verify useful space,
-focus visibility and scroll reachability at 320/390px and 844×390 landscape.
+The live HUD reserves its actual height instead of the handheld 44px row. Both
+boards share the remaining bounded viewport, using the existing footprint owner
+to fit their complete bitmaps; an added minimum arena height must not force a
+live board below the viewport. Compact play keeps the primary Pause/Results
+label while full song details remain available through the existing Pause/audio
+controls and accessible description. Readable counters keep their enlarged font
+sizes. Responsive seat order, touch-input ownership and logical geometry stay
+intact. Actual browser review must verify both complete boards within the
+viewport at 320/390px and 844×390 landscape, alongside menu focus and scrolling.
 
 The first actual 320px Ukrainian review found that the compact song caption's
 unbroken intrinsic width expanded the app's implicit grid column and both seats.
 The correction explicitly constrains that column and its HUD/readout children,
-wraps the caption and seat statistics, and gives compact Pause/Results its own row
-on narrow screens. It applies to live play and the existing earned-board review;
+wraps seat statistics and gives compact Pause/Results its own row on narrow
+screens. A second actual check found that growing the app and a fixed arena
+minimum still pushed live boards below the viewport; the bounded grid and compact
+song-details policy above address that separate vertical failure. It applies to live play and the existing earned-board review;
 the normal and Large layouts, font sizes, hidden owners and logical bitmaps stay
 unchanged. Source checks bind these real owners; visual qualification belongs to
 the corrected snapshot, not the earlier overflowing candidate.
