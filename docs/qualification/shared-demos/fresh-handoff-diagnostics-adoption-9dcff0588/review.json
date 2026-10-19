@@ -1,0 +1,77 @@
+{
+  "format": "LegacyFreshDiagnosticAdoptionV1",
+  "at": "2026-10-19T11:38:11.412814+00:00",
+  "parentHead": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "node": "v22.22.2",
+  "platform": "darwin",
+  "arch": "arm64",
+  "complete": true,
+  "checks": {
+    "wholeAffectedFiles": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skipped": 0,
+      "durationMs": 37777.440208,
+      "CI": "true",
+      "concurrency": 2
+    },
+    "collectorGuards": {
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    "eslint": "pass",
+    "prettier": "pass"
+  },
+  "source": [
+    {
+      "path": "game/test/helpers/demo-host-fixture.mjs",
+      "bytes": 10001,
+      "sha256": "95609e06be37ed3b47b5f6281604a495074186a244e0dcdf1969d23acee616c7"
+    },
+    {
+      "path": "game/test/demo-fresh-handoff.test.mjs",
+      "bytes": 6646,
+      "sha256": "c9e937933a3e432ddde1010392c2ce73c399fd50a589e2fe7fe3580352f5ed1a"
+    },
+    {
+      "path": "game/test/demo-host-diagnostics.test.mjs",
+      "bytes": 4059,
+      "sha256": "6e41c83fe3d42d4e500d3b722cfcf67394fd3238a0ebcefa26b2c9b9d21da030"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "whole-files.tap.txt",
+      "bytes": 2721,
+      "sha256": "9a0b5dab37fd054f512d3d3637dafeea78d2e38c8b739fba2c466f8172c50bb1",
+      "source": ".cache/fresh-handoff-diagnostics-local-test.tap.txt"
+    },
+    {
+      "path": "collector-guards.tap.txt",
+      "bytes": 820,
+      "sha256": "9d46aa71a6076d91e09fc1979d411bcba7cd02341846a085cb7ee8b9b74c4f4e",
+      "source": ".cache/fresh-handoff-diagnostics-guards.tap.txt"
+    },
+    {
+      "path": "diagnostics.patch.txt",
+      "bytes": 11540,
+      "sha256": "c28924dc4b83a151a56e8e5a0ccc91e5c993d157c8c92b35fec29d5b9547dbf8",
+      "source": ".cache/legacy-fresh-diagnostics-draft-9dcff/diagnostics.patch"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 2425,
+      "sha256": "e3267608482ff4cb00953e11f5e3f0126568ef83533a1000b36f38dd5b8356f6",
+      "source": ".cache/legacy-fresh-diagnostics-draft-9dcff/preparation.json"
+    }
+  ],
+  "scope": [
+    "Bounded synchronous public-state observation on failure, shared with fixture readiness.",
+    "Original wait predicate and30000ms timeout, Error identity/message/stack/cause, assertions and gameplay remain unchanged.",
+    "Both whole affected files pass locally. The original hosted timeout is unresolved; this is diagnostic preparation, not a demonstrated game fix.",
+    "No new browser result or physical-device result is claimed."
+  ]
+}

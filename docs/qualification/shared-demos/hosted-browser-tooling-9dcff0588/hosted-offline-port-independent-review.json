@@ -1,0 +1,27 @@
+{
+  "format": "SharedDemoOfflinePortIndependentReviewV1",
+  "readOnly": true,
+  "observedAt": "2026-10-19T11:39:37.763Z",
+  "sources": [
+    {
+      "file": ".cache/demo-offline-browser/full-core-external-probe.mjs",
+      "sha256": "852994a4724add5d48e17c32f34e5e2d56c94f071a1f83b9f42b851278c3e402"
+    },
+    {
+      "file": "scripts/qualify-shared-demo-offline-browser.mjs",
+      "sha256": "91a7d95ce5e6c08c8f7d7ceb47be5e3017a059490ae87cc182f48dadcadaa0b7"
+    }
+  ],
+  "callbacks": {
+    "count": 27,
+    "equal": true,
+    "sha256": "7a06466835c835da6d1a05856609bd17f8c6a2584224c40950bc9d0e9bac5645"
+  },
+  "findings": [],
+  "scope": "Independent source inspection of the local session/ownership and cleanup changes, plus canonical AST comparison of all evaluate/waitForFunction/addInitScript browser callbacks. Same original full worker/core+extras installation, cold offline, persistence/native-origin/practice assertions. No browser run or Linux proof.",
+  "limits": [
+    "Polled process names in the offline child are observation only; the outer Linux exact-identity supervisor owns kill safety and final descendant retirement.",
+    "Fresh local session only, identities verified before recursive removal; changed/replaced/symlink target refused.",
+    "Actual mounted storage and hosted browser execution remain separate."
+  ]
+}

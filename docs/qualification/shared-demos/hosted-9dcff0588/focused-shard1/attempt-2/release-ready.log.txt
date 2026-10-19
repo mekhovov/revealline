@@ -1,0 +1,75 @@
+﻿2026-10-19T11:05:57.4054719Z Current runner version: '2.337.0'
+2026-10-19T11:05:57.4083318Z ##[group]Runner Image Provisioner
+2026-10-19T11:05:57.4084224Z Hosted Compute Agent
+2026-10-19T11:05:57.4084949Z Version: 20261012.601
+2026-10-19T11:05:57.4085585Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-19T11:05:57.4086380Z Build Date: 2026-10-12T17:48:21Z
+2026-10-19T11:05:57.4087093Z Worker ID: {f1c14da4-f881-464e-b6dc-05abe4741850}
+2026-10-19T11:05:57.4087805Z Region: westus
+2026-10-19T11:05:57.4088423Z Cloud: Azure
+2026-10-19T11:05:57.4088960Z ##[endgroup]
+2026-10-19T11:05:57.4090839Z ##[group]Operating System
+2026-10-19T11:05:57.4091506Z Ubuntu
+2026-10-19T11:05:57.4092032Z 24.04.5
+2026-10-19T11:05:57.4092604Z LTS
+2026-10-19T11:05:57.4093116Z ##[endgroup]
+2026-10-19T11:05:57.4093702Z ##[group]Runner Image
+2026-10-19T11:05:57.4094370Z Image: ubuntu-24.04
+2026-10-19T11:05:57.4094977Z Version: 20261012.334.1
+2026-10-19T11:05:57.4096671Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-19T11:05:57.4098317Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-19T11:05:57.4099389Z ##[endgroup]
+2026-10-19T11:05:57.4100900Z ##[group]GITHUB_TOKEN Permissions
+2026-10-19T11:05:57.4103239Z Contents: read
+2026-10-19T11:05:57.4103915Z Metadata: read
+2026-10-19T11:05:57.4104559Z ##[endgroup]
+2026-10-19T11:05:57.4107181Z Secret source: Actions
+2026-10-19T11:05:57.4108242Z Cache mode: write
+2026-10-19T11:05:57.4109194Z Prepare workflow directory
+2026-10-19T11:05:57.4512026Z Prepare all required actions
+2026-10-19T11:05:57.4621948Z Complete job name: release-ready
+2026-10-19T11:05:57.5485377Z ##[group]Run test "$PREFLIGHT_RESULT" = success
+2026-10-19T11:05:57.5486417Z [36;1mtest "$PREFLIGHT_RESULT" = success[0m
+2026-10-19T11:05:57.5487180Z [36;1mif [ "$ADMISSION" != hold ]; then[0m
+2026-10-19T11:05:57.5488130Z [36;1m  if [ "$FOCUSED_REQUIRED" = true ]; then[0m
+2026-10-19T11:05:57.5488928Z [36;1m    test "$FOCUSED_RESULT" = success[0m
+2026-10-19T11:05:57.5489618Z [36;1m  else[0m
+2026-10-19T11:05:57.5490706Z [36;1m    test "$FOCUSED_REQUIRED" = false[0m
+2026-10-19T11:05:57.5491506Z [36;1m    test "$FOCUSED_RESULT" = skipped[0m
+2026-10-19T11:05:57.5492254Z [36;1m  fi[0m
+2026-10-19T11:05:57.5492868Z [36;1mfi[0m
+2026-10-19T11:05:57.5493435Z [36;1mif [ "$ADMISSION" = maintenance ]; then[0m
+2026-10-19T11:05:57.5494953Z [36;1m  echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'[0m
+2026-10-19T11:05:57.5496383Z [36;1m  exit 0[0m
+2026-10-19T11:05:57.5497118Z [36;1mfi[0m
+2026-10-19T11:05:57.5497703Z [36;1mif [ "$ADMISSION" = scheduled ]; then[0m
+2026-10-19T11:05:57.5498971Z [36;1m  echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'[0m
+2026-10-19T11:05:57.5500421Z [36;1m  exit 0[0m
+2026-10-19T11:05:57.5501087Z [36;1mfi[0m
+2026-10-19T11:05:57.5501887Z [36;1mif [ "$ADMISSION" = release-evidence ]; then[0m
+2026-10-19T11:05:57.5503148Z [36;1m  echo 'Docs-only post-merge release evidence: exact-source validation is required without allocating another product version.'[0m
+2026-10-19T11:05:57.5504436Z [36;1m  test "$BUILD_RESULT" = success[0m
+2026-10-19T11:05:57.5505098Z [36;1m  exit 0[0m
+2026-10-19T11:05:57.5505677Z [36;1mfi[0m
+2026-10-19T11:05:57.5506303Z [36;1mif [ "$ADMISSION" != release ]; then[0m
+2026-10-19T11:05:57.5507651Z [36;1m  echo '::error::This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.'[0m
+2026-10-19T11:05:57.5509021Z [36;1m  exit 1[0m
+2026-10-19T11:05:57.5509562Z [36;1mfi[0m
+2026-10-19T11:05:57.5510329Z [36;1mtest "$BUILD_RESULT" = success[0m
+2026-10-19T11:05:57.5511100Z [36;1mif [ "$FULL_CI" = true ]; then[0m
+2026-10-19T11:05:57.5511809Z [36;1m  test "$TEST_RESULT" = success[0m
+2026-10-19T11:05:57.5512851Z [36;1melse[0m
+2026-10-19T11:05:57.5513533Z [36;1m  echo "Full tests are deferred and do not block this PR."[0m
+2026-10-19T11:05:57.5514281Z [36;1mfi[0m
+2026-10-19T11:05:57.6573277Z shell: /usr/bin/bash -e {0}
+2026-10-19T11:05:57.6574666Z env:
+2026-10-19T11:05:57.6575425Z   ADMISSION: maintenance
+2026-10-19T11:05:57.6576264Z   BUILD_RESULT: skipped
+2026-10-19T11:05:57.6577096Z   FOCUSED_RESULT: failure
+2026-10-19T11:05:57.6577933Z   FOCUSED_REQUIRED: true
+2026-10-19T11:05:57.6578757Z   FULL_CI: false
+2026-10-19T11:05:57.6579591Z   PREFLIGHT_RESULT: success
+2026-10-19T11:05:57.6580757Z   TEST_RESULT: skipped
+2026-10-19T11:05:57.6581611Z ##[endgroup]
+2026-10-19T11:05:57.6932944Z ##[error]Process completed with exit code 1.
+2026-10-19T11:05:57.7106523Z Cleaning up orphan processes

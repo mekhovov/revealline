@@ -1,0 +1,97 @@
+{
+  "format": "SharedDemoCaptureImageAttemptPreservationV1",
+  "complete": true,
+  "created": "2026-10-19T11:30:22.886463+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "files": [
+    {
+      "source": ".cache/prepare-canonical-capture-image-9dcff0588.py",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/prepare-canonical-capture-image-9dcff0588.py.txt",
+      "bytes": 16120,
+      "sha256": "5f42cc0c0d1bb5763aab0907c43ea9d99d8610d252e309a3718422c18bf8f001"
+    },
+    {
+      "source": ".cache/prepare-canonical-capture-image-9dcff0588-lifetime.py",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/prepare-canonical-capture-image-9dcff0588-lifetime.py.txt",
+      "bytes": 19176,
+      "sha256": "405a83143fd8fd74afe758f06b29f4ca5ba6712b8d9ef47db69368bd40a17bc3"
+    },
+    {
+      "source": ".cache/test-capture-image-lifetime-9dcff0588.py",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/test-capture-image-lifetime-9dcff0588.py.txt",
+      "bytes": 3878,
+      "sha256": "b740ec65d8fdd4342cd1047d9b9bbc338d4909996a0d1374c22c41410b5dff6a"
+    },
+    {
+      "source": ".cache/capture-image-command-guards-9dcff0588.json",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/capture-image-command-guards-9dcff0588.json",
+      "bytes": 9299,
+      "sha256": "0cabbaf4dd0441db4f6a29b622f90c021873a20ae1791b171e85a96c9429b4e7"
+    },
+    {
+      "source": ".cache/capture-image-lifetime-guards-9dcff0588.json",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/capture-image-lifetime-guards-9dcff0588.json",
+      "bytes": 13196,
+      "sha256": "d314ab527f0e491af7aa506f962571f522eaf678fe830aaf09d9efa9a4a956b7"
+    },
+    {
+      "source": ".cache/capture-image-lifetime-review-binding-9dcff0588.json",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/capture-image-lifetime-review-binding-9dcff0588.json",
+      "bytes": 818,
+      "sha256": "6ec27fe3c504e161367cb91bbee6d7f5a654b4c9a68b56c0ad5fb3123af03dd9"
+    },
+    {
+      "source": ".cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a.json",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a.json",
+      "bytes": 24871,
+      "sha256": "e0c8e40c36d74ba0eec0a34fb0ba3ec3e2cb3a1dad43cfd02eb4787fd19c2ce4"
+    },
+    {
+      "source": ".cache/capture-image-preparation-9dcff0588-20261019T112902Z-36038c49.json",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/capture-image-preparation-9dcff0588-20261019T112902Z-36038c49.json",
+      "bytes": 10842,
+      "sha256": "fd4632bfef580c08e629bbddd2556a929bf145defa1a6c01c8655f3396e85f4a"
+    },
+    {
+      "source": ".cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a.attach.log.txt",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a.attach.log.txt",
+      "bytes": 1347,
+      "sha256": "9ffa200a2e5351560b5c8122a99040ad715aa6baa668234d8f8e7bb4fdf32bcf"
+    },
+    {
+      "source": ".cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a.create.log.txt",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a.create.log.txt",
+      "bytes": 147,
+      "sha256": "962eb85a21c3c78bf2dd6dcb2481f1e9ab6a240a773b2c525c3b452e6ed2dffa"
+    },
+    {
+      "source": ".cache/capture-image-preparation-9dcff0588-20261019T112902Z-36038c49.create.log.txt",
+      "path": "docs/qualification/shared-demos/capture-image-preparation-9dcff0588/capture-image-preparation-9dcff0588-20261019T112902Z-36038c49.create.log.txt",
+      "bytes": 59,
+      "sha256": "645de1b0af6189930dba58e71ee45d5c2b10e568f2236c722097d9cfd4792814"
+    }
+  ],
+  "freeBytesAfter": 256765952,
+  "actualPreparationComplete": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "result": "Image created and attach exited0, but generic subprocess cleanup incorrectly killed the persistent mount-owner helper. Failed before copying. All ownedprocesses retired; original capture unchanged."
+    },
+    {
+      "attempt": 2,
+      "result": "Fresh unique image creation refused by system: Operation not supported by device. No attach/copy/swap/retirement. All ownedprocesses retired; original capture unchanged."
+    }
+  ],
+  "correctedLifecycle": {
+    "helperSHA256": "405a83143fd8fd74afe758f06b29f4ca5ba6712b8d9ef47db69368bd40a17bc3",
+    "syntheticGuardsPassed": 3,
+    "actualMountCopyDetachProof": false,
+    "postGuardOnlyRootModeDeltaVerified": true
+  },
+  "limitations": [
+    "No further retry performed. Root cause of the second create failure remains unknown.",
+    "No inference is made about the historical image disappearance.",
+    "The original canonical capture has not been moved, replaced or removed. The prospective mount-point swap is not ready."
+  ]
+}

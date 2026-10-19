@@ -1,0 +1,497 @@
+{
+  "format": "SharedDemoFinalMatrixRemainingExternalTmpSupervisionV1",
+  "complete": false,
+  "started": "2026-10-19T11:09:54.271249+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    ".cache/run-final-demo-refresh-owned.mjs",
+    "--run=approved",
+    "--head=9dcff05887ed573a9fef4037c8d451c8043653a9",
+    "--base=403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+    "--fingerprint=cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "--files=10273",
+    "--bytes=410435495",
+    "--emitted-preview=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh",
+    "--suffix=final-emitted-403814d-9dcff0588-remaining-external-tmp",
+    "--shared-port=18773",
+    "--url-port=18774",
+    "--only=mixed-webkit,sim-fresh-chromium,sim-fresh-firefox,sim-fresh-webkit,graphics-chromium,listeners-chromium"
+  ],
+  "timeoutSeconds": 1800,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/browser-native-9dcff0588-cxb6skyp",
+  "before": {
+    "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+    "runtime": {
+      "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+      "files": 10273,
+      "bytes": 410435495
+    },
+    "buildInputs": {
+      "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+      "files": 9411,
+      "bytes": 348449477
+    },
+    "helpers": {
+      ".cache/matrix-carry-forward-9dcff0588.json": {
+        "sha256": "5c3879a69da4ed15dbcb0e626e1e107aaeb4427e1c448876149524bfd995e0cb",
+        "bytes": 4784
+      },
+      ".cache/native-matrix-evidence/restoration-webkit-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "65c724bb324df60926d867200a17f8b4b2b2df8cba677435496634c6a77a8ae1",
+        "bytes": 62984
+      },
+      ".cache/native-matrix-evidence/restoration-chromium-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "90599fa15e09ccee7d0ecf4a5b75e2be96b1debfe728999c47e3e1a43a5fde41",
+        "bytes": 54260
+      },
+      ".cache/native-matrix-evidence/restoration-firefox-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "47d8e7a48a93ea3e4d07c0a144b467343afd6602e19d3fcf460185840095fffd",
+        "bytes": 59178
+      },
+      ".cache/native-matrix-evidence/mixed-chromium-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "e0b584f0fa7819614ffd4d8199e6d3d35e4b2226891d23d24e9b07481ad1ab77",
+        "bytes": 32620
+      },
+      ".cache/native-matrix-evidence/mixed-firefox-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "288a8fab20068b03222277885ce1ab634de14227f82df1fb50be4220528f941b",
+        "bytes": 25683
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "0d888dc6eb375711c333dec344b9b5d2e1a62ba7fc7aff0a36a2e59c7e9d0d26",
+        "bytes": 29187
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.supervision.json": {
+        "sha256": "ca4c88e9a68030e9c5c24e291edb550988eaf78d98982901472c9893274482e2",
+        "bytes": 177613
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.log": {
+        "sha256": "6857adbcddb9a6bec82b03373a923e3d3bcfc0a7a44fe0cf3141b450645e6531",
+        "bytes": 1001
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.mjs.txt": {
+        "sha256": "3da84ad80c5aa679ed6fcc43192b0d5e8e82f01a08dbcff5f508effa50516730",
+        "bytes": 16059
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.supervisor.py.txt": {
+        "sha256": "ba21ca31df72f86013e2c150873ac141b5ccc8caa3325ea1f2cd30193a5624f1",
+        "bytes": 16721
+      },
+      ".cache/native-matrix-evidence/mixed-webkit-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "cc4924578470105b3dca09f637cc7425be7c93cc269e5a3586180f21893d4a7c",
+        "bytes": 8332
+      },
+      ".cache/final-matrix-storage-interruption-9dcff0588.json": {
+        "sha256": "e1d67650a2de1d29bdf707941348eb96ddebc37c053cee90828df4803304c087",
+        "bytes": 867
+      },
+      ".cache/run-final-demo-refresh-owned.mjs": {
+        "sha256": "3da84ad80c5aa679ed6fcc43192b0d5e8e82f01a08dbcff5f508effa50516730",
+        "bytes": 16059
+      },
+      ".cache/run-final-demo-refresh-emitted.mjs": {
+        "sha256": "856f7669a0baa761ad036dbd4a6d8ca096d8dc4a51b589a222433d55d7516776",
+        "bytes": 16042
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "scripts/qualify-shared-demo-browser.mjs": {
+        "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+        "bytes": 18020
+      },
+      "scripts/qualify-sim-fresh-browser.mjs": {
+        "sha256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+        "bytes": 7317
+      },
+      "scripts/qualify-shared-demo-listeners.mjs": {
+        "sha256": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+        "bytes": 14755
+      },
+      "scripts/qualify-demo-restoration-browser.mjs": {
+        "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+        "bytes": 23633
+      },
+      "scripts/shared-demo-listener-probe.mjs": {
+        "sha256": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea",
+        "bytes": 5642
+      },
+      "scripts/serve-production-preview.mjs": {
+        "sha256": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+        "bytes": 13598
+      },
+      "scripts/shared-demo-browser-report.mjs": {
+        "sha256": "395200ee9930991de4cf5774005eac84a9c40fcbea925a999159bad8f71fcbc0",
+        "bytes": 4072
+      },
+      "scripts/emitted-preview.mjs": {
+        "sha256": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+        "bytes": 11434
+      },
+      "docs/qualification/shared-demos/source-freeze-latest.json": {
+        "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5",
+        "bytes": 423
+      }
+    },
+    "emitted": {
+      ".cache/shared-demos-emitted-403814d-9dcff0588-native-refresh/manifest.json": {
+        "sha256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3",
+        "bytes": 1369724
+      },
+      ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "9c0b3ea78beecf9f1a00aac5727680a05e0a4a002091914a35323d1356e466e0",
+        "bytes": 2225146
+      },
+      ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.inventory.json": {
+        "sha256": "663c9b8465f4d13d35a5b849db11dbd0ff23175d586d214733149ef233253064",
+        "bytes": 989545
+      }
+    },
+    "supervisor": {
+      "sha256": "eff3705acad8c3933d242e6c6b953d721885019bd3ebd9cf108a5451ae3454a9",
+      "bytes": 18819
+    }
+  },
+  "externalTmp": {
+    "root": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "rootIdentity": [
+      905969668,
+      37530202,
+      502
+    ],
+    "mountIdentity": [
+      905969668,
+      2,
+      502
+    ],
+    "tmpIdentity": [
+      905969668,
+      37585317,
+      502
+    ],
+    "minimumFreeBytes": 536870912
+  },
+  "limitations": [
+    "Browser profiles use a fresh owned external TMPDIR; profile/SQLite behavior on SMB remains unproven until this run. Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 1860 seconds.",
+    "Six unfinished jobs selected through existing --only; qualifier semantics unchanged; there is one 1800-second aggregate deadline rather than a new per-job cutoff. Existing qualifiers own browser/server cleanup. No physical device or two-hour endurance claim."
+  ],
+  "failure": "AssertionError('Local free storage below 200 MiB.')",
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 4,
+      "actionLimit": 1024,
+      "actionCount": 4,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 58840,
+        "ppid": 58798,
+        "pgid": 58840,
+        "uid": 502,
+        "started": "Mon Oct 19 13:09:54 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/run-final-demo-refresh-owned.mjs --run=approved --head=9dcff05887ed573a9fef4037c8d451c8043653a9 --base=403814d27c8e1dd7ba704d8f1eeb7bb6598d454f --fingerprint=cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9 --files=10273 --bytes=410435495 --emitted-preview=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh --suffix=final-emitted-403814d-9dcff0588-remaining-external-tmp --shared-port=18773 --url-port=18774 --only=mixed-webkit,sim-fresh-chromium,sim-fresh-firefox,sim-fresh-webkit,graphics-chromium,listeners-chromium",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T11:09:54.319765+00:00"
+      },
+      {
+        "pid": 58895,
+        "ppid": 58840,
+        "pgid": 58840,
+        "uid": 502,
+        "started": "Mon Oct 19 13:09:56 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/qualify-shared-demo-browser.mjs --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --browser=webkit --executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --emitted-preview=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh --port=18773 --report=.cache/native-matrix-evidence/mixed-webkit-final-emitted-403814d-9dcff0588-remaining-external-tmp.json --practice=true --localeCheck=true --lifecycle=true --cycles=12",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          58840,
+          "Mon Oct 19 13:09:54 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/run-final-demo-refresh-owned.mjs --run=approved --head=9dcff05887ed573a9fef4037c8d451c8043653a9 --base=403814d27c8e1dd7ba704d8f1eeb7bb6598d454f --fingerprint=cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9 --files=10273 --bytes=410435495 --emitted-preview=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh --suffix=final-emitted-403814d-9dcff0588-remaining-external-tmp --shared-port=18773 --url-port=18774 --only=mixed-webkit,sim-fresh-chromium,sim-fresh-firefox,sim-fresh-webkit,graphics-chromium,listeners-chromium"
+        ],
+        "observedAt": "2026-10-19T11:09:56.440886+00:00"
+      },
+      {
+        "pid": 58975,
+        "ppid": 58895,
+        "pgid": 58975,
+        "uid": 502,
+        "started": "Mon Oct 19 13:09:59 2026",
+        "argv": "bash /Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --inspector-pipe --headless --no-startup-window",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          58895,
+          "Mon Oct 19 13:09:56 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/qualify-shared-demo-browser.mjs --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --browser=webkit --executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --emitted-preview=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh --port=18773 --report=.cache/native-matrix-evidence/mixed-webkit-final-emitted-403814d-9dcff0588-remaining-external-tmp.json --practice=true --localeCheck=true --lifecycle=true --cycles=12"
+        ],
+        "observedAt": "2026-10-19T11:10:00.080557+00:00"
+      },
+      {
+        "pid": 58980,
+        "ppid": 58975,
+        "pgid": 58975,
+        "uid": 502,
+        "started": "Mon Oct 19 13:09:59 2026",
+        "argv": "/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/Playwright.app/Contents/MacOS/Playwright --inspector-pipe --headless --no-startup-window",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          58975,
+          "Mon Oct 19 13:09:59 2026",
+          502,
+          "bash /Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --inspector-pipe --headless --no-startup-window"
+        ],
+        "observedAt": "2026-10-19T11:10:00.080581+00:00"
+      }
+    ],
+    "actions": [
+      {
+        "pid": 58840,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          58840,
+          "Mon Oct 19 13:09:54 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/run-final-demo-refresh-owned.mjs --run=approved --head=9dcff05887ed573a9fef4037c8d451c8043653a9 --base=403814d27c8e1dd7ba704d8f1eeb7bb6598d454f --fingerprint=cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9 --files=10273 --bytes=410435495 --emitted-preview=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh --suffix=final-emitted-403814d-9dcff0588-remaining-external-tmp --shared-port=18773 --url-port=18774 --only=mixed-webkit,sim-fresh-chromium,sim-fresh-firefox,sim-fresh-webkit,graphics-chromium,listeners-chromium"
+        ],
+        "at": "2026-10-19T11:10:02.595249+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 58840,
+          "ppid": 58798,
+          "pgid": 58840,
+          "uid": 502,
+          "started": "Mon Oct 19 13:09:54 2026",
+          "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node .cache/run-final-demo-refresh-owned.mjs --run=approved --head=9dcff05887ed573a9fef4037c8d451c8043653a9 --base=403814d27c8e1dd7ba704d8f1eeb7bb6598d454f --fingerprint=cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9 --files=10273 --bytes=410435495 --emitted-preview=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh --suffix=final-emitted-403814d-9dcff0588-remaining-external-tmp --shared-port=18773 --url-port=18774 --only=mixed-webkit,sim-fresh-chromium,sim-fresh-firefox,sim-fresh-webkit,graphics-chromium,listeners-chromium",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      },
+      {
+        "pid": 58895,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          58895,
+          "Mon Oct 19 13:09:56 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/qualify-shared-demo-browser.mjs --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --browser=webkit --executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --emitted-preview=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh --port=18773 --report=.cache/native-matrix-evidence/mixed-webkit-final-emitted-403814d-9dcff0588-remaining-external-tmp.json --practice=true --localeCheck=true --lifecycle=true --cycles=12"
+        ],
+        "at": "2026-10-19T11:10:12.693560+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 58895,
+          "ppid": 1,
+          "pgid": 58840,
+          "uid": 502,
+          "started": "Mon Oct 19 13:09:56 2026",
+          "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/qualify-shared-demo-browser.mjs --runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs --browser=webkit --executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --emitted-preview=.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh --port=18773 --report=.cache/native-matrix-evidence/mixed-webkit-final-emitted-403814d-9dcff0588-remaining-external-tmp.json --practice=true --localeCheck=true --lifecycle=true --cycles=12",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      },
+      {
+        "pid": 58975,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          58975,
+          "Mon Oct 19 13:09:59 2026",
+          502,
+          "bash /Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh --inspector-pipe --headless --no-startup-window"
+        ],
+        "at": "2026-10-19T11:10:12.750144+00:00",
+        "result": "not signalled: exited or identity changed"
+      },
+      {
+        "pid": 58980,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          58980,
+          "Mon Oct 19 13:09:59 2026",
+          502,
+          "/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/Playwright.app/Contents/MacOS/Playwright --inspector-pipe --headless --no-startup-window"
+        ],
+        "at": "2026-10-19T11:10:12.793940+00:00",
+        "result": "not signalled: exited or identity changed"
+      }
+    ],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "7272149474f22510dd1372faec7e5ff28f54321abb6cca5adbb092fc3e84f1b2",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-remaining-external-tmp.log",
+    "byteLimit": 4194304,
+    "totalBytes": 38,
+    "writtenBytes": 38,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 38,
+    "tailSHA256": "6da17dbed9755015646607483aa7c3de9ced2f96faa713522e01b308138a9346",
+    "tail": "{\"phase\":\"start\",\"id\":\"mixed-webkit\"}\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": -15,
+  "after": {
+    "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+    "runtime": {
+      "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+      "files": 10273,
+      "bytes": 410435495
+    },
+    "buildInputs": {
+      "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+      "files": 9411,
+      "bytes": 348449477
+    },
+    "helpers": {
+      ".cache/matrix-carry-forward-9dcff0588.json": {
+        "sha256": "5c3879a69da4ed15dbcb0e626e1e107aaeb4427e1c448876149524bfd995e0cb",
+        "bytes": 4784
+      },
+      ".cache/native-matrix-evidence/restoration-webkit-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "65c724bb324df60926d867200a17f8b4b2b2df8cba677435496634c6a77a8ae1",
+        "bytes": 62984
+      },
+      ".cache/native-matrix-evidence/restoration-chromium-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "90599fa15e09ccee7d0ecf4a5b75e2be96b1debfe728999c47e3e1a43a5fde41",
+        "bytes": 54260
+      },
+      ".cache/native-matrix-evidence/restoration-firefox-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "47d8e7a48a93ea3e4d07c0a144b467343afd6602e19d3fcf460185840095fffd",
+        "bytes": 59178
+      },
+      ".cache/native-matrix-evidence/mixed-chromium-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "e0b584f0fa7819614ffd4d8199e6d3d35e4b2226891d23d24e9b07481ad1ab77",
+        "bytes": 32620
+      },
+      ".cache/native-matrix-evidence/mixed-firefox-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "288a8fab20068b03222277885ce1ab634de14227f82df1fb50be4220528f941b",
+        "bytes": 25683
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "0d888dc6eb375711c333dec344b9b5d2e1a62ba7fc7aff0a36a2e59c7e9d0d26",
+        "bytes": 29187
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.supervision.json": {
+        "sha256": "ca4c88e9a68030e9c5c24e291edb550988eaf78d98982901472c9893274482e2",
+        "bytes": 177613
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.log": {
+        "sha256": "6857adbcddb9a6bec82b03373a923e3d3bcfc0a7a44fe0cf3141b450645e6531",
+        "bytes": 1001
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.mjs.txt": {
+        "sha256": "3da84ad80c5aa679ed6fcc43192b0d5e8e82f01a08dbcff5f508effa50516730",
+        "bytes": 16059
+      },
+      ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-native-refresh.supervisor.py.txt": {
+        "sha256": "ba21ca31df72f86013e2c150873ac141b5ccc8caa3325ea1f2cd30193a5624f1",
+        "bytes": 16721
+      },
+      ".cache/native-matrix-evidence/mixed-webkit-final-emitted-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "cc4924578470105b3dca09f637cc7425be7c93cc269e5a3586180f21893d4a7c",
+        "bytes": 8332
+      },
+      ".cache/final-matrix-storage-interruption-9dcff0588.json": {
+        "sha256": "e1d67650a2de1d29bdf707941348eb96ddebc37c053cee90828df4803304c087",
+        "bytes": 867
+      },
+      ".cache/run-final-demo-refresh-owned.mjs": {
+        "sha256": "3da84ad80c5aa679ed6fcc43192b0d5e8e82f01a08dbcff5f508effa50516730",
+        "bytes": 16059
+      },
+      ".cache/run-final-demo-refresh-emitted.mjs": {
+        "sha256": "856f7669a0baa761ad036dbd4a6d8ca096d8dc4a51b589a222433d55d7516776",
+        "bytes": 16042
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "scripts/qualify-shared-demo-browser.mjs": {
+        "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+        "bytes": 18020
+      },
+      "scripts/qualify-sim-fresh-browser.mjs": {
+        "sha256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+        "bytes": 7317
+      },
+      "scripts/qualify-shared-demo-listeners.mjs": {
+        "sha256": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+        "bytes": 14755
+      },
+      "scripts/qualify-demo-restoration-browser.mjs": {
+        "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+        "bytes": 23633
+      },
+      "scripts/shared-demo-listener-probe.mjs": {
+        "sha256": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea",
+        "bytes": 5642
+      },
+      "scripts/serve-production-preview.mjs": {
+        "sha256": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+        "bytes": 13598
+      },
+      "scripts/shared-demo-browser-report.mjs": {
+        "sha256": "395200ee9930991de4cf5774005eac84a9c40fcbea925a999159bad8f71fcbc0",
+        "bytes": 4072
+      },
+      "scripts/emitted-preview.mjs": {
+        "sha256": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+        "bytes": 11434
+      },
+      "docs/qualification/shared-demos/source-freeze-latest.json": {
+        "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5",
+        "bytes": 423
+      }
+    },
+    "emitted": {
+      ".cache/shared-demos-emitted-403814d-9dcff0588-native-refresh/manifest.json": {
+        "sha256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3",
+        "bytes": 1369724
+      },
+      ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.json": {
+        "sha256": "9c0b3ea78beecf9f1a00aac5727680a05e0a4a002091914a35323d1356e466e0",
+        "bytes": 2225146
+      },
+      ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.inventory.json": {
+        "sha256": "663c9b8465f4d13d35a5b849db11dbd0ff23175d586d214733149ef233253064",
+        "bytes": 989545
+      }
+    },
+    "supervisor": {
+      "sha256": "eff3705acad8c3933d242e6c6b953d721885019bd3ebd9cf108a5451ae3454a9",
+      "bytes": 18819
+    }
+  },
+  "bindingsStable": true,
+  "result": {
+    "path": ".cache/native-matrix-evidence/browser-refresh-final-emitted-403814d-9dcff0588-remaining-external-tmp.json",
+    "sha256": "eb8d0003fb86add12ba4d6fa08ad6510dcf22c3878970ff6532741a0d5f89ea7",
+    "complete": false,
+    "jobs": 0,
+    "failure": null,
+    "allBrowserAndPreviewCleanup": true
+  },
+  "resultFailure": "AssertionError()",
+  "elapsedSeconds": 21.241088916998706,
+  "finished": "2026-10-19T11:10:15.512778+00:00"
+}

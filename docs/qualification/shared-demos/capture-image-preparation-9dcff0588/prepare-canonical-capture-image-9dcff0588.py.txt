@@ -1,0 +1,260 @@
+"""Prepare a new owned capture volume; never swap or remove the original capture."""
+from pathlib import Path
+import ast, datetime, hashlib, json, os, plistlib, re, signal, stat, subprocess, sys, threading, time, uuid
+
+root = Path.cwd().resolve()
+assert root == Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos')
+head = '9dcff05887ed573a9fef4037c8d451c8043653a9'
+external = Path('/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412')
+capture = root / '.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh'
+declaration = root / 'docs/qualification/shared-demos/source-freeze-latest.json'
+old_image = external / 'qualification.sparsebundle'
+token = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8]
+image = external / ('capture-volume-9dcff0588-' + token + '.sparsebundle')
+mount = root / ('.cache/capture-image-preparation-9dcff0588-' + token)
+report_path = root / ('.cache/capture-image-preparation-9dcff0588-' + token + '.json')
+proof_path = report_path.with_suffix('.files.json')
+assert image != old_image and not image.exists() and not mount.exists() and not report_path.exists()
+env = {**os.environ, 'GIT_NO_LAZY_FETCH': '1', 'GIT_OPTIONAL_LOCKS': '0', 'GIT_TERMINAL_PROMPT': '0'}
+owner_name = '.cache/run-endurance-emitted-final.py'
+owner_bytes = (root / owner_name).read_bytes()
+assert hashlib.sha256(owner_bytes).hexdigest() == '0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c'
+names = {'owned_process_snapshot', 'owned_process_identity', 'OwnedProcessTree', 'BoundedChildLog'}
+nodes = [n for n in ast.parse(owner_bytes).body if isinstance(n, (ast.FunctionDef, ast.ClassDef)) and n.name in names]
+assert {n.name for n in nodes} == names
+scope = dict(globals())
+exec(compile(ast.Module(body=nodes, type_ignores=[]), owner_name, 'exec'), scope)
+OwnedProcessTree, BoundedChildLog = scope['OwnedProcessTree'], scope['BoundedChildLog']
+
+def sha(body): return hashlib.sha256(body).hexdigest()
+def free(path):
+    value = os.statvfs(path)
+    return value.f_bavail * value.f_frsize
+def identity(path):
+    value = path.lstat()
+    assert stat.S_ISDIR(value.st_mode) and not path.is_symlink() and path.resolve(strict=True) == path
+    return {'device': value.st_dev, 'inode': value.st_ino, 'uid': value.st_uid, 'mode': stat.S_IMODE(value.st_mode)}
+def file_pin(path):
+    body = path.read_bytes()
+    return {'bytes': len(body), 'sha256': sha(body)}
+def git_head():
+    return subprocess.check_output(['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0', 'rev-parse', 'HEAD'], env=env, text=True, timeout=10).strip()
+
+parent_identity = identity(external)
+mount_parent_identity = identity(external.parent)
+source_identity = identity(capture)
+assert parent_identity['inode'] == 37530202 and parent_identity['uid'] == os.getuid() == 502 and parent_identity['mode'] == 0o700
+assert parent_identity['device'] == mount_parent_identity['device'] != source_identity['device']
+assert free(root) >= 200 * 1024**2 and free(external) >= 8 * 1024**3
+assert git_head() == head
+pins_before = {str(p.relative_to(root)): file_pin(p) for p in (capture / 'manifest.json', declaration)}
+assert pins_before[str((capture / 'manifest.json').relative_to(root))]['sha256'] == '7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3'
+manifest = json.loads((capture / 'manifest.json').read_bytes())
+assert manifest['sourceRevision'] == head and manifest['inventorySHA256'] == '20e51e1ae9bfd6b9916b86978e0a3b212c40724d81612b376a38ccd944621279'
+audit_path = root / manifest['auditReportPath']
+inventory_path = audit_path.with_suffix('.inventory.json')
+pins_before.update({str(p.relative_to(root)): file_pin(p) for p in (audit_path, inventory_path)})
+assert json.loads(audit_path.read_bytes())['complete'] is True
+started = time.monotonic()
+report = {'format': 'SharedDemoFreshCanonicalCaptureImagePreparationV1', 'complete': False,
+          'started': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'head': head,
+          'sourceCapture': str(capture), 'sourceIdentity': source_identity, 'sourcePins': pins_before,
+          'externalParent': {'path': str(external), **parent_identity}, 'externalMount': mount_parent_identity,
+          'image': str(image), 'oldImageNotReused': str(old_image), 'temporaryMount': str(mount),
+          'capacityBytes': 6 * 1024**3, 'filesystem': 'Journaled HFS+', 'phases': [],
+          'freeBytesBefore': {'local': free(root), 'external': free(external)},
+          'limitations': ['Preparation only: the canonical capture is neither renamed nor removed; manifest and audit bytes remain unchanged.',
+                         'Each owned system command has a polled bound and identity-scoped cleanup. Synchronous filesystem/SMB calls can delay polling; no hard end-to-end bound is asserted.',
+                         'A later canonical mount-point swap requires parent review. Actual canonical openEmittedPreview admission belongs to that separate step.',
+                         'The earlier image had an unexplained disappearance and warning. This fresh image does not establish future mount stability.']}
+active = {'registration': False, 'pending': None}
+mounted_device = None
+deadline = started + 600
+
+def stable():
+    assert identity(external) == parent_identity and identity(external.parent) == mount_parent_identity
+    assert identity(capture) == source_identity
+    assert free(root) >= 200 * 1024**2 and free(external) >= 512 * 1024**2
+    assert time.monotonic() < deadline, 'Preparation exceeded600seconds.'
+
+def interrupt(signum, frame):
+    if active['registration']:
+        active['pending'] = signum
+        return
+    report['interruptedSignal'] = signal.Signals(signum).name
+    raise InterruptedError(report['interruptedSignal'])
+signal.signal(signal.SIGINT, interrupt)
+signal.signal(signal.SIGTERM, interrupt)
+
+def command(label, argv, seconds):
+    stage = {'label': label, 'command': argv, 'timeoutSeconds': seconds, 'complete': False}
+    report['phases'].append(stage)
+    path = report_path.with_suffix('.' + label + '.log.txt')
+    assert not path.exists()
+    log = BoundedChildLog(path, byte_limit=1024*1024, tail_limit=4096)
+    child = owned = remaining = None
+    begin = time.monotonic()
+    try:
+        active['registration'] = True
+        try:
+            child = subprocess.Popen(argv, cwd=root, env=env, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, start_new_session=True)
+            owned = OwnedProcessTree(child)
+            owned.capture()
+            log.start(child.stdout)
+        finally:
+            active['registration'] = False
+            pending = active['pending']; active['pending'] = None
+            if pending is not None: interrupt(pending, None)
+        while child.poll() is None:
+            owned.capture(); owned.check_limits(); log.check_limits()
+            if time.monotonic() - begin >= seconds: raise TimeoutError(label + ' exceeded its command budget.')
+            time.sleep(.2)
+        remaining = owned.wait_clear(3)
+        if remaining:
+            stage['cleanupNeeded'] = True
+            remaining = owned.cleanup()
+    except BaseException as error:
+        stage['failure'] = repr(error)
+    finally:
+        previous_handlers = {s: signal.getsignal(s) for s in (signal.SIGINT, signal.SIGTERM)}
+        def finish_command_interrupt(signum, frame):
+            stage.setdefault('interruptedSignal', signal.Signals(signum).name)
+            report.setdefault('interruptedSignal', signal.Signals(signum).name)
+            report['complete'] = False
+        for signum in previous_handlers: signal.signal(signum, finish_command_interrupt)
+        if owned is not None:
+            if remaining is None:
+                try: remaining = owned.cleanup()
+                except BaseException as error: stage['cleanupFailure'] = repr(error)
+            stage['ownedProcesses'] = owned.evidence(remaining)
+        log.finish()
+        stage['log'] = {'path': str(path.relative_to(root)), **log.evidence()}
+        stage['exitCode'] = child.poll() if child else None
+        stage['elapsedSeconds'] = time.monotonic() - begin
+        stage['complete'] = stage['exitCode'] == 0 and stage.get('ownedProcesses', {}).get('verified') is True and not stage['ownedProcesses']['observationLimits']['exceeded'] and stage['log']['complete'] and not stage['log']['error'] and not stage['log']['limitExceeded'] and not any(stage.get(k) for k in ('failure', 'cleanupFailure', 'cleanupNeeded', 'interruptedSignal'))
+        for signum, handler in previous_handlers.items(): signal.signal(signum, handler)
+    assert stage['complete'], stage
+    return path.read_bytes()
+
+def images():
+    result = subprocess.run(['hdiutil', 'info', '-plist'], env=env, stdin=subprocess.DEVNULL, capture_output=True, timeout=20)
+    assert result.returncode == 0 and len(result.stdout) <= 1024**2
+    return plistlib.loads(result.stdout).get('images', [])
+
+def matching_image():
+    found = [item for item in images() if Path(item.get('image-path', '')) == image]
+    assert len(found) <= 1
+    return found[0] if found else None
+
+def inventory(directory):
+    rows = []
+    for current, dirs, files in os.walk(directory, followlinks=False):
+        current = Path(current)
+        for name in sorted(dirs):
+            p = current / name
+            value = p.lstat()
+            assert stat.S_ISDIR(value.st_mode) and not p.is_symlink()
+            rows.append({'path': str(p.relative_to(directory)), 'kind': 'directory', 'mode': stat.S_IMODE(value.st_mode)})
+        for name in sorted(files):
+            stable()
+            p = current / name; value = p.lstat()
+            assert stat.S_ISREG(value.st_mode) and not p.is_symlink() and value.st_uid == os.getuid()
+            body = p.read_bytes(); after = p.lstat()
+            assert (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns) == (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns)
+            rows.append({'path': str(p.relative_to(directory)), 'kind': 'file', 'mode': stat.S_IMODE(value.st_mode), 'bytes': len(body), 'sha256': sha(body)})
+    return sorted(rows, key=lambda r: r['path'])
+
+try:
+    stable()
+    report['imagesBefore'] = images()
+    assert matching_image() is None
+    source_before = inventory(capture)
+    assert sum(r['kind'] == 'file' for r in source_before) == 287
+    handles = subprocess.run(['lsof', '-n', '-P', '+D', str(capture)], capture_output=True, text=True, timeout=20)
+    assert handles.returncode == 1 and not handles.stdout and not handles.stderr, 'Capture has open handles or handle check failed.'
+    command('create', ['hdiutil', 'create', '-size', '6g', '-type', 'SPARSEBUNDLE', '-fs', 'HFS+J', '-volname', 'DemoCapture9dcff', '-nospotlight', str(image)], 120)
+    stable()
+    assert image.is_dir() and not image.is_symlink() and image.stat().st_uid == os.getuid()
+    image.chmod(0o700)
+    report['imageIdentity'] = identity(image)
+    mount.mkdir(mode=0o700)
+    report['temporaryMountUnderlyingIdentity'] = identity(mount)
+    attached = plistlib.loads(command('attach', ['hdiutil', 'attach', '-plist', '-nobrowse', '-noautoopen', '-owners', 'on', '-mountpoint', str(mount), str(image)], 90))
+    report['attach'] = attached
+    exact = matching_image()
+    assert exact is not None
+    entities = exact.get('system-entities', [])
+    mounted = [e for e in entities if e.get('mount-point') == str(mount)]
+    assert len(mounted) == 1 and mounted[0]['dev-entry'].startswith('/dev/disk')
+    mounted_device = mounted[0]['dev-entry']
+    report['mountedDevice'] = mounted_device
+    volume_identity = identity(mount)
+    assert volume_identity['device'] not in (parent_identity['device'], source_identity['device'])
+    assert volume_identity['uid'] == os.getuid()
+    report['volumeIdentity'] = volume_identity
+    report['volumeInitialEntries'] = sorted(p.name for p in mount.iterdir())
+    assert not (mount / 'manifest.json').exists() and not (mount / 'blobs').exists()
+    for row in source_before:
+        stable()
+        source = capture / row['path']; target = mount / row['path']
+        if row['kind'] == 'directory':
+            target.mkdir(mode=row['mode'])
+            target.chmod(row['mode'])
+        else:
+            body = source.read_bytes()
+            assert sha(body) == row['sha256'] and len(body) == row['bytes']
+            with target.open('xb') as output: output.write(body)
+            target.chmod(row['mode'])
+            assert stat.S_IMODE(target.stat().st_mode) == row['mode'] and file_pin(target) == {'bytes': row['bytes'], 'sha256': row['sha256']}
+    assert inventory(capture) == source_before
+    copied = []
+    for row in source_before:
+        target = mount / row['path']
+        assert not target.is_symlink() and stat.S_IMODE(target.stat().st_mode) == row['mode']
+        if row['kind'] == 'file': assert file_pin(target) == {'bytes': row['bytes'], 'sha256': row['sha256']}
+        copied.append(row)
+    assert (mount / 'manifest.json').read_bytes() == (capture / 'manifest.json').read_bytes()
+    proof_path.write_text(json.dumps({'head': head, 'source': str(capture), 'image': str(image), 'entries': copied}, indent=2) + '\n')
+    report['copyProof'] = {'path': str(proof_path.relative_to(root)), **file_pin(proof_path), 'files': sum(r['kind'] == 'file' for r in copied), 'bytes': sum(r.get('bytes', 0) for r in copied), 'allModesSizesAndHashesMatch': True, 'sourceStable': True}
+    assert identity(mount) == volume_identity and matching_image() is not None
+    command('detach', ['hdiutil', 'detach', mounted_device], 60)
+    mounted_device = None
+    assert matching_image() is None
+    assert identity(mount) == report['temporaryMountUnderlyingIdentity'] and not list(mount.iterdir())
+    mount.rmdir()
+    report['detached'] = True
+    report['temporaryMountRemoved'] = True
+    assert git_head() == head and pins_before == {name: file_pin(root / name) for name in pins_before}
+    assert identity(capture) == source_identity
+    stable()
+    report['complete'] = True
+except BaseException as error:
+    report['failure'] = repr(error)
+finally:
+    def final_interrupt(signum, frame):
+        report.setdefault('interruptedSignal', signal.Signals(signum).name)
+        report['complete'] = False
+    signal.signal(signal.SIGINT, final_interrupt)
+    signal.signal(signal.SIGTERM, final_interrupt)
+    try:
+        exact = matching_image()
+        if exact is not None:
+            owned_mounts = [e for e in exact.get('system-entities', []) if e.get('mount-point') == str(mount)]
+            assert len(owned_mounts) == 1, 'Refuse cleanup without one exact owned temporary mount.'
+            report['failureDetachNeeded'] = True
+            command('failure-detach', ['hdiutil', 'detach', owned_mounts[0]['dev-entry']], 60)
+            report['failureDetachComplete'] = matching_image() is None
+        report['imagesAfter'] = images()
+        report['originalCaptureIdentityAfter'] = identity(capture)
+        report['originalCaptureUnchanged'] = identity(capture) == source_identity and pins_before == {name: file_pin(root / name) for name in pins_before}
+        report['freeBytesAfter'] = {'local': free(root), 'external': free(external)}
+    except BaseException as error:
+        report['cleanupOrFinalInspectionFailure'] = repr(error)
+        report['complete'] = False
+    if report.get('interruptedSignal') or not report.get('originalCaptureUnchanged') or time.monotonic() >= deadline:
+        report['complete'] = False
+    report['finished'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    report['elapsedSeconds'] = time.monotonic() - started
+    report_path.write_text(json.dumps(report, indent=2) + '\n')
+    print(json.dumps({'receipt': str(report_path.relative_to(root)), 'complete': report['complete'], 'image': str(image), 'detached': report.get('detached'), 'failure': report.get('failure'), 'cleanupFailure': report.get('cleanupOrFinalInspectionFailure'), 'elapsedSeconds': report['elapsedSeconds']}))
+raise SystemExit(0 if report['complete'] else 1)

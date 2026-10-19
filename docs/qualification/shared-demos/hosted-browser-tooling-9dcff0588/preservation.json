@@ -1,0 +1,97 @@
+{
+  "at": "2026-10-19T11:50:45.172160+00:00",
+  "parentHead": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "files": [
+    {
+      "source": ".cache/hosted-browser-fallback-assessment-9dcff0588.json",
+      "path": "hosted-browser-fallback-assessment-9dcff0588.json",
+      "bytes": 10525,
+      "sha256": "7afdba031b0046a48b8a9aaefbb0da3d5d8930495127afbfab7cb7b8327c05f7"
+    },
+    {
+      "source": ".cache/hosted-browser-runner-preparation.json",
+      "path": "hosted-browser-runner-preparation.json",
+      "bytes": 1946,
+      "sha256": "8fc7be4d29a5e64bdcbb5ceb87ce755c8e6b03707485859108b2c3d937dedea9"
+    },
+    {
+      "source": ".cache/hosted-offline-port-independent-review.json",
+      "path": "hosted-offline-port-independent-review.json",
+      "bytes": 1342,
+      "sha256": "d04404307a7cc77ecfaba911fe5d66b625c0b17bf4e9f3095e9dfbfb432d1fb2"
+    },
+    {
+      "source": ".cache/hosted-offline-port-final-review.json",
+      "path": "hosted-offline-port-final-review.json",
+      "bytes": 1434,
+      "sha256": "2e9fd12d7d62c3e1662f775986d45dad6d81fb9fab53e2b20fa8b9fd618cbdfd"
+    },
+    {
+      "source": ".cache/hosted-runner-workflow-independent-review-9dcff0588.json",
+      "path": "hosted-runner-workflow-independent-review-9dcff0588.json",
+      "bytes": 2071,
+      "sha256": "7c4be03e0b46a54df4a3003ab66d4ef16c799e8978d0b030706c0f73761ef994"
+    },
+    {
+      "source": ".cache/hosted-workflow-review-root.json",
+      "path": "hosted-workflow-review-root.json",
+      "bytes": 1998,
+      "sha256": "02d51e74d04d4fa6af70614ab99f4890a1161aff9a71a8a5eebca153cb092ee0"
+    },
+    {
+      "source": ".cache/offline-port-9dcff0588-preparation.json",
+      "path": "offline-port-9dcff0588-preparation.json",
+      "bytes": 2681,
+      "sha256": "4c05e933579142e809781a261e2ad66db177ced123cfcf9688702deacf8df2b4"
+    },
+    {
+      "source": ".cache/hosted-browser-tooling-local-final-guards.tap.txt",
+      "path": "hosted-browser-tooling-local-final-guards.tap.txt",
+      "bytes": 3094,
+      "sha256": "0ead21c57ed098a2bb0266272fad5afe69d73e95f291fdff8002b1440fbd0105"
+    },
+    {
+      "source": ".cache/hosted-browser-python-root-final-guards.txt",
+      "path": "hosted-browser-python-root-final-guards.txt",
+      "bytes": 3208,
+      "sha256": "c7334912537bbc40a6e6191f4d37ed18a0a0055c2a50f12847493a17ffbae939"
+    },
+    {
+      "source": ".cache/hosted-supervisor-independent-review-9dcff0588.json",
+      "path": "hosted-supervisor-independent-review-9dcff0588.json",
+      "bytes": 2402,
+      "sha256": "18aaa966bca4d2b48887110eb2408faa664524e19edeeae5241b1155d46ca14b"
+    },
+    {
+      "source": ".cache/hosted-supervisor-independent-guards-9dcff0588.log.txt",
+      "path": "hosted-supervisor-independent-guards-9dcff0588.log.txt",
+      "bytes": 3208,
+      "sha256": "24673470d64f86c6369e891a243569a775f85b83635800e79defa86d848e0ecf"
+    },
+    {
+      "source": ".cache/hosted-browser-supervisor-final-independent-review.json",
+      "path": "hosted-browser-supervisor-final-independent-review.json",
+      "bytes": 2748,
+      "sha256": "51c838ab8bcc6ed1f4df82ca4933be8e8fe1ba3aeda41cacafe3f105da99a416"
+    },
+    {
+      "source": ".cache/hosted-browser-python-preparation-final.json",
+      "path": "hosted-browser-python-preparation-final.json",
+      "bytes": 1783,
+      "sha256": "a878921bd7b953755ec908e37439ceb8ce902de9e2cf90c0657baf829aa08dbe"
+    },
+    {
+      "source": ".cache/hosted-browser-python-preparation-final.txt",
+      "path": "hosted-browser-python-preparation-final.txt",
+      "bytes": 3381,
+      "sha256": "dd3b6c86dde6b7eb1a2a262b064af8b53d2cac00d16c5f4f8eeab9feb710fdc3"
+    },
+    {
+      "source": ".cache/hosted-browser-python-root-published-guards.txt",
+      "path": "hosted-browser-python-root-published-guards.txt",
+      "bytes": 3381,
+      "sha256": "d8461d0a3fe22953604c649a06fbecd65fa7154e51de79e77d47d3a049a8c6cc"
+    }
+  ],
+  "status": "Final reviewed tooling preparation. Eight portable Python guards pass; nine actual Linux lifetime guards remain mandatory in hosted workflow. Earlier seven-guard receipts retain their initial source scope. No new browser/build qualification is claimed."
+}

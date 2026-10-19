@@ -1,0 +1,170 @@
+import assert from 'node:assert/strict';
+import { spawn, execFileSync } from 'node:child_process';
+import { readFile, writeFile, lstat, statfs } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { buildAttemptSuffix, inspectBuildReceipt, buildStageFailure } from './final-build-wrapper-support.mjs';
+import { resolveBuildExternalTmp, prepareBuildExternalTmp, inspectBuildExternalTmp, requireBuildScratchSpace } from './final-build-external-tmp.mjs';
+
+const root = '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos';
+assert.equal(process.cwd(), root);
+const args = Object.fromEntries(process.argv.slice(2).map(value => {
+  const at = value.indexOf('=');
+  return [value.slice(2, at), value.slice(at + 1)];
+}));
+assert.equal(args.run, 'approved', 'Prepare only until root releases the CPU/source freeze.');
+assert.match(args.head ?? '', /^[a-f0-9]{40}$/);
+assert.match(args.base ?? '', /^[a-f0-9]{40}$/);
+assert.match(args.fingerprint ?? '', /^[a-f0-9]{64}$/);
+assert.ok(Number.isSafeInteger(Number(args.files)) && Number(args.files) > 0);
+assert.ok(Number.isSafeInteger(Number(args.bytes)) && Number(args.bytes) > 0);
+const expected = {
+  head: args.head,
+  base: args.base,
+  runtime: { sha256: args.fingerprint, files: Number(args.files), bytes: Number(args.bytes) },
+};
+const prefix = '.cache/final-native-refresh-evidence/';
+const attemptSuffix = buildAttemptSuffix(args.attempt);
+const suffix = `${expected.base.slice(0, 7)}-${expected.head.slice(0, 9)}${attemptSuffix}`;
+const minimumDiskBytes = 200 * 1024 * 1024;
+assert.equal(args.scratch, undefined, 'This observer keeps canonical captures internal.');
+resolveBuildExternalTmp(root, args['external-tmp']);
+const previewOutput = `.cache/shared-demos-emitted-${suffix}`;
+const reportPath = prefix + `shared-demos-build-validation-${suffix}.json`;
+const manifestPath = 'docs/qualification/shared-demos/source-freeze-latest.json';
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const git = (...args) => execFileSync('git', args, { encoding: 'utf8', env: { ...process.env, GIT_NO_LAZY_FETCH: '1' } }).trim();
+const sourceFilter = path => /\.(mjs|js|json|css|html)$/.test(path) && !path.includes('/test/') && !path.endsWith('.test.mjs') && !path.endsWith('/coverage.json');
+async function fingerprint(directories) {
+  const paths = execFileSync('rg', ['--files', ...directories], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }).trim().split('\n').filter(sourceFilter).sort();
+  const hash = createHash('sha256'); let bytes = 0;
+  for (const path of paths) { const body = await readFile(path); bytes += body.length; hash.update(path + '\0').update(createHash('sha256').update(body).digest()); }
+  return { sha256: hash.digest('hex'), files: paths.length, bytes };
+}
+const snapshot = async () => ({ head: git('rev-parse', 'HEAD'), runtime: await fingerprint(['game', 'optional-practice', 'publishing']), buildInput: await fingerprint(['scripts', 'authoring']) });
+const jobs = [
+  { name: 'main-pages', command: [process.execPath, 'scripts/qualify-demo-main-pages.mjs', `--report=${prefix}main-pages-demo-final-${suffix}.json`, `--preview-output=${previewOutput}`], receipt: `${prefix}main-pages-demo-final-${suffix}.json` },
+  { name: 'full-packaging', command: [process.execPath, 'scripts/qualify-demo-packaging.mjs', `--report=${prefix}shared-demos-packaging-${suffix}.json`], receipt: `${prefix}shared-demos-packaging-${suffix}.json` },
+  { name: 'validate', command: ['npm', 'run', 'validate'] },
+  { name: 'lint', command: ['npm', 'run', 'lint'] },
+].map(job => ({ ...job, logPath: `${prefix}final-${job.name}-${suffix}.log.txt` }));
+for (const path of [reportPath, previewOutput, ...jobs.map(job => job.logPath), ...jobs.flatMap(job => job.receipt ? [job.receipt] : [])]) {
+  try { await lstat(path); throw new Error(`Refusing existing evidence: ${path}`); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+}
+const wrapperBytes = await readFile(new URL(import.meta.url));
+const helperPath = '.cache/final-build-wrapper-support.mjs';
+const helperBytes = await readFile(helperPath);
+const scratchHelperPath = '.cache/final-build-external-tmp.mjs';
+const floorHelperPath = '.cache/final-build-scratch.mjs';
+const floorHelperBytes = await readFile(floorHelperPath);
+const scratchHelperBytes = await readFile(scratchHelperPath);
+const manifestBytes = await readFile(manifestPath);
+const manifest = JSON.parse(manifestBytes);
+assert.equal(manifest.integrationBase, expected.base);
+assert.deepEqual({ sha256: manifest.sourceFingerprint, files: manifest.files, bytes: manifest.bytes }, expected.runtime);
+const before = await snapshot();
+assert.equal(before.head, expected.head);
+assert.deepEqual(before.runtime, expected.runtime);
+const scratch = await prepareBuildExternalTmp({ root, directory: args['external-tmp'], runName: `build-tmp-${suffix}`, minimumFreeBytes: minimumDiskBytes });
+const report = { format: 'revealline-demo-final-build-validation.v2', started: new Date().toISOString(), expected,
+  attempt: args.attempt ?? null, sourceRevision: before.head, runtimeFingerprint: before.runtime, buildInputFingerprint: before.buildInput,
+  wrapper: { path: '.cache/run-final-build-native-refresh.mjs', sha256: sha(wrapperBytes) },
+  wrapperHelper: { path: helperPath, sha256: sha(helperBytes) },
+  scratchHelper: { path: scratchHelperPath, sha256: sha(scratchHelperBytes) },
+  scratch, previewOutput,
+  storageScope: 'Only TMPDIR/TMP/TEMP use the verified external child. Capture and audit remain internal under unchanged canonical admission.',
+  limitations: ['Original stage-close supervision retained; no identity-based process-cleanup claim. Synchronous external filesystem calls are not hard-preemptive.'],
+  floorHelper: { path: floorHelperPath, sha256: sha(floorHelperBytes) },
+  sourceDeclaration: { path: manifestPath, sha256: sha(manifestBytes), ...manifest },
+  materializedBuild: false, deploymentAdmission: false, complete: false, stages: [],
+  limits: { logBytesPerStage: 2 * 1024 * 1024, stopIfAvailableDiskBelowBytes: minimumDiskBytes, stopIfScratchAvailableBelowBytes: minimumDiskBytes, stageTimeoutMs: 20 * 60 * 1000 },
+};
+const save = async () => { report.updated = new Date().toISOString(); await writeFile(reportPath, JSON.stringify(report, null, 2) + '\n'); };
+await writeFile(reportPath, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
+try {
+  for (const job of jobs) {
+    const disk = await statfs(root);
+    assert.ok(disk.bavail * disk.bsize >= report.limits.stopIfAvailableDiskBelowBytes, 'Insufficient free disk for safe qualification.');
+    const scratchBefore = scratch ? await inspectBuildExternalTmp(scratch) : null;
+    if (scratchBefore) requireBuildScratchSpace(scratchBefore.availableBytes, report.limits.stopIfScratchAvailableBelowBytes);
+    const start = Date.now();
+    const row = { name: job.name, command: job.command, started: new Date().toISOString(), logPath: job.logPath, receivedLogBytes: 0, availableDiskBeforeBytes: disk.bavail * disk.bsize };
+    if (scratchBefore) row.availableScratchBeforeBytes = scratchBefore.availableBytes;
+    report.stages.push(row);
+    await save();
+    console.log(JSON.stringify({ phase: 'start', stage: job.name, sourceRevision: before.head, availableDiskBytes: row.availableDiskBeforeBytes }));
+    let log = Buffer.alloc(0), stopped = false, childClosed = false, monitoring = false;
+    const child = spawn(job.command[0], job.command.slice(1), { cwd: root, detached: true, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, GIT_NO_LAZY_FETCH: '1', NODE_DISABLE_COMPILE_CACHE: '1', ...(scratch ? { TMPDIR: scratch.tmp, TMP: scratch.tmp, TEMP: scratch.tmp } : {}) } });
+    row.pid = child.pid;
+    const stop = reason => {
+      if (stopped || childClosed) return;
+      stopped = true; row.stopReason = reason;
+      console.log(JSON.stringify({ phase: 'stop', stage: job.name, reason }));
+      try { process.kill(-child.pid, 'SIGTERM'); } catch {}
+    };
+    const timer = setTimeout(() => stop('Stage exceeded20-minute bound.'), report.limits.stageTimeoutMs);
+    const monitor = setInterval(async () => {
+      if (monitoring || childClosed) return;
+      monitoring = true;
+      try {
+        const state = await statfs(root), available = state.bavail * state.bsize;
+        row.minimumObservedDiskBytes = Math.min(row.minimumObservedDiskBytes ?? Infinity, available);
+        if (available < report.limits.stopIfAvailableDiskBelowBytes) stop('Available disk fell below200MiB.');
+        if (scratch) {
+          const state = await inspectBuildExternalTmp(scratch);
+          row.minimumObservedScratchBytes = Math.min(row.minimumObservedScratchBytes ?? Infinity, state.availableBytes);
+          if (state.availableBytes < report.limits.stopIfScratchAvailableBelowBytes) stop('Available scratch space fell below 200 MiB.');
+        }
+      } catch (error) { stop(`Disk observation failed: ${error.message}`); }
+      finally { monitoring = false; }
+    }, 30000);
+    for (const stream of ['stdout', 'stderr']) child[stream].on('data', bytes => {
+      row.receivedLogBytes += bytes.length;
+      log = Buffer.concat([log, bytes]);
+      if (log.length > report.limits.logBytesPerStage) log = log.subarray(log.length - report.limits.logBytesPerStage);
+    });
+    try {
+      const exit = await new Promise((resolve, reject) => { child.once('error', reject); child.once('close', (code, signal) => resolve({ code, signal })); });
+      row.exitCode = exit.code; row.exitSignal = exit.signal;
+    } finally { childClosed = true; clearTimeout(timer); clearInterval(monitor); }
+    row.elapsedMs = Date.now() - start;
+    row.retainedLogBytes = log.length;
+    row.logTruncated = row.receivedLogBytes !== log.length;
+    row.logSHA256 = sha(log);
+    await writeFile(job.logPath, log, { flag: 'wx' });
+    Object.assign(row, await inspectBuildReceipt(job.receipt));
+    await save();
+    console.log(JSON.stringify({ phase: 'finished', stage: job.name, exitCode: row.exitCode, elapsedMs: row.elapsedMs, receiptComplete: row.receipt?.complete }));
+    const stageFailure = buildStageFailure(row, { requiresReceipt: Boolean(job.receipt) });
+    if (stageFailure) throw new Error(stageFailure);
+  }
+  report.complete = true;
+} catch (error) {
+  report.failure = String(error.stack ?? error);
+  report.complete = false;
+  process.exitCode = 1;
+} finally {
+  const after = await snapshot();
+  report.finalSourceRevision = after.head;
+  report.finalRuntimeFingerprint = after.runtime;
+  report.finalBuildInputFingerprint = after.buildInput;
+  report.sourceStable = JSON.stringify(before) === JSON.stringify(after)
+    && sha(await readFile(manifestPath)) === sha(manifestBytes)
+    && sha(await readFile(new URL(import.meta.url))) === sha(wrapperBytes)
+    && sha(await readFile(helperPath)) === sha(helperBytes)
+    && sha(await readFile(scratchHelperPath)) === sha(scratchHelperBytes)
+    && sha(await readFile(floorHelperPath)) === sha(floorHelperBytes);
+  if (!report.sourceStable) { report.complete = false; report.failure ??= 'Source, source declaration, wrapper or HEAD changed.'; process.exitCode = 1; }
+  if (scratch) {
+    try {
+      report.finalScratch = await inspectBuildExternalTmp(scratch);
+      requireBuildScratchSpace(report.finalScratch.availableBytes, report.limits.stopIfScratchAvailableBelowBytes);
+      report.scratchStable = true;
+    } catch (error) {
+      report.scratchStable = false; report.scratchFailure = String(error?.stack ?? error).slice(0, 4096);
+      report.complete = false; report.failure ??= report.scratchFailure; process.exitCode = 1;
+    }
+  }
+  await save();
+  console.log(JSON.stringify({ phase: 'complete', reportPath, complete: report.complete, stages: report.stages.length, sourceStable: report.sourceStable, failure: report.failure ?? null }));
+}

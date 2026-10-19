@@ -1,0 +1,67 @@
+import assert from 'node:assert/strict';
+import * as nativeFS from 'node:fs/promises';
+import path from 'node:path';
+export { requireBuildScratchSpace } from './final-build-scratch.mjs';
+import { requireBuildScratchSpace } from './final-build-scratch.mjs';
+
+export const EXTERNAL_TMP_PARENT = '/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412';
+export const EXTERNAL_TMP_OWNER = 502;
+export const EXTERNAL_TMP_INODE = 37530202;
+const available = value => {
+  const bytes = value.bavail * value.bsize;
+  assert(Number.isSafeInteger(bytes) && bytes >= 0, 'Invalid filesystem capacity observation.');
+  return bytes;
+};
+export function resolveBuildExternalTmp(root, directory) {
+  assert(path.isAbsolute(root) && path.resolve(root) === root);
+  assert.equal(directory, EXTERNAL_TMP_PARENT, 'Only the exact already-owned external parent is allowed.');
+  assert(!directory.startsWith(root + path.sep) && !root.startsWith(directory + path.sep));
+  return directory;
+}
+async function parentIdentity(root, directory, {fs, uid}) {
+  resolveBuildExternalTmp(root, directory);
+  assert.equal(await fs.realpath(root), root, 'Source must retain its real path.');
+  let current=path.parse(directory).root;
+  for(const part of directory.slice(current.length).split('/')) {
+    current=path.join(current,part); const info=await fs.lstat(current);
+    assert(info.isDirectory()&&!info.isSymbolicLink(),'External ancestors must be real directories.');
+  }
+  assert.equal(await fs.realpath(directory),directory,'External parent cannot cross a symlink.');
+  const [source,parent]=await Promise.all([fs.lstat(root),fs.lstat(directory)]);
+  assert.equal(uid,EXTERNAL_TMP_OWNER,'Unexpected executing user.');
+  assert.equal(parent.uid,EXTERNAL_TMP_OWNER,'External parent owner changed.');
+  assert.equal(parent.ino,EXTERNAL_TMP_INODE,'External parent inode changed.');
+  assert.notEqual(parent.dev,source.dev,'External parent is on the source filesystem; refuse fallback.');
+  return {root,directory,sourceDevice:source.dev,device:parent.dev,parentInode:parent.ino,ownerUid:uid};
+}
+async function childIdentity(file,parent,fs) {
+  const info=await fs.lstat(file);
+  assert(info.isDirectory()&&!info.isSymbolicLink(),'Temporary child must be a real directory.');
+  assert.equal(await fs.realpath(file),file,'Temporary child cannot cross a symlink.');
+  assert.equal(info.dev,parent.device,'Temporary child changed filesystem.');
+  assert.equal(info.uid,parent.ownerUid,'Temporary child owner changed.');
+  assert.equal(info.mode&0o077,0,'Temporary child must be private.');
+  return {tmp:file,childInode:info.ino};
+}
+export async function inspectBuildExternalTmp(state,{fs=nativeFS,uid=process.getuid()}={}) {
+  const parent=await parentIdentity(state.root,state.directory,{fs,uid});
+  assert.deepEqual(parent,Object.fromEntries(Object.keys(parent).map(key=>[key,state[key]])),'External parent identity changed.');
+  const child=await childIdentity(state.tmp,parent,fs);
+  assert.equal(child.childInode,state.childInode,'Temporary child inode changed.');
+  return {availableBytes:available(await fs.statfs(state.tmp)),device:parent.device,parentInode:parent.parentInode,childInode:child.childInode};
+}
+export async function prepareBuildExternalTmp({root,directory,runName,minimumFreeBytes},{fs=nativeFS,uid=process.getuid()}={}) {
+  assert(/^build-tmp-[A-Za-z0-9][A-Za-z0-9-]{0,110}$/.test(runName),'Unsafe temporary child name.');
+  const parent=await parentIdentity(root,directory,{fs,uid});
+  requireBuildScratchSpace(available(await fs.statfs(root)),minimumFreeBytes);
+  requireBuildScratchSpace(available(await fs.statfs(directory)),minimumFreeBytes);
+  const tmp=path.join(directory,runName);
+  try {await fs.lstat(tmp);assert.fail('Refusing existing temporary child.');}
+  catch(error){if(error.code!=='ENOENT')throw error;}
+  assert.deepEqual(await parentIdentity(root,directory,{fs,uid}),parent,'External parent changed before creation.');
+  await fs.mkdir(tmp,{mode:0o700}); // Never recursive and never replace/reuse an existing directory.
+  const state={...parent,...await childIdentity(tmp,parent,fs)};
+  const check=await inspectBuildExternalTmp(state,{fs,uid});
+  requireBuildScratchSpace(check.availableBytes,minimumFreeBytes);
+  return {...state,availableBytesAtAdmission:check.availableBytes};
+}

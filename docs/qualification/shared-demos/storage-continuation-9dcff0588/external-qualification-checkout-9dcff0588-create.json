@@ -1,0 +1,235 @@
+{
+  "format": "SharedDemoExternalCheckoutCreationV1",
+  "complete": false,
+  "started": "2026-10-19T10:59:35.051229+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "originalCheckout": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos",
+  "target": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88",
+  "externalParent": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "device": 905969668,
+    "inode": 37530202,
+    "uid": 502,
+    "freeBytes": 42598400000
+  },
+  "command": [
+    "git",
+    "-c",
+    "maintenance.auto=false",
+    "-c",
+    "gc.auto=0",
+    "-c",
+    "core.hooksPath=/dev/null",
+    "worktree",
+    "add",
+    "--detach",
+    "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88",
+    "9dcff05887ed573a9fef4037c8d451c8043653a9"
+  ],
+  "timeoutSeconds": 900,
+  "cleanupGraceSeconds": 16,
+  "limitations": [
+    "Only a fresh owned detached worktree is created. The original checkout, source, capture and real Git packs remain unchanged.",
+    "The exact local commit and available objects are used; lazy fetch, network prompts, automatic maintenance and hooks are disabled.",
+    "Synchronous SMB/system calls can delay polling; no hard end-to-end timeout is claimed. Failure preserves the partial checkout for review."
+  ],
+  "watchdogExpired": true,
+  "failure": "TimeoutError('External checkout materialization exceeded900seconds.')",
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 3,
+      "actionLimit": 1024,
+      "actionCount": 5,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 47091,
+        "ppid": 47081,
+        "pgid": 47091,
+        "uid": 502,
+        "started": "Mon Oct 19 12:59:35 2026",
+        "argv": "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 -c core.hooksPath=/dev/null worktree add --detach /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88 9dcff05887ed573a9fef4037c8d451c8043653a9",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T10:59:35.117878+00:00"
+      },
+      {
+        "pid": 47095,
+        "ppid": 47091,
+        "pgid": 47091,
+        "uid": 502,
+        "started": "Mon Oct 19 12:59:35 2026",
+        "argv": "/Library/Developer/CommandLineTools/usr/libexec/git-core/git reset --hard --no-recurse-submodules",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          47091,
+          "Mon Oct 19 12:59:35 2026",
+          502,
+          "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 -c core.hooksPath=/dev/null worktree add --detach /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88 9dcff05887ed573a9fef4037c8d451c8043653a9"
+        ],
+        "observedAt": "2026-10-19T10:59:35.795000+00:00"
+      },
+      {
+        "pid": 47095,
+        "ppid": 47091,
+        "pgid": 47091,
+        "uid": 502,
+        "started": "Mon Oct 19 12:59:35 2026",
+        "argv": "<defunct>",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          47091,
+          "Mon Oct 19 12:59:35 2026",
+          502,
+          "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 -c core.hooksPath=/dev/null worktree add --detach /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88 9dcff05887ed573a9fef4037c8d451c8043653a9"
+        ],
+        "observedAt": "2026-10-19T11:14:45.692437+00:00"
+      }
+    ],
+    "actions": [
+      {
+        "pid": 47091,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          47091,
+          "Mon Oct 19 12:59:35 2026",
+          502,
+          "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 -c core.hooksPath=/dev/null worktree add --detach /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88 9dcff05887ed573a9fef4037c8d451c8043653a9"
+        ],
+        "at": "2026-10-19T11:14:35.322227+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 47091,
+          "ppid": 47081,
+          "pgid": 47091,
+          "uid": 502,
+          "started": "Mon Oct 19 12:59:35 2026",
+          "argv": "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 -c core.hooksPath=/dev/null worktree add --detach /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88 9dcff05887ed573a9fef4037c8d451c8043653a9",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      },
+      {
+        "pid": 47091,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          47091,
+          "Mon Oct 19 12:59:35 2026",
+          502,
+          "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 -c core.hooksPath=/dev/null worktree add --detach /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88 9dcff05887ed573a9fef4037c8d451c8043653a9"
+        ],
+        "at": "2026-10-19T11:14:45.437964+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 47091,
+          "ppid": 47081,
+          "pgid": 47091,
+          "uid": 502,
+          "started": "Mon Oct 19 12:59:35 2026",
+          "argv": "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 -c core.hooksPath=/dev/null worktree add --detach /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88 9dcff05887ed573a9fef4037c8d451c8043653a9",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      },
+      {
+        "pid": 47095,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          47095,
+          "Mon Oct 19 12:59:35 2026",
+          502,
+          "/Library/Developer/CommandLineTools/usr/libexec/git-core/git reset --hard --no-recurse-submodules"
+        ],
+        "at": "2026-10-19T11:14:45.480980+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 47095,
+          "ppid": 47091,
+          "pgid": 47091,
+          "uid": 502,
+          "started": "Mon Oct 19 12:59:35 2026",
+          "argv": "/Library/Developer/CommandLineTools/usr/libexec/git-core/git reset --hard --no-recurse-submodules",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      },
+      {
+        "pid": 47091,
+        "signal": "SIGKILL",
+        "expectedIdentity": [
+          47091,
+          "Mon Oct 19 12:59:35 2026",
+          502,
+          "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 -c core.hooksPath=/dev/null worktree add --detach /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88 9dcff05887ed573a9fef4037c8d451c8043653a9"
+        ],
+        "at": "2026-10-19T11:14:48.581464+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 47091,
+          "ppid": 47081,
+          "pgid": 47091,
+          "uid": 502,
+          "started": "Mon Oct 19 12:59:35 2026",
+          "argv": "/Library/Developer/CommandLineTools/usr/bin/git -c maintenance.auto=false -c gc.auto=0 -c core.hooksPath=/dev/null worktree add --detach /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88 9dcff05887ed573a9fef4037c8d451c8043653a9",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      },
+      {
+        "pid": 47095,
+        "signal": "SIGKILL",
+        "expectedIdentity": [
+          47095,
+          "Mon Oct 19 12:59:35 2026",
+          502,
+          "<defunct>"
+        ],
+        "at": "2026-10-19T11:14:48.621883+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 47095,
+          "ppid": 47091,
+          "pgid": 47091,
+          "uid": 502,
+          "started": "Mon Oct 19 12:59:35 2026",
+          "argv": "<defunct>",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      }
+    ],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "c9b20b5c77e14ea5063d156365009ce96343b596c5123ef9540da7c4391f0725",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/external-qualification-checkout-9dcff0588-create.log.txt",
+    "byteLimit": 1048576,
+    "totalBytes": 31294,
+    "writtenBytes": 31294,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 16384,
+    "tailSHA256": "2e79b686b3c452bf3a0bcf5ff141300991b90342928f8ba41ca6825a0f4c63e9",
+    "tail": "ting files:   7% (3561/49346)\rUpdating files:   7% (3568/49346)\rUpdating files:   7% (3575/49346)\rUpdating files:   7% (3582/49346)\rUpdating files:   7% (3589/49346)\rUpdating files:   7% (3596/49346)\rUpdating files:   7% (3603/49346)\rUpdating files:   7% (3610/49346)\rUpdating files:   7% (3616/49346)\rUpdating files:   7% (3624/49346)\rUpdating files:   7% (3631/49346)\rUpdating files:   7% (3638/49346)\rUpdating files:   7% (3646/49346)\rUpdating files:   7% (3653/49346)\rUpdating files:   7% (3661/49346)\rUpdating files:   7% (3668/49346)\rUpdating files:   7% (3675/49346)\rUpdating files:   7% (3683/49346)\rUpdating files:   7% (3690/49346)\rUpdating files:   7% (3697/49346)\rUpdating files:   7% (3706/49346)\rUpdating files:   7% (3714/49346)\rUpdating files:   7% (3722/49346)\rUpdating files:   7% (3730/49346)\rUpdating files:   7% (3740/49346)\rUpdating files:   7% (3748/49346)\rUpdating files:   7% (3756/49346)\rUpdating files:   7% (3763/49346)\rUpdating files:   7% (3769/49346)\rUpdating files:   7% (3775/49346)\rUpdating files:   7% (3779/49346)\rUpdating files:   7% (3785/49346)\rUpdating files:   7% (3790/49346)\rUpdating files:   7% (3795/49346)\rUpdating files:   7% (3801/49346)\rUpdating files:   7% (3808/49346)\rUpdating files:   7% (3814/49346)\rUpdating files:   7% (3820/49346)\rUpdating files:   7% (3825/49346)\rUpdating files:   7% (3831/49346)\rUpdating files:   7% (3836/49346)\rUpdating files:   7% (3843/49346)\rUpdating files:   7% (3849/49346)\rUpdating files:   7% (3856/49346)\rUpdating files:   7% (3863/49346)\rUpdating files:   7% (3870/49346)\rUpdating files:   7% (3879/49346)\rUpdating files:   7% (3888/49346)\rUpdating files:   7% (3896/49346)\rUpdating files:   7% (3904/49346)\rUpdating files:   7% (3912/49346)\rUpdating files:   7% (3919/49346)\rUpdating files:   7% (3926/49346)\rUpdating files:   7% (3933/49346)\rUpdating files:   7% (3940/49346)\rUpdating files:   7% (3945/49346)\rUpdating files:   8% (3948/49346)\rUpdating files:   8% (3954/49346)\rUpdating files:   8% (3963/49346)\rUpdating files:   8% (3971/49346)\rUpdating files:   8% (3979/49346)\rUpdating files:   8% (3986/49346)\rUpdating files:   8% (3993/49346)\rUpdating files:   8% (3999/49346)\rUpdating files:   8% (4007/49346)\rUpdating files:   8% (4014/49346)\rUpdating files:   8% (4020/49346)\rUpdating files:   8% (4027/49346)\rUpdating files:   8% (4036/49346)\rUpdating files:   8% (4043/49346)\rUpdating files:   8% (4050/49346)\rUpdating files:   8% (4057/49346)\rUpdating files:   8% (4064/49346)\rUpdating files:   8% (4072/49346)\rUpdating files:   8% (4080/49346)\rUpdating files:   8% (4085/49346)\rUpdating files:   8% (4093/49346)\rUpdating files:   8% (4102/49346)\rUpdating files:   8% (4108/49346)\rUpdating files:   8% (4118/49346)\rUpdating files:   8% (4125/49346)\rUpdating files:   8% (4132/49346)\rUpdating files:   8% (4140/49346)\rUpdating files:   8% (4148/49346)\rUpdating files:   8% (4156/49346)\rUpdating files:   8% (4166/49346)\rUpdating files:   8% (4176/49346)\rUpdating files:   8% (4185/49346)\rUpdating files:   8% (4193/49346)\rUpdating files:   8% (4202/49346)\rUpdating files:   8% (4211/49346)\rUpdating files:   8% (4218/49346)\rUpdating files:   8% (4226/49346)\rUpdating files:   8% (4234/49346)\rUpdating files:   8% (4243/49346)\rUpdating files:   8% (4252/49346)\rUpdating files:   8% (4261/49346)\rUpdating files:   8% (4269/49346)\rUpdating files:   8% (4277/49346)\rUpdating files:   8% (4287/49346)\rUpdating files:   8% (4297/49346)\rUpdating files:   8% (4306/49346)\rUpdating files:   8% (4316/49346)\rUpdating files:   8% (4325/49346)\rUpdating files:   8% (4334/49346)\rUpdating files:   8% (4343/49346)\rUpdating files:   8% (4350/49346)\rUpdating files:   8% (4358/49346)\rUpdating files:   8% (4366/49346)\rUpdating files:   8% (4375/49346)\rUpdating files:   8% (4383/49346)\rUpdating files:   8% (4391/49346)\rUpdating files:   8% (4400/49346)\rUpdating files:   8% (4407/49346)\rUpdating files:   8% (4416/49346)\rUpdating files:   8% (4425/49346)\rUpdating files:   8% (4434/49346)\rUpdating files:   9% (4442/49346)\rUpdating files:   9% (4451/49346)\rUpdating files:   9% (4460/49346)\rUpdating files:   9% (4468/49346)\rUpdating files:   9% (4476/49346)\rUpdating files:   9% (4484/49346)\rUpdating files:   9% (4493/49346)\rUpdating files:   9% (4502/49346)\rUpdating files:   9% (4510/49346)\rUpdating files:   9% (4518/49346)\rUpdating files:   9% (4525/49346)\rUpdating files:   9% (4534/49346)\rUpdating files:   9% (4542/49346)\rUpdating files:   9% (4551/49346)\rUpdating files:   9% (4559/49346)\rUpdating files:   9% (4568/49346)\rUpdating files:   9% (4576/49346)\rUpdating files:   9% (4585/49346)\rUpdating files:   9% (4594/49346)\rUpdating files:   9% (4603/49346)\rUpdating files:   9% (4612/49346)\rUpdating files:   9% (4620/49346)\rUpdating files:   9% (4628/49346)\rUpdating files:   9% (4636/49346)\rUpdating files:   9% (4645/49346)\rUpdating files:   9% (4652/49346)\rUpdating files:   9% (4661/49346)\rUpdating files:   9% (4671/49346)\rUpdating files:   9% (4680/49346)\rUpdating files:   9% (4689/49346)\rUpdating files:   9% (4697/49346)\rUpdating files:   9% (4705/49346)\rUpdating files:   9% (4714/49346)\rUpdating files:   9% (4722/49346)\rUpdating files:   9% (4731/49346)\rUpdating files:   9% (4738/49346)\rUpdating files:   9% (4745/49346)\rUpdating files:   9% (4755/49346)\rUpdating files:   9% (4764/49346)\rUpdating files:   9% (4773/49346)\rUpdating files:   9% (4781/49346)\rUpdating files:   9% (4791/49346)\rUpdating files:   9% (4799/49346)\rUpdating files:   9% (4808/49346)\rUpdating files:   9% (4818/49346)\rUpdating files:   9% (4830/49346)\rUpdating files:   9% (4841/49346)\rUpdating files:   9% (4849/49346)\rUpdating files:   9% (4859/49346)\rUpdating files:   9% (4868/49346)\rUpdating files:   9% (4877/49346)\rUpdating files:   9% (4885/49346)\rUpdating files:   9% (4893/49346)\rUpdating files:   9% (4901/49346)\rUpdating files:   9% (4909/49346)\rUpdating files:   9% (4917/49346)\rUpdating files:   9% (4925/49346)\rUpdating files:   9% (4934/49346)\rUpdating files:  10% (4935/49346)\rUpdating files:  10% (4942/49346)\rUpdating files:  10% (4950/49346)\rUpdating files:  10% (4960/49346)\rUpdating files:  10% (4969/49346)\rUpdating files:  10% (4977/49346)\rUpdating files:  10% (4985/49346)\rUpdating files:  10% (4994/49346)\rUpdating files:  10% (5003/49346)\rUpdating files:  10% (5010/49346)\rUpdating files:  10% (5018/49346)\rUpdating files:  10% (5028/49346)\rUpdating files:  10% (5039/49346)\rUpdating files:  10% (5045/49346)\rUpdating files:  10% (5053/49346)\rUpdating files:  10% (5061/49346)\rUpdating files:  10% (5070/49346)\rUpdating files:  10% (5077/49346)\rUpdating files:  10% (5084/49346)\rUpdating files:  10% (5092/49346)\rUpdating files:  10% (5101/49346)\rUpdating files:  10% (5108/49346)\rUpdating files:  10% (5115/49346)\rUpdating files:  10% (5122/49346)\rUpdating files:  10% (5130/49346)\rUpdating files:  10% (5135/49346)\rUpdating files:  10% (5142/49346)\rUpdating files:  10% (5150/49346)\rUpdating files:  10% (5158/49346)\rUpdating files:  10% (5165/49346)\rUpdating files:  10% (5173/49346)\rUpdating files:  10% (5181/49346)\rUpdating files:  10% (5192/49346)\rUpdating files:  10% (5199/49346)\rUpdating files:  10% (5207/49346)\rUpdating files:  10% (5216/49346)\rUpdating files:  10% (5225/49346)\rUpdating files:  10% (5232/49346)\rUpdating files:  10% (5242/49346)\rUpdating files:  10% (5251/49346)\rUpdating files:  10% (5260/49346)\rUpdating files:  10% (5268/49346)\rUpdating files:  10% (5278/49346)\rUpdating files:  10% (5288/49346)\rUpdating files:  10% (5297/49346)\rUpdating files:  10% (5306/49346)\rUpdating files:  10% (5317/49346)\rUpdating files:  10% (5326/49346)\rUpdating files:  10% (5336/49346)\rUpdating files:  10% (5347/49346)\rUpdating files:  10% (5357/49346)\rUpdating files:  10% (5365/49346)\rUpdating files:  10% (5374/49346)\rUpdating files:  10% (5382/49346)\rUpdating files:  10% (5390/49346)\rUpdating files:  10% (5398/49346)\rUpdating files:  10% (5407/49346)\rUpdating files:  10% (5416/49346)\rUpdating files:  10% (5425/49346)\rUpdating files:  11% (5429/49346)\rUpdating files:  11% (5432/49346)\rUpdating files:  11% (5441/49346)\rUpdating files:  11% (5449/49346)\rUpdating files:  11% (5458/49346)\rUpdating files:  11% (5466/49346)\rUpdating files:  11% (5474/49346)\rUpdating files:  11% (5483/49346)\rUpdating files:  11% (5492/49346)\rUpdating files:  11% (5501/49346)\rUpdating files:  11% (5510/49346)\rUpdating files:  11% (5519/49346)\rUpdating files:  11% (5526/49346)\rUpdating files:  11% (5534/49346)\rUpdating files:  11% (5543/49346)\rUpdating files:  11% (5552/49346)\rUpdating files:  11% (5559/49346)\rUpdating files:  11% (5568/49346)\rUpdating files:  11% (5576/49346)\rUpdating files:  11% (5583/49346)\rUpdating files:  11% (5593/49346)\rUpdating files:  11% (5602/49346)\rUpdating files:  11% (5610/49346)\rUpdating files:  11% (5619/49346)\rUpdating files:  11% (5626/49346)\rUpdating files:  11% (5634/49346)\rUpdating files:  11% (5642/49346)\rUpdating files:  11% (5651/49346)\rUpdating files:  11% (5659/49346)\rUpdating files:  11% (5667/49346)\rUpdating files:  11% (5677/49346)\rUpdating files:  11% (5686/49346)\rUpdating files:  11% (5695/49346)\rUpdating files:  11% (5703/49346)\rUpdating files:  11% (5712/49346)\rUpdating files:  11% (5721/49346)\rUpdating files:  11% (5730/49346)\rUpdating files:  11% (5738/49346)\rUpdating files:  11% (5746/49346)\rUpdating files:  11% (5755/49346)\rUpdating files:  11% (5763/49346)\rUpdating files:  11% (5772/49346)\rUpdating files:  11% (5781/49346)\rUpdating files:  11% (5790/49346)\rUpdating files:  11% (5797/49346)\rUpdating files:  11% (5808/49346)\rUpdating files:  11% (5817/49346)\rUpdating files:  11% (5827/49346)\rUpdating files:  11% (5835/49346)\rUpdating files:  11% (5845/49346)\rUpdating files:  11% (5854/49346)\rUpdating files:  11% (5864/49346)\rUpdating files:  11% (5874/49346)\rUpdating files:  11% (5884/49346)\rUpdating files:  11% (5893/49346)\rUpdating files:  11% (5902/49346)\rUpdating files:  11% (5909/49346)\rUpdating files:  11% (5917/49346)\rUpdating files:  12% (5922/49346)\rUpdating files:  12% (5925/49346)\rUpdating files:  12% (5935/49346)\rUpdating files:  12% (5944/49346)\rUpdating files:  12% (5953/49346)\rUpdating files:  12% (5962/49346)\rUpdating files:  12% (5969/49346)\rUpdating files:  12% (5977/49346)\rUpdating files:  12% (5985/49346)\rUpdating files:  12% (5994/49346)\rUpdating files:  12% (6002/49346)\rUpdating files:  12% (6011/49346)\rUpdating files:  12% (6019/49346)\rUpdating files:  12% (6028/49346)\rUpdating files:  12% (6037/49346)\rUpdating files:  12% (6045/49346)\rUpdating files:  12% (6053/49346)\rUpdating files:  12% (6062/49346)\rUpdating files:  12% (6071/49346)\rUpdating files:  12% (6081/49346)\rUpdating files:  12% (6089/49346)\rUpdating files:  12% (6097/49346)\rUpdating files:  12% (6106/49346)\rUpdating files:  12% (6114/49346)\rUpdating files:  12% (6123/49346)\rUpdating files:  12% (6131/49346)\rUpdating files:  12% (6140/49346)\rUpdating files:  12% (6148/49346)\rUpdating files:  12% (6157/49346)\rUpdating files:  12% (6164/49346)\rUpdating files:  12% (6172/49346)\rUpdating files:  12% (6181/49346)\rUpdating files:  12% (6189/49346)\rUpdating files:  12% (6198/49346)\rUpdating files:  12% (6205/49346)\rUpdating files:  12% (6215/49346)\rUpdating files:  12% (6224/49346)\rUpdating files:  12% (6233/49346)\rUpdating files:  12% (6240/49346)\rUpdating files:  12% (6247/49346)\rUpdating files:  12% (6255/49346)\rUpdating files:  12% (6264/49346)\rUpdating files:  12% (6273/49346)\rUpdating files:  12% (6282/49346)\rUpdating files:  12% (6291/49346)\rUpdating files:  12% (6300/49346)\rUpdating files:  12% (6308/49346)\rUpdating files:  12% (6318/49346)\rUpdating files:  12% (6326/49346)\rUpdating files:  12% (6336/49346)\rUpdating files:  12% (6345/49346)\rUpdating files:  12% (6353/49346)\rUpdating files:  12% (6361/49346)\rUpdating files:  12% (6371/49346)\rUpdating files:  12% (6380/49346)\rUpdating files:  12% (6390/49346)\rUpdating files:  12% (6399/49346)\rUpdating files:  12% (6407/49346)\rUpdating files:  13% (6415/49346)\rUpdating files:  13% (6416/49346)\rUpdating files:  13% (6424/49346)\rUpdating files:  13% (6433/49346)\rUpdating files:  13% (6442/49346)\rUpdating files:  13% (6451/49346)\rUpdating files:  13% (6458/49346)\rUpdating files:  13% (6466/49346)\rUpdating files:  13% (6474/49346)\rUpdating files:  13% (6483/49346)\rUpdating files:  13% (6489/49346)\rUpdating files:  13% (6496/49346)\rUpdating files:  13% (6504/49346)\rUpdating files:  13% (6512/49346)\rUpdating files:  13% (6521/49346)\rUpdating files:  13% (6529/49346)\rUpdating files:  13% (6536/49346)\rUpdating files:  13% (6542/49346)\rUpdating files:  13% (6548/49346)\rUpdating files:  13% (6558/49346)\rUpdating files:  13% (6565/49346)\rUpdating files:  13% (6574/49346)\rUpdating files:  13% (6579/49346)\rUpdating files:  13% (6584/49346)\rUpdating files:  13% (6591/49346)\rUpdating files:  13% (6600/49346)\rUpdating files:  13% (6606/49346)\rUpdating files:  13% (6612/49346)\rUpdating files:  13% (6621/49346)\rUpdating files:  13% (6630/49346)\rUpdating files:  13% (6637/49346)\rUpdating files:  13% (6645/49346)\rUpdating files:  13% (6655/49346)\rUpdating files:  13% (6665/49346)\rUpdating files:  13% (6674/49346)\rUpdating files:  13% (6678/49346)\rUpdating files:  13% (6683/49346)\rUpdating files:  13% (6689/49346)\rUpdating files:  13% (6698/49346)\rUpdating files:  13% (6707/49346)\rUpdating files:  13% (6716/49346)\rUpdating files:  13% (6723/49346)\rUpdating files:  13% (6732/49346)\rUpdating files:  13% (6740/49346)\rUpdating files:  13% (6748/49346)\rUpdating files:  13% (6757/49346)\rUpdating files:  13% (6768/49346)\rUpdating files:  13% (6775/49346)\rUpdating files:  13% (6784/49346)\rUpdating files:  13% (6792/49346)\rUpdating files:  13% (6802/49346)\rUpdating files:  13% (6812/49346)\rUpdating files:  13% (6822/49346)\rUpdating files:  13% (6830/49346)\rUpdating files:  13% (6840/49346)\rUpdating files:  13% (6849/49346)\rUpdating files:  13% (6859/49346)\rUpdating files:  13% (6869/49346)\rUpdating files:  13% (6879/49346)\rUpdating files:  13% (6887/49346)\rUpdating files:  13% (6896/49346)\rUpdating files:  13% (6904/49346)\rUpdating files:  14% (6909/49346)\rUpdating files:  14% (6912/49346)\rUpdating files:  14% (6920/49346)\rUpdating files:  14% (6928/49346)\rUpdating files:  14% (6936/49346)\rUpdating files:  14% (6944/49346)\rUpdating files:  14% (6953/49346)\rUpdating files:  14% (6962/49346)\rUpdating files:  14% (6971/49346)\rUpdating files:  14% (6980/49346)\rUpdating files:  14% (6988/49346)\rUpdating files:  14% (6995/49346)\rUpdating files:  14% (7003/49346)\rUpdating files:  14% (7012/49346)\rUpdating files:  14% (7021/49346)\rUpdating files:  14% (7030/49346)\rUpdating files:  14% (7039/49346)\rUpdating files:  14% (7045/49346)\rUpdating files:  14% (7047/49346)\rUpdating files:  14% (7050/49346)\rUpdating files:  14% (7057/49346)\rUpdating files:  14% (7063/49346)\rUpdating files:  14% (7071/49346)\rUpdating files:  14% (7077/49346)\rUpdating files:  14% (7080/49346)\rUpdating files:  14% (7082/49346)\rUpdating files:  14% (7084/49346)\rUpdating files:  14% (7087/49346)\rUpdating files:  14% (7090/49346)\rUpdating files:  14% (7097/49346)\rUpdating files:  14% (7106/49346)\rUpdating files:  14% (7115/49346)\rUpdating files:  14% (7124/49346)\rUpdating files:  14% (7131/49346)\rUpdating files:  14% (7140/49346)\rUpdating files:  14% (7147/49346)\rUpdating files:  14% (7156/49346)\rUpdating files:  14% (7165/49346)\rUpdating files:  14% (7175/49346)\rUpdating files:  14% (7185/49346)\rUpdating files:  14% (7194/49346)\rUpdating files:  14% (7202/49346)\rUpdating files:  14% (7211/49346)\rUpdating files:  14% (7219/49346)\rUpdating files:  14% (7227/49346)\rUpdating files:  14% (7237/49346)\rUpdating files:  14% (7245/49346)\rUpdating files:  14% (7254/49346)\rUpdating files:  14% (7263/49346)\rUpdating files:  14% (7273/49346)\rUpdating files:  14% (7282/49346)\rUpdating files:  14% (7291/49346)\rUpdating files:  14% (7300/49346)\rUpdating files:  14% (7309/49346)\rUpdating files:  14% (7317/49346)\rUpdating files:  14% (7327/49346)\rUpdating files:  14% (7338/49346)\rUpdating files:  14% (7348/49346)\rUpdating files:  14% (7356/49346)\rUpdating files:  14% (7364/49346)\rUpdating files:  14% (7371/49346)\rUpdating files:  14% (7379/49346)\rUpdating files:  14% (7387/49346)\rUpdating files:  14% (7396/49346)\rUpdating files:  15% (7402/49346)\rUpdating files:  15% (7403/49346)\rUpdating files:  15% (7409/49346)\rUpdating files:  15% (7417/49346)\rUpdating files:  15% (7424/49346)\rUpdating files:  15% (7432/49346)\r",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": -9,
+  "originalHeadAfter": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "elapsedSeconds": 913.7834768339999,
+  "finished": "2026-10-19T11:14:48.838447+00:00"
+}

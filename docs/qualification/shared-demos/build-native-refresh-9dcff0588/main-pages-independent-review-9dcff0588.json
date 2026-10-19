@@ -1,0 +1,79 @@
+{
+  "format": "SharedDemoMainPagesIndependentAuditV1",
+  "complete": true,
+  "reviewedAt": "2026-10-19T10:54:38.488774+00:00",
+  "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "integrationBase": "403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+  "audit": {
+    "path": ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.json",
+    "bytes": 2225146,
+    "sha256": "9c0b3ea78beecf9f1a00aac5727680a05e0a4a002091914a35323d1356e466e0"
+  },
+  "captureManifest": {
+    "path": ".cache/shared-demos-emitted-403814d-9dcff0588-native-refresh/manifest.json",
+    "bytes": 1369724,
+    "sha256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3"
+  },
+  "inventoryFile": {
+    "path": ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.inventory.json",
+    "bytes": 989545,
+    "sha256": "663c9b8465f4d13d35a5b849db11dbd0ff23175d586d214733149ef233253064"
+  },
+  "semanticInventorySHA256": "20e51e1ae9bfd6b9916b86978e0a3b212c40724d81612b376a38ccd944621279",
+  "declaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "bytes": 423,
+    "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5"
+  },
+  "runtime": {
+    "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "files": 10273,
+    "bytes": 410435495
+  },
+  "buildInputs": {
+    "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+    "files": 9411,
+    "bytes": 348449477
+  },
+  "capture": {
+    "files": 6229,
+    "sourceFiles": 5937,
+    "deltaFiles": 292,
+    "deltaBlobs": 286,
+    "deltaBytes": 142165892,
+    "allBodyPathsAndSizesChecked": true,
+    "blobBodiesIndependentlyRehashed": false
+  },
+  "required": {
+    "payloadsAndDiagnostics": 2744,
+    "missingPayloads": 0,
+    "nativePaths": 128,
+    "missingNative": 0,
+    "literalModuleClosure": 412,
+    "missingModules": 0,
+    "offlineRequiredPaths": 2303,
+    "offlineCoreFiles": 1752,
+    "offlineSelectedBytes": 456291844,
+    "everyOfflineDescriptorMatchesInventory": true
+  },
+  "capacity": {
+    "finalStaged": {
+      "files": 6229,
+      "bytes": 967468908,
+      "headroomBytes": 12531092,
+      "overlayFiles": 4,
+      "metadataFiles": 4
+    },
+    "independentlyRecomputedGNUtarModelBytes": 972666880,
+    "modeledHeadroomBytes": 7333120,
+    "unchangedLimitBytes": 980000000,
+    "actualUploadedArtifact": false
+  },
+  "method": "Recomputed required payload/native/offline path coverage from current catalogs and receipts; checked every capture/source body path and byte size; independently hashed and compared capture/inventory/audit/declaration metadata and rederived GNU tar model. No full source-tree or blob-body rehash, simulation or browser run.",
+  "limitations": [
+    "Exact source/payload body hashes and source/build stability were measured by the pinned completed main-pages qualifier; this audit checks their reported identities and semantic inventory without repeating all bytes.",
+    "This local archive model does not constitute an actual uploaded artifact or publication/deployment admission.",
+    "Ordinary child-close build supervision is separate from exact identity-owned package/process cleanup.",
+    "Actual full-core browser offline installation, browser matrix and physical/human acceptance remain independent gates."
+  ]
+}

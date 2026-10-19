@@ -1,0 +1,20 @@
+from pathlib import Path
+import datetime,hashlib,json,os,stat,subprocess,time,uuid
+root=Path.cwd();head='9dcff05887ed573a9fef4037c8d451c8043653a9';parent=Path('/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412');env={**os.environ,'GIT_NO_LAZY_FETCH':'1','GIT_TERMINAL_PROMPT':'0','GIT_OPTIONAL_LOCKS':'0','GIT_LFS_SKIP_SMUDGE':'1'}
+git=['git','-c','maintenance.auto=false','-c','gc.auto=0','-c','core.hooksPath=/dev/null'];started=time.monotonic()
+assert subprocess.check_output([*git,'rev-parse','HEAD'],env=env,text=True,timeout=10).strip()==head
+s=parent.lstat();assert parent.resolve()==parent and parent.is_dir() and not parent.is_symlink() and s.st_uid==502 and s.st_ino==37530202 and s.st_dev!=root.stat().st_dev
+v=os.statvfs(parent);assert v.f_bavail*v.f_frsize>=4*1024**3
+body=subprocess.check_output([*git,'ls-tree','-r','-z',head],env=env,timeout=45);rows=[]
+for raw in body.split(b'\0'):
+ if not raw:continue
+ meta,name=raw.split(b'\t',1);mode,kind,oid=meta.decode().split();rows.append({'mode':mode,'kind':kind,'oid':oid,'path':name.decode()})
+objects=sorted({r['oid'] for r in rows if r['kind']=='blob'});result=subprocess.run([*git,'cat-file','--batch-check=%(objectname) %(objecttype) %(objectsize)'],input='\n'.join(objects)+'\n',env=env,text=True,capture_output=True,timeout=45);assert result.returncode==0,result.stderr[:3000]
+missing=[];object_bytes=0
+for line in result.stdout.splitlines():
+ fields=line.split()
+ if fields[-1]=='missing':missing.append(fields[0])
+ else:assert fields[1]=='blob';object_bytes+=int(fields[2])
+stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ');target=parent/f'qualification-checkout-9dcff0588-{stamp}-{uuid.uuid4().hex[:8]}';assert not target.exists()
+report={'format':'SharedDemoExternalCheckoutPreflightV1','complete':not missing,'head':head,'source':str(root),'target':str(target),'externalParent':{'path':str(parent),'device':s.st_dev,'inode':s.st_ino,'uid':s.st_uid,'freeBytes':v.f_bavail*v.f_frsize},'trackedEntries':len(rows),'uniqueBlobObjects':len(objects),'uniqueBlobBytes':object_bytes,'treeListingSHA256':hashlib.sha256(body).hexdigest(),'missingBlobObjects':missing,'missingBlobPaths':[r['path'] for r in rows if r['oid'] in set(missing)],'nonBlobEntries':[r for r in rows if r['kind']!='blob'],'symlinks':[r['path'] for r in rows if r['mode']=='120000'],'elapsedSeconds':time.monotonic()-started,'noFetchOrCheckoutYet':True,'environmentGuards':{'GIT_NO_LAZY_FETCH':'1','maintenance.auto':False,'gc.auto':0,'hooks':'/dev/null'}}
+p=root/'.cache/external-qualification-checkout-9dcff0588-preflight.json';assert not p.exists();p.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:report[k] for k in ['complete','target','trackedEntries','uniqueBlobObjects','uniqueBlobBytes','elapsedSeconds']}));print(json.dumps({'missingObjects':len(missing),'missingPaths':report['missingBlobPaths'][:15],'nonBlobEntries':len(report['nonBlobEntries']),'symlinks':len(report['symlinks'])}))

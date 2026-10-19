@@ -1,0 +1,184 @@
+name: Shared demo browser qualification
+
+on:
+  pull_request:
+    paths:
+      - 'game/**'
+      - 'optional-practice/**'
+      - 'publishing/**'
+      - 'scripts/**'
+      - 'authoring/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'docs/qualification/shared-demos/source-freeze-latest.json'
+      - '.github/workflows/shared-demo-browser-qualification.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: shared-demo-browser-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  emitted-browser-qualification:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      DEMO_HEAD: ${{ github.event.pull_request.head.sha }}
+      GIT_NO_LAZY_FETCH: '1'
+      NODE_DISABLE_COMPILE_CACHE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 2
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Prepare an isolated qualification workspace
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$DEMO_HEAD"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          mkdir -p .cache
+          mkdir .cache/hosted-demo-browser
+          mkdir -m 700 "$RUNNER_TEMP/shared-demo-playwright" "$RUNNER_TEMP/shared-demo-browser-tmp"
+          {
+            echo "DEMO_PLAYWRIGHT=$RUNNER_TEMP/shared-demo-playwright/node_modules/playwright/index.mjs"
+            echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/shared-demo-browsers"
+            echo "TMPDIR=$RUNNER_TEMP/shared-demo-browser-tmp"
+            echo "TMP=$RUNNER_TEMP/shared-demo-browser-tmp"
+            echo "TEMP=$RUNNER_TEMP/shared-demo-browser-tmp"
+          } >> "$GITHUB_ENV"
+          df -k . "$RUNNER_TEMP" > .cache/hosted-demo-browser/storage-before.txt
+      - name: Install locked build dependencies and the pinned browser tooling
+        timeout-minutes: 5
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 180s npm ci --no-audit --no-fund
+          timeout --signal=TERM --kill-after=10s 90s npm install --prefix "$RUNNER_TEMP/shared-demo-playwright" --no-package-lock --ignore-scripts --no-audit --no-fund playwright@1.62.1
+          test -z "$(git status --porcelain --untracked-files=no)"
+      - name: Install Chromium, Firefox and WebKit on this runner
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          timeout --signal=TERM --kill-after=10s 9m node "$RUNNER_TEMP/shared-demo-playwright/node_modules/playwright/cli.js" install --with-deps chromium firefox webkit 2>&1 | head -c 4194305 > .cache/hosted-demo-browser/browser-install.log
+          statuses=("${PIPESTATUS[@]}")
+          set -e
+          test "$(wc -c < .cache/hosted-demo-browser/browser-install.log)" -le 4194304
+          test "${statuses[0]}" -eq 0
+          test "${statuses[1]}" -eq 0
+      - name: Verify supervisor and offline-storage guards
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test --test-concurrency=1 scripts/test-qualify-shared-demo-hosted-browser.mjs scripts/test-shared-demo-offline-storage.mjs
+          python3 scripts/test-qualify-shared-demo-hosted-browser.py
+      - name: Pin the source and installed tooling before capture
+        timeout-minutes: 2
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          import { createHash } from 'node:crypto';
+          import { appendFile, readFile, statfs, writeFile } from 'node:fs/promises';
+          import path from 'node:path';
+          import { fingerprintDemoSources } from './scripts/demo-source-fingerprint.mjs';
+          const root = process.cwd();
+          const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
+          assert.match(process.env.DEMO_HEAD, /^[a-f0-9]{40}$/);
+          assert.equal(git('rev-parse', 'HEAD'), process.env.DEMO_HEAD);
+          assert.equal(git('status', '--porcelain', '--untracked-files=no'), '');
+          assert.equal(process.version, 'v22.13.1');
+          assert.equal(process.platform, 'linux');
+          assert.equal(process.arch, 'x64');
+          const declaration = JSON.parse(await readFile('docs/qualification/shared-demos/source-freeze-latest.json'));
+          assert.match(declaration.integrationBase, /^[a-f0-9]{40}$/);
+          const runtime = await fingerprintDemoSources(root);
+          assert.equal(runtime.sha256, declaration.sourceFingerprint);
+          const build = await fingerprintDemoSources(root, ['scripts', 'authoring']);
+          const toolingRoot = path.join(process.env.RUNNER_TEMP, 'shared-demo-playwright/node_modules');
+          const files = ['playwright/package.json', 'playwright-core/package.json', 'playwright-core/browsers.json'];
+          const tooling = [];
+          for (const name of files) {
+            const bytes = await readFile(path.join(toolingRoot, name));
+            const value = JSON.parse(bytes);
+            if (name.endsWith('/package.json')) assert.equal(value.version, '1.62.1');
+            tooling.push({ path: name, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'), value });
+          }
+          const disk = await statfs(root);
+          const availableBytes = disk.bavail * disk.bsize;
+          const proof = { format: 'SharedDemoHostedPreflightV1', head: process.env.DEMO_HEAD,
+            integrationBase: declaration.integrationBase, runtime, build, node: process.version,
+            platform: process.platform, arch: process.arch, tooling, availableBytes, complete: availableBytes >= 6 * 1024 ** 3 };
+          await writeFile('.cache/hosted-demo-browser/preflight.json', JSON.stringify(proof, null, 2) + '\n', { flag: 'wx' });
+          assert(proof.complete, 'Six GiB of free runner storage is required before capture; no existing files are removed.');
+          await appendFile(process.env.GITHUB_ENV, `DEMO_RUNTIME_SHA=${runtime.sha256}\nDEMO_BASE=${declaration.integrationBase}\n`);
+          NODE
+      - name: Build and admit a fresh canonical emitted capture
+        id: capture
+        timeout-minutes: 12
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The capture retains its original stage timeout semantics. Exact owned
+          # process supervision is separately required for every browser phase.
+          set +e
+          timeout --signal=TERM --kill-after=10s 11m node scripts/qualify-demo-main-pages.mjs --report=.cache/hosted-demo-browser/main-pages.json --preview-output=.cache/hosted-demo-emitted 2>&1 | head -c 4194305 > .cache/hosted-demo-browser/main-pages.log
+          statuses=("${PIPESTATUS[@]}")
+          set -e
+          test "$(wc -c < .cache/hosted-demo-browser/main-pages.log)" -le 4194304
+          test "${statuses[0]}" -eq 0
+          test "${statuses[1]}" -eq 0
+          test "$(git rev-parse HEAD)" = "$DEMO_HEAD"
+          test -z "$(git status --porcelain --untracked-files=no)"
+      - name: Qualify all eleven emitted browser jobs
+        timeout-minutes: 32
+        run: >-
+          python3 scripts/qualify-shared-demo-hosted-browser.py
+          --node="$(command -v node)" --runtime="$DEMO_PLAYWRIGHT"
+          --head="$DEMO_HEAD" --base="$DEMO_BASE" --fingerprint="$DEMO_RUNTIME_SHA"
+          --emitted-preview=.cache/hosted-demo-emitted
+          --report=.cache/hosted-demo-browser/matrix.json --phase=matrix
+      - name: Qualify Survival Fresh and both reviewed Solo performances in all engines
+        timeout-minutes: 32
+        run: >-
+          python3 scripts/qualify-shared-demo-hosted-browser.py
+          --node="$(command -v node)" --runtime="$DEMO_PLAYWRIGHT"
+          --head="$DEMO_HEAD" --base="$DEMO_BASE" --fingerprint="$DEMO_RUNTIME_SHA"
+          --emitted-preview=.cache/hosted-demo-emitted
+          --report=.cache/hosted-demo-browser/additional.json --phase=additional
+      - name: Qualify the actual emitted worker and installed-offline playback
+        timeout-minutes: 11
+        run: >-
+          python3 scripts/qualify-shared-demo-hosted-browser.py
+          --node="$(command -v node)" --runtime="$DEMO_PLAYWRIGHT"
+          --head="$DEMO_HEAD" --base="$DEMO_BASE" --fingerprint="$DEMO_RUNTIME_SHA"
+          --emitted-preview=.cache/hosted-demo-emitted
+          --report=.cache/hosted-demo-browser/offline.json --phase=offline
+      - name: Retain exact-source reports and bounded incomplete diagnostics
+        if: ${{ always() }}
+        timeout-minutes: 3
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: shared-demo-browser-${{ github.event.pull_request.head.sha }}-${{ github.run_attempt }}
+          path: |
+            .cache/hosted-demo-browser/
+            .cache/hosted-demo-emitted/manifest.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7

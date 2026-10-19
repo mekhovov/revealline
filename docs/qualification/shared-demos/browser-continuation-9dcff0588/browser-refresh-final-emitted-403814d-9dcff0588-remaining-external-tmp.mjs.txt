@@ -1,0 +1,245 @@
+import assert from 'node:assert/strict';
+import { spawn, execFileSync } from 'node:child_process';
+import { readFile, lstat } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import { writeQualificationReport } from '../scripts/shared-demo-browser-report.mjs';
+import { startProductionPreview } from '../scripts/serve-production-preview.mjs';
+
+const root = '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos';
+assert.equal(process.cwd(), root);
+
+const args = Object.fromEntries(process.argv.slice(2).map(value => {
+  const at = value.indexOf('=');
+  return [value.slice(2, at), value.slice(at + 1)];
+}));
+assert.equal(args.run, 'approved', 'Await explicit CPU/browser release before running qualification.');
+assert.ok(args['emitted-preview'], 'Every job requires an exact emitted capture.');
+assert.ok(!Object.hasOwn(args, 'url'), 'This runner never accepts a source preview URL.');
+const runtime = '/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs';
+const executables = {
+  chromium: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  firefox: '/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox',
+  webkit: '/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh',
+};
+const evidence = '.cache/native-matrix-evidence/';
+const suffix = args.suffix ?? 'final-emitted-dd337c8-2b8591448';
+assert.match(suffix, /^[a-z0-9-]+$/);
+const reportPath = evidence + `browser-refresh-${suffix}.json`;
+const sharedPreviewPort = Number(args['shared-port'] ?? 18773);
+const urlPreviewPort = Number(args['url-port'] ?? 18774);
+for (const port of [sharedPreviewPort, urlPreviewPort]) assert.ok(Number.isSafeInteger(port) && port > 1024 && port <= 65535);
+assert.notEqual(sharedPreviewPort, urlPreviewPort);
+const manifestPath = 'docs/qualification/shared-demos/source-freeze-latest.json';
+const manifestBytes = await readFile(manifestPath);
+const manifest = JSON.parse(manifestBytes);
+// Explicit pinned candidate only; source declaration and full tree are checked below.
+const authoritative = {
+  head: args.head,
+  base: args.base,
+  fingerprint: args.fingerprint,
+  files: Number(args.files),
+  bytes: Number(args.bytes),
+};
+assert.match(authoritative.head ?? '', /^[a-f0-9]{40}$/);
+assert.match(authoritative.base ?? '', /^[a-f0-9]{40}$/);
+assert.match(authoritative.fingerprint ?? '', /^[a-f0-9]{64}$/);
+assert.ok(authoritative.head && authoritative.fingerprint, 'Await final source freeze and explicit CPU/browser release.');
+assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), authoritative.head, 'Held HEAD must match.');
+assert.equal(manifest.integrationBase, authoritative.base);
+assert.equal(manifest.sourceFingerprint, authoritative.fingerprint);
+assert.equal(manifest.files, authoritative.files);
+assert.equal(manifest.bytes, authoritative.bytes);
+const sha = value => createHash('sha256').update(value).digest('hex');
+const jobs = [];
+const add = (id, script, engine, extra = []) => jobs.push({ id, script, engine, extra, reportPath: evidence + `${id}-${suffix}.json` });
+for (const engine of ['chromium', 'firefox', 'webkit'])
+  add(`mixed-${engine}`, 'scripts/qualify-shared-demo-browser.mjs', engine,
+    ['--practice=true', '--localeCheck=true', '--lifecycle=true', '--cycles=12']);
+for (const engine of ['chromium', 'firefox', 'webkit'])
+  add(`sim-fresh-${engine}`, 'scripts/qualify-sim-fresh-browser.mjs', engine);
+add('graphics-chromium', 'scripts/qualify-shared-demo-browser.mjs', 'chromium', ['--fault=graphics']);
+add('listeners-chromium', 'scripts/qualify-shared-demo-listeners.mjs', 'chromium', [`--fingerprint=${manifest.sourceFingerprint}`]);
+for (const engine of ['chromium', 'firefox', 'webkit'])
+  add(`restoration-${engine}`, 'scripts/qualify-demo-restoration-browser.mjs', engine, ['--port=8771']);
+assert.equal(jobs.length, 11, 'Affected browser refresh is exactly eleven jobs.');
+const priority = job => job.id === 'restoration-webkit' ? 0 : job.id.startsWith('restoration-') ? 1 : 2;
+jobs.sort((a, b) => priority(a) - priority(b));
+const selected = args.only ? args.only.split(',') : jobs.map(job => job.id);
+assert.equal(new Set(selected).size, selected.length);
+assert.ok(selected.every(id => jobs.some(job => job.id === id)));
+for (const path of [reportPath, ...jobs.filter(job => selected.includes(job.id)).map(job => job.reportPath)]) {
+  try { await lstat(path); throw new Error(`Refusing existing report: ${path}`); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+}
+async function fingerprint(directories, filter) {
+  const paths = execFileSync('rg', ['--files', ...directories], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }).trim().split('\n').filter(filter).sort();
+  const hash = createHash('sha256');
+  const digests = new Map();
+  let bytes = 0;
+  for (const path of paths) {
+    const value = await readFile(path), digest = sha(value);
+    bytes += value.length;
+    digests.set(path, digest);
+    hash.update(path + '\0').update(Buffer.from(digest, 'hex'));
+  }
+  return { sha256: hash.digest('hex'), files: paths.length, bytes, digests };
+}
+const runtimeFilter = path => /\.(mjs|js|json|css|html)$/.test(path) && !path.includes('/test/') && !path.endsWith('.test.mjs') && !path.endsWith('/coverage.json');
+const summarize = ({ sha256, files, bytes }) => ({ sha256, files, bytes });
+const changed = (a, b) => [...new Set([...a.digests.keys(), ...b.digests.keys()])].filter(path => a.digests.get(path) !== b.digests.get(path));
+const report = {
+  format: 'SharedDemoFinalBrowserRefreshV1', started: new Date().toISOString(), complete: false,
+  head: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+  sourceDeclaration: { path: manifestPath, sha256: sha(manifestBytes), ...manifest },
+  authoritative,
+  emittedPreviewDirectory: args['emitted-preview'] ?? null,
+  wrapper: { path: '.cache/run-final-demo-refresh-owned.mjs', sha256: sha(await readFile(new URL(import.meta.url))) },
+  hashScope: { runtime: manifest.scope, harness: 'Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers.' },
+  selected, jobs: [], failedJobs: [],
+  limitations: [
+    'All jobs receive the same verified emitted capture. Shared and restoration qualifiers own their preview. SIM Fresh and listeners use a per-job strict preview on port8774 with fixtureAccess:false; their unchanged document routing rewrites only local HTML access salt, verifier and id. This is an explicit browser fixture exception, not an offline HTML integrity proof.',
+    'Existing durable qualifiers only, sequential isolated browsers. No production or harness changes are made by this wrapper. Each selected job runs once; a strict failure remains failed while later independent jobs may proceed only after confirmed browser/server cleanup.',
+    'Some durable qualifiers retain empty-stack pageerrors as empty strings; any pageerror still fails their strict count. Raw/name diagnostics require a separate bounded probe after preserving such a failed receipt.',
+    'This refresh covers shared controls, Solo readiness/cache ownership and incoming SIM guidance. Full native corpus retains unchanged-content evidence. Representative emitted-offline, control-remap and native discard checks run separately.',
+    'The two-hour actual-wall-time rotation and outstanding physical-device/human review checks remain separate.',
+  ],
+};
+let beforeRuntime, beforeHarness, emittedManifestBytes;
+const emittedManifestPath = path.resolve(root, args['emitted-preview'], 'manifest.json');
+const emittedIdentity = (value) => {
+  assert.ok(value && value.sourceVerified === true, 'Each job must verify its emitted source.');
+  assert.equal(value.sourceRevision, authoritative.head, 'Capture must name the held revision.');
+  assert.equal(value.manifestSHA256, sha(emittedManifestBytes), 'Provider must admit the initially bound capture.');
+  assert.deepEqual(value.sourceFingerprint, {
+    sha256: authoritative.fingerprint, files: authoritative.files, bytes: authoritative.bytes,
+  }, 'Capture must name the held runtime.');
+  return {
+    directory: value.directory,
+    manifestSHA256: value.manifestSHA256,
+    inventorySHA256: value.inventorySHA256,
+    files: value.files,
+    sourceRevision: value.sourceRevision,
+    sourceFingerprint: value.sourceFingerprint,
+    buildInputFingerprint: value.buildInputFingerprint,
+  };
+};
+const acceptEmittedIdentity = (value) => {
+  const identity = emittedIdentity(value);
+  if (report.emittedPreview) assert.deepEqual(identity, report.emittedPreview, 'All jobs must use one exact emitted capture.');
+  else report.emittedPreview = identity;
+};
+async function closePreview(preview, record) {
+  if (!preview) return;
+  const started = Date.now();
+  record.provider.fixtureResponses = preview.fixtureResponses;
+  try {
+    preview.server.closeAllConnections();
+    await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('Owned emitted preview cleanup exceeded2000ms.')), 2000);
+      preview.server.close(error => {
+        clearTimeout(timer);
+        if (error) reject(error); else resolve();
+      });
+    });
+    record.provider.closeCompleted = true;
+  } catch (error) {
+    record.provider.closeCompleted = false;
+    record.provider.closeFailure = String(error.stack ?? error);
+    throw error;
+  } finally {
+    record.provider.closeElapsedMs = Date.now() - started;
+    record.provider.closedAt = new Date().toISOString();
+  }
+}
+try {
+  emittedManifestBytes = await readFile(emittedManifestPath);
+  report.emittedManifest = { path: emittedManifestPath, sha256: sha(emittedManifestBytes), bytes: emittedManifestBytes.length };
+  beforeRuntime = await fingerprint(['game', 'optional-practice', 'publishing'], runtimeFilter);
+  beforeHarness = await fingerprint(['scripts'], () => true);
+  report.before = { runtime: summarize(beforeRuntime), harness: summarize(beforeHarness) };
+  assert.equal(beforeRuntime.sha256, manifest.sourceFingerprint);
+  assert.equal(beforeRuntime.files, manifest.files);
+  assert.equal(beforeRuntime.bytes, manifest.bytes);
+  await writeQualificationReport(reportPath, report);
+  for (const job of jobs.filter(job => selected.includes(job.id))) {
+    const hook = ['scripts/qualify-shared-demo-browser.mjs', 'scripts/qualify-demo-restoration-browser.mjs'].includes(job.script);
+    const record = { id: job.id, scriptSHA256: sha(await readFile(job.script)), reportPath: job.reportPath, started: new Date().toISOString(), stdout: '', stderr: '' };
+    report.jobs.push(record);
+    let preview;
+    try {
+      if (!hook) {
+        preview = await startProductionPreview({
+          root, port: urlPreviewPort, fixtureAccess: false, cache: 'revalidate',
+          emittedPreview: args['emitted-preview'], verifyEmittedSource: true,
+        });
+        record.provider = {
+          owner: 'refresh-wrapper', url: preview.url, mode: preview.mode,
+          headers: preview.headers, cache: preview.cache, fixtureAccess: preview.fixtureAccess,
+          emittedPreview: preview.emittedPreview,
+          credentialException: 'The unchanged child qualifier routes document responses to replace only local HTML access salt, verifier and id. Provider HTML stays exact; routed HTML is not an offline integrity proof.',
+          closeCompleted: false,
+        };
+        acceptEmittedIdentity(preview.emittedPreview);
+      }
+      const provider = hook ? [`--emitted-preview=${args['emitted-preview']}`, ...(job.script === 'scripts/qualify-shared-demo-browser.mjs' ? [`--port=${sharedPreviewPort}`] : [])] : [`--url=${preview.url.replace(/\/$/, '')}`];
+      const command = [job.script, `--runtime=${runtime}`, `--browser=${job.engine}`, `--executable=${executables[job.engine]}`, ...provider, `--report=${job.reportPath}`, ...job.extra];
+      record.command = [process.execPath, ...command];
+      console.log(JSON.stringify({ phase: 'start', id: job.id }));
+      const child = spawn(process.execPath, command, { stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, NODE_DISABLE_COMPILE_CACHE: '1' } });
+      record.pid = child.pid;
+      for (const stream of ['stdout', 'stderr']) child[stream].on('data', value => { record[stream] = (record[stream] + value.toString()).slice(-12000); });
+      record.exit = await new Promise((resolve, reject) => { child.once('error', reject); child.once('close', (code, signal) => resolve({ code, signal })); });
+      record.childClosedAt = new Date().toISOString();
+      const bytes = await readFile(job.reportPath), result = JSON.parse(bytes);
+      record.reportSHA256 = sha(bytes);
+      record.complete = result.complete === true;
+      record.browserCloseCompleted = result.browserCloseCompleted === true;
+      record.previewClosed = result.previewClosed ?? null;
+      record.checks = result.checks?.length ?? null;
+      record.errorCount = result.errors?.length ?? null;
+      record.failure = result.failure ?? null;
+      if (hook) {
+        record.provider = { owner: 'child-qualifier', ...result.preview, closeCompleted: record.previewClosed === true };
+        acceptEmittedIdentity(result.preview?.emittedPreview);
+      }
+    } finally {
+      await closePreview(preview, record);
+      record.finished = new Date().toISOString();
+    }
+    console.log(JSON.stringify({ phase: 'finished', id: job.id, exit: record.exit, complete: record.complete, browserCloseCompleted: record.browserCloseCompleted, checks: record.checks, errorCount: record.errorCount }));
+    await writeQualificationReport(reportPath, report);
+    if (record.exit.code !== 0 || !record.complete) report.failedJobs.push(job.id);
+    assert.equal(record.browserCloseCompleted, true, `${job.id} did not confirm browser cleanup.`);
+    assert.equal(record.provider?.closeCompleted, true, `${job.id} did not confirm emitted provider cleanup.`);
+    if (record.previewClosed !== null) assert.equal(record.previewClosed, true, `${job.id} did not confirm preview cleanup.`);
+  }
+  report.complete = report.failedJobs.length === 0;
+  if (!report.complete) {
+    report.failure = `Strict qualification failed for: ${report.failedJobs.join(', ')}. Every failed receipt is preserved; no retry or exemption applied.`;
+    process.exitCode = 1;
+  }
+} catch (error) {
+  report.failure = String(error.stack ?? error);
+  process.exitCode = 1;
+} finally {
+  try {
+    const afterRuntime = await fingerprint(['game', 'optional-practice', 'publishing'], runtimeFilter);
+    const afterHarness = await fingerprint(['scripts'], () => true);
+    report.after = { runtime: summarize(afterRuntime), harness: summarize(afterHarness) };
+    report.changedFiles = { runtime: beforeRuntime ? changed(beforeRuntime, afterRuntime) : null, harness: beforeHarness ? changed(beforeHarness, afterHarness) : null };
+    assert.deepEqual(report.after, report.before, 'Full runtime or harness source changed during refresh.');
+    assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), authoritative.head, 'Held HEAD changed.');
+    assert.equal(sha(await readFile(manifestPath)), sha(manifestBytes), 'Source declaration changed.');
+    assert.equal(sha(await readFile(new URL(import.meta.url))), report.wrapper.sha256, 'Refresh wrapper changed.');
+    assert.equal(sha(await readFile(emittedManifestPath)), report.emittedManifest.sha256, 'Emitted capture manifest changed.');
+    report.emittedManifestUnchanged = true;
+  } catch (error) {
+    report.complete = false;
+    report.failure ??= String(error.stack ?? error);
+    process.exitCode = 1;
+  }
+  report.finished = new Date().toISOString();
+  await writeQualificationReport(reportPath, report);
+  console.log(JSON.stringify({ phase: 'complete', reportPath, complete: report.complete, finishedJobs: report.jobs.length, selected: selected.length, failure: report.failure ?? null }));
+}

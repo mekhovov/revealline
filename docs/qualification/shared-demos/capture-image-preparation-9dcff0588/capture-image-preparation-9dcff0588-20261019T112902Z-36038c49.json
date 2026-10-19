@@ -1,0 +1,186 @@
+{
+  "format": "SharedDemoFreshCanonicalCaptureImagePreparationV1",
+  "complete": false,
+  "started": "2026-10-19T11:29:02.333071+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "sourceCapture": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh",
+  "sourceIdentity": {
+    "device": 16777235,
+    "inode": 148275491,
+    "uid": 502,
+    "mode": 493
+  },
+  "sourcePins": {
+    ".cache/shared-demos-emitted-403814d-9dcff0588-native-refresh/manifest.json": {
+      "bytes": 1369724,
+      "sha256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3"
+    },
+    "docs/qualification/shared-demos/source-freeze-latest.json": {
+      "bytes": 423,
+      "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5"
+    },
+    ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.json": {
+      "bytes": 2225146,
+      "sha256": "9c0b3ea78beecf9f1a00aac5727680a05e0a4a002091914a35323d1356e466e0"
+    },
+    ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.inventory.json": {
+      "bytes": 989545,
+      "sha256": "663c9b8465f4d13d35a5b849db11dbd0ff23175d586d214733149ef233253064"
+    }
+  },
+  "externalParent": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "device": 905969668,
+    "inode": 37530202,
+    "uid": 502,
+    "mode": 448
+  },
+  "externalMount": {
+    "device": 905969668,
+    "inode": 2,
+    "uid": 502,
+    "mode": 448
+  },
+  "image": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112902Z-36038c49.sparsebundle",
+  "oldImageNotReused": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification.sparsebundle",
+  "temporaryMount": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112902Z-36038c49",
+  "capacityBytes": 6442450944,
+  "filesystem": "Journaled HFS+",
+  "phases": [
+    {
+      "label": "create",
+      "command": [
+        "hdiutil",
+        "create",
+        "-size",
+        "6g",
+        "-type",
+        "SPARSEBUNDLE",
+        "-fs",
+        "HFS+J",
+        "-volname",
+        "DemoCapture9dcff",
+        "-nospotlight",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112902Z-36038c49.sparsebundle"
+      ],
+      "timeoutSeconds": 120,
+      "complete": false,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 71774,
+            "ppid": 71761,
+            "pgid": 71774,
+            "uid": 502,
+            "started": "Mon Oct 19 13:29:02 2026",
+            "argv": "hdiutil create -size 6g -type SPARSEBUNDLE -fs HFS+J -volname DemoCapture9dcff -nospotlight /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112902Z-36038c49.sparsebundle",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T11:29:02.614477+00:00"
+          },
+          {
+            "pid": 71777,
+            "ppid": 71774,
+            "pgid": 71774,
+            "uid": 502,
+            "started": "Mon Oct 19 13:29:02 2026",
+            "argv": "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 5BD2E4C3-52CF-4021-8A71-B097F3F9F9A3",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              71774,
+              "Mon Oct 19 13:29:02 2026",
+              502,
+              "hdiutil create -size 6g -type SPARSEBUNDLE -fs HFS+J -volname DemoCapture9dcff -nospotlight /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112902Z-36038c49.sparsebundle"
+            ],
+            "observedAt": "2026-10-19T11:29:02.659470+00:00"
+          },
+          {
+            "pid": 71779,
+            "ppid": 71777,
+            "pgid": 71774,
+            "uid": 502,
+            "started": "Mon Oct 19 13:29:02 2026",
+            "argv": "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 5BD2E4C3-52CF-4021-8A71-B097F3F9F9A3 -post-exec 5",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              71777,
+              "Mon Oct 19 13:29:02 2026",
+              502,
+              "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 5BD2E4C3-52CF-4021-8A71-B097F3F9F9A3"
+            ],
+            "observedAt": "2026-10-19T11:29:02.915740+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": ".cache/capture-image-preparation-9dcff0588-20261019T112902Z-36038c49.create.log.txt",
+        "byteLimit": 1048576,
+        "totalBytes": 59,
+        "writtenBytes": 59,
+        "truncatedBytes": 0,
+        "tailLimit": 4096,
+        "tailBytes": 59,
+        "tailSHA256": "645de1b0af6189930dba58e71ee45d5c2b10e568f2236c722097d9cfd4792814",
+        "tail": "hdiutil: create failed - Operation not supported by device\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "exitCode": 1,
+      "elapsedSeconds": 1.156289624999772
+    }
+  ],
+  "freeBytesBefore": {
+    "local": 253820928,
+    "external": 42598400000
+  },
+  "limitations": [
+    "Preparation only: the canonical capture is neither renamed nor removed; manifest and audit bytes remain unchanged.",
+    "Each owned system command has a polled bound and identity-scoped cleanup. Synchronous filesystem/SMB calls can delay polling; no hard end-to-end bound is asserted.",
+    "A later canonical mount-point swap requires parent review. Actual canonical openEmittedPreview admission belongs to that separate step.",
+    "The earlier image had an unexplained disappearance and warning. This fresh image does not establish future mount stability."
+  ],
+  "imagesBefore": [],
+  "failure": "AssertionError({'label': 'create', 'command': ['hdiutil', 'create', '-size', '6g', '-type', 'SPARSEBUNDLE', '-fs', 'HFS+J', '-volname', 'DemoCapture9dcff', '-nospotlight', '/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112902Z-36038c49.sparsebundle'], 'timeoutSeconds': 120, 'complete': False, 'ownedProcesses': {'rootObserved': True, 'identityFields': ['pid', 'started', 'uid', 'argv'], 'scope': 'Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.', 'observationLimits': {'ownershipLimit': 256, 'ownershipCount': 3, 'actionLimit': 1024, 'actionCount': 0, 'exceeded': False}, 'observed': [{'pid': 71774, 'ppid': 71761, 'pgid': 71774, 'uid': 502, 'started': 'Mon Oct 19 13:29:02 2026', 'argv': 'hdiutil create -size 6g -type SPARSEBUNDLE -fs HFS+J -volname DemoCapture9dcff -nospotlight /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112902Z-36038c49.sparsebundle', 'profile': None, 'ownership': 'exact newly spawned child', 'observedAt': '2026-10-19T11:29:02.614477+00:00'}, {'pid': 71777, 'ppid': 71774, 'pgid': 71774, 'uid': 502, 'started': 'Mon Oct 19 13:29:02 2026', 'argv': '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 5BD2E4C3-52CF-4021-8A71-B097F3F9F9A3', 'profile': None, 'ownership': 'observed descendant', 'parentIdentity': [71774, 'Mon Oct 19 13:29:02 2026', 502, 'hdiutil create -size 6g -type SPARSEBUNDLE -fs HFS+J -volname DemoCapture9dcff -nospotlight /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112902Z-36038c49.sparsebundle'], 'observedAt': '2026-10-19T11:29:02.659470+00:00'}, {'pid': 71779, 'ppid': 71777, 'pgid': 71774, 'uid': 502, 'started': 'Mon Oct 19 13:29:02 2026', 'argv': '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 5BD2E4C3-52CF-4021-8A71-B097F3F9F9A3 -post-exec 5', 'profile': None, 'ownership': 'observed descendant', 'parentIdentity': [71777, 'Mon Oct 19 13:29:02 2026', 502, '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 5BD2E4C3-52CF-4021-8A71-B097F3F9F9A3'], 'observedAt': '2026-10-19T11:29:02.915740+00:00'}], 'actions': [], 'ownershipEvidenceTruncated': False, 'actionEvidenceTruncated': False, 'allActionsSHA256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'remaining': [], 'remainingCount': 0, 'remainingSHA256': '4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945', 'remainingEvidenceTruncated': False, 'verified': True}, 'log': {'path': '.cache/capture-image-preparation-9dcff0588-20261019T112902Z-36038c49.create.log.txt', 'byteLimit': 1048576, 'totalBytes': 59, 'writtenBytes': 59, 'truncatedBytes': 0, 'tailLimit': 4096, 'tailBytes': 59, 'tailSHA256': '645de1b0af6189930dba58e71ee45d5c2b10e568f2236c722097d9cfd4792814', 'tail': 'hdiutil: create failed - Operation not supported by device\\n', 'limitExceeded': False, 'complete': True, 'error': None}, 'exitCode': 1, 'elapsedSeconds': 1.156289624999772})",
+  "imageOwnersAfterDetach": [],
+  "imagesAfter": [],
+  "originalCaptureIdentityAfter": {
+    "device": 16777235,
+    "inode": 148275491,
+    "uid": 502,
+    "mode": 493
+  },
+  "originalCaptureUnchanged": true,
+  "freeBytesAfter": {
+    "local": 253689856,
+    "external": 42598400000
+  },
+  "finished": "2026-10-19T11:29:03.802070+00:00",
+  "elapsedSeconds": 1.4690349160009646
+}

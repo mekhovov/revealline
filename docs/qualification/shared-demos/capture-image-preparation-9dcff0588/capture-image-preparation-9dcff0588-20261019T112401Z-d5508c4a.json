@@ -1,0 +1,398 @@
+{
+  "format": "SharedDemoFreshCanonicalCaptureImagePreparationV1",
+  "complete": false,
+  "started": "2026-10-19T11:24:01.964390+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "sourceCapture": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh",
+  "sourceIdentity": {
+    "device": 16777235,
+    "inode": 148275491,
+    "uid": 502,
+    "mode": 493
+  },
+  "sourcePins": {
+    ".cache/shared-demos-emitted-403814d-9dcff0588-native-refresh/manifest.json": {
+      "bytes": 1369724,
+      "sha256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3"
+    },
+    "docs/qualification/shared-demos/source-freeze-latest.json": {
+      "bytes": 423,
+      "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5"
+    },
+    ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.json": {
+      "bytes": 2225146,
+      "sha256": "9c0b3ea78beecf9f1a00aac5727680a05e0a4a002091914a35323d1356e466e0"
+    },
+    ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.inventory.json": {
+      "bytes": 989545,
+      "sha256": "663c9b8465f4d13d35a5b849db11dbd0ff23175d586d214733149ef233253064"
+    }
+  },
+  "externalParent": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "device": 905969668,
+    "inode": 37530202,
+    "uid": 502,
+    "mode": 448
+  },
+  "externalMount": {
+    "device": 905969668,
+    "inode": 2,
+    "uid": 502,
+    "mode": 448
+  },
+  "image": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle",
+  "oldImageNotReused": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification.sparsebundle",
+  "temporaryMount": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a",
+  "capacityBytes": 6442450944,
+  "filesystem": "Journaled HFS+",
+  "phases": [
+    {
+      "label": "create",
+      "command": [
+        "hdiutil",
+        "create",
+        "-size",
+        "6g",
+        "-type",
+        "SPARSEBUNDLE",
+        "-fs",
+        "HFS+J",
+        "-volname",
+        "DemoCapture9dcff",
+        "-nospotlight",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle"
+      ],
+      "timeoutSeconds": 120,
+      "complete": true,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 5,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 70279,
+            "ppid": 70232,
+            "pgid": 70279,
+            "uid": 502,
+            "started": "Mon Oct 19 13:24:02 2026",
+            "argv": "hdiutil create -size 6g -type SPARSEBUNDLE -fs HFS+J -volname DemoCapture9dcff -nospotlight /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T11:24:02.472859+00:00"
+          },
+          {
+            "pid": 70282,
+            "ppid": 70279,
+            "pgid": 70279,
+            "uid": 502,
+            "started": "Mon Oct 19 13:24:02 2026",
+            "argv": "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 8327E2C0-9F0D-4C27-8DB4-77A3CC571CA0",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              70279,
+              "Mon Oct 19 13:24:02 2026",
+              502,
+              "hdiutil create -size 6g -type SPARSEBUNDLE -fs HFS+J -volname DemoCapture9dcff -nospotlight /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle"
+            ],
+            "observedAt": "2026-10-19T11:24:02.519809+00:00"
+          },
+          {
+            "pid": 70284,
+            "ppid": 70282,
+            "pgid": 70279,
+            "uid": 502,
+            "started": "Mon Oct 19 13:24:02 2026",
+            "argv": "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 8327E2C0-9F0D-4C27-8DB4-77A3CC571CA0 -post-exec 5",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              70282,
+              "Mon Oct 19 13:24:02 2026",
+              502,
+              "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 8327E2C0-9F0D-4C27-8DB4-77A3CC571CA0"
+            ],
+            "observedAt": "2026-10-19T11:24:02.793327+00:00"
+          },
+          {
+            "pid": 70305,
+            "ppid": 70284,
+            "pgid": 70305,
+            "uid": 502,
+            "started": "Mon Oct 19 13:24:04 2026",
+            "argv": "/System/Library/Filesystems/hfs.fs/Contents/Resources/newfs_hfs -J -v DemoCapture9dcff /dev/rdisk4s2",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              70284,
+              "Mon Oct 19 13:24:02 2026",
+              502,
+              "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 8327E2C0-9F0D-4C27-8DB4-77A3CC571CA0 -post-exec 5"
+            ],
+            "observedAt": "2026-10-19T11:24:04.963300+00:00"
+          },
+          {
+            "pid": 70321,
+            "ppid": 70284,
+            "pgid": 70321,
+            "uid": 502,
+            "started": "Mon Oct 19 13:24:07 2026",
+            "argv": "/System/Library/Filesystems/hfs.fs/Contents/Resources/mount_hfs -o nobrowse /dev/disk4s2 /tmp/BFYL6d4A",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              70284,
+              "Mon Oct 19 13:24:02 2026",
+              502,
+              "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid 8327E2C0-9F0D-4C27-8DB4-77A3CC571CA0 -post-exec 5"
+            ],
+            "observedAt": "2026-10-19T11:24:07.334878+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": ".cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a.create.log.txt",
+        "byteLimit": 1048576,
+        "totalBytes": 147,
+        "writtenBytes": 147,
+        "truncatedBytes": 0,
+        "tailLimit": 4096,
+        "tailBytes": 147,
+        "tailSHA256": "962eb85a21c3c78bf2dd6dcb2481f1e9ab6a240a773b2c525c3b452e6ed2dffa",
+        "tail": "created: /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 6.281318124998506
+    },
+    {
+      "label": "attach",
+      "command": [
+        "hdiutil",
+        "attach",
+        "-plist",
+        "-nobrowse",
+        "-noautoopen",
+        "-owners",
+        "on",
+        "-mountpoint",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle"
+      ],
+      "timeoutSeconds": 90,
+      "complete": false,
+      "cleanupNeeded": true,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 4,
+          "actionLimit": 1024,
+          "actionCount": 2,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 70333,
+            "ppid": 70232,
+            "pgid": 70333,
+            "uid": 502,
+            "started": "Mon Oct 19 13:24:08 2026",
+            "argv": "hdiutil attach -plist -nobrowse -noautoopen -owners on -mountpoint /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T11:24:08.792283+00:00"
+          },
+          {
+            "pid": 70335,
+            "ppid": 70333,
+            "pgid": 70333,
+            "uid": 502,
+            "started": "Mon Oct 19 13:24:08 2026",
+            "argv": "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              70333,
+              "Mon Oct 19 13:24:08 2026",
+              502,
+              "hdiutil attach -plist -nobrowse -noautoopen -owners on -mountpoint /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle"
+            ],
+            "observedAt": "2026-10-19T11:24:08.836802+00:00"
+          },
+          {
+            "pid": 70336,
+            "ppid": 70335,
+            "pgid": 70333,
+            "uid": 502,
+            "started": "Mon Oct 19 13:24:08 2026",
+            "argv": "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              70335,
+              "Mon Oct 19 13:24:08 2026",
+              502,
+              "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B"
+            ],
+            "observedAt": "2026-10-19T11:24:08.836818+00:00"
+          },
+          {
+            "pid": 70345,
+            "ppid": 70336,
+            "pgid": 70345,
+            "uid": 502,
+            "started": "Mon Oct 19 13:24:09 2026",
+            "argv": "/sbin/fsck_hfs -f -n /dev/disk4s2",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              70336,
+              "Mon Oct 19 13:24:08 2026",
+              502,
+              "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5"
+            ],
+            "observedAt": "2026-10-19T11:24:09.915591+00:00"
+          }
+        ],
+        "actions": [
+          {
+            "pid": 70336,
+            "signal": "SIGTERM",
+            "expectedIdentity": [
+              70336,
+              "Mon Oct 19 13:24:08 2026",
+              502,
+              "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5"
+            ],
+            "at": "2026-10-19T11:24:15.491049+00:00",
+            "verifiedBeforeSignal": {
+              "pid": 70336,
+              "ppid": 1,
+              "pgid": 70336,
+              "uid": 502,
+              "started": "Mon Oct 19 13:24:08 2026",
+              "argv": "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5",
+              "profile": null
+            },
+            "result": "signalled exact owned process"
+          },
+          {
+            "pid": 70336,
+            "signal": "SIGKILL",
+            "expectedIdentity": [
+              70336,
+              "Mon Oct 19 13:24:08 2026",
+              502,
+              "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5"
+            ],
+            "at": "2026-10-19T11:24:18.598222+00:00",
+            "verifiedBeforeSignal": {
+              "pid": 70336,
+              "ppid": 1,
+              "pgid": 70336,
+              "uid": 502,
+              "started": "Mon Oct 19 13:24:08 2026",
+              "argv": "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5",
+              "profile": null
+            },
+            "result": "signalled exact owned process"
+          }
+        ],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "067c8ad627cb3e3bbd0cb0d8a0a81fea57d63699ea211886c3000c4a6fb98d6a",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": ".cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a.attach.log.txt",
+        "byteLimit": 1048576,
+        "totalBytes": 1347,
+        "writtenBytes": 1347,
+        "truncatedBytes": 0,
+        "tailLimit": 4096,
+        "tailBytes": 1347,
+        "tailSHA256": "9ffa200a2e5351560b5c8122a99040ad715aa6baa668234d8f8e7bb4fdf32bcf",
+        "tail": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n\t<key>system-entities</key>\n\t<array>\n\t\t<dict>\n\t\t\t<key>content-hint</key>\n\t\t\t<string>GUID_partition_scheme</string>\n\t\t\t<key>dev-entry</key>\n\t\t\t<string>/dev/disk4</string>\n\t\t\t<key>potentially-mountable</key>\n\t\t\t<false/>\n\t\t\t<key>unmapped-content-hint</key>\n\t\t\t<string>GUID_partition_scheme</string>\n\t\t</dict>\n\t\t<dict>\n\t\t\t<key>content-hint</key>\n\t\t\t<string>Apple_HFS</string>\n\t\t\t<key>dev-entry</key>\n\t\t\t<string>/dev/disk4s2</string>\n\t\t\t<key>mount-point</key>\n\t\t\t<string>/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a</string>\n\t\t\t<key>potentially-mountable</key>\n\t\t\t<true/>\n\t\t\t<key>unmapped-content-hint</key>\n\t\t\t<string>48465300-0000-11AA-AA11-00306543ECAC</string>\n\t\t\t<key>volume-kind</key>\n\t\t\t<string>hfs</string>\n\t\t</dict>\n\t\t<dict>\n\t\t\t<key>content-hint</key>\n\t\t\t<string>EFI</string>\n\t\t\t<key>dev-entry</key>\n\t\t\t<string>/dev/disk4s1</string>\n\t\t\t<key>potentially-mountable</key>\n\t\t\t<true/>\n\t\t\t<key>unmapped-content-hint</key>\n\t\t\t<string>C12A7328-F81F-11D2-BA4B-00A0C93EC93B</string>\n\t\t\t<key>volume-kind</key>\n\t\t\t<string>msdos</string>\n\t\t</dict>\n\t</array>\n</dict>\n</plist>\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "exitCode": 0,
+      "elapsedSeconds": 9.927370875000634
+    }
+  ],
+  "freeBytesBefore": {
+    "local": 262918144,
+    "external": 42598400000
+  },
+  "limitations": [
+    "Preparation only: the canonical capture is neither renamed nor removed; manifest and audit bytes remain unchanged.",
+    "Each owned system command has a polled bound and identity-scoped cleanup. Synchronous filesystem/SMB calls can delay polling; no hard end-to-end bound is asserted.",
+    "A later canonical mount-point swap requires parent review. Actual canonical openEmittedPreview admission belongs to that separate step.",
+    "The earlier image had an unexplained disappearance and warning. This fresh image does not establish future mount stability."
+  ],
+  "imagesBefore": [],
+  "imageIdentity": {
+    "device": 905969668,
+    "inode": 37588953,
+    "uid": 502,
+    "mode": 448
+  },
+  "temporaryMountUnderlyingIdentity": {
+    "device": 16777235,
+    "inode": 148284488,
+    "uid": 502,
+    "mode": 448
+  },
+  "failure": "AssertionError({'label': 'attach', 'command': ['hdiutil', 'attach', '-plist', '-nobrowse', '-noautoopen', '-owners', 'on', '-mountpoint', '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a', '/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle'], 'timeoutSeconds': 90, 'complete': False, 'cleanupNeeded': True, 'ownedProcesses': {'rootObserved': True, 'identityFields': ['pid', 'started', 'uid', 'argv'], 'scope': 'Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.', 'observationLimits': {'ownershipLimit': 256, 'ownershipCount': 4, 'actionLimit': 1024, 'actionCount': 2, 'exceeded': False}, 'observed': [{'pid': 70333, 'ppid': 70232, 'pgid': 70333, 'uid': 502, 'started': 'Mon Oct 19 13:24:08 2026', 'argv': 'hdiutil attach -plist -nobrowse -noautoopen -owners on -mountpoint /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle', 'profile': None, 'ownership': 'exact newly spawned child', 'observedAt': '2026-10-19T11:24:08.792283+00:00'}, {'pid': 70335, 'ppid': 70333, 'pgid': 70333, 'uid': 502, 'started': 'Mon Oct 19 13:24:08 2026', 'argv': '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B', 'profile': None, 'ownership': 'observed descendant', 'parentIdentity': [70333, 'Mon Oct 19 13:24:08 2026', 502, 'hdiutil attach -plist -nobrowse -noautoopen -owners on -mountpoint /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/capture-volume-9dcff0588-20261019T112401Z-d5508c4a.sparsebundle'], 'observedAt': '2026-10-19T11:24:08.836802+00:00'}, {'pid': 70336, 'ppid': 70335, 'pgid': 70333, 'uid': 502, 'started': 'Mon Oct 19 13:24:08 2026', 'argv': '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5', 'profile': None, 'ownership': 'observed descendant', 'parentIdentity': [70335, 'Mon Oct 19 13:24:08 2026', 502, '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B'], 'observedAt': '2026-10-19T11:24:08.836818+00:00'}, {'pid': 70345, 'ppid': 70336, 'pgid': 70345, 'uid': 502, 'started': 'Mon Oct 19 13:24:09 2026', 'argv': '/sbin/fsck_hfs -f -n /dev/disk4s2', 'profile': None, 'ownership': 'observed descendant', 'parentIdentity': [70336, 'Mon Oct 19 13:24:08 2026', 502, '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5'], 'observedAt': '2026-10-19T11:24:09.915591+00:00'}], 'actions': [{'pid': 70336, 'signal': 'SIGTERM', 'expectedIdentity': [70336, 'Mon Oct 19 13:24:08 2026', 502, '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5'], 'at': '2026-10-19T11:24:15.491049+00:00', 'verifiedBeforeSignal': {'pid': 70336, 'ppid': 1, 'pgid': 70336, 'uid': 502, 'started': 'Mon Oct 19 13:24:08 2026', 'argv': '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5', 'profile': None}, 'result': 'signalled exact owned process'}, {'pid': 70336, 'signal': 'SIGKILL', 'expectedIdentity': [70336, 'Mon Oct 19 13:24:08 2026', 502, '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5'], 'at': '2026-10-19T11:24:18.598222+00:00', 'verifiedBeforeSignal': {'pid': 70336, 'ppid': 1, 'pgid': 70336, 'uid': 502, 'started': 'Mon Oct 19 13:24:08 2026', 'argv': '/System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper -uuid BF47342E-8637-4DAE-988B-EEDA0C5D593B -post-exec 5', 'profile': None}, 'result': 'signalled exact owned process'}], 'ownershipEvidenceTruncated': False, 'actionEvidenceTruncated': False, 'allActionsSHA256': '067c8ad627cb3e3bbd0cb0d8a0a81fea57d63699ea211886c3000c4a6fb98d6a', 'remaining': [], 'remainingCount': 0, 'remainingSHA256': '4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945', 'remainingEvidenceTruncated': False, 'verified': True}, 'log': {'path': '.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a.attach.log.txt', 'byteLimit': 1048576, 'totalBytes': 1347, 'writtenBytes': 1347, 'truncatedBytes': 0, 'tailLimit': 4096, 'tailBytes': 1347, 'tailSHA256': '9ffa200a2e5351560b5c8122a99040ad715aa6baa668234d8f8e7bb4fdf32bcf', 'tail': '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\\n<plist version=\"1.0\">\\n<dict>\\n\\t<key>system-entities</key>\\n\\t<array>\\n\\t\\t<dict>\\n\\t\\t\\t<key>content-hint</key>\\n\\t\\t\\t<string>GUID_partition_scheme</string>\\n\\t\\t\\t<key>dev-entry</key>\\n\\t\\t\\t<string>/dev/disk4</string>\\n\\t\\t\\t<key>potentially-mountable</key>\\n\\t\\t\\t<false/>\\n\\t\\t\\t<key>unmapped-content-hint</key>\\n\\t\\t\\t<string>GUID_partition_scheme</string>\\n\\t\\t</dict>\\n\\t\\t<dict>\\n\\t\\t\\t<key>content-hint</key>\\n\\t\\t\\t<string>Apple_HFS</string>\\n\\t\\t\\t<key>dev-entry</key>\\n\\t\\t\\t<string>/dev/disk4s2</string>\\n\\t\\t\\t<key>mount-point</key>\\n\\t\\t\\t<string>/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/capture-image-preparation-9dcff0588-20261019T112401Z-d5508c4a</string>\\n\\t\\t\\t<key>potentially-mountable</key>\\n\\t\\t\\t<true/>\\n\\t\\t\\t<key>unmapped-content-hint</key>\\n\\t\\t\\t<string>48465300-0000-11AA-AA11-00306543ECAC</string>\\n\\t\\t\\t<key>volume-kind</key>\\n\\t\\t\\t<string>hfs</string>\\n\\t\\t</dict>\\n\\t\\t<dict>\\n\\t\\t\\t<key>content-hint</key>\\n\\t\\t\\t<string>EFI</string>\\n\\t\\t\\t<key>dev-entry</key>\\n\\t\\t\\t<string>/dev/disk4s1</string>\\n\\t\\t\\t<key>potentially-mountable</key>\\n\\t\\t\\t<true/>\\n\\t\\t\\t<key>unmapped-content-hint</key>\\n\\t\\t\\t<string>C12A7328-F81F-11D2-BA4B-00A0C93EC93B</string>\\n\\t\\t\\t<key>volume-kind</key>\\n\\t\\t\\t<string>msdos</string>\\n\\t\\t</dict>\\n\\t</array>\\n</dict>\\n</plist>\\n', 'limitExceeded': False, 'complete': True, 'error': None}, 'exitCode': 0, 'elapsedSeconds': 9.927370875000634})",
+  "imagesAfter": [],
+  "originalCaptureIdentityAfter": {
+    "device": 16777235,
+    "inode": 148275491,
+    "uid": 502,
+    "mode": 493
+  },
+  "originalCaptureUnchanged": true,
+  "freeBytesAfter": {
+    "local": 261103616,
+    "external": 42598400000
+  },
+  "finished": "2026-10-19T11:24:18.697119+00:00",
+  "elapsedSeconds": 16.732614667002053
+}

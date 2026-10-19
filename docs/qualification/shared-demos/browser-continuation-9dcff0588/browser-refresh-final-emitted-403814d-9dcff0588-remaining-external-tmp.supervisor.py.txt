@@ -1,0 +1,329 @@
+"""Supervise the unchanged eleven-job emitted browser matrix with an identity-owned deadline."""
+from pathlib import Path
+import ast
+import datetime
+import hashlib
+import json
+import os
+import re
+import signal
+import subprocess
+import sys
+import threading
+import time
+
+arguments = {}
+for item in sys.argv[1:]:
+    assert item.startswith('--') and '=' in item
+    key, value = item[2:].split('=', 1)
+    assert key not in arguments and value
+    arguments[key] = value
+assert set(arguments) <= {'run', 'node', 'suffix', 'tmpdir', 'head', 'base', 'fingerprint', 'emitted-preview'}
+assert arguments.get('run') in {'approved', 'preflight'}
+for key in ('node', 'suffix', 'tmpdir', 'head', 'base', 'fingerprint', 'emitted-preview'):
+    assert arguments.get(key), f'Missing --{key}'
+root = Path.cwd().resolve()
+os.environ['GIT_NO_LAZY_FETCH'] = '1'
+assert re.fullmatch('[a-z0-9-]+', arguments['suffix'])
+evidence_dir = root / '.cache/native-matrix-evidence'
+assert not evidence_dir.is_symlink()
+if evidence_dir.exists():
+    assert evidence_dir.is_dir() and evidence_dir.stat().st_uid == os.getuid()
+report_path = evidence_dir / ('browser-refresh-' + arguments['suffix'] + '.json')
+report_path.relative_to(root / '.cache')
+assert report_path.suffix == '.json'
+supervision_path, log_path = report_path.with_suffix('.supervision.json'), report_path.with_suffix('.log')
+for path in (report_path, supervision_path, log_path, report_path.with_suffix('.png'), report_path.with_suffix('.mjs.txt'), report_path.with_suffix('.supervisor.py.txt')):
+    assert not path.exists(), f'Refusing existing evidence: {path}'
+tmpdir = Path(arguments['tmpdir']).resolve(strict=True)
+assert tmpdir.is_dir() and Path(arguments['tmpdir']).absolute() == tmpdir, 'TMPDIR must be an ordinary canonical path.'
+assert tmpdir.stat().st_uid == os.getuid() and tmpdir.stat().st_mode & 0o077 == 0, 'Owned private TMPDIR required.'
+assert Path(os.environ.get('TMPDIR', '')).resolve(strict=True) == tmpdir
+assert re.fullmatch('[a-f0-9]{40}', arguments['head']) and re.fullmatch('[a-f0-9]{40}', arguments['base'])
+assert re.fullmatch('[a-f0-9]{64}', arguments['fingerprint'])
+tmp_identity = (tmpdir.stat().st_dev, tmpdir.stat().st_ino, tmpdir.stat().st_uid)
+external = Path('/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412')
+assert tmpdir.parent == external and re.fullmatch('browser-native-9dcff0588-[A-Za-z0-9_-]+', tmpdir.name)
+
+def directory_identity(directory):
+    value = directory.lstat()
+    assert directory.is_dir() and not directory.is_symlink() and directory.resolve(strict=True) == directory
+    return (value.st_dev, value.st_ino, value.st_uid)
+
+external_identity = directory_identity(external)
+mount_identity = directory_identity(external.parent)
+assert external_identity[1:] == (37530202, 502) and external_identity[2] == os.getuid()
+assert external_identity[0] == mount_identity[0] == tmp_identity[0] != root.stat().st_dev
+assert external.stat().st_mode & 0o077 == 0
+
+def external_stable():
+    assert directory_identity(external) == external_identity
+    assert directory_identity(external.parent) == mount_identity
+    assert directory_identity(tmpdir) == tmp_identity
+    assert os.statvfs(external).f_bavail * os.statvfs(external).f_frsize >= 512 * 1024 * 1024, 'External free storage below512MiB.'
+    return True
+
+external_stable()
+
+node = Path(arguments['node'])
+assert node.is_absolute() and node.is_file()
+capture = (root / arguments['emitted-preview']).resolve(strict=True)
+capture.relative_to(root)
+owner_name = '.cache/run-endurance-emitted-final.py'
+helper_name = '.cache/run-final-demo-refresh-owned.mjs'
+original_name = '.cache/run-final-demo-refresh-emitted.mjs'
+owner_sha = '0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c'
+owner_bytes = (root / owner_name).read_bytes()
+assert hashlib.sha256(owner_bytes).hexdigest() == owner_sha
+supervisor_bytes = Path(__file__).read_bytes()
+
+
+def sha(body):
+    return hashlib.sha256(body).hexdigest()
+
+
+def pin(name):
+    body = (root / name).read_bytes()
+    return {'sha256': sha(body), 'bytes': len(body)}
+
+
+def fingerprint(directories):
+    names = sorted(name for name in subprocess.check_output(['rg', '--files', *directories], text=True, timeout=15).splitlines()
+                   if Path(name).suffix in {'.mjs', '.js', '.json', '.css', '.html'}
+                   and '/test/' not in name and not name.endswith('.test.mjs') and not name.endswith('/coverage.json'))
+    digest, byte_count = hashlib.sha256(), 0
+    for name in names:
+        body = (root / name).read_bytes()
+        byte_count += len(body)
+        digest.update(name.encode() + b'\0')
+        digest.update(hashlib.sha256(body).digest())
+    return {'sha256': digest.hexdigest(), 'files': len(names), 'bytes': byte_count}
+
+
+def bindings():
+    external_stable()
+    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True, timeout=5).strip()
+    manifest_name = str((capture / 'manifest.json').relative_to(root))
+    manifest_bytes = (root / manifest_name).read_bytes()
+    manifest = json.loads(manifest_bytes)
+    audit_name = manifest['auditReportPath']
+    assert not Path(audit_name).is_absolute() and '..' not in Path(audit_name).parts
+    audit = json.loads((root / audit_name).read_bytes())
+    inventory_name = str(Path(audit_name).with_suffix('.inventory.json'))
+    assert manifest['sourceRevision'] == arguments['head']
+    assert manifest['sourceFingerprint']['sha256'] == arguments['fingerprint']
+    assert audit['complete'] is True and audit['sourceStable'] is True and audit['headStable'] is True
+    assert audit['sourceRevision'] == arguments['head']
+    assert audit['sourceFingerprint'] == manifest['sourceFingerprint']
+    assert audit['buildInputFingerprint'] == manifest['buildInputFingerprint']
+    assert audit['emittedPreview']['complete'] is True
+    assert audit['emittedPreview']['manifestSHA256'] == sha(manifest_bytes)
+    assert audit['emittedPreview']['inventorySHA256'] == manifest['inventorySHA256']
+    carry_name = '.cache/matrix-carry-forward-9dcff0588.json'
+    carry = json.loads((root / carry_name).read_bytes())
+    assert carry['head'] == arguments['head'] and carry['originalRunComplete'] is False
+    assert carry['passedChecks'] == 91 and len(carry['passedJobs']) == 5 and carry['remainingJobs'] == expected_ids
+    for item in carry['files']:
+        assert not Path(item['path']).is_absolute() and '..' not in Path(item['path']).parts
+        assert pin(item['path']) == {'sha256': item['sha256'], 'bytes': item['bytes']}
+    paths = [carry_name, *[item['path'] for item in carry['files']], helper_name, original_name, owner_name,
+             'scripts/qualify-shared-demo-browser.mjs', 'scripts/qualify-sim-fresh-browser.mjs',
+             'scripts/qualify-shared-demo-listeners.mjs', 'scripts/qualify-demo-restoration-browser.mjs',
+             'scripts/shared-demo-listener-probe.mjs', 'scripts/serve-production-preview.mjs',
+             'scripts/shared-demo-browser-report.mjs', 'scripts/emitted-preview.mjs',
+             'docs/qualification/shared-demos/source-freeze-latest.json']
+    value = {'head': head, 'runtime': fingerprint(['game', 'optional-practice', 'publishing']),
+             'buildInputs': fingerprint(['scripts', 'authoring']), 'helpers': {name: pin(name) for name in paths},
+             'emitted': {name: pin(name) for name in [manifest_name, audit_name, inventory_name]},
+             'supervisor': {'sha256': sha(Path(__file__).read_bytes()), 'bytes': len(Path(__file__).read_bytes())}}
+    assert value['head'] == arguments['head']
+    assert value['runtime'] == manifest['sourceFingerprint'] == carry['runtime']
+    assert value['buildInputs'] == manifest['buildInputFingerprint']
+    return value
+
+
+expected_ids = ['mixed-webkit',
+                'sim-fresh-chromium', 'sim-fresh-firefox', 'sim-fresh-webkit',
+                'graphics-chromium', 'listeners-chromium']
+
+
+def validate_matrix_result(result, before, arguments):
+    assert result['format'] == 'SharedDemoFinalBrowserRefreshV1'
+    assert result['complete'] is True and not result.get('failure') and result['failedJobs'] == []
+    assert result['head'] == arguments['head']
+    assert result['authoritative'] == {'head': arguments['head'], 'base': arguments['base'],
+                                      'fingerprint': arguments['fingerprint'],
+                                      'files': before['runtime']['files'], 'bytes': before['runtime']['bytes']}
+    assert result['before'] == result['after'] and result['before']['runtime'] == before['runtime']
+    assert result['changedFiles'] == {'runtime': [], 'harness': []}
+    assert result['selected'] == expected_ids
+    assert [job['id'] for job in result['jobs']] == expected_ids
+    assert result['emittedManifestUnchanged'] is True
+    assert result['emittedPreview']['sourceRevision'] == arguments['head']
+    assert result['emittedPreview']['sourceFingerprint'] == before['runtime']
+    for job in result['jobs']:
+        assert job['complete'] is True and job['exit'] == {'code': 0, 'signal': None}
+        assert job['browserCloseCompleted'] is True and job['provider']['closeCompleted'] is True
+        assert job['previewClosed'] in (None, True) and job['errorCount'] == 0 and not job.get('failure')
+        assert isinstance(job['checks'], int) and not isinstance(job['checks'], bool) and job['checks'] > 0
+
+
+def validate_wrapper_copy(original, copied):
+    replacements = {
+        "const evidence = 'docs/qualification/shared-demos/';": "const evidence = '.cache/native-matrix-evidence/';",
+        "const manifestPath = evidence + 'source-freeze-latest.json';": "const manifestPath = 'docs/qualification/shared-demos/source-freeze-latest.json';",
+        "wrapper: { path: '.cache/run-final-demo-refresh-emitted.mjs',": "wrapper: { path: '.cache/run-final-demo-refresh-owned.mjs',",
+    }
+    for old, new in replacements.items():
+        assert original.count(old) == 1
+        original = original.replace(old, new)
+    assert copied == original, 'Only report output location and copied-wrapper identity may differ.'
+
+
+validate_wrapper_copy((root / original_name).read_text(), (root / helper_name).read_text())
+for job_id in expected_ids:
+    for extension in ('.json', '.png'):
+        assert not (evidence_dir / (job_id + '-' + arguments['suffix'] + extension)).exists(), 'Refusing prior child evidence.'
+
+assert os.statvfs(root).f_bavail * os.statvfs(root).f_frsize >= 200 * 1024 * 1024, 'Local free storage below 200 MiB.'
+before = bindings()
+names = {'owned_process_snapshot', 'owned_process_identity', 'OwnedProcessTree', 'BoundedChildLog'}
+selected = [item for item in ast.parse(owner_bytes, filename=owner_name).body
+            if isinstance(item, (ast.FunctionDef, ast.ClassDef)) and item.name in names]
+assert {item.name for item in selected} == names
+scope = dict(globals())
+exec(compile(ast.Module(body=selected, type_ignores=[]), owner_name, 'exec'), scope)
+OwnedProcessTree, BoundedChildLog = scope['OwnedProcessTree'], scope['BoundedChildLog']
+command = [str(node), helper_name, '--run=approved', '--head=' + arguments['head'],
+           '--base=' + arguments['base'], '--fingerprint=' + arguments['fingerprint'],
+           '--files=' + str(before['runtime']['files']), '--bytes=' + str(before['runtime']['bytes']),
+           '--emitted-preview=' + str(capture.relative_to(root)), '--suffix=' + arguments['suffix'],
+           '--shared-port=18773', '--url-port=18774', '--only=' + ','.join(expected_ids)]
+if arguments['run'] == 'preflight':
+    print(json.dumps({'preflight': True, 'browserLaunched': False, 'bindings': before, 'command': command,
+                      'childTimeoutSeconds': 1800, 'cleanupGraceSeconds': 16}))
+    sys.exit(0)
+
+evidence_dir.mkdir(mode=0o700, exist_ok=True)
+assert evidence_dir.resolve(strict=True) == evidence_dir and evidence_dir.stat().st_uid == os.getuid()
+
+report = {'format': 'SharedDemoFinalMatrixRemainingExternalTmpSupervisionV1', 'complete': False,
+          'started': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'command': command,
+          'timeoutSeconds': 1800, 'cleanupGraceSeconds': 16, 'tmpdir': str(tmpdir), 'before': before,
+          'externalTmp': {'root': str(external), 'rootIdentity': external_identity, 'mountIdentity': mount_identity, 'tmpIdentity': tmp_identity, 'minimumFreeBytes': 512 * 1024 * 1024},
+          'limitations': ['Browser profiles use a fresh owned external TMPDIR; profile/SQLite behavior on SMB remains unproven until this run. Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 1860 seconds.',
+                         'Six unfinished jobs selected through existing --only; qualifier semantics unchanged; there is one 1800-second aggregate deadline rather than a new per-job cutoff. Existing qualifiers own browser/server cleanup. No physical device or two-hour endurance claim.']}
+log = BoundedChildLog(log_path, byte_limit=4 * 1024 * 1024, tail_limit=16384)
+child, owned, remaining = None, None, None
+deferred = {'active': False, 'pending': None}
+started = time.monotonic()
+next_external_check = 0
+
+
+def interrupt(signum, _frame):
+    if deferred['active']:
+        deferred['pending'] = signum
+        return
+    report['interruptedSignal'] = signal.Signals(signum).name
+    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    raise InterruptedError('Final emitted matrix qualification interrupted by ' + signal.Signals(signum).name)
+
+
+signal.signal(signal.SIGTERM, interrupt)
+signal.signal(signal.SIGINT, interrupt)
+try:
+    # Defer Python exceptions only through owner registration; never mask signals inherited by Node.
+    deferred['active'] = True
+    try:
+        child = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                 env={**os.environ, 'NODE_DISABLE_COMPILE_CACHE': '1', 'FINAL_MATRIX_SUPERVISED': '1'}, start_new_session=True)
+        owned = OwnedProcessTree(child)
+        owned.capture()
+        log.start(child.stdout)
+    finally:
+        deferred['active'] = False
+        pending = deferred['pending']
+        deferred['pending'] = None
+        if pending is not None:
+            interrupt(pending, None)
+    while child.poll() is None:
+        owned.capture()
+        owned.check_limits()
+        log.check_limits()
+        if time.monotonic() >= next_external_check:
+            external_stable()
+            next_external_check = time.monotonic() + 2
+        assert os.statvfs(root).f_bavail * os.statvfs(root).f_frsize >= 200 * 1024 * 1024, 'Local free storage below 200 MiB.'
+        if time.monotonic() - started >= report['timeoutSeconds']:
+            report['watchdogExpired'] = True
+            raise TimeoutError('Final emitted matrix child exceeded 1800 seconds.')
+        time.sleep(0.2)
+    remaining = owned.wait_clear(3)
+    if remaining:
+        report['cleanupNeededAfterNodeExit'] = True
+        remaining = owned.cleanup()
+    owned.check_limits()
+except BaseException as error:
+    report['failure'] = repr(error)
+finally:
+    # Preserve cancellation as a failure without interrupting bounded cleanup/evidence writing.
+    def finish_interrupt(signum, _frame):
+        report.setdefault('interruptedSignal', signal.Signals(signum).name)
+        report['complete'] = False
+    signal.signal(signal.SIGTERM, finish_interrupt)
+    signal.signal(signal.SIGINT, finish_interrupt)
+    if owned is not None:
+        if remaining is None:
+            try:
+                remaining = owned.cleanup()
+            except BaseException as error:
+                report['cleanupFailure'] = repr(error)
+        report['ownedProcesses'] = owned.evidence(remaining)
+    log.finish()
+    report['log'] = {'path': str(log_path.relative_to(root)), **log.evidence()}
+    report['childExit'] = child.poll() if child else None
+    try:
+        report['after'] = bindings()
+        report['bindingsStable'] = report['after'] == before
+    except BaseException as error:
+        report['bindingsFailure'] = repr(error)
+        report['bindingsStable'] = False
+    try:
+        body = report_path.read_bytes()
+        result = json.loads(body)
+        report['result'] = {'path': str(report_path.relative_to(root)), 'sha256': sha(body),
+                            'complete': result.get('complete'), 'jobs': len(result.get('jobs', [])),
+                            'failure': result.get('failure'), 'allBrowserAndPreviewCleanup': all(job.get('browserCloseCompleted') and job.get('provider', {}).get('closeCompleted') for job in result.get('jobs', []))}
+        validate_matrix_result(result, before, arguments)
+        for job in result['jobs']:
+            child_report = (root / job['reportPath']).resolve(strict=True)
+            child_report.relative_to(evidence_dir)
+            assert sha(child_report.read_bytes()) == job['reportSHA256']
+        report['result']['checks'] = sum(job['checks'] for job in result['jobs'])
+        report['complete'] = (report['childExit'] == 0 and result.get('complete') is True
+                              and result.get('emittedManifestUnchanged') is True and report['bindingsStable'] is True
+                              and report.get('ownedProcesses', {}).get('verified') is True
+                              and not report['ownedProcesses']['observationLimits']['exceeded']
+                              and report['log']['complete'] is True and not report['log']['error'] and not report['log']['limitExceeded']
+                              and not any(report.get(key) for key in ('watchdogExpired', 'interruptedSignal', 'cleanupNeededAfterNodeExit',
+                                                                    'failure', 'cleanupFailure', 'bindingsFailure')))
+
+    except BaseException as error:
+        report['resultFailure'] = repr(error)
+        report['complete'] = False
+    report['elapsedSeconds'] = time.monotonic() - started
+    if report['elapsedSeconds'] >= 1860:
+        report['finalBudgetExceeded'] = True
+        report['complete'] = False
+    report['finished'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    with report_path.with_suffix('.mjs.txt').open('xb') as output:
+        output.write((root / helper_name).read_bytes())
+    with report_path.with_suffix('.supervisor.py.txt').open('xb') as output:
+        output.write(supervisor_bytes)
+    with supervision_path.open('x') as output:
+        json.dump(report, output, indent=2)
+        output.write('\n')
+    print(json.dumps({'supervision': str(supervision_path.relative_to(root)), 'complete': report['complete'],
+                      'childExit': report['childExit'], 'result': report.get('result')}))
+sys.exit(0 if report['complete'] else 1)

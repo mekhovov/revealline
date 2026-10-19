@@ -1,0 +1,1219 @@
+{
+  "format": "SharedDemoCanonicalPackagingIndependentAuditV1",
+  "complete": true,
+  "reviewedAt": "2026-10-19T10:52:02.510180+00:00",
+  "source": {
+    "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+    "sourceTree": "73d06a4f8878c9b79271d454e87c1547b7aacfca"
+  },
+  "qualificationElapsedSeconds": 590.211704,
+  "report": {
+    "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/serial-packaging-native-refresh.json",
+    "bytes": 175807,
+    "sha256": "97f29a851dc71bc8006cc9b9efb44ded4a53bf42da0a3a9cdaaab95e9f4f1c8c"
+  },
+  "counts": {
+    "company": 18,
+    "optional": 3,
+    "complete": 21
+  },
+  "companyPeakRuntimeFiles": 1404,
+  "companyPeakRuntimeBytes": 73148777,
+  "budgets": {
+    "company": {
+      "maxFiles": 2000,
+      "maxBytes": 83886080
+    },
+    "optional": {
+      "civilian-flight": {
+        "files": 98,
+        "bytes": 8388608
+      },
+      "civilian-fpv": {
+        "files": 150,
+        "bytes": 13107200
+      },
+      "fpv-worlds": {
+        "files": 210,
+        "bytes": 20971520
+      }
+    }
+  },
+  "limits": {
+    "companyChildSeconds": 300,
+    "companyTotalSeconds": 3600,
+    "optionalChildSeconds": 300,
+    "optionalTotalSeconds": 900,
+    "childLogBytes": 1048576,
+    "deadlineScope": "Child execution is polled; group deadline is also checked after validation. Synchronous filesystem/system calls can delay a check, so this is not a hard end-to-end I/O timeout."
+  },
+  "candidates": [
+    {
+      "kind": "company",
+      "id": "coupa-adventure",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1319,
+      "runtimeInventoryBytes": 34382960,
+      "admittedRuntimeFilesIncludingManifest": 1319,
+      "sourceInventoryFiles": 1318,
+      "sourceInventoryBytes": 58725666,
+      "completeSourceArchiveFiles": 1319,
+      "completeSourceArchiveBytes": 59215205,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-adventure/editions.json",
+          "bytes": 1026,
+          "sha256": "6376d1ca57a97d1824d11e1d4c8c5434f198cceb225dfcbd51d6b40c38a7e252",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-adventure-envelope.json",
+            "bytes": 1026,
+            "sha256": "6376d1ca57a97d1824d11e1d4c8c5434f198cceb225dfcbd51d6b40c38a7e252"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-adventure/candidate-verification.json",
+          "bytes": 1561,
+          "sha256": "28033db03c99e3923753cb8fae2d7e6ffb5594721236797fd58ebad7419a3a85",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-adventure-verification.json",
+            "bytes": 1561,
+            "sha256": "28033db03c99e3923753cb8fae2d7e6ffb5594721236797fd58ebad7419a3a85"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-adventure/manifest-coupa-adventure.json",
+          "bytes": 186415,
+          "sha256": "06eda943508350bf683fc1618b35b5ce9cb7a2a9fefcf559f85a726420de8313"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-adventure/source-inventory-coupa-adventure.json",
+          "bytes": 489539,
+          "sha256": "2d51cf19754d4c428276a36c0e9606e2df536daab3cbeaad873ccdbe4327ed9c"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-adventure.log.txt",
+        "bytes": 557,
+        "sha256": "407f0486d6dea3a72b873794df8eb9212069085bfda430ea69bb6465015e12b5"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "coupa-all",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1354,
+      "runtimeInventoryBytes": 68617242,
+      "admittedRuntimeFilesIncludingManifest": 1354,
+      "sourceInventoryFiles": 1353,
+      "sourceInventoryBytes": 93092336,
+      "completeSourceArchiveFiles": 1354,
+      "completeSourceArchiveBytes": 93593532,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-all/editions.json",
+          "bytes": 1490,
+          "sha256": "48b4f43a16fc47c0c19cead7f4fc235c5d02bdcbbbb363910262bc2deb9dbdc1",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-all-envelope.json",
+            "bytes": 1490,
+            "sha256": "48b4f43a16fc47c0c19cead7f4fc235c5d02bdcbbbb363910262bc2deb9dbdc1"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-all/candidate-verification.json",
+          "bytes": 1745,
+          "sha256": "da3e89accf2e523668a2bc5cad630ea12eebb0f8060f007e5c186dfc71c789c1",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-all-verification.json",
+            "bytes": 1745,
+            "sha256": "da3e89accf2e523668a2bc5cad630ea12eebb0f8060f007e5c186dfc71c789c1"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-all/manifest-coupa-all.json",
+          "bytes": 191950,
+          "sha256": "efb0bace69ccfa960fcc0e57b1ee027a375fef7884eec82c14755f8789475b62"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-all/source-inventory-coupa-all.json",
+          "bytes": 501196,
+          "sha256": "4f3c0bad07818fb8784d1c2ece125143a70b24b7afd1399b236aa28df1d4638e"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-all.log.txt",
+        "bytes": 545,
+        "sha256": "b3a32e5e03e8807e9edd6471a26fa7cf13cf4e5f2c980d1cfea96530dd644a53"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "coupa-culture",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1318,
+      "runtimeInventoryBytes": 32763836,
+      "admittedRuntimeFilesIncludingManifest": 1318,
+      "sourceInventoryFiles": 1317,
+      "sourceInventoryBytes": 57451329,
+      "completeSourceArchiveFiles": 1318,
+      "completeSourceArchiveBytes": 57940680,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-culture/editions.json",
+          "bytes": 1015,
+          "sha256": "a5ce3b35b47f7e0671bc70a7778ca531d9dc493d4e74a8ca26c2f90d260c2889",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-culture-envelope.json",
+            "bytes": 1015,
+            "sha256": "a5ce3b35b47f7e0671bc70a7778ca531d9dc493d4e74a8ca26c2f90d260c2889"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-culture/candidate-verification.json",
+          "bytes": 1459,
+          "sha256": "31ed951b1200ad5277b8115c8205fd51ba77e9008b54b093b4487712c18d5848",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-culture-verification.json",
+            "bytes": 1459,
+            "sha256": "31ed951b1200ad5277b8115c8205fd51ba77e9008b54b093b4487712c18d5848"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-culture/manifest-coupa-culture.json",
+          "bytes": 186229,
+          "sha256": "b4339db351da90d1c792c4a090866b6a6e4b041ad74c1c7679820a93f7d69f87"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-culture/source-inventory-coupa-culture.json",
+          "bytes": 489351,
+          "sha256": "51f572792b5c5d1d401f97bf1a3c5697766bf6d1c7de12448503c77fe89b2f52"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-culture.log.txt",
+        "bytes": 553,
+        "sha256": "adc08567f5ff36d23dda66e8e3a5fe819d2390063a1e2369ab14b4d7baf9b649"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "coupa-developers",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1319,
+      "runtimeInventoryBytes": 36163154,
+      "admittedRuntimeFilesIncludingManifest": 1319,
+      "sourceInventoryFiles": 1318,
+      "sourceInventoryBytes": 60594028,
+      "completeSourceArchiveFiles": 1319,
+      "completeSourceArchiveBytes": 61083578,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-developers/editions.json",
+          "bytes": 1037,
+          "sha256": "e1ed711411c1a5b4f15126faf93502f190701668accc6e18218caa76156c31f3",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-developers-envelope.json",
+            "bytes": 1037,
+            "sha256": "e1ed711411c1a5b4f15126faf93502f190701668accc6e18218caa76156c31f3"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-developers/candidate-verification.json",
+          "bytes": 1563,
+          "sha256": "7c5a8000d94c80afe8913471e3ffcc3953a12d6ae0b7776e83758b75227ca075",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-developers-verification.json",
+            "bytes": 1563,
+            "sha256": "7c5a8000d94c80afe8913471e3ffcc3953a12d6ae0b7776e83758b75227ca075"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-developers/manifest-coupa-developers.json",
+          "bytes": 186410,
+          "sha256": "b163be01490af5190834d4a76314f3bca989a0cb6752e84267c27d63ea7d45c6"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-developers/source-inventory-coupa-developers.json",
+          "bytes": 489550,
+          "sha256": "f71684171ab1ce97d026bb9ace231b998d4ebb55ebf6fec66d9c5998fab8e790"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-developers.log.txt",
+        "bytes": 559,
+        "sha256": "daf684aa3782fb9febcf4a4df519abb358f57c5df7edef161223ae786baac430"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "coupa-foundations",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1321,
+      "runtimeInventoryBytes": 35248616,
+      "admittedRuntimeFilesIncludingManifest": 1321,
+      "sourceInventoryFiles": 1320,
+      "sourceInventoryBytes": 59915366,
+      "completeSourceArchiveFiles": 1321,
+      "completeSourceArchiveBytes": 60405207,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-foundations/editions.json",
+          "bytes": 1034,
+          "sha256": "716e9a3e7100974014d2b8b44d4044a06f34f58a5f506f17bb670d62f6da59bc",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-foundations-envelope.json",
+            "bytes": 1034,
+            "sha256": "716e9a3e7100974014d2b8b44d4044a06f34f58a5f506f17bb670d62f6da59bc"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-foundations/candidate-verification.json",
+          "bytes": 1663,
+          "sha256": "f40118579a6ac60352a5d2c8e0e80a50a98ba15335b6133e954be2405fc05bf6",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-foundations-verification.json",
+            "bytes": 1663,
+            "sha256": "f40118579a6ac60352a5d2c8e0e80a50a98ba15335b6133e954be2405fc05bf6"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-foundations/manifest-coupa-foundations.json",
+          "bytes": 186732,
+          "sha256": "339ba32b1be00557902b33196103310db81d5a4fd107921bc0072ecc077d5a5a"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-foundations/source-inventory-coupa-foundations.json",
+          "bytes": 489841,
+          "sha256": "a070e0a55c2b32b4baf5db861a65522957682c12dd5a19a5da32a3c0be5f41ce"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-foundations.log.txt",
+        "bytes": 561,
+        "sha256": "42b61307d3320f9d96e4e4cfeac355e0a03e535ff2c30477ba079958845e40cf"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "coupa-operations",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1319,
+      "runtimeInventoryBytes": 34337813,
+      "admittedRuntimeFilesIncludingManifest": 1319,
+      "sourceInventoryFiles": 1318,
+      "sourceInventoryBytes": 58975288,
+      "completeSourceArchiveFiles": 1319,
+      "completeSourceArchiveBytes": 59464873,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-operations/editions.json",
+          "bytes": 1034,
+          "sha256": "53d5595a993aa02743d2bc4bad26db0fd8b46764256c312c92fccaf77284dc30",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-operations-envelope.json",
+            "bytes": 1034,
+            "sha256": "53d5595a993aa02743d2bc4bad26db0fd8b46764256c312c92fccaf77284dc30"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-operations/candidate-verification.json",
+          "bytes": 1563,
+          "sha256": "499e9d878d452d215fc3bbaf9538e8a36b764136b4b757f573f9375d8ad25f54",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-operations-verification.json",
+            "bytes": 1563,
+            "sha256": "499e9d878d452d215fc3bbaf9538e8a36b764136b4b757f573f9375d8ad25f54"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-operations/manifest-coupa-operations.json",
+          "bytes": 186426,
+          "sha256": "a71cb2053f3cdfe15863fc49781df0376f5a8bd892a319c608825f5637e93c35"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-coupa-operations/source-inventory-coupa-operations.json",
+          "bytes": 489585,
+          "sha256": "682e97768b697704de5951ee65a2ea0496b8aba711fbe6048c1ab1c412350267"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-coupa-operations.log.txt",
+        "bytes": 559,
+        "sha256": "d1cd984541b24c3b1c8f4da84474ca2ba4ac0bb70a9eb16355c3c06ef5462fa3"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-community",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1312,
+      "runtimeInventoryBytes": 33539349,
+      "admittedRuntimeFilesIncludingManifest": 1312,
+      "sourceInventoryFiles": 1311,
+      "sourceInventoryBytes": 58318823,
+      "completeSourceArchiveFiles": 1312,
+      "completeSourceArchiveBytes": 58805869,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-community/editions.json",
+          "bytes": 1044,
+          "sha256": "e72166d2e94371965e06213af904ab70dd60135dae9604140d16f1151ee58d54",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-community-envelope.json",
+            "bytes": 1044,
+            "sha256": "e72166d2e94371965e06213af904ab70dd60135dae9604140d16f1151ee58d54"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-community/candidate-verification.json",
+          "bytes": 1358,
+          "sha256": "900f90cee5cb81adb0248b2c276630f025dfcf11775521b1d9e850d7eb23346b",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-community-verification.json",
+            "bytes": 1358,
+            "sha256": "900f90cee5cb81adb0248b2c276630f025dfcf11775521b1d9e850d7eb23346b"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-community/manifest-droneaid-community.json",
+          "bytes": 185310,
+          "sha256": "d7109fea407527bdb229e594e16c61441ffb770935ee1641a41551299dff609a"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-community/source-inventory-droneaid-community.json",
+          "bytes": 487046,
+          "sha256": "1dcb9696bbed2c35d6d51f298ef09cb2eaa1fbdc86ff21145ad7ff9f9b762578"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-community.log.txt",
+        "bytes": 563,
+        "sha256": "582c09f0fd3984ec5ba4e58d0005f26808199cd24c848d5aed677cda2f02a3b0"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-careful-handoff",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1322,
+      "runtimeInventoryBytes": 35762666,
+      "admittedRuntimeFilesIncludingManifest": 1322,
+      "sourceInventoryFiles": 1322,
+      "sourceInventoryBytes": 60738884,
+      "completeSourceArchiveFiles": 1323,
+      "completeSourceArchiveBytes": 61231351,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-careful-handoff/editions.json",
+          "bytes": 1092,
+          "sha256": "e7fbcdd87e91ef587664d3d6665001de0c36ac9b4a543307c6a23ebfc2bce2b3",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-careful-handoff-envelope.json",
+            "bytes": 1092,
+            "sha256": "e7fbcdd87e91ef587664d3d6665001de0c36ac9b4a543307c6a23ebfc2bce2b3"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-careful-handoff/candidate-verification.json",
+          "bytes": 1585,
+          "sha256": "84789e285b9bd874082441db02f545e4e725f5bfa0e69fbffdf49365f4b5adab",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-careful-handoff-verification.json",
+            "bytes": 1585,
+            "sha256": "84789e285b9bd874082441db02f545e4e725f5bfa0e69fbffdf49365f4b5adab"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-careful-handoff/manifest-droneaid-nl-careful-handoff.json",
+          "bytes": 187386,
+          "sha256": "597881f97d9f5f4b829da739a07f82fae4c721de40a09f6f0e2bb037d1cc6ecd"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-careful-handoff/source-inventory-droneaid-nl-careful-handoff.json",
+          "bytes": 492467,
+          "sha256": "e9062e3c04b0e51d514aafbaef9a82805d70b5db660d1be3f3e2c657f47494ec"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-careful-handoff.log.txt",
+        "bytes": 581,
+        "sha256": "5ff2f29df50f7af90b39cc0665358638602ecae5fc090bf74f8780ffa043a7a4"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-community",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1390,
+      "runtimeInventoryBytes": 73148777,
+      "admittedRuntimeFilesIncludingManifest": 1390,
+      "sourceInventoryFiles": 1389,
+      "sourceInventoryBytes": 97717343,
+      "completeSourceArchiveFiles": 1390,
+      "completeSourceArchiveBytes": 98239354,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-community/editions.json",
+          "bytes": 1704,
+          "sha256": "71ed3100fb06744b0087b40075a8459a51c3446d2ca937acbf2a48fe31ac832d",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-community-envelope.json",
+            "bytes": 1704,
+            "sha256": "71ed3100fb06744b0087b40075a8459a51c3446d2ca937acbf2a48fe31ac832d"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-community/candidate-verification.json",
+          "bytes": 1769,
+          "sha256": "0988bbe6d4b1c0419d92e8a9478061ae399641b4afd6db9a1260847f94e2c598",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-community-verification.json",
+            "bytes": 1769,
+            "sha256": "0988bbe6d4b1c0419d92e8a9478061ae399641b4afd6db9a1260847f94e2c598"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-community/manifest-droneaid-nl-community.json",
+          "bytes": 199707,
+          "sha256": "3ee15b5b36a1bc5dbf6fc0a98c79b6c0583d0403d3790b31384438a8281e6459"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-community/source-inventory-droneaid-nl-community.json",
+          "bytes": 522011,
+          "sha256": "8c1c2a215a1f7315e06c6eb5d68aef2a19b3782c29be71cd4e3d853383dfd92b"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-community.log.txt",
+        "bytes": 569,
+        "sha256": "28122a366ed3890297f12dfef35f5ecd74ad9cc438741419eba1711233d31a0c"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-makers-together",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1322,
+      "runtimeInventoryBytes": 35638090,
+      "admittedRuntimeFilesIncludingManifest": 1322,
+      "sourceInventoryFiles": 1322,
+      "sourceInventoryBytes": 60606704,
+      "completeSourceArchiveFiles": 1323,
+      "completeSourceArchiveBytes": 61099159,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-makers-together/editions.json",
+          "bytes": 1092,
+          "sha256": "ef161e72663263e6471cc21c75ce124d64d877bc345fda1e4d4716756f772e66",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-makers-together-envelope.json",
+            "bytes": 1092,
+            "sha256": "ef161e72663263e6471cc21c75ce124d64d877bc345fda1e4d4716756f772e66"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-makers-together/candidate-verification.json",
+          "bytes": 1585,
+          "sha256": "523f57a0a834c44f6bb99503bd25b8b2ec5eec6b8d6f4cc09aaa9009600d7b74",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-makers-together-verification.json",
+            "bytes": 1585,
+            "sha256": "523f57a0a834c44f6bb99503bd25b8b2ec5eec6b8d6f4cc09aaa9009600d7b74"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-makers-together/manifest-droneaid-nl-makers-together.json",
+          "bytes": 187380,
+          "sha256": "bfc2cd738bb1682d83bfb63a5b5005c3299093ea6a8e43bb5a0162baadbbeca5"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-makers-together/source-inventory-droneaid-nl-makers-together.json",
+          "bytes": 492455,
+          "sha256": "c89f11d71bc5236c03006e89c90a10acdd477547accf6c94574915abadcf93e9"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-makers-together.log.txt",
+        "bytes": 581,
+        "sha256": "c9b5fd2634cebdef15fabee9d48639ee2c4a0adaa19186fc444c0b6166236c52"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-parts-in-motion",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1324,
+      "runtimeInventoryBytes": 36156252,
+      "admittedRuntimeFilesIncludingManifest": 1324,
+      "sourceInventoryFiles": 1324,
+      "sourceInventoryBytes": 61116962,
+      "completeSourceArchiveFiles": 1325,
+      "completeSourceArchiveBytes": 61610051,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-parts-in-motion/editions.json",
+          "bytes": 1092,
+          "sha256": "93b6d149212bae0d6cc0821f595a0624d94182d1760061f16a23f6804c69e294",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-parts-in-motion-envelope.json",
+            "bytes": 1092,
+            "sha256": "93b6d149212bae0d6cc0821f595a0624d94182d1760061f16a23f6804c69e294"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-parts-in-motion/candidate-verification.json",
+          "bytes": 1683,
+          "sha256": "84d49159503001a79ba7e41a206910113f615f5f17f38bac406856ebcd463192",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-parts-in-motion-verification.json",
+            "bytes": 1683,
+            "sha256": "84d49159503001a79ba7e41a206910113f615f5f17f38bac406856ebcd463192"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-parts-in-motion/manifest-droneaid-nl-parts-in-motion.json",
+          "bytes": 187728,
+          "sha256": "a53d47ab0d6547b8b0eca93a09955b2fd5a6d01f05f3400d906a34183f528820"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-parts-in-motion/source-inventory-droneaid-nl-parts-in-motion.json",
+          "bytes": 493089,
+          "sha256": "b0bc860eb4f5ed4147a684ea39860956b7d9c758d9e68dde773e4057b583a248"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-parts-in-motion.log.txt",
+        "bytes": 581,
+        "sha256": "8f687f544a2eac69f1db235e5a82e754b07f9495d3612e1f6241ef8119e85ec8"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-shared-horizon",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1322,
+      "runtimeInventoryBytes": 35949072,
+      "admittedRuntimeFilesIncludingManifest": 1322,
+      "sourceInventoryFiles": 1322,
+      "sourceInventoryBytes": 60941342,
+      "completeSourceArchiveFiles": 1323,
+      "completeSourceArchiveBytes": 61433759,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-shared-horizon/editions.json",
+          "bytes": 1086,
+          "sha256": "423600490828d87cd14d6315cff740794623b54a56eb48cdba3e9794c35ef99b",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-shared-horizon-envelope.json",
+            "bytes": 1086,
+            "sha256": "423600490828d87cd14d6315cff740794623b54a56eb48cdba3e9794c35ef99b"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-shared-horizon/candidate-verification.json",
+          "bytes": 1583,
+          "sha256": "269e1a85df08b4282ceb7fc3532f4ae0eb277faa6c5677f9e0a0108984874367",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-shared-horizon-verification.json",
+            "bytes": 1583,
+            "sha256": "269e1a85df08b4282ceb7fc3532f4ae0eb277faa6c5677f9e0a0108984874367"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-shared-horizon/manifest-droneaid-nl-shared-horizon.json",
+          "bytes": 187363,
+          "sha256": "6ff0e4e7849358a869c42d4cfb1453bedded22228fb380fa5e3a516bf76c6389"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-shared-horizon/source-inventory-droneaid-nl-shared-horizon.json",
+          "bytes": 492417,
+          "sha256": "a4a20c6728c2399974ecd427bb677a8d2bb191ff9cd219329e1231e44e3fdeeb"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-shared-horizon.log.txt",
+        "bytes": 579,
+        "sha256": "b06c5626220f7ea91844f0c4c53fc9f86d68f440ebeb0d43b188e2af473ee378"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-signals-of-support",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1322,
+      "runtimeInventoryBytes": 35749483,
+      "admittedRuntimeFilesIncludingManifest": 1322,
+      "sourceInventoryFiles": 1322,
+      "sourceInventoryBytes": 60754425,
+      "completeSourceArchiveFiles": 1323,
+      "completeSourceArchiveBytes": 61247042,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-signals-of-support/editions.json",
+          "bytes": 1110,
+          "sha256": "57fd7c457ed21c8e39f523df16bf7e4fac385f247d737670b1a2f4e0b21e1bcd",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-signals-of-support-envelope.json",
+            "bytes": 1110,
+            "sha256": "57fd7c457ed21c8e39f523df16bf7e4fac385f247d737670b1a2f4e0b21e1bcd"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-signals-of-support/candidate-verification.json",
+          "bytes": 1591,
+          "sha256": "d56b145637c5779abbcd1aa1d23f790d18d6adb304d7d889d6306bd867667ad9",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-signals-of-support-verification.json",
+            "bytes": 1591,
+            "sha256": "d56b145637c5779abbcd1aa1d23f790d18d6adb304d7d889d6306bd867667ad9"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-signals-of-support/manifest-droneaid-nl-signals-of-support.json",
+          "bytes": 187455,
+          "sha256": "0cbe700f13188b9227473e2e4506984fe8e1f6a445edd108f1901ad0477b4fa5"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-signals-of-support/source-inventory-droneaid-nl-signals-of-support.json",
+          "bytes": 492617,
+          "sha256": "26cee5dc19b847601e8ce1c75e09bcfbe0fd932fbc8bbb381cb46f7b850ffce0"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-signals-of-support.log.txt",
+        "bytes": 587,
+        "sha256": "7eff4c49adfc4a3984c82f9d6b3b4daa3a3abc0cacb5104010961d6e0d8b11ed"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-workshop-lights",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1322,
+      "runtimeInventoryBytes": 34447556,
+      "admittedRuntimeFilesIncludingManifest": 1322,
+      "sourceInventoryFiles": 1322,
+      "sourceInventoryBytes": 59424891,
+      "completeSourceArchiveFiles": 1323,
+      "completeSourceArchiveBytes": 59916755,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-workshop-lights/editions.json",
+          "bytes": 1092,
+          "sha256": "8290858bcab63ddeaac3cab6c74953ce27d5443a3ae8e4f2f1183cf41e7dc5f9",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-workshop-lights-envelope.json",
+            "bytes": 1092,
+            "sha256": "8290858bcab63ddeaac3cab6c74953ce27d5443a3ae8e4f2f1183cf41e7dc5f9"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-workshop-lights/candidate-verification.json",
+          "bytes": 1683,
+          "sha256": "bb4460817a869254dede046d0bebce15497e00445e651275dab9f68aed3460eb",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-workshop-lights-verification.json",
+            "bytes": 1683,
+            "sha256": "bb4460817a869254dede046d0bebce15497e00445e651275dab9f68aed3460eb"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-workshop-lights/manifest-droneaid-nl-workshop-lights.json",
+          "bytes": 187367,
+          "sha256": "6868127b41f918c4445bc631e546a3fd0fdae90fabfbf0143986b80f795687c7"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-droneaid-nl-workshop-lights/source-inventory-droneaid-nl-workshop-lights.json",
+          "bytes": 491864,
+          "sha256": "9f333577f9b76189a555933c5131c689ed598bef7226e8190721e3f561cd4308"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-droneaid-nl-workshop-lights.log.txt",
+        "bytes": 581,
+        "sha256": "2ff6f5963fc7a013e2a76996a9852e50ba6f2eb2260502f3cb54336f4391c108"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "fpv-learning",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1404,
+      "runtimeInventoryBytes": 42262472,
+      "admittedRuntimeFilesIncludingManifest": 1404,
+      "sourceInventoryFiles": 1404,
+      "sourceInventoryBytes": 65979352,
+      "completeSourceArchiveFiles": 1405,
+      "completeSourceArchiveBytes": 66497620,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-fpv-learning/editions.json",
+          "bytes": 1835,
+          "sha256": "266a9d2779d487e370e8fc4e7aeb0a74aa3e4040a6547dc93221cdfbc198fd32",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-fpv-learning-envelope.json",
+            "bytes": 1835,
+            "sha256": "266a9d2779d487e370e8fc4e7aeb0a74aa3e4040a6547dc93221cdfbc198fd32"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-fpv-learning/candidate-verification.json",
+          "bytes": 2143,
+          "sha256": "33fbf8ce0562bbaa9d9d25d79e4aeb925ae55da34c3b968bd79ca6ae4cfb5b05",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-fpv-learning-verification.json",
+            "bytes": 2143,
+            "sha256": "33fbf8ce0562bbaa9d9d25d79e4aeb925ae55da34c3b968bd79ca6ae4cfb5b05"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-fpv-learning/manifest-fpv-learning.json",
+          "bytes": 200439,
+          "sha256": "396c3ca4a0ad5ab495547e9cda073e779821a19ed58bf0ffc5a71cdb66c94381"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-fpv-learning/source-inventory-fpv-learning.json",
+          "bytes": 518268,
+          "sha256": "c6d1f5de175dac937aad6b7bee3a1070614ec61a66099d32d652ca5781b09f29"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-fpv-learning.log.txt",
+        "bytes": 551,
+        "sha256": "e1602110b5c730262b3a897ba90eced0c1985d451dadf146388901fe1f6e8718"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "social-drone-ua",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1348,
+      "runtimeInventoryBytes": 41060365,
+      "admittedRuntimeFilesIncludingManifest": 1348,
+      "sourceInventoryFiles": 1348,
+      "sourceInventoryBytes": 64821003,
+      "completeSourceArchiveFiles": 1349,
+      "completeSourceArchiveBytes": 65320056,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-social-drone-ua/editions.json",
+          "bytes": 1291,
+          "sha256": "a8e427dcbf661ef7f64006fea3ec907d08abe0424ff4380b0ed7dd6d539875d6",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-social-drone-ua-envelope.json",
+            "bytes": 1291,
+            "sha256": "a8e427dcbf661ef7f64006fea3ec907d08abe0424ff4380b0ed7dd6d539875d6"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-social-drone-ua/candidate-verification.json",
+          "bytes": 2247,
+          "sha256": "76007a83442ea327e4decdfdc8741bb75f51f6a23c9688c569e9e21783ccc17f",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-social-drone-ua-verification.json",
+            "bytes": 2247,
+            "sha256": "76007a83442ea327e4decdfdc8741bb75f51f6a23c9688c569e9e21783ccc17f"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-social-drone-ua/manifest-social-drone-ua.json",
+          "bytes": 191610,
+          "sha256": "bb00b8f0271b12ab70dbfc9540dbeb64280554e40b350bf802d51b5b699676b0"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-social-drone-ua/source-inventory-social-drone-ua.json",
+          "bytes": 499053,
+          "sha256": "bf627036c6080a4f55d78f234ab5293c6d81a59506459b90f0799746999b4bca"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-social-drone-ua.log.txt",
+        "bytes": 557,
+        "sha256": "656d81a647f7611c7474fb45d3c9e1a6578813c008c0630fb0b42768d54b31b7"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "ukraine-culture",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1379,
+      "runtimeInventoryBytes": 51149784,
+      "admittedRuntimeFilesIncludingManifest": 1379,
+      "sourceInventoryFiles": 1379,
+      "sourceInventoryBytes": 74884866,
+      "completeSourceArchiveFiles": 1380,
+      "completeSourceArchiveBytes": 75395122,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-ukraine-culture/editions.json",
+          "bytes": 1643,
+          "sha256": "8aaeb1e83eb50e73adacd1f3068588be6ac231bd53dcbbc77dc4f512b11b4e3f",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-ukraine-culture-envelope.json",
+            "bytes": 1643,
+            "sha256": "8aaeb1e83eb50e73adacd1f3068588be6ac231bd53dcbbc77dc4f512b11b4e3f"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-ukraine-culture/candidate-verification.json",
+          "bytes": 2051,
+          "sha256": "11d5f54615a5c101f3c93c9f9376de0b056b01f5e365e41226ee5300e9c03de9",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-ukraine-culture-verification.json",
+            "bytes": 2051,
+            "sha256": "11d5f54615a5c101f3c93c9f9376de0b056b01f5e365e41226ee5300e9c03de9"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-ukraine-culture/manifest-ukraine-culture.json",
+          "bytes": 196663,
+          "sha256": "e5c19ef48f537f79d338cfd8ccfaded4f7005824b3281f533732e062b28b461a"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-ukraine-culture/source-inventory-ukraine-culture.json",
+          "bytes": 510256,
+          "sha256": "9165329adbdb66335572cf599e25d238de75ff1c6f5e32a83d23ad94439bb7e6"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-ukraine-culture.log.txt",
+        "bytes": 557,
+        "sha256": "c8826b2ea4ffbd210ac3f8a0c8a9094b25204db33beb9f984c09b0d73c474581"
+      }
+    },
+    {
+      "kind": "company",
+      "id": "victory-drones",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 1328,
+      "runtimeInventoryBytes": 30742877,
+      "admittedRuntimeFilesIncludingManifest": 1328,
+      "sourceInventoryFiles": 1328,
+      "sourceInventoryBytes": 54519225,
+      "completeSourceArchiveFiles": 1329,
+      "completeSourceArchiveBytes": 55011800,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-victory-drones/editions.json",
+          "bytes": 1168,
+          "sha256": "a791d4bea0c6dfb34fc2de8cc2f02369a366725ded78ce85c3ec75df6c66cfc3",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-victory-drones-envelope.json",
+            "bytes": 1168,
+            "sha256": "a791d4bea0c6dfb34fc2de8cc2f02369a366725ded78ce85c3ec75df6c66cfc3"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-victory-drones/candidate-verification.json",
+          "bytes": 1853,
+          "sha256": "3e6f0ff3add7e154438eecda6d1ba017cc69545dc37763c0a94c24fb7a8c543d",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-victory-drones-verification.json",
+            "bytes": 1853,
+            "sha256": "3e6f0ff3add7e154438eecda6d1ba017cc69545dc37763c0a94c24fb7a8c543d"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-victory-drones/manifest-victory-drones.json",
+          "bytes": 188427,
+          "sha256": "905d24fa599387ab6615f164a3498e5e0164bdae18e66e85314115b85bd160eb"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/company-victory-drones/source-inventory-victory-drones.json",
+          "bytes": 492575,
+          "sha256": "95d6aab97a0a8e6b5d41d5a141abdcd4269568fe5fd15614ee2102772f25877e"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/company-victory-drones.log.txt",
+        "bytes": 555,
+        "sha256": "8dbda5b50c44111df331eea18e380ca654c8fd20020d3be918568ab17d020731"
+      }
+    },
+    {
+      "kind": "optional",
+      "id": "civilian-flight",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 94,
+      "runtimeInventoryBytes": 3781006,
+      "admittedRuntimeFilesIncludingManifest": 95,
+      "sourceInventoryFiles": 96,
+      "sourceInventoryBytes": 3805057,
+      "completeSourceArchiveFiles": 97,
+      "completeSourceArchiveBytes": 3833163,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-civilian-flight/optional-packages.json",
+          "bytes": 1024,
+          "sha256": "280775c23e6856d2f953fb7cfe86b2643f8c71ccfd418156db70349c13602dcc",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/optional-civilian-flight-envelope.json",
+            "bytes": 1024,
+            "sha256": "280775c23e6856d2f953fb7cfe86b2643f8c71ccfd418156db70349c13602dcc"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-civilian-flight/optional-candidate-verification.json",
+          "bytes": 889,
+          "sha256": "c197e7fc2d63042c71369f544d57b9c79cdaa388d0521853bd90fa09ad0dec4f",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/optional-civilian-flight-verification.json",
+            "bytes": 889,
+            "sha256": "c197e7fc2d63042c71369f544d57b9c79cdaa388d0521853bd90fa09ad0dec4f"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-civilian-flight/manifest-optional-civilian-flight.json",
+          "bytes": 16934,
+          "sha256": "e5c90e8060c28ff54b86e53178d8b61abd70b55efbec90b8e454af9143c01bb3"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-civilian-flight/source-inventory-optional-civilian-flight.json",
+          "bytes": 28106,
+          "sha256": "ea28dd95973e2775dcebaf1651fa2631d06d36d776400cd07dc8844b609dea68"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/optional-civilian-flight.log.txt",
+        "bytes": 491,
+        "sha256": "36caf8a7c07863778fa5d69138a678c2206bd6a240790994d7bcf353215a6912"
+      }
+    },
+    {
+      "kind": "optional",
+      "id": "civilian-fpv",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 146,
+      "runtimeInventoryBytes": 12063613,
+      "admittedRuntimeFilesIncludingManifest": 147,
+      "sourceInventoryFiles": 148,
+      "sourceInventoryBytes": 12087845,
+      "completeSourceArchiveFiles": 149,
+      "completeSourceArchiveBytes": 12132883,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-civilian-fpv/optional-packages.json",
+          "bytes": 1008,
+          "sha256": "979846732d5d5ba45938ae04b7a2cee8e3f680339bfa5fa1f38a93a6dff5bedb",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/optional-civilian-fpv-envelope.json",
+            "bytes": 1008,
+            "sha256": "979846732d5d5ba45938ae04b7a2cee8e3f680339bfa5fa1f38a93a6dff5bedb"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-civilian-fpv/optional-candidate-verification.json",
+          "bytes": 888,
+          "sha256": "8d76c8c4d30984b9f6d4a63664811ba279f80589820463e9a699ffb067f2c763",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/optional-civilian-fpv-verification.json",
+            "bytes": 888,
+            "sha256": "8d76c8c4d30984b9f6d4a63664811ba279f80589820463e9a699ffb067f2c763"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-civilian-fpv/manifest-optional-civilian-fpv.json",
+          "bytes": 26768,
+          "sha256": "e8ad7ff0cf9893209c9c1e4e8c3a2c93bff8121f2f8a924aea1a388b16ea71c1"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-civilian-fpv/source-inventory-optional-civilian-fpv.json",
+          "bytes": 45038,
+          "sha256": "4685ced8d65cb42ed8a3e4a99226d8759c48bcd9a43e459830d238f9cc8bc18b"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/optional-civilian-fpv.log.txt",
+        "bytes": 485,
+        "sha256": "2cf2b9b82d61c3960687b833b904973afd0d4e14b9f60ec2701b69c3834608df"
+      }
+    },
+    {
+      "kind": "optional",
+      "id": "fpv-worlds",
+      "complete": true,
+      "reproducibleBuilds": 2,
+      "zipMembersAdmitted": true,
+      "runtimeInventoryFiles": 207,
+      "runtimeInventoryBytes": 18569023,
+      "admittedRuntimeFilesIncludingManifest": 208,
+      "sourceInventoryFiles": 209,
+      "sourceInventoryBytes": 18593263,
+      "completeSourceArchiveFiles": 210,
+      "completeSourceArchiveBytes": 18658037,
+      "ownedCleanupVerified": true,
+      "remainingProcesses": 0,
+      "signals": 0,
+      "metadata": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-fpv-worlds/optional-packages.json",
+          "bytes": 996,
+          "sha256": "12c700064860ce8eaf516393fa3b0623766e78e01132e60c2fdd58476680ae33",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/optional-fpv-worlds-envelope.json",
+            "bytes": 996,
+            "sha256": "12c700064860ce8eaf516393fa3b0623766e78e01132e60c2fdd58476680ae33"
+          }
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-fpv-worlds/optional-candidate-verification.json",
+          "bytes": 886,
+          "sha256": "a713b38992fc0aa6d893f88b0b448d4e9538e336def70914464d85c749cc5b60",
+          "preserved": {
+            "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/optional-fpv-worlds-verification.json",
+            "bytes": 886,
+            "sha256": "a713b38992fc0aa6d893f88b0b448d4e9538e336def70914464d85c749cc5b60"
+          }
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-fpv-worlds/manifest-optional-fpv-worlds.json",
+          "bytes": 38416,
+          "sha256": "29307dd13d78a3fc0e6039c112889da92ef9f018ad92ae68ec878c2afadcf47a"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/canonical-packaging-native-refresh-20261019T102558Z-2499fa25/optional-fpv-worlds/source-inventory-optional-fpv-worlds.json",
+          "bytes": 64774,
+          "sha256": "f662ff248982f737c76c2f94e4d341757718c91deaaa23b35c52f02102d609e0"
+        }
+      },
+      "log": {
+        "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/optional-fpv-worlds.log.txt",
+        "bytes": 481,
+        "sha256": "906a8bc394d6ba3fc4829ecfca3199662aa3a3b9de696740b2cdf7a8527e10a8"
+      }
+    }
+  ],
+  "helpers": [
+    {
+      "source": ".cache/qualify-packaging-serial.py",
+      "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/qualify-packaging-serial.py.txt",
+      "bytes": 20317,
+      "sha256": "40cec0f2d26b26bfb6563e5ca48a37c0f07fdc428615fcaf7e632b68f5582f88"
+    },
+    {
+      "source": ".cache/run-endurance-emitted-final.py",
+      "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/run-endurance-emitted-final.py.txt",
+      "bytes": 26055,
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+    },
+    {
+      "source": ".cache/serial-packaging-native-refresh.preparation.json",
+      "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/serial-packaging-native-refresh.preparation.json",
+      "bytes": 3150,
+      "sha256": "08db9e3b4a6b311b83f3c077beceac0d3dd427cef46ac3b8b7423d93ac5097be"
+    },
+    {
+      "source": ".cache/test-qualify-packaging-serial-guards.py",
+      "path": "docs/qualification/shared-demos/packaging-candidates-9dcff0588/test-qualify-packaging-serial-guards.py.txt",
+      "bytes": 3135,
+      "sha256": "197553d86dd0c249896111abb8d7c9b8298739279a75cbc9795a43e46ae83ae2"
+    }
+  ],
+  "method": "Independently re-read and hashed all 84 candidate envelope/verification/manifest/source-inventory metadata files plus all21 logs; recalculated inventory counts/bytes and inspected archive path/size. Authenticated original canonical reports provide double-build and actual ZIP member admission. Held HEAD checked before/after; current source policy/helper pins match.",
+  "limitations": [
+    "Archive bodies remain external and were not reread during this audit; their full hashes/member verification were measured by the completed canonical children.",
+    "Company runtime capacity is separate from source archive size; larger Company source archives are not misreported as runtime budget failures.",
+    "Successful polled execution/cleanup is not a hard wall-clock guarantee for synchronous SMB I/O.",
+    "No combined release envelope, publication, deployment, hosted Linux replay or physical/human acceptance is claimed."
+  ]
+}

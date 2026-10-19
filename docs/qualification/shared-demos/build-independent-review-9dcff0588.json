@@ -1,0 +1,299 @@
+{
+  "format": "SharedDemoFourStageBuildIndependentReviewV1",
+  "complete": true,
+  "reviewedAt": "2026-10-19T11:01:01.832784+00:00",
+  "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "integrationBase": "403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+  "method": "Independent exact-byte receipt/log/helper/declaration/capture-metadata audit. Main-pages companion independently recomputes catalog payload/native/offline coverage, checks every emitted source/blob path and size, and rederives the archive model. Held HEAD checked before/after; recorded runtime/build fingerprints are compared without rehashing the full source tree.",
+  "aggregate": {
+    "path": ".cache/final-native-refresh-evidence/shared-demos-build-validation-403814d-9dcff0588-native-refresh.json",
+    "bytes": 7787,
+    "sha256": "deaa4671bf6f3b029da5a1b7d488c6ce259811ba6bc34846234ae0c5f1f499bd"
+  },
+  "runtime": {
+    "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "files": 10273,
+    "bytes": 410435495
+  },
+  "buildInputs": {
+    "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+    "files": 9411,
+    "bytes": 348449477
+  },
+  "stages": [
+    {
+      "name": "main-pages",
+      "elapsedMs": 259361,
+      "exitCode": 0,
+      "exitSignal": null,
+      "log": {
+        "path": ".cache/final-native-refresh-evidence/final-main-pages-403814d-9dcff0588-native-refresh.log.txt",
+        "bytes": 1362554,
+        "sha256": "8f5cdb826f0ab9f234f25a5c8d8eeb09bff9ff96796d344f5385ff03fa2e99d6"
+      },
+      "logUntruncated": true,
+      "childCloseRecorded": true,
+      "receipt": {
+        "path": ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.json",
+        "bytes": 2225146,
+        "sha256": "9c0b3ea78beecf9f1a00aac5727680a05e0a4a002091914a35323d1356e466e0",
+        "complete": true
+      }
+    },
+    {
+      "name": "full-packaging",
+      "elapsedMs": 260849,
+      "exitCode": 0,
+      "exitSignal": null,
+      "log": {
+        "path": ".cache/final-native-refresh-evidence/final-full-packaging-403814d-9dcff0588-native-refresh.log.txt",
+        "bytes": 2344,
+        "sha256": "b3a0c2994969c4874c9d269a16e5145aba37f3fbc60135bf55b90b472cebcc56"
+      },
+      "logUntruncated": true,
+      "childCloseRecorded": true,
+      "receipt": {
+        "path": ".cache/final-native-refresh-evidence/shared-demos-packaging-403814d-9dcff0588-native-refresh.json",
+        "bytes": 779566,
+        "sha256": "ce99d4605aebc0a5c4cb51cff0aea8e1a7661e928422fa92fa37272bc489e6fb",
+        "complete": true
+      }
+    },
+    {
+      "name": "validate",
+      "elapsedMs": 160048,
+      "exitCode": 0,
+      "exitSignal": null,
+      "log": {
+        "path": ".cache/final-native-refresh-evidence/final-validate-403814d-9dcff0588-native-refresh.log.txt",
+        "bytes": 3932,
+        "sha256": "cdcf99644cb9dc6c03daf97f69ec3d2e9419a02ce25fbec7fc358cc575e23a3b"
+      },
+      "logUntruncated": true,
+      "childCloseRecorded": true
+    },
+    {
+      "name": "lint",
+      "elapsedMs": 17490,
+      "exitCode": 0,
+      "exitSignal": null,
+      "log": {
+        "path": ".cache/final-native-refresh-evidence/final-lint-403814d-9dcff0588-native-refresh.log.txt",
+        "bytes": 196,
+        "sha256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c"
+      },
+      "logUntruncated": true,
+      "childCloseRecorded": true
+    }
+  ],
+  "sourceStability": {
+    "reportedStartEndIdentitiesMatch": true,
+    "heldHEADBeforeAfterMatches": true,
+    "declarationExactHashMatches": true,
+    "fullSourceTreeIndependentlyRehashed": false
+  },
+  "capture": {
+    "files": 6229,
+    "sourceFiles": 5937,
+    "deltaFiles": 292,
+    "deltaBlobs": 286,
+    "deltaBytes": 142165892,
+    "allBodyPathsAndSizesChecked": true,
+    "blobBodiesIndependentlyRehashed": false
+  },
+  "mainPages": {
+    "required": {
+      "payloadsAndDiagnostics": 2744,
+      "missingPayloads": 0,
+      "nativePaths": 128,
+      "missingNative": 0,
+      "literalModuleClosure": 412,
+      "missingModules": 0,
+      "offlineRequiredPaths": 2303,
+      "offlineCoreFiles": 1752,
+      "offlineSelectedBytes": 456291844,
+      "everyOfflineDescriptorMatchesInventory": true
+    },
+    "capacity": {
+      "finalStaged": {
+        "files": 6229,
+        "bytes": 967468908,
+        "headroomBytes": 12531092,
+        "overlayFiles": 4,
+        "metadataFiles": 4
+      },
+      "independentlyRecomputedGNUtarModelBytes": 972666880,
+      "modeledHeadroomBytes": 7333120,
+      "unchangedLimitBytes": 980000000,
+      "actualUploadedArtifact": false
+    },
+    "inventorySHA256": "20e51e1ae9bfd6b9916b86978e0a3b212c40724d81612b376a38ccd944621279",
+    "manifestSHA256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3"
+  },
+  "fullPackaging": {
+    "files": 6345,
+    "bytes": 1122893169,
+    "coreCacheFiles": 1752,
+    "coreCacheBytes": 75885601,
+    "coreCacheLimits": {
+      "files": 2000,
+      "bytes": 83886080
+    },
+    "standalone": {
+      "files": 198,
+      "bytes": 18423235,
+      "zipBytes": 18456799,
+      "limits": {
+        "files": 210,
+        "bytes": 20971520
+      },
+      "demonstrations": 0,
+      "offlineDiagnosticArtifacts": []
+    },
+    "requiredPayloadsAndDiagnostics": 2744,
+    "missingPayloads": [],
+    "unexpectedEmissionChanges": []
+  },
+  "helpers": [
+    {
+      "kind": "wrapper",
+      "path": ".cache/run-final-build-native-refresh.mjs",
+      "bytes": 11857,
+      "sha256": "31ca951f98b354d4e9a85a22d8777894e533acb4428a3baa071d4ee9968a9bae"
+    },
+    {
+      "kind": "wrapperHelper",
+      "path": ".cache/final-build-wrapper-support.mjs",
+      "bytes": 1742,
+      "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e"
+    },
+    {
+      "kind": "scratchHelper",
+      "path": ".cache/final-build-external-tmp.mjs",
+      "bytes": 4315,
+      "sha256": "76d87ce26f2ed9c5873e3ee75c9f9ae296aa8fc6c2485ed39c4aa0d16df7480f"
+    },
+    {
+      "kind": "floorHelper",
+      "path": ".cache/final-build-scratch.mjs",
+      "bytes": 4580,
+      "sha256": "1c8c537e0e9c68a57a5d568fccd641b6c26a7c5458115755c2125afd4546d6e7"
+    },
+    {
+      "kind": "sourceDeclaration",
+      "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+      "bytes": 423,
+      "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5"
+    }
+  ],
+  "limits": {
+    "logBytesPerStage": 2097152,
+    "stopIfAvailableDiskBelowBytes": 209715200,
+    "stopIfScratchAvailableBelowBytes": 209715200,
+    "stageTimeoutMs": 1200000
+  },
+  "preserved": [
+    {
+      "source": ".cache/final-native-refresh-evidence/shared-demos-build-validation-403814d-9dcff0588-native-refresh.json",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/shared-demos-build-validation-403814d-9dcff0588-native-refresh.json",
+      "bytes": 7787,
+      "sha256": "deaa4671bf6f3b029da5a1b7d488c6ce259811ba6bc34846234ae0c5f1f499bd"
+    },
+    {
+      "source": ".cache/final-native-refresh-evidence/final-main-pages-403814d-9dcff0588-native-refresh.log.txt",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/final-main-pages-403814d-9dcff0588-native-refresh.log.txt",
+      "bytes": 1362554,
+      "sha256": "8f5cdb826f0ab9f234f25a5c8d8eeb09bff9ff96796d344f5385ff03fa2e99d6"
+    },
+    {
+      "source": ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.json",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/main-pages-demo-final-403814d-9dcff0588-native-refresh.json",
+      "bytes": 2225146,
+      "sha256": "9c0b3ea78beecf9f1a00aac5727680a05e0a4a002091914a35323d1356e466e0"
+    },
+    {
+      "source": ".cache/final-native-refresh-evidence/final-full-packaging-403814d-9dcff0588-native-refresh.log.txt",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/final-full-packaging-403814d-9dcff0588-native-refresh.log.txt",
+      "bytes": 2344,
+      "sha256": "b3a0c2994969c4874c9d269a16e5145aba37f3fbc60135bf55b90b472cebcc56"
+    },
+    {
+      "source": ".cache/final-native-refresh-evidence/shared-demos-packaging-403814d-9dcff0588-native-refresh.json",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/shared-demos-packaging-403814d-9dcff0588-native-refresh.json",
+      "bytes": 779566,
+      "sha256": "ce99d4605aebc0a5c4cb51cff0aea8e1a7661e928422fa92fa37272bc489e6fb"
+    },
+    {
+      "source": ".cache/final-native-refresh-evidence/final-validate-403814d-9dcff0588-native-refresh.log.txt",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/final-validate-403814d-9dcff0588-native-refresh.log.txt",
+      "bytes": 3932,
+      "sha256": "cdcf99644cb9dc6c03daf97f69ec3d2e9419a02ce25fbec7fc358cc575e23a3b"
+    },
+    {
+      "source": ".cache/final-native-refresh-evidence/final-lint-403814d-9dcff0588-native-refresh.log.txt",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/final-lint-403814d-9dcff0588-native-refresh.log.txt",
+      "bytes": 196,
+      "sha256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c"
+    },
+    {
+      "source": ".cache/final-native-refresh-evidence/main-pages-demo-final-403814d-9dcff0588-native-refresh.inventory.json",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/main-pages-demo-final-403814d-9dcff0588-native-refresh.inventory.json",
+      "bytes": 989545,
+      "sha256": "663c9b8465f4d13d35a5b849db11dbd0ff23175d586d214733149ef233253064"
+    },
+    {
+      "source": ".cache/shared-demos-emitted-403814d-9dcff0588-native-refresh/manifest.json",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/manifest.json",
+      "bytes": 1369724,
+      "sha256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3"
+    },
+    {
+      "source": ".cache/main-pages-independent-review-9dcff0588.json",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/main-pages-independent-review-9dcff0588.json",
+      "bytes": 3398,
+      "sha256": "43654b872cf8c18d6481ed601dab0ef4b6c8443d6e32e252fa6a0d3174d8e92b"
+    },
+    {
+      "source": ".cache/run-final-build-native-refresh.mjs",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/run-final-build-native-refresh.mjs.txt",
+      "bytes": 11857,
+      "sha256": "31ca951f98b354d4e9a85a22d8777894e533acb4428a3baa071d4ee9968a9bae"
+    },
+    {
+      "source": ".cache/final-build-wrapper-support.mjs",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/final-build-wrapper-support.mjs.txt",
+      "bytes": 1742,
+      "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e"
+    },
+    {
+      "source": ".cache/final-build-external-tmp.mjs",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/final-build-external-tmp.mjs.txt",
+      "bytes": 4315,
+      "sha256": "76d87ce26f2ed9c5873e3ee75c9f9ae296aa8fc6c2485ed39c4aa0d16df7480f"
+    },
+    {
+      "source": ".cache/final-build-scratch.mjs",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/final-build-scratch.mjs.txt",
+      "bytes": 4580,
+      "sha256": "1c8c537e0e9c68a57a5d568fccd641b6c26a7c5458115755c2125afd4546d6e7"
+    },
+    {
+      "source": "docs/qualification/shared-demos/source-freeze-latest.json",
+      "copy": "docs/qualification/shared-demos/build-native-refresh-9dcff0588/source-freeze-latest.json",
+      "bytes": 423,
+      "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5"
+    }
+  ],
+  "evidenceCopy": {
+    "bytes": 6767109,
+    "availableBefore": 279547904,
+    "availableAfter": 272715776
+  },
+  "limitations": [
+    "Four child-close events record exit zero and null signals. This build wrapper records PIDs and uses process-group stop, not identity-scoped descendant cleanup; no independent no-orphan claim is made.",
+    "Timers/disk polling and synchronous external filesystem calls are not hard end-to-end wall-clock guarantees.",
+    "The Pages archive figure is a baseline-calibrated model; no actual upload or deployment admission is established.",
+    "Source and body-hash stability was measured by completed pinned qualifiers. This audit does not repeat full corpus body hashing, browser playback or actual offline installation.",
+    "Current local free-space observation fell below the separate browser-launch floor after build completion; the passed build does not authorize starting browsers below that floor."
+  ]
+}
