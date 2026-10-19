@@ -14,6 +14,8 @@ import {
   PAGES_ROOT,
   pagesSmokePlan,
   validatePagesSmokePlan,
+  pagesDiagnosticScope,
+  assertPagesMissionsEvidence,
   redactPagesText,
   encodePagesReport,
   safePagesURL,
@@ -62,6 +64,8 @@ const validReport = () => ({
   controlsComplete: true,
   expectedRevision: revision,
   engine: 'chromium',
+  diagnostic: 'none',
+  diagnosticScope: 'public-critical-flow-smoke',
   browserVersion: 'modeled-123',
   profile: 'fresh-ephemeral',
   performanceExcluded: true,
@@ -100,6 +104,9 @@ test('fixed policy and dispatch refuse widened limits, remote inputs and missing
     node: '22.22.2',
     playwright: 'latest',
     expectedDeployment: 'arbitrary',
+    diagnosticModes: ['none', 'arbitrary'],
+    defaultDiagnostic: 'missions',
+    missionsDiagnostic: {},
   }))
     assert.throws(() => validatePagesSmokePlan({ ...plan, [key]: value }), key);
   validatePagesDispatch(validEnv(), revision, '22.13.1');
@@ -109,6 +116,7 @@ test('fixed policy and dispatch refuse widened limits, remote inputs and missing
     GITHUB_REF: 'refs/heads/other',
     GITHUB_SHA: '2'.repeat(40),
     PAGES_SMOKE_ENGINE: 'firefox',
+    PAGES_SMOKE_DIAGNOSTIC: 'arbitrary',
     REVEALLINE_PAGES_TEST_PASSWORD: '',
   }))
     assert.throws(
@@ -360,6 +368,7 @@ async function observeModel(options = {}) {
   const report = await observePagesSmoke({
     expectedRevision: revision,
     engine: options.engine ?? 'chromium',
+    diagnostic: options.diagnostic ?? 'none',
     password: secret,
     browserType: model.browserType,
     ...(options.earlyEvidenceLate ? { now: () => clock } : {}),
@@ -370,8 +379,14 @@ async function observeModel(options = {}) {
         ? { ...binding(), changed: true }
         : binding();
     },
-    soloFlows: async () => {
+    soloFlows: async (page) => {
       soloCalls++;
+      for (const row of options.missionsRows ?? [])
+        page.emit('console', {
+          type: () => 'debug',
+          text: () => missionsPrefix + JSON.stringify(row),
+          location: () => ({ url: PAGES_ROOT + 'game/app.mjs' }),
+        });
       if (options.earlyEvidenceLate) clock = 569999;
       if (options.soloFailure) throw new Error('public flow failed ' + secret);
     },
@@ -669,7 +684,7 @@ async function ownedModel(options = {}) {
       expectedRevision: revision,
       playwrightPath: join(moduleRoot, 'index.mjs'),
       output,
-      env: validEnv(),
+      env: { ...validEnv(), PAGES_SMOKE_DIAGNOSTIC: options.diagnostic ?? 'none' },
       platformNode: '22.13.1',
       sourceIdentity: () => ({
         revision,
@@ -677,13 +692,18 @@ async function ownedModel(options = {}) {
       }),
       owner: async (argv, settings) => {
         assert(!argv.join(' ').includes(secret));
+        assert.equal(argv[6], options.diagnostic ?? 'none');
+        assert.equal(settings.env.PAGES_SMOKE_DIAGNOSTIC, undefined);
         assert.equal(settings.env.REVEALLINE_PAGES_TEST_PASSWORD, secret);
         assert.equal(settings.env.GH_TOKEN, undefined);
         assert.equal(settings.env.DEBUG, undefined);
         assert.equal(settings.timeoutMs, 600000);
         assert.equal(settings.rssBytes, 6 * 1024 ** 3);
         await writeFile(settings.log, 'unexpected call log ' + secret);
-        await writeFile(argv[5], JSON.stringify({ ...validReport(), extra: secret }));
+        await writeFile(
+          argv[5],
+          JSON.stringify({ ...(options.report ?? validReport()), extra: secret }),
+        );
         if (options.throwOwner) {
           await writeFile(settings.receipt, JSON.stringify({ status: 'failed', error: secret }));
           throw new Error(secret);
@@ -798,7 +818,21 @@ test('fixed workflow separates PR source checks from secret-bearing main-only br
     ),
   );
   assert(!workflow.split('\n  browser:\n')[0].includes('secrets.'));
-  assert(!workflow.includes('inputs:'));
+  assert.equal((workflow.match(/^    inputs:$/gm) ?? []).length, 1);
+  assert.match(
+    workflow,
+    /workflow_dispatch:\n    inputs:\n      diagnostic:\n        description: Fixed optional diagnostic scope\n        type: choice\n        required: true\n        default: none\n        options: \[none, missions\]/,
+  );
+  assert(browser.includes('PAGES_SMOKE_DIAGNOSTIC: ' + '$' + "{{ inputs.diagnostic || 'none' }}"));
+  assert(
+    browser.includes(
+      'published-pages-controls-' +
+        '$' +
+        '{{ matrix.engine }}-' +
+        '$' +
+        "{{ inputs.diagnostic || 'none' }}-",
+    ),
+  );
   assert(
     browser.includes(
       'timeout --signal=TERM --kill-after=30s 12m node scripts/run-solo-pages-smoke.mjs',
@@ -1192,4 +1226,304 @@ test('actual early-success evidence timeout cannot overwrite the final failed-fl
   result.releaseEarly();
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(JSON.stringify(result.report.pages[0].publicEvidence), before);
+});
+
+const missionsPrefix = 'RevealLineMissionsStageV1 ';
+function missionsReceiver() {
+  const page = new EventEmitter();
+  page.url = () => PAGES_ROOT + 'game/?journey=whole-spatial-v25&performance=1';
+  page.evaluate = () => {
+    throw new Error('unresponsive page: no evaluation is available');
+  };
+  const observer = createPagesDiagnostics(page, secret);
+  const emit = (row, mutate = () => {}) => {
+    const message = {
+      type: () => 'debug',
+      text: () => missionsPrefix + JSON.stringify(row),
+      location: () => ({ url: PAGES_ROOT + 'game/app.mjs' }),
+      args: () => {
+        throw new Error('must not read argument objects');
+      },
+    };
+    mutate(message);
+    page.emit('console', message);
+  };
+  return { page, observer, emit };
+}
+const stageRow = (sequence, kind, opening = 1) => [
+  opening,
+  0,
+  sequence,
+  kind,
+  1,
+  0,
+  sequence,
+  123456,
+];
+
+test('Missions pending stage is retained in the host before a failed final page read', async () => {
+  const { observer, emit } = missionsReceiver();
+  emit(stageRow(1, 'missions-opening'));
+  emit(stageRow(2, 'missions-render-begin'));
+  assert.equal(observer.result.missions.incomplete, true);
+  assert.equal(observer.result.missions.first.at(-1).kind, 'missions-render-begin');
+  const retained = JSON.stringify(observer.result.missions);
+  await assert.rejects(observer.capturePublic(), /unresponsive page/);
+  assert.equal(JSON.stringify(observer.result.missions), retained);
+  observer.detach();
+});
+
+test('Missions transport keeps cancelled and overlapping opening sequences separate', () => {
+  const { observer, emit } = missionsReceiver();
+  emit(stageRow(1, 'missions-opening', 1));
+  emit(stageRow(2, 'missions-imports-begin', 1));
+  emit(stageRow(1, 'missions-opening', 2));
+  emit(stageRow(2, 'missions-build-joined', 2));
+  emit(stageRow(3, 'missions-cancelled', 1));
+  emit(stageRow(3, 'missions-complete', 2));
+  assert.equal(observer.result.missions.incomplete, false);
+  assert.deepEqual(
+    observer.result.missions.openings.map((row) => row.terminal),
+    ['missions-cancelled', 'missions-complete'],
+  );
+  emit(stageRow(4, 'missions-imports-end', 1));
+  assert.equal(observer.result.missions.invalid, 1);
+  assert.equal(observer.result.missions.incomplete, true);
+  observer.detach();
+});
+
+test('Missions transport rejects truncation, spoofed source, wrong document and scalar identity mutations without retaining raw text', () => {
+  for (const corrupt of [
+    (message) => {
+      message.text = () => missionsPrefix + secret + 'x'.repeat(600);
+    },
+    (message) => {
+      message.text = () => missionsPrefix + '[1,0,1';
+    },
+    (message) => {
+      message.text = () =>
+        missionsPrefix + JSON.stringify([...stageRow(1, 'missions-opening'), secret]);
+    },
+    (message) => {
+      message.text = () => missionsPrefix + JSON.stringify(stageRow(2, 'missions-opening'));
+    },
+    (message) => {
+      message.text = () => missionsPrefix + JSON.stringify(stageRow(1, 'unknown-stage'));
+    },
+    (message) => {
+      message.location = () => ({ url: 'https://example.org/app.mjs' });
+    },
+  ]) {
+    const { observer, emit } = missionsReceiver();
+    emit(stageRow(1, 'missions-opening'), corrupt);
+    assert.equal(observer.result.missions.invalid, 1);
+    assert.equal(observer.result.missions.incomplete, true);
+    assert(!JSON.stringify(observer.result).includes(secret));
+    observer.detach();
+  }
+  const { page, observer, emit } = missionsReceiver();
+  page.url = () => PAGES_ROOT + 'game/?journey=whole-spatial-v25';
+  emit(stageRow(1, 'missions-opening'));
+  assert.equal(observer.result.missions.invalid, 1);
+  observer.detach();
+});
+
+test('Missions host retention keeps first and tail within64 and refuses missing/order/clock evidence', () => {
+  const { observer, emit } = missionsReceiver();
+  for (let opening = 1; opening <= 8; opening++) {
+    emit(stageRow(1, 'missions-opening', opening));
+    for (let sequence = 2; sequence <= 9; sequence++)
+      emit(stageRow(sequence, 'missions-render-begin', opening));
+    emit(stageRow(10, 'missions-complete', opening));
+  }
+  const target = observer.result.missions;
+  assert.equal(target.first.length, 16);
+  assert.equal(target.tail.length, 48);
+  assert.equal(target.omitted, 16);
+  assert.equal(target.overflow, true);
+  assert.equal(target.incomplete, true);
+  assert.equal(target.first[0].opening, 1);
+  assert.equal(target.tail.at(-1).opening, 8);
+  emit(stageRow(1, 'missions-opening', 9));
+  assert.equal(target.invalid, 1);
+  observer.detach();
+  for (const mutate of [
+    (row) => {
+      row[2] = 3;
+    },
+    (row) => {
+      row[1] = 99;
+    },
+    (row) => {
+      row[4] = 2;
+    },
+    (row) => {
+      row[5] = 1;
+    },
+    (row) => {
+      row[6] = 0;
+    },
+    (row) => {
+      row[7] = 9999;
+    },
+  ]) {
+    const f = missionsReceiver();
+    f.emit(stageRow(1, 'missions-opening'));
+    const row = stageRow(2, 'missions-render-begin');
+    mutate(row);
+    f.emit(row);
+    assert.equal(f.observer.result.missions.invalid, 1);
+    assert.equal(f.observer.result.missions.incomplete, true);
+    f.observer.detach();
+  }
+});
+
+const completeMissionsRows = () =>
+  [1, 2].flatMap((opening) => [
+    stageRow(1, 'missions-opening', opening),
+    stageRow(2, 'missions-complete', opening),
+  ]);
+
+test('fixed diagnostic mode changes only the initial Solo URL and labels both browser and owner evidence', async () => {
+  for (const engine of ['chromium', 'webkit']) {
+    const normal = await observeModel({ engine });
+    assert.equal(normal.report.diagnostic, 'none');
+    assert.equal(normal.report.diagnosticScope, 'public-critical-flow-smoke');
+    assert.equal(normal.pages[0].url(), PAGES_ROOT + 'game/?journey=whole-spatial-v25');
+    assert.equal(normal.report.pages[0].missions, undefined);
+    const observed = await observeModel({
+      engine,
+      diagnostic: 'missions',
+      missionsRows: completeMissionsRows(),
+    });
+    assert.equal(observed.report.status, 'passed-controls');
+    assert.equal(
+      observed.pages[0].url(),
+      PAGES_ROOT + 'game/?journey=whole-spatial-v25&performance=1',
+    );
+    assert.equal(observed.pages[1].url(), PAGES_ROOT + 'game/?journey=legacy');
+    assert.equal(observed.report.diagnosticScope, 'missions-first-open-stage-observation');
+    assert.deepEqual(observed.report.stages, normal.report.stages);
+    assessOwnedPagesSmoke(observed.report, closed(), revision, engine, 'missions');
+    assert.throws(
+      () => assessOwnedPagesSmoke(observed.report, closed(), revision, engine),
+      /diagnostic|missions|none/,
+    );
+  }
+  assert.equal(pagesDiagnosticScope(), 'public-critical-flow-smoke');
+  for (const diagnostic of ['', 'other', null, true]) {
+    assert.throws(() => pagesDiagnosticScope(diagnostic), /diagnostic/);
+    await assert.rejects(
+      observePagesSmoke({
+        engine: 'chromium',
+        diagnostic,
+        expectedRevision: revision,
+        password: secret,
+        browserType: {
+          launch() {
+            throw new Error('must not launch');
+          },
+        },
+      }),
+      /diagnostic/,
+    );
+  }
+});
+
+test('Missions mode refuses absent, invalid, pending, failed and cancelled outcomes before shared actions', async () => {
+  for (const rows of [
+    [],
+    [stageRow(1, 'missions-opening')],
+    [stageRow(1, 'missions-opening'), stageRow(3, 'missions-complete')],
+    completeMissionsRows().slice(0, 2),
+    completeMissionsRows().map((row, index) =>
+      index === 1 ? stageRow(2, 'missions-failed') : row,
+    ),
+    completeMissionsRows().map((row, index) =>
+      index === 1 ? stageRow(2, 'missions-cancelled') : row,
+    ),
+  ]) {
+    const result = await observeModel({ diagnostic: 'missions', missionsRows: rows });
+    assert.equal(result.report.status, 'failed');
+    assert.equal(result.sharedCalls, 0);
+    assert(result.report.missionsEvidenceFailure);
+    assert.deepEqual(result.calls.slice(-2), ['context.close', 'browser.close']);
+  }
+  const primary = await observeModel({
+    diagnostic: 'missions',
+    soloFailure: true,
+    missionsRows: [stageRow(1, 'missions-opening'), stageRow(2, 'missions-render-begin')],
+  });
+  assert.match(primary.report.failure, /^public flow failed/);
+  assert(primary.report.missionsEvidenceFailure);
+  assert.equal(primary.report.pages[0].missions.first.at(-1).kind, 'missions-render-begin');
+});
+
+test('actual owner launcher binds its fixed diagnostic argument and independently refuses incomplete or relabelled reports', async () => {
+  const observed = await observeModel({
+    diagnostic: 'missions',
+    missionsRows: completeMissionsRows(),
+  });
+  const launched = await ownedModel({ diagnostic: 'missions', report: observed.report });
+  assert.equal(launched.result.status, 'passed-controls');
+  assert.equal(launched.result.diagnostic, 'missions');
+  assert.equal(launched.result.assessment.diagnosticScope, 'missions-first-open-stage-observation');
+  for (const corrupt of [
+    (report) => {
+      report.diagnostic = 'none';
+    },
+    (report) => {
+      report.diagnosticScope = 'public-critical-flow-smoke';
+    },
+    (report) => {
+      delete report.pages[0].missions;
+    },
+    (report) => {
+      report.pages[0].missions.invalid = 1;
+    },
+    (report) => {
+      report.pages[0].missions.overflow = true;
+    },
+    (report) => {
+      report.pages[0].missions.omitted = 1;
+    },
+    (report) => {
+      report.pages[0].missions.incomplete = true;
+    },
+    (report) => {
+      report.pages[0].missions.first.pop();
+    },
+    (report) => {
+      report.pages[0].missions.openings[0].terminal = 'missions-failed';
+    },
+    (report) => {
+      report.pages[0].missions.first[1].sequence = 3;
+    },
+    (report) => {
+      report.missionsAssessment.completeOpenings = 1;
+    },
+    (report) => {
+      report.pages[1].missions = report.pages[0].missions;
+    },
+  ]) {
+    const report = structuredClone(observed.report);
+    corrupt(report);
+    assert.throws(() => assessOwnedPagesSmoke(report, closed(), revision, 'chromium', 'missions'));
+  }
+  assert.deepEqual(
+    assertPagesMissionsEvidence(observed.report.pages[0]),
+    observed.report.missionsAssessment,
+  );
+});
+
+test('diagnostic URL retains exact document checks at both credential boundaries', async () => {
+  for (const options of [{ redirect: true }, { afterFillRedirect: true }]) {
+    const result = await observeModel({ diagnostic: 'missions', ...options });
+    assert.equal(result.report.status, 'failed');
+    assert.match(result.report.failure, /Credential document changed/);
+    assert.equal(result.soloCalls, 0);
+    assert.equal(result.sharedCalls, 0);
+    assert.equal(result.calls.includes('click:#access-gate button[type="submit"]'), false);
+    assert.equal(result.calls.includes('password.fill'), !options.redirect);
+  }
 });
