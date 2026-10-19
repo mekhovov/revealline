@@ -14,13 +14,13 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Home recommendation: finish the Journey navigation checks. A stale-result test expects immediate play where the current Solo flow requires Start; preserve every artwork and run-replacement safeguard in its correction.",
-    "P1 · Controller report: finish native checks for the wording fix. An observed connection must not imply an assigned, ready controller; actual English and Ukrainian absence messages now read correctly.",
-    "P1 · Shared foundations: finish support-summary reconciliation with main before updating the dependent Team, Versus and Academy PRs. Preserve every mode’s supported states and lifecycle.",
+    "P1 · Home recommendations: admit the independent Solo briefing-test prerequisite (#1732), finish current-source checks for the Capture Home draft (#1729), and develop the explained existing default Versus selection. Contextual lessons still need the Learn hub.",
+    "P1 · Controller report: the wording correction is published as draft #1731 with 141 targeted checks and scoped English/Ukrainian browser review. Complete remaining source/package admission; physical connected-controller behavior remains untested.",
+    "P1 · Shared foundations: support reconciliation #1661 is published with 81 targeted checks. Complete current-source gates, then preserve all host states while updating dependent Team, Versus and Academy PRs.",
     "P1 · Available space: small fixes, focused tests and browser review continue. Full builds and new source snapshots need at least 2 GiB free; about 1.1 GiB is currently available.",
     "P1 · Compact play: review Duel, Team and Worlds on narrow and landscape layouts, including touch controls, language changes, scrolling and focus. Physical iPhone, offline PWA and Steam Deck checks remain Not tested.",
     "P1 · Review and admission: complete current-source checks for text compatibility, recovery and the reviewed support adapters when space permits. Required CI and merge admission still apply.",
-    "P1 · Remaining support hosts: implement the complete Worlds adapter after the wording fix; Rooms remains next. Keep reports tied to actual Settings, pause, disposal and package ownership.",
+    "P1 · Remaining support hosts: finish complete Worlds and Rooms adapters now in development, with actual Settings, lifecycle, read-only controller observations and deliberate export. Review their shared collector changes in order.",
     "P1 · Team launch checks: finish the separate test, guide and catalog corrections while preserving the intended one-click native launch. The withdrawn runtime proposal stays closed.",
     "P2 · Clarity and comfort: finish search-recovery screens, retained Worlds result language and Hunt result reading. Preserve exact attempt, achievement and save facts.",
     "Continue the remaining approved phases. Lesson recommendations still depend on the Learn hub and shared demos; PR inventory does not measure whole-plan completion."
@@ -890,14 +890,14 @@
       "status": "developing",
       "owner": "lane-b",
       "qualification": {
-        "automated": "broader_failure_under_investigation",
+        "automated": "scoped_passes_fixture_prerequisite_pending",
         "browser": "scoped_desktop_and_iframe_passed",
         "physical": "not_tested"
       },
-      "blocker": "Result-supersession wait failure under investigation; full source reserve and lessonF25/D dependencies remain",
+      "blocker": "Current-head source/admission gates remain; contextual lessons require F25/D.",
       "pr": null,
       "commit": null,
-      "next": "Develop one explained Capture-Journey Home recommendation on the existing Start/Continue action. Preserve genuine Resume priority and Browse all. Full lesson/context recommendations remain dependent on the Learn hub and shared demos.",
+      "next": "Finish Capture Home admission with independent fixture prerequisite1732. Develop a separate explained default Versus landing selection using its existing accepted owner. Team can follow separately; full lesson recommendations remain F25/D dependent.",
       "evidence": [
         "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced."
       ],
@@ -908,10 +908,10 @@
           "status": "draft_review",
           "owner": "lane-b",
           "pr": "https://github.com/mekhovov/revealline/pull/1729",
-          "commit": "83a2d654d3789576934afaebd8ebf6feaa0a86dc",
+          "commit": "51b5d9d466b32deb6861a2419d264b720321c43d",
           "effort": "1–2d bounded Home slice plus independent/source/browser qualification; overall F10 remains partial",
           "dependency": "Existing Journey destination owner and merged FirstFlight1655; future lesson recommendations still requireF25/D",
-          "next": "Eight unchanged complete files pass112tests across separate per-file runs. Original result-supersession file fails0/1 because it expects immediate play instead of accepted Solo briefing. Final catalog-host file is running alone; preserve frozen51b5. Separate test-only correction approved; remote1729 remains83a until successor review.",
+          "next": "Published Home draft1729 exact51b5. Independent main-based test prerequisite1732 exact8704 corrects obsolete immediate-play expectation and passes its complete case1/1. Original ten separate files retain raw134pass/1fail; do not call the parent aggregate passed. Complete prerequisite/current-source admission and remaining package/browser/device gates; lesson recommendations remainF25/D dependent.",
           "evidence": [
             "No new CTA or result action. Explain first mission, exact uncleared cursor, same accepted failed mission, or existing recorded-clear successor only when owned facts support it. Unknown/end/stale ownership produces no fabricated next mission. Unified-library rows are not progression order. Actual compact/landscape acceptance remains pending.",
             "Earlier focused15/15 complete pass. Two added recovery cases passed before broader10-file cohort ended exit7 after30 successes without TAP summary: INCOMPLETE, no aggregate pass or assumed cause. Root read-only review preserves exact original launch/destination policy; independent rerun pending.",
@@ -920,9 +920,29 @@
             "Actual exact83a desktop: reload/saved-flight Home keeps Continue primary with no recommendation; explicit Continue restores real flight. Earned legal win34.3%/8160points/3lives/1:08; Home explains actual Choose your share successor, Browse all→Back retains guidance and openerfocus, existing Continue reaches actual next mission. No fabricated mastery or new progression owner.",
             "Local51b5 successor changes only one Ukrainian recorded-next sentence, canonical catalogs and scoped review docs; runtime/tests identical83a. Actual iframe CSS viewport reviews320x480/568x320/844x390 use Standard and native Large/Plain, not device emulation. Primary guidance/Start visible; keyboard Tab scrolls Settings into view at320Large with focus. Suspected568clipping was retained scroll: fresh568load shows full guidance; no speculative layout change. PWA/offline/physical acceptance not inferred.",
             "Serialized exact51b5 per-file checks: seven complete files91tests pass exit0/zero skips. Eighth actual authored result-supersession file fails0/1 exit1 atline86 asynchronous action did not settle. Final two files NOT RUN; diagnosis underway. Earlier incomplete aggregate remains incomplete, no assumed baseline attribution.",
-            "Ninth unchanged complete file solo-result-continuation-host passes21/21 zero skips exit0 at exactclean51b5. Final mission-library-solo-host started separately and remains running; no aggregate result inferred. Root source review corroborates explicit Solo prepared briefing/Start contract; separate child test-only repair approved, retaining original stale artwork/checkpoint/focus assertions and joining actual owner promises."
+            "Ninth unchanged complete file solo-result-continuation-host passes21/21 zero skips exit0 at exactclean51b5. Final mission-library-solo-host started separately and remains running; no aggregate result inferred. Root source review corroborates explicit Solo prepared briefing/Start contract; separate child test-only repair approved, retaining original stale artwork/checkpoint/focus assertions and joining actual owner promises.",
+            "Final originalcatalog-host file22/22 passes exit0/zero skips230.1s. Thus all10originalfiles were executed separately, raw134pass/1fail; no aggregatepass claimed. Root reviewed separate single-test correction: exact five-partidentity, joins actual opener/card/Start promises, proves tick0 ready pausedbriefing and retains exactacceptedrun plus every original held-decoder/checkpoint/picture/focus/noerrors assertion. Complete corrected1/1 passes9.8s, unchanged before/afterdiff hash5ff02742b3b7a54d00377afec3ad0abe533a9778f9548cd3c51de61bc9750321. No runtime/helper/timeout changes.",
+            "Draft1729 FFupdated83a→51b5 withoutforce, exactparent+3filediffverified; remote51b5/draftreadback independentlyconfirmed. Historical83a browserproof retains statedscope; corrected UKcopy and nativeiframe evidence remain51b5.",
+            "Independent fixture prerequisite1732 based localcapturedmaine746 exact8704f202cda63edbc8438df133754a8ac2cdd358. Actual e746workingtree verified:34newsourcefilesexactmain,4F10-onlypathsabsent; thirteen relevanthelper/sourceblobs and9 ownershipfunctionASTs byte-identical51b5→e746. Current complete1/1pass9.98s, zero skips; all12originalassertcalls preserved verbatim (25total). Exactly test+51linedoc, changedlint/format/diffpass. Draftmain remotehead/baseverified. Testedchild9f5d on51b5retained; no runtime/timeouts/helpers relaxed. This is a delivery prerequisite, excluded from player-feature PR counts."
           ],
-          "candidateCommit": "51b5d9d466b32deb6861a2419d264b720321c43d"
+          "candidateCommit": "51b5d9d466b32deb6861a2419d264b720321c43d",
+          "observedRemoteHead": "51b5d9d466b32deb6861a2419d264b720321c43d",
+          "deliveryState": "draft",
+          "testPrerequisite": "https://github.com/mekhovov/revealline/pull/1732"
+        },
+        {
+          "id": "versus-journey-home-recommendation",
+          "priority": "P1",
+          "status": "developing",
+          "owner": "lane-b",
+          "pr": null,
+          "commit": null,
+          "dependency": "Independent fixture1732 exact8704; existing native Journey initial-selection owner, not F25/D",
+          "effort": "1–2d bounded reason/visibility slice plus native and compact browser review; queues excluded",
+          "next": "Implement visible and accessible explanation next to existing Start from the exact accepted default Versus Journey selection. No additional CTA or progression selector; preserve first-to-two, Rematch, Skip, Next and input/focus owners.",
+          "evidence": [
+            "Read-only assessment: actual journeyCursor/cursorEntry/progressMission/initialJourneyMission already choose default first/current/recorded successor. Bind captured reason facts to acceptedroundRecipe.entry; suppress pending, late/stale/endfallback, incominghandoff/continuation and actuallive/paused states. Later accepted manual recipe uses neutral selected wording, never earned progress or opponent mastery. Versus controller restore stores assignment, not a generic saved flight: do not invent a save owner. Existing resultNext already names destination and needs no duplicate recommendation."
+          ]
         }
       ]
     },
@@ -1664,14 +1684,14 @@
       "status": "developing",
       "owner": "integration",
       "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
+        "automated": "partial_host_passes_worlds_rooms_developing",
+        "browser": "scoped_host_reviews_remaining",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Primary1661 current-main integration reviewed/frozen; focused checks queued. Team1721→Versus1726→Academy1730 remain drafts; correct shared observation wording before Worlds adapter. Full source/export/device acceptance stays scoped.",
+      "next": "Primary1661 current-main reconciliation published e1d with81 targeted checks; full gates remain. Team,Versus,Academy and shared observation-copy drafts retain their dependencies. Worlds source implementation and complete Rooms boundary/preflight are underway; preserve unions on later integration.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim.",
@@ -1681,21 +1701,22 @@
       "implementationSlices": [
         {
           "id": "primary-shell",
-          "status": "ready_for_checks",
+          "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1661",
-          "commit": "eec8d4abb08947197a7af2ee5f8b70e21996dde7",
+          "commit": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
           "evidence": [
             "62 focused/full source gates plus10 independent owner/component/host checks pass. Actual desktop EN/UK preview, refresh, close clearing and929-byte downloaded JSON equality pass. No native export, real controller, paused-flight or hardware browser claim.",
             "Integrated f3c preserves original47c and dd337 ancestry; 5 feature blobs and app/index feature deltas unchanged, main locale values plus51 original keys preserved.91 distinct focused cases have pass evidence across initial90/91 plus unchanged isolated1/1 (2 name-filtered cases excluded); initial authored-Journey preparation timeout retained. Full lint/changed format/uninterrupted validation pass,8 unchanged main format findings. Independent review clear; ready.",
             "Local eec8 candidate: initial59/63 failures and missing-doc format exit2 were sparse-copy failures, retained. Restored556 exact inputs (verified distinct-inode COW or Git blobs); complete63/63 then passes zero skips, all3383 registered input Git blobs verified. Original untracked documents preserved; independent /tmp/revealline-f58-eec8-independent-worlds-review.json. Full gate pending; no new browser claim.",
             "Current eec8 full gates terminal0,3383 before/after exact Git input blobs and original untracked hashes preserved. Published1661draft, fresh remoteCONFLICTING aftermain advanced again. No current-main successor pass inferred; /tmp/revealline-f58-eec8-full-gates-receipt.json.",
-            "Root independently reviewed frozen main-e746 integration: exact10 original paths, all7ordinary blobs identicaleec, all5937EN/6049UKmain values plus exact51originalsupport messages/language retained. Agent canonical18/staticlintformatpass; no hydration/native/sourcegate/push yet. Propagate through Team→Versus→Academy deliberately, preserving host/scope/state unions."
+            "Root independently reviewed frozen main-e746 integration: exact10 original paths, all7ordinary blobs identicaleec, all5937EN/6049UKmain values plus exact51originalsupport messages/language retained. Agent canonical18/staticlintformatpass; no hydration/native/sourcegate/push yet. Propagate through Team→Versus→Academy deliberately, preserving host/scope/state unions.",
+            "Complete8files81/81 zero skips/failures/cancellations,65.49s, exactNode22singleprocessserial; frozen96e31indexbefore/after. Only absent2,366,738byte tracked first-returnPNG restored from already-local Git94d94509e0bd3fca988e15fc000bc53af091a543; SHA2563acf496d9a6bc9db2f83ac01d8255223b3913e7ae0a157e48559ac981c80b95d verified, no network/otherinputrestoration. Published e1d draftmain/readbackhead+treeindependentlyconfirmed; noforce/manualmerge. Rooms completeadapter assessed, implementation authorized from reviewed1731predecessor."
           ],
           "deliveryState": "draft",
           "mergeState": "DIRTY",
-          "observedRemoteHead": "eec8d4abb08947197a7af2ee5f8b70e21996dde7",
-          "candidateCommit": "eec8d4abb08947197a7af2ee5f8b70e21996dde7",
-          "next": "Frozen eec+e746 integration tree96e31e6d407dfe737535a14859872550180bc74f; root independent preservation/static review pass, focused checks pending. No commit/publication or downstream propagation yet."
+          "observedRemoteHead": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+          "candidateCommit": "e1d1059b3144d383ee14ccca0d50ad86c7ddf43a",
+          "next": "Published e1d ordinary FF to existing draft1661: exact frozen96e31 tree, eec+capturede746 parents,81/81 complete8filecohort. Full current-head source/browser/package/device gates remain; original eec full gates retain earlier scope."
         },
         {
           "id": "snake-host",
@@ -1798,17 +1819,49 @@
         {
           "id": "controller-observation-wording",
           "priority": "P1",
+          "status": "draft_review",
+          "owner": "lane-c",
+          "pr": "https://github.com/mekhovov/revealline/pull/1731",
+          "commit": "495ef542d4ddd27d787ab08774d5e96b45bfb9a9",
+          "dependency": "PR1730 exact0e9; separate shared-view correction",
+          "effort": "0.5d bounded copy/branch coverage plus native/browser review",
+          "next": "Published separate reviewed draft1731 on Academy1730. Complete five-file141/141 native/component cohort, root source/locale review and actual EN/UK absence path clear. Full current-source/package/admission and connected physical-controller acceptance remain.",
+          "evidence": [
+            "Connected is ready only when assigned=true,neutral=true,confirmBlocked=false. Otherwise describe observed presence without inferring menu readiness. Disconnected with unknown/falseassignment says no connected controller observed; known assigned-disconnect/stale/unavailable remain unchanged. No raw controller/export/collector facts changed.",
+            "Valid27component RED18pass9fail demonstrates incorrect wording; corrected complete27/27 zero skips. Earlier invalid incomplete-snapshot fixture13pass14fail is excluded as bugproof. EN/UK focus and exactJSONexport preserved,2newkeys/language+canonicalbundle only.",
+            "Root actual frozen candidate at1280x720: EN and UK fresh Prepare use accurate absence wording, Preparefocus retained, gameDisarmed unchanged. Changing category retires summary/disables Download. Screenshots before0e9+afterEN/UK under .cache/improvements-evidence/2026-10-19/academy-controller-observation-*. No physical connected/assigned-controller or download claim.",
+            "One complete serial5file run141/141 zero skips59.73s covers component27, primary/Team/Versus hosts and Academy91. Frozen six-file400155manifest exact before/after; later docs-only qualification update, committed finaled2c0f20b5e1f41d7568e6cbf598b166753096958f600f99e3734c888bef4310manifest verified. Root independently preserves5991EN/6101UKbasevalues +exact2presencekeys/language; no collector/host/export changes. Remotehead495ef/base1730/draftverified, rootattached1731."
+          ],
+          "observedRemoteHead": "495ef542d4ddd27d787ab08774d5e96b45bfb9a9",
+          "deliveryState": "draft"
+        },
+        {
+          "id": "native-worlds-host",
+          "priority": "P1",
           "status": "developing",
           "owner": "lane-c",
           "pr": null,
           "commit": null,
-          "dependency": "PR1730 exact0e9; separate shared-view correction",
-          "effort": "0.5d bounded copy/branch coverage plus native/browser review",
-          "next": "Six-file candidate frozen: root source and scoped actual EN/UK browser review pass; complete native host cohort after serialized slot release, then commit/review/publish separate dependent draft.",
+          "dependency": "PR1731 exact495ef controllerobservation wording, Academy1730 stack",
+          "effort": "1d bounded adapter plus review/fullsource/browser qualification; waiting excluded",
+          "next": "Implement complete native Worlds Settings adapter from reviewed495ef on new child branch. Preserve actual flight variants, recording EOF, pause/disposal/normal-frame polling owners and package caps. Native checks serialized after current primary cohort.",
           "evidence": [
-            "Connected is ready only when assigned=true,neutral=true,confirmBlocked=false. Otherwise describe observed presence without inferring menu readiness. Disconnected with unknown/falseassignment says no connected controller observed; known assigned-disconnect/stale/unavailable remain unchanged. No raw controller/export/collector facts changed.",
-            "Valid27component RED18pass9fail demonstrates incorrect wording; corrected complete27/27 zero skips. Earlier invalid incomplete-snapshot fixture13pass14fail is excluded as bugproof. EN/UK focus and exactJSONexport preserved,2newkeys/language+canonicalbundle only.",
-            "Root actual frozen candidate at1280x720: EN and UK fresh Prepare use accurate absence wording, Preparefocus retained, gameDisarmed unchanged. Changing category retires summary/disables Download. Screenshots before0e9+afterEN/UK under .cache/improvements-evidence/2026-10-19/academy-controller-observation-*. No physical connected/assigned-controller or download claim."
+            "Read-only boundary review complete: real sim-settings Data panel/menuContext/topmodal; preserve existing onSurfaceChange callback. Cache aggregatephysicalpresence only normaladvanceFrame→pollGamepad before mapping; Arm read nevercaches. pauseFlight owns blur/hidden/pagehide/nativeinactive retirement; dispose destroys report synchronously before async promise. Exhausted recording reports playback-ended before paused, never implies objective completion. Direct Worlds-only2modules+supportSummary projection fits unchanged210file20MiB contract by parser analysis, not a builtpackagepass. Legacy civilian-flight staysisolated."
+          ]
+        },
+        {
+          "id": "native-rooms-host",
+          "priority": "P1",
+          "status": "developing",
+          "owner": "lane-a",
+          "pr": null,
+          "commit": null,
+          "dependency": "Reviewed observation-copy1731 exact495ef542d4ddd27d787ab08774d5e96b45bfb9a9; retain all host/scope/state unions",
+          "effort": "1–2d bounded actual-room adapter/native qualification plus browser review; queues excluded",
+          "next": "Implement actual room Settings Data report from narrow phase/status projection and existing controller-router sample cache. Preserve server/transport/input ownership and private data; review separately from parallel Worlds adapter.",
+          "evidence": [
+            "Read-only complete boundary: mountModePlayShell actual room-settings-dialog and moved room-settings root, support destroyed before shell. rooms.mjs supplies only allowlisted phase/status, never whole wire snapshot, credentials, URL, seats, recipes or replay. Existing room-input poll supplies only bounded sample/status/assignment cache, no Prepare polls/Ready/submit/pause/transport/storage. Neutral/Confirm/build/save lease/offline unknown unless actual owner exists. Add connecting/recovering/waiting/playing/abandoned; reuse paused/finished/idle. Actual mount fixture plus zero extra side effects/export/lifecycle/locale/privacy required; AST-only presentation tests not full native evidence.",
+            "New child from exact495ef already-local objects; no transfer/fetch/hydration required. Read-only preflight initially used an invalid shorthand, corrected to full exactSHA before any action; original1661e1d ref retained."
           ]
         }
       ]
@@ -4043,6 +4096,21 @@
       "date": "2026-10-19",
       "item": "Journey test attribution and final unchanged checks",
       "reason": "Actual Solo prepareResultAttempt explicitly prepares paused briefing on choose; original failure predicate requiring immediate running cannot settle. Adjacent native test confirms freshStartowner. Separate test-only child approved; file9 passes21/21, finalfile10running. No production/pollhelper/timeout relaxation."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Controller observation correction delivered as separate draft; Worlds development begins",
+      "reason": "1731 exact495ef on1730 published6files;141/141completecohort, rootreview, scopedactualENUKabsencepass. Worldscompleteadapterbeginsfreshchild. Home1729FF51b5draftconfirmed; all10originalfilesraw134pass1fail; separatecorrectedcase1/1passes, admissionorderingreview. Counts27merged15ready36draft78active+1withdrawn."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Primary support integration published; independent Solo fixture prerequisite",
+      "reason": "1661 exacte1d/96e31published draft81/81targetedpass, originalfullscopeeecunchanged.1732 separate mainfixture prerequisite8704 complete1/1 actuale746, rootreview and12originalassertionspreserved; does not inflate player-feature counts. Newremote4069 only2doccommitsaheadcapturede746, no runtimechanges. Worlds and Rooms completeadapter work continue."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Three complete feature slices now developing in parallel",
+      "reason": "Worlds and Rooms native support adapters plus defaultVersus existing-selection explanation authorized as separate complete slices. Shared collector/catalog integration remains serialized; source edits small and native tests queued. No fabricated generic Versus saved flight or lesson graph. All113deliverables and earlierfailed/incomplete runs retained."
     }
   ],
   "deliveryDependencies": [
@@ -4096,11 +4164,26 @@
       "scope": "Existing shared demos/practice predecessor, owned separately. Original work remains preserved; dependent learning/demo slices stay open.",
       "next": "Its owner is investigating two current browser failures, then endurance and hosted checks. Preserve its source and failed receipts; do not treat the reported build success as completed player/device acceptance.",
       "evidence": "Fresh remote read confirms open draft71a0 on pinned main16eb. Owner reports305 affected assertions, stable official generation and all4 build stages pass; current browser refresh is failed overall (WebKit blob-decode error, Chromium source-readiness timeout). Two-hour endurance has not started; hosted CI queued and physical/listening review pending. Reported main-pages960929013 staged/965908480 archive bytes are that candidate only, not a new measurement for these feature PRs."
+    },
+    {
+      "id": "Solo chooser briefing fixture · prerequisite1732",
+      "priority": "P1",
+      "status": "draft_review",
+      "owner": "lane-b",
+      "pr": "https://github.com/mekhovov/revealline/pull/1732",
+      "commit": "8704f202cda63edbc8438df133754a8ac2cdd358",
+      "scope": "Existing Solo result-supersession test must follow the accepted prepared briefing and explicit Start before checking stale artwork release. Exactly test and verification doc; no runtime, helper, timeout or original assertion removed. Independent main prerequisite avoids requiring an unmerged child for the Home feature gate.",
+      "next": "Independent complete1/1 on actuale746 source and root review pass; original134/135parent scope remains recorded. Required current-head source/CI/admission gates pending; keep draft.",
+      "qualification": {
+        "automated": "scoped_passed_full_pending",
+        "browser": "not_required_for_fixture_only",
+        "physical": "not_tested"
+      }
     }
   ],
   "deliverySnapshot": {
     "featurePRsReady": 15,
-    "featurePRsDraft": 35,
+    "featurePRsDraft": 36,
     "deliverablesMerged": 27,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
@@ -4121,6 +4204,13 @@
       1690, 1702, 1704, 1723, 1729
     ],
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1662, 1669, 1682, 1686, 1690],
-    "note": "Current remote-wide inventory rechecked. Ready is authoring status, not mergeability or passed checks.1668 returned draftf807;1661 integration pending. No manual merges or bypasses; older tests do not qualify new source."
+    "note": "Current remote-wide inventory rechecked. Ready is authoring status, not mergeability or passed checks.1668 returned draftf807;1661 integration pending. No manual merges or bypasses; older tests do not qualify new source. Inventory precedes draft1731 publication; deliverySnapshot includes it.",
+    "latestMain": {
+      "revision": "4069b0871a406221ce91feb0aadbab3e028fe0f1",
+      "comparedWith": "e7465da3e4b1146b492f401fbb165a5e5a4a6202",
+      "aheadCommits": 2,
+      "changedPaths": ["docs/performance/solo-performance-followup-plan.md"],
+      "note": "Authoritative GitHub compare reports docs-only188linechanges, no runtime/inputchanges. Captured-main test receipts retain exactheadscope; no redundant rebase/retaggedpasses."
+    }
   }
 }
