@@ -259,7 +259,7 @@ function onlineCatalogueResponse(status = 200) {
   return response;
 }
 
-test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play', async (t) => {
+test('muted fresh Solo browses metadata only on Studio demand and acquires no recordings before Play', async (t) => {
   assert(
     SOUNDTRACK_CATALOGUE.tracks.some((track) => track.archiveId),
     'This edition has admitted online music.',
@@ -276,11 +276,15 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
     () => !page.$('soundtrack-summary').textContent.includes('Loading music library'),
     'Silent library preparation settles',
   );
-  await waitFor(
-    () => !!page.$(`soundtrack-online-play-${onlineRecordingHash}`),
-    'The real bounded catalogue reader admits the metadata before Studio opens',
+  assert.deepEqual(
+    requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
+    [],
+    'The hidden panel does not request public metadata',
   );
+  assert.equal(page.$(`soundtrack-online-play-${onlineRecordingHash}`), null);
+  assert(page.audioElements.every((media) => media.plays === 0));
   await openStudio(page);
+  await waitForPublicCatalogue(page, onlineRecordingHash);
   assert.deepEqual(
     requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
     [ONLINE_SOUNDTRACK_CATALOGUE_URL],
@@ -294,7 +298,7 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
   assert.deepEqual(page.errors, []);
 });
 
-test('failed silent catalogue metadata is reported and Studio retries it once without acquiring recordings', async (t) => {
+test('failed explicit Audio catalogue metadata is reported and Studio retries it once without acquiring recordings', async (t) => {
   const requests = [];
   let metadataRequests = 0;
   const { page } = await setup(t, {
@@ -306,16 +310,25 @@ test('failed silent catalogue metadata is reported and Studio retries it once wi
     },
   });
   await waitFor(
-    () => /unavailable/i.test(page.$('soundtrack-online-status').textContent),
-    'A rejected HTTP response stays visible before a fresh explicit Studio visit',
+    () => !page.$('soundtrack-summary').textContent.includes('Loading music library'),
+    'Silent library preparation settles',
+  );
+  assert.equal(metadataRequests, 0, 'The hidden panel does not browse the public catalogue');
+  assert(page.audioElements.every((media) => media.plays === 0));
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  assert.equal(page.$('settings-panel-audio').hidden, false);
+  await waitFor(
+    () =>
+      /unavailable/i.test(page.$('soundtrack-online-status').textContent) &&
+      !page.$('soundtrack-online-reload').disabled,
+    'The explicit Audio visit reports and settles its rejected metadata request',
   );
   assert.equal(metadataRequests, 1);
   assert.equal(page.$(`soundtrack-online-play-${onlineRecordingHash}`), null);
+  page.doc.querySelector('[data-close="settings-dialog"]').click();
   await openStudio(page);
-  await waitFor(
-    () => !!page.$(`soundtrack-online-play-${onlineRecordingHash}`),
-    'A normal Studio visit retries failed metadata and admits the successful response',
-  );
+  await waitForPublicCatalogue(page, onlineRecordingHash);
   assert.deepEqual(
     requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
     [ONLINE_SOUNDTRACK_CATALOGUE_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL],
@@ -342,6 +355,13 @@ async function openStudio(page) {
     'Actual studio opens and reads local library',
   );
   assert.equal(page.$('settings-dialog').open, false);
+}
+async function waitForPublicCatalogue(page, hash = '1'.repeat(64)) {
+  await waitFor(
+    () =>
+      !!page.$(`soundtrack-online-play-${hash}`) && !page.$('soundtrack-online-reload').disabled,
+    'The requested catalogue is admitted and its panel reader has settled',
+  );
 }
 const musicMedia = (page) => page.audioElements[0];
 async function playStudio(page) {
@@ -1135,7 +1155,8 @@ for (const [styles, action] of [
       },
     });
     await openStudio(page);
-    assert.equal(catalogueRequests, 1, 'only the pre-existing panel discovery runs before Play');
+    await waitForPublicCatalogue(page);
+    assert.equal(catalogueRequests, 1, 'only the explicit Studio discovery runs before Play');
     assert.equal(
       musicMedia(page).src || '',
       '',
@@ -1182,6 +1203,8 @@ test('closing Studio cancels a pending saved-style Play without a late stream', 
     },
   });
   await openStudio(page);
+  await waitForPublicCatalogue(page);
+  assert.equal(catalogueRequests, 1, 'Explicit Studio discovery finishes before this Play');
   const playing = page.$('soundtrack-play').onclick();
   await waitFor(() => catalogueRequests === 2, 'generic Play awaits catalogue');
   page.$('soundtrack-close').click();
@@ -1192,3 +1215,62 @@ test('closing Studio cancels a pending saved-style Play without a late stream', 
   assert.equal(musicMedia(page).src || '', '');
   assert.deepEqual(page.errors, []);
 });
+
+for (const closeWhilePending of [false, true]) {
+  test(`generic saved-style Play ${closeWhilePending ? 'is cancelled on close' : 'wins'} while Studio discovery is still pending`, async (t) => {
+    const requests = [];
+    t.after(() => {
+      for (const request of requests) request.release(publicCatalogueResponse());
+    });
+    const { page, audio, db } = await setup(t, {
+      publicStyles: ['fpv'],
+      fetchResponse: async (url, options) => {
+        if (String(url) !== ONLINE_SOUNDTRACK_CATALOGUE_URL) return;
+        return new Promise((release) => requests.push({ release, signal: options.signal }));
+      },
+    });
+    assert.equal(requests.length, 0, 'The hidden panel does not browse the catalogue');
+    await openStudio(page);
+    await waitFor(() => requests.length === 1, 'Explicit Studio discovery reaches the real fetch');
+    assert.equal(requests[0].signal.aborted, false);
+    assert.equal(page.$(`soundtrack-online-play-${'1'.repeat(64)}`), null);
+    assert.equal(musicMedia(page).src || '', '');
+    assert.equal(musicMedia(page).plays, 0);
+
+    assert.equal(audio.context.state, 'suspended', 'Discovery has not activated audio');
+    const playing = page.$('soundtrack-play').onclick();
+    assert.equal(audio.context.state, 'running', 'Play wakes audio in the activation turn');
+    await waitFor(() => requests.length === 2, 'Generic Play owns its fresh metadata request');
+    assert.equal(requests[0].signal.aborted, true, 'Play supersedes pending Studio discovery');
+    assert.equal(requests[1].signal.aborted, false);
+    if (closeWhilePending) {
+      page.$('soundtrack-close').click();
+      assert.equal(page.$('soundtrack-dialog').open, false);
+      assert.equal(
+        requests[1].signal.aborted,
+        true,
+        'Closing Studio cancels the pending Play owner',
+      );
+    }
+
+    for (const request of requests) request.release(publicCatalogueResponse());
+    await playing;
+    assert.equal(requests.length, 2);
+    if (closeWhilePending) {
+      assert(page.audioElements.every((media) => media.plays === 0));
+      assert.equal(musicMedia(page).src || '', '');
+    } else {
+      await waitFor(
+        () => musicMedia(page).src?.includes('2'.repeat(64)),
+        'The accepted Play uses the saved FPV style after held discovery settles',
+      );
+      assert.equal(musicMedia(page).paused, false);
+    }
+    const manager = createManagedMediaStore({ indexedDB: db.indexedDB, soundtrackCatalogue: true });
+    const saved = await manager.readDomain('audio');
+    manager.close();
+    assert.equal(saved.generation, 1);
+    assert.deepEqual(saved.publicStyles, ['fpv']);
+    assert.deepEqual(page.errors, []);
+  });
+}

@@ -2254,6 +2254,7 @@ function attachMissionLibraryBrowser({
 document:doc=globalThis.document,
 library,
 mode='solo',
+getHostMode=()=>mode,
 onPause,
 onReturn,
 readState=()=>null,
@@ -2266,6 +2267,7 @@ goalPreferenceOptions={},
 description=localizedMessage(
 'interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir',
 ),
+browsingContext=null,
 random=Math.random,
 renderPreview=()=>null,
 createArtworkView=null,
@@ -2438,7 +2440,18 @@ t('interface:playRandomLevelFromVisibleResults'),
 const back=node('button','journey-back',localizedMessage('common:navigation.backToGame'));
 back.type='button';
 back.className='button secondary';
-footer.append(randomLevel,back);
+const resetFilters=node(
+'button',
+'journey-filters-reset',
+localizedMessage('interface:missionLibrary.search.resetFilters'),
+);
+resetFilters.type='button';
+resetFilters.className='button secondary';
+resetFilters.setAttribute('aria-controls','journey-cards');
+localizedAttribute(resetFilters,'title',()=>
+t('interface:missionLibrary.search.resetHint'),
+);
+footer.append(resetFilters,randomLevel,back);
 dialog.append(heading,copy,filters,status,campaignRail,list,footer);
 doc.body.append(dialog);
 const cards=new Map(),
@@ -2934,6 +2947,42 @@ artwork:null,
 completion:null,
 };
 }
+function hostMode(){
+try{
+const accepted=getHostMode();
+if(modes.includes(accepted))return accepted;
+}catch{
+// A retired host callback must not make browse-only recovery unusable.
+}
+return mode;
+}
+const filtersActive=()=>
+!!collection.value||modeFilter.value!==hostMode()||lifecycle.value!=='current';
+function filterDescription(){
+return t('interface:missionLibrary.search.filters',{
+collection:collection.value?t(LIBRARY_TAG_KEYS[collection.value]):t('interface:all'),
+editions:
+lifecycle.value==='current'
+?t('interface:current')
+:lifecycle.value==='archive'
+?t('interface:missionLibrary.lifecycle.archive')
+:t('interface:missionLibrary.lifecycle.all'),
+mode:modeLabel(modeFilter.value),
+});
+}
+function emptyDescription(){
+const query= !!search.value.trim();
+const key= !library.missions.length
+?'emptyLibrary'
+:query&&filtersActive()
+?'emptySearchFilters'
+:query
+?'emptySearch'
+:filtersActive()
+?'emptyFilters'
+:'emptyView';
+return t(`interface:missionLibrary.search.${key}`);
+}
 function render(){
 if(destroyed)return;
 clearSearch.hidden= !search.value;
@@ -2955,15 +3004,21 @@ const matches=railRows;
 randomLevel.disabled= !matches.some(
 (row)=>library.availability(row,modeFilter.value).state==='ready',
 );
-localizedText(
-status,
-()=>
-`${t('common:counts.missions',{count:matches.length})} · ${modeLabel(modeFilter.value)}${message?` · ${renderMessage(message)}`:''}`,
+resetFilters.hidden= !filtersActive();
+localizedText(status,()=>
+[
+t('common:counts.missions',{count:matches.length}),
+browsingContext?.({mode:modeFilter.value,label:modeLabel(modeFilter.value)})??
+modeLabel(modeFilter.value),
+filtersActive()|| !matches.length?filterDescription():'',
+!matches.length?emptyDescription():'',
+message?renderMessage(message):'',
+]
+.filter(Boolean)
+.join(' · '),
 );
-const filtersActive=
-!!collection.value||modeFilter.value!==mode||lifecycle.value!=='current';
 localizedText(filterSummary,()=>
-filtersActive?t('interface:filtersActive'):t('interface:filters'),
+filtersActive()?t('interface:filtersActive'):t('interface:filters'),
 );
 const campaignChoices=new Map();
 for(const row of railRows)
@@ -3428,6 +3483,42 @@ const first=[...list.querySelectorAll('.journey-card')].find(
 (first??(compact?filterSummary:collection)).focus({
 preventScroll:true,
 });
+remember();
+};
+resetFilters.onclick=()=>{
+if(
+destroyed||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false||
+!filtersActive()
+)
+return;
+const ticket=visit,
+focused=doc.activeElement,
+acceptedMode=hostMode();
+collection.value='';
+lifecycle.value='current';
+modeFilter.value=acceptedMode;
+// One ordinary filter event owns retirement/rendering and informs native
+// hosts which keep remote metadata or preview controls for the browsed mode.
+const EventType=doc.defaultView?.Event||Event;
+modeFilter.dispatchEvent(new EventType('change',{bubbles:true}));
+if(
+destroyed||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false||
+visit!==ticket+1||
+modeFilter.value!==acceptedMode||
+(doc.activeElement!==focused&&
+!(focused===resetFilters&&doc.activeElement===doc.body))
+)
+return;
+const first=[...list.querySelectorAll('.journey-card')].find(
+(button)=> !button.disabled,
+);
+(first??search).focus({preventScroll:true});
 remember();
 };
 campaign.addEventListener('change',()=>{
@@ -9259,7 +9350,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: c72c76aff2abf1bb486d89a7377176e11c5c6d1f6de191b5a672d6e9f1fc55c2
+// Canonical source sha256: a5ebd172991cc1269a3e7abc132b967f47fbc405f8897435a55935203de3b8ae
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9467,6 +9558,20 @@ settings.closest('[hidden],[inert],[aria-hidden="true"]')||
 return false;
 return panelOwners.get(settings)?.back()===true;
 }
+
+/** A nested tool may close after its Settings parent changed responsive layout. */
+function restoreSettingsPanelFocus(root,opener){
+const settings=root?.classList?.contains('native-settings')
+?root
+:root?.querySelector?.('.native-settings');
+if(
+!settings||
+settings.closest('[hidden],[inert],[aria-hidden="true"]')||
+!settings.getClientRects().length
+)
+return false;
+return panelOwners.get(settings)?.restoreFocus(opener)===true;
+}
 const owns=(root,doc,list,{tab,panel})=>
 root?.ownerDocument===doc&&
 doc?.contains(root)&&
@@ -9578,7 +9683,37 @@ return true;
 }
 return false;
 };
-if(root)panelOwners.set(root,{back});
+const focusable=(element)=>
+element?.isConnected&&
+!element.disabled&&
+element.getAttribute('aria-disabled')!=='true'&&
+element.tabIndex>=0&&
+!element.closest('[hidden],[inert],[aria-hidden="true"]')&&
+element.getClientRects().length&&
+doc.defaultView?.getComputedStyle(element)?.visibility!=='hidden';
+const restoreFocus=(opener)=>{
+if(!current|| !owned(current)|| !enabled(current))return false;
+// Reveal only the still-selected category. A retired/hidden control must
+// not change categories or be made available by closing a child tool.
+if(
+current.panel.contains(opener)&&
+!opener.disabled&&
+!opener.closest('[hidden],[inert],[aria-hidden="true"]')
+){
+if(compact())view('panel');
+if(focusable(opener)){
+opener.focus({preventScroll:true});
+if(compact())opener.scrollIntoView?.({block:'nearest',inline:'nearest'});
+return true;
+}
+}
+view('categories');
+if(!focusable(current.tab))return false;
+current.tab.focus({preventScroll:true});
+if(compact())current.tab.scrollIntoView?.({block:'nearest',inline:'nearest'});
+return true;
+};
+if(root)panelOwners.set(root,{back,restoreFocus});
 const cancel=(event)=>{
 if(back()){
 event.preventDefault();
@@ -10210,6 +10345,7 @@ logo.alt='FPV / LINE';
 title.replaceChildren(logo);
 }
 const edition=el('p','mode-play-edition');
+edition.id=`${idPrefix}-navigation-context`;
 const modes=el('nav','mode-play-modes');
 move('modes',modes);
 const mission=el('p','mode-play-mission');
@@ -10419,8 +10555,10 @@ put(node,'textContent',value);
 }
 attribute(buttons.menu,'aria-label',COPY[language].menu);
 put(modeLabel,'textContent',text(modeName));
-put(edition,'textContent',text(modeName));
-edition.hidden=true;
+put(edition,'textContent',text(state.navigationContext));
+put(edition,'hidden',!edition.textContent);
+if(edition.hidden)modes.removeAttribute('aria-describedby');
+else attribute(modes,'aria-describedby',edition.id);
 attribute(modes,'aria-label',COPY[language].modes);
 attribute(menu,'aria-label',COPY[language].home);
 attribute(utilities,'aria-label',COPY[language].settings);
@@ -10621,6 +10759,7 @@ return{
 GAME_MODE_ORDER,
 renderModeChoices,
 settingsPanelBack,
+restoreSettingsPanelFocus,
 settingsTabOwnsKey,
 attachSettingsPanels,
 MODE_SETTINGS_CATEGORIES,

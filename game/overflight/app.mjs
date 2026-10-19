@@ -986,8 +986,11 @@ function syncUpgrade(force = false) {
       });
     }
     $('reroll-upgrades').textContent = text('reroll');
+    $('reroll-hint').textContent = text('rerollHint');
     const remaining = run.progression.rerolls;
-    $('rerolls-left').textContent = `${remaining} ${text('rerolls')}`;
+    $('rerolls-left').textContent = t('interface:overflight.rerollsRemaining', {
+      count: remaining,
+    });
     $('reroll-upgrades').disabled = review.active() || remaining <= 0;
   }
   if (!$('upgrade-dialog').open) {
@@ -2117,6 +2120,7 @@ settingsView = mountModeSettings({
       $('difficulty-help'),
       field('airframes'),
       $('overflight-settings').querySelector('[data-copy="nextSortie"]'),
+      shell.elements.buttons['home-retry'],
     ],
     controls: [touchSettings],
     audio: [
@@ -2136,7 +2140,12 @@ settingsView = mountModeSettings({
     ],
     data: [el('section')],
     content: [offlineSettings],
-    extras: [$('overflight-studios'), shell.elements.buttons.help, shell.elements.buttons.workshop],
+    extras: [
+      $('overflight-studios'),
+      shell.elements.buttons.expert,
+      shell.elements.buttons.help,
+      shell.elements.buttons.workshop,
+    ],
   },
 });
 globalSettings = mountGlobalSettings({

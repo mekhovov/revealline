@@ -1,0 +1,42 @@
+{
+  "schema": "fpv-native-listing-source-preservation-v1",
+  "sourceBase": "741948b14a09a816e49054c443511186bb99eb41",
+  "originalObservedCandidate": "bc9bc71f192729f0661a0483d7d64609c1973343",
+  "fourBrowserFilesByteIdentical": [
+    {
+      "path": "index.html",
+      "bytes": 1930,
+      "sha256": "ee7b1343ca521480f02dbe51b022ee7ae0ea118cbad312d6ee89f9ba9d97d95c"
+    },
+    {
+      "path": "style.css",
+      "bytes": 771,
+      "sha256": "0c7aef2cbbc6afaaafaf7f7a6f7875bf5fa571c1227f4b566fcf7d522541bef7"
+    },
+    {
+      "path": "harness.mjs",
+      "bytes": 1668,
+      "sha256": "d37599b6a90bfb1b6d8d276a905e02a5141a511c5ca226abe3b93e04bc2c4aca"
+    },
+    {
+      "path": "contract.mjs",
+      "bytes": 14755,
+      "sha256": "c2d819373994e2ac9e87b93fb04fe8df522d75d7a4167dcf6361a52496533f62"
+    }
+  ],
+  "verifierOnlyAdaptation": "createRequire dependency path is an explicit FPV_TEST_PACKAGE_JSON or adjacent canonical authoring package.json; test assertions unchanged",
+  "newPreparationChecks": {
+    "cases": 3,
+    "passed": 3,
+    "skipped": 0
+  },
+  "helperPreparedStageSafetyChecks": {
+    "cases": 4,
+    "passed": 4,
+    "skipped": 0
+  },
+  "noProductionModuleCommitted": true,
+  "newStageNativeAccepted": false,
+  "normalPlayerAccepted": false,
+  "publicPersistenceAccepted": false
+}
