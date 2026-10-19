@@ -48,6 +48,7 @@ import { contentText } from '../i18n/content.mjs';
 import {
   t,
   getLocale,
+  onLocaleChange,
   localizedText,
   localizedAttribute,
   localizedOption,
@@ -1030,6 +1031,9 @@ try {
       variant: 'hud',
     }),
   );
+  const stopEnemyStatsLocale = onLocaleChange(() => {
+    enemyStatsViews.forEach((view) => view.refresh());
+  });
   const continuousPlay = createContinuousPlayController({
     isCurrent: (identity) => identity === match && !disposed && match?.status === 'finished',
     isActive: () => !document.hidden && document.hasFocus(),
@@ -4708,6 +4712,7 @@ try {
     continuousPlay.dispose();
     flowControls.dispose();
     flowCelebration.dispose();
+    stopEnemyStatsLocale();
     enemyStatsViews.forEach((view) => view.dispose());
     void enemyStatistics.stats.flush().finally(() => enemyStatistics.close());
     document.removeEventListener('pointerdown', cancelContinuousPlay, true);
