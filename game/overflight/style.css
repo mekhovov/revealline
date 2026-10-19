@@ -1408,3 +1408,10 @@ button:disabled {
   max-width: 100%;
   white-space: normal;
 }
+
+.overflight-reroll-hint {
+  flex-basis: 100%;
+  min-inline-size: 0;
+  margin: 0;
+  overflow-wrap: break-word;
+}
