@@ -4029,6 +4029,10 @@ try {
       entry: {
         available: !practice && !courseSession && !started && !courseEntry,
         helpAvailable: !practice && !courseSession,
+        homeAvailable:
+          !practice &&
+          !courseSession &&
+          !['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id),
         pending: !!courseEntry,
         message: courseEntryMessage,
       },
