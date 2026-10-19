@@ -14040,6 +14040,7 @@ try {
             })
           : originalThemes;
         const views = publishedRouteViews(route);
+        trace?.mark('missions-solo-host-begin');
         const host =
           candidateHost ||
           views?.solo ||
@@ -14053,6 +14054,7 @@ try {
               ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
               : {}),
           }));
+        trace?.mark('missions-solo-host-end');
         if (!candidateHost && !views?.solo) ownedHost = host;
         assertCurrent();
         const profile = candidateHost
@@ -14072,7 +14074,9 @@ try {
                 );
               },
             });
+        trace?.mark('missions-profile-load-begin');
         if (!candidateHost) await profile.load();
+        trace?.mark('missions-profile-load-end');
         assertCurrent();
         const launchSolo = async (mission, context) => {
           if (context.isCurrent?.() === false) return false;
@@ -14163,11 +14167,13 @@ try {
           // combined browsing identity never grants this Solo host Versus ownership.
           const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
           assertCurrent();
+          trace?.mark('missions-versus-host-begin');
           const versusPreview = createCandidateVersusHost(route.source, {
             themes: libraryThemes,
             corePackIds: route.corePackIds,
             optionalCampaignIds: route.optionalCampaignIds,
           });
+          trace?.mark('missions-versus-host-end');
           const manifestFor = (
             mission,
             difficulty = browsingJourneyPreferences.snapshot().difficulty,
@@ -14220,6 +14226,7 @@ try {
             './mission-library/spatial-next-editions.mjs'
           );
           assertCurrent();
+          trace?.mark('missions-prior-editions-begin');
           spatialEditions = await createSpatialNextEditionSources({
             assertCurrent,
             activeRouteId: route.id,
@@ -14227,6 +14234,7 @@ try {
             difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
             launch: departLibraryMission,
           });
+          trace?.mark('missions-prior-editions-end');
           assertCurrent();
           journeySources = [
             combineJourneyLibrarySources([
