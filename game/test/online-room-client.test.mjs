@@ -85,6 +85,10 @@ async function acceptedRoomFixture() {
       contentHash,
       engineVersion: seat.engineVersion,
     });
+  // The HTTP service adds its control envelope before taking the genuine
+  // authoritative snapshot. Core-only rooms do not create a service activation.
+  room.controlProtocol = ROOM_CONTROL_PROTOCOL;
+  room.controlActivation = 'f'.repeat(64);
   return { accepted, seat, wire: snapshotAuthoritativeRoom(room) };
 }
 
@@ -155,6 +159,15 @@ test('actual snapshot owner publishes sharing only after full recipe acceptance 
   };
   const { poll } = await roomPageFunctions(['poll'], context),
     pending = poll();
+  void pending.then(
+    () =>
+      bound.reject(
+        new Error(
+          `Snapshot poll completed before recipe binding (${errors.map((error) => error.code ?? 'UNKNOWN').join(',') || 'no diagnostic'}).`,
+        ),
+      ),
+    (error) => bound.reject(error),
+  );
   assert.equal(updates.length, 0);
   assert.equal(requests.length, 1);
   response.resolve(wire);
