@@ -189,6 +189,75 @@ async function settleUntil(predicate, message) {
   await waitFor(predicate, { message });
 }
 
+for (const save of ['guided', 'manual']) {
+  test(`World radio setup saves through ${save} controls and activates radio flight`, async (t) => {
+    const { defaultRadioProfile } = await import(
+      '../../optional-practice/civilian-fpv/radio-profile.mjs'
+    );
+    const h = fixture(t);
+    await h.app.ready;
+    await h.app.startFlight(WORLD_CATALOGUE.find((entry) => !entry.legacy && !entry.regional));
+    const pad = {
+      id: defaultRadioProfile().device.id,
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0.004, 0.004, -1, 0.004, -1, 0, 0, 0],
+      buttons: Array.from({ length: 24 }, () => ({ value: 0 })),
+    };
+    h.pads.push(pad);
+    h.win.Event = Event;
+    const create = h.doc.createElement.bind(h.doc);
+    h.doc.createElement = (...args) => {
+      const node = create(...args);
+      Object.defineProperty(node, 'firstChild', {
+        get: () =>
+          node._text
+            ? {
+                get textContent() {
+                  return node._text;
+                },
+                set textContent(value) {
+                  node._text = value;
+                },
+              }
+            : (node.children[0] ?? null),
+      });
+      return node;
+    };
+    h.$('radio-setup-button').click();
+    const container = h.$('world-radio-setup');
+    const click = (text) =>
+      container
+        .querySelectorAll('button')
+        .find((node) => node.textContent === text)
+        .click();
+    if (save === 'manual') {
+      click('I checked the animated sticks and their direction');
+      click('Save verified profile');
+    } else {
+      const checked = container.querySelector('.radio-confirm input');
+      checked.checked = true;
+      checked.emit('change');
+      click('Save & return');
+    }
+    assert.equal(h.$('world-radio-dialog').open, false);
+    assert.equal(h.$('flight-source').value, 'radio');
+    assert.equal(h.app.snapshot().radio.verified, true);
+    assert.equal(h.app.snapshot().radio.editing, false);
+    assert.notEqual(h.app.snapshot().state.status, 'active');
+    h.tick(2);
+    pad.axes[4] = 1;
+    h.tick(2);
+    assert.equal(h.app.snapshot().state.status, 'active');
+    pad.axes[2] = -0.5;
+    pad.axes[3] = 0.5;
+    h.tick(3);
+    assert.ok(h.app.snapshot().state.lastInput.throttle > 0);
+    assert.ok(h.app.snapshot().state.lastInput.yaw > 0);
+  });
+}
+
 test('World lesson mode action restarts paused in the matching mode and preserves unscored continuation', async (t) => {
   const h = fixture(t);
   await h.app.ready;
