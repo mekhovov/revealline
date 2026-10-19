@@ -5910,5 +5910,19 @@
   "flightLimits.collection.journey": "This mission keeps Journey clears and pictures separately from Classic collection records; their two-hour limit does not apply here. Recording-dependent results still need a complete recording, and storage and reward rules still apply.",
   "flightLimits.recordingWarning": "Recording and new recoverable saves end at 30 minutes of play. Pause and check Flight saves before leaving the game.",
   "flightLimits.collectionWarning": "Approaching two hours of play: a later completion cannot be kept in the Classic collection. Pause and check Flight saves.",
-  "flightLimits.collectionExpired": "The two-hour Classic collection limit has passed. This flight can continue, but its completion cannot be kept in the Classic collection. Earlier progress is unchanged."
+  "flightLimits.collectionExpired": "The two-hour Classic collection limit has passed. This flight can continue, but its completion cannot be kept in the Classic collection. Earlier progress is unchanged.",
+  "flightDetails.progress.title": "Mission progress",
+  "flightDetails.progress.unavailable": "Some mission progress is unavailable.",
+  "flightDetails.progress.hunt": "Targets defeated: {{current}} / {{target}}.",
+  "flightDetails.progress.revealed": "Picture revealed: {{value}}%.",
+  "flightDetails.progress.target": "Reveal target: {{value}}% of the picture.",
+  "flightDetails.progress.remaining": "Still to reveal: {{value}}% of the picture.",
+  "flightDetails.progress.lessThan": "Less than {{value}}% of the picture remains to reach the reveal target.",
+  "flightDetails.progress.reached": "Reveal target reached. Any remaining required objectives still apply.",
+  "flightDetails.progress.routes.revealed": "Reachable routes captured: {{value}}%.",
+  "flightDetails.progress.routes.target": "Route target: {{value}}% of reachable routes.",
+  "flightDetails.progress.routes.remaining": "Still to capture: {{value}}% of reachable routes.",
+  "flightDetails.progress.routes.lessThan": "Less than {{value}}% of reachable routes remains to reach the route target.",
+  "flightDetails.progress.routes.reached": "Reachable-route target reached. Any remaining required objectives still apply.",
+  "flightDetails.progress.routes.bonus": "Hazard pockets are bonus reveal territory."
 }
