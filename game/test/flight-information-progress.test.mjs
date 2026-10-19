@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { createRun, stepRun, FIXED_DT, CELL } from '../core/index.mjs';
 import { EPS } from '../core/geometry.mjs';
 import { flightInformationSnapshot } from '../ui/flight-information-source.mjs';
 import { flightDetailsModel } from '../ui/flight-information-details.mjs';
@@ -33,6 +33,7 @@ test('earned partial coverage retains exact accepted progress while EN/UK detail
     value = snapshot(run);
   assert.deepEqual(value.progress, {
     kind: 'coverage',
+    basis: 'picture',
     current: run.coverage,
     target: 0.65,
     remaining: 0.65 - run.coverage,
@@ -106,7 +107,13 @@ test('Hunt uses its admitted quota and accepted kills instead of a reveal goal; 
     );
     const value = snapshot(run);
     if (mode === 'hunt') {
-      assert.deepEqual(value.progress, { kind: 'hunt', current: 0, target: 1, remaining: 1 });
+      assert.deepEqual(value.progress, {
+        kind: 'hunt',
+        basis: 'targets',
+        current: 0,
+        target: 1,
+        remaining: 1,
+      });
       assert.deepEqual(lines(value), ['Targets defeated: 0 / 1.']);
       setLocale('uk', { persist: false });
       assert.deepEqual(lines(value), ['Знешкоджено цілей: 0 / 1.']);
@@ -120,6 +127,66 @@ test('Hunt uses its admitted quota and accepted kills instead of a reveal goal; 
       assert.match(lines(value).join(' '), /Reveal target/);
     }
   }
+});
+
+test('legal routed capture reports the fixed eligible-route budget rather than the picture area', (t) => {
+  t.after(() => setLocale('en', { persist: false }));
+  const run = createRun({
+    ...retryFixture('self-contact').level,
+    version: 'xonix-level.v4',
+    width: 72,
+    encounter: null,
+    goal: { coverage: 0.65 },
+    rules: { lives: 3 },
+    enemies: [{ id: 'remote', type: 'bouncer', x: 60.5, y: 28.5, vx: 0, vy: 0 }],
+    classic: {
+      version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
+      terrain: [{ id: 'pocket', kind: 'lethal', x: 30, y: 10, w: 4, h: 4 }],
+      powerups: [],
+    },
+  });
+  const pictureFieldCells = run.cells.filter((cell) => cell === CELL.FIELD).length;
+  assert.equal(run.classic.coverageExcluded, 16);
+  assert.equal(run.totalClaimable + run.classic.coverageExcluded, pictureFieldCells);
+  for (let count = 0; count < 1000 && !run.coverage; count++)
+    stepRun(run, { direction: 'down' }, FIXED_DT);
+  assert.equal(run.status, 'running');
+  assert.ok(run.coverage > 0 && run.coverage < 0.65);
+  assert.equal(run.coverage, run.claimedCount / run.totalClaimable);
+  assert.notEqual(run.coverage, run.claimedCount / pictureFieldCells);
+  const before = JSON.stringify(run),
+    value = snapshot(run);
+  assert.equal(value.progress.basis, 'routes');
+  for (const locale of ['en', 'uk']) {
+    setLocale(locale, { persist: false });
+    const actual = lines(value).join(' ');
+    assert.match(
+      actual,
+      locale === 'en' ? /Reachable routes captured: 8.6%/ : /Захоплено доступних маршрутів: 8,6%/,
+    );
+    assert.match(
+      actual,
+      locale === 'en' ? /56.4% of reachable routes/ : /56,4% доступних маршрутів/,
+    );
+    assert.match(actual, locale === 'en' ? /Hazard pockets are bonus/ : /Небезпечні ділянки/);
+    assert.doesNotMatch(actual, /of the picture|зображення:|% зображення/);
+  }
+  assert.equal(JSON.stringify(run), before);
+  // Presentation boundary checks for route precision and unavailable future policies.
+  run.coverage = 0.65 - 0.00001;
+  for (const locale of ['en', 'uk']) {
+    setLocale(locale, { persist: false });
+    assert.match(
+      lines(snapshot(run))[2],
+      locale === 'en' ? /Less than 0.1% of reachable routes/ : /менше ніж 0,1% доступних маршрутів/,
+    );
+  }
+  run.coverage = 0.65;
+  assert.match(lines(snapshot(run))[2], /Ціль захоплення маршрутів досягнуто/);
+  run.level.classic.coverage.version = 'unknown-policy';
+  assert.equal(snapshot(run).progress.basis, null);
+  assert.deepEqual(lines(snapshot(run)), ['Частина даних про прогрес місії недоступна.']);
 });
 
 test('missing or invalid coverage facts remain unavailable without invented completion or nonfinite text', (t) => {

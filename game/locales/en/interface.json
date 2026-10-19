@@ -5914,5 +5914,11 @@
   "flightDetails.progress.remaining": "Still to reveal: {{value}}% of the picture.",
   "flightDetails.progress.lessThan": "Less than {{value}}% of the picture remains to reach the reveal target.",
   "flightDetails.progress.reached": "Reveal target reached. Any remaining required objectives still apply.",
+  "flightDetails.progress.routes.revealed": "Reachable routes captured: {{value}}%.",
+  "flightDetails.progress.routes.target": "Route target: {{value}}% of reachable routes.",
+  "flightDetails.progress.routes.remaining": "Still to capture: {{value}}% of reachable routes.",
+  "flightDetails.progress.routes.lessThan": "Less than {{value}}% of reachable routes remains to reach the route target.",
+  "flightDetails.progress.routes.reached": "Reachable-route target reached. Any remaining required objectives still apply.",
+  "flightDetails.progress.routes.bonus": "Hazard pockets are bonus reveal territory.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

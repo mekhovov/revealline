@@ -1,5 +1,6 @@
 import { t } from '../i18n/index.mjs';
 import { EPS } from '../core/geometry.mjs';
+import { ROUTE_COVERAGE } from '../core/coverage.mjs';
 import {
   baseLevelVersion,
   isClassicRuleset,
@@ -91,6 +92,13 @@ const flightProgress = (run) => {
   // objectives are complete. Missing facts are not reconstructed from captions.
   return {
     kind: hunt ? 'hunt' : 'coverage',
+    basis: hunt
+      ? 'targets'
+      : run.level?.classic?.coverage
+        ? run.level.classic.coverage.version === ROUTE_COVERAGE
+          ? 'routes'
+          : null
+        : 'picture',
     current: currentValid ? current : null,
     target: targetValid ? target : null,
     remaining:
