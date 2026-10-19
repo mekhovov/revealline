@@ -114,12 +114,21 @@ test('combat slot consequences follow legal remaining capacity, including author
       build = createOverflightBuild();
     const first = cardFor(build, compiled, 'slow-field', 1);
     parity(first.card, first.consequence);
+    assert.match(first.consequence, /^After this choice:/);
+    const ukrainian = cardFor(build, compiled, 'slow-field', 1, 'uk');
+    parity(ukrainian.card, ukrainian.consequence);
+    assert.match(ukrainian.consequence, /^Після цього вибору:/);
     assert.match(first.consequence, allowed.length === 2 ? /1 of 1.*final available/i : /1 of 2/);
     install(build, compiled, 'slow-field', 1);
     assert.equal(cardFor(build, compiled, 'slow-field', 2).consequence, '');
     if (allowed.length === 2) continue;
     const second = cardFor(build, compiled, 'side-burst', 1);
     parity(second.card, second.consequence);
+    assert.match(second.consequence, /^After this choice:/);
+    assert.match(
+      cardFor(build, compiled, 'side-burst', 1, 'uk').consequence,
+      /^Після цього вибору:/,
+    );
     assert.match(second.consequence, /2 of 2.*final available/i);
     install(build, compiled, 'side-burst', 1);
     assert.equal(
@@ -136,10 +145,7 @@ test('support choice and true final ranks are described across all native rules 
     for (const locale of ['en', 'uk']) {
       const { card, consequence } = cardFor(build, compiled, 'shield', 1, locale);
       parity(card, consequence);
-      assert.match(
-        consequence,
-        locale === 'en' ? /support family.*sortie/ : /родину підтримки.*виліт/,
-      );
+      assert.match(consequence, locale === 'en' ? /support type.*sortie/ : /тип підтримки.*виліт/);
       assert.doesNotMatch(consequence, /guarantee|next draft|завжди/);
     }
     install(build, compiled, 'shield', 1);
@@ -150,7 +156,7 @@ test('support choice and true final ranks are described across all native rules 
     assert.equal(cardFor(build, compiled, 'shield', 2).consequence, '');
     install(build, compiled, 'shield', 2);
     const cap = cardFor(build, compiled, 'shield', 3);
-    assert.match(cap.consequence, /Maximum module level/);
+    assert.match(cap.consequence, /Reaches the maximum module level/);
     install(build, compiled, 'shield', 3);
     assert.equal(
       legal(build, compiled).some((offer) => offer.system === 'shield'),
@@ -160,10 +166,16 @@ test('support choice and true final ranks are described across all native rules 
   const compiled = compiledFor(),
     build = createOverflightBuild();
   install(build, compiled, 'plating', 1);
-  assert.match(cardFor(build, compiled, 'plating', 2, 'uk').consequence, /Найвищий рівень модуля/);
+  assert.match(
+    cardFor(build, compiled, 'plating', 2, 'uk').consequence,
+    /Досягає найвищого рівня модуля/,
+  );
   install(build, compiled, 'side-burst', 1);
   install(build, compiled, 'side-burst', 2);
-  assert.match(cardFor(build, compiled, 'side-burst', 3).consequence, /Maximum module level/);
+  assert.match(
+    cardFor(build, compiled, 'side-burst', 3).consequence,
+    /Reaches the maximum module level/,
+  );
 });
 
 test('Riy, missing policy context and unaccepted offers do not inherit Single Drone commitment claims', () => {
