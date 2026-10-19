@@ -1,0 +1,37 @@
+{
+  "format": "SharedDemoOfficialGeneratedChecksV1",
+  "recordedAt": "2026-10-19T08:11:20.092364+00:00",
+  "sourceRevision": "f51d2597a3bcc711c229bbc51445e7150bfee1db",
+  "integrationBase": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+  "node": "20.19.5",
+  "complete": true,
+  "runtimeBuildPathsUnmodified": true,
+  "checks": [
+    {
+      "command": "node scripts/localization.mjs check",
+      "exitCode": 0,
+      "result": {
+        "locales": [
+          "en",
+          "uk"
+        ],
+        "messages": 13706,
+        "references": 9073
+      }
+    },
+    {
+      "command": "node scripts/refresh-fpv-play-shell.mjs --check",
+      "exitCode": 0,
+      "result": {
+        "status": "verified-byte-identical",
+        "sourceSha256": "ebf75d702677d63fd0c2bea53fae061e931725fb5e6646541f8607c9cdb0461a",
+        "bytes": 300311,
+        "packageSlotsAdded": 0
+      }
+    },
+    {
+      "command": "node scripts/refresh-demo-shell.mjs --check",
+      "exitCode": 0
+    }
+  ]
+}

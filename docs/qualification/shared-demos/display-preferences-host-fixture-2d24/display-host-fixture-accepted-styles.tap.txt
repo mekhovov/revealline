@@ -1,0 +1,71 @@
+TAP version 13
+# Subtest: actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer
+ok 1 - actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer
+  ---
+  duration_ms: 1826.958417
+  ...
+# Subtest: immediate: shared display edits preserve the actual paused Solo cut and replay
+ok 2 - immediate: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 1703.581583
+  ...
+# Subtest: grid-center: shared display edits preserve the actual paused Solo cut and replay
+ok 3 - grid-center: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 1701.37
+  ...
+# Subtest: Solo to Team to Versus and back restores one display record without Couch profile writes
+    # Subtest: Solo explicitly opts into the shared record
+    ok 1 - Solo explicitly opts into the shared record
+      ---
+      duration_ms: 993.19
+      ...
+    # Subtest: Team adopts and edits from its real paused Options
+    ok 2 - Team adopts and edits from its real paused Options
+      ---
+      duration_ms: 639.448958
+      ...
+    # Subtest: Versus adopts, exposes controls to keyboard and changes only display state
+    ok 3 - Versus adopts, exposes controls to keyboard and changes only display state
+      ---
+      duration_ms: 2111.625458
+      ...
+    # Subtest: fresh Solo prefers the shared record over its older profile
+    ok 4 - fresh Solo prefers the shared record over its older profile
+      ---
+      duration_ms: 966.98675
+      ...
+    1..4
+ok 4 - Solo to Team to Versus and back restores one display record without Couch profile writes
+  ---
+  duration_ms: 4712.342875
+  ...
+# Subtest: Team system reduction preserves a raw false choice and a denied shared save stays session-only
+ok 5 - Team system reduction preserves a raw false choice and a denied shared save stays session-only
+  ---
+  duration_ms: 149.381417
+  ...
+# Subtest: Versus controller selects the real display control without replacing or starting the duel
+ok 6 - Versus controller selects the real display control without replacing or starting the duel
+  ---
+  duration_ms: 2008.198208
+  ...
+# Subtest: actual Team comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+ok 7 - actual Team comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+  ---
+  duration_ms: 132.082958
+  ...
+# Subtest: actual Versus comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+ok 8 - actual Versus comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+  ---
+  duration_ms: 1923.24025
+  ...
+1..8
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20562.95175

@@ -1,0 +1,558 @@
+{
+  "format": "PinnedMainIntegrationIndependentReviewV1",
+  "reviewedAt": "2026-10-19T08:10:22.165013+00:00",
+  "complete": true,
+  "reviewScope": "Read-only semantic and exact-object audit; no tests, replay, build or browser run by reviewer. Hydration earlier wrote only verified missing Git objects.",
+  "pins": {
+    "previousCandidate": "318b133362388716590a7399ad91e417837259dc",
+    "previousBase": "16ebd7b51984387c39622380a8e51a60e745152e",
+    "incomingMain": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+    "adoptedCandidate": "f51d2597a3bcc711c229bbc51445e7150bfee1db"
+  },
+  "incomingPaths": 41,
+  "threeWayOverlapPaths": 9,
+  "textConflictPaths": [
+    "game/i18n/catalogs.mjs"
+  ],
+  "adoptedPreviewChecks": [
+    {
+      "path": "game/app.mjs",
+      "sha256": "bcd024dac248be1510de40b67f2af72519944b9a845304fc303cb72a4ea4a43a",
+      "matchesReviewedPreview": true
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "sha256": "69c4f80b62c86371cbec56ebc040778e90975013e8e4ea9e727c46e154d1df9c",
+      "matchesReviewedPreview": true
+    },
+    {
+      "path": "game/snake/classic-app.mjs",
+      "sha256": "8b217bc9c152f183f6dc0999221f46f206c08096f8a40b31fa9b9835f548673f",
+      "matchesReviewedPreview": true
+    },
+    {
+      "path": "game/test/classic-snake-ui.test.mjs",
+      "sha256": "27c98e0f9171fe4739eda4e639c89569524f45cece0559a9aa81a63e38bdb36d",
+      "matchesReviewedPreview": true
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "sha256": "ff7d3d3599a54cf884477c50c7468eb08a2ae11da9d1f75dbbc8002b84ee4230",
+      "matchesReviewedPreview": true
+    },
+    {
+      "path": "game/ui/native-menus.mjs",
+      "sha256": "feebbc4fb348e2145a8b9cc3ec214ce65a6decb08ccbc6517e8b49c6e93f8096",
+      "matchesReviewedPreview": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "sha256": "ae6f495d2be0a294b6691e39a6871edb7a827b0d1dbb21737e4fb16eb0bed003",
+      "matchesReviewedPreview": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha256": "4bd2acf41a1cc7b326b7c53de7f97c849706799c52864c98d05f452a6808c13a",
+      "matchesReviewedPreview": true
+    }
+  ],
+  "hydration": {
+    "receipt": ".cache/main-16eb-2d24-318b-hydration.json",
+    "sha256": "9fb5b4674e2d0b034e0f1782df983b9068051ae0b9c43ae16673f81b05846b87",
+    "objects": 15,
+    "bytes": 4591343
+  },
+  "rootIntegrationReceipt": {
+    "path": ".cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-2d24aee2-state.json",
+    "sha256": "87b4161362d0d7ada308a5429adaf27c5a27a70088aa82970825ec04ff186ec2",
+    "authorsMessagesOrderPreserved": true,
+    "commitCount": 41,
+    "exactIncomingDeltaPaths": [
+      "docs/accessibility/mission-search-recovery.md",
+      "docs/performance/solo-performance-followup-plan.md",
+      "docs/verification/team-discovery-preview-fixture-2026-10-19.md",
+      "game/app.mjs",
+      "game/couch/couch.mjs",
+      "game/couch/relay-rescue.mjs",
+      "game/creator/player-menu.mjs",
+      "game/display-preferences.mjs",
+      "game/i18n/catalogs.mjs",
+      "game/locales/en/interface.json",
+      "game/locales/uk/interface.json",
+      "game/overflight/app.mjs",
+      "game/snake/classic-app.mjs",
+      "game/test/classic-snake-ui.test.mjs",
+      "game/test/comfort-presets.test.mjs",
+      "game/test/creator-player-menu.test.mjs",
+      "game/test/display-preferences-host.test.mjs",
+      "game/test/display-preferences.test.mjs",
+      "game/test/fpv-flight-ui.test.mjs",
+      "game/test/fpv-world-appearance-ui.test.mjs",
+      "game/test/global-settings-view.test.mjs",
+      "game/test/menu-animation-preferences.test.mjs",
+      "game/test/menu-scenes.test.mjs",
+      "game/test/mission-library-search-recovery.test.mjs",
+      "game/test/native-global-settings.test.mjs",
+      "game/test/overflight-host.test.mjs",
+      "game/test/sim-mission-library-projection.test.mjs",
+      "game/test/team-discovery-preview-host.test.mjs",
+      "game/test/team-navigation-context-host.test.mjs",
+      "game/ui/comfort-presets.css",
+      "game/ui/comfort-presets.mjs",
+      "game/ui/game-shell.mjs",
+      "game/ui/menu-animation-feedback.mjs",
+      "game/ui/menu-animation-preferences.mjs",
+      "game/ui/mission-library-browser.mjs",
+      "game/ui/native-menu.css",
+      "game/ui/native-menus.mjs",
+      "optional-practice/civilian-fpv/app.mjs",
+      "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "optional-practice/civilian-fpv/world-app.mjs",
+      "scripts/refresh-fpv-play-shell.mjs"
+    ],
+    "sparseWorktreeRemoved": true
+  },
+  "nativeIdentityChecks": [
+    {
+      "path": "game/demo-data",
+      "gitObject": "fe4780393e107e63ee14d122ce1d59024b8ae731",
+      "actualGitObject": "fe4780393e107e63ee14d122ce1d59024b8ae731",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes",
+      "gitObject": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+      "actualGitObject": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+      "unchanged": true
+    },
+    {
+      "path": "game/content",
+      "gitObject": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+      "actualGitObject": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+      "unchanged": true
+    },
+    {
+      "path": "game/content-design/assets",
+      "gitObject": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183",
+      "actualGitObject": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183",
+      "unchanged": true
+    },
+    {
+      "path": "game/replay.mjs",
+      "gitObject": "fa473c568bec333395636541cc82fe3dd8b597f6",
+      "actualGitObject": "fa473c568bec333395636541cc82fe3dd8b597f6",
+      "unchanged": true
+    },
+    {
+      "path": "game/snake/classic-core.mjs",
+      "gitObject": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5",
+      "actualGitObject": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5",
+      "unchanged": true
+    },
+    {
+      "path": "game/snake/classic-match.mjs",
+      "gitObject": "cd47d4660228b5e8968d6aef3d3d7700b48d432c",
+      "actualGitObject": "cd47d4660228b5e8968d6aef3d3d7700b48d432c",
+      "unchanged": true
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "gitObject": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6",
+      "actualGitObject": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6",
+      "unchanged": true
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "gitObject": "c87f15cdc632a1bfd7592e8075974558d776fb88",
+      "actualGitObject": "c87f15cdc632a1bfd7592e8075974558d776fb88",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-data",
+      "gitObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86",
+      "actualGitObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "gitObject": "e9ee1383ebe909ce7993da499f07b33d486c9605",
+      "actualGitObject": "e9ee1383ebe909ce7993da499f07b33d486c9605",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "gitObject": "fa254c168037003881a41f881f270465a09d8f05",
+      "actualGitObject": "fa254c168037003881a41f881f270465a09d8f05",
+      "unchanged": true
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/shared-demos-generated",
+      "gitObject": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179",
+      "actualGitObject": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179",
+      "unchanged": true
+    },
+    {
+      "path": "game/core",
+      "gitObject": "bf56faec341bd33c7633cd707decc5c86783763b",
+      "actualGitObject": "bf56faec341bd33c7633cd707decc5c86783763b",
+      "unchanged": true
+    }
+  ],
+  "sharedDemoModuleChecks": [
+    {
+      "path": "game/demo-audio-feedback.mjs",
+      "gitObject": "ce83aa68233ea832dd33afbe1bd11d05c2d6854e",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-bot-player.mjs",
+      "gitObject": "4f504983b55ef31510935b00af676072b62125e6",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-bot-worker.mjs",
+      "gitObject": "773345bbf9ee4c0ea4c22fd4b633289445cedcb5",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-bot.mjs",
+      "gitObject": "56e7ada9954f9fa7844456aea1d7d853ed69424c",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-catalog.mjs",
+      "gitObject": "f792e3774940a103e79c058d958e4ccdbf8a5460",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-director.mjs",
+      "gitObject": "1749e8d1a3976695c61febdd87cbf5778e07e78f",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-experience.mjs",
+      "gitObject": "0998190f64f97d7142f2e551c01f1f416aa630f4",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-improv-player.mjs",
+      "gitObject": "cbb6fcdbee7a3a64e0220a1779000b7c2f4118d3",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-launch.mjs",
+      "gitObject": "9f44cf2025f8e2fbe26ea46dccc85a9e3b351a3c",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-library.mjs",
+      "gitObject": "fe6d4c783472a0413f1f48ab733274ee64a4dab8",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-loading.mjs",
+      "gitObject": "51cfabbb81233fd06df1549a3690ed42357d9ae3",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/sim.mjs",
+      "gitObject": "5ce730be3f7cb56a5865482838183cc784774500",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/snake-authoring.mjs",
+      "gitObject": "b37beaf8c45e9ac978456f6099ab9081ca75b659",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/snake-recording.mjs",
+      "gitObject": "daf793ddc158fc64d7fa82d9e1c7ff8bb80bac17",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/snake.mjs",
+      "gitObject": "a348fa724a5af1a31cd4c069a7b751081c0f062e",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-authoring.mjs",
+      "gitObject": "79c84a958bb156a768a5564845de42e7efe3d787",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-builtins-index.mjs",
+      "gitObject": "f26b7a07dd34e2ad561fb4125ad57537386b412e",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-builtins.mjs",
+      "gitObject": "19cfa3c3576768848b13e4d5f5fc013c69a7af70",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-captions.mjs",
+      "gitObject": "920380a21e5ddc2715aaeadf080ad64e1c6e1df1",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-catalog.mjs",
+      "gitObject": "2da830b66bd2f8aff082de6a7af9c4bbaffa2d7f",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-classic-builtins.mjs",
+      "gitObject": "6ecdf78084b2f6a00cebc0f81bf139d2c968aef3",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-classic-launch.mjs",
+      "gitObject": "1984731d153e6f4714f72e36e70a766c028019de",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-practice.mjs",
+      "gitObject": "380426197fd43796f6c60c6033fc81385eed0727",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-source-owner.mjs",
+      "gitObject": "ab2e1ed7e7ccf4ee00d0a54e5dcb5ffb68263a3e",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo-view.mjs",
+      "gitObject": "8f4ad17b549a3e95de517b46e85d6f5da5a18700",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/solo.mjs",
+      "gitObject": "0619d1b82378baa68445ebba7f773b927017545d",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/survival-authoring.mjs",
+      "gitObject": "06b26b26df2e9d842e17ab5ddf78b5cc6f6c1501",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/survival-catalog.mjs",
+      "gitObject": "856b79cba42dabc0046efca7ee4d254ab5db4085",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/survival-replay.mjs",
+      "gitObject": "d29d1daa9628c8835e5bb6ebf960a6199f62838f",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/survival-runtime-variants.mjs",
+      "gitObject": "d68f0c6c477cb400a25fe4ee5fb6dafcd0144b99",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/survival-simulation-identity.mjs",
+      "gitObject": "18ce0a22d6b64540c563b002d459926cde964ff2",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-modes/survival.mjs",
+      "gitObject": "50f505310ea1ac3de72691ebd980e38707080d33",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-prefetch.mjs",
+      "gitObject": "2487dd7579249c9e3d17f0891ceff7e7a47ff478",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-preparation.mjs",
+      "gitObject": "32521faeea38fac5ab5f698b895a73126b5a1bc5",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-registry.mjs",
+      "gitObject": "a7f12f6866cd9087009f0ab855ef6c06d226b473",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-replay-diagnostics.mjs",
+      "gitObject": "f4d643ab5789fdc062ab5b22b52c43b130f8c206",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-rotation.mjs",
+      "gitObject": "113aebdd5c55ea541da36277666a3bc91bbb686f",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "gitObject": "99d3a9f8f2482391d2d43c787d3f3672c42de684",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-settings.mjs",
+      "gitObject": "7d906e6588b4543f71a5ac203558cc478bf03940",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-source-metadata.mjs",
+      "gitObject": "06b93da5f33878226b6a6bec763b52cf9831dfe9",
+      "unchanged": true
+    },
+    {
+      "path": "game/demo-sources.mjs",
+      "gitObject": "ee94d0d8a7ae06c4da77cb8e0388a23c88384d52",
+      "unchanged": true
+    },
+    {
+      "path": "game/editions/standalone/demo-builtins.mjs",
+      "gitObject": "bccb03d2de042bf56eeabd597ef984b17304c5ca",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-audio.mjs",
+      "gitObject": "3fa462ff6628d4d591eb55b7d31f9ae5023c3e6d",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-clock.mjs",
+      "gitObject": "85b10788bdf08e6954121bfbc74f70a98d5be7c6",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-controller.mjs",
+      "gitObject": "e52d85b79c3719c851c0aef497270af26042ebd8",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-entry.mjs",
+      "gitObject": "1edd6b5dd5366f1621d759e59e9cf68b0b3c5345",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-fullscreen.mjs",
+      "gitObject": "63e2f928c1b3a0d4fcaa3929efc24f71db2d0b8e",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "gitObject": "410dec47b09a9afeb841029bf2597a96bce61b9c",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-input.mjs",
+      "gitObject": "49d8150ce9e10ac2a6aca56f035774f2ba6d32b7",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-journey-picture.mjs",
+      "gitObject": "ee892e61dd53416da976e448bf9872188255313e",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-layout.mjs",
+      "gitObject": "62bb3fa8c86ddcd1c51b13a82ace998969c5877c",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-music-transport.mjs",
+      "gitObject": "261f94fd5c142273dfee62fb7414cd256f0e80d6",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-picture.mjs",
+      "gitObject": "bdb8aa55acf2dd985fb384ce268200ff010c778b",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-reward.mjs",
+      "gitObject": "ebfb09f4ad02d8a9cb6e6210aa49780a1a8f6f8b",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-scene-transition.mjs",
+      "gitObject": "e81408dade30b380966dd9aeeb3cdede4725db1e",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo-shell.mjs",
+      "gitObject": "d463bcc27e8da20be2acf46f805639c45456c988",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/demo.css",
+      "gitObject": "9f49321190719e5fd5c86efdf2cbc4d974098a0e",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-input.mjs",
+      "gitObject": "44691d4797e5d297b15dee45acc5ba7c7ed54b7d",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-inventory.mjs",
+      "gitObject": "7cbf18f90ae61d0163ed8d4ce27d24bbbf9b9119",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-payload.mjs",
+      "gitObject": "24a3194ab5bc38ad59c537a92d7e5cbd81b30e02",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-player.mjs",
+      "gitObject": "ff878bc67a963636b9c241c99810dc44b47a8fd9",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstration-resolver.mjs",
+      "gitObject": "661b07fa7bbf5a6e4867ddd2ac3cfae4a49878cf",
+      "unchanged": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "gitObject": "9e18e76e8b04ca8a82ef85d8e03eb7cc0f83c246",
+      "unchanged": true
+    }
+  ],
+  "semanticFindings": [
+    {
+      "scope": "Solo comfort presets",
+      "finding": "Merged attachGameShell keeps all demo hooks and routes explicit Apply/Undo through existing changeDisplay and display warning. Preview only reads; no new watch/practice write path found."
+    },
+    {
+      "scope": "Preferences and native menu ownership",
+      "finding": "Display save confirmation and menu-animation retry preserve newer explicit intent. Comfort and feedback owners unsubscribe locale/display/menu/storage/pageshow listeners and remove owned DOM during native menu destruction. These are host UI changes, not gameplay advancement."
+    },
+    {
+      "scope": "Snake, Survival and SIM hosts",
+      "finding": "Incoming menuAnimationBinding replaces duplicate bindings; Snake dynamic host mode feeds browse-only filter reset; Survival settings actions move into existing categories. Merged demo entry/input/launch/cleanup hooks remain present and unchanged by incoming hunks."
+    },
+    {
+      "scope": "Generated SIM shell",
+      "finding": "Incoming menuAnimationBinding export is mapped to simMenuAnimationBinding by the generator; merged native SIM settings consume that projection. Existing demo/shared control code is byte-identical. Generated shell changed for preference feedback and mission search recovery, so verify from canonical merged inputs."
+    },
+    {
+      "scope": "Packaging",
+      "finding": "New comfort-presets.mjs, comfort-presets.css and menu-animation-feedback.mjs add reachable shared menu assets. Existing candidate/FPV file-count failures still require measured correction and fresh budgets; no limit increase or content omission justified by this review."
+    }
+  ],
+  "actionableFindings": [],
+  "verificationRecommendation": {
+    "focusedSuite": "The parent's 23-file suite (all 16 incoming tests plus demo-sources, timeout-fallback, native-host, back-host, settings, shared and sim-input) covers the identified integration seams; no additional broad unit suite requested.",
+    "generatedCommands": [
+      "npm run i18n:check",
+      "node scripts/refresh-fpv-play-shell.mjs --check",
+      "node scripts/refresh-demo-shell.mjs --check"
+    ],
+    "browserRefresh": "After packaging correction and a fresh emitted build, exercise settings/comfort Apply and Undo with paused Solo state, demo current/mixed entry and Back persistence, Snake/SIM focused menu controls, and affected cross-engine restoration/mixed transitions. Check listener cleanup against each host's actual baseline.",
+    "nativeCorpus": "No replay regeneration or blanket native-corpus rerun is justified by these 41 UI/documentation changes: exact 14 native objects and shared demo modules are unchanged. Existing corpus receipts retain their original execution pins; this object audit is the explicit carry-forward basis, not a new replay run.",
+    "endurance": "Keep the completed 7201.006-second 1efd receipt scoped to that build. Incoming changes do not alter shared demo scheduler/director/adapters/native simulation. Decide any new endurance requirement against final packaging/runtime changes; do not relabel the prior run as executed on this new HEAD."
+  },
+  "stillOpen": [
+    "Hosted Linux Node22.13.1 replay admission failure is not cleared by local Node20/22 macOS passes; diagnostic test must run on the hosted candidate.",
+    "Candidate and fpv-worlds file-count budgets need correction and fresh measurement.",
+    "No new emitted build/browser result is established by this review; root's integration tests and generated checks are separate.",
+    "Physical controller/SIM radio, mobile, audible and unfamiliar-player checks still await reviewers."
+  ]
+}
