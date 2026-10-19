@@ -29,11 +29,7 @@ import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
-import {
-  getMenuAnimation,
-  setMenuAnimation,
-  subscribeMenuAnimation,
-} from '../ui/menu-animation-preferences.mjs';
+import { menuAnimationBinding } from '../ui/menu-animation-preferences.mjs';
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
 import {
   attachSettingsPanels,
@@ -117,6 +113,7 @@ import {
   createClassicSnakeRatings,
   classicSnakeRatingForRecord,
   classicSnakeRatingCriteriaText,
+  classicSnakeRatingResultText,
 } from './classic-ratings.mjs';
 import { createClassicSnakeRecords } from './classic-records.mjs';
 import { resolveClassicSnakeRecipeEntry } from './classic-catalogue-archive.mjs';
@@ -820,7 +817,13 @@ function installTransitionControls() {
   media.append(resultPreview, replayControls);
   const overview = el('div', null, 'snake-result-overview');
   const summary = el('div', null, 'snake-result-summary');
-  summary.append($('result-detail'), $('snake-stars'), $('result-record'), $('result-save-notice'));
+  summary.append(
+    $('result-detail'),
+    $('snake-stars'),
+    $('snake-rating-goal'),
+    $('result-record'),
+    $('result-save-notice'),
+  );
   overview.append(media, summary);
   $('snake-results').prepend(overview);
   for (const [container, variant] of [
@@ -1200,6 +1203,12 @@ function openMissionLibrary() {
       document: doc,
       library: missionLibrary,
       mode,
+      getHostMode: () => mode,
+      browsingContext: ({ mode: browsedMode }) =>
+        text('browsingContext', {
+          mode: navigationMode(browsedMode),
+          context: navigationContext(),
+        }),
       availableCollectionsOnly: true,
       getCurrentId: () => currentRow()?.id,
       readState: session.read,
@@ -1208,10 +1217,7 @@ function openMissionLibrary() {
         editionId: namespace,
         getStorage: () => globalThis.localStorage,
       },
-      description: () =>
-        locale === 'uk'
-          ? 'Усі місії Snake. Оберіть поле й починайте; розділи допоможуть знайти наступне випробування.'
-          : 'Every Snake mission. Choose a board to play; chapters help you find your next challenge.',
+      description: () => text('browseHint'),
       renderPreview: (options) => {
         const destination = CLASSIC_SNAKE_LEVELS.find((item) => item.id === options.row.runtimeId);
         const previewAppearance = acceptAttemptAppearance(
@@ -1589,6 +1595,19 @@ function renderEncounterGuide() {
   $('encounter-summary').dataset.specialist = String(specialist);
   renderEnemyFieldGuide($('field-guide-cards'), kinds, { locale, cast: currentCast() });
 }
+function navigationMode(selectedMode) {
+  return selectedMode === 'versus' ? t('interface:versus2', { lng: locale }) : text(selectedMode);
+}
+function navigationContext() {
+  return [
+    text('title'),
+    navigationMode(mode),
+    text(format),
+    ...(format === 'endless' && mode === 'versus'
+      ? [text(duel === 'score' ? 'scoreDuel' : duel)]
+      : []),
+  ].join(' · ');
+}
 function refresh() {
   if (!match) return;
   const nextTarget = runs[0].targets?.find((actor) => actor.role !== 'bonus') ?? runs[0].target;
@@ -1613,6 +1632,7 @@ function refresh() {
     phase: outcome ? 'results' : ready ? 'ready' : paused ? 'paused' : 'playing',
     transitionActive: !['idle', 'cancelled'].includes(transition.snapshot().phase),
     missionName: entry.title[locale],
+    navigationContext: navigationContext(),
     summary: readyInstruction(),
     canResume: !outcome && (!ready || (offerSavedContinue && !!savedRound)),
     muted: audioMaster.snapshot().muted,
@@ -1811,6 +1831,13 @@ function renderRatings() {
   const starsLabel = grade?.stars ? `${grade.stars} / 3` : starsText;
   if ($('snake-stars').getAttribute('aria-label') !== starsLabel)
     $('snake-stars').setAttribute('aria-label', starsLabel);
+  const goalText =
+    result() === 'won' && liveProvenance !== 'import'
+      ? classicSnakeRatingResultText(grade, runs[0].tick, locale)
+      : '';
+  $('snake-rating-goal').hidden = !goalText;
+  if ($('snake-rating-goal').textContent !== goalText)
+    $('snake-rating-goal').textContent = goalText;
   $('snake-rating-criteria').textContent = ratingCriteriaText(runs[0]);
 }
 function restore(raw, { provenance = 'import' } = {}) {
@@ -2752,11 +2779,7 @@ snakeGlobalSettings = mountGlobalSettings({
     ...continuousPlayBindings(continuousPreferences),
     textFace: displayBinding('textFace'),
     textSize: displayBinding('textSize'),
-    menuAnimation: {
-      get: () => getMenuAnimation(globalThis),
-      set: (value) => setMenuAnimation(value, globalThis),
-      subscribe: (listener) => subscribeMenuAnimation(listener, globalThis),
-    },
+    menuAnimation: menuAnimationBinding(globalThis),
   },
 });
 const snakeTouchSettings = el('section');
