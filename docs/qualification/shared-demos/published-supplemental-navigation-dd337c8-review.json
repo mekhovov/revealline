@@ -1,0 +1,120 @@
+{
+  "format": "revealline-published-supplemental-navigation-review.v1",
+  "sourceRevision": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+  "runtimeScope": "Publisher-derived display metadata only; native simulation, authored sources, save identities, playback and receiving-host validation unchanged.",
+  "tests": {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "game/test/published-journey-provider.test.mjs",
+      "game/test/solo-mission-expansion-construction.test.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 41.535623375002615,
+    "before": {
+      "scripts/authored-runtime-snapshots.mjs": "53243b745c28ce181dd1f93398251321e122eb063419b16b033e252156f7c248",
+      "game/content-design/published-journey.mjs": "58d8d803cd6e4772f98b8b1302e5b231c353ececc992487ecc6ed05ecebe7ab8",
+      "game/mission-library/published-routes.mjs": "ebfc32611153afc41ec435cf46fc101e72fa7e621848b2c4ccb5af39f4faf5c5",
+      "game/app.mjs": "4a6c4fbaeb036de62697cf47755b3d4162793c250f274192e1ad812b35640eab",
+      "game/test/published-journey-provider.test.mjs": "f6941ed740891f57ab91653052cb6cbb9adbee1d32ee4e50c6505f27d8671edf",
+      "game/test/solo-mission-expansion-construction.test.mjs": "acb39ea4676b010f8bf7064986d04248f85634d39a29185b55d4698bfffc44c0"
+    },
+    "after": {
+      "scripts/authored-runtime-snapshots.mjs": "53243b745c28ce181dd1f93398251321e122eb063419b16b033e252156f7c248",
+      "game/content-design/published-journey.mjs": "58d8d803cd6e4772f98b8b1302e5b231c353ececc992487ecc6ed05ecebe7ab8",
+      "game/mission-library/published-routes.mjs": "ebfc32611153afc41ec435cf46fc101e72fa7e621848b2c4ccb5af39f4faf5c5",
+      "game/app.mjs": "4a6c4fbaeb036de62697cf47755b3d4162793c250f274192e1ad812b35640eab",
+      "game/test/published-journey-provider.test.mjs": "f6941ed740891f57ab91653052cb6cbb9adbee1d32ee4e50c6505f27d8671edf",
+      "game/test/solo-mission-expansion-construction.test.mjs": "acb39ea4676b010f8bf7064986d04248f85634d39a29185b55d4698bfffc44c0"
+    }
+  },
+  "ownedHashes": {
+    "scripts/authored-runtime-snapshots.mjs": "53243b745c28ce181dd1f93398251321e122eb063419b16b033e252156f7c248",
+    "game/content-design/published-journey.mjs": "58d8d803cd6e4772f98b8b1302e5b231c353ececc992487ecc6ed05ecebe7ab8",
+    "game/mission-library/published-routes.mjs": "ebfc32611153afc41ec435cf46fc101e72fa7e621848b2c4ccb5af39f4faf5c5",
+    "game/app.mjs": "4a6c4fbaeb036de62697cf47755b3d4162793c250f274192e1ad812b35640eab",
+    "game/test/published-journey-provider.test.mjs": "f6941ed740891f57ab91653052cb6cbb9adbee1d32ee4e50c6505f27d8671edf"
+  },
+  "checks": [
+    {
+      "name": "lint",
+      "exitCode": 0,
+      "command": [
+        "node_modules/.bin/eslint",
+        "scripts/authored-runtime-snapshots.mjs",
+        "game/content-design/published-journey.mjs",
+        "game/mission-library/published-routes.mjs",
+        "game/app.mjs",
+        "game/test/published-journey-provider.test.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "log": "docs/qualification/shared-demos/published-supplemental-navigation-dd337c8-lint.log.txt"
+    },
+    {
+      "name": "format",
+      "command": [
+        "node_modules/.bin/prettier",
+        "--check",
+        "scripts/authored-runtime-snapshots.mjs",
+        "game/content-design/published-journey.mjs",
+        "game/mission-library/published-routes.mjs",
+        "game/app.mjs",
+        "game/test/published-journey-provider.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/qualification/shared-demos/published-supplemental-navigation-dd337c8-format.log.txt"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "scripts/authored-runtime-snapshots.mjs",
+        "game/content-design/published-journey.mjs",
+        "game/mission-library/published-routes.mjs",
+        "game/app.mjs",
+        "game/test/published-journey-provider.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/qualification/shared-demos/published-supplemental-navigation-dd337c8-diff.log.txt"
+    }
+  ],
+  "assertions": {
+    "tests": 13,
+    "pass": 13,
+    "fail": 0,
+    "skipped": 0
+  },
+  "testLog": "docs/qualification/shared-demos/published-supplemental-navigation-dd337c8-regressions.tap.txt",
+  "sourceStable": true,
+  "complete": true,
+  "generatedNavigation": {
+    "measuredBytes": 2447158,
+    "priorEmittedBytes": 1363574,
+    "deltaBytes": 1083584,
+    "existingSnapshotLimitBytes": 8388608,
+    "sizeLimitUnchanged": true,
+    "fullBuildSizeChecksStillRequired": true
+  },
+  "behavior": [
+    "Exact native source owner order, including the unchanged Classic arenas; all Journey mission descriptors matched for Team Expedition, Team Hunt, current CulturalSpecialistV2 Team Journey and Duel Hunt/Expedition.",
+    "Actual Journey cards, details, progress and handoff references matched in English/Ukrainian across gentle/standard/expert.",
+    "Both Hunt owners retain automaticContinuation:false; Team and Hunt tags follow selected difficulty while Duel Expedition tags remain standard.",
+    "Missing optional extension preserves legacy/source constructor fallback; partial, duplicate, wrong-mode or wrong-continuation metadata fails closed.",
+    "Current published Team source corrected from older impact source to the actual current cultural successor."
+  ],
+  "independentReview": {
+    "reviewer": "snake_adapter",
+    "result": "No remaining actionable blocker; verified native IDs/order/modes/continuation, Team/Hunt preset tags, exact current Team source, fallback and receiving validation.",
+    "ranAdditionalTests": false
+  },
+  "limitations": [
+    "No browser or full build run in this receipt. Host tests are owned separately by Survival agent.",
+    "Measured original emitted stage trace attributes about98% of getUnifiedMissionLibrary duration to removed native supplemental construction; browser timing improvement still requires final emitted rebuild."
+  ],
+  "finished": "2026-10-19T00:33:23Z"
+}

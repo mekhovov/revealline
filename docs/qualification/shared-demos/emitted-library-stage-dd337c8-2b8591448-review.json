@@ -1,0 +1,488 @@
+{
+  "format": "EmittedSoloLibraryStageObservationReviewV1",
+  "status": "confirmed unnecessary supplemental compilation in emitted incoming Solo library path; separate strict browser error retained",
+  "readOnlyAnalysis": true,
+  "report": {
+    "path": "docs/qualification/shared-demos/emitted-library-stage-dd337c8-2b8591448.json",
+    "sha256": "35e0ab4bd6053290ec939778b42b4fb5ec75f54fb4f4b5e80b5771a43300b577",
+    "started": "2026-10-19T00:24:33.271Z",
+    "finished": "2026-10-19T00:26:13.566Z",
+    "exitCode": 1,
+    "functionalComplete": true,
+    "functionalChecks": 3,
+    "strictDiagnosticGate": false,
+    "pageErrors": [
+      {
+        "mode": "solo",
+        "stage": "ordinary-control-reload-1",
+        "receivedAt": "2026-10-19T00:24:40.215Z",
+        "message": "Cannot load blob:http://127.0.0.1:8771/177cdb3b-4000-4ed5-92d7-54458b72f5d6 due to access control checks.\n    at browserDecode (http://127.0.0.1:8771/game/presentation/host.mjs:156:36)\n    at unknown (http://127.0.0.1:8771/game/presentation/host.mjs:581:28)"
+      }
+    ],
+    "domErrors": []
+  },
+  "rows": [
+    {
+      "documentId": "1792369480249-0.10843248166244834",
+      "stage": "ordinary-control-reload-1",
+      "publishedViews": {
+        "available": true,
+        "route": "whole-spatial-v25"
+      },
+      "durationsMs": {
+        "createHuntTrainingCandidates": [
+          0
+        ],
+        "createCandidateVersusHost": [
+          691,
+          3302
+        ],
+        "supplementalDuelSources": [
+          691
+        ],
+        "createDuelExpansionCandidates": [
+          2450
+        ],
+        "duelExpeditionLibrarySources": [
+          6444
+        ],
+        "createTeamExpansionCandidates": [
+          8947
+        ],
+        "createCandidateTeamHost": [
+          10674
+        ],
+        "teamExpeditionLibrarySource": [
+          19621
+        ],
+        "incoming.getUnifiedMissionLibrary": [
+          26458
+        ],
+        "incoming.prewarm": [
+          0
+        ]
+      },
+      "supplementalTotalMs": 26065,
+      "libraryTotalMs": 26458,
+      "libraryRemainderMs": 393,
+      "supplementalSharePercent": 98.515,
+      "bootReadyDocumentMs": 28390,
+      "pairs": [
+        {
+          "label": "createHuntTrainingCandidates",
+          "enteredMs": 1402,
+          "settledMs": 1402,
+          "elapsedMs": 0
+        },
+        {
+          "label": "createCandidateVersusHost",
+          "enteredMs": 1402,
+          "settledMs": 2093,
+          "elapsedMs": 691
+        },
+        {
+          "label": "supplementalDuelSources",
+          "enteredMs": 1402,
+          "settledMs": 2093,
+          "elapsedMs": 691
+        },
+        {
+          "label": "createDuelExpansionCandidates",
+          "enteredMs": 2093,
+          "settledMs": 4543,
+          "elapsedMs": 2450
+        },
+        {
+          "label": "createCandidateVersusHost",
+          "enteredMs": 4543,
+          "settledMs": 7845,
+          "elapsedMs": 3302
+        },
+        {
+          "label": "duelExpeditionLibrarySources",
+          "enteredMs": 1401,
+          "settledMs": 7845,
+          "elapsedMs": 6444
+        },
+        {
+          "label": "createTeamExpansionCandidates",
+          "enteredMs": 7845,
+          "settledMs": 16792,
+          "elapsedMs": 8947
+        },
+        {
+          "label": "createCandidateTeamHost",
+          "enteredMs": 16792,
+          "settledMs": 27466,
+          "elapsedMs": 10674
+        },
+        {
+          "label": "teamExpeditionLibrarySource",
+          "enteredMs": 7845,
+          "settledMs": 27466,
+          "elapsedMs": 19621
+        },
+        {
+          "label": "incoming.getUnifiedMissionLibrary",
+          "enteredMs": 1194,
+          "settledMs": 27652,
+          "elapsedMs": 26458
+        },
+        {
+          "label": "incoming.prewarm",
+          "enteredMs": 27652,
+          "settledMs": 27652,
+          "elapsedMs": 0
+        }
+      ]
+    },
+    {
+      "documentId": "1792369511488-0.385675601473191",
+      "stage": "reload-from-watching",
+      "publishedViews": {
+        "available": true,
+        "route": "whole-spatial-v25"
+      },
+      "durationsMs": {
+        "createHuntTrainingCandidates": [
+          1
+        ],
+        "createCandidateVersusHost": [
+          708,
+          3148
+        ],
+        "supplementalDuelSources": [
+          709
+        ],
+        "createDuelExpansionCandidates": [
+          2323
+        ],
+        "duelExpeditionLibrarySources": [
+          6180
+        ],
+        "createTeamExpansionCandidates": [
+          8667
+        ],
+        "createCandidateTeamHost": [
+          10581
+        ],
+        "teamExpeditionLibrarySource": [
+          19249
+        ],
+        "incoming.getUnifiedMissionLibrary": [
+          25899
+        ],
+        "incoming.prewarm": [
+          0
+        ]
+      },
+      "supplementalTotalMs": 25429,
+      "libraryTotalMs": 25899,
+      "libraryRemainderMs": 470,
+      "supplementalSharePercent": 98.185,
+      "bootReadyDocumentMs": 27789,
+      "pairs": [
+        {
+          "label": "createHuntTrainingCandidates",
+          "enteredMs": 1574,
+          "settledMs": 1575,
+          "elapsedMs": 1
+        },
+        {
+          "label": "createCandidateVersusHost",
+          "enteredMs": 1575,
+          "settledMs": 2283,
+          "elapsedMs": 708
+        },
+        {
+          "label": "supplementalDuelSources",
+          "enteredMs": 1574,
+          "settledMs": 2283,
+          "elapsedMs": 709
+        },
+        {
+          "label": "createDuelExpansionCandidates",
+          "enteredMs": 2283,
+          "settledMs": 4606,
+          "elapsedMs": 2323
+        },
+        {
+          "label": "createCandidateVersusHost",
+          "enteredMs": 4606,
+          "settledMs": 7754,
+          "elapsedMs": 3148
+        },
+        {
+          "label": "duelExpeditionLibrarySources",
+          "enteredMs": 1574,
+          "settledMs": 7754,
+          "elapsedMs": 6180
+        },
+        {
+          "label": "createTeamExpansionCandidates",
+          "enteredMs": 7754,
+          "settledMs": 16421,
+          "elapsedMs": 8667
+        },
+        {
+          "label": "createCandidateTeamHost",
+          "enteredMs": 16421,
+          "settledMs": 27002,
+          "elapsedMs": 10581
+        },
+        {
+          "label": "teamExpeditionLibrarySource",
+          "enteredMs": 7754,
+          "settledMs": 27003,
+          "elapsedMs": 19249
+        },
+        {
+          "label": "incoming.getUnifiedMissionLibrary",
+          "enteredMs": 1265,
+          "settledMs": 27164,
+          "elapsedMs": 25899
+        },
+        {
+          "label": "incoming.prewarm",
+          "enteredMs": 27164,
+          "settledMs": 27164,
+          "elapsedMs": 0
+        }
+      ]
+    },
+    {
+      "documentId": "1792369543172-0.31822205843914997",
+      "stage": "reload-from-practice",
+      "publishedViews": {
+        "available": true,
+        "route": "whole-spatial-v25"
+      },
+      "durationsMs": {
+        "createHuntTrainingCandidates": [
+          0
+        ],
+        "createCandidateVersusHost": [
+          664,
+          3323
+        ],
+        "supplementalDuelSources": [
+          664
+        ],
+        "createDuelExpansionCandidates": [
+          2354
+        ],
+        "duelExpeditionLibrarySources": [
+          6342
+        ],
+        "createTeamExpansionCandidates": [
+          9005
+        ],
+        "createCandidateTeamHost": [
+          10809
+        ],
+        "teamExpeditionLibrarySource": [
+          19814
+        ],
+        "incoming.getUnifiedMissionLibrary": [
+          26622
+        ],
+        "incoming.prewarm": [
+          0
+        ]
+      },
+      "supplementalTotalMs": 26156,
+      "libraryTotalMs": 26622,
+      "libraryRemainderMs": 466,
+      "supplementalSharePercent": 98.25,
+      "bootReadyDocumentMs": 28450,
+      "pairs": [
+        {
+          "label": "createHuntTrainingCandidates",
+          "enteredMs": 1464,
+          "settledMs": 1464,
+          "elapsedMs": 0
+        },
+        {
+          "label": "createCandidateVersusHost",
+          "enteredMs": 1464,
+          "settledMs": 2128,
+          "elapsedMs": 664
+        },
+        {
+          "label": "supplementalDuelSources",
+          "enteredMs": 1464,
+          "settledMs": 2128,
+          "elapsedMs": 664
+        },
+        {
+          "label": "createDuelExpansionCandidates",
+          "enteredMs": 2128,
+          "settledMs": 4482,
+          "elapsedMs": 2354
+        },
+        {
+          "label": "createCandidateVersusHost",
+          "enteredMs": 4483,
+          "settledMs": 7806,
+          "elapsedMs": 3323
+        },
+        {
+          "label": "duelExpeditionLibrarySources",
+          "enteredMs": 1464,
+          "settledMs": 7806,
+          "elapsedMs": 6342
+        },
+        {
+          "label": "createTeamExpansionCandidates",
+          "enteredMs": 7806,
+          "settledMs": 16811,
+          "elapsedMs": 9005
+        },
+        {
+          "label": "createCandidateTeamHost",
+          "enteredMs": 16811,
+          "settledMs": 27620,
+          "elapsedMs": 10809
+        },
+        {
+          "label": "teamExpeditionLibrarySource",
+          "enteredMs": 7806,
+          "settledMs": 27620,
+          "elapsedMs": 19814
+        },
+        {
+          "label": "incoming.getUnifiedMissionLibrary",
+          "enteredMs": 1169,
+          "settledMs": 27791,
+          "elapsedMs": 26622
+        },
+        {
+          "label": "incoming.prewarm",
+          "enteredMs": 27791,
+          "settledMs": 27791,
+          "elapsedMs": 0
+        }
+      ]
+    }
+  ],
+  "conclusion": "Published navigation views are available, but app still synchronously builds Hunt Duel, Duel Expeditions and Team Expeditions. Measured top-level supplemental functions take 25429\u201326156ms, 98.185\u201398.515% of the complete incoming library lookup on all three reloads. The later picture prewarm await settles in the same recorded millisecond. This establishes the dominant owner in these instrumented runs, not the precise timing of the earlier failed uninstrumented run.",
+  "recommendedScope": {
+    "files": [
+      "scripts/authored-runtime-snapshots.mjs",
+      "game/content-design/published-journey.mjs",
+      "game/mission-library/published-routes.mjs",
+      "game/app.mjs"
+    ],
+    "behavior": "Prebuild finite supplementary metadata with existing buildJourneyView/cards. Consume complete admitted views and bypass redundant source compilation only when available. Preserve native source fallback and remote handlers, exact owner/order/labels, difficulty/card/tag parity, locks/install rules and Hunt continuation=false.",
+    "acceptance": "Metadata parity plus actual published incoming Ready/cancellation regressions; unchanged emitted WebKit 30-second restoration gate. Existing failure must remain retained."
+  },
+  "provenance": {
+    "sourceRevision": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+    "runtimeBefore": {
+      "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+      "files": 9996,
+      "bytes": 404389524
+    },
+    "runtimeAfter": {
+      "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+      "files": 9996,
+      "bytes": 404389524
+    },
+    "sourceUnchangedAtExit": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-2b8591448",
+      "manifestSHA256": "f6a3dd91289cb76bf3a5351a8c4866dec32c4edc411ff8d9c9ef50eb90383fbe",
+      "inventorySHA256": "d6860bb00d082a9e7c6de4dcadaf2c399b815d4a0a395842b6689051bee70f70",
+      "files": 5952,
+      "sourceRevision": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+      "sourceFingerprint": {
+        "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+        "files": 9996,
+        "bytes": 404389524
+      },
+      "buildInputFingerprint": {
+        "sha256": "03bed002af55e4d34202ba2125fc6c75d7ab03cde245f7b419c899e2e0017d89",
+        "files": 9398,
+        "bytes": 348356072
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+        "runtime": {
+          "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+          "files": 9996,
+          "bytes": 404389524
+        },
+        "buildInput": {
+          "sha256": "03bed002af55e4d34202ba2125fc6c75d7ab03cde245f7b419c899e2e0017d89",
+          "files": 9398,
+          "bytes": 348356072
+        }
+      }
+    },
+    "observerSHA256": "2440c7f111cc5c86ae51121246719c40ccd3210cef06d257848d02ee90dc5ece",
+    "projections": [
+      {
+        "path": "game/app.mjs",
+        "original": {
+          "bytes": 491544,
+          "sha256": "24ab92450b4123b815ae6b679dcdd12572fe4e5077d12a244555773fe9b0969f",
+          "storage": "blob"
+        },
+        "projection": {
+          "path": ".cache/emitted-library-stage-observer/game__app.mjs",
+          "bytes": 491986,
+          "sha256": "9938667adbfc47c6c1d3e743be145eea9b36c2b44f70ba8d153f31513694a05e"
+        }
+      },
+      {
+        "path": "game/mission-library/multiplayer-expeditions.mjs",
+        "original": {
+          "bytes": 4346,
+          "sha256": "1ef37d134b054f7798dc3e996709b90c45cde37e87fe2743281bdd5006e1d661",
+          "storage": "source"
+        },
+        "projection": {
+          "path": ".cache/emitted-library-stage-observer/game__mission-library__multiplayer-expeditions.mjs",
+          "bytes": 5712,
+          "sha256": "88f4b9481df0db7469d22e5b0e5af82fba4c5e17f0ac3b1f077199350de0b90e"
+        }
+      },
+      {
+        "path": "game/mission-library/supplemental-hunt.mjs",
+        "original": {
+          "bytes": 2509,
+          "sha256": "9081ec22e75789d5db20f6fa3bdeb038de8ff7284e2316011804c5be87375a48",
+          "storage": "source"
+        },
+        "projection": {
+          "path": ".cache/emitted-library-stage-observer/game__mission-library__supplemental-hunt.mjs",
+          "bytes": 3223,
+          "sha256": "0a6a5fd84ce97f981a4070a103482abc5818bb7ce5218709cb8c6e85418de3d7"
+        }
+      }
+    ],
+    "reviewCopies": "docs/qualification/shared-demos/emitted-library-stage-dd337c8-2b8591448/review-copy-pins.json"
+  },
+  "cleanup": {
+    "browserCloseAttempted": true,
+    "browserCloseCompleted": true,
+    "previewClosed": true,
+    "observedOwnedPidsAbsent": [
+      75515,
+      75595,
+      75602,
+      75603,
+      75604
+    ],
+    "port8771ListenerAbsent": true,
+    "observedAfterExit": "2026-10-19T00:27:23.171772+00:00"
+  },
+  "limits": [
+    "One diagnostic run; no retries, changed readiness condition, higher timeout or skipped native work.",
+    "Three module responses contain declared timing projections; elapsed times include minor synchronous observation overhead and are not uninstrumented benchmark measurements.",
+    "All original control/watch/practice assertions passed, but one native presentation blob access-control error keeps the strict result failed. No cause or harmlessness classification for that separate event is claimed.",
+    "The failure occurred at final strict diagnostic admission after context closure, so the attempted failure screenshot was unavailable; no failed entry gate screenshot exists.",
+    "The previously failed uninstrumented WebKit restoration receipt remains unchanged."
+  ]
+}

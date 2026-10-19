@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: published remote browsing matches every native Team and Duel owner, mission, preset and handoff in both languages
+ok 1 - published remote browsing matches every native Team and Duel owner, mission, preset and handoff in both languages
+  ---
+  duration_ms: 9692.740334
+  ...
+# Complete pinned navigation: 2447158 bytes; existing 8 MiB limit unchanged.
+# Subtest: published preset tags retain native Team and Hunt selection while Duel Expedition tags stay authored
+ok 2 - published preset tags retain native Team and Hunt selection while Duel Expedition tags stay authored
+  ---
+  duration_ms: 48.646208
+  ...
+# Subtest: older published navigation retains its fallback and incomplete supplemental ownership fails closed
+ok 3 - older published navigation retains its fallback and incomplete supplemental ownership fails closed
+  ---
+  duration_ms: 274.272791
+  ...
+# Subtest: published Solo materializes only Horizon and preserves full navigation, cards and exact execution identity
+ok 4 - published Solo materializes only Horizon and preserves full navigation, cards and exact execution identity
+  ---
+  duration_ms: 224.761375
+  ...
+# Subtest: published chapters load online without an offline preparation integration
+ok 5 - published chapters load online without an offline preparation integration
+  ---
+  duration_ms: 1792.307916
+  ...
+# Subtest: chapter visual identity retains original whole-project authority for saved pins and replays
+ok 6 - chapter visual identity retains original whole-project authority for saved pins and replays
+  ---
+  duration_ms: 1719.458583
+  ...
+# Subtest: published source admission rejects forged descriptors and cancels blocked snapshot reads
+ok 7 - published source admission rejects forged descriptors and cancels blocked snapshot reads
+  ---
+  duration_ms: 1.370375
+  ...
+# Subtest: previous-edition display rows retain their original mission ordinal
+ok 8 - previous-edition display rows retain their original mission ordinal
+  ---
+  duration_ms: 0.321208
+  ...
+# Subtest: published replay owner fetches only its exact chapter and keeps the historical full-project pin
+ok 9 - published replay owner fetches only its exact chapter and keeps the historical full-project pin
+  ---
+  duration_ms: 1804.875875
+  ...
+# Subtest: a superseded preparation cannot cancel its replacement in the same materialized pack
+ok 10 - a superseded preparation cannot cancel its replacement in the same materialized pack
+  ---
+  duration_ms: 194.422083
+  ...
+# Subtest: a re-entrant action from an abort callback keeps ownership over the action that cancelled it
+ok 11 - a re-entrant action from an abort callback keeps ownership over the action that cancelled it
+  ---
+  duration_ms: 182.523333
+  ...
+# Subtest: actual Solo expansion assembly retains the existing Team owner without rebuilding it
+ok 12 - actual Solo expansion assembly retains the existing Team owner without rebuilding it
+  ---
+  duration_ms: 5500.070708
+  ...
+# Subtest: actual Solo expansion assembly constructs the Team fallback unless its exact owner exists
+ok 13 - actual Solo expansion assembly constructs the Team fallback unless its exact owner exists
+  ---
+  duration_ms: 4596.321834
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 41487.64225

@@ -9,11 +9,19 @@ import {
   spatialNextPriorEditions,
   spatialNextPriorEditionProjection,
 } from '../game/mission-library/spatial-next-editions.mjs';
-import { createTeamImpactOriginalCandidates } from '../game/content-design/team-impact-originals.mjs';
+import { createTeamCulturalSpecialistV2OriginalCandidates } from '../game/content-design/team-cultural-specialist-v2-originals.mjs';
+import { createTeamHuntTrainingCandidates } from '../game/content-design/team-hunt-training-candidates.mjs';
+import {
+  createTeamExpansionCandidates,
+  TEAM_EXPANSION_ROUTE,
+  DUEL_EXPANSION_ROUTE,
+} from '../game/content-design/multiplayer-expansion.mjs';
+import { SUPPLEMENTAL_HUNT_ROUTE } from '../game/mission-library/supplemental-hunt.mjs';
 import { COOP_STARTER_PACK, coopGoalText } from '../game/coop/library.mjs';
 import {
   TEAM_LIBRARY_CLASSIC_SOURCE,
   TEAM_LIBRARY_JOURNEY_EDITION,
+  teamJourneyLibraryOwner,
 } from '../game/mission-library/team-source.mjs';
 
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -96,7 +104,45 @@ export async function addAuthoredRuntimeSnapshots(entries) {
       },
     };
   });
-  const teamSource = createTeamImpactOriginalCandidates({ artwork: true });
+  const teamSource = createTeamCulturalSpecialistV2OriginalCandidates();
+  // These remote library owners need browsing projections, not native engines,
+  // during Solo startup. Their receiving pages still prepare the exact source.
+  const supplemental = [
+    {
+      sourceId: teamJourneyLibraryOwner(TEAM_EXPANSION_ROUTE),
+      route: { id: TEAM_EXPANSION_ROUTE, label: 'Team Expeditions' },
+      mode: 'team',
+      view: buildJourneyView(createTeamExpansionCandidates(), 'team', cards),
+    },
+    {
+      sourceId: teamJourneyLibraryOwner(SUPPLEMENTAL_HUNT_ROUTE),
+      route: { id: SUPPLEMENTAL_HUNT_ROUTE, label: 'Hunt lessons · six missions' },
+      mode: 'team',
+      view: buildJourneyView(createTeamHuntTrainingCandidates(), 'team', cards),
+      automaticContinuation: false,
+    },
+    {
+      sourceId: `journey:${SUPPLEMENTAL_HUNT_ROUTE}`,
+      route: { id: SUPPLEMENTAL_HUNT_ROUTE, label: 'Hunt lessons · six missions' },
+      mode: 'versus',
+      view: buildJourneyView(
+        routes.find((item) => item.route.id === SUPPLEMENTAL_HUNT_ROUTE).route.source,
+        'versus',
+        cards,
+      ),
+      automaticContinuation: false,
+    },
+    {
+      sourceId: `journey:${DUEL_EXPANSION_ROUTE}`,
+      route: { id: DUEL_EXPANSION_ROUTE, label: 'Duel Expeditions' },
+      mode: 'versus',
+      view: buildJourneyView(
+        routes.find((item) => item.route.id === DUEL_EXPANSION_ROUTE).route.source,
+        'versus',
+        cards,
+      ),
+    },
+  ];
   const navigation = {
     format: 'revealline-journey-navigation.v1',
     project: {
@@ -134,6 +180,7 @@ export async function addAuthoredRuntimeSnapshots(entries) {
       },
     },
     archives,
+    supplemental,
     cards,
   };
   const published = { ...routeMetadata(route), navigation };

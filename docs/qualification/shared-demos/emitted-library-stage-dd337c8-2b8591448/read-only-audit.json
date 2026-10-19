@@ -1,0 +1,144 @@
+{
+  "format": "EmittedSoloIncomingLibraryReadOnlyAuditV1",
+  "status": "concrete eager compilation path; time share awaits isolated observation",
+  "sourceRevision": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+  "runtimeFingerprint": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+  "failedReceipt": "docs/qualification/shared-demos/restoration-webkit-final-emitted-dd337c8-2b8591448.json",
+  "failure": {
+    "stage": "reload-from-practice",
+    "checksPassed": 2,
+    "pageErrors": 0,
+    "ordinaryEntryTimeoutMs": 30000,
+    "browserClosed": true,
+    "previewClosed": true,
+    "knownBootState": null
+  },
+  "timeline": {
+    "ordinaryControlGapMs": 27289,
+    "watchingReloadGapMs": 27953,
+    "interval": "Between successive main-document sessionStorage.removeItem of revealline.accepted-appearance-context.v1; these are observation gaps, not measured exclusive JavaScript durations."
+  },
+  "publishedNavigation": {
+    "pin": {
+      "path": "game/content-design/runtime/navigation-whole-spatial-v25.json",
+      "bytes": 1363574,
+      "sha256": "c5fcd45e0335297b0788b87299f63952c2e58dbdd9cb5f6338908a1d9ad7caf8",
+      "storage": "blob"
+    },
+    "keys": [
+      "format",
+      "project",
+      "starterPackId",
+      "chapters",
+      "views",
+      "team",
+      "archives",
+      "cards"
+    ],
+    "currentTeamRoute": "team-cultural-specialist-originals-2",
+    "archiveCount": 16,
+    "supplementalViewsPresent": false
+  },
+  "concretePath": [
+    {
+      "file": "game/app.mjs",
+      "line": 14189,
+      "finding": "createRemoteTeamLibrarySources runs only in the native non-published branch, bypassed when published views are present."
+    },
+    {
+      "file": "game/app.mjs",
+      "line": 14218,
+      "finding": "A separate if (!runtimeContent) block executes for published views too. It calls duelExpeditionLibrarySources before duplicate filtering, and compiles missing Team expedition source."
+    },
+    {
+      "file": "game/mission-library/multiplayer-expeditions.mjs",
+      "line": 87,
+      "finding": "duelExpeditionLibrarySources calls supplementalDuelSources, then creates Duel expansion candidates and a native Versus host."
+    },
+    {
+      "file": "game/mission-library/supplemental-hunt.mjs",
+      "line": 39,
+      "finding": "supplementalDuelSources creates Hunt candidates and a native Versus host."
+    },
+    {
+      "file": "game/mission-library/multiplayer-expeditions.mjs",
+      "line": 73,
+      "finding": "teamExpeditionLibrarySource creates Team expansion candidates and a native Team host."
+    }
+  ],
+  "safeProposedDirection": {
+    "build": "Use existing buildJourneyView and shared card table to publish the three finite supplementary views in the current navigation projection.",
+    "runtime": "Admit and consume all complete supplemental views with native-equivalent metadata, then bypass only the redundant native expedition block for this complete projection. Retain current constructors as the source/historical fallback.",
+    "preserve": [
+      "Exact source owners, mission IDs, modes, ordering and remote native launch handlers.",
+      "Hunt automaticContinuation:false and live localized edition labels.",
+      "All ordinary ownership, progress, installation, locks and departure guards.",
+      "Duel/Hunt standard-manifest tags versus Team selected-difficulty tags.",
+      "All current details, cards and supported difficulty identities."
+    ],
+    "unsafeShortcut": "Do not merely add && !views to the app block: current published views omit these sources and that would silently remove ordinary missions."
+  },
+  "requiredEvidence": [
+    "Measured supplementary/source/host stage times in one diagnostic emitted run without altered deadline, skipping or retries.",
+    "Published/native metadata parity for all three owners, including tags under each supported difficulty.",
+    "Actual published Solo incoming Ready and cancellation integration preserving ordinary native handlers.",
+    "Unchanged WebKit restoration and emitted packaging/identity/dependency checks after any approved fix."
+  ],
+  "observer": {
+    "format": "EmittedLibraryStageObservationPreparationV1",
+    "head": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+    "capture": ".cache/shared-demos-emitted-dd337c8-2b8591448",
+    "captureManifestSHA256": "f6a3dd91289cb76bf3a5351a8c4866dec32c4edc411ff8d9c9ef50eb90383fbe",
+    "durableHarness": {
+      "path": "scripts/qualify-demo-restoration-browser.mjs",
+      "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83"
+    },
+    "projections": [
+      {
+        "path": "game/app.mjs",
+        "original": {
+          "bytes": 491544,
+          "sha256": "24ab92450b4123b815ae6b679dcdd12572fe4e5077d12a244555773fe9b0969f",
+          "storage": "blob"
+        },
+        "projection": {
+          "path": ".cache/emitted-library-stage-observer/game__app.mjs",
+          "bytes": 491986,
+          "sha256": "9938667adbfc47c6c1d3e743be145eea9b36c2b44f70ba8d153f31513694a05e"
+        }
+      },
+      {
+        "path": "game/mission-library/multiplayer-expeditions.mjs",
+        "original": {
+          "bytes": 4346,
+          "sha256": "1ef37d134b054f7798dc3e996709b90c45cde37e87fe2743281bdd5006e1d661",
+          "storage": "source"
+        },
+        "projection": {
+          "path": ".cache/emitted-library-stage-observer/game__mission-library__multiplayer-expeditions.mjs",
+          "bytes": 5712,
+          "sha256": "88f4b9481df0db7469d22e5b0e5af82fba4c5e17f0ac3b1f077199350de0b90e"
+        }
+      },
+      {
+        "path": "game/mission-library/supplemental-hunt.mjs",
+        "original": {
+          "bytes": 2509,
+          "sha256": "9081ec22e75789d5db20f6fa3bdeb038de8ff7284e2316011804c5be87375a48",
+          "storage": "source"
+        },
+        "projection": {
+          "path": ".cache/emitted-library-stage-observer/game__mission-library__supplemental-hunt.mjs",
+          "bytes": 3223,
+          "sha256": "0a6a5fd84ce97f981a4070a103482abc5818bb7ce5218709cb8c6e85418de3d7"
+        }
+      }
+    ],
+    "limits": [
+      "Diagnostic only; never replaces unchanged restoration qualification.",
+      "Only three declared JavaScript response bodies are instrumented. Original function arguments/results/throws retained; no yields, skipped work, error filters or gate/deadline changes.",
+      "All original control/watch/practice reload assertions and cleanup remain unchanged. Observations cannot prove unrelated CPU cost or eliminate timing perturbation."
+    ]
+  },
+  "noExecution": "Only file reads, ignored observer preparation and syntax checks. No browser, tests, build, production edits or Git mutation."
+}
