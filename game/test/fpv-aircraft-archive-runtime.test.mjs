@@ -13,6 +13,7 @@ import {
   verifyAircraftArchiveInWorker,
   verifyAircraftCourseArchiveInWorker,
 } from '../../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
+import * as courseProof from '../../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
 import { createAdvancedWorkerClient } from '../../optional-practice/civilian-fpv/advanced-worker-client.mjs';
 import { validateAircraftCoursePresentation } from '../../optional-practice/civilian-fpv/advanced-ghost-path.mjs';
 
@@ -377,7 +378,17 @@ test('detached worker verification reports progress and cancelling it leaves the
   assert.equal(flyingWorker.terminated, false);
 });
 
-async function recordedCourse(t, { family = 'world', model, ticks = 8, mode = 'self-level' } = {}) {
+async function recordedCourse(
+  t,
+  {
+    family = 'world',
+    model,
+    ticks = 8,
+    mode = 'self-level',
+    tune = () => {},
+    complete = true,
+  } = {},
+) {
   const course = structuredClone(
     family === 'world' ? BEGINNER_CATALOGUE[0].course : FLIGHT_COURSES[0],
   );
@@ -389,6 +400,7 @@ async function recordedCourse(t, { family = 'world', model, ticks = 8, mode = 's
     course.steps[flightMode] = [hold];
   }
   const preset = options();
+  tune(preset, course);
   let simulation;
   const session = createAircraftCourseSession(
     {
@@ -446,7 +458,7 @@ async function recordedCourse(t, { family = 'world', model, ticks = 8, mode = 's
   }
   const end = simulation.finalizeArchive(segments.at(-1)?.index ?? -1);
   if (end.segment) segments.push(end.segment);
-  assert.equal(session.snapshot().step, 1);
+  assert.equal(session.snapshot().step, complete ? 1 : 0);
   const packet = archive(initial, segments);
   packet.manifest.host = family;
   return { packet, course, poses, referenceIdentity: session.referenceIdentity() };
@@ -510,6 +522,7 @@ test('course worker reconstructs supported adapters and preserves separate physi
           onProgress: (value) => progress.push(value),
         });
         assert.equal(result.physics.verified, true);
+        assert.equal(result.requestedCourseIdentity, dataIdentity(course));
         assert.equal(result.course.verified, true);
         assert.equal(result.missionModel, model);
         assert.equal(result.course.completedAtTick, 3);
@@ -680,4 +693,264 @@ test('visual capture rejects invalid options and a tampered tail after already c
   assert.equal(result.course.presentation.completedAtTick, 3);
   assert.equal(result.course.verifiedThroughMission, 40);
   assert.equal(advancedComparisonEligibility(result, result).eligible, false);
+});
+
+function useDefaultCourseWorker(t) {
+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'Worker');
+  Object.defineProperty(globalThis, 'Worker', { value: CourseWorker, configurable: true });
+  t.after(() => {
+    if (descriptor) Object.defineProperty(globalThis, 'Worker', descriptor);
+    else delete globalThis.Worker;
+  });
+}
+
+test('owned course results are immutable and cloned or forged reports cannot establish eligibility', async (t) => {
+  useDefaultCourseWorker(t);
+  const { packet, course } = await recordedCourse(t, { family: 'academy' });
+  const direct = await courseProof.verifyAircraftCourseArchive(packet, course, {
+    collectReference: true,
+  });
+  const worker = await verifyAircraftCourseArchiveInWorker(packet, course, {});
+  const assess = courseProof.aircraftCourseComparisonEligibility;
+  assert.equal(typeof assess, 'function');
+  const eligible = assess(direct, worker);
+  assert.deepEqual(eligible, {
+    eligible: true,
+    reason: 'compatible-unscored-practice',
+    experimental: true,
+    scored: false,
+    defaultEligible: false,
+  });
+  for (const value of [null, {}, structuredClone(direct), JSON.parse(JSON.stringify(worker))]) {
+    assert.equal(assess(value, worker).reason, 'unverified-course-result');
+    assert.equal(assess(worker, value).eligible, false);
+  }
+  for (const result of [direct, worker]) {
+    assert.ok(Object.isFrozen(result));
+    assert.ok(Object.isFrozen(result.physics));
+    assert.ok(Object.isFrozen(result.course.referenceIdentity));
+    assert.throws(() => (result.course.verified = false), TypeError);
+    assert.throws(
+      () => (result.course.referenceIdentity.terrainIdentity = '0'.repeat(16)),
+      TypeError,
+    );
+    assert.throws(() => (result.course.splits[0].ticks = 999), TypeError);
+    assert.equal(advancedComparisonEligibility(result, result).eligible, false);
+  }
+  assert.ok(Object.isFrozen(direct.course.presentation.path[0]));
+  assert.equal(assess(direct, worker).eligible, true);
+});
+
+test('course eligibility permits personal rotation rates but binds throttle, aircraft, mode and course', async (t) => {
+  useDefaultCourseWorker(t);
+  const verify = async (change = {}) => {
+    const { packet, course } = await recordedCourse(t, { family: 'academy', ...change });
+    return {
+      packet,
+      result: await verifyAircraftCourseArchiveInWorker(packet, course, {}),
+    };
+  };
+  const baseline = await verify();
+  const personal = await verify({ tune: (preset) => (preset.response.rates.axes.roll.rate += 10) });
+  assert.notEqual(personal.packet.manifest.identity, baseline.packet.manifest.identity);
+  assert.equal(
+    courseProof.aircraftCourseComparisonEligibility(baseline.result, personal.result).eligible,
+    true,
+  );
+  for (const change of [
+    {
+      tune: (preset) => {
+        preset.response.rates.throttle.limitType = 'scale';
+        preset.response.rates.throttle.limitPercent = 70;
+      },
+    },
+    { tune: (preset) => (preset.aircraft.mass *= 1.1) },
+    { mode: 'acro' },
+    { tune: (_preset, course) => course.steps['self-level'][0].ticks++ },
+  ]) {
+    const candidate = await verify(change);
+    assert.equal(
+      courseProof.aircraftCourseComparisonEligibility(baseline.result, candidate.result).reason,
+      'comparison-class-mismatch',
+    );
+  }
+});
+
+test('course eligibility rejects checkpoint, incomplete, unsupported and custom-adapter scope', async (t) => {
+  useDefaultCourseWorker(t);
+  const { packet, course } = await recordedCourse(t, { family: 'academy' });
+  const complete = await verifyAircraftCourseArchiveInWorker(packet, course, {});
+  const partial = await verifyAircraftCourseArchiveInWorker(
+    {
+      ...packet,
+      manifest: { ...packet.manifest, state: 'interrupted' },
+    },
+    course,
+    {},
+  );
+  const missing = await verifyAircraftCourseArchiveInWorker(packet, null, {});
+  const incomplete = await recordedCourse(t, {
+    family: 'academy',
+    complete: false,
+    tune: (_preset, course) => {
+      course.steps['self-level'][0].ticks = 30;
+    },
+  });
+  const unfinished = await verifyAircraftCourseArchiveInWorker(
+    incomplete.packet,
+    incomplete.course,
+    {},
+  );
+  const world = await recordedCourse(t);
+  const custom = await courseProof.verifyAircraftCourseArchive(world.packet, world.course, {
+    courseAdapter: worldCourseAdapter,
+  });
+  for (const [result, reason] of [
+    [partial, 'checkpoint-clip'],
+    [missing, 'missing-course-dependency'],
+    [unfinished, 'incomplete-course'],
+    [custom, 'custom-course-adapter'],
+  ]) {
+    assert.equal(courseProof.aircraftCourseComparisonEligibility(complete, result).reason, reason);
+    assert.equal(courseProof.aircraftCourseComparisonEligibility(result, complete).eligible, false);
+  }
+  const trustedWorld = await verifyAircraftCourseArchiveInWorker(world.packet, world.course, {
+    workerURL: worldWorkerURL,
+  });
+  assert.equal(
+    courseProof.aircraftCourseComparisonEligibility(trustedWorld, trustedWorld).eligible,
+    true,
+  );
+});
+
+test('direct and worker course proof bind the initial archive and course snapshots', async (t) => {
+  useDefaultCourseWorker(t);
+  for (const useWorker of [false, true]) {
+    const { packet, course } = await recordedCourse(t, { family: 'academy' });
+    const sourceHash = packet.manifest.finalHash;
+    const sourceCourseHash = dataIdentity(course);
+    let changed = false;
+    const run = useWorker
+      ? verifyAircraftCourseArchiveInWorker
+      : courseProof.verifyAircraftCourseArchive;
+    const result = await run(packet, course, {
+      onProgress(progress) {
+        if (progress.phase === 'physics') {
+          course.steps['self-level'][0].ticks = 100;
+          packet.manifest.finalHash = '0'.repeat(8);
+          changed = true;
+        }
+      },
+    });
+    assert.equal(changed, true);
+    assert.equal(result.physics.finalHash, sourceHash);
+    assert.equal(result.requestedCourseIdentity, sourceCourseHash);
+    assert.equal(result.course.completedAtTick, 3);
+    assert.equal(courseProof.aircraftCourseComparisonEligibility(result, result).eligible, true);
+  }
+});
+
+test('course worker result binding rejects mismatched replies and cancellation at completion', async (t) => {
+  useDefaultCourseWorker(t);
+  const { packet, course } = await recordedCourse(t, { family: 'academy' });
+  for (const change of [
+    (result) => (result.physics.finalHash = '0'.repeat(8)),
+    (result) => (result.requestedCourseIdentity = '0'.repeat(16)),
+    (result) => result.physics.verifiedThroughMission++,
+    (result) => (result.scored = true),
+    (result) => (result.course.mode = 'acro'),
+    (result) => (result.course.missionHz = 500),
+    (result) => result.course.verifiedThroughMission++,
+    (result) => (result.course.referenceIdentity.configurationClass = '0'.repeat(16)),
+    (result) => (result.course.referenceIdentity.terrainIdentity = '0'.repeat(16)),
+  ]) {
+    class MismatchedWorker extends CourseWorker {
+      addEventListener(type, fn) {
+        super.addEventListener(
+          type,
+          type === 'message'
+            ? (event) => {
+                if (event.data.result?.course) change(event.data.result);
+                fn(event);
+              }
+            : fn,
+        );
+      }
+    }
+    await assert.rejects(
+      verifyAircraftCourseArchiveInWorker(packet, course, { Worker: MismatchedWorker }),
+      /Course verification source changed/,
+    );
+    assert.equal(CourseWorker.instances.at(-1).terminated, true);
+  }
+  const previous = await verifyAircraftCourseArchiveInWorker(packet, course, {});
+  class BorrowedResultWorker extends CourseWorker {
+    addEventListener(type, fn) {
+      super.addEventListener(
+        type,
+        type === 'message'
+          ? (event) => {
+              if (event.data.result?.course) event.data.result = structuredClone(previous);
+              fn(event);
+            }
+          : fn,
+      );
+    }
+  }
+  const borrowed = await verifyAircraftCourseArchiveInWorker(packet, course, {
+    Worker: BorrowedResultWorker,
+  });
+  assert.equal(
+    courseProof.aircraftCourseComparisonEligibility(previous, borrowed).reason,
+    'custom-course-worker',
+  );
+  const customEntry = await verifyAircraftCourseArchiveInWorker(packet, course, {
+    workerURL: new URL('./unowned-worker.mjs', import.meta.url),
+  });
+  assert.equal(
+    courseProof.aircraftCourseComparisonEligibility(previous, customEntry).reason,
+    'custom-course-worker',
+  );
+  const mutableURL = new URL('./unowned-worker.mjs', import.meta.url);
+  const originallyRequested = mutableURL.href;
+  const mutatedEntry = await verifyAircraftCourseArchiveInWorker(packet, course, {
+    workerURL: mutableURL,
+    onProgress() {
+      mutableURL.href = worldWorkerURL.href;
+    },
+  });
+  assert.equal(CourseWorker.instances.at(-1).url, originallyRequested);
+  assert.equal(mutableURL.href, worldWorkerURL.href);
+  assert.equal(
+    courseProof.aircraftCourseComparisonEligibility(previous, mutatedEntry).reason,
+    'custom-course-worker',
+  );
+  const changedCourse = structuredClone(course);
+  changedCourse.steps['self-level'][0].ticks++;
+  await assert.rejects(
+    verifyAircraftCourseArchiveInWorker(packet, changedCourse, { Worker: BorrowedResultWorker }),
+    /Course verification source changed/,
+  );
+  const abort = new AbortController();
+  class CompletionAbortWorker extends CourseWorker {
+    addEventListener(type, fn) {
+      super.addEventListener(
+        type,
+        type === 'message'
+          ? (event) => {
+              fn(event);
+              if (event.data.result?.course) abort.abort();
+            }
+          : fn,
+      );
+    }
+  }
+  await assert.rejects(
+    verifyAircraftCourseArchiveInWorker(packet, course, {
+      Worker: CompletionAbortWorker,
+      signal: abort.signal,
+    }),
+    { name: 'AbortError' },
+  );
+  assert.equal(CourseWorker.instances.at(-1).terminated, true);
 });

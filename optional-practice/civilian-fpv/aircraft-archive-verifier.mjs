@@ -8,6 +8,7 @@ import {
 import { validateAircraftArchivePackage } from './aircraft-archive.mjs';
 import {
   AIRCRAFT_TERRAIN_BACKENDS,
+  aircraftFlightIdentities,
   createAircraftSimulation,
   replayAircraftSegment,
 } from './advanced-aircraft-runtime.mjs';
@@ -43,9 +44,16 @@ async function verifyArchiveWithWorker(
   const checked = validateAircraftArchivePackage(source);
   const course =
     !courseRequest || courseRequest.source == null ? null : boundedCourse(courseRequest.source);
+  const url = courseRequest && workerURL !== undefined ? String(workerURL) : workerURL;
+  const customWorker =
+    Worker !== undefined ||
+    (url !== undefined &&
+      !['./advanced-worker.mjs', '../fpv-worlds/advanced-worker.mjs'].some(
+        (path) => new URL(path, import.meta.url).href === url,
+      ));
   const client = createAdvancedWorkerClient({
     ...(Worker === undefined ? {} : { Worker }),
-    ...(workerURL === undefined ? {} : { url: workerURL }),
+    ...(url === undefined ? {} : { url }),
     ...(verificationWatchdogMs === undefined ? {} : { verificationWatchdogMs }),
   });
   const abort = () => client.dispose(cancelled());
@@ -57,9 +65,12 @@ async function verifyArchiveWithWorker(
       numericalReference: checked.manifest.config.frequency === 2000,
       recording: false,
     });
-    return await (courseRequest
+    const result = await (courseRequest
       ? client.verifyCourseArchive(checked, course, { onProgress, collectReference })
       : client.verifyArchive(checked, { onProgress }));
+    if (signal?.aborted) throw cancelled();
+    if (!courseRequest) return result;
+    return ownCourseResult(result, checked, course, customWorker ? 'custom-course-worker' : null);
   } finally {
     signal?.removeEventListener('abort', abort);
     client.dispose();
@@ -179,6 +190,70 @@ export async function verifyAircraftArchive(source, { signal, onProgress } = {})
 // Course reconstruction stays separate from physical archive verification.
 // Adapters are native construction dependencies, never worker-message values.
 export const STATIC_COURSE_VERIFIER = 'AircraftStaticCourseVerification.v1';
+const courseResults = new WeakMap();
+const freezeResult = (value) => {
+  if (value && typeof value === 'object') {
+    Object.values(value).forEach(freezeResult);
+    Object.freeze(value);
+  }
+  return value;
+};
+function ownCourseResult(report, { manifest, segments }, sourceCourse, custom = null) {
+  const { physics, course } = report;
+  required(
+    report.format === STATIC_COURSE_VERIFIER &&
+      report.scored === false &&
+      report.requestedCourseIdentity === dataIdentity(sourceCourse) &&
+      physics.verified === true &&
+      physics.finalHash === manifest.finalHash &&
+      physics.verifiedThroughMission === manifest.endTick &&
+      (!course.verified ||
+        (manifest.state === 'ended' &&
+          manifest.origin.kind === 'fresh' &&
+          course.mode === manifest.config.response.mode &&
+          course.missionHz === 50 &&
+          course.verifiedThroughMission === manifest.endTick &&
+          course.referenceIdentity?.configurationClass ===
+            aircraftFlightIdentities(manifest.config).comparisonClass &&
+          course.referenceIdentity?.terrainIdentity === segments[0].events[0][2].identity)),
+    'Course verification source changed',
+  );
+  freezeResult(report);
+  courseResults.set(report, {
+    reason:
+      custom ||
+      (physics.verificationScope !== 'complete-session'
+        ? 'checkpoint-clip'
+        : course.verified !== true
+          ? course.reason || 'unverified-course-result'
+          : null),
+    identity: course.referenceIdentity,
+  });
+  return report;
+}
+
+/** Only locally owned proofs qualify; serialized reports are not replay evidence. */
+export function aircraftCourseComparisonEligibility(reference, candidate) {
+  const a = courseResults.get(reference),
+    b = courseResults.get(candidate);
+  const reason =
+    !a || !b
+      ? 'unverified-course-result'
+      : a.reason ||
+        b.reason ||
+        (['configurationClass', 'terrainIdentity'].every(
+          (key) => a.identity[key] === b.identity[key],
+        )
+          ? 'compatible-unscored-practice'
+          : 'comparison-class-mismatch');
+  return {
+    eligible: reason === 'compatible-unscored-practice',
+    reason,
+    experimental: true,
+    scored: false,
+    defaultEligible: false,
+  };
+}
 const models = ['aircraft-course-practice.v1', 'aircraft-course-practice.v2'];
 const same = (a, b) => canonicalJSON(a) === canonicalJSON(b);
 const fail = (code) => {
@@ -325,12 +400,14 @@ export async function verifyAircraftCourseArchive(
   cancelled(signal);
   required(typeof collectReference === 'boolean', 'Invalid reference capture option');
   const archive = validateAircraftArchivePackage(archiveSource);
+  const course = courseSource == null ? null : boundedCourse(courseSource);
   const physics = await verifyAircraftArchive(archive, {
     signal,
     onProgress: (progress) => onProgress({ phase: 'physics', ...progress }),
   });
   const report = {
     format: STATIC_COURSE_VERIFIER,
+    requestedCourseIdentity: dataIdentity(course),
     scored: false,
     physics: {
       verified: true,
@@ -348,7 +425,7 @@ export async function verifyAircraftCourseArchive(
       'course-needs-complete-reset-session',
     );
     const dep = {
-      ...courseDependency(courseSource, courseAdapter),
+      ...courseDependency(course, courseAdapter),
       missionModel: report.missionModel,
     };
     requireValue(
@@ -511,7 +588,7 @@ export async function verifyAircraftCourseArchive(
     simulation?.dispose();
   }
   cancelled(signal);
-  return report;
+  return ownCourseResult(report, archive, course, courseAdapter ? 'custom-course-adapter' : null);
 }
 
 /** Dedicated, cancellable course proof; never grants scored comparison eligibility. */
