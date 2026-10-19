@@ -103,7 +103,8 @@ export function mountWorkbenchChrome({
     if (focus) sections.get(current).title.focus();
   }
   const normalize = (value) => value.toLocaleLowerCase().replace(/[’']/g, '');
-  listen(search, 'input', () => {
+  function renderSearch() {
+    const focused = Array.from(results.children).indexOf(doc.activeElement);
     results.replaceChildren();
     const query = normalize(search.value.trim());
     results.hidden = !query;
@@ -125,6 +126,7 @@ export function mountWorkbenchChrome({
         button.type = 'button';
         button.textContent = `${label} · ${entry.title.textContent} · ${availability}`;
         button.addEventListener('click', () => {
+          if (!entry.panel.contains(input)) return;
           revealed = input;
           show(key, false);
           applyView();
@@ -140,7 +142,9 @@ export function mountWorkbenchChrome({
       if (found >= 40) break;
     }
     if (!found) el('p', t('No matching settings', 'Налаштувань не знайдено'), results);
-  });
+    if (focused >= 0) (results.querySelectorAll('button')[focused] ?? search).focus();
+  }
+  listen(search, 'input', renderSearch);
   show('overview', false);
   applyView();
   return {
@@ -154,6 +158,7 @@ export function mountWorkbenchChrome({
       );
       nav.setAttribute('aria-label', t('Setup sections', 'Розділи налаштувань'));
       applyView();
+      if (!results.hidden) renderSearch();
     },
     reveal(node) {
       revealed = node;

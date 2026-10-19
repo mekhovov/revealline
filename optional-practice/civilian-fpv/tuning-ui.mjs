@@ -707,22 +707,20 @@ export function mountFlightTuning({
     'checkbox',
     preview,
   );
-  const captureStatus = el(
-    'p',
-    t(
-      'Sticks navigate menus. Enable capture to drive the rotation preview.',
-      'Стіки керують меню. Увімкніть перехоплення для перегляду обертання.',
-    ),
-    preview,
-  );
-  listen(capturePreview, 'change', () => {
+  const captureStatus = el('p', '', preview, false);
+  function paintCaptureStatus() {
     captureStatus.textContent = capturePreview.checked
       ? t(
           'Preview owns sticks; menu navigation is paused. Press and release controller B to return.',
           'Стіки керують переглядом; навігацію меню призупинено. Натисніть і відпустіть B контролера для повернення.',
         )
-      : t('Sticks navigate menus.', 'Стіки керують меню.');
-  });
+      : t(
+          'Sticks navigate menus. Enable capture to drive the rotation preview.',
+          'Стіки керують меню. Увімкніть перехоплення для перегляду обертання.',
+        );
+  }
+  listen(capturePreview, 'change', paintCaptureStatus);
+  paintCaptureStatus();
   const previewExact = field(
     t('Preview stick position · exact (%)', 'Положення стіка · точно (%)'),
     'number',
@@ -2738,6 +2736,7 @@ export function mountFlightTuning({
     if (frame !== null) win.cancelAnimationFrame(frame);
     frame = null;
     capturePreview.checked = false;
+    paintCaptureStatus();
     returnButton.hidden = !draftFlightActive;
     onClose({ testing });
     if (opener?.isConnected) opener.focus();
@@ -2784,7 +2783,7 @@ export function mountFlightTuning({
       if (section === 'rates') return;
       releaseCurvePointer();
       capturePreview.checked = false;
-      captureStatus.textContent = t('Sticks navigate menus.', 'Стіки керують меню.');
+      paintCaptureStatus();
     },
   });
   workbench.add('overview', introduction);
@@ -3308,10 +3307,7 @@ export function mountFlightTuning({
     captureActive: () => root.open && capturePreview.checked,
     releaseCapture() {
       capturePreview.checked = false;
-      captureStatus.textContent = t(
-        'Sticks navigate menus. Enable capture to drive the rotation preview.',
-        'Стіки керують меню. Увімкніть захоплення для попереднього перегляду обертання.',
-      );
+      paintCaptureStatus();
       capturePreview.focus();
     },
     async savePracticeDraft(advanced, metadata = {}) {
@@ -3367,6 +3363,7 @@ export function mountFlightTuning({
         }
       }
       for (const { node, name, pair } of attributeBindings) node.setAttribute(name, t(...pair));
+      paintCaptureStatus();
       controllerTunes?.refresh();
       responseBench?.refresh();
       paintImportReview();

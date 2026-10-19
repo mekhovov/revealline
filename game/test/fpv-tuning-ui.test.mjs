@@ -2451,6 +2451,75 @@ test('settings search reveals expert fields without changing Basic preference an
   assert.equal(f.store.snapshot().revision, 0);
 });
 
+test('visible settings search follows replacement rate fields and preserves keyboard focus', async (t) => {
+  const f = fixture(t),
+    saved = f.store.export();
+  await f.click('Rates & throttle');
+  f.edit('Search all settings', 'Expo');
+  const results = f.ui.root.querySelector('.workbench-search-results'),
+    oldResult = results.querySelectorAll('button')[0],
+    oldInput = f.find('Expo (%)', 'input', f.axis('Roll'), 'number');
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  assert.equal(oldInput.isConnected, false);
+  assert.equal(
+    results.contains(oldResult),
+    false,
+    'The removed Legacy control must lose its result',
+  );
+  results.querySelectorAll('button')[0].emit('click');
+  const actualInput = f.find('Expo (%)', 'input', f.axis('Roll'), 'number');
+  assert.equal(f.document.activeElement, actualInput);
+  assert.equal(actualInput.isConnected, true);
+  assert.equal(results.hidden, true);
+  f.edit('Expo (%)', '17', { scope: f.axis('Roll'), type: 'number' });
+  assert.equal(results.hidden, true, 'Editing a chosen field does not reopen search');
+  oldResult.emit('click');
+  assert.equal(
+    f.document.activeElement,
+    actualInput,
+    'A detached result cannot focus its old field',
+  );
+  assert.equal(f.ui.root.dataset.view, 'basic');
+  assert.notEqual(f.storage.getItem('revealline.fpv.workbench.view.v1'), 'expert');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].response.rates.axes.roll.expo, 17);
+  assert.equal(f.store.export(), saved);
+});
+
+test('visible settings search refreshes localized labels and targets without losing the query or draft', async (t) => {
+  const f = fixture(t),
+    saved = f.store.export();
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  f.edit('Maximum rate (°/s)', '812.0', { scope: f.axis('Roll'), type: 'number' });
+  f.edit('Search all settings', 'Maximum rate');
+  const results = f.ui.root.querySelector('.workbench-search-results'),
+    oldResult = results.querySelectorAll('button')[0];
+  oldResult.focus();
+  f.setLocale('uk');
+  assert.equal(results.contains(oldResult), false);
+  assert.equal(f.find('Пошук усіх налаштувань').value, 'Maximum rate');
+  const localized = results.querySelectorAll('button')[0];
+  assert.match(localized.textContent, /Максимальний рейт.*Рейти й газ/);
+  assert.equal(f.document.activeElement, localized);
+  localized.emit('click');
+  assert.equal(
+    f.document.activeElement,
+    f.find('Максимальний рейт (°/с)', 'input', f.axis('Крен'), 'number'),
+  );
+  assert.equal(f.document.activeElement.value, '812.0');
+  f.edit('Пошук усіх налаштувань', 'Maximum rate');
+  f.setLocale('en');
+  assert.match(results.querySelectorAll('button')[0].textContent, /Maximum rate.*Rates & throttle/);
+  results.querySelectorAll('button')[0].emit('click');
+  assert.equal(
+    f.document.activeElement,
+    f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number'),
+  );
+  assert.equal(f.document.activeElement.value, '812.0');
+  assert.equal(f.ui.root.dataset.view, 'basic');
+  assert.equal(f.store.export(), saved);
+});
+
 test('direct PID editing enters the tested draft with exact units and invalid text blocks saving', async (t) => {
   const f = fixture(t);
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
@@ -2580,6 +2649,48 @@ test('calibration returns to the unchanged draft and input editing keys stay wit
   assert.equal(f.applied.length, 0);
   assert.equal(f.tested.length, 0);
   assert.equal(f.store.snapshot().revision, 0);
+});
+
+test('preview capture status follows ownership across locale and editor lifecycle transitions', async (t) => {
+  const f = fixture(t),
+    saved = f.store.export();
+  await f.click('Rates & throttle');
+  const capture = f.find('Capture live sticks for preview'),
+    status = f.ui.root
+      .querySelectorAll('p')
+      .find((node) => /Sticks navigate menus/.test(node.textContent));
+  capture.checked = true;
+  capture.emit('change');
+  assert.equal(f.ui.captureActive(), true);
+  assert.match(status.textContent, /Preview owns sticks/);
+  for (const locale of ['uk', 'en']) {
+    f.setLocale(locale);
+    assert.equal(f.ui.captureActive(), true, 'Translation cannot release input ownership');
+    assert.match(
+      status.textContent,
+      locale === 'uk' ? /Стіки керують переглядом/ : /Preview owns sticks/,
+    );
+  }
+  f.ui.close();
+  f.ui.open({ keepDraft: true });
+  assert.equal(capture.checked, false);
+  assert.equal(f.ui.captureActive(), false);
+  assert.match(status.textContent, /Sticks navigate menus/);
+  capture.checked = true;
+  capture.emit('change');
+  f.ui.releaseCapture();
+  assert.equal(f.ui.captureActive(), false);
+  assert.equal(f.document.activeElement, capture);
+  assert.match(status.textContent, /Sticks navigate menus/);
+  capture.checked = true;
+  capture.emit('change');
+  await f.click('Camera');
+  assert.equal(f.ui.captureActive(), false);
+  f.setLocale('uk');
+  assert.match(status.textContent, /Стіки керують меню/);
+  assert.equal(f.store.export(), saved);
+  assert.equal(f.applied.length, 0);
+  assert.equal(f.tested.length, 0);
 });
 
 test('animated rotation pauses outside Rates, when backgrounded and for reduced motion', async (t) => {
