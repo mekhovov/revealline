@@ -103,6 +103,10 @@ import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
 import { COOP_STARTER_PACK, coopPackDestination } from '../coop/library.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
+import { createCouchKeyboardPreferences } from './keyboard-preferences.mjs';
+import { mountCouchKeyboardSettings } from './keyboard-settings.mjs';
+import { couchDirectionLabel } from './keyboard-bindings.mjs';
+import { keyLabel } from '../key-bindings.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { coopCueOverflowEntries, hasCoopCueOverflow } from './coop-cue-overflow.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
@@ -1474,7 +1478,9 @@ export function bootCoop({
     root: $('coop-settings-panel-controls'),
     session: controllerSession,
   });
+  const keyboardPreferences = createCouchKeyboardPreferences({ mode: 'team' });
   input = attachCouchInput({
+    keyboardBindings: keyboardPreferences.snapshot().bindings,
     controllerSession,
     getTouchSettings: () => couchTouch.snapshot(),
     ...COOP_INPUT_CAPABILITIES,
@@ -1493,6 +1499,24 @@ export function bootCoop({
         });
       if ($('coop-pads').textContent !== text()) localizedText($('coop-pads'), text);
     },
+  });
+  const keyboardSettings = mountCouchKeyboardSettings({
+    root: $('coop-settings-panel-controls'),
+    mode: 'team',
+    preferences: keyboardPreferences,
+    isOpen: () => settingsDialog.open && !running(),
+  });
+  const stopKeyboard = keyboardPreferences.subscribe(({ bindings }) => {
+    input.setKeyboardBindings(bindings);
+    for (let player = 0; player < 2; player++)
+      localizedText($(`coop-key-help-${player}`), () =>
+        t('interface:couchKeyboard.teamKeys', {
+          player: t(player === 0 ? 'interface:sunflower' : 'interface:skyline'),
+          move: couchDirectionLabel(bindings, player, 'team'),
+          boost: keyLabel(bindings.seats[player].boost),
+          support: keyLabel(bindings.seats[player].action),
+        }),
+      );
   });
   const router = createControllerRouter({
     readPads: () => controllerSession.frame().menuPads,
@@ -1843,6 +1867,7 @@ export function bootCoop({
       );
     }
     runningEnemyControls.refresh();
+    keyboardSettings.refresh();
     settingsDialog.showModal();
     placePictureRecovery();
     globalTools.refresh();
@@ -1866,12 +1891,16 @@ export function bootCoop({
   }
   function closeSettings({ restore = true } = {}) {
     if (!settingsDialog.open) return;
+    keyboardSettings.cancel();
+    keyboardPreferences.suspend();
     if (settingsOwner) settingsOwner.restore = restore && foreground();
     settingsDialog.close();
   }
   const settingsClosed = () => {
     // A queued close from an earlier visit has no authority over a reopened one.
     if (settingsDialog.open) return;
+    keyboardSettings.cancel();
+    keyboardPreferences.suspend();
     const owner = settingsOwner;
     if (!owner) return;
     const restore = owner.restore && settingsCurrent(owner);
@@ -7265,6 +7294,9 @@ export function bootCoop({
     clear();
     couchTouch.destroy();
     controllerSetup.dispose();
+    keyboardSettings.dispose();
+    stopKeyboard();
+    keyboardPreferences.dispose();
     controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();

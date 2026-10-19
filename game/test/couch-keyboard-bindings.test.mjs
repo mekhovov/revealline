@@ -5,6 +5,7 @@ import { resolveCouchKeyboard, replaceCouchKey, couchKeyMap } from '../couch/key
 import {
   createCouchKeyboardPreferences,
   COUCH_KEYBOARD_KEY,
+  TEAM_KEYBOARD_KEY,
 } from '../couch/keyboard-preferences.mjs';
 
 function storage() {
@@ -247,4 +248,51 @@ test('unavailable locks never write, and leaving Settings or disposal retires de
     assert.equal(owner.snapshot().bindings.seats[0].up, 'KeyI');
     assert.notEqual(owner.snapshot().status, 'saved');
   }
+});
+
+test('Team admits exactly six usable actions, preserving Support defaults without reserving unused Supply keys', () => {
+  const team = resolveCouchKeyboard(null, 'team');
+  assert.equal(team.seats[0].action, 'KeyQ');
+  assert.equal(team.seats[1].action, 'Enter');
+  assert.equal(Object.keys(team.seats[0]).length, 6);
+  assert.equal(Object.hasOwn(team.seats[0], 'pickup'), false);
+  assert.equal(Object.hasOwn(couchKeyMap(team, 'team'), 'KeyE'), false);
+  assert.equal(Object.hasOwn(couchKeyMap(team, 'team'), 'Slash'), false);
+  const remapped = replaceCouchKey(
+    replaceCouchKey(team, 0, 'action', 'KeyE', 'team'),
+    1,
+    'action',
+    'Slash',
+    'team',
+  );
+  assert.deepEqual(couchKeyMap(remapped, 'team').Slash, [1, 'action']);
+  assert.throws(() => replaceCouchKey(remapped, 0, 'up', 'Slash', 'team'), { reason: 'conflict' });
+  assert.throws(() => replaceCouchKey(team, 0, 'pickup', 'KeyE', 'team'), { reason: 'format' });
+  assert.throws(() => resolveCouchKeyboard(team));
+  assert.throws(() => resolveCouchKeyboard(resolveCouchKeyboard(), 'team'));
+});
+
+test('Team persistence and Reset own a separate record and save lock from Duel', async () => {
+  const store = storage(),
+    locks = new KeyboardLocks();
+  const options = { getStorage: () => store, getLockManager: () => locks };
+  const duel = createCouchKeyboardPreferences(options);
+  await duel.set(0, 'up', 'KeyI');
+  const duelRaw = store.getItem(COUCH_KEYBOARD_KEY);
+  const team = createCouchKeyboardPreferences({ ...options, mode: 'team' });
+  assert.equal(team.snapshot().bindings.seats[0].up, 'KeyW');
+  await team.set(0, 'up', 'KeyU');
+  assert.equal(store.getItem(COUCH_KEYBOARD_KEY), duelRaw);
+  assert.equal(JSON.parse(store.getItem(TEAM_KEYBOARD_KEY)).seats[0].up, 'KeyU');
+  await keyboardTurn();
+  await team.reset();
+  assert.deepEqual(
+    JSON.parse(store.getItem(TEAM_KEYBOARD_KEY)),
+    resolveCouchKeyboard(null, 'team'),
+  );
+  assert.equal(store.getItem(COUCH_KEYBOARD_KEY), duelRaw);
+  assert.deepEqual(
+    [...new Set(locks.calls.map(({ key }) => key))].sort(),
+    [`${COUCH_KEYBOARD_KEY}:writer`, `${TEAM_KEYBOARD_KEY}:writer`].sort(),
+  );
 });

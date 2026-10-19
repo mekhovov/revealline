@@ -1,5 +1,5 @@
 import {
-  COUCH_KEYBOARD_ACTIONS,
+  couchKeyboardActions,
   resolveCouchKeyboard,
   replaceCouchKey,
 } from './keyboard-bindings.mjs';
@@ -7,11 +7,11 @@ import {
 import { claimProfileWriter, ownsProfileWriter } from '../profile-writer.mjs';
 
 export const COUCH_KEYBOARD_KEY = 'revealline.couch-keyboard.v1';
-const writerKey = `${COUCH_KEYBOARD_KEY}:writer`;
-const decode = (raw) => {
+export const TEAM_KEYBOARD_KEY = 'revealline.team-keyboard.v1';
+const decode = (raw, mode) => {
   if (typeof raw !== 'string' || raw.length > 4096) return null;
   try {
-    return resolveCouchKeyboard(JSON.parse(raw));
+    return resolveCouchKeyboard(JSON.parse(raw), mode);
   } catch {
     return null;
   }
@@ -19,10 +19,14 @@ const decode = (raw) => {
 /** The caller refreshes only at an explicit Settings boundary. Other tabs never
  * change a running round's keyboard map. Pending fields merge at verified save. */
 export function createCouchKeyboardPreferences({
+  mode = 'duel',
   getStorage = () => globalThis.localStorage,
   getLockManager = () => globalThis.navigator?.locks,
 } = {}) {
-  let state = resolveCouchKeyboard(),
+  const actions = couchKeyboardActions(mode),
+    storageKey = mode === 'team' ? TEAM_KEYBOARD_KEY : COUCH_KEYBOARD_KEY,
+    writerKey = `${storageKey}:writer`;
+  let state = resolveCouchKeyboard(null, mode),
     status = 'idle',
     reason = '',
     disposed = false,
@@ -33,7 +37,7 @@ export function createCouchKeyboardPreferences({
   const read = () => {
     const storage = getStorage();
     if (!storage) throw new Error('Storage unavailable.');
-    return { storage, value: decode(storage.getItem(COUCH_KEYBOARD_KEY)) };
+    return { storage, value: decode(storage.getItem(storageKey), mode) };
   };
   try {
     state = read().value ?? state;
@@ -70,20 +74,20 @@ export function createCouchKeyboardPreferences({
       phase = 'unavailable';
       const { storage, value } = read();
       if (!current()) return;
-      const candidate = value ?? resolveCouchKeyboard();
+      const candidate = value ?? resolveCouchKeyboard(null, mode);
       for (const [field, code] of pending) {
         const [seat, kind] = field.split(':');
         candidate.seats[Number(seat)][kind] = code;
       }
       phase = 'conflict';
-      const accepted = resolveCouchKeyboard(candidate),
+      const accepted = resolveCouchKeyboard(candidate, mode),
         raw = JSON.stringify(accepted);
       if (!current() || !ownsProfileWriter(lease, writerKey)) return;
       phase = 'write';
-      storage.setItem(COUCH_KEYBOARD_KEY, raw);
+      storage.setItem(storageKey, raw);
       if (!current()) return;
       phase = 'verify';
-      if (storage.getItem(COUCH_KEYBOARD_KEY) !== raw) {
+      if (storage.getItem(storageKey) !== raw) {
         reason = 'unconfirmed';
         return;
       }
@@ -119,7 +123,7 @@ export function createCouchKeyboardPreferences({
     },
     set(seat, kind, code) {
       if (disposed) return;
-      state = replaceCouchKey(state, seat, kind, code);
+      state = replaceCouchKey(state, seat, kind, code, mode);
       pending.set(`${seat}:${kind}`, code);
       revision++;
       status = 'session';
@@ -128,10 +132,9 @@ export function createCouchKeyboardPreferences({
     },
     reset() {
       if (disposed) return;
-      state = resolveCouchKeyboard();
+      state = resolveCouchKeyboard(null, mode);
       for (let seat = 0; seat < 2; seat++)
-        for (const kind of COUCH_KEYBOARD_ACTIONS)
-          pending.set(`${seat}:${kind}`, state.seats[seat][kind]);
+        for (const kind of actions) pending.set(`${seat}:${kind}`, state.seats[seat][kind]);
       revision++;
       status = 'session';
       reason = 'unconfirmed';
@@ -146,7 +149,7 @@ export function createCouchKeyboardPreferences({
     refresh() {
       if (disposed || pending.size) return;
       try {
-        const next = read().value ?? resolveCouchKeyboard();
+        const next = read().value ?? resolveCouchKeyboard(null, mode);
         if (JSON.stringify(next) === JSON.stringify(state)) return;
         state = next;
         revision++;
