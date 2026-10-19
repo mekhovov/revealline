@@ -11,6 +11,7 @@
     "dev": "node scripts/game-cli.mjs serve --port 8768",
     "test": "node scripts/game-cli.mjs test",
     "test:mission-library-solo": "node --test --test-concurrency=1 game/test/mission-library-solo-custom-host.test.mjs game/test/mission-library-solo-host.test.mjs game/test/mission-library-solo-incoming-host.test.mjs game/test/mission-library-solo-handoff-host.test.mjs",
+    "test:mission-library-solo-cold-opening-diagnostic": "node --test --test-concurrency=1 game/test/mission-library-solo-cold-opening.probe.mjs",
     "ai:inventory": "node scripts/inventory-ai-tooling.mjs",
     "test:creator-feature": "node scripts/check-creator-feature.mjs",
     "validate": "npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs && node scripts/refresh-fpv-reaction-runtime.mjs --check && node scripts/refresh-fpv-academy-audio.mjs --check && node scripts/refresh-fpv-play-shell.mjs --check && node scripts/refresh-fpv-presentation-assets.mjs --check && node scripts/refresh-optional-worker.mjs --check && node scripts/refresh-fpv-world-visuals.mjs --check && node scripts/produce-industrial-environments.mjs --check",
