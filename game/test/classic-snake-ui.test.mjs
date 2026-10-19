@@ -1497,6 +1497,23 @@ test('Snake library mode selection launches the exact chosen Team mission with o
   assert.equal(state.shell.topDialog(), null);
   assert.equal(state.document.body.dataset.playing, 'true');
   state.shell.openHome();
+  state.shell.open('missions');
+  const accepted = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  state.$('journey-mode').value = 'solo';
+  state.$('journey-mode').emit('change');
+  state.$('journey-filters-reset').focus();
+  state.$('journey-filters-reset').click();
+  assert.equal(
+    state.$('journey-mode').value,
+    'team',
+    'The reused chooser follows the accepted Team owner.',
+  );
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    accepted,
+  );
+  assert.equal(state.document.body.dataset.playing, 'false');
+  state.$('journey-back').click();
   assert.equal(state.$('snake-navigation-context').textContent, 'SNAKE · Team · Campaign');
   assert.equal(
     state.shell.elements.home.querySelector('.mode-play-mission').textContent,

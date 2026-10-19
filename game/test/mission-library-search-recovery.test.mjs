@@ -338,3 +338,43 @@ test('an empty refreshed list preserves the current failed-download feedback', a
   assert.match(p.$('journey-chooser-status').textContent, /Network unavailable/);
   assert.equal(p.launches, 0);
 });
+
+test('reset emits one native mode change after all filters reset and retains host-observable query', (t) => {
+  const p = fixture(t, { mode: 'team' });
+  p.change('journey-collection', 'Custom');
+  p.change('journey-lifecycle', 'archive');
+  p.change('journey-mode', 'solo');
+  p.change('journey-search', 'Keep this query');
+  const observations = [];
+  p.doc.addEventListener('change', (event) => {
+    if (event.target === p.$('journey-mode')) observations.push(p.chooser.state());
+  });
+  p.$('journey-filters-reset').focus();
+  p.$('journey-filters-reset').click();
+  assert.equal(observations.length, 1);
+  assert.equal(observations[0].mode, 'team');
+  assert.equal(observations[0].collection, '');
+  assert.equal(observations[0].lifecycle, 'current');
+  assert.equal(observations[0].search, 'Keep this query');
+  assert.equal(p.launches, 0);
+  assert.equal(p.preparations, 0);
+});
+
+test('a reused browser resets to the latest accepted supported host mode and rejects an invalid getter result', (t) => {
+  let accepted = 'solo';
+  const p = fixture(t, { getHostMode: () => accepted });
+  p.change('journey-mode', 'team');
+  accepted = 'team';
+  p.chooser.refresh();
+  assert.equal(p.$('journey-filters-reset').hidden, true);
+  p.change('journey-mode', 'solo');
+  p.$('journey-filters-reset').focus();
+  p.$('journey-filters-reset').click();
+  assert.equal(p.chooser.state().mode, 'team');
+  accepted = 'unsupported';
+  p.change('journey-mode', 'team');
+  p.$('journey-filters-reset').focus();
+  p.$('journey-filters-reset').click();
+  assert.equal(p.chooser.state().mode, 'solo');
+  assert.equal(p.launches, 0);
+});
