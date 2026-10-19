@@ -221,6 +221,7 @@ export function mountFlightApp({
     globalSettingsView = null,
     globalTools = null,
     missionChooser = null;
+  const navigationContext = () => (locale === 'uk' ? 'FPV SIM · Академія' : 'FPV SIM · Academy');
   const c = () => COPY[locale],
     messageText = (key) =>
       key === 'preparingGraphics'
@@ -1127,6 +1128,7 @@ export function mountFlightApp({
             ? 'playing'
             : state.status,
       transitionActive: !['idle', 'cancelled'].includes(continuousPlay.snapshot().phase),
+      navigationContext,
       missionName: currentCourse().locales[locale].title,
       summary: currentCourse().locales[locale].brief,
       canResume: replay
@@ -2131,6 +2133,7 @@ export function mountFlightApp({
     document: doc,
     library: missionLibrary,
     supportedModes: ['solo'],
+    browsingContext: ({ label }) => `${navigationContext()} · ${label}`,
     description: () =>
       locale === 'uk'
         ? 'Усі вправи Академії в одному списку. Виберіть маршрут і почніть політ.'
@@ -2255,7 +2258,7 @@ export function mountFlightApp({
     idPrefix: 'academy-shell',
     wordmarkURL,
     artworkURL: wordmarkURL ? new URL('../../menu-scenes/fpv.webp', wordmarkURL).href : '',
-    modeName: () => (locale === 'uk' ? 'FPV SIM · Академія' : 'FPV SIM · Academy'),
+    modeName: navigationContext,
     locale,
     services: {
       settingsPanelBack: simSettingsPanelBack,
