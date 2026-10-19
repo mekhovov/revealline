@@ -9115,7 +9115,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: dbb81fb6878bb4368459af287a586bb790a40362697c08874ccd52dcb703519d
+// Canonical source sha256: eed92673baaf4ec7d1d6457c3c62d9ae3e8593eb9a2473b91ee39d447bdccb10
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9623,6 +9623,7 @@ locale='en',
 setMenuIcon=()=>{},
 attachPanels,
 beforeSelect,
+onPresentationChange,
 }={}){
 const doc=root?.ownerDocument;
 if(!doc|| !content|| !root.contains(content)||typeof attachPanels!=='function')
@@ -9684,7 +9685,7 @@ layout.append(panel);
 rootClasses.forEach((name)=>root.classList.add(name));
 if(contentClass)content.classList.add('mode-settings-content');
 content.append(layout);
-const navigation=attachPanels({root,document:doc,beforeSelect});
+const navigation=attachPanels({root,document:doc,beforeSelect,onPresentationChange});
 let destroyed=false;
 const api=Object.freeze({
 navigation,

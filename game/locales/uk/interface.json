@@ -6091,5 +6091,9 @@
   "supportSummary.game.unavailable": "Недоступно",
   "supportSummary.preparedWaiting": "Звіт підготовлено нижче. Попередній експорт ще очікує на місце призначення; наступний буде доступний після його завершення.",
   "supportSummary.game.finished": "Раунд завершено",
+  "supportSummary.game.disarmed": "Двигуни вимкнено",
+  "supportSummary.game.complete": "Політ завершено",
+  "supportSummary.game.expired": "Час польоту вичерпано",
+  "supportSummary.game.playback-ended": "Перегляд завершено",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

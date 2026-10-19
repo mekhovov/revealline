@@ -2688,3 +2688,294 @@ test('keyboard resume never grants another input owner throttle or changes check
     }
   }
 });
+
+const academySupportSettle = () => new Promise((resolve) => setImmediate(resolve));
+async function academySupportFixture(t, options = {}) {
+  const locale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(locale, { persist: false }));
+  const f = await fixture(t, options);
+  assert.ok(f.$('academy-support-summary-root'), 'Academy native Data owns a support root.');
+  let reads = 0;
+  const original = f.win.navigator.getGamepads;
+  t.mock.method(f.win.navigator, 'getGamepads', () => {
+    reads++;
+    return original();
+  });
+  return { ...f, supportReads: () => reads };
+}
+function openAcademySupport(f) {
+  f.$('academy-shell-action-settings').click();
+  f.$('academy-settings-tab-data').click();
+  assert.equal(f.$('academy-shell-settings-dialog').open, true);
+  assert.equal(f.$('academy-settings-panel-data').hidden, false);
+}
+async function prepareAcademySupport(f) {
+  f.$('support-summary-prepare').focus();
+  f.$('support-summary-prepare').click();
+  await waitFor(() => !f.$('support-summary-download').disabled);
+  return JSON.parse(f.$('support-summary-json').textContent);
+}
+
+test('Academy support starts with unknown controller, build and writer ownership using its injected environment', async (t) => {
+  const f = await academySupportFixture(t);
+  openAcademySupport(f);
+  f.win.navigator.storage = {
+    persisted: async () => true,
+    estimate: async () => ({ usage: 1, quota: 2 }),
+  };
+  const reads = f.supportReads(),
+    before = f.view.snapshot(),
+    proof = f.view.exportAttempt();
+  const value = await prepareAcademySupport(f);
+  assert.equal(value.scope, 'academy-game-shell');
+  assert.equal(value.game.host, 'fpv-academy');
+  assert.equal(value.game.state, 'disarmed');
+  assert.deepEqual(value.build, { version: null, sourceRevision: null, packaged: null });
+  assert.equal(value.controller.freshness, 'unavailable');
+  assert.equal(value.controller.assigned, null);
+  assert.equal(value.controller.neutral, null);
+  assert.equal(value.controller.confirmBlocked, null);
+  assert.equal(value.game.saving.writable, null);
+  assert.equal(value.storage.retention, 'granted');
+  assert.equal(f.supportReads(), reads);
+  assert.deepEqual(f.view.snapshot(), before);
+  assert.deepEqual(f.view.exportAttempt(), proof);
+});
+
+for (const owner of [
+  'category',
+  'close',
+  'overlay',
+  'blur',
+  'hidden',
+  'bfcache',
+  'width',
+  'dispose',
+])
+  test(`Academy retires pending support across ${owner} away/back before completion`, async (t) => {
+    let finish,
+      calls = 0;
+    const held = new Promise((resolve) => {
+      finish = resolve;
+    });
+    const f = await academySupportFixture(t);
+    f.win.innerWidth = f.doc.defaultView.innerWidth = 1000;
+    f.win.navigator.storage = { persisted: () => (++calls === 1 ? held : Promise.resolve(false)) };
+    openAcademySupport(f);
+    const output = f.$('support-summary-json'),
+      prepare = f.$('support-summary-prepare'),
+      download = f.$('support-summary-download');
+    prepare.click();
+    await academySupportSettle();
+    if (owner === 'category') {
+      f.$('academy-settings-tab-data').emit('keydown', { key: 'ArrowUp' });
+      f.$('academy-settings-tab-data').click();
+    } else if (owner === 'close') {
+      f.$('academy-shell-settings-dialog').close();
+      openAcademySupport(f);
+    } else if (owner === 'overlay') {
+      f.$('help').click();
+      assert.equal(f.$('help-dialog').open, true);
+      f.doc.querySelector('[data-close="help-dialog"]').click();
+    } else if (owner === 'blur') {
+      f.doc.focused = false;
+      f.win.emit('blur');
+      f.doc.focused = true;
+      f.win.emit('focus');
+    } else if (owner === 'hidden') {
+      f.doc.hidden = true;
+      f.doc.visibilityState = 'hidden';
+      f.doc.emit('visibilitychange');
+      f.doc.hidden = false;
+      f.doc.visibilityState = 'visible';
+      f.doc.emit('visibilitychange');
+    } else if (owner === 'bfcache') {
+      f.win.emit('pagehide', { persisted: true });
+      f.win.emit('pageshow', { persisted: true });
+    } else if (owner === 'dispose') {
+      f.view.dispose();
+      assert.equal(output.textContent, '', 'Disposal retires synchronously.');
+      assert.equal(prepare.getAttribute('aria-busy'), 'false');
+    } else {
+      f.$('academy-settings-tab-data').focus();
+      f.win.innerWidth = f.doc.defaultView.innerWidth = 320;
+      f.doc.defaultView.emit('resize');
+      f.win.innerWidth = f.doc.defaultView.innerWidth = 1000;
+      f.doc.defaultView.emit('resize');
+    }
+    const focused = f.doc.activeElement;
+    finish(true);
+    await academySupportSettle();
+    await academySupportSettle();
+    assert.equal(output.textContent, '');
+    assert.equal(download.disabled, true);
+    assert.equal(f.doc.activeElement, focused);
+    if (owner === 'dispose') {
+      prepare.click();
+      download.click();
+      await academySupportSettle();
+      assert.equal(calls, 1, 'A destroyed view cannot prepare or export.');
+    } else assert.equal((await prepareAcademySupport(f)).storage.retention, 'not-granted');
+  });
+
+test('Academy preserves a captured report across ordinary paused frames and unchanged wide presentation', async (t) => {
+  const f = await academySupportFixture(t);
+  f.win.innerWidth = f.doc.defaultView.innerWidth = 1000;
+  assert.equal(f.view.arm(), true);
+  f.tick(3);
+  f.view.pause();
+  openAcademySupport(f);
+  const captured = await prepareAcademySupport(f);
+  const before = f.view.snapshot(),
+    proof = f.view.exportAttempt();
+  f.tick(3);
+  assert.deepEqual(JSON.parse(f.$('support-summary-json').textContent), captured);
+  f.$('academy-settings-tab-data').focus();
+  const view = f.$('academy-shell-settings-dialog').getAttribute('data-settings-view');
+  f.win.innerWidth = f.doc.defaultView.innerWidth = 900;
+  f.doc.defaultView.emit('resize');
+  assert.equal(f.$('academy-shell-settings-dialog').getAttribute('data-settings-view'), view);
+  assert.deepEqual(JSON.parse(f.$('support-summary-json').textContent), captured);
+  assert.equal(f.$('support-summary-download').disabled, false);
+  assert.deepEqual(f.view.snapshot(), before);
+  assert.deepEqual(f.view.exportAttempt(), proof);
+});
+
+test('Academy support reuses a normal physical frame and exports exact JSON without changing a paused attempt', async (t) => {
+  const f = await academySupportFixture(t);
+  const pad = menuPad();
+  pad.id = 'private-academy-device';
+  f.setPads([pad]);
+  assert.equal(f.view.arm(), true);
+  f.tick(6);
+  f.view.pause();
+  openAcademySupport(f);
+  f.tick();
+  const before = f.view.snapshot(),
+    proof = f.view.exportAttempt(),
+    reads = f.supportReads();
+  const value = await prepareAcademySupport(f);
+  assert.equal(value.game.state, 'paused');
+  assert.equal(value.controller.status, 'connected');
+  assert.equal(value.controller.assigned, null);
+  assert.equal(value.controller.neutral, null);
+  assert.equal(value.controller.confirmBlocked, null);
+  assert.equal(f.supportReads(), reads);
+  assert.deepEqual(f.view.snapshot(), before);
+  assert.deepEqual(f.view.exportAttempt(), proof);
+  assert.doesNotMatch(
+    JSON.stringify(value),
+    /private-academy|buttons|axes|profile|device|raw|storageKey/,
+  );
+  const blobs = [];
+  f.win.URL.createObjectURL = (blob) => {
+    blobs.push(blob);
+    return 'blob:academy-support';
+  };
+  f.$('support-summary-download').focus();
+  f.$('support-summary-download').click();
+  await waitFor(() => blobs.length === 1);
+  assert.deepEqual(JSON.parse(await blobs[0].text()), value);
+  setLocale('uk', { persist: false });
+  assert.match(f.$('support-summary-title').textContent, /Локальний звіт/);
+  assert.equal(f.doc.activeElement, f.$('support-summary-download'));
+  f.win.emit('pagehide', { persisted: true });
+  assert.equal(f.$('support-summary-json').textContent, '');
+  assert.deepEqual(f.view.snapshot(), before);
+});
+
+for (const retirement of ['settings', 'help-return'])
+  test(`Academy ended unfinished playback stays distinct after ${retirement}`, async (t) => {
+    const { memoryStorage } = await import('./helpers/solo-dom.mjs');
+    const storage = memoryStorage();
+    const f = await academySupportFixture(t, { storage });
+    const proof = {
+      ...structuredClone(FLIGHT_DEMONSTRATIONS[0]),
+      session: 'replay',
+      frames: Array.from({ length: 4 }, () => [0, 0, 0, 0]),
+    };
+    const original = structuredClone(proof);
+    const checked = await f.view.review(proof);
+    assert.equal(checked.state.status, 'active', 'The recording has not completed its objective.');
+    f.tick(12);
+    assert.equal(f.renders.at(-1).ticks, proof.frames.length);
+    assert.equal(f.renders.at(-1).status, 'active');
+    f.$('academy-shell-action-menu').click();
+    openAcademySupport(f);
+    if (retirement === 'help-return') {
+      f.$('academy-settings-tab-extras').click();
+      f.$('help').click();
+      assert.equal(f.$('help-dialog').open, true);
+      f.doc.querySelector('[data-close="help-dialog"]').click();
+      f.$('academy-settings-tab-data').click();
+    }
+    const rendered = structuredClone(f.renders.at(-1));
+    const reads = f.supportReads(),
+      writes = [...storage.writes],
+      attempt = f.view.exportAttempt();
+    const value = await prepareAcademySupport(f);
+    assert.equal(value.game.state, 'playback-ended');
+    assert.notEqual(value.game.state, 'paused');
+    assert.notEqual(value.game.state, 'complete');
+    assert.match(f.$('support-summary-game').textContent, /Playback ended/);
+    assert.deepEqual(f.renders.at(-1), rendered);
+    assert.deepEqual(proof, original);
+    assert.deepEqual(f.view.exportAttempt(), attempt);
+    assert.equal(f.deliveries.length, 0);
+    assert.equal(f.supportReads(), reads);
+    assert.deepEqual(storage.writes, writes);
+    const blobs = [];
+    f.win.URL.createObjectURL = (blob) => {
+      blobs.push(blob);
+      return 'blob:ended-playback-support';
+    };
+    f.$('support-summary-download').focus();
+    f.$('support-summary-download').click();
+    await waitFor(() => blobs.length === 1);
+    assert.deepEqual(JSON.parse(await blobs[0].text()), value);
+    setLocale('uk', { persist: false });
+    assert.match(f.$('support-summary-game').textContent, /Перегляд завершено/);
+    assert.equal(f.doc.activeElement, f.$('support-summary-download'));
+    assert.deepEqual(storage.writes, writes);
+  });
+
+test('Academy support keeps in-progress playback paused and its existing Continue owner remains usable', async (t) => {
+  const f = await academySupportFixture(t);
+  await f.view.review(FLIGHT_DEMONSTRATIONS[0]);
+  f.tick(5);
+  f.$('academy-flight-menu').click();
+  openAcademySupport(f);
+  const rendered = structuredClone(f.renders.at(-1));
+  assert.ok(rendered.ticks > 0 && rendered.ticks < FLIGHT_DEMONSTRATIONS[0].frames.length);
+  assert.equal((await prepareAcademySupport(f)).game.state, 'paused');
+  assert.deepEqual(f.renders.at(-1), rendered);
+  f.$('academy-shell-action-settings-back').click();
+  f.$('academy-shell-action-pause-resume').click();
+  f.tick(5);
+  assert.ok(f.renders.at(-1).ticks > rendered.ticks);
+  assert.equal(f.deliveries.length, 0);
+});
+
+for (const api of ['empty', 'missing', 'throwing'])
+  test(`Academy support distinguishes ${api} Gamepad API observations without polling during Prepare`, async (t) => {
+    const f = await academySupportFixture(t);
+    openAcademySupport(f);
+    let calls = 0;
+    if (api === 'missing') delete f.win.navigator.getGamepads;
+    else
+      f.win.navigator.getGamepads = () => {
+        calls++;
+        if (api === 'throwing') throw new Error('private-gamepad-failure');
+        return [];
+      };
+    f.tick();
+    const before = calls;
+    const value = await prepareAcademySupport(f);
+    assert.equal(value.controller.status, api === 'empty' ? 'disconnected' : 'unavailable');
+    assert.equal(calls, before);
+    assert.equal(value.controller.assigned, null);
+    assert.equal(value.controller.neutral, null);
+    assert.equal(value.controller.confirmBlocked, null);
+    assert.doesNotMatch(JSON.stringify(value), /private-gamepad-failure/);
+  });

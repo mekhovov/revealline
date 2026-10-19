@@ -51,7 +51,9 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         ? 'team-game-shell'
         : host.kind === 'capture-versus'
           ? 'versus-game-shell'
-          : 'primary-game-shell',
+          : host.kind === 'fpv-academy'
+            ? 'academy-game-shell'
+            : 'primary-game-shell',
     build: {
       version: version(host.version),
       sourceRevision:
@@ -68,8 +70,20 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         'practice',
         'capture-team',
         'capture-versus',
+        'fpv-academy',
       ]),
-      state: oneOf(host.state, ['idle', 'running', 'paused', 'won', 'lost', 'finished']),
+      state: oneOf(host.state, [
+        'idle',
+        'running',
+        'paused',
+        'won',
+        'lost',
+        'finished',
+        'disarmed',
+        'complete',
+        'expired',
+        'playback-ended',
+      ]),
       locale: oneOf(host.locale, ['en', 'uk']),
       saving: {
         writable: boolean(host.writable),

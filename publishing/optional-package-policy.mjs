@@ -655,7 +655,11 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         // Admit only its message families, including plural and dynamic keys.
         localeKeyPrefixes: Object.freeze({
           errors: Object.freeze(['missionLibrary.']),
-          interface: Object.freeze(['missionLibrary.', 'missionGoal.']),
+          interface: Object.freeze([
+            'missionLibrary.',
+            'missionGoal.',
+            ...(id === 'civilian-fpv' ? ['supportSummary.'] : []),
+          ]),
           common: Object.freeze(['counts.missions', 'collections.']),
         }),
         localeKeys: Object.freeze({
@@ -750,6 +754,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                 )
               : []),
             ...(['civilian-fpv', 'fpv-worlds'].includes(id) ? ['game/platform.mjs'] : []),
+            ...(id === 'civilian-fpv'
+              ? ['game/ui/local-support-summary.mjs', 'game/local-support-summary.mjs']
+              : []),
             'game/access-gate.mjs',
             'game/access-gate.css',
             // The legacy civilian-flight archive also hosts the shared SIM
