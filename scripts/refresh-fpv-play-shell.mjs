@@ -40,6 +40,7 @@ async function projectGlobalServices() {
       getMenuAnimation: 'getSimMenuAnimation',
       setMenuAnimation: 'setSimMenuAnimation',
       subscribeMenuAnimation: 'subscribeSimMenuAnimation',
+      menuAnimationBinding: 'simMenuAnimationBinding',
     },
     'game/ui/theme-family-controls.mjs': {
       attachThemeFamilyControls: 'attachSimThemeFamilyControls',

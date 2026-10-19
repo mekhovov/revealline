@@ -86,8 +86,7 @@ import {
   SIM_RADIO_AUDIO_KEY,
   createSimDisplayPreferences,
   attachSimThemeFamilyControls,
-  getSimMenuAnimation,
-  setSimMenuAnimation,
+  simMenuAnimationBinding,
   subscribeSimMenuAnimation,
   simAttachSettingsPanels,
   simSettingsPanelBack,
@@ -9303,11 +9302,7 @@ export function mountWorldApp({
       textFace: displayBinding('textFace'),
       textSize: displayBinding('textSize'),
       reducedEffects: displayBinding('reducedEffects'),
-      menuAnimation: {
-        get: () => getSimMenuAnimation(win),
-        set: (value) => setSimMenuAnimation(value, win),
-        subscribe: (listener) => subscribeSimMenuAnimation(listener, win),
-      },
+      menuAnimation: simMenuAnimationBinding(win),
       masterMuted: {
         get: () => audio.masterSnapshot().muted,
         set: (value) => audio.setEnabled(!value),
