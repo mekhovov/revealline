@@ -404,6 +404,8 @@ export async function collectEditionEngineFiles({ root, entries = ['game/company
 /** Produce a complete isolated input tree without writing the checkout. The
  * caller supplies a reviewed engine inventory and original bytes; all other
  * paths are derived from the selected catalog's dependency closure. */
+export const EDITION_LOCAL_CONTENT_API_VERSION = 1;
+
 export async function compileEdition({
   catalog: source,
   editionIds,
