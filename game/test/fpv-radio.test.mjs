@@ -422,3 +422,23 @@ test('v2 axis switches preserve v1 calibration, reject flight-axis overlap and r
   p.axes[3] = NaN;
   assert.throws(() => radioSwitch(config, p, 'reset'));
 });
+
+test('Paused radio feedback retains the real arm-switch instruction across polling frames', () => {
+  const p = pad(),
+    config = profile(p);
+  config.switches.arm = { button: 0, threshold: 0.5, invert: false };
+  const { radio } = runtime(p, config);
+  for (let i = 0; i < 10; i++) {
+    radio.poll();
+    assert.equal(radio.status().reason, 'arm-switch-off');
+  }
+  p.buttons[0].value = 1;
+  radio.poll();
+  assert.equal(radio.status().active, true);
+  radio.freeze('paused');
+  radio.poll();
+  assert.equal(radio.status().reason, 'arm-off-first');
+  p.buttons[0].value = 0;
+  radio.poll();
+  assert.equal(radio.status().reason, 'arm-switch-off');
+});
