@@ -1,4 +1,5 @@
 import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
+import { createExecutedFrameReader } from './solo-frame-trace-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -7,6 +8,7 @@ import { auxiliaryMatrix } from './solo-remote-auxiliary.mjs';
 import { validateDemoPlan } from './solo-remote-demo.mjs';
 
 const read = (path) => readFile(new URL('../' + path, import.meta.url));
+const historicalFrameRead = createExecutedFrameReader(read);
 const workflow = (await read('.github/workflows/solo-native-package-consumer.yml')).toString();
 const firstEightOutcome = JSON.parse(
   await read('docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json'),
@@ -196,7 +198,16 @@ test('each reviewed sparse set contains every exact adapter and frozen observer 
       .split('\n')
       .map((line) => line.trim().slice(1));
     assert.equal(inputs.length, new Set(inputs).size);
-    const plan = JSON.parse(await read('docs/performance/' + spec.plan));
+    const planBytes = await read('docs/performance/' + spec.plan);
+    const retainedOwner = spec.plan === 'solo-shared-mode-public-return-797e03-owner-plan.json';
+    if (retainedOwner) {
+      assert.equal(planBytes.length, 12694);
+      assert.equal(
+        createHash('sha256').update(planBytes).digest('hex'),
+        'eed6fdbd4ec2ed2e9d5cd2e3692a3cfcca4bee9b99b999fa9cdeaed4e0924bcf',
+      );
+    }
+    const plan = JSON.parse(planBytes);
     for (const ref of [...plan.adapterInputs, ...plan.frozenTools]) {
       assert(inputs.includes(ref.path), ref.path);
       if (
@@ -204,7 +215,14 @@ test('each reviewed sparse set contains every exact adapter and frozen observer 
         (await assertDeclaredReadinessTool('docs/performance/' + spec.plan, ref))
       )
         continue;
-      const bytes = await read(ref.path);
+      // This executed declaration predates the additive v2 protocol. Read its exact
+      // retained tools; production admission still rejects the old pins against current source.
+      const retainedFrame =
+        retainedOwner &&
+        ['scripts/qualify-solo-runtime.mjs', 'scripts/solo-qualification-cpu-profile.mjs'].includes(
+          ref.path,
+        );
+      const bytes = await (retainedFrame ? historicalFrameRead(ref.path) : read(ref.path));
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
     }
