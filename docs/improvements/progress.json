@@ -7,7 +7,7 @@
     "audit": "e2bf4f0e61218c85a1b0bb5779884b622ec03925",
     "implementation": "20555cda6bd44a0736aa829e64c52e455b4e770c",
     "originalWorkspace": "Preserved; no implementation edits.",
-    "latestObservedMain": "5b465b6cf6fa6f177f8ae59b1bac4dfea43fa4aa"
+    "latestObservedMain": "d8d51335aaa9d84948d5b8e181f8f130cb4da17b"
   },
   "featureCount": 83,
   "setup": {
@@ -15,7 +15,7 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Capture Home: 113 checks pass across nine complete files at the recorded candidate. Draft #1754 preserves the remaining 22 cases; CI now reports dialog and test-fixture failures under investigation. Keep the correct public Browse action and all assertions. Finish this prerequisite, then source, browser, package and CI acceptance.",
+    "P1 · Capture Home: 113 checks pass across nine complete files at the recorded candidate. Isolation prerequisite #1754 is source merged; library-opening failures remain unresolved. Pagination repair #1756 passes its complete438-case file and focused CI; separate presentation failures remain. Diagnostic #1757 is published for exact opening evidence. Then finish source, browser, package and player acceptance.",
     "P1 · Single Drone/Riy: 28 checks pass across two complete files; a third is incomplete and 25 have not run. Source is restored. The preparation guard correction passes 10 isolated checks; a fresh attempt stops before source changes because space fell again. Resume the full cohort when capacity permits, then fonts, languages, controls and full player journeys.",
     "P1 · Text compatibility #1668: all 11 configured source checks pass at the recorded source. Reconcile conflicts with newer main, then verify current browser, package and CI.",
     "P1 · Team Home #1747: source now merged. All nine admitted files match the independently reviewed local reconciliation. Prior 11 source checks remain bound to 22c553; finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
@@ -26,14 +26,11 @@
   ],
   "release": {
     "status": "source_delivery_in_progress",
-    "note": "45 source slices merged; last verified public e440 identity remains unchanged. No new public/live or hardware qualification.",
+    "note": "47 source slices merged; last verified public e440 identity remains unchanged. No new public/live or hardware qualification.",
     "publishedSource": {
       "revision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
       "observedAt": "2026-10-18T22:43:05Z",
-      "includedMergedSlices": [
-        "F83a",
-        "F81"
-      ],
+      "includedMergedSlices": ["F83a", "F81"],
       "evidence": "No-cache public main-deployment.json, game/build-info.json and game/app.mjs all match e440 deployment inventory; receipt /tmp/revealline-public-e440-identity-evidence.json.",
       "run": "https://github.com/mekhovov/revealline/actions/runs/39166266155",
       "behaviorQualification": "not_run"
@@ -107,7 +104,7 @@
           ".cache/improvements-evidence/2026-10-19/minimal-retention-generated-duplicate-release.json"
         ]
       },
-      "latestFreePointBytes": 1595002880,
+      "latestFreePointBytes": 1437143040,
       "latestCompaction": {
         "sourcePackBytes": 1478004933,
         "minimalReplacementBytes": 545060240,
@@ -130,7 +127,7 @@
       }
     },
     "pendingTestPrerequisite": {
-      "status": "draft_published_local_execution_pending",
+      "status": "source_merged_ci_failures_unresolved",
       "base": "e660eaef0aea3e93aa4ea3da4cc6fe984519a828",
       "paths": 14,
       "originalCasesPreserved": 22,
@@ -155,7 +152,10 @@
       "ci": "focused_groups_1_3_4_failed_group2_pending_at_observation",
       "nativeCI": "Node20.19_exact_d34_custom0of2_handoff6of7_incoming_terminal_TAP6of6; percommand_exit_receipt_pending; no_whole22case_pass",
       "localNative": "not_run",
-      "causalReview": "PublicBrowsebuttonowner_confirmed_correct; investigatechooser_request_retirement. Separatepaginated_publishing_fixture_crash_identified;no_assertions_or_production_changed."
+      "causalReview": "CorrectpublicBrowseownerpreserved; noFirstFlighttakeover/OOMevidence. Failure-only diagnostic1757 published; all22casebodies/assertions/15sretained. Separatepagination1756completecontroller438pass/fourfocusedshardspass; broaderindustrialpresentation6fail remainsseparate. No runtimefixjustifiedyet.",
+      "additionalPrerequisite": "https://github.com/mekhovov/revealline/pull/1756",
+      "sourceMerged": true,
+      "diagnosticPrerequisite": "https://github.com/mekhovov/revealline/pull/1757"
     },
     "preparationReview": {
       "overflight": {
@@ -170,7 +170,17 @@
         "transitionSHA256": "c561489d830c08fda89c9447607d108ca6463664430671f8ca4149393a911fcb",
         "runnerSHA256": "461f0e775d6eba717acb286f6719f5a6cc42b9039a85998d828a62b43061cb28",
         "isolatedLedgerCases": "9of10_pass_unknown_output_path_not_rejected_fix_under_review",
-        "sourceOrNativeWrites": false
+        "sourceOrNativeWrites": false,
+        "reviewOnlySuccessor": {
+          "transitionSHA256": "03fdd566c9a89b7e979020e4ef0e4b49cbb0102a745cd49236005f490f684370",
+          "runnerSHA256": "4d0cb0f75c2f292ff1b10580548ca783e1f1b458bdc04d20ae335782c3261ffd",
+          "allocationRegistryToy": "10of10_pass_separateproof",
+          "readerCleanupStubToy": "7of7_pass_noGitprocessspawned",
+          "actualApplyOrNative": "not_run",
+          "rootFullSourceSpecificReview": "followupreview_found_failure_receipt_child_lifecycle_context_preflight_gaps",
+          "priorFailuresPreserved": true,
+          "next": "Correct failure-receipt, child-cleanup and context-preflight handling in a new review-only revision, with negative stub checks. Preserve every previous failure. No actual source application or native run authorized at the current capacity."
+        }
       },
       "limits": "32MiBtask-ownedpreparationbudget;2MiBreceiptreserve;2GiBglobalnativefloorunchanged; fresh2.55GBprelaunch."
     }
@@ -235,7 +245,7 @@
             "browser": "not_run",
             "physical": "not_tested"
           },
-          "deliveryState": "withdrawn",
+          "deliveryState": "closed",
           "observedRemoteHead": "1b74986f995dee607716e002c7df71be7b7f3d31",
           "mergeState": "UNSTABLE"
         }
@@ -309,7 +319,8 @@
           "deliveryState": "merged",
           "mergeState": "UNKNOWN",
           "observedRemoteHead": "0fd780bba39ae36ae952172d4de2805cf8325c43",
-          "mergedAt": "2026-10-19T04:14:22Z"
+          "mergedAt": "2026-10-19T04:14:22Z",
+          "mergeCommit": "a94f2a6c3dac43ebeead58036a7b890414dfff37"
         }
       ],
       "deliveryState": "merged",
@@ -373,7 +384,8 @@
           "evidence": "53 focused and full source gates pass; broader2unchanged failures reproduced on clean base. Independent source and actual Duel menu/paused Team/UK316px review pass; modeled storage, actual controls/gameplay. No physical or listening claim.",
           "deliveryState": "ready",
           "mergeState": "DIRTY",
-          "observedRemoteHead": "029da03357b63d84ee5b081bb6e420fc297ddcde"
+          "observedRemoteHead": "029da03357b63d84ee5b081bb6e420fc297ddcde",
+          "lastKnownMergeState": "DIRTY"
         },
         {
           "id": "about-plain-title",
@@ -440,7 +452,8 @@
           "commit": "02809a21e8f9360333cb931f511ff4dd8d38d63e",
           "deliveryState": "ready",
           "observedRemoteHead": "02809a21e8f9360333cb931f511ff4dd8d38d63e",
-          "mergeState": "DIRTY"
+          "mergeState": "DIRTY",
+          "lastKnownMergeState": "DIRTY"
         }
       ]
     },
@@ -497,7 +510,8 @@
           "commit": "b6233d1b91fbde8c92548b10cd72eab916661b0f",
           "deliveryState": "ready",
           "mergeState": "DIRTY",
-          "observedRemoteHead": "b6233d1b91fbde8c92548b10cd72eab916661b0f"
+          "observedRemoteHead": "b6233d1b91fbde8c92548b10cd72eab916661b0f",
+          "lastKnownMergeState": "DIRTY"
         },
         {
           "id": "menu-animation",
@@ -545,7 +559,8 @@
           ],
           "deliveryState": "draft",
           "observedRemoteHead": "b48f50fbf423a59243be2810e047423d77c06bf8",
-          "mergeState": "DIRTY"
+          "mergeState": "DIRTY",
+          "lastKnownMergeState": "DIRTY"
         }
       ]
     },
@@ -579,7 +594,8 @@
       ],
       "deliveryState": "ready",
       "mergeState": "DIRTY",
-      "observedRemoteHead": "5a5ca502b62b5eb6713383f7740fa539ccbfd176"
+      "observedRemoteHead": "5a5ca502b62b5eb6713383f7740fa539ccbfd176",
+      "lastKnownMergeState": "DIRTY"
     },
     {
       "id": "F12",
@@ -610,7 +626,8 @@
       ],
       "deliveryState": "ready",
       "mergeState": "DIRTY",
-      "observedRemoteHead": "a3b1e33b1766991e4220ffcc54347e335db11c7e"
+      "observedRemoteHead": "a3b1e33b1766991e4220ffcc54347e335db11c7e",
+      "lastKnownMergeState": "DIRTY"
     },
     {
       "id": "F16",
@@ -640,7 +657,8 @@
       ],
       "deliveryState": "ready",
       "mergeState": "DIRTY",
-      "observedRemoteHead": "f54e6227ebd67a4c52cac84e17afed694e94e6c3"
+      "observedRemoteHead": "f54e6227ebd67a4c52cac84e17afed694e94e6c3",
+      "lastKnownMergeState": "DIRTY"
     },
     {
       "id": "F17",
@@ -1083,7 +1101,8 @@
             "receipt": ".cache/improvements-evidence/2026-10-19/f49/capture1729-scratch-plan/native-cohort-incomplete-summary.json",
             "scratchRecovery": "verified_exact_29267_files_original_inodes_restored"
           },
-          "independentTestPrerequisite": "https://github.com/mekhovov/revealline/pull/1754"
+          "independentTestPrerequisite": "https://github.com/mekhovov/revealline/pull/1754",
+          "lastKnownMergeState": "DIRTY"
         },
         {
           "id": "versus-journey-home-recommendation",
@@ -1300,7 +1319,8 @@
           "commit": "720d034334f13658d23c898432d5d2da9d53b61a",
           "deliveryState": "ready",
           "observedRemoteHead": "720d034334f13658d23c898432d5d2da9d53b61a",
-          "mergeState": "CLEAN"
+          "mergeState": "CLEAN",
+          "lastKnownMergeState": "CLEAN"
         },
         {
           "id": "reroll-cost-and-repeat-disclosure",
@@ -1401,7 +1421,8 @@
       ],
       "deliveryState": "ready",
       "observedRemoteHead": "9dfbdf3bcc6f00eb29a178532cfb1d29f0654097",
-      "mergeState": "DIRTY"
+      "mergeState": "DIRTY",
+      "lastKnownMergeState": "DIRTY"
     },
     {
       "id": "F23",
@@ -1503,7 +1524,8 @@
           "pr": "https://github.com/mekhovov/revealline/pull/1702",
           "deliveryState": "draft",
           "observedRemoteHead": "426923adb1e128a5305c78c6af2b9452d926d27d",
-          "mergeState": "DIRTY"
+          "mergeState": "DIRTY",
+          "lastKnownMergeState": "DIRTY"
         }
       ]
     },
@@ -1784,7 +1806,8 @@
       ],
       "deliveryState": "ready",
       "mergeState": "DIRTY",
-      "observedRemoteHead": "50adc31f9750347e91cbbb34748e176aee2e4807"
+      "observedRemoteHead": "50adc31f9750347e91cbbb34748e176aee2e4807",
+      "lastKnownMergeState": "DIRTY"
     },
     {
       "id": "F11b",
@@ -1889,7 +1912,8 @@
       ],
       "deliveryState": "ready",
       "mergeState": "DIRTY",
-      "observedRemoteHead": "146c36e8f890aab0204941f73812b4e79df4b2dd"
+      "observedRemoteHead": "146c36e8f890aab0204941f73812b4e79df4b2dd",
+      "lastKnownMergeState": "DIRTY"
     },
     {
       "id": "F14-Q",
@@ -1962,18 +1986,22 @@
         },
         {
           "id": "snake-host",
-          "status": "reviewed_stack",
+          "status": "source_merged_acceptance_incomplete",
           "dependency": "PR1661 exact f3c97cb5bb4be58c816df45087b89afd6d2b26e8",
           "evidence": [
             "139 focused/full source gates and13 independently rerun summary/host checks pass. Actual Team host paused report, EN/UK refresh, Close/reopen clearing and931-byte download-preview equality pass. Hardware/native/controller readiness and other Snake variants remain modeled separately.",
-            "Integrated a40 preserves original8-file/+248−16 delta,5 feature blobs and3 original locale changes.139/139 focused checks, full lint/changed format and uninterrupted source validation pass;8 unchanged format baseline files remain. Root independently verifies exact source delta and all18 generated namespaces. Published dependent draft1664; original751 actual paused Team/export receipt retained."
+            "Integrated a40 preserves original8-file/+248−16 delta,5 feature blobs and3 original locale changes.139/139 focused checks, full lint/changed format and uninterrupted source validation pass;8 unchanged format baseline files remain. Root independently verifies exact source delta and all18 generated namespaces. Published dependent draft1664; original751 actual paused Team/export receipt retained.",
+            "Remoteinventory19October observes externalmerge1664 atd8d51335/headf75e1ac. Current-head qualification notinferred from earliera40/751 evidence; no manualmerge,promotion orcheckbypass bythis task."
           ],
           "pr": "https://github.com/mekhovov/revealline/pull/1664",
           "commit": "a40fd15192dd7e3972fcba96e4a903eb1eae175c",
-          "deliveryState": "draft",
-          "mergeState": "DIRTY",
-          "observedRemoteHead": "a40fd15192dd7e3972fcba96e4a903eb1eae175c",
-          "next": "Await primary predecessor and exact-head admission; actual export evidence remains scoped to original751."
+          "deliveryState": "merged",
+          "mergeState": "UNKNOWN",
+          "observedRemoteHead": "f75e1acabfe0f572aa3048c712adfd22364a3ba2",
+          "next": "Source merged externally at d8d5133 from new remoteheadf75e1ac. Earlier local/browser checks retain exacta40/751 scope; verify admitted file changes, current native export/remaining Snake variants/source/package acceptance.",
+          "lastKnownMergeState": "DIRTY",
+          "mergedAt": "2026-10-19T19:14:41Z",
+          "mergeCommit": "d8d51335aaa9d84948d5b8e181f8f130cb4da17b"
         },
         {
           "id": "survival-raid-host",
@@ -2215,7 +2243,8 @@
           "deliveryState": "draft",
           "mergeState": "DIRTY",
           "observedRemoteHead": "7c55783226056599726f58c321535ecb8b457fb1",
-          "next": "Await predecessor admission, then reconcile and run current exact-head required checks."
+          "next": "Await predecessor admission, then reconcile and run current exact-head required checks.",
+          "lastKnownMergeState": "DIRTY"
         },
         {
           "id": "sim-presets",
@@ -2473,7 +2502,8 @@
           "mergeState": "DIRTY",
           "observedRemoteHead": "78353830a92fa15f6d1e754220ba5da56db516fd",
           "next": "All11 configured source components pass on exact869 source across two guarded attempts;783 successor changes qualification documentation only. Current-main conflict reconciliation, package/browser and new-head CI remain. Earlier461/461 cohort retains its captured source.",
-          "candidateCommit": "78353830a92fa15f6d1e754220ba5da56db516fd"
+          "candidateCommit": "78353830a92fa15f6d1e754220ba5da56db516fd",
+          "lastKnownMergeState": "DIRTY"
         },
         {
           "id": "primary-200-percent",
@@ -2500,7 +2530,8 @@
       ],
       "deliveryState": "draft",
       "mergeState": "DIRTY",
-      "observedRemoteHead": "78353830a92fa15f6d1e754220ba5da56db516fd"
+      "observedRemoteHead": "78353830a92fa15f6d1e754220ba5da56db516fd",
+      "lastKnownMergeState": "DIRTY"
     },
     {
       "id": "F09b",
@@ -4786,6 +4817,26 @@
       "date": "2026-10-19",
       "item": "CI prerequisite and resource preparation",
       "reason": "Publish separate draft1754 and preserve its exact-head CI failures; investigate nativeBrowse/dialog ownership and paginatedpublishingfixture crash without weakeningassertions. Overflightpreparationaccounting correction passes10isolatedchecks; new actualattemptdoesnotstartbelowprelaunchfloor. Sharedscratch/originalworkunchanged; otherchatskeep running byuserchoice."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Separate CI pagination prerequisite",
+      "reason": "Publish one-file draft1756 oncapturedcurrentmaina61e; reversepatchproof retainsninehostilemutationcases/everyassertion/latest48readinesscombinations. Source/syntaxreviewpass; CI/localexecutionpending. Nativeopeningdiagnosis retainscorrectBrowseowner andalltimeouts, withnoFirstFlight/OOMattribution. Review-onlyresourceguardtoys passseparately; noapp/nativequalification."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Complete PR inventory correction",
+      "reason": "Generate remotequeryfromalltask/slice/follow-upPRfields ratherthanmanual list; include previouslyomittedmergedSettings1673. Correct89featurecandidates:46merged/10openforchecks/32draft/1withdrawn;10dependenciesseparate. External1754sourceadmissiondoesnotcloseitsCI/nativeacceptancefailures. All83groups/113originalscopes/priorities/efforts preserved."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Exact CI pagination pass and separate Browse diagnosis",
+      "reason": "Controller438/438/fourfocusedshards/release-readypass exact18ce; industrialpresentation6failremains. Publishone-filediagnostic1757 preservingall22originalcases/native15s/publicBrowseowner. Guardreviewfindsfailure-receipt/child-lifecycle/context-preflightgaps; correctinnewinertrevisionbeforeactualapply. Otherchatscontinue; no newnative/player/devicequalification."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Snake support source admission",
+      "reason": "External merge #1664 observed at new head f75e1ac / merge d8d5133: 47 merged, 10 open for checks, 31 drafts, 1 withdrawn. Earlier a40/751 checks remain pinned; current native export, remaining variants, source and package acceptance are required."
     }
   ],
   "deliveryDependencies": [
@@ -4925,24 +4976,58 @@
     {
       "id": "CI-Solo-library-file-isolation",
       "priority": "P1",
-      "status": "draft_ci_failures_under_review",
-      "deliveryState": "draft",
+      "status": "source_merged_acceptance_incomplete",
+      "deliveryState": "merged",
       "pr": "https://github.com/mekhovov/revealline/pull/1754",
       "commit": "d34c52599b5bb1fb42972de8368bf75c74f73eb0",
       "observedRemoteHead": "d34c52599b5bb1fb42972de8368bf75c74f73eb0",
-      "mergeState": "UNSTABLE",
+      "mergeState": "UNKNOWN",
       "scope": "Independent test-only prerequisite: preserve all 22 Solo Mission Library cases in four complete process-isolated files. Production behavior and fixture lifecycle remain unchanged.",
-      "next": "CI reports retained native/dialog and publishing-fixture failures; diagnose exact-source causes and preserve all assertions. Local execution is blocked by capacity. Complete regression/native/source gates and current-main compatibility before admission.",
+      "next": "Source merged externally; exact d34 CI failures remain unresolved. Review bounded opening-promise/DOM diagnostic proposal, qualify original cases and configured source checks; independent pagination fixture repair1756 remains pending. No all22 native pass, full-suite, package or device qualification.",
       "evidence": [
         "Root and independent B source reviews clear: 19 registration blocks and 14 moved helper declarations byte-identical; all14committedblobs equal reviewedmanifest; all44954otherbaseentries exact. Real CLI discovery intercepts/restores spawnSync binding; four focusedcommands have separate300000ms limits. Syntax-only checks pass. Remote readback confirms OPEN/DRAFT/main/exactd34/14paths; no native/source/package/browser/device pass claimed.",
         "CIrun39304576230 exactd34/headtree2b09, Node20.19; rawfailedshards1/3/4 fullycaptured209089/53437/64197B withSHA256e0138e00/da853356/4135a74c and no truncation. Custom0/2 fails while waitingforBrowse dialog; source review confirms shell-play correctlyownsMissions, so no inventedentry retarget. Historicalcomment-onlytestpaths also expose failures. Publishingfastline-merge-controller.testcase59 throwsbeforeassertions because116rowfixturepages100 and unconditionallymutatesID302 onpagewithoutit. Fullbuild/testjobsSKIPPEDbyrepositorypolicy—not passes. LocalNode22native/source/package/browser/devicegatesremainunrun."
+      ],
+      "mergedAt": "2026-10-19T18:59:36Z",
+      "mergeCommit": "3630ffbc84ac1862c25647ab5e364c42cceec217"
+    },
+    {
+      "id": "CI-merge-controller-pagination-fixture",
+      "priority": "P1",
+      "status": "draft_scoped_ci_pass_broader_failure",
+      "deliveryState": "draft",
+      "pr": "https://github.com/mekhovov/revealline/pull/1756",
+      "commit": "18ceaa2dfbbbe614d7a2fc155b5c9264fb26415b",
+      "observedRemoteHead": "18ceaa2dfbbbe614d7a2fc155b5c9264fb26415b",
+      "mergeState": "UNSTABLE",
+      "scope": "One-file paginated test-fixture correction on captured current main a61e0a3. Preserve nine hostile mutation cases, every merge-blocking assertion and all 48 newer readiness combinations. Production merge policy is unchanged.",
+      "next": "Complete controller file passes438/438 on exact18ce CI; four focused shards and release-ready pass. Industrial presentation fails6of421; preserve and attribute separately. Local Node22 native/package/browser acceptance remains unrun.",
+      "evidence": [
+        "Latestmainbaselineblobfaf25b0a796bcf17c5a552339bf7e84db89b2a84; after40632d464478a0708e69a0d36b29711a049dec1f. Independentreversepatch reproducesbaselinebyteexact; Node22 --checkPASS. Remotecommit18ce/soleparenta61e/treebec64 generatedfrombase_tree withonefile; everyotherroot/publishingentryexact. RemoteOPEN/DRAFT/main/1path readback; localtestsNotrun belowreserve.",
+        "Exacthead18ce run39307735566 terminalSUCCESS; all4focusedshards/aggregate/release-ready pass. Completepublishingcontroller438/438 with0fail/cancel/skip/todo; repaired mutation ok60. CI sourceidentity before/after45492trackedfiles/treebec64; source workflow test/buildSKIPPED, not passes. Industrialpresentation415pass/6fail exit1; no allCIgreen claim.",
+        "Full CI receipt confirms the complete publishing-controller command exited 0: 438 passed; no failures, cancellations, skips or TODOs. The separate presentation run exited 1 with six failures caused by an event-only test document lacking getElementById; those audio production/test files are unchanged by this pagination PR. Evidence: /tmp/revealline-pr1756-ci-focused-audit-18ceaa2-capture2/diagnosis.json. This attribution does not qualify a repair or full suite pass."
+      ]
+    },
+    {
+      "id": "CI-Solo-library-opening-diagnostic",
+      "priority": "P1",
+      "status": "draft_ci_pending",
+      "deliveryState": "draft",
+      "pr": "https://github.com/mekhovov/revealline/pull/1757",
+      "commit": "e155b841b80e2bde469b7856b9197a096e81d212",
+      "observedRemoteHead": "e155b841b80e2bde469b7856b9197a096e81d212",
+      "mergeState": "UNSTABLE",
+      "scope": "One shared test-fixture file on captured current main d8d5133; bounded failure-only actual click-handler/promise/public-DOM evidence. Production and all22casebodies/assertions/native15sdeadline unchanged. Observer adds one promise reaction and rejection-handling bookkeeping; diagnostic, not zero-effect or runtime repair.",
+      "next": "Collect complete exact-head CI native files and failure detail; determine actual opening cause before any runtime/fixture ownership correction. Local native/package gates remain held.",
+      "evidence": [
+        "Independent reversal restores baselineblob83a6396e byteexact; formattedcandidateb72b26b831734d02f746d0ac6ddf7876e6370509996e9d08f2c0367bd98db9df9480B; Node22syntax/repositoryformat pass. Remoteonefilecommit e155/soleparentd8d/tree692403; everyotherroot/game/testtreeentry exact. OPEN/DRAFT/main/exacthead/onepathverified. No localapp/index/ref/sourcecheckoutmutation or assethydration."
       ]
     }
   ],
   "deliverySnapshot": {
     "featurePRsReady": 10,
-    "featurePRsDraft": 32,
-    "deliverablesMerged": 45,
+    "featurePRsDraft": 31,
+    "deliverablesMerged": 47,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
     "hardware": "unavailable",
@@ -4950,49 +5035,24 @@
   },
   "admissionReview": {
     "observedDate": "2026-10-19",
-    "scope": "All88 feature candidates; nine delivery dependencies and documentation follow-ups excluded",
+    "scope": "All89 feature candidates generated from every task, implementation slice and follow-up PR field; eleven separately tracked delivery dependencies and documentation excluded",
     "counts": {
-      "merged": 45,
+      "merged": 47,
       "ready": 10,
-      "draft": 32,
+      "draft": 31,
       "withdrawn": 1
     },
     "conflictedOpenPRs": [
-      1617,
-      1622,
-      1624,
-      1627,
-      1632,
-      1638,
-      1642,
-      1664,
-      1667,
-      1668,
-      1669,
-      1671,
-      1672,
-      1682,
-      1686,
-      1702,
-      1704,
-      1721,
-      1729
+      1615, 1617, 1622, 1624, 1627, 1632, 1638, 1642, 1667, 1668, 1669, 1671, 1672, 1682, 1686,
+      1702, 1704, 1721, 1729
     ],
-    "conflictedReadyPRs": [
-      1617,
-      1622,
-      1624,
-      1627,
-      1632,
-      1638,
-      1669,
-      1682,
-      1686
-    ],
-    "note": "45 source slices merged,10 open for checks,32 drafts,1 withdrawn. Team Home1747 and mono effects/voices1697 newly source merged; source admission is not full feature completion. Exact-source/browser/package/hardware boundaries remain. No manual merge, promotion or check bypass.",
+    "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1669, 1682, 1686],
+    "note": "47 sourcePRs merged,10 openforchecks,31drafts,1withdrawn across89featurecandidates;11prerequisitesseparate. Corrected1673accounting retained;1664newexternalsource merge has newheadf75e, noautomaticcurrentacceptance. UNKNOWN mergeabilitydoesnotclearpreviousconflicts; priorknownstatesretained. No manualmerge,promotion orcheckbypass.",
     "latestMain": {
-      "revision": "596b93b24412a3b1cccd10f5eb81bff2ab7a151b",
+      "revision": "d8d51335aaa9d84948d5b8e181f8f130cb4da17b",
       "note": "Observed main only; all source qualifications retain their recorded candidate/base."
-    }
+    },
+    "queryEvidence": "/tmp/revealline-complete-inventory-100-result.json",
+    "inventoryCorrection": "Previously omitted1673 is an existing merged settings follow-up; correcting45→46 is accounting, not new implementation."
   }
 }
