@@ -940,7 +940,7 @@
           "commit": null,
           "dependency": "Independent fixture1732 exact8704; existing native Journey initial-selection owner, not F25/D",
           "effort": "1–2d bounded reason/visibility slice plus native and compact browser review; queues excluded",
-          "next": "New native10/10,pure5/5,shell27/27 pass; actual EN/UK desktop/directPlay/PauseResume reviewed. Independent main fixture1735 passes14/14 and is integrated; default-entry7/10 still fails old visible-action/heading expectations. Cohesive test-only prerequisite extension is developing from independent source metadata; remaining6 files NOTRUN. No F10 PR yet.",
+          "next": "Independent fixture1735 extension actual captured-main default10/10 passes; complete MissionLibrary14/19 fails five cases (one introduced caption, three preparePack decoders, one obsolete PNG assumption). Continuous and later feature files NOTRUN; stop retained. Diagnose bounded fixture/artwork contract before rerun, then integrate unchanged F10 feature and finish cohort.",
           "evidence": [
             "Read-only assessment: actual journeyCursor/cursorEntry/progressMission/initialJourneyMission already choose default first/current/recorded successor. Bind captured reason facts to acceptedroundRecipe.entry; suppress pending, late/stale/endfallback, incominghandoff/continuation and actuallive/paused states. Later accepted manual recipe uses neutral selected wording, never earned progress or opponent mastery. Versus controller restore stores assignment, not a generic saved flight: do not invent a save owner. Existing resultNext already names destination and needs no duplicate recommendation.",
             "Frozen64d0d3b414e8fc6d28c2b5fe443e22d8988a7c82fbc755077e9dad9a1b1afdb6 on8704 preserves twelve original production owners,5937EN/6049UK values plus3messages each and canonical18. Actual accepted recipe remains sole selection owner. Complete pure5/5 passes.",
@@ -950,7 +950,9 @@
             "Frozen39acaa9deccf42c6b1700e255936700a0cd37412a38d67edf97ec36baa74707d minimalfixturecorrection independently reviewed; production unchanged. Complete actualdefaultnative10/10 pass48.755s, peak1337.4MiB; pure5/5, completecouchshell27/27 pass54.632s/peak1640.1MiB; no skips/cancellations/guards. Fourthfile candidate-versus-host14cases9pass/5fail85.331s, no guards/stderr,1109.6MiBpeak. Three failures expect old One race heading without Capture/Duel prefix, two expect Versus instead of Duel gallery label. Baseline attribution notyetestablished; remaining7 NOTRUN, no aggregatepass.",
             "Actual local39acdesktop1280x720: initialUK thennativeSettingsEnglish→Back retainsSettingsfocus and translatedfirstguidance nexttoStart. ActualvisibleSelectMission eventuallyopens318missionchooser; exactFirstreturncard directlylaunchesbothrunning, Homeguidanceabsent. PauseoffersResumeprimary/noexplanation; explicitResumereturnsboth0%/3lives/0points. No exactbrowsercheckpoint/earnedwin/compact/physicalclaim. Screenshotsversus-home-39ac-{uk-desktop,en-desktop,paused-resume}.png. SeparatevisibleNextsongbuttonstaysUKinEnglishPause; retainedF59finding, notchangedinF10.",
             "Localfeature27bfa1374531627fa0dad099fc824f84e19abc54 preserves39acaa11blobs. Actuale746 independent correctedcandidate14/14 pass87.15s, no skips/guards; exact2strings reverse to originaltestbytes. Separatedraftmain1735 exact24753ce6e646ceb8dea073fef2857bf97a0f2ea7,2paths, roothead/base/readback verified. F10cherry-picked predecessor→de336294392af5fec7602a19e676ece1a7afcb3e, all11featureblobs byteidentical. Correctedcandidate onactualF10 complete14/14 pass88.35s.",
-            "Next complete versus-default-entry atde3367/10 FAIL27.83s, no skips/guards; three obsolete heading/hiddenMissions action/retired mode-description expectations. Remaining6 NOTRUN. Read-onlycohort audit finds related retainedmetadata literals/openers inlibrary/continuous-next. Independentlight source-hashed pack/campaign/mission IDs (notDOM/no fullprojectfactory) underpin cohesive1735 fixtureextension; runtime selection/launch policy unchanged. Latestmain9566 search-owner integration is separate, not qualified by e746 checks."
+            "Next complete versus-default-entry atde3367/10 FAIL27.83s, no skips/guards; three obsolete heading/hiddenMissions action/retired mode-description expectations. Remaining6 NOTRUN. Read-onlycohort audit finds related retainedmetadata literals/openers inlibrary/continuous-next. Independentlight source-hashed pack/campaign/mission IDs (notDOM/no fullprojectfactory) underpin cohesive1735 fixtureextension; runtime selection/launch policy unchanged. Latestmain9566 search-owner integration is separate, not qualified by e746 checks.",
+            "Test-only extension refined a107e87 uses independently pinned membership, including164Original/132compatibleCurrent Classic identities, explicit mode/lifecycle/owners, source hashes and canonical ID primitives only. No production sourcefactory/createMissionLibrary/classicLibrarySources oracle, rendered counts or compiled geometry. Complete default-entry10/10 passes42.64s peak1145.3MiB on actuale746 runtime.",
+            "Next complete MissionLibrary file19cases14PASS/5FAIL,112.50s peak1483.1MiB, zero skips/cancellations/guards, exacta107 before/after. One introduced Legacy caption must remain original Select Mission, three installed cases fail decoder-unavailable in unchanged prehostpreparePack, optional case fails unchanged PNG-signature assumption. Independent exact inventories/shared order/Team IDs/held-owner lazy cases pass, but file/cohort does NOT. Continuous NOTRUN after stop; no timeouts/assertion weakening or hydration."
           ],
           "testPrerequisite": "https://github.com/mekhovov/revealline/pull/1735"
         }
@@ -2345,17 +2347,28 @@
         {
           "id": "single-drone-riy-settings-width",
           "priority": "P1",
-          "status": "developing",
+          "status": "draft_review",
           "owner": "lane-a",
-          "pr": null,
-          "commit": null,
+          "pr": "https://github.com/mekhovov/revealline/pull/1738",
+          "commit": "c4fd7199b5ab4e5126cb5d9f60e439873f539eec",
           "dependency": "Independent main e746; preserves merged1707 category/action ownership",
           "effort": "0.5–1d bounded readability repair; within original F09 allocation, not additional whole-group estimate",
-          "next": "Review minimal host-scoped context/content column flow and existing layout min-height. Preserve actual compact category→panel→Back semantics and native action nodes; compare measured control widths before/after in both families/languages.",
+          "next": "Published independent two-path draft1738 exactc4fd on capturede746; doc-only receipt corrected, CSS42e unchanged. Complete current-source/admission and integrate into full SingleDrone/Riy Extra large group.",
           "evidence": [
             "Actualf8071280Large: some HUD labels remain11/12px and SVGstatglyphs13–13.5px; timer25.6px from laterclampoverride. NativeStandardSettings title22/Back14/selector16; Large selector18 buttitle/Back unchanged. Actual earnedLevel2 upgrade, not staged outcome. No numeric200%/conformance claim.",
-            "Actual320LargeSingleDrone and320StandardRiy initialcategoryview has selectedGameplay but0x0panel INTENTIONALLY. Initial blocked-screen inference corrected before any edit. Actuale746320Standard EnterGameplay opens nativecontrols154.77pxwide×542.60px atx143.23; operationcontext occupies otherhalf. Esc returnscategories withGameplayfocus; secondEscHomeexactSettingsfocus. Functional drillthrough passes; repairtargets crampedtext/width only. Bothf807 ande746 share exactlayoutCSS/owners; no1668causation. Screenshots overflight-e746-320-standard-drilled-settings, overflight-f807-320-large-settings,riy-f807-320-standard-settings."
-          ]
+            "Actual320LargeSingleDrone and320StandardRiy initialcategoryview has selectedGameplay but0x0panel INTENTIONALLY. Initial blocked-screen inference corrected before any edit. Actuale746320Standard EnterGameplay opens nativecontrols154.77pxwide×542.60px atx143.23; operationcontext occupies otherhalf. Esc returnscategories withGameplayfocus; secondEscHomeexactSettingsfocus. Functional drillthrough passes; repairtargets crampedtext/width only. Bothf807 ande746 share exactlayoutCSS/owners; no1668causation. Screenshots overflight-e746-320-standard-drilled-settings, overflight-f807-320-large-settings,riy-f807-320-standard-settings.",
+            "Initial CSS flow correction passed complete4existingfiles57/57, zero skips/cancellations/guards. Final42e249023d30144a1766e817d5e66807442b272c narrows all rules to non-Raid Overflight and restores direct noncheckbox labels display:grid/gap6px lost on reparenting. No runtime/DOM/action/1707 owner changes; final2file formatting/diff pass. Existing test run precedes these CSS-only refinements and does not establish browser geometry.",
+            "Root actual final42e browser: SingleDrone320 StandardENTheme panel276px vs154.77baseline; difficulty belowChooseDrone, lowerAirframes reachable via native focus scrolling, Backvisible.320 LargePlainUK select18px/268wide. Riy844x390 ENLargePlain panel529.31wide/117.21high with lowerfield/Back reachable;390x844 UKLargePlain panel346wide. Exact keyboardEsc→Gameplaycategory→EscHomeSettingsfocus verified. Four screenshots in statuscache2026-10-19, overflight/riy-42e*. Sampled CSSviewports only, not full matrix/device/PWA/200% qualification.",
+            "Root remote readback verifies1738draft/main/exact6da4964165a92058a348cf469650dc3963ecb5b7/tree0efe161027ad11ad5960b51c460d816585700561/2paths, attached. Screenshot320Standard panelheight507.69, scrollheight707, scrollTop200; draftdoc initial clientheight200 is a transcriptionerror, correctionrequested. CSS/playerbehavior unchanged.",
+            "Doc-only ordinaryFF successor c4fd7199b5ab4e5126cb5d9f60e439873f539eec/tree02930bc72eb6de5eb75df4e3bd4064cef2a60b42 corrects507.69panelheight/200scrollTop/707scrollheight; CSS42e unchanged. Scalingwork safelyreturnedto preservedf807 with bounded5.72MB already-local source-only switch, no media hydration."
+          ],
+          "deliveryState": "draft",
+          "observedRemoteHead": "c4fd7199b5ab4e5126cb5d9f60e439873f539eec",
+          "qualification": {
+            "automated": "57_existing_owner_cases_pass_before_css_only_refinements",
+            "browser": "sampled_en_uk_portrait_landscape_pass",
+            "physical": "not_tested"
+          }
         },
         {
           "id": "single-drone-riy-extra-large-text",
@@ -2719,7 +2732,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Worlds storage-status language draft1736 passes partitioned139/139 and scoped actual EN/UK browser. Separate existing shared Versus/Team pause-music label correction is developing; other terminology/result/card gates remain.",
+      "next": "Worlds storage draft1736 retains partitioned139/139 and actual EN/UK review. Shared pause-music draft1737 passes complete28/28; corrected browser blocked at local picture loading, full source/package/device gates pending. Remaining terminology/result/card work continues.",
       "evidence": [
         "Browser review confirms existing singular grammar \"1 rerolls left\" and \"1 замін залишилося\". Track bounded count-aware localization in a later F59 batch; F19c adds disclosure only.",
         "Actual Worlds5363 native language switch after a verified result translates the new medal paragraph and enemy stats but leaves existing result heading, recording status, medal/score and action labels in English. Track bounded retained-result live-locale ownership; do not claim F23 new-paragraph fix covers existing nodes.",
@@ -2828,17 +2841,26 @@
         {
           "id": "couch-pause-music-language",
           "priority": "P2",
-          "status": "developing",
+          "status": "draft_review",
           "owner": "lane-c",
-          "pr": null,
-          "commit": null,
+          "pr": "https://github.com/mekhovov/revealline/pull/1737",
+          "commit": "7c4dd5205807116b86658cb4c3b641bb5e3d23e0",
           "dependency": "Existing shared pauseMusicAction owner; independent captured-main e746 base, not F10 or Worlds stack",
           "effort": "0.5d bounded fix plus focused/native/browser gates; queues excluded",
-          "next": "Refresh existing stable localization binding at legitimate pause admission, preserving global detached-node skip and music/input owners. Complete component red/green established; music-owner and actual Versus/Team checks developing.",
+          "next": "Published independent draft1737 on capturede746; complete component4/music22/native2 =28/28 passes. Corrected actual browser starts with Retry picture/disabled Start before Pause; investigate local asset failure without changing runtime. Full current-source/package/admission and device gates remain.",
           "evidence": [
             "ActualF10desktop screenshot shows visible Ukrainian Nextsong in otherwiseEnglishPause afterlocalechangedbeforefirstPause. Source owner pause-menu and bootstrap byte-identical e746, B27bfa and C1736: detached shortcut intentionally skipped by global translation; first legitimate admission needs current-locale refresh.",
-            "Valid complete componentRED2existingpass/2newracecoopfail, then approved stable label producer +existinglocalizedText reuse inrefresh; complete4/4GREEN. Earlier wrongUKliteral and stale textnode identity fixture errors corrected separately, not counted as productionred. Actual buttonidentity, subsequenttextnode/focus/order, missing/disabledtransport, oneexplicitNext, destroy/no-revival preserved. No playback/global localization/API change."
-          ]
+            "Valid complete componentRED2existingpass/2newracecoopfail, then approved stable label producer +existinglocalizedText reuse inrefresh; complete4/4GREEN. Earlier wrongUKliteral and stale textnode identity fixture errors corrected separately, not counted as productionred. Actual buttonidentity, subsequenttextnode/focus/order, missing/disabledtransport, oneexplicitNext, destroy/no-revival preserved. No playback/global localization/API change.",
+            "Final complete3file cohort28/28, zero skips/cancellations/guards, fresh serialized Node22 and exact24870 before/after manifest. Native2/2 includes actual Display select/change before first Pause in Versus/Team, paused checkpoints and repeated Back focus. Music22/22 preserves exact session/track/queue/preferences/writes/media plays. First broader native1/2 failure was pre-label cached-i18n fixture mounting; correction uses existing public attachLanguageControls via beforeImport and requires actualSELECT, no direct-locale bypass. Earlier failed attempt retained.",
+            "Root independently reviewed stable producer/existing localizedText4line change and all5paths. Draft1737 exact7c4dd52 tree8afdfbc8 parentactuale746, remote head/main/draft/paths verified and attached. Finaldoc-only qualification update does not alter passing production/test blobs. Actual source browser8993 could not reach Pause because defaultFirstreturn picture did not load; this is not corrected-label browser acceptance. No audible/device/offline claim."
+          ],
+          "deliveryState": "draft",
+          "observedRemoteHead": "7c4dd5205807116b86658cb4c3b641bb5e3d23e0",
+          "qualification": {
+            "automated": "complete_focused_28_pass_full_pending",
+            "browser": "blocked_local_picture_loading",
+            "physical": "not_tested"
+          }
         }
       ]
     },
@@ -4233,6 +4255,11 @@
       "date": "2026-10-19",
       "item": "Worlds language1736 and test1735 published; compact inference corrected",
       "reason": "Storage139partitionedcoverage verified independently; two failedmonolithicruns retained. Draft1736source5b84/3paths, browserlanguagefocus clear. Separatemainfixture1735 complete14/14, relatedextension developing. Search1715 source merge9566 confirmed, current-mainruntimegatesnewscope. Compactzero-panelreport corrected: intentionalcategorymode, actualdrill/Back passes; width154.77px measurablecramp drivesnarrowrepair. All113tasksretained."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Pause-music1737 published; compact width browser verified; fixture failure retained",
+      "reason": "Complete28/28 pause-language checks and exact5pathdraft published. Compact42e sampledENUK320/390/844 readability/focus passes after restored fieldlayout; draftpublication pending. Independent defaultfixture10/10passes, MissionLibrary14/19fails andcontinuousNOTRUN remain explicit. Whole113deliverables retained."
     }
   ],
   "deliveryDependencies": [
@@ -4320,7 +4347,7 @@
   ],
   "deliverySnapshot": {
     "featurePRsReady": 15,
-    "featurePRsDraft": 37,
+    "featurePRsDraft": 39,
     "deliverablesMerged": 28,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
@@ -4329,16 +4356,16 @@
   },
   "admissionReview": {
     "observedDate": "2026-10-19",
-    "scope": "All81 unique task-referenced candidates; separate dependencies excluded",
+    "scope": "All83 unique task-referenced candidates after1738; separate dependencies excluded",
     "counts": {
       "merged": 28,
       "ready": 15,
-      "draft": 37,
+      "draft": 39,
       "withdrawn": 1
     },
     "conflictedOpenPRs": [1617, 1642, 1664, 1671, 1672, 1721],
     "conflictedReadyPRs": [1617],
-    "note": "Metadata-only unique task-PR inventory rechecked after search1715 source merge and drafts1734/1736. Ready is authoring status, not passed checks or mergeability. Independentfixture1735 is a separate delivery dependency. Captured-e746 receipts do not qualify changed latestmain9566 search/runtime inputs; no blind rebase, manual merge or check bypass.",
+    "note": "Metadata-only unique task-PR inventory rechecked after search1715 source merge and drafts1734/1736. Ready is authoring status, not passed checks or mergeability. Independentfixture1735 is a separate delivery dependency. Captured-e746 receipts do not qualify changed latestmain9566 search/runtime inputs; no blind rebase, manual merge or check bypass. Draft1737 added after exact remote readback; other metadata states retain prior inventory timestamp. Draft1738 source/readback verified separately; doc-only receipt correction published as c4fd.",
     "latestMain": {
       "revision": "9566d32099b37f7e0c14fcc8101ea75b0e8432b5",
       "comparedWith": "e7465da3e4b1146b492f401fbb165a5e5a4a6202",
