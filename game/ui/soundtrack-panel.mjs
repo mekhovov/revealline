@@ -107,6 +107,7 @@ export function attachSoundtrackPanel({
   download,
   onOpen = () => {},
   onClose = () => {},
+  onPresentationChange = () => {},
   canRestoreFocus = () => true,
   onVolume = () => {},
   onPlayback = () => {},
@@ -3609,10 +3610,13 @@ export function attachSoundtrackPanel({
     retireAuthoringLoad();
     onOpen();
     returnFocus = doc.activeElement;
-    if (!dialog.open) dialog.showModal();
+    const opening = !dialog.open;
+    if (opening) dialog.showModal();
     update();
     if (!onlineCatalogue && !onlineCatalogueController) void loadOnlineCatalogue();
     closeButton.focus();
+    if (opening) onPresentationChange();
+    if (disposed || !dialog.open) return;
     const authoring = ensureAuthoringView();
     if (!saved) {
       const focusIsEmpty = () => doc.activeElement === doc.body || doc.activeElement === dialog;

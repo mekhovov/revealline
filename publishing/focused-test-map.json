@@ -291,6 +291,8 @@
           "command": "node",
           "args": [
             "--test",
+            "publishing/admission-paths.test.mjs",
+            "publishing/admission-binding.test.mjs",
             "publishing/focused-tests.test.mjs",
             "publishing/focused-shard-plan.test.mjs",
             "publishing/focused-git-inputs.test.mjs",
