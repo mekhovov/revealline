@@ -2,15 +2,15 @@
 
 **Review version: 19 October 2026**
 
-**Latest execution checkpoint:** **28 source slices merged,15 feature PRs open for checks,37 draft/dependent PRs;80 active/admitted and1 withdrawn.** All113 deliverables retain individual status. Seven delivery dependencies are separate. These are delivery counts, not a completion percentage.
+**Latest execution checkpoint:** **31 source slices merged ·12 feature PRs open for checks ·39 drafts =82 active/admitted candidates;1 withdrawn.** All83 feature groups /113 deliverables remain tracked; seven delivery dependencies are separate. These counts are not a completion percentage.
 
-**New reviewable delivery:** Worlds support #1733 passes245 focused checks; Rooms #1734 passes152 across11 complete files; Worlds storage language #1736 covers139 cases through verified disjoint groups and passes the actual language-switch browser scenario. Each remains a draft with explicit full-source/package/admission and device gates. Storage’s interrupted monolithic attempts remain failed/incomplete.
+**New reviewable delivery:** compact Single Drone/Riy Settings #1738 and shared pause-music language #1737 retain scoped browser evidence and focused tests. Independent Duel fixture #1735 now has complete per-file14/10/19/9 passes; its feature integrationb452 is qualifying the seven remaining files. Worlds/Rooms support and partitioned storage-language evidence remain reviewed drafts with explicit broader gates.
 
-**Current priorities:** integrate now-qualified independent prerequisite #1735 into Versus Home guidance and finish its remaining native cohort, qualify Capture Home and primary foundations, repair measured cramped Single Drone/Riy Settings, then complete their whole Extra large text group. Shared Versus/Team pause-music draft #1737 passes complete28/28; actual Duel first-pause and retained EN/UK label browser review pass. Contextual lessons still require Learn/D.
+**Current priorities:** finish Duel Home qualification, reconcile pause-language with currentmain, and complete the whole Single Drone/Riy Extra large menu/HUD/upgrades/results group. Newly merged Survival suspend and caption-reading owners must be preserved and inventoried. Contextual lessons still require Learn/D.
 
-**Corrected compact finding:** the initial zero-size selected panel is intentional category navigation. Actual category→controls→Back works; the operation context nevertheless leaves controls only154.77px wide at320px. Final scoped CSS42e now provides276px at320, with field rows and keyboard scrolling/Back verified in sampled Single Drone/Riy EN/UK portrait/landscape views. Two-path publication precedes full Extra large implementation.
+**Compact correction:** initialzero-size selectedpanel is intentional categorynavigation. The independentwidthfix1738 restores controlsfrom154.77 to276px at320, with sampledEN/UK portrait/landscape scrolling/Back evidence. It does not establish full Extra large support.
 
-**Admission and limits:** search #1715 is source-merged at inventoried main9566 (newer2d24 metadata observed); current runtime/search inputs differ from capturede746. Older receipts retain their exact scope. Disk fell to about160MiB, later recovered to615MiB; new implementation/native/integration work is held and user asked to free3GiB. Full builds/new snapshots retain2GiB reserve. No external-drive copy is authorized. Physical iPhone PWA/offline, Steam Deck and suspend/resume remain **Not tested**. Source, browser, release and device gates stay separate.
+**Admission and limits:** current observedmaincdb includes source-merges offline1616, Survival suspend1663 and captionreading1691. Older receipts retain exactsource scope. Actualspace2.6GiB permitsboundedimplementation/focusedtests; protect2GiB reserve forlargebuilds/newsourcecapture. No bulkassets or externalcopy authorized. PhysicaliPhonePWA/offline, SteamDeck and suspend/resume remain **Not tested**. Source, browser,release anddevice gates stay separate.
 
 ## 1. Summary, priorities and current evidence
 
