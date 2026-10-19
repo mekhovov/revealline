@@ -1,0 +1,25 @@
+{
+  "format": "SharedDemoNarrowVisualReviewV1",
+  "reviewedAt": "2026-10-19T04:31:17.298448+00:00",
+  "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+  "complete": true,
+  "images": [
+    {
+      "path": "mixed-chromium-final-emitted-ab47230-7438d14d6-local-narrow.png",
+      "sha256": "e4040259636e88e9f59a517a6b05db2664d24bd165f168fc494a8dc5794a6ec6"
+    },
+    {
+      "path": "mixed-firefox-final-emitted-ab47230-7438d14d6-local-narrow.png",
+      "sha256": "7d047c565a4b6d41e7589319171521cf538007456faf55adb5d3158cc02ebdf0"
+    },
+    {
+      "path": "mixed-webkit-final-emitted-ab47230-7438d14d6-local-narrow.png",
+      "sha256": "ee7a609586925e230e3e2c2c94777114bdfb52d902c969331f3f1e66d95c7d28"
+    }
+  ],
+  "findings": "All three retained narrow captures visually inspected. Toolbar controls, mode/title, game surface, captions, objective progress, audio status and practice hint remain within the viewport and readable; no visible overlap obscures controls or captions.",
+  "limitations": [
+    "Representative static captures, not every source or locale.",
+    "Headless narrow layout does not establish physical mobile input, audible playback or unfamiliar-player comprehension."
+  ]
+}

@@ -1,0 +1,355 @@
+{
+  "format": "SharedDemoFinalBrowserRefreshV1",
+  "started": "2026-10-19T04:12:43.048Z",
+  "complete": false,
+  "head": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "c278cb5a6257f1e8975807f921251d4b9a9487928792d4632f541a85b3a2af69",
+    "created": "2026-10-19T03:52:18.708Z",
+    "integrationBase": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+    "files": 9997,
+    "bytes": 404434188
+  },
+  "authoritative": {
+    "head": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+    "base": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+    "fingerprint": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+    "files": 9997,
+    "bytes": 404434188
+  },
+  "emittedPreviewDirectory": ".cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+  "wrapper": {
+    "path": ".cache/run-final-demo-refresh-emitted.mjs",
+    "sha256": "856f7669a0baa761ad036dbd4a6d8ca096d8dc4a51b589a222433d55d7516776"
+  },
+  "hashScope": {
+    "runtime": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "harness": "Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers."
+  },
+  "selected": [
+    "restoration-webkit",
+    "restoration-chromium",
+    "restoration-firefox",
+    "mixed-chromium",
+    "mixed-firefox",
+    "mixed-webkit",
+    "sim-fresh-chromium",
+    "sim-fresh-firefox",
+    "sim-fresh-webkit",
+    "graphics-chromium",
+    "listeners-chromium"
+  ],
+  "jobs": [
+    {
+      "id": "restoration-webkit",
+      "scriptSHA256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+      "reportPath": "docs/qualification/shared-demos/restoration-webkit-final-emitted-ab47230-7438d14d6.json",
+      "started": "2026-10-19T04:12:46.096Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-webkit-final-emitted-ab47230-7438d14d6.json\",\"complete\":true,\"checks\":12,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "command": [
+        "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--emitted-preview=.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+        "--report=docs/qualification/shared-demos/restoration-webkit-final-emitted-ab47230-7438d14d6.json",
+        "--port=8771"
+      ],
+      "pid": 60287,
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "childClosedAt": "2026-10-19T04:13:51.494Z",
+      "reportSHA256": "2a4b1347ab56d554097f58a0b1fc05f8da259252a5164addcf806cd5df069b44",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0,
+      "failure": null,
+      "provider": {
+        "owner": "child-qualifier",
+        "port": 8771,
+        "cache": "revalidate",
+        "mode": "generated-build",
+        "headers": "generated _headers (verified)",
+        "fixtureAccess": true,
+        "emittedPreview": {
+          "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+          "manifestSHA256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888",
+          "inventorySHA256": "d89d1e29792a85fb05e4b024f4c6ff097645ac349eb5194c1a5ce0f4bc9ceecc",
+          "files": 5953,
+          "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+          "sourceFingerprint": {
+            "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+            "files": 9997,
+            "bytes": 404434188
+          },
+          "buildInputFingerprint": {
+            "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+            "files": 9406,
+            "bytes": 348394334
+          },
+          "sourceVerified": true,
+          "sourceVerification": {
+            "head": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+            "runtime": {
+              "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+              "files": 9997,
+              "bytes": 404434188
+            },
+            "buildInput": {
+              "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+              "files": 9406,
+              "bytes": 348394334
+            }
+          }
+        },
+        "observedCacheControl": "public, max-age=0, must-revalidate",
+        "fixtureResponses": [
+          {
+            "path": "game/index.html",
+            "original": {
+              "bytes": 148811,
+              "sha256": "c2fe0b0b0d40db94406bd6e38cb3bd60c63b803d49f02f590d2e6d9a378e8db2"
+            },
+            "served": {
+              "bytes": 148785,
+              "sha256": "e5c8229a627fcaecf7568c24d2223a8c732a492b4929219e6239285fcf2630be"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          },
+          {
+            "path": "game/snake/play.html",
+            "original": {
+              "bytes": 17647,
+              "sha256": "884607b63aa1d690f1f91330bb4ff171d9b7fe79b914eb933e43ffc9fd07ba9a"
+            },
+            "served": {
+              "bytes": 17621,
+              "sha256": "29e74ec48d464393b04ce34fbdc9b3f18f2d73b1b1e100038699ea740f2ebd28"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          },
+          {
+            "path": "optional-practice/fpv-worlds/index.html",
+            "original": {
+              "bytes": 49494,
+              "sha256": "f36752ecf688965c81db7828c0702fe4e41a3d2115602b8e6fd70ec8d085fe10"
+            },
+            "served": {
+              "bytes": 49468,
+              "sha256": "c793a25b5482c55229f65c9aafd7f784063063f71b0d9b5122a24ab2efd6d138"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          },
+          {
+            "path": "game/overflight/play.html",
+            "original": {
+              "bytes": 17685,
+              "sha256": "1fe47550f1f95f97e60fd30d94c107202e2afefa8434870fed0b69fa69c4ff3e"
+            },
+            "served": {
+              "bytes": 17659,
+              "sha256": "ad28d7dfbb98d421c919635c551c469d8004139e79970fcc0ce7f47df88679f7"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          }
+        ],
+        "closeCompleted": true
+      },
+      "finished": "2026-10-19T04:13:51.496Z"
+    },
+    {
+      "id": "restoration-chromium",
+      "scriptSHA256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+      "reportPath": "docs/qualification/shared-demos/restoration-chromium-final-emitted-ab47230-7438d14d6.json",
+      "started": "2026-10-19T04:13:51.497Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-chromium-final-emitted-ab47230-7438d14d6.json\",\"complete\":false,\"checks\":1,\"failure\":\"page.waitForFunction: Target page, context or browser has been closed\\nBrowser logs:\\n\\n<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --disk-cache-size=1048576 --media-cache-size=1048576 --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/playwright_chromiumdev_profile-iF8eys --remote-debugging-pipe --no-startup-window\\n<launched> pid=61676\\n[pid=61676][err] Trying to load the allocator multiple times. This is *not* supported.\\n[pid=61676][err] [61699:476874:1019/061359.607001:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476979:1019/061359.610330:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476874:1019/061359.611207:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476979:1019/061359.611245:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476874:1019/061359.611927:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476979:1019/061359.611963:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476874:1019/061359.612094:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476979:1019/061359.612120:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476874:1019/061359.612206:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476979:1019/061359.612224:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476874:1019/061401.152863:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61699:476979:1019/061401.152906:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\\n[pid=61676][err] [61676:47674\",\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "command": [
+        "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--emitted-preview=.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+        "--report=docs/qualification/shared-demos/restoration-chromium-final-emitted-ab47230-7438d14d6.json",
+        "--port=8771"
+      ],
+      "pid": 61599,
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "childClosedAt": "2026-10-19T04:14:08.473Z",
+      "reportSHA256": "0a29e02fa5e17aa876fa816e0f32efd5f1ba6525907646cecf933bd1dc557563",
+      "complete": false,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 1,
+      "errorCount": 0,
+      "failure": "page.waitForFunction: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --disk-cache-size=1048576 --media-cache-size=1048576 --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/playwright_chromiumdev_profile-iF8eys --remote-debugging-pipe --no-startup-window\n<launched> pid=61676\n[pid=61676][err] Trying to load the allocator multiple times. This is *not* supported.\n[pid=61676][err] [61699:476874:1019/061359.607001:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476979:1019/061359.610330:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476874:1019/061359.611207:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476979:1019/061359.611245:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476874:1019/061359.611927:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476979:1019/061359.611963:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476874:1019/061359.612094:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476979:1019/061359.612120:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476874:1019/061359.612206:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476979:1019/061359.612224:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476874:1019/061401.152863:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61699:476979:1019/061401.152906:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n[pid=61676][err] [61676:47674",
+      "provider": {
+        "owner": "child-qualifier",
+        "port": 8771,
+        "cache": "revalidate",
+        "mode": "generated-build",
+        "headers": "generated _headers (verified)",
+        "fixtureAccess": true,
+        "emittedPreview": {
+          "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+          "manifestSHA256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888",
+          "inventorySHA256": "d89d1e29792a85fb05e4b024f4c6ff097645ac349eb5194c1a5ce0f4bc9ceecc",
+          "files": 5953,
+          "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+          "sourceFingerprint": {
+            "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+            "files": 9997,
+            "bytes": 404434188
+          },
+          "buildInputFingerprint": {
+            "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+            "files": 9406,
+            "bytes": 348394334
+          },
+          "sourceVerified": true,
+          "sourceVerification": {
+            "head": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+            "runtime": {
+              "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+              "files": 9997,
+              "bytes": 404434188
+            },
+            "buildInput": {
+              "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+              "files": 9406,
+              "bytes": 348394334
+            }
+          }
+        },
+        "observedCacheControl": "public, max-age=0, must-revalidate",
+        "fixtureResponses": [
+          {
+            "path": "game/index.html",
+            "original": {
+              "bytes": 148811,
+              "sha256": "c2fe0b0b0d40db94406bd6e38cb3bd60c63b803d49f02f590d2e6d9a378e8db2"
+            },
+            "served": {
+              "bytes": 148785,
+              "sha256": "e5c8229a627fcaecf7568c24d2223a8c732a492b4929219e6239285fcf2630be"
+            },
+            "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+          }
+        ],
+        "closeCompleted": true
+      },
+      "finished": "2026-10-19T04:14:08.474Z"
+    },
+    {
+      "id": "restoration-firefox",
+      "scriptSHA256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+      "reportPath": "docs/qualification/shared-demos/restoration-firefox-final-emitted-ab47230-7438d14d6.json",
+      "started": "2026-10-19T04:14:08.476Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-firefox-final-emitted-ab47230-7438d14d6.json\",\"complete\":false,\"checks\":0,\"failure\":\"Error: ENOENT: no such file or directory, realpath '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6'\\n    at async realpath (node:internal/fs/promises:1241:10)\\n    at async openEmittedPreview (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/emitted-preview.mjs:194:18)\\n    at async startProductionPreview (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/serve-production-preview.mjs:106:7)\\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:240:13\",\"browserCloseAttempted\":false,\"browserCloseCompleted\":false,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "command": [
+        "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--emitted-preview=.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+        "--report=docs/qualification/shared-demos/restoration-firefox-final-emitted-ab47230-7438d14d6.json",
+        "--port=8771"
+      ],
+      "pid": 61896,
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "childClosedAt": "2026-10-19T04:14:09.025Z",
+      "reportSHA256": "a7d074a696d129a619e647ade7d8d831a4dbe7bd10d6ddc58512b95964988e07",
+      "complete": false,
+      "browserCloseCompleted": false,
+      "previewClosed": null,
+      "checks": 0,
+      "errorCount": 0,
+      "failure": "Error: ENOENT: no such file or directory, realpath '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6'\n    at async realpath (node:internal/fs/promises:1241:10)\n    at async openEmittedPreview (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/emitted-preview.mjs:194:18)\n    at async startProductionPreview (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/serve-production-preview.mjs:106:7)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:240:13",
+      "provider": {
+        "owner": "child-qualifier",
+        "closeCompleted": false
+      },
+      "finished": "2026-10-19T04:14:09.026Z"
+    }
+  ],
+  "failedJobs": [
+    "restoration-chromium"
+  ],
+  "limitations": [
+    "All jobs receive the same verified emitted capture. Shared and restoration qualifiers own their preview. SIM Fresh and listeners use a per-job strict preview on port8774 with fixtureAccess:false; their unchanged document routing rewrites only local HTML access salt, verifier and id. This is an explicit browser fixture exception, not an offline HTML integrity proof.",
+    "Existing durable qualifiers only, sequential isolated browsers. No production or harness changes are made by this wrapper. Each selected job runs once; a strict failure remains failed while later independent jobs may proceed only after confirmed browser/server cleanup.",
+    "Some durable qualifiers retain empty-stack pageerrors as empty strings; any pageerror still fails their strict count. Raw/name diagnostics require a separate bounded probe after preserving such a failed receipt.",
+    "This refresh covers shared controls, Solo readiness/cache ownership and incoming SIM guidance. Full native corpus retains unchanged-content evidence. Representative emitted-offline, control-remap and native discard checks run separately.",
+    "The two-hour actual-wall-time rotation and outstanding physical-device/human review checks remain separate."
+  ],
+  "emittedManifest": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6/manifest.json",
+    "sha256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888",
+    "bytes": 1304587
+  },
+  "before": {
+    "runtime": {
+      "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+      "files": 9997,
+      "bytes": 404434188
+    },
+    "harness": {
+      "sha256": "2667cedb7a93d5e48b6e449f7da6ab8b05b25b11bf5c305649fb00aa619ff0bc",
+      "files": 933,
+      "bytes": 11154741
+    }
+  },
+  "emittedPreview": {
+    "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+    "manifestSHA256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888",
+    "inventorySHA256": "d89d1e29792a85fb05e4b024f4c6ff097645ac349eb5194c1a5ce0f4bc9ceecc",
+    "files": 5953,
+    "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+    "sourceFingerprint": {
+      "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+      "files": 9997,
+      "bytes": 404434188
+    },
+    "buildInputFingerprint": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    }
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: Each job must verify its emitted source.\n    at emittedIdentity (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/run-final-demo-refresh-emitted.mjs:111:10)\n    at acceptEmittedIdentity (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/run-final-demo-refresh-emitted.mjs:128:20)\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/run-final-demo-refresh-emitted.mjs:204:9",
+  "after": {
+    "runtime": {
+      "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+      "files": 9997,
+      "bytes": 404434188
+    },
+    "harness": {
+      "sha256": "2667cedb7a93d5e48b6e449f7da6ab8b05b25b11bf5c305649fb00aa619ff0bc",
+      "files": 933,
+      "bytes": 11154741
+    }
+  },
+  "changedFiles": {
+    "runtime": [],
+    "harness": []
+  },
+  "finished": "2026-10-19T04:14:11.659Z"
+}

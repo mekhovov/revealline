@@ -1,0 +1,234 @@
+{
+  "format": "revealline-demo-browser-matrix-aggregate.v1",
+  "created": "2026-10-19T04:29:43.840933+00:00",
+  "complete": true,
+  "scope": "Independent aggregation of eleven distinct required current-candidate browser jobs; no new browser run or source fingerprint recomputation.",
+  "head": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+  "integrationBase": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "c278cb5a6257f1e8975807f921251d4b9a9487928792d4632f541a85b3a2af69",
+    "created": "2026-10-19T03:52:18.708Z",
+    "integrationBase": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+    "files": 9997,
+    "bytes": 404434188
+  },
+  "runtime": {
+    "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+    "files": 9997,
+    "bytes": 404434188
+  },
+  "harness": {
+    "sha256": "2667cedb7a93d5e48b6e449f7da6ab8b05b25b11bf5c305649fb00aa619ff0bc",
+    "files": 933,
+    "bytes": 11154741
+  },
+  "buildInput": {
+    "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+    "files": 9406,
+    "bytes": 348394334
+  },
+  "emittedCapture": {
+    "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+    "manifestSHA256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888",
+    "inventorySHA256": "d89d1e29792a85fb05e4b024f4c6ff097645ac349eb5194c1a5ce0f4bc9ceecc",
+    "files": 5953,
+    "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82"
+  },
+  "wrapperReceipts": [
+    {
+      "path": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6.json",
+      "sha256": "e01b12c5b84c2a3317fc0b2159c5e1d4bf9449eab44cc093713d6694f37e08b1",
+      "complete": false,
+      "includedJobs": [
+        "restoration-webkit"
+      ],
+      "originalFailurePreserved": true
+    },
+    {
+      "path": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json",
+      "sha256": "bed8926d726c698b6d284b7608d6b051a19f35c300f7fd5411855cb041fea3aa",
+      "complete": true,
+      "includedJobs": [
+        "restoration-chromium",
+        "restoration-firefox",
+        "mixed-chromium",
+        "mixed-firefox",
+        "mixed-webkit",
+        "sim-fresh-chromium",
+        "sim-fresh-firefox",
+        "sim-fresh-webkit",
+        "graphics-chromium",
+        "listeners-chromium"
+      ]
+    }
+  ],
+  "requiredJobs": [
+    "restoration-webkit",
+    "restoration-chromium",
+    "restoration-firefox",
+    "mixed-chromium",
+    "mixed-firefox",
+    "mixed-webkit",
+    "sim-fresh-chromium",
+    "sim-fresh-firefox",
+    "sim-fresh-webkit",
+    "graphics-chromium",
+    "listeners-chromium"
+  ],
+  "passedJobs": 11,
+  "reportedChecks": 135,
+  "pageErrors": 0,
+  "jobs": [
+    {
+      "id": "restoration-webkit",
+      "reportPath": "docs/qualification/shared-demos/restoration-webkit-final-emitted-ab47230-7438d14d6.json",
+      "reportSHA256": "2a4b1347ab56d554097f58a0b1fc05f8da259252a5164addcf806cd5df069b44",
+      "scriptSHA256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+      "checks": 12,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6.json"
+    },
+    {
+      "id": "restoration-chromium",
+      "reportPath": "docs/qualification/shared-demos/restoration-chromium-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "1961d3ebb0e454070b130591442b70fca97ea5d19e951ad773bb30abe2af16de",
+      "scriptSHA256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+      "checks": 12,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    },
+    {
+      "id": "restoration-firefox",
+      "reportPath": "docs/qualification/shared-demos/restoration-firefox-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "a23b1becd7ed5e04b213d1ac4c359b4799136c5d55a4f81ee1e554cea8f479ae",
+      "scriptSHA256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+      "checks": 12,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    },
+    {
+      "id": "mixed-chromium",
+      "reportPath": "docs/qualification/shared-demos/mixed-chromium-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "c79d782285978b7add8793543fe97f974ddf4369c9bc9788b7bb2fb10c68c9db",
+      "scriptSHA256": "159529e4bf00f7d6cad0a9ed8ecbf725535c3a3c560cd40fb2968b5e700a7675",
+      "checks": 28,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    },
+    {
+      "id": "mixed-firefox",
+      "reportPath": "docs/qualification/shared-demos/mixed-firefox-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "dabe1a222287595730fbf1d602db7bdb845884376d49b361b5e8765b2626d292",
+      "scriptSHA256": "159529e4bf00f7d6cad0a9ed8ecbf725535c3a3c560cd40fb2968b5e700a7675",
+      "checks": 27,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    },
+    {
+      "id": "mixed-webkit",
+      "reportPath": "docs/qualification/shared-demos/mixed-webkit-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "4f6251f4a81c284c973f779285f1e04d7565278985b46c97589d89433350cf91",
+      "scriptSHA256": "159529e4bf00f7d6cad0a9ed8ecbf725535c3a3c560cd40fb2968b5e700a7675",
+      "checks": 27,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    },
+    {
+      "id": "sim-fresh-chromium",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-chromium-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "203ee3d0409c164a0e2e107b2ba6a6905574c30a7d6751eb9bf3fe4563d95de2",
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "checks": 2,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    },
+    {
+      "id": "sim-fresh-firefox",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-firefox-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "74615719094ce6273ea53aaf50be785468edd4ea61245da30342ad26bae480c9",
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "checks": 2,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    },
+    {
+      "id": "sim-fresh-webkit",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-webkit-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "2c3e142f455c663c1e18847a0e9698b7a72aeee5520c56f4fdf2e60bebe477bb",
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "checks": 2,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    },
+    {
+      "id": "graphics-chromium",
+      "reportPath": "docs/qualification/shared-demos/graphics-chromium-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "5b7cc8106ad4bc96f452966c98b9dfd7ea6deefe48e2518955cc2accdf55cbd9",
+      "scriptSHA256": "159529e4bf00f7d6cad0a9ed8ecbf725535c3a3c560cd40fb2968b5e700a7675",
+      "checks": 7,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    },
+    {
+      "id": "listeners-chromium",
+      "reportPath": "docs/qualification/shared-demos/listeners-chromium-final-emitted-ab47230-7438d14d6-local.json",
+      "reportSHA256": "ba6a86952f25602b453c811a7efcdd359a64165c88db22da7792716e84820893",
+      "scriptSHA256": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+      "checks": 4,
+      "errorCount": 0,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "providerCloseCompleted": true,
+      "wrapperReport": "docs/qualification/shared-demos/browser-refresh-final-emitted-ab47230-7438d14d6-local.json"
+    }
+  ],
+  "verification": {
+    "childReportHashesMatchWrappers": true,
+    "eachJobExitZeroAndComplete": true,
+    "allBrowserAndProviderCleanupComplete": true,
+    "sameDeclaredHeadRuntimeHarnessAndCapture": true,
+    "runtimeAndHarnessUnchangedAtBothWrapperBoundaries": true,
+    "continuationManifestUnchanged": true
+  },
+  "limitations": [
+    "The interrupted original matrix remains failed; only its independently successful WebKit restoration child is included.",
+    "These eleven jobs cover restoration, mixed playback/practice, SIM Fresh, graphics recovery and listener cleanup. They do not establish the focused native-menu probe, actual game discard, two-hour endurance, hosted CI or human/device/audible review.",
+    "Fixture credentials replace only declared local HTML access fields; this is not offline HTML integrity evidence.",
+    "Full 890-entry native replay coverage retains its own unchanged-content receipts; it was not rerun as part of this emitted browser matrix.",
+    "The passing WebKit sample does not identify or erase causes of historical native Fetch/Cache/Context diagnostics.",
+    "Receipts bind this exact candidate and emitted capture; any later main integration requires explicit impact review and appropriate refreshed evidence."
+  ]
+}

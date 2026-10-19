@@ -15,4 +15,6 @@ Record reviewer, date, device/controller, browser/version, mode, source ID, obse
 
 For each unfamiliar-player result, retain the observed answer rather than only a pass/fail judgment. Record defects against a specific mode/source and distinguish inability to find a control from an incorrect game explanation.
 
+For the controller check, focus the demo toolbar in native Snake and SIM. Move between Pause, Next and Back, then confirm each action. These menu gestures must not start practice. After leaving the toolbar, a held stick must remain inactive until released and moved again. Also verify that Space activates a focused toolbar button with each SIM keyboard preset. For the radio check, include the explicit “Practice with radio” button and verify that its accepted throttle survives practice preparation.
+
 Public deployment remains separate from this review.

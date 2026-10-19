@@ -1,0 +1,137 @@
+{
+  "format": "revealline-demo-owned-scratch-recovery.v1",
+  "started": "2026-10-19T04:16:32.095400+00:00",
+  "head": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+  "sourceDeclarationSHA256": "c278cb5a6257f1e8975807f921251d4b9a9487928792d4632f541a85b3a2af69",
+  "originalState": {
+    "format": "revealline-demo-owned-scratch.v1",
+    "createdAt": "2026-10-19T02:26:40.363959+00:00",
+    "externalFolder": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "imagePath": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification.sparsebundle",
+    "mountPoint": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c",
+    "capacityBytes": 2147483648,
+    "externalFreeBeforeBytes": 55296000000,
+    "ownerUid": 502,
+    "sourceRoot": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos",
+    "purpose": "Bounded generated emitted capture and owned temporary browser/build files; no user content removed.",
+    "attached": true,
+    "cleanupComplete": false,
+    "createExitCode": 0,
+    "createOutput": "created: /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification.sparsebundle\n",
+    "systemEntities": [
+      {
+        "content-hint": "GUID_partition_scheme",
+        "dev-entry": "/dev/disk4"
+      },
+      {
+        "content-hint": "48465300-0000-11AA-AA11-00306543ECAC",
+        "dev-entry": "/dev/disk4s1",
+        "mount-point": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c"
+      }
+    ],
+    "mountedDevice": "/dev/disk4s1",
+    "scratchAvailableBytes": 1856114688,
+    "restoredAt": "2026-10-19T03:28:32.445389+00:00"
+  },
+  "imagesBefore": [],
+  "cause": "Unknown. hdiutil reports no attached images; mountpoint had only an empty owned tmp directory, no open handles. No cause inferred from these observations.",
+  "recoveryMount": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-recovery-mount-7438d14d6",
+  "internalFreeBeforeBytes": 2855313408,
+  "complete": true,
+  "phase": "original-path-restored-internally",
+  "attachAttempts": [
+    {
+      "at": "2026-10-19T04:17:44.516341+00:00",
+      "readOnly": true,
+      "explicitOwnedImageConfirmation": true,
+      "exitCode": 0,
+      "stderr": "There may be a problem with this disk image. Are you sure you want to open it?\n",
+      "stdoutTailOnFailure": null
+    }
+  ],
+  "attach": {
+    "system-entities": [
+      {
+        "content-hint": "Apple_HFS",
+        "dev-entry": "/dev/disk4s1",
+        "mount-point": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-recovery-mount-7438d14d6",
+        "potentially-mountable": true,
+        "unmapped-content-hint": "48465300-0000-11AA-AA11-00306543ECAC",
+        "volume-kind": "hfs"
+      },
+      {
+        "content-hint": "GUID_partition_scheme",
+        "dev-entry": "/dev/disk4",
+        "potentially-mountable": false,
+        "unmapped-content-hint": "GUID_partition_scheme"
+      }
+    ]
+  },
+  "recoveryDevice": "/dev/disk4s1",
+  "mountedInventory": {
+    "files": 833,
+    "directories": 70,
+    "fileBytes": 289113182,
+    "allocatedFileBytes": 296415232,
+    "symlinks": [
+      "tmp/playwright_chromiumdev_profile-iF8eys/RunningChromeVersion",
+      "tmp/playwright_chromiumdev_profile-iF8eys/SingletonCookie",
+      "tmp/playwright_chromiumdev_profile-iF8eys/SingletonLock",
+      "tmp/playwright_chromiumdev_profile-iF8eys/SingletonSocket"
+    ],
+    "specialEntries": [],
+    "uids": [
+      502
+    ]
+  },
+  "captureIdentity": {
+    "relativePath": "captures/shared-demos-emitted-ab47230-7438d14d6",
+    "manifestSHA256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888",
+    "inventorySHA256": "d89d1e29792a85fb05e4b024f4c6ff097645ac349eb5194c1a5ce0f4bc9ceecc",
+    "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+    "sourceFingerprint": {
+      "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+      "files": 9997,
+      "bytes": 404434188
+    }
+  },
+  "wholeImageInventoryBeforeSHA256": "ab683c0818ec79ef6d6235ba90a60e9f8770c04a213d19d13f7101a9298b80d7",
+  "internalStaging": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-internal-stage-7438d14d6",
+  "updated": "2026-10-19T04:19:44.971781+00:00",
+  "wholeImageInventoryAfterSHA256": "ab683c0818ec79ef6d6235ba90a60e9f8770c04a213d19d13f7101a9298b80d7",
+  "wholeImageEntries": 907,
+  "wholeImageCopyVerified": true,
+  "captureBlobValidation": {
+    "uniqueBlobs": 286,
+    "bytes": 141598616,
+    "allBytesAndSHA256Match": true
+  },
+  "detach": {
+    "device": "/dev/disk4",
+    "exitCode": 0,
+    "stdout": "\"disk4\" ejected.\n",
+    "stderr": ""
+  },
+  "fallbackPreservedAt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-unmounted-fallback-7438d14d6",
+  "activeStorageKind": "internal-directory",
+  "activeStoragePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c",
+  "activeStorageDevice": 16777235,
+  "externalImagePreserved": true,
+  "ownedImageDetached": true,
+  "internalFreeAfterBytes": 2496643072,
+  "emptyRecoveryMountRemoved": true,
+  "initialAttachAttempt": {
+    "readOnly": true,
+    "confirmationSupplied": false,
+    "exitCode": 1,
+    "stderr": "There may be a problem with this disk image. Are you sure you want to open it?\nhdiutil: attach canceled\n",
+    "failure": "Read-only attach failed"
+  },
+  "finalOutcome": "Recovered exact owned contents to internal storage at the original path; external image preserved and detached.",
+  "completedAt": "2026-10-19T04:20:43.469125+00:00",
+  "headAfter": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+  "headUnchanged": true,
+  "sourceDeclarationUnchanged": true,
+  "sourceFingerprintRecomputed": false,
+  "remainingAdmission": "The unchanged browser wrapper will perform canonical source/capture admission before browser launch. No browser result or unmount-cause claim is added by this recovery."
+}
