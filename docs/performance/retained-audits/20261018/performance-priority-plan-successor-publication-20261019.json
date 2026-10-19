@@ -1,0 +1,28 @@
+{
+  "kind": "performance-plan-successor-publication",
+  "observedUTC": "2026-10-19T05:09:34.582415+00:00",
+  "predecessorPR": 1710,
+  "pr": 1725,
+  "url": "https://github.com/mekhovov/revealline/pull/1725",
+  "base": "55b1562803c177e49d0f0ed28a5b5929f675a4da",
+  "head": "a61d6c18fe67f2db4542db123c307ea84491f299",
+  "tree": "f1f8af4d46c63392ae4786215e5990d8842714a9",
+  "branch": "codex/solo-performance-priority-status-20261019",
+  "blob": "1e48b98479a97a8338f74a0db4dfb7745cdcd592",
+  "bytes": 177290,
+  "sha256": "b1e4ec3dc3e6efb8164d4c1ce52d64a9eb50adbc97425f07599efd1565d1608e",
+  "changedPaths": [
+    "docs/performance/solo-performance-followup-plan.md"
+  ],
+  "preservedHistoricalBytes": 126143,
+  "preservedHistoricalSHA256": "d31ad625087f70e4e507accdcce3bad037a3d44410ba77893c9484c011074bff",
+  "index": {
+    "head": "b1d53310276d189ebccd7d0be82425e9d7f17552",
+    "tree": "095e533f57f3f79b08e9b7185dd7c7e226c70346",
+    "indexBlob": "b878af1254ac133787feb6f33f1979447061a928",
+    "bytes": 89336,
+    "sha256": "6d40124fe6aa45754914aa864ada9e31014eff501ee14f4e18637b5a5c1af12a",
+    "records": 371
+  },
+  "publicationRecovery": "Initial branch creation succeeded; immediate readback returned404 before PR creation. First recovery verified the complete tree and bytes but failed on an unresolved body placeholder before the API request. Reverified existing branch/commit/complete tree/exact formatted bytes and historical tail; created PR without another commit or ref mutation."
+}

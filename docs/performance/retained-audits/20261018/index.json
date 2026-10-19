@@ -2228,6 +2228,12 @@
       "blob": "f354775b421cd7c45d3ff5268a966fcc121e4fa0",
       "bytes": 4717,
       "sha256": "b766be3fe5322c04fe986485c52beb5dd3db0b1a3e17dba0b54f7a836f1e7194"
+    },
+    {
+      "path": "performance-priority-plan-successor-publication-20261019.json",
+      "blob": "f556e312d43321441ee4abbad8a5d655892462e2",
+      "bytes": 1494,
+      "sha256": "71739236bf22eeb8641e509721886194c758ab40cafd56c09c63735d11c71fb7"
     }
   ]
 }
