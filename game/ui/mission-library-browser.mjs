@@ -44,6 +44,7 @@ export function attachMissionLibraryBrowser({
   document: doc = globalThis.document,
   library,
   mode = 'solo',
+  getHostMode = () => mode,
   onPause,
   onReturn,
   readState = () => null,
@@ -726,8 +727,17 @@ export function attachMissionLibraryBrowser({
       completion: null,
     };
   }
+  function hostMode() {
+    try {
+      const accepted = getHostMode();
+      if (modes.includes(accepted)) return accepted;
+    } catch {
+      // A retired host callback must not make browse-only recovery unusable.
+    }
+    return mode;
+  }
   const filtersActive = () =>
-    !!collection.value || modeFilter.value !== mode || lifecycle.value !== 'current';
+    !!collection.value || modeFilter.value !== hostMode() || lifecycle.value !== 'current';
   function filterDescription() {
     return t('interface:missionLibrary.search.filters', {
       collection: collection.value ? t(LIBRARY_TAG_KEYS[collection.value]) : t('interface:all'),
@@ -1255,30 +1265,21 @@ export function attachMissionLibraryBrowser({
       return;
     const ticket = visit,
       focused = doc.activeElement,
-      modeChanged = modeFilter.value !== mode;
-    resetViewportAnchor();
-    retirePendingSelection();
-    retirePreparations();
-    ++visit;
-    message = '';
+      acceptedMode = hostMode();
     collection.value = '';
     lifecycle.value = 'current';
-    modeFilter.value = mode;
-    selectedId = '';
-    savedScroll = 0;
-    list.scrollTop = 0;
-    pendingCampaign = '';
-    rebuildCampaigns();
-    if (modeChanged) invalidateDiagrams();
-    render();
-    captureViewportAnchor();
-    remember({ captureFocus: false });
+    modeFilter.value = acceptedMode;
+    // One ordinary filter event owns retirement/rendering and informs native
+    // hosts which keep remote metadata or preview controls for the browsed mode.
+    const EventType = doc.defaultView?.Event || Event;
+    modeFilter.dispatchEvent(new EventType('change', { bubbles: true }));
     if (
       destroyed ||
       !dialog.open ||
       doc.hidden ||
       doc.hasFocus?.() === false ||
       visit !== ticket + 1 ||
+      modeFilter.value !== acceptedMode ||
       (doc.activeElement !== focused &&
         !(focused === resetFilters && doc.activeElement === doc.body))
     )
