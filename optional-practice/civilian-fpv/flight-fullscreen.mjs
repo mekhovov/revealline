@@ -1000,6 +1000,7 @@ import*as simGlobalArtReview from'../../game/ui/art-review-navigation.mjs';
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
 import*as simGlobalActorPreferences from'../../game/hunt/preferences.mjs';
+import*as simGlobalEnemyAppearance from'../../game/ui/enemy-appearance-controls.mjs';
 const sharedGlobalSettings=(()=>{
 const modules=Object.create(null);
 modules['game/mission-library/library.mjs']=(()=>{
@@ -2128,6 +2129,7 @@ goalPreferenceOptions={},
 description=localizedMessage(
 'interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir',
 ),
+browsingContext=null,
 random=Math.random,
 renderPreview=()=>null,
 createArtworkView=null,
@@ -2820,7 +2822,7 @@ randomLevel.disabled= !matches.some(
 localizedText(
 status,
 ()=>
-`${t('common:counts.missions',{count:matches.length})} · ${modeLabel(modeFilter.value)}${message?` · ${renderMessage(message)}`:''}`,
+`${t('common:counts.missions',{count:matches.length})} · ${browsingContext?.({mode:modeFilter.value,label:modeLabel(modeFilter.value)})??modeLabel(modeFilter.value)}${message?` · ${renderMessage(message)}`:''}`,
 );
 const filtersActive=
 !!collection.value||modeFilter.value!==mode||lifecycle.value!=='current';
@@ -6307,48 +6309,129 @@ window:target=globalThis.window,
 }={}){
 const shared=storage===defaultStorage();
 if(sharedPreferences&&shared)return sharedPreferences;
-let value={...CONTINUOUS_PLAY_DEFAULTS};
+let value={...CONTINUOUS_PLAY_DEFAULTS},
+reason='',
+action=0,
+saving=false,
+disposed=false;
 const listeners=new Set();
+const pending=new Set(),
+saved=new Set();
 const read=()=>{
+const next={...CONTINUOUS_PLAY_DEFAULTS};
+const raw=storage?.getItem(CONTINUOUS_PLAY_KEY);
 try{
-const saved=JSON.parse(storage?.getItem(CONTINUOUS_PLAY_KEY)??'{}');
-for(const key of Object.keys(value))
-if(typeof saved?.[key]==='boolean')value[key]=saved[key];
+const record=JSON.parse(raw??'{}');
+for(const key of Object.keys(next))
+if(typeof record?.[key]==='boolean')next[key]=record[key];
 }catch{
-/* In-memory preferences remain usable when storage is unavailable. */
+/* An explicit choice can replace an unreadable preference record. */
+}
+return next;
+};
+try{
+value=read();
+}catch{
+/* Startup reads do not claim that an unsaved default has been saved. */
+}
+const notify=()=>{
+for(const listener of[...listeners])
+if(!disposed&&listeners.has(listener))listener({...value});
+};
+const persistence=(key)=>({
+status:pending.has(key)?'session':saved.has(key)?'saved':'idle',
+reason:pending.has(key)?reason:'',
+});
+const save=()=>{
+if(disposed||saving|| !pending.size)return;
+saving=true;
+const expected=action,
+local={...value},
+keys=[...pending];
+let phase='read';
+try{
+if(!storage){
+reason='unavailable';
+return;
+}
+// Retry keeps local unsaved choices and the latest saved values for all
+// untouched settings. A different tab cannot silently retire local intent.
+const next=read();
+if(disposed||action!==expected)return;
+for(const key of keys)next[key]=local[key];
+const raw=JSON.stringify(next);
+phase='write';
+storage.setItem(CONTINUOUS_PLAY_KEY,raw);
+if(disposed||action!==expected)return;
+phase='verify';
+const confirmed=storage.getItem(CONTINUOUS_PLAY_KEY);
+if(disposed||action!==expected)return;
+if(confirmed!==raw)throw new Error('Save was not confirmed.');
+value=next;
+pending.clear();
+saved.clear();
+for(const key of keys)saved.add(key);
+reason='';
+}catch(error){
+if(!disposed&&action===expected)
+reason=
+error?.name==='SecurityError'
+?'blocked'
+:error?.name==='QuotaExceededError'
+?'full'
+:phase;
+}finally{
+saving=false;
+if(!disposed)notify();
 }
 };
-read();
-const notify=()=>{
-for(const listener of listeners)listener({...value});
-};
 const changed=(event)=>{
-if(event.key===CONTINUOUS_PLAY_KEY){
-read();
+if(
+disposed||
+(event.key!==CONTINUOUS_PLAY_KEY&& !(event.key===null&&event.newValue===null))||
+(event.storageArea&&event.storageArea!==storage)
+)
+return;
+const expected=action;
+try{
+const current=read();
+if(disposed||action!==expected)return;
+for(const key of Object.keys(current))if(!pending.has(key))value[key]=current[key];
+saved.clear();
 notify();
+}catch{
+/* An unreadable event has no authority over this session's choices. */
 }
 };
 target?.addEventListener?.('storage',changed);
 const preferences={
 snapshot:()=>({...value}),
+persistence,
 set(key,enabled){
-if(!(key in CONTINUOUS_PLAY_DEFAULTS))
+if(disposed)throw new Error('Continuous-play preferences are disposed.');
+if(!Object.hasOwn(CONTINUOUS_PLAY_DEFAULTS,key))
 throw new TypeError('Unknown continuous-play preference.');
 value[key]= !!enabled;
-try{
-storage?.setItem(CONTINUOUS_PLAY_KEY,JSON.stringify(value));
-}catch{
-/* Session choice remains active. */
-}
-notify();
+action++;
+pending.add(key);
+reason='unconfirmed';
+save();
+return persistence(key);
+},
+retry(){
+if(disposed|| !pending.size)return;
+action++;
+save();
 },
 subscribe(listener){
 listeners.add(listener);
 return()=>listeners.delete(listener);
 },
 dispose(){
+disposed=true;
 target?.removeEventListener?.('storage',changed);
 listeners.clear();
+if(sharedPreferences===preferences)sharedPreferences=null;
 },
 };
 if(shared)sharedPreferences=preferences;
@@ -6509,6 +6592,32 @@ autoRetry:'Автоматично повторювати після поразк
 autoReplay:'Автоматично показувати повтор поразки',
 },
 };
+const SAVE_COPY={
+en:{
+saved:'Saved on this device.',
+session:'Session only.',
+unavailable:'Browser storage is unavailable.',
+blocked:'The browser blocked saving.',
+full:'Browser storage is full.',
+read:'Saved settings could not be read.',
+write:'These settings could not be saved.',
+verify:'Saving could not be confirmed.',
+unconfirmed:'Your latest choice has not been saved yet.',
+retry:'Retry saving',
+},
+uk:{
+saved:'Збережено на цьому пристрої.',
+session:'Лише для цього сеансу.',
+unavailable:'Сховище браузера недоступне.',
+blocked:'Браузер заблокував збереження.',
+full:'Сховище браузера заповнене.',
+read:'Не вдалося прочитати збережені налаштування.',
+write:'Не вдалося зберегти ці налаштування.',
+verify:'Не вдалося підтвердити збереження.',
+unconfirmed:'Ваш останній вибір ще не збережено.',
+retry:'Повторити збереження',
+},
+};
 function continuousPlayBindings(preferences=continuousPlayPreferences()){
 return Object.fromEntries(
 Object.keys(CONTINUOUS_PLAY_DEFAULTS).map((key)=>[
@@ -6517,6 +6626,21 @@ key,
 get:()=>preferences.snapshot()[key],
 set:(value)=>preferences.set(key,value),
 subscribe:(fn)=>preferences.subscribe(fn),
+retry:()=>preferences.retry(),
+feedback:(locale)=>{
+const state=preferences.persistence?.(key),
+copy=SAVE_COPY[String(locale).split('-')[0]]??SAVE_COPY.en;
+return{
+text:
+state?.status==='saved'
+?copy.saved
+:state?.status==='session'
+?`${copy.session} ${copy[state.reason]??copy.unconfirmed}`
+:'',
+retry:state?.status==='session',
+retryLabel:copy.retry,
+};
+},
 },
 ]),
 );
@@ -7079,184 +7203,6 @@ panel.remove();
 
 return{mountThemeMaterialPreview};
 })();
-modules['game/ui/enemy-appearance-controls.mjs']=(()=>{
-const sharedEnemyArtwork=simGlobalActorPreferences['sharedEnemyArtwork'];
-const sharedActorAppearance=simGlobalActorPreferences['sharedActorAppearance'];
-const ACTOR_CASTS=simGlobalActorCatalog['ACTOR_CASTS'];
-const actorArtReviewRevision=simGlobalArtReview['actorArtReviewRevision'];
-const nativeArtReviewURL=simGlobalArtReview['nativeArtReviewURL'];
-
-const COPY={
-en:{
-label:'Enemy appearance preset',
-authored:'Original level artwork',
-military:'Military Field · soldiers and vehicles',
-uniform:'Soldier uniform',
-castAuthored:'As designed',
-about:'What changes?',
-help:'Military Field applies the matching game appearance and detailed military artwork. Choose a uniform under Character appearance. It uses the level’s existing enemies; Running enemies adds optional humanoids. Snake targets stay humanoid.',
-next:'Applies when starting a new attempt. Retry and Continue keep accepted artwork. Creator-owned custom artwork is retained.',
-preview:'Preview artwork is active. Choosing a preset ends this preview.',
-saving:'This choice applies here, but could not be saved for another page.',
-failure:'The appearance could not be prepared. Select it again to retry.',
-},
-uk:{
-label:'Набір оформлення ворогів',
-authored:'Початкове оформлення рівня',
-military:'Військове поле · солдати й техніка',
-uniform:'Форма солдатів',
-castAuthored:'За задумом',
-about:'Що змінюється?',
-help:'Військове поле застосовує відповідне оформлення гри та детальні військові образи. Форму можна вибрати в розділі «Вигляд персонажів». Використовуються наявні вороги рівня; «Рухливі вороги» додають необов’язкових гуманоїдів. Цілі Snake залишаються гуманоїдами.',
-next:'Діє з початком нової спроби. Повтор і продовження зберігають прийняте оформлення. Власні авторські зображення зберігаються.',
-preview:'Активний попередній перегляд зображень. Вибір набору завершує цей перегляд.',
-saving:'Вибір діє тут, але його не вдалося зберегти для іншої сторінки.',
-failure:'Не вдалося підготувати оформлення. Виберіть його знову, щоб повторити.',
-},
-};
-let sequence=0;
-
-function clearExplicitReviewPin(location,history){
-if(!actorArtReviewRevision(location))return;
-const source=new URL(location.href),
-target=new URL(source);
-target.searchParams.delete('artReview');
-// Use the same fixed native-route contract as review-link propagation. An
-// unrelated URL, unsupported protocol or ambiguous pin is never rewritten.
-if(nativeArtReviewURL(target.href,source.href)===target.href)return;
-if(typeof history?.replaceState!=='function')
-throw new Error('The current review appearance cannot be replaced.');
-history.replaceState(history.state,'',target.href);
-}
-
-/** Shared explicit preset, not a gameplay/population switch. Each native host
-     * retains ownership of the current attempt and its next preparation boundary. */
-function mountEnemyAppearanceControls({
-document:doc=globalThis.document,
-location=doc.defaultView?.location??globalThis.location,
-history=doc.defaultView?.history??globalThis.history,
-container,
-preferences=sharedEnemyArtwork(),
-locale=()=>doc.documentElement?.lang??'en',
-includeUniform=false,
-applyMilitary,
-applyAuthored,
-}={}){
-if(!container||typeof applyMilitary!=='function'||typeof applyAuthored!=='function')
-throw new TypeError('Enemy appearance controls require native appearance actions.');
-const root=doc.createElement('div'),
-label=doc.createElement('label'),
-title=doc.createElement('span'),
-select=doc.createElement('select'),
-details=doc.createElement('details'),
-summary=doc.createElement('summary'),
-help=doc.createElement('p'),
-status=doc.createElement('p');
-root.className='enemy-appearance-controls';
-root.dataset.enemyAppearanceControls='true';
-label.className='settings-row';
-select.id=`enemy-appearance-${++sequence}`;
-select.name='enemy-appearance';
-select.dataset.enemyAppearance='true';
-help.id=`${select.id}-help`;
-help.className=status.className='micro-note';
-status.setAttribute('role','status');
-select.setAttribute('aria-describedby',help.id);
-for(const value of['authored','military']){
-const option=doc.createElement('option');
-option.value=value;
-select.append(option);
-}
-label.append(title,select);
-details.append(summary,help);
-root.append(label,status,details);
-const cast=includeUniform?sharedActorAppearance():null;
-let uniform;
-if(cast){
-const uniformLabel=doc.createElement('label');
-uniform={title:doc.createElement('span'),select:doc.createElement('select')};
-uniformLabel.className='settings-row';
-uniform.select.name='soldier-uniform';
-for(const value of['authored',...ACTOR_CASTS.map((entry)=>entry.id)]){
-const option=doc.createElement('option');
-option.value=value;
-uniform.select.append(option);
-}
-uniformLabel.append(uniform.title,uniform.select);
-root.insertBefore(uniformLabel,status);
-}
-container.append(root);
-let disposed=false,
-failed=false,
-generation=0;
-function refresh(){
-if(disposed)return;
-const words=COPY[locale()]??COPY.en,
-state=preferences.snapshot(),
-reviewing=actorArtReviewRevision(location)!==null;
-title.textContent=words.label;
-for(const option of select.options)option.textContent=words[option.value];
-select.value=reviewing?'military':state.style;
-help.textContent=words.help;
-summary.textContent=words.about;
-if(uniform){
-uniform.title.textContent=words.uniform;
-uniform.select.value=cast.snapshot().cast;
-for(const option of uniform.select.options)
-option.textContent=
-ACTOR_CASTS.find((entry)=>entry.id===option.value)?.name[
-locale()==='uk'?'uk':'en'
-]??words.castAuthored;
-}
-status.textContent=failed
-?words.failure
-:reviewing
-?words.preview
-:state.durable===false
-?words.saving
-:words.next;
-}
-const change=async()=>{
-const ticket= ++generation,
-style=select.value;
-if(!['authored','military'].includes(style))return;
-failed=false;
-try{
-// An explicit preset supersedes only this page's supported cosmetic review
-// pin. Do this before notifying preferences so native subscribers observe
-// the new intent; visiting settings or receiving another tab's choice
-// must preserve the current review link.
-clearExplicitReviewPin(location,history);
-preferences.set({style});
-await(style==='military'?applyMilitary():applyAuthored());
-}catch{
-if(!disposed&&generation===ticket)failed=true;
-}
-if(!disposed&&generation===ticket)refresh();
-};
-select.addEventListener('change',change);
-const changeUniform=()=>cast.set({cast:uniform.select.value});
-uniform?.select.addEventListener('change',changeUniform);
-const unsubscribe=preferences.subscribe(refresh);
-const unsubscribeCast=cast?.subscribe(refresh);
-return Object.freeze({
-element:root,
-refresh,
-dispose(){
-if(disposed)return;
-disposed=true;
-generation++;
-unsubscribe();
-unsubscribeCast?.();
-select.removeEventListener('change',change);
-uniform?.select.removeEventListener('change',changeUniform);
-root.remove();
-},
-});
-}
-
-return{clearExplicitReviewPin,mountEnemyAppearanceControls};
-})();
 modules['game/ui/theme-family-controls.mjs']=(()=>{
 const t=simGlobalI18n['t'];
 const localizedText=simGlobalI18n['localizedText'];
@@ -7267,8 +7213,7 @@ const BUILTIN_THEME_FAMILIES=simGlobalThemes['BUILTIN_THEME_FAMILIES'];
 const resolvePresentation=simGlobalThemes['resolvePresentation'];
 const mountThemeMaterialPreview=
 modules['game/ui/theme-material-preview.mjs']['mountThemeMaterialPreview'];
-const mountEnemyAppearanceControls=
-modules['game/ui/enemy-appearance-controls.mjs']['mountEnemyAppearanceControls'];
+const mountEnemyAppearanceControls=simGlobalEnemyAppearance['mountEnemyAppearanceControls'];
 
 /** One immediate appearance choice; the host owns atomic loads and flight boundaries. */
 function attachThemeFamilyControls({
@@ -7671,9 +7616,18 @@ moves.push({node,parent:node.parentNode,next:node.nextSibling});
 function retireField(row){
 row.stop?.();
 row.input?.removeEventListener('change',row.change);
+row.retry?.removeEventListener('click',row.retrySave);
 row.field?.remove();
 row.status?.remove();
-Object.assign(row,{input:null,field:null,status:null,output:null,stop:null});
+row.retry?.remove();
+Object.assign(row,{
+input:null,
+field:null,
+status:null,
+output:null,
+retry:null,
+stop:null,
+});
 }
 function render(row){
 if(!row.input|| !row.binding)return;
@@ -7681,8 +7635,19 @@ const value=row.binding.get();
 if(row.spec.type==='checkbox')row.input.checked= !!value;
 else row.input.value=String(value);
 if(row.output)row.output.textContent=`${Math.round(Number(value)*100)}%`;
-row.status.textContent=row.binding.warning?.()||'';
+const feedback=row.binding.feedback?.(locale),
+message=row.binding.warning?.()||feedback?.text||'';
+if(row.status.textContent!==message)row.status.textContent=message;
 row.status.hidden= !row.status.textContent;
+const ownedFocus=doc.activeElement===row.retry;
+row.retry.textContent=feedback?.retryLabel||'';
+row.retry.hidden= !(feedback?.retry&&row.binding.retry);
+if(
+ownedFocus&&
+row.retry.hidden&&
+[row.retry,doc.body,null].includes(doc.activeElement)
+)
+row.input.focus({preventScroll:true});
 }
 function makeField(row){
 const{spec,wrapper}=row;
@@ -7702,25 +7667,26 @@ row.output.setAttribute('for',input.id);
 label.append(text,input);
 if(row.output)label.append(row.output);
 const status=doc.createElement('p');
+status.id=`${input.id}-status`;
 status.className='micro-note';
 status.setAttribute('role','status');
 status.hidden=true;
-wrapper.append(label,status);
-Object.assign(row,{field:label,label:text,input,status});
-row.change=()=>{
-const value=
-spec.type==='checkbox'
-?input.checked
-:spec.type==='range'
-?Number(input.value)
-:input.value;
+input.setAttribute('aria-describedby',status.id);
+const retry=doc.createElement('button');
+retry.type='button';
+retry.className='button secondary global-settings-save-retry';
+retry.hidden=true;
+retry.setAttribute('aria-describedby',status.id);
+wrapper.append(label,status,retry);
+Object.assign(row,{field:label,label:text,input,status,retry});
+const invoke=(operation)=>{
 const failed=(error)=>{
 render(row);
 status.textContent=error?.message||labels().failed;
 status.hidden=false;
 };
 try{
-const pending=row.binding.set(value);
+const pending=operation();
 render(row);
 if(pending?.then)
 pending.then(
@@ -7735,7 +7701,18 @@ if(!disposed)failed(error);
 failed(error);
 }
 };
+row.change=()=>{
+const value=
+spec.type==='checkbox'
+?input.checked
+:spec.type==='range'
+?Number(input.value)
+:input.value;
+invoke(()=>row.binding.set(value));
+};
+row.retrySave=()=>invoke(()=>row.binding.retry?.());
 input.addEventListener('change',row.change);
+retry.addEventListener('click',row.retrySave);
 }
 function refresh(nextLocale=locale){
 if(disposed)return;
@@ -7833,6 +7810,7 @@ disposed=true;
 for(const row of rows.values()){
 row.stop?.();
 row.input?.removeEventListener('change',row.change);
+row.retry?.removeEventListener('click',row.retrySave);
 }
 for(const{node,parent,next}of moves.reverse()){
 // A host may already have retired its own provider during teardown.
@@ -8089,7 +8067,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: c72c76aff2abf1bb486d89a7377176e11c5c6d1f6de191b5a672d6e9f1fc55c2
+// Canonical source sha256: 5ad4d180084e82aeeee30fd336a56aa099ae3b5a1952c0e2dfc3f15c16f38cc5
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9040,6 +9018,7 @@ logo.alt='FPV / LINE';
 title.replaceChildren(logo);
 }
 const edition=el('p','mode-play-edition');
+edition.id=`${idPrefix}-navigation-context`;
 const modes=el('nav','mode-play-modes');
 move('modes',modes);
 const mission=el('p','mode-play-mission');
@@ -9249,8 +9228,10 @@ put(node,'textContent',value);
 }
 attribute(buttons.menu,'aria-label',COPY[language].menu);
 put(modeLabel,'textContent',text(modeName));
-put(edition,'textContent',text(modeName));
-edition.hidden=true;
+put(edition,'textContent',text(state.navigationContext));
+put(edition,'hidden',!edition.textContent);
+if(edition.hidden)modes.removeAttribute('aria-describedby');
+else attribute(modes,'aria-describedby',edition.id);
 attribute(modes,'aria-label',COPY[language].modes);
 attribute(menu,'aria-label',COPY[language].home);
 attribute(utilities,'aria-label',COPY[language].settings);

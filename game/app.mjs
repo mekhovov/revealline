@@ -228,6 +228,7 @@ import {
 } from './ui/controller-boost-settings.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
+import { readingInputPrompt } from './ui/reading-input-prompt.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';
@@ -3450,19 +3451,11 @@ try {
     });
   }
   function readingPrompt({ scrollable }) {
-    const mode = document.body.dataset.inputMode;
-    const scroll = !scrollable
-      ? t('interface:allTextIsVisible')
-      : mode === 'controller' || mode === 'keyboard'
-        ? t('interface:upDownScroll')
-        : t('interface:scrollToRead');
-    const exit =
-      mode === 'controller'
-        ? `${controllerLabels.menu.confirm} or ${controllerLabels.menu.back}`
-        : mode === 'keyboard'
-          ? t('interface:enterSpaceOrEscape')
-          : t('interface:doneReading');
-    return `${scroll} · ${exit} returns`;
+    return readingInputPrompt({
+      modality: document.body.dataset.inputMode,
+      scrollable,
+      controls: controllerLabels.menu,
+    });
   }
   function setInputModality(mode) {
     if (document.body.dataset.inputMode === mode) return;
@@ -14384,9 +14377,16 @@ try {
             ? {
                 supportedModes: runtimeContent.selection.edition.modes,
                 availableCollectionsOnly: true,
-                description: runtimeContent.selection.edition.name,
               }
             : {}),
+          description: () =>
+            `${runtimeContent?.selection.edition.name ?? t('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir')} ${t('interface:captureNavigation.browseHint')}`,
+          browsingContext: ({ label }) => {
+            const context = soloNavigationContext();
+            return context
+              ? t('interface:captureNavigation.browsing', { mode: label, context })
+              : label;
+          },
           getCurrentId: () => {
             const mission = candidateHost && journeyMission();
             if (mission)
@@ -14914,7 +14914,23 @@ try {
       close: () => unifiedChooser?.close(),
     };
   }
+  function soloNavigationContext() {
+    // The accepted catalogue owner, not the entry URL or visual theme, grants
+    // this identity. Classic/imported selections retain their Capture context.
+    if (
+      candidateHost?.owns(activeEntry) &&
+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)
+    ) {
+      const name =
+        authoredRoute.id === 'humanoid-hunt-v1'
+          ? huntText('lessons')
+          : contentText(authoredRoute.source, 'name');
+      return `${name} · ${t('interface:solo2')}`;
+    }
+    return t('interface:captureNavigation.context', { mode: t('interface:solo2') });
+  }
   gameShell = attachGameShell({
+    navigationContext: soloNavigationContext,
     getAppearanceDefault: () => {
       const pin = currentAppearanceDefault();
       return pin && runtimeContent?.appearanceThemes.length
