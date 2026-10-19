@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile, stat } from 'node:fs/promises';
+import { lstat, mkdir, mkdtemp, readFile, realpath, rm, stat, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { dirname, join } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const fixtureURL = new URL(
   '../docs/performance/fixtures/solo-replay-portability/first-eight-39109911286.json',
@@ -313,18 +316,79 @@ export function traceReplayPortability(recording, dependencies, strictCheckpoint
   return result;
 }
 
-async function verifyNodeModules(fixture) {
+const historicalCatalogURL = new URL(
+  '../docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture',
+  import.meta.url,
+);
+const historicalCatalog = Object.freeze({
+  path: 'game/i18n/catalogs.mjs',
+  bytes: 1264959,
+  sha256: 'ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224',
+});
+function validateNodeSourceClosure(fixture) {
+  assert.equal(fixture.nodeSourceRevision, '1255a79a90268316f8ea768d3e0c56610b26df52');
+  assert.equal(fixture.nodeModules.length, 47, 'Exact historical Node closure required');
+  assert.equal(new Set(fixture.nodeModules.map((item) => item.path)).size, 47);
+  assert.deepEqual(
+    fixture.nodeModules.find((item) => item.path === historicalCatalog.path),
+    historicalCatalog,
+  );
   let total = 0;
   for (const item of fixture.nodeModules) {
     assert(/^game\/[A-Za-z0-9/_.-]+$/.test(item.path) && !item.path.includes('..'));
-    const url = new URL('../' + item.path, import.meta.url);
-    assert.equal((await stat(url)).size, item.bytes, 'Node module byte count: ' + item.path);
-    assert(item.bytes <= 2 * 1024 * 1024);
+    assert(Number.isSafeInteger(item.bytes) && item.bytes > 0 && item.bytes <= 2 * 1024 * 1024);
+    assert.match(item.sha256, /^[a-f0-9]{64}$/);
     total += item.bytes;
     assert(total <= 16 * 1024 * 1024, 'Node source byte bound');
-    const bytes = await readFile(url);
-    assert.equal(bytes.length, item.bytes);
-    assert.equal(sha256(bytes), item.sha256, 'Node source differs: ' + item.path);
+  }
+}
+async function readNodeModule(item, rootURL = null) {
+  const url = rootURL
+    ? new URL(item.path, rootURL)
+    : item.path === historicalCatalog.path
+      ? historicalCatalogURL
+      : new URL('../' + item.path, import.meta.url);
+  const info = await lstat(url);
+  assert(info.isFile() && !info.isSymbolicLink(), 'Node source must be a regular file');
+  assert.equal(await realpath(url), fileURLToPath(url), 'Node source alias refused');
+  assert.equal(info.size, item.bytes, 'Node module byte count: ' + item.path);
+  const bytes = await readFile(url);
+  assert.equal(bytes.length, item.bytes);
+  assert.equal(sha256(bytes), item.sha256, 'Node source differs: ' + item.path);
+  return bytes;
+}
+async function verifyNodeModules(fixture, rootURL = null) {
+  for (const item of fixture.nodeModules) await readNodeModule(item, rootURL);
+}
+// This owned mirror executes the exact retained Node closure. The single frozen
+// catalog is data from 1255; the other 46 must still match their original hashes.
+// No external source/reference path or current-source fallback is accepted.
+export async function withReplayPortabilityNodeSource(fixture, use) {
+  validateNodeSourceClosure(fixture);
+  assert.equal(typeof use, 'function');
+  const directory = await mkdtemp(join(await realpath(tmpdir()), 'rl-replay-node-'));
+  const rootURL = pathToFileURL(directory + '/').href;
+  try {
+    assert.equal(await realpath(directory), directory, 'Owned Node source alias refused');
+    await writeFile(join(directory, 'package.json'), '{"type":"module"}\n', {
+      flag: 'wx',
+      mode: 0o600,
+    });
+    for (const item of fixture.nodeModules) {
+      const bytes = await readNodeModule(item);
+      const target = fileURLToPath(new URL(item.path, rootURL));
+      await mkdir(dirname(target), { recursive: true, mode: 0o700 });
+      await writeFile(target, bytes, { flag: 'wx', mode: 0o600 });
+    }
+    await verifyNodeModules(fixture, rootURL);
+    try {
+      return await use(rootURL);
+    } finally {
+      await verifyNodeModules(fixture, rootURL);
+      await verifyNodeModules(fixture);
+    }
+  } finally {
+    await rm(directory, { recursive: true, force: true });
   }
 }
 
@@ -333,43 +397,43 @@ export async function createReplayPortabilityReference(recordId, recordingText) 
   assert.equal(process.version, fixture.nodeVersion, 'Original Node patch is required');
   assert.equal(Buffer.byteLength(recordingText), row.recording.bytes);
   assert.equal(sha256(recordingText), row.recording.sha256, 'Recording bytes changed');
-  await verifyNodeModules(fixture);
-  const [core, replay] = await Promise.all([
-    import('../game/core/index.mjs'),
-    import('../game/replay.mjs'),
-  ]);
-  const recording = JSON.parse(recordingText);
-  const verified = replay.verifyReplay(recording.replay ?? recording);
-  assert.equal(verified.match, false, 'Original Node mismatch was not reproduced');
-  assert.deepEqual(verified.actual, row.nodeObservation.actual);
-  assert.deepEqual(verified.diagnostics, row.nodeObservation.diagnostics);
-  const trace = traceReplayPortability(
-    recording,
-    {
-      snapshotReplay: replay.snapshotReplay,
-      createRun: core.createRun,
-      stepRun: core.stepRun,
-      releaseInputs: core.releaseInputs,
-      FIXED_DT: core.FIXED_DT,
-      authoritativeCheckpoint: replay.authoritativeCheckpoint,
-    },
-    verified.actual.checkpoint,
-  );
-  await verifyNodeModules(fixture);
-  const reference = {
-    format: 'SoloReplayPortabilityReferenceV1',
-    recordId,
-    recordingSHA256: row.recording.sha256,
-    nodeVersion: process.version,
-    nodeSourceRevision: fixture.nodeSourceRevision,
-    nodeModules: fixture.nodeModules,
-    nodeCheckpoint: verified.actual.checkpoint,
-    trace,
-    traceSHA256: sha256(JSON.stringify(trace)),
-  };
-  const text = JSON.stringify(reference);
-  assert(Buffer.byteLength(text) <= 2 * 1024 * 1024, 'Reference exceeds two MiB');
-  return text;
+  return withReplayPortabilityNodeSource(fixture, async (rootURL) => {
+    const [core, replay] = await Promise.all([
+      import(new URL('game/core/index.mjs', rootURL)),
+      import(new URL('game/replay.mjs', rootURL)),
+    ]);
+    const recording = JSON.parse(recordingText);
+    const verified = replay.verifyReplay(recording.replay ?? recording);
+    assert.equal(verified.match, false, 'Original Node mismatch was not reproduced');
+    assert.deepEqual(verified.actual, row.nodeObservation.actual);
+    assert.deepEqual(verified.diagnostics, row.nodeObservation.diagnostics);
+    const trace = traceReplayPortability(
+      recording,
+      {
+        snapshotReplay: replay.snapshotReplay,
+        createRun: core.createRun,
+        stepRun: core.stepRun,
+        releaseInputs: core.releaseInputs,
+        FIXED_DT: core.FIXED_DT,
+        authoritativeCheckpoint: replay.authoritativeCheckpoint,
+      },
+      verified.actual.checkpoint,
+    );
+    const reference = {
+      format: 'SoloReplayPortabilityReferenceV1',
+      recordId,
+      recordingSHA256: row.recording.sha256,
+      nodeVersion: process.version,
+      nodeSourceRevision: fixture.nodeSourceRevision,
+      nodeModules: fixture.nodeModules,
+      nodeCheckpoint: verified.actual.checkpoint,
+      trace,
+      traceSHA256: sha256(JSON.stringify(trace)),
+    };
+    const text = JSON.stringify(reference);
+    assert(Buffer.byteLength(text) <= 2 * 1024 * 1024, 'Reference exceeds two MiB');
+    return text;
+  });
 }
 
 export async function prepareReplayPortabilityRequest(request, context) {
