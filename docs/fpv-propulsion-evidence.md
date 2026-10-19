@@ -239,6 +239,124 @@ could combine conflicting known environmental declarations; the targeted negativ
 reproduces that result before the guard and passes afterward. No game build,
 rendered acceptance, measured fitting or flight qualification is claimed.
 
+## Local fixed-voltage inverse: non-activating preparation
+
+`propulsion-inverse.mjs` exports `solveStaticQuadCommandCell()`. Its
+`StaticQuadInverse.v1` input and `StaticQuadInverseResult.v1` result add a bounded
+inverse to the static quad adapter. Given a requested body wrench, an ideal
+fixed terminal voltage and **one explicitly selected admitted cell per rotor**,
+it solves for the four ESC commands within those cells. This is a local numerical
+calculation, not a global allocator or an aircraft tune. It remains outside all
+live game, controller, catalog, inspector and worker imports and adds no packaged
+runtime module. No existing format or flight behavior changes.
+
+The input declares `format`, `frame`, `thrustAxis`, `torqueBasis`, `units`,
+`supply`, `rotors` and `target`, with no optional or inferred fields:
+
+- Frame, thrust axis, torque basis and all six SI units are exactly those of
+  `StaticQuadPropulsion.v1` above. Positions are already relative to COM; they
+  must not have the center-of-mass offset subtracted a second time.
+- `supply` is exactly `{kind: 'ideal-fixed-terminal-voltage', voltage}` in volts.
+  There is no battery-sag solve, current-limit policy or battery state in this
+  inverse. Its forward check explicitly uses that voltage and zero series
+  resistance; these are declared ideal-supply assumptions, not estimated battery
+  properties.
+- Exactly four `rotors` each contain `id`, `position`, `reactionDirection`,
+  `commandUnit`, `cell` and the complete original `surface`. `cell` is its
+  `[commandIndex, voltageIndex]` and must be a member of that surface's declared
+  cells. The voltage must fall inside that cell's closed voltage interval.
+  Covered exact-command paths cannot fill an undeclared cell. `commandUnit`
+  must be the surface's canonical `normalized` or `us` unit. Different rotors
+  may use different command units and components.
+- `target` contains `force: {x,y,z}` in newtons and `torque: {x,y,z}` in N·m,
+  using the declared body frame. Lateral force requests are unavailable because
+  every rotor thrust is parallel to +y. Signed torque requests are supported;
+  negative collective force is unavailable. These are not pilot roll/pitch/yaw
+  fields. The existing controller convention is `roll=-bodyTorque.z`,
+  `pitch=-bodyTorque.x`, `yaw=-bodyTorque.y`.
+
+At a fixed voltage inside one admitted cell, thrust and reaction torque are
+affine in the same command fraction `u`, with `0 ≤ u ≤ 1`. For each rotor, the
+matrix column in `[force.y, torque.x, torque.y, torque.z]` order is:
+
+```text
+[Δthrust, −position.z × Δthrust,
+ reactionDirection × ΔreactionTorque, position.x × Δthrust]
+```
+
+The offset is the wrench at all four lower command bounds. A deterministic 4×4
+partial-pivot solve maps the requested wrench minus that offset to the four
+fractions. Each rotor uses its own thrust and reaction-torque slopes; no common
+torque/thrust ratio is substituted. Flat or decreasing thrust within the chosen
+cell is unavailable. This conservative restriction does not modify the original
+surface or claim that its other cells are invertible.
+
+The versioned numerical policy uses fixed **1 N** and **1 N·m** output scales,
+not per-row normalization that could conceal weak yaw or small-arm authority.
+It rejects zero pivots, pivots no larger than `64 × Number.EPSILON` times the
+original matrix infinity norm, nonfinite arithmetic and an estimated infinity
+condition number above **10⁸**. This is a numerical eligibility rule, not a
+measurement-accuracy claim. A singular or poorly resolved matrix produces no
+usable commands.
+
+Cell coordinates and voltage bounds have **no tolerance, clipping, snapping or
+extrapolation**. An outside solution returns `outside-selected-command-cells`;
+this does not claim the request is impossible in some other cells. Representing
+a solved fraction in the surface's command unit must reconstruct that fraction
+within `64 × Number.EPSILON`; otherwise the result is `command-resolution`.
+An interval whose adjacent floating-point commands cannot represent the required
+interior value therefore cannot silently collapse to a boundary.
+
+Both cell endpoints and the final candidate pass through the existing static
+quad adapter. Its source eligibility, missing-channel, current-basis, static-flow,
+environment-conflict, negative-reading and power-consistency checks remain in
+force. Checking only the endpoints is insufficient: interpolated RPM × torque
+can exceed electrical power even when endpoint values do not. The final check
+also requires exactly the declared terminal voltage and independently evaluates
+the resulting force and torque. Residual limits are **10⁻⁹ N** for collective
+force and **10⁻¹¹ N·m** per torque axis, plus **10⁻¹⁰ × max(|requested|,
+|achieved|)** in the same units. Zero and near-zero requests are never used as
+divisors. These arithmetic tolerances do not qualify the source measurements.
+
+Results retain the input declaration, selected windows, original source receipts,
+matrix/offset, condition estimate, available candidate fractions, forward receipt
+and residuals. Top-level `sources` retains the lower-endpoint load receipts,
+explicitly labeled `sourceReceiptContext: 'lower-command-endpoints'`; its
+`command` fields describe those endpoints, not the allocated commands. The
+final candidate's receipts remain under `forward`. `commands` is populated only
+after all gates pass. Returned data
+is detached and frozen; its identity includes the source content identities,
+geometry, voltage, target, cells and numerical policy. Every result remains
+`resultKind: 'calculated'` and `flightEligible: false`.
+
+This increment does not interpret an ESC command as normalized motor speed or
+RPM. It does not use `allocateAircraftThrust()`, whose existing flight model has
+a different command domain and allocation policy. Searching multiple cells,
+choosing among multiple solutions, desaturation/axis priorities, coupled
+battery-sag inversion, armed idle/Airmode, motor transients, actual achieved-torque
+feedback and versioned runtime integration remain separate work. The absence of
+matched motor/propeller measurements still prevents a measured-fidelity claim.
+
+The new synthetic suite covers independently solved symmetric moments,
+asymmetric layouts and nonconstant torque/thrust ratios, mixed command units,
+negative requests, singular and weak-axis matrices, exact/adjacent boundaries,
+coverage holes, command resolution, missing evidence, environment conflicts,
+interior power failures, near-zero residuals, bounded input and immutable
+provenance. Run it with all four existing propulsion suites:
+
+```sh
+node --test --test-concurrency=1 game/test/fpv-aircraft-propulsion-inverse.test.mjs game/test/fpv-aircraft-propulsion-quad.test.mjs game/test/fpv-aircraft-propulsion-surface.test.mjs game/test/fpv-aircraft-propulsion-load.test.mjs game/test/fpv-aircraft-propulsion-evidence.test.mjs
+```
+
+On 19 October 2026, Node 20.19.5 passed **80/80** focused checks: sixteen inverse
+checks and the unchanged sixty-four quad/surface/load/path checks. Scoped ESLint,
+JavaScript/test Prettier and `git diff --check` pass. Independent review reproduced
+the sixteen new checks and confirmed the signed vector construction, command-cell
+limits and forward checks. That review also prompted the explicit lower-endpoint
+source-receipt label above. This receipt establishes source-level numerical
+preparation only; no new game build, browser flight, device or measured-aircraft
+qualification is claimed.
+
 ## API and example
 
 ```js
