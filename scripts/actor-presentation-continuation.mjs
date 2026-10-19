@@ -1,3 +1,4 @@
+import { matchesRetainedReviewEvidence } from './retained-review-evidence.mjs';
 /** Validation plumbing only: no successor pin, quality stage or production wiring.
  * A future integration must supply its independently reviewed, code-owned pin;
  * never derive that authority from an uploaded bundle or the record itself.
@@ -140,7 +141,7 @@ export async function readActorPresentationContinuation({ read, reviewedRecord }
     const entry = { sha256: ref.sha256, record: null };
     ancestors.set(ref.path, entry);
     const body = await readBytes(ref.path);
-    check(hash(body) === ref.sha256, `ancestor bytes changed: ${ref.path}`);
+    check(matchesRetainedReviewEvidence(ref.path, body, ref.sha256), `ancestor bytes changed: ${ref.path}`);
     const record = JSON.parse(body);
     for (const child of [
       ...(record.priorReview ? [record.priorReview] : []),

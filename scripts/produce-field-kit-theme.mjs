@@ -1,3 +1,4 @@
+import { matchesRetainedReviewEvidence } from './retained-review-evidence.mjs';
 /** Assemble original production assets into the existing immutable theme model. */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -309,7 +310,9 @@ export function verifyFieldKitBulkQueueReview(currentBytes, predecessors) {
     hash(currentBytes) === '5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3' &&
     Array.isArray(predecessors) &&
     predecessors.length === Object.keys(expected).length &&
-    Object.values(expected).every((pin, index) => hash(predecessors[index]) === pin.sha256)
+    Object.values(expected).every((pin, index) =>
+      matchesRetainedReviewEvidence(pin.path, predecessors[index], pin.sha256),
+    )
   );
 }
 
