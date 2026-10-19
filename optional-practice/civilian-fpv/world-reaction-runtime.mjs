@@ -51,7 +51,7 @@ const sourceHashes={
 'game/ui/art/reactions/sentinel-react.svg':
 '34900da2d7a4782f0ee0d0da4eb483dc29724f757bdc73bac50e135422405e6d',
 'game/journey/reaction-voice-cache.mjs':
-'efd1d95cc6e80a11f39e6a1f1489d213eefb647d2de906d39a7240fbcc2c88f5',
+'18e387079bf3409030f9ac5d7372614031c8bfaea2c286bd54419b24d707ca3b',
 'game/ui/media-preparation.mjs':'9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
@@ -4957,7 +4957,9 @@ if(!blob?.size||blob.size>REACTION_VOICE_LIMITS.bytes|| !document?.createElement
 return Promise.reject(
 new Error('A recording up to 2 MiB and browser media inspection are required.'),
 );
-const container=inspectRecordingContainer(await blob.arrayBuffer());
+const bytes=await blob.arrayBuffer();
+if(signal?.aborted)throw aborted();
+const container=inspectRecordingContainer(bytes);
 if(signal?.aborted)throw aborted();
 return new Promise((resolve,reject)=>{
 const media=document.createElement('audio');

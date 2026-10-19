@@ -232,6 +232,7 @@ export function attachCouchMusicHost({
   panel = attachSoundtrackPanel({
     document: doc,
     settingsRoot: section,
+    settingsOwner: root,
     onlineCatalogueDownload,
     onlineSourceStore,
     catalogue: source.catalogue,

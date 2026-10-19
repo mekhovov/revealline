@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
+import { Worker as NodeWorker } from 'node:worker_threads';
+import { createSoundtrackSource } from '../soundtrack-source.mjs';
+import { responseFor } from './helpers/soundtrack-albums.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import {
@@ -2178,6 +2181,273 @@ test('user-owned local MP3 playback still accepts an upload without a public lic
   assert.equal(h.player.snapshot().track.id, original.track.id);
   assert.equal(h.player.snapshot().track.kind, 'mp3');
   assert.equal(reads, 1);
+});
+
+// The production browser worker is imported in a separate Node worker realm.
+// Main-realm Blob read counters therefore cannot hide source-side inspection.
+function inspectionWorkers(t, mode = 'real') {
+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'Worker');
+  const live = [],
+    counts = { scans: 0, created: 0, terminated: 0 };
+  Object.defineProperty(globalThis, 'Worker', {
+    configurable: true,
+    value: function () {
+      if (mode === 'unavailable') throw new Error('Worker unavailable');
+      counts.created++;
+      if (mode === 'blocked')
+        return {
+          postMessage() {
+            counts.scans++;
+          },
+          terminate() {
+            counts.terminated++;
+          },
+          addEventListener() {},
+          removeEventListener() {},
+        };
+      const module = new URL('../mp3-inspection-worker.mjs', import.meta.url).href;
+      const code =
+        'import { parentPort } from "node:worker_threads";' +
+        'globalThis.addEventListener = (type, callback) => parentPort.on(type, data => callback({ data }));' +
+        'globalThis.postMessage = data => parentPort.postMessage(data);' +
+        'await import(' +
+        JSON.stringify(module) +
+        ');';
+      const worker = new NodeWorker(new URL('data:text/javascript,' + encodeURIComponent(code)));
+      live.push(worker);
+      const listeners = new Map();
+      return {
+        postMessage(value) {
+          counts.scans++;
+          worker.postMessage(value);
+        },
+        terminate() {
+          counts.terminated++;
+          return worker.terminate();
+        },
+        addEventListener(type, callback) {
+          const listener = type === 'message' ? (data) => callback({ data }) : callback;
+          if (type === 'message') listeners.set(callback, listener);
+          worker.on(type, listener);
+        },
+        removeEventListener(type, callback) {
+          worker.off(type, type === 'message' ? listeners.get(callback) : callback);
+          if (type === 'message') listeners.delete(callback);
+        },
+      };
+    },
+  });
+  t.after(async () => {
+    if (descriptor) Object.defineProperty(globalThis, 'Worker', descriptor);
+    else delete globalThis.Worker;
+    await Promise.allSettled(live.map((worker) => worker.terminate()));
+  });
+  return counts;
+}
+
+async function downloadInspectionPlayer(
+  t,
+  { readAsset, readLocal = () => null, repeat = 'off', secondAudioElement } = {},
+) {
+  const bytes = new Uint8Array(await original.blob.arrayBuffer());
+  const track = {
+    ...original.track,
+    id: 'builtin.catalog.worker-test',
+    edition: 'test-1',
+    path: 'optional/soundtracks/worker-test.mp3',
+    tags: { genres: ['ukrainian'], role: 'any', energy: 3, themes: [] },
+  };
+  const catalogue = {
+    format: 'revealline-soundtrack-catalogue.v1',
+    edition: 'test-1',
+    tracks: [track],
+  };
+  const base = setCatalogueTracks(emptySoundtrackLibrary(), [track]);
+  let requests = 0;
+  const source = createSoundtrackSource({
+    catalogue,
+    localPlayback: () => false,
+    readLocal,
+    readOfficial: () => null,
+    baseURL: 'https://example.test/',
+    fetch: async (url) => {
+      requests++;
+      return responseFor(bytes, url);
+    },
+  });
+  const h = setup({
+    catalogue,
+    library: {
+      ...base,
+      playlists: [
+        {
+          id: 'worker.only',
+          title: 'Worker recording',
+          trackIds: [track.id],
+          order: 'ordered',
+          repeat,
+        },
+      ],
+      selection: { playlistId: 'worker.only' },
+      listening: { ...base.listening, installedOnly: false },
+    },
+    readAsset: readAsset ?? source.readAsset,
+    secondAudioElement,
+  });
+  t.after(() => h.player.dispose());
+  return { ...h, track, source, requests: () => requests };
+}
+
+test('downloaded playback uses one real worker inspection and no main-realm Blob materialization', async (t) => {
+  const workers = inspectionWorkers(t);
+  const h = await downloadInspectionPlayer(t);
+  let mainReads = 0;
+  const read = Blob.prototype.arrayBuffer;
+  t.mock.method(Blob.prototype, 'arrayBuffer', function () {
+    mainReads++;
+    return read.call(this);
+  });
+  h.soundscape.mediaPreparation.setPhase('playing');
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.player.snapshot().track.id, h.track.id);
+  assert.equal(h.requests(), 1);
+  assert.equal(workers.scans, 1);
+  assert.equal(mainReads, 0);
+  assert.equal(h.created.length, 1);
+  assert.equal(h.created[0].blob.type, 'audio/mpeg');
+  assert.deepEqual(h.soundscape.mediaPreparation.snapshot().active, {
+    fetch: 0,
+    decode: 0,
+    inspect: 0,
+    main: 0,
+  });
+});
+
+test('local originals still receive worker validation without acquisition', async (t) => {
+  const workers = inspectionWorkers(t);
+  const h = await downloadInspectionPlayer(t, { readLocal: () => original.blob });
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.requests(), 0);
+  assert.equal(workers.scans, 1);
+});
+
+for (const variant of ['ignored', 'same', 'different', 'failed'])
+  test(
+    'custom reader inspection reuse is bound to one successful exact Blob: ' + variant,
+    async (t) => {
+      const workers = inspectionWorkers(t);
+      let retainedInspect;
+      const h = await downloadInspectionPlayer(t, {
+        async readAsset(_hash, { inspect, signal }) {
+          retainedInspect = inspect;
+          if (variant === 'failed')
+            await assert.rejects(inspect(new Blob(['not an MP3']), { signal }));
+          else if (variant !== 'ignored') await inspect(original.blob, { signal });
+          return variant === 'different' ? original.blob.slice() : original.blob;
+        },
+      });
+      assert.equal(await h.player.play(), true);
+      assert.equal(workers.scans, ['different', 'failed'].includes(variant) ? 2 : 1);
+      const scans = workers.scans;
+      await assert.rejects(retainedInspect(original.blob), { name: 'AbortError' });
+      assert.equal(workers.scans, scans, 'retired acquisition cannot start a later scan');
+    },
+  );
+
+test('worker-unavailable playback holds fetch and inspection until a safe fallback phase', async (t) => {
+  inspectionWorkers(t, 'unavailable');
+  const h = await downloadInspectionPlayer(t);
+  const queue = h.soundscape.mediaPreparation;
+  queue.setPhase('playing');
+  let mainReads = 0;
+  const read = Blob.prototype.arrayBuffer;
+  t.mock.method(Blob.prototype, 'arrayBuffer', function () {
+    mainReads++;
+    return read.call(this);
+  });
+  const playing = h.player.play();
+  await settleUntil(() => queue.snapshot().queued === 1 && queue.snapshot().active.inspect === 1);
+  assert.equal(queue.snapshot().active.fetch, 1);
+  assert.equal(mainReads, 0);
+  assert.equal(h.created.length, 0);
+  queue.setPhase('paused');
+  assert.equal(await playing, true);
+  assert.equal(mainReads, 1, 'the fallback validates once, then the exact source result is reused');
+  assert.equal(queue.snapshot().queued, 0);
+  assert.deepEqual(queue.snapshot().active, { fetch: 0, decode: 0, inspect: 0, main: 0 });
+});
+
+test('the unchanged acquisition deadline cancels queued fallback and releases both reservations', async (t) => {
+  inspectionWorkers(t, 'unavailable');
+  const h = await downloadInspectionPlayer(t);
+  const queue = h.soundscape.mediaPreparation;
+  queue.setPhase('playing');
+  let deadline;
+  const schedule = globalThis.setTimeout;
+  t.mock.method(globalThis, 'setTimeout', (callback, ms, ...args) => {
+    if (ms === 60000) deadline = callback;
+    return schedule(callback, ms, ...args);
+  });
+  const playing = h.player.play();
+  await settleUntil(
+    () => deadline && queue.snapshot().queued === 1 && queue.snapshot().active.inspect === 1,
+  );
+  assert.equal(queue.snapshot().active.fetch, 1);
+  deadline();
+  assert.equal(await playing, false);
+  assert.equal(h.created.length, 0);
+  assert.match(h.player.snapshot().notice, /timed out/);
+  assert.equal(queue.snapshot().queued, 0);
+  assert.deepEqual(queue.snapshot().active, { fetch: 0, decode: 0, inspect: 0, main: 0 });
+  queue.setPhase('paused');
+  await Promise.resolve();
+  assert.equal(h.created.length, 0);
+});
+
+test('transport cancellation retires inspection even when a custom reader supplies another signal', async (t) => {
+  const workers = inspectionWorkers(t, 'blocked');
+  const other = new AbortController();
+  const h = await downloadInspectionPlayer(t, {
+    async readAsset(_hash, { inspect }) {
+      await inspect(original.blob, { signal: other.signal });
+      return original.blob;
+    },
+  });
+  const playing = h.player.play();
+  await settleUntil(() => workers.scans === 1);
+  h.player.pause();
+  assert.equal(await playing, false);
+  assert.equal(other.signal.aborted, false);
+  assert.equal(workers.terminated, 1);
+  assert.equal(h.created.length, 0);
+  assert.deepEqual(h.soundscape.mediaPreparation.snapshot().active, {
+    fetch: 0,
+    decode: 0,
+    inspect: 0,
+    main: 0,
+  });
+});
+
+test('active current-plus-next loading reuses one worker but never carries facts across acquisitions', async (t) => {
+  const workers = inspectionWorkers(t);
+  const h = await downloadInspectionPlayer(t, {
+    repeat: 'all',
+    secondAudioElement: audioHarness().media,
+  });
+  let mainReads = 0;
+  const read = Blob.prototype.arrayBuffer;
+  t.mock.method(Blob.prototype, 'arrayBuffer', function () {
+    mainReads++;
+    return read.call(this);
+  });
+  h.soundscape.mediaPreparation.setPhase('playing');
+  assert.equal(await h.player.play(), true);
+  await settleUntil(() => h.created.length === 2);
+  assert.equal(h.player.snapshot().playing, true);
+  assert.equal(h.requests(), 2);
+  assert.equal(workers.created, 1);
+  assert.equal(workers.scans, 2, 'each acquired original is independently validated exactly once');
+  assert.equal(mainReads, 0);
 });
 
 test('effects-only mono leaves an active no-CORS release stream on native media without replay or rerouting', async (t) => {
