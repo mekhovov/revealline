@@ -88,7 +88,7 @@ async function installedAssets(pack) {
 }
 
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 15000 });
-function appendLibraryWaitEvidence(error, p, initialPictureRequested) {
+function appendLibraryWaitEvidence(error, p, initialPictureRequested, opening) {
   try {
     const doc = p?.doc ?? globalThis.document;
     const rendered = p?.rendered;
@@ -114,6 +114,20 @@ function appendLibraryWaitEvidence(error, p, initialPictureRequested) {
       errors: errors?.slice(0, 4).map((item) => String(item).slice(0, 512)) ?? null,
       errorsOmitted: errors ? Math.max(0, errors.length - 4) : null,
       initialPictureRequested,
+      opening: opening
+        ? {
+            handlerType: opening.handlerType,
+            handlerCalls: opening.handlerCalls,
+            returnedPromise: opening.returnedPromise,
+            promiseState: opening.promiseState,
+            rejectionName: text(opening.rejection?.name),
+            rejectionMessage: text(opening.rejection?.message),
+            handlerRestored: opening.handlerRestored,
+            beforeClick: opening.beforeClick,
+            afterClick: opening.afterClick,
+            atFailure: opening.snapshot(),
+          }
+        : undefined,
     });
     if (typeof error?.message === 'string' && Buffer.byteLength(evidence, 'utf8') <= 8192) {
       void error.stack;
@@ -124,12 +138,71 @@ function appendLibraryWaitEvidence(error, p, initialPictureRequested) {
   }
 }
 async function open(p) {
-  p.$('shell-play').click();
+  const button = p.$('shell-play'),
+    original = button.onclick;
+  const snapshot = () => {
+    try {
+      const feedback = p.$('mission-library-opening-status');
+      return {
+        activeElement: p.doc.activeElement?.id || p.doc.activeElement?.tagName || null,
+        homeOpen: p.$('shell-home')?.open ?? null,
+        openDialogs: [...p.doc.querySelectorAll('dialog[open]')]
+          .slice(0, 16)
+          .map((node) => node.id),
+        feedback: feedback
+          ? { present: true, text: feedback.textContent.slice(0, 512), hidden: !!feedback.hidden }
+          : { present: false },
+        flightState: p.doc.body.dataset.flightState ?? null,
+        pictureState: p.doc.body.dataset.pictureState ?? null,
+        hidden: !!p.doc.hidden,
+        hasFocus: p.doc.hasFocus?.() ?? null,
+      };
+    } catch {
+      return { observationFailed: true };
+    }
+  };
+  const opening = {
+    handlerType: typeof original,
+    handlerCalls: 0,
+    returnedPromise: false,
+    promiseState: 'not-observed',
+    rejection: null,
+    handlerRestored: false,
+    beforeClick: snapshot(),
+    afterClick: null,
+    snapshot,
+  };
+  const observed = function (...args) {
+    opening.handlerCalls++;
+    const returned = original.apply(this, args);
+    opening.returnedPromise = returned instanceof Promise;
+    if (opening.returnedPromise) {
+      opening.promiseState = 'pending';
+      void returned.then(
+        () => {
+          opening.promiseState = 'fulfilled';
+        },
+        (reason) => {
+          opening.promiseState = 'rejected';
+          opening.rejection = reason;
+        },
+      );
+    }
+    return returned;
+  };
+  try {
+    if (typeof original === 'function') button.onclick = observed;
+    p.$('shell-play').click();
+  } finally {
+    if (button.onclick === observed) button.onclick = original;
+    opening.handlerRestored = button.onclick === original;
+    opening.afterClick = snapshot();
+  }
   try {
     await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   } catch (error) {
     error.message += ` ${p.$('run-message').textContent} ${p.errors.map(String).join(';')}`;
-    appendLibraryWaitEvidence(error, p);
+    appendLibraryWaitEvidence(error, p, undefined, opening);
     throw error;
   }
 }
