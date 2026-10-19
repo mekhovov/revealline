@@ -20,7 +20,7 @@
     "P1 · Available space: small source changes, bounded focused tests and browser review continue. Full builds/new snapshots require 2 GiB free; about 1.0 GiB is available. No external-drive copy is authorized.",
     "P1 · Compact play: review Duel, Team and Worlds on narrow and landscape layouts, including touch controls, language changes, scrolling and focus. Physical iPhone, offline PWA and Steam Deck checks remain Not tested.",
     "P1 · Review and admission: complete current-source checks for text compatibility, recovery and the reviewed support adapters when space permits. Required CI and merge admission still apply.",
-    "P1 · Support hosts: Worlds #1733 is a reviewed draft with 245 complete focused checks and actual paused-flight return review. Rooms preserves the reviewed Worlds union, but native checks expose unresolved cache/modal/focus fixture failures; finish correction before publication.",
+    "P1 · Support hosts: Worlds #1733 passes245 and Rooms #1734 passes152 complete focused checks, with scoped English/Ukrainian native browser review. Both remain drafts for full source/package/admission; live-room and physical acceptance remain open.",
     "P1 · Team launch checks: finish the separate test, guide and catalog corrections while preserving the intended one-click native launch. The withdrawn runtime proposal stays closed.",
     "P2 · Clarity and comfort: fix the actual retained Worlds storage-status language mismatch in a separate F59 slice; finish search, result language and Hunt reading acceptance. Preserve save, permission, records and focus owners.",
     "Continue the remaining approved phases. Lesson recommendations still depend on the Learn hub and shared demos; PR inventory does not measure whole-plan completion."
@@ -943,7 +943,9 @@
           "evidence": [
             "Read-only assessment: actual journeyCursor/cursorEntry/progressMission/initialJourneyMission already choose default first/current/recorded successor. Bind captured reason facts to acceptedroundRecipe.entry; suppress pending, late/stale/endfallback, incominghandoff/continuation and actuallive/paused states. Later accepted manual recipe uses neutral selected wording, never earned progress or opponent mastery. Versus controller restore stores assignment, not a generic saved flight: do not invent a save owner. Existing resultNext already names destination and needs no duplicate recommendation.",
             "Frozen64d0d3b414e8fc6d28c2b5fe443e22d8988a7c82fbc755077e9dad9a1b1afdb6 on8704 preserves twelve original production owners,5937EN/6049UK values plus3messages each and canonical18. Actual accepted recipe remains sole selection owner. Complete pure5/5 passes.",
-            "First complete native host ended file-levelSIGKILL0/1 after120.5s; original cause UNKNOWN. Fixture-only duplicate full catalogue construction removed, all51 original assertions retained. Second full host protectively stopped at about12.5GiB RSS, file-levelSIGTERM0/1 after120.9s; FAILED/INCOMPLETE, not an assertion pass. Remaining8files NOTRUN. No DOM insertion cycle found. Whole-DOM equality failure rendering is only a hypothesis; preserve exact predicates using bounded Boolean diagnostics and actual visible race-chapters Missions owner. No heavy blind retry or catalogue reduction authorized."
+            "First complete native host ended file-levelSIGKILL0/1 after120.5s; original cause UNKNOWN. Fixture-only duplicate full catalogue construction removed, all51 original assertions retained. Second full host protectively stopped at about12.5GiB RSS, file-levelSIGTERM0/1 after120.9s; FAILED/INCOMPLETE, not an assertion pass. Remaining8files NOTRUN. No DOM insertion cycle found. Whole-DOM equality failure rendering is only a hypothesis; preserve exact predicates using bounded Boolean diagnostics and actual visible race-chapters Missions owner. No heavy blind retry or catalogue reduction authorized.",
+            "Bounded fixture0d1886d483c55d04e69562e123ff04c8d879078888dd02987c929530b291bea7 changes only two new fixtures/docs from64d0; production unchanged. Complete couch-shell27/27 pass, zero skips/cancellations,52.9s, peak own-groupRSS1599.9MiB under1536MiBV8/2048MiBRSS/180s wall; no guard. Includes actual landing column/visibility, existing aria descriptions, exact focus, both-board checkpoints and teardown restoration. Full default-host file remains separate/in progress.",
+            "Complete bounded default actualhost at0d188 finishes9/10, zero skips/cancellations,49.9s; no guards,1388MiBpeak. One meaningful fixturefailure expects visible selected explanation after actual card activation. Root independently verifies actualcandidateJourney launch invokes startRace(...briefingOnly:false) and returns acceptedrunning; running explanation should remain absent. First/ENUK/BrowseBack and earnedclear→successor, first-to-two/Rematch, stalecursor, incomingcontinuation, cancelledpicture, Legacy/Opening pass. Minimal fixture correction under review; no productionlaunchpolicy change."
           ]
         }
       ]
@@ -1686,14 +1688,14 @@
       "status": "developing",
       "owner": "integration",
       "qualification": {
-        "automated": "scoped_worlds_pass_rooms_failed_incomplete",
+        "automated": "scoped_all_published_host_passes_full_gates_pending",
         "browser": "scoped_host_reviews_remaining",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Qualify Worlds draft1733 and current-primary full gates. Finish Rooms cache/modal/focus corrections and complete guarded native cohort before a separate PR; retain all host unions. Dependent integration and package/device gates remain.",
+      "next": "Worlds1733 and Rooms1734 are separate reviewed drafts. Complete current-head full/package/admission gates and explicit dependent foundation propagation. Native/report/browser evidence stays source-scoped; live room and physical owners remain untested.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim.",
@@ -1859,19 +1861,25 @@
         {
           "id": "native-rooms-host",
           "priority": "P1",
-          "status": "developing",
+          "status": "draft_review",
           "owner": "lane-a",
-          "pr": null,
-          "commit": null,
+          "pr": "https://github.com/mekhovov/revealline/pull/1734",
+          "commit": "d987c419ff01a56af0c6ce697dd2b767dc5ff1c0",
           "dependency": "Reviewed observation-copy1731 exact495ef542d4ddd27d787ab08774d5e96b45bfb9a9; retain all host/scope/state unions",
           "effort": "1–2d bounded actual-room adapter/native qualification plus browser review; queues excluded",
-          "next": "Correct current-loss cache and actual modal-return fixture, then diagnose pending-close focus under bounded identity failure reporting. Complete native file before remaining10-file cohort; no PR yet. Stack on published Worlds1733.",
+          "next": "Published separate draft1734 on Worlds1733. Complete152/152 and actual EN/UK idle report/Back/reopen review clear. Full current-source/package/admission, live-room, export delivery and physical gates remain.",
           "evidence": [
             "Read-only complete boundary: mountModePlayShell actual room-settings-dialog and moved room-settings root, support destroyed before shell. rooms.mjs supplies only allowlisted phase/status, never whole wire snapshot, credentials, URL, seats, recipes or replay. Existing room-input poll supplies only bounded sample/status/assignment cache, no Prepare polls/Ready/submit/pause/transport/storage. Neutral/Confirm/build/save lease/offline unknown unless actual owner exists. Add connecting/recovering/waiting/playing/abandoned; reuse paused/finished/idle. Actual mount fixture plus zero extra side effects/export/lifecycle/locale/privacy required; AST-only presentation tests not full native evidence.",
             "New child from exact495ef already-local objects; no transfer/fetch/hydration required. Read-only preflight initially used an invalid shorthand, corrected to full exactSHA before any action; original1661e1d ref retained.",
             "Root independent frozen18-path unionbd91fb5ea602debe98fc7cb2f5ed74c4fa32ee48 preserves all Rooms and Worlds ordinary blobs and all locale values; canonical18 equality. Initial attempt emitted143cases133pass/10fail then stalled: FAILED/INCOMPLETE. Corrected missing reconnect fixture, AST support binding and real production support-owner identity lifetime.",
-            "Second native-first attempt emitted5cases3pass/2fail, then pending-close stalled and own process was protectively stopped; remaining10files NOTRUN. Identity lifetime regression passes. New failures show disconnected observation erased by existing clear and Results topmodal correctly denying Settings. Private resetControls extraction preserves neutralization while retaining current observation; fixture uses actual Results Back. DOM identity predicates now have bounded Boolean diagnostics. Updated frozen2f541151c85c230897f1f597f758af216869eb2f independently reviewed, native rerun pending. Neither incomplete run is an aggregate pass."
-          ]
+            "Second native-first attempt emitted5cases3pass/2fail, then pending-close stalled and own process was protectively stopped; remaining10files NOTRUN. Identity lifetime regression passes. New failures show disconnected observation erased by existing clear and Results topmodal correctly denying Settings. Private resetControls extraction preserves neutralization while retaining current observation; fixture uses actual Results Back. DOM identity predicates now have bounded Boolean diagnostics. Updated frozen2f541151c85c230897f1f597f758af216869eb2f independently reviewed, native rerun pending. Neither incomplete run is an aggregate pass.",
+            "Guarded complete native file at2f541 finishes9/10, exit1, zero skips/cancellations8.67s; guards256MiBheap/768MiBgroupRSS/30s wall did not trigger. Bounded error proves pending-close expected room-action-menu while modal-navigation restores room-action-primary in Home. Corrected fixture23c3af20e28cf14341311d658f46ddf1049de31e selects actual Home primary and additionally proves active topmodal ownership; no runtime focus change. Complete11-file cohort pending. Actual local browser1280x720 EN/UK idle report, private-room scope, recent waiting-controller/assignedfalse with neutral/Confirmunknown, Prepare focus, Back exact Settings opener, reopen clears JSON/disablesDownload. No live room/physical/exportdownload claim. Screenshot rooms-23c3-idle-report{,-uk}.png.",
+            "Corrected complete11-file cohort152/152, zero failures/skips/cancellations, everyfileexit0; frozen23c3 before/after exact. Fresh serialNode22 perfile,256MiBheap/768MiBgroupRSS/90s wall, no guards; nativepeak198560KiB. Perfile nativeRooms10,projection2,input8,client10,presentation10,roomcore7,collector28,settings14,shell49,platform8,admission6. All9changedJS lint/13nongeneratedauthoredformat/diff pass; originalscopeincludes14Roomsfeaturepaths and19pathfullunion. Publication pending, earlierfailuresretained.",
+            "Root remote readback confirms draft1734 head d987c419ff01a56af0c6ce697dd2b767dc5ff1c0, tree1f4558173e35c28f33b947493e50a8f3aeaeb270, basecodex/f58-worlds-local-support; localparents17ca+9c6. Only docs receipt differs tested23c3; runtime/testblobs identical. Fourteenfeaturepaths, ordinarypush/noforce/manualmerge, attached. Sourceclean."
+          ],
+          "candidateCommit": "d987c419ff01a56af0c6ce697dd2b767dc5ff1c0",
+          "observedRemoteHead": "d987c419ff01a56af0c6ce697dd2b767dc5ff1c0",
+          "deliveryState": "draft"
         }
       ]
     },
@@ -2764,7 +2772,9 @@
           "next": "Run guarded valid red for19 new actual-host cases, implement semantic four-state cached painter and latest-request/disposal guards, then complete entire native file and actual EN/UK browser acceptance. No extra database calls or permission prompts on locale change.",
           "evidence": [
             "Actual Settings Data at1280x720 changed UK→English, all adjacent labels translated but storage-status remained Ukrainian. Screenshot worlds-f38-retained-storage-status-uk-after-en.png. Existing writers render translated text only at hydration/permission completion; paintLanguage does not repaint. No new store or catalogue needed.",
-            "Test-only native cases prepared; lint/format/diff clear, no native run yet. Cover both/partial stores, granted/denied/pending, late hydration, overlap ordering, rejection/missingAPI, synchronous disposal and actual paused checkpoint/records/focus/noaddedDB observations. Preserve existing four EN/UK sentences and semantic permission availability."
+            "Test-only native cases prepared; lint/format/diff clear, no native run yet. Cover both/partial stores, granted/denied/pending, late hydration, overlap ordering, rejection/missingAPI, synchronous disposal and actual paused checkpoint/records/focus/noaddedDB observations. Preserve existing four EN/UK sentences and semantic permission availability.",
+            "Valid new-case red at original unchanged9c6production:19/19selected cases fail, zero skips,3.33s, peak own-groupRSS528624KiB, no guard. Seventeen reproduce stale EN/UK status and two reproduce second permission prompt after synchronous dispose. Full-file pass not claimed. Root independently reviewed production correction: four exact existing strings, pure semantic repaint/noDB, original receiver API, latest-generation/live-only success/error, null-only hydration preserving accepted permission feedback. Complete native green queued.",
+            "First corrected full-native attempt at494c6 FAILED/INCOMPLETE:43passes plus file-levelSIGABRT, zero skips,12.58s; heap768MiB/own-groupRSS1.25GiB guard not triggered, peak1250528KiB. No retained assertion diagnostic; wrapper discarded nonfailurestdout, so cannot claim no fatalmessage existed or attribute cause. Boundary follows unchanged43rd deferred-focuscase before unchanged44th Hunt schematiccase. Root reviewed a second complete-file budget1536MiBV8/2048MiBRSS/180s with unfiltered bounded stdout/stderr; no source/assertion/logical-timeout relaxation. Queued, no new pass."
           ]
         }
       ]
@@ -4140,6 +4150,21 @@
       "date": "2026-10-19",
       "item": "Worlds1733 published; bounded native diagnostics and new retained-language finding",
       "reason": "Worlds9c complete245/245, root review and actual paused-flight return evidence. Authoritative unique task-PR inventory27merged15ready36draft78active+1withdrawn (corrects provisional double-count); fixture1732 excluded; fixture1732 remains separate dependency. Rooms emitted failures and stalled; Versus protective12.5GiB stop remain incomplete, no relabeled passes. Guarded failure reporting and fixture diagnosis precede retries. Actual Worlds storage-status mixedlanguage enters F59 separate complete slice. All113deliverables retained; full builds below2GiB reserve and physical acceptance remain open."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Bounded native diagnostics now finish; actual Rooms report reviewed",
+      "reason": "Versus completecouch-shell27/27pass at0d188; full defaulthost remains separate. Rooms9/10 bounded native failure proves invalid testfocus expectedoutsideHome; approvedfixture-only23c3 corrects expectedowner while retainingstrictidentity. ActualRoomsENUKidle/Back/reopenclearingreviewpassscoped. F59validred19/19fails confirmsstale localeanddisposedprompt; semanticcorrection independentlyreviewed, fullgreenqueued. Resourceguardstopsandolderfailuresretained."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Rooms complete cohort passes; Versus default boundary diagnosed",
+      "reason": "Rooms152/152complete11filespasses23c3, noresourceguards, rootunion reviewclear; separate draftpublicationauthorized. Versus9/10completehostnowemits invalidmanualreadyexpectationafterintendeddirectcardlaunch; acceptedrunningownerconfirmedandfixturecorrectionunderreview. CcompleteF59greenrunning. Earlierfailed/incompletequalificationretained."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Rooms1734 published; complete F59 qualification remains open",
+      "reason": "Rooms d987 separate draft on9c6; onlydocs differs152/152tested23c3; roothead/base/blobsverified. Deliverysnapshot now27merged15ready37draft79active+1withdrawn. F59fullrun43pass+SIGABRTincomplete, nofatalattributionduefilteredcapture; reviewedboundednextbudgetwithcompletecapturequeued. NextF09SingleDrone/Riy group sourceassessmentstartsread-only."
     }
   ],
   "deliveryDependencies": [
@@ -4212,7 +4237,7 @@
   ],
   "deliverySnapshot": {
     "featurePRsReady": 15,
-    "featurePRsDraft": 36,
+    "featurePRsDraft": 37,
     "deliverablesMerged": 27,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,

@@ -2,22 +2,22 @@
 
 ## Latest checkpoint · 19 October, native review and foundation reconciliation
 
-**27 merged · 15 open for checks · 36 drafts = 78 active/admitted candidates; 1 withdrawn.** All 113 deliverables remain tracked. PR inventory is not plan completion.
+**27 merged · 15 open for checks · 37 drafts = 79 active/admitted candidates; 1 withdrawn.** All 113 deliverables remain tracked. PR inventory is not plan completion.
 
-Worlds support is now a reviewed draft. Rooms, default Versus guidance and the newly found retained storage-status translation issue remain in development. Native runs are serialized and now use bounded diagnostics after two incomplete high-memory/stalled runs.
+Worlds #1733 and Rooms #1734 are separate reviewed drafts. Default Versus guidance and the retained storage-status translation correction remain in development. Native checks are serialized, with explicit resource limits and preserved failure evidence.
 
-| Priority | Deliverable                 | Current result                                                                                                                                                 | Next gate                                                                                       |
-| -------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| P1       | Worlds #1733                | Exact9c6; complete245/245 checks, independent preservation review; actual idle/paused Settings and explicit same-flight return reviewed.                       | Full source/package/admission, deliberate export and physical acceptance.                       |
-| P1       | Rooms support               | Reviewed18-path Worlds/Rooms union. First native run emitted133pass/10fail; second emitted3pass/2fail then stalled. Both incomplete; no PR yet.                | Cache/modal fixes, bounded pending-close focus diagnosis, then all11 complete files.            |
-| P1       | Versus Home guidance        | Source implemented; pure5/5 and original owner/locale preservation clear. Original SIGKILL cause unknown; corrected host protectively stopped near12.5GiB RSS. | Bounded fixture diagnostics, complete lightweight couch-shell, then guarded full native cohort. |
-| P1       | Capture Home #1729          | Exact51b5; all10 original files executed separately:134pass/1fail. Actual saved Resume, earned successor and compact CSS scopes recorded.                      | Independent main test prerequisite #1732 passes corrected1/1; full source/admission remain.     |
-| P1       | Support foundation #1661    | Published e1d with81/81 focused checks; exact source/locale preservation.                                                                                      | Current-head full gates and deliberate dependent propagation.                                   |
-| P1       | Observation wording #1731   | Complete141/141, root review and actual EN/UK absent-controller report.                                                                                        | Source/package/admission; real connected-controller behavior Not tested.                        |
-| P1       | Compatibility #1668         | Publishedf807;446/446 focused checks.                                                                                                                          | Current-head full gates and required admission.                                                 |
-| P2       | Worlds storage language F59 | Actual UK→English switch leaves storage-status Ukrainian. Separate19-case native red prepared.                                                                 | Four-state cached painter, request/disposal ordering, complete native and browser verification. |
-| P2       | Hunt reading #1727          | Correctedad50;74/74 focused checks and source review.                                                                                                          | Full source and actual result reading.                                                          |
-| P1       | Capacity/devices            | About1.0GiB free; source/bounded checks/browser continue.                                                                                                      | Full builds/snapshots need2GiB reserve; iPhone/PWA/Steam Deck Not tested.                       |
+| Priority | Deliverable                 | Current result                                                                                                                                                           | Next gate                                                                                                              |
+| -------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| P1       | Worlds #1733                | Exact9c6; complete245/245 checks, independent preservation review; actual idle/paused Settings and explicit same-flight return reviewed.                                 | Full source/package/admission, deliberate export and physical acceptance.                                              |
+| P1       | Rooms support #1734         | Published d987; complete152/152 across11 files. Actual EN/UK idle report, Back focus and reopen clearing reviewed. Earlier failed/incomplete runs preserved.             | Full source/package/admission; live-room, actual export delivery and physical acceptance.                              |
+| P1       | Versus Home guidance        | Pure5/5 and complete couch-shell27/27 pass. Complete default host9/10 exposes invalid ready-state expectation after deliberate direct card launch.                       | Minimal fixture correction independently reviewed; complete11-file cohort queued. No production launch-policy change.  |
+| P1       | Capture Home #1729          | Exact51b5; all10 original files executed separately:134pass/1fail. Actual saved Resume, earned successor and compact CSS scopes recorded.                                | Independent main test prerequisite #1732 passes corrected1/1; full source/admission remain.                            |
+| P1       | Support foundation #1661    | Published e1d with81/81 focused checks; exact source/locale preservation.                                                                                                | Current-head full gates and deliberate dependent propagation.                                                          |
+| P1       | Observation wording #1731   | Complete141/141, root review and actual EN/UK absent-controller report.                                                                                                  | Source/package/admission; real connected-controller behavior Not tested.                                               |
+| P1       | Compatibility #1668         | Publishedf807;446/446 focused checks.                                                                                                                                    | Current-head full gates and required admission.                                                                        |
+| P2       | Worlds storage language F59 | Actual mixed-language row and disposed prompt reproduced by19 selected red cases. Production correction independently reviewed. First full run43pass+SIGABRT incomplete. | Complete native run with reviewed resource budget and unfiltered diagnostic capture, then actual EN/UK browser review. |
+| P2       | Hunt reading #1727          | Correctedad50;74/74 focused checks and source review.                                                                                                                    | Full source and actual result reading.                                                                                 |
+| P1       | Capacity/devices            | About1.0GiB free; source/bounded checks/browser continue.                                                                                                                | Full builds/snapshots need2GiB reserve; iPhone/PWA/Steam Deck Not tested.                                              |
 
 Worlds initial244/245 failure is retained: its corrected test waits for exactly two existing pause checkpoint writes, then still requires zero writes or extra polling from report preparation. No incomplete Rooms or Versus run is counted as a pass. Estimates remain developer-day ranges excluding storage, CI and hardware waiting.
 
@@ -26,6 +26,44 @@ The delivery board now includes a whole-deliverable overview for all eight phase
 This checkpoint supersedes older present-tense summaries below; their dated evidence remains historical. Estimates remain developer-day ranges excluding CI, storage and hardware waiting.
 
 Updated **19 October 2026** (Europe/Berlin). The [approved plan](plan.md) retains **83 feature groups /113 deliverables**. [The structured tracker](progress.json) records every item’s priority, effort, dependency, source revision, evidence and next action.
+
+## Current priorities
+
+- P1 · Home recommendations: admit Solo fixture prerequisite #1732 and qualify Capture Home #1729. Versus source is implemented; native validation is incomplete after a protective memory stop. Diagnose with bounded fixtures before retrying the full default route. Lessons still need the Learn hub.
+- P1 · Controller report: the wording correction is published as draft #1731 with 141 targeted checks and scoped English/Ukrainian browser review. Complete remaining source/package admission; physical connected-controller behavior remains untested.
+- P1 · Shared foundations: support reconciliation #1661 is published with 81 targeted checks. Complete current-source gates, then preserve all host states while updating dependent Team, Versus and Academy PRs.
+- P1 · Available space: small source changes, bounded focused tests and browser review continue. Full builds/new snapshots require 2 GiB free; about 1.0 GiB is available. No external-drive copy is authorized.
+- P1 · Compact play: review Duel, Team and Worlds on narrow and landscape layouts, including touch controls, language changes, scrolling and focus. Physical iPhone, offline PWA and Steam Deck checks remain Not tested.
+- P1 · Review and admission: complete current-source checks for text compatibility, recovery and the reviewed support adapters when space permits. Required CI and merge admission still apply.
+- P1 · Support hosts: Worlds #1733 passes245 and Rooms #1734 passes152 complete focused checks, with scoped English/Ukrainian native browser review. Both remain drafts for full source/package/admission; live-room and physical acceptance remain open.
+- P1 · Team launch checks: finish the separate test, guide and catalog corrections while preserving the intended one-click native launch. The withdrawn runtime proposal stays closed.
+- P2 · Clarity and comfort: fix the actual retained Worlds storage-status language mismatch in a separate F59 slice; finish search, result language and Hunt reading acceptance. Preserve save, permission, records and focus owners.
+- Continue the remaining approved phases. Lesson recommendations still depend on the Learn hub and shared demos; PR inventory does not measure whole-plan completion.
+
+## Phase picture
+
+| Phase                             | Current picture                                                                                                               | Main remaining work                                                                                                        |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| 0 — Baseline                      | Isolated checkouts and source ownership established; catalog fixture repairs are separate review dependencies.                | Preserve exact-source evidence and original work; resume blocked full checks when disk reserve permits.                    |
+| 1 — Reliability                   | Multiple source fixes merged; reviewed foundations and new integrations await admission.                                      | Current-main reconciliation, Demo dependencies and remaining labels/save notices.                                          |
+| 2 — Find, learn and start         | First Flight, several context/result explanations merged; search recovery1715 published.                                      | Native search acceptance, next-mission recommendation, further onboarding and guidance.                                    |
+| 3 — Progress and offline          | Archive/local recovery and suspend have reviewed slices; support-summary foundation passes full source gates.                 | Admission, remaining host adapters, package capacity and real PWA/device evidence.                                         |
+| 4 — Comfort, input and audio      | Presets, bindings, scaling and language slices are reviewed or admitted; Team launch test/doc contracts are being reconciled. | Compact browser checks, two Overflight scaling families, remaining hosts, listening and assistive-technology journeys.     |
+| 5 — Practice and playing together | Planned.                                                                                                                      | Playlists, replays, practice routes, invitations, lobby readiness and performance sampling.                                |
+| 6 — Creator and community         | Foundational catalog/recovery slices reviewed; larger workflows planned.                                                      | Creator entry/playtest/validation, previews, discovery, publishing and bookmarks.                                          |
+| 7 — Progression and depth         | Hunt draft#1727 now includes the reading-region fix atad50;74 native/read-owner checks pass.                                  | Review and qualify the bounded Hunt slice, then earned-art browsing, experiments, featured challenges and chapter content. |
+| 8 — Services and platforms        | Planned; bounded native scope already distinguished from full-game distribution.                                              | Online recovery, cloud transfer, signed distribution/updates and optional platform features.                               |
+
+The work continues across independent phases while source, predecessor, browser and hardware gates remain visible. No whole-plan completion or untested player benefit is implied by a merged source PR.
+
+The next Overflight scaling deliverables are **Single Drone + Riy Squad**, followed by **Raid + Time Attack + Contract Marathon**. Each pair/group shares a native shell and must deliver its complete menus, HUD, upgrade previews and result/continuation states together. Separate SVG/Canvas preview labels need their own typography policy; battlefield artwork, camera geometry, accepted offers and round timing stay under their existing owners. Browser acceptance covers both languages, both fonts, all supported text sizes, portrait and landscape. This is an implementation boundary, not a new estimate or a claim that those families already support Extra large text.
+
+<details>
+<summary>Detailed evidence, earlier checkpoints and qualification boundaries</summary>
+
+### Superseded early checkpoints
+
+The following present-tense notes are preserved historical evidence. The latest checkpoint and current priorities above supersede them.
 
 **Latest recorded feature PRs: 27 merged · 16 ready for required checks · 33 drafts (76 active/admitted; 1 withdrawn candidate recorded separately).** Delivery dependencies such as the Team fixture repairs are counted separately. These are PR counts, not percentages of completed features. Two merged slices are confirmed in the last verified published source; no new live journey is qualified.
 
@@ -56,27 +94,6 @@ Updated **19 October 2026** (Europe/Berlin). The [approved plan](plan.md) retain
 | P2       | Language and result guidance        | Reroll caption #1711 is merged. Recalibrate card wording #1723 is a reviewed draft with 109 affected cases passing. Worlds result language #1709 passes full source checks.              | Full checks for the new card slice, actual screen acceptance and further terminology hosts.                                                                                      |
 
 Estimates remain developer-day ranges in the approved plan, excluding review/CI queues, unavailable browser controls and hardware waiting. No iPhone or Steam Deck is available. Physical offline cold launch, sustained performance and sleep/resume stay **Not tested**. Source checks, modeled host interaction, actual browser play and device acceptance are separate evidence.
-
-## Phase picture
-
-| Phase                             | Current picture                                                                                                               | Main remaining work                                                                                                        |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| 0 — Baseline                      | Isolated checkouts and source ownership established; catalog fixture repairs are separate review dependencies.                | Preserve exact-source evidence and original work; resume blocked full checks when disk reserve permits.                    |
-| 1 — Reliability                   | Multiple source fixes merged; reviewed foundations and new integrations await admission.                                      | Current-main reconciliation, Demo dependencies and remaining labels/save notices.                                          |
-| 2 — Find, learn and start         | First Flight, several context/result explanations merged; search recovery1715 published.                                      | Native search acceptance, next-mission recommendation, further onboarding and guidance.                                    |
-| 3 — Progress and offline          | Archive/local recovery and suspend have reviewed slices; support-summary foundation passes full source gates.                 | Admission, remaining host adapters, package capacity and real PWA/device evidence.                                         |
-| 4 — Comfort, input and audio      | Presets, bindings, scaling and language slices are reviewed or admitted; Team launch test/doc contracts are being reconciled. | Compact browser checks, two Overflight scaling families, remaining hosts, listening and assistive-technology journeys.     |
-| 5 — Practice and playing together | Planned.                                                                                                                      | Playlists, replays, practice routes, invitations, lobby readiness and performance sampling.                                |
-| 6 — Creator and community         | Foundational catalog/recovery slices reviewed; larger workflows planned.                                                      | Creator entry/playtest/validation, previews, discovery, publishing and bookmarks.                                          |
-| 7 — Progression and depth         | Hunt draft#1727 now includes the reading-region fix atad50;74 native/read-owner checks pass.                                  | Review and qualify the bounded Hunt slice, then earned-art browsing, experiments, featured challenges and chapter content. |
-| 8 — Services and platforms        | Planned; bounded native scope already distinguished from full-game distribution.                                              | Online recovery, cloud transfer, signed distribution/updates and optional platform features.                               |
-
-The work continues across independent phases while source, predecessor, browser and hardware gates remain visible. No whole-plan completion or untested player benefit is implied by a merged source PR.
-
-The next Overflight scaling deliverables are **Single Drone + Riy Squad**, followed by **Raid + Time Attack + Contract Marathon**. Each pair/group shares a native shell and must deliver its complete menus, HUD, upgrade previews and result/continuation states together. Separate SVG/Canvas preview labels need their own typography policy; battlefield artwork, camera geometry, accepted offers and round timing stay under their existing owners. Browser acceptance covers both languages, both fonts, all supported text sizes, portrait and landscape. This is an implementation boundary, not a new estimate or a claim that those families already support Extra large text.
-
-<details>
-<summary>Detailed evidence, earlier checkpoints and qualification boundaries</summary>
 
 ## Merged
 
