@@ -1368,6 +1368,43 @@ test('the shared keyboard navigator moves menu focus without leaking directional
   assert.equal(state.document.body.dataset.playing, 'false');
 });
 
+for (const [mode, activity, query, expected] of [
+  ['solo', 'campaign', '', 'SNAKE · Solo · Campaign'],
+  ['team', 'campaign', '', 'SNAKE · Team · Campaign'],
+  ['versus', 'campaign', '', 'SNAKE · Duel · Campaign'],
+  ['solo', 'endless', '', 'SNAKE · Solo · Endless'],
+  ['versus', 'endless', '&duel=score', 'SNAKE · Duel · Endless · Score duel · 3 min'],
+  ['versus', 'endless', '&duel=survival', 'SNAKE · Duel · Endless · Survival duel'],
+]) {
+  test(`Snake Home identifies the accepted ${mode}/${activity}${query} round without starting it`, async () => {
+    const state = await harness({
+      mode,
+      activity,
+      query,
+      directEntry: false,
+      liveLocale: mode === 'versus',
+    });
+    const context = state.$('snake-navigation-context');
+    assert.equal(context.hidden, false);
+    assert.equal(context.textContent, expected);
+    assert.equal(state.shell.elements.modes.getAttribute('aria-describedby'), context.id);
+    assert.equal(state.shell.topDialog(), state.shell.elements.home);
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    if (mode === 'versus') {
+      state.$('language').value = 'uk';
+      state.$('language').emit('change');
+      assert.match(context.textContent, /^ЗМІЙКА · Дуель · /);
+    }
+    state.frame(0);
+    state.frame(2000);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(state.document.body.dataset.playing, 'false');
+  });
+}
+
 test('the Snake library shows all missions and filters without changing the paused attempt', async () => {
   const state = await harness();
   state.frame(0);
@@ -1382,6 +1419,11 @@ test('the Snake library shows all missions and filters without changing the paus
   assert.equal(state.$('journey-cards').children.length, 1);
   state.$('journey-mode').value = 'team';
   state.$('journey-mode').emit('change');
+  state.$('journey-filter-details').open = false;
+  assert.match(
+    state.$('journey-chooser-status').textContent,
+    /Browsing Team · from SNAKE · Solo · Campaign/,
+  );
   state.frame(1200);
   assert.deepEqual(
     state.created.map((run) => core.exportClassicSnakeReplay(run)),
@@ -1406,6 +1448,12 @@ test('Snake library mode selection launches the exact chosen Team mission with o
   state.$('journey-mode').value = 'team';
   state.$('journey-mode').emit('change');
   const selected = CLASSIC_SNAKE_LEVELS.at(-1);
+  const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  libraryCard(state, selected.id).focus();
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    before,
+  );
   libraryCard(state, selected.id).click();
   await flush();
   assert.equal(state.created.at(-1).level.id, selected.id);
@@ -1414,7 +1462,60 @@ test('Snake library mode selection launches the exact chosen Team mission with o
   assert.equal(state.$('journey-chooser').open, false);
   assert.equal(state.shell.topDialog(), null);
   assert.equal(state.document.body.dataset.playing, 'true');
+  state.shell.openHome();
+  assert.equal(state.$('snake-navigation-context').textContent, 'SNAKE · Team · Campaign');
+  assert.equal(
+    state.shell.elements.home.querySelector('.mode-play-mission').textContent,
+    selected.title.en,
+  );
 });
+
+for (const [browsedMode, label, translatedLabel] of [
+  ['team', 'Team', 'Команда'],
+  ['versus', 'Duel', 'Дуель'],
+])
+  test(`Snake ${browsedMode} navigation context localizes without changing the paused owner or selected library mode`, async () => {
+    const state = await harness({ liveLocale: true });
+    state.frame(0);
+    state.frame(200);
+    state.shell.openHome();
+    state.shell.open('missions');
+    state.$('journey-mode').value = browsedMode;
+    state.$('journey-mode').emit('change');
+    assert.ok(
+      state
+        .$('journey-chooser-status')
+        .textContent.includes(`Browsing ${label} · from SNAKE · Solo · Campaign`),
+    );
+    assert.equal(
+      [...state.$('journey-mode').children].find((option) => option.value === browsedMode)
+        .textContent,
+      label,
+    );
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const selected = libraryCard(state, CLASSIC_SNAKE_LEVELS[1].id);
+    selected.focus();
+    state.$('language').value = 'uk';
+    state.$('language').emit('change');
+    assert.equal(state.document.activeElement, selected);
+    assert.equal(state.$('snake-navigation-context').textContent, 'ЗМІЙКА · Соло · Кампанія');
+    assert.ok(
+      state
+        .$('journey-chooser-status')
+        .textContent.includes(
+          `Перегляд: ${translatedLabel} · поточна гра: ЗМІЙКА · Соло · Кампанія`,
+        ),
+    );
+    state.$('journey-back').click();
+    assert.equal(state.shell.topDialog(), state.shell.elements.home);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    state.shell.open('missions');
+    assert.equal(state.$('journey-mode').value, browsedMode);
+  });
 
 test('a mode change in Snake rules remains selected when returning to the existing library', async () => {
   const state = await harness();
