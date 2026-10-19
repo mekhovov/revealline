@@ -1,0 +1,376 @@
+{
+  "started": "2026-10-19T04:33:56.481387+00:00",
+  "oldHead": "b691aee66f875ec83477e161841362665b618f22",
+  "oldBase": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+  "newBase": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "sparseWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-sparse-16ebd7b5",
+  "backupBranch": "codex/shared-demos-before-16ebd7b5",
+  "complete": true,
+  "adopted": true,
+  "resolutions": [
+    {
+      "commit": "005b24c30e16a289e2e13a1d85c39983f1a0bb47",
+      "path": "game/i18n/catalogs.mjs",
+      "method": "official catalogBundle/readCatalogs on merged sparse locale files"
+    },
+    {
+      "commit": "005b24c30e16a289e2e13a1d85c39983f1a0bb47",
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "method": "Official four canonical sources joined with newline; replace generated SHA256 conflict only; all merged implementation bytes retained",
+      "sourceObjects": [
+        {
+          "path": "game/ui/mode-choice-view.mjs",
+          "gitObject": "792b667d4695c572f126c9926cf753c872e0c096",
+          "bytes": 6353,
+          "sha256": "83ed33c92ee4fcaaad63211407a5ca659a20abfb09770995624c1d4115ad50e4"
+        },
+        {
+          "path": "game/ui/settings-panels.mjs",
+          "gitObject": "0e8f4810e6f5ae96cd5511938041d14358c7e5d3",
+          "bytes": 9977,
+          "sha256": "4875177dc5ffe25f2d6719e62b85193675dc086839320006fda42ff3ef5eb4df"
+        },
+        {
+          "path": "game/ui/mode-settings-view.mjs",
+          "gitObject": "c9e849894776adbd277c5f3172ddc4606a992e89",
+          "bytes": 5165,
+          "sha256": "d7e1b6d81ed96e30fcf812549d830d83ef0e561774dc11aad106160ab3a0f742"
+        },
+        {
+          "path": "game/ui/mode-play-shell.mjs",
+          "gitObject": "796a65c3d35bc0a06739afce16d71adba50352a2",
+          "bytes": 28698,
+          "sha256": "3483d2df578c98f7ddcbc92a99f23640ef8a111978b64c78aabefa146ee182d1"
+        }
+      ],
+      "canonicalSourceSHA256": "ebf75d702677d63fd0c2bea53fae061e931725fb5e6646541f8607c9cdb0461a",
+      "conflictBlockSHA256": "7961c7200957865e697b847d9255a5b39567c74075b9c3ac497439c7266097fd",
+      "fullOfficialCheckRequired": true
+    },
+    {
+      "commit": "ffc7ce4ad2dc8918f4750d1a2b5d509a2a408b9b",
+      "path": "game/i18n/catalogs.mjs",
+      "method": "official catalogBundle/readCatalogs on merged sparse locale files"
+    }
+  ],
+  "preservedStoppedAttempts": [
+    {
+      "failure": "RuntimeError(\"Unexpected conflicts; stop for root review: ['game/i18n/catalogs.mjs', 'optional-practice/civilian-fpv/flight-fullscreen.mjs']\")",
+      "at": "2026-10-19T04:33:59.386369+00:00",
+      "conflicts": [
+        "game/i18n/catalogs.mjs",
+        "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+      ]
+    }
+  ],
+  "rebasedHead": "c647da2b9de6fb158004f06459afda926ba24028",
+  "commitCount": 38,
+  "commitMapping": [
+    {
+      "old": "005b24c30e16a289e2e13a1d85c39983f1a0bb47",
+      "rebased": "33cf47fbc3bf680ae6dd23041dd5caf582d402f8"
+    },
+    {
+      "old": "c376c811b909bc6966291b04135b46c467dace67",
+      "rebased": "3994978ee298a3d44abe80e82ed13e8d4360528f"
+    },
+    {
+      "old": "2ce86f79cb6604e12b0737088e97cd78b25af9c5",
+      "rebased": "2fb2c844461a7aad2a04e56f180777476bc812ca"
+    },
+    {
+      "old": "4fc47b72f972527068aae85bcd6384fc1fc26919",
+      "rebased": "61f0382abc6aeae98bbd12abfd7898613beb5dcb"
+    },
+    {
+      "old": "70254be64863416954d71200c512e682c1b37ff0",
+      "rebased": "ffc3fa0f84e082d2ed1f5543f9b13d697c433576"
+    },
+    {
+      "old": "6d365962681bec606eff71ed69a6c26254ea0b5a",
+      "rebased": "257f147da0002eed37088c69c8d69ebc1c25f145"
+    },
+    {
+      "old": "3b1e1de427983f2d571ab96c0777f7d23798ed4b",
+      "rebased": "3f8f1ce07d1d08ad4aea147f4941dd2eb9905d80"
+    },
+    {
+      "old": "d5906d2e27221a10bfb2fc5f052fc31404570ef5",
+      "rebased": "23f879e9ee0e8dd671e7c0a13bf67b7da0bede79"
+    },
+    {
+      "old": "ee3bf48e70af17b12a1926e8ee2da30a08f84ded",
+      "rebased": "e8a49b8b7196242f85ae15a85cff9a747fb2398d"
+    },
+    {
+      "old": "28a16500d7c502a6adb6eb45c7c561ab8ce19a91",
+      "rebased": "bfb4fd55b91f8a4970e985c4645e3fc86cf90353"
+    },
+    {
+      "old": "efdc4e0656cc20a25076b5183a055bdb6ae26690",
+      "rebased": "5855200e105395b73920d682ccd67c803c115f70"
+    },
+    {
+      "old": "a8c586bd68c929698a75629312fcec3bfd9470d2",
+      "rebased": "8285cf4cf06aa87734f0b70f6a2f08504e99bfc2"
+    },
+    {
+      "old": "ffc7ce4ad2dc8918f4750d1a2b5d509a2a408b9b",
+      "rebased": "b6138d1c6b2a294fb5d5d686fdf9189c25a8dd2e"
+    },
+    {
+      "old": "4dfcbae2d2de58e62ff9213a4d9bfadd836a3fd1",
+      "rebased": "89299494ede4b0e26601cd853eadd9865abb4193"
+    },
+    {
+      "old": "a2b7cfa7f5296b62dae6e50be04527f6186c9ec2",
+      "rebased": "537a125ad05e772822d608ffadb4bf5ace4e8948"
+    },
+    {
+      "old": "4190dc936bd0013cc4414236896ac6aefeccfe01",
+      "rebased": "f9caf6ed0679e82ee6be901aa71e2a5ba791bfee"
+    },
+    {
+      "old": "a92327efb6e197bcbfb2f050bc2dd0084f5c5f92",
+      "rebased": "473a185cf7fae4de369de4df9cca9ebfa27bbf25"
+    },
+    {
+      "old": "3a1ec85059ad2b4b65d6c585162cd98efaff5fc7",
+      "rebased": "c476dc166a69c4387d079e3486081fbaf3522cf1"
+    },
+    {
+      "old": "b1e133b747a33ab702f2d0e8935485d4b8625139",
+      "rebased": "93d43d7713c825f9abeebc3a1770bb544b63ca70"
+    },
+    {
+      "old": "fc7f36ef72d8ec2d723d3dbf16ab77e8d8ab20ac",
+      "rebased": "06b8fa3926a86b6a881e2caecaafc91fc52f87d6"
+    },
+    {
+      "old": "84eec83cabf93789a8e1094ca924f3232b3df20d",
+      "rebased": "7b0f20fef3d5fb732f8d7c43f83451298fd63d98"
+    },
+    {
+      "old": "5f09e7a0ad52c438322abe3027e3c368858a3909",
+      "rebased": "a5451894a7afdd02eaa6193c02aaf2fa4b6e04d4"
+    },
+    {
+      "old": "a578dcc1c93e855bb31647e9bf7f08d19454577b",
+      "rebased": "141406ae9a1c243d13340d201cd13cbf800ff707"
+    },
+    {
+      "old": "0f6e51cb621380dbf3618b8062a4fc459043565c",
+      "rebased": "c5e9945b1a65a15523092fe765326a43afffcbed"
+    },
+    {
+      "old": "3f1a661eb73a773bfaf9f4ae5f31de9ab87285a7",
+      "rebased": "ab0a1f82374c51453a085a3a1d8c7f089edcd96f"
+    },
+    {
+      "old": "41d8266f2e2b9660260792d985f1f3748b3e3fdc",
+      "rebased": "c7278f00f6360663b77a25966576fb72c9e7a0c0"
+    },
+    {
+      "old": "1b7ee23d8a786c2f628f946ca0adef476a10bd31",
+      "rebased": "b42699bc880632fe1f8e3da75371b8600e0783e1"
+    },
+    {
+      "old": "8df89b45c56bdbc6edbd2af5846a5dc978c9fb73",
+      "rebased": "d275a07eb34e0a6091f7a68495b7e09b3057886e"
+    },
+    {
+      "old": "d2eb719f2e45ea790b502232cfbc5920044a9c19",
+      "rebased": "73115ab3d0632e60bde9cebcc03e7006320bf793"
+    },
+    {
+      "old": "159f1750149240436f74f4dace52a23e50de3237",
+      "rebased": "05c56fbe83ce9903451af73d0c03d8da21fee9ca"
+    },
+    {
+      "old": "80a593cffe8809e8a2c4e4b23343908a153a5b44",
+      "rebased": "2f9ff91bf63b8066493f5353c737d3aa23cb33a6"
+    },
+    {
+      "old": "ecd4492bee6d07d80d81fc36cb70e6a60394e73a",
+      "rebased": "815d4736f4e292c39102c211cc954b5d0bc4c933"
+    },
+    {
+      "old": "13aa8d471f031a35daf672db3d852d2b2333c7a9",
+      "rebased": "d8f5e2dd9a5a613239383f4b40cbf013258113a6"
+    },
+    {
+      "old": "61c9ce0f1da68006d4f4c71f1985cc606828a04d",
+      "rebased": "7003429319b4bf2713030318d3126762b7f2f481"
+    },
+    {
+      "old": "a057367456558b294d19ffff3cdb0981f1d2ea1c",
+      "rebased": "b5a5220960636fd51787b8dbda6509297c258169"
+    },
+    {
+      "old": "5f90e978f6abf52b8ebbacf9dc3ba951f7796ce8",
+      "rebased": "204c6d9e550e48654fdb54614a76c286c37240c2"
+    },
+    {
+      "old": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+      "rebased": "46145c2df100dcc2c486c7e90af4fd4740f7c469"
+    },
+    {
+      "old": "b691aee66f875ec83477e161841362665b618f22",
+      "rebased": "c647da2b9de6fb158004f06459afda926ba24028"
+    }
+  ],
+  "authorsMessagesOrderPreserved": true,
+  "exactIncomingDeltaPaths": [
+    "docs/overflight-reroll-count-language.md",
+    "docs/performance/solo-performance-followup-plan.md",
+    "game/core/capture.mjs",
+    "game/couch/couch.mjs",
+    "game/i18n/catalogs.mjs",
+    "game/journey/reaction-voice-cache.mjs",
+    "game/locales/en/interface.json",
+    "game/locales/uk/interface.json",
+    "game/overflight/app.mjs",
+    "game/overflight/raid-upgrade-card.mjs",
+    "game/soundtrack-source.mjs",
+    "game/test/body-backing-recovery.test.mjs",
+    "game/test/classic-snake-ui.test.mjs",
+    "game/test/core-capture.test.mjs",
+    "game/test/couch-enemy-stats-locale.test.mjs",
+    "game/test/global-settings-tools.test.mjs",
+    "game/test/overflight-raid-refit-shield.test.mjs",
+    "game/test/overflight-reroll-disclosure.test.mjs",
+    "game/test/reaction-recording-cancellation.test.mjs",
+    "game/test/soundtrack-player.test.mjs",
+    "game/test/soundtrack-source.test.mjs",
+    "game/ui/body-backing.mjs",
+    "game/ui/global-settings-tools.mjs",
+    "game/ui/settings-panels.mjs",
+    "game/ui/soundtrack-player.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+  ],
+  "nonoverlapMatchesMain": true,
+  "exactNativeObjects": [
+    {
+      "path": "game/demo-data",
+      "gitObject": "fe4780393e107e63ee14d122ce1d59024b8ae731"
+    },
+    {
+      "path": "game/demo-modes",
+      "gitObject": "4e192209366eeb31de526b38ea9a7dc3790008a0"
+    },
+    {
+      "path": "game/content",
+      "gitObject": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764"
+    },
+    {
+      "path": "game/content-design/assets",
+      "gitObject": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183"
+    },
+    {
+      "path": "game/replay.mjs",
+      "gitObject": "fa473c568bec333395636541cc82fe3dd8b597f6"
+    },
+    {
+      "path": "game/snake/classic-core.mjs",
+      "gitObject": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5"
+    },
+    {
+      "path": "game/snake/classic-match.mjs",
+      "gitObject": "cd47d4660228b5e8968d6aef3d3d7700b48d432c"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "gitObject": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6"
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "gitObject": "c87f15cdc632a1bfd7592e8075974558d776fb88"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-data",
+      "gitObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "gitObject": "e9ee1383ebe909ce7993da499f07b33d486c9605"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "gitObject": "fa254c168037003881a41f881f270465a09d8f05"
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/shared-demos-generated",
+      "gitObject": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179"
+    }
+  ],
+  "changedNativeObjects": [
+    {
+      "path": "game/core",
+      "beforeObject": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+      "afterObject": "bf56faec341bd33c7633cd707decc5c86783763b",
+      "matchesIncomingMain": true,
+      "changedPaths": [
+        "game/core/capture.mjs"
+      ],
+      "qualification": "Allocation change requires independent semantic review and relevant replay verification; no blanket unchanged-simulation claim."
+    }
+  ],
+  "verificationCompleted": "2026-10-19T04:35:45.150699+00:00",
+  "untrackedPathsPreserved": true,
+  "sparseWorktreeRemoved": true,
+  "completedAt": "2026-10-19T04:35:45.977531+00:00",
+  "logs": [
+    {
+      "stage": "backup",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-backup.log.txt",
+      "exitCode": 0
+    },
+    {
+      "stage": "worktree-add",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-worktree-add.log.txt",
+      "exitCode": 0
+    },
+    {
+      "stage": "populate",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-populate.log.txt",
+      "exitCode": 0
+    },
+    {
+      "stage": "rebase",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-rebase.log.txt",
+      "exitCode": 1
+    },
+    {
+      "stage": "catalog-0",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-catalog-0.log.txt",
+      "exitCode": 0
+    },
+    {
+      "stage": "continue-0",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-continue-0.log.txt",
+      "exitCode": 1
+    },
+    {
+      "stage": "catalog-1",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-catalog-1.log.txt",
+      "exitCode": 0
+    },
+    {
+      "stage": "continue-1",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-continue-1.log.txt",
+      "exitCode": 0
+    },
+    {
+      "stage": "adopt",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-adopt.log.txt",
+      "exitCode": 0
+    },
+    {
+      "stage": "worktree-remove",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-worktree-remove.log.txt",
+      "exitCode": 0
+    }
+  ],
+  "method": "Standard detached sparse Git rebase; official merged-locale catalog generation and one explicitly authorized generated source-SHA conflict recomputed from the four canonical merged index sources. Original checkout adopted with reset --keep after preservation checks."
+}
