@@ -53,9 +53,11 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
           ? 'versus-game-shell'
           : host.kind === 'fpv-academy'
             ? 'academy-game-shell'
-            : host.kind === 'private-room'
-              ? 'private-room-game-shell'
-              : 'primary-game-shell',
+            : host.kind === 'fpv-worlds'
+              ? 'worlds-game-shell'
+              : host.kind === 'private-room'
+                ? 'private-room-game-shell'
+                : 'primary-game-shell',
     build: {
       version: version(host.version),
       sourceRevision:
@@ -73,6 +75,7 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         'capture-team',
         'capture-versus',
         'fpv-academy',
+        'fpv-worlds',
         'private-room',
       ]),
       state: oneOf(host.state, [
@@ -86,6 +89,7 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         'complete',
         'expired',
         'playback-ended',
+        'failed',
         ...(host.kind === 'private-room'
           ? ['connecting', 'recovering', 'waiting', 'playing', 'abandoned']
           : []),

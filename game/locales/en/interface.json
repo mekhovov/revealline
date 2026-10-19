@@ -5987,6 +5987,7 @@
   "supportSummary.game.playback-ended": "Playback ended",
   "supportSummary.presence.connected": "Connected controller observed. Assignment and menu readiness are not confirmed by this observation.",
   "supportSummary.presence.disconnected": "No connected controller was observed.",
+  "supportSummary.game.failed": "Flight failed",
   "supportSummary.game.connecting": "Connecting to a room",
   "supportSummary.game.recovering": "Room connection recovering",
   "supportSummary.game.waiting": "Waiting for room readiness",

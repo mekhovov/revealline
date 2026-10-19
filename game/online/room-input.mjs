@@ -31,6 +31,9 @@ export function attachRoomInput({
   });
   function clear() {
     supportController = null;
+    resetControls();
+  }
+  function resetControls() {
     command = neutralControllerFlight();
     router.clear();
     input.clear();
@@ -76,7 +79,8 @@ export function attachRoomInput({
         onGamepad(frame.status.message);
       }
       if (frame.disconnected) {
-        clear();
+        // Neutralize the same controls while retaining this current loss fact.
+        resetControls();
         if (active()) onPause();
       } else if (scope !== 'flight') {
         onNavigate(frame.ui);

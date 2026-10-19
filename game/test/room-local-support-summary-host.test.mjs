@@ -200,7 +200,10 @@ test('actual Rooms Settings owns one summary, with unknown pre-frame hardware/bu
   assert.equal(report.offline.files, 'not-verified-here');
   assert.deepEqual([f.reads, f.requests, f.submits, f.pauses, f.saved.writes], before);
   assert.deepEqual(f.lifecycle.snapshot(), lifecycle);
-  assert.equal(f.doc.activeElement, f.$('support-summary-prepare'));
+  assert.ok(
+    f.doc.activeElement === f.$('support-summary-prepare'),
+    `Expected prepare focus, got ${f.doc.activeElement?.id}`,
+  );
   assert.doesNotMatch(
     JSON.stringify(report),
     /private-seat|private-room-credential|private-token|private-invite|private\.example|token|recipe|roomId|seat|sequence/i,
@@ -237,7 +240,9 @@ test('paused legal room reuses only the ordinary controller sample and preserves
   );
   f.pads.length = 0;
   f.ui.frame();
-  assert.equal((await prepare(f)).controller.status, 'disconnected');
+  const disconnected = await prepare(f);
+  assert.equal(disconnected.controller.status, 'disconnected');
+  assert.equal(disconnected.controller.assigned, false);
   f.pads.push(device());
   f.ui.frame();
   f.ui.frame();
@@ -280,7 +285,15 @@ test('accepted waiting, playing and terminal room states stay distinct from loca
   for (let n = 0; n < 6000 && room.status === 'playing'; n++) stepAuthoritativeRoom(room, 0);
   assert.equal(room.status, 'finished', 'Use an actual terminal core outcome.');
   f.accept(room);
-  f.open();
+  assert.ok(
+    f.ui.shell.topDialog() === f.$('room-results-dialog'),
+    'Results must own the top modal.',
+  );
+  f.ui.shell.back();
+  assert.ok(
+    f.ui.shell.topDialog() === f.$('room-settings-dialog'),
+    'Settings must own the top modal.',
+  );
   assert.equal((await prepare(f)).game.state, 'finished');
   assert.deepEqual([f.requests, f.submits, f.pauses], [0, 0, 0]);
 });
@@ -302,13 +315,13 @@ test('first accepted room and replacement identity keep the mounted support owne
   assert.equal(f.$('support-summary-json').textContent, '');
   f.open();
   assert.equal((await prepare(f)).game.state, 'waiting');
-  assert.equal(f.$('room-support-summary-root'), root);
-  assert.equal(f.$('support-summary-prepare'), button);
+  assert.ok(f.$('room-support-summary-root') === root, 'Retain the mounted root node.');
+  assert.ok(f.$('support-summary-prepare') === button, 'Retain the native prepare button.');
   f.win.emit('blur');
   assert.equal(f.$('support-summary-json').textContent, '');
   assert.equal(f.$('support-summary-download').disabled, true);
   f.ui.dispose();
-  assert.equal(root.closest('dialog'), null);
+  assert.ok(root.closest('dialog') === null, 'Disposal returns the root to its original owner.');
   assert.deepEqual([f.requests, f.submits, f.pauses], [0, 0, 0]);
 });
 
@@ -322,14 +335,21 @@ test('closing actual Rooms Settings retires a late preparation without reclaimin
   f.$('support-summary-prepare').click();
   await turn();
   f.$('room-settings-dialog').close();
-  f.$('room-action-menu').focus();
+  f.$('room-action-primary').focus();
+  assert.ok(
+    f.doc.activeElement.closest('dialog') === f.ui.shell.topDialog(),
+    'Replacement focus belongs to the active native Home modal.',
+  );
   const focus = f.doc.activeElement;
   finish(true);
   await turn();
   await turn();
   assert.equal(f.$('support-summary-json').textContent, '');
   assert.equal(f.$('support-summary-download').disabled, true);
-  assert.equal(f.doc.activeElement, focus);
+  assert.ok(
+    f.doc.activeElement === focus,
+    `Expected retained ${focus?.id}, got ${f.doc.activeElement?.id}`,
+  );
   f.open();
   assert.equal(f.$('support-summary-json').textContent, '');
 });
@@ -350,11 +370,14 @@ test('native child modal transition retires prepared and pending Rooms reports; 
     reads = f.reads;
   f.ui.frame();
   assert.equal(f.$('support-summary-json').textContent, json);
-  assert.equal(f.doc.activeElement, prepareButton);
+  assert.ok(
+    f.doc.activeElement === prepareButton,
+    `Expected prepare focus, got ${f.doc.activeElement?.id}`,
+  );
   assert.equal(f.reads, reads + 1, 'Only the ordinary frame samples input.');
   f.ui.shell.open('help');
   assert.equal(f.$('room-settings-dialog').open, true);
-  assert.equal(f.ui.shell.topDialog(), f.$('room-help-dialog'));
+  assert.ok(f.ui.shell.topDialog() === f.$('room-help-dialog'), 'Help must own the top modal.');
   assert.equal(f.$('support-summary-json').textContent, '');
   f.$('support-summary-prepare').click();
   await turn();
@@ -371,7 +394,10 @@ test('native child modal transition retires prepared and pending Rooms reports; 
   await turn();
   assert.equal(f.$('support-summary-json').textContent, '');
   assert.equal(f.$('support-summary-download').disabled, true);
-  assert.equal(f.doc.activeElement, focus);
+  assert.ok(
+    f.doc.activeElement === focus,
+    `Expected retained ${focus?.id}, got ${f.doc.activeElement?.id}`,
+  );
   assert.deepEqual([f.reads, f.requests, f.submits, f.saved.writes], before);
   f.$('room-help-dialog').close();
   assert.equal(f.$('support-summary-json').textContent, '');
@@ -437,7 +463,10 @@ test('blur retires pending native Rooms preparation and cannot reclaim newer foc
   await turn();
   assert.equal(f.$('support-summary-json').textContent, '');
   assert.equal(f.$('support-summary-download').disabled, true);
-  assert.equal(f.doc.activeElement, focus);
+  assert.ok(
+    f.doc.activeElement === focus,
+    `Expected retained ${focus?.id}, got ${f.doc.activeElement?.id}`,
+  );
   assert.deepEqual([f.requests, f.submits, f.pauses, f.reads], [0, 0, 0, 0]);
 });
 
@@ -465,15 +494,21 @@ test('Rooms export uses the exact captured preview; locale refresh preserves its
   assert.deepEqual(JSON.parse(await blobs[0].text()), report);
   setLocale('uk', { persist: false });
   assert.match(f.$('support-summary-title').textContent, /Локальний звіт/);
-  assert.equal(f.doc.activeElement, download);
+  assert.ok(
+    f.doc.activeElement === download,
+    `Expected download focus, got ${f.doc.activeElement?.id}`,
+  );
   assert.equal(f.$('support-summary-json').textContent, json);
-  assert.equal(f.$('support-summary-download'), download);
+  assert.ok(f.$('support-summary-download') === download, 'Retain the native download node.');
   assert.doesNotMatch(
     f.$('room-support-summary-root').textContent,
     /interface:|supportSummary\.|\{\{/,
   );
   setLocale('en', { persist: false });
-  assert.equal(f.doc.activeElement, download);
+  assert.ok(
+    f.doc.activeElement === download,
+    `Expected download focus, got ${f.doc.activeElement?.id}`,
+  );
   assert.equal(f.$('support-summary-json').textContent, json);
   assert.deepEqual([f.requests, f.submits, f.pauses], [0, 0, 0]);
 });
