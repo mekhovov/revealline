@@ -76,3 +76,31 @@ The first new 15-file attempt failed: 302 passed / 10 failed, 312 emitted cases,
 The canonical catalog is independently byte-identical and decodes exactly to all 18 namespaces / 27,646 messages (1,270,807 bytes; SHA-256 `be17570df2b9e0ac58fc751544bdd99ba054c264c4598f9af246651ce170a378`). A broader localization command returned zero with 13,706 messages / 8,981 references, but this review document was edited during that run, so its before/after qualification audit failed. That attempt is not counted as a clean exact-source gate; its complete output and differing-document audit are retained.
 
 Detailed receipts are in `.cache/improvements-evidence/2026-10-19/compat-latest-main-827ac5-{complete,restored-complete,full-lint,theme-bootstrap,play-shell}/`. Final documentation-only publication must retain the 42 non-document feature blobs from the passing merge. Full source validation, package, actual current browser journeys and new exact-head CI admission remain separate pending gates; no new mobile, installed-PWA, listening or hardware qualification is claimed.
+
+## Configured source validation at 869dff
+
+All eleven configured lint/localization/validation components now pass at published `869dffba635f963fdce4b7a04ef8052b97af1d5b`, tree `f1a978e843912d58605e8f98ae9067da886bb067`. Commands ran as separate fresh, serialized Node22.22.2 processes, with localization once followed by the nine remaining exact `package.json` validation commands. This is component-equivalent configured source qualification across two attempts, **not one uninterrupted npm invocation**, a package build, a full test-suite result or newer-main acceptance.
+
+| Component               | Seconds including terminal source audit |
+| ----------------------- | --------------------------------------: |
+| lint                    |                                  27.934 |
+| i18n                    |                                  117.35 |
+| game-validate           |                                  53.718 |
+| presentation-metadata   |                                   6.778 |
+| reaction-projection     |                                   5.455 |
+| academy-audio           |                                   5.627 |
+| play-shell              |                                   5.845 |
+| presentation-assets     |                                   5.975 |
+| optional-worker         |                                   5.453 |
+| world-visuals           |                                   5.479 |
+| industrial-environments |                                  24.433 |
+
+Every accepted component exited zero with empty stderr, no resource guard, capture error or truncation, unchanged source and no remaining owned descendants. Each process used1536MiB old space,2048MiB group/descendant RSS,180 seconds per running child, a2GiB free-disk floor and4MiB per output stream. Maximum sampled RSS was1424.3MiB during localization;0.5-second sampling can miss peaks in short processes. The localization check reports13,706 messages/9,071 references in the complete defined source closure. An earlier clean final-head localization check106.864s/1,516,448KiB retains its own narrower working-tree input scope.
+
+The first chain passed its first seven components. Presentation-assets itself exited zero, but its postflight free space was1,774,960,640 bytes, below the2GiB reserve, so that stage was rejected and the chain stopped; its last three components were not run. The failed guard receipt and unfiltered output remain intact. Available space later recovered without deletion; new finalized Git packs were observed, but the precise writer/cause was not established. The interrupted component and the final three were then rerun into a fresh evidence directory with unchanged source and the same limits. All four passed. No failure was relabeled or guard relaxed.
+
+The APFS-clone snapshot has29,236 available exact-target tracked files, verified GitOID/SHA256/executable mode and distinct inodes. It explicitly lists15,661 absent tracked history/raw paths; it is not an all-tracked checkout. All6,874 defined build/lint/localization-scanner prerequisites are present. Matching committed media came from the independently verified Team snapshot;212 differing files came from the exact compatibility checkout. No source asset hydration, ordinary-copy fallback, dependency installation, hardlink or Gitblob restoration was used. Original compatibility HEAD/index/working state and its43feature-path hashes were unchanged.
+
+Before and after each accepted component, all29,236 snapshot files matched audit `fe2cdf6ebc822f67472bbc21a442daafa63e0ed1320b64af86a9536de60e665e`. Complete raw output, per-component limits/exits and all22 log hashes remain under `.cache/improvements-evidence/2026-10-19/compat-869-apfs-preflight/`; `configured-components-final.json` identifies exactly which attempt qualifies each component. The original interrupted `full-gates/` chain and its failure are retained alongside `full-gates-resumed/`. This documentation-only successor keeps all42 non-document feature blobs exact869; checks were not rerun at the successor.
+
+Package capacity, actual current browser journeys and new-head remote CI/admission remain open. Physical iPhone installed-PWA offline cold launch, Steam Deck, listening and assistive-technology acceptance remain unqualified.
