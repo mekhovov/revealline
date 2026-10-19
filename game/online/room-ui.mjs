@@ -25,7 +25,16 @@ import { attachRoomSupport } from './room-controls.mjs';
 
 /** The room transport owns readiness and outcomes. This adapter owns only native
  * menu/input presentation and the one page mixer; it never advances a simulation. */
-export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display, destruction }) {
+export function mountRoomUI({
+  getState,
+  getSeat,
+  canPlay,
+  submit,
+  pause,
+  display,
+  destruction,
+  onSurfaceChange = () => {},
+}) {
   const doc = globalThis.document,
     $ = (id) => doc.getElementById(id),
     uk = getLocale() === 'uk',
@@ -197,6 +206,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
       cards[getState()?.recipe.mode === 'versus' ? getSeat() : 0]?.canvas.focus({
         preventScroll: true,
       }),
+    onSurfaceChange,
     initial: 'home',
   });
   // subscribe() publishes immediately; the title must exist before its first
