@@ -1040,6 +1040,48 @@
       "blob": "103fc103d2bc8f20c21cf063de508ad09a362dae",
       "bytes": 5572,
       "sha256": "a8a80de03438b8ec541ab4765a885628358a09fd32a7c250640425d167d448b3"
+    },
+    {
+      "path": "demo-final-release-gate-1628.json",
+      "blob": "83c8816ddb493b0f7fabad512a1878ae167d6bbd",
+      "bytes": 7236,
+      "sha256": "952fc1a63d87a67ef14c30492b9a4522016eb0dc2b31606bed2648760ec3e0fa"
+    },
+    {
+      "path": "worlds-admission-timeout-1674-attempt1.json",
+      "blob": "6f33db6c4f5d3c645edf92fbfd615af201984659",
+      "bytes": 172459,
+      "sha256": "98e19ad35c6875b85631e182d2fc7aff326cf3f5e754900430ecde8e14d8ebe9"
+    },
+    {
+      "path": "release-and-source-status-20261019-0003.json",
+      "blob": "558eb3e060f3b77aac0b1fc324924c310ca233ae",
+      "bytes": 53366,
+      "sha256": "cb1c45729a9f9ed657d2e0bc356325984badca4acde4ed6a3802d70f825a4ac8"
+    },
+    {
+      "path": "worlds-stage-diagnostic-source-proposal.json",
+      "blob": "c4b7adc6aedb58a347bb79c98c4080b9dc4e672a",
+      "bytes": 33123,
+      "sha256": "e5472f42d974aa16f5cc8a991948eea82661c4633e2e41cb027acf4c938b5221"
+    },
+    {
+      "path": "worlds-stage-diagnostic-reviewed-source-proposal.json",
+      "blob": "000f71e5d63c692c69aa64915ab30c60b9846a61",
+      "bytes": 34079,
+      "sha256": "e22b2d76d4aa6f8210d6ebed9b45c9ca2cbd0f4bafdde4b92e0410aafb0ae089"
+    },
+    {
+      "path": "worlds-stage-diagnostic-publication.json",
+      "blob": "6b02bf35ce4036012a1c0132ab6d4c25a88111c9",
+      "bytes": 760,
+      "sha256": "652cf8c5308f981518ccce99790fec919b2c80fc586209e253b73e89f4ccbd3b"
+    },
+    {
+      "path": "worlds-stage-diagnostic-independent-review.json",
+      "blob": "93a7bc576d4a8e375c6d7049c916abef22778b65",
+      "bytes": 3296,
+      "sha256": "25457f0c374783dbf60fca5f15ccdebff4f8eebebd56b34148e8f81961879d67"
     }
   ]
 }

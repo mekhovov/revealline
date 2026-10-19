@@ -1,0 +1,15 @@
+{
+  "kind": "WorldsDiagnosticSourcePublicationV1",
+  "at": "2026-10-19T00:06:45.611506+00:00",
+  "pr": 1674,
+  "branch": "codex/solo-menu-preparation-split",
+  "previous": "e379c2749e0815538f23500ef5a3b2117569c0c6",
+  "head": "98f666a20d133d9a81eb07104076c3147fd165aa",
+  "tree": "589372596d51272109a6dd062429553ce80afd83",
+  "changedPaths": [
+    "game/test/solo-lazy-library-host.test.mjs"
+  ],
+  "proposal": "000f71e5d63c692c69aa64915ab30c60b9846a61",
+  "limits": "Test diagnostics only. Existing cases/assertions and20-second/5-minute outer deadlines retained. No product cause established and no functional execution/pass claimed.",
+  "checks": "Exact before/after bytes, hashes, diff, complete tree union, fast-forward ref and commit parent verified."
+}

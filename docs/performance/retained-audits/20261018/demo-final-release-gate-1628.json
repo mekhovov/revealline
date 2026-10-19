@@ -1,0 +1,71 @@
+{
+  "schema": "SoloDemoFinalReleaseGateV1",
+  "collected": "2026-10-18T23:56:01.281773+00:00",
+  "pr": 1628,
+  "head": "62be652ce70b11f840b491c218609d5225374be4",
+  "draft": false,
+  "state": "open",
+  "merged": false,
+  "job": {
+    "id": 117814060858,
+    "run_id": 39163633429,
+    "workflow_name": "Validate source for continuous main",
+    "head_branch": "codex/solo-demo-paused-geometry-20261018",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39163633429",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAbbkPnOg",
+    "head_sha": "62be652ce70b11f840b491c218609d5225374be4",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117814060858",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39163633429/job/117814060858",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-18T22:57:06Z",
+    "started_at": "2026-10-18T23:49:32Z",
+    "completed_at": "2026-10-18T23:49:35Z",
+    "name": "release-ready",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T23:49:33Z",
+        "completed_at": "2026-10-18T23:49:33Z"
+      },
+      {
+        "name": "Apply the selected PR gate policy",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-18T23:49:33Z",
+        "completed_at": "2026-10-18T23:49:33Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-18T23:49:33Z",
+        "completed_at": "2026-10-18T23:49:33Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117814060858",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000043361,
+    "runner_name": "GitHub Actions 1000043361",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "run": {
+    "id": 39163633429,
+    "head_sha": "62be652ce70b11f840b491c218609d5225374be4",
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-10-18T23:49:35Z",
+    "run_attempt": 1
+  },
+  "log": "\ufeff2026-10-18T23:49:33.4166607Z Current runner version: '2.337.0'\n2026-10-18T23:49:33.4202193Z ##[group]Runner Image Provisioner\n2026-10-18T23:49:33.4203823Z Hosted Compute Agent\n2026-10-18T23:49:33.4204773Z Version: 20261012.601\n2026-10-18T23:49:33.4205828Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d\n2026-10-18T23:49:33.4207600Z Build Date: 2026-10-12T17:48:21Z\n2026-10-18T23:49:33.4208705Z Worker ID: {28f4d566-04d0-4dba-9eaf-f5c6facca045}\n2026-10-18T23:49:33.4210002Z Region: eastus\n2026-10-18T23:49:33.4210947Z Cloud: Azure\n2026-10-18T23:49:33.4211829Z ##[endgroup]\n2026-10-18T23:49:33.4214976Z ##[group]Operating System\n2026-10-18T23:49:33.4215982Z Ubuntu\n2026-10-18T23:49:33.4216964Z 24.04.5\n2026-10-18T23:49:33.4217809Z LTS\n2026-10-18T23:49:33.4218697Z ##[endgroup]\n2026-10-18T23:49:33.4219726Z ##[group]Runner Image\n2026-10-18T23:49:33.4220752Z Image: ubuntu-24.04\n2026-10-18T23:49:33.4221755Z Version: 20261012.334.1\n2026-10-18T23:49:33.4224074Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md\n2026-10-18T23:49:33.4226848Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334\n2026-10-18T23:49:33.4228493Z ##[endgroup]\n2026-10-18T23:49:33.4230372Z ##[group]GITHUB_TOKEN Permissions\n2026-10-18T23:49:33.4233618Z Contents: read\n2026-10-18T23:49:33.4234765Z Metadata: read\n2026-10-18T23:49:33.4235679Z ##[endgroup]\n2026-10-18T23:49:33.4238834Z Secret source: Actions\n2026-10-18T23:49:33.4240346Z Cache mode: write\n2026-10-18T23:49:33.4241849Z Prepare workflow directory\n2026-10-18T23:49:33.4716941Z Prepare all required actions\n2026-10-18T23:49:33.4869434Z Complete job name: release-ready\n2026-10-18T23:49:33.6069400Z ##[group]Run test \"$PREFLIGHT_RESULT\" = success\n2026-10-18T23:49:33.6071002Z test \"$PREFLIGHT_RESULT\" = success\n2026-10-18T23:49:33.6072222Z if [ \"$ADMISSION\" != hold ]; then\n2026-10-18T23:49:33.6146389Z   if [ \"$FOCUSED_REQUIRED\" = true ]; then\n2026-10-18T23:49:33.6147549Z     test \"$FOCUSED_RESULT\" = success\n2026-10-18T23:49:33.6148672Z   else\n2026-10-18T23:49:33.6149445Z     test \"$FOCUSED_REQUIRED\" = false\n2026-10-18T23:49:33.6150579Z     test \"$FOCUSED_RESULT\" = skipped\n2026-10-18T23:49:33.6151656Z   fi\n2026-10-18T23:49:33.6152717Z fi\n2026-10-18T23:49:33.6153542Z if [ \"$ADMISSION\" = maintenance ]; then\n2026-10-18T23:49:33.6155927Z   echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'\n2026-10-18T23:49:33.6158245Z   exit 0\n2026-10-18T23:49:33.6159031Z fi\n2026-10-18T23:49:33.6159788Z if [ \"$ADMISSION\" = scheduled ]; then\n2026-10-18T23:49:33.6161714Z   echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'\n2026-10-18T23:49:33.6163834Z   exit 0\n2026-10-18T23:49:33.6164573Z fi\n2026-10-18T23:49:33.6165413Z if [ \"$ADMISSION\" = release-evidence ]; then\n2026-10-18T23:49:33.6167390Z   echo 'Docs-only post-merge release evidence: exact-source validation is required without allocating another product version.'\n2026-10-18T23:49:33.6169344Z   test \"$BUILD_RESULT\" = success\n2026-10-18T23:49:33.6170319Z   exit 0\n2026-10-18T23:49:33.6171102Z fi\n2026-10-18T23:49:33.6171928Z if [ \"$ADMISSION\" != release ]; then\n2026-10-18T23:49:33.6174545Z   echo '::error::This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.'\n2026-10-18T23:49:33.6176738Z   exit 1\n2026-10-18T23:49:33.6177470Z fi\n2026-10-18T23:49:33.6178240Z test \"$BUILD_RESULT\" = success\n2026-10-18T23:49:33.6179335Z if [ \"$FULL_CI\" = true ]; then\n2026-10-18T23:49:33.6180370Z   test \"$TEST_RESULT\" = success\n2026-10-18T23:49:33.6181897Z else\n2026-10-18T23:49:33.6183112Z   echo \"Full tests are deferred and do not block this PR.\"\n2026-10-18T23:49:33.6184215Z fi\n2026-10-18T23:49:33.7249695Z shell: /usr/bin/bash -e {0}\n2026-10-18T23:49:33.7250637Z env:\n2026-10-18T23:49:33.7251134Z   ADMISSION: maintenance\n2026-10-18T23:49:33.7251689Z   BUILD_RESULT: skipped\n2026-10-18T23:49:33.7252230Z   FOCUSED_RESULT: success\n2026-10-18T23:49:33.7253143Z   FOCUSED_REQUIRED: true\n2026-10-18T23:49:33.7253686Z   FULL_CI: false\n2026-10-18T23:49:33.7254188Z   PREFLIGHT_RESULT: success\n2026-10-18T23:49:33.7254740Z   TEST_RESULT: skipped\n2026-10-18T23:49:33.7255273Z ##[endgroup]\n2026-10-18T23:49:33.7474718Z Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.\n2026-10-18T23:49:33.7624565Z Cleaning up orphan processes\n",
+  "limits": "This final gate is source/admission evidence. Changed Demo native observation remains pending; no physical or final-package performance pass."
+}

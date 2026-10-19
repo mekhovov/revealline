@@ -1,0 +1,54 @@
+{
+  "schema": "revealline-peer-source-review-v1",
+  "repository": "mekhovov/revealline",
+  "reviewedAt": "2026-10-19T00:07:54.092968+00:00",
+  "reviewer": "status_qualification",
+  "baseCommit": "e379c2749e0815538f23500ef5a3b2117569c0c6",
+  "pullRequest": 1674,
+  "proposal": {
+    "gitBlob": "000f71e5d63c692c69aa64915ab30c60b9846a61",
+    "bytes": 34079,
+    "sha256": "e22b2d76d4aa6f8210d6ebed9b45c9ca2cbd0f4bafdde4b92e0410aafb0ae089"
+  },
+  "source": {
+    "path": "game/test/solo-lazy-library-host.test.mjs",
+    "before": {
+      "bytes": 14432,
+      "sha256": "c2637ac2eaee2b9fb96f8c35559d13ad54343c1c432ae6cdaffb903be44f7dff",
+      "gitBlob": "a83fd8aeb35f7d90d26836a08c7aec4b8d451e6e"
+    },
+    "after": {
+      "bytes": 19054,
+      "sha256": "670e5911834434671562e2465984fe0a4ce006b889b0631bce36307ead97bcaa",
+      "gitBlob": "3596f20afb950bc1e64f71be801aa79a975c2d82"
+    }
+  },
+  "verdict": "clean-source-review; remote functional execution still required",
+  "scope": [
+    "Exactly one test file; no production source, loader hook, workflow, admission policy, native browser run or source push.",
+    "All original assertions remain as identical normalized AST call expressions with multiplicity; four new assertions establish pending-action ownership, synchronous loading feedback, actual opener focus and visible Settings ancestry.",
+    "All existing test cases and 20-second individual limits remain; the five-minute admission workflow owner is unchanged.",
+    "Asynchronous gate boundaries now use an earlier five-second stage diagnostic limit, without extending the enclosing owner deadlines.",
+    "The real activateHostAction promise is observed immediately; rejection is retained and rethrown at the stage/join boundary. Successful paths still await the original action.",
+    "Cleanup attempts release and every observed action join even if an earlier cleanup operation fails; it then rethrows the original single error or AggregateError.",
+    "Diagnostic state reads are safe for the exact fixture: hasFocus is present, rendered is a local getter, errors remains an array, and page-local references survive pagehide. Error strings and loading text are bounded; no per-frame diagnostics are added.",
+    "The successor changes only cleanup failure collection relative to reviewed c4b7adc6aedb58a347bb79c98c4080b9dc4e672a."
+  ],
+  "assertionCallCounts": {
+    "before": 67,
+    "after": 71,
+    "retainedOriginal": 67,
+    "added": 4
+  },
+  "countCorrection": "The prior informal count66 omitted a call; exact AST census includes existing assert.match and establishes67 original/71 final. No assertion was removed.",
+  "failureEvidence": "6f33db6c4f5d3c645edf92fbfd615af201984659",
+  "validation": {
+    "method": "Remote byte/hash verification, source review and RAM-only Acorn AST comparison; parsed modules were not evaluated.",
+    "functionalExecution": false
+  },
+  "limitations": [
+    "No functional tests, product modules, native browser, build or generator executed by this review.",
+    "Prior nine outer test timeouts remain failed/inconclusive evidence; this proposal is diagnostic localization, not a demonstrated runtime repair.",
+    "A five-second diagnostic may identify a slow boundary; it is not physical-device performance qualification."
+  ]
+}
