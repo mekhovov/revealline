@@ -19,6 +19,13 @@ const controllerStates = [
   'joined',
   'connected',
 ];
+const overflightHosts = [
+  'overflight',
+  'overflight-riy',
+  'overflight-hunt',
+  'overflight-time-attack',
+  'overflight-marathon',
+];
 
 /** A fixed projection of current owners. No raw URL, identity, input history,
  * game data, storage key or exception text is accepted into this document. */
@@ -46,7 +53,7 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       Number.isSafeInteger(capturedAt) && capturedAt >= 1e12 && capturedAt < 1e13
         ? new Date(capturedAt).toISOString()
         : null,
-    scope: 'primary-game-shell',
+    scope: overflightHosts.includes(host.kind) ? 'overflight-game-shell' : 'primary-game-shell',
     build: {
       version: version(host.version),
       sourceRevision:
@@ -56,7 +63,13 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       packaged: boolean(host.packaged),
     },
     game: {
-      host: oneOf(host.kind, ['solo', 'journey', 'installed-edition', 'practice']),
+      host: oneOf(host.kind, [
+        'solo',
+        'journey',
+        'installed-edition',
+        'practice',
+        ...overflightHosts,
+      ]),
       state: oneOf(host.state, ['idle', 'running', 'paused', 'won', 'lost']),
       locale: oneOf(host.locale, ['en', 'uk']),
       saving: {
