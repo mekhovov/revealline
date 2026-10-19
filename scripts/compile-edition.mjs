@@ -411,6 +411,7 @@ export async function compileEdition({
   version = 'DEV',
   sourceRevision = 'development',
   validateCode = true,
+  compactCode = true,
   offline = null,
 } = {}) {
   required(sourceFiles instanceof Map, 'Edition compilation requires original source bytes.');
@@ -615,7 +616,7 @@ export async function compileEdition({
       ),
     );
   }
-  for (const entry of ['game/company.html', 'game/index.html', ...EDITION_RUNTIME_PAGES])
+  for (const entry of new Set(['game/company.html', 'game/index.html', ...EDITION_RUNTIME_PAGES, ...enginePaths.filter((name) => name.endsWith('.html'))]))
     if (files.has(entry)) {
       let html = files.get(entry).toString('utf8');
       required(/<html\b[^>]*>/.test(html), 'Company entry needs an HTML root.');
@@ -893,7 +894,9 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
       editionIds,
     }),
   );
-  files = projectEditionCodeIndentation(files);
+  // Downstream distributions may apply reviewed source projections before
+  // their own final closure validation and compaction.
+  if (compactCode) files = projectEditionCodeIndentation(files);
   if (offline !== null) {
     required(
       editionIds.length === 1,
