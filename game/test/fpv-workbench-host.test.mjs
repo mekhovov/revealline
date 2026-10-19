@@ -245,6 +245,7 @@ test('restoring a saved custom controller keeps its customized gains visible in 
   assert.equal(row.hidden, false);
   f.edit('Roll P (N·m/(rad/s))', savedGain * 1.1);
   await f.click('Restore saved controller');
+  gain.focus();
   assert.equal(Number(gain.value), savedGain);
   assert.equal(row.dataset.customized, 'true');
   assert.equal(row.hidden, false, 'saved customizations still differ from the aircraft defaults');
@@ -348,7 +349,7 @@ test('reusable controller tunes copy explicitly into an undoable draft without s
   const f = await fixture(t, { physical: true });
   const tunes = f.ui.root.querySelector('.controller-tune-panel');
   const saved = f.store.export(),
-    original = Number(f.field(gainLabel).value),
+    original = f.store.effective().advanced.controller.gains.roll.p,
     tuned = original * 1.1,
     alternate = original * 1.2;
   f.edit(gainLabel, tuned);
@@ -362,6 +363,7 @@ test('reusable controller tunes copy explicitly into an undoable draft without s
   f.edit('Saved controller tune', tuneLibrary.tunes[0].id, 'select', tunes);
   assert.equal(Number(f.field(gainLabel).value), alternate, 'browsing cannot apply a tune');
   await f.click('Use in draft', tunes);
+  f.field(gainLabel).focus();
   assert.equal(Number(f.field(gainLabel).value), tuned);
   assert.equal(f.store.export(), saved, 'copying cannot save the setup');
   await f.click('Use in draft', tunes);
@@ -371,6 +373,7 @@ test('reusable controller tunes copy explicitly into an undoable draft without s
   f.edit(gainLabel, original * 0.9);
   assert.deepEqual(JSON.parse(f.data.get(CONTROLLER_TUNE_LIBRARY_KEY)), tuneLibrary);
   await f.click('Undo last edit');
+  f.field(gainLabel).focus();
   assert.equal(Number(f.field(gainLabel).value), tuned);
   await f.click('Save for next flight');
   assert.equal(f.store.effective().advanced.controller.gains.roll.p, tuned);
@@ -383,7 +386,7 @@ test('workbench comparison snapshots stay immutable and only configuration edits
   const bench = f.ui.root.querySelector('.tuning-bench'),
     tunes = f.ui.root.querySelector('.controller-tune-panel'),
     saved = f.store.export(),
-    original = Number(f.field(gainLabel).value);
+    original = f.store.effective().advanced.controller.gains.roll.p;
   f.edit(gainLabel, original * 1.1);
   await f.click('Run simulation bench', bench);
   assert.equal(f.workers.length, 1);
@@ -395,6 +398,15 @@ test('workbench comparison snapshots stay immutable and only configuration edits
   assert.equal(request.type, 'compare');
   assert.equal(request.request.saved.advanced.controller.gains.roll.p, original);
   assert.equal(request.request.draft.advanced.controller.gains.roll.p, original * 1.1);
+  const pitch = f.field('Pitch P (N·m/(rad/s))');
+  pitch.focus();
+  assert.equal(pitch.value, String(request.request.saved.advanced.controller.gains.pitch.p));
+  f.ui.refresh();
+  pitch.blur();
+  pitch.emit('focusout');
+  f.ui.refresh();
+  assert.equal(first.terminated, false, 'focus and blur cannot invalidate a running comparison');
+  assert.deepEqual(first.messages[0], frozen);
   const lateMessage = [...first.listeners.get('message')][0];
   const notes = panelControl(bench, 'Draft setup: control and comfort', 'textarea');
   notes.value = 'Manual feedback is independent of the running bench.';
@@ -548,7 +560,7 @@ test('manual A/B flies the frozen saved and draft pair and returns to the latest
   const f = await fixture(t, { physical: true, conditions });
   const bench = f.ui.root.querySelector('.tuning-bench'),
     saved = f.store.export(),
-    original = Number(f.field(gainLabel).value),
+    original = f.store.effective().advanced.controller.gains.roll.p,
     prepared = original * 1.1,
     later = original * 1.2;
   await f.click('Flight response / PID');
@@ -664,7 +676,7 @@ test('Basic never hides a focused customized control while it is being restored 
   await f.click('Expert');
   const gain = f.field('Roll P (N·m/(rad/s))'),
     row = gain.closest('.workbench-physical-field'),
-    original = gain.value;
+    original = String(f.store.effective().advanced.controller.gains.roll.p);
   f.edit('Roll P (N·m/(rad/s))', Number(original) * 1.1);
   await f.click('Basic');
   gain.focus();

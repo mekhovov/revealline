@@ -2790,6 +2790,7 @@ test('saved aircraft remain editable when their catalog reference is no longer b
     /Unknown aircraft preset/,
   );
   await f.click('Flight response / PID');
+  f.find('Roll P (N·m/(rad/s))').focus();
   assert.equal(Number(f.find('Roll P (N·m/(rad/s))').value), config.controller.gains.roll.p);
   await f.click('Test draft · unscored');
   assert.equal(f.tested.length, 1);
@@ -2797,7 +2798,7 @@ test('saved aircraft remain editable when their catalog reference is no longer b
 });
 
 for (const preset of listAircraftPresets())
-  test(`workbench can test ${preset.id} without saving or changing its physical coefficients`, async (t) => {
+  test(`${preset.id} retains exact PID configuration through compact display, test return and no-op saves`, async (t) => {
     const f = fixture(t),
       reference = createPresetConfiguration(preset.id),
       before = f.store.export();
@@ -2814,7 +2815,112 @@ for (const preset of listAircraftPresets())
     assert.deepEqual(f.tested[0].response, reference.response);
     assert.deepEqual(f.tested[0].camera, reference.camera);
     assert.equal(f.store.export(), before);
+    f.ui.open({ keepDraft: true });
+    await f.click('Save for next flight');
+    const saved = f.store.export(),
+      effective = f.store.effective(),
+      summary = () => f.ui.root.querySelector('.workbench-summary').textContent,
+      gains = f.ui.root
+        .querySelectorAll('input')
+        .filter((input) => input.dataset.search?.includes('controller.gains.'));
+    assert.equal(gains.length, 12);
+    assert.deepEqual(effective.advanced, f.tested[0].advanced);
+    for (const input of gains) {
+      const [, axis, term] = input.dataset.search.match(/controller\.gains\.(\w+)\.(\w+)/),
+        exact = reference.controller.gains[axis][term],
+        compact = String(Number(exact.toPrecision(12)));
+      assert.equal(input.value, compact);
+      input.focus();
+      assert.equal(input.value, String(exact), 'focus reveals the exact stored gain');
+      f.ui.refresh();
+      assert.equal(input.value, String(exact), 'refresh preserves the focused exact display');
+      // The DOM fixture does not dispatch focusout from blur, unlike a browser.
+      input.blur();
+      input.emit('focusout');
+      assert.equal(input.value, compact);
+      assert.match(summary(), /0 changes.*Saved for next flight/);
+    }
+    for (const locale of ['uk', 'en']) f.setLocale(locale);
+    await f.click('Save for next flight');
+    assert.equal(f.store.export(), saved, 'display-only changes add no revisions or history');
+    assert.deepEqual(f.store.effective(), effective, 'the exact simulation identity is unchanged');
+    gains[0].focus();
+    await f.click('Test draft · unscored');
+    assert.deepEqual(f.tested[1].advanced, effective.advanced);
+    f.ui.open({ keepDraft: true });
+    assert.match(summary(), /0 changes.*Saved for next flight/);
+    await f.click('Apply & restart');
+    assert.deepEqual(f.applied[0], effective);
+    assert.equal(f.store.export(), saved, 'test return and focused apply remain no-op saves');
   });
+
+test('PID edits retain literal precision and invalid text across blur, locale, practice and undo', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'nazgul-eco-xl5-v11', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
+  const gain = f.find('Roll P (N·m/(rad/s))'),
+    baseline = f.store.export(),
+    effective = f.store.effective(),
+    text = '0.123456789949999990000';
+  gain.focus();
+  f.edit('Roll P (N·m/(rad/s))', text);
+  gain.blur();
+  gain.emit('focusout');
+  assert.equal(gain.value, text);
+  f.setLocale('uk');
+  assert.equal(gain.value, text);
+  f.setLocale('en');
+  f.edit('Roll P (N·m/(rad/s))', '-');
+  gain.focus();
+  gain.blur();
+  gain.emit('focusout');
+  assert.equal(gain.value, '-');
+  await f.click('Save for next flight');
+  assert.equal(f.store.export(), baseline);
+  await f.click('Undo last edit');
+  assert.equal(gain.value, text);
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.controller.gains.roll.p, Number(text));
+  f.ui.open({ keepDraft: true });
+  assert.equal(gain.value, text);
+  gain.focus();
+  gain.blur();
+  gain.emit('focusout');
+  await f.click('Undo last edit');
+  assert.equal(
+    gain.value,
+    String(Number(effective.advanced.controller.gains.roll.p.toPrecision(12))),
+  );
+  await f.click('Save for next flight');
+  assert.equal(f.store.export(), baseline);
+  assert.deepEqual(f.store.effective(), effective);
+});
+
+test('PID fine adjustment starts at the exact stored gain, including rounding boundaries', async (t) => {
+  const f = fixture(t),
+    configuration = createPresetConfiguration('meteor75-analog-2022'),
+    original = 0.12345678994999999;
+  configuration.controller.gains.roll.p = original;
+  await f.store.saveSetup({
+    ...f.store.snapshot().setups[0],
+    advanced: { aircraft: configuration.aircraft, controller: configuration.controller },
+  });
+  await f.click('Refresh library');
+  const gain = f.find('Roll P (N·m/(rad/s))'),
+    compact = Number(gain.value),
+    expected = Number((original + 0.001).toPrecision(10));
+  assert.notEqual(compact, original);
+  assert.notEqual(Number((compact + 0.001).toPrecision(10)), expected);
+  await f.click('+', gain.closest('.workbench-physical-field'));
+  assert.equal(Number(gain.value), expected);
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.controller.gains.roll.p, expected);
+  f.ui.open({ keepDraft: true });
+  await f.click('Undo last edit');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[1].advanced.controller.gains.roll.p, original);
+});
 
 test('Library browsing previews each native algorithm without applying it or discarding raw draft text', async (t) => {
   const f = fixture(t);

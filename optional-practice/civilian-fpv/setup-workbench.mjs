@@ -203,6 +203,9 @@ export function mountWorkbenchPhysics({
     baseline = null;
   const controls = [],
     fields = aircraftTuningFields();
+  // Compact text is presentation only; untouched gains retain their exact double.
+  const gainText = (value, exact) =>
+    value === undefined ? '' : String(exact ? value : Number(value.toPrecision(12)));
   for (const axis of ['x', 'y', 'z'])
     fields.push([
       `aircraft.geometry.centerOfMass.${axis}`,
@@ -238,7 +241,17 @@ export function mountWorkbenchPhysics({
     input.step = 'any';
     input.min = String(min);
     input.max = String(max);
+    const control = { path, input, row, min, max, gain, edited: false };
+    if (gain)
+      for (const [event, exact] of [
+        ['focusin', true],
+        ['focusout', false],
+      ])
+        listen(input, event, () => {
+          if (!control.edited) input.value = gainText(get(configuration, path), exact);
+        });
     function changed() {
+      control.edited = true;
       const value = Number(input.value),
         valid =
           input.value.trim() &&
@@ -259,7 +272,8 @@ export function mountWorkbenchPhysics({
           action(
             direction < 0 ? '−' : '+',
             () => {
-              const current = Number(input.value);
+              const current =
+                gain && !control.edited ? get(configuration, path) : Number(input.value);
               if (!Number.isFinite(current) || !input.value.trim()) return;
               const step =
                 current === 0 ? 0.000001 : 10 ** (Math.floor(Math.log10(Math.abs(current))) - 2);
@@ -284,7 +298,7 @@ export function mountWorkbenchPhysics({
     }
     listen(input, 'input', changed);
     listen(input, 'change', changed);
-    controls.push({ path, input, row, min, max });
+    controls.push(control);
   }
   const airmode = field(
     t(
@@ -354,7 +368,9 @@ export function mountWorkbenchPhysics({
             'This legacy aircraft has no independent PID controller. Select a physical aircraft to edit its controller.',
             'Класичний дрон не має незалежного PID-контролера. Виберіть фізичний дрон для його редагування.',
           );
-      for (const { path, input, row, min, max } of controls) {
+      for (const control of controls) {
+        const { path, input, row, min, max, gain } = control;
+        control.edited = raw[path] != null;
         const v = get(value, path),
           legacyOnly =
             isPhysical &&
@@ -368,7 +384,13 @@ export function mountWorkbenchPhysics({
         row.hidden = v === undefined || legacyOnly;
         input.disabled = row.hidden;
         row.dataset.unavailable = String(row.hidden);
-        input.value = raw[path] ?? (v === undefined ? '' : String(v));
+        input.value =
+          raw[path] ??
+          (gain
+            ? gainText(v, input.ownerDocument.activeElement === input)
+            : v === undefined
+              ? ''
+              : String(v));
         input.max = String(
           isPhysical &&
             (path.startsWith('controller.gains.') || path === 'controller.integralLimit')
@@ -400,14 +422,14 @@ export function mountWorkbenchPhysics({
           }
           return null;
         }
-      for (const { path, input } of controls)
-        if (!input.disabled) set(configuration, path, Number(input.value));
+      for (const { path, input, gain, edited } of controls)
+        if (!input.disabled && (!gain || edited)) set(configuration, path, Number(input.value));
       return clone(configuration);
     },
     raw: () =>
       Object.fromEntries(
         controls
-          .filter(({ input }) => !input.disabled)
+          .filter(({ input, gain, edited }) => !input.disabled && (!gain || edited))
           .map(({ path, input }) => [path, input.value]),
       ),
     fields: controls,
