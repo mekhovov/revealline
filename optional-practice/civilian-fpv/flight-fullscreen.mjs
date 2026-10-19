@@ -9120,7 +9120,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: c72c76aff2abf1bb486d89a7377176e11c5c6d1f6de191b5a672d6e9f1fc55c2
+// Canonical source sha256: 5ad4d180084e82aeeee30fd336a56aa099ae3b5a1952c0e2dfc3f15c16f38cc5
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -10071,6 +10071,7 @@ logo.alt='FPV / LINE';
 title.replaceChildren(logo);
 }
 const edition=el('p','mode-play-edition');
+edition.id=`${idPrefix}-navigation-context`;
 const modes=el('nav','mode-play-modes');
 move('modes',modes);
 const mission=el('p','mode-play-mission');
@@ -10280,8 +10281,10 @@ put(node,'textContent',value);
 }
 attribute(buttons.menu,'aria-label',COPY[language].menu);
 put(modeLabel,'textContent',text(modeName));
-put(edition,'textContent',text(modeName));
-edition.hidden=true;
+put(edition,'textContent',text(state.navigationContext));
+put(edition,'hidden',!edition.textContent);
+if(edition.hidden)modes.removeAttribute('aria-describedby');
+else attribute(modes,'aria-describedby',edition.id);
 attribute(modes,'aria-label',COPY[language].modes);
 attribute(menu,'aria-label',COPY[language].home);
 attribute(utilities,'aria-label',COPY[language].settings);
