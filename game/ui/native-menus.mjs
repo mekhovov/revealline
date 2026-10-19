@@ -1,7 +1,7 @@
 import { t, localizedText, localizedAttribute, getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { attachMenuScene, getMenuAnimation, setMenuAnimation } from './menu-scenes.mjs';
-import { subscribeMenuAnimation } from './menu-animation-preferences.mjs';
+import { attachMenuAnimationFeedback } from './menu-animation-feedback.mjs';
 import { attachFullscreen } from './fullscreen.mjs';
 import { mountLandingBrand, GAME_BRAND_NAME } from './brand-identity.mjs';
 import { attachMenuRetune } from './menu-retune.mjs';
@@ -146,11 +146,8 @@ export function prepareNativeMenus({
   const animationChange = () => setMenuAnimation(animation.checked, doc.defaultView);
   animation.addEventListener('change', animationChange);
   listeners.push(() => animation.removeEventListener('change', animationChange));
-  listeners.push(
-    subscribeMenuAnimation((enabled) => {
-      animation.checked = enabled;
-    }, doc.defaultView),
-  );
+  const animationFeedback = attachMenuAnimationFeedback(animation, doc.defaultView);
+  listeners.push(() => animationFeedback.destroy());
   let actions;
   if (mode === 'solo') {
     actions = root.querySelector('.home-actions');
@@ -555,7 +552,7 @@ export function prepareNativeMenus({
       textFace: row(`${fieldPrefix}text-face`),
       textSize: row(`${fieldPrefix}text-size`),
       reducedEffects: row(mode === 'solo' ? 'settings-reduced-effects' : `${fieldPrefix}reduced`),
-      menuAnimation: animationLabel,
+      menuAnimation: animationFeedback.element,
       masterMuted: node(mode === 'solo' ? 'settings-master-mute' : `${fieldPrefix}audio`),
       masterVolume: row(`${fieldPrefix}master-volume`),
       audioCues: [

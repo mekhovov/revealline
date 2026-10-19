@@ -28,6 +28,7 @@ import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { menuAnimationBinding, MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -323,9 +324,7 @@ async function harness({
     },
     attachMenuAudioSettings() {},
     attachDefeatSoundControls,
-    getMenuAnimation: () => true,
-    setMenuAnimation() {},
-    subscribeMenuAnimation: () => () => {},
+    menuAnimationBinding,
     mountModeSettings,
     attachSettingsPanels,
     settingsPanelBack,
@@ -411,6 +410,8 @@ async function harness({
     matchMedia: () => Object.assign(new Events(), { matches: false }),
     addEventListener: window.addEventListener.bind(window),
     removeEventListener: window.removeEventListener.bind(window),
+    dispatchEvent: window.dispatchEvent.bind(window),
+    CustomEvent,
     requestAnimationFrame(callback) {
       scheduledFrames.push(callback);
     },
@@ -1911,6 +1912,58 @@ test('Snake nested tools preserve iframe input and controller Back returns to th
   );
 });
 
+test('Snake About returns to its visible panel after a compact resize without advancing the paused attempt', async (t) => {
+  const h = await harness({ sharedTools: true });
+  t.after(() => h.disposeTools());
+  h.document.defaultView.innerWidth = 1280;
+  h.start();
+  h.frame(0);
+  h.frame(100);
+  h.shell.elements.buttons.pause.click();
+  const paused = h.created.map((run) => core.exportClassicSnakeReplay(run));
+  h.shell.elements.buttons.settings.click();
+  h.$('snake-menu-settings-tab-extras').click();
+  const settings = h.shell.elements.dialogs.settings,
+    opener = h.$('snake-global-tools-about'),
+    rects = opener.getClientRects.bind(opener),
+    focus = opener.focus.bind(opener),
+    stored = [...h.storage];
+  // Model only the existing compact CSS/native focus boundary; the real
+  // Settings/tool owners, host handlers and accepted simulation run below.
+  opener.getClientRects = () =>
+    h.document.defaultView.innerWidth <= 700 && settings.dataset.settingsView === 'categories'
+      ? []
+      : rects();
+  opener.focus = (...args) => {
+    if (opener.getClientRects().length) focus(...args);
+  };
+  opener.focus();
+  opener.click();
+  const dialog = h.$('snake-global-tools-tool-dialog'),
+    frame = dialog.querySelector('iframe');
+  frame.focus();
+  h.document.defaultView.innerWidth = 316;
+  h.document.defaultView.emit('resize');
+  h.window.emit('resize');
+  assert.equal(settings.dataset.settingsView, 'categories');
+  assert.equal(opener.getClientRects().length, 0);
+  h.$('snake-global-tools-tool-back').click();
+  assert.equal(dialog.open, false);
+  assert.equal(settings.open, true);
+  assert.equal(settings.dataset.settingsView, 'panel');
+  assert.equal(h.document.activeElement, opener);
+  assert.ok(opener.getClientRects().length);
+  assert.equal(frame.getAttribute('src'), null);
+  h.frame(200);
+  h.frame(1200);
+  assert.deepEqual(
+    h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    paused,
+  );
+  assert.deepEqual([...h.storage], stored);
+  assert.equal(h.shell.blocksPlay(), true);
+});
+
 test('Snake reading controls update the shared display owner without replacing or advancing an attempt', async () => {
   const state = await harness({ mode: 'team' });
   const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
@@ -2796,4 +2849,30 @@ test('Snake live language refresh translates every stats view without changing t
     assert.equal(state.shell.elements.root.dataset.phase, 'paused');
     assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.settings);
   }
+});
+
+test('actual Snake settings keep an unsaved menu animation choice and Retry the same checkbox', async () => {
+  const h = await harness(),
+    write = h.storage.set.bind(h.storage);
+  let working = false;
+  h.storage.set = (key, value) => {
+    if (key === MENU_ANIMATION_KEY && !working)
+      throw new DOMException('Modeled blocked storage', 'SecurityError');
+    return write(key, value);
+  };
+  h.shell.open('settings');
+  const input = h.$('snake-global-menuAnimation');
+  input.checked = false;
+  input.emit('change');
+  const status = h.$(`${input.id}-status`),
+    retry = status.parentNode.querySelector('.global-settings-save-retry');
+  assert.equal(input.checked, false);
+  assert.match(status.textContent, /Session only.*blocked/);
+  retry.focus();
+  working = true;
+  retry.click();
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+  assert.equal(status.textContent, 'Saved');
+  assert.equal(h.document.activeElement, input);
+  assert.equal(retry.hidden, true);
 });

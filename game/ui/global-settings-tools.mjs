@@ -3,6 +3,7 @@ import { attachProfileRecoveryDialog } from './profile-recovery-dialog.mjs';
 import { attachStorageRetention } from './storage-retention.mjs';
 import { attachInstallOfflinePanel } from './install-offline-panel.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
+import { restoreSettingsPanelFocus } from './settings-panels.mjs';
 
 const owners = new WeakMap();
 export const globalSettingsToolsRoot = (doc = globalThis.document) =>
@@ -290,14 +291,16 @@ export function mountGlobalSettingsTools({
         releaseToolKeyboard();
         releaseToolKeyboard = () => {};
         toolFrame.removeAttribute('src');
-        if (
-          valid(toolOwner) &&
-          !doc.hidden &&
-          doc.hasFocus?.() !== false &&
-          toolOpener?.isConnected &&
-          !toolOpener.closest('[hidden],[inert],[aria-hidden="true"]')
-        )
-          toolOpener.focus({ preventScroll: true });
+        if (valid(toolOwner) && !doc.hidden && doc.hasFocus?.() !== false) {
+          if (restoreSettingsPanelFocus(settingsRoot, toolOpener)) return;
+          if (
+            toolOpener?.isConnected &&
+            !toolOpener.disabled &&
+            !toolOpener.closest('[hidden],[inert],[aria-hidden="true"]') &&
+            toolOpener.getClientRects().length
+          )
+            toolOpener.focus({ preventScroll: true });
+        }
       });
     }
     localizedText(doc.getElementById(`${prefix}-tool-title`), () => t(title));
