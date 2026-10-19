@@ -28,6 +28,7 @@ import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { menuAnimationBinding, MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -323,9 +324,7 @@ async function harness({
     },
     attachMenuAudioSettings() {},
     attachDefeatSoundControls,
-    getMenuAnimation: () => true,
-    setMenuAnimation() {},
-    subscribeMenuAnimation: () => () => {},
+    menuAnimationBinding,
     mountModeSettings,
     attachSettingsPanels,
     settingsPanelBack,
@@ -411,6 +410,8 @@ async function harness({
     matchMedia: () => Object.assign(new Events(), { matches: false }),
     addEventListener: window.addEventListener.bind(window),
     removeEventListener: window.removeEventListener.bind(window),
+    dispatchEvent: window.dispatchEvent.bind(window),
+    CustomEvent,
     requestAnimationFrame(callback) {
       scheduledFrames.push(callback);
     },
@@ -2848,4 +2849,30 @@ test('Snake live language refresh translates every stats view without changing t
     assert.equal(state.shell.elements.root.dataset.phase, 'paused');
     assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.settings);
   }
+});
+
+test('actual Snake settings keep an unsaved menu animation choice and Retry the same checkbox', async () => {
+  const h = await harness(),
+    write = h.storage.set.bind(h.storage);
+  let working = false;
+  h.storage.set = (key, value) => {
+    if (key === MENU_ANIMATION_KEY && !working)
+      throw new DOMException('Modeled blocked storage', 'SecurityError');
+    return write(key, value);
+  };
+  h.shell.open('settings');
+  const input = h.$('snake-global-menuAnimation');
+  input.checked = false;
+  input.emit('change');
+  const status = h.$(`${input.id}-status`),
+    retry = status.parentNode.querySelector('.global-settings-save-retry');
+  assert.equal(input.checked, false);
+  assert.match(status.textContent, /Session only.*blocked/);
+  retry.focus();
+  working = true;
+  retry.click();
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+  assert.equal(status.textContent, 'Saved');
+  assert.equal(h.document.activeElement, input);
+  assert.equal(retry.hidden, true);
 });
