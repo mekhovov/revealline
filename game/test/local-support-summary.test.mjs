@@ -117,6 +117,37 @@ test('controller snapshots distinguish readiness, inactive/stale sampling and mi
   assert.equal(supportSnapshot(invalid, env, clock).build.version, null);
 });
 
+test('Snake host scopes and terminal states stay bounded without inventing neutral-input readiness', () => {
+  for (const kind of ['snake-solo', 'snake-versus', 'snake-team']) {
+    const report = supportSnapshot(
+      {
+        kind,
+        state: 'finished',
+        writerReason: 'released',
+        writable: false,
+        controller: { sampledAt: 900, status: 'observed', assigned: true },
+      },
+      environment(),
+      clock,
+    );
+    assert.equal(report.scope, 'snake-game-shell');
+    assert.equal(report.game.host, kind);
+    assert.equal(report.game.state, 'finished');
+    assert.equal(report.game.saving.reason, 'released');
+    assert.equal(report.controller.status, 'observed');
+    assert.equal(report.controller.neutral, null);
+    assert.equal(report.controller.confirmBlocked, null);
+    assert.equal(report.controller.confirmReason, 'unavailable');
+  }
+  const invalid = supportSnapshot(
+    { kind: 'snake-secret', state: 'private-result' },
+    environment(),
+    clock,
+  );
+  assert.equal(invalid.game.host, 'unavailable');
+  assert.equal(invalid.game.state, 'unavailable');
+});
+
 test('hanging storage observations have a bounded deadline and cancellation settles promptly', async () => {
   const env = environment(),
     wait = deferred();
