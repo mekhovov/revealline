@@ -333,6 +333,7 @@ export function prepareNativeMenus({
         : 'coop-lobby-modes',
     identity,
   );
+  if (mode === 'versus') moveId('race-summary', commands);
   move(actions, commands);
   move(utilities, commands);
   if (mode === 'versus') moveId('race-preparation', commands);
