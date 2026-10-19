@@ -414,6 +414,7 @@ export async function compileEdition({
   validateCode = true,
   compactCode = true,
   contentPackages = [],
+  menuSceneResources = null,
   offline = null,
 } = {}) {
   required(sourceFiles instanceof Map, 'Edition compilation requires original source bytes.');
@@ -487,8 +488,11 @@ export async function compileEdition({
   // An edition home follows edition identity, independent of gameplay theme.
   // Its own scene is also the fallback; unrelated home artwork otherwise
   // consumes several MiB of the deliberately bounded offline package.
-  const menuResources = editionMenuSceneResources(editionIds);
-  enginePaths = projectEditionMenuResourcePaths(enginePaths, editionIds);
+  required(menuSceneResources === null || (Array.isArray(menuSceneResources) &&
+    menuSceneResources.every(editionRelativePath) && new Set(menuSceneResources).size === menuSceneResources.length),
+    'Local menu scenes require unique relative resource paths.');
+  const menuResources = menuSceneResources ?? editionMenuSceneResources(editionIds);
+  if (menuSceneResources === null) enginePaths = projectEditionMenuResourcePaths(enginePaths, editionIds);
   const selectedBrand =
     editionIds.length === 1 &&
     runtimeCatalog.brands.find((brand) => brand.id === runtimeCatalog.editions[0].brandId);
@@ -590,7 +594,7 @@ export async function compileEdition({
     validateEditionHostRequests(file, bytes);
     files.set(
       file,
-      file === 'game/ui/menu-scene-catalog.mjs'
+      file === 'game/ui/menu-scene-catalog.mjs' && menuSceneResources === null
         ? projectEditionMenuScenes(bytes, editionIds)
         : file === 'game/ui/brand-identity.mjs' && selectedLogo
           ? projectEditionBrandIdentity(bytes, selectedLogo.path)
