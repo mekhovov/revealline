@@ -1597,9 +1597,7 @@ for (const save of ['guided', 'manual']) {
       click('I checked the animated sticks and their direction');
       click('Save verified profile');
     } else {
-      const checked = container.querySelector('.radio-confirm input');
-      checked.checked = true;
-      checked.emit('change');
+
       click('Save & return');
     }
     await f.view.settled();

@@ -131,16 +131,14 @@ export function mountRadioGuide({
     'Springs to centre (gamepad)',
     'Повертається в центр (геймпад)',
   );
-  const confirmation = el('label', undefined, task, 'radio-confirm');
-  const checked = el('input', undefined, confirmation);
-  checked.type = 'checkbox';
-  el(
-    'span',
+  const confirmation = el(
+    'p',
     t(
-      'Both sticks move in the correct direction.',
-      'Обидва стіки рухаються в правильному напрямку.',
+      'Check both sticks in every direction, then choose Save & return to use this radio.',
+      'Перевірте обидва стіки в усіх напрямках, потім натисніть «Зберегти й повернутися», щоб використовувати пульт.',
     ),
-    confirmation,
+    task,
+    'radio-confirm',
   );
   const automaticHint = el('p', undefined, task, 'radio-monitor-caption');
   const holdProgress = el('progress', undefined, task);
@@ -284,7 +282,7 @@ export function mountRadioGuide({
     identity = null;
     interrupted = false;
     phase = 'manual';
-    checked.checked = false;
+
     // Keep measurements already collected by the wizard; provide editable
     // standard ranges for the remaining axes so automatic capture is optional.
     const used = new Set(
@@ -336,7 +334,7 @@ export function mountRadioGuide({
       clearConfirmation();
       lastSample = null;
       phase = 'prepare';
-      checked.checked = false;
+
       invalidate();
       status.textContent = '';
       focusStep();
@@ -361,7 +359,7 @@ export function mountRadioGuide({
     identity = null;
     interrupted = false;
     phase = prior?.form ? 'check' : 'connect';
-    checked.checked = false;
+
     status.textContent = t(
       'Calibration cancelled. Your saved profile is unchanged.',
       'Калібрування скасовано. Збережений профіль не змінено.',
@@ -396,10 +394,10 @@ export function mountRadioGuide({
             'Підключення змінилося. Скасуйте й почніть калібрування знову.',
           ),
         );
-      if (phase === 'connect' || phase === 'manual') {
+      if (phase === 'connect') {
         if (validProfile(pad)) {
           phase = 'check';
-          checked.checked = false;
+
           focusStep();
         } else start();
         return;
@@ -508,7 +506,7 @@ export function mountRadioGuide({
           }
         }
         readProfile(false);
-        checked.checked = false;
+
         beginAction('arm');
         status.textContent = clearedSwitch
           ? t(
@@ -521,8 +519,8 @@ export function mountRadioGuide({
             );
       } else if (isAction()) {
         beginAction(phase);
-      } else if (phase === 'check') {
-        if (!checked.checked || externalCaptureActive()) return;
+      } else if (phase === 'check' || phase === 'manual') {
+        if (externalCaptureActive()) return;
         if (!verifyProfile()) return;
         const result = saveProfile();
         if (!result) return;
@@ -543,14 +541,23 @@ export function mountRadioGuide({
   }
   function otherAxesStill(pad, axis) {
     return (
-      baseline && pad.axes.every((value, i) => i === axis || Math.abs(value - baseline[i]) <= 0.14)
+      baseline &&
+      pad.axes.every(
+        (value, i) =>
+          i === axis || previouslyMappedAxis(i) || Math.abs(value - baseline[i]) <= 0.14,
+      )
     );
+  }
+  function previouslyMappedAxis(axis) {
+    // A left-stick yaw movement can also change its non-centring throttle.
+    // Completed controls must not block capture or stable holds of the next one.
+    return isMapping() && index < order.length && assignments.slice(0, index).includes(axis);
   }
   function atRest(pad) {
     return (
       baseline &&
       pad.axes.length === baseline.length &&
-      pad.axes.every((value, i) => Math.abs(value - baseline[i]) <= 0.12)
+      pad.axes.every((value, i) => previouslyMappedAxis(i) || Math.abs(value - baseline[i]) <= 0.12)
     );
   }
   function positiveCandidate(pad) {
@@ -576,7 +583,9 @@ export function mountRadioGuide({
       !dwell ||
       dwell.key !== key ||
       dwell.axes.length !== pad.axes.length ||
-      pad.axes.some((value, i) => Math.abs(value - dwell.axes[i]) > 0.035)
+      pad.axes.some(
+        (value, i) => !previouslyMappedAxis(i) && Math.abs(value - dwell.axes[i]) > 0.035,
+      )
     )
       dwell = { key, start: now, axes: [...pad.axes] };
     holdProgress.value = Math.min(1, (now - dwell.start) / duration);
@@ -596,7 +605,6 @@ export function mountRadioGuide({
     else {
       phase = 'check';
       clearConfirmation();
-      checked.checked = false;
     }
     if (skipped)
       status.textContent = t(
@@ -675,7 +683,6 @@ export function mountRadioGuide({
       } else if (phase === 'check') {
         if (externalCaptureActive()) clearConfirmation();
         else if (confirmationGesture(pad, validProfile(pad), now)) {
-          checked.checked = true;
           advance();
         }
       } else if (phase === 'prepare') {
@@ -770,11 +777,11 @@ export function mountRadioGuide({
                 'Щоб залишити поточне призначення: стіки у спокій, рискання праворуч на 1 секунду, потім у центр.',
               )
             : t(
-                'After checking, rest sticks with switches OFF. Hold yaw right for 1 second, then centre to save and return. Or use the checkbox and Save.',
-                'Після перевірки поверніть стіки у спокій, перемикачі ВИМК. Утримуйте рискання праворуч 1 секунду, потім поверніть у центр, щоб зберегти й повернутися. Або скористайтеся прапорцем і кнопкою збереження.',
+                'After checking, select Save & return. You can also rest sticks with switches OFF, hold yaw right for 1 second, then centre to save.',
+                'Після перевірки натисніть «Зберегти й повернутися». Або поверніть стіки у спокій, перемикачі ВИМК, утримуйте рискання праворуч 1 секунду й поверніть у центр.',
               ),
     );
-    confirmation.hidden = phase !== 'check';
+    confirmation.hidden = !['check', 'manual'].includes(phase);
     returnHint.hidden = mapping || actionMapping;
     back.hidden = !['positive', 'return', 'negative', 'centre'].includes(phase);
     cancel.hidden = !mapping && !actionMapping;
@@ -783,10 +790,7 @@ export function mountRadioGuide({
     manual.hidden = phase === 'manual' || phase === 'saved';
     manual.disabled = !pad;
     primary.disabled =
-      !pad ||
-      interrupted ||
-      (phase === 'manual' && (!input || externalCaptureActive())) ||
-      (phase === 'check' && (!input || !checked.checked || externalCaptureActive()));
+      !pad || interrupted || (['manual', 'check'].includes(phase) && externalCaptureActive());
     for (const key of order) setText(values[key], input ? `${Math.round(input[key] * 100)}%` : '—');
     setText(
       armHint,
@@ -811,7 +815,7 @@ export function mountRadioGuide({
           'Рухайте по одному стіку та стежте за каналами нижче. Укажіть номер осі, мінімум, центр, максимум і за потреби змініть напрямок. Потім перевірте стіки наживо та збережіть.',
         ),
       );
-      setText(primary, t('Check my sticks', 'Перевірити стіки'));
+      setText(primary, t('Save & return', 'Зберегти й повернутися'));
     } else if (phase === 'connect') {
       setText(progress, t('01 / CONNECT', '01 / ПІД’ЄДНАННЯ'));
       setText(
@@ -863,15 +867,20 @@ export function mountRadioGuide({
         setText(title, t('Rest your sticks.', 'Поверніть стіки у вихідне положення.'));
         setText(
           instruction,
-          throttle.value === 'full-travel'
+          phase === 'return' && index > 0
             ? t(
-                'Lower throttle all the way. Centre the other controls and leave switches OFF.',
-                'Повністю опустіть газ. Центруйте інші осі й залиште перемикачі вимкненими.',
+                `Return ${names[order[index]].toLowerCase()} to centre. Previously calibrated controls may stay where they are.`,
+                `Поверніть «${names[order[index]]}» у центр. Уже відкалібровані осі можуть залишатися на місці.`,
               )
-            : t(
-                'Release both sticks so they spring to centre. Centred gamepad throttle means 50% power.',
-                'Відпустіть обидва стіки, щоб вони повернулися в центр. Центр газу геймпада означає 50% потужності.',
-              ),
+            : throttle.value === 'full-travel'
+              ? t(
+                  'Lower throttle all the way. Centre the other controls and leave switches OFF.',
+                  'Повністю опустіть газ. Центруйте інші осі й залиште перемикачі вимкненими.',
+                )
+              : t(
+                  'Release both sticks so they spring to centre. Centred gamepad throttle means 50% power.',
+                  'Відпустіть обидва стіки, щоб вони повернулися в центр. Центр газу геймпада означає 50% потужності.',
+                ),
         );
         setText(
           primary,
@@ -894,8 +903,8 @@ export function mountRadioGuide({
         setText(
           instruction,
           t(
-            `Move the ${side} all the way ${direction}. Hold it steadily until the next instruction appears. Keep the other controls still.`,
-            `Перемістіть ${side} до краю ${direction}. Утримуйте до наступної підказки. Інші осі залиште нерухомими.`,
+            `Move the ${side} all the way ${direction}. Hold it steadily until the next instruction appears. Keep the unassigned controls still. Previously calibrated controls may move.`,
+            `Перемістіть ${side} до краю ${direction}. Утримуйте до наступної підказки. Непризначені осі залиште нерухомими. Уже відкалібровані осі можуть рухатися.`,
           ),
         );
         const target = targets[Math.floor(position / 2)],
@@ -945,13 +954,9 @@ export function mountRadioGuide({
         ),
       );
   }
-  on(checked, 'change', () => update(runtime.raw()));
-  on(container, 'change', (event) => {
-    if (event.target !== checked) {
-      checked.checked = false;
-      clearConfirmation();
-      update(runtime.raw());
-    }
+  on(container, 'change', () => {
+    clearConfirmation();
+    update(runtime.raw());
   });
   const lostFocus = () => {
     if (isMapping() || isAction()) interrupted = true;
@@ -973,7 +978,6 @@ export function mountRadioGuide({
       phase = 'connect';
       identity = null;
       interrupted = false;
-      checked.checked = false;
     },
     dispose() {
       for (const remove of listeners) remove();

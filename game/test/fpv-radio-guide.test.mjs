@@ -5,7 +5,7 @@ import { mountRadioSetup } from '../../optional-practice/civilian-fpv/radio-setu
 import { createRadioRuntime } from '../../optional-practice/civilian-fpv/radio-runtime.mjs';
 import { defaultRadioProfile } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 
-function fixture(t, { known = false, denyStorage = false } = {}) {
+function fixture(t, { known = false, denyStorage = false, padOverride = {} } = {}) {
   const doc = new Document(),
     create = doc.createElement.bind(doc);
   doc.createElement = (...args) => {
@@ -42,6 +42,7 @@ function fixture(t, { known = false, denyStorage = false } = {}) {
         axes: [0, 0, 0, -0.5],
         buttons: [],
       };
+  Object.assign(pad, padOverride);
   const data = new Map(),
     frames = new Map();
   let time = 0,
@@ -141,9 +142,7 @@ test('known radio exposes confirmation and Save & return immediately', (t) => {
   f.tick();
   assert.equal(f.phase(), 'check');
   assert.equal(f.container.querySelector('.radio-confirm').hidden, false);
-  const confirm = f.container.querySelector('.radio-confirm input');
-  confirm.checked = true;
-  confirm.emit('change');
+
   f.click('Save & return');
   assert.equal(f.runtime.status().verified, true);
   assert.equal(f.runtime.status().active, false);
@@ -174,10 +173,7 @@ test('manual setup is available during calibration and can save without automati
     inputs[3].value = '0.5';
     inputs[1].emit('change');
   }
-  f.click('Check my sticks');
-  const confirm = f.container.querySelector('.radio-confirm input');
-  confirm.checked = true;
-  confirm.emit('change');
+
   f.click('Save & return');
   assert.equal(f.done(), 1);
   assert.equal(f.runtime.status().verified, true);
@@ -215,9 +211,7 @@ for (const [low, high, reversed] of [
     f.tick();
     f.click('Keep current binding / skip');
     f.click('Keep current binding / skip');
-    const confirm = f.container.querySelector('.radio-confirm input');
-    confirm.checked = true;
-    confirm.emit('change');
+
     f.click('Save & return');
     assert.equal(f.runtime.requestArm(), true);
     f.pad.axes = [up, down, up, up];
@@ -243,9 +237,7 @@ test('calibration never guesses two moving axes and manual mode recovers after f
 
 test('denied storage permits an explicitly verified session and reports it before returning', (t) => {
   const f = fixture(t, { known: true, denyStorage: true });
-  const confirm = f.container.querySelector('.radio-confirm input');
-  confirm.checked = true;
-  confirm.emit('change');
+
   f.click('Save & return');
   assert.equal(f.phase(), 'saved');
   assert.equal(f.done(), 0);
@@ -262,4 +254,71 @@ test('a known radio cannot arm while its setup dialog owns the controls', (t) =>
   f.runtime.poll();
   assert.equal(f.runtime.status().active, false);
   assert.equal(f.runtime.requestArm(), false);
+});
+
+test('real radio yaw capture tolerates movement of the already calibrated throttle', (t) => {
+  const f = fixture(t, { padOverride: { axes: [0.001, 0.001, -1, 0.001, -1, -1, 0, 0] } });
+  f.click('Set up my sticks');
+  f.tick();
+  f.pad.axes[2] = 1;
+  f.tick();
+  f.pad.axes[2] = -1;
+  f.tick();
+  assert.equal(f.phase(), 'negative');
+  f.tick();
+  f.tick();
+  assert.equal(f.phase(), 'positive');
+  f.pad.axes[3] = 1;
+  for (let i = 0; i < 10; i++) {
+    f.pad.axes[2] = i % 2 ? -0.05 : 0.05;
+    f.tick(1);
+  }
+  assert.equal(f.phase(), 'return', 'Yaw right is independent of throttle position.');
+  f.pad.axes[3] = 0.001;
+  f.tick();
+  assert.equal(f.phase(), 'negative');
+  f.pad.axes[3] = -1;
+  f.tick();
+  assert.equal(f.phase(), 'return', 'Yaw left is independent of throttle position.');
+  f.pad.axes[3] = 0.001;
+  f.tick();
+  for (const axis of [1, 0]) {
+    f.pad.axes[axis] = 1;
+    f.tick();
+    f.pad.axes[axis] = 0.001;
+    f.tick();
+    f.pad.axes[axis] = -1;
+    f.tick();
+    f.pad.axes[axis] = 0.001;
+    f.tick();
+  }
+  f.tick();
+  assert.equal(f.phase(), 'centre', 'Final check still requires low throttle.');
+  f.pad.axes[2] = -1;
+  f.tick();
+  f.click('Keep current binding / skip');
+  f.click('Keep current binding / skip');
+  f.click('Save & return');
+  assert.equal(f.done(), 1);
+  assert.equal(f.runtime.requestArm(), true);
+});
+
+test('valid manual mapping saves directly without a second hidden confirmation gate', (t) => {
+  const f = fixture(t, { known: true });
+  f.click('Set sticks manually');
+  f.click('Save & return');
+  assert.equal(f.done(), 1);
+  assert.equal(f.runtime.status().verified, true);
+});
+
+test('direct manual Save reports invalid duplicate axes without storing or activating them', (t) => {
+  const f = fixture(t, { known: true });
+  f.click('Set sticks manually');
+  const axes = f.container.querySelector('.radio-channels').children;
+  axes[2].querySelector('input').value = '0';
+  axes[2].querySelector('input').emit('change');
+  f.click('Save & return');
+  assert.equal(f.done(), 0);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /distinct axis/);
+  assert.equal(f.runtime.status().verified, false);
 });

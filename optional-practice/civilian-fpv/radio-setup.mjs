@@ -49,6 +49,7 @@ const COPY = {
     verify: 'I checked the animated sticks and their direction',
     save: 'Save verified profile',
     verified: 'Control verification complete. Save to keep this profile.',
+    unsaved: 'Changes not saved. Check the live sticks, then choose Save & return.',
     saved: 'Profile saved on this device.',
     session: 'Session only — profile could not be saved.',
     response: 'Flight response — separate from calibration',
@@ -139,6 +140,7 @@ const COPY = {
     verify: 'Я перевірив рух і напрямок анімованих стіків',
     save: 'Зберегти перевірений профіль',
     verified: 'Керування перевірено. Збережіть профіль.',
+    unsaved: 'Зміни не збережено. Перевірте стіки наживо й натисніть «Зберегти й повернутися».',
     saved: 'Профіль збережено на пристрої.',
     session: 'Лише цей сеанс — профіль не вдалося зберегти.',
     response: 'Реакція польоту — окремо від калібрування',
@@ -381,7 +383,12 @@ export function mountRadioSetup({
     importRevision++;
     verified = false;
     if (markRuntime) runtime.editProfile();
-    status.textContent = copy.incomplete;
+    try {
+      readProfile(false);
+      status.textContent = copy.unsaved;
+    } catch {
+      status.textContent = copy.incomplete;
+    }
   }
   function stopCaptures() {
     identifying = null;

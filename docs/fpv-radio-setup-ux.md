@@ -77,3 +77,13 @@ Academy and World host tests exercise saving, selecting radio input, deliberate
 arming, and live flight input. Browser checks exercise the production setup
 component, profile reload, and manual editing at desktop and narrow widths with
 synthetic USB samples; physical radio verification remains a separate check.
+
+Real-radio follow-up found that moving the left stick fully right can also move
+the already calibrated throttle away from its low position. Capture, return and
+stable-hold checks now ignore completed controls while mapping the next one;
+final centre/low-throttle validation remains mandatory. A regression uses the
+observed eight-axis Oxbot layout and repeats yaw right/left with moving throttle.
+
+Manual setup now offers **Save & return** directly. Saving validates the mapping
+and confirms it for use without an extra checkbox or intermediate check screen.
+Invalid mappings still report the validation error and remain unsaved.
