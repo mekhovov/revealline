@@ -5943,5 +5943,8 @@
   "missionLibrary.search.emptySearchFilters": "No missions match this search and these filters. Clear the search text or reset filters separately.",
   "missionLibrary.search.emptySearch": "No missions match this search. Clear or change the search text.",
   "missionLibrary.search.emptyFilters": "No missions match these filters. Reset filters or choose different filters.",
-  "missionLibrary.search.emptyView": "No missions match the current edition and mode. Open Filters to choose another view."
+  "missionLibrary.search.emptyView": "No missions match the current edition and mode. Open Filters to choose another view.",
+  "teamHomeRecommendation.first": "Suggested Team mission: {{mission}}. Start with the first mission in this Journey.",
+  "teamHomeRecommendation.selected": "Selected Team mission: {{mission}}. Start uses this exact mission and your current setup.",
+  "teamHomeRecommendation.recordedNext": "Suggested Team mission: {{mission}}. It follows {{previous}}, whose completion is recorded in your Team Journey progress."
 }
