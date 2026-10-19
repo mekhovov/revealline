@@ -6,7 +6,58 @@ It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
 unrelated world-expansion or demonstration-authoring projects.
 
-## Current continuation — 19 October, 06:58 CEST
+## Current continuation — 19 October, 07:11 CEST
+
+**The plan remains incomplete.** Independent software preparation and local
+acceptance continue; release, platform and measurement gates remain explicit.
+
+- **Latest-main integration is qualified.** Main `6e3c5f81d4` is incorporated
+  on a separate follow-up branch at `7109710578`; queued PR heads were not
+  changed. All **775 unique focused checks** pass across the original run and
+  a targeted rerun after restoring exact missing sparse fixtures. **19/19**
+  package checks, three generated-source identities and all **243 input hashes**
+  pass. No source/assertion repair was needed. Academy has **41,429 bytes spare**
+  under unchanged caps. [Receipt](fpv-main-integration-qualification-20261019.json).
+- **R3/R9 local offline update acceptance passes.** The World package reloads
+  with its server stopped; Meteor75 lifts and pauses, its complete recording
+  verifies, and its 15-second checkpoint restores paused. A normal update from
+  `1dfb180f2` to `9dd87a9c1a` retains the saved setup and verifies the old archive
+  again with the updated native worker while the server is stopped. This is
+  local server loss/update coverage, not OS-offline, installed-PWA or native
+  qualification. [Procedure, result and screenshots](fpv-offline-update-acceptance-20261019.md).
+- **R6 bounded command-domain selection is implemented and independently
+  reviewed.** Commit `59586770b5` selects over declared fixed-voltage surface
+  cells with a 256-combination limit, rejects ambiguity and unresolved candidates,
+  and preserves evidence gaps. **95/95** synthetic checks pass. It is source-only,
+  never activated in flight; voltage-sag coupling, command mapping, motor dynamics
+  and matched measurements remain. [Contract](fpv-propulsion-evidence.md).
+- **R9 current-v3 Regional worker qualification is in progress.** A source-only
+  native-worker harness now exercises terrain/mission rejection, byte-budget
+  segment rotation, pause and fresh-worker restore with frozen Meteor75 and
+  Nazgul configurations. Its pure checks pass; browser execution and independent
+  review are the next gate. This must not be reported as all-map flight acceptance.
+- **Release remains queued.** The latest read of #1722 still shows its unchanged
+  `35a1824f1c` head open/mergeable with fifteen queued checks and no completed
+  result. No manual rerun, cancellation, bypass or merge was performed. The
+  preceding release chain and final Pages acceptance remain outstanding.
+- **R13 remains unresolved and protected archives untouched.** No hidden public
+  storage inspection, deletion or denied-route retry occurred. Physical radios
+  and pilot comparisons remain deferred by the user.
+
+| Priority | Remaining result | Estimate / dependency |
+| --- | --- | --- |
+| P1 — release | Normal checks/integration for #1679 → #1685 → #1698 → #1717 → #1722 and this separately qualified follow-up; actual Pages acceptance | Queue ETA unknown; **1–2 working days after stable deployment**, fixes extra. |
+| P1 — Firefox | Trajectory-preserving remedy for the original failed 2× capacity gate | Profiling complete; remedy ETA unknown. Original frequency/gate unchanged. |
+| P1 — archives | Account for six protected older records and establish cause/recovery | **1–3 investigation days after a permitted diagnostic context**; recovery ETA unknown. No cleanup. |
+| P2 — Regional | Finish native-worker transition/recovery harness review and actual browser check | Current implementation/checks underway; further rendered streaming and platform coverage remain separate. |
+| P2 — broader platforms | Installed apps, interrupted updates/eviction, additional hosts/devices | Local World server-loss/update check complete. **3–5 working days** for available desktop matrix, **1–2 days per additional target**, access/fixes extra. |
+| P2 — propulsion | Conservative sag-coupled preparation, command mapping/transients, then versioned activation and matched fitting | Software preparation continues. **5–10 days per first reference after matched data**; acquisition/all-aircraft fidelity undated. |
+
+No overall completion date is credible while the external queue, platform remedy
+and physical evidence remain unresolved. Numerical checks are not measured
+whole-aircraft fidelity, and scored/default promotion remains gated.
+
+## Historical continuation — 19 October, 06:58 CEST
 
 **The plan remains incomplete. Available software work continues.** This summary
 supersedes older queue, capacity and in-progress notes below.
