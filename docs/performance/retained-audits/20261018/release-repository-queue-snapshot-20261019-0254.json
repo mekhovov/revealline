@@ -1,0 +1,15 @@
+{
+  "kind": "SoloReleaseQueueSnapshotV1",
+  "at": "2026-10-19T02:52:42.050527+00:00",
+  "observedAt": "2026-10-19T02:54Z",
+  "counts": {
+    "queuedWorkflowRuns": 240,
+    "pendingWorkflowRuns": 58,
+    "inProgressWorkflowRuns": 11
+  },
+  "scope": "Repository-wide workflow-run metadata, not distinct jobs or runner availability",
+  "cause": "unestablished",
+  "eta": "unknown",
+  "changesMade": false,
+  "nextAction": "Inspect only own superseded unassigned report/controller candidates; no general cancellation or active functional-test cancellation."
+}

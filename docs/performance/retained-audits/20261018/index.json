@@ -1682,6 +1682,72 @@
       "blob": "0355b97886c5dc4cf4d5afa0d35396a440d94d57",
       "bytes": 3787,
       "sha256": "ee65455e8c687532bc9083aef0470b075522f109e279b12a2bcbf2ed2743bad9"
+    },
+    {
+      "path": "plan-followup-loader-repairs-publication-20261019.json",
+      "blob": "ca1a3bcf2576a06b2dd3c75ae8d414a535783d19",
+      "bytes": 932,
+      "sha256": "7e8d093394052d67c9933e3176474d958bf50b3157ad934792bb7033ee30ebc2"
+    },
+    {
+      "path": "release-current-head-status-snapshot-20261019-0249.json",
+      "blob": "690d001673ab8b7d56ef8351be492e4a8450c361",
+      "bytes": 53183,
+      "sha256": "b44f40041935d366e6ad58569b6f6acffe082468aa20fc52a41312b5bc58cb83"
+    },
+    {
+      "path": "release-repository-queue-snapshot-20261019-0254.json",
+      "blob": "2e909e77165f4d7039178552fcb8c9ee2712c833",
+      "bytes": 556,
+      "sha256": "5876283665963b6a7bbc245bce3cbab1465cf7fdc48df03a5eedebd04b3fe4c1"
+    },
+    {
+      "path": "authoring-main-integration-dependency-peer-20261019.json",
+      "blob": "30b59ba243f434d2371a6475dc81a51424fcd37d",
+      "bytes": 7582,
+      "sha256": "a9a7b7aeec7f23546c857d490ffa39ba69955047b12d832935fb731253afdbf4"
+    },
+    {
+      "path": "task-owned-queued-reporters-independent-audit-20261019.json",
+      "blob": "63f61e16fd1c6570bfb6fe17766768cd936f338e",
+      "bytes": 31294,
+      "sha256": "cb51b3c163419d45bb24f80369142c326bfe4b124f0c2a309de2c41e9aea5c93"
+    },
+    {
+      "path": "authoring-fixed-main-normal-union-proposal-20261019.json",
+      "blob": "3292b6b8b57875c470906eda86d5a1512cf5d35c",
+      "bytes": 127068,
+      "sha256": "9559bcc58e3711c75a9a387c7eaf8ec38b084036b117ef7ebd6bb7e95c39d85e"
+    },
+    {
+      "path": "obsolete-unassigned-own-reporter-cancellation-20261019.json",
+      "blob": "508cb422cb4a5aa760ce570bab049aa9b573ecb5",
+      "bytes": 2319,
+      "sha256": "14a66a5f432595516882a71e15001499b3f92f1cb2f2b49aca1af7432dc91b63"
+    },
+    {
+      "path": "obsolete-own-reporters-unresponsive-cancellation-20261019.json",
+      "blob": "dd38a263b7f4e1aface5414d73f199837285b582",
+      "bytes": 1714,
+      "sha256": "91c286a52ae351d43f96626989169e772e9559794ba2e82e6607897a10d4c711"
+    },
+    {
+      "path": "authoring-fixed-main-full-union-peer-20261019.json",
+      "blob": "9f1b3134d4005f534be8f2f7dc5a50b0e991aeb5",
+      "bytes": 6017,
+      "sha256": "12b1d276030a555848636b88cba40ce31524e7c39fd8057d4d8529e7311a81d7"
+    },
+    {
+      "path": "authoring-fixed-main-normal-merge-publication-20261019.json",
+      "blob": "ece73270e8128ed40dfb170f29ab93b22836efea",
+      "bytes": 789,
+      "sha256": "b5f23d4affedbd41a8ba2332ca44d635730735f2ca2df5f0bf0f4e62b31c016b"
+    },
+    {
+      "path": "own-obsolete-reporters-cleanup-completion-20261019.json",
+      "blob": "18fe9b9504e5616232279df6be7b970514801161",
+      "bytes": 1073,
+      "sha256": "a25cf5252b6cb35755ff61a439fcc51f48a158ed719328857c844d2f03c8d68c"
     }
   ]
 }

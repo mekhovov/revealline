@@ -1,0 +1,61 @@
+{
+  "kind": "SoloObsoleteReportCancellationEscalationV1",
+  "at": "2026-10-19T02:56:27.146097+00:00",
+  "normalRequest": "508cb422cb4a5aa760ce570bab049aa9b573ecb5",
+  "officialPolicy": "https://docs.github.com/en/rest/actions/workflow-runs#force-cancel-a-workflow-run",
+  "results": [
+    {
+      "run": 39179292792,
+      "before": {
+        "status": "queued",
+        "conclusion": null
+      },
+      "normalCancelAgeSeconds": 112.1286,
+      "currentHead": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+      "unassignedReporter": {
+        "id": 117861496514,
+        "name": "focused",
+        "status": "queued",
+        "runner_id": 0,
+        "steps": []
+      },
+      "forceCancelResponse": {},
+      "action": "force-cancel unresponsive obsolete aggregation only"
+    },
+    {
+      "run": 39183206863,
+      "before": {
+        "status": "queued",
+        "conclusion": null
+      },
+      "normalCancelAgeSeconds": 114.395754,
+      "currentHead": "403753c221913cbe5339d84c22ee368955dcb413",
+      "unassignedReporter": {
+        "id": 117863940175,
+        "name": "release-ready",
+        "status": "queued",
+        "runner_id": 0,
+        "steps": []
+      },
+      "forceCancelResponse": {},
+      "action": "force-cancel unresponsive obsolete aggregation only"
+    },
+    {
+      "run": 39182301808,
+      "before": {
+        "status": "completed",
+        "conclusion": "cancelled"
+      },
+      "action": "none; normal cancellation already completed"
+    },
+    {
+      "run": 39190053545,
+      "before": {
+        "status": "completed",
+        "conclusion": "cancelled"
+      },
+      "action": "none; normal cancellation already completed"
+    }
+  ],
+  "functionalWorkCancelled": false
+}

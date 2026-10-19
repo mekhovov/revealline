@@ -1,0 +1,22 @@
+{
+  "kind": "SoloPerformancePlanPublicationV1",
+  "at": "2026-10-19T02:50:17.560462+00:00",
+  "pr": 1706,
+  "previousPlan": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+  "base": "1b4928f05fdfeb36918f6de161ad63bcac2e4cb2",
+  "head": "8a4e9377c0a2cb70136fcfbc9f23e658059cc802",
+  "tree": "1e32c775540cddbce080ecdb33fc60b59fa2ead2",
+  "path": "docs/performance/solo-performance-followup-plan.md",
+  "blob": "802901a328a2e061f4e9633e5acdaf1a0b7ed419",
+  "bytes": 177975,
+  "sha256": "3867e191ff9910088a9236da4d93ec5475565f0c20a0676b136c5cfb5c5ab0b5",
+  "historicalTail": {
+    "bytes": 126143,
+    "sha256": "d31ad625087f70e4e507accdcce3bad037a3d44410ba77893c9484c011074bff",
+    "unchanged": true
+  },
+  "evidenceIndex": "984813131723e421e2b410200c7f1d96e7aec9dc",
+  "indexRecords": 280,
+  "review": "Independent consistency review; current summary supersedes clearly marked historical instructions.",
+  "functionalExecution": false
+}

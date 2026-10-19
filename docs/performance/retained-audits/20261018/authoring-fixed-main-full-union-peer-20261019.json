@@ -1,0 +1,153 @@
+{
+  "format": "revealline.authoring-fixed-main-full-union-peer.v1",
+  "reviewedAt": "2026-10-19T02:56:33.559Z",
+  "proposal": {
+    "gitBlob": "3292b6b8b57875c470906eda86d5a1512cf5d35c",
+    "bytes": 127068,
+    "sha256": "9559bcc58e3711c75a9a387c7eaf8ec38b084036b117ef7ebd6bb7e95c39d85e",
+    "decodedBytes": 602233,
+    "decodedSha256": "41f5d5a64058db962d653fea7ec0309b8a02db8e50265661ff28b21b91cb4161"
+  },
+  "parents": [
+    "403753c221913cbe5339d84c22ee368955dcb413",
+    "1b4928f05fdfeb36918f6de161ad63bcac2e4cb2"
+  ],
+  "branch": {
+    "revision": "403753c221913cbe5339d84c22ee368955dcb413",
+    "tree": "822fd9a3a4db2c6ca387c7c22772217ffab090a4"
+  },
+  "fixedMain": {
+    "revision": "1b4928f05fdfeb36918f6de161ad63bcac2e4cb2",
+    "tree": "bb5a868510c3e0faada24c0ca63d57155de1ea6d"
+  },
+  "comparisonBase": {
+    "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "tree": "b1214330108fe62c8a89e45902be4f84c628ed99"
+  },
+  "verdict": "Clean exact full-tree union; safe for guarded normal branch merge publication subject to fresh exact-head guard. No merged-head test pass is claimed.",
+  "independentTreeChecks": {
+    "untruncated": true,
+    "pathCounts": {
+      "base": 44792,
+      "main": 44839,
+      "head": 44795
+    },
+    "reproduced": {
+      "base": "b1214330108fe62c8a89e45902be4f84c628ed99",
+      "main": "bb5a868510c3e0faada24c0ca63d57155de1ea6d",
+      "head": "822fd9a3a4db2c6ca387c7c22772217ffab090a4"
+    },
+    "reviewedBranchDelta": 11,
+    "mainDelta": 99,
+    "identicalOrReviewedOverlaps": 6,
+    "nonoverlapMainRetained": 93,
+    "outputsOverMain": 8,
+    "fromMain": "89f5360e4f04d856e668005c46a89d5307a30813",
+    "fromHead": "89f5360e4f04d856e668005c46a89d5307a30813",
+    "expectedTree": "89f5360e4f04d856e668005c46a89d5307a30813"
+  },
+  "outputs": [
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "mode": "100644",
+      "after": {
+        "gitBlob": "e6f522d036c74cbbc0e8fe4011ce6d659327d793",
+        "bytes": 59654,
+        "sha256": "30170f928aa21acb85a260b4ee20be80a270ce6c8f08e4a377fa9a9bb92a320e"
+      },
+      "mainGuard": true,
+      "headExact": true
+    },
+    {
+      "path": "game/test/couch-dom-query.test.mjs",
+      "mode": "100644",
+      "after": {
+        "gitBlob": "af53ec6a929ef56b1924dc364f07a13b1d28b90a",
+        "bytes": 11446,
+        "sha256": "8f5f90cd0da91d87375a9c3f0cd63acb171437d547124afb578b89a52896aa9f"
+      },
+      "mainGuard": true,
+      "headExact": true
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "mode": "100644",
+      "after": {
+        "gitBlob": "28282ff7b4f1c58958159f29a55594cd7f0999cb",
+        "bytes": 20764,
+        "sha256": "db3bd00411046889d4874e99c7d957e737be51f21c9ddf92fc0ef54d3f0ed06d"
+      },
+      "mainGuard": true,
+      "headExact": true
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "mode": "100644",
+      "after": {
+        "gitBlob": "514e5538769ad80cdcb4b45cdcb5ea5168b094ac",
+        "bytes": 75166,
+        "sha256": "5d99fa160c96236296c207b0bc87a03d5be18f3628de6d085889d4a6cf800281"
+      },
+      "mainGuard": true,
+      "headExact": true
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "mode": "100644",
+      "after": {
+        "gitBlob": "acdb6fa9c2b5d3ad3463e14bcb27a2dd45dc481a",
+        "bytes": 208100,
+        "sha256": "8091222276f493f374ad4fcfcfb969bb4c3d5d8c8e21f244f243739c302789df"
+      },
+      "mainGuard": true,
+      "headExact": true
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "mode": "100644",
+      "after": {
+        "gitBlob": "6b0ff488f6b4011ecdf7857975b2f6b3e703d021",
+        "bytes": 150465,
+        "sha256": "5e9caf6659a2d44deb51772c3b5d1c04d2fe3ffc8d833ef91c67785be02c77c0"
+      },
+      "mainGuard": true,
+      "headExact": true
+    },
+    {
+      "path": "game/test/helpers/soundtrack-authoring-loader.mjs",
+      "mode": "100644",
+      "after": {
+        "gitBlob": "d2fcc1e7f550a3873e86aeae43666f79c602c194",
+        "bytes": 2203,
+        "sha256": "38931f36c742326519d27959995fc54b0153c95ecef502fdd131d0145febb4a6"
+      },
+      "mainGuard": true,
+      "headExact": true
+    },
+    {
+      "path": "game/ui/soundtrack-authoring-view.mjs",
+      "mode": "100644",
+      "after": {
+        "gitBlob": "ffa796251fce11736a195232431607740883220b",
+        "bytes": 14219,
+        "sha256": "b33ec2c9c5bd6f27b9f38dfe7b8920acb31812ef01a7902f968a43d2d95f1ef0"
+      },
+      "mainGuard": true,
+      "headExact": true
+    }
+  ],
+  "dependencyReview": "30b59ba243f434d2371a6475dc81a51424fcd37d",
+  "findings": [
+    "All11 reviewed branch paths survive exactly; every one of the8 differences overfixedmain reuses the already reviewed403753c blob with complete byte/Git/SHA receipts.",
+    "All99 main deltas fromdd337 were independently reproduced. Six overlaps are already identical or reviewed dependency successors; all93 other main changes are copied exactly, including additions/removals/modes.",
+    "Both independently built complete leaf-map unions reproduce expectedtree89f5360e4f04d856e668005c46a89d5307a30813. No extra output path, loss of main change or newly synthesized source detected.",
+    "Dependency function/assertion semantics were separately reviewed as clean; original three divergent main files equal0991, included in both histories.",
+    "Appearance workflow is the exact reviewed branch blob; no additional workflow/policy/source-declaration change is introduced by this integration."
+  ],
+  "limits": [
+    "Static tree/content/AST dependency review only; no functional tests, app/browser/build/native execution.",
+    "No local writes or branch/PR/index/plan mutation. Remote evidence retention only.",
+    "Root must guard current branchhead403753c immediately before publication, preserve parents[403753c,1b4928], verify finaltree and run normal fresh current-head checks.",
+    "This normal branch merge is not main merge, release, native admission or a claim that previous failed controls passed."
+  ]
+}

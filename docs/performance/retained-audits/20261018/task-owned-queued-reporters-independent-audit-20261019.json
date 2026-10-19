@@ -1,0 +1,679 @@
+{
+  "format": "revealline-obsolete-task-queue-classification.v1",
+  "observedAt": "2026-10-19T02:54:12.507Z",
+  "repository": "mekhovov/revealline",
+  "scope": "One bounded read-only scan of branches attached to PR1623/1674/1675/1619; no cancellations, dispatches, retries, local writes or functional execution.",
+  "targets": [
+    {
+      "pr": 1623,
+      "state": "closed",
+      "draft": false,
+      "head": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+      "branch": "codex/solo-performance-status-20261018-late",
+      "merged": true,
+      "mergedAt": "2026-10-19T02:27:40Z"
+    },
+    {
+      "pr": 1674,
+      "state": "open",
+      "draft": true,
+      "head": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+      "branch": "codex/solo-menu-preparation-split",
+      "merged": false,
+      "mergedAt": null
+    },
+    {
+      "pr": 1675,
+      "state": "open",
+      "draft": true,
+      "head": "403753c221913cbe5339d84c22ee368955dcb413",
+      "branch": "codex/solo-lazy-soundtrack-authoring",
+      "merged": false,
+      "mergedAt": null
+    },
+    {
+      "pr": 1619,
+      "state": "closed",
+      "draft": false,
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "branch": "codex/solo-demanded-soundtrack-catalogue",
+      "merged": true,
+      "mergedAt": "2026-10-19T01:59:48Z"
+    }
+  ],
+  "branchInventoryCompleteness": [
+    {
+      "pr": 1623,
+      "total": 38,
+      "returned": 38
+    },
+    {
+      "pr": 1674,
+      "total": 22,
+      "returned": 22
+    },
+    {
+      "pr": 1675,
+      "total": 12,
+      "returned": 12
+    },
+    {
+      "pr": 1619,
+      "total": 25,
+      "returned": 25
+    }
+  ],
+  "candidates": [
+    {
+      "pr": 1674,
+      "run": 39179292792,
+      "oldHead": "98f666a20d133d9a81eb07104076c3147fd165aa",
+      "currentHead": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+      "job": 117861496514,
+      "reason": "Exact old head superseded on draft PR; only outstanding job focused is unassigned/empty steps and verifies existing shard receipts. All functional shards terminal cancelled; test/build skipped."
+    },
+    {
+      "pr": 1675,
+      "run": 39183206863,
+      "oldHead": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "currentHead": "403753c221913cbe5339d84c22ee368955dcb413",
+      "job": 117863940175,
+      "reason": "Exact old head superseded on draft PR; only outstanding release-ready reporter unassigned/empty steps. Preflight failure remains recorded; all functional jobs skipped. Cancellation must not be described as a passed preflight."
+    },
+    {
+      "pr": 1619,
+      "run": 39182301808,
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "job": 117850179702,
+      "reason": "PR already merged; outstanding unassigned reconcile controller has empty steps and cannot merge closed PR. Current exact-head validation jobs are explicitly excluded."
+    },
+    {
+      "pr": 1623,
+      "run": 39190053545,
+      "head": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+      "job": null,
+      "reason": "Closed merged PR; controller workflow pending with zero allocated jobs. This is a run-level candidate, not an assertion of job runner metadata."
+    }
+  ],
+  "jobEvidence": [
+    {
+      "run": 39190053545,
+      "total": 0,
+      "jobs": []
+    },
+    {
+      "run": 39186804451,
+      "total": 1,
+      "jobs": [
+        {
+          "id": 117851700679,
+          "name": "preflight",
+          "status": "queued",
+          "conclusion": null,
+          "runnerId": 0,
+          "runnerName": "",
+          "startedAt": "2026-10-19T01:49:27Z",
+          "completedAt": null,
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39186804451/job/117851700679"
+        }
+      ]
+    },
+    {
+      "run": 39179292792,
+      "total": 8,
+      "jobs": [
+        {
+          "id": 117829433874,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "success",
+          "runnerId": 1000043725,
+          "runnerName": "GitHub Actions 1000043725",
+          "startedAt": "2026-10-19T01:49:41Z",
+          "completedAt": "2026-10-19T01:49:55Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-10-19T01:49:42Z",
+              "completed_at": "2026-10-19T01:49:43Z"
+            },
+            {
+              "name": "Check out the workflow's test policy",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-10-19T01:49:43Z",
+              "completed_at": "2026-10-19T01:49:45Z"
+            },
+            {
+              "name": "Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-10-19T01:49:45Z",
+              "completed_at": "2026-10-19T01:49:50Z"
+            },
+            {
+              "name": "Read explicit automated-suite policy",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-10-19T01:49:50Z",
+              "completed_at": "2026-10-19T01:49:50Z"
+            },
+            {
+              "name": "Classify the pull request for the release train",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-10-19T01:49:50Z",
+              "completed_at": "2026-10-19T01:49:51Z"
+            },
+            {
+              "name": "Preserve exact source and admission metadata",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-10-19T01:49:51Z",
+              "completed_at": "2026-10-19T01:49:52Z"
+            },
+            {
+              "name": "Record temporary fast-release policy",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-10-19T01:49:52Z",
+              "completed_at": "2026-10-19T01:49:52Z"
+            },
+            {
+              "name": "Post Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-10-19T01:49:52Z",
+              "completed_at": "2026-10-19T01:49:52Z"
+            },
+            {
+              "name": "Post Check out the workflow's test policy",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-10-19T01:49:52Z",
+              "completed_at": "2026-10-19T01:49:53Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-10-19T01:49:53Z",
+              "completed_at": "2026-10-19T01:49:53Z"
+            }
+          ],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39179292792/job/117829433874"
+        },
+        {
+          "id": 117851798521,
+          "name": "focused_shards (1)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "runnerId": 0,
+          "runnerName": "",
+          "startedAt": "2026-10-19T01:49:56Z",
+          "completedAt": "2026-10-19T02:30:59Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39179292792/job/117851798521"
+        },
+        {
+          "id": 117851798546,
+          "name": "focused_shards (3)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "runnerId": 0,
+          "runnerName": "",
+          "startedAt": "2026-10-19T01:49:56Z",
+          "completedAt": "2026-10-19T02:30:59Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39179292792/job/117851798546"
+        },
+        {
+          "id": 117851798602,
+          "name": "focused_shards (2)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "runnerId": 0,
+          "runnerName": "",
+          "startedAt": "2026-10-19T01:49:56Z",
+          "completedAt": "2026-10-19T02:30:59Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39179292792/job/117851798602"
+        },
+        {
+          "id": 117851798613,
+          "name": "focused_shards (4)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "runnerId": 0,
+          "runnerName": "",
+          "startedAt": "2026-10-19T01:49:56Z",
+          "completedAt": "2026-10-19T02:30:59Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39179292792/job/117851798613"
+        },
+        {
+          "id": 117851799737,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "runnerId": null,
+          "runnerName": null,
+          "startedAt": "2026-10-19T01:49:56Z",
+          "completedAt": "2026-10-19T01:49:55Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39179292792/job/117851799737"
+        },
+        {
+          "id": 117851799804,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "skipped",
+          "runnerId": null,
+          "runnerName": null,
+          "startedAt": "2026-10-19T01:49:56Z",
+          "completedAt": "2026-10-19T01:49:55Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39179292792/job/117851799804"
+        },
+        {
+          "id": 117861496514,
+          "name": "focused",
+          "status": "queued",
+          "conclusion": null,
+          "runnerId": 0,
+          "runnerName": "",
+          "startedAt": "2026-10-19T02:30:59Z",
+          "completedAt": null,
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39179292792/job/117861496514"
+        }
+      ]
+    },
+    {
+      "run": 39183206863,
+      "total": 6,
+      "jobs": [
+        {
+          "id": 117840426623,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "failure",
+          "runnerId": 1000043891,
+          "runnerName": "GitHub Actions 1000043891",
+          "startedAt": "2026-10-19T02:40:57Z",
+          "completedAt": "2026-10-19T02:41:07Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-10-19T02:40:58Z",
+              "completed_at": "2026-10-19T02:40:59Z"
+            },
+            {
+              "name": "Check out the workflow's test policy",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-10-19T02:40:59Z",
+              "completed_at": "2026-10-19T02:41:00Z"
+            },
+            {
+              "name": "Set up Node.js",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-10-19T02:41:00Z",
+              "completed_at": "2026-10-19T02:41:04Z"
+            },
+            {
+              "name": "Read explicit automated-suite policy",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-10-19T02:41:04Z",
+              "completed_at": "2026-10-19T02:41:04Z"
+            },
+            {
+              "name": "Classify the pull request for the release train",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 5,
+              "started_at": "2026-10-19T02:41:04Z",
+              "completed_at": "2026-10-19T02:41:05Z"
+            },
+            {
+              "name": "Preserve exact source and admission metadata",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 6,
+              "started_at": "2026-10-19T02:41:05Z",
+              "completed_at": "2026-10-19T02:41:05Z"
+            },
+            {
+              "name": "Record temporary fast-release policy",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 7,
+              "started_at": "2026-10-19T02:41:05Z",
+              "completed_at": "2026-10-19T02:41:05Z"
+            },
+            {
+              "name": "Post Set up Node.js",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13,
+              "started_at": "2026-10-19T02:41:05Z",
+              "completed_at": "2026-10-19T02:41:05Z"
+            },
+            {
+              "name": "Post Check out the workflow's test policy",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-10-19T02:41:05Z",
+              "completed_at": "2026-10-19T02:41:05Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-10-19T02:41:05Z",
+              "completed_at": "2026-10-19T02:41:05Z"
+            }
+          ],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39183206863/job/117840426623"
+        },
+        {
+          "id": 117863940175,
+          "name": "release-ready",
+          "status": "queued",
+          "conclusion": null,
+          "runnerId": 0,
+          "runnerName": "",
+          "startedAt": "2026-10-19T02:41:07Z",
+          "completedAt": null,
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39183206863/job/117863940175"
+        },
+        {
+          "id": 117863940589,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "skipped",
+          "runnerId": null,
+          "runnerName": null,
+          "startedAt": "2026-10-19T02:41:07Z",
+          "completedAt": "2026-10-19T02:41:07Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39183206863/job/117863940589"
+        },
+        {
+          "id": 117863940694,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "runnerId": null,
+          "runnerName": null,
+          "startedAt": "2026-10-19T02:41:07Z",
+          "completedAt": "2026-10-19T02:41:07Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39183206863/job/117863940694"
+        },
+        {
+          "id": 117863940940,
+          "name": "focused",
+          "status": "completed",
+          "conclusion": "skipped",
+          "runnerId": null,
+          "runnerName": null,
+          "startedAt": "2026-10-19T02:41:07Z",
+          "completedAt": "2026-10-19T02:41:07Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39183206863/job/117863940940"
+        },
+        {
+          "id": 117863940955,
+          "name": "focused_shards",
+          "status": "completed",
+          "conclusion": "skipped",
+          "runnerId": null,
+          "runnerName": null,
+          "startedAt": "2026-10-19T02:41:07Z",
+          "completedAt": "2026-10-19T02:41:07Z",
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39183206863/job/117863940955"
+        }
+      ]
+    },
+    {
+      "run": 39182301808,
+      "total": 1,
+      "jobs": [
+        {
+          "id": 117850179702,
+          "name": "reconcile",
+          "status": "queued",
+          "conclusion": null,
+          "runnerId": 0,
+          "runnerName": "",
+          "startedAt": "2026-10-19T01:42:38Z",
+          "completedAt": null,
+          "steps": [],
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "url": "https://github.com/mekhovov/revealline/actions/runs/39182301808/job/117850179702"
+        }
+      ]
+    }
+  ],
+  "runEvidence": [
+    {
+      "pr": 1623,
+      "id": 39190053545,
+      "name": "Fastline exact-head auto-merge",
+      "path": ".github/workflows/fastline-auto-merge.yml",
+      "event": "pull_request",
+      "headSha": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+      "status": "pending",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T02:27:30Z",
+      "updatedAt": "2026-10-19T02:27:31Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39190053545",
+      "prs": []
+    },
+    {
+      "pr": 1623,
+      "id": 39186804451,
+      "name": "Validate source for continuous main",
+      "path": ".github/workflows/deploy-pages.yml",
+      "event": "pull_request",
+      "headSha": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T01:45:26Z",
+      "updatedAt": "2026-10-19T01:49:27Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39186804451",
+      "prs": []
+    },
+    {
+      "pr": 1674,
+      "id": 39179292792,
+      "name": "Validate source for continuous main",
+      "path": ".github/workflows/deploy-pages.yml",
+      "event": "pull_request",
+      "headSha": "98f666a20d133d9a81eb07104076c3147fd165aa",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T00:06:49Z",
+      "updatedAt": "2026-10-19T01:49:56Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39179292792",
+      "prs": [
+        1674
+      ]
+    },
+    {
+      "pr": 1675,
+      "id": 39183206863,
+      "name": "Validate source for continuous main",
+      "path": ".github/workflows/deploy-pages.yml",
+      "event": "pull_request",
+      "headSha": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T00:58:57Z",
+      "updatedAt": "2026-10-19T02:41:07Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39183206863",
+      "prs": [
+        1675
+      ]
+    },
+    {
+      "pr": 1619,
+      "id": 39182301808,
+      "name": "Fastline exact-head auto-merge",
+      "path": ".github/workflows/fastline-auto-merge.yml",
+      "event": "pull_request",
+      "headSha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T00:46:42Z",
+      "updatedAt": "2026-10-19T01:42:38Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39182301808",
+      "prs": []
+    }
+  ],
+  "sourceProof": {
+    "sourceWorkflow": {
+      "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "bytes": 19972,
+      "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+      "exactRefBindings": [
+        {
+          "path": ".github/workflows/deploy-pages.yml",
+          "ref": "98f666a20d133d9a81eb07104076c3147fd165aa",
+          "sha": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+        },
+        {
+          "path": ".github/workflows/deploy-pages.yml",
+          "ref": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+          "sha": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+        }
+      ],
+      "focused": "\n  focused:\n    # Keep the existing required status: no individual shard can qualify the gate.\n    if: >-\n      always() && github.event_name == 'pull_request' &&\n      needs.preflight.result == 'success' &&\n      needs.preflight.outputs.admission != 'hold' &&\n      needs.preflight.outputs.focusedRequired == 'true'\n    needs: [preflight, focused_shards]\n    runs-on: ubuntu-latest\n    timeout-minutes: 5\n    env:\n      EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}\n      EXPECTED_AUTOMATION: ${{ github.workflow_sha }}\n    steps:\n      - name: Require every shard job to succeed\n        env:\n          SHARDS_RESULT: ${{ needs.focused_shards.result }}\n        run: test \"$SHARDS_RESULT\" = success\n\n      - name: Check out trusted focused receipt verifier\n        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5\n        with:\n          ref: ${{ github.workflow_sha }}\n          path: automation\n          fetch-depth: 1\n          persist-credentials: false\n          sparse-checkout: |\n            publishing/focused-test-map.json\n            publishing/focused-tests.mjs\n            publishing/test-policy.json\n            publishing/test-policy.mjs\n          sparse-checkout-cone-mode: false\n\n      - name: Set up Node.js\n        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5\n        with:\n          package-manager-cache: false\n          node-version: 20.19.x\n\n      - name: Download immutable preflight admission\n        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7\n        with:\n          name: admission-${{ github.run_id }}-${{ github.run_attempt }}\n          path: ${{ runner.temp }}/preflight-admission\n\n      - name: Download all four focused shard receipts\n        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7\n        with:\n          pattern: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-*\n          path: ${{ runner.temp }}/focused-shards\n          merge-multiple: false\n\n      - name: Require exact complete command coverage\n        run: |\n          node automation/publishing/focused-tests.mjs \\\n            --verify-shards \"$RUNNER_TEMP/focused-shards\" \\\n            --artifact-prefix \"focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-\" \\\n            --admission \"$RUNNER_TEMP/preflight-admission/admission.json\" \\\n            --manifest automation/publishing/focused-test-map.json \\\n            --test-policy automation/publishing/test-policy.json\n",
+      "releaseReady": "\n  release-ready:\n    if: always() && github.event_name == 'pull_request'\n    needs: [preflight, focused, test, build]\n    runs-on: ubuntu-latest\n    steps:\n      - name: Apply the selected PR gate policy\n        env:\n          ADMISSION: ${{ needs.preflight.outputs.admission }}\n          BUILD_RESULT: ${{ needs.build.result }}\n          FOCUSED_RESULT: ${{ needs.focused.result }}\n          FOCUSED_REQUIRED: ${{ needs.preflight.outputs.focusedRequired }}\n          FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}\n          PREFLIGHT_RESULT: ${{ needs.preflight.result }}\n          TEST_RESULT: ${{ needs.test.result }}\n        run: |\n          test \"$PREFLIGHT_RESULT\" = success\n          if [ \"$ADMISSION\" != hold ]; then\n            if [ \"$FOCUSED_REQUIRED\" = true ]; then\n              test \"$FOCUSED_RESULT\" = success\n            else\n              test \"$FOCUSED_REQUIRED\" = false\n              test \"$FOCUSED_RESULT\" = skipped\n            fi\n          fi\n          if [ \"$ADMISSION\" = maintenance ]; then\n            echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'\n            exit 0\n          fi\n          if [ \"$ADMISSION\" = scheduled ]; then\n            echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'\n            exit 0\n          fi\n          if [ \"$ADMISSION\" = release-evidence ]; then\n            echo 'Docs-only post-merge release evidence: exact-source validation is required without allocating another product version.'\n            test \"$BUILD_RESULT\" = success\n            exit 0\n          fi\n          if [ \"$ADMISSION\" != release ]; then\n            echo '::error::This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.'\n            exit 1\n          fi\n          test \"$BUILD_RESULT\" = success\n          if [ \"$FULL_CI\" = true ]; then\n            test \"$TEST_RESULT\" = success\n          else\n            echo \"Full tests are deferred and do not block this PR.\"\n          fi\n"
+    },
+    "fastlineWorkflow": {
+      "gitBlob": "231cf239370fb69919ffbb3e09e0cbf5f5c0f8b3",
+      "bytes": 3061,
+      "sha256": "be28689f2eef8a104f37a85cee0858f3b45ec0c68455e261600b43a5c8264068",
+      "content": "name: Fastline exact-head auto-merge\n\non:\n  workflow_run:\n    # Reconcile when any PR validation workflow completes, including a failure\n    # that must disarm an earlier decision. The controller also waits for every\n    # non-waived exact-head check already registered on the commit.\n    workflows:\n      - Validate source for continuous main\n      - Appearance preview\n      - Industrial feature verification\n      - Company edition candidates\n      - Assemble full-test release evidence\n      - Community hosted acceptance\n      - Community MinIO recovery\n    types: [completed]\n  pull_request:\n    branches: [main]\n    types:\n      [\n        opened,\n        reopened,\n        synchronize,\n        edited,\n        labeled,\n        unlabeled,\n        milestoned,\n        demilestoned,\n        ready_for_review,\n        converted_to_draft,\n      ]\n  pull_request_review:\n    branches: [main]\n    types: [submitted, dismissed]\n\npermissions:\n  contents: write\n  pull-requests: write\n  checks: read\n  actions: write\n\nconcurrency:\n  group: fastline-merge-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || github.run_id }}\n  # Metadata changes are cheap and read current state. Serializing them avoids\n  # cancelled controller checks poisoning GitHub's merge-state rollup.\n  cancel-in-progress: false\n\njobs:\n  reconcile:\n    # Completed failed/cancelled required gates must also wake the controller:\n    # an exact head that was armed by an earlier successful run must be\n    # disarmed when the required result changes.\n    if: >-\n      github.event_name != 'workflow_run' ||\n      github.event.workflow_run.event == 'pull_request'\n    runs-on: ubuntu-latest\n    steps:\n      # This privileged controller checks out automation only from protected main.\n      # It never checks out or executes pull-request code.\n      - name: Check out trusted controller\n        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5\n        with:\n          ref: main\n          fetch-depth: 1\n          filter: blob:none\n          persist-credentials: false\n          sparse-checkout: |\n            .github/workflows/deploy-pages.yml\n            publishing/fastline-merge-controller.mjs\n            publishing/admission-binding.mjs\n            publishing/admission-preflight.mjs\n            publishing/focused-tests.mjs\n            publishing/focused-test-map.json\n            publishing/test-policy.json\n            publishing/test-policy.mjs\n          sparse-checkout-cone-mode: false\n\n      - name: Record one-time controller bootstrap\n        if: hashFiles('publishing/fastline-merge-controller.mjs') == ''\n        run: echo 'Trusted controller is not on protected main yet; this bootstrap event is intentionally a no-op.'\n\n      - name: Reconcile exact-head admission\n        if: hashFiles('publishing/fastline-merge-controller.mjs') != ''\n        env:\n          ACTIVE_MILESTONE: ${{ vars.REVEALLINE_ACTIVE_RELEASE }}\n          GH_TOKEN: ${{ github.token }}\n        run: node publishing/fastline-merge-controller.mjs\n"
+    },
+    "currentController": {
+      "ref": "1b4928f05fdfeb36918f6de161ad63bcac2e4cb2",
+      "gitBlob": "a8b71ef43d7afbf18bc169bfc75ff924c634fd93",
+      "bytes": 58466,
+      "sha256": "eee8ca3661f04112f327ccc3d99fee3fe4866e8025dcb0fd8d09d41d2f77a9b4",
+      "closedStateGuards": [
+        {
+          "startLine": 805,
+          "content": "  // The rejected-merge fallback must recognize an already completed merge\n  // without another mutation or a duplicate production dispatch.\n  if (first.state !== \"open\")\n    return {\n      pullRequest: first,\n      observedHeadSha,\n      controllerMainSha,\n      liveMainSha: mainBefore.object?.sha,\n      decision: { action: \"wait\", reason: \"pull request is not open\" },\n    };\n  if (!trustedMainMatches(controllerMainSha, mainBefore.object?.sha))\n    throw new Error(\"Trusted main changed before snapshot.\");\n  if (\n    first.number !== number ||"
+        },
+        {
+          "startLine": 1077,
+          "content": "    if (!/^[0-9a-f]{40}$/u.test(observedHeadSha || \"\"))\n      return \"event has no exact head SHA\";\n    if (pullRequest.head?.sha !== observedHeadSha)\n      return \"head changed after inspection\";\n    if (pullRequest.state !== \"open\") return \"pull request is not open\";\n    if (pullRequest.draft !== false)\n      return \"pull request is draft or draft state is unknown\";\n    if (dependencies.some((dependency) => !dependency.merged_at))\n      return \"declared predecessor is not merged\";\n    if ("
+        }
+      ]
+    }
+  },
+  "excluded": [
+    {
+      "run": 39186804451,
+      "reason": "Closed docs PR Source run still has queued preflight validation. It is not a report-only job; excluded from requested cleanup class."
+    },
+    {
+      "pr": 1675,
+      "runs": [
+        39183206777,
+        39183206766,
+        39183206830
+      ],
+      "reason": "Old-head functional Appearance/Industrial/Company work is outside reporter-only cleanup; Company is running. No cancellation recommended."
+    },
+    {
+      "pr": 1619,
+      "reason": "Merged-head Source/Appearance/Industrial/Company jobs are needed to resolve the existing validation gap and remain protected."
+    },
+    {
+      "pr": 1674,
+      "reason": "All current ada002 checks are protected."
+    }
+  ],
+  "recommendation": "Root may fresh-read exact guards and decide normal cancellation of only obsolete reporter/controller runs. No authorization or action is exercised by this audit. No runner-capacity conclusion or general repository cleanup."
+}

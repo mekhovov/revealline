@@ -1,0 +1,82 @@
+{
+  "kind": "SoloObsoleteReportCancellationV1",
+  "guards": [
+    {
+      "pr": 1674,
+      "run": 39179292792,
+      "currentHead": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+      "prState": "open",
+      "merged": false,
+      "runHead": "98f666a20d133d9a81eb07104076c3147fd165aa",
+      "runStatus": "queued",
+      "activeJobs": [
+        {
+          "id": 117861496514,
+          "name": "focused",
+          "status": "queued",
+          "runner_id": 0,
+          "runner_name": "",
+          "steps": []
+        }
+      ],
+      "normalCancelResponse": {},
+      "requestedAt": "2026-10-19T02:54:29.089020+00:00"
+    },
+    {
+      "pr": 1675,
+      "run": 39183206863,
+      "currentHead": "403753c221913cbe5339d84c22ee368955dcb413",
+      "prState": "open",
+      "merged": false,
+      "runHead": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "runStatus": "queued",
+      "activeJobs": [
+        {
+          "id": 117863940175,
+          "name": "release-ready",
+          "status": "queued",
+          "runner_id": 0,
+          "runner_name": "",
+          "steps": []
+        }
+      ],
+      "normalCancelResponse": {},
+      "requestedAt": "2026-10-19T02:54:29.728714+00:00"
+    },
+    {
+      "pr": 1619,
+      "run": 39182301808,
+      "currentHead": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "prState": "closed",
+      "merged": true,
+      "runHead": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "runStatus": "queued",
+      "activeJobs": [
+        {
+          "id": 117850179702,
+          "name": "reconcile",
+          "status": "queued",
+          "runner_id": 0,
+          "runner_name": "",
+          "steps": []
+        }
+      ],
+      "normalCancelResponse": {},
+      "requestedAt": "2026-10-19T02:54:30.277487+00:00"
+    },
+    {
+      "pr": 1623,
+      "run": 39190053545,
+      "currentHead": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+      "prState": "closed",
+      "merged": true,
+      "runHead": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+      "runStatus": "pending",
+      "activeJobs": [],
+      "normalCancelResponse": {},
+      "requestedAt": "2026-10-19T02:54:30.810213+00:00"
+    }
+  ],
+  "scope": "Only superseded unassigned receipt aggregation and merged-PR controller jobs; no current/functional validation canceled",
+  "functionalExecution": false
+}

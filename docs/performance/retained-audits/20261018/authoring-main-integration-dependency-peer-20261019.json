@@ -1,0 +1,190 @@
+{
+  "format": "revealline.authoring-fixed-main-dependency-peer.v1",
+  "reviewedAt": "2026-10-19T02:53:39.065Z",
+  "scope": "Read-only source/dependency preservation review of three divergent soundtrack overlaps and three identical shared paths. No proposed source mutation or functional execution.",
+  "heads": {
+    "dependency": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+    "branch": "403753c221913cbe5339d84c22ee368955dcb413",
+    "main": "1b4928f05fdfeb36918f6de161ad63bcac2e4cb2"
+  },
+  "commits": {
+    "dependency": {
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "tree": "cb8af43d44f4abd27ee62e7324c472adebe24574",
+      "parents": [
+        "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+      ]
+    },
+    "branch": {
+      "head": "403753c221913cbe5339d84c22ee368955dcb413",
+      "tree": "822fd9a3a4db2c6ca387c7c22772217ffab090a4",
+      "parents": [
+        "79622d061fa2b2b58ecf222d00ee0d396722a302"
+      ]
+    },
+    "main": {
+      "head": "1b4928f05fdfeb36918f6de161ad63bcac2e4cb2",
+      "tree": "bb5a868510c3e0faada24c0ca63d57155de1ea6d",
+      "parents": [
+        "6b05de03e2b72af57e9d88b3c556a291c84a3ca0",
+        "28e63d1f4a316a5d80ee4f7a604609321ea0c39a"
+      ]
+    }
+  },
+  "verdict": "Clean for retaining reviewed403753c versions of the three divergent overlaps while integrating fixedmain1b4928; full-tree union and fresh candidate checks remain separate required guards.",
+  "files": [
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "dependency": {
+        "gitBlob": "8f7894242e9572eccff97bb997aba9361e17a699",
+        "bytes": 152677,
+        "sha256": "a9df4484f1ea7bf26c795ac591aae2ccccd0b0528957f71e07ceed4c721abfc2"
+      },
+      "main": {
+        "gitBlob": "8f7894242e9572eccff97bb997aba9361e17a699",
+        "bytes": 152677,
+        "sha256": "a9df4484f1ea7bf26c795ac591aae2ccccd0b0528957f71e07ceed4c721abfc2"
+      },
+      "branch": {
+        "gitBlob": "6b0ff488f6b4011ecdf7857975b2f6b3e703d021",
+        "bytes": 150465,
+        "sha256": "5e9caf6659a2d44deb51772c3b5d1c04d2fe3ffc8d833ef91c67785be02c77c0"
+      },
+      "mainEqualsDependency": true
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "dependency": {
+        "gitBlob": "9c50de59e2f44949e4a4563374806ee3c511bbcc",
+        "bytes": 202249,
+        "sha256": "ed49ce02a1796ade92b4de50cf078ac57d7039f115564ac85d5d6fd6cbe88d83"
+      },
+      "main": {
+        "gitBlob": "9c50de59e2f44949e4a4563374806ee3c511bbcc",
+        "bytes": 202249,
+        "sha256": "ed49ce02a1796ade92b4de50cf078ac57d7039f115564ac85d5d6fd6cbe88d83"
+      },
+      "branch": {
+        "gitBlob": "acdb6fa9c2b5d3ad3463e14bcb27a2dd45dc481a",
+        "bytes": 208100,
+        "sha256": "8091222276f493f374ad4fcfcfb969bb4c3d5d8c8e21f244f243739c302789df"
+      },
+      "mainEqualsDependency": true
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "dependency": {
+        "gitBlob": "f8f753f9727ba3174f54a6959a916a5da412a9e1",
+        "bytes": 51100,
+        "sha256": "754b20b5b6c6ab6764b45880d63c8b257e41a6eadec79655bb9334f50cb0e4ea"
+      },
+      "main": {
+        "gitBlob": "f8f753f9727ba3174f54a6959a916a5da412a9e1",
+        "bytes": 51100,
+        "sha256": "754b20b5b6c6ab6764b45880d63c8b257e41a6eadec79655bb9334f50cb0e4ea"
+      },
+      "branch": {
+        "gitBlob": "514e5538769ad80cdcb4b45cdcb5ea5168b094ac",
+        "bytes": 75166,
+        "sha256": "5d99fa160c96236296c207b0bc87a03d5be18f3628de6d085889d4a6cf800281"
+      },
+      "mainEqualsDependency": true
+    }
+  ],
+  "dependencyAncestry": {
+    "status": "ahead",
+    "mergeBase": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+    "ahead": 26,
+    "behind": 0,
+    "branchIntegration": {
+      "commit": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "parents": [
+        "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+        "0991a7de3d613a2c5491fe06eadcdef47fc23be5"
+      ]
+    },
+    "mainMerge": {
+      "commit": "444707792f1dca6867ce227fc3467267d6061855",
+      "parents": [
+        "f46580679adae008284b5998c45eaf3f7ac7c967",
+        "0991a7de3d613a2c5491fe06eadcdef47fc23be5"
+      ]
+    }
+  },
+  "criticalFunctions": [
+    {
+      "name": "requestSettingsCatalogue",
+      "mainCount": 1,
+      "branchCount": 1,
+      "astEqual": true
+    },
+    {
+      "name": "loadSourcePreferences",
+      "mainCount": 1,
+      "branchCount": 1,
+      "astEqual": true
+    },
+    {
+      "name": "loadOnlineCatalogue",
+      "mainCount": 1,
+      "branchCount": 1,
+      "astEqual": true
+    }
+  ],
+  "settingsTabBindingIdentical": true,
+  "otherIdenticalPaths": [
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "dependency": "2e4de410d668a8c0150d3851de7cba9fd7b1c3bd",
+      "main": "2e4de410d668a8c0150d3851de7cba9fd7b1c3bd",
+      "branch": "2e4de410d668a8c0150d3851de7cba9fd7b1c3bd",
+      "allEqual": true
+    },
+    {
+      "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+      "dependency": "a765711f91ec813b5835539a7704909e72055b58",
+      "main": "a765711f91ec813b5835539a7704909e72055b58",
+      "branch": "a765711f91ec813b5835539a7704909e72055b58",
+      "allEqual": true
+    },
+    {
+      "path": "game/test/couch-audio-catalogue-demand.test.mjs",
+      "dependency": "a124930b551bf56aaac34c01b21cdc4e60bfc6e4",
+      "main": "a124930b551bf56aaac34c01b21cdc4e60bfc6e4",
+      "branch": "a124930b551bf56aaac34c01b21cdc4e60bfc6e4",
+      "allEqual": true
+    }
+  ],
+  "testStatements": [
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "beforeAssertions": 987,
+      "afterAssertions": 1022,
+      "missingOriginalTopStatements": []
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "beforeAssertions": 255,
+      "afterAssertions": 361,
+      "missingOriginalTopStatements": [
+        {
+          "type": "FunctionDeclaration",
+          "name": "openStudio",
+          "asserts": 3
+        }
+      ]
+    }
+  ],
+  "findings": [
+    "Every divergent main file exactly equals the already integrated0991dependency source. Both normal merge histories include0991; an alternative common-base report atdd337 does not imply absence of the dependency.",
+    "Branch retains settingsOwner default, owner containment/identity/visible rect/hidden/inert and tab association guards. requestSettingsCatalogue,loadSourcePreferences,loadOnlineCatalogue and settingsTab binding are AST-identical to main.",
+    "All original non-import panel-test statements remain AST-identical; assertions987→1022 with additive authoring controls. All original non-import host-test statements remain except openStudio, whose sole behavioral addition is waiting for soundtrack-tracks.isConnected; its3 assertions remain unchanged. Host assertion calls255→361.",
+    "All three remaining overlaps are byte-identical across0991/main/branch: Couch music host, Solo soundtrack admission, Couch catalogue demand. The complete dependency test file is retained; no new execution count is inferred.",
+    "The reviewed403 loader lifetime and bounded diagnostic/source changes are retained by choosing403 versions. No production repair is needed solely to integrate these overlaps."
+  ],
+  "limits": [
+    "This does not certify the yet-unread full integration map or tree. Preserve all unrelated fixed-main paths and every reviewed branch output, then verify exact parent/tree guards.",
+    "Source comparison and AST parsing only; no application/test/build/browser execution or localfiles.",
+    "No branch/PR/ref/index/plan change. Fresh merged-head CI remains required and all prior failed outcomes stay retained."
+  ]
+}

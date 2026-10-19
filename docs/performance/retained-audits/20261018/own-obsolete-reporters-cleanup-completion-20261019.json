@@ -1,0 +1,36 @@
+{
+  "kind": "SoloOwnObsoleteReporterCleanupCompletedV1",
+  "at": "2026-10-19T02:57:03.335340+00:00",
+  "runs": [
+    {
+      "run": 39179292792,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "updatedAt": "2026-10-19T02:56:24Z"
+    },
+    {
+      "run": 39183206863,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "updatedAt": "2026-10-19T02:56:26Z"
+    },
+    {
+      "run": 39182301808,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "updatedAt": "2026-10-19T02:54:30Z"
+    },
+    {
+      "run": 39190053545,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "updatedAt": "2026-10-19T02:54:31Z"
+    }
+  ],
+  "guardReceipt": "63f61e16fd1c6570bfb6fe17766768cd936f338e",
+  "normalRequest": "508cb422cb4a5aa760ce570bab049aa9b573ecb5",
+  "unresponsiveRequest": "dd38a263b7f4e1aface5414d73f199837285b582",
+  "scope": "Four obsolete unassigned report/controller runs only; no current validation, functional tests or Pages run cancelled",
+  "queueCause": "unestablished",
+  "queueETA": "unknown"
+}
