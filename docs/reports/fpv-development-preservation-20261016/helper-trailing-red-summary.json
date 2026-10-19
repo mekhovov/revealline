@@ -1,0 +1,9 @@
+{
+  "format": "FPVPreservationHelperRedReceipt.v1",
+  "test": "test_rejects_nonzero_payload_after_tar_terminator",
+  "beforeResult": "FAIL: expected trailing-content ValueError was not raised",
+  "originalInternalLogSHA256": "b47aef7b063c951aa47ff6e8d9958e089e7a7d16b1deac019c58a2c8bcea9d34",
+  "fix": "Read and validate trailing bytes through tarfile buffered stream and the decompressor pipe; reject nonzero bytes",
+  "afterReceipt": "helper-trailing-green.txt",
+  "scope": "new backup helper only; original native/runtime evidence unchanged"
+}

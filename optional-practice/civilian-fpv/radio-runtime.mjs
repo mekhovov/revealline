@@ -126,6 +126,7 @@ export function createRadioRuntime({
     }
   }
   function armReason(command) {
+    if (editing) return 'setup';
     if (!profile) return 'mapping-incomplete';
     if (!verified) return 'verify-controls';
     if (!command) return 'device-lost';
