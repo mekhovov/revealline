@@ -1,0 +1,37 @@
+{
+  "head": "c9101428f186ffea75f237e1bb0a33281db0dbbd",
+  "started": "2026-10-19T03:10:55.599965+00:00",
+  "complete": true,
+  "jobs": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "i18n:build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 122.40540679200058,
+      "log": "generated-0.log.txt"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/refresh-fpv-play-shell.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.5520703340007458,
+      "log": "generated-1.log.txt"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/refresh-demo-shell.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.19947245799994562,
+      "log": "generated-2.log.txt"
+    }
+  ],
+  "trackedChanges": ""
+}

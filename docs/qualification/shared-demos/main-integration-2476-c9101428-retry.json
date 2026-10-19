@@ -1,0 +1,93 @@
+{
+  "format": "revealline-demo-main-integration-retry.v1",
+  "started": "2026-10-19T03:34:17.541Z",
+  "prior": "main-integration-2476-c9101428.json",
+  "dependencyRestoration": {
+    "name": "fake-indexeddb",
+    "version": "6.2.5",
+    "source": "Existing installed pinned dependency copied into ignored worktree authoring node_modules; no source or lockfile changes."
+  },
+  "sourceBefore": {
+    "head": "c9101428f186ffea75f237e1bb0a33281db0dbbd",
+    "runtime": {
+      "sha256": "af55eca7ea8f7d11c9aab274e5974b42f7bca7720e4cdb04878026a41f9aa795",
+      "files": 9996,
+      "bytes": 404425934
+    },
+    "buildInput": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    }
+  },
+  "nodeVersion": "v20.19.5",
+  "jobs": [
+    {
+      "name": "incoming-retry",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/fpv-world-appearance-ui.test.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 45.812,
+      "logName": "main-integration-2476-c9101428-incoming-retry.tap.txt",
+      "logBytes": 20488,
+      "logSHA256": "a99c6578778b9975b137d163431a65cd455689eb3de5d1152d628474d64e162e",
+      "totals": {
+        "tests": 102,
+        "suites": 0,
+        "pass": 102,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "complete": true
+    },
+    {
+      "name": "demos",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/demo-sim.test.mjs",
+        "game/test/demo-native-host.test.mjs",
+        "game/test/demo-classic-fresh-host.test.mjs",
+        "game/test/demo-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 82.643,
+      "logName": "main-integration-2476-c9101428-demos.tap.txt",
+      "logBytes": 9297,
+      "logSHA256": "d82ed4af9b52cad90719f7e04faa8601da311af22bf348da67ef6823d6567a07",
+      "totals": {
+        "tests": 40,
+        "suites": 0,
+        "pass": 40,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "complete": true
+    }
+  ],
+  "complete": true,
+  "sourceAfter": {
+    "head": "c9101428f186ffea75f237e1bb0a33281db0dbbd",
+    "runtime": {
+      "sha256": "af55eca7ea8f7d11c9aab274e5974b42f7bca7720e4cdb04878026a41f9aa795",
+      "files": 9996,
+      "bytes": 404425934
+    },
+    "buildInput": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    }
+  },
+  "sourceStable": true,
+  "finished": "2026-10-19T03:36:30.792Z"
+}

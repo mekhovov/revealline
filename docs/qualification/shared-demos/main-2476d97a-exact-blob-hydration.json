@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-19T03:07:04.845216+00:00",
+  "base": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "target": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+  "incomingPaths": 49,
+  "checkedBlobs": 87,
+  "hydrated": [
+    {
+      "oid": "23cb5332f0146bbfda27c781bfea1c82ad16d292",
+      "bytes": 162327,
+      "identities": [
+        {
+          "rev": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+          "path": "docs/performance/solo-performance-followup-plan.md"
+        }
+      ]
+    },
+    {
+      "oid": "234c3eea8b51986c9179f93c51a8c063cfeb147d",
+      "bytes": 102237,
+      "identities": [
+        {
+          "rev": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+          "path": "game/test/fpv-flight-ui.test.mjs"
+        }
+      ]
+    },
+    {
+      "oid": "2f440a402b32a120e9ff9e8d89a9f3c7acb15fd0",
+      "bytes": 147982,
+      "identities": [
+        {
+          "rev": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+          "path": "game/test/fpv-world-appearance-ui.test.mjs"
+        }
+      ]
+    },
+    {
+      "oid": "8df267f282d928f7d8370081a3d924432cc9483d",
+      "bytes": 416785,
+      "identities": [
+        {
+          "rev": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+          "path": "optional-practice/civilian-fpv/world-app.mjs"
+        }
+      ]
+    }
+  ],
+  "source": "GitHub Git blob API, exact SHA1/header/size validated before local object insertion",
+  "complete": true
+}
