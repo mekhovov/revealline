@@ -15,8 +15,8 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Capture Home: 113 checks pass across nine complete test files. Draft #1754: a separate test reliability change preserves all 22 remaining cases in four files; source review passes, CI is starting and local execution is pending. Next: qualify that change, then finish source, browser, package and CI checks. The original memory failures remain recorded.",
-    "P1 · Single Drone/Riy: 28 checks pass across two complete files. A third stopped at the disk reserve; 25 files have not run. Original source is safely restored. Next: finish the checks, then both fonts and languages, portrait controls, menus, saves, results and packaging. Earlier 64/64 reader checks retain their scope.",
+    "P1 · Capture Home: 113 checks pass across nine complete files at the recorded candidate. Draft #1754 preserves the remaining 22 cases; CI now reports dialog and test-fixture failures under investigation. Keep the correct public Browse action and all assertions. Finish this prerequisite, then source, browser, package and CI acceptance.",
+    "P1 · Single Drone/Riy: 28 checks pass across two complete files; a third is incomplete and 25 have not run. Source is restored. The preparation guard correction passes 10 isolated checks; a fresh attempt stops before source changes because space fell again. Resume the full cohort when capacity permits, then fonts, languages, controls and full player journeys.",
     "P1 · Text compatibility #1668: all 11 configured source checks pass at the recorded source. Reconcile conflicts with newer main, then verify current browser, package and CI.",
     "P1 · Team Home #1747: source now merged. All nine admitted files match the independently reviewed local reconciliation. Prior 11 source checks remain bound to 22c553; finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
     "P1 · Shared support: independent controller wording passes 22 component cases, lint/format and both actual Solo-host cases. All 11 configured source components stopped before launch at disk preflight. Resume those checks, then browser/package and remaining host delivery gates.",
@@ -30,7 +30,10 @@
     "publishedSource": {
       "revision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
       "observedAt": "2026-10-18T22:43:05Z",
-      "includedMergedSlices": ["F83a", "F81"],
+      "includedMergedSlices": [
+        "F83a",
+        "F81"
+      ],
       "evidence": "No-cache public main-deployment.json, game/build-info.json and game/app.mjs all match e440 deployment inventory; receipt /tmp/revealline-public-e440-identity-evidence.json.",
       "run": "https://github.com/mekhovov/revealline/actions/runs/39166266155",
       "behaviorQualification": "not_run"
@@ -45,12 +48,12 @@
       "note": "Published prepared inventory is within current rolling-main980MB contract, above plan950MB target. Default1.075GB local output is a different profile. No limits changed or future candidate capacity inferred."
     },
     "localCapacity": {
-      "status": "capacity_recovered_preparation_accounting_review",
+      "status": "native_held_capacity_below_reserve_source_and_CI_review_continue",
       "recoveredBytes": 1813852160,
       "freeBytesAtCompletion": 2801545216,
       "protectedFloorBytes": 2147483648,
       "receipt": ".cache/improvements-evidence/2026-10-19/safe-duplicate-storage-cleanup/result.json",
-      "note": "Other concurrent activity freed additional space; no attribution to this task. The2GiB native floor remains and fresh prelaunch requires2.55GB. Native execution is serialized. A second preparation safely stopped before any scratch mutation because its globalfree-delta cap counted unrelated activity; successor task-owned allocation accounting is under review. All original work and failed receipts remain preserved.",
+      "note": "Other chats remain running by explicit user request. Additional external freespace was temporary; the latest A attempt stopped at1.691GB before successor execution or scratch mutation. Native/tests keep2GiB continuous floor and2.55GB fresh prelaunch; no limits relaxed. Source-only review and separate CI diagnosis continue.",
       "secondCleanup": {
         "generatedBytecodeAllocatedBytes": 348528640,
         "additionalDuplicatePacksExpired": 8,
@@ -104,7 +107,7 @@
           ".cache/improvements-evidence/2026-10-19/minimal-retention-generated-duplicate-release.json"
         ]
       },
-      "latestFreePointBytes": 1734008832,
+      "latestFreePointBytes": 1595002880,
       "latestCompaction": {
         "sourcePackBytes": 1478004933,
         "minimalReplacementBytes": 545060240,
@@ -149,7 +152,27 @@
       "pr": "https://github.com/mekhovov/revealline/pull/1754",
       "independentSourceReview": "clear_root_and_B",
       "remoteReadback": "open_draft_exact_d34_14_paths_mergeable",
-      "ci": "queued_or_running_no_pass_claim"
+      "ci": "focused_groups_1_3_4_failed_group2_pending_at_observation",
+      "nativeCI": "Node20.19_exact_d34_custom0of2_handoff6of7_incoming_terminal_TAP6of6; percommand_exit_receipt_pending; no_whole22case_pass",
+      "localNative": "not_run",
+      "causalReview": "PublicBrowsebuttonowner_confirmed_correct; investigatechooser_request_retirement. Separatepaginated_publishing_fixture_crash_identified;no_assertions_or_production_changed."
+    },
+    "preparationReview": {
+      "overflight": {
+        "transitionSHA256": "b31042caa76d17810a96f7ac7ce66347f21674dcb7e49a33dc50900049c910ab",
+        "runnerSHA256": "2fb49d3258a7acedc0f4e6c3a53d5826c718b4f1e566754eb8d98ec132686f9f",
+        "rootAndIndependentReview": "clear_after_rename_failure_bookkeeping_fix",
+        "isolatedLedgerCases": "10of10_pass_not_native_qualification",
+        "latestExecution": "stopped_before_script_execution_at_fresh_capacity_preflight",
+        "sourceOrNativeWrites": false
+      },
+      "library": {
+        "transitionSHA256": "c561489d830c08fda89c9447607d108ca6463664430671f8ca4149393a911fcb",
+        "runnerSHA256": "461f0e775d6eba717acb286f6719f5a6cc42b9039a85998d828a62b43061cb28",
+        "isolatedLedgerCases": "9of10_pass_unknown_output_path_not_rejected_fix_under_review",
+        "sourceOrNativeWrites": false
+      },
+      "limits": "32MiBtask-ownedpreparationbudget;2MiBreceiptreserve;2GiBglobalnativefloorunchanged; fresh2.55GBprelaunch."
     }
   },
   "tasks": [
@@ -4758,6 +4781,11 @@
       "date": "2026-10-19",
       "item": "F09b/F58a/test-prerequisite/capacity",
       "reason": "Record2complete dock files/28passed, third disk-guard incomplete and25Notrun; controller actual Solo-host2/2pass with11source components Notrun after preflight. Review separate22-case native-file isolation proposal without changing assertions/limits. Lossless minimal Git retention preserves all objects; user keeps other chats running. Source recovery and remaining gates remain explicit."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "CI prerequisite and resource preparation",
+      "reason": "Publish separate draft1754 and preserve its exact-head CI failures; investigate nativeBrowse/dialog ownership and paginatedpublishingfixture crash without weakeningassertions. Overflightpreparationaccounting correction passes10isolatedchecks; new actualattemptdoesnotstartbelowprelaunchfloor. Sharedscratch/originalworkunchanged; otherchatskeep running byuserchoice."
     }
   ],
   "deliveryDependencies": [
@@ -4897,16 +4925,17 @@
     {
       "id": "CI-Solo-library-file-isolation",
       "priority": "P1",
-      "status": "draft_review",
+      "status": "draft_ci_failures_under_review",
       "deliveryState": "draft",
       "pr": "https://github.com/mekhovov/revealline/pull/1754",
       "commit": "d34c52599b5bb1fb42972de8368bf75c74f73eb0",
       "observedRemoteHead": "d34c52599b5bb1fb42972de8368bf75c74f73eb0",
-      "mergeState": "MERGEABLE",
+      "mergeState": "UNSTABLE",
       "scope": "Independent test-only prerequisite: preserve all 22 Solo Mission Library cases in four complete process-isolated files. Production behavior and fixture lifecycle remain unchanged.",
-      "next": "CI is queued/running. Complete local registry and CLI files, four complete native files, configured source checks and current-main compatibility. Local execution has not started. Capture integration remains separate.",
+      "next": "CI reports retained native/dialog and publishing-fixture failures; diagnose exact-source causes and preserve all assertions. Local execution is blocked by capacity. Complete regression/native/source gates and current-main compatibility before admission.",
       "evidence": [
-        "Root and independent B source reviews clear: 19 registration blocks and 14 moved helper declarations byte-identical; all14committedblobs equal reviewedmanifest; all44954otherbaseentries exact. Real CLI discovery intercepts/restores spawnSync binding; four focusedcommands have separate300000ms limits. Syntax-only checks pass. Remote readback confirms OPEN/DRAFT/main/exactd34/14paths; no native/source/package/browser/device pass claimed."
+        "Root and independent B source reviews clear: 19 registration blocks and 14 moved helper declarations byte-identical; all14committedblobs equal reviewedmanifest; all44954otherbaseentries exact. Real CLI discovery intercepts/restores spawnSync binding; four focusedcommands have separate300000ms limits. Syntax-only checks pass. Remote readback confirms OPEN/DRAFT/main/exactd34/14paths; no native/source/package/browser/device pass claimed.",
+        "CIrun39304576230 exactd34/headtree2b09, Node20.19; rawfailedshards1/3/4 fullycaptured209089/53437/64197B withSHA256e0138e00/da853356/4135a74c and no truncation. Custom0/2 fails while waitingforBrowse dialog; source review confirms shell-play correctlyownsMissions, so no inventedentry retarget. Historicalcomment-onlytestpaths also expose failures. Publishingfastline-merge-controller.testcase59 throwsbeforeassertions because116rowfixturepages100 and unconditionallymutatesID302 onpagewithoutit. Fullbuild/testjobsSKIPPEDbyrepositorypolicy—not passes. LocalNode22native/source/package/browser/devicegatesremainunrun."
       ]
     }
   ],
@@ -4929,10 +4958,37 @@
       "withdrawn": 1
     },
     "conflictedOpenPRs": [
-      1617, 1622, 1624, 1627, 1632, 1638, 1642, 1664, 1667, 1668, 1669, 1671, 1672, 1682, 1686,
-      1702, 1704, 1721, 1729
+      1617,
+      1622,
+      1624,
+      1627,
+      1632,
+      1638,
+      1642,
+      1664,
+      1667,
+      1668,
+      1669,
+      1671,
+      1672,
+      1682,
+      1686,
+      1702,
+      1704,
+      1721,
+      1729
     ],
-    "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1669, 1682, 1686],
+    "conflictedReadyPRs": [
+      1617,
+      1622,
+      1624,
+      1627,
+      1632,
+      1638,
+      1669,
+      1682,
+      1686
+    ],
     "note": "45 source slices merged,10 open for checks,32 drafts,1 withdrawn. Team Home1747 and mono effects/voices1697 newly source merged; source admission is not full feature completion. Exact-source/browser/package/hardware boundaries remain. No manual merge, promotion or check bypass.",
     "latestMain": {
       "revision": "596b93b24412a3b1cccd10f5eb81bff2ab7a151b",
