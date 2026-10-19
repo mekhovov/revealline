@@ -1,9 +1,11 @@
 # Flight practice: integrated execution checkpoint — 18 October 2026
 
-> **Latest follow-up:** [19 October: Mac mini staging, verified writer change and preparation timeout](flight-practice-execution-2026-10-19.md).
-> The share has sufficient output space, but the current normal build times out
-> before output materialization. No new production/browser pass follows. The
-> source-bound results below remain historical evidence, not a resolved build blocker.
+> **Current planning authority:** [19 October status, remaining items, ETAs and blockers](flight-practice-status-2026-10-19.md).
+> [19 October execution evidence](flight-practice-execution-2026-10-19.md) adds
+> passing Academy continuity, six current offline routes and 53 build-tool checks.
+> The normal full build still times out, latest observed in expanded-file writing.
+> Source-bound results and earlier blockers below remain historical evidence;
+> newer main commits, queue state and acceptance gaps are covered in the review.
 
 ## Current checkpoint: accepted main 237b40543
 

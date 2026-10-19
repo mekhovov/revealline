@@ -2,7 +2,18 @@
 
 ## Latest review checkpoint — 19 October 2026
 
-Use the [Mac mini follow-up and updated remaining-order table](flight-practice-execution-2026-10-19.md).
+Use the [current status review, completed work, detailed remaining plan, ETAs and
+blockers](flight-practice-status-2026-10-19.md) as the planning authority. The
+[local diagnosis/browser execution report](flight-practice-execution-2026-10-19.md)
+retains exact source-bound test evidence.
+
+Fresh read-only review: PR #1554 is draft, with all 12 reported checks queued at
+head `1b8dcb491`. GitHub reports mergeable against its sampled `dd337c812` base;
+live main is now `bd15820be`, ten commits beyond the integrated `237b40543`,
+including coach/World runtime and Capture First Flight changes. Integration,
+new candidate reproduction/input comparison and affected qualification are
+remaining work, not completed by this documentation review.
+
 The approved share resolves output space; bounded writes, opt-in phase reporting
 and conservative cross-volume clone veto pass **53 targeted tests**. External
 sampling and isolated original validators completed without changing catalogue
@@ -14,34 +25,44 @@ Whole-run attribution and current production-directory journeys remain open.
 completes its R2 refresh, and all six current restarted-offline short-flight routes
 pass. Simulator evidence remains pinned to candidate `6177d2cc8`; build-tool
 evidence is separately pinned to `623918462`, not relabelled runtime bytes.
-Next: current-head CI, bounded evidence-led build diagnosis, independent all-app
+Next: accepted-main integration/current-head CI, bounded evidence-led build diagnosis, independent all-app
 actual recovery (R3) and native outstanding-digest cancellation (R4), then current
 production journeys. Acceptance/reviewer work (R6–R9) retains its prerequisites.
 Hosting, hardware and historical Worlds stay owner-deferred, not passed. Earlier
 disk measurements and source-specific results below are preserved history.
 
-## Current accepted-main checkpoint — 237b40543
+The former 3–5 day range is not a current overall ETA. The build fix and CI/human
+waiting have no reliable completion time; the linked review gives conditional
+effort for every remaining item and preserves all 24 pending gate decisions.
+This review updates documentation only; no rebase, new tests or PR mutation.
+Local free space is now approximately 1.8 GiB, below the recent 2 GiB disposable
+browser preflight floor; heavier local browser checks need recovered headroom.
+The Mac mini share still has about 52 GiB for output/evidence.
 
-Use the [latest execution status and remaining-order table](flight-practice-execution-2026-10-18.md)
-at the top of that report. The second rebase, fresh three-package reproduction/
+## Historical accepted-main checkpoint — 237b40543
+
+The [18 October execution status](flight-practice-execution-2026-10-18.md)
+records the second rebase, fresh three-package reproduction/
 admission, 1,270 Practice tests, 756 local-UX tests, ten native exercises, six
 guides, four populated tuning restores and current Gym update continuity pass.
 Evidence source is `6177d2cc8`, not the older runtime receipts below.
 
-Next: safe local disk headroom (at least 4 GiB recommended), fresh remote CI,
+At that checkpoint the next steps were safe local disk headroom (at least 4 GiB recommended), fresh remote CI,
 Academy's current-payload update rerun, remaining all-app recovery and native
 hash-overlap cancellation, then the current full production/offline journeys.
-The measured full-build storage guard currently refuses to start. Only our own
+The measured full-build storage guard then refused to start. Only our own
 generated old build was relocated after hash verification; no user data was removed.
 Hosting, hardware and the historical Worlds active check are explicitly deferred,
 not passed. Performance, spoken/visual, real walkthrough and 24 review decisions
-retain their separate prerequisites and conditional estimates in the latest table.
+retain their separate prerequisites. Academy's refresh and the six current
+offline routes subsequently passed; the 19 October review supersedes these next
+steps and the historical storage-only blocker.
 
-## Latest execution checkpoint — 18 October 2026
+## Historical execution checkpoint — 18 October 2026
 
 The [integrated execution checkpoint](flight-practice-execution-2026-10-18.md)
-is authoritative for completion and remaining work. Rebase onto main `cb8dddd3d`
-is complete; current packages/build are source `3c6ac5ee0`. Practice passes
+records its original completion and remaining work. Rebase onto main `cb8dddd3d`
+was complete; that checkpoint's packages/build are source `3c6ac5ee0`. Practice passes
 1,232 tests, all six restarted-offline short-flight routes pass, and EN/UK guides
 plus actual populated tuning-library backup restores pass. The production build
 now passes at the unchanged deadline. R2 Worlds preparation still fails first
@@ -50,11 +71,12 @@ Continue independent R5 journeys, then remaining R3/R4 and acceptance work.
 Hosting and real hardware stay deferred. The read-only and older checkpoints
 below preserve history, not current blockers or completion claims.
 
-## Current status and execution order — 18 October 2026
+## Historical status and execution order — 18 October 2026
 
 The [current status, completed work, detailed remaining items, estimates and
 blockers](flight-practice-status-2026-10-18.md) supersedes historical “next” and
-priority statements below. Implementation is substantially complete, but
+priority statements below at that time. The 19 October review above now governs
+planning. Implementation is substantially complete, but
 non-hosting qualification and release approval are not. No completion percentage
 or public-release ETA is claimed.
 
