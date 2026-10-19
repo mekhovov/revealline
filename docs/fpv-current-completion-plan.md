@@ -6,7 +6,52 @@ It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
 unrelated world-expansion or demonstration-authoring projects.
 
-## Status review — 19 October, 02:18 CEST (publication note added after submission)
+## Active continuation — 19 October, after 02:38 CEST
+
+The next work is **workbench correctness → safe package capacity → course-result
+integrity integration**, alongside the unchanged release queue and Firefox
+qualification. The whole plan remains incomplete. These findings update the
+older release snapshot immediately below:
+
+- **R3: inspector 200% zoom is locally accepted.** A fresh exact World package
+  at `7d92d2fd10a0e0b098f95eadea30df9bb5080932` passed English/Ukrainian keyboard,
+  wrapping, focus, calculation, result invalidation, return and revert checks
+  in Chrome Guest. No flight or archive write occurred. [Receipt](fpv-inspector-zoom-20261019.md).
+  Physical touch and virtual-keyboard checks remain separate.
+- **R3: two new reproducible software defects are fixed locally.** Input-preview
+  ownership text becomes inaccurate across locale changes or close/reopen;
+  search results can retain controls removed by a rate-algorithm change.
+  Both were reproduced through the real UI modules in an isolated test DOM.
+  The fix passes **155/155** focused checks and source review; rendered
+  acceptance is next. [Receipt](fpv-workbench-state-20261019.md).
+- **R18: structural capacity reduction is implemented and reviewed.**
+  The generated flight shell embeds a duplicate appearance-control module
+  already admitted by all optional packages. Reusing its canonical import
+  recovers **7,416 bytes** without changing a limit, removing content, or
+  touching physics. **70/70** focused checks and independent review pass.
+  The R11 prerequisite is now integrated locally; its reference-selection
+  consumers are being connected. Exact combined package qualification remains.
+  [Capacity receipt](fpv-shared-appearance-capacity-20261019.md).
+- **R9: the Firefox failure is localized further.** Supported native profiling
+  identifies contact velocity-constraint resolution as the dominant cost.
+  A separate unattached headless run still fails capacity, so Playwright
+  attachment is not required to reproduce it. Original failed results remain
+  authoritative; no trajectory-preserving performance fix is established.
+  All 32 completed diagnostic cases preserve exact trajectories.
+  [Investigation and retained negatives](fpv-v3-firefox-solver-investigation-20261019.md).
+- **Release audit at 02:37:54 CEST:** #1665's release-ready job awaits a runner;
+  #1679 waits behind its superseded run's queued cancellation finalizer;
+  #1685's 15 checks remain queued. No final-source test failure or merge
+  conflict was found. Public metadata still reports `e440030395`. No run was
+  reset and the public browser/archive state was untouched. Queue ETA unknown.
+
+The protected archive incident R13 remains P1 with no further deletion or
+unapproved inspection. Disk headroom is about **1.5 GiB**; only small targeted
+builds and measurements are being used. Conditional estimates below remain
+engineering allowances, not completion promises; the old capacity-search
+estimate is superseded by the completed reduction awaiting combined qualification.
+
+## Earlier status snapshot — 19 October, 02:18 CEST
 
 **The core features are released. The latest flight corrections are implemented
 and locally verified, but are not live yet. The whole plan is not complete.**
@@ -467,7 +512,7 @@ qualification; P3 depends on a qualified physical/platform baseline.
 | R20 / P1                     | **Documented local flight checks pass; platform qualification is incomplete (R9).** Overlap-only current contact, fixed v3 1,000 Hz, 176 core/37 bench/42 proof checks, fifteen-aircraft numerical matrix, 60 complete lessons, 35 sustained cases and actual packaged keyboard landing/recovery pass.                | Final review and normal hosted release remain; public acceptance is included in the shared R1 **1–2 working day** allowance if integration remains source-equivalent. Queues/fixes extra.                                     | Preserve v1/v2 and explicit recorded timing. No invented height support, gain retune, relaxed objective or lost failed-candidate evidence.                              |
 | R13 / P1                     | **Unresolved archive retention incident.** Six protected older public records remain unaccounted for; the later isolated local disappearance also remains unexplained.                                                                                                                                                | **1–3 investigation days** after an appropriate permitted diagnostic context is available; diagnosis and recovery ETA unknown.                                                                                                | Account for protected records and establish cause. Existing inspection denial is not bypassed. No further cleanup.                                                      |
 | R2 / completed bounded scope | All 41 accessible Swarm records and ten spreadsheet tabs dispositioned. Only the supported civilian indoor kit maps to Mobula8; other entries remain equipment, ambiguous or excluded.                                                                                                                                | Complete for this accessible snapshot; refresh only on changed sources/clarified civilian references.                                                                                                                         | Exact titles, status and evidence gaps retained; this is not all-source-kit implementation.                                                                             |
-| R3 / P2                      | Existing Chrome Guest 200% workbench zoom and EN/UK paired camera fields are locally accepted. The new inspector clipping defect is fixed and **320 × 640 EN/UK acceptance now passes**.                                                                                                                              | Public workbench acceptance is included in R1. Inspector-specific 200% zoom, physical touch and virtual-keyboard checks remain part of the accessible target matrix.                                                          | Reachable numeric/keyboard controls and unobscured focus. Responsive desktop emulation does not qualify physical mobile devices.                                        |
+| R3 / P2                      | Chrome Guest workbench zoom, paired camera fields, **320 × 640 inspector** and **fresh-package inspector 200% zoom in EN/UK** are locally accepted. Capture-status/search-lifecycle fixes pass **155/155** checks and source review. | Rendered lifecycle acceptance next; public acceptance remains in R1. Physical touch and virtual-keyboard checks remain part of the accessible target matrix. | Reachable numeric/keyboard controls and unobscured focus. Responsive desktop emulation does not qualify physical mobile devices. |
 | R4 / paused cleanup scope    | Ten identified test-archive deletions authorized but **not confirmed completed**; first outcome unknown and older inventory subsequently absent.                                                                                                                                                                      | No cleanup ETA before R13 is understood.                                                                                                                                                                                      | Re-identify only the ten named entries and protect the six older ones; never substitute deleting another session.                                                       |
 | R5 / P2                      | Cetus X and Protos **implemented, deployed and post-deployment verified in e440**; approximation/assist limits visible.                                                                                                                                                                                               | Public interactive acceptance remains. Measurements remain unavailable.                                                                                                                                                       | Frozen exact component variant, explicit mass and assist limits, distinct visualization, host coverage.                                                                 |
 | R6 / P2                      | Evidence inspector, load-line solver and **bounded command/voltage surface prerequisite are implemented and reviewed locally**. Surface module is not activated in flights. Electrical/current coupling, allocation, versioned runtime integration and matched fitting remain.                                        | **5–10 engineering days for one reference aircraft** after a complete usable matched dataset and scope are accepted; acquisition and all-fifteen fidelity undated. Independent software preparation continues without pilots. | Explicit conditions/current basis, no extrapolation presented as measured, energy-consistent integration and held-out validation.                                       |
