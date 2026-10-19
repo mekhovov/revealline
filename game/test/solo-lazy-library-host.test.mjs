@@ -9,6 +9,7 @@ import { parse } from 'acorn';
 import { selectOfflineCore } from '../../scripts/offline-core-closure.mjs';
 import { t as translate } from '../i18n/index.mjs';
 import { activateHostAction } from './helpers/host-action.mjs';
+import * as worldsLoader from './helpers/optional-worlds-loader.mjs';
 
 const { port1, port2 } = new MessageChannel();
 const importGates = new Map();
@@ -183,6 +184,241 @@ function worldsOpener(page) {
   );
   return button;
 }
+// These controls exercise the hook's actual MessagePort reference ownership in
+// this realm. The existing host cases below still exercise Node's loader worker
+// and the unchanged production action/import boundary.
+function worldsLoaderBoundary(t) {
+  const { port1: control, port2: loader } = new MessageChannel();
+  const messages = [];
+  const actions = [];
+  const beforeCleanup = [];
+  control.on('message', (message) => messages.push(message));
+  worldsLoader.initialize({ channel: loader });
+  const panelURL = new URL('../ui/optional-chapters-panel.mjs', import.meta.url).href;
+  const parentURL = new URL('../app.mjs?loaderOwnership', import.meta.url).href;
+  const send = async (action, id, fail = false) => {
+    const after = messages.length;
+    control.postMessage({ action, id, fail });
+    await settle(
+      () =>
+        messages
+          .slice(after)
+          .some(
+            (message) => message.type === 'ack' && message.action === action && message.id === id,
+          ),
+      'The loader ownership control must acknowledge its command.',
+      { timeoutMs: 5000 },
+    );
+  };
+  const start = (
+    result = { url: panelURL },
+    parent = parentURL,
+    failure = null,
+    delegated = null,
+  ) => {
+    const action = { settled: false, value: null, error: null };
+    action.pending = worldsLoader.resolve(
+      './optional',
+      { parentURL: parent },
+      delegated ??
+        (async () => {
+          if (failure) throw failure;
+          return result;
+        }),
+    );
+    action.pending.then(
+      (value) => {
+        action.settled = true;
+        action.value = value;
+      },
+      (error) => {
+        action.settled = true;
+        action.error = error;
+      },
+    );
+    actions.push(action);
+    return action;
+  };
+  t.after(async () => {
+    try {
+      for (const finish of beforeCleanup) finish();
+      await send('dispose', 'cleanup');
+      await settle(
+        () => actions.every((action) => action.settled),
+        'Every direct loader control must settle during cleanup.',
+        { timeoutMs: 5000 },
+      );
+      await Promise.allSettled(actions.map((action) => action.pending));
+    } finally {
+      control.close();
+      loader.close();
+    }
+  });
+  return {
+    loader,
+    messages,
+    send,
+    start,
+    panelURL,
+    beforeCleanup: (finish) => beforeCleanup.push(finish),
+  };
+}
+
+for (const outcome of ['release', 'reject', 'dispose']) {
+  test(
+    `Worlds loader owns concurrent held resolutions through ${outcome} and releases its port`,
+    { timeout: 20000 },
+    async (t) => {
+      const gate = worldsLoaderBoundary(t);
+      assert.equal(gate.loader.hasRef(), false, 'An idle hook must not keep its worker alive.');
+      await gate.send('hold', 1);
+      assert.equal(gate.loader.hasRef(), false, 'Arming a gate does not own a pending import.');
+      const firstResult = { url: gate.panelURL, format: 'module' };
+      const secondResult = { url: gate.panelURL, marker: 'second' };
+      const first = gate.start(firstResult);
+      const second = gate.start(secondResult);
+      await settle(
+        () => gate.messages.filter((message) => message.type === 'entered').length === 2,
+        'Both actual hook promises must enter the held boundary.',
+        { timeoutMs: 5000 },
+      );
+      assert.equal(gate.loader.hasRef(), true);
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(
+        gate.loader.hasRef(),
+        true,
+        'Held imports retain ownership across event-loop turns.',
+      );
+      assert.equal(first.settled, false);
+      assert.equal(second.settled, false);
+      await gate.send('release', 99);
+      assert.equal(
+        gate.loader.hasRef(),
+        true,
+        'An unrelated release cannot retire the current imports.',
+      );
+      assert.equal(first.settled, false);
+      assert.equal(second.settled, false);
+      await gate.send(outcome === 'dispose' ? 'dispose' : 'release', 1, outcome === 'reject');
+      await settle(
+        () => first.settled && second.settled,
+        'Released imports must unwind on both success and failure.',
+        { timeoutMs: 5000 },
+      );
+      assert.equal(
+        gate.loader.hasRef(),
+        false,
+        'The final settled resolver releases the worker reference.',
+      );
+      if (outcome === 'reject') {
+        assert.match(first.error?.message ?? '', /Modeled optional module transport failure/);
+        assert.match(second.error?.message ?? '', /Modeled optional module transport failure/);
+      } else {
+        assert.equal(first.error, null);
+        assert.equal(second.error, null);
+        assert.equal(first.value, firstResult);
+        assert.equal(second.value, secondResult);
+      }
+      await gate.send('hold', 2);
+      const retried = gate.start(firstResult);
+      await settle(
+        () => gate.messages.some((message) => message.type === 'entered' && message.id === 2),
+        'A later gate must acquire its own resolver.',
+        { timeoutMs: 5000 },
+      );
+      assert.equal(gate.loader.hasRef(), true);
+      await gate.send('release', 2);
+      await settle(() => retried.settled, 'The later resolver must settle.', { timeoutMs: 5000 });
+      assert.equal(retried.value, firstResult);
+      assert.equal(retried.error, null);
+      assert.equal(gate.loader.hasRef(), false);
+    },
+  );
+}
+
+test(
+  'Worlds loader leaves unrelated resolution and default errors outside its held ownership',
+  { timeout: 20000 },
+  async (t) => {
+    const gate = worldsLoaderBoundary(t);
+    await gate.send('hold', 1);
+    const otherResult = { url: new URL('../ui/help.mjs', import.meta.url).href };
+    const otherModule = gate.start(otherResult);
+    const otherParent = gate.start({ url: gate.panelURL }, import.meta.url);
+    const error = new Error('Default resolution failed.');
+    const failedDefault = gate.start(undefined, undefined, error);
+    await settle(
+      () => otherModule.settled && otherParent.settled && failedDefault.settled,
+      'Unrelated/default-failed resolutions must not enter the optional gate.',
+      { timeoutMs: 5000 },
+    );
+    assert.equal(otherModule.value, otherResult);
+    assert.equal(otherParent.value.url, gate.panelURL);
+    assert.equal(failedDefault.error, error);
+    assert.equal(
+      gate.messages.some((message) => message.type === 'entered'),
+      false,
+    );
+    assert.equal(gate.loader.hasRef(), false);
+  },
+);
+
+test(
+  'Worlds loader retains delegated ownership after another held resolution finishes',
+  { timeout: 20000 },
+  async (t) => {
+    const gate = worldsLoaderBoundary(t);
+    const result = { url: gate.panelURL };
+    let finishDelegation;
+    const delegated = new Promise((resolve) => {
+      finishDelegation = resolve;
+    });
+    gate.beforeCleanup(() => finishDelegation(result));
+    await gate.send('hold', 1);
+    const first = gate.start(result, undefined, null, () => delegated);
+    assert.equal(gate.loader.hasRef(), true, 'Acquire before awaiting delegated resolution.');
+    const second = gate.start(result);
+    await settle(
+      () => gate.messages.some((message) => message.type === 'entered'),
+      'The second resolver must reach the gate.',
+      { timeoutMs: 5000 },
+    );
+    await gate.send('release', 1);
+    await settle(() => second.settled, 'The second resolver must settle.', { timeoutMs: 5000 });
+    assert.equal(second.value, result);
+    assert.equal(first.settled, false);
+    assert.equal(
+      gate.loader.hasRef(),
+      true,
+      'Another delegated resolver still owns the reference.',
+    );
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(gate.loader.hasRef(), true);
+    finishDelegation(result);
+    await settle(() => first.settled, 'The delegated resolver must finish.', { timeoutMs: 5000 });
+    assert.equal(first.value, result);
+    assert.equal(gate.loader.hasRef(), false);
+
+    await gate.send('hold', 2);
+    let rejectDelegation;
+    const failed = new Promise((resolve, reject) => {
+      rejectDelegation = reject;
+    });
+    const failure = new Error('Delayed default resolution failure.');
+    gate.beforeCleanup(() => rejectDelegation(failure));
+    const rejected = gate.start(result, undefined, null, () => failed);
+    assert.equal(gate.loader.hasRef(), true);
+    await gate.send('dispose', 2);
+    assert.equal(gate.loader.hasRef(), true, 'Disposal cannot preempt a delegated promise.');
+    rejectDelegation(failure);
+    await settle(() => rejected.settled, 'The rejected delegation must unwind.', {
+      timeoutMs: 5000,
+    });
+    assert.equal(rejected.error, failure);
+    assert.equal(gate.loader.hasRef(), false);
+  },
+);
+
 test('Main Solo leaves Library unconstructed through Start, then public Workshop opens the same paused run', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   assert.equal(
