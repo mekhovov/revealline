@@ -1,229 +1,128 @@
 # Flight practice: status review and remaining plan — 19 October 2026
 
-## Overall decision
+## Current decision
 
-**The feature implementation is substantially complete and the three development
-packages are locally playable. Non-hosting qualification is not complete, the
-draft PR is not release-approved, and public delivery is owner-deferred.** There
-is no defensible overall completion date or single completion percentage.
+The implementation is substantially complete and all three development packages
+are locally playable. **The normal production build and current local browser
+journeys now pass. The full plan is not complete:** recovery coverage,
+native cancellation timing, remote CI and real acceptance decisions remain open.
+Hosting, physical hardware and the historical World active-session check remain
+explicitly deferred by the owner.
 
-This review is authoritative for priorities and current status. The
-[19 October execution report](flight-practice-execution-2026-10-19.md) and its
-hashed evidence archives remain authoritative for the original test results.
-Earlier checkpoints retain their exact sources; their historical “next” steps,
-storage readings and PR state are not current instructions.
+This review supersedes earlier queue, resource and next-step statements. Exact
+results and preserved failures are in the
+[execution report](flight-practice-execution-2026-10-19.md). No older receipt is
+relabelled as a test of newer code.
 
-The initial review changed documentation only. The continuation below integrated
-accepted main, reran selected checks and rebuilt standalone candidates. It did
-not publish, run a new browser profile or change simulator mechanics.
+## Completed in the latest continuation
 
-## Current continuation checkpoint — accepted main integrated
+- Accepted main `36e8bc426` is integrated; all 33 Practice patches rebased
+  identically. The shared dirty primary checkout and unmerged SIM work remain
+  untouched. Candidate source is `08fc3430c8`; observer/full-site/test source is
+  `bcc0b61a8cbc984f075fae1260b899fb1b78ff1d`.
+- All three packages reproduce twice and pass strict admission. The candidate
+  envelope is `61ae470760baa9f276a0d6c9c22a3f536e4e5de8048246e454c07ef0e56e7270`.
+  They remain development `v0.151.1`, not public-eligible; all 24 reviews are pending.
+- The normal full build passed in **277.874 seconds**, with unchanged production
+  concurrency and 600-second limit. All 4,431 input pins stayed unchanged. The
+  output has 3,560 manifest files / 1,074,765,329 bytes. This is a local build,
+  not an assembled hosted-capacity approval.
+- **1,278 Practice tests passed** in 488.397 seconds. **757 local-interface tests
+  passed** in 203.549 seconds. No skips, failures or deadline changes. The first
+  interface attempt stopped before tests because sparse checkout omitted committed
+  evidence. Restoring that exact tracked source fixed setup; all 44,923 raw tracked
+  files and modes were verified. Its failed receipt is retained.
+- All six EN/UK full-production directory → one Play → disarmed Home → packaged
+  guide → return journeys passed. Production files and package overlays were
+  independently rehashed. A blocked root `/favicon.ico` request is retained as a
+  fixture-boundary warning, not hidden or called an error-free run.
+- Ten beginner exercises passed with actual public exports and independent
+  replay: two Gym and eight Academy/World EN/UK Self-level/Acro cases.
+- All six current restarted-offline launcher/installed-window short flights
+  passed. Actual imported CC0 World content survived; owned test apps were removed.
+- Current Gym and Academy historical-version update sessions passed: real focus
+  loss paused the flight, focus return did not resume it, and explicit resume
+  continued motion without replacing the document. Historical World remains D3.
+- Current Academy recovery passed: an actual earned proof was exported, native
+  browser quota eviction removed its database and caches, ordinary preparation
+  and import restored the proof, independent replay verified it, and a fresh
+  offline browser process completed a short lift and pause.
 
-- Rebased all **33 Practice commits** onto accepted main
-  `36e8bc426589ab952c2fcc4fd62df39800edfeca` (14 commits beyond the previous
-  integrated main). All 33 patches compare equal before/after; no conflicts.
-  Preserved the old history at `codex/practice-before-main-36e8-20261019`.
-  The shared primary checkout remains untouched.
-- Frozen verification source: `08fc3430c8f6670a76c1a749b3ad0b65bc9f9ded`, tree
-  `5481b630d5433ad5e23f0dbbea639faf99363bd4`. **127 selected tests pass**, zero
-  failures/skips/cancellations, in 42.850 s. This includes build writer/CLI,
-  coach, fullscreen, First Flight Home, downloads and preference regressions;
-  it is not a complete suite or current-head CI result.
-- **All three standalone packages reproduce twice and pass strict admission**
-  from this source, with committed inputs verified. Output:
-  `/Volumes/alex/CodexMigrationStaging/flight-practice-main36-20261019-candidate`.
-  Envelope SHA-256:
-  `61ae470760baa9f276a0d6c9c22a3f536e4e5de8048246e454c07ef0e56e7270`.
-  Gym/Academy/World have 96/148/208 members. All 24 review decisions remain
-  pending and `publicEligible` remains false. Small standalone builds used
-  share-only output and a 512 MiB child heap cap; the full-site build did not run.
-- Exact old/new archive comparison found changed runtime files in **all three
-  apps**, no added/removed members. Gym changes shared fullscreen/settings;
-  Academy changes fullscreen/style; World also changes coach/mode switching.
-  Stable launcher members are unchanged. Older `6177d2cc8` browser receipts
-  remain preserved, **not promoted to this candidate**. Refresh affected play,
-  settings persistence, updates and offline journeys after resources recover.
-- The last pre-push PR snapshot is still old head `1b8dcb491`: **8 successes,
-  1 running, 5 queued**. It does not qualify the rebased head. Current-head CI
-  remains required after the rebased branch is pushed.
-- Local free space fell below 900 MiB, most recently **661 MiB**; share free
-  space was approximately **51 GiB**. Full builds and disposable native-browser
-  checks remain blocked by local headroom. The existing request to free 4 GiB
-  or provide a fast local drive is unanswered. No user cleanup was performed.
-- The six-case 128-file SMB probe found no useful improvement from application
-  worker counts 4/8/16 alone (8.982–9.904 s). A separate child-only ABBA probe,
-  holding application workers at 16, measured I/O thread pools 4/16/16/4 at
-  **9.359 / 5.789 / 6.763 / 9.081 s**, with all 512 outputs verified exactly.
-  This supports an I/O-scheduling contribution for that small workload only.
-  **Production remains at four workers with no environment override**; no
-  full-build acceleration or fix is claimed. Owned probe data was removed only
-  after byte verification; logs and receipts are retained.
+Existing completed implementation remains: descriptor-driven three-card discovery,
+EN/UK player/maintainer guides, precise offline states and scoped removal, stable
+launchers, v1 fallback, last-known catalogue handling, package preflight/publishing
+tooling, and the unpublished fourth-app add/update/rollback/retirement recipe.
+Earlier tuning-library restore evidence remains source-specific; it is not
+whole-origin-loss qualification of every backup type.
 
-Evidence and exact changed-file hashes are retained in
-`flight-practice-main36-20261019-evidence.tgz`; see the execution report for its
-archive hash and diagnostic limitations. Rebase, selected checks and candidate
-reproduction are complete portions of R1; affected browser checks and required
-current-head CI remain open.
+### World recovery follow-up — incomplete
 
-## Initial read-only review — historical snapshot
+Three bounded attempts stopped before native eviction: hidden offline control,
+then a mismatched completion-message expectation, then a hidden Content & Offline
+tab during editable-project setup. The third attempt completed, exported and
+independently replayed a real World lesson first. All three owned browsers,
+servers and disposable profiles were cleaned up; no user profile was touched.
+These are observer failures, not a World recovery pass or a diagnosed simulator
+bug. Further retries are paused for approach review after repeated failures.
 
-Snapshot refreshed: **19 October 2026, approximately 02:35 Europe/Berlin**. Remote state and
-free space may change after inspection.
+## Remaining plan and priorities
 
-- Isolated checkout and remote PR head match:
-  `1b8dcb49110cb639bb1df4e5cb4a44237eea1e53`. The checkout was clean before this
-  documentation update. The concurrent dirty primary checkout remains untouched.
-- [PR #1554](https://github.com/mekhovov/revealline/pull/1554) is open, **draft and
-  mergeable**, with merge state `UNSTABLE`. **All 12 reported checks are queued**;
-  there is no current-head CI pass, failure or complete suite result to report.
-  “Mergeable” describes conflict calculation, not readiness or approval. The PR
-  snapshot still names base `dd337c812`; live main below is newer, so mergeability
-  against that newer revision has not been established.
-- Live main is `bd15820bee10a33ba64534071d22657fbd7326d3`, **ten commits ahead**
-  of the last integrated main `237b405437def3c41b01165fe057af1ab06f618c`. The
-  [comparison](https://github.com/mekhovov/revealline/compare/237b405437def3c41b01165fe057af1ab06f618c...bd15820bee10a33ba64534071d22657fbd7326d3)
-  lists 31 changed files, including `civilian-fpv/beginner-coach.mjs` and
-  `civilian-fpv/world-app.mjs`, related tests, recording lookup and CI diagnostics.
-  It also adds the optional First Flight entry on Capture Home and its checks.
-  These accepted changes are **not integrated or qualified here**. Existing
-  browser receipts cannot automatically qualify the new coach/World bytes.
-- Approximately **1.8 GiB local free** and **52 GiB on the Mac mini SMB share**
-  were visible. Output capacity on the share is adequate for the attempted local
-  build. Local space is below the **2 GiB preflight floor used for the recent
-  disposable browser runs**, blocking the next equivalent heavy browser check
-  until headroom recovers. The recommended working margin remains 4 GiB. SMB
-  storage does not move computation or browser profiles off this Mac.
-- The retained candidate is source `6177d2cc83adb9cb76ff4088d502c21ddfd7d199`,
-  tree `ba3902515d73e97ae18dda8ffc57ee698eba9825`, development `v0.151.1`,
-  envelope `b64909c3127ea428be8d188444bf2ae0873e299b71bfd991a737ba0c658ce2a5`.
-  Its existing review file was re-read: **all 24 gate decisions are pending**,
-  with no reviewers or approved evidence. It is not public-eligible.
+Estimates are focused effort **after prerequisites**, not promised dates. Queue
+time, reviewer availability and new defects are excluded. There is no defensible
+overall completion date.
 
-## Completed, with scope boundaries
+| Priority      | Remaining item and exit evidence                                                                                                                                                                      | Why / impact of omission                                                                                   | Estimate and dependency                                                                                                                                   |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P0 / R1       | Required remote CI on the actual PR head; compare later accepted changes before refreshing affected checks. Local integration and current browser refresh are complete.                               | Local passes cannot substitute for required remote jobs or qualify later SIM bytes.                        | Queue/run time unknown; fixes estimated only if a failure appears. Last snapshot: draft PR #1554 at `bcc0b61a8`, all 12 jobs queued.                      |
+| P0 / R3       | Finish applicable World project/asset/record and aircraft/profile/tuning recovery with public exports/imports after actual loss, then offline play. Preserve failures and distinguish each data type. | A single Academy proof and ordinary library restore do not prove all advertised backups survive real loss. | 1–2 focused days for remaining coverage, subject to safe disposable-profile resources and maintained UI contracts. No affected-user-profile manipulation. |
+| P0 / R4       | Obtain a native timing witness of Cancel while digest work is outstanding, followed by settled work and previous/sibling preservation.                                                                | Deterministic late-write tests and final-response cancellation do not establish native hash/UI overlap.    | Initial bounded trace investigation completed **inconclusive**. No honest completion ETA; a new evidence-supported method is needed before more attempts. |
+| Complete / R2 | Retain current Gym/Academy update evidence; rerun only for relevant source changes.                                                                                                                   | Avoid repeated work or unsupported transfer of old results.                                                | No current rerun required. World historical subset remains owner-deferred.                                                                                |
+| Complete / R5 | Retain normal production build and all six current full-production journeys.                                                                                                                          | Confirms actual built main-shell integration, not only a fixture.                                          | No current rerun required; later runtime changes require impact comparison.                                                                               |
+| P1 / R6       | Agree moving-flight/menu/loading/recovery workloads and acceptance thresholds, then measure local Chrome.                                                                                             | Startup success is not evidence of smooth flight or an accepted performance budget.                        | 4–8 hours measurement after agreement; decision turnaround unknown.                                                                                       |
+| P1 / R7       | Review readable 200% layout, complete visible/retained focus and actual EN/UK spoken statuses using a named screen reader.                                                                            | DOM semantics and normal-size screenshots do not prove usable zoom or spoken feedback.                     | 1–2 review/test days plus fixes; screen-reader/operator setup needed.                                                                                     |
+| P1 / R8       | Real novice guide walkthroughs and a real maintainer's unpublished sample lifecycle.                                                                                                                  | Scripted success cannot establish human understanding or discover confusing instructions.                  | 0.5–1 initial review day plus scheduling/fixes; participants unassigned.                                                                                  |
+| Required / R9 | Assemble final source-bound evidence and obtain eight attributable gate decisions for each app.                                                                                                       | Tests and hashes are not content, license, learning, accessibility or performance approval.                | 0.5–1 engineering day after prerequisites, plus unknown reviewer time; all 24 decisions pending.                                                          |
 
-The browser/full-suite rows below refer to retained candidate `6177d2cc8`.
-They remain completed historical evidence; the new `08fc3430c8` candidate has
-the narrower qualification described above and needs affected refreshes.
+Recommended order: complete bounded R3 data-preservation coverage, resolve a valid
+R4 measurement approach, and monitor meaningful CI outcomes; arrange R6–R8
+acceptance separately, then close R9. Do not repeatedly rebase during frozen runs
+or rerun already-passing unchanged cases merely because the PR is queued.
 
-| Area                                | Completed work / retained evidence                                                                                                                                                                                                                                                      | What this does not establish                                                                                                                          |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Discovery and launch                | Three descriptor-driven cards with real previews, purposes, requirements, input support, version/size, EN/UK, Play/details, stable launchers, safe routes and v1 fallback. Empty/failure/retry/dated offline catalogue states are implemented.                                          | No claim that the public host currently lists or serves these packages.                                                                               |
-| Offline service                     | Dependency/hash/owning-worker readiness, download/cancel feedback, inactivity/overall limits, staging isolation, previous-version preservation, rollback and scoped app removal are implemented and tested.                                                                             | Native cancellation during outstanding hashing and complete real-data loss recovery remain open.                                                      |
-| Package and maintainer workflow     | All three candidate packages reproduce twice and pass original admission. Descriptor registration, preflight, preview and the existing publisher are documented. A temporary fourth app passed automated launch, update, offline reopen, rollback and retirement; it was not published. | No real-package acceptance decision or human maintainer walkthrough. `.rlpack` remains World content, not an executable directory app.                |
-| Guides                              | EN/UK repository and packaged player help, separate maintainer instructions, first-flight links, backup/removal/update guidance and app-vs-content distinctions are implemented. Six current guide/navigation journeys and four populated tuning-library restores pass.                 | Not a novice learning study or loss/recovery qualification of every advertised data type.                                                             |
-| Current-candidate regression checks | Source `6177d2cc8`: 1,270 Practice, 756 local-UX and 369 focused checks pass; 377 observer checks pass with one explicitly recorded historical-fixture skip.                                                                                                                            | Not fresh CI or a pass for the ten newer main commits. The Practice run took 564.626 s under its unchanged 600 s limit, leaving little timing margin. |
-| Beginner play                       | Ten current native exercises with public export and independent replay pass: two Gym cases and eight EN/UK Academy/Worlds Self-level/Acro cases.                                                                                                                                        | Vertical Acro completion is not rotational proficiency, physical-controller qualification or human learnability.                                      |
-| Update-session refresh              | Current Gym and now current Academy genuine old/new installed-session checks pass: trusted focus-loss pause, unchanged document, no automatic resume, explicit resumed motion and retained data witnesses.                                                                              | Historical Worlds remains D3. Seeded shared profile/proof fixtures are explicitly synthetic, not genuine lesson completion or physical-radio proof.   |
-| Restarted offline play              | All six current English launcher/installed-window short-flight routes pass after an actual Chrome process restart; imported CC0 World content is retained. Both new native runs removed their owned test apps/profiles without reported cleanup errors.                                 | Browser-context offline is not machine-wide airplane mode; this does not qualify every World or browser.                                              |
-| Build diagnostics and safety        | Bounded four-worker writes, shared directory creation, settling owned work on error, opt-in phase-start reporting and conservative cross-volume clone veto. All 53 targeted tests pass, as do lint/format checks. Original failed builds and diagnostics are retained.                  | No successful normal full build of the latest writer. The small overlapping ABBA comparison is not demonstrated full-build acceleration.              |
+## Remaining concerns and scope limits
 
-Older full-production EN/UK directory journeys and one real Academy proof
-loss/recovery remain useful **partial, older-source evidence**, not absent work
-and not current-payload passes. No older receipt is relabelled as latest-main.
+- Native digest probes confirmed real worker digest events, but the trusted
+  cancellation happened during download and a second probe missed the brief
+  verification window. Neither proves outstanding-hash cancellation. No artificial
+  digest slowdown, timing waiver or false pass was introduced.
+- Native quota recovery used a disposable, explicitly reduced 512 KiB browser
+  pool and the normal eviction timer. It is not default-policy, whole-origin,
+  every-browser or affected-player recovery. Browser-context offline is not
+  machine-wide airplane mode. Shared seeded profile/proof fixtures in update
+  tests remain synthetic; they do not qualify physical radios.
+- The earlier full-build failures remain real evidence. A later normal local
+  output pass resolves the execution blocker, not the entire SMB performance
+  cause. No production thread-pool override or larger deadline was adopted.
+- Local headroom recovered sufficiently for guarded runs, but remains volatile
+  (approximately 3.1 GiB at the last check). The 2 GiB browser floor and normal
+  build guard remain. The Mac mini share supplies storage only. No user data,
+  dependencies or unrelated files were deleted.
+- The separate SIM affected-profile persistence/retention incident remains
+  unresolved. Fresh-profile recovery success cannot explain the original lost
+  rows or confirm recovery of protected sessions. Do not clear or repopulate that
+  profile. Concurrent SIM updates are not imported before acceptance on main.
+- Two moderate default-branch vulnerabilities were reported by the last push;
+  they are untriaged here, not attributed to Practice or claimed resolved.
+- Human reviewers, accepted performance limits and actual package decisions are
+  missing. Local Chrome selection does not authorize invented approvals.
 
-## Remaining work, priority, impact and ETA
+## Owner-deferred items
 
-ETAs below mean **focused effort after prerequisites**, not promised elapsed
-dates. One day is approximately eight focused hours. Queue time, owner/reviewer
-availability, new defects and changes to accepted main are excluded. No deadline
-or validation waiver is implied. The full-build fix has no reliable ETA.
+| Item                                                                              | Consequence                                                                                                  | ETA                                 |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| D1 — physical controller/radio/touch checks                                       | Physical input support remains unqualified.                                                                  | Unscheduled.                        |
+| D2 — hosting/capacity architecture/allocation/upload/selector/public verification | Local packages are not a public release; original GitHub Pages completion criterion remains unmet by choice. | Unscheduled; no public-release ETA. |
+| D3 — historical World automated active-session check                              | Do not claim all-app active-flight update safety. Current World play/offline/recovery are separate.          | Unscheduled; do not retry.          |
 
-| Priority / ID         | Remaining deliverable and exit evidence                                                                                                                                                                                                                             | Why needed / impact if omitted                                                                                                                                                                  | Estimate and blockers                                                                                                                                                                                                                                                           |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P0 / build            | Attribute preparation and SMB materialization cost, make an evidence-supported correction if warranted, then complete the normal full build within existing limits with unchanged input pins and original manifest/ZIP verification.                                | Without the actual current site output, its directory/main-shell integration cannot be qualified. A fixture build, isolated validator or older ZIP is not a substitute.                         | **Next diagnostic checkpoint: 2–4 h; fix/completion ETA unknown.** The instrumented `56acb4240` run reached expanded-files then timed out at 600 s. The latest `623918462` writer has no full retest. No blind retry or raised limit.                                           |
-| P0 / R1               | Rebase, exact archive comparison, twice-reproduced three-app candidate and 127 selected tests are complete. Remaining: affected browser regression refresh and required current-head CI on the frozen integrated candidate.                                         | Prevents applying old browser/CI evidence to changed coach, fullscreen and persistence behavior.                                                                                                | **2–4 h focused refresh after safe local profile space**, plus unknown CI queue/run time and fixes. Main may move again; the older remote local-UX timeout is still unexplained.                                                                                                |
-| P0 / R3               | Exercise actual public exports and loss/recovery for applicable records, World projects/assets, aircraft archives and advertised controller/tuning libraries; demonstrate loss honestly, reinstall, import, compare semantic identities and finish offline flights. | The existing single older Academy proof and populated tuning restores do not establish recovery of all user data. Omitting this risks misleading backup instructions and unnoticed record loss. | **1–2 focused days** after candidate freeze and safe disposable-profile resources. Use maintained SIM controls; no hidden database seeding to invent genuine records, invented Gym persistence or affected-user-profile cleanup.                                                |
-| P0 / R4               | Capture native Cancel while real digest work is still outstanding; trace timing/ownership, settle work, prove no late Ready/write and preserve previous/sibling versions.                                                                                           | Held unit-test digests and cancellation of a delayed final-ready reply do not prove real browser scheduling. A race could leave incomplete data or invalidate a working installation.           | **4–8 h for a bounded investigation/test** after candidate freeze. No artificial digest delay or synthetic overlap. If natural overlap cannot be evidenced, outcome remains inconclusive, not complete.                                                                         |
-| Complete / R2 refresh | Keep the audited current Gym and Academy results; compare relevant changes after R1 and rerun only where source changes invalidate them.                                                                                                                            | Avoids both repeating already completed work as absent and extending its claim to new bytes. Historical Worlds is explicitly separate.                                                          | **No remaining current-candidate rerun.** Change-driven refresh is part of integration/qualification estimates. D3 has no scheduled ETA.                                                                                                                                        |
-| P1 / R5               | On the final integrated source, build the actual production site and complete all six EN/UK directory → one Play → disarmed Home → packaged guide → directory/main-game return journeys; refresh affected offline/update checks.                                    | New main-shell, package or launcher bytes cannot inherit old full-production evidence. Otherwise the real packaged player journey remains unverified.                                           | **4–8 h after the build prerequisite and final input freeze.** Six current offline routes already pass; they are not the same as the missing current production journeys.                                                                                                       |
-| P1 / R6               | Agree moving-flight/menu/load/recovery workloads and accepted same-device thresholds, measure them in local Chrome, preserve failures/outliers and obtain the actual decision.                                                                                      | Startup, CPU samples or stationary callback timing cannot establish smooth rendered flight or accepted performance.                                                                             | **4–8 h measurement**, after workload/threshold agreement; setup/decision turnaround unknown. Local browser was selected, not performance budgets.                                                                                                                              |
-| P1 / R7               | Review actual readable 200% layout and complete visible/retained focus; listen to EN/UK progress, failure and readiness announcements using a named screen reader; fix and recheck findings.                                                                        | DOM semantics, approximate focus geometry and cropped/blank older captures do not prove usable visual or spoken feedback.                                                                       | **1–2 review/test days plus fixes**, after screen-reader/operator setup. Physical inputs remain D1; software checks cannot approve that deferred subset.                                                                                                                        |
-| P1 / R8               | Have real first-time players follow the guides and a real maintainer add/update/retire the unpublished sample; record assistance, confusion and outcomes.                                                                                                           | A script completing a lesson or sample lifecycle proves execution, not that a person understands the feature or the publication recipe.                                                         | **0.5–1 initial review day plus scheduling/fixes.** Participants/reviewers are not assigned; local-browser selection is not human approval.                                                                                                                                     |
-| Required / R9         | Freeze final source-bound evidence, reconcile guides and obtain the eight actual package-gate decisions for each of three apps, with attribution and approved evidence.                                                                                             | Tests and hashes are not content/license/accessibility/performance/learning approval. All 24 decisions remain pending.                                                                          | **0.5–1 engineering day assembly** after prerequisites; reviewer turnaround unknown. Gates touching D1/D3 or other unqualified work cannot silently pass. Full approval remains unavailable until required evidence is obtained or an authorized policy decision changes scope. |
-
-### Recommended execution order
-
-1. **Remaining build diagnosis and R1 qualification first**, as independent bounded work. Rebase and candidate reproduction are now complete. Do not repeatedly
-   rebase while source-bound runs are active. After accepted-main integration,
-   freeze exact package/observer/source identities before more heavy verification.
-2. **R3 and R4 next**: prioritize data preservation and cancellation races over
-   cosmetic work. They can proceed independently of the production build when
-   disposable local resources and an explicit candidate are available; a queued
-   PR is not a reason to stop useful local work.
-3. **R5 after a successful actual build**. Reuse unchanged-byte evidence only
-   after an explicit input/hash comparison; refresh affected tests, not arbitrary
-   historical results.
-4. **Arrange R6–R8 decisions/participants alongside engineering**, then measure
-   the frozen candidate. Do not treat these acceptance dependencies as an
-   unlimited implementation loop or fabricate approvals.
-5. **R9 last**, while assembling evidence incrementally. Keep reviewer decisions
-   pending until supported; no publication action is included.
-
-The older **3–5 engineering-day range is not a current overall ETA**. The unknown
-build fix, new accepted SIM bytes, CI queue and unassigned human decisions make
-a calendar completion date unreliable. Re-estimate after the build diagnostic
-checkpoint and R1, then after R3/R4 results. The estimates above describe useful
-work budgets, not guaranteed successful exits from open investigations.
-
-## Deferred items — not blockers to continuing authorized local work
-
-| Owner decision                                                                           | Status and consequence                                                                                                                                                                                           | ETA                                 |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| D1: physical controller/radio/touch                                                      | Explicitly skipped for now; supported physical input claims remain unqualified.                                                                                                                                  | Unscheduled, owner-deferred.        |
-| D2: hosting, capacity architecture, allocation, upload, selector and public verification | Explicitly deferred. Local play and a mounted folder do not make the packages publicly available. The original “three packages playable on GitHub Pages” completion condition therefore remains unmet by choice. | Unscheduled; no public-release ETA. |
-| D3: historical Worlds automated active-session check                                     | Explicitly left unverified; do not retry speculative first-Arm fixes or report all-app active-flight update safety. Current Worlds beginner/offline passes remain valid for their scope.                         | Unscheduled, owner-deferred.        |
-
-## Blockers and concerns that must remain visible
-
-- **Full-build failure:** no adopted current output. The first run failed during
-  preparation; a later instrumented run reached expanded writes. Neither fired a
-  disk guard. Original-helper catalogue generation took 282.532 s in isolation;
-  separate-process measurements and sampled CPU windows do not establish the
-  entire timeout's cause. No validated full-build speedup is claimed.
-- **Local resource pressure:** most recently 661 MiB local free is below the
-  recent disposable-browser preflight floor of 2 GiB and the recommended 4 GiB
-  workspace headroom. Equivalent heavy browser checks must wait for safe local
-  space. The share supplies output space, not a
-  fast local disk or remote CPU. Recheck system/profile space before heavy cases;
-  no destructive user cleanup or remote access is authorized.
-- **Timing/CI uncertainty:** the last pre-push old-head snapshot has eight successful,
-  one running and five queued checks; there is no rebased-head CI result. The older remote
-  local-UX timeout is still unexplained, and the current-candidate Practice run
-  had only about 35 s margin under its 600 s ceiling. Do not waive the deadline
-  or turn a queued/skipped/incomplete job into a pass.
-- **Moving accepted SIM source:** 14 newer main commits were integrated through
-  `36e8bc426`; all three candidate payloads changed. Integrate accepted main only;
-  do not copy active SIM worktrees or change
-  mechanics/training/rendering in this workstream. Hash-bound old evidence must
-  remain tied to its actual package.
-- **Separate unresolved archive-retention incident:** the
-  [SIM retention report](fpv-archive-retention-followup-20261018.md) remains open.
-  Six protected sessions have not been confirmed recovered; reconnect/UI fixes
-  do not explain the disappearance of 16 cached rows. Fresh-profile tests do not
-  diagnose that affected profile. Stop destructive cleanup there; use disposable
-  R3 records. This concern affects confidence in user-data safety and must stay
-  visible even while directory work proceeds.
-- **Human and policy dependencies:** no accepted performance limits, named
-  novice/maintainer participants or completed content/license/package decisions.
-  Hardware deferral does not implicitly waive a release gate. Eight gates ×
-  three packages remain 24 real decisions, not 24 tasks an automated script can
-  sign for people.
-- **Public availability not assessed here:** no fresh public-host request,
-  release selection or capacity approval was performed. Earlier hosted-capacity
-  concerns remain historical warnings, not a current site-size measurement or an
-  invitation to choose a hosting architecture.
-- GitHub's last push notification reported **two moderate default-branch
-  vulnerabilities**. They were not triaged in this workstream; this review does
-  not identify them as introduced by Practice or claim they are resolved.
-
-## Definition of done for the current scope
-
-An **authorized local-software checkpoint** needs a frozen accepted-main
-candidate, complete required current-head CI, successful normal production build
-and relevant production journeys, and honest outcomes for R3/R4 with no unresolved
-blocking data-loss/startup/installation defects. It must retain explicitly
-unverified acceptance/deferred items, not label the full original plan complete.
-
-**Full release/Phase 1 completion** additionally requires the actual review gates
-and the original public delivery criteria. Those cannot be claimed while D2 and
-required hardware/historical/acceptance evidence remain deferred or missing.
+Full Phase 1 completion still requires actual acceptance and public delivery.
+This checkpoint closes substantial **local** verification work without silently
+waiving the remaining or deferred requirements.
