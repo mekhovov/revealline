@@ -20,6 +20,12 @@ import {
   initWorldRuntime,
 } from '../../optional-practice/civilian-fpv/world-model.mjs';
 import {
+  evaluateWorldResult,
+  medalTargets,
+  worldMedalGoal,
+  worldMedalGoalText,
+} from '../../optional-practice/civilian-fpv/world-progress.mjs';
+import {
   resolveSimThemeProfile,
   snapshotSimThemeProfile,
 } from '../../optional-practice/civilian-fpv/world-themes.mjs';
@@ -3454,3 +3460,137 @@ for (const kind of [
     assert.deepEqual(JSON.parse(data.get('revealline.flight-profiles.v1')).response, response);
   });
 }
+
+// Real host/model/record-store journey with an authored finite test course.
+// Renderer and DOM geometry remain fixtures, not a public catalogue/browser proof.
+test('World verified current medal guidance survives native language changes with the same result, records and actions', async (t) => {
+  const previousLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(previousLocale, { persist: false }));
+  const storage = new Map(),
+    h = fixture(t, { storage });
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy && !item.beginner);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      spawn: { x: 0, y: 0, z: 0 },
+      bounds: { min: { x: -10000, y: 0, z: -10000 }, max: { x: 10000, y: 15000, z: 10000 } },
+      obstacles: [],
+      actors: [
+        {
+          id: 'medal-target',
+          type: 'drone',
+          position: { x: 0, y: 0, z: -2500 },
+          radius: 220,
+          health: 50,
+          fireEveryTicks: 0,
+        },
+      ],
+      steps: Object.fromEntries(
+        ['self-level', 'acro'].map((mode) => [
+          mode,
+          [{ type: 'eliminate', targets: ['medal-target'] }],
+        ]),
+      ),
+    },
+  };
+  await h.app.startFlight(entry);
+  h.$('world-arm').click();
+  h.$('world-fire').emit('pointerdown', { pointerId: 10 });
+  h.tick(60);
+  h.$('world-fire').emit('pointerup', { pointerId: 10 });
+  await waitFor(() => h.$('result-panel').textContent.includes('Recording verified.'));
+  const earlierGold = h.app.snapshot();
+  assert.equal(
+    evaluateWorldResult(entry.course, earlierGold.records[0].proof, earlierGold.state).medal,
+    'gold',
+  );
+  // Join the production launch preparation before starting the second attempt.
+  // The result's own Retry action is exercised separately after both grades.
+  await h.app.startFlight(entry);
+  h.$('world-arm').click();
+  h.tick(medalTargets(entry.course).goldTicks + 2);
+  assert.equal(h.app.snapshot().state.status, 'active');
+  h.$('world-fire').emit('pointerdown', { pointerId: 11 });
+  h.tick(60);
+  h.$('world-fire').emit('pointerup', { pointerId: 11 });
+  assert.equal(h.app.snapshot().state.status, 'complete');
+  const panel = h.$('result-panel'),
+    actions = panel.querySelector('.continuous-result-actions'),
+    retry = [...actions.querySelectorAll('button')].find(
+      (node) => node.textContent === 'Fly again',
+    );
+  retry.focus();
+  assert.equal(
+    panel.querySelector('[data-world-medal-goal]'),
+    null,
+    'No goal before verification.',
+  );
+  await waitFor(() => panel.querySelector('[data-world-medal-goal]'));
+  const state = h.app.snapshot().state,
+    records = h.app.snapshot().records,
+    accepted = records.find(
+      (record) =>
+        record.status === 'verified' &&
+        record.diagnostic === 'complete' &&
+        record.proof.frames.length === state.ticks,
+    );
+  assert.ok(accepted, 'The real record owner accepts the native completed proof.');
+  assert.ok(
+    records.some((record) => record.id === earlierGold.records[0].id),
+    'An earlier Gold remains stored while this attempt is explained as Silver.',
+  );
+  const result = evaluateWorldResult(entry.course, accepted.proof, state),
+    goal = worldMedalGoal(result, state.ticks),
+    node = panel.querySelector('[data-world-medal-goal]');
+  assert.equal(result.medal, 'silver');
+  assert.equal(node.textContent, worldMedalGoalText(goal, 'en'));
+  assert.match(node.textContent, /Next: Gold/);
+  assert.equal(node.parentElement, panel.children[0]);
+  assert.equal(h.doc.activeElement, retry);
+  const nonPreferenceStorage = () =>
+    [...storage].filter(([key]) => key !== 'revealline.fpv.world-settings.v1');
+  const stored = nonPreferenceStorage();
+  for (const language of ['uk', 'en']) {
+    h.$('world-language').value = language;
+    h.$('world-language').emit('change');
+    assert.equal(node.textContent, worldMedalGoalText(goal, language));
+    assert.equal(panel.querySelector('[data-world-medal-goal]'), node);
+    assert.equal(panel.querySelector('.continuous-result-actions'), actions);
+    assert.equal(h.doc.activeElement, retry);
+    assert.deepEqual(h.app.snapshot().state, state);
+    assert.deepEqual(h.app.snapshot().records, records);
+    assert.deepEqual(nonPreferenceStorage(), stored);
+  }
+  retry.click();
+  await waitFor(() => h.app.snapshot().state.status === 'disarmed');
+  assert.equal(h.app.snapshot().state.ticks, 0);
+  assert.equal(panel.hidden, true);
+  assert.deepEqual(h.app.snapshot().records, records);
+});
+
+test('World authoring preview keeps its no-award result without next-medal guidance', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      actors: [],
+      steps: {
+        'self-level': [{ type: 'survive', ticks: 1 }],
+        acro: [{ type: 'survive', ticks: 1 }],
+      },
+    },
+  };
+  await h.app.startFlight(entry, { preview: true });
+  h.$('world-arm').click();
+  h.tick(3);
+  await waitFor(() => h.$('result-panel').textContent.includes('Authoring preview'));
+  assert.equal(h.app.snapshot().state.status, 'complete');
+  assert.equal(h.$('result-panel').querySelector('[data-world-medal-goal]'), null);
+  assert.deepEqual(h.app.snapshot().records, []);
+});
