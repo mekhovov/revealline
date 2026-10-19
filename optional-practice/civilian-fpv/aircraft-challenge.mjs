@@ -262,6 +262,10 @@ export function withAircraftChallenge(session, { rules: sourceRules, capacityAh 
       typeof value === 'function' ? value.bind(session) : value,
     ]),
   );
+  Object.defineProperty(wrapped, 'identity', {
+    enumerable: true,
+    get: () => session.identity,
+  });
   const snapshot = () => ({ ...session.snapshot(), challenge: progress.snapshot() });
   Object.assign(wrapped, {
     snapshot,

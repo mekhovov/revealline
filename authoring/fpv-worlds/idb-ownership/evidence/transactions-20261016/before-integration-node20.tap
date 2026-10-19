@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: transaction capture is opt-in; mount/snapshot issue no operation and native methods stay unchanged by default
+not ok 1 - transaction capture is opt-in; mount/snapshot issue no operation and native methods stay unchanged by default
+  ---
+  duration_ms: 0.8045
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:37:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'enabled')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:39:44)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: actual main741 WorldStore listing distinguishes successful empty, active-only and retained metadata without exporting content
+not ok 2 - actual main741 WorldStore listing distinguishes successful empty, active-only and retained metadata without exporting content
+  ---
+  duration_ms: 5.45875
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:47:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'history')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    last (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:28:58)
+    TestContext.<anonymous> (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:62:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: pending, caller-aborted, filtered and stopped reads never establish empty
+not ok 3 - pending, caller-aborted, filtered and stopped reads never establish empty
+  ---
+  duration_ms: 1.256375
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:78:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'history')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    last (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:28:58)
+    TestContext.<anonymous> (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:81:16)
+    runNextTicks (node:internal/process/task_queues:60:5)
+    process.processImmediate (node:internal/timers:454:9)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: a real caller close and later failed start share connection identity and sanitized caller evidence
+not ok 4 - a real caller close and later failed start share connection identity and sanitized caller evidence
+  ---
+  duration_ms: 1.446958
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:93:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'history')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    last (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:28:58)
+    TestContext.<anonymous> (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:98:45)
+    runNextTicks (node:internal/process/task_queues:60:5)
+    process.processImmediate (node:internal/timers:454:9)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: foreign receivers, thrown identity and option coercions retain caller contracts
+not ok 5 - foreign receivers, thrown identity and option coercions retain caller contracts
+  ---
+  duration_ms: 0.769291
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:109:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'counts')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:127:44)
+    runNextTicks (node:internal/process/task_queues:60:5)
+    process.processImmediate (node:internal/timers:454:9)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: unknown databases remain outside transaction capture; restoration keeps a later owner
+not ok 6 - unknown databases remain outside transaction capture; restoration keeps a later owner
+  ---
+  duration_ms: 1.033292
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:139:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'counts')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:146:44)
+    runNextTicks (node:internal/process/task_queues:60:5)
+    process.processImmediate (node:internal/timers:454:9)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: bounded history and read cap disclose incomplete coverage instead of empty
+not ok 7 - bounded history and read cap disclose incomplete coverage instead of empty
+  ---
+  duration_ms: 1.048959
+  location: '/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:153:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'history')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    last (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:28:58)
+    TestContext.<anonymous> (file:///Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/idb-ownership/verify-transactions.mjs:158:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 0
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 472.483542

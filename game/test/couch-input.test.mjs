@@ -6,6 +6,7 @@ import { attachCouchInput } from '../couch/couch-input.mjs';
 import { createDuel, stepDuel, resumeDuel, pauseDuel, neutralCommand } from '../multiplayer.mjs';
 import { releaseInputs, CLASSES } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { replaceCouchKey } from '../couch/keyboard-bindings.mjs';
 
 class Target {
   constructor(parent = null) {
@@ -84,7 +85,14 @@ const makePad = (index) => ({
 });
 function fixture(
   t,
-  { tap = false, onStop = () => {}, onPause = () => {}, initialSlots, controllerSession } = {},
+  {
+    tap = false,
+    onStop = () => {},
+    onPause = () => {},
+    initialSlots,
+    controllerSession,
+    continuous = false,
+  } = {},
 ) {
   const win = new Target(),
     doc = new Target(win),
@@ -122,6 +130,7 @@ function fixture(
     getGamepads: () => pads,
     active: () => active,
     tapMode: () => tap,
+    continuousSteering: () => continuous,
     onPause: () => {
       active = false;
       pauseCount++;
@@ -166,6 +175,33 @@ function fixture(
   };
 }
 const neutralPair = () => [neutralCommand(), neutralCommand()];
+
+test('keyboard remapping retains accepted continuous steering and requires release after capture', (t) => {
+  const f = fixture(t, { continuous: true });
+  f.key('KeyD');
+  assert.equal(f.input.consume()[0].direction, 'right');
+  assert.throws(
+    () => f.input.setKeyboardBindings(replaceCouchKey(null, 0, 'up', 'KeyI')),
+    /outside active play/,
+  );
+  f.setActive(false);
+  f.key('KeyI');
+  f.input.setKeyboardBindings(replaceCouchKey(null, 0, 'up', 'KeyI'));
+  assert.equal(f.input.snapshotDirection(0), 'right');
+  f.setActive(true);
+  f.key('KeyI', { repeat: true });
+  assert.equal(f.input.consume()[0].direction, 'right');
+  f.up('KeyI');
+  f.key('KeyI');
+  assert.equal(f.input.consume()[0].direction, 'up');
+  f.up('KeyI');
+  f.up('KeyD');
+  f.key('KeyD');
+  f.key('KeyW');
+  assert.equal(f.input.consume()[0].direction, 'right', 'The old key cannot create a new turn.');
+  f.key('ArrowDown');
+  assert.equal(f.input.consume()[1].direction, 'down');
+});
 
 test('continuation restores connected controller seats without accepting held input', (t) => {
   const f = fixture(t, { initialSlots: [2, 0] });
@@ -588,4 +624,77 @@ test('shared-radio seats reach both couch gameplay commands without cross-contro
   session.sample([pad], { active: true });
   commands = f.input.poll();
   assert.equal(commands[1].direction, 'up');
+});
+
+test('neutral Resume tick defers fresh local requests independently without releasing held pads', (t) => {
+  const f = fixture(t),
+    pad = makePad(0);
+  f.setPads([pad]);
+  f.input.poll();
+  pad.buttons[0].pressed = true;
+  f.resume();
+  f.input.poll();
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  assert.deepEqual(f.input.consume(), neutralPair(), 'A pad held through Resume is still blocked.');
+  pad.buttons[0].pressed = false;
+  f.input.poll();
+  f.key('KeyQ');
+  f.up('KeyQ');
+  f.down(1, 'pickup', 7);
+  f.lift(1, 'pickup', 7);
+  f.input.poll();
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  assert.deepEqual(
+    f.input.consume().map((c) => [c.action, c.pickup]),
+    [
+      [true, false],
+      [false, true],
+    ],
+  );
+  assert.deepEqual(f.input.consume(), neutralPair(), 'Local requests emit one pulse each.');
+  pad.buttons[0].pressed = true;
+  f.input.poll();
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  assert.equal(f.input.consume()[0].action, true);
+  assert.equal(
+    f.input.consume()[0].action,
+    true,
+    'Fresh controller input keeps its held semantics.',
+  );
+  pad.buttons[0].pressed = false;
+  f.input.poll();
+  f.input.consume();
+  pad.buttons[0].pressed = true;
+  pad.buttons[2].pressed = true;
+  f.input.poll();
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  pad.buttons[0].pressed = false;
+  pad.buttons[2].pressed = false;
+  f.input.poll();
+  assert.deepEqual(
+    f.input.consume().map((c) => [c.action, c.pickup]),
+    [
+      [true, true],
+      [false, false],
+    ],
+    'An admitted short pad press survives release before the next poll.',
+  );
+  assert.deepEqual(f.input.consume(), neutralPair());
+});
+
+test('clearing a deferred Resume request retires it before the next fixed tick', (t) => {
+  const f = fixture(t);
+  f.key('KeyQ');
+  f.down(1, 'pickup', 8);
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  f.input.clearPlayer(0);
+  assert.deepEqual(
+    f.input.consume().map((c) => [c.action, c.pickup]),
+    [
+      [false, false],
+      [false, true],
+    ],
+  );
+  f.input.clearPhysical();
+  assert.deepEqual(f.input.consume(), neutralPair());
 });
