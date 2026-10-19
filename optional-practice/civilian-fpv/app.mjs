@@ -2133,6 +2133,7 @@ export function mountFlightApp({
     document: doc,
     library: missionLibrary,
     supportedModes: ['solo'],
+    browsingContext: ({ label }) => `${navigationContext()} · ${label}`,
     description: () =>
       locale === 'uk'
         ? 'Усі вправи Академії в одному списку. Виберіть маршрут і почніть політ.'
