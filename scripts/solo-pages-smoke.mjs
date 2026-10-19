@@ -8,6 +8,9 @@ import {
   assessSharedModePublicReturn,
 } from './solo-qualification-shared-mode.mjs';
 
+import { executePagesBackupFlow, assertPagesBackupEvidence } from './solo-pages-backup.mjs';
+export { assertPagesBackupEvidence } from './solo-pages-backup.mjs';
+
 const planPath = new URL(
   '../docs/performance/solo-published-pages-smoke-plan.json',
   import.meta.url,
@@ -32,6 +35,22 @@ export function validatePagesSmokePlan(plan) {
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
   assert.deepEqual(plan.engines, ['chromium', 'webkit']);
+  assert.deepEqual(plan.diagnosticModes, ['none', 'missions', 'backup']);
+  assert.equal(plan.defaultDiagnostic, 'none');
+  assert.deepEqual(plan.backupDiagnostic, {
+    scope: 'fresh-profile-progress-backup',
+    maximumRetainedReadBytes: 1048576,
+    acquisitionBound: 'existing-browser-context-and-owner-limits',
+    downloadRetention: 'metadata-only-after-owned-delete',
+    performanceExcluded: true,
+  });
+  assert.deepEqual(plan.missionsDiagnostic, {
+    scope: 'missions-first-open-stage-observation',
+    initialSoloQuery: 'performance=1',
+    requiredCompleteOpenings: 2,
+    transport: 'bounded-scalar-console-v1',
+    performanceExcluded: true,
+  });
   assert.equal(plan.profile, 'fresh-ephemeral');
   assert.equal(plan.credential, 'REVEALLINE_PAGES_TEST_PASSWORD');
   assert.equal(plan.credentialEntry, 'ordinary-public-password-form');
@@ -56,6 +75,51 @@ export function validatePagesSmokePlan(plan) {
     'team-versus-public-return',
   ]);
   return plan;
+}
+export function pagesDiagnosticScope(diagnostic = 'none') {
+  assert(['none', 'missions', 'backup'].includes(diagnostic), 'Fixed Pages diagnostic required');
+  return diagnostic === 'missions'
+    ? 'missions-first-open-stage-observation'
+    : diagnostic === 'backup'
+      ? 'fresh-profile-progress-backup'
+      : 'public-critical-flow-smoke';
+}
+export function assertPagesMissionsEvidence(pageEvidence) {
+  const evidence = pageEvidence?.missions;
+  assert.equal(evidence?.format, 'PagesMissionsStagesV1', 'Missions stage evidence missing');
+  assert.equal(evidence.performanceExcluded, true);
+  assert.equal(evidence.capacity, 64);
+  assert.equal(evidence.openingCapacity, 8);
+  assert.equal(evidence.invalid, 0, 'Invalid Missions stage evidence');
+  assert.equal(evidence.omitted, 0, 'Missing Missions stage evidence');
+  assert.equal(evidence.overflow, false, 'Missions stage overflow');
+  assert.equal(evidence.incomplete, false, 'Incomplete Missions stage evidence');
+  assert.equal(evidence.openings.length, 2, 'Both public Missions openings required');
+  assert(evidence.first.length <= 16 && evidence.tail.length <= 48);
+  const rows = [...evidence.first, ...evidence.tail];
+  assert(rows.length > 0 && rows.length <= 64 && evidence.total === rows.length);
+  assert.equal(new Set(evidence.openings.map((owner) => owner.opening)).size, 2);
+  assert.equal(
+    rows.length,
+    evidence.openings.reduce((count, owner) => count + owner.sequence, 0),
+  );
+  for (const owner of evidence.openings) {
+    assert.equal(owner.terminal, 'missions-complete', 'Missions opening did not complete');
+    const observed = rows.filter((row) => row.opening === owner.opening);
+    assert(observed.length >= 2 && observed.length === owner.sequence);
+    assert.equal(observed[0].kind, 'missions-opening');
+    assert.equal(observed.at(-1).kind, owner.terminal);
+    assert.equal(owner.lastKind, owner.terminal);
+    for (const [index, row] of observed.entries()) {
+      assert.equal(row.sequence, index + 1);
+      for (const key of ['build', 'generation', 'tick']) assert.equal(row[key], owner[key]);
+    }
+  }
+  return {
+    scope: 'missions-first-open-stage-observation',
+    completeOpenings: 2,
+    performanceExcluded: true,
+  };
 }
 export async function pagesSmokePlan() {
   return validatePagesSmokePlan(JSON.parse(await readFile(planPath, 'utf8')));
@@ -272,6 +336,167 @@ export async function retainPagesPublicEvidence(
   }
 }
 
+const MISSIONS_STAGE_PREFIX = 'RevealLineMissionsStageV1 ';
+const MISSIONS_STAGE_KINDS = Object.freeze([
+  'missions-opening',
+  'missions-after-pause',
+  'missions-build-cached',
+  'missions-build-joined',
+  'missions-imports-begin',
+  'missions-imports-end',
+  'missions-data-begin',
+  'missions-data-end',
+  'missions-sources-begin',
+  'missions-sources-end',
+  'missions-supplemental-imports-begin',
+  'missions-supplemental-imports-end',
+  'missions-hunt-begin',
+  'missions-hunt-end',
+  'missions-duel-begin',
+  'missions-duel-end',
+  'missions-team-begin',
+  'missions-team-end',
+  'missions-installed-begin',
+  'missions-installed-end',
+  'missions-chooser-build-begin',
+  'missions-chooser-build-end',
+  'missions-refresh-begin',
+  'missions-refresh-end',
+  'missions-open-begin',
+  'missions-campaigns-begin',
+  'missions-campaigns-end',
+  'missions-render-begin',
+  'missions-render-end',
+  'missions-modal-begin',
+  'missions-modal-end',
+  'missions-complete',
+  'missions-cancelled',
+  'missions-failed',
+  'missions-observer-overflow',
+]);
+function retainMissionsStage(result, page, message) {
+  // Rare runtime-emitted scalar records are received without page.evaluate.
+  // Console transport is best effort; absent messages never prove completion.
+  let text;
+  try {
+    text = message.text();
+  } catch {
+    return;
+  }
+  if (!text.startsWith(MISSIONS_STAGE_PREFIX)) return;
+  const target = (result.missions ??= {
+    format: 'PagesMissionsStagesV1',
+    performanceExcluded: true,
+    timeBasis:
+      'atMs=document-performance.now; receivedAtMs=host-performance.now; never subtract across origins',
+    capacity: 64,
+    openingCapacity: 8,
+    total: 0,
+    invalid: 0,
+    omitted: 0,
+    overflow: false,
+    incomplete: true,
+    openings: [],
+    first: [],
+    tail: [],
+    limitations: [
+      'Only received records survive an unresponsive page; final delivery is unobserved.',
+      'A pending stage is not proof that it caused a stall; elapsed spans are not CPU time.',
+      'Joined builds retain their original observer; a joining trace has no inherited substages.',
+      'Generation zero means no accepted run generation was available to the numeric ring.',
+    ],
+  });
+  target.total++;
+  const refuse = () => {
+    target.invalid++;
+    target.incomplete = true;
+  };
+  try {
+    assert(text.length <= 512, 'Missions transport bound');
+    const source = new URL(message.location().url);
+    const documentURL = new URL(page.url());
+    const expected = new URL('game/app.mjs', PAGES_ROOT);
+    assert(source.href === expected.href, 'Missions source');
+    assert(
+      documentURL.origin === expected.origin &&
+        documentURL.pathname === new URL('game/', PAGES_ROOT).pathname &&
+        documentURL.searchParams.get('performance') === '1',
+      'Missions document',
+    );
+    const row = JSON.parse(text.slice(MISSIONS_STAGE_PREFIX.length));
+    assert(Array.isArray(row) && row.length === 8, 'Missions scalar record');
+    const [opening, build, sequence, kind, generation, tick, atMs, timeOrigin] = row;
+    for (const value of [opening, build, sequence, generation, tick])
+      assert(Number.isSafeInteger(value) && value >= 0, 'Missions integer identity');
+    assert(opening > 0 && sequence > 0 && sequence <= 64, 'Missions sequence bound');
+    assert(MISSIONS_STAGE_KINDS.includes(kind), 'Missions stage');
+    assert(
+      Number.isFinite(atMs) &&
+        atMs >= 0 &&
+        atMs <= Number.MAX_SAFE_INTEGER &&
+        Number.isFinite(timeOrigin) &&
+        timeOrigin > 0 &&
+        timeOrigin <= Number.MAX_SAFE_INTEGER,
+      'Missions clock',
+    );
+    if (target.timeOrigin === undefined) target.timeOrigin = timeOrigin;
+    assert(timeOrigin === target.timeOrigin, 'Missions document changed');
+    let owner = target.openings.find((item) => item.opening === opening);
+    if (!owner) {
+      assert(target.openings.length < target.openingCapacity, 'Missions opening bound');
+      assert(sequence === 1 && kind === 'missions-opening', 'Missions beginning missing');
+      owner = { opening, build, generation, tick, sequence: 0, atMs: -1, terminal: null };
+      target.openings.push(owner);
+    }
+    assert(
+      !owner.terminal &&
+        owner.build === build &&
+        owner.generation === generation &&
+        owner.tick === tick &&
+        sequence === owner.sequence + 1 &&
+        atMs >= owner.atMs,
+      'Missions identity/order changed',
+    );
+    const receivedAtMs = performance.now();
+    assert(Number.isFinite(receivedAtMs), 'Missions receive clock');
+    owner.sequence = sequence;
+    owner.atMs = atMs;
+    owner.lastKind = kind;
+    if (
+      [
+        'missions-complete',
+        'missions-cancelled',
+        'missions-failed',
+        'missions-observer-overflow',
+      ].includes(kind)
+    )
+      owner.terminal = kind;
+    if (kind === 'missions-observer-overflow') target.overflow = true;
+    const event = { opening, build, sequence, kind, generation, tick, atMs, receivedAtMs };
+    if (target.first.length < 16) target.first.push(event);
+    else {
+      if (target.tail.length === 48) {
+        target.tail.shift();
+        target.omitted++;
+        target.overflow = true;
+      }
+      target.tail.push(event);
+    }
+    target.incomplete =
+      target.invalid > 0 || target.overflow || target.openings.some((item) => !item.terminal);
+  } catch {
+    refuse();
+  }
+}
+function pagesDiagnosticsClean(item) {
+  return (
+    item.total === 0 &&
+    !item.overflow &&
+    (!item.missions ||
+      (!item.missions.invalid && !item.missions.overflow && !item.missions.incomplete))
+  );
+}
+
 export function createPagesDiagnostics(page, password, maximum = 128) {
   const result = { events: [], total: 0, overflow: false };
   const add = (event) => {
@@ -286,6 +511,7 @@ export function createPagesDiagnostics(page, password, maximum = 128) {
     pageerror: (error) =>
       add({ kind: 'pageerror', message: redactPagesText(error?.message, password, 1024) }),
     console: (message) => {
+      if (message.type() === 'debug') retainMissionsStage(result, page, message);
       if (['error', 'warning'].includes(message.type())) {
         try {
           // Read only Playwright's text string, never argument objects/handles.
@@ -671,17 +897,24 @@ export async function executePagesSoloFlows(page, budget, record) {
 }
 export async function observePagesSmoke({
   engine,
+  diagnostic = 'none',
   expectedRevision,
   password,
   browserType,
   checkpoint = async () => {},
   binding = readPagesBinding,
   soloFlows = executePagesSoloFlows,
+  backupFlow = executePagesBackupFlow,
   sharedFlows = executeSharedModePublicReturn,
   sharedAssessment = assessSharedModePublicReturn,
   now = () => performance.now(),
 }) {
   assert(['chromium', 'webkit'].includes(engine), 'Fixed browser engine required');
+  const diagnosticScope = pagesDiagnosticScope(diagnostic);
+  const soloURL =
+    PAGES_ROOT +
+    'game/?journey=whole-spatial-v25' +
+    (diagnostic === 'missions' ? '&performance=1' : '');
   assert.match(expectedRevision, /^[a-f0-9]{40}$/);
   assert(
     typeof password === 'string' &&
@@ -697,6 +930,8 @@ export async function observePagesSmoke({
     status: 'incomplete',
     expectedRevision,
     engine,
+    diagnostic,
+    diagnosticScope,
     root: PAGES_ROOT,
     performanceExcluded: true,
     profile: 'fresh-ephemeral',
@@ -771,13 +1006,13 @@ export async function observePagesSmoke({
     assert.equal(context.pages().length, 0, 'Fresh context unexpectedly contains a page');
     const page = await budget.step('new Solo page', () => context.newPage());
     assert.deepEqual(context.pages(), [page], 'Solo page ownership is ambiguous');
-    const diagnostic = createPagesDiagnostics(page, password);
-    observers.push(diagnostic);
-    report.pages.push(diagnostic.result);
+    const soloDiagnostic = createPagesDiagnostics(page, password);
+    observers.push(soloDiagnostic);
+    report.pages.push(soloDiagnostic.result);
     await budget.step(
       'published Solo',
       (timeout) =>
-        page.goto(PAGES_ROOT + 'game/?journey=whole-spatial-v25', {
+        page.goto(soloURL, {
           timeout,
           waitUntil: 'domcontentloaded',
         }),
@@ -789,17 +1024,9 @@ export async function observePagesSmoke({
       (timeout) => field.waitFor({ state: 'visible', timeout }),
       60000,
     );
-    assert.equal(
-      page.url(),
-      PAGES_ROOT + 'game/?journey=whole-spatial-v25',
-      'Credential document changed before entry',
-    );
+    assert.equal(page.url(), soloURL, 'Credential document changed before entry');
     await budget.step('ordinary password entry', (timeout) => field.fill(password, { timeout }));
-    assert.equal(
-      page.url(),
-      PAGES_ROOT + 'game/?journey=whole-spatial-v25',
-      'Credential document changed before submission',
-    );
+    assert.equal(page.url(), soloURL, 'Credential document changed before submission');
     await budget.step('ordinary password submission', (timeout) =>
       page.locator('#access-gate button[type="submit"]').click({ timeout }),
     );
@@ -817,56 +1044,66 @@ export async function observePagesSmoke({
     );
     report.stages.push('ordinary-password-accepted');
     await retain();
-    report.solo = { actions: [], samples: [] };
-    await soloFlows(page, budget, report.solo);
-    report.stages.push(...plan.flows.slice(0, 3));
-    await retain();
-    await budget.step(
-      'retain Solo public evidence',
-      async (timeout) => {
-        const failure = await retainPagesPublicEvidence(
-          [diagnostic],
-          password,
-          Math.min(5000, timeout),
-          () => {
-            try {
-              budget.remaining();
-              return true;
-            } catch {
-              return false;
-            }
-          },
-        );
-        assert.equal(failure, null, failure ?? 'Public evidence incomplete');
-      },
-      5000,
-    );
-    await budget.step('close Solo page', () => page.close());
-    assert.equal(context.pages().length, 0, 'Solo page did not close');
-    const sharedPage = await budget.step('new shared-route page', () => context.newPage());
-    assert.deepEqual(context.pages(), [sharedPage], 'Shared page ownership is ambiguous');
-    const sharedDiagnostic = createPagesDiagnostics(sharedPage, password);
-    observers.push(sharedDiagnostic);
-    report.pages.push(sharedDiagnostic.result);
-    await budget.step(
-      'published shared starting route',
-      (timeout) =>
-        sharedPage.goto(PAGES_ROOT + 'game/?journey=legacy', {
-          timeout,
-          waitUntil: 'domcontentloaded',
-        }),
-      60000,
-    );
-    report.shared = {};
-    await sharedFlows({
-      page: sharedPage,
-      deadline: Math.min(budget.deadline, now() + plan.sharedModeTimeoutMs),
-      record: report.shared,
-      now,
-    });
-    report.sharedAssessment = sharedAssessment(report.shared);
-    report.stages.push('team-versus-public-return');
-    await retain();
+    if (diagnostic === 'backup') {
+      report.backup = {};
+      await backupFlow(page, budget, report.backup);
+      report.backupAssessment = assertPagesBackupEvidence(report.backup);
+      report.stages.push('fresh-profile-progress-backup');
+      await retain();
+    } else {
+      report.solo = { actions: [], samples: [] };
+      await soloFlows(page, budget, report.solo);
+      if (diagnostic === 'missions')
+        report.missionsAssessment = assertPagesMissionsEvidence(soloDiagnostic.result);
+      report.stages.push(...plan.flows.slice(0, 3));
+      await retain();
+      await budget.step(
+        'retain Solo public evidence',
+        async (timeout) => {
+          const failure = await retainPagesPublicEvidence(
+            [soloDiagnostic],
+            password,
+            Math.min(5000, timeout),
+            () => {
+              try {
+                budget.remaining();
+                return true;
+              } catch {
+                return false;
+              }
+            },
+          );
+          assert.equal(failure, null, failure ?? 'Public evidence incomplete');
+        },
+        5000,
+      );
+      await budget.step('close Solo page', () => page.close());
+      assert.equal(context.pages().length, 0, 'Solo page did not close');
+      const sharedPage = await budget.step('new shared-route page', () => context.newPage());
+      assert.deepEqual(context.pages(), [sharedPage], 'Shared page ownership is ambiguous');
+      const sharedDiagnostic = createPagesDiagnostics(sharedPage, password);
+      observers.push(sharedDiagnostic);
+      report.pages.push(sharedDiagnostic.result);
+      await budget.step(
+        'published shared starting route',
+        (timeout) =>
+          sharedPage.goto(PAGES_ROOT + 'game/?journey=legacy', {
+            timeout,
+            waitUntil: 'domcontentloaded',
+          }),
+        60000,
+      );
+      report.shared = {};
+      await sharedFlows({
+        page: sharedPage,
+        deadline: Math.min(budget.deadline, now() + plan.sharedModeTimeoutMs),
+        record: report.shared,
+        now,
+      });
+      report.sharedAssessment = sharedAssessment(report.shared);
+      report.stages.push('team-versus-public-return');
+      await retain();
+    }
     report.bindingAfter = await binding(expectedRevision, budget);
     assert.deepEqual(
       report.bindingAfter,
@@ -874,7 +1111,7 @@ export async function observePagesSmoke({
       'Published deployment changed during smoke',
     );
     assert(
-      report.pages.every((item) => item.total === 0 && !item.overflow),
+      report.pages.every(pagesDiagnosticsClean),
       'Page/resource/console diagnostics require review',
     );
     report.controlsComplete = true;
@@ -891,7 +1128,15 @@ export async function observePagesSmoke({
     if (context) await cleanup('context', () => context.close());
     if (browser) await cleanup('browser', () => browser.close());
     for (const observer of observers) observer.detach();
-    if (!report.pages.every((item) => item.total === 0 && !item.overflow))
+    if (diagnostic === 'missions') {
+      try {
+        report.missionsAssessment = assertPagesMissionsEvidence(report.pages[0]);
+      } catch (error) {
+        report.missionsEvidenceFailure = redactPagesText(error?.message ?? error, password);
+        report.failure ??= 'Missions stage evidence incomplete';
+      }
+    }
+    if (!report.pages.every(pagesDiagnosticsClean))
       report.failure ??= 'Page/resource/console diagnostics require review';
     report.status =
       report.controlsComplete && !report.failure && !report.cleanupFailure
@@ -902,7 +1147,8 @@ export async function observePagesSmoke({
   return report;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const [expectedRevision, engine, playwrightPath, output] = process.argv.slice(2);
+  const [expectedRevision, engine, playwrightPath, output, diagnostic = 'none'] =
+    process.argv.slice(2);
   const password = process.env.REVEALLINE_PAGES_TEST_PASSWORD;
   delete process.env.REVEALLINE_PAGES_TEST_PASSWORD;
   for (const key of ['DEBUG', 'PWDEBUG', 'NODE_OPTIONS']) delete process.env[key];
@@ -911,6 +1157,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const report = await observePagesSmoke({
       expectedRevision,
       engine,
+      diagnostic,
       password,
       browserType: playwright[engine],
       checkpoint: (value) => writeFile(output, encodePagesReport(value, password), { mode: 0o600 }),
@@ -920,6 +1167,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const failure = {
       format: 'RevealLinePublishedPagesSmokeReportV1',
       engine,
+      diagnostic,
       status: 'failed',
       failure: redactPagesText(error?.message ?? error, password),
       controlsComplete: false,
