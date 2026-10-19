@@ -240,6 +240,20 @@ export async function acquireFocusedGitInputs(
   return {
     sourceRevision: expectedSource,
     sourceTree,
+    // A changed test absent from the admitted Git tree was deleted (or renamed
+    // away). Files absent only from a sparse/dirty checkout must still run.
+    deletedTests: commands
+      .flatMap((command) => {
+        const name = command.args?.[1];
+        return command.command === 'node' &&
+          command.args.length === 2 &&
+          command.args[0] === '--test' &&
+          command.id === `changed-test:${name}` &&
+          !entries.has(name)
+          ? [name]
+          : [];
+      })
+      .sort(),
     setupFiles,
     inputs: { ...inputs, repositoryFiles: [...inputs.repositoryFiles].sort() },
   };
