@@ -1,7 +1,10 @@
 import { boundedJSON, canonicalJSON, exactKeys } from '../data-json.mjs';
 import { t } from '../i18n/index.mjs';
 import { inspectJourneyPerformance } from './performance.mjs';
-import { createJourneyPerformanceController } from './performance-store.mjs';
+import {
+  createJourneyPerformanceController,
+  JourneyBackupEvidenceUnavailable,
+} from './performance-store.mjs';
 import { JOURNEY_MODES } from './catalog.mjs';
 import {
   emptyJourneyPictures,
@@ -928,6 +931,32 @@ export function createJourneyProfileStore({
       : {}),
     canWrite,
   });
+  const serializeBackup = (evidence) => {
+    const hasStars = JOURNEY_MODES.some((mode) => Object.keys(stars.best[mode]).length);
+    return JSON.stringify(
+      evidence || hasStars
+        ? {
+            format: JOURNEY_COMBINED_BACKUP_VERSION,
+            profileKey,
+            profile: snapshot(),
+            pictures: pictureSnapshot(),
+            stars: starSnapshot(),
+            ...(evidence ? { performance: evidence } : {}),
+          }
+        : pictures.records.length
+          ? {
+              format: JOURNEY_PICTURE_BACKUP_VERSION,
+              profileKey,
+              profile: snapshot(),
+              pictures: pictureSnapshot(),
+            }
+          : profileKey === 'journey'
+            ? { format: JOURNEY_BACKUP_VERSION, profile: snapshot() }
+            : { format: JOURNEY_SCOPED_BACKUP_VERSION, profileKey, profile: snapshot() },
+      null,
+      2,
+    );
+  };
   const inspectAsync = async (source, { signal } = {}) => {
     const inspected = inspectProfileBackup(source, profileKey);
     const merged = applyEvent(
@@ -1038,31 +1067,33 @@ export function createJourneyProfileStore({
     recordWithReceiptFallback,
     recordMany: recordEvents,
     export() {
-      const evidence = performance.backup(),
-        hasStars = JOURNEY_MODES.some((mode) => Object.keys(stars.best[mode]).length);
-      return JSON.stringify(
-        evidence || hasStars
-          ? {
-              format: JOURNEY_COMBINED_BACKUP_VERSION,
-              profileKey,
-              profile: snapshot(),
-              pictures: pictureSnapshot(),
-              stars: starSnapshot(),
-              ...(evidence ? { performance: evidence } : {}),
-            }
-          : pictures.records.length
-            ? {
-                format: JOURNEY_PICTURE_BACKUP_VERSION,
-                profileKey,
-                profile: snapshot(),
-                pictures: pictureSnapshot(),
-              }
-            : profileKey === 'journey'
-              ? { format: JOURNEY_BACKUP_VERSION, profile: snapshot() }
-              : { format: JOURNEY_SCOPED_BACKUP_VERSION, profileKey, profile: snapshot() },
-        null,
-        2,
-      );
+      return serializeBackup(performance.backup());
+    },
+    async exportAsync({ signal } = {}) {
+      signal?.throwIfAborted();
+      checkProgress();
+      if (!canRunPerformanceWork())
+        throw new Error('Journey progress remains pending until gameplay is paused.');
+      let evidence,
+        partial = false;
+      try {
+        evidence = await performance.backupAsync({ signal });
+      } catch (error) {
+        signal?.throwIfAborted();
+        checkProgress();
+        if (!canRunPerformanceWork())
+          throw new Error('Journey progress remains pending until gameplay is paused.');
+        if (!(error instanceof JourneyBackupEvidenceUnavailable)) throw error;
+        // Storage failure must not remove the existing session-recovery action.
+        // Keep all currently available evidence, but never label it complete.
+        evidence = performance.backup();
+        partial = true;
+      }
+      signal?.throwIfAborted();
+      checkProgress();
+      if (!canRunPerformanceWork())
+        throw new Error('Journey progress remains pending until gameplay is paused.');
+      return { raw: serializeBackup(evidence), partial };
     },
   };
 }

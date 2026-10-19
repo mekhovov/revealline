@@ -549,6 +549,7 @@ test('actual final read preserves partial cost and invalidates missing or replac
       partial = { status: 'complete', appMs: 10, outsideMs: 250, combinedMs: 260 };
     const run = vm.runInNewContext('(async () => {' + source.slice(start, end) + '})', {
       journalCostOptions: {},
+      qualityOptions: null,
       report,
       page: { evaluate: async () => partial },
       hitchStore: null,

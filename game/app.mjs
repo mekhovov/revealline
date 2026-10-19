@@ -54,6 +54,7 @@ import {
 } from './ui/gameplay-copy.mjs';
 import { contentText } from './i18n/content.mjs';
 import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';
+import { captureFlightLimits, createFlightLimitNotices } from './capture-flight-limits.mjs';
 import {
   createPreparationCadence,
   PreparationCadenceTimeoutError,
@@ -101,7 +102,7 @@ import { publishedRouteViews } from './content-design/published-journey.mjs';
 import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
-import { attachJourneyChooser } from './ui/journey-chooser.mjs';
+import { acquireCandidatePicture } from './content-design/picture.mjs';
 import {
   resolveInstalledMissionTarget,
   installedMissionExecutionIndex,
@@ -179,6 +180,7 @@ import { laneWarningCaption } from './ui/lane-presentation.mjs';
 import { attachFlightInformation } from './ui/flight-information-host.mjs';
 import { attachFlightDetails } from './ui/flight-information-details.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
+import { captureMedalGoalCopy } from './ui/capture-medal-goal.mjs';
 import {
   FIRST_FLIGHT_LESSONS,
   getFirstFlightLesson,
@@ -228,6 +230,7 @@ import {
 } from './ui/controller-boost-settings.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
+import { readingInputPrompt } from './ui/reading-input-prompt.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';
@@ -389,6 +392,7 @@ import {
 } from './ui/offline-tool-navigation.mjs';
 import { offlineAvailability } from './offline.mjs';
 import { attachStorageRetention } from './ui/storage-retention.mjs';
+import { attachLocalSupportSummary } from './ui/local-support-summary.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
   downloadJSON,
@@ -729,6 +733,8 @@ try {
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? await createSoloRouteHost(authoredRoute, {
+        // Main adopts the owned decoded picture, not a portable Studio scenario.
+        serializeArtwork: false,
         getEncounterVariant: () => encounterChoices.snapshot().variant,
         themes:
           runtimeContent?.themes ??
@@ -1488,7 +1494,7 @@ try {
     record: !practiceSession,
   });
   huntResultStatus = attachHuntStatus({
-    container: $('journey-reactions').parentElement,
+    container: $('overlay-reading'),
     mode: 'solo',
     records: huntRecords,
     record: false,
@@ -1913,6 +1919,7 @@ try {
           },
           asset: manifest.background,
           picture: candidatePicture,
+          acquire: (asset, options) => acquireCandidatePicture(asset, { ...options, binary: true }),
         }),
       );
     }
@@ -2895,6 +2902,50 @@ try {
   function warning(message, cue = null, role = 'host.unknown') {
     return flightInformation.warning(message, cue, role);
   }
+  const flightLimitNotices = createFlightLimitNotices();
+  let flightLimitViewKey = '';
+  function refreshCaptureFlightLimits() {
+    const eligible =
+      started &&
+      !practice &&
+      !courseSession &&
+      !courseEntry &&
+      !['won', 'lost'].includes(run.status) &&
+      !recoverGameplayTuning(run.level)?.adminOverride;
+    const visible = eligible && paused && $('game-overlay').dataset.kind === 'pause';
+    const panel = $('capture-flight-limits');
+    const wasVisible = !panel.hidden;
+    if (wasVisible !== visible) panel.hidden = !visible;
+    if (!eligible) return;
+    const view = captureFlightLimits({
+      recordingTicks: recorder?.ticks,
+      recordingStopped,
+      elapsedSeconds: run.time,
+      // Authored Journey clears/pictures do not pass through library time validation.
+      collectionLimited: !candidateHost?.owns(activeEntry),
+    });
+    if (!paused)
+      for (const key of flightLimitNotices(run, view))
+        warning(localizedMessage(`interface:flightLimits.${key}`), null, 'host.flight-limits');
+    if (visible && !wasVisible) panel.open = view.urgent;
+    const busy = contentSwitchBusy || sessionBusy || backupBusy;
+    const key = JSON.stringify([view, visible, busy, !!replayDownload]);
+    if (key === flightLimitViewKey) return;
+    flightLimitViewKey = key;
+    localizedText($('capture-flight-limits-summary'), () =>
+      t(`interface:flightLimits.${view.urgent ? 'attention' : 'title'}`),
+    );
+    localizedText($('capture-recording-limit'), () =>
+      t(`interface:flightLimits.recording.${view.recording}`, {
+        minutes: formatNumber(view.minutes ?? 0),
+      }),
+    );
+    localizedText($('capture-collection-limit'), () =>
+      t(`interface:flightLimits.collection.${view.collection}`),
+    );
+    $('capture-limit-saves').disabled = busy;
+    $('capture-limit-replay').disabled = !recorder || !!replayDownload;
+  }
   function dialogOpen() {
     return modalNavigation
       ? modalNavigation.hasOpenDialog()
@@ -2949,6 +3000,9 @@ try {
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
+  // One latest observation, with no device identity, input values or history.
+  // Input clearing can retire its actionable frame after a disconnect.
+  const supportController = {};
   let lastControllerModality = '';
   document.body.dataset.inputMode =
     navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
@@ -3406,19 +3460,11 @@ try {
     });
   }
   function readingPrompt({ scrollable }) {
-    const mode = document.body.dataset.inputMode;
-    const scroll = !scrollable
-      ? t('interface:allTextIsVisible')
-      : mode === 'controller' || mode === 'keyboard'
-        ? t('interface:upDownScroll')
-        : t('interface:scrollToRead');
-    const exit =
-      mode === 'controller'
-        ? `${controllerLabels.menu.confirm} or ${controllerLabels.menu.back}`
-        : mode === 'keyboard'
-          ? t('interface:enterSpaceOrEscape')
-          : t('interface:doneReading');
-    return `${scroll} · ${exit} returns`;
+    return readingInputPrompt({
+      modality: document.body.dataset.inputMode,
+      scrollable,
+      controls: controllerLabels.menu,
+    });
   }
   function setInputModality(mode) {
     if (document.body.dataset.inputMode === mode) return;
@@ -3915,6 +3961,30 @@ try {
     status: $('storage-retention-status'),
     isOpen: () => $('settings-dialog').open,
   });
+  attachLocalSupportSummary({
+    getHost: () => {
+      const offline = offlineAvailability();
+      return {
+        version: buildVersion,
+        sourceRevision: buildSourceRevision,
+        packaged: isRelease,
+        kind: practice
+          ? 'practice'
+          : runtimeContent
+            ? 'installed-edition'
+            : journeyEnabled
+              ? 'journey'
+              : 'solo',
+        state: !started ? 'idle' : paused ? 'paused' : run?.status,
+        locale: getLocale(),
+        writable: writer.writable,
+        writerReason: practice ? 'practice' : writer.writable ? 'owned' : writer.reasonCode,
+        platform: nativePlatform() ?? 'browser',
+        offline: offline.available ? 'configured' : offline.messageCode,
+        controller: supportController,
+      };
+    },
+  });
   window.addEventListener('pagehide', (event) => {
     storageRetention.close();
     if (!event.persisted) {
@@ -3981,6 +4051,10 @@ try {
       entry: {
         available: !practice && !courseSession && !started && !courseEntry,
         helpAvailable: !practice && !courseSession,
+        homeAvailable:
+          !practice &&
+          !courseSession &&
+          !['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id),
         pending: !!courseEntry,
         message: courseEntryMessage,
       },
@@ -7272,7 +7346,17 @@ try {
       canonicalJSON(JSON.parse(raw)) === canonicalJSON(session)
     );
   }
-  function persistAttempt(notify = true) {
+  function markPauseWork(trace, kind, incomplete = false) {
+    if (!trace) return;
+    if (incomplete) trace.complete = false;
+    try {
+      trace.session.markEvent(kind, trace.generation, trace.tick);
+    } catch {
+      // Optional observations must never change the synchronous pause/save path.
+      trace.complete = false;
+    }
+  }
+  function persistAttempt(notify = true, pauseTrace = null) {
     if (titleFlightHold)
       throw new Error(t('interface:explicitlyResumeTheVerifiedFlightBeforeSavingAgain'));
     if (modeDepartureHold)
@@ -7280,23 +7364,37 @@ try {
     if (courseEntryHold)
       throw new Error(t('interface:theCourseHandoffKeepsThisFlightPausedResumeExplicitlyBefore'));
     assertWriter();
-    const session = snapshotAttempt();
+    markPauseWork(pauseTrace, 'pause-snapshot-begin');
+    let session;
+    try {
+      session = snapshotAttempt();
+      markPauseWork(pauseTrace, 'pause-snapshot-end');
+    } catch (error) {
+      markPauseWork(pauseTrace, 'pause-snapshot-failed', true);
+      throw error;
+    }
     let saved;
+    markPauseWork(pauseTrace, 'pause-save-begin');
     try {
       saved = saveSession(profileStorage(), sessionKey, session);
     } catch {
       saved = { ok: false, warning: t('interface:storageIsUnavailableExportThisAttempt') };
     }
+    markPauseWork(pauseTrace, saved.ok ? 'pause-save-end' : 'pause-save-failed', !saved.ok);
     if (saved.ok) {
+      markPauseWork(pauseTrace, 'pause-readback-begin');
       try {
         const raw = profileStorage().getItem(sessionKey);
         // The serializer already validated these bytes and their storage limit.
         // Keep semantic readback for equivalent encodings; changed content must
         // still pass the original validation before it grants slot ownership.
-        if (raw === saved.serialized || attemptReadbackMatches(raw, session))
+        if (raw === saved.serialized || attemptReadbackMatches(raw, session)) {
           lastOwnedAttempt = raw;
+          markPauseWork(pauseTrace, 'pause-readback-end');
+        } else markPauseWork(pauseTrace, 'pause-readback-failed', true);
       } catch {
         /* A successful write result alone is not readback authority. */
+        markPauseWork(pauseTrace, 'pause-readback-failed', true);
       }
     }
     if (notify)
@@ -8341,6 +8439,11 @@ try {
       warning(e.message);
     }
   };
+  $('capture-limit-saves').onclick = () => {
+    if (contentSwitchBusy || sessionBusy || backupBusy) return;
+    return libraryPanel.open('saves');
+  };
+  $('capture-limit-replay').onclick = () => $('export-replay').click();
   $('hangar-button').onclick = () => {
     if (!craftSwitchAvailable()) return;
     pause(true);
@@ -9220,6 +9323,15 @@ try {
     show('pause-label', kind === 'pause');
     show('overlay-reading', kind !== 'pause');
     show('overlay-footnote', kind !== 'pause');
+    const medalGoalVisible =
+      kind === 'won' &&
+      !practice &&
+      !courseSession &&
+      !recoverGameplayTuning(run.level)?.adminOverride;
+    show('capture-medal-goal', medalGoalVisible);
+    localizedText($('capture-medal-goal'), () =>
+      medalGoalVisible ? captureMedalGoalCopy(run) : '',
+    );
     $('game-overlay').dataset.intro = String(
       kind === 'ready' &&
         !practice &&
@@ -9393,11 +9505,7 @@ try {
         return t('interface:nextMission');
       });
       localizedText($('overlay-footnote'), () =>
-        practice
-          ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks')
-          : run.medal === 'gold'
-            ? t('interface:goldFastAndNoLivesLost')
-            : t('interface:tryAnotherClassOrReturnForACleanFasterRoute'),
+        practice ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks') : '',
       );
     }
     if (kind === 'lost') {
@@ -10135,6 +10243,9 @@ try {
         // retain their existing single-action continuation contract.
         if (skipped) rememberSelection({ skipped });
         if (briefingOnly) {
+          // The settled briefing already owns its accepted public Journey identity.
+          // Classic discovery stays optional because discoverClassic remains false.
+          void updatePlayedLevelLink();
           clearInput();
           focusMission();
           return !started && paused && run === nextRun;
@@ -10908,10 +11019,21 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force, { preserveWorld = false } = {}) {
+    const pauseTrace =
+      performanceSession && performanceRunGeneration > 0
+        ? {
+            session: performanceSession,
+            generation: performanceRunGeneration,
+            tick: run?.tick,
+            complete: true,
+          }
+        : null;
+    markPauseWork(pauseTrace, 'pause-begin');
     setMediaPreparationPhase(document.hidden || !document.hasFocus() ? 'suspended' : 'paused');
     performanceSession?.setPhase(document.hidden ? 'hidden' : 'paused');
     if (practiceRenderFailure.failed) return;
     cancelPictureStart({ preserveRecovery: true, preserveWorld });
+    markPauseWork(pauseTrace, 'pause-phase');
     if (courseBlocked()) {
       clearInput();
       paused = true;
@@ -10940,6 +11062,7 @@ try {
     }
     clearInput();
     paused = true;
+    markPauseWork(pauseTrace, 'pause-input');
     if (journeyProfile && !journeyRewardsDurable) void journeyProfile.flush();
     sound.pause?.();
     if (runMessageCue === 'resumed')
@@ -10950,6 +11073,7 @@ try {
         'paused-resume',
         'host.paused',
       );
+    markPauseWork(pauseTrace, 'pause-audio');
     if (
       !practice &&
       !courseEntryHold &&
@@ -10959,15 +11083,24 @@ try {
       !sessionBusy
     ) {
       try {
-        persistAttempt(false);
-      } catch {}
-    }
+        persistAttempt(false, pauseTrace);
+      } catch {
+        markPauseWork(pauseTrace, 'pause-persist-failed', true);
+      }
+    } else markPauseWork(pauseTrace, 'pause-save-skipped');
     overlay('pause');
+    markPauseWork(pauseTrace, 'pause-overlay');
     localizedText($('pause-button'), () => '▶');
     refreshHUD();
+    markPauseWork(pauseTrace, 'pause-hud');
     void updatePlayedLevelLink({ discoverClassic: true });
+    markPauseWork(pauseTrace, 'pause-link');
+    // End is a completed synchronous span, never evidence of durable storage
+    // or asynchronous sharing/flush completion. Failed substages stay partial.
+    if (pauseTrace?.complete) markPauseWork(pauseTrace, 'pause-end');
   }
   function refreshHUDClocks() {
+    refreshCaptureFlightLimits();
     localizedText($('time'), () =>
       timeLabel(
         run.rules.timeLimitSeconds ? Math.max(0, run.rules.timeLimitSeconds - run.time) : run.time,
@@ -11252,7 +11385,7 @@ try {
       refreshInputPresentation();
       $('pause-button').disabled = courseBlocked() || campaignOverview;
       $('save-attempt-button').disabled =
-        !started || practice || ['won', 'lost'].includes(run.status);
+        !started || practice || !recorder || ['won', 'lost'].includes(run.status);
       const near = run.hangars?.some(
         (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,
       );
@@ -11546,6 +11679,73 @@ try {
       throw error;
     }
   }
+  async function captureJourneyPerformanceLater(acceptedMission, acceptedClear) {
+    const acceptedRun = run,
+      acceptedRecorder = recorder,
+      acceptedRunId = runId;
+    const assertActive = () => {
+      if (!journeyPerformanceActive)
+        throw new DOMException('Journey comparison cancelled.', 'AbortError');
+    };
+    const currentResult = () =>
+      journeyPerformanceActive &&
+      run === acceptedRun &&
+      recorder === acceptedRecorder &&
+      runId === acceptedRunId;
+    const scheduleChunk = (work, options) =>
+      scheduleOptionalReplayChunk(() => {
+        assertActive();
+        return work();
+      }, options);
+    try {
+      // Terminal run/recorder references remain immutable after their final
+      // simulation step. Next may replace them, but must not discard a valid
+      // accepted personal best; only the result UI belongs to the current run.
+      await scheduleChunk(() => {}, {});
+      assertActive();
+      // Owner admission drains in microtasks. A timer task after admission
+      // gives the winning frame a real yield before taking the private snapshot.
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      assertActive();
+      let exported;
+      await scheduleChunk(() => {
+        const clear = journeyProfile.snapshot().clears.solo[acceptedMission.id];
+        if (
+          clear?.runId !== acceptedClear.runId ||
+          clear.gameplayId !== acceptedClear.gameplayId ||
+          clear.difficulty !== acceptedClear.difficulty
+        )
+          throw new DOMException('Journey comparison was replaced.', 'AbortError');
+        // Keep the existing optional array budget and public export contract.
+        const optionalReplay =
+          acceptedRecorder.segmentCount > JOURNEY_PERFORMANCE_LIMITS.arrayItems
+            ? Promise.reject(new RangeError('Journey performance array budget exceeded.'))
+            : exportReplayAsync(acceptedRecorder, acceptedRun, { scheduleChunk });
+        // Observe both outcomes immediately, but return no promise: the export's
+        // inner chunks need this same main slot after this callback releases it.
+        exported = optionalReplay.then(
+          (replay) => ({ replay }),
+          (error) => ({ error }),
+        );
+      }, {});
+      const outcome = await exported;
+      assertActive();
+      if ('error' in outcome) throw outcome.error;
+      const result = await journeyProfile.performance.capture({
+        mode: 'solo',
+        missionId: acceptedMission.id,
+        ...acceptedClear,
+        replay: outcome.replay,
+      });
+      if (!currentResult()) return;
+      journeyBestResult = { runId: acceptedRunId, result };
+      refreshJourneyBest();
+    } catch {
+      if (!currentResult()) return;
+      journeyBestResult = { runId: acceptedRunId, result: { error: 'unavailable' } };
+      refreshJourneyBest();
+    }
+  }
   const gameWakeLock = createGameWakeLock();
   window.addEventListener('pagehide', (event) => {
     if (!event.persisted) {
@@ -11555,7 +11755,7 @@ try {
     if (event.persisted) gameWakeLock.setActive(false);
     else gameWakeLock.dispose();
   });
-  function update(elapsed) {
+  function update(elapsed, flightWasActive) {
     let terminalHUD = false;
     gameWakeLock.setActive(
       !demoHost?.active && started && !paused && run.status === 'running' && !document.hidden,
@@ -11590,6 +11790,12 @@ try {
         ? demoHost.toggleBoostEligible
         : run?.status === 'running',
     });
+    supportController.sampledAt = controllerTime;
+    supportController.status = controllerFrame.status.code;
+    supportController.assigned = Boolean(controllerFrame.assigned);
+    supportController.neutral = controllerFrame.confirmSnapshot.neutral;
+    supportController.blocked = controllerFrame.confirmSnapshot.blocked;
+    supportController.reason = controllerFrame.confirmSnapshot.reason;
     if (controllerFrame.assigned && !paused && started) observeInput('controller');
     soloRadioSetup.refresh();
     refreshControllerBoostCue();
@@ -11699,6 +11905,7 @@ try {
       message: status.message.slice(0, 240),
     });
     if (
+      flightWasActive &&
       !courseBlocked() &&
       !paused &&
       started &&
@@ -11733,6 +11940,7 @@ try {
         if (!recordingStopped && recorder.ticks >= MAX_REPLAY_TICKS) {
           recordingStopped = true;
           recorder = null;
+          hudDirty = true;
           $('export-replay').disabled = true;
           warning(localizedMessage('interface:the30MinuteReplayBudgetIsFullRecordingWasDiscarded'));
         }
@@ -11830,6 +12038,7 @@ try {
           } catch {
             recordingStopped = true;
             recorder = null;
+            hudDirty = true;
             $('export-replay').disabled = true;
             warning(localizedMessage('interface:replayRecordingStoppedYouCanKeepPlayingStartANew'));
           }
@@ -11922,45 +12131,11 @@ try {
           ) {
             const acceptedMission =
               candidateHost?.progressMission?.(activeEntry, levelIndex) ?? journeyMission();
-            const acceptedRun = run,
-              acceptedRunId = runId;
+            const acceptedRunId = runId;
             const acceptedClear =
               acceptedMission && journeyProfile?.snapshot().clears.solo[acceptedMission.id];
-            if (acceptedClear?.runId === acceptedRunId) {
-              try {
-                // This is the existing downstream JSON array budget, not a
-                // reduced replay limit. Such evidence can never be retained.
-                const optionalReplay =
-                  recorder.segmentCount > JOURNEY_PERFORMANCE_LIMITS.arrayItems
-                    ? Promise.reject(new RangeError('Journey performance array budget exceeded.'))
-                    : exportReplayAsync(recorder, acceptedRun, {
-                        scheduleChunk: scheduleOptionalReplayChunk,
-                      });
-                void optionalReplay
-                  .then((replay) =>
-                    journeyProfile.performance.capture({
-                      mode: 'solo',
-                      missionId: acceptedMission.id,
-                      ...acceptedClear,
-                      replay,
-                    }),
-                  )
-                  .then((result) => {
-                    if (!journeyPerformanceActive || run !== acceptedRun || runId !== acceptedRunId)
-                      return;
-                    journeyBestResult = { runId: acceptedRunId, result };
-                    refreshJourneyBest();
-                  })
-                  .catch(() => {
-                    if (!journeyPerformanceActive || run !== acceptedRun || runId !== acceptedRunId)
-                      return;
-                    journeyBestResult = { runId: acceptedRunId, result: { error: 'unavailable' } };
-                    refreshJourneyBest();
-                  });
-              } catch {
-                /* Comparison is optional; the accepted clear and Next remain available. */
-              }
-            }
+            if (acceptedClear?.runId === acceptedRunId)
+              void captureJourneyPerformanceLater(acceptedMission, acceptedClear);
           }
           if (!candidateHost?.owns(activeEntry)) {
             const previousBodies = availableBodies();
@@ -12915,6 +13090,7 @@ try {
       this.framePending = false;
       this.pendingSubmission = false;
       this.frameStartedAt = null;
+      this.frameWorkPhase = null;
       const preStep = () => this.beginFrame();
       const postRender = (renderer) => this.finishFrame(renderer);
       this.game.events.on(Phaser.Core.Events.PRE_STEP, preStep);
@@ -13066,6 +13242,7 @@ try {
       // A failed/aborted renderer may not emit POST_RENDER.
       this.restoreDisplayRender();
       this.frameStartedAt = performance.now();
+      this.frameWorkPhase = null;
       this.framePending = false;
       this.pendingSubmission = false;
       this.submittedInputCount = 0;
@@ -13124,6 +13301,7 @@ try {
           this.frameHudMs,
           this.frameSimulationMs,
           workMs,
+          this.frameWorkPhase,
         );
       }
       gameShell?.setQuality(qualityPolicy.snapshot().tier);
@@ -13347,8 +13525,10 @@ try {
           : time.elapsedSeconds
         : Math.min(rawMs / 1000, 0.1);
       if (time.interrupted) performanceSession?.interruption(rawMs);
-      performanceSession?.setPhase(
-        !foreground
+      // Capture the update-entry phase before this callback can pause or win.
+      // Diagnostics-off keeps the phase expression unevaluated as before.
+      const frameWorkPhase = performanceSession
+        ? !foreground
           ? 'hidden'
           : rendererLost.size
             ? 'error'
@@ -13360,10 +13540,13 @@ try {
                   ? 'playing'
                   : started
                     ? 'paused'
-                    : 'ready',
-      );
+                    : 'ready'
+        : null;
+      performanceSession?.setPhase(frameWorkPhase);
       try {
-        update(dt);
+        // Controller Menu/Confirm can Resume synchronously while polling below.
+        // Its paused UI interval must not become authoritative gameplay time.
+        update(dt, active);
         updateMs = performance.now() - workStart;
         if (!foreground || demoHost?.active) this.retainUnchangedDisplay();
         if (demoHost?.active || !foreground || rendererLost.size) return;
@@ -13453,6 +13636,7 @@ try {
       } finally {
         this.framePending = true;
         this.frameNow = now;
+        this.frameWorkPhase = frameWorkPhase;
         this.frameRawMs = rawMs;
         this.frameActive = active;
         this.frameDemoPractice = demoPractice;
@@ -13755,10 +13939,13 @@ try {
     assertCurrent();
     return host.refreshInstalled({ assertCurrent });
   }
-  async function getUnifiedMissionLibrary(isCurrent = () => true) {
+  async function getUnifiedMissionLibrary(isCurrent = () => true, trace = null) {
     const callerCurrent = unifiedLibraryGuard(isCurrent);
     callerCurrent();
-    if (unifiedLibrary) return unifiedLibrary;
+    if (unifiedLibrary) {
+      trace?.mark('missions-build-cached');
+      return unifiedLibrary;
+    }
     let attempt = unifiedLibraryLoading;
     if (attempt) {
       // A new explicit owner may join a still-admitted request. A retired
@@ -13779,7 +13966,11 @@ try {
         attempt = null;
       }
     }
-    if (attempt) return attempt.promise;
+    if (attempt) {
+      // Its original observer retains ownership; a joining request does not inherit its stamps.
+      trace?.mark('missions-build-joined');
+      return attempt.promise;
+    }
     const callers = new Set([callerCurrent]);
     const admitted = unifiedLibraryGuard();
     const assertCurrent = () => {
@@ -13802,18 +13993,23 @@ try {
         result = null,
         committed = false;
       try {
+        trace?.mark('missions-imports-begin');
         const [
+          { attachJourneyChooser },
           { createInstalledMissionLibrary },
           { publishedJourneyLibrarySources },
           { combineJourneyLibrarySources },
           { createDuel },
         ] = await Promise.all([
+          import('./ui/journey-chooser.mjs'),
           import('./mission-library/installed-library.mjs'),
           import('./mission-library/published-routes.mjs'),
           import('./mission-library/cross-mode-journey.mjs'),
           import('./multiplayer.mjs'),
         ]);
+        trace?.mark('missions-imports-end');
         assertCurrent();
+        trace?.mark('missions-data-begin');
         const index =
           runtimeContent?.missionIndex ??
           (await getJSON('content/mission-library-index.json', assertCurrent));
@@ -13828,6 +14024,8 @@ try {
           runtimeContent?.themes ??
           (await getJSON('content-design/themes.json', assertCurrent)).themes;
         assertCurrent();
+        trace?.mark('missions-data-end');
+        trace?.mark('missions-sources-begin');
         const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
           ? journeyActorThemeCandidates(originalThemes, {
               includeOriginals: route.preserveOriginalThemes === true,
@@ -14031,7 +14229,9 @@ try {
             ...teamSources,
           ];
         }
+        trace?.mark('missions-sources-end');
         if (!runtimeContent) {
+          trace?.mark('missions-supplemental-imports-begin');
           const [
             { duelExpeditionLibrarySources, teamExpeditionLibrarySource },
             { TEAM_EXPANSION_ROUTE },
@@ -14041,9 +14241,11 @@ try {
             import('./content-design/multiplayer-expansion.mjs'),
             import('./mission-library/team-source.mjs'),
           ]);
+          trace?.mark('missions-supplemental-imports-end');
           assertCurrent();
           const expansionSources = [
             ...duelExpeditionLibrarySources({
+              onStage: trace?.mark,
               themes: originalThemes,
               activeRouteId: route.id,
               launch: departLibraryMission,
@@ -14055,6 +14257,7 @@ try {
               ? []
               : [
                   teamExpeditionLibrarySource({
+                    onStage: trace?.mark,
                     launch: departLibraryMission,
                     difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
                   }),
@@ -14094,6 +14297,7 @@ try {
         };
         const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
         assertCurrent();
+        trace?.mark('missions-installed-begin');
         result = await createInstalledMissionLibrary({
           assertCurrent,
           getProjectSources: async ({ assertCurrent }) => {
@@ -14202,6 +14406,7 @@ try {
               : { state: 'new', bestStars: null };
           },
         });
+        trace?.mark('missions-installed-end');
         assertCurrent();
         const state = createMissionLibrarySessionState({ mode: 'solo' });
         // Checked return restores the retained runtime independently of browsing.
@@ -14224,6 +14429,7 @@ try {
               );
             })
           : null;
+        trace?.mark('missions-chooser-build-begin');
         unifiedChooser = attachJourneyChooser({
           library: result.library,
           profile,
@@ -14235,9 +14441,16 @@ try {
             ? {
                 supportedModes: runtimeContent.selection.edition.modes,
                 availableCollectionsOnly: true,
-                description: runtimeContent.selection.edition.name,
               }
             : {}),
+          description: () =>
+            `${runtimeContent?.selection.edition.name ?? t('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir')} ${t('interface:captureNavigation.browseHint')}`,
+          browsingContext: ({ label }) => {
+            const context = soloNavigationContext();
+            return context
+              ? t('interface:captureNavigation.browsing', { mode: label, context })
+              : label;
+          },
           getCurrentId: () => {
             const mission = candidateHost && journeyMission();
             if (mission)
@@ -14290,6 +14503,7 @@ try {
             });
           },
         });
+        trace?.mark('missions-chooser-build-end');
         if (!journeyPreferences)
           browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
         // Keep the native settings and their guarded handlers, but not the old
@@ -14383,9 +14597,60 @@ try {
     const homeWasOpen = $('shell-home').open,
       oldRun = run,
       wasStarted = started;
+    // No trace, closure, payload or extra clock read exists on the ordinary path.
+    // Console delivery is supplementary, best effort evidence: a received begin
+    // survives a later unresponsive page; an undelivered end stays unobserved.
+    const trace = performanceSession
+      ? {
+          sequence: 0,
+          closed: false,
+          generation: performanceRunGeneration,
+          tick: run?.tick ?? 0,
+          build: unifiedBuildRevision,
+          mark(kind) {
+            if (trace.closed) return;
+            if (++trace.sequence >= 64) {
+              kind = 'missions-observer-overflow';
+              trace.closed = true;
+            }
+            let atMs = null;
+            try {
+              atMs = performance.now();
+              if (trace.generation > 0)
+                performanceSession.markEvent(kind, trace.generation, trace.tick, atMs);
+            } catch {
+              // Diagnostics never cancel or admit a library operation.
+            }
+            try {
+              console.debug(
+                'RevealLineMissionsStageV1 ' +
+                  JSON.stringify([
+                    revision,
+                    trace.build,
+                    trace.sequence,
+                    kind,
+                    trace.generation,
+                    trace.tick,
+                    atMs,
+                    performance.timeOrigin,
+                  ]),
+              );
+            } catch {
+              // The retained numeric ring remains independent of console delivery.
+            }
+          },
+          finish(kind) {
+            if (trace.closed) return;
+            trace.mark(kind);
+            trace.closed = true;
+          },
+        }
+      : null;
+    trace?.mark('missions-opening');
     ++unifiedLaunchRevision;
     pause(true);
     clearInput();
+    trace?.mark('missions-after-pause');
     const feedback = document.createElement('span');
     feedback.id = 'mission-library-opening-status';
     feedback.className = 'micro-note';
@@ -14394,6 +14659,7 @@ try {
     (opener?.isConnected ? opener : $('shell-play')).after(feedback);
     let failed = false;
     const cancel = () => {
+      trace?.finish('missions-cancelled');
       if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
       opening.dispose();
       feedback.remove();
@@ -14411,13 +14677,18 @@ try {
       run === oldRun &&
       started === wasStarted;
     try {
-      const host = await getUnifiedMissionLibrary(isCurrent);
+      const host = await getUnifiedMissionLibrary(isCurrent, trace);
       // The installed-card refresh may move focus while it reconciles an owned
       // catalogue. Claim the still-current opener before that internal work;
       // newer input still retires the claim while the state/revision checks
       // below also reject replaced navigation and game state.
-      if (!opening.claim()) return;
+      if (!opening.claim()) {
+        trace?.finish('missions-cancelled');
+        return;
+      }
+      trace?.mark('missions-refresh-begin');
       await refreshUnifiedInstalled(host, isCurrent);
+      trace?.mark('missions-refresh-end');
       const openingCurrent = opening.current();
       opening.dispose();
       if (
@@ -14431,9 +14702,13 @@ try {
         run !== oldRun ||
         started !== wasStarted ||
         !paused
-      )
+      ) {
+        trace?.finish('missions-cancelled');
         return;
-      unifiedChooser.open(opener, options);
+      }
+      trace?.mark('missions-open-begin');
+      unifiedChooser.open(opener, trace ? { ...options, onOpeningStage: trace.mark } : options);
+      trace?.finish('missions-complete');
       if (options?.random) {
         unifiedChooser.playRandom({ resetFilters: true });
         return;
@@ -14448,6 +14723,7 @@ try {
         }
       }
     } catch (error) {
+      trace?.finish(error?.name === 'AbortError' ? 'missions-cancelled' : 'missions-failed');
       if (revision === unifiedOpenRevision) {
         failed = true;
         localizedText(feedback, () => t('interface:missionsCouldNotLoadChooseMissionsToRetry'));
@@ -14479,14 +14755,40 @@ try {
     );
     refreshJourneySkip();
     $('journey-save-retry').onclick = () => void journeyProfile.flush();
+    let journeySaveExportOperation = null;
     $('journey-save-export').onclick = async () => {
       if (previewSession) return;
+      journeySaveExportOperation?.abort();
+      const controller = new AbortController();
+      journeySaveExportOperation = controller;
+      const assertCurrent = unifiedLibraryGuard(
+        () => journeySaveExportOperation === controller && !controller.signal.aborted,
+      );
       try {
-        await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
+        assertCurrent();
+        const { raw, partial } = await journeyProfile.exportAsync({ signal: controller.signal });
+        assertCurrent();
+        const filename = partial
+          ? journeyProfile.backupFilename.replace(/\.json$/, '-recovery.json')
+          : journeyProfile.backupFilename;
+        const result = await downloadJSON(JSON.parse(raw), filename);
+        assertCurrent();
+        if (partial)
+          localizedText($('journey-save-message'), () =>
+            t('interface:journeyBackup.exportPartial', { result: result.message }),
+          );
       } catch (error) {
+        try {
+          assertCurrent();
+        } catch {
+          return;
+        }
         localizedText($('journey-save-message'), () =>
           t('interface:journey.progressExportError', { error: error.message }),
         );
+      } finally {
+        if (journeySaveExportOperation === controller) journeySaveExportOperation = null;
+        controller.abort();
       }
     };
     if (previewSession) {
@@ -14739,7 +15041,28 @@ try {
       close: () => unifiedChooser?.close(),
     };
   }
+  function soloNavigationContext() {
+    // The accepted catalogue owner, not the entry URL or visual theme, grants
+    // this identity. Classic/imported selections retain their Capture context.
+    if (
+      candidateHost?.owns(activeEntry) &&
+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)
+    ) {
+      const name =
+        authoredRoute.id === 'humanoid-hunt-v1'
+          ? huntText('lessons')
+          : contentText(authoredRoute.source, 'name');
+      return `${name} · ${t('interface:solo2')}`;
+    }
+    return t('interface:captureNavigation.context', { mode: t('interface:solo2') });
+  }
   gameShell = attachGameShell({
+    navigationContext: soloNavigationContext,
+    comfortSettings: {
+      display: displayPreferences,
+      setDisplay: changeDisplay,
+      displayWarning: () => $('display-preferences-status').textContent,
+    },
     getAppearanceDefault: () => {
       const pin = currentAppearanceDefault();
       return pin && runtimeContent?.appearanceThemes.length

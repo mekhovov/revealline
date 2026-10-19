@@ -13,10 +13,18 @@ async function fixture({
   storageBlocked = false,
   crypto = webcrypto,
   missingConfig = false,
+  loadScript = (script) => script.onload?.(),
+  scripts = [
+    ['module.mjs', 'module', false],
+    ['classic.js', '', false],
+    ['deferred.js', '', true],
+  ],
 } = {}) {
   const all = [],
     started = [],
-    saved = [];
+    saved = [],
+    activated = [];
+  let reloads = 0;
   let nodes = [];
   class Element {
     constructor(tag) {
@@ -51,21 +59,22 @@ async function fixture({
     }
     replaceWith(script) {
       started.push(script.src || script.textContent);
-      queueMicrotask(() => script.onload?.());
+      activated.push(script);
+      queueMicrotask(() => loadScript(script));
     }
   }
-  for (const [src, type, defer] of [
-    ['module.mjs', 'module', false],
-    ['classic.js', '', false],
-    ['deferred.js', '', true],
-  ]) {
+  for (const [src, type, defer] of scripts) {
     const e = new Element('script');
     e.dataset.accessType = type;
-    e.setAttribute('src', src);
+    if (src) e.setAttribute('src', src);
+    e.setAttribute('nonce', 'fixture-nonce');
+    e.setAttribute('integrity', 'sha256-fixture');
+    e.setAttribute('crossorigin', 'anonymous');
     if (defer) e.setAttribute('defer', '');
     nodes.push(e);
   }
   const document = {
+    baseURI: 'https://example.test/game/studio/snake.html',
     readyState: 'complete',
     documentElement: { dataset: { accessState: 'locked' } },
     body: new Element('body'),
@@ -93,6 +102,8 @@ async function fixture({
     crypto,
     TextEncoder,
     Uint8Array,
+    URL,
+    location: { reload: () => reloads++ },
     CustomEvent: class {},
     atob,
     queueMicrotask,
@@ -118,6 +129,8 @@ async function fixture({
     all,
     started,
     saved,
+    activated,
+    reloads: () => reloads,
     flush,
     async submit(value) {
       const input = all.find((e) => e.tagName === 'input');
@@ -202,4 +215,134 @@ test('a replaced document rechecks access instead of trusting a previous unlocke
   assert.equal(f.document.documentElement.dataset.accessState, 'locked');
   assert.equal(f.started.length, before);
   assert.ok(f.all.some((e) => e.tagName === 'form'));
+});
+
+test('a failed script identifies its ordered path and reloads only on an explicit full-page action', async () => {
+  const f = await fixture({
+    remembered: verifier,
+    scripts: [
+      ['https://user:secret@example.test/game/snake.mjs?token=private#hidden', 'module', false],
+      ['classic.js', '', false],
+      ['deferred.js', '', true],
+    ],
+    loadScript: (script) => (script.type === 'module' ? script.onerror() : script.onload()),
+  });
+  assert.equal(await f.host.RevealLineAccess.ready, true);
+  assert.equal(f.document.documentElement.dataset.accessState, 'failed');
+  assert.equal(f.started.length, 2, 'later scripts stay inert after the failure');
+  const copy = f.all
+    .filter((e) => e.tagName === 'p')
+    .map((e) => e.textContent)
+    .join(' ');
+  assert.match(copy, /script 2 of 3.*\/game\/snake\.mjs/);
+  assert.doesNotMatch(copy, /secret|token|private|hidden/);
+  assert.ok(copy.length < 500);
+  const button = f.all.find((e) => e.tagName === 'button');
+  assert.equal(button.textContent, 'Reload page');
+  assert.equal(button.focused, true);
+  assert.equal(f.reloads(), 0);
+  await runInNewContext(source, f.host);
+  assert.equal(f.started.length, 2, 'loading the gate again never replays executed scripts');
+  button.listeners.click();
+  button.listeners.click();
+  assert.equal(f.reloads(), 1);
+  assert.equal(f.started.length, 2, 'recovery does not reactivate scripts in the current document');
+  for (const script of f.activated) {
+    assert.equal(script.async, false);
+    for (const [name, value] of [
+      ['nonce', 'fixture-nonce'],
+      ['integrity', 'sha256-fixture'],
+      ['crossorigin', 'anonymous'],
+    ])
+      assert.ok(script.attributes.some((a) => a.name === name && a.value === value));
+  }
+});
+
+test('inline module failures have a bounded diagnostic without exposing script contents', async () => {
+  const f = await fixture({
+    remembered: verifier,
+    scripts: [['', 'module', false]],
+    loadScript: (script) => script.onerror(),
+  });
+  const copy = f.all
+    .filter((e) => e.tagName === 'p')
+    .map((e) => e.textContent)
+    .join(' ');
+  assert.match(copy, /script 1 of 1.*inline module/);
+});
+
+test('script diagnostics bound long paths and omit inline data or malformed URL contents', async () => {
+  for (const src of [
+    'https://example.test/' + 'x'.repeat(10000),
+    'data:text/javascript,privateCode',
+    'https://[secret',
+  ]) {
+    const f = await fixture({
+      remembered: verifier,
+      scripts: [[src, 'module', false]],
+      loadScript: (script) => script.onerror(),
+    });
+    const copy = f.all
+      .filter((e) => e.tagName === 'p')
+      .map((e) => e.textContent)
+      .join(' ');
+    assert.ok(copy.length < 400);
+    assert.doesNotMatch(copy, /privateCode|secret/);
+    assert.equal(f.started.length, 1);
+  }
+});
+
+test('an old document cannot continue script activation or overlay a replacement page', async () => {
+  for (const outcome of ['onload', 'onerror']) {
+    const f = await fixture({ remembered: verifier, loadScript: () => {} });
+    assert.equal(f.started.length, 1);
+    const oldScript = f.activated[0];
+    f.document.documentElement = { dataset: { accessState: 'locked' } };
+    f.host.localStorage.getItem = () => 'invalid-token';
+    await runInNewContext(source, f.host);
+    const current = f.host.RevealLineAccess;
+    oldScript[outcome]();
+    await f.flush();
+    assert.equal(f.host.RevealLineAccess, current);
+    assert.equal(f.document.documentElement.dataset.accessState, 'locked');
+    assert.equal(f.started.length, 1);
+    assert.equal(
+      f.all.filter((e) => e.attributes.some((a) => a.name === 'role' && a.value === 'alert'))
+        .length,
+      0,
+    );
+  }
+});
+
+test('a failure reload action is retired when its document is replaced', async () => {
+  const f = await fixture({ remembered: verifier, loadScript: (script) => script.onerror() });
+  const button = f.all.find((e) => e.tagName === 'button');
+  assert.ok(button);
+  f.document.documentElement = { dataset: { accessState: 'locked' } };
+  button.listeners.click();
+  assert.equal(f.reloads(), 0);
+});
+
+test('an unlock completed after document replacement cannot remember or start the old page', async () => {
+  let finish;
+  const f = await fixture({
+    crypto: {
+      subtle: {
+        importKey: async () => ({}),
+        deriveBits: () =>
+          new Promise((resolve) => {
+            finish = resolve;
+          }),
+      },
+    },
+  });
+  const pending = f.submit('fixture-password');
+  await f.flush();
+  assert.equal(typeof finish, 'function');
+  f.document.documentElement = { dataset: { accessState: 'locked' } };
+  finish(Buffer.from(verifier, 'base64url'));
+  await pending;
+  assert.equal(f.document.documentElement.dataset.accessState, 'locked');
+  assert.deepEqual(f.started, []);
+  assert.deepEqual(f.saved, []);
 });

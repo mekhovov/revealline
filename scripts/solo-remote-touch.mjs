@@ -12,6 +12,33 @@ export const TOUCH_SOURCE = Object.freeze({
   tree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
   runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
 });
+export const TOUCH_DE332_COHORT = 'native-touch-candidatede332';
+export const TOUCH_DE332_SOURCE = Object.freeze({
+  revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+  runtime: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+});
+export const TOUCH_RUNTIME73_COHORT = 'native-touch-candidate73';
+export const TOUCH_RUNTIME73_SOURCE = Object.freeze({
+  revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+  tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+  runtime: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+});
+export const TOUCH_RUNTIME797_COHORT = 'native-touch-candidate797';
+export const TOUCH_RUNTIME797_SOURCE = Object.freeze({
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  runtime: '797e03f28743921842df6aa57520a72016ba3dfc',
+});
+const sourceBoundTouch = (sourceCohort) =>
+  [TOUCH_DE332_COHORT, TOUCH_RUNTIME73_COHORT, TOUCH_RUNTIME797_COHORT].includes(sourceCohort);
+export function touchSource(sourceCohort) {
+  if (sourceCohort === TOUCH_RUNTIME797_COHORT) return TOUCH_RUNTIME797_SOURCE;
+  if (sourceCohort === TOUCH_RUNTIME73_COHORT) return TOUCH_RUNTIME73_SOURCE;
+  if (sourceCohort === undefined) return TOUCH_SOURCE;
+  assert.equal(sourceCohort, TOUCH_DE332_COHORT, 'Undeclared touch source');
+  return TOUCH_DE332_SOURCE;
+}
 export const TOUCH_JOBS = ['chromium-dpad', 'webkit-dpad', 'chromium-stick', 'chromium-swipe'];
 export const TOUCH_FIXTURE = Object.freeze({
   path: 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
@@ -51,7 +78,108 @@ export function touchCase(job, repetition) {
     },
   };
 }
-export function assertTouchCandidate(candidate) {
+function validate797FirstEight(release) {
+  assert.equal(release.firstEightRequired, true);
+  assert.equal(release.firstEightAllCorrectnessPassed, true);
+  const proof = release.firstEightEvidence;
+  assert(proof && typeof proof === 'object' && !Array.isArray(proof));
+  assert.deepEqual(
+    Object.keys(proof).sort(),
+    [
+      'format',
+      'sourceRevision',
+      'runId',
+      'artifactId',
+      'artifactSHA256',
+      'summarySHA256',
+      'correctness',
+      'ownersClosed',
+    ].sort(),
+  );
+  assert.equal(proof.format, 'SoloFirstEightCorrectnessEvidenceV1');
+  assert.equal(proof.sourceRevision, '797e03f28743921842df6aa57520a72016ba3dfc');
+  for (const key of ['runId', 'artifactId'])
+    assert(Number.isSafeInteger(proof[key]) && proof[key] > 0);
+  for (const key of ['artifactSHA256', 'summarySHA256']) assert.match(proof[key], /^[a-f0-9]{64}$/);
+  assert.equal(proof.correctness, 'passed');
+  assert.equal(proof.ownersClosed, true);
+}
+
+export function assertTouchCandidate(candidate, sourceCohort) {
+  touchSource(sourceCohort);
+  if (sourceCohort === TOUCH_RUNTIME797_COHORT) {
+    const { revision, tree, run, artifact, outer, inner, manifestSHA256 } = candidate;
+    assert.deepEqual(
+      { revision, tree, run, artifact, outer, inner, manifestSHA256 },
+      {
+        revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+        tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+        run: 39104551453,
+        artifact: 12128990483,
+        outer: {
+          bytes: 1094639112,
+          sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
+        },
+        inner: {
+          bytes: 1075807530,
+          sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
+        },
+        manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
+      },
+    );
+    return;
+  }
+  if (sourceCohort === TOUCH_RUNTIME73_COHORT) {
+    const { revision, tree, run, artifact, outer, inner, manifestSHA256 } = candidate;
+    assert.deepEqual(
+      { revision, tree, run, artifact, outer, inner, manifestSHA256 },
+      {
+        revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+        tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+        run: 39099979283,
+        artifact: 12127570566,
+        outer: {
+          bytes: 1094639407,
+          sha256: '6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64',
+        },
+        inner: {
+          bytes: 1075807617,
+          sha256: '17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54',
+        },
+        manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
+      },
+    );
+    return;
+  }
+  if (sourceCohort === TOUCH_DE332_COHORT) {
+    assert.deepEqual(
+      {
+        revision: candidate.revision,
+        tree: candidate.tree,
+        run: candidate.run,
+        artifact: candidate.artifact,
+        outer: candidate.outer,
+        inner: candidate.inner,
+        manifestSHA256: candidate.manifestSHA256,
+      },
+      {
+        revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+        tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+        run: 39091745654,
+        artifact: 12123463810,
+        outer: {
+          bytes: 1094606342,
+          sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+        },
+        inner: {
+          bytes: 1075789325,
+          sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+        },
+        manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+      },
+    );
+    return;
+  }
   assert.equal(candidate.revision, TOUCH_SOURCE.revision);
   assert.equal(candidate.tree, TOUCH_SOURCE.tree);
   assert.equal(candidate.run, 39008793814);
@@ -73,8 +201,9 @@ export function validateTouchPlan(plan) {
   assert.equal(plan.format, 'SoloHostedTouchPlanV1');
   assert.equal(plan.status, 'reviewed-input-diagnostic-only');
   assert.equal(plan.repository, 'mekhovov/revealline');
-  assertTouchCandidate(plan.candidate);
-  assert.equal(plan.runtimeRevision, TOUCH_SOURCE.runtime);
+  const source = touchSource(plan.sourceCohort);
+  assertTouchCandidate(plan.candidate, plan.sourceCohort);
+  assert.equal(plan.runtimeRevision, source.runtime);
   assert.deepEqual(plan.baseline, {
     revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
     tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
@@ -92,14 +221,26 @@ export function validateTouchPlan(plan) {
   assert.deepEqual(plan.protocol, TOUCH_PROTOCOL);
   assert.deepEqual(plan.fixture, TOUCH_FIXTURE);
   assert.equal(plan.release.scope, 'native-touch-submission-only');
-  assert.equal(plan.release.candidateRevision, TOUCH_SOURCE.revision);
-  assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
+  assert.equal(plan.release.candidateRevision, source.revision);
+  if (sourceBoundTouch(plan.sourceCohort)) {
+    if (plan.sourceCohort === TOUCH_RUNTIME797_COHORT) validate797FirstEight(plan.release);
+    else {
+      assert.equal(plan.release.firstEightRequired, false);
+      assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    }
+    assert.deepEqual(plan.release.dispatch, {
+      workflow: '.github/workflows/solo-native-package-consumer.yml',
+      lane: 'touch',
+      source: source.revision,
+    });
+    assert.equal(plan.release.onceOnlyBefore, undefined);
+  } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.performanceQualification, 'excluded');
   assert.equal(plan.release.physicalQualification, 'unobserved');
   assert.equal(plan.release.automaticRetries, 0);
   assert.equal(plan.release.priorProofInspected, true);
   assert.equal(plan.release.noUnclosedOwners, true);
-  assert.match(plan.release.onceOnlyBefore, /^[a-f0-9]{40}$/);
+  if (plan.sourceCohort === undefined) assert.match(plan.release.onceOnlyBefore, /^[a-f0-9]{40}$/);
   assert.deepEqual(
     plan.rows,
     [1, 2, 3].map((repetition) => ({
@@ -215,11 +356,12 @@ export function touchDisplayCommand(executables, command) {
 }
 export async function prepareTouchMode(ctx) {
   validateTouchPlan(ctx.plan);
+  const source = touchSource(ctx.plan.sourceCohort);
   await verifyInputs(ctx);
   assert.equal(ctx.admitted.status, 'passed');
   const actual = ctx.admitted.artifacts.candidate;
-  assert.equal(actual.sourceRevision, TOUCH_SOURCE.revision);
-  assert.equal(actual.sourceTree, TOUCH_SOURCE.tree);
+  assert.equal(actual.sourceRevision, source.revision);
+  assert.equal(actual.sourceTree, source.tree);
   assert.equal(actual.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(actual.archiveIdentity, ctx.plan.candidate.inner);
   const executables = {};
@@ -238,7 +380,11 @@ export async function prepareTouchMode(ctx) {
     30000,
   );
   ctx.report.performanceExclusion = true;
-  ctx.report.firstEightAllCorrectnessPassed = false;
+  if (ctx.plan.sourceCohort === TOUCH_RUNTIME797_COHORT) {
+    ctx.report.firstEightRequired = true;
+    ctx.report.firstEightAllCorrectnessPassed = true;
+  } else if (sourceBoundTouch(ctx.plan.sourceCohort)) ctx.report.firstEightRequired = false;
+  else ctx.report.firstEightAllCorrectnessPassed = false;
   return {
     executables,
     scope:
@@ -363,6 +509,7 @@ export function touchLatency(raw, quantileBound) {
   };
 }
 export async function touchAssessment(plan, row, raw, command) {
+  const source = touchSource(plan.sourceCohort);
   const spec = touchCase(plan.job, row.repetition);
   let failure = null;
   try {
@@ -385,9 +532,9 @@ export async function touchAssessment(plan, row, raw, command) {
     assert.equal(raw.environment.dpr, spec.context.deviceScaleFactor);
     assert.equal(raw.nativeCapability.syntheticDOMEvents, false);
     if (spec.engine === 'chromium') assert(raw.environment.maxTouchPoints > 0);
-    assert.equal(raw.buildIdentity.sourceRevision, TOUCH_SOURCE.revision);
-    assert.equal(raw.artifact.sourceRevision, TOUCH_SOURCE.revision);
-    assert.equal(raw.artifact.sourceTree, TOUCH_SOURCE.tree);
+    assert.equal(raw.buildIdentity.sourceRevision, source.revision);
+    assert.equal(raw.artifact.sourceRevision, source.revision);
+    assert.equal(raw.artifact.sourceTree, source.tree);
     assert.equal(raw.artifact.manifestSHA256, plan.candidate.manifestSHA256);
     assert.deepEqual(raw.artifact.archiveIdentity, plan.candidate.inner);
     assert.equal(raw.observedBrowserClosed, true);
@@ -458,6 +605,7 @@ export async function touchAssessment(plan, row, raw, command) {
   };
 }
 export async function runTouchRow(ctx, row, dir, tmp) {
+  const source = touchSource(ctx.plan.sourceCohort);
   await verifyInputs(ctx);
   const { startProductionPreview } = await import(
     pathToFileURL(join(ctx.here, 'serve-production-preview.mjs'))
@@ -480,11 +628,12 @@ export async function runTouchRow(ctx, row, dir, tmp) {
     const bytes = Buffer.from(await response.arrayBuffer());
     assert(bytes.length < MiB);
     const build = JSON.parse(bytes);
-    assert.equal(build.sourceRevision, TOUCH_SOURCE.revision);
+    assert.equal(build.sourceRevision, source.revision);
     for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS))
       assert.equal(response.headers.get(name), value);
     const execution = {
       format: 'SoloHostedTouchExecutionV1',
+      ...(ctx.plan.sourceCohort ? { sourceCohort: ctx.plan.sourceCohort } : {}),
       job: touchCase(ctx.plan.job, row.repetition),
       protocol: TOUCH_PROTOCOL,
       artifact: {

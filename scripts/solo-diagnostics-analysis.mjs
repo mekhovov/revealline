@@ -1,4 +1,11 @@
 import assert from 'node:assert/strict';
+import {
+  PROSPECTIVE_OVERHEAD_METHOD,
+  prospectiveOverhead,
+  overheadP95Bounds,
+  overheadLogRatioBounds,
+  overheadPairedBox,
+} from './solo-overhead-interval.mjs';
 
 export const DIAGNOSTICS_FORMAT = 'SoloDiagnosticsQualificationV1';
 export const OVERHEAD_LIMIT = 0.05;
@@ -328,6 +335,9 @@ export function diagnosticsObservation(report, execution, configuration) {
 
 export function analyzeDiagnostics(manifest, reports) {
   assert.equal(manifest.format, DIAGNOSTICS_FORMAT);
+  const prospective = prospectiveOverhead(manifest);
+  if (prospective)
+    assert.equal(manifest.configuration.pairs, 10, 'Prospective overhead requires ten pairs');
   const expected = diagnosticsSchedule(manifest.configuration.pairs, manifest.configuration.seed);
   const reasons = [];
   const observations = expected.map((planned, index) => {
@@ -390,7 +400,27 @@ export function analyzeDiagnostics(manifest, reports) {
     noAdaptationWitness.status = 'observed-full';
   } else
     reasons.push('No complete quality witness excludes adaptive rendering changes in both arms.');
-  if (
+  if (prospective) {
+    if (resolutionValid && valid.length === 10) {
+      try {
+        const bounds = pairs.map((pair) => {
+          const arms = observations.filter((row) => row.pair === pair.pair);
+          pair.onP95BoundsMs = overheadP95Bounds(
+            arms.find((row) => row.diagnostics).rawRunningWorkMs,
+            quantum,
+          );
+          pair.offP95BoundsMs = overheadP95Bounds(
+            arms.find((row) => !row.diagnostics).rawRunningWorkMs,
+            quantum,
+          );
+          return overheadLogRatioBounds(pair.onP95BoundsMs, pair.offP95BoundsMs);
+        });
+        adjustedInterval = overheadPairedBox(bounds);
+      } catch (error) {
+        reasons.push(`Prospective interval unresolved: ${String(error.message).slice(0, 256)}`);
+      }
+    }
+  } else if (
     interval &&
     resolutionValid &&
     valid.every((pair) => pair.offP95Ms > quantum && pair.onP95Ms > quantum)
@@ -420,6 +450,7 @@ export function analyzeDiagnostics(manifest, reports) {
   }
   return {
     format: DIAGNOSTICS_FORMAT,
+    ...(prospective ? { analysisMethod: PROSPECTIVE_OVERHEAD_METHOD } : {}),
     status,
     limit: OVERHEAD_LIMIT,
     reasons,
@@ -435,8 +466,9 @@ export function analyzeDiagnostics(manifest, reports) {
       execution: manifest.executions?.[expected.length + index] ?? null,
       report,
     })),
-    method:
-      'Nearest-rank p95 of complete independent running-phase samples; paired log(on/off) differences; two-sided 95% Student-t interval; conservative observed-quantum sensitivity bound.',
+    method: prospective
+      ? 'Prospective paired-p95-endpoint-box-v1: all ten predeclared pairs; raw nearest-rank p95 duration bounds; exact 1,024-vertex extrema of the existing two-sided 95% Student-t interval under the assumed duration-error bounds. No historical verdict replacement.'
+      : 'Nearest-rank p95 of complete independent running-phase samples; paired log(on/off) differences; two-sided 95% Student-t interval; conservative observed-quantum sensitivity bound.',
     assumptions: [
       'Independent matched pairs and approximately normal paired log ratios; frames are not treated as independent experimental replicates.',
       'Observed minimum positive timer step estimates quantization; sensitivity assumes that step bounds each measured duration error. It is not a guaranteed browser privacy-jitter bound.',

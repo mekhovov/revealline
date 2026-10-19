@@ -1,3 +1,7 @@
+import {
+  assertDeclaredReadinessTool,
+  modelCurrentReadinessTools,
+} from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -265,7 +269,7 @@ test('new journal policies require exact immutable recipes and cannot be combine
 async function journalFixture(
   t,
   phase,
-  { activeRestored = false, omitRestored = false, defaultPolicy = false } = {},
+  { activeRestored = false, omitRestored = false, defaultPolicy = false, prospectiveManifest } = {},
 ) {
   const dir = await temporary(t),
     output = join(dir, 'report.json'),
@@ -330,7 +334,7 @@ async function journalFixture(
           : 'final-existing-public-boundary',
     );
   }
-  const plan = bindSustainedJob(await manifest(phase), 'chromium', 1);
+  const plan = bindSustainedJob(prospectiveManifest ?? (await manifest(phase)), 'chromium', 1);
   return { plan, output, url, raw: { hitchJournal: store.finish() }, store };
 }
 
@@ -532,3 +536,316 @@ test('final lifecycle assessment keeps complete route checks, raw failures and m
     }
   }
 });
+
+for (const sourceLabel of ['de332', '797']) {
+  const sourceRevision =
+    sourceLabel === '797'
+      ? '797e03f28743921842df6aa57520a72016ba3dfc'
+      : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+  async function de332Manifest(phase) {
+    const m = JSON.parse(
+      await load(`docs/performance/solo-${sourceLabel}-lifecycle-${phase}-plan.json`),
+    );
+    if (sourceLabel === '797' && phase === 'retry') {
+      assert.equal(m.release.status, 'reviewed-diagnostic-only');
+      assert.equal(m.release.predecessorRun, 39115157669);
+      assert.deepEqual(
+        m.release.firstEightEvidence,
+        JSON.parse(
+          await load('docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json'),
+        ).proof,
+      );
+      assert.equal(m.release.evidence.length, 6);
+      assert(
+        m.release.evidence.every(
+          (ref) => ref.runId === 39115157669 && ref.disposition === 'failed-reviewed',
+        ),
+      );
+      bindSustainedJob(m, 'chromium', 1);
+      return m;
+    }
+    assert.equal(m.release.status, 'held-for-review');
+    assert.throws(() => bindSustainedJob(m, 'chromium', 1));
+    // Synthetic release facts test admission shape, never grant remote authority.
+    Object.assign(m.release, {
+      status: 'reviewed-diagnostic-only',
+      predecessorRun: 1,
+      noUnclosedOwners: true,
+      allPriorPlannedJobsClosed: true,
+      priorProofInspected: true,
+      evidence: [
+        {
+          runId: 1,
+          artifactId: 2,
+          artifactSHA256: '0'.repeat(64),
+          summarySHA256: '0'.repeat(64),
+          disposition: 'failed-reviewed',
+        },
+      ],
+    });
+    if (sourceLabel === '797') {
+      m.release.firstEightAllCorrectnessPassed = true;
+      m.release.firstEightEvidence = {
+        format: 'SoloFirstEightCorrectnessEvidenceV1',
+        sourceRevision,
+        runId: 1,
+        artifactId: 2,
+        artifactSHA256: '0'.repeat(64),
+        summarySHA256: '0'.repeat(64),
+        correctness: 'passed',
+        ownersClosed: true,
+      };
+    }
+    return m;
+  }
+
+  test(`${sourceLabel}: lifecycle retry and long recording retain exact twelve-arm comparisons and immutable recipes`, async () => {
+    for (const phase of ['retry', 'long29']) {
+      const m = await de332Manifest(phase),
+        spec = phaseValues[phase];
+      assert.equal(m.sourceCohort, `${phase}-main8b-candidate${sourceLabel}-v1`);
+      assert.equal(m.candidate.revision, sourceRevision);
+      assert.equal(m.candidate.artifact, sourceLabel === '797' ? 12128990483 : 12123463810);
+      assert.equal(m.baseline.reusableArtifact.artifact, 12088541389);
+      for (const ref of [...m.frozenTools, ...m.adapterInputs, ...Object.values(m.recipes)]) {
+        if (
+          await assertDeclaredReadinessTool(
+            `docs/performance/solo-${sourceLabel}-lifecycle-${phase}-plan.json`,
+            ref,
+          )
+        )
+          continue;
+        const bytes = await load(ref.path);
+        assert.equal(bytes.length, ref.bytes, ref.path);
+        assert.equal(sha(bytes), ref.sha256, ref.path);
+      }
+      const jobs = sustainedMatrix(m).include;
+      assert.equal(jobs.length, 6);
+      assert(
+        jobs.every(
+          (j) =>
+            j.jobMinutes === spec.job &&
+            j.stepMinutes === spec.helper + 3 &&
+            j.outerSeconds === (spec.helper + 2) * 60,
+        ),
+      );
+      let arms = 0;
+      for (const engine of ['chromium', 'webkit'])
+        for (const repetition of [1, 2, 3]) {
+          const p = bindSustainedJob(m, engine, repetition);
+          arms += p.rows.length;
+          assert.deepEqual(
+            p.rows.map((r) => r.source),
+            repetition === 2 ? ['candidate', 'baseline'] : ['baseline', 'candidate'],
+          );
+          assert(p.rows.every((r) => r.timeoutMs === spec.row && r.performanceExclusion));
+          assert.equal(p.helperTimeoutMs, spec.helper * 60000);
+          assert.equal(p.rowEvidenceBytes, 128 * 1024 ** 2);
+          assert.equal(p.evidenceBytes, 512 * 1024 ** 2);
+          assert.equal(p.setupTimeoutMs, 40 * 60000);
+          assert.equal(p.calibrationTimeoutMs, 300000);
+          assert.equal(p.release.firstEightRequired, sourceLabel === '797');
+          assert.equal(
+            p.release.firstEightAllCorrectnessPassed,
+            sourceLabel === '797' ? true : undefined,
+          );
+          for (const mutate of [
+            ...(sourceLabel === '797'
+              ? [
+                  (p) => (p.release.firstEightRequired = false),
+                  (p) => (p.release.firstEightEvidence = null),
+                  (p) =>
+                    (p.release.firstEightEvidence.sourceRevision =
+                      '73a345cec696d7789198cf295ca5c37b17ca0e71'),
+                  (p) => (p.release.firstEightEvidence.correctness = 'failed'),
+                  (p) => (p.release.firstEightEvidence.ownersClosed = false),
+                  (p) => (p.release.firstEightEvidence.artifactSHA256 = 'invalid'),
+                  (p) => (p.release.firstEightEvidence.runId = 0),
+                  (p) => (p.release.firstEightEvidence.unreviewed = true),
+                ]
+              : []),
+            (p) => {
+              p.phase = 'next';
+            },
+            (p) => {
+              p.candidate.outer.bytes++;
+            },
+            (p) => {
+              p.baseline.reusableArtifact.artifact++;
+            },
+            (p) => {
+              p.recipes[phase].sha256 = '0'.repeat(64);
+            },
+            (p) => {
+              p.release.status = 'reviewed-and-released';
+            },
+            (p) => {
+              p.release.predecessorRun = null;
+            },
+            (p) => {
+              p.release.noUnclosedOwners = false;
+            },
+            (p) => {
+              p.release.dispatch.phase = 'next';
+            },
+            (p) => {
+              p.release.onceOnlyBefore = p.candidate.revision;
+            },
+            (p) => {
+              p.release.firstEightAllCorrectnessPassed = sourceLabel !== '797';
+            },
+            (p) => {
+              p.rows[0].timeoutMs++;
+            },
+            (p) => {
+              p.performanceExclusion = false;
+            },
+            (p) => {
+              p.hitchJournal = undefined;
+            },
+          ]) {
+            const q = structuredClone(p);
+            mutate(q);
+            assert.throws(() => validateSustainedPlan(q));
+          }
+        }
+      assert.equal(arms, 12);
+    }
+    assert.equal(recipes.retry.value.actions[8].count, 20);
+    assert.equal(recipes.long29.value.actions[3].atLeastMs, 1740000);
+    assert.equal(recipes.long29.value.actions[8].type, 'reload');
+  });
+
+  test(`${sourceLabel}: lifecycle actual preparation and binary documents retain retry and pre-reload authority`, async (t) => {
+    for (const phase of ['retry', 'long29']) {
+      const m = await de332Manifest(phase),
+        dir = await temporary(t),
+        work = join(dir, 'work');
+      await mkdir(work);
+      const p = bindSustainedJob(
+        await modelCurrentReadinessTools(
+          `docs/performance/solo-${sourceLabel}-lifecycle-${phase}-plan.json`,
+          m,
+        ),
+        'webkit',
+        1,
+      );
+      const ctx = {
+        plan: p,
+        repository: root,
+        here: join(root, 'scripts'),
+        work,
+        evidence: dir,
+        report: {},
+        admitted: { artifacts: { candidate: {} } },
+        ensureBaseline: async () => {},
+        required: async () =>
+          assert.fail('No browser/calibration in this pure preparation control'),
+        digest: async (path) => {
+          const b = await readFile(path);
+          return { bytes: b.length, sha256: sha(b) };
+        },
+      };
+      ctx.modeState = await prepareSustainedMode(ctx);
+      assert.deepEqual(await readFile(ctx.modeState.recipePath), recipes[phase].bytes);
+      assert.equal(ctx.modeState.snapshotStorage, null);
+      for (const engine of ['chromium', 'webkit']) {
+        const args = sustainedArguments(
+          ctx,
+          { ...p.rows[1], engine },
+          'http://127.0.0.1:4321/game/?journey=opening',
+          dir,
+        );
+        assert(args.includes('--hitch-journal'));
+        assert(!args.includes('--snapshot-chunks'));
+        assert.equal(args.includes('--memory-profile'), phase === 'retry' && engine === 'chromium');
+        const options = qualificationHitchJournalOptions(
+          args,
+          recipes[phase].value,
+          recipes[phase].bytes,
+        );
+        assert.equal(
+          options.preparationPolicy,
+          phase === 'retry' ? 'first-return-retry-anchored-v1' : undefined,
+        );
+        assert.equal(
+          options.activeDocumentPolicy,
+          phase === 'long29' ? 'first-before-reload-v1' : undefined,
+        );
+      }
+      const f = await journalFixture(t, phase, { prospectiveManifest: m });
+      const result = await verifyTimingHitchJournal(f.plan, f.raw, f.output, f.url);
+      assert.equal(result.status, 'complete', result.failure);
+      assert.equal(result.documents, 2);
+      assert.equal(result.activeElapsedMs, 40.125);
+      if (phase === 'long29') {
+        assert.equal(result.activePlayCoverage, 'observed-first-solo-before-reload');
+        assert.equal(result.documentCoverage[1].activeFrames, 0);
+        const changed = await journalFixture(t, phase, {
+          prospectiveManifest: m,
+          activeRestored: true,
+        });
+        assert.equal(
+          (await verifyTimingHitchJournal(changed.plan, changed.raw, changed.output, changed.url))
+            .status,
+          'invalid-evidence',
+        );
+      }
+      const omitted = structuredClone(f.raw);
+      omitted.hitchJournal.documents.pop();
+      assert.equal(
+        (await verifyTimingHitchJournal(f.plan, omitted, f.output, f.url)).status,
+        'invalid-evidence',
+      );
+    }
+  });
+
+  test(`${sourceLabel}: lifecycle assessment retains every Retry failure and long recording insufficiency`, async () => {
+    for (const phase of ['retry', 'long29']) {
+      const p = bindSustainedJob(await de332Manifest(phase), 'chromium', 1),
+        raw = rawProtocol(p);
+      const assess = (value, command = closed, journal = { status: 'complete' }) =>
+        finalLifecycleAssessment(p, p.rows[1], value, command, '123.4', journal);
+      const result = assess(raw);
+      assert.equal(result.correctness, 'pass');
+      assert.equal(result.protocolStatus, 'pass');
+      assert.equal(result.status, phase === 'retry' ? 'passed' : 'failed');
+      assert.equal(result.performanceQualification, 'not-qualified-diagnostic-only');
+      assert.equal(result.firstEightRequired, sourceLabel === '797');
+      assert.equal(result.firstEightAllCorrectnessPassed, sourceLabel === '797' ? true : undefined);
+      if (phase === 'long29') assert.equal(result.preReloadPerformance.status, 'inconclusive');
+      for (const mutate of [
+        (r) => {
+          r.failure = 'original failure';
+        },
+        (r) => {
+          r.replay.nativeVerification.status = 'fail';
+        },
+        (r) => {
+          r.sourceRevision = p.baseline.revision;
+        },
+        (r) => {
+          if (phase === 'retry') r.actions[8].status = 'fail';
+          else r.actions[3].elapsedMs = 0;
+        },
+        (r) => {
+          r.actions.push({
+            path: phase === 'retry' ? '8.0.0' : '3.0.0',
+            type: 'key',
+            status: 'fail',
+          });
+        },
+        (r) => {
+          if (phase === 'retry') r.actions[8].iterations = 19;
+          else r.replayIdentity.observations[1].sha256 = 'b'.repeat(64);
+        },
+      ]) {
+        const changed = structuredClone(raw);
+        mutate(changed);
+        assert.equal(assess(changed).status, 'failed');
+      }
+      assert.equal(assess(raw, { status: 'failed', exitCode: 2 }).status, 'failed');
+      assert.equal(assess(raw, closed, { status: 'invalid-evidence' }).status, 'failed');
+    }
+  });
+}

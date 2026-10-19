@@ -127,9 +127,274 @@ export const DIAGNOSED_READINESS_PROTOCOL = Object.freeze({
   numericalGates: 'unchanged-raw',
   performanceQualification: false,
 });
+export const DE332_READINESS_SOURCE = Object.freeze({
+  revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+});
+export const DE332_READINESS_COHORT = 'readiness-preparation-candidatede332';
+export const DE332_READINESS_ROW = 'readiness-preparation-row-candidatede332';
+export const DE332_READINESS_FAULT_FIXTURES = Object.freeze({
+  'required-original-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-de332/required-original-cancel-start-v2.qualification.fixture',
+    bytes: 4546,
+    sha256: '88f5c21bd2bbd5f75eb99bcb848e053e1b6b96632ae49e7f4c870a0aed9c46a6',
+  },
+  'optional-icon-missing': {
+    path: 'docs/performance/fixtures/solo-readiness-de332/optional-icon-missing-v1.qualification.fixture',
+    bytes: 3233,
+    sha256: '2fe33ea0291018b09174338ac777a66ae62b22ccc9c911e02d4af1dcbe0ca1b7',
+  },
+  'selected-font-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-de332/selected-font-request-settlement-v4.qualification.fixture',
+    bytes: 5773,
+    sha256: '10e8ea2983a25dc3c7a4c5ff90a906256b1acf9ddd3f935faf9e0ce3b600565f',
+  },
+});
+export const DE332_READINESS_PROTOCOL = Object.freeze({
+  ...PREPARATION_READINESS_PROTOCOL,
+  name: 'geometry-and-source-bound-preparation-de332-v1',
+  selectedFontObservation: 'selected-font-request-settlement-v4',
+  requiredStartRetention: 'trusted-initial-start-v1',
+});
+const de332Plan = (plan) => plan?.sourceCohort === DE332_READINESS_COHORT;
+export const RUNTIME73_READINESS_SOURCE = Object.freeze({
+  revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+  tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+});
+export const RUNTIME73_READINESS_COHORT = 'readiness-preparation-candidate73';
+export const RUNTIME73_READINESS_ROW = 'readiness-preparation-row-candidate73';
+export const RUNTIME73_READINESS_FAULT_FIXTURES = Object.freeze({
+  'required-original-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-73a345/required-original-cancel-start-v2.qualification.fixture',
+    bytes: 4546,
+    sha256: '2d5f47d74cad4000a41d781b62cb24a93f177b8215dcd9b83a5853707354dbb4',
+  },
+  'optional-icon-missing': {
+    path: 'docs/performance/fixtures/solo-readiness-73a345/optional-icon-missing-v1.qualification.fixture',
+    bytes: 3233,
+    sha256: 'bdb592d359b92d0421ef272ec9b56211e2845ca8a65f33b73ce125afa2e85809',
+  },
+  'selected-font-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-73a345/selected-font-request-settlement-v4.qualification.fixture',
+    bytes: 5773,
+    sha256: 'cdc15760dde72ce57901001099129e6c25d6b8cce4e5c479d1dc2f687b3ea7a6',
+  },
+});
+export const RUNTIME73_READINESS_PROTOCOL = Object.freeze({
+  ...DE332_READINESS_PROTOCOL,
+  name: 'geometry-and-source-bound-preparation-73-v1',
+});
+export const RUNTIME797_READINESS_SOURCE = Object.freeze({
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+});
+export const RUNTIME797_READINESS_COHORT = 'readiness-preparation-candidate797';
+export const RUNTIME797_READINESS_ROW = 'readiness-preparation-row-candidate797';
+export const RUNTIME797_READINESS_FAULT_FIXTURES = Object.freeze({
+  'required-original-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-797e03/required-original-cancel-start-v2.qualification.fixture',
+    bytes: 4546,
+    sha256: '9d29ade54065dffc23c8f33942edeb32cda2e930cda625e843d0780922043716',
+  },
+  'optional-icon-missing': {
+    path: 'docs/performance/fixtures/solo-readiness-797e03/optional-icon-missing-v1.qualification.fixture',
+    bytes: 3233,
+    sha256: 'ae9b01b4d9ff5a59aed103edf60983cfa4466f6d962098a4ac56b79945983be7',
+  },
+  'selected-font-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-797e03/selected-font-request-settlement-v4.qualification.fixture',
+    bytes: 5773,
+    sha256: 'b116ec74c2687c11ebb8e9ef3ebce3a529788e39fa038e131f88fc884a586eae',
+  },
+});
+export const RUNTIME797_READINESS_PROTOCOL = Object.freeze({
+  ...DE332_READINESS_PROTOCOL,
+  name: 'geometry-and-source-bound-preparation-797-v1',
+});
+const runtime797Plan = (plan) => plan?.sourceCohort === RUNTIME797_READINESS_COHORT;
+const runtime73Plan = (plan) => plan?.sourceCohort === RUNTIME73_READINESS_COHORT;
+const sourceBoundPlan = (plan) => de332Plan(plan) || runtime73Plan(plan) || runtime797Plan(plan);
+const sourceBoundSelection = (selected) =>
+  selected.de332 || selected.runtime73 || selected.runtime797;
+
+export function de332ReadinessSelection(plan) {
+  assert.equal(plan.sourceCohort, DE332_READINESS_ROW);
+  return sourceReadinessSelection(plan);
+}
+export function runtime73ReadinessSelection(plan) {
+  assert.equal(plan.sourceCohort, RUNTIME73_READINESS_ROW);
+  return sourceReadinessSelection(plan);
+}
+export function runtime797ReadinessSelection(plan) {
+  assert.equal(plan.sourceCohort, RUNTIME797_READINESS_ROW);
+  return sourceReadinessSelection(plan);
+}
+function sourceReadinessSelection(plan) {
+  assert(
+    [DE332_READINESS_ROW, RUNTIME73_READINESS_ROW, RUNTIME797_READINESS_ROW].includes(
+      plan.sourceCohort,
+    ),
+  );
+  assert(PREPARATION_READINESS_PHASES.includes(plan.phase));
+  const latest = plan.sourceCohort === RUNTIME797_READINESS_ROW;
+  if (plan.requiredClickIdentityObservation !== undefined) {
+    assert(latest);
+    assert.equal(plan.requiredClickIdentityObservation, 'retained-reference-rejoin-v1');
+  }
+  const current = plan.sourceCohort === RUNTIME73_READINESS_ROW;
+  const common = latest
+    ? { source: RUNTIME797_READINESS_SOURCE, runtime797: true, documents: 1 }
+    : current
+      ? { source: RUNTIME73_READINESS_SOURCE, runtime73: true, documents: 1 }
+      : { source: DE332_READINESS_SOURCE, de332: true, documents: 1 };
+  const faults = latest
+    ? RUNTIME797_READINESS_FAULT_FIXTURES
+    : current
+      ? RUNTIME73_READINESS_FAULT_FIXTURES
+      : DE332_READINESS_FAULT_FIXTURES;
+  if (['cold-first30', 'warm-resume', 'saved-resume'].includes(plan.phase))
+    return {
+      ...common,
+      fixture:
+        plan.phase === 'cold-first30'
+          ? READINESS_FIXTURE
+          : plan.phase === 'warm-resume'
+            ? DIAGNOSED_READINESS_FIXTURES['warm-resume']
+            : COMPACT_READINESS_FIXTURES.saved,
+      protocol: plan.phase === 'cold-first30' ? 'first-running-v1' : plan.phase + '-v1',
+      geometry: true,
+      resume: plan.phase !== 'cold-first30',
+      compact: plan.phase !== 'cold-first30',
+      documents: plan.phase === 'saved-resume' ? 2 : 1,
+    };
+  if (plan.phase === 'selected-font-cancel')
+    return {
+      ...common,
+      fixture: faults[plan.phase],
+      protocol: 'selected-font-request-settlement-v4',
+      font: true,
+      settlement: true,
+      cancelBoundary: true,
+      requestPolicy: 'same-url-two-v2',
+    };
+  return {
+    ...common,
+    fixture: faults[plan.phase],
+    protocol: plan.phase + '-v1',
+    mediaFault: true,
+    ...(plan.phase === 'required-original-cancel'
+      ? {
+          requiredStartRetention: 'trusted-initial-start-v1',
+          ...(plan.requiredClickIdentityObservation
+            ? { requiredClickIdentityObservation: plan.requiredClickIdentityObservation }
+            : {}),
+        }
+      : {}),
+  };
+}
+function validate797FirstEight(release) {
+  assert.equal(release.firstEightRequired, true);
+  assert.equal(release.firstEightAllCorrectnessPassed, true);
+  const proof = release.firstEightEvidence;
+  assert(proof && typeof proof === 'object' && !Array.isArray(proof));
+  assert.deepEqual(
+    Object.keys(proof).sort(),
+    [
+      'format',
+      'sourceRevision',
+      'runId',
+      'artifactId',
+      'artifactSHA256',
+      'summarySHA256',
+      'correctness',
+      'ownersClosed',
+    ].sort(),
+  );
+  assert.equal(proof.format, 'SoloFirstEightCorrectnessEvidenceV1');
+  assert.equal(proof.sourceRevision, '797e03f28743921842df6aa57520a72016ba3dfc');
+  for (const key of ['runId', 'artifactId'])
+    assert(Number.isSafeInteger(proof[key]) && proof[key] > 0);
+  for (const key of ['artifactSHA256', 'summarySHA256']) assert.match(proof[key], /^[a-f0-9]{64}$/);
+  assert.equal(proof.correctness, 'passed');
+  assert.equal(proof.ownersClosed, true);
+}
+
+function assertRuntime797ReadinessCandidate(candidate) {
+  const { revision, tree, run, artifact, outer, inner, manifestSHA256 } = candidate;
+  assert.deepEqual(
+    { revision, tree, run, artifact, outer, inner, manifestSHA256 },
+    {
+      revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+      tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+      run: 39104551453,
+      artifact: 12128990483,
+      outer: {
+        bytes: 1094639112,
+        sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
+      },
+      inner: {
+        bytes: 1075807530,
+        sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
+      },
+      manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
+    },
+  );
+}
+function assertRuntime73ReadinessCandidate(candidate) {
+  const { revision, tree, run, artifact, outer, inner, manifestSHA256 } = candidate;
+  assert.deepEqual(
+    { revision, tree, run, artifact, outer, inner, manifestSHA256 },
+    {
+      revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+      tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+      run: 39099979283,
+      artifact: 12127570566,
+      outer: {
+        bytes: 1094639407,
+        sha256: '6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64',
+      },
+      inner: {
+        bytes: 1075807617,
+        sha256: '17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54',
+      },
+      manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
+    },
+  );
+}
+function assertDe332ReadinessCandidate(candidate) {
+  assert.deepEqual(
+    {
+      revision: candidate.revision,
+      tree: candidate.tree,
+      run: candidate.run,
+      artifact: candidate.artifact,
+      outer: candidate.outer,
+      inner: candidate.inner,
+      manifestSHA256: candidate.manifestSHA256,
+    },
+    {
+      revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+      tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+      run: 39091745654,
+      artifact: 12123463810,
+      outer: {
+        bytes: 1094606342,
+        sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+      },
+      inner: {
+        bytes: 1075789325,
+        sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+      },
+      manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+    },
+  );
+}
+
 const diagnosedPlan = (plan) => plan?.sourceCohort === DIAGNOSED_READINESS_COHORT;
 const preparationPlan = (plan) =>
-  plan?.sourceCohort === PREPARATION_READINESS_COHORT || diagnosedPlan(plan);
+  plan?.sourceCohort === PREPARATION_READINESS_COHORT ||
+  diagnosedPlan(plan) ||
+  sourceBoundPlan(plan);
 export function diagnosedReadinessRows(engine) {
   assert.equal(engine, 'webkit');
   return DIAGNOSED_READINESS_PHASES.map((phase) => ({ ...readinessRow(engine, phase), phase }));
@@ -138,6 +403,9 @@ export function preparationReadinessRows(engine) {
   return PREPARATION_READINESS_PHASES.map((phase) => ({ ...readinessRow(engine, phase), phase }));
 }
 export function preparationReadinessSelection(plan) {
+  if (plan.sourceCohort === RUNTIME797_READINESS_ROW) return runtime797ReadinessSelection(plan);
+  if (plan.sourceCohort === RUNTIME73_READINESS_ROW) return runtime73ReadinessSelection(plan);
+  if (plan.sourceCohort === DE332_READINESS_ROW) return de332ReadinessSelection(plan);
   if (plan.sourceCohort === 'readiness-diagnosed-row-candidate239') {
     assert.equal(plan.engine, 'webkit');
     assert(DIAGNOSED_READINESS_PHASES.includes(plan.phase));
@@ -199,9 +467,15 @@ function preparationRowPlan(plan, row) {
   for (const [key, value] of Object.entries(expected)) assert.deepEqual(row[key], value, key);
   const scoped = {
     ...plan,
-    sourceCohort: diagnosedPlan(plan)
-      ? 'readiness-diagnosed-row-candidate239'
-      : 'readiness-preparation-row-candidatee1cc',
+    sourceCohort: runtime797Plan(plan)
+      ? RUNTIME797_READINESS_ROW
+      : runtime73Plan(plan)
+        ? RUNTIME73_READINESS_ROW
+        : de332Plan(plan)
+          ? DE332_READINESS_ROW
+          : diagnosedPlan(plan)
+            ? 'readiness-diagnosed-row-candidate239'
+            : 'readiness-preparation-row-candidatee1cc',
     phase: expected.phase,
   };
   const selected = preparationReadinessSelection(scoped);
@@ -481,15 +755,25 @@ function selection(plan) {
   if (preparationPlan(plan))
     return preparationReadinessSelection({
       ...plan,
-      sourceCohort: diagnosedPlan(plan)
-        ? 'readiness-diagnosed-row-candidate239'
-        : 'readiness-preparation-row-candidatee1cc',
+      sourceCohort: runtime797Plan(plan)
+        ? RUNTIME797_READINESS_ROW
+        : runtime73Plan(plan)
+          ? RUNTIME73_READINESS_ROW
+          : de332Plan(plan)
+            ? DE332_READINESS_ROW
+            : diagnosedPlan(plan)
+              ? 'readiness-diagnosed-row-candidate239'
+              : 'readiness-preparation-row-candidatee1cc',
       phase: diagnosedPlan(plan) ? 'warm-resume' : 'cold-first30',
     });
   if (
-    ['readiness-preparation-row-candidatee1cc', 'readiness-diagnosed-row-candidate239'].includes(
-      plan.sourceCohort,
-    )
+    [
+      RUNTIME73_READINESS_ROW,
+      RUNTIME797_READINESS_ROW,
+      DE332_READINESS_ROW,
+      'readiness-preparation-row-candidatee1cc',
+      'readiness-diagnosed-row-candidate239',
+    ].includes(plan.sourceCohort)
   )
     return preparationReadinessSelection(plan);
   if (plan.sourceCohort === GEOMETRY_READINESS_COHORT) return geometryReadinessSelection(plan);
@@ -741,6 +1025,43 @@ export function readinessRow(engine, phase = 'cold-first30') {
   };
 }
 export function validateReadinessPlan(plan) {
+  if (plan.requiredClickIdentityObservation !== undefined) {
+    assert(runtime797Plan(plan) || plan.sourceCohort === RUNTIME797_READINESS_ROW);
+    assert.equal(plan.requiredClickIdentityObservation, 'retained-reference-rejoin-v1');
+  }
+  if (sourceBoundPlan(plan)) {
+    const latest = runtime797Plan(plan);
+    const current = runtime73Plan(plan);
+    const faults = latest
+      ? RUNTIME797_READINESS_FAULT_FIXTURES
+      : current
+        ? RUNTIME73_READINESS_FAULT_FIXTURES
+        : DE332_READINESS_FAULT_FIXTURES;
+    assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
+    assert.equal(plan.phase, 'geometry-and-preparation-faults');
+    assert.deepEqual(
+      plan.protocol,
+      latest
+        ? RUNTIME797_READINESS_PROTOCOL
+        : current
+          ? RUNTIME73_READINESS_PROTOCOL
+          : DE332_READINESS_PROTOCOL,
+    );
+    assert.deepEqual(plan.rows, preparationReadinessRows(plan.engine));
+    assert.deepEqual(plan.fixture, READINESS_FIXTURE);
+    assert.deepEqual(plan.additionalFixtures, [
+      DIAGNOSED_READINESS_FIXTURES['warm-resume'],
+      COMPACT_READINESS_FIXTURES.saved,
+      faults['selected-font-cancel'],
+      faults['required-original-cancel'],
+      faults['optional-icon-missing'],
+    ]);
+    assert.equal(plan.release.comparisonScope, 'candidate-preparation-correctness-only');
+    for (const row of plan.rows) validateReadinessPlan(preparationRowPlan(plan, row));
+    const refs = combinedFixtureInputs(plan);
+    assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
+    return plan;
+  }
   if (diagnosedPlan(plan)) {
     assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
     assert.equal(plan.phase, 'warm-and-required-original-corrections');
@@ -883,7 +1204,18 @@ export function validateReadinessPlan(plan) {
   assert.equal(plan.candidate.revision, selected.source.revision);
   assert.equal(plan.candidate.tree, selected.source.tree);
   assert.equal(plan.runtimeRevision, selected.source.revision);
-  if (selected.audioFault || selected.settlement) {
+  if (sourceBoundSelection(selected)) {
+    if (selected.runtime797) assertRuntime797ReadinessCandidate(plan.candidate);
+    else if (selected.runtime73) assertRuntime73ReadinessCandidate(plan.candidate);
+    else assertDe332ReadinessCandidate(plan.candidate);
+    assert.deepEqual(plan.release.dispatch, {
+      workflow: '.github/workflows/solo-native-package-consumer.yml',
+      lane: 'readiness',
+      source: selected.source.revision,
+    });
+    assert.equal(plan.release.onceOnlyBefore, undefined);
+  }
+  if (!sourceBoundSelection(selected) && (selected.audioFault || selected.settlement)) {
     assert.deepEqual(plan.candidate.run, 39037874955);
     assert.deepEqual(plan.candidate.artifact, 12104590541);
     assert.deepEqual(plan.candidate.outer, {
@@ -994,16 +1326,24 @@ export function validateReadinessPlan(plan) {
     'diagnosticStatus-passed-and-readinessCorrectness-pass',
   );
   assert.equal(plan.release.candidateRevision, selected.source.revision);
-  if (selected.audioFault || selected.diagnosed || selected.settlement) {
-    assert.equal(plan.release.firstEightRequired, false);
-    assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+  if (
+    sourceBoundSelection(selected) ||
+    selected.audioFault ||
+    selected.diagnosed ||
+    selected.settlement
+  ) {
+    if (selected.runtime797) validate797FirstEight(plan.release);
+    else {
+      assert.equal(plan.release.firstEightRequired, false);
+      assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    }
   } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.performanceQualification, 'excluded');
   assert.equal(plan.release.physicalQualification, 'unobserved');
   assert.equal(plan.release.automaticRetries, 0);
   assert.equal(plan.release.priorProofInspected, true);
   assert.equal(plan.release.noUnclosedOwners, true);
-  assert.match(plan.release.onceOnlyBefore, /^[a-f0-9]{40}$/);
+  if (!sourceBoundSelection(selected)) assert.match(plan.release.onceOnlyBefore, /^[a-f0-9]{40}$/);
   for (const key of ['run', 'artifact'])
     assert(Number.isSafeInteger(plan.candidate[key]) && plan.candidate[key] > 0);
   for (const key of ['outer', 'inner']) {
@@ -1118,8 +1458,16 @@ export async function prepareReadinessMode(ctx) {
   assert.equal(a.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(a.archiveIdentity, ctx.plan.candidate.inner);
   ctx.report.performanceExclusion = true;
-  if (selected.audioFault || selected.diagnosed || selected.settlement)
-    ctx.report.firstEightRequired = false;
+  if (
+    sourceBoundSelection(selected) ||
+    selected.audioFault ||
+    selected.diagnosed ||
+    selected.settlement
+  )
+    if (selected.runtime797) {
+      ctx.report.firstEightRequired = true;
+      ctx.report.firstEightAllCorrectnessPassed = true;
+    } else ctx.report.firstEightRequired = false;
   else ctx.report.firstEightAllCorrectnessPassed = false;
   return {
     scope: selected.diagnosed
@@ -1160,6 +1508,9 @@ export function readinessArguments(ctx, row, url, dir) {
     ...(selected.geometry ? ['--readiness-geometry=phase-boundary-v1'] : []),
     ...(selected.requiredStartRetention
       ? ['--readiness-required-start=' + selected.requiredStartRetention]
+      : []),
+    ...(selected.requiredClickIdentityObservation
+      ? ['--readiness-required-rejoin=' + selected.requiredClickIdentityObservation]
       : []),
     ...(selected.cancelBoundary ? ['--readiness-cancel-boundary=post-command-v3'] : []),
     ...(row.engine === 'webkit'
@@ -1225,6 +1576,7 @@ export async function readinessAssessment(
         raw?.readinessDocuments,
         raw?.selectedFontTransport,
         raw?.selectedFontSettlement,
+        selected.source.revision,
       )
     : selected.mediaFault
       ? assessReadinessMediaFault({
@@ -1237,6 +1589,7 @@ export async function readinessAssessment(
           fallback: raw?.optionalIconFallback,
           cleanupFailure: raw?.mediaFaultCleanupFailure,
           startRetention: selected.requiredStartRetention ?? null,
+          requiredClickIdentityObservation: selected.requiredClickIdentityObservation ?? null,
           ...(selected.audioFault ? { audioCheck: raw?.audioCheck } : {}),
         })
       : selected.font
@@ -1326,6 +1679,10 @@ export async function readinessAssessment(
     assert.equal(raw.baselineRuntime, false);
     assert.equal(raw.readinessPilot.protocol, selected.protocol);
     assert.equal(raw.readinessPilot.performanceQualification, false);
+    assert.equal(
+      raw.readinessPilot.requiredClickIdentityObservation,
+      selected.requiredClickIdentityObservation,
+    );
     if (selected.settlement) {
       assert.equal(raw.readinessPilot.cancelBoundaryObservation, 'post-command-v3');
       assert.equal(raw.readinessPilot.settlementObservation, 'original-demand-v1');
@@ -1419,8 +1776,13 @@ export async function readinessAssessment(
     rawPerformanceGateStatus: numeric,
     numericObservationStatus: numeric,
     hitchJournalVerification: journal,
-    ...(selected.audioFault || selected.diagnosed || selected.settlement
-      ? { firstEightRequired: false }
+    ...(sourceBoundSelection(selected) ||
+    selected.audioFault ||
+    selected.diagnosed ||
+    selected.settlement
+      ? selected.runtime797
+        ? { firstEightRequired: true, firstEightAllCorrectnessPassed: true }
+        : { firstEightRequired: false }
       : { firstEightAllCorrectnessPassed: false }),
     performanceQualification: 'excluded',
     scope:

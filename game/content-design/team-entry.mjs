@@ -139,6 +139,23 @@ export async function createTeamGreyboxEntry({
                               : {},
   );
   await candidateProgress.load();
+  const navigationEdition = culturalSpecialistsV2
+    ? 'culturalSpecialistsV2'
+    : culturalSpecialists
+      ? 'culturalSpecialists'
+      : reviewedSpecialists
+        ? 'reviewedSpecialists'
+        : partnerSpecialist
+          ? 'partnerSpecialist'
+          : specialist
+            ? 'specialist'
+            : impact
+              ? 'impact'
+              : spatial
+                ? 'spatial'
+                : pressure
+                  ? 'pressure'
+                  : null;
   return Object.freeze({
     candidateJourney,
     prepareCandidateEnvironment(row, { signal } = {}) {
@@ -168,6 +185,13 @@ export async function createTeamGreyboxEntry({
         : TEAM_JOURNEY_LEARNING_ARCS[0].missionIds,
     ),
     candidateDifficulty: snapshot.difficulty,
+    candidateNavigationLabel: navigationEdition
+      ? localizedMessage(`interface:couch.teamNavigation_${navigationEdition}`)
+      : expedition || pursuitPilots || pursuitCampaigns || snakeHunt
+        ? () => contentText(source, 'name')
+        : huntTraining
+          ? () => huntText('lessons')
+          : '',
     candidateEditionLabel:
       expedition || pursuitPilots || pursuitCampaigns
         ? () => contentText(source, 'name')

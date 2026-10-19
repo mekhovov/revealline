@@ -20,7 +20,7 @@ import {
 import { verifyNativeQualificationReplay } from './solo-qualification-native-replay.mjs';
 import {
   TOUCH_PROTOCOL,
-  TOUCH_SOURCE,
+  touchSource,
   TOUCH_FIXTURE,
   touchCase,
   readTouchJSON,
@@ -209,16 +209,21 @@ export async function dispatchTouchDirection({ page, cdp, anchor, mode, index })
   await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [point] });
   return { name: 'trusted-native-touch-move', index, direction, x: point.x, y: point.y };
 }
-export async function observeTouch(planArg, outputArg) {
-  const output = resolve(outputArg),
-    plan = await readTouchJSON(resolve(planArg), 65536);
+export function assertTouchExecutionSource(plan) {
   assert.equal(plan.format, 'SoloHostedTouchExecutionV1');
+  const source = touchSource(plan.sourceCohort);
   assert.deepEqual(plan.protocol, TOUCH_PROTOCOL);
   const job = plan.job;
   assert.deepEqual(job, touchCase(job.engine + '-' + job.mode, job.repetition));
-  assert.equal(plan.artifact.sourceRevision, TOUCH_SOURCE.revision);
-  assert.equal(plan.artifact.sourceTree, TOUCH_SOURCE.tree);
+  assert.equal(plan.artifact.sourceRevision, source.revision);
+  assert.equal(plan.artifact.sourceTree, source.tree);
   assert.match(plan.artifact.buildInfoSHA256, /^[a-f0-9]{64}$/);
+  return job;
+}
+export async function observeTouch(planArg, outputArg) {
+  const output = resolve(outputArg),
+    plan = await readTouchJSON(resolve(planArg), 65536);
+  const job = assertTouchExecutionSource(plan);
   assert.equal(resolve(process.env.TMPDIR), plan.scratch);
   assert.equal((await lstat(dirname(output))).isDirectory(), true);
   try {

@@ -6,7 +6,89 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 
+const SHARED_MODE_RUNTIME73_SOURCE = '73a345cec696d7789198cf295ca5c37b17ca0e71';
+const SHARED_MODE_RUNTIME797_SOURCE = '797e03f28743921842df6aa57520a72016ba3dfc';
+const SHARED_MODE_PROTOCOL = 'shared-mode-public-return-v1';
+const SHARED_MODE_FIXTURE = Object.freeze({
+  bytes: 2685,
+  sha256: '805b2793d4613aa67fd8e6f373c9268dd919b6cf857222bdf143cbe8fcd6311d',
+});
+
+const SHARED_MODE_BOOT_FIXTURE = Object.freeze({
+  bytes: 2720,
+  sha256: 'fd53760e86158e8da498eea0201c1b19fa1d34b0aed524bc34e1b6a0e7c91f67',
+});
+
 const MiB = 1024 ** 2;
+const sharedReturn = (plan) => plan.release?.format === 'SoloSharedModePublicReturnReleaseV1';
+export const SHARED_RETURN_CANDIDATE = Object.freeze({
+  revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+  run: 39091745654,
+  artifact: 12123463810,
+  outer: {
+    bytes: 1094606342,
+    sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+  },
+  inner: {
+    bytes: 1075789325,
+    sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+  },
+  manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+});
+export const SHARED_RETURN_RUNTIME73_CANDIDATE = Object.freeze({
+  revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+  tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+  run: 39099979283,
+  artifact: 12127570566,
+  outer: {
+    bytes: 1094639407,
+    sha256: '6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64',
+  },
+  inner: {
+    bytes: 1075807617,
+    sha256: '17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54',
+  },
+  manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
+});
+export const SHARED_RETURN_RUNTIME797_CANDIDATE = Object.freeze({
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  run: 39104551453,
+  artifact: 12128990483,
+  outer: {
+    bytes: 1094639112,
+    sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
+  },
+  inner: {
+    bytes: 1075807530,
+    sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
+  },
+  manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
+});
+const sharedCandidate = (plan) => {
+  if (plan.release?.sourceCohort === 'shared-mode-runtime797-diagnostic-v1')
+    return SHARED_RETURN_RUNTIME797_CANDIDATE;
+  if (plan.release?.sourceCohort === 'shared-mode-runtime73-diagnostic-v1')
+    return SHARED_RETURN_RUNTIME73_CANDIDATE;
+  assert.equal(plan.release?.sourceCohort, undefined);
+  return SHARED_RETURN_CANDIDATE;
+};
+const sharedRecipe = (plan) => {
+  if (plan.release.bootReadiness === undefined)
+    return {
+      path: 'docs/performance/fixtures/solo-shared-mode/public-return.qualification.fixture',
+      ...SHARED_MODE_FIXTURE,
+    };
+  assert.equal(plan.release.bootReadiness, 'production-boot-screen-v1');
+  assert.equal(sharedCandidate(plan).revision, SHARED_MODE_RUNTIME797_SOURCE);
+  return {
+    path: 'docs/performance/fixtures/solo-shared-mode/public-return-boot-ready.qualification.fixture',
+    ...SHARED_MODE_BOOT_FIXTURE,
+  };
+};
+const sharedRecipeHash = (plan, spec) =>
+  sharedReturn(plan) ? sharedRecipe(plan).sha256 : HASHES[spec.recipe];
 const SOURCE = {
   baseline: 'b11745223861c3973ad4bf440cc536198b8e0371',
   candidate: '3adcd53792043ef02459e86168c6b33a66d6ef00',
@@ -30,6 +112,8 @@ const importDiagnostic = (plan) => plan.release?.format === 'SoloMusicImportDiag
 const rolesFor = (plan, spec) => (importDiagnostic(plan) ? ['candidate'] : spec.roles);
 function sourceRevision(plan, role) {
   assert(['baseline', 'candidate'].includes(role));
+  if (sharedReturn(plan))
+    return role === 'candidate' ? sharedCandidate(plan).revision : FINAL_RECOVERY.baseline;
   if (finalSource(plan)) return FINAL_RECOVERY[role];
   return role === 'candidate' && preparationConfirmation(plan) ? PREPARATION_SOURCE : SOURCE[role];
 }
@@ -122,6 +206,35 @@ export function auxiliarySetupSuccessor(kind) {
       'Sparse tooling omitted selected source-verifier validators. Original cancellation is retained; complete verifier smoke is required before new artifact admission.',
   };
 }
+
+function validateRuntimeFirstEight(evidence, sourceRevision = SHARED_MODE_RUNTIME73_SOURCE) {
+  assert(
+    evidence && typeof evidence === 'object',
+    'Actual same-source first-eight evidence required',
+  );
+  assert.deepEqual(
+    Object.keys(evidence).sort(),
+    [
+      'format',
+      'sourceRevision',
+      'runId',
+      'artifactId',
+      'artifactSHA256',
+      'summarySHA256',
+      'correctness',
+      'ownersClosed',
+    ].sort(),
+  );
+  assert.equal(evidence.format, 'SoloFirstEightCorrectnessEvidenceV1');
+  assert.equal(evidence.sourceRevision, sourceRevision);
+  assert(Number.isSafeInteger(evidence.runId) && evidence.runId > 0);
+  assert(Number.isSafeInteger(evidence.artifactId) && evidence.artifactId > 0);
+  assert.match(evidence.artifactSHA256, /^[a-f0-9]{64}$/);
+  assert.match(evidence.summarySHA256, /^[a-f0-9]{64}$/);
+  assert.equal(evidence.correctness, 'passed');
+  assert.equal(evidence.ownersClosed, true);
+}
+
 function validateRelease(plan) {
   const successor = plan.setupSuccessor !== undefined;
   if (successor) {
@@ -141,7 +254,7 @@ function validateRelease(plan) {
   }
   const diagnostic = plan.status === 'reviewed-diagnostic-only';
   assert(diagnostic || plan.status === 'reviewed-and-released');
-  assert.equal(plan.release.firstEightAllCorrectnessPassed, !diagnostic);
+  assert.equal(plan.release.firstEightAllCorrectnessPassed, sharedReturn(plan) || !diagnostic);
   if (plan.release.musicProofBytes !== undefined) {
     assert(diagnostic && !repeatedRecovery(plan));
     assert.equal(plan.release.musicProofBytes, 32 * MiB);
@@ -149,22 +262,57 @@ function validateRelease(plan) {
   if (diagnostic) {
     assert.equal(
       plan.release.scope,
-      finalAudio(plan)
-        ? 'independent-final-source-paired-audio-confirmation'
-        : finalRecovery(plan)
-          ? 'independent-final-source-recovery-confirmation'
-          : preparationConfirmation(plan)
-            ? 'independent-start-preparation-confirmation'
-            : importDiagnostic(plan)
-              ? 'independent-audio-import-duration-diagnostic'
-              : 'independent-audio-and-synthetic-recovery',
+      sharedReturn(plan)
+        ? 'independent-public-shared-mode-return'
+        : finalAudio(plan)
+          ? 'independent-final-source-paired-audio-confirmation'
+          : finalRecovery(plan)
+            ? 'independent-final-source-recovery-confirmation'
+            : preparationConfirmation(plan)
+              ? 'independent-start-preparation-confirmation'
+              : importDiagnostic(plan)
+                ? 'independent-audio-import-duration-diagnostic'
+                : 'independent-audio-and-synthetic-recovery',
     );
     assert.equal(
       plan.release.predecessorRun,
-      finalAudio(plan) ? 38992974900 : finalRecovery(plan) ? 38995660472 : 38985941469,
+      sharedReturn(plan)
+        ? 39096176143
+        : finalAudio(plan)
+          ? 38992974900
+          : finalRecovery(plan)
+            ? 38995660472
+            : 38985941469,
     );
     assert.equal(plan.release.automaticRetries, 0);
     assert.equal(plan.release.performanceQualification, 'excluded');
+  }
+  if (sharedReturn(plan)) {
+    assert(diagnostic);
+    const candidate = sharedCandidate(plan);
+    assert.equal(plan.runtimeRevision, candidate.revision);
+    assert.equal(plan.release.candidateRevision, candidate.revision);
+    if (candidate.revision === SHARED_MODE_RUNTIME797_SOURCE) {
+      assert.equal(plan.release.firstEightRequired, true);
+      assert.equal(plan.release.firstEightSourceRevision, SHARED_MODE_RUNTIME797_SOURCE);
+      validateRuntimeFirstEight(plan.release.firstEightEvidence, SHARED_MODE_RUNTIME797_SOURCE);
+    } else if (candidate.revision === SHARED_MODE_RUNTIME73_SOURCE) {
+      assert.equal(plan.release.firstEightSourceRevision, SHARED_MODE_RUNTIME73_SOURCE);
+      validateRuntimeFirstEight(plan.release.firstEightEvidence);
+    }
+    assert.equal(plan.release.protocol, SHARED_MODE_PROTOCOL);
+    assert.equal(plan.release.physicalQualification, 'unobserved');
+    assert.deepEqual(plan.release.selectedJobs, ['recovery-chromium', 'recovery-webkit']);
+    assert.deepEqual(plan.release.dispatch, {
+      workflow: '.github/workflows/solo-native-package-consumer.yml',
+      ref: 'refs/heads/main',
+      lane: 'shared-return',
+      source: candidate.revision,
+    });
+    assert.equal(plan.release.onceOnlyBefore, undefined);
+    assert.equal(plan.release.musicProofBytes, undefined);
+    for (const [key, value] of Object.entries(candidate))
+      assert.deepEqual(plan.candidate[key], value, 'Changed shared-return package ' + key);
   }
   if (finalAudio(plan)) {
     assert(diagnostic, 'Final audio remains paired diagnostic evidence');
@@ -245,6 +393,7 @@ export function validateAuxiliaryPlan(plan) {
     assert.equal(plan.observationId, undefined);
   }
   assert.equal(plan.baseline.revision, sourceRevision(plan, 'baseline'));
+  if (sharedReturn(plan)) assert.equal(plan.baseline.tree, FINAL_RECOVERY.baselineTree);
   if (finalSource(plan)) {
     assert.equal(plan.candidate.tree, FINAL_RECOVERY.candidateTree);
     assert.equal(plan.baseline.tree, FINAL_RECOVERY.baselineTree);
@@ -285,10 +434,14 @@ export function validateAuxiliaryPlan(plan) {
       performanceExclusion: true,
     })),
   );
-  assert.equal(plan.recipes[spec.recipe].sha256, HASHES[spec.recipe]);
-  assert.deepEqual(Object.keys(plan.recipes).sort(), ['music', 'recovery', 'speech']);
-  assert.equal(plan.uploads.length, 3);
-  assert.equal(new Set(plan.uploads.map((ref) => ref.name)).size, 3);
+  assert.equal(plan.recipes[spec.recipe].sha256, sharedRecipeHash(plan, spec));
+  assert.deepEqual(
+    Object.keys(plan.recipes).sort(),
+    sharedReturn(plan) ? ['recovery'] : ['music', 'recovery', 'speech'],
+  );
+  if (sharedReturn(plan)) assert.deepEqual(plan.recipes.recovery, sharedRecipe(plan));
+  assert.equal(plan.uploads.length, sharedReturn(plan) ? 0 : 3);
+  assert.equal(new Set(plan.uploads.map((ref) => ref.name)).size, plan.uploads.length);
   for (const ref of [
     ...Object.values(plan.recipes),
     ...plan.uploads,
@@ -299,11 +452,14 @@ export function validateAuxiliaryPlan(plan) {
     assert.match(ref.sha256, /^[a-f0-9]{64}$/);
     assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < MiB);
   }
-  assert.equal(
-    plan.musicBundle.sha256,
-    'aa25ae643608cfa9a2dd6aac1a3dcd7ba65d667f998144d0927c194df7c1e99f',
-  );
-  assert.equal(plan.musicBundle.bytes, 3124928);
+  if (sharedReturn(plan)) assert.equal(plan.musicBundle, undefined);
+  else {
+    assert.equal(
+      plan.musicBundle.sha256,
+      'aa25ae643608cfa9a2dd6aac1a3dcd7ba65d667f998144d0927c194df7c1e99f',
+    );
+    assert.equal(plan.musicBundle.bytes, 3124928);
+  }
   return plan;
 }
 export function bindAuxiliaryJob(manifest, job, repetition = 1) {
@@ -311,7 +467,7 @@ export function bindAuxiliaryJob(manifest, job, repetition = 1) {
   validateRelease(manifest);
   assert.deepEqual(
     manifest.jobs.map(({ id }) => id),
-    Object.keys(AUXILIARY_JOBS),
+    sharedReturn(manifest) ? ['recovery-chromium', 'recovery-webkit'] : Object.keys(AUXILIARY_JOBS),
   );
   const spec = AUXILIARY_JOBS[job];
   assert(spec);
@@ -391,17 +547,20 @@ async function verifyInputs(ctx) {
     assert(path.startsWith(ctx.repository + '/'));
     const info = await lstat(path);
     assert(info.isFile() && !info.isSymbolicLink());
-    assert.deepEqual(await ctx.digest(path), { bytes: ref.bytes, sha256: ref.sha256 });
+    assert.deepEqual(await ctx.digest(path), {
+      bytes: ref.bytes,
+      sha256: ref.sha256,
+    });
   }
 }
 export async function prepareAuxiliaryMode(ctx) {
   validateAuxiliaryPlan(ctx.plan);
   await verifyInputs(ctx);
-  if (finalSource(ctx.plan)) {
+  if (finalSource(ctx.plan) || sharedReturn(ctx.plan)) {
     assert.equal(ctx.admitted.status, 'passed');
     const admitted = ctx.admitted.artifacts.candidate;
-    assert.equal(admitted.sourceRevision, FINAL_RECOVERY.candidate);
-    assert.equal(admitted.sourceTree, FINAL_RECOVERY.candidateTree);
+    assert.equal(admitted.sourceRevision, ctx.plan.candidate.revision);
+    assert.equal(admitted.sourceTree, ctx.plan.candidate.tree);
     assert.equal(admitted.manifestSHA256, ctx.plan.candidate.manifestSHA256);
     assert.deepEqual(admitted.archiveIdentity, ctx.plan.candidate.inner);
   }
@@ -412,12 +571,18 @@ export async function prepareAuxiliaryMode(ctx) {
   const recipe = ctx.plan.recipes[spec.recipe];
   const scenario = join(inputs, 'scenario.qualification.json');
   await copyFile(resolve(ctx.repository, recipe.path), scenario);
-  assert.deepEqual(await ctx.digest(scenario), { bytes: recipe.bytes, sha256: recipe.sha256 });
+  assert.deepEqual(await ctx.digest(scenario), {
+    bytes: recipe.bytes,
+    sha256: recipe.sha256,
+  });
   for (const upload of ctx.plan.uploads) {
     const target = join(inputs, upload.name);
     assert(!upload.name.includes('/') && !upload.name.includes('..'));
     await copyFile(resolve(ctx.repository, upload.path), target);
-    assert.deepEqual(await ctx.digest(target), { bytes: upload.bytes, sha256: upload.sha256 });
+    assert.deepEqual(await ctx.digest(target), {
+      bytes: upload.bytes,
+      sha256: upload.sha256,
+    });
   }
   let audioFixture = null;
   if (spec.recipe === 'music') {
@@ -458,8 +623,9 @@ export async function prepareAuxiliaryMode(ctx) {
   ctx.report.performanceExclusion = true;
   ctx.report.firstEightAllCorrectnessPassed = ctx.plan.release.firstEightAllCorrectnessPassed;
   ctx.report.releaseScope = ctx.plan.release.scope ?? 'after-reviewed-first-eight';
-  ctx.report.auxiliaryScope =
-    'Linux correctness-only; intrusive audio identity or synthetic handler delivery. No timing, actual GPU loss, physical audio, or thermal qualification.';
+  ctx.report.auxiliaryScope = sharedReturn(ctx.plan)
+    ? 'Public Solo to Team and Versus return; final Solo strict native replay required. Intermediate replay/resources and per-player trajectories unobserved.'
+    : 'Linux correctness-only; intrusive audio identity or synthetic handler delivery. No timing, actual GPU loss, physical audio, or thermal qualification.';
   return { recipePath: scenario, browserVersion: null, audioFixture };
 }
 export function auxiliaryArguments(ctx, row, url, dir) {
@@ -470,8 +636,9 @@ export function auxiliaryArguments(ctx, row, url, dir) {
     ctx.modeState.recipePath,
     join(dir, 'report.json'),
     '--server-fixture-access',
-    '--work-probe',
-    '--cadence=settled120',
+    ...(sharedReturn(ctx.plan)
+      ? [`--shared-mode-public-return=${SHARED_MODE_PROTOCOL}`]
+      : ['--work-probe', '--cadence=settled120']),
     '--cpu=1',
     `--browser=${row.engine}`,
     `--source-revision=${sourceRevision(ctx.plan, row.source)}`,
@@ -484,7 +651,16 @@ export function auxiliaryArguments(ctx, row, url, dir) {
       : []),
   ];
 }
+// Historical standalone declaration/assessment callers remain synchronous and
+// dependency-free. Only the new shared-mode branch loads its pinned observer.
 export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
+  if (sharedReturn(plan))
+    return import('./solo-qualification-shared-mode.mjs').then(({ assessSharedModePublicReturn }) =>
+      assessAuxiliary(plan, row, raw, command, browserVersion, assessSharedModePublicReturn),
+    );
+  return assessAuxiliary(plan, row, raw, command, browserVersion);
+}
+function assessAuxiliary(plan, row, raw, command, browserVersion, assessSharedModePublicReturn) {
   const spec = AUXILIARY_JOBS[plan.job],
     replay = raw?.replay?.nativeVerification;
   const common =
@@ -496,7 +672,7 @@ export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
     command.survivors?.length === 0 &&
     command.ambiguous?.length === 0 &&
     raw?.scenarioStatus === 'pass' &&
-    raw.scenarioSHA256 === HASHES[spec.recipe] &&
+    raw.scenarioSHA256 === sharedRecipeHash(plan, spec) &&
     raw.sourceRevision === sourceRevision(plan, row.source) &&
     raw.buildIdentity?.sourceRevision === sourceRevision(plan, row.source) &&
     raw.environment?.engine === row.engine &&
@@ -535,8 +711,18 @@ export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
       importProbe.observerErrors === 0 &&
       importProbe.limits?.elements === 8 &&
       importProbe.limits?.records === 64);
-  const admitted =
-    spec.recipe === 'recovery'
+  let publicReturn = null;
+  if (sharedReturn(plan)) {
+    try {
+      publicReturn = assessSharedModePublicReturn(raw?.sharedModeObservation);
+      assert.deepEqual(raw?.sharedModeAssessment, publicReturn);
+    } catch {
+      publicReturn = null;
+    }
+  }
+  const admitted = sharedReturn(plan)
+    ? raw?.performanceGateStatus === 'excluded-public-shared-mode-recovery' && Boolean(publicReturn)
+    : spec.recipe === 'recovery'
       ? raw?.performanceGateStatus === 'excluded-synthetic-recovery'
       : raw?.performanceGateStatus === 'excluded-audio-identity-profiling' &&
         audio?.status === 'pass' &&
@@ -550,14 +736,20 @@ export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
   return {
     status: common && admitted && capacityMatches && importProbeComplete ? 'passed' : 'failed',
     ...(importDiagnostic(plan)
-      ? { importProbe: importProbeComplete ? 'recorded-within-bounds' : 'incomplete' }
+      ? {
+          importProbe: importProbeComplete ? 'recorded-within-bounds' : 'incomplete',
+        }
       : {}),
-    correctness: common ? 'pass' : 'fail',
+    correctness: common && (!sharedReturn(plan) || publicReturn) ? 'pass' : 'fail',
+    ...(sharedReturn(plan)
+      ? { sharedMode: publicReturn, physicalQualification: 'unobserved' }
+      : {}),
     performanceQualification: 'excluded',
     firstEightAllCorrectnessPassed: plan.release.firstEightAllCorrectnessPassed,
     audioIdentity: spec.recipe === 'recovery' ? 'not-requested' : (audio?.status ?? 'unobserved'),
-    scope:
-      spec.recipe === 'recovery'
+    scope: sharedReturn(plan)
+      ? 'Public Solo/Team/Versus routes and final Solo strict replay only; no unfinished shared checkpoint, resource, per-player motion, raster or timing qualification.'
+      : spec.recipe === 'recovery'
         ? 'Synthetic main-display loss/restore+blur/resize/explicit Resume only; no Demo or actual GPU-loss credit.'
         : 'Exact encoded identity linked to native API starts/advancement; no listening/speaker or video-approval claim.',
   };
@@ -614,7 +806,7 @@ export async function runAuxiliaryRow(ctx, row, dir, tmp) {
     const raw = await readAuxiliaryJSON(join(dir, 'report.json'));
     Object.assign(
       row,
-      auxiliaryAssessment(ctx.plan, row, raw, row.command, ctx.modeState.browserVersion),
+      await auxiliaryAssessment(ctx.plan, row, raw, row.command, ctx.modeState.browserVersion),
     );
     row.browserVersion = raw.environment?.browserVersion;
     assert.equal(typeof row.browserVersion, 'string');
@@ -653,6 +845,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
       bytes: bytes.length,
       sha256: createHash('sha256').update(bytes).digest('hex'),
     };
-    await writeFile(output, JSON.stringify(plan, null, 2) + '\n', { flag: 'wx' });
+    await writeFile(output, JSON.stringify(plan, null, 2) + '\n', {
+      flag: 'wx',
+    });
   }
 }

@@ -52,8 +52,7 @@ import {
   SIM_RADIO_AUDIO_KEY,
   createSimDisplayPreferences,
   attachSimThemeFamilyControls,
-  getSimMenuAnimation,
-  setSimMenuAnimation,
+  simMenuAnimationBinding,
   subscribeSimMenuAnimation,
   simAttachSettingsPanels,
   simSettingsPanelBack,
@@ -221,6 +220,7 @@ export function mountFlightApp({
     globalSettingsView = null,
     globalTools = null,
     missionChooser = null;
+  const navigationContext = () => (locale === 'uk' ? 'FPV SIM · Академія' : 'FPV SIM · Academy');
   const c = () => COPY[locale],
     messageText = (key) =>
       key === 'preparingGraphics'
@@ -506,7 +506,7 @@ export function mountFlightApp({
     onFreeze(reason) {
       flight?.pause();
       audio.pause();
-      input.enable(false);
+      if (input.owner() === 'radio') input.enable(false);
       accumulator = 0;
       lastTime = null;
       lastExecutionTime = null;
@@ -798,13 +798,16 @@ export function mountFlightApp({
     launchIntent = null;
     if (disposed) return;
     pauseGeneration++;
+    const active = flight?.snapshot().status === 'active';
     gamepad.reset();
     resetStickTraces();
     cancelReview();
     flight?.pause();
     audio.pause();
     if (replay) replay.paused = true;
-    input.enable(false);
+    if (reason === 'paused' && !replay)
+      input.pause({ session: flight, retainKeyboardThrottle: active });
+    else input.enable(false);
     radio.freeze(reason);
     accumulator = 0;
     lastTime = null;
@@ -812,6 +815,8 @@ export function mountFlightApp({
     message = reason === 'focus-lost' ? 'focusLost' : c()[reason] ? reason : 'paused';
     paint(true);
   }
+  // Background checkpoint reads must not consume a deliberate Arm click.
+  const pendingFlightSteps = new WeakSet();
   function arm() {
     $('academy-flight-options').open = false;
     if (
@@ -826,6 +831,14 @@ export function mountFlightApp({
       (replay && replay.at >= replay.proof.frames.length)
     )
       return false;
+    if (!replay && pendingFlightSteps.has(flight)) {
+      message =
+        locale === 'uk'
+          ? 'Завершується поточний крок польоту. Після цього натисніть «Продовжити» ще раз.'
+          : 'Finishing the current flight step. Press Resume again when ready.';
+      paint(true);
+      return false;
+    }
     immersive.closeControls();
     $('flight-app').dataset.flightMenuOpen = 'false';
     if (replay) {
@@ -857,8 +870,9 @@ export function mountFlightApp({
       paint(true);
       return false;
     }
-    input.enable(true);
     flight.arm();
+    if (flight.snapshot().status !== 'active') return false;
+    input.resume(flight, flight.snapshot().lastInput.throttle / 1000);
     void audio.resume();
     appearanceSession.arm(flight.snapshot().status);
     accumulator = 0;
@@ -1028,6 +1042,27 @@ export function mountFlightApp({
     }
     paint(true);
   }
+  function paintResultCopy() {
+    const status = !replay && terminalHandled ? flight.snapshot().status : null;
+    const course = currentCourse().locales[locale];
+    let title = course.title,
+      lesson = course.lesson;
+    if (['complete', 'expired'].includes(status) && tuningPractice) {
+      title = locale === 'uk' ? 'Перевірку чернетки завершено' : 'Draft test finished';
+      lesson =
+        locale === 'uk'
+          ? 'Без заліку й запису. Поверніться до рейтів для порівняння.'
+          : 'Unscored, without a recording. Return to tuning to compare.';
+    } else if (status === 'expired') {
+      title = locale === 'uk' ? 'Політ завершено' : 'Flight ended';
+      lesson =
+        locale === 'uk'
+          ? 'Новий маршрут починається з наступної спроби.'
+          : 'Your next route starts with another try.';
+    }
+    $('complete-title').textContent = title;
+    $('lesson').textContent = lesson;
+  }
   function translated() {
     doc.documentElement.lang = locale;
     $('language').value = locale;
@@ -1066,8 +1101,7 @@ export function mountFlightApp({
     $('sticks').setAttribute('aria-label', c().inputLabel);
     $('left-stick').setAttribute('aria-label', c().leftStick);
     $('right-stick').setAttribute('aria-label', c().rightStick);
-    $('complete-title').textContent = currentCourse().locales[locale].title;
-    $('lesson').textContent = currentCourse().locales[locale].lesson;
+    paintResultCopy();
     paint(true);
   }
   function targetText(state) {
@@ -1113,6 +1147,7 @@ export function mountFlightApp({
             ? 'playing'
             : state.status,
       transitionActive: !['idle', 'cancelled'].includes(continuousPlay.snapshot().phase),
+      navigationContext,
       missionName: currentCourse().locales[locale].title,
       summary: currentCourse().locales[locale].brief,
       canResume: replay
@@ -1341,15 +1376,10 @@ export function mountFlightApp({
     input.enable(false);
     radio.freeze('paused');
     message = null;
+    paintResultCopy();
     if (tuningPractice) {
       lastProof = null;
       $('complete').hidden = false;
-      $('complete-title').textContent =
-        locale === 'uk' ? 'Перевірку чернетки завершено' : 'Draft test finished';
-      $('lesson').textContent =
-        locale === 'uk'
-          ? 'Без заліку й запису. Поверніться до рейтів для порівняння.'
-          : 'Unscored, without a recording. Return to tuning to compare.';
       $('next').hidden = $('review').hidden = true;
       return;
     }
@@ -1357,19 +1387,12 @@ export function mountFlightApp({
     lastPresentation = appearanceSession.current();
     if (state.status !== 'complete') {
       $('complete').hidden = false;
-      $('complete-title').textContent = locale === 'uk' ? 'Політ завершено' : 'Flight ended';
-      $('lesson').textContent =
-        locale === 'uk'
-          ? 'Новий маршрут починається з наступної спроби.'
-          : 'Your next route starts with another try.';
       $('next').hidden = $('review').hidden = true;
       $('retry').focus();
       if (!authoringCourse)
         continuousPlay.begin({ identity: flight, outcome: 'lost', replayMs: 0, readyMs: 400 });
       return;
     }
-    $('complete-title').textContent = currentCourse().locales[locale].title;
-    $('lesson').textContent = currentCourse().locales[locale].lesson;
     $('complete').hidden = false;
     $('next').hidden = !!authoringCourse || selected === courses.length - 1;
     $('review').hidden = !!authoringCourse;
@@ -1449,7 +1472,11 @@ export function mountFlightApp({
         radioInput = radio.poll();
         if (!radio.status().active && ['paused', 'disarmed'].includes(flight.snapshot().status))
           message = radio.status().reason === 'ready' ? 'radioReady' : radio.status().reason;
-        if (radio.status().active && ['paused', 'disarmed'].includes(flight.snapshot().status)) {
+        if (
+          radio.status().active &&
+          !pendingFlightSteps.has(flight) &&
+          ['paused', 'disarmed'].includes(flight.snapshot().status)
+        ) {
           flight.arm();
           void audio.resume();
           appearanceSession.arm(flight.snapshot().status);
@@ -1497,6 +1524,7 @@ export function mountFlightApp({
           const selectedFlight = flight;
           const result = flight.step(command);
           if (result && typeof result.then === 'function') {
+            pendingFlightSteps.add(selectedFlight);
             const source = input.owner();
             const diagnostics =
               source === 'radio'
@@ -1509,15 +1537,17 @@ export function mountFlightApp({
                 if (disposed || flight !== selectedFlight) return;
                 if (state.ticks !== before)
                   inputDiagnostics.record(flight, source, command, diagnostics, state);
+                if (state.reason === 'worker-error') pause('worker-error');
                 audio.update(state, { active: state.status === 'active' });
                 paint(true);
               })
               .catch((error) => {
                 if (disposed || flight !== selectedFlight) return;
-                pause();
+                pause('error');
                 message = error.message;
                 paint(true);
-              });
+              })
+              .finally(() => pendingFlightSteps.delete(selectedFlight));
             break;
           }
           audio.update(flight.snapshot(), { active: flight.snapshot().status === 'active' });
@@ -2110,6 +2140,7 @@ export function mountFlightApp({
     document: doc,
     library: missionLibrary,
     supportedModes: ['solo'],
+    browsingContext: ({ label }) => `${navigationContext()} · ${label}`,
     description: () =>
       locale === 'uk'
         ? 'Усі вправи Академії в одному списку. Виберіть маршрут і почніть політ.'
@@ -2234,7 +2265,7 @@ export function mountFlightApp({
     idPrefix: 'academy-shell',
     wordmarkURL,
     artworkURL: wordmarkURL ? new URL('../../menu-scenes/fpv.webp', wordmarkURL).href : '',
-    modeName: () => (locale === 'uk' ? 'FPV SIM · Академія' : 'FPV SIM · Academy'),
+    modeName: navigationContext,
     locale,
     services: {
       settingsPanelBack: simSettingsPanelBack,
@@ -2509,11 +2540,7 @@ export function mountFlightApp({
       textFace: displayBinding('textFace'),
       textSize: displayBinding('textSize'),
       reducedEffects: displayBinding('reducedEffects'),
-      menuAnimation: {
-        get: () => getSimMenuAnimation(win),
-        set: (value) => setSimMenuAnimation(value, win),
-        subscribe: (listener) => subscribeSimMenuAnimation(listener, win),
-      },
+      menuAnimation: simMenuAnimationBinding(win),
       masterMuted: {
         get: () => audio.masterSnapshot().muted,
         set: (value) => audio.setEnabled(!value),
@@ -2544,6 +2571,7 @@ export function mountFlightApp({
   });
 
   const cueSettings = {
+    gameplayOutput: audio.gameplayOutput,
     // This preference is global; the 3D engine has no separate radio bus.
     // The canonical Soundscape consumes the same record in supported modes.
     get radioSettings() {

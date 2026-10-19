@@ -40,12 +40,20 @@ const read = (value, path) => path.split('.').reduce((item, key) => item?.[key],
  * Every snapshot is checked, including earlier and failed-attempt boundaries.
  * The selected group only determines the final comparable trend window.
  */
-export function assessSoloOwnedResources(report, { group = 'completed', last = 10 } = {}) {
+export function assessSoloOwnedResources(report, { group = 'completed', last = 10, demo } = {}) {
   assert.equal(report?.format, 'SoloQualificationReportV1');
   assert(Array.isArray(report.snapshots));
   assert(report.snapshots.length <= OWNED_RESOURCE_LIMITS.snapshots, 'Snapshot assessment cap');
   assert(typeof group === 'string' && /^[a-z0-9-]{1,80}$/.test(group));
   assert(Number.isSafeInteger(last) && last >= 3 && last <= OWNED_RESOURCE_LIMITS.snapshots);
+  if (demo !== undefined) {
+    assert.equal(demo?.format, 'DemoOwnedResourcesV1', 'Explicit Demo resource schema required');
+    assert(
+      typeof demo.sourceRevision === 'string' && /^[a-f0-9]{40}$/.test(demo.sourceRevision),
+      'Exact Demo source revision required',
+    );
+    assert.equal(demo.sourceRevision, report.sourceRevision, 'Demo source revision mismatch');
+  }
   const rows = [];
   const paths = new Set();
   const pendingPaths = new Set();
@@ -103,26 +111,27 @@ export function assessSoloOwnedResources(report, { group = 'completed', last = 1
     if (!validGroup) issue('failures', 'group', 'invalid-boundary-group');
     const number = (
       path,
-      { maximum = Number.MAX_SAFE_INTEGER, expected, pending = false } = {},
+      { maximum = Number.MAX_SAFE_INTEGER, expected, pending = false, record = true } = {},
+      value = read(resources, path),
     ) => {
-      paths.add(path);
+      if (record) paths.add(path);
       if (pending) pendingPaths.add(path);
-      const value = read(resources, path);
-      row.values[path] = null;
+      let result = null;
       if (value === undefined || value === null) issue('unknown', path, 'missing-counter');
       else if (!Number.isSafeInteger(value) || value < 0)
         issue('failures', path, 'invalid-nonnegative-integer');
       else {
-        row.values[path] = value;
+        result = value;
         if (value > maximum) issue('failures', path, 'source-limit-exceeded');
         if (expected !== undefined && value !== expected)
           issue('failures', path, 'source-constant-disagrees');
       }
-      return row.values[path];
+      if (record) row.values[path] = result;
+      return result;
     };
-    const boolean = (path) => {
+    const boolean = (path, { pending = false } = {}, value = read(resources, path)) => {
       paths.add(path);
-      const value = read(resources, path);
+      if (pending) pendingPaths.add(path);
       row.values[path] = null;
       if (value === undefined || value === null) issue('unknown', path, 'missing-counter');
       else if (typeof value !== 'boolean') issue('failures', path, 'invalid-boolean');
@@ -142,10 +151,13 @@ export function assessSoloOwnedResources(report, { group = 'completed', last = 1
       }
       return result;
     };
-    const pixels = (path, count = 'canvases') => {
-      const n = number(`${path}.${count}`);
-      const p = number(`${path}.pixels`, { maximum: Math.floor(Number.MAX_SAFE_INTEGER / 4) });
-      const bytes = number(`${path}.rgbaBytesEstimate`);
+    const pixels = (path, count = 'canvases', options = {}) => {
+      const n = number(`${path}.${count}`, options);
+      const p = number(`${path}.pixels`, {
+        ...options,
+        maximum: Math.floor(Number.MAX_SAFE_INTEGER / 4),
+      });
+      const bytes = number(`${path}.rgbaBytesEstimate`, options);
       equal(`${path}.rgbaBytesEstimate`, bytes, p === null ? null : p * 4);
       if (n === 0 && p > 0) issue('failures', path, 'pixels-without-owner');
       return { count: n, pixels: p, bytes };
@@ -366,6 +378,187 @@ export function assessSoloOwnedResources(report, { group = 'completed', last = 1
       if (!Array.isArray(decks) || decks.length !== 0)
         issue('failures', 'soundtrack.playback.decks', 'never-created-owner-disagrees');
     }
+    if (demo !== undefined) {
+      const format = read(resources, 'demo.format');
+      if (format === undefined || format === null)
+        issue('unknown', 'demo.format', 'missing-schema');
+      else if (format !== demo.format) issue('failures', 'demo.format', 'invalid-schema');
+      const activeDemo = boolean('demo.active');
+      const disposedDemo = boolean('demo.disposed');
+      if (activeDemo === 1 && disposedDemo === 1)
+        issue('failures', 'demo', 'disposed-active-owner');
+      const phase = read(resources, 'demo.phase');
+      if (phase === undefined) issue('unknown', 'demo.phase', 'missing-phase');
+      else if (activeDemo === 0 && phase !== null)
+        issue('failures', 'demo.phase', 'inactive-phase-disagrees');
+      else if (activeDemo === 1 && !['paused', 'suspended'].includes(phase))
+        issue('failures', 'demo.phase', 'not-paused-demo-boundary');
+      for (const path of ['demo.pendingSourceLoads', 'demo.pendingPreparations']) {
+        const pending = number(path, { pending: true });
+        // Closing is allowed while noncancelable work still owns a reservation.
+        // An active Demo may export only after its scene preparation settles.
+        if (activeDemo === 1 && pending > 0)
+          issue('failures', path, 'active-unsettled-preparation');
+      }
+      const scenes = number('demo.scenes');
+      for (const path of ['demo.display', 'demo.transition', 'demo.reward.poster']) {
+        const surface = pixels(path);
+        if (surface.count > 1) issue('failures', path, 'single-surface-owner-disagrees');
+        equal(
+          `${path}.canvases`,
+          surface.count,
+          surface.pixels === null ? null : Number(surface.pixels > 0),
+        );
+      }
+      boolean('demo.transition.loading', { pending: true });
+      const painters = read(resources, 'demo.painters');
+      const totals = { count: [], pixels: [], bytes: [], retained: [], leases: [] };
+      // Evidence-processing bound only, never an asserted runtime owner budget.
+      // Painter array positions are not persistent identities or trend series.
+      if (!Array.isArray(painters)) {
+        issue(
+          painters == null ? 'unknown' : 'failures',
+          'demo.painters',
+          'missing-or-invalid-painters',
+        );
+      } else if (painters.length > 64) {
+        issue('failures', 'demo.painters', 'painter-evidence-cap-exceeded');
+      } else {
+        if (scenes !== null && painters.length > scenes)
+          issue('failures', 'demo.painters', 'painters-without-scene-owner');
+        for (let i = 0; i < painters.length; i++) {
+          const path = `demo.painters.${i}`;
+          const owned = pixels(`${path}.ownedCanvases`, 'canvases', { record: false });
+          const categories = canvasCategories.map((name) =>
+            pixels(`${path}.ownedCanvases.categories.${name}`, 'canvases', { record: false }),
+          );
+          for (const key of ['count', 'pixels', 'bytes']) {
+            equal(`${path}.ownedCanvases.${key}`, owned[key], sum(categories.map((c) => c[key])));
+            totals[key].push(owned[key]);
+          }
+          const retained = number(`${path}.ownedCanvases.retainedPixelBufferBytes`, {
+            record: false,
+          });
+          equal(
+            `${path}.ownedCanvases.retainedPixelBufferBytes`,
+            retained,
+            number(`${path}.ownedCanvases.categories.demoConcealment.pixelBufferBytes`, {
+              record: false,
+            }),
+          );
+          totals.retained.push(retained);
+          totals.leases.push(number(`${path}.enemyImages.ownedLeases`, { record: false }));
+          // These are replicas of page pools, not extra per-painter allocations.
+          for (const [pool, names] of [
+            [
+              'legacyImages',
+              ['pending', 'active', 'reservedPixels', 'retainedPixels', 'pixelLimit'],
+            ],
+            ['enemyImages', ['entries', 'reservedBytes', 'decodedBytes', 'active', 'queued']],
+          ]) {
+            for (const name of names) {
+              const value = number(`${path}.${pool}.${name}`, { record: false });
+              const shared = row.values[`renderer.${pool}.${name}`] ?? null;
+              equal(`${path}.${pool}.${name}`, value, shared);
+            }
+          }
+          const reserved = number(`${path}.legacyImages.reservedPixels`, { record: false });
+          const retainedImages = number(`${path}.legacyImages.retainedPixels`, { record: false });
+          const totalImages = sum([reserved, retainedImages]);
+          if (totalImages !== null && totalImages > OWNED_RESOURCE_LIMITS.legacyPixels)
+            issue('failures', `${path}.legacyImages`, 'source-limit-exceeded');
+          number(`${path}.legacyImages.pixelLimit`, {
+            record: false,
+            expected: OWNED_RESOURCE_LIMITS.legacyPixels,
+          });
+          number(`${path}.legacyImages.active`, { record: false, maximum: 1 });
+          number(`${path}.enemyImages.active`, { record: false, maximum: 1 });
+        }
+      }
+      const validPainters = Array.isArray(painters) && painters.length <= 64;
+      for (const [key, name] of [
+        ['count', 'canvases'],
+        ['pixels', 'pixels'],
+        ['bytes', 'rgbaBytesEstimate'],
+        ['retained', 'retainedPixelBufferBytes'],
+        ['leases', 'ownedEnemyLeases'],
+      ])
+        number(`demo.painterTotals.${name}`, {}, validPainters ? sum(totals[key]) : null);
+
+      const handles = number('demo.workers.observedHandles');
+      const created = number('demo.workers.created');
+      const terminated = number('demo.workers.terminationRequests');
+      equal('demo.workers.created', created, sum([handles, terminated]));
+
+      const images = pixels('demo.sharedImages.uniqueObserved', 'images');
+      const imageRows = ['presentation', 'actors', 'backdrop'].map((name) =>
+        pixels(`demo.sharedImages.categories.${name}`, 'images'),
+      );
+      for (const key of ['count', 'pixels', 'bytes']) {
+        const total = sum(imageRows.map((item) => item[key]));
+        if (images[key] !== null && total !== null && images[key] > total)
+          issue('failures', 'demo.sharedImages.uniqueObserved', 'union-exceeds-category-sum');
+        if (
+          images[key] !== null &&
+          imageRows.some((item) => item[key] !== null && item[key] > images[key])
+        )
+          issue('failures', 'demo.sharedImages.uniqueObserved', 'union-below-category');
+      }
+      for (const prefix of [
+        'uniqueObserved',
+        'categories.presentation',
+        'categories.actors',
+        'categories.backdrop',
+      ])
+        if (number(`demo.sharedImages.${prefix}.unknownDimensions`) > 0)
+          issue('unknown', `demo.sharedImages.${prefix}`, 'unobserved-image-dimensions');
+      if (number('demo.sharedImages.unavailableSnapshots') > 0)
+        issue('unknown', 'demo.sharedImages', 'unavailable-image-owner');
+
+      number('demo.reward.pendingPreparations', { pending: true });
+      const unavailable = boolean('demo.reward.presentationUnavailable');
+      if (unavailable === 1)
+        issue('unknown', 'demo.reward.presentation', 'unavailable-media-owner');
+      const presentation = read(resources, 'demo.reward.presentation');
+      // Explicit null + available inspection proves only absence of this JS owner.
+      // It never proves native decode buffers were released.
+      const absent = presentation === null && unavailable === 0;
+      const media = number(
+        'demo.reward.presentation.mediaElements',
+        { maximum: 1 },
+        absent ? 0 : presentation?.mediaElements,
+      );
+      const urls = number(
+        'demo.reward.presentation.ownedBlobURLs',
+        { maximum: 1 },
+        absent ? 0 : presentation?.ownedBlobURLs,
+      );
+      const bytes = number(
+        'demo.reward.presentation.ownedBlobBytes',
+        {},
+        absent ? 0 : presentation?.ownedBlobBytes,
+      );
+      const play = boolean(
+        'demo.reward.presentation.pendingPlayCommand',
+        { pending: true },
+        absent ? false : presentation?.pendingPlayCommand,
+      );
+      const disposed = boolean(
+        'demo.reward.presentation.disposed',
+        {},
+        absent ? false : presentation?.disposed,
+      );
+      if ((urls === 0 && bytes > 0) || (urls === 1 && bytes === 0))
+        issue('failures', 'demo.reward.presentation', 'blob-owner-bytes-disagree');
+      if ((play === 1 && media === 0) || (disposed === 1 && (media > 0 || urls > 0 || play === 1)))
+        issue('failures', 'demo.reward.presentation', 'retired-or-missing-media-owner');
+      if (presentation && presentation.nativeDecodedBytes !== null)
+        issue(
+          'failures',
+          'demo.reward.presentation.nativeDecodedBytes',
+          'native-allocation-not-observable',
+        );
+    }
     rows.push(row);
   }
   const selected = rows.filter((row) => row.group === group).slice(-last);
@@ -427,6 +620,13 @@ export function assessSoloOwnedResources(report, { group = 'completed', last = 1
     rows,
     gameplayQualification: false,
     nativeMemoryQualification: false,
+    ...(demo !== undefined
+      ? {
+          demoContract: { format: demo.format, sourceRevision: demo.sourceRevision },
+          demoScope:
+            'Manual paused/closed Demo owners only; closed display remains retained. Canceled reservations remain pending until settlement. Worker termination is a request, not native exit. Shared images and page-pool replicas are nonadditive. Cumulative created/termination counters are not live retention. The 64-painter limit bounds evidence processing only. No native memory or leak verdict.',
+        }
+      : {}),
     scope:
       'Source-proved owner bounds and exact counters only. Flat values are observations, not a new retention tolerance or a leak verdict. Reservations, PCM, compressed originals and overlapping image pools are not summed. Native/GPU/process memory and active voices are unobserved. Raw failures remain authoritative.',
   };

@@ -26,12 +26,15 @@ const manifest = JSON.parse(
 );
 const fixture = JSON.parse(await readFile(join(root, manifest.recipes.next.path)));
 const historicalChangedPaths = new Set([
+  'scripts/solo-qualification-cpu-profile.mjs',
   'scripts/solo-qualification.mjs',
   'scripts/solo-qualification-replay-core.mjs',
   'scripts/run-solo-remote-correctness.mjs',
   'scripts/solo-remote-sustained.mjs',
   'scripts/solo-qualification-next-route.mjs',
   'scripts/qualify-solo-runtime.mjs',
+  'scripts/solo-owned-resource-assessment.mjs',
+  'scripts/solo-qualification-hitch-journal.mjs',
 ]);
 const witnessPath = 'docs/performance/fixtures/solo-next-geometric/e1cc-execution-source.json';
 const validateExecutionWitness = (bytes, manifestBytes, workflowBytes) => {
@@ -370,7 +373,7 @@ test('concrete package, tools and one-shot workflow retain exact independent ide
   );
   const witnessBytes = await readFile(join(root, witnessPath));
   const witnessed = validateExecutionWitness(witnessBytes, manifestBytes, workflowBytes);
-  assert.equal(witnessed.size, 6);
+  assert.equal(witnessed.size, 9);
   for (const ref of refs) {
     const prior = witnessed.get(ref.path);
     assert.deepEqual(
