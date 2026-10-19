@@ -47,6 +47,15 @@ both seats reachable; responsive seat order and touch-input ownership stay intac
 There is no board transform. Actual browser review must verify useful space,
 focus visibility and scroll reachability at 320/390px and 844×390 landscape.
 
+The first actual 320px Ukrainian review found that the compact song caption's
+unbroken intrinsic width expanded the app's implicit grid column and both seats.
+The correction explicitly constrains that column and its HUD/readout children,
+wraps the caption and seat statistics, and gives compact Pause/Results its own row
+on narrow screens. It applies to live play and the existing earned-board review;
+the normal and Large layouts, font sizes, hidden owners and logical bitmaps stay
+unchanged. Source checks bind these real owners; visual qualification belongs to
+the corrected snapshot, not the earlier overflowing candidate.
+
 ## Qualification
 
 Actual-host checks use both real simulations and the real preference owner.

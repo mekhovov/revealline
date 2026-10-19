@@ -236,6 +236,98 @@ test('Duel enlarged layout binds actual native states and leaves hidden screens 
   assert.ok(!settings.raws.selector.includes('[open]'));
 });
 
+test('Duel active and result-review layout contains the actual compact song and seat readout owners', async () => {
+  const rulesOf = async (file) => {
+    const collect = (nodes, media = '', layer = '') =>
+      nodes.flatMap((rule) => {
+        if (rule.type === 'css-atrule')
+          return collect(
+            rule.nodes ?? [],
+            rule.name === 'media' ? rule.raws.params : media,
+            rule.name === 'layer' ? rule.raws.params : layer,
+          );
+        return rule.type === 'css-rule' ? [{ rule, media, layer }] : [];
+      });
+    return collect((await parsers.css.parse(await readFile(path.join(root, file), 'utf8'))).nodes);
+  };
+  const originals = await rulesOf('game/couch/couch.css');
+  const handheld = await rulesOf('game/ui/handheld-play.css');
+  const enlarged = await rulesOf('game/couch/text-scaling.css');
+  const value = (rule, property) => rule.nodes.find((node) => node.prop === property)?.value.text;
+  const actualApp = originals.find(
+    ({ rule }) => rule.raws.selector === 'body.race-focus #couch-app',
+  );
+  assert.equal(value(actualApp.rule, 'display'), 'grid');
+  assert.equal(
+    value(actualApp.rule, 'grid-template-columns'),
+    undefined,
+    'Original columns are implicit.',
+  );
+  const app = enlarged.find(
+    ({ rule }) =>
+      value(rule, 'grid-template-columns') === 'minmax(0, 1fr)' &&
+      rule.raws.selector.endsWith('#couch-app'),
+  );
+  assert.ok(app);
+  assert.equal(app.layer, '', 'The explicit column overrides the legacy implicit track.');
+  assert.equal(value(app.rule, 'max-inline-size'), '100%');
+  assert.ok(app.rule.raws.selector.includes('.race-focus'));
+  assert.ok(
+    !app.rule.raws.selector.includes('data-couch-status'),
+    'Running and earned-board review share the real race-focus owner.',
+  );
+  const html = await readFile(path.join(root, 'game/couch/index.html'), 'utf8');
+  assert.match(html, /<div class="racer-readouts">\s*<p id="racer-stats-0" class="racer-stats"/);
+  const containment = enlarged.find(
+    ({ rule }) =>
+      rule.raws.selector.includes('.racer-readouts') && value(rule, 'min-inline-size') === '0',
+  );
+  for (const selector of ['.race-hud', '.race-boards', '.racer', '.racer-stats'])
+    assert.ok(containment.rule.raws.selector.includes(selector));
+  assert.equal(value(containment.rule, 'max-inline-size'), '100%');
+  const stats = enlarged.find(
+    ({ rule }) => rule.raws.selector.endsWith('.racer-stats') && value(rule, 'white-space'),
+  );
+  assert.equal(value(stats.rule, 'white-space'), 'normal');
+  assert.equal(value(stats.rule, 'overflow-wrap'), 'anywhere');
+  const compact = '#race-pause.compact-track-pause';
+  const before = handheld.find(
+    ({ rule }) => rule.raws.selector.includes(compact + '::after') && value(rule, 'white-space'),
+  );
+  assert.equal(value(before.rule, 'white-space'), 'nowrap');
+  assert.equal(value(before.rule, 'overflow'), 'hidden');
+  const caption = enlarged.find(({ rule }) => rule.raws.selector.endsWith(compact + '::after'));
+  assert.equal(caption.layer, '');
+  assert.equal(value(caption.rule, 'white-space'), 'normal');
+  assert.equal(value(caption.rule, 'overflow'), 'visible');
+  assert.equal(value(caption.rule, 'overflow-wrap'), 'anywhere');
+  assert.equal(
+    before.layer,
+    'legacy',
+    'Unlayered wrapping takes precedence over the shared compact rule.',
+  );
+  const button = enlarged.find(
+    ({ rule }) => rule.raws.selector.endsWith(compact) && value(rule, 'flex-shrink'),
+  );
+  assert.equal(value(button.rule, 'flex-shrink'), '1');
+  const narrow = enlarged.find(
+    ({ rule }) => rule.raws.selector.endsWith(compact) && value(rule, 'flex-basis'),
+  );
+  assert.equal(narrow.media.replace(/\s/g, ''), '(max-width:700px)');
+  assert.equal(value(narrow.rule, 'flex-basis'), '100%');
+  assert.equal(value(narrow.rule, 'inline-size'), '100%');
+  for (const { rule } of [app, containment, stats, caption, button, narrow]) {
+    assert.ok(rule.raws.selector.includes("[data-text-scaling='versus']"));
+    assert.ok(rule.raws.selector.includes("[data-text-size='extra-large']"));
+    assert.ok(
+      rule.nodes.every((node) => !['display', 'font-size', 'transform'].includes(node.prop)),
+      'Retain hidden ownership, enlarged text, and bitmap geometry.',
+    );
+  }
+  // This regression binds the intrinsic-size causes and real owners. Browser
+  // review still measures overflow, readable wrapping and complete board fit.
+});
+
 test('live theme projection matches the Duel capability and keeps other hosts on Large', async (t) => {
   for (const qualified of [true, false]) {
     const document = new Document(),

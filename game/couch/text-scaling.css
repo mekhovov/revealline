@@ -128,6 +128,21 @@ html[data-text-scaling='versus'] body[data-text-size='extra-large'] #race-help-r
 html[data-text-scaling='versus'] body[data-text-size='extra-large'].race-focus #couch-app {
   block-size: auto;
   min-block-size: 100dvh;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+/* The compact song caption must not establish an implicit min-content column
+ * for the HUD and both boards. Readouts wrap within the same measured seat. */
+html[data-text-scaling='versus']
+  body[data-text-size='extra-large'].race-focus
+  :is(.race-hud, .race-boards, .racer, .racer-readouts, .racer-stats) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+html[data-text-scaling='versus'] body[data-text-size='extra-large'].race-focus .racer-stats {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 html[data-text-scaling='versus'] body[data-text-size='extra-large'] .race-arena {
   min-block-size: 10rem;
@@ -322,5 +337,22 @@ html[data-text-scaling='versus']
   inline-size: auto;
   min-inline-size: 88px;
   max-inline-size: 100%;
+  flex-shrink: 1;
   overflow: visible;
+}
+html[data-text-scaling='versus']
+  body[data-text-size='extra-large'].race-focus
+  #race-pause.compact-track-pause::after {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  overflow: visible;
+  text-overflow: clip;
+}
+@media (max-width: 700px) {
+  html[data-text-scaling='versus']
+    body[data-text-size='extra-large'].race-focus
+    #race-pause.compact-track-pause {
+    flex-basis: 100%;
+    inline-size: 100%;
+  }
 }
