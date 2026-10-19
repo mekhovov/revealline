@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-19T01:55:45.871632+00:00",
+  "priorSourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+  "candidateSourceRevision": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+  "runtimeChanges": [
+    "game/demo-director.mjs"
+  ],
+  "nativeScopesUnchanged": [
+    "game/demo-data",
+    "game/core",
+    "game/demo-modes",
+    "game/overflight",
+    "optional-practice",
+    "game/replay.mjs",
+    "game/replay-player.mjs",
+    "game/demo-runtime.mjs"
+  ],
+  "nativeScopesEqual": true,
+  "scope": "The timeout fallback correction changes only shared source selection in the runtime. Native catalogs, recordings, simulation, replay verification and adapters remain unchanged. Existing890-entry complete native replay evidence retains its content-specific scope; new emitted availability/browser/endurance qualification remains required.",
+  "validation": {
+    "sharedFrameworkHostHelperTests": 95,
+    "receipt": "timeout-recovery-693947ed1.json",
+    "independentReview": "Two prepared patches and final tracked code reviewed; no actionable blocker.",
+    "targetedLintAndFormat": "passed"
+  },
+  "limitations": [
+    "Native corpus evidence is not a new890-entry replay run of this emitted build.",
+    "All historical failed/incomplete browser receipts retain their original outcomes."
+  ]
+}
