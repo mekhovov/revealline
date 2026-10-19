@@ -15,15 +15,15 @@
   },
   "nextPriority": [
     "Admit reviewed foundations through required checks on each current revision",
-    "Complete Survival/Raid support integration and remaining diagnostic hosts",
-    "Extend readable text to the complete Classic Snake play family",
-    "Verify paused mission progress, including route-based and Hunt goals",
-    "Explain Survival upgrade commitments using the native choice policy",
+    "Complete and measure Classic Snake text scaling across all three play modes",
+    "Fix the remaining confirmed Ukrainian route briefing",
+    "Review exact Time Attack medal goals and preserve native eligibility",
+    "Continue remaining support-summary hosts and replay-aware upgrade availability",
     "Continue Demo-dependent work after its predecessor; physical-only gates remain Not tested"
   ],
   "release": {
     "status": "source_delivery_in_progress",
-    "note": "Four source slices merged. Public e440 source identity/hash evidence includes F83a and F81; no new live gameplay, offline or physical-device qualification.",
+    "note": "Five source slices merged. Public e440 source identity/hash evidence includes F83a and F81; no new live gameplay, offline or physical-device qualification.",
     "publishedSource": {
       "revision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
       "observedAt": "2026-10-18T22:43:05Z",
@@ -181,7 +181,7 @@
       "impact": "M/H",
       "effort": "**0.5–1.5d**",
       "featureId": "F15",
-      "status": "ready_for_checks",
+      "status": "developing",
       "owner": "lane-c",
       "qualification": {
         "automated": "focused_and_full_source_passed",
@@ -191,7 +191,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Admit the four reviewed touch/About/stats/reading copy slices. Broader terminology and later feature-batch reviews remain F59.",
+      "next": "Admit four reviewed copy slices; translate source-confirmed Ukrainian reachable-route briefing through its existing key and native briefing regression. Broader terminology remains F59.",
       "evidence": [
         "Source scan on20555cd found no missing rich slots or plain-label interpolation tokens in checked Solo Help/About/Couch/Team surfaces. This is not a browser closure.",
         "Current-source Solo Help EN browser shows no localization placeholders. About has build-time __REVEALLINE_VERSION__ only in source serving; exact F82 packaged About substitutes0.151.1. No shipped localization defect demonstrated by that token.",
@@ -249,6 +249,16 @@
           "deliveryState": "ready",
           "observedRemoteHead": "d39385ca9cb6bec083a1bb84b97d257416be182e",
           "mergeState": "UNSTABLE"
+        },
+        {
+          "id": "reachable-route-briefing-uk",
+          "priority": "P1",
+          "status": "assessment_complete",
+          "owner": "lane-c",
+          "next": "Translate existing routeCoverage key and regenerate catalog; verify native EN/UK route-based mission briefing, no new layout or goal owner.",
+          "evidence": [
+            "Exact native-admitted reachable-routes.v1 mission passed to public missionBriefing returns English goal/copy under UK; uk/gameplay.json:521 equals EN:495, owner mission-brief.mjs:55. Source/native-model finding; browser not yet run."
+          ]
         }
       ]
     },
@@ -353,7 +363,7 @@
         "Independent dd337 integration review:6 feature blobs byte-identical, app/index feature patches identical, all main locale values retained plus exact3 original keys.90+68 focused checks, full validation/lint/format pass; exact lease push complete. Current CI queued, no merge claimed."
       ],
       "deliveryState": "ready",
-      "mergeState": "UNSTABLE",
+      "mergeState": "DIRTY",
       "observedRemoteHead": "e5405b462b6d7411ecd45d872892f0a26f720088"
     },
     {
@@ -552,11 +562,13 @@
           "evidence": [
             "Corrected shared Hunt labels; 54 context/title tests and full source gates. Earlier201f230 actual Capture EN/UK browsing/Back receipt retained; final Hunt correction source-tested. Independent review passed.",
             "Independent dd337 integration review confirms app/index feature patches and6 original feature blobs unchanged, all mainlocale values plus exact3 original additions retained.109 shared checks pass. Initial54-host cohort51passed/3failed after unchanged5second preparation timeout; unchanged exact case then passes3/3 isolated. Full validation and complete serial54-case rerun remain required; no timeout or assertion weakening.",
-            "Final integrated 9c passes 109 shared checks, full lint/format/validation and the complete serial 54-case host cohort with zero skips under unchanged limits. Initial concurrent preparation failure remains recorded; no timeout/assertion change. Independent review clear, lease-pushed and ready."
+            "Final integrated 9c passes 109 shared checks, full lint/format/validation and the complete serial 54-case host cohort with zero skips under unchanged limits. Initial concurrent preparation failure remains recorded; no timeout/assertion change. Independent review clear, lease-pushed and ready.",
+            "Remote1634 advanced9c→c94051bf1f46d2d7c9bf4e065d533f79abb2b7f6 with user-authored test alignment. Reviewed9c source/browser receipts remain exact-scoped; c940 independent delta verification requested, no inherited full-validation claim."
           ],
           "deliveryState": "ready",
           "mergeState": "UNSTABLE",
-          "observedRemoteHead": "9c23a13f5ef1d58f520a9e12f35b2aa218312af1"
+          "observedRemoteHead": "c94051bf1f46d2d7c9bf4e065d533f79abb2b7f6",
+          "next": "Inspect external user-authored c940 test-only successor before attributing current-head qualification; preserve it while reconciling dependent stacks."
         },
         {
           "id": "snake-context",
@@ -657,7 +669,7 @@
       "impact": "H/H",
       "effort": "**6–10d total**; b/c require D",
       "featureId": "F02",
-      "status": "ready_for_checks",
+      "status": "merged",
       "owner": "lane-a",
       "qualification": {
         "automated": "focused_and_source_gates_passed",
@@ -667,14 +679,17 @@
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1655",
       "commit": "aad2f48a0cc45e07777fa240d4fba661291c6382",
-      "next": "Required exact-head checks and merge admission; 13 broader baseline failures remain documented.",
+      "next": "Merged source complete. Live publication, physical acceptance and further onboarding slices remain separate.",
       "evidence": [
         "Existing First Flight owner now has optional Home entry, normal Start retained. Independent source review passed; full lint/validate and focused retention/EN/UK cases pass.13 broader failures reproduce exact clean cb8dddd3; assertions not weakened.",
-        "15 final focused tests pass; actual product c6dcc227 browser: optionalHomeentry→Ready→Start→legalcut→completed52.2%/3lives/6seconds→NextReady→Skip→replayReady→ReturnnormalHome. Finalaad onlytestaddition; no paused-save/browser/hardware claim."
+        "15 final focused tests pass; actual product c6dcc227 browser: optionalHomeentry→Ready→Start→legalcut→completed52.2%/3lives/6seconds→NextReady→Skip→replayReady→ReturnnormalHome. Finalaad onlytestaddition; no paused-save/browser/hardware claim.",
+        "Trusted admission merged1655 atbd15820bee10a33ba64534071d22657fbd7326d3 on2026-10-19T00:10:09Z. All registered required exact-head checks successful; general test/build scope-skipped, not counted as passes. /tmp/revealline-f02a-merged-evidence.json. No new live/device claim."
       ],
-      "deliveryState": "ready",
-      "mergeState": "CLEAN",
-      "observedRemoteHead": "aad2f48a0cc45e07777fa240d4fba661291c6382"
+      "deliveryState": "merged",
+      "mergeState": "UNKNOWN",
+      "observedRemoteHead": "aad2f48a0cc45e07777fa240d4fba661291c6382",
+      "mergeCommit": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "mergedAt": "2026-10-19T00:10:09Z"
     },
     {
       "id": "F02b",
@@ -838,14 +853,14 @@
       "status": "developing",
       "owner": "lane-c",
       "qualification": {
-        "automated": "shield_slice_focused_and_full_source_passed",
-        "browser": "staged_native_shield_card_scoped_passed",
+        "automated": "two_slices_focused_and_full_source_passed",
+        "browser": "staged_native_cards_scoped_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1680",
       "commit": "74e6a6cc203642652645f3fbc946c4e9b545debb",
-      "next": "Admit the shield-refit consequence PR; then deliver native Survival commitment context and separately reviewed reroll availability/cost slices.",
+      "next": "Admit reviewed shield and Survival commitment slices; assess replay-aware reroll availability, then optional utility cost copy.",
       "evidence": [
         "Current dd337 already provides native current/next Survival SVG and Raid canvas comparisons, rank/evolution markers, utility cap projections and same-rank refit explanations.24/24 existing card/preview/Raid-balance tests pass on byte-equivalent root snapshot, zero skips. Earlier actual normal390px Survival Wide Fan choice showed before/after1→3charges. No new feature complete or Raid earned-refit browser qualification claimed.",
         "Exactdd337 assessment credits existing current/next graphics, rank/evolution/refit labels and capped repair math. Executed legal plating2→ObjectiveShield2 refit advertises two hits but leaves available charges0/capacity2 and consumes one choice. First bounded P2 slice: truthful projected charges/capacity, current-rule recharge wording, EN/UK visible/accessible parity, no balance change. Further source-backed gaps: Survival primary/support/final-slot commitment, impossible-to-change reroll disclosure, utility choice-cost/up-to repair prose. Separate reroll behavior requires replay-aware policy; utility copy is P3 polish.31-file Git closure and executed model receipt retained."
@@ -875,13 +890,19 @@
         {
           "id": "survival-commitment-context",
           "priority": "P2",
-          "status": "developing",
-          "next": "Derive native legal offer consequences for payload path, combat slot, support family and max rank; preserve current/next graphic and one-choice owner. Missing policy context and Raid stay excluded.",
+          "status": "ready_for_checks",
+          "next": "Required exact-head checks and admission. Reroll availability and utility choice-cost copy remain separate.",
           "effort": "2–4d",
           "owner": "lane-c",
           "evidence": [
-            "Scope approved after current P1 review: use the accepted native build/legal-choice policy and actual authored module set. No balance/replay/save/input changes; EN/UK visible/accessible parity, compact real-card and keyboard activation review required. Existing shield slice remains separately ready; reroll and utility copy remain open."
-          ]
+            "Scope approved after current P1 review: use the accepted native build/legal-choice policy and actual authored module set. No balance/replay/save/input changes; EN/UK visible/accessible parity, compact real-card and keyboard activation review required. Existing shield slice remains separately ready; reroll and utility copy remain open.",
+            "Exact720 native legal-offer/build policy derives payload/support commitment, authored combat capacity and maximum rank without changing balance or choosing twice.24 focused/policy tests and full lint/changed format/uninterrupted final validation pass;18e prior scan is separately retained. A/root source review clear; root5/5 final complete test file passes. Actual320px native-card fixture: ENfirst1/2, UKfinal2/2, UKauthored1/1, UKsupport and max rank, original-rulesV2 ENpayload all accept exactly one choice at time0/tick0; no-policy keeps unchanged comparison. Review corrected ambiguous current-tense copy to explicit after-choice wording. Actual renderer/native choose with staged builds/draft and omitted artwork; no earned flight/storage/AT/device/acoustic claim. /tmp/f19b-720-native-card-browser-receipt.json. Ready at unchanged720."
+          ],
+          "pr": "https://github.com/mekhovov/revealline/pull/1683",
+          "commit": "720d034334f13658d23c898432d5d2da9d53b61a",
+          "deliveryState": "ready",
+          "observedRemoteHead": "720d034334f13658d23c898432d5d2da9d53b61a",
+          "mergeState": "UNSTABLE"
         },
         {
           "id": "reroll-choice-availability",
@@ -952,6 +973,34 @@
       "impact": "H/M",
       "effort": "**3–5d**",
       "featureId": "F22",
+      "status": "ready_for_checks",
+      "owner": "lane-a",
+      "qualification": {
+        "automated": "focused_and_full_source_passed_with_attributed_baseline_failures",
+        "browser": "earned_capture_scoped_passed",
+        "physical": "not_tested"
+      },
+      "blocker": null,
+      "pr": "https://github.com/mekhovov/revealline/pull/1682",
+      "commit": "9dfbdf3bcc6f00eb29a178532cfb1d29f0654097",
+      "next": "Required checks and admission for accepted paused progress. Route/Hunt policy tests pass; actual earned browser evidence is Capture only.",
+      "evidence": [
+        "Read-only exactdd337 source assessment credits existing goal, objectives, rules, threats, binding and paused ownership. Actual isolated22a Choose your share Field details shows Reveal65% but no current/remaining coverage inside the modal; HUD0% remains outside. Back retains17:16/3lives/0score and opener focus. No exact-main browser replay or comprehension/physical claim. Assessment /tmp/revealline-f22-assessment-oct19.md; F09 reader-layout problem is tracked separately.",
+        "Independent source review caught route-budget percentages mislabeled as picture coverage. The first internal945 candidate is not accepted; corrected basis-aware wording and route fixture regression are required before browser review. Earlier90/93 information cohort has3 failures reproduced directly on clean dd337; no historical assertions edited or failures counted as passes.",
+        "Final9df fixes basis-aware picture/routes/target copy, threshold precision and unknown-policy fallback. Seven new cases pass; complete91/94 information cohort retains3 failures reproduced on clean dd337, no skipped cases or assertion weakening. Full lint/changed format/uninterrupted source validation pass;8 unchanged full-format baseline files disclosed. Independent B/C/root reviews clear; root19/19 complete files pass. Actual normal Choose your share earns48.6% toward65%,16.4% remaining,11560score/3lives/paused0:05. EN/UK Field details and End/Return/Back preserve those facts; keyboard-opened Back restores exact opener. Pointer focus behavior is baseline, not newly fixed. No route/Hunt actual play, save-byte, AT or hardware claim. /tmp/f22-9df-earned-browser-receipt.json. Ready at unchanged9df."
+      ],
+      "deliveryState": "ready",
+      "observedRemoteHead": "9dfbdf3bcc6f00eb29a178532cfb1d29f0654097",
+      "mergeState": "UNSTABLE"
+    },
+    {
+      "id": "F23",
+      "priority": "P2",
+      "phase": "Phase 2 — Find, understand and start the right game",
+      "description": "Show exact medal shortfall and distinguish raw time, penalties and medal time. Gives retry a concrete purpose.",
+      "impact": "H/H",
+      "effort": "**2–4d**",
+      "featureId": "F23",
       "status": "developing",
       "owner": "lane-a",
       "qualification": {
@@ -962,32 +1011,35 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement current/target/remaining progress in the accepted paused snapshot and existing details section; retain Hunt quota/required-objective distinctions, locale repaint and safe Back.",
+      "next": "Review first complete Time Attack result slice, then assess Capture time/clean-lives medal explanation separately.",
       "evidence": [
-        "Read-only exactdd337 source assessment credits existing goal, objectives, rules, threats, binding and paused ownership. Actual isolated22a Choose your share Field details shows Reveal65% but no current/remaining coverage inside the modal; HUD0% remains outside. Back retains17:16/3lives/0score and opener focus. No exact-main browser replay or comprehension/physical claim. Assessment /tmp/revealline-f22-assessment-oct19.md; F09 reader-layout problem is tracked separately.",
-        "Independent source review caught route-budget percentages mislabeled as picture coverage. The first internal945 candidate is not accepted; corrected basis-aware wording and route fixture regression are required before browser review. Earlier90/93 information cohort has3 failures reproduced directly on clean dd337; no historical assertions edited or failures counted as passes."
+        "Current native Time Attack already separates raw elapsed time, penalty, medal time and all authored thresholds. Missing next-medal shortfall can make a sub-hundredth miss display equal to its target. Preserve exact native <= eligibility; compare full precision, qualify rounded-up larger gaps and explicitly describe tiny positive gaps. Gold, incomplete and unavailable boundaries remain truthful."
+      ],
+      "implementationSlices": [
+        {
+          "id": "time-attack-medal-shortfall",
+          "priority": "P2",
+          "status": "browser_review",
+          "owner": "lane-a",
+          "commit": "9332a5931f4cc3673bfbc2d1f334b8a6798a8a3b",
+          "effort": "2–4d within F23 estimate",
+          "next": "Independent source, compact EN/UK native-result review and exact full validation; no award/record/retry rule changes.",
+          "evidence": [
+            "Frozen9332 on current mainbd15820: existing result rows/copy plus six native-view/policy tests and scoped documentation.114/114 focused cases, full lint/changed format pass; full validation and browser review pending. Ordinary-input pilot reaches a native completed sortie in tests; this is model, not manual/browser/device qualification.",
+            "Draft1684 published at unchanged9332; C/root source review clear. Root6/6 complete test file passes, zero skips. Full validation and browser result review remain pending."
+          ],
+          "pr": "https://github.com/mekhovov/revealline/pull/1684",
+          "deliveryState": "draft",
+          "observedRemoteHead": "9332a5931f4cc3673bfbc2d1f334b8a6798a8a3b",
+          "mergeState": "UNSTABLE"
+        },
+        {
+          "id": "capture-medal-explanation",
+          "priority": "P2",
+          "status": "planned",
+          "next": "Assess exact time and clean-lives conditions through existing accepted record/rule owners after the Time Attack slice."
+        }
       ]
-    },
-    {
-      "id": "F23",
-      "priority": "P2",
-      "phase": "Phase 2 — Find, understand and start the right game",
-      "description": "Show exact medal shortfall and distinguish raw time, penalties and medal time. Gives retry a concrete purpose.",
-      "impact": "H/H",
-      "effort": "**2–4d**",
-      "featureId": "F23",
-      "status": "planned",
-      "owner": null,
-      "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
-        "physical": "not_tested"
-      },
-      "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
     },
     {
       "id": "F27",
@@ -1398,7 +1450,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Finish Survival/Raid integration, then remaining couch/SIM/Rooms summaries. Primary and Snake integrations are reviewed; browser evidence retains its exact candidate scope.",
+      "next": "Primary, Snake and Survival/Raid integrations reviewed; remaining couch, SIM and Rooms summary hosts stay open.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim."
@@ -1436,16 +1488,17 @@
           "id": "survival-raid-host",
           "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1671",
-          "commit": "3dfcd3a362a9d6ac52a1aed8c22841a94a48464b",
-          "dependency": "PR1661 exact47c8693a",
+          "commit": "c330d3ddf115a95f9bb52a83eb61f517139b36f4",
+          "dependency": "PR1661 exact f3c97cb5bb4be58c816df45087b89afd6d2b26e8",
           "evidence": [
             "55focused/full source gates pass; independent C review clear. All5operations, read-only existing controller sampler and honest unknown save permission; noF04dependency. Immutable actualhostfixture available, browser/export review pending.",
-            "Root actual3df browser: direct Single Drone Start→direction→Pause→Settings Data→Prepare;943-byte downloaded JSON parsed-equals preview (/tmp/f58-survival-native-browser-preview.json), SHA256 d4f15bb96b8977e5a9bba3f0c2c09b3c9fe5aedbf1457aee20a7c62db11b130a. Back returns paused host with Settings focus; explicit Resume; reopening clears preview/disables Download. Paused Ukrainian preview and idle Marathon UK identity overflight-marathon verified. Wrapper download produced no observed file; direct native path succeeded. No numerical paused-timer, replay, real-controller or physical claim."
+            "Root actual3df browser: direct Single Drone Start→direction→Pause→Settings Data→Prepare;943-byte downloaded JSON parsed-equals preview (/tmp/f58-survival-native-browser-preview.json), SHA256 d4f15bb96b8977e5a9bba3f0c2c09b3c9fe5aedbf1457aee20a7c62db11b130a. Back returns paused host with Settings focus; explicit Resume; reopening clears preview/disables Download. Paused Ukrainian preview and idle Marathon UK identity overflight-marathon verified. Wrapper download produced no observed file; direct native path succeeded. No numerical paused-timer, replay, real-controller or physical claim.",
+            "Integrated c330 preserves original10-file/+389−7 delta,7 original blobs and one intentional key per locale.55/55 tests/full lint/changed format/uninterrupted source validation pass;8 unchanged baseline formatting files remain. Root independent delta and18 generated-namespace review clear. Published reviewed draft1671 onf3c; original3df actual943-byte export and EN/UK return evidence retained, no new package/device claim. /tmp/revealline-f58-survival-c330-final-receipt.json."
           ],
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
-          "next": "Integrate after1661; keep exact-head source/browser scope and merge gates.",
-          "observedRemoteHead": "3dfcd3a362a9d6ac52a1aed8c22841a94a48464b"
+          "mergeState": "UNSTABLE",
+          "next": "Await predecessor and current exact-head admission; original actual export evidence retains its3df candidate scope.",
+          "observedRemoteHead": "c330d3ddf115a95f9bb52a83eb61f517139b36f4"
         }
       ]
     },
@@ -1790,7 +1843,7 @@
       "impact": "H/H",
       "effort": "**3–5d**; F09a",
       "featureId": "F09",
-      "status": "assessing",
+      "status": "developing",
       "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
@@ -1799,10 +1852,11 @@
       },
       "blocker": null,
       "pr": null,
-      "commit": null,
-      "next": "After support integration, deliver Classic Snake Solo/Versus/Team play as one complete family on reviewed primary1672. Inventory deferred sheets, readers and canvas text; keep separate hub and other families on honest fallback.",
+      "commit": "627cc436a19f097c30218858d734e2771a8b5458",
+      "next": "Review frozen Classic Snake Solo/Versus/Team candidate on primarye40. Complete measured font and actual EN/UK compact/landscape family navigation before claiming200%; separate hub and other families keep fallback.",
       "evidence": [
-        "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json."
+        "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json.",
+        "Frozen627 on e40: complete play-family preference/first-paint/settings integration,377-module/21-sheet inventory,41 readable absolute declarations scaled once and2 arrow-art exclusions.138 host/bootstrap/global plus120 shared regressions and3 closure/runtime-theme tests pass; full lint pass, full validation/source/browser review pending. Thin source fixture8810, no automatic progress injection. No200% or device acceptance claimed."
       ]
     },
     {
@@ -3338,6 +3392,11 @@
       "date": "2026-10-19",
       "item": "F15a/F79/F58/F09b/F19/F22",
       "reason": "Reading localization is independently reviewed and ready. Recovery and Snake diagnostics are integrated with current predecessors. Begin bounded Classic Snake scaling and Survival commitment work; correct route-based progress wording before acceptance."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "First Flight merged; paused progress and upgrade commitments ready",
+      "reason": "Five merged/21 ready/29 draft feature PRs. F22 earned Capture browser review and F19b native-card review clear. Survival support integration complete. Classic Snake scaling and exact Time Attack medal goals developing; confirmed UK route briefing added as bounded P1 follow-up. No new live/device qualification."
     }
   ],
   "deliveryDependencies": [
@@ -3354,9 +3413,9 @@
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 20,
-    "featurePRsDraft": 28,
-    "deliverablesMerged": 4,
+    "featurePRsReady": 21,
+    "featurePRsDraft": 29,
+    "deliverablesMerged": 5,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
     "hardware": "unavailable"
