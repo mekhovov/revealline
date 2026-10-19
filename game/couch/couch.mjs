@@ -2805,6 +2805,15 @@ try {
     getLevels: () => match?.runs?.map((run) => run.level) ?? [],
   });
   let globalSettingsVisit = 0;
+  function duelNavigationContext() {
+    const mode = t('interface:versus2');
+    if (
+      candidateJourney?.owns(roundRecipe?.entry) &&
+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)
+    )
+      return `${contentText(authoredRoute.source, 'name')} · ${mode}`;
+    return t('interface:captureNavigation.context', { mode });
+  }
   shell = createCouchShell({
     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
@@ -3763,6 +3772,11 @@ try {
         library: result.library,
         profile,
         mode: 'versus',
+        browsingContext: ({ label }) =>
+          t('interface:captureNavigation.browsing', {
+            mode: label,
+            context: duelNavigationContext(),
+          }),
         getCurrentId: () => {
           if (currentLibrarySelection?.match === match) return currentLibrarySelection.id;
           const entry = roundRecipe.entry;
@@ -4315,7 +4329,7 @@ try {
       contentBusy,
       focusTransition,
       summary: () =>
-        `${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
+        `${duelNavigationContext()} · ${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
     });
     $('race-time-field').hidden = qualifiedVersusEntry(roundRecipe.entry);
     // Reconcile deliberate layout transitions immediately, including browsers
