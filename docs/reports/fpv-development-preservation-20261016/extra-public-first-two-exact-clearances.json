@@ -1,0 +1,341 @@
+{
+  "rows": [
+    {
+      "path": "fpv-catalogue-play-20261014/docs/history/core-soundtrack-expansion-pr643.md",
+      "sha256": "95e0dbe4bccab61d06a2a1b18433f0babff8d547bf7ac291f6d8a9bc4d5fd958",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/history/pr1124-appearance-plan-notes.md",
+      "sha256": "022b936d7b48b474f62ce330b8f9fa0d76b0da468026a169c5646969a92a43fa",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/history/pr1124-pause-menu-plan-review-2026-10-01.md",
+      "sha256": "660779883df5154442c865177bfde03694b921751ae2c9a72baa32a09703e631",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/history/pr1124-whole-product-plan-review-2026-10-01.md",
+      "sha256": "d40d8421e917400843dc79e4a8dca15e437d441bd6b1d674612a894c5dd29e64",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/history/pr539-player-first-ux2-couch-secondary-navigation.md",
+      "sha256": "50a3688ec9710be5ce8a61f64f19d0c5974f78c04437b31ffd66a56ee9307ff3",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/history/pr549-player-first-ux2-team-quickstart.md",
+      "sha256": "31c9e40e9157bde0a9351dabfeda7937ed8abc86ce03e7527da14727489b052c",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/sim-community-20261002/coupa-offline.jpg",
+      "sha256": "9963863eaf5b82dcdbf67c6cd4711d941975446f0d28adc512b391a88b7c8873",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/research/round-03-coupa.md",
+      "sha256": "a3e4b549768f514f76645cb345f33b70f0abb15e0504f177a0e4f614f5fa99b4",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/communities/coupa/index.html",
+      "sha256": "c4aeab32f5b05c5ad6af2d00f3a509f138a03aa499d586d16724f64b1057bffe",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-adventure/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-adventure/campaign.json",
+      "sha256": "1e7cbceb30377bd9ffd1a8a23e07dc5954d9ccc3c2e9a151c2fb001b9029f77e",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-adventure/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-adventure/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-adventure/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-adventure/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-all/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-all/campaign.json",
+      "sha256": "1e7cbceb30377bd9ffd1a8a23e07dc5954d9ccc3c2e9a151c2fb001b9029f77e",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-all/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-all/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-all/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-all/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-culture/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-culture/campaign.json",
+      "sha256": "0995f8aff694c374eadfe2880156c1f7873650431ac436a54a254e824edc87b0",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-culture/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-culture/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-culture/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-culture/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-developers/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-developers/campaign.json",
+      "sha256": "5c9e81b6e7cb8946a7e471bb3a1ccd9a1ac6ebe61af24f77fb6fe1b0696c6cfd",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-developers/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-developers/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-developers/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-developers/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-foundations/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-foundations/campaign.json",
+      "sha256": "8bdc0f2a0687c0a6f3334e2091fa267dcdc570366eacadc44ddb8d09e50d4363",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-foundations/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-foundations/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-foundations/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-foundations/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-operations/archives.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-operations/campaign.json",
+      "sha256": "8bfc77fe8f32279d061197eed33bfd62663f86cd7fabf61d00b150ca4c506480",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-operations/classes.json",
+      "sha256": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-operations/packs.json",
+      "sha256": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-operations/presets.json",
+      "sha256": "64eb4dc5e0b8a91f65e3c7233a306039448af3c5ba781d4eab423f512b44b7bf",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-boot/coupa-operations/themes.json",
+      "sha256": "ab584882c6cc0b8a88d79473c565a7672d612f0afe0555042b26b31ffb91d2fb",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-developer-integration.json",
+      "sha256": "1baebc02667516bf1c8aaf7cc4f0a394254e599e671f6d2f0526b341d6640ae0",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-developer-integration.lessons.json",
+      "sha256": "b7518328e989823c59da74709831e86e8dca55edcc139abb4a5d14eeab475f86",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-inside-village.json",
+      "sha256": "584fdb801dcc747de97d01b0cd6992e20d87ae67e610218ee137403d16c36a36",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-inside-village.lessons.json",
+      "sha256": "d9a7a65c5643a2915aa714c9640c30f14b0645ef5f65ae3d2b54b7a5ac8f1106",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-product-operations.json",
+      "sha256": "c31d0285ff6b24dd3a2bce30c4b0877b457a4ae3870ee6fb8f7996c8454668d8",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-product-operations.lessons.json",
+      "sha256": "5041d09618f4bd9cc7c424dce2b3d840973dbb7dc2358f36a545075bf1d1dadb",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-source-to-pay.json",
+      "sha256": "385ef30f002cd5f2fc11e2e080d877538cd83f6862ec6c440ed23fb75eab537e",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-source-to-pay.lessons.json",
+      "sha256": "82e91fae0b85c8aae6584c89c51d8c40a06d7ebb932375a003611d5426ee6707",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-source-to-pay.rewards.json",
+      "sha256": "f81e54560992325853f030b3a926a96c6bf19d62d0d32bcc05a1394a765d0b29",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-spend-in-motion.json",
+      "sha256": "571a8f1c11344300de9e715b6490daf17a1087c9742efdf87ce38566e82f308a",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/game/content/company-campaigns/coupa-spend-in-motion.rewards.json",
+      "sha256": "cb85acdb99639a27117a49c80337f10c0f5ae4f1dfa093a2c024c86927a6ad7e",
+      "decision": "allow-app-archive",
+      "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+    }
+  ],
+  "sourceReceiptSHA256": "d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11"
+}

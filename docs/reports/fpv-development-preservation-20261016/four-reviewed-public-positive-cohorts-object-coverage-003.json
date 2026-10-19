@@ -1,0 +1,246 @@
+{
+  "format": "FourReviewedPublicPositiveCohortsObjectCoverage.v1",
+  "inputs": [
+    {
+      "name": "first-two-public-files-frozen.jsonl",
+      "sha256": "3c8bf60d4ab96f8ddb8220acdd1c419afb28d9121a3bb805317255902bae71cb",
+      "files": 3169,
+      "bytes": 528292018
+    },
+    {
+      "name": "next-two-approved-public-files-final.jsonl",
+      "sha256": "c91fa011daa5589a27d0953a5eae07fe0a97f240f5f4f27066b96280334de755",
+      "files": 6147,
+      "bytes": 1843256598
+    },
+    {
+      "name": "remaining-four-approved-public-files-final.jsonl",
+      "sha256": "98cd9329b4cb0436304d7bacd39232a1f91e11128490ce37565907cbde268527",
+      "files": 29722,
+      "bytes": 2717991896
+    },
+    {
+      "name": "small-main-approved-public-files-final.jsonl",
+      "sha256": "63831e6a06f1e92e54c9114bd69cb3b6a84cb81b7b451c6706b506f52d5a4fcd",
+      "files": 1467,
+      "bytes": 52468726
+    }
+  ],
+  "counts": {
+    "logicalFilePaths": 40505,
+    "logicalBytes": 5142009238,
+    "coveredFilePaths": 40505,
+    "uncoveredFilePaths": 0,
+    "usedVerifiedCASParts": 19,
+    "usedOriginalStageActualRestoredDirectAssets": 10
+  },
+  "usedParts": {
+    "102e33a30593f1df5ac75fd810880d170344552b2d6bdc2728d45275a0e775d0": {
+      "assetId": 646181621,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-102e33a30593f1df5ac75fd810880d170344552b2d6bdc2728d45275a0e775d0-verified.json",
+      "receiptSHA256": "0cb156395a149408ad1032eb9f58644a435993d1c0b13c6be972b9f0d0cc30b2"
+    },
+    "1c571cf78fefa69569939741c5771f33c3fa68f5540964de0cf9c6ad1332f26d": {
+      "assetId": 646255935,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38857718878/part-1c571cf78fefa69569939741c5771f33c3fa68f5540964de0cf9c6ad1332f26d-verified.json",
+      "receiptSHA256": "f55aa02b9dabe85d92ffa3d121b8b2b6ce6129fa139c83c95d45e1b4fa8096f3"
+    },
+    "2f0d817fed4cf9fa05d8cc4b684cb0dc5df0529bd5fff1ce9d4c408dd0bfdf32": {
+      "assetId": 646193386,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-2f0d817fed4cf9fa05d8cc4b684cb0dc5df0529bd5fff1ce9d4c408dd0bfdf32-verified.json",
+      "receiptSHA256": "7eff1789c718dc1c86a030622ac1ebf1acf3b51bc95d20deba394457293b55c4"
+    },
+    "35b7972b6e9472961534b2f5c1a01e875acda8eac094b5e4e2652642f91163b7": {
+      "assetId": 646207087,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-35b7972b6e9472961534b2f5c1a01e875acda8eac094b5e4e2652642f91163b7-verified.json",
+      "receiptSHA256": "fcc8d487f1717e172b4026f71177d98f67aea27b568bd767c59b1467ecd7af83"
+    },
+    "46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93": {
+      "assetId": 646093315,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93-verified.json",
+      "receiptSHA256": "c1f7ca84d619a52f682a36d9d9b126267a117b77c7db4f48e270afcf592a44df"
+    },
+    "5280e98ddcd944daa283bd426287a0c42e63ea6c5055552deaf362fc84ace076": {
+      "assetId": 646192823,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-5280e98ddcd944daa283bd426287a0c42e63ea6c5055552deaf362fc84ace076-verified.json",
+      "receiptSHA256": "764f9dbd49e436235baad73edef553c4c68023459c5c2437c6a7564fa4f8091b"
+    },
+    "8c0b7aa858bc4ba55a3bbab88bb90e01ec21b58647de30682b3bfb750166c611": {
+      "assetId": 646167100,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-8c0b7aa858bc4ba55a3bbab88bb90e01ec21b58647de30682b3bfb750166c611-verified.json",
+      "receiptSHA256": "4b80ee9f66718b74e05baebe117144b732ea8073cc45f527a0316de153b52acf"
+    },
+    "96e54d4137442c325fec7a3ec0340b9395edde473d60934d6d5895c0554310b8": {
+      "assetId": 646217715,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38857718878/part-96e54d4137442c325fec7a3ec0340b9395edde473d60934d6d5895c0554310b8-verified.json",
+      "receiptSHA256": "584f9564d4d3d034baa90b871258b3a883c83b4f7b2a9791243b198aa2868334"
+    },
+    "9a62daf603914c9373db31bd4231ee4cdb86e32854da16b58c4293b6182beaf8": {
+      "assetId": 646382282,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/batch-extra-public-002/part-0001-verified.json",
+      "receiptSHA256": "4f2f20dd96852272d4eb3daf4589c76f6dd6123353014ca976c32515e1fe364a"
+    },
+    "9d76fd0a4ed90188fffac80f9790e679cc5c209bd6f12cca1e1c187d13dc6c40": {
+      "assetId": 646140654,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-9d76fd0a4ed90188fffac80f9790e679cc5c209bd6f12cca1e1c187d13dc6c40-verified.json",
+      "receiptSHA256": "14be46d0dc0ae02a1475dfd41338fd22ed07ce4919afde87655270e4f99415de"
+    },
+    "9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520": {
+      "assetId": 646122696,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520-verified.json",
+      "receiptSHA256": "5d9be737c65b2dafba5be183ae4ac2c3a492f46b36dc6ac9c3588d7309580a18"
+    },
+    "a10ec601bafe5a4ee4a45e8a57d0dca55b28f20a466710b56ee07c18b06c9f5b": {
+      "assetId": 646557830,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/batch-extra-public-004/part-0001-verified.json",
+      "receiptSHA256": "8dc54e2b16ec72897a4ddc9d8b4622aff3349a47fcf415ff4b49b15ec6a36a81"
+    },
+    "a611cc22eac994b4fe7af86cb1d126b136cb5f31d48cfc7e0a8730091e962b89": {
+      "assetId": 646207060,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-a611cc22eac994b4fe7af86cb1d126b136cb5f31d48cfc7e0a8730091e962b89-verified.json",
+      "receiptSHA256": "d8f9498434686df0b54cb974ea7712f13fe936f5be929b8eda04808fde2f6955"
+    },
+    "b536ee45f56151c013bf773070a32479ad8db9b6dcdef99b5c0df107033cb842": {
+      "assetId": 646686183,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-incremental-readback-38875736494/extra-public-003-verified.json",
+      "receiptSHA256": "b8bc6a35af9bcfb0f0ad0a5625f1a231945842d3c607a2d788627dccc424e9b0"
+    },
+    "ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d": {
+      "assetId": 646133063,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38855234880/part-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d-verified.json",
+      "receiptSHA256": "9797d5d7d819c09de857009f83f88686bbcfb919590aa5e09585eee14b8d0741"
+    },
+    "bd6595d702e48191b9b9bafe5a1105ad34bb466cb2e0a28314c24394dd2e9565": {
+      "assetId": 646236709,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38857718878/part-bd6595d702e48191b9b9bafe5a1105ad34bb466cb2e0a28314c24394dd2e9565-verified.json",
+      "receiptSHA256": "ea5c88238c8309c77c0a0c72c6f53767a6c18efacde99fe25c9eb182d1f70469"
+    },
+    "d636f3184ee164c3b6dc656280f1f48d17eae0b72d7cb38b16d09b0188ed5098": {
+      "assetId": 646250320,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38857718878/part-d636f3184ee164c3b6dc656280f1f48d17eae0b72d7cb38b16d09b0188ed5098-verified.json",
+      "receiptSHA256": "0ee59382af56f586fb460fcb613a9cc77b5b2541e0c10cf746eb5a20fdcb7810"
+    },
+    "ddc6e470b9dfb440e846fd2ba36396b5c4c582e40ec3e540b998c54acd8aa41e": {
+      "assetId": 646342532,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/cloud-receipts-38860572427/part-ddc6e470b9dfb440e846fd2ba36396b5c4c582e40ec3e540b998c54acd8aa41e-verified.json",
+      "receiptSHA256": "9743980d4d5ee47bf6b4523b7677ef7f0bf20d8d8068d6fb27a8e080e2716ee0"
+    },
+    "f966df1dc59abd44344edaff5b55d52fd5e0719183533aa84ad53ab64a123063": {
+      "assetId": 646078378,
+      "receiptPath": "/Users/oleksandr.mekhovov/.codex/fpv-volume-preservation-20261016/bulk-pack-lane/batch-policy-001/part-0001-verified.json",
+      "receiptSHA256": "b18fc481590101c9bfd953842524cc05cef16fdcc0f3982cca4c748f47c63381"
+    }
+  },
+  "usedDirectAssets": {
+    "0d60dd1c929999acea12ddf66b4201dd0913e689bb6e5f4a925bb739fb1de75c": {
+      "assetId": 571678570,
+      "assetName": "manifest.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.61.0/manifest.json",
+      "bytes": 127378,
+      "sha256": "0d60dd1c929999acea12ddf66b4201dd0913e689bb6e5f4a925bb739fb1de75c",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.61.0",
+      "fullRestoreReadbackRequired": true
+    },
+    "1687fe1846f7f6cec588d24085a422fa0d9e75a1555f8c0e9a7aefcfe796ac66": {
+      "assetId": 565750456,
+      "assetName": "release.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.57.1/release.json",
+      "bytes": 465,
+      "sha256": "1687fe1846f7f6cec588d24085a422fa0d9e75a1555f8c0e9a7aefcfe796ac66",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.57.1",
+      "fullRestoreReadbackRequired": true
+    },
+    "3f191263ad827c30ecd797d7dcf1186d03551fae9a8500611b91a5d72ce512bd": {
+      "assetId": 565750458,
+      "assetName": "source-qualification.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.57.1/source-qualification.json",
+      "bytes": 52290,
+      "sha256": "3f191263ad827c30ecd797d7dcf1186d03551fae9a8500611b91a5d72ce512bd",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.57.1",
+      "fullRestoreReadbackRequired": true
+    },
+    "771334f1c965a2781a86b99958a245271a1eb706d0bcda983c37d48ee008f232": {
+      "assetId": 571678573,
+      "assetName": "release.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.61.0/release.json",
+      "bytes": 465,
+      "sha256": "771334f1c965a2781a86b99958a245271a1eb706d0bcda983c37d48ee008f232",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.61.0",
+      "fullRestoreReadbackRequired": true
+    },
+    "7f0be3dbdddb0b3252e0f3c60b53b0f6f93a38f9e5c513d37cf0e38a176e0f78": {
+      "assetId": 565750452,
+      "assetName": "manifest.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.57.1/manifest.json",
+      "bytes": 121400,
+      "sha256": "7f0be3dbdddb0b3252e0f3c60b53b0f6f93a38f9e5c513d37cf0e38a176e0f78",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.57.1",
+      "fullRestoreReadbackRequired": true
+    },
+    "96085dafb2c7f8083564e9923647b914efe29a5704a35b23d7fe337f4be4ae56": {
+      "assetId": 565105372,
+      "assetName": "manifest.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.55.0/manifest.json",
+      "bytes": 120099,
+      "sha256": "96085dafb2c7f8083564e9923647b914efe29a5704a35b23d7fe337f4be4ae56",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.55.0",
+      "fullRestoreReadbackRequired": true
+    },
+    "b84d2995e56d3034f2eae8b4fa3c175b2c91157d7ad68f58b9ad11cc781fe956": {
+      "assetId": 565105436,
+      "assetName": "source-qualification.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.55.0/source-qualification.json",
+      "bytes": 13337,
+      "sha256": "b84d2995e56d3034f2eae8b4fa3c175b2c91157d7ad68f58b9ad11cc781fe956",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.55.0",
+      "fullRestoreReadbackRequired": true
+    },
+    "c8f3f40e34ed7e26bcfda123423ddc59e2bf01044d0ade69f9da04b6b895e191": {
+      "assetId": 571678568,
+      "assetName": "source-qualification.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.61.0/source-qualification.json",
+      "bytes": 78105,
+      "sha256": "c8f3f40e34ed7e26bcfda123423ddc59e2bf01044d0ade69f9da04b6b895e191",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.61.0",
+      "fullRestoreReadbackRequired": true
+    },
+    "d18a9f0d93bed2609fb8fc089d1d3f4885909c7fba588ca065430494c073b28d": {
+      "assetId": 565105465,
+      "assetName": "verification.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.55.0/verification.json",
+      "bytes": 122173,
+      "sha256": "d18a9f0d93bed2609fb8fc089d1d3f4885909c7fba588ca065430494c073b28d",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.55.0",
+      "fullRestoreReadbackRequired": true
+    },
+    "fc79b9ce3974276a6aa3c5e7a81925fe484387b12e0472f54f81ceea01927d17": {
+      "assetId": 565105370,
+      "assetName": "release.json",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/v0.55.0/release.json",
+      "bytes": 465,
+      "sha256": "fc79b9ce3974276a6aa3c5e7a81925fe484387b12e0472f54f81ceea01927d17",
+      "provenance": "release-server-digest-catalogue",
+      "releaseTag": "v0.55.0",
+      "fullRestoreReadbackRequired": true
+    }
+  },
+  "uncovered": [],
+  "sourceRoot": "/Volumes/alex",
+  "originalStageDirectAssetsActualRestoreRun": 38861525073,
+  "new003ActualRestoreRun": 38875736494,
+  "new003IndependentRootReviewPending": false,
+  "fullLogicalFilePathModeTimeRestorePerformed": false,
+  "inputSetFinal": false,
+  "allVolumeComplete": false,
+  "new003IndependentRootAcceptanceSHA256": "1d524fce6d6bd8a0b4198ad38b0a7a61d2eede31276f0878921d933b6913c797",
+  "new003IndependentRootAcceptance": true
+}

@@ -1,0 +1,121 @@
+{
+  "capturedAt": "2026-10-16T03:23:24.569442+00:00",
+  "sourceWorktree": "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-regional-family-library-source-20261016",
+  "head": "b65d80f716b8db646bfdf5f714892f1c0f6409b0",
+  "tree": "98a19c4b9465279e910f7fd5c7b37d10b2c9d566",
+  "status": "Clean tracked and untracked; only ignored node_modules/ reported",
+  "upstream": "No upstream configured for feature branch",
+  "remoteBranch": "refs/heads/codex/fpv-regional-family-library-20261016",
+  "remoteHead": "b65d80f716b8db646bfdf5f714892f1c0f6409b0",
+  "localMain": "428329745c3078941338ae6157e2ae1a55c28462",
+  "originMain": "2169552a0571b9d62bce116054f1e21aabd10fa1",
+  "untrackedFiles": [],
+  "unpushedTrackedSourceCommits": [],
+  "ignored": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-regional-family-library-source-20261016/node_modules",
+      "symlink": false,
+      "target": null,
+      "role": "Installed third-party build dependencies; lockfile is committed"
+    }
+  ],
+  "reviewRuntimeReferences": [
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/web/runtime",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9214/web/runtime",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/functional-check"
+    }
+  ],
+  "qualified8abOptionalRuntimeScan": {
+    "archive": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-fpv-worlds.zip",
+    "absoluteAlexReferenceMembers": []
+  },
+  "b65Qualification": "Fresh cloud runs38844752667 and38844826436 started; no b65 original downloaded or package/native result claimed",
+  "newStage9220": "Not created; stopped at human preservation priority",
+  "importantSparseCheckoutNote": "Normal fast-forward reapplied existing sparse patterns. Some committed feature docs/tests are absent from working tree but are durable in b65/8ab Git objects and GitHub. No files were reset/deleted by this lane.",
+  "largeOriginalsNeedingRootDurableSnapshot": [
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/company-original-artifact.zip",
+      "bytes": 78418136,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/distribution-optional-civilian-flight.zip",
+      "bytes": 3762262,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/distribution-optional-civilian-fpv.zip",
+      "bytes": 6781322,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/distribution-optional-fpv-worlds.zip",
+      "bytes": 17600770,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/github-artifact.zip",
+      "bytes": 23157373,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/source-optional-civilian-flight.zip",
+      "bytes": 3797326,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/source-optional-civilian-fpv.zip",
+      "bytes": 6817787,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/source-optional-fpv-worlds.zip",
+      "bytes": 17645783,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/company-original-artifact.zip",
+      "bytes": 78418184,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-civilian-flight.zip",
+      "bytes": 3762262,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-civilian-fpv.zip",
+      "bytes": 6781322,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-fpv-worlds.zip",
+      "bytes": 17601020,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/github-artifact.zip",
+      "bytes": 23157547,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/source-optional-civilian-flight.zip",
+      "bytes": 3797326,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/source-optional-civilian-fpv.zip",
+      "bytes": 6817787,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    },
+    {
+      "source": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/source-optional-fpv-worlds.zip",
+      "bytes": 17646033,
+      "status": "Original large bytes not yet permanently preserved by this lane; GitHub Actions copies are expiring artifacts"
+    }
+  ]
+}

@@ -26,6 +26,7 @@ import {
   freshAdmissionMatches,
   mutationSnapshotMatches,
   collectExactHeadCheckInventory,
+  REVIEWED_PR_INAPPLICABLE_WORKFLOWS,
   inventoryCheckBlocker,
   inventoryReleaseReady,
   executeVerifiedMergeAction,
@@ -1575,6 +1576,36 @@ test("draft and closed PRs fail closed and disarm existing auto-merge", () => {
   }
 });
 
+test("draft or unknown readiness blocks every merge path and disarms existing requests", () => {
+  let combinations = 0;
+  for (const draft of [true, undefined, null]) {
+    for (const mergeable_state of [
+      "clean",
+      "unstable",
+      "behind",
+      "has_hooks",
+    ]) {
+      for (const auto_merge of [null, { enabled_at: "now" }]) {
+        for (const stack of [undefined, { number: 7, size: 2, position: 2 }]) {
+          const input = fixture({
+            draft,
+            mergeable_state,
+            auto_merge,
+            labels: [{ name: "fastline-stack-merge" }],
+            stack,
+          });
+          assert.deepEqual(decideMergeAction(input), {
+            action: auto_merge ? "disarm" : "wait",
+            reason: "pull request is draft or draft state is unknown",
+          });
+          combinations++;
+        }
+      }
+    }
+  }
+  assert.equal(combinations, 48);
+});
+
 test("labels, milestones and review state do not change exact-head admission", () => {
   for (const overrides of [
     { labels: [{ name: "hold: ux" }, { name: "release-train-hold" }] },
@@ -2084,4 +2115,721 @@ test("the privileged workflow is a safe no-op until the trusted controller reach
     workflow,
     /if: hashFiles\('publishing\/fastline-merge-controller\.mjs'\) != ''/,
   );
+});
+
+function prInapplicableFixture({
+  workflowPath = '.github/workflows/published-pages-smoke.yml',
+  blob = Object.keys(REVIEWED_PR_INAPPLICABLE_WORKFLOWS[workflowPath])[0],
+  copies = 1,
+  extraChecks = 0,
+  baseSha = '2'.repeat(40),
+  allowRecordedBaseDrift = false,
+  pullRequestNumber = 1620,
+  mutate,
+} = {}) {
+  const repository = 'mekhovov/revealline';
+  const base = baseSha;
+  const app = { id: 15368, slug: 'github-actions' };
+  const repositoryRecord = { id: 12, full_name: repository };
+  const repositoryURL = `https://api.github.com/repos/${repository}`;
+  const paths = [
+    '.github/workflows/deploy-pages.yml',
+    '.github/workflows/fastline-auto-merge.yml',
+    workflowPath,
+  ];
+  const catalog = paths.map((path, i) => ({ id: 300 + i, path, state: 'active' }));
+  while (catalog.length < 116)
+    catalog.push({
+      id: 300 + catalog.length,
+      path: `.github/workflows/unused-${catalog.length}.yml`,
+      state: 'active',
+    });
+  const directory = [
+    { name: workflowPath.split('/').at(-1), path: workflowPath, sha: blob, type: 'file' },
+  ];
+  const suites = [],
+    checks = [],
+    runs = [],
+    jobs = new Map();
+  const addRun = (workflowId, definitions, controller = false) => {
+    const suiteId = 7 + suites.length;
+    const runId = 50 + runs.length;
+    const run = {
+      id: runId,
+      run_attempt: 1,
+      workflow_id: workflowId,
+      path: catalog.find((row) => row.id === workflowId).path,
+      head_sha: SHA,
+      check_suite_id: suiteId,
+      repository: repositoryRecord,
+      head_repository: repositoryRecord,
+      event: 'pull_request',
+      status: controller ? 'in_progress' : 'completed',
+      conclusion: controller ? null : 'success',
+      pull_requests: [
+        {
+          id: 99,
+          number: pullRequestNumber,
+          url: `${repositoryURL}/pulls/${pullRequestNumber}`,
+          head: { ref: 'codex/fixture', sha: SHA, repo: { id: 12, url: repositoryURL } },
+          base: { ref: 'main', sha: base, repo: { id: 12, url: repositoryURL } },
+        },
+      ],
+    };
+    runs.push(run);
+    suites.push({
+      id: suiteId,
+      head_sha: SHA,
+      repository: repositoryRecord,
+      app,
+      status: run.status,
+      conclusion: run.conclusion,
+    });
+    const actionJobs = [];
+    for (const [name, conclusion] of definitions) {
+      const check = {
+        id: 1000 + checks.length,
+        name,
+        head_sha: SHA,
+        app,
+        check_suite: { id: suiteId },
+        status: conclusion === null ? 'in_progress' : 'completed',
+        conclusion,
+        started_at: '2026-10-18T00:00:00Z',
+        completed_at: conclusion === null ? null : '2026-10-18T00:01:00Z',
+        details_url: 'https://attacker.invalid/not-used',
+      };
+      checks.push(check);
+      actionJobs.push({
+        id: 100000 + check.id,
+        run_id: run.id,
+        run_attempt: 1,
+        head_sha: SHA,
+        name,
+        status: check.status,
+        conclusion,
+        started_at: check.started_at,
+        completed_at: check.completed_at,
+        check_run_url: `${repositoryURL}/check-runs/${check.id}`,
+      });
+    }
+    jobs.set(run.id, actionJobs);
+    return run;
+  };
+  addRun(300, [
+    ['release-ready', 'success'],
+    ['test', 'skipped'],
+    ['build', 'skipped'],
+    ...Array.from({ length: extraChecks }, (_, i) => [`extra-success-${i}`, 'success']),
+  ]);
+  const controller = addRun(301, [['reconcile', null]], true);
+  const reviewed = REVIEWED_PR_INAPPLICABLE_WORKFLOWS[workflowPath][blob];
+  for (let i = 0; i < copies; i++)
+    addRun(
+      302,
+      Object.values(reviewed.jobs).map((definition) => [
+        definition.checkNames[0],
+        definition.proof ? 'skipped' : 'success',
+      ]),
+    );
+  const calls = [];
+  let sweep = 0;
+  const api = async (route) => {
+    calls.push(route);
+    const url = new URL(route, 'https://api.github.com');
+    const page = Number(url.searchParams.get('page'));
+    const counted = (key, rows) => ({
+      total_count: rows.length,
+      [key]: rows.slice((page - 1) * 100, page * 100),
+    });
+    let result;
+    if (url.pathname.endsWith('/check-suites')) {
+      sweep++;
+      result = counted('check_suites', suites);
+    } else if (url.pathname.endsWith('/check-runs')) {
+      assert.equal(url.searchParams.get('filter'), 'all');
+      result = counted('check_runs', checks);
+    } else if (url.pathname.endsWith('/statuses')) result = [];
+    else if (url.pathname.endsWith('/actions/runs')) {
+      assert.equal(url.searchParams.get('head_sha'), SHA);
+      assert.equal(url.searchParams.has('check_suite_id'), false);
+      result = counted('workflow_runs', runs);
+    } else if (url.pathname.endsWith('/actions/workflows')) result = counted('workflows', catalog);
+    else if (url.pathname.endsWith('/contents/.github/workflows')) {
+      assert.equal(url.searchParams.get('ref'), SHA);
+      result = directory;
+    } else if (url.pathname.includes('/compare/')) {
+      const match = /\/compare\/([a-f0-9]{40})\.\.\.([a-f0-9]{40})$/u.exec(url.pathname);
+      assert(match);
+      const requestedBase = match[1];
+      assert.equal(match[2], SHA);
+      if (!allowRecordedBaseDrift) assert.equal(requestedBase, base);
+      assert.equal(url.pathname, `/repos/${repository}/compare/${requestedBase}...${SHA}`);
+      assert.equal(url.searchParams.get('per_page'), '1');
+      result = {
+        url: `${repositoryURL}/compare/${requestedBase}...${SHA}`,
+        base_commit: { sha: requestedBase },
+        merge_base_commit: { sha: requestedBase },
+        status: requestedBase === SHA ? 'identical' : 'ahead',
+        ahead_by: requestedBase === SHA ? 0 : 1,
+        behind_by: 0,
+        total_commits: requestedBase === SHA ? 0 : 1,
+      };
+    } else {
+      const match = /\/actions\/runs\/(\d+)\/attempts\/1\/jobs$/u.exec(url.pathname);
+      assert(match, `Unexpected read ${route}`);
+      result = counted('jobs', jobs.get(Number(match[1])));
+    }
+    result = structuredClone(result);
+    mutate?.({ route, url, result, page, sweep });
+    return result;
+  };
+  return {
+    repository,
+    repositoryId: 12,
+    headSha: SHA,
+    pullRequestNumber,
+    invocation: { runId: controller.id, runAttempt: 1, jobName: 'reconcile' },
+    api,
+    calls,
+    suites,
+    checks,
+    runs,
+    jobs,
+    catalog,
+    directory,
+    base,
+  };
+}
+
+test('reviewed PR-inapplicable skips preserve source success and native qualification separation', async () => {
+  const input = prInapplicableFixture();
+  const inventory = await collectExactHeadCheckInventory(input);
+  assert.equal(inventoryCheckBlocker(inventory, SHA), null);
+  const browser = inventory.checkRuns.find((check) => check.name === 'browser');
+  const binding = inventory.provenance.find((row) => row.checkId === browser.id);
+  assert.equal(browser.conclusion, 'skipped');
+  assert.equal(binding.role, 'inapplicable-skip');
+  assert.equal(binding.workflowBlob, input.directory[0].sha);
+  assert.equal(binding.executedSourceBase, input.base);
+  assert.equal(binding.pullRequestNumber, 1620);
+  assert.deepEqual(binding.inapplicableJobs, ['browser']);
+  assert.equal(binding.sourceJobs[0].jobId, 'source');
+  assert.equal(inventoryReleaseReady(inventory, SHA).name, 'release-ready');
+  assert.equal(inventory.mergeAuthority, false);
+  assert.equal(input.calls.filter((route) => route.includes('/compare/')).length, 2);
+  assert.equal(input.calls.filter((route) => route.includes('/contents/')).length, 2);
+});
+
+test('all skipped matrix-name candidates and transitive needs require source-bound proofs', async () => {
+  const input = prInapplicableFixture({
+    workflowPath: '.github/workflows/solo-native-package-consumer.yml',
+  });
+  const inventory = await collectExactHeadCheckInventory(input);
+  assert.equal(inventoryCheckBlocker(inventory, SHA), null);
+  const bindings = inventory.provenance.filter((row) => row.role === 'inapplicable-skip');
+  assert.equal(bindings.length, 16);
+  const engine = inventory.checkRuns.filter((row) => row.name === 'matrix.engine');
+  assert.equal(engine.length, 2);
+  for (const check of engine)
+    assert.deepEqual(bindings.find((row) => row.checkId === check.id).inapplicableJobs, [
+      'app-overhead',
+      'journal-cost',
+    ]);
+  const sustained = inventory.checkRuns.find((row) => row.name === 'sustained');
+  assert.deepEqual(bindings.find((row) => row.checkId === sustained.id).inapplicableJobs, [
+    'declare',
+    'sustained',
+  ]);
+});
+
+test('frozen one-shot owners are inapplicable only outside PR1544', async () => {
+  const workflowPath = Object.keys(REVIEWED_PR_INAPPLICABLE_WORKFLOWS).find((path) =>
+    Object.values(REVIEWED_PR_INAPPLICABLE_WORKFLOWS[path]).some((entry) =>
+      Object.values(entry.jobs).some((job) => job.proof?.kind === 'other-pr'),
+    ),
+  );
+  const other = await collectExactHeadCheckInventory(prInapplicableFixture({ workflowPath }));
+  assert.equal(inventoryCheckBlocker(other, SHA), null);
+  const original = await collectExactHeadCheckInventory(
+    prInapplicableFixture({
+      workflowPath,
+      pullRequestNumber: 1544,
+    }),
+  );
+  assert.match(inventoryCheckBlocker(original, SHA), /skipped/u);
+  assert.equal(
+    original.provenance.some((row) => row.role === 'inapplicable-skip'),
+    false,
+  );
+});
+
+test('workflow mutations, source failure and manual/native runs never become skip exceptions', async () => {
+  for (const mutate of [
+    ({ result }) => {
+      if (Array.isArray(result) && result[0]?.sha) result[0].sha = 'f'.repeat(40);
+    },
+    ({ result }) => {
+      if (result.workflows)
+        result.workflows.find((row) => row.id === 302).state = 'disabled_manually';
+    },
+    ({ result }) => {
+      if (result.workflow_runs) result.workflow_runs.at(-1).event = 'workflow_dispatch';
+    },
+    ({ result }) => {
+      if (result.workflow_runs) result.workflow_runs.at(-1).workflow_id = 777;
+    },
+    ({ result }) => {
+      if (result.workflow_runs) result.workflow_runs.at(-1).path = '.github/workflows/unknown.yml';
+    },
+    ({ result }) => {
+      if (result.jobs)
+        result.jobs
+          .filter((row) => row.name === 'source')
+          .forEach((row) => (row.conclusion = 'failure'));
+    },
+    ({ result }) => {
+      if (result.jobs)
+        result.jobs
+          .filter((row) => row.name === 'source')
+          .forEach((row) => (row.check_run_url += '?spoof'));
+    },
+    ({ result }) => {
+      if (result.jobs)
+        result.jobs
+          .filter((row) => row.name === 'source')
+          .forEach((row) => (row.started_at = '2026-10-18T00:00:01Z'));
+    },
+    ({ result }) => {
+      if (result.jobs)
+        result.jobs
+          .filter((row) => row.name === 'browser')
+          .forEach((row) => (row.check_run_url += '?spoof'));
+    },
+  ]) {
+    const inventory = await collectExactHeadCheckInventory(prInapplicableFixture({ mutate }));
+    assert.match(inventoryCheckBlocker(inventory, SHA), /skipped/u);
+    assert.equal(
+      inventory.provenance.some((row) => row.role === 'inapplicable-skip'),
+      false,
+    );
+  }
+});
+
+test('unknown check names and missing or non-skipped dependencies remain gates', async () => {
+  const input = prInapplicableFixture({
+    workflowPath: '.github/workflows/solo-native-package-consumer.yml',
+  });
+  const declare = input.checks.find((row) => row.name === 'declare');
+  const declaredJob = [...input.jobs.values()].flat().find((row) => row.name === 'declare');
+  declare.conclusion = 'success';
+  declaredJob.conclusion = 'success';
+  const inventory = await collectExactHeadCheckInventory(input);
+  assert.match(inventoryCheckBlocker(inventory, SHA), /sustained.*skipped/u);
+  const unknown = prInapplicableFixture();
+  unknown.checks.find((row) => row.name === 'browser').name = 'unknown-browser';
+  [...unknown.jobs.values()].flat().find((row) => row.name === 'browser').name = 'unknown-browser';
+  assert.match(
+    inventoryCheckBlocker(await collectExactHeadCheckInventory(unknown), SHA),
+    /unknown-browser/u,
+  );
+});
+
+test('failed, pending and cancelled native jobs remain blocked even under reviewed workflow bytes', async () => {
+  for (const [status, conclusion] of [
+    ['completed', 'failure'],
+    ['completed', 'cancelled'],
+    ['in_progress', null],
+  ]) {
+    const input = prInapplicableFixture();
+    for (const row of [...input.checks, ...[...input.jobs.values()].flat()]) {
+      if (row.name !== 'browser') continue;
+      row.status = status;
+      row.conclusion = conclusion;
+      row.completed_at = status === 'completed' ? '2026-10-18T00:01:00Z' : null;
+    }
+    // Keep another otherwise-inapplicable skip to exercise the batched path.
+    const extra = input.checks.find((row) => row.name === 'source');
+    extra.name = 'unknown';
+    extra.conclusion = 'skipped';
+    const extraJob = [...input.jobs.values()].flat().find((row) => row.name === 'source');
+    extraJob.name = 'unknown';
+    extraJob.conclusion = 'skipped';
+    const inventory = await collectExactHeadCheckInventory(input);
+    assert(inventoryCheckBlocker(inventory, SHA));
+    const browser = inventory.checkRuns.find((row) => row.name === 'browser');
+    assert.notEqual(
+      inventory.provenance.find((row) => row.checkId === browser.id)?.role,
+      'inapplicable-skip',
+    );
+  }
+});
+
+test('PR associations bind the exact head, repository and unique non-historical owner', async () => {
+  for (const change of [
+    (run) => {
+      run.pull_requests = [];
+    },
+    (run) => {
+      run.pull_requests.push(structuredClone(run.pull_requests[0]));
+    },
+    (run) => {
+      run.pull_requests[0].number = 1544;
+    },
+    (run) => {
+      run.pull_requests[0].head.sha = 'e'.repeat(40);
+    },
+    (run) => {
+      run.pull_requests[0].head.repo.id = 999;
+    },
+    (run) => {
+      run.pull_requests[0].base.repo.url = 'https://api.github.com/repos/attacker/repo';
+    },
+    (run) => {
+      run.pull_requests[0].base.ref = 'other';
+    },
+    (run) => {
+      run.pull_requests[0].url += '?spoof';
+    },
+  ]) {
+    const input = prInapplicableFixture();
+    change(input.runs.at(-1));
+    const inventory = await collectExactHeadCheckInventory(input);
+    assert.match(inventoryCheckBlocker(inventory, SHA), /skipped/u);
+  }
+});
+
+test('executed-source ancestry requires an immutable ancestor and a consistent summary', async () => {
+  for (const change of [
+    (row) => {
+      row.status = 'diverged';
+      row.behind_by = 1;
+      row.merge_base_commit.sha = 'd'.repeat(40);
+    },
+    (row) => {
+      row.status = 'behind';
+      row.ahead_by = 0;
+      row.total_commits = 0;
+      row.behind_by = 1;
+    },
+    (row) => {
+      row.status = 'identical';
+      row.ahead_by = 0;
+      row.total_commits = 0;
+    },
+    (row) => {
+      row.merge_base_commit.sha = 'd'.repeat(40);
+    },
+    (row) => {
+      row.ahead_by = 2;
+    },
+  ]) {
+    const inventory = await collectExactHeadCheckInventory(
+      prInapplicableFixture({
+        mutate: ({ result }) => {
+          if (result.merge_base_commit) change(result);
+        },
+      }),
+    );
+    assert.match(inventoryCheckBlocker(inventory, SHA), /skipped/u);
+  }
+  for (const change of [
+    (row) => {
+      row.url = row.url.replace(SHA, 'f'.repeat(40));
+    },
+    (row) => {
+      row.base_commit.sha = 'd'.repeat(40);
+    },
+    (row) => {
+      row.ahead_by = -1;
+    },
+    (row) => {
+      row.total_commits = 1.5;
+    },
+    (row) => {
+      row.merge_base_commit.sha = 'malformed';
+    },
+    (row) => {
+      delete row.status;
+    },
+  ])
+    await assert.rejects(
+      collectExactHeadCheckInventory(
+        prInapplicableFixture({
+          mutate: ({ result }) => {
+            if (result.merge_base_commit) change(result);
+          },
+        }),
+      ),
+      /ancestry/u,
+    );
+});
+
+test('workflow catalogs, run batches and directories are complete, bounded and unambiguous', async () => {
+  for (const mutate of [
+    ({ result }) => {
+      if (result.workflows) result.workflows.pop();
+    },
+    ({ result }) => {
+      if (result.workflow_runs) result.workflow_runs.push(structuredClone(result.workflow_runs[0]));
+    },
+    ({ result }) => {
+      if (result.workflows?.length > 1) result.workflows[1].path = result.workflows[0].path;
+    },
+    ({ result }) => {
+      if (result.workflow_runs) result.workflow_runs[0].repository.id = 999;
+    },
+    ({ result }) => {
+      if (Array.isArray(result) && result[0]?.sha) result.push(structuredClone(result[0]));
+    },
+    ({ result }) => {
+      if (Array.isArray(result) && result[0]?.sha) result[0].type = 'symlink';
+    },
+    ({ result }) => {
+      if (Array.isArray(result) && result[0]?.sha)
+        result[0].path = '.github/workflows/../spoof.yml';
+    },
+    ({ result }) => {
+      if (Array.isArray(result) && result[0]?.sha) result[0].sha = 'bad';
+    },
+    ({ result }) => {
+      if (Array.isArray(result) && result[0]?.sha)
+        while (result.length < 1000) result.push(structuredClone(result[0]));
+    },
+  ])
+    await assert.rejects(collectExactHeadCheckInventory(prInapplicableFixture({ mutate })));
+});
+
+test('batched run-to-suite and exact-attempt job joins never collapse historical identities', async () => {
+  for (const mutate of [
+    ({ result }) => {
+      if (result.workflow_runs) {
+        result.workflow_runs.push({ ...structuredClone(result.workflow_runs.at(-1)), id: 999 });
+        result.total_count++;
+      }
+    },
+    ({ result }) => {
+      if (result.jobs?.some((row) => row.name === 'browser')) {
+        result.jobs.push({ ...structuredClone(result.jobs.at(-1)), id: 999 });
+        result.total_count++;
+      }
+    },
+    ({ result }) => {
+      if (result.jobs) result.jobs[0].run_attempt = 2;
+    },
+    ({ result }) => {
+      if (result.jobs) result.jobs[0].run_id = 999;
+    },
+    ({ result }) => {
+      if (result.jobs) result.jobs[0].head_sha = 'e'.repeat(40);
+    },
+  ])
+    await assert.rejects(collectExactHeadCheckInventory(prInapplicableFixture({ mutate })));
+});
+
+test('the second complete sweep rechecks workflow bytes, PR base, ancestry and catalog state', async () => {
+  for (const mutate of [
+    ({ result, sweep }) => {
+      if (sweep === 2 && Array.isArray(result) && result[0]?.sha) result[0].sha = 'f'.repeat(40);
+    },
+    ({ result, sweep }) => {
+      if (sweep === 2 && result.merge_base_commit) result.merge_base_commit.sha = 'd'.repeat(40);
+    },
+    ({ result, sweep }) => {
+      if (sweep === 2 && result.workflows) result.workflows.at(-1).state = 'disabled_manually';
+    },
+  ])
+    await assert.rejects(collectExactHeadCheckInventory(prInapplicableFixture({ mutate })));
+});
+
+test('a large frozen cohort stays within the unchanged per-sweep request bound', async () => {
+  const input = prInapplicableFixture({ copies: 46, extraChecks: 14 });
+  const inventory = await collectExactHeadCheckInventory(input);
+  assert.equal(inventoryCheckBlocker(inventory, SHA), null);
+  assert.deepEqual(inventory.requestCounts, [57, 57]);
+  assert.equal(inventory.provenance.filter((row) => row.role === 'inapplicable-skip').length, 46);
+  assert.equal(input.calls.filter((route) => route.includes('/actions/runs?')).length, 2);
+  assert.equal(input.calls.filter((route) => route.includes('/attempts/')).length, 96);
+  assert.equal(input.calls.filter((route) => route.includes('/compare/')).length, 2);
+  await assert.rejects(
+    collectExactHeadCheckInventory({
+      ...prInapplicableFixture({ copies: 54, extraChecks: 14 }),
+    }),
+    /request budget/u,
+  );
+});
+
+test('new proof reads share existing request and wall-clock bounds', async () => {
+  await assert.rejects(
+    collectExactHeadCheckInventory({
+      ...prInapplicableFixture(),
+      maxRequests: 6,
+    }),
+    /request budget/u,
+  );
+  let now = 0;
+  await assert.rejects(
+    collectExactHeadCheckInventory({
+      ...prInapplicableFixture({
+        mutate: ({ url }) => {
+          if (url.pathname.includes('/compare/')) now = 120_000;
+        },
+      }),
+      now: () => now,
+    }),
+    /time budget/u,
+  );
+});
+
+test('the finite registry has no source-job exemption and every inherited proof names a reviewed root', () => {
+  for (const [workflowPath, versions] of Object.entries(REVIEWED_PR_INAPPLICABLE_WORKFLOWS)) {
+    assert.match(workflowPath, /^\.github\/workflows\/[A-Za-z0-9_.-]+$/u);
+    for (const [blob, reviewed] of Object.entries(versions)) {
+      assert.match(blob, /^[a-f0-9]{40}$/u);
+      assert.match(reviewed.sha256, /^[a-f0-9]{64}$/u);
+      assert(Number.isSafeInteger(reviewed.bytes) && reviewed.bytes > 0);
+      for (const source of reviewed.requiredSuccessfulJobs)
+        assert.equal(reviewed.jobs[source].proof, null);
+      for (const definition of Object.values(reviewed.jobs)) {
+        assert(definition.checkNames.length > 0);
+        if (definition.proof?.kind === 'other-pr') assert.equal(definition.proof.forbiddenPR, 1544);
+        if (definition.proof?.kind === 'needs-inapplicable') {
+          assert.equal(definition.condition, null);
+          assert.deepEqual(definition.proof.needs, definition.needs);
+          assert(definition.needs.length > 0);
+          for (const needed of definition.needs) assert(reviewed.jobs[needed].proof);
+        }
+      }
+    }
+  }
+});
+
+test('a successful source guard from another run or attempt cannot authorize a skip', async () => {
+  const input = prInapplicableFixture({ copies: 2 });
+  const firstNative = input.runs[2];
+  const sourceJob = input.jobs.get(firstNative.id).find((row) => row.name === 'source');
+  sourceJob.run_attempt = 2;
+  await assert.rejects(collectExactHeadCheckInventory(input), /job identity/u);
+  const mismatch = prInapplicableFixture({ copies: 2 });
+  const firstSource = mismatch.jobs.get(mismatch.runs[2].id).find((row) => row.name === 'source');
+  firstSource.check_run_url = mismatch.jobs
+    .get(mismatch.runs[3].id)
+    .find((row) => row.name === 'source').check_run_url;
+  const inventory = await collectExactHeadCheckInventory(mismatch);
+  assert.match(inventoryCheckBlocker(inventory, SHA), /browser.*skipped/u);
+  assert.equal(inventory.provenance.filter((row) => row.role === 'inapplicable-skip').length, 1);
+});
+
+test('missing PR identity and original PR1544 never receive the new role', async () => {
+  const original = await collectExactHeadCheckInventory(
+    prInapplicableFixture({ pullRequestNumber: 1544 }),
+  );
+  assert.match(inventoryCheckBlocker(original, SHA), /browser.*skipped/u);
+  assert.equal(
+    original.provenance.some((row) => row.role === 'inapplicable-skip'),
+    false,
+  );
+  const missing = provenanceFixture();
+  missing.rows[1].name = 'browser';
+  const ordinary = await collectExactHeadCheckInventory(missing);
+  assert.match(inventoryCheckBlocker(ordinary, SHA), /browser.*skipped/u);
+  for (const pullRequestNumber of [0, -1, '1620', 1.5])
+    await assert.rejects(
+      collectExactHeadCheckInventory({ ...prInapplicableFixture(), pullRequestNumber }),
+      /pull request identity/u,
+    );
+});
+
+test('identical executed-source base requires the same head and zero comparison counts', async () => {
+  const input = prInapplicableFixture({ baseSha: SHA });
+  assert.equal(inventoryCheckBlocker(await collectExactHeadCheckInventory(input), SHA), null);
+  const invalid = prInapplicableFixture({
+    baseSha: SHA,
+    mutate: ({ result }) => {
+      if (result.merge_base_commit) {
+        result.status = 'ahead';
+        result.ahead_by = 1;
+        result.total_commits = 1;
+      }
+    },
+  });
+  assert.match(
+    inventoryCheckBlocker(await collectExactHeadCheckInventory(invalid), SHA),
+    /skipped/u,
+  );
+});
+
+test('source guards must be consistently successful in the same joined attempt', async () => {
+  for (const [status, conclusion] of [
+    ['completed', 'failure'],
+    ['completed', 'cancelled'],
+    ['completed', 'skipped'],
+    ['in_progress', null],
+  ]) {
+    const input = prInapplicableFixture();
+    for (const row of [...input.checks, ...[...input.jobs.values()].flat()]) {
+      if (row.name !== 'source') continue;
+      row.status = status;
+      row.conclusion = conclusion;
+      row.completed_at = status === 'completed' ? '2026-10-18T00:01:00Z' : null;
+    }
+    const inventory = await collectExactHeadCheckInventory(input);
+    const browser = inventory.checkRuns.find((row) => row.name === 'browser');
+    assert(inventoryCheckBlocker(inventory, SHA));
+    assert.notEqual(
+      inventory.provenance.find((row) => row.checkId === browser.id)?.role,
+      'inapplicable-skip',
+    );
+  }
+  const missing = prInapplicableFixture();
+  missing.checks.splice(
+    missing.checks.findIndex((row) => row.name === 'source'),
+    1,
+  );
+  const nativeJobs = missing.jobs.get(missing.runs.at(-1).id);
+  nativeJobs.splice(
+    nativeJobs.findIndex((row) => row.name === 'source'),
+    1,
+  );
+  const inventory = await collectExactHeadCheckInventory(missing);
+  assert.match(inventoryCheckBlocker(inventory, SHA), /browser.*skipped/u);
+  assert.equal(
+    inventory.provenance.some((row) => row.role === 'inapplicable-skip'),
+    false,
+  );
+});
+
+test('every ambiguous matrix sibling must be skipped before its shared name is inapplicable', async () => {
+  for (const conclusion of ['success', 'failure']) {
+    const input = prInapplicableFixture({
+      workflowPath: '.github/workflows/solo-native-package-consumer.yml',
+    });
+    const siblings = input.checks.filter((row) => row.name === 'matrix.engine');
+    assert.equal(siblings.length, 2);
+    siblings[1].conclusion = conclusion;
+    const jobs = input.jobs.get(input.runs.at(-1).id).filter((row) => row.name === 'matrix.engine');
+    jobs[1].conclusion = conclusion;
+    const inventory = await collectExactHeadCheckInventory(input);
+    assert(inventoryCheckBlocker(inventory, SHA));
+    for (const sibling of siblings)
+      assert.notEqual(
+        inventory.provenance.find((row) => row.checkId === sibling.id)?.role,
+        'inapplicable-skip',
+      );
+  }
+});
+
+test('a valid alternate recorded base still fails the complete-sweep stability check', async () => {
+  const input = prInapplicableFixture({
+    allowRecordedBaseDrift: true,
+    mutate: ({ result, sweep }) => {
+      if (sweep === 2 && result.workflow_runs)
+        result.workflow_runs.at(-1).pull_requests[0].base.sha = 'd'.repeat(40);
+    },
+  });
+  await assert.rejects(
+    collectExactHeadCheckInventory(input),
+    /inventory changed between complete sweeps/u,
+  );
+  assert.equal(input.calls.filter((route) => route.includes('/compare/')).length, 2);
 });

@@ -100,7 +100,10 @@ test('isolated lessons retain their own title context without exposing Capture n
   assert.equal(p.$('shell-title-modes').hidden, true);
 });
 
-for (const route of ['humanoid-hunt-v1', 'snake-hunt-v1']) {
+for (const [route, name, translated] of [
+  ['humanoid-hunt-v1', 'Hunt lessons · six missions', 'Уроки полювання · шість місій'],
+  ['snake-hunt-v1', 'Snake Hunt', 'Зміїне полювання'],
+]) {
   test(`authored ${route} retains its own identity without a Capture label`, async (t) => {
     const locale = getLocale();
     t.after(() => setLocale(locale, { persist: false }));
@@ -116,20 +119,22 @@ for (const route of ['humanoid-hunt-v1', 'snake-hunt-v1']) {
       p.$('pack-select').value,
       route === 'snake-hunt-v1' ? 'journey-snake-hunt' : 'journey-humanoid-hunt',
     );
-    assert.equal(p.$('shell-family-context').hidden, true);
-    assert.equal(p.$('shell-family-context').textContent, '');
-    assert.equal(p.$('shell-title-modes').getAttribute('aria-describedby'), null);
+    assert.equal(p.$('shell-family-context').hidden, false);
+    assert.equal(p.$('shell-family-context').textContent, `${name} · Solo`);
+    assert.equal(p.$('shell-title-modes').getAttribute('aria-describedby'), 'shell-family-context');
     await openMissionLibrary(p, 'shell-play');
     const status = p.$('journey-chooser-status');
+    assert.ok(status.textContent.includes(`Browsing Solo · from ${name} · Solo`));
     assert.doesNotMatch(status.textContent, /Capture/);
     p.change('journey-mode', 'versus');
-    assert.match(status.textContent, /Duel/);
+    assert.ok(status.textContent.includes(`Browsing Duel · from ${name} · Solo`));
     assert.doesNotMatch(status.textContent, /Capture/);
     const focus = p.doc.activeElement;
     setLocale('uk', { persist: false });
     assert.equal(p.doc.activeElement, focus);
-    assert.equal(p.$('shell-family-context').hidden, true);
-    assert.equal(p.$('shell-family-context').textContent, '');
+    assert.equal(p.$('shell-family-context').hidden, false);
+    assert.equal(p.$('shell-family-context').textContent, `${translated} · Одиночна`);
+    assert.ok(status.textContent.includes(`Перегляд: Дуель · з ${translated} · Одиночна`));
     assert.doesNotMatch(status.textContent, /Захоплення/);
     p.$('journey-back').click();
     assert.equal(p.$('shell-home').open, true);
@@ -137,3 +142,33 @@ for (const route of ['humanoid-hunt-v1', 'snake-hunt-v1']) {
     assert.deepEqual(p.errors, []);
   });
 }
+
+test('choosing Classic from Hunt retains the current owner until its exact legacy handoff', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const p = await soloPage(t, {
+    titleScreen: true,
+    search: '?journey=humanoid-hunt-v1',
+    waitForPictures: false,
+  });
+  assert.match(p.$('shell-family-context').textContent, /^Hunt lessons/);
+  await openMissionLibrary(p, 'shell-play');
+  const classic = [...p.$('journey-cards').children].find((card) => {
+    const [owner, , , id] = JSON.parse(card.dataset.missionId);
+    return id === 'signal-01' && JSON.parse(owner)[1] === 'base';
+  });
+  assert.ok(classic, 'The exact base mission is available in the existing library.');
+  const missionId = classic.dataset.missionId;
+  const sourceRun = p.rendered.run;
+  await activateMissionCard(classic);
+  const destination = new URL(globalThis.location.href);
+  assert.equal(destination.pathname, '/game/');
+  assert.equal(destination.searchParams.get('journey'), 'legacy');
+  assert.equal(destination.searchParams.get('library-mission'), missionId);
+  // The finite fixture records navigation instead of loading a new page. The
+  // retiring Hunt page must not claim to have already accepted the Classic run.
+  assert.equal(p.rendered.run, sourceRun);
+  assert.equal(p.$('shell-family-context').textContent, 'Hunt lessons · six missions · Solo');
+  assert.deepEqual(p.errors, []);
+});

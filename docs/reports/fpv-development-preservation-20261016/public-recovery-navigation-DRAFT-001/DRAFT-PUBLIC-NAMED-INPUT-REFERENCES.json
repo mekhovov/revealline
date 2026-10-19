@@ -1,0 +1,138 @@
+{
+  "format": "DraftPublicRecoveryNamedInputReferences.v1",
+  "repository": "mekhovov/revealline",
+  "publicOnly": true,
+  "status": "Named accepted public inputs, no remote re-verification",
+  "inputs": [
+    {
+      "inputId": "accepted-public-entry",
+      "name": "PUBLIC-RECOVERY-ENTRY.md",
+      "bytes": 3102,
+      "sha256": "e072427ce3b45d7accd6a1bc6f7bccd83e35fda3242a270634ee38b3277cdf61",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-tool-guide",
+      "name": "README.md",
+      "bytes": 13682,
+      "sha256": "cb8dfa9577e9ce478a478734c7552b8aef25eaa23a4206620c594ebf41571842",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-PR1552-summary",
+      "name": "pr1552-body-current-022.md",
+      "bytes": 5828,
+      "sha256": "ac7060379e372e55858e3759d67e7c10752ae99e78ae891cfb39b7a932e4f4ab",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-publication-017",
+      "name": "tools-publication-increment-017.json",
+      "bytes": 2704,
+      "sha256": "15b17675ddf0892f6b6baaeafb1d597031c929168542d99a53aebe7cd3592ee3",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-publication-018",
+      "name": "tools-publication-increment-018.json",
+      "bytes": 8289,
+      "sha256": "e499715255b02907e437614ceb94988c62f1127fae75067d3fa1bc51d42c347e",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-publication-019",
+      "name": "tools-publication-increment-019.json",
+      "bytes": 4321,
+      "sha256": "2ed6412e395995480a66e340e212e0ccce30d5968f11f89ddb9a98ca08f0397e",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-publication-020",
+      "name": "tools-publication-increment-020.json",
+      "bytes": 2479,
+      "sha256": "23166fae8715d47c39ae73cf369fb326cd70b535ecce2d61cbf1dc97506be396",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-publication-021",
+      "name": "tools-publication-increment-021.json",
+      "bytes": 6420,
+      "sha256": "3785390404f5a81aab2b58bf159b13784753c8661dc51af3308cec22fc591306",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-publication-022",
+      "name": "tools-publication-increment-022.json",
+      "bytes": 1306,
+      "sha256": "1b73109ccebcf30820c8ab601fb99d45c5847bb17fcd9225e2d4c08c6b15bc7e",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-explicit13-public-checkpoint",
+      "name": "explicit-public-checkpoint-v2-receipt.json",
+      "bytes": 4394,
+      "sha256": "def8e762f75f8d9263e085a82435f5d49c9183ab48bb324029b47897da9bdcda",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-original21-publication",
+      "name": "github-final-receipt.json",
+      "bytes": 33536,
+      "sha256": "ff2ecc0fec5c6083f7995c6f9dc4a7c8b4fdbe5478ba358626a3af749142f9c8",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-original21-manifest",
+      "name": "release-assets-manifest-21.json",
+      "bytes": 57917,
+      "sha256": "9cdb91833ff75877e145a83e12a31d29e8ed6d293adef98333d1c412f2e95cae",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-source-cold-proof-publication",
+      "name": "github-original-source-final-acceptance-publication.json",
+      "bytes": 1435,
+      "sha256": "a9ff6f6a2edcf650b1934b45b105b255c1b6b37ac642136dbe57d521118c3a23",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    },
+    {
+      "inputId": "accepted-public-source-cold-proof",
+      "name": "github-hosted-original-source-cold-independent-acceptance.json",
+      "bytes": 4361,
+      "sha256": "b4eaf35c23147ec4fc87eee8f8a5f05e09dee39929914358137b6156591b07e2",
+      "stableMetadataInputRead": true,
+      "scope": "Previously accepted public publication metadata/document only",
+      "freshRemoteBodyOrAssetVerificationPerformed": false
+    }
+  ],
+  "publicInputBodiesNotRecopied": true,
+  "environmentHomeOrSourcePathsIncluded": false,
+  "finalCutoffReference": null,
+  "preservationComplete": false
+}
