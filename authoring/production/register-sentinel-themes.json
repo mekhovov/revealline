@@ -1620,8 +1620,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 20699,
+          "sha256": "c4c2adbc3f787e0f7db52859b98d9bc54239fdb7e8e44af02a0f4cefcf5bda73"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -1635,8 +1635,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -1671,8 +1671,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 20699,
+          "sha256": "c4c2adbc3f787e0f7db52859b98d9bc54239fdb7e8e44af02a0f4cefcf5bda73"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -1686,8 +1686,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -1722,8 +1722,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 20699,
+          "sha256": "c4c2adbc3f787e0f7db52859b98d9bc54239fdb7e8e44af02a0f4cefcf5bda73"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -1737,8 +1737,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -1773,8 +1773,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 20699,
+          "sha256": "c4c2adbc3f787e0f7db52859b98d9bc54239fdb7e8e44af02a0f4cefcf5bda73"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -1788,8 +1788,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -1824,8 +1824,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 20699,
+          "sha256": "c4c2adbc3f787e0f7db52859b98d9bc54239fdb7e8e44af02a0f4cefcf5bda73"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -1839,8 +1839,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -3503,8 +3503,8 @@
       "skinId": "bouncer.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3513,8 +3513,8 @@
       "skinId": "bouncer.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3523,8 +3523,8 @@
       "skinId": "bouncer.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3533,8 +3533,8 @@
       "skinId": "border-patrol.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3543,8 +3543,8 @@
       "skinId": "border-patrol.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3553,8 +3553,8 @@
       "skinId": "border-patrol.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3563,8 +3563,8 @@
       "skinId": "contour-patrol.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3573,8 +3573,8 @@
       "skinId": "contour-patrol.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3583,8 +3583,8 @@
       "skinId": "contour-patrol.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3593,8 +3593,8 @@
       "skinId": "claimed-rover.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3603,8 +3603,8 @@
       "skinId": "claimed-rover.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3613,8 +3613,8 @@
       "skinId": "claimed-rover.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3623,8 +3623,8 @@
       "skinId": "eroder.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3633,8 +3633,8 @@
       "skinId": "eroder.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3643,8 +3643,8 @@
       "skinId": "eroder.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3653,8 +3653,8 @@
       "skinId": "lane-boss.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3663,8 +3663,8 @@
       "skinId": "lane-boss.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3673,8 +3673,8 @@
       "skinId": "lane-boss.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3683,8 +3683,8 @@
       "skinId": "relay-sentinel.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3693,8 +3693,8 @@
       "skinId": "relay-sentinel.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     },
     {
@@ -3703,8 +3703,8 @@
       "skinId": "relay-sentinel.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5957,
+        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
       }
     }
   ],

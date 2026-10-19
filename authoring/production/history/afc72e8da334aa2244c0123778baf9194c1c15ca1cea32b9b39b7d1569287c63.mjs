@@ -6,7 +6,7 @@ const freeze = (value) => {
   }
   return value;
 };
-export const ENEMY_THEMES = freeze(['fpv', 'ukraine', 'retro', 'coupa']);
+export const ENEMY_THEMES = freeze(['fpv', 'ukraine', 'retro']);
 export const ENEMY_STYLES = freeze(['microtile', 'hybrid', 'props']);
 export const ENEMY_CATALOG = freeze([
   {

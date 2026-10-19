@@ -238,17 +238,6 @@
       "rotors": [],
       "animationRecipe": "retro-thruster"
     },
-    "navi-avatar": {
-      "label": "Spend Sprite",
-      "src": "assets/navi-avatar.png",
-      "sourceStatus": "original image-generated helper; not verified official Coupa Navi artwork",
-      "widthCells": 1.25,
-      "heightCells": 1.25,
-      "headingOffsetDegrees": 0,
-      "sampling": "nearest",
-      "rotors": [],
-      "animationRecipe": "helper-guidance"
-    },
     "fpv-racer": {
       "label": "Skyline FPV",
       "src": "assets/fpv-racer.png",
@@ -350,17 +339,6 @@
       "sampling": "nearest",
       "rotors": [],
       "animationRecipe": "vector-thruster"
-    },
-    "navi-auditor": {
-      "label": "Audit pulse",
-      "src": "assets/navi-avatar.png",
-      "sourceStatus": "shared original helper image; cosmetic pulse variant, not official Navi",
-      "widthCells": 1.25,
-      "heightCells": 1.25,
-      "headingOffsetDegrees": 0,
-      "sampling": "nearest",
-      "rotors": [],
-      "animationRecipe": "audit-guidance"
     },
     "scout-quad": {
       "label": "Scout quad",
@@ -467,7 +445,7 @@
       "animationRecipe": "wing-pusher",
       "rotors": [
         {
-          "x": 0.0,
+          "x": 0,
           "y": 0.268,
           "radiusScale": 1,
           "direction": 1,
@@ -489,7 +467,7 @@
   },
   "terrainLayers": {
     "fpv-materials": {
-      "label": "FPV \u00b7 concrete / mud / wire",
+      "label": "FPV · concrete / mud / wire",
       "roles": {
         "wall": {
           "kind": "concrete",
@@ -509,7 +487,7 @@
       }
     },
     "ukraine-materials": {
-      "label": "Ukraine \u00b7 stone / reeds / thorns",
+      "label": "Ukraine · stone / reeds / thorns",
       "roles": {
         "wall": {
           "kind": "stone",
@@ -529,7 +507,7 @@
       }
     },
     "retro-materials": {
-      "label": "1994 \u00b7 circuit / static / plasma",
+      "label": "1994 · circuit / static / plasma",
       "roles": {
         "wall": {
           "kind": "circuit",
@@ -543,26 +521,6 @@
         },
         "danger": {
           "kind": "plasma",
-          "microSrc": null,
-          "propSrc": null
-        }
-      }
-    },
-    "navi-materials": {
-      "label": "Navi \u00b7 archive / queue / alerts",
-      "roles": {
-        "wall": {
-          "kind": "archive",
-          "microSrc": null,
-          "propSrc": null
-        },
-        "slow": {
-          "kind": "queue",
-          "microSrc": null,
-          "propSrc": null
-        },
-        "danger": {
-          "kind": "alert",
           "microSrc": null,
           "propSrc": null
         }
@@ -607,19 +565,6 @@
         "slow": "#9691c6",
         "danger": "#d97591",
         "dim": "#646a8d"
-      }
-    },
-    "navi-network": {
-      "label": "Navi Network / blue hours",
-      "colors": {
-        "arena": "#0d2535",
-        "grid": "#234253",
-        "accent": "#86daf2",
-        "body": "#eef9fb",
-        "wall": "#74b7cf",
-        "slow": "#a6b89d",
-        "danger": "#e4a065",
-        "dim": "#5d8598"
       }
     }
   },
@@ -820,44 +765,6 @@
         }
       ]
     },
-    "helper-guidance": {
-      "label": "Spend Sprite / pulse + blink",
-      "components": [
-        {
-          "id": "guidance",
-          "type": "pulse",
-          "anchors": [
-            [
-              0,
-              0.14
-            ]
-          ],
-          "radius": 0.38,
-          "amplitude": 0.05,
-          "frequencyHz": 0.8,
-          "opacity": 0.2,
-          "color": "#8bd4e4"
-        },
-        {
-          "id": "eyes",
-          "type": "blink",
-          "anchors": [
-            [
-              -0.085,
-              -0.005
-            ],
-            [
-              0.085,
-              -0.005
-            ]
-          ],
-          "frequencyHz": 0.8,
-          "dutyCycle": 0.18,
-          "size": 0.035,
-          "color": "#f0d66a"
-        }
-      ]
-    },
     "audit-guidance": {
       "label": "Audit trim / gold pulse + blink",
       "components": [
@@ -997,9 +904,6 @@
     },
     "retro-1994": {
       "terrainLayer": "retro-materials"
-    },
-    "navi-network": {
-      "terrainLayer": "navi-materials"
     }
   }
 }
