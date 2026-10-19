@@ -116,6 +116,7 @@ export function attachSoundtrackPanel({
   onMasterVolume = null,
   beforeAudio = async () => {},
   settingsRoot = null,
+  settingsOwner = settingsRoot,
   albumDownload = {},
   onlineCatalogueDownload = {},
   onlineSourceManager = null,
@@ -768,9 +769,12 @@ export function attachSoundtrackPanel({
     if (selected < 0) return matches.slice(0, limit);
     return [...matches.slice(selected), ...matches.slice(0, selected)].slice(0, limit);
   };
-  function selectedSettingsStyles() {
+  function selectedSettingsStyles(includeUnresolved = false) {
     return [...settingsStyleInputs]
-      .filter(([style, checkbox]) => visibleStyleIds.has(style) && checkbox.checked)
+      .filter(
+        ([style, checkbox]) =>
+          (includeUnresolved || visibleStyleIds.has(style)) && checkbox.checked,
+      )
       .map(([style]) => style);
   }
   function savedSettingsStyles() {
@@ -801,7 +805,8 @@ export function attachSoundtrackPanel({
     );
   }
   async function playSettingsStyles() {
-    const selected = selectedSettingsStyles();
+    // Preserve a checked saved style while its optional feed has not been requested yet.
+    const selected = selectedSettingsStyles(true);
     if (!selected.length) {
       renderSettingsStyleStatus(t('interface:soundtrack.chooseAtLeastOneStyle'));
       return false;
@@ -816,14 +821,15 @@ export function attachSoundtrackPanel({
         throwIfSoundtrackAborted(signal);
         const loaded = await loadOnlineCatalogue();
         throwIfSoundtrackAborted(signal);
-        const localGenres = localGenresForPublicStyles(selected);
-        const selection = publicSoundtrackSelection(loaded ?? { tracks: [] }, selected, {
+        const available = selected.filter((style) => visibleStyleIds.has(style));
+        const localGenres = localGenresForPublicStyles(available);
+        const selection = publicSoundtrackSelection(loaded ?? { tracks: [] }, available, {
           recordingMode: Boolean(draft.listening?.recordingMode),
         });
         if (!selection.tracks.length && !localGenres.length)
           throw new Error(t('interface:soundtrack.chooseAtLeastOneStyle'));
         const retainedStyles = new Set([
-          ...selected,
+          ...available,
           ...(saved?.publicStyles ?? []).filter((style) => !visibleStyleIds.has(style)),
         ]);
         const committed = await commitSettingsListening(
@@ -3937,9 +3943,49 @@ export function attachSoundtrackPanel({
   renderSources();
   renderSettingsStyleStatus();
   void loadSourcePreferences();
+  const settingsTab = doc.getElementById?.(settingsOwner?.getAttribute('aria-labelledby'));
+  let settingsBrowseQueued = false;
+  const requestSettingsCatalogue = () => {
+    if (disposed || settingsBrowseQueued) return;
+    settingsBrowseQueued = true;
+    // Native mouse/controller activation may focus before the tab owner selects it.
+    queueMicrotask(() => {
+      settingsBrowseQueued = false;
+      if (
+        disposed ||
+        doc.hidden ||
+        doc.visibilityState === 'hidden' ||
+        !settingsRoot?.isConnected ||
+        !settingsOwner?.isConnected ||
+        !settingsOwner.contains(settingsRoot) ||
+        doc.getElementById?.(settingsOwner.id) !== settingsOwner ||
+        !settingsTab?.isConnected ||
+        settingsTab.disabled ||
+        settingsTab.getAttribute('aria-disabled') === 'true' ||
+        doc.getElementById?.(settingsTab.id) !== settingsTab ||
+        settingsTab.getAttribute('aria-controls') !== settingsOwner.id ||
+        settingsTab.getAttribute('aria-selected') !== 'true' ||
+        settingsOwner.hidden ||
+        settingsOwner.inert ||
+        settingsOwner.closest('[hidden],[inert],[aria-hidden="true"]') ||
+        !settingsOwner.getClientRects?.().length ||
+        settingsRoot.hidden ||
+        settingsRoot.inert ||
+        settingsRoot.closest('[hidden],[inert],[aria-hidden="true"]') ||
+        !settingsRoot.getClientRects?.().length
+      )
+        return;
+      void loadOnlineCatalogue();
+    });
+  };
+  if (settingsTab) {
+    listen(settingsTab, 'click', requestSettingsCatalogue);
+    listen(settingsTab, 'focusin', requestSettingsCatalogue);
+  }
+  // Local choices hydrate immediately. A visible selected Audio tab is an explicit browse demand.
   if (settingsRoot) {
     void loadSettingsLibrary();
-    void loadOnlineCatalogue();
+    requestSettingsCatalogue();
   }
   return Object.freeze({
     open,
