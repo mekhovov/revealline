@@ -1,3 +1,4 @@
+import { matchesRetainedReviewEvidence } from '../../scripts/retained-review-evidence.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
@@ -470,10 +471,9 @@ async function authenticatedReviewRecord(relative, expectedSHA256) {
     : [review.priorReview];
   for (const prior of predecessors)
     if (prior.path)
-      assert.equal(
-        digest(await read(prior.path)),
-        prior.sha256,
-        'immutable predecessor ' + prior.path,
+      assert.ok(
+        matchesRetainedReviewEvidence(prior.path, await read(prior.path), prior.sha256),
+        'retained predecessor ' + prior.path,
       );
   return review;
 }
