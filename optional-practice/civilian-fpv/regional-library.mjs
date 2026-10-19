@@ -762,6 +762,7 @@ export function mountRegionalLibrary({
   window: win = globalThis.window,
   pins = REGIONAL_LIBRARY_PINS,
   openLibrary = openRegionalLibrary,
+  onChange = () => {},
 }) {
   const root = el('section', undefined, 'world-catalogue'),
     heading = el('h2'),
@@ -1242,6 +1243,7 @@ export function mountRegionalLibrary({
           'Регіон збережено. Оновлення списку регіонів…',
         );
         records = await waitFor(store.list({ includeRevisions: true }), signal);
+        onChange();
         show(
           'Region saved. Choose Fly when you are ready.',
           'Регіон збережено. Виберіть «Летіти», коли будете готові.',
@@ -1284,6 +1286,7 @@ export function mountRegionalLibrary({
         committed = true;
         removal = null;
         records = await waitFor(store.list({ includeRevisions: true }), signal);
+        onChange();
         show(
           scope === 'revision'
             ? 'Saved version removed. Other versions and saved places are kept.'
@@ -1294,6 +1297,7 @@ export function mountRegionalLibrary({
         );
       } else {
         records = await waitFor(store.list({ includeRevisions: true }), signal);
+        onChange();
         removal = null;
       }
     } catch (error) {
@@ -1390,7 +1394,75 @@ export function mountRegionalLibrary({
     if (!cancel.disabled) operation?.abort();
   };
   paint();
+  const missionRows = () =>
+    regionalLibraryFamilies(pins, records).flatMap((family) =>
+      family.rows.map((row) => ({ ...row, familyKey: family.key, familyTitle: family.title })),
+    );
+  const currentMission = (row) =>
+    missionRows().find(
+      (candidate) => candidate.id === row.id && regionalRowHash(candidate) === regionalRowHash(row),
+    );
   return {
+    missions: missionRows,
+    async refreshMissions() {
+      const store = await dbReady;
+      if (closed) return;
+      records = await store.list({ includeRevisions: true });
+      if (!closed) onChange();
+    },
+    isInstalled: (row) =>
+      Boolean(currentMission(row)?.saved) && !failedLoads.has(failureKey(currentMission(row))),
+    async prepareMission(row, { signal }) {
+      const current = currentMission(row);
+      if (closed || !current?.pin) throw new Error('This regional download is no longer offered.');
+      const store = await waitFor(dbReady, signal);
+      const controller = new AbortController();
+      const abort = () => controller.abort(signal.reason);
+      signal.addEventListener('abort', abort, { once: true });
+      if (signal.aborted) abort();
+      const deadline = regionalOperationDeadline(win, controller, 'install');
+      try {
+        const options = {
+          pageURL: win.location.href,
+          signal: controller.signal,
+          onActivity: deadline.activity,
+          onProgress: deadline.progress,
+        };
+        const inspected = await store.inspect(current.pin, options);
+        if (inspected.descriptor.id !== row.id)
+          throw new Error('Regional catalogue identity mismatch');
+        controller.signal.throwIfAborted();
+        if (failedLoads.has(failureKey(current)) && current.saved)
+          await store.repair(current.pin, { ...options, id: row.id });
+        else await store.install(current.pin, options);
+        failedLoads.delete(failureKey(current));
+        records = await waitFor(store.list({ includeRevisions: true }), controller.signal);
+        if (!closed) onChange();
+      } finally {
+        deadline.stop();
+        signal.removeEventListener('abort', abort);
+      }
+    },
+    async loadMission(row, { signal } = {}) {
+      const saved = currentMission(row)?.saved;
+      if (closed || !saved)
+        throw new Error('Region is no longer installed. Refresh the level selector.');
+      const store = await dbReady;
+      try {
+        const configuration = await store.load(row.id, { sha256: saved.sha256, signal });
+        signal?.throwIfAborted();
+        return {
+          configuration: applyRegionalAppearance(configuration, saved, pins),
+          record: saved,
+        };
+      } catch (error) {
+        if (error?.code === 'regional-cache-invalid') {
+          failedLoads.add(failureKey(currentMission(row)));
+          if (!closed) onChange();
+        }
+        throw error;
+      }
+    },
     open(container = null) {
       if (closed) return;
       // Re-inserting an already-placed subtree can blur its focused control

@@ -872,3 +872,38 @@ test('calibrated-radio menu gestures open Versions and focus an edition without 
     f.ui.dispose();
   }
 });
+
+test('Common selector can download and load an exact regional revision without opening its management browser', async () => {
+  const f = await fixture({ records: [] });
+  const row = f.ui.missions()[0];
+  const load = f.store.load;
+  f.store.load = async (...args) => { const result = await load(...args); result.manifest.id = args[0]; return result; };
+  assert.equal(row.familyKey, 'desert');
+  assert.equal(f.ui.isInstalled(row), false);
+  const controller = new AbortController();
+  await f.ui.prepareMission(row, { signal: controller.signal });
+  assert.equal(f.ui.isInstalled(row), true);
+  const loaded = await f.ui.loadMission(row, { signal: controller.signal });
+  assert.equal(loaded.record.sha256, row.pin.sha256);
+  assert.deepEqual(loaded.configuration.catalogueTitle, row.title);
+  assert.ok(f.calls.some(([kind, hash]) => kind === 'inspect' && hash === row.pin.sha256));
+  assert.ok(f.calls.some(([kind, id, hash]) => kind === 'load' && id === row.id && hash === row.pin.sha256));
+  const cancelled = new AbortController(); cancelled.abort();
+  await assert.rejects(f.ui.prepareMission(f.ui.missions()[1], { signal: cancelled.signal }), { name: 'AbortError' });
+  assert.equal(f.records().length, 1, 'Cancelled selection never installs another revision');
+  f.ui.dispose();
+});
+
+test('A corrupt map selected in the common picker can repair only its exact offered revision', async () => {
+  const f = await fixture({ records: [saved(desert[0], true), saved(desert[1])] });
+  const row = f.ui.missions()[0];
+  f.corrupt();
+  await assert.rejects(f.ui.loadMission(row), { code: 'regional-cache-invalid' });
+  assert.equal(f.ui.isInstalled(row), false);
+  await f.ui.prepareMission(row, { signal: new AbortController().signal });
+  assert.equal(f.ui.isInstalled(row), true);
+  assert.deepEqual(f.calls.filter(([kind]) => kind === 'repair'), [['repair', row.id, row.pin.sha256]]);
+  assert.equal(f.records().length, 2, 'Other saved versions survive repair');
+  await f.ui.loadMission(row);
+  f.ui.dispose();
+});

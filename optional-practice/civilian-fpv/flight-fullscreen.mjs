@@ -2269,6 +2269,7 @@ description=localizedMessage(
 ),
 browsingContext=null,
 random=Math.random,
+randomDownloadable=false,
 renderPreview=()=>null,
 createArtworkView=null,
 retune={},
@@ -2827,7 +2828,13 @@ mode:modeFilter.value,
 collection:collection.value,
 lifecycle:lifecycle.value,
 })
-.filter((row)=>library.availability(row,modeFilter.value).state==='ready');
+.filter((row)=>{
+const state=library.availability(row,modeFilter.value);
+return(
+state.state==='ready'||
+(randomDownloadable&&(state.state==='download'||state.retry))
+);
+});
 }
 function playRandom({resetFilters=false}={}){
 if(destroyed|| !dialog.open||doc.hidden||doc.hasFocus?.()===false)return false;
@@ -3001,9 +3008,7 @@ lifecycle:lifecycle.value,
 // Campaigns are navigation anchors, never a hidden second filter. Every
 // matching campaign remains in this one scroll surface.
 const matches=railRows;
-randomLevel.disabled= !matches.some(
-(row)=>library.availability(row,modeFilter.value).state==='ready',
-);
+randomLevel.disabled= !readyRandomRows().length;
 resetFilters.hidden= !filtersActive();
 localizedText(status,()=>
 [
@@ -9590,7 +9595,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: a5ebd172991cc1269a3e7abc132b967f47fbc405f8897435a55935203de3b8ae
+// Canonical source sha256: e35af79d78f4fea9f291249c562c676cbb2e1d7cca927290fd7bfe3e6925a432
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -10792,6 +10797,16 @@ else if(node===buttons.sound||node===buttons['pause-sound'])
 value=`${COPY[language].sound}: ${COPY[language][state.muted?'off':'on']}`;
 else if(node===briefingTitle)value=text(state.missionName)||value;
 put(node,'textContent',value);
+}
+const pauseIcon=
+state.phase==='paused'&& !state.pauseOpensMenu
+?'play'
+:state.pauseOpensMenu&&state.phase!=='playing'
+?'menu'
+:'pause';
+if(buttons.pause.dataset.modePauseIcon!==pauseIcon){
+buttons.pause.dataset.modePauseIcon=pauseIcon;
+services.setMenuIcon?.(buttons.pause,pauseIcon);
 }
 attribute(buttons.menu,'aria-label',COPY[language].menu);
 put(modeLabel,'textContent',text(modeName));
