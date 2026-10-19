@@ -33,6 +33,11 @@ reference. No action subtree is replaced to refresh the guidance. The canonical
 helper is projected into `world-reaction-runtime.mjs` through the existing
 generator, with no new executable package slot.
 
+The Worlds result action row stays in the result panel's normal scroll flow.
+Wrapped navigation and continuous-play controls cannot stick over the verified
+details or medal guidance. Existing button order, actions and focus remain
+unchanged; this does not change the shared action layout in other game modes.
+
 Verification includes three legal native flights and replay checks for Gold,
 Silver and Bronze; exact time/contact boundary comparisons with the native
 evaluator; unavailable/inconsistent cases; and a real host/model/record-store
