@@ -180,6 +180,7 @@ import { laneWarningCaption } from './ui/lane-presentation.mjs';
 import { attachFlightInformation } from './ui/flight-information-host.mjs';
 import { attachFlightDetails } from './ui/flight-information-details.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
+import { captureMedalGoalCopy } from './ui/capture-medal-goal.mjs';
 import {
   FIRST_FLIGHT_LESSONS,
   getFirstFlightLesson,
@@ -229,6 +230,7 @@ import {
 } from './ui/controller-boost-settings.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
+import { readingInputPrompt } from './ui/reading-input-prompt.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { createPracticeRenderFailure } from './ui/practice-render-failure.mjs';
@@ -390,6 +392,7 @@ import {
 } from './ui/offline-tool-navigation.mjs';
 import { offlineAvailability } from './offline.mjs';
 import { attachStorageRetention } from './ui/storage-retention.mjs';
+import { attachLocalSupportSummary } from './ui/local-support-summary.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
   downloadJSON,
@@ -1491,7 +1494,7 @@ try {
     record: !practiceSession,
   });
   huntResultStatus = attachHuntStatus({
-    container: $('journey-reactions').parentElement,
+    container: $('overlay-reading'),
     mode: 'solo',
     records: huntRecords,
     record: false,
@@ -2997,6 +3000,9 @@ try {
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
+  // One latest observation, with no device identity, input values or history.
+  // Input clearing can retire its actionable frame after a disconnect.
+  const supportController = {};
   let lastControllerModality = '';
   document.body.dataset.inputMode =
     navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
@@ -3454,19 +3460,11 @@ try {
     });
   }
   function readingPrompt({ scrollable }) {
-    const mode = document.body.dataset.inputMode;
-    const scroll = !scrollable
-      ? t('interface:allTextIsVisible')
-      : mode === 'controller' || mode === 'keyboard'
-        ? t('interface:upDownScroll')
-        : t('interface:scrollToRead');
-    const exit =
-      mode === 'controller'
-        ? `${controllerLabels.menu.confirm} or ${controllerLabels.menu.back}`
-        : mode === 'keyboard'
-          ? t('interface:enterSpaceOrEscape')
-          : t('interface:doneReading');
-    return `${scroll} · ${exit} returns`;
+    return readingInputPrompt({
+      modality: document.body.dataset.inputMode,
+      scrollable,
+      controls: controllerLabels.menu,
+    });
   }
   function setInputModality(mode) {
     if (document.body.dataset.inputMode === mode) return;
@@ -3962,6 +3960,30 @@ try {
     button: $('storage-retention-button'),
     status: $('storage-retention-status'),
     isOpen: () => $('settings-dialog').open,
+  });
+  attachLocalSupportSummary({
+    getHost: () => {
+      const offline = offlineAvailability();
+      return {
+        version: buildVersion,
+        sourceRevision: buildSourceRevision,
+        packaged: isRelease,
+        kind: practice
+          ? 'practice'
+          : runtimeContent
+            ? 'installed-edition'
+            : journeyEnabled
+              ? 'journey'
+              : 'solo',
+        state: !started ? 'idle' : paused ? 'paused' : run?.status,
+        locale: getLocale(),
+        writable: writer.writable,
+        writerReason: practice ? 'practice' : writer.writable ? 'owned' : writer.reasonCode,
+        platform: nativePlatform() ?? 'browser',
+        offline: offline.available ? 'configured' : offline.messageCode,
+        controller: supportController,
+      };
+    },
   });
   window.addEventListener('pagehide', (event) => {
     storageRetention.close();
@@ -9303,6 +9325,15 @@ try {
     show('pause-label', kind === 'pause');
     show('overlay-reading', kind !== 'pause');
     show('overlay-footnote', kind !== 'pause');
+    const medalGoalVisible =
+      kind === 'won' &&
+      !practice &&
+      !courseSession &&
+      !recoverGameplayTuning(run.level)?.adminOverride;
+    show('capture-medal-goal', medalGoalVisible);
+    localizedText($('capture-medal-goal'), () =>
+      medalGoalVisible ? captureMedalGoalCopy(run) : '',
+    );
     $('game-overlay').dataset.intro = String(
       kind === 'ready' &&
         !practice &&
@@ -9476,11 +9507,7 @@ try {
         return t('interface:nextMission');
       });
       localizedText($('overlay-footnote'), () =>
-        practice
-          ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks')
-          : run.medal === 'gold'
-            ? t('interface:goldFastAndNoLivesLost')
-            : t('interface:tryAnotherClassOrReturnForACleanFasterRoute'),
+        practice ? t('interface:demonstrationsAndImportedMapsDoNotGrantUnlocks') : '',
       );
     }
     if (kind === 'lost') {
@@ -11765,6 +11792,12 @@ try {
         ? demoHost.toggleBoostEligible
         : run?.status === 'running',
     });
+    supportController.sampledAt = controllerTime;
+    supportController.status = controllerFrame.status.code;
+    supportController.assigned = Boolean(controllerFrame.assigned);
+    supportController.neutral = controllerFrame.confirmSnapshot.neutral;
+    supportController.blocked = controllerFrame.confirmSnapshot.blocked;
+    supportController.reason = controllerFrame.confirmSnapshot.reason;
     if (controllerFrame.assigned && !paused && started) observeInput('controller');
     soloRadioSetup.refresh();
     refreshControllerBoostCue();
@@ -13908,10 +13941,13 @@ try {
     assertCurrent();
     return host.refreshInstalled({ assertCurrent });
   }
-  async function getUnifiedMissionLibrary(isCurrent = () => true) {
+  async function getUnifiedMissionLibrary(isCurrent = () => true, trace = null) {
     const callerCurrent = unifiedLibraryGuard(isCurrent);
     callerCurrent();
-    if (unifiedLibrary) return unifiedLibrary;
+    if (unifiedLibrary) {
+      trace?.mark('missions-build-cached');
+      return unifiedLibrary;
+    }
     let attempt = unifiedLibraryLoading;
     if (attempt) {
       // A new explicit owner may join a still-admitted request. A retired
@@ -13932,7 +13968,11 @@ try {
         attempt = null;
       }
     }
-    if (attempt) return attempt.promise;
+    if (attempt) {
+      // Its original observer retains ownership; a joining request does not inherit its stamps.
+      trace?.mark('missions-build-joined');
+      return attempt.promise;
+    }
     const callers = new Set([callerCurrent]);
     const admitted = unifiedLibraryGuard();
     const assertCurrent = () => {
@@ -13955,6 +13995,7 @@ try {
         result = null,
         committed = false;
       try {
+        trace?.mark('missions-imports-begin');
         const [
           { attachJourneyChooser },
           { createInstalledMissionLibrary },
@@ -13968,7 +14009,9 @@ try {
           import('./mission-library/cross-mode-journey.mjs'),
           import('./multiplayer.mjs'),
         ]);
+        trace?.mark('missions-imports-end');
         assertCurrent();
+        trace?.mark('missions-data-begin');
         const index =
           runtimeContent?.missionIndex ??
           (await getJSON('content/mission-library-index.json', assertCurrent));
@@ -13983,6 +14026,8 @@ try {
           runtimeContent?.themes ??
           (await getJSON('content-design/themes.json', assertCurrent)).themes;
         assertCurrent();
+        trace?.mark('missions-data-end');
+        trace?.mark('missions-sources-begin');
         const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
           ? journeyActorThemeCandidates(originalThemes, {
               includeOriginals: route.preserveOriginalThemes === true,
@@ -14186,7 +14231,9 @@ try {
             ...teamSources,
           ];
         }
+        trace?.mark('missions-sources-end');
         if (!runtimeContent) {
+          trace?.mark('missions-supplemental-imports-begin');
           const [
             { duelExpeditionLibrarySources, teamExpeditionLibrarySource },
             { TEAM_EXPANSION_ROUTE },
@@ -14196,9 +14243,11 @@ try {
             import('./content-design/multiplayer-expansion.mjs'),
             import('./mission-library/team-source.mjs'),
           ]);
+          trace?.mark('missions-supplemental-imports-end');
           assertCurrent();
           const expansionSources = [
             ...duelExpeditionLibrarySources({
+              onStage: trace?.mark,
               themes: originalThemes,
               activeRouteId: route.id,
               launch: departLibraryMission,
@@ -14210,6 +14259,7 @@ try {
               ? []
               : [
                   teamExpeditionLibrarySource({
+                    onStage: trace?.mark,
                     launch: departLibraryMission,
                     difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
                   }),
@@ -14249,6 +14299,7 @@ try {
         };
         const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
         assertCurrent();
+        trace?.mark('missions-installed-begin');
         result = await createInstalledMissionLibrary({
           assertCurrent,
           getProjectSources: async ({ assertCurrent }) => {
@@ -14357,6 +14408,7 @@ try {
               : { state: 'new', bestStars: null };
           },
         });
+        trace?.mark('missions-installed-end');
         assertCurrent();
         const state = createMissionLibrarySessionState({ mode: 'solo' });
         // Checked return restores the retained runtime independently of browsing.
@@ -14379,6 +14431,7 @@ try {
               );
             })
           : null;
+        trace?.mark('missions-chooser-build-begin');
         unifiedChooser = attachJourneyChooser({
           library: result.library,
           profile,
@@ -14390,9 +14443,16 @@ try {
             ? {
                 supportedModes: runtimeContent.selection.edition.modes,
                 availableCollectionsOnly: true,
-                description: runtimeContent.selection.edition.name,
               }
             : {}),
+          description: () =>
+            `${runtimeContent?.selection.edition.name ?? t('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir')} ${t('interface:captureNavigation.browseHint')}`,
+          browsingContext: ({ label }) => {
+            const context = soloNavigationContext();
+            return context
+              ? t('interface:captureNavigation.browsing', { mode: label, context })
+              : label;
+          },
           getCurrentId: () => {
             const mission = candidateHost && journeyMission();
             if (mission)
@@ -14445,6 +14505,7 @@ try {
             });
           },
         });
+        trace?.mark('missions-chooser-build-end');
         if (!journeyPreferences)
           browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
         // Keep the native settings and their guarded handlers, but not the old
@@ -14538,9 +14599,60 @@ try {
     const homeWasOpen = $('shell-home').open,
       oldRun = run,
       wasStarted = started;
+    // No trace, closure, payload or extra clock read exists on the ordinary path.
+    // Console delivery is supplementary, best effort evidence: a received begin
+    // survives a later unresponsive page; an undelivered end stays unobserved.
+    const trace = performanceSession
+      ? {
+          sequence: 0,
+          closed: false,
+          generation: performanceRunGeneration,
+          tick: run?.tick ?? 0,
+          build: unifiedBuildRevision,
+          mark(kind) {
+            if (trace.closed) return;
+            if (++trace.sequence >= 64) {
+              kind = 'missions-observer-overflow';
+              trace.closed = true;
+            }
+            let atMs = null;
+            try {
+              atMs = performance.now();
+              if (trace.generation > 0)
+                performanceSession.markEvent(kind, trace.generation, trace.tick, atMs);
+            } catch {
+              // Diagnostics never cancel or admit a library operation.
+            }
+            try {
+              console.debug(
+                'RevealLineMissionsStageV1 ' +
+                  JSON.stringify([
+                    revision,
+                    trace.build,
+                    trace.sequence,
+                    kind,
+                    trace.generation,
+                    trace.tick,
+                    atMs,
+                    performance.timeOrigin,
+                  ]),
+              );
+            } catch {
+              // The retained numeric ring remains independent of console delivery.
+            }
+          },
+          finish(kind) {
+            if (trace.closed) return;
+            trace.mark(kind);
+            trace.closed = true;
+          },
+        }
+      : null;
+    trace?.mark('missions-opening');
     ++unifiedLaunchRevision;
     pause(true);
     clearInput();
+    trace?.mark('missions-after-pause');
     const feedback = document.createElement('span');
     feedback.id = 'mission-library-opening-status';
     feedback.className = 'micro-note';
@@ -14549,6 +14661,7 @@ try {
     (opener?.isConnected ? opener : $('shell-play')).after(feedback);
     let failed = false;
     const cancel = () => {
+      trace?.finish('missions-cancelled');
       if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
       opening.dispose();
       feedback.remove();
@@ -14566,13 +14679,18 @@ try {
       run === oldRun &&
       started === wasStarted;
     try {
-      const host = await getUnifiedMissionLibrary(isCurrent);
+      const host = await getUnifiedMissionLibrary(isCurrent, trace);
       // The installed-card refresh may move focus while it reconciles an owned
       // catalogue. Claim the still-current opener before that internal work;
       // newer input still retires the claim while the state/revision checks
       // below also reject replaced navigation and game state.
-      if (!opening.claim()) return;
+      if (!opening.claim()) {
+        trace?.finish('missions-cancelled');
+        return;
+      }
+      trace?.mark('missions-refresh-begin');
       await refreshUnifiedInstalled(host, isCurrent);
+      trace?.mark('missions-refresh-end');
       const openingCurrent = opening.current();
       opening.dispose();
       if (
@@ -14586,9 +14704,13 @@ try {
         run !== oldRun ||
         started !== wasStarted ||
         !paused
-      )
+      ) {
+        trace?.finish('missions-cancelled');
         return;
-      unifiedChooser.open(opener, options);
+      }
+      trace?.mark('missions-open-begin');
+      unifiedChooser.open(opener, trace ? { ...options, onOpeningStage: trace.mark } : options);
+      trace?.finish('missions-complete');
       if (options?.random) {
         unifiedChooser.playRandom({ resetFilters: true });
         return;
@@ -14603,6 +14725,7 @@ try {
         }
       }
     } catch (error) {
+      trace?.finish(error?.name === 'AbortError' ? 'missions-cancelled' : 'missions-failed');
       if (revision === unifiedOpenRevision) {
         failed = true;
         localizedText(feedback, () => t('interface:missionsCouldNotLoadChooseMissionsToRetry'));
@@ -14920,7 +15043,28 @@ try {
       close: () => unifiedChooser?.close(),
     };
   }
+  function soloNavigationContext() {
+    // The accepted catalogue owner, not the entry URL or visual theme, grants
+    // this identity. Classic/imported selections retain their Capture context.
+    if (
+      candidateHost?.owns(activeEntry) &&
+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)
+    ) {
+      const name =
+        authoredRoute.id === 'humanoid-hunt-v1'
+          ? huntText('lessons')
+          : contentText(authoredRoute.source, 'name');
+      return `${name} · ${t('interface:solo2')}`;
+    }
+    return t('interface:captureNavigation.context', { mode: t('interface:solo2') });
+  }
   gameShell = attachGameShell({
+    navigationContext: soloNavigationContext,
+    comfortSettings: {
+      display: displayPreferences,
+      setDisplay: changeDisplay,
+      displayWarning: () => $('display-preferences-status').textContent,
+    },
     getAppearanceDefault: () => {
       const pin = currentAppearanceDefault();
       return pin && runtimeContent?.appearanceThemes.length

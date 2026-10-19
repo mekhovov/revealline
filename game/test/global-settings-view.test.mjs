@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { Document } from './helpers/couch-dom.mjs';
+import { menuAnimationBinding, MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
 
 function fixture() {
   const document = new Document(),
@@ -47,6 +48,56 @@ function preference(initial) {
     listeners: () => listeners.size,
   };
 }
+
+for (const projected of [false, true])
+  test(`${projected ? 'SIM' : 'shared'} generated menu-motion row preserves failed choice and returns Retry focus only to its checkbox`, async (t) => {
+    const f = fixture(),
+      win = f.document.defaultView;
+    let working = false,
+      stored = 'on';
+    win.localStorage = {
+      getItem: (key) => (key === MENU_ANIMATION_KEY ? stored : null),
+      setItem(key, value) {
+        if (!working) throw new DOMException('Modeled blocked save', 'SecurityError');
+        if (key === MENU_ANIMATION_KEY) stored = value;
+      },
+    };
+    const services = projected
+        ? await import('../../optional-practice/civilian-fpv/flight-fullscreen.mjs')
+        : null,
+      mount = services?.mountSimGlobalSettings ?? mountGlobalSettings,
+      binding = (services?.simMenuAnimationBinding ?? menuAnimationBinding)(win),
+      view = mount({ ...f, bindings: { menuAnimation: binding } });
+    t.after(() => view.destroy());
+    const input = f.document.getElementById('global-settings-menuAnimation'),
+      status = f.document.getElementById(`${input.id}-status`),
+      retry = status.parentNode.querySelector('.global-settings-save-retry');
+    input.checked = false;
+    input.emit('change');
+    assert.equal(input.checked, false);
+    assert.equal(stored, 'on');
+    assert.match(status.textContent, /Session only.*blocked/);
+    retry.focus();
+    view.refresh('uk');
+    assert.equal(f.document.activeElement, retry);
+    assert.match(status.textContent, /заблоковане/);
+    working = true;
+    retry.click();
+    assert.equal(stored, 'off');
+    assert.equal(status.textContent, 'Збережено');
+    assert.equal(f.document.activeElement, input);
+    assert.equal(retry.hidden, true);
+    working = false;
+    input.checked = true;
+    input.emit('change');
+    const other = f.document.createElement('button');
+    f.root.append(other);
+    other.focus();
+    working = true;
+    binding.retry();
+    assert.equal(f.document.activeElement, other);
+    assert.equal(stored, 'on');
+  });
 
 test('two hosts share one preference owner without startup writes and release subscriptions', () => {
   const owner = preference(0.6),

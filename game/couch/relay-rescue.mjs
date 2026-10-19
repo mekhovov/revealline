@@ -103,6 +103,10 @@ import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
 import { COOP_STARTER_PACK, coopPackDestination } from '../coop/library.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
+import { createCouchKeyboardPreferences } from './keyboard-preferences.mjs';
+import { mountCouchKeyboardSettings } from './keyboard-settings.mjs';
+import { couchDirectionLabel } from './keyboard-bindings.mjs';
+import { keyLabel } from '../key-bindings.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { coopCueOverflowEntries, hasCoopCueOverflow } from './coop-cue-overflow.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
@@ -263,6 +267,7 @@ export function bootCoop({
   candidateDifficulty = 'standard',
   candidateNotice = '',
   candidateEditionLabel = '',
+  candidateNavigationLabel = '',
 } = {}) {
   // Consume native setup intent before applying saved defaults. Only an actual
   // difficulty edit changes the global preference; opening its selector does not.
@@ -917,8 +922,9 @@ export function bootCoop({
     region.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
   }
   $('coop-field-details').onclick = openCueDetails;
+  const levelSelect = $('coop-level');
   const selectedLevel = () =>
-    pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
+    pack.levels.find((level) => level.id === levelSelect.value) || pack.levels[0];
   const encounterChoices = new WeakMap();
   const huntRecords = createHuntRecords({ window, getStorage: () => localStorage });
   huntSaveControls = attachTeamHuntSave({
@@ -1472,7 +1478,9 @@ export function bootCoop({
     root: $('coop-settings-panel-controls'),
     session: controllerSession,
   });
+  const keyboardPreferences = createCouchKeyboardPreferences({ mode: 'team' });
   input = attachCouchInput({
+    keyboardBindings: keyboardPreferences.snapshot().bindings,
     controllerSession,
     getTouchSettings: () => couchTouch.snapshot(),
     ...COOP_INPUT_CAPABILITIES,
@@ -1491,6 +1499,24 @@ export function bootCoop({
         });
       if ($('coop-pads').textContent !== text()) localizedText($('coop-pads'), text);
     },
+  });
+  const keyboardSettings = mountCouchKeyboardSettings({
+    root: $('coop-settings-panel-controls'),
+    mode: 'team',
+    preferences: keyboardPreferences,
+    isOpen: () => settingsDialog.open && !running(),
+  });
+  const stopKeyboard = keyboardPreferences.subscribe(({ bindings }) => {
+    input.setKeyboardBindings(bindings);
+    for (let player = 0; player < 2; player++)
+      localizedText($(`coop-key-help-${player}`), () =>
+        t('interface:couchKeyboard.teamKeys', {
+          player: t(player === 0 ? 'interface:sunflower' : 'interface:skyline'),
+          move: couchDirectionLabel(bindings, player, 'team'),
+          boost: keyLabel(bindings.seats[player].boost),
+          support: keyLabel(bindings.seats[player].action),
+        }),
+      );
   });
   const router = createControllerRouter({
     readPads: () => controllerSession.frame().menuPads,
@@ -1775,7 +1801,10 @@ export function bootCoop({
     });
     musicPublished.setPlayer(music.player);
   }
-  nativeMenu?.refreshGlobalSettings?.({ controls: globalTools.controls });
+  nativeMenu?.refreshGlobalSettings?.({
+    controls: globalTools.controls,
+    comfort: { display: displayPreferences },
+  });
   function prepareReactionAttempt() {
     if (run && reactionRun !== run) {
       reactionRun = run;
@@ -1838,6 +1867,7 @@ export function bootCoop({
       );
     }
     runningEnemyControls.refresh();
+    keyboardSettings.refresh();
     settingsDialog.showModal();
     placePictureRecovery();
     globalTools.refresh();
@@ -1861,12 +1891,16 @@ export function bootCoop({
   }
   function closeSettings({ restore = true } = {}) {
     if (!settingsDialog.open) return;
+    keyboardSettings.cancel();
+    keyboardPreferences.suspend();
     if (settingsOwner) settingsOwner.restore = restore && foreground();
     settingsDialog.close();
   }
   const settingsClosed = () => {
     // A queued close from an earlier visit has no authority over a reopened one.
     if (settingsDialog.open) return;
+    keyboardSettings.cancel();
+    keyboardPreferences.suspend();
     const owner = settingsOwner;
     if (!owner) return;
     const restore = owner.restore && settingsCurrent(owner);
@@ -4715,6 +4749,11 @@ export function bootCoop({
       document,
       library: getTeamLibrary(),
       mode: 'team',
+      browsingContext: ({ label }) =>
+        t('interface:captureNavigation.browsing', {
+          mode: label,
+          context: teamNavigationContext(),
+        }),
       getCurrentId: () =>
         missionLibrary.missions.find((row) => {
           const bound = libraryRuntimeRows.get(row)?.();
@@ -6512,6 +6551,32 @@ export function bootCoop({
     const level = selectedLevel();
     return candidateJourney?.rows.find((row) => row.pack === pack && row.level === level) ?? null;
   }
+  function teamNavigationContext(includeMission = false) {
+    const sourcePack = run ? (acceptedPicture?.sourcePack ?? attemptPack) : pack;
+    const level = run ? attemptLevel : selectedLevel();
+    const row = run ? acceptedPicture?.journeyRow : selectedCandidateRow();
+    const owned = candidateJourney?.owns(row);
+    const edition = owned && !defaultJourney ? renderMessage(candidateNavigationLabel) : '';
+    const mode = t('interface:team');
+    const context = edition
+      ? `${edition} · ${mode}`
+      : owned || sourcePack === COOP_STARTER_PACK
+        ? t('interface:captureNavigation.context', { mode })
+        : `${contentText(sourcePack, 'name')} · ${mode}`;
+    if (!includeMission) return context;
+    const chapter = owned
+      ? contentText(row.mission, 'campaignTitle')
+      : sourcePack === COOP_STARTER_PACK
+        ? contentText(sourcePack, 'name')
+        : '';
+    return [
+      context,
+      chapter && !context.startsWith(`${chapter} · `) ? chapter : '',
+      contentText(level, 'name'),
+    ]
+      .filter(Boolean)
+      .join(' · ');
+  }
   function difficultyControls(level = selectedLevel()) {
     // Compiled Journey packs are immutable preset editions. Changing this menu
     // selects a newly compiled owned edition, never re-projects imported bytes.
@@ -6522,6 +6587,8 @@ export function bootCoop({
     gameplayTuningPanel?.refresh();
   }
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
+    localizedText($('coop-navigation-context'), () => teamNavigationContext(true));
+    $('coop-navigation-context').hidden = false;
     huntSaveControls?.refresh();
     difficultyControls(level);
     if (run) level = run.level;
@@ -7227,6 +7294,9 @@ export function bootCoop({
     clear();
     couchTouch.destroy();
     controllerSetup.dispose();
+    keyboardSettings.dispose();
+    stopKeyboard();
+    keyboardPreferences.dispose();
     controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();

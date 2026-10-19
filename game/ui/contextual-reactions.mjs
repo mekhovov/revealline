@@ -25,6 +25,10 @@ import { OVERFLIGHT_REACTION_FAMILIES } from '../overflight/reactions.mjs';
 
 const recentLines = new Map();
 const HISTORY_KEY = 'revealline.reaction-recent.v1';
+const captionReadingDuration = (text, factor = 1) =>
+  Math.max(3000, Math.ceil((text.split(/\s+/u).length / 2.5) * 1000)) * factor;
+const previewLineId = 'journey-incidental.v1/guide/capture/0';
+let settingsSequence = 0;
 /** Warm the active cast first, then shared pilot lines. Unrelated enemy packs
  * must not displace the current encounter from the bounded decoded cache. */
 export function reactionWarmupLineIds({ families = [], originals = [], available = [], locale }) {
@@ -182,7 +186,7 @@ export class ContextualReactionDirector {
       this.remember(line);
       this.families.add(family);
       this.count++;
-      const duration = Math.max(3000, Math.ceil((selected.text.split(/\s+/u).length / 2.5) * 1000));
+      const duration = captionReadingDuration(selected.text);
       this.busyUntil = time + duration;
       this.quietUntil = this.busyUntil + 12000;
       const presented = this.present(selected, { duration, terminal: false });
@@ -218,6 +222,11 @@ export class ContextualReactionDirector {
   resume() {
     this.suspended = false;
   }
+  extendCaption(duration) {
+    if (this.suspended || !Number.isFinite(duration) || duration <= 0) return;
+    this.busyUntil = Math.max(this.busyUntil, this.now() + duration);
+    this.quietUntil = Math.max(this.quietUntil, this.busyUntil + 12000);
+  }
 }
 
 const labels = {
@@ -228,6 +237,13 @@ const labels = {
   volume: ['Dialogue volume', 'Гучність діалогів'],
   scale: ['Caption size', 'Розмір субтитрів'],
   background: ['Solid caption background', 'Суцільне тло субтитрів'],
+  readingTime: ['Caption reading time', 'Час читання субтитрів'],
+  readingStandard: ['Standard', 'Звичайний'],
+  readingExtended: ['Extended (2×)', 'Подовжений (2×)'],
+  readingHelp: [
+    'Applies to new character captions during play and their timed preview. Result captions stay until you leave the result.',
+    'Діє для нових субтитрів персонажів під час гри та їхнього перегляду з таймером. Субтитри результату залишаються до виходу з нього.',
+  ],
   preview: ['Preview caption', 'Переглянути субтитри'],
   retry: ['Retry saving', 'Зберегти повторно'],
   unavailable: [
@@ -297,6 +313,7 @@ export function attachContextualReactions({
     lease = null,
     generation = 0,
     captionUntil = 0,
+    captionTimerRevision = 0,
     motion = null;
   const cache = createReactionVoiceCache({ sound, library: voiceLibrary });
   const prepared = new Map(),
@@ -306,8 +323,13 @@ export function attachContextualReactions({
     actorVoiceControls = null,
     status = null,
     pilot = null,
+    readingHelp = null,
     previewSample = null,
-    previewVisible = false;
+    previewVisible = false,
+    previewTimer = null,
+    previewTimerRevision = 0,
+    previewUntil = 0,
+    previewReadingTime = 1;
   const release = () => {
     try {
       if (typeof lease === 'function') lease();
@@ -322,7 +344,44 @@ export function attachContextualReactions({
     activeVoice = null;
     release();
   }
+  function clearCaptionTimer() {
+    captionTimerRevision++;
+    clearTimeout(timer);
+    timer = null;
+  }
+  function scheduleCaption(until) {
+    clearCaptionTimer();
+    captionUntil = until;
+    const revision = captionTimerRevision;
+    timer = setTimeout(
+      () => {
+        if (!closed && revision === captionTimerRevision) hide();
+      },
+      Math.max(0, until - Date.now()),
+    );
+  }
+  function hidePreview() {
+    previewTimerRevision++;
+    clearTimeout(previewTimer);
+    previewTimer = null;
+    previewVisible = false;
+    if (previewSample)
+      renderResultReactionCaption(previewSample, null, options.snapshot(), false, getLocale());
+  }
+  function schedulePreview(until) {
+    previewTimerRevision++;
+    clearTimeout(previewTimer);
+    previewUntil = until;
+    const revision = previewTimerRevision;
+    previewTimer = setTimeout(
+      () => {
+        if (!closed && revision === previewTimerRevision) hidePreview();
+      },
+      Math.max(0, until - Date.now()),
+    );
+  }
   function hide() {
+    clearCaptionTimer();
     motion?.cancel();
     motion = null;
     if (current?.terminal && resultContainer && !journeyOwnsReactionCaption(resultContainer))
@@ -340,8 +399,15 @@ export function attachContextualReactions({
       void cache.cancel();
     }
     if (reason === 'danger') return; // Preserve readable text even when its audio is interrupted.
-    clearTimeout(timer);
+    hidePreview();
     hide();
+  }
+  function localizedCurrentLine() {
+    return (
+      (current.line.resultContext
+        ? journeyResultReaction(current.line.resultContext, getLocale())
+        : reactionLine(current.line.id, getLocale())) ?? current.line
+    );
   }
   function render() {
     if (closed) return;
@@ -355,11 +421,11 @@ export function attachContextualReactions({
       void cache.cancel();
     }
     if (!enabled) {
-      clearTimeout(timer);
       // Retain an accepted result so its shared checkbox can hide/show the
       // caption without replaying its voice. Incidental lines still expire.
       if (!current?.terminal) hide();
     }
+    if (!enabled || !state.subtitles) hidePreview();
     for (const [key, control] of controls) {
       if (control.type === 'checkbox') control.checked = state[key];
       else control.value = String(state[key]);
@@ -367,6 +433,11 @@ export function attachContextualReactions({
     }
     if (settings) settings.querySelector('legend').textContent = tr('title');
     if (pilot) pilot.textContent = tr('pilot');
+    if (readingHelp) readingHelp.textContent = tr('readingHelp');
+    const readingControl = controls.get('readingTime');
+    if (readingControl)
+      for (const option of readingControl.children)
+        option.textContent = tr(option.value === '1' ? 'readingStandard' : 'readingExtended');
     actorVoiceControls?.refresh();
     if (settings) {
       const preview = settings.querySelector('[data-reaction-preview]');
@@ -377,7 +448,7 @@ export function attachContextualReactions({
     if (previewVisible && previewSample)
       renderResultReactionCaption(
         previewSample,
-        reactionLine('journey-reaction.v1/guide/0', getLocale()),
+        reactionLine(previewLineId, getLocale()),
         state,
         enabled,
         getLocale(),
@@ -390,10 +461,7 @@ export function attachContextualReactions({
     panel.style.color = 'var(--text-color, #fff)';
     caption.style.fontSize = `${state.scale}rem`;
     if (current) {
-      const localized =
-        (current.line.resultContext
-          ? journeyResultReaction(current.line.resultContext, getLocale())
-          : reactionLine(current.line.id, getLocale())) ?? current.line;
+      const localized = localizedCurrentLine();
       caption.textContent = reactionCaptionText(
         { ...localized, board: current.line.board, player: current.line.player },
         getLocale(),
@@ -471,11 +539,15 @@ export function attachContextualReactions({
   }
   function present(line, { duration, terminal, speak = true }) {
     if (closed || !preferences.snapshot().enabled) return;
-    clearTimeout(timer);
+    clearCaptionTimer();
     stopSpeech();
     motion?.cancel();
     motion = null;
-    current = { line, terminal };
+    // A setting change applies to the next accepted line, without truncating or
+    // replaying the current one. A translated line retains this timing policy.
+    current = { line, terminal, readingTime: options.snapshot().readingTime };
+    if (!terminal)
+      duration = Math.max(duration, captionReadingDuration(line.text, current.readingTime));
     const appearance = REACTION_PORTRAITS[line.speaker] ?? REACTION_PORTRAITS.guide;
     portrait.src = getReduced() ? appearance.idle : appearance.react;
     const actor = actorDefinition(line.speaker);
@@ -527,8 +599,7 @@ export function attachContextualReactions({
     }
     if (!buffer && state.speech) void cache.load(line.id, getLocale());
     if (!terminal) {
-      captionUntil = Date.now() + duration;
-      timer = setTimeout(hide, duration);
+      scheduleCaption(Date.now() + duration);
     } else if (resultContainer) {
       panel.hidden = true;
       panel.style.display = 'none';
@@ -540,13 +611,26 @@ export function attachContextualReactions({
     settings = create('fieldset');
     settings.dataset.reactionSettings = 'true';
     settings.append(create('legend', tr('title')));
-    for (const key of ['sounds', 'speech', 'subtitles', 'volume', 'scale', 'background']) {
+    for (const key of [
+      'sounds',
+      'speech',
+      'subtitles',
+      'volume',
+      'scale',
+      'background',
+      'readingTime',
+    ]) {
       const label = create('label'),
         text = create('span', tr(key)),
-        control = create(key === 'scale' ? 'select' : 'input');
-      if (key === 'scale')
-        for (const value of [1, 1.5, 2]) {
-          const option = create('option', `${value * 100}%`);
+        control = create(['scale', 'readingTime'].includes(key) ? 'select' : 'input');
+      if (['scale', 'readingTime'].includes(key))
+        for (const value of key === 'scale' ? [1, 1.5, 2] : [1, 2]) {
+          const option = create(
+            'option',
+            key === 'scale'
+              ? `${value * 100}%`
+              : tr(value === 1 ? 'readingStandard' : 'readingExtended'),
+          );
           option.value = String(value);
           control.append(option);
         }
@@ -565,10 +649,19 @@ export function attachContextualReactions({
       };
       label.append(control, text);
       label.style.cssText = 'display:flex;align-items:center;gap:.5rem;margin:.5rem 0;';
+      if (key === 'readingTime') {
+        label.style.flexWrap = 'wrap';
+        control.style.maxWidth = '100%';
+      }
       settings.append(label);
       controls.set(key, control);
       controlLabels.set(key, text);
     }
+    readingHelp = create('p', tr('readingHelp'));
+    readingHelp.id = `reaction-reading-help-${++settingsSequence}`;
+    readingHelp.dataset.reactionReadingHelp = 'true';
+    controls.get('readingTime').setAttribute('aria-describedby', readingHelp.id);
+    settings.append(readingHelp);
     const preview = create('button', tr('preview'));
     preview.type = 'button';
     preview.dataset.reactionPreview = 'true';
@@ -577,8 +670,14 @@ export function attachContextualReactions({
     previewSample.hidden = true;
     previewSample.setAttribute('role', 'status');
     preview.onclick = () => {
+      if (closed || !preferences.snapshot().enabled || !options.snapshot().subtitles) return;
       previewVisible = true;
+      previewReadingTime = options.snapshot().readingTime;
       render();
+      schedulePreview(
+        Date.now() +
+          captionReadingDuration(reactionLine(previewLineId, getLocale()).text, previewReadingTime),
+      );
     };
     const retry = create('button', tr('retry'));
     retry.type = 'button';
@@ -610,9 +709,24 @@ export function attachContextualReactions({
     render();
     prepare();
     if (current && !current.terminal) {
-      clearTimeout(timer);
-      timer = setTimeout(hide, Math.max(3000, captionUntil - Date.now()));
+      const until = Math.max(
+        captionUntil,
+        Date.now() + captionReadingDuration(localizedCurrentLine().text, current.readingTime),
+      );
+      scheduleCaption(until);
+      director.extendCaption(until - Date.now());
     }
+    if (previewVisible)
+      schedulePreview(
+        Math.max(
+          previewUntil,
+          Date.now() +
+            captionReadingDuration(
+              reactionLine(previewLineId, getLocale()).text,
+              previewReadingTime,
+            ),
+        ),
+      );
   });
   const visibility = () => {
     if (doc.hidden) director.suspend();
@@ -677,7 +791,8 @@ export function attachContextualReactions({
       if (closed) return;
       closed = true;
       director.suspend();
-      clearTimeout(timer);
+      clearCaptionTimer();
+      hidePreview();
       cache.dispose();
       prepared.clear();
       unsubPrefs();
