@@ -69,7 +69,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--readiness-probe=first-running-v1 (ab45 cold correctness pilot only)] [--hitch-journal [--hitch-journal-preparation=first-return-anchored-v1]] [--journal-cost-probe (exact 30-second border recipe only)] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--heap-retainers=retry797-first-last-v1 (source797 local Retry fixture only)] [--audio-proof-music-capacity] [--audio-proof-import-events] [--work-probe] [--readiness-probe=first-running-v1 (ab45 cold correctness pilot only)] [--hitch-journal [--hitch-journal-preparation=first-return-anchored-v1]] [--journal-cost-probe (exact 30-second border recipe only)] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent] [--snapshot-chunks (declared long lifecycle only)]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -96,6 +96,17 @@ const profileMode = qualificationProfileMode(flags, engine, scenario);
 const memoryProfile = profileMode === 'memory-profile',
   audioProof = profileMode === 'audio-proof',
   cpuProfile = profileMode === 'cpu-profile';
+const heapRetainerModule = flags.some((flag) => flag.startsWith('--heap-retainers'))
+  ? await import('./solo-qualification-heap-retainers.mjs')
+  : null;
+const heapRetainerOptions = heapRetainerModule?.qualificationHeapRetainerOptions(flags, {
+  engine,
+  profileMode,
+  contextMode,
+  scenarioBytes: bytes,
+  sourceRevision: option('source-revision', null),
+  address,
+});
 const frameTraceOptions = qualificationFrameTraceOptions(flags, engine, bytes);
 const audioOptions = audioProofOptions(flags, scenario.audioRequirements, audioProof);
 const exportsReplay = (actions) =>
@@ -385,7 +396,7 @@ async function save() {
 }
 await save();
 let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder, persistentOwner;
-let frameRecorder;
+let frameRecorder, heapRecorder;
 let activeAction = null;
 let partialReplay = false;
 let memorySnapshots = 0;
@@ -422,8 +433,13 @@ async function sealHitchDocument(boundary) {
     hitchStore.fail(`Document export: ${error.message}`);
   }
 }
-async function profileMemory() {
+async function profileMemory(row = null) {
   if (!memoryProfile) return undefined;
+  if (heapRecorder && !row)
+    return {
+      status: 'unobserved-partial',
+      reason: 'Heap diagnostic never adds collection at failure-cleanup boundaries.',
+    };
   if (memorySnapshots++ >= 64)
     return {
       status: 'unobserved-cap',
@@ -437,6 +453,10 @@ async function profileMemory() {
     return { heap, dom };
   };
   let timer;
+  const heapAbort = heapRecorder ? new AbortController() : null;
+  const profileTimeout = heapRecorder
+    ? heapRetainerModule.heapRetainerProfileTimeout(deadline)
+    : 10000;
   const result = { status: 'running', at: new Date().toISOString() };
   try {
     await Promise.race([
@@ -444,9 +464,18 @@ async function profileMemory() {
         result.before = await read();
         await cdp.send('HeapProfiler.collectGarbage');
         result.after = await read();
+        if (heapRecorder)
+          result.heapRetainer = await heapRecorder.observe(row, {
+            signal: heapAbort.signal,
+            verifyPhase: () => page.evaluate(() => document.body.dataset.flightState),
+          });
       })(),
       new Promise((_, reject) => {
-        timer = setTimeout(() => reject(new Error('Pause-only memory profile exceeded10s')), 10000);
+        timer = setTimeout(() => {
+          const error = new Error('Pause-only memory profile exceeded10s');
+          heapAbort?.abort(error);
+          reject(error);
+        }, profileTimeout);
       }),
     ]);
     result.status = 'observed';
@@ -495,6 +524,14 @@ try {
   } else page = await context.newPage();
   if (memoryProfile || cpuProfile || frameTraceOptions || cpu !== 1)
     cdp = await context.newCDPSession(page);
+  if (heapRetainerOptions) {
+    heapRecorder = heapRetainerModule.createQualificationHeapRetainers({
+      cdp,
+      output: resolve(output),
+      options: heapRetainerOptions,
+    });
+    report.heapRetainers = heapRecorder.report;
+  }
   page.on('pageerror', (error) => {
     if (report.pageErrors.length < 100) {
       report.pageErrorWitnesses.push({
@@ -1653,7 +1690,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
           };
           report.snapshots.push(row);
           if (qualityOptions) qualificationQualityAudioBoundary(row, report.snapshots.length - 1);
-          row.memory = await profileMemory();
+          row.memory = await profileMemory(row);
           assert(
             row.memory?.status !== 'failed',
             'Pause-only memory profile failed; partial application data retained',
@@ -2003,6 +2040,17 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   } else {
     await context?.close().catch(() => {});
     await browser?.close().catch(() => {});
+  }
+  if (heapRecorder) {
+    await heapRecorder.finish({
+      browserClosed: Boolean(browser && !browser.isConnected()),
+      deadlineAt: deadline,
+    });
+    if (report.heapRetainers.status !== 'complete-diagnostic') {
+      report.scenarioStatus = 'fail';
+      report.heapRetainerFailure = 'Complete bounded same-document heap evidence is unavailable.';
+      process.exitCode = 1;
+    }
   }
   if (scenario.audioRequirements) {
     report.audioIdentity = evaluateAudioProof(

@@ -1,3 +1,4 @@
+import { readDeclaredPreHeapTool } from './solo-readiness-rejoin-declared-source.mjs';
 import { createExecutedFrameReader } from './solo-frame-trace-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -505,7 +506,11 @@ test('held declaration keeps exact prior adapter and unchanged complete warm rec
       assert.equal(prior.bytes, ref.bytes);
       assert.equal(prior.sha256, ref.sha256);
     } else {
-      const bytes = await read(ref.path);
+      const bytes =
+        (await readDeclaredPreHeapTool(
+          'docs/performance/solo-browser-frame-trace-warm-plan.json',
+          ref,
+        )) ?? (await read(ref.path));
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(hash(bytes), ref.sha256, ref.path);
     }

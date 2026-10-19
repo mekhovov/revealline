@@ -45,6 +45,7 @@ export function declaredReadinessToolRefs(bytes, manifestPath, manifestBytes) {
   return refs;
 }
 export async function assertDeclaredReadinessTool(manifestPath, ref) {
+  if (await readDeclaredPreHeapTool(manifestPath, ref)) return true;
   if (!changedReadinessTools.includes(ref.path)) return false;
   const root = new URL('../', import.meta.url);
   const [witness, manifest] = await Promise.all([
@@ -69,4 +70,73 @@ export async function modelCurrentReadinessTools(manifestPath, plan) {
     }
   }
   return modeled;
+}
+
+// Test-only readback for the exact tools changed by heap observation. Older
+// witnesses remain byte-for-byte independent; this grants no native admission.
+export const PRE_HEAP_TOOLING_WITNESS =
+  'docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json';
+function preHeapWitness(bytes) {
+  assert.equal(bytes.length, 244528);
+  assert.equal(sha(bytes), 'a9340d90751a357745895fc399bed951d8c01bb57b5d8a2c545b5bfe061092cf');
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.format, 'SoloPreHeapDeclaredToolingSourceV1');
+  assert.equal(witness.status, 'immutable-source-only-no-observation-or-native-admission');
+  assert.equal(witness.revision, '4d28eb409e45a3db3b26ce4ec7a64437e5929a95');
+  assert.equal(witness.tree, '4bd51f0d0b846063e030372d6873ca029852e697');
+  assert.equal(witness.declarations.length, 27);
+  assert.equal(witness.sources.length, 2);
+  for (const record of witness.sources) {
+    const body = Buffer.from(record.content);
+    assert.equal(body.length, record.bytes);
+    assert.equal(sha(body), record.sha256);
+  }
+  return witness;
+}
+function preHeapDeclaration(witness, manifestPath, manifestBytes) {
+  const declaration = witness.declarations.find((row) => row.path === manifestPath);
+  assert(declaration, 'Unwitnessed pre-heap declaration');
+  assert.equal(manifestBytes.length, declaration.bytes, 'Changed pre-heap declaration');
+  assert.equal(sha(manifestBytes), declaration.sha256, 'Changed pre-heap declaration');
+  return declaration;
+}
+export function declaredPreHeapToolSource(bytes, manifestPath, manifestBytes, ref) {
+  const witness = preHeapWitness(bytes);
+  const declaration = preHeapDeclaration(witness, manifestPath, manifestBytes);
+  const declared = declaration.references.find((row) => row.path === ref.path);
+  assert(declared, 'Tool not witnessed for this exact declaration');
+  assert.deepEqual(ref, declared, 'Exact pre-heap helper reference required');
+  const source = witness.sources.find((row) => row.path === ref.path);
+  assert(source, 'Missing pre-heap tool source');
+  assert.equal(source.bytes, declared.bytes);
+  assert.equal(source.sha256, declared.sha256);
+  return Buffer.from(source.content);
+}
+export async function readDeclaredPreHeapTool(manifestPath, ref) {
+  if (!['scripts/qualify-solo-runtime.mjs', 'scripts/solo-remote-sustained.mjs'].includes(ref.path))
+    return null;
+  const root = new URL('../', import.meta.url);
+  const bytes = await readFile(new URL(PRE_HEAP_TOOLING_WITNESS, root));
+  const witness = preHeapWitness(bytes);
+  const declaration = witness.declarations.find((row) => row.path === manifestPath);
+  // Existing older qualifier and sustained identities keep their own witnesses.
+  if (!declaration?.references.some((row) => row.path === ref.path)) return null;
+  return declaredPreHeapToolSource(
+    bytes,
+    manifestPath,
+    await readFile(new URL(manifestPath, root)),
+    ref,
+  );
+}
+export function preHeapTraceWorkflow(bytes, manifestPath, manifestBytes) {
+  const witness = preHeapWitness(bytes);
+  assert.equal(manifestPath, 'docs/performance/solo-browser-frame-trace-9d-tasks-plan.json');
+  preHeapDeclaration(witness, manifestPath, manifestBytes);
+  const retained = witness.traceWorkflow;
+  assert.equal(retained.path, '.github/workflows/solo-native-package-consumer.yml');
+  assert.equal(retained.job, 'hud-cpu');
+  const excerpt = Buffer.from(retained.excerpt);
+  assert.equal(excerpt.length, retained.excerptIdentity.bytes);
+  assert.equal(sha(excerpt), retained.excerptIdentity.sha256);
+  return excerpt;
 }

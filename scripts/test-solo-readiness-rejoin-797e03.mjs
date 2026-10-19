@@ -13,6 +13,10 @@ import {
 } from './solo-remote-readiness.mjs';
 import {
   READINESS_REJOIN_WITNESS,
+  PRE_HEAP_TOOLING_WITNESS,
+  declaredPreHeapToolSource,
+  readDeclaredPreHeapTool,
+  preHeapTraceWorkflow,
   changedReadinessTools,
   declaredReadinessToolRefs,
   assertDeclaredReadinessTool,
@@ -168,7 +172,7 @@ test('retained successor refs and actual command remain source-confined while ev
   const selected = body(workflow, 'readiness');
   const sparse = new Set([...selected.matchAll(/^            \/(.+)$/gm)].map((m) => m[1]));
   for (const ref of refs(plan)) {
-    const bytes = await declaredRead(ref.path);
+    const bytes = (await readDeclaredPreHeapTool(planPath, ref)) ?? (await declaredRead(ref.path));
     assert.deepEqual({ path: ref.path, bytes: bytes.length, sha256: hash(bytes) }, ref);
     assert(sparse.has(ref.path), ref.path);
   }
@@ -206,6 +210,8 @@ test('retained successor refs and actual command remain source-confined while ev
     planPath,
     priorPath,
     READINESS_REJOIN_WITNESS,
+    PRE_HEAP_TOOLING_WITNESS,
+    ...JSON.parse(await read(PRE_HEAP_TOOLING_WITNESS)).declarations.map((row) => row.path),
     'scripts/solo-frame-trace-executed-source.mjs',
     'docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json',
     'scripts/solo-readiness-rejoin-declared-source.mjs',
@@ -269,7 +275,7 @@ test('production preparation rejects the original stale declaration before packa
       for (let i = 0; i < saved[key].length; i++) {
         const before = saved[key][i],
           after = modeled[key][i];
-        if (!changedReadinessTools.includes(before.path)) assert.deepEqual(after, before);
+        if (!(await assertDeclaredReadinessTool(path, before))) assert.deepEqual(after, before);
         else {
           const bytes = await read(before.path);
           assert.deepEqual(after, { path: before.path, bytes: bytes.length, sha256: hash(bytes) });
@@ -278,4 +284,70 @@ test('production preparation rejects the original stale declaration before packa
       }
     }
   }
+});
+
+test('pre-heap witness binds all 27 immutable declarations to actual retained tool bodies', async () => {
+  const bytes = await read(PRE_HEAP_TOOLING_WITNESS);
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.declarations.length, 27);
+  assert.equal(new Set(witness.declarations.map((row) => row.path)).size, 27);
+  for (const declaration of witness.declarations) {
+    const saved = await read(declaration.path);
+    const plan = JSON.parse(saved);
+    const actualRefs = [
+      ...(plan.adapterInputs ?? []),
+      ...(plan.frozenTools ?? []),
+      ...(plan.runtimeRefs ?? []),
+    ];
+    for (const ref of declaration.references) {
+      assert(actualRefs.some((row) => JSON.stringify(row) === JSON.stringify(ref)));
+      const retained = declaredPreHeapToolSource(bytes, declaration.path, saved, ref);
+      assert.deepEqual({ path: ref.path, bytes: retained.length, sha256: hash(retained) }, ref);
+      assert.deepEqual(await readDeclaredPreHeapTool(declaration.path, ref), retained);
+      assert.equal(await assertDeclaredReadinessTool(declaration.path, ref), true);
+      for (const bad of [
+        { ...ref, bytes: ref.bytes + 1 },
+        { ...ref, sha256: '0'.repeat(64) },
+        { ...ref, path: 'scripts/solo-remote-baseline.mjs' },
+      ])
+        assert.throws(() => declaredPreHeapToolSource(bytes, declaration.path, saved, bad));
+      assert.throws(() =>
+        declaredPreHeapToolSource(bytes, declaration.path + '.unknown', saved, ref),
+      );
+      const other = witness.declarations.find((row) => row.path !== declaration.path);
+      assert.throws(() => declaredPreHeapToolSource(bytes, other.path, saved, ref));
+      assert.throws(() =>
+        declaredPreHeapToolSource(
+          bytes,
+          declaration.path,
+          Buffer.concat([saved, Buffer.from(' ')]),
+          ref,
+        ),
+      );
+      for (const altered of [
+        Buffer.concat([bytes, Buffer.from(' ')]),
+        Buffer.from(JSON.stringify({ ...witness, revision: '0'.repeat(40) })),
+        Buffer.from(JSON.stringify({ ...witness, sources: witness.sources.slice(1) })),
+        Buffer.from(JSON.stringify({ ...witness, declarations: witness.declarations.slice(1) })),
+      ])
+        assert.throws(() => declaredPreHeapToolSource(altered, declaration.path, saved, ref));
+    }
+  }
+  const oldPath = 'docs/performance/solo-readiness-preparation-de332-plan.json';
+  const old = JSON.parse(await read(oldPath));
+  const oldSustained = old.adapterInputs.find(
+    (row) => row.path === 'scripts/solo-remote-sustained.mjs',
+  );
+  assert.equal(oldSustained.bytes, 91250);
+  assert.equal(await readDeclaredPreHeapTool(oldPath, oldSustained), null);
+  const originalTrace = 'docs/performance/solo-browser-frame-trace-9d-tasks-plan.json';
+  const originalBytes = await read(originalTrace);
+  const excerpt = preHeapTraceWorkflow(bytes, originalTrace, originalBytes);
+  assert(excerpt.toString().includes('bind-plan ' + originalTrace));
+  assert.throws(() => preHeapTraceWorkflow(bytes, planPath, Buffer.from('{}')));
+  assert.throws(() =>
+    preHeapTraceWorkflow(bytes, originalTrace, Buffer.concat([originalBytes, Buffer.from(' ')])),
+  );
+  for (const path of ['scripts/qualify-solo-runtime.mjs', 'scripts/solo-remote-sustained.mjs'])
+    assert(!(await read(path)).toString().includes('solo-readiness-rejoin-declared-source'));
 });
