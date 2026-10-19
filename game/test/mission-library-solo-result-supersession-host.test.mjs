@@ -5,6 +5,7 @@ import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
 
 // Real authored level, registered image bytes, public input and current async
 // selector. The finite decoder/DOM boundary is not native rendering evidence.
@@ -69,25 +70,60 @@ test('actual unified Journey chooser supersedes held Next artwork without a stal
   p.$('next-button').click();
   await settle(() => decoding);
   assert.equal(p.rendered.run, completed);
-  p.$('shell-packs').click();
   try {
-    await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+    await openMissionLibrary(p, 'shell-packs');
   } catch (error) {
     error.message += ` ${JSON.stringify({ message: p.$('run-message').textContent, warning: p.$('save-warning').textContent, opening: p.$('mission-library-opening-status')?.textContent, errors: p.errors.map(String) })}`;
     throw error;
   }
   p.$('journey-collection').value = 'Journey';
   p.$('journey-collection').emit('change');
-  const first = [...p.$('journey-cards').children].find((card) =>
-    JSON.parse(card.dataset.missionId)[3].endsWith('/first-return'),
+  const identity = JSON.stringify([
+    'journey:opening',
+    'opening',
+    JSON.stringify(['candidate', 'journey-opening', 'prologue']),
+    'candidate/journey-opening/prologue/first-return',
+    '',
+  ]);
+  const matches = [...p.$('journey-cards').children].filter(
+    (card) => card.dataset.missionId === identity,
   );
+  assert.equal(matches.length, 1, 'Only the exact Opening Journey mission is selected.');
+  const [first] = matches;
   assert(first, 'Current unified registry exposes the exact Journey mission.');
-  first.click();
+  await activateMissionCard(first);
+  p.frame(0);
+  const prepared = p.rendered.run;
+  assert.notEqual(prepared, completed);
+  assert.equal(prepared.levelId, 'first-return');
+  assert.equal(prepared.tick, 0);
+  assert.equal(p.doc.body.dataset.flightState, 'briefing');
+  assert.equal(p.doc.body.dataset.pictureState, 'ready');
+  assert.equal(p.rendered.paused, true);
+  assert.equal(p.$('journey-chooser').open, false);
+  // Exact Solo selection prepares a briefing. A fresh visible Start, rather
+  // than elapsed polling time, owns the transition into play.
+  const start = p.$('start-button'),
+    onStart = start.onclick;
+  assert.equal(start.hidden, false);
+  assert.equal(start.disabled, false);
+  assert.equal(start.closest('[hidden],[inert]'), null);
+  let starting;
+  start.onclick = (...args) => (starting = onStart.apply(start, args));
+  try {
+    start.focus();
+    start.click();
+  } finally {
+    start.onclick = onStart;
+  }
+  assert(starting instanceof Promise, 'The real Start handler owns resuming the prepared mission.');
+  await starting;
   await settle(() => {
     p.frame(0);
     return p.rendered.run !== completed && running();
   });
   assert.equal(p.rendered.paused, false);
+  assert.equal(p.rendered.run, prepared, 'Start retains the exact accepted briefing run.');
   await settle(running);
   assert.notEqual(p.rendered.run, completed);
   const accepted = p.rendered.run,
