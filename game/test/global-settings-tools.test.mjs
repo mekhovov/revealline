@@ -2,7 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 import { attachProfileRecoveryView } from '../ui/profile-recovery.mjs';
+import { mountModeSettings } from '../ui/mode-settings-view.mjs';
+import { attachSettingsPanels } from '../ui/settings-panels.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
 function fixture(t) {
@@ -78,6 +81,102 @@ function fixture(t) {
       visit++;
     },
   };
+}
+
+function responsiveFixture(t) {
+  const h = fixture(t);
+  h.doc.defaultView.innerWidth = 1280;
+  const settings = mountModeSettings({
+    root: h.settings,
+    prefix: 'responsive-settings',
+    groups: Object.fromEntries(Object.entries(h.panels).map(([name, panel]) => [name, [panel]])),
+    attachPanels: attachSettingsPanels,
+  });
+  t.after(() => settings.destroy());
+  settings.navigation.select(settings.tabs.extras.id);
+  const opener = h.api.controls.about.querySelector('button'),
+    rects = opener.getClientRects.bind(opener),
+    focus = opener.focus.bind(opener);
+  // This finite DOM has no stylesheet engine. Model the actual compact rule:
+  // categories hide every panel, and native focus ignores a non-rendered opener.
+  opener.getClientRects = () =>
+    h.doc.defaultView.innerWidth <= 700 && h.settings.dataset.settingsView === 'categories'
+      ? []
+      : rects();
+  opener.focus = (...args) => {
+    if (opener.getClientRects().length) focus(...args);
+  };
+  const resize = () => {
+    h.doc.defaultView.innerWidth = 316;
+    h.doc.defaultView.emit('resize');
+  };
+  opener.focus();
+  opener.click();
+  return { ...h, navigation: settings.navigation, tab: settings.tabs.extras, opener, resize };
+}
+
+test('About Back reveals its current Settings panel after resizing while the child owns focus', async (t) => {
+  const h = responsiveFixture(t),
+    frame = h.api.root().querySelector('iframe');
+  frame.focus();
+  h.resize();
+  assert.equal(h.settings.dataset.settingsView, 'categories');
+  assert.equal(h.opener.getClientRects().length, 0);
+  h.api.back();
+  await settle();
+  assert.equal(h.settings.dataset.settingsView, 'panel');
+  assert.equal(h.doc.activeElement, h.opener);
+  assert.ok(h.opener.getClientRects().length);
+  assert.equal(h.opener.scrolled, 1);
+  assert.equal(h.settings.open, true);
+  assert.equal(frame.getAttribute('src'), null);
+  assert.equal(h.calls.persist, 0);
+  assert.equal(h.calls.readers, 0);
+});
+
+for (const unavailable of ['hidden', 'removed', 'disabled']) {
+  test(`About Back returns to its category if the resized opener is ${unavailable}`, async (t) => {
+    const h = responsiveFixture(t);
+    h.resize();
+    if (unavailable === 'removed') h.opener.remove();
+    else h.opener[unavailable] = true;
+    h.api.back();
+    await settle();
+    assert.equal(h.settings.dataset.settingsView, 'categories');
+    assert.equal(h.doc.activeElement, h.tab);
+    assert.equal(h.tab.scrolled, 1);
+    assert.equal(h.settings.open, true);
+  });
+}
+
+test('resized tool close retains a newer selected category instead of revealing the former opener', async (t) => {
+  const h = responsiveFixture(t);
+  h.navigation.select('responsive-settings-tab-controls');
+  h.resize();
+  h.api.back();
+  await settle();
+  assert.equal(h.navigation.selected(), 'responsive-settings-tab-controls');
+  assert.equal(h.settings.dataset.settingsView, 'categories');
+  assert.equal(h.doc.activeElement.id, 'responsive-settings-tab-controls');
+  assert.equal(h.opener.getClientRects().length, 0);
+});
+
+for (const retired of ['visit', 'hidden page', 'unfocused page', 'disposed']) {
+  test(`resized tool close cannot take focus after its ${retired} is retired`, async (t) => {
+    const h = responsiveFixture(t),
+      current = h.doc.createElement('button');
+    h.resize();
+    h.settings.append(current);
+    current.focus();
+    if (retired === 'visit') h.changeVisit();
+    if (retired === 'hidden page') h.doc.hidden = true;
+    if (retired === 'unfocused page') h.doc.hasFocus = () => false;
+    if (retired === 'disposed') await h.api.dispose();
+    else h.api.back();
+    await settle();
+    assert.equal(h.doc.activeElement, current);
+    assert.equal(h.settings.dataset.settingsView, 'categories');
+  });
 }
 
 test('global tools reuse the existing offline owner and lazily open real recovery above a non-Solo parent', async (t) => {
@@ -175,4 +274,48 @@ test('unclaimed Escape crosses the tool frame boundary while an inner modal keep
     false,
     'Closing releases the old child key listener.',
   );
+});
+
+test('About uses plain localized copy through its nested title and returns focus to the same Settings row', async (context) => {
+  const previous = getLocale();
+  context.after(() => setLocale(previous, { persist: false }));
+  setLocale('en', { persist: false });
+  const h = fixture(context),
+    opener = h.api.controls.about.querySelector('button');
+  assert.equal(opener.textContent, 'About & credits');
+  opener.focus();
+  opener.click();
+  const dialog = h.api.root(),
+    heading = h.doc.getElementById('test-tools-tool-title'),
+    frame = dialog.querySelector('iframe'),
+    back = h.doc.getElementById('test-tools-tool-back'),
+    route = frame.src;
+  assert.equal(route, 'https://game.invalid/site/about.html#versions');
+  assert.equal(h.settings.open, true);
+  assert.equal(h.doc.activeElement, back);
+  for (const [locale, title] of [
+    ['uk', 'Про гру й авторів'],
+    ['en', 'About & credits'],
+  ]) {
+    setLocale(locale, { persist: false });
+    assert.equal(opener.textContent, title);
+    assert.equal(heading.textContent, title);
+    assert.equal(frame.getAttribute('title'), title);
+    assert.equal(frame.src, route);
+    assert.equal(h.api.root(), dialog);
+    assert.equal(h.doc.activeElement, back);
+  }
+  back.click();
+  await settle();
+  assert.equal(h.api.root(), null);
+  assert.equal(h.settings.open, true);
+  assert.equal(h.doc.activeElement, opener);
+  assert.equal(frame.getAttribute('src'), null);
+  const creator = h.api.controls.creatorTools.querySelector('button');
+  creator.click();
+  setLocale('uk', { persist: false });
+  assert.equal(frame.getAttribute('title'), translate('interface:nativeMenu.creatorTools'));
+  assert.equal(heading.textContent, translate('interface:nativeMenu.creatorTools'));
+  assert.equal(h.calls.persist, 0);
+  assert.equal(h.calls.readers, 0);
 });
