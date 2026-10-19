@@ -5,6 +5,7 @@ import { mountAircraftArchiveControls } from '../../optional-practice/civilian-f
 import { mountPracticeSplits } from '../../optional-practice/civilian-fpv/flight-sectors.mjs';
 import {
   aircraftCourseComparisonEligibility,
+  findBestAircraftCourseReference,
   verifyAircraftCourseArchive,
   verifyAircraftCourseArchiveInWorker,
 } from '../../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
@@ -41,6 +42,7 @@ function fixture(
   {
     verify,
     verifyCourse,
+    pause,
     course,
     referenceIdentity,
     onReference,
@@ -111,7 +113,9 @@ function fixture(
       if (list) await list(options);
       return [...records.values()].map((row) => structuredClone(row));
     },
-    async exportPackage(id) {
+    async exportPackage(id, options) {
+      if (typeof archivePackage === 'function')
+        return structuredClone(await archivePackage(id, options));
       if (archivePackage) return structuredClone(archivePackage);
       return { manifest: structuredClone(records.get(id)) };
     },
@@ -163,7 +167,10 @@ function fixture(
     getSession: () => activeSession,
     store,
     makeId: () => `archive-${++ids}`,
-    onPause: () => pauses++,
+    onPause: () => {
+      pauses++;
+      return pause?.();
+    },
     ...(onReference ? { onReference } : {}),
     ...(hasSplitReference ? { hasSplitReference } : {}),
     ...(onVisualReference ? { onVisualReference } : {}),
@@ -912,7 +919,10 @@ test('explicit cancellation terminates a course job and keeps its result correct
 // Short synthetic hold courses exercise real recording and canonical proof.
 // Their success does not qualify an authored lesson or measured aircraft behavior.
 await initAdvancedRuntime();
-async function recordedReference(family) {
+async function recordedReference(
+  family,
+  { ticks = 8, delay = 0, centred = false, complete = true, tune = () => {} } = {},
+) {
   const course = structuredClone(
     family === 'world' ? BEGINNER_CATALOGUE[0].course : FLIGHT_COURSES[0],
   );
@@ -922,10 +932,12 @@ async function recordedReference(family) {
       min: { x: -10000, y: -1000, z: -10000 },
       max: { x: 10000, y: 8000, z: 10000 },
       ticks: 3,
+      centred,
     });
     course.steps[mode] = [hold];
   }
   const preset = createPresetConfiguration('meteor75-analog-2022');
+  tune(preset);
   let simulation;
   const session = createAircraftCourseSession(
     {
@@ -964,8 +976,9 @@ async function recordedReference(family) {
     await session.prepare();
     const initial = simulation.readSealedSegment();
     session.arm();
-    for (let i = 0; i < 8; i++) await session.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0 });
-    assert.equal(session.snapshot().step, 1);
+    for (let i = 0; i < ticks; i++)
+      await session.step({ roll: 0, pitch: 0, yaw: i < delay ? 0.2 : 0, throttle: 0 });
+    assert.equal(session.snapshot().step, complete ? 1 : 0);
     const { segment } = simulation.finalizeArchive(),
       size = (value) => new TextEncoder().encode(JSON.stringify(value)).length;
     return {
@@ -1012,6 +1025,7 @@ const ownedReference = await verifyAircraftCourseArchive(
 assert.equal(aircraftCourseComparisonEligibility(ownedReference, ownedReference).eligible, true);
 const referenceIdentity = ownedReference.course.referenceIdentity;
 const referenceReport = () => ownedReference;
+
 test('only owned compatible completed proof offers an explicit copied unscored split reference', async (t) => {
   const applied = [],
     report = referenceReport();
@@ -1676,3 +1690,374 @@ for (const change of ['selection', 'disposal'])
       'cleanup owns the reference despite unknown display state',
     );
   });
+
+function searchStore(packets) {
+  return {
+    async list() {
+      return packets.map((packet) => structuredClone(packet.manifest));
+    },
+    async exportPackage(id) {
+      return structuredClone(packets.find((packet) => packet.manifest.id === id));
+    },
+  };
+}
+function namedPacket(data, id) {
+  const packet = structuredClone(data.packet);
+  packet.manifest.id = id;
+  packet.manifest.name = id;
+  return packet;
+}
+
+test('practice search ranks verified completion, not archive duration, with stable ties and one native worker', async (t) => {
+  environmentWorker(t, ProofWorker);
+  const fast = await recordedReference('world', { ticks: 16, centred: true }),
+    slow = await recordedReference('world', { delay: 2, ticks: 8, centred: true }),
+    packets = [
+      namedPacket(slow, 'short-slow'),
+      namedPacket(fast, 'z-fast'),
+      namedPacket(fast, 'a-fast'),
+    ],
+    prior = ProofWorker.instances.length;
+  let progress = 0;
+  const result = await findBestAircraftCourseReference(fast.course, fast.referenceIdentity, {
+    store: searchStore(packets),
+    workerURL: new URL('../../optional-practice/fpv-worlds/advanced-worker.mjs', import.meta.url),
+    onProgress() {
+      progress++;
+      assert.equal(ProofWorker.instances.filter((worker) => !worker.terminated).length, 0);
+    },
+  });
+  assert.equal(result.best.id, 'a-fast');
+  assert.equal(result.best.report.course.completedAtTick, 3);
+  assert.equal(result.best.report.physics.verifiedThroughMission, 16);
+  assert.equal(result.checked, 3);
+  assert.equal(result.unavailable, 0);
+  assert.equal(progress, 3);
+  assert.equal(ProofWorker.instances.length - prior, 3);
+  assert.ok(ProofWorker.instances.slice(prior).every((worker) => worker.terminated));
+  assert.equal(
+    aircraftCourseComparisonEligibility(result.best.report, result.best.report).eligible,
+    true,
+  );
+  assert.equal(result.scored, false);
+  assert.equal(result.defaultEligible, false);
+  assert.ok(Object.isFrozen(result.best.report.course.presentation.path));
+  const reversed = await findBestAircraftCourseReference(fast.course, fast.referenceIdentity, {
+    store: searchStore(packets.reverse()),
+    workerURL: new URL('../../optional-practice/fpv-worlds/advanced-worker.mjs', import.meta.url),
+  });
+  assert.equal(reversed.best.id, 'a-fast');
+});
+
+test('practice search permits personal rates but filters physical settings and never trusts saved completion flags', async (t) => {
+  environmentWorker(t, ProofWorker);
+  const data = referenceFixtures.academy,
+    personal = await recordedReference('academy', {
+      tune: (preset) => {
+        preset.response.rates.axes.roll.rate += 10;
+      },
+    }),
+    limited = await recordedReference('academy', {
+      tune: (preset) => {
+        preset.response.rates.throttle.limitType = 'scale';
+        preset.response.rates.throttle.limitPercent = 70;
+      },
+    }),
+    forged = namedPacket(data, 'forged'),
+    interrupted = namedPacket(data, 'interrupted'),
+    packets = [
+      forged,
+      interrupted,
+      namedPacket(limited, 'limited'),
+      namedPacket(personal, 'personal'),
+    ];
+  forged.segments[0].finalHash = '0000000000000000';
+  interrupted.manifest.state = 'interrupted';
+  const result = await findBestAircraftCourseReference(data.course, data.referenceIdentity, {
+    store: searchStore(packets),
+  });
+  assert.equal(result.best.id, 'personal');
+  assert.equal(result.checked, 1);
+  assert.equal(result.unavailable, 1);
+  const mismatch = await findBestAircraftCourseReference(
+    data.course,
+    { ...data.referenceIdentity, terrainIdentity: 'ffffffffffffffff' },
+    { store: searchStore([namedPacket(data, 'terrain')]) },
+  );
+  assert.equal(mismatch.best, null);
+  assert.equal(mismatch.checked, 0);
+});
+
+test('practice search rejects custom-worker authority, changed archives, excess inventory and cancellation', async (t) => {
+  environmentWorker(t, ProofWorker);
+  const data = referenceFixtures.academy,
+    packet = namedPacket(data, 'candidate'),
+    store = searchStore([packet]);
+  const custom = await findBestAircraftCourseReference(data.course, data.referenceIdentity, {
+    store,
+    Worker: ProofWorker,
+  });
+  assert.equal(custom.best, null);
+  assert.equal(custom.checked, 1);
+  const changed = await findBestAircraftCourseReference(data.course, data.referenceIdentity, {
+    store: {
+      ...store,
+      exportPackage: async () => ({
+        ...packet,
+        manifest: { ...packet.manifest, revision: packet.manifest.revision + 1 },
+      }),
+    },
+  });
+  assert.equal(changed.best, null);
+  assert.equal(changed.unavailable, 1);
+  await assert.rejects(
+    findBestAircraftCourseReference(data.course, data.referenceIdentity, {
+      store: { ...store, list: async () => Array(17).fill(packet.manifest) },
+    }),
+    /Too many/,
+  );
+  const controller = new AbortController();
+  let exported = 0;
+  await assert.rejects(
+    findBestAircraftCourseReference(data.course, data.referenceIdentity, {
+      store: {
+        ...store,
+        exportPackage: async () => {
+          exported++;
+          controller.abort();
+          return packet;
+        },
+      },
+      signal: controller.signal,
+    }),
+    { name: 'AbortError' },
+  );
+  assert.equal(exported, 1);
+});
+
+test('explicit practice search selects a verified archive without enabling either reference automatically', async (t) => {
+  environmentWorker(t, ProofWorker);
+  const data = referenceFixtures.world,
+    packet = namedPacket(data, 'best-world'),
+    selected = [];
+  const f = fixture(t, {
+    key: 'world',
+    course: data.course,
+    referenceIdentity: data.referenceIdentity,
+    Worker: ProofWorker,
+    workerURL: new URL('../../optional-practice/fpv-worlds/advanced-worker.mjs', import.meta.url),
+    archivePackage: async () => packet,
+    onReference: (_session, value) => {
+      selected.push(value);
+      return true;
+    },
+    onVisualReference: (_session, value) => {
+      selected.push(value);
+      return true;
+    },
+  });
+  f.records.set(packet.manifest.id, packet.manifest);
+  f.update();
+  await settle();
+  f.button('Find best verified practice flight').click();
+  await until(() => f.ui.root.textContent.includes('Fastest completion among checked'));
+  assert.equal(f.ui.root.querySelector('select').value, packet.manifest.id);
+  assert.equal(f.button('Use as split reference').disabled, false);
+  assert.equal(f.button('Show reference aircraft').disabled, false);
+  assert.deepEqual(selected, []);
+  assert.deepEqual(f.calls, []);
+  assert.equal(f.pauses, 1);
+  f.button('Use as split reference').click();
+  f.button('Show reference aircraft').click();
+  assert.equal(selected.length, 2);
+  f.setLocale('uk');
+  f.update();
+  assert.match(f.ui.root.textContent, /Найшвидше завершення серед перевірених/);
+  assert.equal(f.button('Прибрати орієнтир часу').disabled, false);
+  assert.equal(f.button('Сховати еталонний дрон').disabled, false);
+  f.ui.update({
+    ticks: 0,
+    status: 'active',
+    advancedTelemetry: { archiveStatus: { generation: '0', lastSealedIndex: -1, latestTick: 0 } },
+  });
+  assert.equal(selected.length, 2, 'resuming after selection retains both references');
+  assert.equal(f.button('Прибрати орієнтир часу').disabled, false);
+});
+
+test('practice search reports no candidate and incomplete coverage in both languages', async (t) => {
+  environmentWorker(t, ProofWorker);
+  const data = referenceFixtures.academy,
+    packet = namedPacket(data, 'unreadable');
+  const f = fixture(t, {
+    course: data.course,
+    referenceIdentity: data.referenceIdentity,
+    Worker: ProofWorker,
+    archivePackage: async () => {
+      throw new Error('read failed');
+    },
+  });
+  f.records.set(packet.manifest.id, packet.manifest);
+  f.update();
+  await settle();
+  f.button('Find best verified practice flight').click();
+  await until(() => f.ui.root.textContent.includes('this search is incomplete'));
+  assert.match(f.ui.root.textContent, /No matching complete verified practice flight/);
+  assert.equal(f.button('Use as split reference').hidden, true);
+  f.setLocale('uk');
+  f.update();
+  assert.match(f.ui.root.textContent, /Немає сумісного завершеного перевіреного польоту/);
+  assert.match(f.ui.root.textContent, /пошук неповний/);
+  assert.deepEqual(f.calls, []);
+});
+
+for (const change of ['cancel', 'replace', 'restore', 'selection', 'resume', 'dispose'])
+  test(`practice search cancels on ${change} and ignores a late package read`, async (t) => {
+    environmentWorker(t, ProofWorker);
+    const data = referenceFixtures.academy,
+      packet = namedPacket(data, 'late');
+    let release, signal;
+    const f = fixture(t, {
+      course: data.course,
+      referenceIdentity: data.referenceIdentity,
+      Worker: ProofWorker,
+      archivePackage: async (_id, options) => {
+        signal = options.signal;
+        return new Promise((resolve) => {
+          release = resolve;
+        });
+      },
+    });
+    f.records.set(packet.manifest.id, packet.manifest);
+    f.update();
+    await settle();
+    f.button('Find best verified practice flight').click();
+    await until(() => Boolean(release));
+    if (change === 'cancel') f.button('Cancel archive operation').click();
+    if (change === 'replace') {
+      f.replaceSession();
+      f.update();
+    }
+    if (change === 'restore') {
+      f.setGeneration('restored');
+      f.update();
+    }
+    if (change === 'selection') {
+      const select = f.ui.root.querySelector('select');
+      select.value = 'other';
+      select.emit('change');
+    }
+    if (change === 'resume')
+      f.ui.update({
+        ticks: 0,
+        status: 'active',
+        advancedTelemetry: {
+          archiveStatus: { generation: '0', lastSealedIndex: -1, latestTick: 0 },
+        },
+      });
+    if (change === 'dispose') f.ui.dispose();
+    assert.equal(signal.aborted, true);
+    release(packet);
+    await settle();
+    await settle();
+    assert.doesNotMatch(
+      f.ui.root.textContent,
+      /Recorded course completion verified|Fastest completion/,
+    );
+    assert.deepEqual(f.calls, []);
+    assert.equal(f.button('Use as split reference').hidden, true);
+  });
+
+test('practice search requires actual frozen-course completion, not a physically valid ended archive', async (t) => {
+  environmentWorker(t, ProofWorker);
+  const incomplete = await recordedReference('academy', {
+      centred: true,
+      delay: 8,
+      complete: false,
+    }),
+    store = searchStore([namedPacket(incomplete, 'unfinished')]);
+  const result = await findBestAircraftCourseReference(
+    incomplete.course,
+    incomplete.referenceIdentity,
+    { store },
+  );
+  assert.equal(result.best, null);
+  assert.equal(result.checked, 1);
+  assert.equal(result.unavailable, 0);
+  const data = referenceFixtures.academy,
+    altered = structuredClone(data.course);
+  altered.steps.acro[0].ticks++;
+  const wrong = await findBestAircraftCourseReference(altered, data.referenceIdentity, {
+    store: searchStore([namedPacket(data, 'same-id-different-course')]),
+  });
+  assert.equal(wrong.best, null);
+  assert.equal(wrong.checked, 1);
+});
+
+test('practice search terminates its native worker on cancel and never starts the next candidate', async (t) => {
+  class DeferredWorker extends ProofWorker {
+    postMessage(message) {
+      if (message.type === 'verify-course-archive') this.deliver = () => super.postMessage(message);
+      else super.postMessage(message);
+    }
+  }
+  environmentWorker(t, DeferredWorker);
+  const data = referenceFixtures.academy,
+    packets = [namedPacket(data, 'first'), namedPacket(data, 'second')],
+    controller = new AbortController(),
+    prior = ProofWorker.instances.length;
+  const job = findBestAircraftCourseReference(data.course, data.referenceIdentity, {
+    store: searchStore(packets),
+    signal: controller.signal,
+  });
+  const rejected = assert.rejects(job, { name: 'AbortError' });
+  await until(
+    () => ProofWorker.instances.length > prior && Boolean(ProofWorker.instances.at(-1).deliver),
+  );
+  const worker = ProofWorker.instances.at(-1);
+  controller.abort();
+  await rejected;
+  worker.deliver();
+  await worker.pending;
+  assert.equal(worker.terminated, true);
+  assert.equal(worker.listeners.size, 0);
+  assert.equal(ProofWorker.instances.length, prior + 1);
+});
+
+test('practice search pauses an initially active flight before checking archives', async (t) => {
+  environmentWorker(t, ProofWorker);
+  const data = referenceFixtures.academy,
+    packet = namedPacket(data, 'active-start');
+  let release,
+    exports = 0;
+  const f = fixture(t, {
+    course: data.course,
+    referenceIdentity: data.referenceIdentity,
+    Worker: ProofWorker,
+    pause: () =>
+      new Promise((resolve) => {
+        release = resolve;
+      }),
+    archivePackage: async () => {
+      exports++;
+      return packet;
+    },
+  });
+  f.records.set(packet.manifest.id, packet.manifest);
+  const state = (status) => ({
+    ticks: 0,
+    status,
+    advancedTelemetry: { archiveStatus: { generation: '0', lastSealedIndex: -1, latestTick: 0 } },
+  });
+  f.ui.update(state('active'));
+  await settle();
+  f.button('Find best verified practice flight').click();
+  await until(() => Boolean(release));
+  assert.equal(f.pauses, 1);
+  assert.equal(exports, 0, 'no package is read while the pause request is pending');
+  f.ui.update(state('paused'));
+  release();
+  await until(() => f.ui.root.textContent.includes('Fastest completion among checked'));
+  assert.equal(exports, 1);
+  assert.equal(f.button('Use as split reference').disabled, false);
+  assert.deepEqual(f.calls, []);
+});

@@ -2,6 +2,7 @@ import { exportJSONFile } from '../../game/platform.mjs';
 import { createAircraftArchiveStore } from './aircraft-archive.mjs';
 import {
   aircraftCourseComparisonEligibility,
+  findBestAircraftCourseReference,
   verifyAircraftArchiveInWorker,
   verifyAircraftCourseArchiveInWorker,
 } from './aircraft-archive-verifier.mjs';
@@ -146,6 +147,16 @@ export function mountAircraftArchiveControls({
         error.name === 'AbortError'
           ? t('Course verification cancelled.', 'Перевірку курсу скасовано.')
           : `${t('Could not verify course', 'Не вдалося перевірити курс')}: ${error.message}`;
+    else if (courseView.searchFinished && !report)
+      text = t(
+        'No matching complete verified practice flight. Clips, unfinished flights and different settings cannot be used.',
+        'Немає сумісного завершеного перевіреного польоту. Фрагменти, незавершені польоти та інші налаштування не підходять.',
+      );
+    else if (!report && courseView.search)
+      text = t(
+        'Checking saved practice flights… The flight remains paused.',
+        'Перевірка збережених тренувальних польотів… Політ залишається на паузі.',
+      );
     else if (!report)
       text =
         phase === 'course'
@@ -171,6 +182,10 @@ export function mountAircraftArchiveControls({
               : `${t('Unsupported course or recording', 'Непідтримуваний курс або запис')}: ${reason}`
       } ${t('Unscored.', 'Без заліку.')}`;
     }
+    if (courseView.searchFinished && report)
+      text += ` ${t('Fastest completion among checked compatible flights.', 'Найшвидше завершення серед перевірених сумісних польотів.')}`;
+    if (courseView.unavailable)
+      text += ` ${t('Some saved flights could not be checked; this search is incomplete.', 'Деякі збережені польоти не вдалося перевірити; пошук неповний.')}`;
     setResult(subject + text);
   }
   function renderRows() {
@@ -237,6 +252,10 @@ export function mountAircraftArchiveControls({
     download.textContent = t('Export selected archive', 'Експортувати вибраний архів');
     verifyButton.textContent = t('Verify selected archive', 'Перевірити вибраний архів');
     courseButton.textContent = t('Verify course completion', 'Перевірити завершення курсу');
+    bestButton.textContent = t(
+      'Find best verified practice flight',
+      'Знайти найкращий перевірений тренувальний політ',
+    );
     referenceButton.textContent = courseView?.referenceSelected
       ? t('Clear split reference', 'Прибрати орієнтир часу')
       : t('Use as split reference', 'Використати як орієнтир часу');
@@ -260,6 +279,7 @@ export function mountAircraftArchiveControls({
     finish.disabled ||= !context?.manifest || Boolean(context?.stopped);
     for (const node of [download, verifyButton, remove]) node.disabled ||= !select.value;
     courseButton.disabled ||= !select.value || !activeCourse;
+    bestButton.disabled ||= !activeCourse;
     referenceButton.disabled ||= !courseView?.referenceSelected && !referenceMatches();
     visualButton.disabled ||= !courseView?.visualSelected && !referenceMatches();
     select.disabled = Boolean(operation);
@@ -539,27 +559,74 @@ export function mountAircraftArchiveControls({
         }`;
     }),
   );
-  const courseButton = button(() => {
-    if (!activeCourse || !select.value) return;
+  const courseButton = button(() => checkCourse(false));
+  const bestButton = button(() => checkCourse(true));
+  function checkCourse(search) {
+    if (!activeCourse || (!search && !select.value)) return;
     clearCourse();
     const session = owner,
-      archiveGeneration = generation(),
-      id = select.value;
+      archiveGeneration = generation();
+    let id = select.value;
     const view = {
       session,
-      name: rows.find((row) => row.id === id)?.name ?? id,
+      name: search ? '' : (rows.find((row) => row.id === id)?.name ?? id),
       course: structuredClone(activeCourse),
+      search,
       valid: () =>
         courseView === view &&
         current(session) &&
         generation() === archiveGeneration &&
+        (!search || !view.paused || view.searchFinished || state?.status !== 'active') &&
         select.value === id,
     };
     courseView = view;
     return run(async (signal) => {
       await onPause();
+      view.paused = true;
       signal.throwIfAborted();
       if (!view.valid()) throw cancelled();
+      if (search) {
+        const found = await findBestAircraftCourseReference(
+          view.course,
+          session.referenceIdentity(),
+          {
+            store,
+            signal,
+            ...(win?.Worker === globalThis.Worker ? {} : { Worker: win?.Worker }),
+            ...(workerURL ? { workerURL } : {}),
+          },
+        );
+        signal.throwIfAborted();
+        if (!view.valid()) throw cancelled();
+        view.unavailable = found.unavailable;
+        if (!found.best) {
+          view.searchFinished = true;
+          return;
+        }
+        // Refresh only after the job; dropdown changes never install references.
+        const fresh = await store.list({ signal });
+        signal.throwIfAborted();
+        if (!view.valid()) throw cancelled();
+        if (
+          !fresh.some(
+            (row) =>
+              row.id === found.best.id &&
+              row.revision === found.best.revision &&
+              row.finalHash === found.best.finalHash,
+          )
+        )
+          throw cancelled();
+        rows = fresh;
+        inventoryError = null;
+        listLoaded = true;
+        renderRows();
+        id = select.value = found.best.id;
+        view.name = found.best.name;
+        view.report = found.best.report;
+        view.mode = found.best.report.course.mode;
+        view.searchFinished = true;
+        return;
+      }
       const packet = await store.exportPackage(id, { signal });
       signal.throwIfAborted();
       if (!view.valid()) throw cancelled();
@@ -580,7 +647,7 @@ export function mountAircraftArchiveControls({
       if (!view.valid() || courseView !== view) throw cancelled();
       view.report = report;
     }, view.valid);
-  });
+  }
   const referenceButton = button(() => {
     if (!courseView?.referenceSelected && !referenceMatches()) return;
     const view = courseView;

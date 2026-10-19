@@ -5,7 +5,11 @@ import {
   exactKeys,
   required,
 } from '../../game/data-json.mjs';
-import { validateAircraftArchivePackage } from './aircraft-archive.mjs';
+import {
+  AIRCRAFT_ARCHIVE_MAX_SESSIONS,
+  validateAircraftArchiveManifest,
+  validateAircraftArchivePackage,
+} from './aircraft-archive.mjs';
 import {
   AIRCRAFT_TERRAIN_BACKENDS,
   aircraftFlightIdentities,
@@ -253,6 +257,97 @@ export function aircraftCourseComparisonEligibility(reference, candidate) {
     scored: false,
     defaultEligible: false,
   };
+}
+
+/** Device-local practice only. Stored manifests shortlist candidates; only a
+ * fresh native replay can own a reference. Keep one package and best report,
+ * never a collection of historical paths. A failed read makes coverage partial. */
+export async function findBestAircraftCourseReference(
+  sourceCourse,
+  referenceIdentity,
+  { store, signal, onProgress, ...workerOptions } = {},
+) {
+  const course = boundedCourse(sourceCourse),
+    reference = boundedJSON(referenceIdentity, { maxBytes: 256, maxNodes: 8, maxDepth: 2 });
+  exactKeys(reference, ['configurationClass', 'terrainIdentity'], 'Practice reference');
+  required(
+    ['configurationClass', 'terrainIdentity'].every((key) => /^[0-9a-f]{16}$/.test(reference[key])),
+    'Practice flight is not ready',
+  );
+  exactKeys(workerOptions, ['Worker', 'workerURL'], 'Practice search worker options');
+  cancelled(signal);
+  const rows = await store.list({ signal });
+  cancelled(signal);
+  required(
+    Array.isArray(rows) && rows.length <= AIRCRAFT_ARCHIVE_MAX_SESSIONS,
+    'Too many stored aircraft archives',
+  );
+  // Capture all metadata before yielding again. Invalid rows cannot expand work.
+  const candidates = rows.map((row) => {
+    try {
+      return validateAircraftArchiveManifest(row);
+    } catch {
+      return null;
+    }
+  });
+  let best = null,
+    checked = 0,
+    unavailable = 0;
+  for (const manifest of candidates) {
+    cancelled(signal);
+    if (!manifest) {
+      unavailable++;
+      continue;
+    }
+    try {
+      if (
+        manifest.state !== 'ended' ||
+        manifest.origin.kind !== 'fresh' ||
+        aircraftFlightIdentities(manifest.config).comparisonClass !== reference.configurationClass
+      )
+        continue;
+      const packet = validateAircraftArchivePackage(
+        await store.exportPackage(manifest.id, { signal }),
+      );
+      cancelled(signal);
+      required(same(packet.manifest, manifest), 'Saved archive changed during search');
+      if (packet.segments[0]?.events[0]?.[2]?.identity !== reference.terrainIdentity) continue;
+      checked++;
+      onProgress?.({ checked, total: candidates.length });
+      const report = await verifyAircraftCourseArchiveInWorker(packet, course, {
+        ...workerOptions,
+        signal,
+        collectReference: true,
+      });
+      cancelled(signal);
+      if (!aircraftCourseComparisonEligibility(report, report).eligible) continue;
+      if (
+        !['configurationClass', 'terrainIdentity'].every(
+          (key) => report.course.referenceIdentity[key] === reference[key],
+        )
+      )
+        continue;
+      const ticks = report.course.completedAtTick;
+      if (
+        !best ||
+        ticks < best.report.course.completedAtTick ||
+        (ticks === best.report.course.completedAtTick && manifest.id < best.id)
+      )
+        best = {
+          id: manifest.id,
+          name: manifest.name,
+          revision: manifest.revision,
+          finalHash: manifest.finalHash,
+          report,
+        };
+    } catch (error) {
+      cancelled(signal);
+      if (error.name === 'AbortError') throw error;
+      unavailable++;
+    }
+  }
+  cancelled(signal);
+  return freezeResult({ best, checked, unavailable, scored: false, defaultEligible: false });
 }
 const models = ['aircraft-course-practice.v1', 'aircraft-course-practice.v2'];
 const same = (a, b) => canonicalJSON(a) === canonicalJSON(b);
