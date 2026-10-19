@@ -3,6 +3,25 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { mountAircraftArchiveControls } from '../../optional-practice/civilian-fpv/aircraft-archive-controls.mjs';
 import { mountPracticeSplits } from '../../optional-practice/civilian-fpv/flight-sectors.mjs';
+import {
+  aircraftCourseComparisonEligibility,
+  verifyAircraftCourseArchive,
+  verifyAircraftCourseArchiveInWorker,
+} from '../../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
+import {
+  createAdvancedSimulation,
+  initAdvancedRuntime,
+} from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
+import { createAircraftCourseSession } from '../../optional-practice/civilian-fpv/aircraft-course-session.mjs';
+import { createPresetConfiguration } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
+import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
+import { BEGINNER_CATALOGUE } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
+import { createFlight } from '../../optional-practice/civilian-fpv/model.mjs';
+import {
+  createWorldFlight,
+  validateWorldCourse,
+} from '../../optional-practice/civilian-fpv/world-model.mjs';
+import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
@@ -32,6 +51,9 @@ function fixture(
     append,
     list,
     remove,
+    archivePackage,
+    Worker,
+    workerURL,
     key = 'academy',
   } = {},
 ) {
@@ -90,6 +112,7 @@ function fixture(
       return [...records.values()].map((row) => structuredClone(row));
     },
     async exportPackage(id) {
+      if (archivePackage) return structuredClone(archivePackage);
       return { manifest: structuredClone(records.get(id)) };
     },
     async delete(id) {
@@ -130,10 +153,12 @@ function fixture(
   };
   let activeSession = session;
   window.confirm = () => true;
+  if (Worker) window.Worker = Worker;
   const ui = mountAircraftArchiveControls({
     parent: document.body,
     key,
     window,
+    workerURL,
     locale: () => locale,
     getSession: () => activeSession,
     store,
@@ -884,23 +909,115 @@ test('explicit cancellation terminates a course job and keeps its result correct
   assert.deepEqual(f.calls, []);
 });
 
-const referenceIdentity = {
-  configurationClass: '0123456789abcdef',
-  terrainIdentity: 'fedcba9876543210',
+// Short synthetic hold courses exercise real recording and canonical proof.
+// Their success does not qualify an authored lesson or measured aircraft behavior.
+await initAdvancedRuntime();
+async function recordedReference(family) {
+  const course = structuredClone(
+    family === 'world' ? BEGINNER_CATALOGUE[0].course : FLIGHT_COURSES[0],
+  );
+  for (const mode of ['acro', 'self-level']) {
+    const hold = structuredClone(course.steps[mode].find((step) => step.type === 'hold'));
+    Object.assign(hold, {
+      min: { x: -10000, y: -1000, z: -10000 },
+      max: { x: 10000, y: 8000, z: 10000 },
+      ticks: 3,
+    });
+    course.steps[mode] = [hold];
+  }
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  let simulation;
+  const session = createAircraftCourseSession(
+    {
+      course,
+      mode: 'acro',
+      legacy: family === 'academy',
+      configuration: {
+        response: preset.response,
+        advanced: { aircraft: preset.aircraft, controller: preset.controller },
+      },
+    },
+    {
+      createMission: family === 'academy' ? createFlight : createWorldFlight,
+      createClient: () => ({
+        async initialize(config) {
+          simulation = createAdvancedSimulation(config);
+          return { telemetry: simulation.telemetry(), comparison: simulation.comparison() };
+        },
+        async stageTerrainFrame(frame) {
+          return simulation.stageTerrainFrame(frame);
+        },
+        async commitTerrainFrame(value) {
+          return simulation.commitTerrainFrame(value);
+        },
+        async step(sample, motions) {
+          simulation.enqueueInput(sample);
+          return simulation.stepMission({ motions });
+        },
+        dispose() {
+          simulation?.dispose();
+        },
+      }),
+    },
+  );
+  try {
+    await session.prepare();
+    const initial = simulation.readSealedSegment();
+    session.arm();
+    for (let i = 0; i < 8; i++) await session.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0 });
+    assert.equal(session.snapshot().step, 1);
+    const { segment } = simulation.finalizeArchive(),
+      size = (value) => new TextEncoder().encode(JSON.stringify(value)).length;
+    return {
+      course,
+      referenceIdentity: session.referenceIdentity(),
+      packet: {
+        format: 'AircraftArchivePackage.v1',
+        manifest: {
+          format: 'AircraftSessionArchive.v1',
+          id: 'recorded-flight',
+          host: family,
+          name: 'Synthetic reference boundary',
+          createdAt: 0,
+          revision: 2,
+          identity: initial.identity,
+          config: initial.config,
+          origin: initial.origin,
+          state: 'ended',
+          firstIndex: 0,
+          lastIndex: 0,
+          startTick: 0,
+          endTick: segment.endTick,
+          segmentCount: 1,
+          payloadBytes: size(initial.config) + size(segment),
+          finalHash: segment.finalHash,
+          scored: false,
+        },
+        segments: [segment],
+      },
+    };
+  } finally {
+    await session.dispose();
+  }
+}
+const referenceFixtures = {
+  academy: await recordedReference('academy'),
+  world: await recordedReference('world'),
 };
-const referenceReport = () => ({
-  ...courseVerified(),
-  course: {
-    ...courseVerified().course,
-    referenceIdentity: { ...referenceIdentity },
-    splits: [{ index: 0, ticks: 301, endTick: 301 }],
-  },
-});
+const ownedReference = await verifyAircraftCourseArchive(
+  referenceFixtures.academy.packet,
+  referenceFixtures.academy.course,
+  { collectReference: true },
+);
+assert.equal(aircraftCourseComparisonEligibility(ownedReference, ownedReference).eligible, true);
+const referenceIdentity = ownedReference.course.referenceIdentity;
+const referenceReport = () => ownedReference;
 test('only owned compatible completed proof offers an explicit copied unscored split reference', async (t) => {
   const applied = [],
     report = referenceReport();
   const f = fixture(t, {
-    course: verificationCourse(),
+    course: referenceFixtures.academy.course,
+    archivePackage: referenceFixtures.academy.packet,
     referenceIdentity,
     verifyCourse: async () => report,
     onReference: (session, value) => {
@@ -922,8 +1039,11 @@ test('only owned compatible completed proof offers an explicit copied unscored s
   assert.equal(applied[0].value.name, 'recorded-flight');
   assert.deepEqual(applied[0].value.rows, report.course.splits);
   assert.notEqual(applied[0].value.rows, report.course.splits);
-  report.course.splits[0].ticks = 1;
-  assert.equal(applied[0].value.rows[0].ticks, 301);
+  assert.throws(() => {
+    report.course.splits[0].ticks = 1;
+  }, TypeError);
+  applied[0].value.rows[0].ticks = 1;
+  assert.equal(report.course.splits[0].ticks, 3, 'The consumer receives an independent row copy');
   f.update();
   assert.equal(applied.length, 1, 'ordinary paused/live paints retain the selection');
   f.setLocale('uk');
@@ -944,7 +1064,9 @@ for (const mismatch of [
   'missing-proof',
 ]) {
   test(`split reference rejects ${mismatch}`, async (t) => {
-    const report = referenceReport(),
+    const report = ['configurationClass', 'terrainIdentity', 'unprepared'].includes(mismatch)
+        ? referenceReport()
+        : structuredClone(referenceReport()),
       identity = { ...referenceIdentity };
     let calls = 0;
     if (mismatch in identity) identity[mismatch] = 'ffffffffffffffff';
@@ -953,7 +1075,8 @@ for (const mismatch of [
     if (mismatch === 'frequency') report.course.missionHz = 100;
     if (mismatch === 'missing-proof') delete report.physics;
     const f = fixture(t, {
-      course: verificationCourse(),
+      course: referenceFixtures.academy.course,
+      archivePackage: referenceFixtures.academy.packet,
       referenceIdentity: mismatch === 'unprepared' ? null : identity,
       verifyCourse: async () => report,
       onReference: () => {
@@ -973,7 +1096,8 @@ for (const change of ['selection', 'recovery', 'owner', 'verification', 'disposa
   test(`selected reference is cleared on ${change}`, async (t) => {
     const applied = [];
     const f = fixture(t, {
-      course: verificationCourse(),
+      course: referenceFixtures.academy.course,
+      archivePackage: referenceFixtures.academy.packet,
       referenceIdentity,
       verifyCourse: async () => referenceReport(),
       onReference: (session, value) => {
@@ -1008,7 +1132,8 @@ for (const change of ['selection', 'recovery', 'owner', 'verification', 'disposa
 }
 test('reference presentation failures neither select nor escape into flight updates', async (t) => {
   const f = fixture(t, {
-    course: verificationCourse(),
+    course: referenceFixtures.academy.course,
+    archivePackage: referenceFixtures.academy.packet,
     referenceIdentity,
     verifyCourse: async () => referenceReport(),
     onReference: () => {
@@ -1022,19 +1147,273 @@ test('reference presentation failures neither select nor escape into flight upda
   assert.ok(f.button('Use as split reference'));
 });
 
-const visualReport = () => ({
-  ...referenceReport(),
-  course: {
-    ...referenceReport().course,
-    presentation: { format: 'AircraftCoursePresentation.v1', marker: 'owned-worker-result' },
-  },
+const visualReport = referenceReport;
+
+for (const copy of ['plain', 'JSON'])
+  test(`unowned ${copy} course reports cannot enable either reference control`, async (t) => {
+    const report =
+      copy === 'JSON'
+        ? JSON.parse(JSON.stringify(ownedReference))
+        : structuredClone(ownedReference);
+    let selected = 0;
+    const f = fixture(t, {
+      course: referenceFixtures.academy.course,
+      archivePackage: referenceFixtures.academy.packet,
+      referenceIdentity,
+      verifyCourse: async () => report,
+      onReference: () => {
+        selected++;
+        return true;
+      },
+      onVisualReference: () => {
+        selected++;
+        return true;
+      },
+    });
+    await prepareCourseArchive(f);
+    f.button('Verify course completion').click();
+    await settle();
+    for (const label of ['Use as split reference', 'Show reference aircraft']) {
+      assert.equal(f.button(label).disabled, true);
+      f.button(label).emit('click');
+    }
+    assert.equal(selected, 0);
+    assert.deepEqual(f.calls, []);
+  });
+
+class ProofWorker {
+  static instances = [];
+  constructor(url) {
+    this.listeners = new Map();
+    this.messages = [];
+    this.terminated = false;
+    this.handler = createAdvancedWorkerHandler(
+      (data) => {
+        if (!this.terminated) this.listeners.get('message')?.({ data: structuredClone(data) });
+      },
+      {
+        courseAdapter: String(url).includes('/fpv-worlds/')
+          ? {
+              format: 'FlightCourse.v2',
+              validate: validateWorldCourse,
+              createMission: createWorldFlight,
+            }
+          : undefined,
+      },
+    );
+    ProofWorker.instances.push(this);
+  }
+  addEventListener(type, callback) {
+    this.listeners.set(type, callback);
+  }
+  removeEventListener(type) {
+    this.listeners.delete(type);
+  }
+  postMessage(message) {
+    const data = structuredClone(message);
+    this.messages.push(data);
+    this.pending = this.handler.receive(data);
+  }
+  terminate() {
+    this.terminated = true;
+    this.handler.dispose();
+  }
+}
+function environmentWorker(t, Worker) {
+  const previous = Object.getOwnPropertyDescriptor(globalThis, 'Worker');
+  Object.defineProperty(globalThis, 'Worker', {
+    configurable: true,
+    writable: true,
+    value: Worker,
+  });
+  t.after(() => {
+    if (previous) Object.defineProperty(globalThis, 'Worker', previous);
+    else delete globalThis.Worker;
+  });
+}
+async function until(predicate) {
+  for (let i = 0; i < 200 && !predicate(); i++) await settle();
+  assert.ok(predicate(), 'The bounded verification job should settle');
+}
+for (const family of ['academy', 'world'])
+  test(`default ${family} worker proof enables only explicit unscored references and retains cleanup`, async (t) => {
+    environmentWorker(t, ProofWorker);
+    const data = referenceFixtures[family],
+      identity = { ...data.referenceIdentity },
+      split = [],
+      visual = [];
+    let report, workerOptions;
+    const f = fixture(t, {
+      key: family,
+      course: data.course,
+      referenceIdentity: identity,
+      archivePackage: data.packet,
+      Worker: ProofWorker,
+      workerURL:
+        family === 'world'
+          ? new URL('../../optional-practice/fpv-worlds/advanced-worker.mjs', import.meta.url)
+          : undefined,
+      verifyCourse: async (packet, course, options) => {
+        workerOptions = options;
+        report = await verifyAircraftCourseArchiveInWorker(packet, course, options);
+        return report;
+      },
+      onReference: (_session, value) => {
+        split.push(value);
+        return true;
+      },
+      onVisualReference: (_session, value) => {
+        visual.push(value);
+        return true;
+      },
+    });
+    await prepareCourseArchive(f);
+    const records = structuredClone([...f.records]);
+    f.button('Verify course completion').click();
+    await until(() => Boolean(report));
+    await settle();
+    assert.equal(
+      Object.hasOwn(workerOptions, 'Worker'),
+      false,
+      'The host must retain the default executor boundary',
+    );
+    const eligibility = aircraftCourseComparisonEligibility(report, report);
+    assert.equal(eligibility.eligible, true);
+    assert.equal(eligibility.scored, false);
+    assert.equal(eligibility.defaultEligible, false);
+    assert.deepEqual(report.course.referenceIdentity, identity);
+    assert.equal(split.length, 0);
+    assert.equal(visual.length, 0);
+    for (const key of ['configurationClass', 'terrainIdentity']) {
+      const original = identity[key];
+      identity[key] = 'ffffffffffffffff';
+      f.update();
+      assert.equal(f.button('Use as split reference').disabled, true);
+      assert.equal(f.button('Show reference aircraft').disabled, true);
+      identity[key] = original;
+    }
+    f.update();
+    assert.equal(f.button('Use as split reference').disabled, false);
+    assert.equal(f.button('Show reference aircraft').disabled, false);
+    f.button('Use as split reference').click();
+    f.button('Show reference aircraft').click();
+    assert.deepEqual(split[0].rows, report.course.splits);
+    assert.equal(visual[0], report.course.presentation);
+    identity.terrainIdentity = 'ffffffffffffffff';
+    f.update();
+    assert.equal(
+      f.button('Clear split reference').disabled,
+      false,
+      'Cleanup stays available when compatibility is lost',
+    );
+    assert.equal(f.button('Hide reference aircraft').disabled, false);
+    f.button('Clear split reference').click();
+    f.button('Hide reference aircraft').click();
+    assert.equal(split.at(-1), null);
+    assert.equal(visual.at(-1), null);
+    assert.deepEqual([...f.records], records);
+    assert.deepEqual(f.calls, []);
+    assert.equal(f.pauses, 1);
+    const worker = ProofWorker.instances.at(-1);
+    assert.equal(worker.terminated, true);
+    assert.equal(worker.listeners.size, 0);
+    assert.equal(
+      worker.messages.filter((message) => message.type === 'verify-course-archive').length,
+      1,
+    );
+  });
+
+test('an explicitly different worker stays diagnostic-only even when it completes genuine replay', async (t) => {
+  environmentWorker(t, ProofWorker);
+  class InjectedWorker extends ProofWorker {}
+  const data = referenceFixtures.academy;
+  let report,
+    selected = 0;
+  const f = fixture(t, {
+    course: data.course,
+    referenceIdentity: data.referenceIdentity,
+    archivePackage: data.packet,
+    Worker: InjectedWorker,
+    verifyCourse: async (packet, course, options) => {
+      assert.equal(options.Worker, InjectedWorker);
+      report = await verifyAircraftCourseArchiveInWorker(packet, course, options);
+      return report;
+    },
+    onReference: () => {
+      selected++;
+      return true;
+    },
+    onVisualReference: () => {
+      selected++;
+      return true;
+    },
+  });
+  await prepareCourseArchive(f);
+  f.button('Verify course completion').click();
+  await until(() => Boolean(report));
+  await settle();
+  assert.equal(report.course.verified, true);
+  assert.equal(aircraftCourseComparisonEligibility(report, report).reason, 'custom-course-worker');
+  for (const label of ['Use as split reference', 'Show reference aircraft']) {
+    assert.equal(f.button(label).disabled, true);
+    f.button(label).emit('click');
+  }
+  assert.equal(selected, 0);
+  assert.equal(ProofWorker.instances.at(-1).terminated, true);
+  assert.deepEqual(f.calls, []);
 });
+
+test('cancelled default-worker course verification releases ownership and cannot select late results', async (t) => {
+  class DeferredWorker extends ProofWorker {
+    postMessage(message) {
+      if (message.type === 'verify-course-archive') this.deliver = () => super.postMessage(message);
+      else super.postMessage(message);
+    }
+  }
+  environmentWorker(t, DeferredWorker);
+  const data = referenceFixtures.academy;
+  let selected = 0;
+  const f = fixture(t, {
+    course: data.course,
+    referenceIdentity: data.referenceIdentity,
+    archivePackage: data.packet,
+    Worker: DeferredWorker,
+    onReference: () => {
+      selected++;
+      return true;
+    },
+    onVisualReference: () => {
+      selected++;
+      return true;
+    },
+  });
+  await prepareCourseArchive(f);
+  f.button('Verify course completion').click();
+  await until(() => Boolean(ProofWorker.instances.at(-1)?.deliver));
+  const worker = ProofWorker.instances.at(-1);
+  f.button('Cancel archive operation').click();
+  await settle();
+  worker.deliver();
+  await worker.pending;
+  await settle();
+  assert.equal(worker.terminated, true);
+  assert.equal(worker.listeners.size, 0);
+  assert.match(f.ui.root.textContent, /Course verification cancelled/);
+  for (const label of ['Use as split reference', 'Show reference aircraft']) {
+    assert.ok(f.button(label).hidden || f.button(label).disabled);
+    f.button(label).emit('click');
+  }
+  assert.equal(selected, 0);
+  assert.deepEqual(f.calls, []);
+});
+
 test('visual capture prepares bounded data but requires separate explicit Show/Hide and retains split choice', async (t) => {
   const visual = [],
     splits = [],
     report = visualReport();
   const f = fixture(t, {
-    course: verificationCourse(),
+    course: referenceFixtures.academy.course,
+    archivePackage: referenceFixtures.academy.packet,
     referenceIdentity,
     verifyCourse: async (_archive, _course, options) => {
       assert.equal(options.collectReference, true);
@@ -1077,7 +1456,8 @@ for (const change of ['selection', 'recovery', 'owner', 'verification', 'disposa
   test(`visual reference clears on ${change}`, async (t) => {
     const applied = [];
     const f = fixture(t, {
-      course: verificationCourse(),
+      course: referenceFixtures.academy.course,
+      archivePackage: referenceFixtures.academy.packet,
       referenceIdentity,
       verifyCourse: async () => visualReport(),
       onVisualReference: (session, value) => {
@@ -1113,7 +1493,8 @@ for (const change of ['selection', 'recovery', 'owner', 'verification', 'disposa
 test('failed visual rendering remains optional and a mismatched archive cannot show it', async (t) => {
   let calls = 0;
   const f = fixture(t, {
-    course: verificationCourse(),
+    course: referenceFixtures.academy.course,
+    archivePackage: referenceFixtures.academy.packet,
     referenceIdentity,
     verifyCourse: async () => visualReport(),
     onVisualReference: () => {
@@ -1133,7 +1514,8 @@ test('failed visual rendering remains optional and a mismatched archive cannot s
   f.button('Use as split reference').click();
   assert.ok(f.button('Clear split reference'));
   const wrong = fixture(t, {
-    course: verificationCourse(),
+    course: referenceFixtures.academy.course,
+    archivePackage: referenceFixtures.academy.packet,
     referenceIdentity: { ...referenceIdentity, terrainIdentity: 'ffffffffffffffff' },
     verifyCourse: async () => visualReport(),
     onVisualReference: () => {
@@ -1152,7 +1534,8 @@ test('failed visual rendering remains optional and a mismatched archive cannot s
 test('a reference lost by the renderer restores Show and reports unavailable without changing splits', async (t) => {
   let active = true;
   const f = fixture(t, {
-    course: verificationCourse(),
+    course: referenceFixtures.academy.course,
+    archivePackage: referenceFixtures.academy.packet,
     referenceIdentity,
     verifyCourse: async () => visualReport(),
     onVisualReference: () => true,
@@ -1184,7 +1567,8 @@ for (const locale of ['en', 'uk'])
         visualCalls = 0;
       const applied = [],
         f = fixture(t, {
-          course: verificationCourse(),
+          course: referenceFixtures.academy.course,
+          archivePackage: referenceFixtures.academy.packet,
           referenceIdentity,
           verifyCourse: async () => {
             verifications++;
@@ -1260,7 +1644,8 @@ for (const change of ['selection', 'disposal'])
     let splits,
       queryFailed = false;
     const f = fixture(t, {
-      course: verificationCourse(),
+      course: referenceFixtures.academy.course,
+      archivePackage: referenceFixtures.academy.packet,
       referenceIdentity,
       verifyCourse: async () => referenceReport(),
       onReference: (session, value) => splits.setReference(session, value),

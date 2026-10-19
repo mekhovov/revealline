@@ -1,6 +1,7 @@
 import { exportJSONFile } from '../../game/platform.mjs';
 import { createAircraftArchiveStore } from './aircraft-archive.mjs';
 import {
+  aircraftCourseComparisonEligibility,
   verifyAircraftArchiveInWorker,
   verifyAircraftCourseArchiveInWorker,
 } from './aircraft-archive-verifier.mjs';
@@ -119,6 +120,7 @@ export function mountAircraftArchiveControls({
       const report = courseView?.report;
       if (
         !courseView?.valid() ||
+        !aircraftCourseComparisonEligibility(report, report).eligible ||
         !report?.physics?.verified ||
         report.physics.verificationScope !== 'complete-session' ||
         !report.course?.verified ||
@@ -565,7 +567,7 @@ export function mountAircraftArchiveControls({
       const report = await verifyCourse(packet, view.course, {
         collectReference: true,
         signal,
-        Worker: win?.Worker,
+        ...(win?.Worker === globalThis.Worker ? {} : { Worker: win?.Worker }),
         ...(workerURL ? { workerURL } : {}),
         onProgress: ({ phase }) => {
           if (!signal.aborted && view.valid() && courseView === view) {
