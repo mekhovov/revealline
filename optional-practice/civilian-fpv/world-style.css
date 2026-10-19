@@ -4813,3 +4813,58 @@
     max-height: 180px;
   }
 }
+
+/* Passive flight monitors reuse the shared movement trail and axis labels. */
+html body.sim-worlds #world-viewport .world-touch:not(.touch-active) {
+  gap: 18px;
+  padding: 12px 14px 30px;
+  border-radius: 10px;
+  background: #101923b8;
+}
+html body.sim-worlds #world-viewport .world-touch:not(.touch-active) .touch-stick {
+  width: clamp(96px, 10vw, 140px);
+  height: clamp(96px, 10vw, 140px);
+  border-color: #c7d2db99;
+  background-color: #182530aa;
+}
+html body.sim-worlds #world-viewport .world-touch.compact-sticks:not(.touch-active) .touch-stick {
+  width: clamp(80px, 8vw, 108px);
+  height: clamp(80px, 8vw, 108px);
+}
+
+@media (max-width: 560px) {
+  html body.sim-worlds #world-viewport .world-touch:not(.touch-active) { gap: 12px; padding: 8px 10px 20px; }
+  html body.sim-worlds #world-viewport .world-touch:not(.touch-active) .touch-stick { width: 92px; height: 92px; }
+  html body.sim-worlds #world-viewport .world-touch.compact-sticks:not(.touch-active) .touch-stick { width: 76px; height: 76px; }
+}
+
+html body.sim-worlds #world-viewport .world-touch:not(.touch-active) .sim-stick-direction { display: none; }
+html body.sim-worlds #world-viewport .world-touch:not(.touch-active) :is(#world-left-label, #world-right-label) {
+  display: block;
+  position: absolute;
+  inset: auto -6px -22px;
+  color: #f4f7fb;
+  font: 600 11px/1.3 var(--fk-font-ui, sans-serif);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Keep the Random activity choice next to its action on every screen size. */
+html body.sim-worlds #journey-chooser .journey-footer > .sim-random-levels {
+  display: flex;
+  flex: 1 1 22rem;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  font-size: 0.85rem;
+}
+html body.sim-worlds #journey-chooser .sim-random-levels > select {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 44px;
+  max-width: 100%;
+  margin: 0;
+  font-size: inherit;
+}
