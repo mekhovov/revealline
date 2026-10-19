@@ -185,16 +185,10 @@
       "path": "authoring/library/retro-route-art/provenance.json",
       "bytes": 4104,
       "sha256": "286114f072ac5f73f4aa1d840553d2a03eab7a40a828ef71343a89d5ef579133"
-    },
-    {
-      "path": "authoring/library/spend-route-art/prompts.json",
-      "bytes": 5088,
-      "sha256": "6ad44570fe6576f2880802e427f8c4fc793ab35061d1273a1061c6d00bd01c55"
-    },
-    {
-      "path": "authoring/library/spend-route-art/provenance.json",
-      "bytes": 5024,
-      "sha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc"
     }
-  ]
+  ],
+  "ownershipProjection": {
+    "scope": "Retained artwork verification with two retired context references omitted; this is a derived record, not the original verification artifact.",
+    "originalSHA256": "7f7a3a66487eba9d5abd124f1daabb988e6443e97ff8a2674e3dc2b12963f24f"
+  }
 }
