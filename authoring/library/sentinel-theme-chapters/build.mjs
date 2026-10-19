@@ -39,7 +39,7 @@ const INPUTS = Object.freeze({
     'eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b8ef61f0ad98d95e70',
   'game/content/themes.json': '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2',
   'authoring/library/sentinel-theme-art/provenance.json':
-    '0aab60f6002e6665cc0a6092cee3ddbb86665b14c9b6168d1385ac07db01ba9b',
+    '608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb',
 });
 export const physicalLevel = (level) => {
   const copy = structuredClone(level);
