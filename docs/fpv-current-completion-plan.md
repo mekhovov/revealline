@@ -6,7 +6,7 @@ It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
 unrelated world-expansion or demonstration-authoring projects.
 
-## Active continuation — 19 October, 03:03 CEST
+## Active continuation — 19 October, 03:25 CEST
 
 The workbench lifecycle fixes, safe package reduction and unscored course-result
 integrity changes are **implemented, independently reviewed and qualified locally**.
@@ -27,7 +27,11 @@ Academy has **5,632 original-input bytes** and **39,414 bundled bytes** spare;
 World has **1,183,101 input bytes** spare. All three optional source inventories
 remain at their unchanged **98/151/211** limits. Native packaging passes its
 simulator-only development contract; this does not qualify a native device.
-Main was refreshed again and remains an ancestor of this source.
+Main was refreshed again and remains an ancestor of this source. The final
+continuation at `6b91adb212d2a1366fe90890ae9eff251f5fa971` has the same
+**243 unique packaged inputs**, byte for byte. Additional 64/5/49 passing tool
+suites are reported separately because prerequisites overlap.
+[Continuation receipt](fpv-workbench-integrity-continuation-20261019.json).
 
 - **R3: inspector 200% zoom is locally accepted.** A fresh exact World package
   at `7d92d2fd10a0e0b098f95eadea30df9bb5080932` passed English/Ukrainian keyboard,
@@ -56,6 +60,26 @@ Main was refreshed again and remains an ancestor of this source.
   combined invocation was **94/95** because a tracked World worker file was
   absent from the sparse checkout; that setup failure is retained separately.
   Cleanup remains independent of eligibility and scoring stays disabled.
+- **R11: the offline built-in Academy audit is implemented and reviewed.** It
+  resolves complete catalog content and the actual course revision, assesses
+  native proof ownership before copying, and rejects altered same-ID courses,
+  injected authority options and observed selected-source changes. Its separate
+  **49/49** integrated suite passes, without skips. It
+  remains tooling-only, unscored and default-ineligible. This is a local trust
+  boundary, not client attestation. [Contract and limits](fpv-static-course-proof.md#built-in-academy-admission-audit-offline-preparation).
+  World-owned course resolution, admission policy and competitive filtering
+  remain independent software work; physical evidence gates promotion, not
+  this preparation.
+- **R6: static quad composition is implemented and reviewed locally.** Four
+  explicitly indexed rotor surfaces now combine with the shared-voltage load
+  solver to calculate force, torque and power, using declared SI geometry and
+  declared canonical ESC-command units. Missing/negative/power-inconsistent operating
+  values and conflicting known environmental conditions cannot produce a wrench;
+  diagnostic receipts remain available. Unknown conditions remain visible. **64/64** integrated synthetic
+  circuit/vector/energy checks pass. This adds **zero shipped bytes** and changes
+  no aircraft, controller, motor response or recording. Command mapping,
+  allocation, dynamics, matched-data fitting and versioned activation remain.
+  [Data and adapter contract](fpv-propulsion-evidence.md#static-quad-forward-adapter-non-activating-preparation).
 - **R9: the Firefox failure is localized further.** Supported native profiling
   identifies contact velocity-constraint resolution as the dominant cost.
   A separate unattached headless run still fails capacity, so Playwright
@@ -63,6 +87,13 @@ Main was refreshed again and remains an ancestor of this source.
   authoritative; no trajectory-preserving performance fix is established.
   All 32 completed diagnostic cases preserve exact trajectories.
   [Investigation and retained negatives](fpv-v3-firefox-solver-investigation-20261019.md).
+  The independently reviewed [minimal contact replay](fpv-contact-tape-diagnostic-20261019.md)
+  now reproduces the gap using only pinned Rapier, a checkpoint and recorded
+  forces. All **1,000 post-step world/body observations** match in Node and two
+  fresh runs each of Chrome and Firefox. Five integrated diagnostic tests pass.
+  The reproduction excludes controller/game/worker logic, but does not establish
+  a compiler defect, a remedy or full-flight capacity. This closes the minimized
+  reproduction task; R9's original performance failure stays open.
 - **Release audit at 02:37:54 CEST:** #1665's release-ready job awaits a runner;
   #1679 waits behind its superseded run's queued cancellation finalizer;
   #1685's 15 checks remain queued. A second read-only snapshot at **02:48 CEST**
@@ -72,6 +103,14 @@ Main was refreshed again and remains an ancestor of this source.
   At **02:59:48 CEST**, #1679's team-admission check had started; its other
   eleven checks and #1685's fifteen checks remained queued. This is queue
   progress, not release completion. No final-source failed check was reported.
+  At **03:09 CEST**, #1679 had four successful checks, two running and six
+  queued. #1665 still awaited release-ready; #1685's fifteen checks remained
+  queued. Sources and dependency ordering were unchanged.
+  At **03:22 CEST**, #1679 had six successful checks, three running and five
+  queued; #1665 still awaited release-ready and #1685's fifteen checks remained
+  queued. Main was refreshed without new commits to incorporate. No failed
+  final-source check or changed prerequisite head was found. The next reviewed
+  continuation is `codex/fpv-workbench-integrity-20261019`, depending on #1685.
 
 The protected archive incident R13 remains P1 with no further deletion or
 unapproved inspection. Disk headroom is about **1.5 GiB**; only small targeted
@@ -84,14 +123,17 @@ Current priority order:
 1. **P1:** publish the reviewed follow-up after #1685 and accept the eventual
    deployed source. Queue time is unknown; allow **1–2 working days after a
    stable deployment** for the shared available-desktop acceptance scope.
-2. **P1:** finish the minimized Firefox contact diagnostic, then assess a
-   trajectory-preserving remedy. Initial profiling is complete; a fix ETA is
+2. **P1:** assess a trajectory-preserving Firefox remedy using the completed
+   minimized contact diagnostic. Profiling and reproduction are complete; a fix ETA is
    unknown. The existing failed performance gate remains open.
 3. **P2:** available-desktop offline/update, rendered-host and Regional coverage;
    **3–5 working days** for an agreed accessible matrix, fixes extra.
-4. **P2:** synthetic, non-activating propulsion composition and later trusted
-   scoring-policy preparation. These can proceed without pilots. Real-aircraft
-   activation and scored promotion still require their separate evidence gates.
+4. **P2:** remaining propulsion command mapping, allocation and dynamics;
+   trusted World course resolution, agreed local scoring-admission rules and
+   competitive filtering. These can proceed in parallel with release, without
+   pilots. Real-aircraft activation and scored promotion still require their
+   separate evidence gates; local records versus public competition needs an
+   explicit product scope before designing additional authority infrastructure.
 5. **Access/evidence-dependent:** R13 archive diagnosis, physical radios/pilots,
    matched aircraft measurements and signed/native targets retain the detailed
    dependencies below. No further public archive mutation is authorized by this
@@ -562,10 +604,10 @@ qualification; P3 depends on a qualified physical/platform baseline.
 | R3 / P2                      | Chrome Guest workbench zoom, paired camera fields, **320 × 640 inspector** and **fresh-package inspector 200% zoom in EN/UK** are locally accepted. Capture-status/search-lifecycle fixes pass **155/155** checks, source review and fresh rendered acceptance. | Public acceptance remains in R1. Physical touch and virtual-keyboard checks remain part of the accessible target matrix. | Reachable numeric/keyboard controls and unobscured focus. Responsive desktop emulation does not qualify physical mobile devices. |
 | R4 / paused cleanup scope    | Ten identified test-archive deletions authorized but **not confirmed completed**; first outcome unknown and older inventory subsequently absent.                                                                                                                                                                      | No cleanup ETA before R13 is understood.                                                                                                                                                                                      | Re-identify only the ten named entries and protect the six older ones; never substitute deleting another session.                                                       |
 | R5 / P2                      | Cetus X and Protos **implemented, deployed and post-deployment verified in e440**; approximation/assist limits visible.                                                                                                                                                                                               | Public interactive acceptance remains. Measurements remain unavailable.                                                                                                                                                       | Frozen exact component variant, explicit mass and assist limits, distinct visualization, host coverage.                                                                 |
-| R6 / P2                      | Evidence inspector, load-line solver and **bounded command/voltage surface prerequisite are implemented and reviewed locally**. Surface module is not activated in flights. Electrical/current coupling, allocation, versioned runtime integration and matched fitting remain.                                        | **5–10 engineering days for one reference aircraft** after a complete usable matched dataset and scope are accepted; acquisition and all-fifteen fidelity undated. Independent software preparation continues without pilots. | Explicit conditions/current basis, no extrapolation presented as measured, energy-consistent integration and held-out validation.                                       |
+| R6 / P2 | Evidence inspector, load solver, bounded command/voltage surfaces and **static quad forward composition** are implemented and reviewed. **64/64** integrated synthetic checks pass; no flight activation. ESC-command mapping, inverse allocation, motor transients, electrical integration and matched fitting remain. | Continue bounded software preparation without pilots. **5–10 engineering days for one reference aircraft** after usable matched data and scope; acquisition and all-fifteen fidelity undated. | Explicit units, known-condition compatibility and missing-data diagnostics; no extrapolated or synthetic result presented as measured. Runtime activation requires a new version, package-capacity design and held-out validation. |
 | R7 / P2                      | Physical USB radio and touch-device mapping, calibration, input ownership and cadence **deferred/unmeasured**.                                                                                                                                                                                                        | **1–2 working days per representative target** after access, plus fixes.                                                                                                                                                      | Real-device flight and setup pass; browser cadence is not physical input latency. Keyboard/emulation cannot close this gate.                                            |
 | R8 / P2                      | Experienced-pilot comparisons **deferred by user**.                                                                                                                                                                                                                                                                   | **2–3 comparison sessions plus 1–2 review days** after pilots are available; scheduling unknown.                                                                                                                              | Repeatable maneuvers, subjective A/B feedback and reviewed keep/revert outcomes; pilot preference is distinct from physical fit.                                        |
-| R9 / P1–P2                   | Fresh **v3/1,000 Hz trajectory/replay results agree exactly** across Node, Chrome, Firefox and Playwright WebKit. Chrome/WebKit pass measured gates; **Firefox fails capacity** (0.890× landing, 1.461× worker). Profiling localizes the floor cost to velocity constraints; unattached Firefox also fails. Wider platform checks remain. | Initial profiling complete; **1–3 days for a minimized solver investigation**, remediation unknown. **3–5 days** accessible agreed platform matrix, then **1–2 days/extra target**, access/fixes extra. | Retain failed first matrix and 32 exact diagnostic cases. No reduced frequency, relaxed gates or wider-platform claim. Headless WebKit is not installed Safari/PWA acceptance. |
+| R9 / P1–P2 | Exact v3/1,000 Hz trajectories agree across Node, Chrome, Firefox and Playwright WebKit. Chrome/WebKit pass measured gates; **Firefox fails capacity** (0.890× landing, 1.461× worker). Native profiling and the completed pure-Rapier contact replay isolate the slowdown from controller/game code. Wider platform checks remain. | Profiling and minimized reproduction complete; remedy/requalification ETA **unknown**. **3–5 days** for an accessible agreed platform matrix, then **1–2 days/extra target**, access/fixes extra. | Preserve original failed matrix, 32 profile cases and five exact 1,000-step contact replays. No changed frequency/gate or compiler-defect claim. Headless WebKit does not qualify installed Safari/PWA. |
 | R10 / P3                     | Measured propwash and ground effect **gated on base qualification and measurements**.                                                                                                                                                                                                                                 | No dependable ETA before evidence/tolerances exist.                                                                                                                                                                           | Versioned fitted effects with held-out validation; no invented coefficients to close the row.                                                                           |
 | R11A–C / P2                  | Observed splits, static-course tooling and browser proof **implemented, reviewed, locally accepted**.                                                                                                                                                                                                                 | Final follow-up release/public acceptance only.                                                                                                                                                                               | Bounded complete-proof reconstruction, unscored diagnostics, no invented pre-recovery history; Regional free flight has no course splits.                               |
 | R11D / P2                    | Split references **locally complete**, including the final owner/lifecycle label fix (92 focused checks). Actual final-package proof selection and paused recovery pass.                                                                                                                                              | Final follow-up release/public acceptance only.                                                                                                                                                                               | A control reflects its own live reference; clearing proof removes that reference even if its presence query fails. No physics or scoring changes.                       |
@@ -573,7 +615,7 @@ qualification; P3 depends on a qualified physical/platform baseline.
 | R17 / P2                     | EN/UK recovery feedback **implemented, reviewed, locally accepted** without repeated storage operations.                                                                                                                                                                                                              | Final follow-up release/public acceptance only.                                                                                                                                                                               | Locale changes only presentation; unknown diagnostics remain literal.                                                                                                   |
 | R18 / completed local prerequisite | Shared appearance extraction saves **7,416 bytes** per package; integration review and **19/19 package checks** pass on source `11883768a`. | Normal publication and shared R1 acceptance remain; no capacity implementation estimate. | Exact Academy margins **5,632 input / 39,414 bundled bytes**; caps and full source inventories unchanged. [Receipt](fpv-workbench-integrity-package-20261019.json). |
 | R21 / P2                     | Fine-adjust accessible labels and contextual Legacy reference guidance **implemented, reviewed and accepted in the final package**. All thirty labels translate; numeric values/undo and retained Legacy behavior are unchanged.                                                                                      | Final follow-up publication/public acceptance only.                                                                                                                                                                           | 169 focused checks and actual packaged Ukrainian interaction pass; no physics or stored-configuration change. [Evidence](fpv-workbench-labels-20261019.md).             |
-| R11 / P2–P3 | Immutable verifier-owned proof and shared split/visual selection guard **implemented, reviewed and locally qualified**, included in **366/366** integrated checks and **19/19** package checks. Scored admission, competitive ghost/sector filtering and promotion remain unfinished. | Publish the qualified unscored changes, then shared R1 acceptance. **1–2 engineering weeks provisionally** for agreed scoring scope; physical/platform qualification additionally gates promotion. | Custom/forged/partial results stay ineligible. Unscored tools do not close scored admission. Default/scoring flags stay false. |
+| R11 / P2–P3 | Immutable verifier-owned proof and split/visual selection guard are **reviewed and locally qualified** within **366/366** regression and **19/19** package checks. Offline built-in Academy authority audit adds a separate **49/49** integrated suite. World-owned course resolution, local admission rules, competitive ghost/sector filtering and promotion remain unfinished. | Publish qualified unscored changes and perform shared R1 acceptance. Independent software preparation can proceed in parallel. **1–2 engineering weeks provisionally** for agreed local-record/public-competition scope; physical/platform qualification additionally gates promotion. | Custom/forged/partial results stay ineligible. Selected source pins are not full client attestation. Unscored preparation does not close scored admission; default/scoring flags stay false. |
 | R12 / separate scope         | Signed/full-game native distribution **unscheduled**; simulator-only development package delivered.                                                                                                                                                                                                                   | Not estimated until targets, signing access and package scope are decided.                                                                                                                                                    | Signed target install/update/runtime acceptance; does not block the current web release.                                                                                |
 
 R2 covers the requested [Swarm kit catalog](https://swarm.army/kits) and
@@ -582,13 +624,13 @@ The [inventory](fpv-civilian-source-inventory.md) records each public record and
 tab, its exact title and disposition, along with the first-party feed/loading-shell
 and bounded sheet-header inspection limits.
 
-Current sequence: **#1665 → #1679 → #1685 → accept required protected-main updates and fresh checks → deploy → source-bound public acceptance**. Parent #1626's Pages workflow is complete. The flight correction branch is `codex/fpv-flight-integration-20261019`; the reviewed follow-up is `codex/fpv-qualification-followup-20261019`; unrelated main lesson-mode changes are retained. A direct stacked diff against #1665's original branch would not represent this rebased history correctly.
+Current sequence: **#1665 → #1679 → #1685 → reviewed workbench-integrity continuation → accept required protected-main updates and fresh checks → deploy → source-bound public acceptance**. Parent #1626's Pages workflow is complete. The flight correction branch is `codex/fpv-flight-integration-20261019`; #1685 is `codex/fpv-qualification-followup-20261019`; the new continuation is `codex/fpv-workbench-integrity-20261019`. Unrelated main lesson-mode changes are retained. A direct stacked diff against #1665's original branch would not represent this rebased history correctly.
 
 R13 remains an independent P1 investigation; R4 has no safe cleanup path until the inventory is understood. R2’s bounded inventory and R3’s local narrow/200% EN/UK checks are complete; physical touch, virtual keyboard and public acceptance remain separate. R6 software preparation can proceed independently of deferred physical radios/pilots, but measured activation cannot. Delivered R11A–E and R17–R21 corrections need normal publication and scoped public acceptance; R18’s capacity reduction and exact combined-package qualification are complete locally. Do not wait for R6–R12 to improve released practice or treat them as passed because the local release is ready.
 
 ### R6 evidence and preparation history
 
-**Current R6 result:** the surface prerequisite is complete locally at `c6dc82f64`, integrated in the new follow-up as `635e301e6`, with 52 passing checks and independent review. No runtime activation or measured fit is claimed. The chronological receipts below retain their original branch/publication states; use the front snapshot for current release status.
+**Current R6 result:** bounded surfaces and static quad composition are implemented and independently reviewed, with **64/64** integrated checks at `89d58bb7fe`. The new adapter adds no shipped bytes and is not imported by current flight/UI/worker code. No measured fit or runtime activation is claimed. The chronological receipts below retain their original branch/publication states; use the front snapshot for current release status.
 
 A separate exact-component correction is committed as
 `48373316b65bf14e3731569e9de9296fcdb553d0` on

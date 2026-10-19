@@ -1,0 +1,83 @@
+{
+  "format": "FpvWorkbenchContinuationReceipt.v1",
+  "checkedAt": "2026-10-19T01:24:12.493Z",
+  "sourceRevision": "6b91adb212d2a1366fe90890ae9eff251f5fa971",
+  "sourceTree": "58910ef4e0e7b30ac40c59f3a4f72e64d46c14c8",
+  "qualifiedRuntimeSource": "11883768afe9119b4da833324e4b6f33d4ab1a94",
+  "uniqueInputsChecked": 243,
+  "mismatches": [],
+  "baseReceipt": "fpv-workbench-integrity-package-20261019.json",
+  "baseReceiptSha256": "08a65841f9fe4be88d453789d4a7d26fcfb1958f49396c206c814b1449136a36",
+  "sourceFiles": [
+    {
+      "path": "scripts/fpv-static-course-proof.mjs",
+      "sha256": "726189cf5a5847089cc9f40b4c4970bbc290ab3c418e77b6271e020496ea92b4"
+    },
+    {
+      "path": "scripts/test-fpv-static-course-proof.mjs",
+      "sha256": "710e7b4f74b27592fb72d93d430a508e656661283230ab3d242dba9f450b6953"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/propulsion-quad.mjs",
+      "sha256": "88a67bcf871405844fdad370c16d3d0484e6a23fd20081fe251c783d518501af"
+    },
+    {
+      "path": "game/test/fpv-aircraft-propulsion-quad.test.mjs",
+      "sha256": "e43fded8283bf0ac5ea3e933ec68315cd6787c8890c622011ef3627c1b0e9ce5"
+    },
+    {
+      "path": "scripts/profile-fpv-contact-tape.mjs",
+      "sha256": "3f49d447367eba3dc7fb478fc9bb6c29c708667d927caeafb6e82781d97221fe"
+    },
+    {
+      "path": "scripts/test-fpv-contact-tape.mjs",
+      "sha256": "31aec076ea1392d2772f1aa9e743980fbf72a87caf13a5e93358f165e42c60fb"
+    }
+  ],
+  "suites": [
+    {
+      "name": "static quad and propulsion prerequisites",
+      "source": "89d58bb7fe",
+      "passed": 64,
+      "command": "node --test game/test/fpv-aircraft-propulsion-quad.test.mjs game/test/fpv-aircraft-propulsion-surface.test.mjs game/test/fpv-aircraft-propulsion-evidence.test.mjs game/test/fpv-aircraft-propulsion-load.test.mjs",
+      "log": "/private/tmp/fpv-static-quad-integrated-89d58bb7f.log",
+      "failed": 0,
+      "skipped": 0,
+      "logSha256": "08ac32a596080b3f355a246688d5091f1792cdd980eb7172c3dbe6b3fe8fca6f"
+    },
+    {
+      "name": "minimal contact tape",
+      "source": "c8436e33e4dc8ce9915f5d48fdd92bdf2772af65",
+      "passed": 5,
+      "command": "node --test scripts/test-fpv-contact-tape.mjs",
+      "log": "/private/tmp/fpv-contact-tape-integrated-c8436e33e.log",
+      "failed": 0,
+      "skipped": 0,
+      "logSha256": "c74d43ced859699a594c6f3df601c333bcb67acff6bd18b18d8a0c6574f85d84"
+    },
+    {
+      "name": "offline built-in course audit and static tooling",
+      "source": "6b91adb212d2a1366fe90890ae9eff251f5fa971",
+      "passed": 49,
+      "command": "node --test --test-concurrency=1 scripts/test-fpv-static-course-proof.mjs",
+      "log": "/private/tmp/fpv-builtin-course-audit-integrated-6b91adb212.log",
+      "failed": 0,
+      "skipped": 0,
+      "logSha256": "6600577261e910c91108b46c1e24e5e4961d01afc41a248e5b85a447cee9c8d9"
+    }
+  ],
+  "qualification": {
+    "newRuntimeImports": false,
+    "packageLimitsChanged": false,
+    "packageAdmissionsChanged": false,
+    "aircraftPhysicsChanged": false,
+    "scoringEnabled": false,
+    "independentReviewsPassed": true,
+    "notes": [
+      "Suite counts are separate, with overlapping prerequisites; do not add them as distinct tests.",
+      "Prior 366 regression and 19 package checks apply to the identical qualified package inputs.",
+      "These source-only tools do not establish measured aircraft fidelity, platform promotion or client attestation.",
+      "Firefox capacity failure and protected archive incident remain open."
+    ]
+  }
+}

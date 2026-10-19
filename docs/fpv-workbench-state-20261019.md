@@ -75,3 +75,24 @@ Retained logs:
 Publication and exact combined-package checks are tracked in the
 [completion plan](fpv-current-completion-plan.md). No public browser or archives
 were used by this implementation or its tests.
+
+## Supplemental Academy check: limited scope
+
+A new isolated Academy artifact at source
+`51c9c82f586e6142c250af0a191d9456556ca64e`, tree
+`e7c91c5f49667211eafb5f8dfd6d0f24e71b8cb3`, contained
+149 files / 12,112,344 bytes with committed inputs verified and localhost base
+path `/`. On the fresh `127.0.0.1:8885` origin, ordinary UI unlocked the app,
+selected Meteor75, applied its starter rates to the draft and entered the
+unchanged Lift and land lesson paused at zero. Explicit Arm and keyboard input
+advanced the current recording to 1.58 seconds; Pause opened the expected
+unscored archive/recovery controls. No objective completion or takeoff metric
+was captured, so this is only an entry/arm/pause check.
+
+An attempted import of the earlier known test flight stopped at the file picker.
+Native Codex inspection was refused by the computer-use tool; no alternate app
+inspection or hidden storage path was used. No file was selected or imported,
+and no positive rendered proof-selection acceptance is claimed from this attempt.
+The temporary tab (including its picker) and local server were closed. Public
+SIM/archive state was untouched. The 366-test integrated cohort separately
+checks proof ownership and the real worker-handler path.
