@@ -1,0 +1,53 @@
+{
+  "format": "SoloReverifyToyCleanupObservationV1",
+  "complete": true,
+  "scope": "Read-only exact PID observations from owned toy receipts and their explicit child output. All are absent; no signals or name-wide action used. Prior shebang toys had finite45s lifetimes.",
+  "observed": "2026-10-19T04:45:37.356881+00:00",
+  "receipts": [
+    {
+      "receipt": ".cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb/cancel.supervision.json",
+      "sha256": "5b81c755fa764e50ceccde6232e26cd33af6e9cb9e15b0fb363de216324d2473",
+      "strictComplete": false,
+      "checks": [
+        {
+          "pid": 21654,
+          "currentlyAbsent": true
+        },
+        {
+          "pid": 21659,
+          "currentlyAbsent": true
+        }
+      ]
+    },
+    {
+      "receipt": ".cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-node-vxkjafyu/cancel.supervision.json",
+      "sha256": "28e580a033fd602f1e90360d9069d8278708c8cd863e50192633d029d6d4be0c",
+      "strictComplete": false,
+      "checks": [
+        {
+          "pid": 28833,
+          "currentlyAbsent": true
+        },
+        {
+          "pid": 28837,
+          "currentlyAbsent": true
+        }
+      ]
+    },
+    {
+      "receipt": ".cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-ymcp9ara/cancel.supervision.json",
+      "sha256": "61e55de8cdba56a2cab61a8cf24e9717ca703622c9df49f76d89d552825f5266",
+      "strictComplete": false,
+      "checks": [
+        {
+          "pid": 24732,
+          "currentlyAbsent": true
+        },
+        {
+          "pid": 24737,
+          "currentlyAbsent": true
+        }
+      ]
+    }
+  ]
+}

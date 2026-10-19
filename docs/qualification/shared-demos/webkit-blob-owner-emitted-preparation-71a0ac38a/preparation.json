@@ -1,0 +1,179 @@
+{
+  "format": "WebKitBlobOwnerEmittedPreparationV1",
+  "created": "2026-10-19T05:12:58.142748+00:00",
+  "complete": true,
+  "scope": "Preparation only. No browser or preview was started. No runtime, original harness, source declaration or HEAD was changed.",
+  "sourceCopies": [
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/run.mjs",
+        "sha256": "656758af24dcee68cb3ff80aa80f17865c7fe8b3b3fbf62dec65f177085524b5",
+        "bytes": 17594
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-preparation-71a0ac38a/run.mjs.txt",
+        "sha256": "656758af24dcee68cb3ff80aa80f17865c7fe8b3b3fbf62dec65f177085524b5",
+        "bytes": 17594
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/projection.mjs",
+        "sha256": "8f409ef6d51bac28bcb9a94b5aec9a87261cd4bab8ef27466d1fe55340e1b617",
+        "bytes": 15733
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-preparation-71a0ac38a/projection.mjs.txt",
+        "sha256": "8f409ef6d51bac28bcb9a94b5aec9a87261cd4bab8ef27466d1fe55340e1b617",
+        "bytes": 15733
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/projection.test.mjs",
+        "sha256": "b0812ce2f26015fdedd30c956c0691ae0bab7de85ca696e9daee690fd527b4ce",
+        "bytes": 21697
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-preparation-71a0ac38a/projection.test.mjs.txt",
+        "sha256": "b0812ce2f26015fdedd30c956c0691ae0bab7de85ca696e9daee690fd527b4ce",
+        "bytes": 21697
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/supervise.py",
+        "sha256": "9e23c4e610dc21281132fe513856a6d21ae7df23be600f5e43c94a344539c2c0",
+        "bytes": 4597
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-preparation-71a0ac38a/supervise.py.txt",
+        "sha256": "9e23c4e610dc21281132fe513856a6d21ae7df23be600f5e43c94a344539c2c0",
+        "bytes": 4597
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/emitted-fixtures.json",
+        "sha256": "32692e35f9c12aec993ae7a9a64f8fd291fd39527d94e65567acda00a05e574b",
+        "bytes": 973
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-preparation-71a0ac38a/emitted-fixtures.json",
+        "sha256": "32692e35f9c12aec993ae7a9a64f8fd291fd39527d94e65567acda00a05e574b",
+        "bytes": 973
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/game__presentation__host.mjs.emitted.txt",
+        "sha256": "ae0ee1270b586807f0c96987988f970c0048c1844a085d748efe31e4de43b623",
+        "bytes": 29538
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-preparation-71a0ac38a/game__presentation__host.mjs.emitted.txt",
+        "sha256": "ae0ee1270b586807f0c96987988f970c0048c1844a085d748efe31e4de43b623",
+        "bytes": 29538
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/game__app.mjs.emitted.txt",
+        "sha256": "8110efdf57db9a88236c0c293451db4ac3e4ea9369036bd538d15164f51d8ba7",
+        "bytes": 492495
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-preparation-71a0ac38a/game__app.mjs.emitted.txt",
+        "sha256": "8110efdf57db9a88236c0c293451db4ac3e4ea9369036bd538d15164f51d8ba7",
+        "bytes": 492495
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/webkit-blob-owner-emitted-71a0ac38a/tests.tap.txt",
+        "sha256": "f9fb959ff74b7712939fc7830012a75834d9a22f37b38e2f51a81c32267c8398",
+        "bytes": 4720
+      },
+      "copy": {
+        "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-preparation-71a0ac38a/tests.tap.txt",
+        "sha256": "f9fb959ff74b7712939fc7830012a75834d9a22f37b38e2f51a81c32267c8398",
+        "bytes": 4720
+      }
+    }
+  ],
+  "correctsPreparation": {
+    "path": "docs/qualification/shared-demos/webkit-blob-owner-preparation-71a0ac38a/preparation.json",
+    "sha256": "8e303b1cfc753ee294c0a5df9a97b34365634b75729d5c949f562f09b488112e",
+    "bytes": 12148
+  },
+  "preservedFailedLaunch": {
+    "receipt": {
+      "path": "docs/qualification/shared-demos/webkit-blob-owner-71a0ac38a.supervision.json",
+      "sha256": "92eb10b62a09d270323e1a47b475c40123ebd0d2d1c735ed41ccad5e436869b4",
+      "bytes": 3815
+    },
+    "complete": false,
+    "childExit": 1,
+    "ownedProcessesVerified": true,
+    "observerReport": null,
+    "cause": "The former projection matched source indentation/operator whitespace. The actual captured host preserves the comment but compacts whitespace, so its first anchor failed before the browser child was launched. The old helper paths and failed supervision remain untouched."
+  },
+  "capture": {
+    "capture": ".cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+    "manifestSHA256": "dc5b83bb9c0f3ca8ba6fc656cb8a06b25d3b5905a72aa8ac2e880ceaaba6ac2f",
+    "inventorySHA256": "7d436362db5ad2408fd1f1a8811404d4918b90473a001344551fa4961f0cdbba",
+    "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+    "scope": "Exact provider-admitted captured bytes. Runtime re-fingerprint deferred to runner; this preparation does not start browser or preview.",
+    "fixtures": [
+      {
+        "name": "game/presentation/host.mjs",
+        "file": ".cache/webkit-blob-owner-emitted-71a0ac38a/game__presentation__host.mjs.emitted.txt",
+        "sha256": "ae0ee1270b586807f0c96987988f970c0048c1844a085d748efe31e4de43b623",
+        "bytes": 29538
+      },
+      {
+        "name": "game/app.mjs",
+        "file": ".cache/webkit-blob-owner-emitted-71a0ac38a/game__app.mjs.emitted.txt",
+        "sha256": "8110efdf57db9a88236c0c293451db4ac3e4ea9369036bd538d15164f51d8ba7",
+        "bytes": 492495
+      }
+    ]
+  },
+  "fix": [
+    "New ignored path uses explicit unique code anchors from the provider-admitted compact host/app bytes. Native captured bytes outside bounded insertions are retained. No generic whitespace matcher, comment stripping or whole-module formatter is used.",
+    "Both compact modules receive the same observation-only insertions as the previously reviewed source projection. Native createImageBitmap/decode calls, original Promise handlers, original errors/results and strict diagnostics stay unchanged.",
+    "The runner performs Node syntax checks on each actual projected emitted module before creating its browser child."
+  ],
+  "checks": {
+    "tests": 19,
+    "passed": 19,
+    "failed": 0,
+    "actualTap": {
+      "path": "docs/qualification/shared-demos/webkit-blob-owner-emitted-preparation-71a0ac38a/tests.tap.txt",
+      "sha256": "f9fb959ff74b7712939fc7830012a75834d9a22f37b38e2f51a81c32267c8398",
+      "bytes": 4720
+    },
+    "newEmittedCases": [
+      "Fixture bytes/hash/length equal the exact admitted capture; manifest/inventory/revision pins agree. Both projections have unique anchors, reject duplicate application and parse as modules.",
+      "Actual emitted main callback preserves work invocation count, results, identical native rejection/synchronous throw, submitted-result behavior after admission cancellation and no-admission Promise identity.",
+      "Actual emitted final app catch preserves AbortError/fallback null returns, side-effect order and original exceptions thrown by fallback."
+    ],
+    "supervisorSyntax": true,
+    "runtimeReFingerprint": "Deferred to the real runner, which retains verifySource:true and complete before/after source/build/HEAD/helper/capture binding checks. Fixture preparation uses provider byte admission with verifySource:false and makes no new runtime qualification claim."
+  },
+  "interpretation": "Keep the prior current strict restoration failure false. Native JS/error console-to-pageerror transport is not an unhandled-exception proof; actual decode catches and target/document/lifecycle evidence are reviewed separately. Exact native internal URL to JS error identity is neither available nor required. Source bindings and limits remain those in the referenced prior preparation.",
+  "argvTemplate": [
+    "python3",
+    ".cache/webkit-blob-owner-emitted-71a0ac38a/supervise.py",
+    "--run=approved",
+    "--node=<absolute Node24 binary>",
+    "--runtime=<absolute playwright/index.mjs>",
+    "--executable=<absolute webkit-2336/pw_run.sh>",
+    "--report=<new JSON path>",
+    "--head=71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+    "--fingerprint=8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+    "--emitted-preview=.cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+    "--port=18776"
+  ],
+  "environment": "Use the owned local TMPDIR and wait for root browser-slot release. Do not reuse the old failed report or artifact directory."
+}

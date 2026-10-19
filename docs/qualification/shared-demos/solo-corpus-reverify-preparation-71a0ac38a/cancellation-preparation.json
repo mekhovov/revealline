@@ -1,0 +1,20 @@
+{
+  "format": "SoloReverifyCancellationPreparationV1",
+  "complete": true,
+  "scope": "Actual Node with a harmless synchronous preload plus one sleeping Node child only; real ignored supervisor receives SIGTERM; no browser, simulation, emitted preview, source mutation or regenerated recording.",
+  "supervisorSHA256": "89212bc352ff234d4c83c3ba92ffb7b3caa82eeb869359a137afe108c700bf93",
+  "supervision": {
+    "path": ".cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-node-vxkjafyu/cancel.supervision.json",
+    "sha256": "28e580a033fd602f1e90360d9069d8278708c8cd863e50192633d029d6d4be0c"
+  },
+  "observedProcesses": 2,
+  "signals": 2,
+  "remaining": 0,
+  "logDrained": true,
+  "strictResultStayedIncomplete": true,
+  "fixtureCorrections": [
+    "Initial readiness fixture incorrectly waited for buffered log contents. Corrected readiness to an owned file.",
+    "Python env shebang changed root argv at exec, so conservative identity owner deliberately declined ownership; strict result stayed false with undrained log. Replaced fixture with actual Node and a harmless preload, matching production root identity. Supervisor unchanged; failed toy receipts retained."
+  ],
+  "finished": "2026-10-19T04:45:02.742115+00:00"
+}

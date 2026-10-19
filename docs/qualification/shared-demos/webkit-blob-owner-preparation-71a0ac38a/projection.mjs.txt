@@ -1,0 +1,138 @@
+/** Diagnostic-only projections. Native calls and existing rejection control flow stay intact. */
+import assert from 'node:assert/strict';
+export const OWNER_MARKER = 'DEMO_FINAL_OWNER:';
+export function replaceOnce(source, before, after) {
+  assert.equal(source.split(before).length - 1, 1, 'Projection anchor must occur once: ' + before.slice(0, 90));
+  return source.replace(before, after);
+}
+export function projectHost(source) {
+  let value = source;
+  const edits = [
+    ['  // Actor-only leases deliberately omit DOM authority', '  const __owner = globalThis.__demoFinalOwnerObserver?.host(profile);\n  // Actor-only leases deliberately omit DOM authority'],
+    ['    const response = await fetcher(url.href, {', '    const __request = __owner?.request(signal, url.href);\n    const response = await fetcher(url.href, {'],
+    ["      credentials: 'same-origin',\n    });\n    try {", "      credentials: 'same-origin',\n    });\n    __owner?.response(__request, response.status);\n    try {"],
+    ['      pending = controller;\n      const externalAbort', '      pending = controller;\n      __owner?.load(controller.signal);\n      const externalAbort'],
+    ['      const main = (work) => {\n        if (!preparation) return work();', "      const main = (work, __decodeDetail = null) => {\n        const __operation = __decodeDetail ? __owner?.operation(controller.signal, __decodeDetail) : null;\n        if (!preparation) {\n          if (__operation) __owner?.submitted(__operation, controller.signal);\n          return work();\n        }"],
+    ['              result = Promise.resolve(work());', '              if (__operation) __owner?.submitted(__operation, controller.signal);\n              result = Promise.resolve(work());'],
+    ['              void result.catch(() => {});', "              void result.catch((error) => { __owner?.caught('main', controller.signal, error, { operation: __operation }); });"],
+    ['                load: (signal) => main(() => decodeImage(blob, { signal })),', "                load: (signal) => main(() => decodeImage(blob, { signal }), { kind: 'decode-image', route: 'actor-pool', slot, assetHash: hash, mime: file.mime, bytes: file.bytes, blobSize: blob.size, blobType: blob.type, codecSignalAbortedAtQueue: !!signal?.aborted }),"],
+    ['              original = await main(() => decodeImage(blob, { signal: controller.signal }));', "              original = await main(() => decodeImage(blob, { signal: controller.signal }), { kind: 'decode-image', route: 'host-direct', slot, assetHash: hash, mime: file.mime, bytes: file.bytes, blobSize: blob.size, blobType: blob.type, codecSignalAbortedAtQueue: controller.signal.aborted });"],
+    ["      } catch (error) {\n        if (error.name !== 'AbortError')", "      } catch (error) {\n        __owner?.caught('load', controller.signal, error, { closed });\n        if (error.name !== 'AbortError')"],
+    ['        dispose();\n        throw error;\n      } finally {', "        dispose();\n        __owner?.caught('load-rethrow-after-dispose', controller.signal, error, { closed });\n        throw error;\n      } finally {"],
+    ['      } finally {\n        controller.signal.removeEventListener', "      } finally {\n        __owner?.settled(controller.signal, { closed });\n        controller.signal.removeEventListener"],
+    ['    close() {\n      if (closed) return;', "    close() {\n      __owner?.close('enter', { closed, pending: !!pending, pictureReads: pictureReads.size, audioReads: audioReads.size });\n      if (closed) return;"],
+    ['      current?.dispose();\n      current = null;\n    },', "      current?.dispose();\n      current = null;\n      __owner?.close('complete', { closed, pending: !!pending, pictureReads: pictureReads.size, audioReads: audioReads.size });\n    },"],
+  ];
+  for (const [before, after] of edits) value = replaceOnce(value, before, after);
+  return value;
+}
+export function projectApp(source) {
+  let value = source;
+  const edits = [
+    ['  try {\n    if (!runtimeContent)\n      presentationHost = createPresentationHost', '  const __presentationOwner = globalThis.__demoFinalOwnerObserver;\n  try {\n    if (!runtimeContent)\n      presentationHost = createPresentationHost'],
+    ["        .catch((error) => {\n          if (error.name === 'AbortError') {\n            presentationFeedback.update", "        .catch((error) => {\n          __presentationOwner?.appCatch('enter', error);\n          if (error.name === 'AbortError') {\n            presentationFeedback.update"],
+    ["            presentationFeedback.update({ status: 'cancelled', message: '' });\n            return null;", "            presentationFeedback.update({ status: 'cancelled', message: '' });\n            __presentationOwner?.appCatch('complete-abort', error);\n            return null;"],
+    ["          painter.onAsset('');\n          return null;", "          painter.onAsset('');\n          __presentationOwner?.appCatch('complete-fallback', error);\n          return null;"],
+  ];
+  for (const [before, after] of edits) value = replaceOnce(value, before, after);
+  return value;
+}
+/** Capture one document and error WeakMap; late calls cannot resolve a new document's sink. */
+export function installFinalOwnerObserver() {
+  const documentIdentity = String(performance.timeOrigin) + '-' + Math.random();
+  const doc = document, sendNative = console.debug.bind(console), errors = new WeakMap();
+  let errorId = 0, hostId = 0, sequence = 0, observerFailures = 0, overflow = 0;
+  const rows = [];
+  const safe = (work) => { try { return work(); } catch { observerFailures++; return undefined; } };
+  const errorIdentity = (error) => {
+    const object = error !== null && (typeof error === 'object' || typeof error === 'function');
+    if (object && !errors.has(error)) errors.set(error, ++errorId);
+    return { errorId: object ? errors.get(error) : null, name: String(error?.name ?? typeof error).slice(0, 160), message: String(error?.message ?? error).slice(0, 1400), stack: String(error?.stack ?? '').slice(0, 3000) };
+  };
+  const emit = (kind, data = {}) => safe(() => {
+    if (rows.length >= 1800) {
+      overflow++;
+      if (overflow === 1) sendNative('DEMO_FINAL_OWNER:' + JSON.stringify({ documentIdentity, kind: 'observer-overflow', at: Date.now(), overflow }));
+      return;
+    }
+    const row = { documentIdentity, sequence: ++sequence, kind, at: Date.now(), monotonic: performance.now(), timeOrigin: performance.timeOrigin, readyState: doc.readyState, ...data };
+    rows.push(row);
+    sendNative('DEMO_FINAL_OWNER:' + JSON.stringify(row));
+  });
+  const observer = Object.freeze({
+    snapshot: () => ({ documentIdentity, sequence, observerFailures, overflow, rows: [...rows] }),
+    appCatch: (phase, error) => safe(() => emit('app-catch', { phase, ...errorIdentity(error) })),
+    host: (profile) => safe(() => {
+      const host = ++hostId;
+      let loadId = 0, requestId = 0, operationId = 0;
+      const loads = new WeakMap();
+      const record = (signal) => {
+        if (!signal || (typeof signal !== 'object' && typeof signal !== 'function')) return null;
+        if (!loads.has(signal)) loads.set(signal, { load: ++loadId, requests: [] });
+        return loads.get(signal);
+      };
+      emit('host-create', { host, profile });
+      return Object.freeze({
+        operation: (signal, detail) => safe(() => {
+          if (operationId >= 500) { observerFailures++; return undefined; }
+          const { kind: operationKind, ...metadata } = detail;
+          const operation = { ...metadata, operationKind, operation: ++operationId, load: record(signal)?.load ?? null };
+          emit('operation-created', { host, ...operation, aborted: !!signal?.aborted });
+          return operation;
+        }),
+        submitted: (operation, signal) => safe(() => emit('operation-submitted', { host, ...operation, aborted: !!signal?.aborted })),
+        load: (signal) => safe(() => emit('load-start', { host, load: record(signal)?.load ?? null, aborted: !!signal?.aborted })),
+        request: (signal, url) => safe(() => {
+          const load = record(signal);
+          if ((load?.requests.length ?? 0) >= 1000) { observerFailures++; return undefined; }
+          const request = { request: ++requestId, load: load?.load ?? null, url, responseDelivered: false };
+          load?.requests.push(request);
+          emit('request-start', { host, ...request, aborted: !!signal?.aborted });
+          return request;
+        }),
+        response: (request, status) => safe(() => {
+          if (!request) return;
+          request.responseDelivered = true;
+          emit('response-delivered', { host, ...request, status });
+        }),
+        caught: (phase, signal, error, detail = {}) => safe(() => {
+          const load = record(signal);
+          emit('host-catch', { host, load: load?.load ?? null, phase, aborted: !!signal?.aborted, pendingRequests: (load?.requests ?? []).filter(r => !r.responseDelivered).map(r => ({ ...r })), ...errorIdentity(error), ...detail });
+        }),
+        settled: (signal, detail) => safe(() => emit('load-finally', { host, load: record(signal)?.load ?? null, aborted: !!signal?.aborted, ...detail })),
+        close: (phase, detail) => safe(() => emit('host-close', { host, phase, ...detail })),
+      });
+    }),
+  });
+  Object.defineProperty(globalThis, '__demoFinalOwnerObserver', { value: observer, configurable: false, writable: false });
+  for (const name of ['beforeunload', 'pagehide', 'pageshow'])
+    addEventListener(name, (event) => emit('lifecycle', { event: name, persisted: event.persisted ?? null }));
+  // These listeners observe existing events only: no preventDefault, new catch,
+  // native codec wrapper or promise substitution. WebKit may emit neither event.
+  addEventListener('error', event => safe(() => emit('dom-error', {
+    ...errorIdentity(event.error), eventMessage: String(event.message ?? '').slice(0, 1400),
+    filename: String(event.filename ?? '').slice(0, 1000), lineno: event.lineno, colno: event.colno,
+    hasErrorObject: event.error !== null && (typeof event.error === 'object' || typeof event.error === 'function'),
+  })));
+  addEventListener('unhandledrejection', event => safe(() => emit('dom-unhandledrejection', { ...errorIdentity(event.reason) })));
+  emit('document-start', { url: location.href, top: window === window.top, frameElement: window.frameElement?.id ?? null });
+}
+
+
+/** Completeness of diagnostic collection is separate from the unchanged strict pass. */
+export function observationCollectionComplete(report, result) {
+  const exit = report.childExit;
+  const streams = report.streamClosure;
+  const normalPass = exit?.code === 0 && result.complete === true &&
+    result.functionalComplete === true && result.strictDiagnosticGate === true;
+  const collectedStrictFailure = exit?.code === 1 && result.complete === false &&
+    result.functionalComplete === true && result.strictDiagnosticGate === false;
+  return report.watchdogExpired !== true && !report.terminationError &&
+    !exit?.error && !exit?.signal && streams?.complete === true &&
+    streams.code === exit?.code && !streams.signal &&
+    (normalPass || collectedStrictFailure) &&
+    report.bindingsUnchanged === true &&
+    result.browserCloseCompleted === true && result.previewClosed === true &&
+    result.observationPrefixComplete === true &&
+    report.protocolOverflow === 0 && report.parseFailures === 0;
+}

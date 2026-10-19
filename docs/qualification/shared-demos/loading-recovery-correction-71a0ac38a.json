@@ -1,0 +1,97 @@
+{
+  "format": "SharedDemoRecoveryMilestoneV1",
+  "created": "2026-10-19T05:23:53.025548+00:00",
+  "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+  "scope": "Working-tree recovery correction and failure-state reporting; does not claim emitted-browser or endurance qualification.",
+  "complete": true,
+  "nodeVersion": "20.19.5",
+  "exitCode": 0,
+  "counts": {
+    "tests": 114,
+    "pass": 114,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "durationMs": 68726.098208,
+  "sourceHashesAtCompletion": {
+    "game/demo-director.mjs": "f057b24ec7e878b5a8013a5aba26ab1398067e4aabcd14b8871f432f259f5b66",
+    "game/ui/demo-host.mjs": "7f2d09118885feef5614bfa906c206ab099964f943a692264187a97e1be87b3d",
+    "game/test/demo-timeout-fallback.test.mjs": "5b2d9f2f93e6d1ffff85bd118c7510588b9bbe11575833144365677da31f9073",
+    "scripts/qualify-shared-demo-browser.mjs": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+    "scripts/shared-demo-browser-report.mjs": "395200ee9930991de4cf5774005eac84a9c40fcbea925a999159bad8f71fcbc0",
+    "scripts/test-shared-demo-browser-report.mjs": "ec9217a2429cd00913cb73c919af15c42fdec0f6c7a4ee6001a32199bc019d58"
+  },
+  "agentGameSourcePinsUnchanged": true,
+  "bindingLimit": "Full runtime was not fingerprinted at suite start. Completion hashes and unchanged pre-suite game pins bind the applied patch; the next emitted build independently binds all production/build files.",
+  "independentReviews": [
+    {
+      "scope": "director, host and recovery regressions",
+      "result": "No actionable issues",
+      "reviewer": "storage_audit"
+    },
+    {
+      "scope": "failure-state reporting and regressions",
+      "result": "No actionable issues",
+      "reviewer": "storage_audit"
+    }
+  ],
+  "formatCheck": true,
+  "proofs": [
+    {
+      "path": "docs/qualification/shared-demos/loading-recovery-correction-71a0ac38a/applied-recovery-correction.json",
+      "bytes": 4088,
+      "sha256": "5ed5bcd3fb9e27c30c37da84167dc2477d3ebd366630d05d101b95bc9101c1a4"
+    },
+    {
+      "path": "docs/qualification/shared-demos/loading-recovery-correction-71a0ac38a/combined-loading-recovery-final.patch",
+      "bytes": 23296,
+      "sha256": "bd94570aa4fc65399e872b443e1bfc9719aba013be344cf78e8021d76d46116b"
+    },
+    {
+      "path": "docs/qualification/shared-demos/loading-recovery-correction-71a0ac38a/production-focused-final.tap.txt",
+      "bytes": 4565,
+      "sha256": "7c4753c9e1937f7c08aa7eeaf33b894ce92b2d49e74e11ddaee555d811b2965c"
+    },
+    {
+      "path": "docs/qualification/shared-demos/loading-recovery-correction-71a0ac38a/budget-red.tap.txt",
+      "bytes": 2338,
+      "sha256": "4948f69371efe503ba12051f1bcea254fd03143bb274c6e19e581eac7a49c896"
+    },
+    {
+      "path": "docs/qualification/shared-demos/loading-recovery-correction-71a0ac38a/verified-fallback-red.tap.txt",
+      "bytes": 7248,
+      "sha256": "8885f59a6d8f67d090e668f7de2504c941f0ef3e935157eee797e64154c86fb4"
+    },
+    {
+      "path": "docs/qualification/shared-demos/loading-recovery-correction-71a0ac38a/secondary-fallback-red.tap.txt",
+      "bytes": 6155,
+      "sha256": "ed3ed15e446a637210c295a53877f0d8b58d3c2d9642ff5ef265a6b1e6391b26"
+    },
+    {
+      "path": "docs/qualification/shared-demos/loading-recovery-correction-71a0ac38a/combined-regression.tap.txt",
+      "bytes": 25186,
+      "sha256": "db594f34d38cbce96f61109c3ad1080f0cafd23c3429a574bb939c47c9e5f4d0"
+    }
+  ],
+  "limitations": [
+    "Original failing reproductions remain failures.",
+    "Browser recovery and uninterrupted two-hour rotation await a fresh emitted build."
+  ],
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=2",
+    "game/test/demo-director.test.mjs",
+    "game/test/demo-loading.test.mjs",
+    "game/test/demo-shared.test.mjs",
+    "game/test/demo-host.test.mjs",
+    "game/test/demo-loading-host.test.mjs",
+    "game/test/demo-scene-transition.test.mjs",
+    "game/test/solo-demo-resources-host.test.mjs",
+    "game/test/demo-timeout-fallback.test.mjs",
+    "scripts/test-shared-demo-browser-report.mjs",
+    "scripts/test-shared-demo-endurance-progress.mjs"
+  ]
+}

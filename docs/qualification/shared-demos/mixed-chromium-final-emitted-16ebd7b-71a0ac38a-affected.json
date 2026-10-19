@@ -1,0 +1,226 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T04:58:36.504Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-operation-citadel-dispatch:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Citadel Dispatch",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Оберіть маршрут патруля через відновлений машинний двір. Доставте після першого перехоплення й оберіть вихід через інше коло."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:adventure-rooftops-04-self-level-5ed1fecffb664a97",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Roof-to-roof landings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Сядьте на низькому західному, середньому східному й високому західному дахах. Заходьте згори."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-1317cbb34f9f263d",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Neon Channels",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-43-acro-5873933e67fe81af",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Roll and recover",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-irrigation-courts:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Irrigation Courts",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": false,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+      "manifestSHA256": "dc5b83bb9c0f3ca8ba6fc656cb8a06b25d3b5905a72aa8ac2e880ceaaba6ac2f",
+      "inventorySHA256": "7d436362db5ad2408fd1f1a8811404d4918b90473a001344551fa4961f0cdbba",
+      "files": 5953,
+      "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+      "sourceFingerprint": {
+        "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+        "files": 9997,
+        "bytes": 404446327
+      },
+      "buildInputFingerprint": {
+        "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+        "files": 9406,
+        "bytes": 348394334
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+        "runtime": {
+          "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+          "files": 9997,
+          "bytes": 404446327
+        },
+        "buildInput": {
+          "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+          "files": 9406,
+          "bytes": 348394334
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "8f2518b89a1ab9511910494ddc1d7f81e8c0e28d841b1e8ad97bd4ba56d8ca00"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "0aaa882d7da7515b3009a8eca9e303a471d3ee38f0e4bbc0d6eba03267ba65fc"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "failure": "page.waitForFunction: Timeout 35000ms exceeded.\n    at ready (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:73:8)\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:275:11",
+  "visibleText": "TACTICAL EDITION\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path. Reveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nCopy level link\nMission brief\nHome\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nDEMO · Recorded play\n\nPreparing a real level…\nPause\nNext level\nWant to play?\nAudio & details\nFullscreen\nBack\n\nSurvive the sortie, collect salvage, and choose upgrades to defeat the final target.\n\nNo compatible demo is available right now. Your game is unchanged.\n\nSurvive the sortie, collect salvage, and choose upgrades to defeat the final target.\nRetry\nClose details\nCarol of the Bells (Metal Version)\nAlexander Nakarada\nCreator source ↗\nSound on\nPlay music\nNext song\nAudio options\n\npaused\n\nShow a demo after 60 seconds on the idle home screen\nReveal all demo pictures (gameplay effects remain)\n\nScrambled preview. Earn the original picture in normal play.",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T04:59:52.133Z",
+  "previewClosed": true
+}

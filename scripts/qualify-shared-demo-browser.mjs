@@ -55,6 +55,7 @@ const snapshot = () =>
     phase: node.dataset.demoPhase,
     failure: node.dataset.demoFailure,
     failureDetails: JSON.parse(node.dataset.demoFailureDetails ?? 'null'),
+    preparationDetails: JSON.parse(node.dataset.demoPreparationDetails ?? 'null'),
     tick: node.dataset.demoTick,
     canvases: node.querySelectorAll('canvas').length,
     nativeSurfaces: node.querySelectorAll('.demo-native-surface').length,
@@ -399,6 +400,7 @@ try {
     error,
     page,
     screenshotPath: reportPath.replace(/\.json$/, '.png'),
+    readState: snapshot,
   });
 } finally {
   const summary = await finishQualification({

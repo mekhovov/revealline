@@ -1,0 +1,812 @@
+{
+  "format": "SharedDemoExactHeadQueueInspectionV1",
+  "observedAt": "2026-10-19T05:15:48.989857+00:00",
+  "head": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+  "scope": "Read-only exact-head workflow/job labels, concurrency declarations and pending environment metadata. No main fetch, CI trigger, cancellation or settings changes.",
+  "runs": [
+    {
+      "id": 39200937567,
+      "name": "Industrial feature verification",
+      "path": ".github/workflows/industrial-feature-tests.yml",
+      "status": "queued",
+      "conclusion": null,
+      "run_attempt": 1,
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937567",
+      "jobs": {
+        "route": "repos/mekhovov/revealline/actions/runs/39200937567/jobs?per_page=100",
+        "exitCode": 0,
+        "data": {
+          "total_count": 6,
+          "jobs": [
+            {
+              "id": 117893580382,
+              "name": "feature (recordings)",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": null,
+              "runner_name": null,
+              "runner_group_id": null,
+              "runner_group_name": null,
+              "started_at": "2026-10-19T04:43:53Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937567/job/117893580382"
+            },
+            {
+              "id": 117893580623,
+              "name": "feature (creator)",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T04:43:53Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937567/job/117893580623"
+            },
+            {
+              "id": 117893580625,
+              "name": "feature (local-ux)",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": null,
+              "runner_name": null,
+              "runner_group_id": null,
+              "runner_group_name": null,
+              "started_at": "2026-10-19T04:43:53Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937567/job/117893580625"
+            },
+            {
+              "id": 117893580652,
+              "name": "feature (gameplay)",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T04:43:53Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937567/job/117893580652"
+            },
+            {
+              "id": 117893580672,
+              "name": "feature (rooms)",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": null,
+              "runner_name": null,
+              "runner_group_id": null,
+              "runner_group_name": null,
+              "started_at": "2026-10-19T04:43:53Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937567/job/117893580672"
+            },
+            {
+              "id": 117893580709,
+              "name": "feature (presentation)",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T04:43:53Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937567/job/117893580709"
+            }
+          ]
+        },
+        "error": null
+      },
+      "pending_deployments": {
+        "route": "repos/mekhovov/revealline/actions/runs/39200937567/pending_deployments",
+        "exitCode": 0,
+        "data": [],
+        "error": null
+      }
+    },
+    {
+      "id": 39200937613,
+      "name": "Company edition candidates",
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "status": "queued",
+      "conclusion": null,
+      "run_attempt": 1,
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937613",
+      "jobs": {
+        "route": "repos/mekhovov/revealline/actions/runs/39200937613/jobs?per_page=100",
+        "exitCode": 0,
+        "data": {
+          "total_count": 2,
+          "jobs": [
+            {
+              "id": 117893581111,
+              "name": "candidate",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T04:43:53Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937613/job/117893581111"
+            },
+            {
+              "id": 117893581395,
+              "name": "optional-practice",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T04:43:54Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937613/job/117893581395"
+            }
+          ]
+        },
+        "error": null
+      },
+      "pending_deployments": {
+        "route": "repos/mekhovov/revealline/actions/runs/39200937613/pending_deployments",
+        "exitCode": 0,
+        "data": [],
+        "error": null
+      }
+    },
+    {
+      "id": 39200937669,
+      "name": "Appearance preview",
+      "path": ".github/workflows/appearance-preview.yml",
+      "status": "queued",
+      "conclusion": null,
+      "run_attempt": 1,
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937669",
+      "jobs": {
+        "route": "repos/mekhovov/revealline/actions/runs/39200937669/jobs?per_page=100",
+        "exitCode": 0,
+        "data": {
+          "total_count": 4,
+          "jobs": [
+            {
+              "id": 117893581641,
+              "name": "team_admission",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T04:43:54Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937669/job/117893581641"
+            },
+            {
+              "id": 117893581826,
+              "name": "demo_admission",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T04:43:54Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937669/job/117893581826"
+            },
+            {
+              "id": 117893581955,
+              "name": "installed_admission",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T04:43:54Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937669/job/117893581955"
+            },
+            {
+              "id": 117893582022,
+              "name": "admission",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T04:43:54Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937669/job/117893582022"
+            }
+          ]
+        },
+        "error": null
+      },
+      "pending_deployments": {
+        "route": "repos/mekhovov/revealline/actions/runs/39200937669/pending_deployments",
+        "exitCode": 0,
+        "data": [],
+        "error": null
+      }
+    },
+    {
+      "id": 39200937631,
+      "name": "Validate source for continuous main",
+      "path": ".github/workflows/deploy-pages.yml",
+      "status": "queued",
+      "conclusion": null,
+      "run_attempt": 1,
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937631",
+      "jobs": {
+        "route": "repos/mekhovov/revealline/actions/runs/39200937631/jobs?per_page=100",
+        "exitCode": 0,
+        "data": {
+          "total_count": 1,
+          "jobs": [
+            {
+              "id": 117901065770,
+              "name": "preflight",
+              "status": "queued",
+              "conclusion": null,
+              "labels": [
+                "ubuntu-latest"
+              ],
+              "runner_id": 0,
+              "runner_name": "",
+              "runner_group_id": 0,
+              "runner_group_name": "",
+              "started_at": "2026-10-19T05:13:38Z",
+              "completed_at": null,
+              "html_url": "https://github.com/mekhovov/revealline/actions/runs/39200937631/job/117901065770"
+            }
+          ]
+        },
+        "error": null
+      },
+      "pending_deployments": {
+        "route": "repos/mekhovov/revealline/actions/runs/39200937631/pending_deployments",
+        "exitCode": 0,
+        "data": [],
+        "error": null
+      }
+    }
+  ],
+  "workflowSources": [
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+      "readExitCode": 0,
+      "sha256": "cbdb72e7c93bc3ce268caa5641f87c94f566e3297b74a8dff6a8ed02dd44fa6f",
+      "runnerConcurrencyEnvironmentExcerpts": [
+        {
+          "line": 256,
+          "text": ""
+        },
+        {
+          "line": 257,
+          "text": "concurrency:"
+        },
+        {
+          "line": 258,
+          "text": "  group: appearance-preview-${{ github.event.pull_request.number }}"
+        },
+        {
+          "line": 259,
+          "text": "  cancel-in-progress: true"
+        },
+        {
+          "line": 260,
+          "text": ""
+        },
+        {
+          "line": 261,
+          "text": "env:"
+        },
+        {
+          "line": 262,
+          "text": "  APPEARANCE_TEAM_TEST_FILES: >-"
+        },
+        {
+          "line": 263,
+          "text": "    game/test/couch-static-pictures.test.mjs"
+        },
+        {
+          "line": 297,
+          "text": "  admission:"
+        },
+        {
+          "line": 298,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 299,
+          "text": "    timeout-minutes: 19"
+        },
+        {
+          "line": 300,
+          "text": "    env:"
+        },
+        {
+          "line": 301,
+          "text": "      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}"
+        },
+        {
+          "line": 302,
+          "text": "      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        },
+        {
+          "line": 405,
+          "text": "  demo_admission:"
+        },
+        {
+          "line": 406,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 407,
+          "text": "    timeout-minutes: 19"
+        },
+        {
+          "line": 408,
+          "text": "    env:"
+        },
+        {
+          "line": 409,
+          "text": "      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}"
+        },
+        {
+          "line": 410,
+          "text": "      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        },
+        {
+          "line": 513,
+          "text": "  team_admission:"
+        },
+        {
+          "line": 514,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 515,
+          "text": "    timeout-minutes: 24"
+        },
+        {
+          "line": 516,
+          "text": "    env:"
+        },
+        {
+          "line": 517,
+          "text": "      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}"
+        },
+        {
+          "line": 518,
+          "text": "      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        },
+        {
+          "line": 621,
+          "text": "  installed_admission:"
+        },
+        {
+          "line": 622,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 623,
+          "text": "    timeout-minutes: 24"
+        },
+        {
+          "line": 624,
+          "text": "    env:"
+        },
+        {
+          "line": 625,
+          "text": "      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}"
+        },
+        {
+          "line": 626,
+          "text": "      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        },
+        {
+          "line": 730,
+          "text": "    needs: [admission, team_admission, demo_admission, installed_admission]"
+        },
+        {
+          "line": 731,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 732,
+          "text": "    timeout-minutes: 70"
+        },
+        {
+          "line": 733,
+          "text": "    env:"
+        },
+        {
+          "line": 734,
+          "text": "      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}"
+        },
+        {
+          "line": 735,
+          "text": "      PREVIEW_PR: ${{ github.event.pull_request.number }}"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+      "readExitCode": 0,
+      "sha256": "8a0398db57717f2fc0109d4b9ec8f11ef14f3f448e1f30fd408dac9f5923d19e",
+      "runnerConcurrencyEnvironmentExcerpts": [
+        {
+          "line": 37,
+          "text": ""
+        },
+        {
+          "line": 38,
+          "text": "concurrency:"
+        },
+        {
+          "line": 39,
+          "text": "  group: company-candidate-${{ github.event.pull_request.number || github.ref }}"
+        },
+        {
+          "line": 40,
+          "text": "  cancel-in-progress: true"
+        },
+        {
+          "line": 41,
+          "text": ""
+        },
+        {
+          "line": 42,
+          "text": "jobs:"
+        },
+        {
+          "line": 43,
+          "text": "  optional-practice:"
+        },
+        {
+          "line": 44,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 45,
+          "text": "    # The earlier aircraft/replay suite alone needed 7m26s on run 39059412458."
+        },
+        {
+          "line": 46,
+          "text": "    # All-catalog course and verified Regional geometry flights now add sustained"
+        },
+        {
+          "line": 47,
+          "text": "    # physics coverage. Retain every check and bound the larger suite plus setup"
+        },
+        {
+          "line": 48,
+          "text": "    # and package verification with headroom for hosted-runner variance."
+        },
+        {
+          "line": 95,
+          "text": "  candidate:"
+        },
+        {
+          "line": 96,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 97,
+          "text": "    # Full tests plus two builds of all 18 editions exceeded 30 minutes on"
+        },
+        {
+          "line": 98,
+          "text": "    # hosted runners (run 38483554464). Retain every check"
+        },
+        {
+          "line": 99,
+          "text": "    # with a bounded hour for compilation, archive inspection and finalization."
+        },
+        {
+          "line": 100,
+          "text": "    timeout-minutes: 60"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+      "readExitCode": 0,
+      "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+      "runnerConcurrencyEnvironmentExcerpts": [
+        {
+          "line": 13,
+          "text": ""
+        },
+        {
+          "line": 14,
+          "text": "concurrency:"
+        },
+        {
+          "line": 15,
+          "text": "  group: source-gates-${{ github.ref }}"
+        },
+        {
+          "line": 16,
+          "text": "  # Superseded PR heads cannot qualify the current source; do not queue behind them."
+        },
+        {
+          "line": 17,
+          "text": "  # Release routing and manual runs keep their existing serialization."
+        },
+        {
+          "line": 18,
+          "text": "  cancel-in-progress: ${{ github.event_name == 'pull_request' }}"
+        },
+        {
+          "line": 19,
+          "text": ""
+        },
+        {
+          "line": 20,
+          "text": "# `release-ready` is the single required status on protected `main`. Do not add"
+        },
+        {
+          "line": 21,
+          "text": "# pull-request path filters above: a filtered workflow leaves a required check"
+        },
+        {
+          "line": 22,
+          "text": "# pending forever. Maintenance is classified in preflight and exits quickly."
+        },
+        {
+          "line": 31,
+          "text": "      focusedRequired: ${{ steps.admission.outputs.focusedRequired }}"
+        },
+        {
+          "line": 32,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 33,
+          "text": "    steps:"
+        },
+        {
+          "line": 34,
+          "text": "      - name: Check out the workflow's test policy"
+        },
+        {
+          "line": 35,
+          "text": "        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5"
+        },
+        {
+          "line": 36,
+          "text": "        with:"
+        },
+        {
+          "line": 97,
+          "text": "    needs: preflight"
+        },
+        {
+          "line": 98,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 99,
+          "text": "    # Host fixtures are CPU-intensive. Two workers preserve parallel progress"
+        },
+        {
+          "line": 100,
+          "text": "    # without starving async test handoffs on the standard hosted runner."
+        },
+        {
+          "line": 101,
+          "text": "    timeout-minutes: 90"
+        },
+        {
+          "line": 102,
+          "text": "    strategy:"
+        },
+        {
+          "line": 241,
+          "text": "    needs: [preflight, focused_shards]"
+        },
+        {
+          "line": 242,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 243,
+          "text": "    timeout-minutes: 5"
+        },
+        {
+          "line": 244,
+          "text": "    env:"
+        },
+        {
+          "line": 245,
+          "text": "      EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}"
+        },
+        {
+          "line": 246,
+          "text": "      EXPECTED_AUTOMATION: ${{ github.workflow_sha }}"
+        },
+        {
+          "line": 303,
+          "text": "    needs: preflight"
+        },
+        {
+          "line": 304,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 305,
+          "text": "    strategy:"
+        },
+        {
+          "line": 306,
+          "text": "      fail-fast: false"
+        },
+        {
+          "line": 307,
+          "text": "      max-parallel: 4"
+        },
+        {
+          "line": 308,
+          "text": "      matrix:"
+        },
+        {
+          "line": 371,
+          "text": "    needs: [preflight]"
+        },
+        {
+          "line": 372,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 373,
+          "text": "    steps:"
+        },
+        {
+          "line": 374,
+          "text": "      - name: Check out exact pull-request source"
+        },
+        {
+          "line": 375,
+          "text": "        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5"
+        },
+        {
+          "line": 376,
+          "text": "        with:"
+        },
+        {
+          "line": 442,
+          "text": "    needs: [preflight, focused, test, build]"
+        },
+        {
+          "line": 443,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 444,
+          "text": "    steps:"
+        },
+        {
+          "line": 445,
+          "text": "      - name: Apply the selected PR gate policy"
+        },
+        {
+          "line": 446,
+          "text": "        env:"
+        },
+        {
+          "line": 447,
+          "text": "          ADMISSION: ${{ needs.preflight.outputs.admission }}"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/industrial-feature-tests.yml",
+      "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+      "readExitCode": 0,
+      "sha256": "08a0d45b61439eac811424e3b0616ee24e89dbd62ab2a8e7ff6de050a74c0cd0",
+      "runnerConcurrencyEnvironmentExcerpts": [
+        {
+          "line": 18,
+          "text": ""
+        },
+        {
+          "line": 19,
+          "text": "concurrency:"
+        },
+        {
+          "line": 20,
+          "text": "  group: industrial-features-${{ github.event.pull_request.number }}"
+        },
+        {
+          "line": 21,
+          "text": "  cancel-in-progress: true"
+        },
+        {
+          "line": 22,
+          "text": ""
+        },
+        {
+          "line": 23,
+          "text": "jobs:"
+        },
+        {
+          "line": 24,
+          "text": "  feature:"
+        },
+        {
+          "line": 25,
+          "text": "    runs-on: ubuntu-latest"
+        },
+        {
+          "line": 26,
+          "text": "    timeout-minutes: 20"
+        },
+        {
+          "line": 27,
+          "text": "    strategy:"
+        },
+        {
+          "line": 28,
+          "text": "      fail-fast: false"
+        },
+        {
+          "line": 29,
+          "text": "      max-parallel: 3"
+        }
+      ]
+    }
+  ],
+  "explicitQueueCause": null,
+  "limitations": [
+    "Configured concurrency groups alone do not establish that concurrency is blocking these runs.",
+    "Unassigned runner metadata alone does not identify capacity, billing, quota or scheduling cause.",
+    "No success is inferred from queued/pending statuses; no actions were taken."
+  ]
+}

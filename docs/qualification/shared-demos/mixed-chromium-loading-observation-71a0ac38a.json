@@ -1,0 +1,3796 @@
+{
+  "engine": "chromium",
+  "diagnosticOnly": true,
+  "originalHarnessSHA256": "159529e4bf00f7d6cad0a9ed8ecbf725535c3a3c560cd40fb2968b5e700a7675",
+  "diagnosticPurpose": "Bounded DOM loading history; unchanged production modules, waits, actions and pass/fail gates.",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T05:13:00.362Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "first-signal-left",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · First Signal",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-field-ricochet-line:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Ricochet Line",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Прочитайте три відбиті повернення вздовж прямої. Перехоплюйте ціль попереду; наступний двір додає ровера, що прокидається."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Diagonal threading",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Спіймайте 6 вигаданих гуманоїдів дотиком у порядку номерів. Кожен дотик подовжує твердий слід пройденого шляху. Оминайте світлий хвіст або пролітайте над ним."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "pause",
+      "mode": "sim"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792386815503,
+        "loadingMs": 15667.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15667,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 11.299999999813735,
+            "retirement": 0.20000000018626451,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15655.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18720,
+              "totalTicks": 19454,
+              "elapsedMs": 15655.4
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Diagonal threading",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 329,
+          "materials": 220,
+          "textures": 28,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 11,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-furnace-terrace:standard",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792386815503,
+        "loadingMs": 15667.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15667,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 11.299999999813735,
+            "retirement": 0.20000000018626451,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15655.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18720,
+              "totalTicks": 19454,
+              "elapsedMs": 15655.4
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Furnace Terrace",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-dd80d3e78efbf350",
+      "phase": "playing",
+      "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792386815503,
+        "loadingMs": 15667.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15667,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 11.299999999813735,
+            "retirement": 0.20000000018626451,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15655.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18720,
+              "totalTicks": 19454,
+              "elapsedMs": 15655.4
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Circuit lanes",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-dd80d3e78efbf350",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792386839551,
+        "loadingMs": 15488.799999999814,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15488.7,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 4.099999999627471,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.10000000055879354,
+            "payload": 0,
+            "verification": 15484.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19478,
+              "elapsedMs": 15484.4
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Circuit lanes",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-42-self-level-54080d3efd75e5d8",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792386839551,
+        "loadingMs": 15488.799999999814,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15488.7,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 4.099999999627471,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.10000000055879354,
+            "payload": 0,
+            "verification": 15484.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19478,
+              "elapsedMs": 15484.4
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Precision pilot route",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-citadel-dispatch:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792386839551,
+        "loadingMs": 15488.799999999814,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15488.7,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 4.099999999627471,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.10000000055879354,
+            "payload": 0,
+            "verification": 15484.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19478,
+              "elapsedMs": 15484.4
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Citadel Dispatch",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-reclaimer-court:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792386839551,
+        "loadingMs": 15488.799999999814,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15488.7,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 4.099999999627471,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.10000000055879354,
+            "payload": 0,
+            "verification": 15484.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19478,
+              "elapsedMs": 15484.4
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Reclaimer Court",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-first-pulse:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792386839551,
+        "loadingMs": 15488.799999999814,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15488.7,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 4.099999999627471,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.10000000055879354,
+            "payload": 0,
+            "verification": 15484.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19478,
+              "elapsedMs": 15484.4
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · First Pulse",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792386839551,
+        "loadingMs": 15488.799999999814,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15488.7,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 4.099999999627471,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.10000000055879354,
+            "payload": 0,
+            "verification": 15484.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 19200,
+              "totalTicks": 19478,
+              "elapsedMs": 15484.4
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Island bypass",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+      "phase": "playing",
+      "failure": "solo-qualified-5345516b36f07dce demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "solo-qualified-5345516b36f07dce",
+        "modeId": "solo",
+        "at": 1792386876001,
+        "loadingMs": 15390.700000000186,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 15390.4,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 0,
+            "retirement": 2.7000000001862645,
+            "adapter": 0,
+            "source": 15387.6,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Island bypass",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 276,
+          "materials": 163,
+          "textures": 23,
+          "gpuGeometries": 243,
+          "gpuTextures": 23,
+          "gpuPrograms": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+      "phase": "playing",
+      "failure": "solo-qualified-f85650a2f81b67ed demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "solo-qualified-f85650a2f81b67ed",
+        "modeId": "solo",
+        "at": 1792386894667,
+        "loadingMs": 17589,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 17589,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 2.699999999254942,
+            "adapter": 0,
+            "source": 17586.3,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Island bypass",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-field-quiet-channel:standard",
+      "phase": "playing",
+      "failure": "solo-qualified-f85650a2f81b67ed demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "solo-qualified-f85650a2f81b67ed",
+        "modeId": "solo",
+        "at": 1792386894667,
+        "loadingMs": 17589,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 17589,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 2.699999999254942,
+            "adapter": 0,
+            "source": 17586.3,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Quiet Channel",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+      "manifestSHA256": "dc5b83bb9c0f3ca8ba6fc656cb8a06b25d3b5905a72aa8ac2e880ceaaba6ac2f",
+      "inventorySHA256": "7d436362db5ad2408fd1f1a8811404d4918b90473a001344551fa4961f0cdbba",
+      "files": 5953,
+      "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+      "sourceFingerprint": {
+        "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+        "files": 9997,
+        "bytes": 404446327
+      },
+      "buildInputFingerprint": {
+        "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+        "files": 9406,
+        "bytes": 348394334
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+        "runtime": {
+          "sha256": "8da700ba5a9cab9787ecec0b9064830ffea6e5687d407caeb2b290260b97df04",
+          "files": 9997,
+          "bytes": 404446327
+        },
+        "buildInput": {
+          "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+          "files": 9406,
+          "bytes": 348394334
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "8f2518b89a1ab9511910494ddc1d7f81e8c0e28d841b1e8ad97bd4ba56d8ca00"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "0aaa882d7da7515b3009a8eca9e303a471d3ee38f0e4bbc0d6eba03267ba65fc"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "enduranceStarted": "2026-10-19T05:14:56.935Z",
+  "enduranceFinalObservation": {
+    "finalObservationGapMs": 1
+  },
+  "enduranceFinished": "2026-10-19T05:14:56.936Z",
+  "loadingDiagnostics": {
+    "reason": "qualifier-finally",
+    "capturedAt": "2026-10-19T05:14:57.095Z",
+    "observed": {
+      "rows": [
+        {
+          "at": "2026-10-19T05:13:05.641Z",
+          "monotonicMs": 1372.5999999996275,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": null
+        },
+        {
+          "at": "2026-10-19T05:13:06.442Z",
+          "monotonicMs": 2171.399999999441,
+          "mode": "solo",
+          "source": "first-signal-left",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "first-signal-left",
+            "modeId": "solo",
+            "at": 1792386786438,
+            "loadingMs": 411.29999999981374,
+            "preparation": {
+              "status": "ready",
+              "stage": "source",
+              "elapsedMs": 411.2,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 0,
+                "retirement": 1.7999999998137355,
+                "adapter": 0,
+                "source": 409.3,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:07.558Z",
+          "monotonicMs": 3287.399999999441,
+          "mode": "solo",
+          "source": "first-signal-left",
+          "phase": "paused",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "first-signal-left",
+            "modeId": "solo",
+            "at": 1792386786438,
+            "loadingMs": 411.29999999981374,
+            "preparation": {
+              "status": "ready",
+              "stage": "source",
+              "elapsedMs": 411.2,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 0,
+                "retirement": 1.7999999998137355,
+                "adapter": 0,
+                "source": 409.3,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:07.636Z",
+          "monotonicMs": 3366,
+          "mode": "solo",
+          "source": "first-signal-left",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "first-signal-left",
+            "modeId": "solo",
+            "at": 1792386786438,
+            "loadingMs": 411.29999999981374,
+            "preparation": {
+              "status": "ready",
+              "stage": "source",
+              "elapsedMs": 411.2,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 0,
+                "retirement": 1.7999999998137355,
+                "adapter": 0,
+                "source": 409.3,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:08.704Z",
+          "monotonicMs": 4433.700000000186,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "first-signal-left",
+            "modeId": "solo",
+            "at": 1792386786438,
+            "loadingMs": 411.29999999981374,
+            "preparation": {
+              "status": "ready",
+              "stage": "source",
+              "elapsedMs": 411.2,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 0,
+                "retirement": 1.7999999998137355,
+                "adapter": 0,
+                "source": 409.3,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:11.140Z",
+          "monotonicMs": 6869.5,
+          "mode": "survival",
+          "source": "survival:field-crossing-broken-crossroads:standard",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "survival:field-crossing-broken-crossroads:standard",
+            "modeId": "survival",
+            "at": 1792386791136,
+            "loadingMs": 2431.600000000559,
+            "preparation": {
+              "status": "ready",
+              "stage": "renderer",
+              "elapsedMs": 2431.6,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 1,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 2321.199999999255,
+                "scene-import": 7.3999999994412065,
+                "artwork": 60.200000000186265,
+                "renderer": 41.6,
+                "mount": 0.10000000055879354
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "verified",
+                  "code": null,
+                  "tick": 19020,
+                  "totalTicks": 19020,
+                  "elapsedMs": 2321.1
+                }
+              ]
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:12.255Z",
+          "monotonicMs": 7984.200000000186,
+          "mode": "survival",
+          "source": "survival:field-crossing-broken-crossroads:standard",
+          "phase": "paused",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "survival:field-crossing-broken-crossroads:standard",
+            "modeId": "survival",
+            "at": 1792386791136,
+            "loadingMs": 2431.600000000559,
+            "preparation": {
+              "status": "ready",
+              "stage": "renderer",
+              "elapsedMs": 2431.6,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 1,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 2321.199999999255,
+                "scene-import": 7.3999999994412065,
+                "artwork": 60.200000000186265,
+                "renderer": 41.6,
+                "mount": 0.10000000055879354
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "verified",
+                  "code": null,
+                  "tick": 19020,
+                  "totalTicks": 19020,
+                  "elapsedMs": 2321.1
+                }
+              ]
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:12.319Z",
+          "monotonicMs": 8048.799999999814,
+          "mode": "survival",
+          "source": "survival:field-crossing-broken-crossroads:standard",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "survival:field-crossing-broken-crossroads:standard",
+            "modeId": "survival",
+            "at": 1792386791136,
+            "loadingMs": 2431.600000000559,
+            "preparation": {
+              "status": "ready",
+              "stage": "renderer",
+              "elapsedMs": 2431.6,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 1,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 2321.199999999255,
+                "scene-import": 7.3999999994412065,
+                "artwork": 60.200000000186265,
+                "renderer": 41.6,
+                "mount": 0.10000000055879354
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "verified",
+                  "code": null,
+                  "tick": 19020,
+                  "totalTicks": 19020,
+                  "elapsedMs": 2321.1
+                }
+              ]
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:13.286Z",
+          "monotonicMs": 9015.099999999627,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "survival:field-crossing-broken-crossroads:standard",
+            "modeId": "survival",
+            "at": 1792386791136,
+            "loadingMs": 2431.600000000559,
+            "preparation": {
+              "status": "ready",
+              "stage": "renderer",
+              "elapsedMs": 2431.6,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 1,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 2321.199999999255,
+                "scene-import": 7.3999999994412065,
+                "artwork": 60.200000000186265,
+                "renderer": 41.6,
+                "mount": 0.10000000055879354
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "verified",
+                  "code": null,
+                  "tick": 19020,
+                  "totalTicks": 19020,
+                  "elapsedMs": 2321.1
+                }
+              ]
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:13.329Z",
+          "monotonicMs": 9058.799999999814,
+          "mode": "snake",
+          "source": "snake:classic-field-ricochet-line:standard",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-field-ricochet-line:standard",
+            "modeId": "snake",
+            "at": 1792386793326,
+            "loadingMs": 39,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 39,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 1.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 37.60000000055879,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:14.420Z",
+          "monotonicMs": 10149.899999999441,
+          "mode": "snake",
+          "source": "snake:classic-field-ricochet-line:standard",
+          "phase": "paused",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-field-ricochet-line:standard",
+            "modeId": "snake",
+            "at": 1792386793326,
+            "loadingMs": 39,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 39,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 1.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 37.60000000055879,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:14.477Z",
+          "monotonicMs": 10206.099999999627,
+          "mode": "snake",
+          "source": "snake:classic-field-ricochet-line:standard",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-field-ricochet-line:standard",
+            "modeId": "snake",
+            "at": 1792386793326,
+            "loadingMs": 39,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 39,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 1.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 37.60000000055879,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:15.453Z",
+          "monotonicMs": 11182.399999999441,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-field-ricochet-line:standard",
+            "modeId": "snake",
+            "at": 1792386793326,
+            "loadingMs": 39,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 39,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 1.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 37.60000000055879,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:16.201Z",
+          "monotonicMs": 11930.200000000186,
+          "mode": "sim",
+          "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386796196,
+            "loadingMs": 742.7999999998137,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 742.8,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0.7000000001862645,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 586.5999999996275,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 155.5
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:16.356Z",
+          "monotonicMs": 12085.799999999814,
+          "mode": "sim",
+          "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+          "phase": "paused",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386796196,
+            "loadingMs": 742.7999999998137,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 742.8,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0.7000000001862645,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 586.5999999996275,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 155.5
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:16.438Z",
+          "monotonicMs": 12167.200000000186,
+          "mode": "sim",
+          "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386796196,
+            "loadingMs": 742.7999999998137,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 742.8,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0.7000000001862645,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 586.5999999996275,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 155.5
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:16.538Z",
+          "monotonicMs": 12267.399999999441,
+          "mode": "sim",
+          "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+          "phase": "paused",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386796196,
+            "loadingMs": 742.7999999998137,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 742.8,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0.7000000001862645,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 586.5999999996275,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 155.5
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:17.336Z",
+          "monotonicMs": 13065.700000000186,
+          "mode": "sim",
+          "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386796196,
+            "loadingMs": 742.7999999998137,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 742.8,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0.7000000001862645,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 586.5999999996275,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 155.5
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:18.606Z",
+          "monotonicMs": 14335.200000000186,
+          "mode": "sim",
+          "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+          "phase": "paused",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386796196,
+            "loadingMs": 742.7999999998137,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 742.8,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0.7000000001862645,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 586.5999999996275,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 155.5
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:19.766Z",
+          "monotonicMs": 15495.899999999441,
+          "mode": "sim",
+          "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+          "phase": "playing",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386796196,
+            "loadingMs": 742.7999999998137,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 742.8,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0.7000000001862645,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 586.5999999996275,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 155.5
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:19.835Z",
+          "monotonicMs": 15564.599999999627,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": null,
+          "failureDetails": null,
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386796196,
+            "loadingMs": 742.7999999998137,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 742.8,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0.7000000001862645,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 586.5999999996275,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 155.5
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:35.508Z",
+          "monotonicMs": 31237.099999999627,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+            "modeId": "survival",
+            "at": 1792386815503,
+            "loadingMs": 15667.099999999627,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15667,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 11.299999999813735,
+                "retirement": 0.20000000018626451,
+                "adapter": 0,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 15655.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 18720,
+                  "totalTicks": 19454,
+                  "elapsedMs": 15655.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "failed",
+            "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+            "modeId": "survival",
+            "at": 1792386815503,
+            "loadingMs": 15667.099999999627,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15667,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 11.299999999813735,
+                "retirement": 0.20000000018626451,
+                "adapter": 0,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 15655.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 18720,
+                  "totalTicks": 19454,
+                  "elapsedMs": 15655.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:37.603Z",
+          "monotonicMs": 33332.700000000186,
+          "mode": "sim",
+          "source": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+          "phase": "playing",
+          "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+            "modeId": "survival",
+            "at": 1792386815503,
+            "loadingMs": 15667.099999999627,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15667,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 11.299999999813735,
+                "retirement": 0.20000000018626451,
+                "adapter": 0,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 15655.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 18720,
+                  "totalTicks": 19454,
+                  "elapsedMs": 15655.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386817596,
+            "loadingMs": 2091.5,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 2091.5,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 3.300000000745058,
+                "adapter": 0,
+                "source": 1955.8999999994412,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 132.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:37.728Z",
+          "monotonicMs": 33457.09999999963,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+            "modeId": "survival",
+            "at": 1792386815503,
+            "loadingMs": 15667.099999999627,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15667,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 11.299999999813735,
+                "retirement": 0.20000000018626451,
+                "adapter": 0,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 15655.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 18720,
+                  "totalTicks": 19454,
+                  "elapsedMs": 15655.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-weave-05-acro-b79dc21793195b8a",
+            "modeId": "sim",
+            "at": 1792386817596,
+            "loadingMs": 2091.5,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 2091.5,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 3.300000000745058,
+                "adapter": 0,
+                "source": 1955.8999999994412,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 132.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:37.895Z",
+          "monotonicMs": 33624.09999999963,
+          "mode": "snake",
+          "source": "snake:classic-operation-furnace-terrace:standard",
+          "phase": "playing",
+          "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+            "modeId": "survival",
+            "at": 1792386815503,
+            "loadingMs": 15667.099999999627,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15667,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 11.299999999813735,
+                "retirement": 0.20000000018626451,
+                "adapter": 0,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 15655.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 18720,
+                  "totalTicks": 19454,
+                  "elapsedMs": 15655.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-operation-furnace-terrace:standard",
+            "modeId": "snake",
+            "at": 1792386817890,
+            "loadingMs": 161.29999999981374,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 161.3,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 3.800000000745058,
+                "retirement": 0.09999999962747097,
+                "adapter": 0,
+                "source": 156.90000000037253,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.4
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:37.943Z",
+          "monotonicMs": 33672.799999999814,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+            "modeId": "survival",
+            "at": 1792386815503,
+            "loadingMs": 15667.099999999627,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15667,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 11.299999999813735,
+                "retirement": 0.20000000018626451,
+                "adapter": 0,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 15655.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 18720,
+                  "totalTicks": 19454,
+                  "elapsedMs": 15655.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-operation-furnace-terrace:standard",
+            "modeId": "snake",
+            "at": 1792386817890,
+            "loadingMs": 161.29999999981374,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 161.3,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 3.800000000745058,
+                "retirement": 0.09999999962747097,
+                "adapter": 0,
+                "source": 156.90000000037253,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.4
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:43.926Z",
+          "monotonicMs": 39655.39999999944,
+          "mode": "solo",
+          "source": "solo-qualified-dd80d3e78efbf350",
+          "phase": "playing",
+          "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+            "modeId": "survival",
+            "at": 1792386815503,
+            "loadingMs": 15667.099999999627,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15667,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 11.299999999813735,
+                "retirement": 0.20000000018626451,
+                "adapter": 0,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 15655.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 18720,
+                  "totalTicks": 19454,
+                  "elapsedMs": 15655.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "solo-qualified-dd80d3e78efbf350",
+            "modeId": "solo",
+            "at": 1792386823921,
+            "loadingMs": 5975.399999999441,
+            "preparation": {
+              "status": "ready",
+              "stage": "source",
+              "elapsedMs": 5975.4,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 3.7999999998137355,
+                "adapter": 0,
+                "source": 5971.6,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:44.061Z",
+          "monotonicMs": 39790.200000000186,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:orchard-strongpoint-glasshouse-ruins:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+            "modeId": "survival",
+            "at": 1792386815503,
+            "loadingMs": 15667.099999999627,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15667,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 11.299999999813735,
+                "retirement": 0.20000000018626451,
+                "adapter": 0,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 15655.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 18720,
+                  "totalTicks": 19454,
+                  "elapsedMs": 15655.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "solo-qualified-dd80d3e78efbf350",
+            "modeId": "solo",
+            "at": 1792386823921,
+            "loadingMs": 5975.399999999441,
+            "preparation": {
+              "status": "ready",
+              "stage": "source",
+              "elapsedMs": 5975.4,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 3.7999999998137355,
+                "adapter": 0,
+                "source": 5971.6,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:13:59.557Z",
+          "monotonicMs": 55286.299999999814,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:04.771Z",
+          "monotonicMs": 60500.09999999963,
+          "mode": "solo",
+          "source": "solo-qualified-dd80d3e78efbf350",
+          "phase": "playing",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "solo-qualified-dd80d3e78efbf350",
+            "modeId": "solo",
+            "at": 1792386844759,
+            "loadingMs": 5207.4000000003725,
+            "preparation": {
+              "status": "ready",
+              "stage": "source",
+              "elapsedMs": 5207.4,
+              "durationsMs": {
+                "preparation": 0.10000000055879354,
+                "prefetch": 0,
+                "retirement": 5.099999999627471,
+                "adapter": 0,
+                "source": 5202.2,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:04.890Z",
+          "monotonicMs": 60618.89999999944,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "solo-qualified-dd80d3e78efbf350",
+            "modeId": "solo",
+            "at": 1792386844759,
+            "loadingMs": 5207.4000000003725,
+            "preparation": {
+              "status": "ready",
+              "stage": "source",
+              "elapsedMs": 5207.4,
+              "durationsMs": {
+                "preparation": 0.10000000055879354,
+                "prefetch": 0,
+                "retirement": 5.099999999627471,
+                "adapter": 0,
+                "source": 5202.2,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:05.364Z",
+          "monotonicMs": 61093.59999999963,
+          "mode": "sim",
+          "source": "sim:beginner-42-self-level-54080d3efd75e5d8",
+          "phase": "playing",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:beginner-42-self-level-54080d3efd75e5d8",
+            "modeId": "sim",
+            "at": 1792386845350,
+            "loadingMs": 459.09999999962747,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 459.1,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.2000000001862645,
+                "retirement": 0.10000000055879354,
+                "adapter": 0,
+                "source": 314.69999999925494,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 140
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:05.442Z",
+          "monotonicMs": 61171.200000000186,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:beginner-42-self-level-54080d3efd75e5d8",
+            "modeId": "sim",
+            "at": 1792386845350,
+            "loadingMs": 459.09999999962747,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 459.1,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.2000000001862645,
+                "retirement": 0.10000000055879354,
+                "adapter": 0,
+                "source": 314.69999999925494,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 140
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:05.669Z",
+          "monotonicMs": 61398.200000000186,
+          "mode": "snake",
+          "source": "snake:classic-operation-citadel-dispatch:standard",
+          "phase": "playing",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-operation-citadel-dispatch:standard",
+            "modeId": "snake",
+            "at": 1792386845665,
+            "loadingMs": 221.1000000005588,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 221.1,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 2.900000000372529,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 217.90000000037253,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:05.727Z",
+          "monotonicMs": 61456.39999999944,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-operation-citadel-dispatch:standard",
+            "modeId": "snake",
+            "at": 1792386845665,
+            "loadingMs": 221.1000000005588,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 221.1,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 2.900000000372529,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 217.90000000037253,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:19.727Z",
+          "monotonicMs": 75456.59999999963,
+          "mode": "survival",
+          "source": "survival:chalk-quarry-reclaimer-court:standard",
+          "phase": "playing",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+            "modeId": "survival",
+            "at": 1792386859720,
+            "loadingMs": 13992,
+            "preparation": {
+              "status": "ready",
+              "stage": "renderer",
+              "elapsedMs": 13992,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 2.7999999998137355,
+                "retirement": 0,
+                "adapter": 0.10000000055879354,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 13638.100000000559,
+                "scene-import": 10.299999999813735,
+                "artwork": 201.5,
+                "renderer": 138.9,
+                "mount": 0.09999999962747097
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "verified",
+                  "code": null,
+                  "tick": 19274,
+                  "totalTicks": 19274,
+                  "elapsedMs": 13638
+                }
+              ]
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:19.792Z",
+          "monotonicMs": 75521.79999999981,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+            "modeId": "survival",
+            "at": 1792386859720,
+            "loadingMs": 13992,
+            "preparation": {
+              "status": "ready",
+              "stage": "renderer",
+              "elapsedMs": 13992,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 2.7999999998137355,
+                "retirement": 0,
+                "adapter": 0.10000000055879354,
+                "source": 0.09999999962747097,
+                "payload": 0,
+                "verification": 13638.100000000559,
+                "scene-import": 10.299999999813735,
+                "artwork": 201.5,
+                "renderer": 138.9,
+                "mount": 0.09999999962747097
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "verified",
+                  "code": null,
+                  "tick": 19274,
+                  "totalTicks": 19274,
+                  "elapsedMs": 13638
+                }
+              ]
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:19.883Z",
+          "monotonicMs": 75612.09999999963,
+          "mode": "snake",
+          "source": "snake:classic-pursuit-first-pulse:standard",
+          "phase": "playing",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-pursuit-first-pulse:standard",
+            "modeId": "snake",
+            "at": 1792386859880,
+            "loadingMs": 82.3999999994412,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 82.4,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 4.8999999994412065,
+                "adapter": 0.10000000055879354,
+                "source": 77.19999999925494,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.2
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:19.927Z",
+          "monotonicMs": 75655.89999999944,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-pursuit-first-pulse:standard",
+            "modeId": "snake",
+            "at": 1792386859880,
+            "loadingMs": 82.3999999994412,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 82.4,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 4.8999999994412065,
+                "adapter": 0.10000000055879354,
+                "source": 77.19999999925494,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.2
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:20.521Z",
+          "monotonicMs": 76250.79999999981,
+          "mode": "sim",
+          "source": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+          "phase": "playing",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+            "modeId": "sim",
+            "at": 1792386860510,
+            "loadingMs": 581.0999999996275,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 581.1,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 3.8999999994412065,
+                "retirement": 0,
+                "adapter": 0.10000000055879354,
+                "source": 449.79999999981374,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 127.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:20.609Z",
+          "monotonicMs": 76338.5,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "survival:river-port-floodgate-yard:standard",
+            "modeId": "survival",
+            "at": 1792386839551,
+            "loadingMs": 15488.799999999814,
+            "preparation": {
+              "status": "failed",
+              "stage": "verification",
+              "elapsedMs": 15488.7,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 4.099999999627471,
+                "retirement": 0,
+                "adapter": 0,
+                "source": 0.10000000055879354,
+                "payload": 0,
+                "verification": 15484.4,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": [
+                {
+                  "variant": "chromium",
+                  "engineHint": "chromium",
+                  "prefetched": true,
+                  "status": "loading",
+                  "code": null,
+                  "tick": 19200,
+                  "totalTicks": 19478,
+                  "elapsedMs": 15484.4
+                }
+              ]
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+            "modeId": "sim",
+            "at": 1792386860510,
+            "loadingMs": 581.0999999996275,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 581.1,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 3.8999999994412065,
+                "retirement": 0,
+                "adapter": 0.10000000055879354,
+                "source": 449.79999999981374,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 127.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:36.006Z",
+          "monotonicMs": 91734.79999999981,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "solo-qualified-5345516b36f07dce demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "solo-qualified-5345516b36f07dce",
+            "modeId": "solo",
+            "at": 1792386876001,
+            "loadingMs": 15390.700000000186,
+            "preparation": {
+              "status": "failed",
+              "stage": "source",
+              "elapsedMs": 15390.4,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 0,
+                "retirement": 2.7000000001862645,
+                "adapter": 0,
+                "source": 15387.6,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "failed",
+            "sourceId": "solo-qualified-5345516b36f07dce",
+            "modeId": "solo",
+            "at": 1792386876001,
+            "loadingMs": 15390.700000000186,
+            "preparation": {
+              "status": "failed",
+              "stage": "source",
+              "elapsedMs": 15390.4,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 0,
+                "retirement": 2.7000000001862645,
+                "adapter": 0,
+                "source": 15387.6,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:36.987Z",
+          "monotonicMs": 92716.5,
+          "mode": "sim",
+          "source": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+          "phase": "playing",
+          "failure": "solo-qualified-5345516b36f07dce demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "solo-qualified-5345516b36f07dce",
+            "modeId": "solo",
+            "at": 1792386876001,
+            "loadingMs": 15390.700000000186,
+            "preparation": {
+              "status": "failed",
+              "stage": "source",
+              "elapsedMs": 15390.4,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 0,
+                "retirement": 2.7000000001862645,
+                "adapter": 0,
+                "source": 15387.6,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+            "modeId": "sim",
+            "at": 1792386876980,
+            "loadingMs": 977.9000000003725,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 977.9,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 3.2000000001862645,
+                "adapter": 0,
+                "source": 830.3999999994412,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 144.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:37.076Z",
+          "monotonicMs": 92805.29999999981,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "solo-qualified-5345516b36f07dce demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "solo-qualified-5345516b36f07dce",
+            "modeId": "solo",
+            "at": 1792386876001,
+            "loadingMs": 15390.700000000186,
+            "preparation": {
+              "status": "failed",
+              "stage": "source",
+              "elapsedMs": 15390.4,
+              "durationsMs": {
+                "preparation": 0.09999999962747097,
+                "prefetch": 0,
+                "retirement": 2.7000000001862645,
+                "adapter": 0,
+                "source": 15387.6,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+            "modeId": "sim",
+            "at": 1792386876980,
+            "loadingMs": 977.9000000003725,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 977.9,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 3.2000000001862645,
+                "adapter": 0,
+                "source": 830.3999999994412,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 144.3
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:54.668Z",
+          "monotonicMs": 110397.59999999963,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "solo-qualified-f85650a2f81b67ed demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "solo-qualified-f85650a2f81b67ed",
+            "modeId": "solo",
+            "at": 1792386894667,
+            "loadingMs": 17589,
+            "preparation": {
+              "status": "failed",
+              "stage": "source",
+              "elapsedMs": 17589,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 2.699999999254942,
+                "adapter": 0,
+                "source": 17586.3,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "failed",
+            "sourceId": "solo-qualified-f85650a2f81b67ed",
+            "modeId": "solo",
+            "at": 1792386894667,
+            "loadingMs": 17589,
+            "preparation": {
+              "status": "failed",
+              "stage": "source",
+              "elapsedMs": 17589,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 2.699999999254942,
+                "adapter": 0,
+                "source": 17586.3,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:55.540Z",
+          "monotonicMs": 111269.5,
+          "mode": "sim",
+          "source": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+          "phase": "playing",
+          "failure": "solo-qualified-f85650a2f81b67ed demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "solo-qualified-f85650a2f81b67ed",
+            "modeId": "solo",
+            "at": 1792386894667,
+            "loadingMs": 17589,
+            "preparation": {
+              "status": "failed",
+              "stage": "source",
+              "elapsedMs": 17589,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 2.699999999254942,
+                "adapter": 0,
+                "source": 17586.3,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+            "modeId": "sim",
+            "at": 1792386895536,
+            "loadingMs": 868.4000000003725,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 868.4,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 1.2999999998137355,
+                "adapter": 0,
+                "source": 758.2999999998137,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 108.8
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:55.617Z",
+          "monotonicMs": 111345.89999999944,
+          "mode": "solo",
+          "source": "",
+          "phase": "loading",
+          "failure": "solo-qualified-f85650a2f81b67ed demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "solo-qualified-f85650a2f81b67ed",
+            "modeId": "solo",
+            "at": 1792386894667,
+            "loadingMs": 17589,
+            "preparation": {
+              "status": "failed",
+              "stage": "source",
+              "elapsedMs": 17589,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 2.699999999254942,
+                "adapter": 0,
+                "source": 17586.3,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "sim:snake-hunt-interception-island-bypass-acro-e4f72e7ef2119926",
+            "modeId": "sim",
+            "at": 1792386895536,
+            "loadingMs": 868.4000000003725,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 868.4,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 1.2999999998137355,
+                "adapter": 0,
+                "source": 758.2999999998137,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 108.8
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        },
+        {
+          "at": "2026-10-19T05:14:55.832Z",
+          "monotonicMs": 111561.39999999944,
+          "mode": "snake",
+          "source": "snake:classic-field-quiet-channel:standard",
+          "phase": "playing",
+          "failure": "solo-qualified-f85650a2f81b67ed demo-load-timeout: Demo preparation exceeded its loading deadline.",
+          "failureDetails": {
+            "event": "failed",
+            "sourceId": "solo-qualified-f85650a2f81b67ed",
+            "modeId": "solo",
+            "at": 1792386894667,
+            "loadingMs": 17589,
+            "preparation": {
+              "status": "failed",
+              "stage": "source",
+              "elapsedMs": 17589,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 0,
+                "retirement": 2.699999999254942,
+                "adapter": 0,
+                "source": 17586.3,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0
+              },
+              "candidates": []
+            },
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline.",
+            "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43"
+          },
+          "preparationDetails": {
+            "event": "ready",
+            "sourceId": "snake:classic-field-quiet-channel:standard",
+            "modeId": "snake",
+            "at": 1792386895827,
+            "loadingMs": 209.59999999962747,
+            "preparation": {
+              "status": "ready",
+              "stage": "mount",
+              "elapsedMs": 209.6,
+              "durationsMs": {
+                "preparation": 0,
+                "prefetch": 2.900000000372529,
+                "retirement": 0.09999999962747097,
+                "adapter": 0,
+                "source": 206.40000000037253,
+                "payload": 0,
+                "verification": 0,
+                "scene-import": 0,
+                "artwork": 0,
+                "renderer": 0,
+                "mount": 0.2
+              },
+              "candidates": []
+            },
+            "code": null,
+            "message": null,
+            "stack": null
+          }
+        }
+      ],
+      "dropped": 0,
+      "observationComplete": true,
+      "disconnected": true
+    },
+    "resources": [
+      {
+        "name": "http://127.0.0.1:18773/game/demo-modes/solo-builtins.mjs",
+        "startTime": 339.20000000018626,
+        "duration": 28.799999999813735,
+        "transferSize": 6783,
+        "encodedBodySize": 6483
+      }
+    ],
+    "visibility": "visible",
+    "focused": true,
+    "finalDataset": {
+      "mode": "snake",
+      "source": "snake:classic-field-quiet-channel:standard",
+      "phase": "playing",
+      "tick": "5",
+      "failure": "solo-qualified-f85650a2f81b67ed demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": "{\"event\":\"failed\",\"sourceId\":\"solo-qualified-f85650a2f81b67ed\",\"modeId\":\"solo\",\"at\":1792386894667,\"loadingMs\":17589,\"preparation\":{\"status\":\"failed\",\"stage\":\"source\",\"elapsedMs\":17589,\"durationsMs\":{\"preparation\":0,\"prefetch\":0,\"retirement\":2.699999999254942,\"adapter\":0,\"source\":17586.3,\"payload\":0,\"verification\":0,\"scene-import\":0,\"artwork\":0,\"renderer\":0,\"mount\":0},\"candidates\":[]},\"code\":\"demo-load-timeout\",\"message\":\"Demo preparation exceeded its loading deadline.\",\"stack\":\"DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\\n    at timeoutFailure (http://127.0.0.1:18773/game/demo-loading.mjs:26:19)\\n    at http://127.0.0.1:18773/game/demo-loading.mjs:51:43\"}",
+      "preparationDetails": "{\"event\":\"ready\",\"sourceId\":\"snake:classic-field-quiet-channel:standard\",\"modeId\":\"snake\",\"at\":1792386895827,\"loadingMs\":209.59999999962747,\"preparation\":{\"status\":\"ready\",\"stage\":\"mount\",\"elapsedMs\":209.6,\"durationsMs\":{\"preparation\":0,\"prefetch\":2.900000000372529,\"retirement\":0.09999999962747097,\"adapter\":0,\"source\":206.40000000037253,\"payload\":0,\"verification\":0,\"scene-import\":0,\"artwork\":0,\"renderer\":0,\"mount\":0.2},\"candidates\":[]},\"code\":null,\"message\":null,\"stack\":null}",
+      "resources": "{\"ownedNativeScenes\":0,\"practiceWorlds\":0,\"ownedHostListeners\":34,\"renderer\":{}}"
+    }
+  },
+  "loadingDiagnosticCheckpoints": [
+    {
+      "reason": "qualifier-finally",
+      "at": "2026-10-19T05:14:57.095Z"
+    }
+  ],
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T05:14:57.564Z",
+  "previewClosed": true
+}
