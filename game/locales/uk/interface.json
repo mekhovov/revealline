@@ -6043,5 +6043,9 @@
   "captureMedal.tiny": "Перевищення цілі часу менш ніж на 0,01 с.",
   "captureMedal.shortfall": "Покращіть цей час на {{seconds}} с (округлено вгору до 0,01 с).",
   "captureMedal.cleanMet": "У цій спробі життів не втрачено.",
-  "captureMedal.cleanMissing": "Життя було втрачено; завершіть повторну спробу без втрати життів."
+  "captureMedal.cleanMissing": "Життя було втрачено; завершіть повторну спробу без втрати життів.",
+  "overflight.rerollsRemaining_one": "Залишилася {{count}} заміна",
+  "overflight.rerollsRemaining_few": "Залишилося {{count}} заміни",
+  "overflight.rerollsRemaining_many": "Залишилося {{count}} замін",
+  "overflight.rerollsRemaining_other": "Залишилося {{count}} заміни"
 }
