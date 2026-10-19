@@ -1,0 +1,135 @@
+{
+  "format": "revealline-independent-source-review.v1",
+  "observedAt": "2026-10-19T05:03:43.127Z",
+  "reviewer": "/root/release_status_now",
+  "repository": "mekhovov/revealline",
+  "pullRequest": 1699,
+  "base": "739a87f66a80d4956f1af77c60c032821bf799fb",
+  "proposal": {
+    "blob": "622c4ce84b84e22e62bbafc2337b5c26376fb481",
+    "bytes": 368199,
+    "sha256": "01c666f5979334f5522ff12aad4f3bdc04e81e6e4d2f7a9e4f5df25e25aba6cc"
+  },
+  "disposition": "No remaining blocking source-review findings; suitable for guarded source amendment, not execution or native admission.",
+  "files": [
+    {
+      "path": "scripts/solo-remote-sustained.mjs",
+      "before": "e04e9e59291a1549c470edf5d653a52e139d0ad5",
+      "after": "bf0855fec500e87749627b43afbae2d1ee6a6ec6",
+      "bytes": 110951,
+      "sha256": "a8217d19a9b26a194ef98b38890835b51f6b96a9f3dfe30677062c3e142ba0ae"
+    },
+    {
+      "path": "scripts/solo-retry-heap-retainers-admission.test.mjs",
+      "before": "2009b4cd9e868d2c80b10c4ed615d9f3f14525b7",
+      "after": "bc0d9aa394d1bcf361ef64c7c4c85c77b1d45ca1",
+      "bytes": 7698,
+      "sha256": "627d6b154e3cfaeff49b6c56f6293c52eed9a2605ae34630049654a7fd87fee9"
+    },
+    {
+      "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+      "before": "ef3c9a6ad2e6801ab17f99c2a1746b015321a758",
+      "after": "8502622cab1656d134627b8f02c71fa741f978e9",
+      "bytes": 14555,
+      "sha256": "e59bcaceff2cf1251e8124b6521598fe12c87cd0c72cd885fd3a35646fcd2c4b"
+    },
+    {
+      "path": "scripts/solo-frame-trace-heap-tooling-admission.test.mjs",
+      "before": "04510d22f8705164012c80ef97eb678cae5e757a",
+      "after": "e5e723e21ea8de79159baf2b4b1200fb168b897e",
+      "bytes": 6229,
+      "sha256": "a27364f6ce9f544cd01c37ad37974aa49542672b90ac5b96b6074616e813a6f3"
+    },
+    {
+      "path": "docs/performance/solo-797-retry-heap-retainers-plan.json",
+      "before": "50fc1f871b9537cda58417e3f89bd86330173529",
+      "after": "155bcef7f7306a22cc8380848cadf434948a7acc",
+      "bytes": 20436,
+      "sha256": "9b867766e9770ca1108e8bfce857fe9a564e3585c88041cfc9cd5e0cc99a8c1d"
+    },
+    {
+      "path": "docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json",
+      "before": "9ee9049eef18f37e7f9cc48653947fb67dc1f98c",
+      "after": "a66e0aae37d526495cdf376d4418b4d2f8e51d5a",
+      "bytes": 17005,
+      "sha256": "90bd8b96d993b580c0eb5af70c8480c3223bfba70d8e4b2c9d0006878ee75b86"
+    }
+  ],
+  "review": {
+    "productionScope": "Only existing validateSourceCohort changed among 93 top-level AST nodes. Full validateSustainedPlan and every downstream adapter path are unchanged.",
+    "routeProof": [
+      "Recognized retry797-first-last-v1 protocol is rejected unless selected === runtime797LifecycleSource, runtime797LifecyclePlan(plan) is true and phase is retry.",
+      "The new route assertion is first in validateSourceCohort, before its sourceCohort-undefined early return. Null selected source and both timing-source objects cannot pass.",
+      "The old candidateOnly expectation changes to true only for the recognized heap protocol; ordinary source-bound declarations still require undefined.",
+      "The accepted heap path still passes the unchanged later exact HEAP_RETAINER_ADMISSION checks, release copy equality, cohort, candidateOnly true, Chromium, repetition 1, release scope and helper identity.",
+      "Ordinary timing and geometric Next declarations have no heap protocol and retain their existing validation behavior. Invalid heap protocol injection into other routes is rejected."
+    ],
+    "identifiedAndClosed": "The initial protocol-only conditional would have admitted candidateOnly true to shared timing validation without reaching the strict sustained heap block. Merely narrowing the expected flag still permitted the recognized protocol with candidateOnly omitted. The final explicit early route assertion closes both variants.",
+    "controls": {
+      "retryBefore": 5,
+      "retryAfter": 7,
+      "allFiveExistingRetryBodiesAstIdentical": true,
+      "newGroups": [
+        "candidate-only Retry admission requires the exact heap scope and a boolean opt-in",
+        "ordinary timing and non-Retry lifecycle cannot borrow the heap protocol"
+      ],
+      "newCoverage": [
+        "Missing, false, string true and numeric candidateOnly flags on heap declaration rejected.",
+        "Ordinary Retry cannot borrow candidateOnly true; foreign protocol is rejected.",
+        "Actual unchanged warm797 timing and soak declarations positively bind before mutations.",
+        "Both timing and soak reject the recognized heap protocol with candidateOnly omitted and with true; exact route assertion message is required."
+      ],
+      "otherOriginalBodies": "Only the two pre-existing failing fixture test bodies changed; their names and other test bodies remain unchanged."
+    },
+    "fixtures": {
+      "historicalLookup": "Historical de332 declaration e328897840b5f3be7fcf2789425176491914bd50 has no sustained adapterInput; its frozenTools pin is 91250 bytes/SHA256 978a4383294f764f8c14f751902221ae09465329b196d2050fa7283a368b3a59. One lookup changes to that existing section; pinned bytes/hash and null-witness checks remain.",
+      "canonicalRoot": "The trace admission test resolves repository URL through realpath. CPU adapter e9cfbca906a7bf8d7d7b797980c40376a149e8e5 validates canonical path and exact digest before reading admitted; production guards are unchanged.",
+      "strictFailure": "Corrected assertion requires ERR_ASSERTION/deepStrictEqual and actual/expected identities for an observed one of the two changed tool paths. checked > 0 and zero admission/native effects remain required."
+    },
+    "manifestProjection": [
+      {
+        "path": "docs/performance/solo-797-retry-heap-retainers-plan.json",
+        "onlySustainedIdentityChanged": true,
+        "updatedReferences": 1
+      },
+      {
+        "path": "docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json",
+        "onlySustainedIdentityChanged": true,
+        "updatedReferences": 1
+      }
+    ],
+    "originalTrace": {
+      "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+      "blob": "78c4a5f588b13097744746539c078acd9128220d",
+      "bytes": 17005,
+      "sha256": "21a6c7ea6245bffd3ce6b2d9b42c4cf2c56243823be8cb319ae327a276972bfa",
+      "changed": false
+    },
+    "selection": {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "blob": "20da2eb39bb29226cdadd8d5f9cd585e82751b9f",
+      "changed": false,
+      "lifecycleSparseIncludesWarm797": true,
+      "lifecycleSparseIncludesSoak": true,
+      "existingTestCommandRetained": true
+    }
+  },
+  "staticChecks": {
+    "allSixBeforeContentsAndGitBlobsVerifiedAtExactHead": true,
+    "allSixAfterGitBlobsBytesAndSha256Verified": true,
+    "jsFileCount": 4,
+    "acorn": "All four before and after sources parsed as latest ECMAScript modules.",
+    "format": "All four complete after sources exactly match repository Prettier config: singleQuote true, printWidth 100, trailingComma all.",
+    "coreEslint": "No errors/messages for no-unreachable, no-dupe-args, no-dupe-keys, constructor-super, no-this-before-super and valid-typeof.",
+    "productionChangedTopLevel": [
+      "validateSourceCohort"
+    ],
+    "functionalExecution": false
+  },
+  "limits": [
+    "No app, test, workflow, controller, browser, native adapter or generator was executed. Static parse/format/lint does not establish passing behavior.",
+    "No source, workflow, historical declaration, witness, PR state, release intent or local file was changed by this review.",
+    "The original #1621 trace-v2 outcome must still be retained and reviewed before #1699 merge or heap native dispatch. Candidate-only historical diagnostics do not qualify current app performance.",
+    "Corrected exact-head hosted source execution and final integration review remain required."
+  ]
+}

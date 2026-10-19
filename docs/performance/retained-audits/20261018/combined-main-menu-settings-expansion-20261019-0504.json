@@ -1,0 +1,146 @@
+{
+  "kind": "combined-main-source-expansion",
+  "at": "2026-10-19T05:05:44.203222+00:00",
+  "from": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "to": "55b1562803c177e49d0f0ed28a5b5929f675a4da",
+  "ahead": 5,
+  "behind": 0,
+  "commits": [
+    {
+      "sha": "858cbe3d0fb103561622c754e3e30f8d3db9eecd",
+      "message": "Preserve unsaved menu animation choices with retry feedback"
+    },
+    {
+      "sha": "55393cdfa7787057c838aa58f1c767ad5f08ba01",
+      "message": "Keep Survival settings actions inside their categories"
+    },
+    {
+      "sha": "2783839218ddb649989557445564d1399f612df7",
+      "message": "Merge main into menu animation save feedback while preserving current owners"
+    },
+    {
+      "sha": "6e3c5f81d421b26ff96effa3a4f1677b8e3de4d3",
+      "message": "Merge pull request #1636 from mekhovov/codex/f15b-menu-animation-save-feedback"
+    },
+    {
+      "sha": "55b1562803c177e49d0f0ed28a5b5929f675a4da",
+      "message": "Merge pull request #1707 from mekhovov/codex/f09-survival-settings-layout"
+    }
+  ],
+  "files": [
+    {
+      "path": "game/creator/player-menu.mjs",
+      "sha": "25646ad92ea6a9db3c16ca1b3f85373168f8b03f",
+      "status": "modified"
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "sha": "950656af0e2090da65d390951a1ad1a1cce16162",
+      "status": "modified"
+    },
+    {
+      "path": "game/snake/classic-app.mjs",
+      "sha": "2c077561aa5dd941f4537a79eb7d901c5d12bc1c",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/classic-snake-ui.test.mjs",
+      "sha": "f198c45e0b10c49a314daf08b3ceaa7e980e682d",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/creator-player-menu.test.mjs",
+      "sha": "7561ffd1431194e9b82f9aa486f8066aee94164a",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "sha": "da47148ad95318872e674f6975579f58b391345a",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "sha": "097ebea1d3244701337284f654d61fcece2bec0d",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/global-settings-view.test.mjs",
+      "sha": "fe9946709267ebad0dca1469c7b7848d77097fbf",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/menu-animation-preferences.test.mjs",
+      "sha": "eb7f66a0e68f1bbe67bd06d2394d0f5796f18822",
+      "status": "added"
+    },
+    {
+      "path": "game/test/menu-scenes.test.mjs",
+      "sha": "e3ec38dd88bed2956ae11d14ef73033a0704a7c4",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/native-global-settings.test.mjs",
+      "sha": "399b596fb88488eb93fb123199252b9bcd765151",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/overflight-host.test.mjs",
+      "sha": "f4e4eb503922169ddff625d9ef32ae5aae1715ef",
+      "status": "modified"
+    },
+    {
+      "path": "game/ui/menu-animation-feedback.mjs",
+      "sha": "364f8716bde178449c5297f354e040ef053f5dc6",
+      "status": "added"
+    },
+    {
+      "path": "game/ui/menu-animation-preferences.mjs",
+      "sha": "4b5240d5ef11004ed62779c23b0a0dab83350b97",
+      "status": "modified"
+    },
+    {
+      "path": "game/ui/native-menus.mjs",
+      "sha": "12a64d7dd5cb6a31e38ae500a009f5bba6b88ac0",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "sha": "436de86a7d18c7005221b266fb4e3372572fc8ed",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "sha": "65c1fc9628d720505c7d2e447089569c42aa2fdf",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha": "b15cf2bf631b02cd5c17de355cc881f752ac16e4",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/refresh-fpv-play-shell.mjs",
+      "sha": "8d4a05986698173a6bfc52ec0436eef3e54b9f03",
+      "status": "modified"
+    }
+  ],
+  "prs": [
+    {
+      "pr": 1636,
+      "head": "2783839218ddb649989557445564d1399f612df7",
+      "merged": true,
+      "merge": "6e3c5f81d421b26ff96effa3a4f1677b8e3de4d3",
+      "merged_at": "2026-10-19T04:55:05Z",
+      "title": "Keep menu animation choices active when saving fails"
+    },
+    {
+      "pr": 1707,
+      "head": "55393cdfa7787057c838aa58f1c767ad5f08ba01",
+      "merged": true,
+      "merge": "55b1562803c177e49d0f0ed28a5b5929f675a4da",
+      "merged_at": "2026-10-19T04:59:47Z",
+      "title": "Keep Survival and Raid settings actions inside their categories"
+    }
+  ],
+  "scope": "Read-only main identity/diff observation. This task did not merge these changes and does not infer source or native qualification. Include changed menu/settings behavior in the eventual combined build."
+}

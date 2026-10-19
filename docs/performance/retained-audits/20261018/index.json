@@ -2168,6 +2168,66 @@
       "blob": "cb4cab0147df3e44fda9b411e731a0aceee155cb",
       "bytes": 23834,
       "sha256": "050435abe6cc3128e12f511a13561634b78331df3d37d21e9bb42910b1aec834"
+    },
+    {
+      "path": "release-controller-cohort-publication-status-20261019-0453.json",
+      "blob": "de82cd4aee3c5d16dd1fbf1676617e9da76f3b44",
+      "bytes": 16492,
+      "sha256": "35c5752e83a4b02166f622e2064c260b211d468e85b789271f5abb3d01b582bf"
+    },
+    {
+      "path": "release-controller-cohort-full-inventory-20261019-0453.json",
+      "blob": "8a334408a4ce04f557356faa244886001adac352",
+      "bytes": 109368,
+      "sha256": "d2d57d342c009bb207f2d92dcc37bd6bd035d26b15d219bc52d32f371e4b8c8b"
+    },
+    {
+      "path": "merged-source-new-control-scope-20261019-0459.json",
+      "blob": "b0cf8a04edd83a5158c43a82336be0eb31760662",
+      "bytes": 16270,
+      "sha256": "a6be9d124915e0e8566c692ab436d054eedaa42123418ab34d65c71a68e18b2f"
+    },
+    {
+      "path": "held-heap-original-failures-and-overhead-provenance-snapshot-20261019.json",
+      "blob": "0290f72133b0379b359e9471857ba54c71d2c870",
+      "bytes": 326716,
+      "sha256": "52666cc7e10d7cb066d8307cd640958080f3ac986056980f2e3e7c340871a3a3"
+    },
+    {
+      "path": "held-heap-source-fixture-correction-proposal-20261019.json",
+      "blob": "622c4ce84b84e22e62bbafc2337b5c26376fb481",
+      "bytes": 368199,
+      "sha256": "01c666f5979334f5522ff12aad4f3bdc04e81e6e4d2f7a9e4f5df25e25aba6cc"
+    },
+    {
+      "path": "held-heap-scoped-source-failures-20261019.json",
+      "blob": "fd2544f5c2c079cc5119f2e0b3b4229e4dc0c324",
+      "bytes": 58664,
+      "sha256": "ee7dd7c50098117b9a0b7a60c47e46ea73e18b2064b0420236090f48d17d694f"
+    },
+    {
+      "path": "held-heap-source-fixture-correction-independent-review-20261019.json",
+      "blob": "0a619b9d74106c0770156ca66e0dd81b6bf141dd",
+      "bytes": 7948,
+      "sha256": "8ac1688a51bfee0fd6288f4140cd48fb1888eb3d8dede78d70f01bd55208fa93"
+    },
+    {
+      "path": "new-controller-route-recovery-pr-snapshot-20261019-0504.json",
+      "blob": "ad73a85329fc2b6daa62a0166c46194bfd785ad1",
+      "bytes": 9351,
+      "sha256": "bf4160b9782de4314154ce696c7b253c50309bf5e78a77e826755d9e4cc6f7da"
+    },
+    {
+      "path": "held-heap-source-correction-publication-20261019.json",
+      "blob": "b54cd319e5d7654b89feda2951f115310aa42420",
+      "bytes": 3054,
+      "sha256": "df90f9692b40b55377f5b68f89dd74d9384ca23a21c99b08b6b8064e40ee3f09"
+    },
+    {
+      "path": "combined-main-menu-settings-expansion-20261019-0504.json",
+      "blob": "f354775b421cd7c45d3ff5268a966fcc121e4fa0",
+      "bytes": 4717,
+      "sha256": "b766be3fe5322c04fe986485c52beb5dd3db0b1a3e17dba0b54f7a836f1e7194"
     }
   ]
 }

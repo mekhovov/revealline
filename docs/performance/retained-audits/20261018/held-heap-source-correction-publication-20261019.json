@@ -1,0 +1,62 @@
+{
+  "kind": "held-heap-source-correction-publication",
+  "observedUTC": "2026-10-19T05:05:35.266837+00:00",
+  "pr": 1699,
+  "url": "https://github.com/mekhovov/revealline/pull/1699",
+  "parent": "739a87f66a80d4956f1af77c60c032821bf799fb",
+  "head": "a4a0540969800323e7fbce7e52b6757189c236a4",
+  "tree": "fc4e451ba3b9d1864d474371a8a2274f901c7f32",
+  "branch": "codex/solo-retry-heap-retainers",
+  "proposal": "622c4ce84b84e22e62bbafc2337b5c26376fb481",
+  "independentReview": "0a619b9d74106c0770156ca66e0dd81b6bf141dd",
+  "files": [
+    {
+      "path": "scripts/solo-remote-sustained.mjs",
+      "beforeBlob": "e04e9e59291a1549c470edf5d653a52e139d0ad5",
+      "afterBlob": "bf0855fec500e87749627b43afbae2d1ee6a6ec6",
+      "afterBytes": 110951,
+      "afterSHA256": "a8217d19a9b26a194ef98b38890835b51f6b96a9f3dfe30677062c3e142ba0ae"
+    },
+    {
+      "path": "scripts/solo-retry-heap-retainers-admission.test.mjs",
+      "beforeBlob": "2009b4cd9e868d2c80b10c4ed615d9f3f14525b7",
+      "afterBlob": "bc0d9aa394d1bcf361ef64c7c4c85c77b1d45ca1",
+      "afterBytes": 7698,
+      "afterSHA256": "627d6b154e3cfaeff49b6c56f6293c52eed9a2605ae34630049654a7fd87fee9"
+    },
+    {
+      "path": "scripts/test-solo-readiness-rejoin-797e03.mjs",
+      "beforeBlob": "ef3c9a6ad2e6801ab17f99c2a1746b015321a758",
+      "afterBlob": "8502622cab1656d134627b8f02c71fa741f978e9",
+      "afterBytes": 14555,
+      "afterSHA256": "e59bcaceff2cf1251e8124b6521598fe12c87cd0c72cd885fd3a35646fcd2c4b"
+    },
+    {
+      "path": "scripts/solo-frame-trace-heap-tooling-admission.test.mjs",
+      "beforeBlob": "04510d22f8705164012c80ef97eb678cae5e757a",
+      "afterBlob": "e5e723e21ea8de79159baf2b4b1200fb168b897e",
+      "afterBytes": 6229,
+      "afterSHA256": "a27364f6ce9f544cd01c37ad37974aa49542672b90ac5b96b6074616e813a6f3"
+    },
+    {
+      "path": "docs/performance/solo-797-retry-heap-retainers-plan.json",
+      "beforeBlob": "50fc1f871b9537cda58417e3f89bd86330173529",
+      "afterBlob": "155bcef7f7306a22cc8380848cadf434948a7acc",
+      "afterBytes": 20436,
+      "afterSHA256": "9b867766e9770ca1108e8bfce857fe9a564e3585c88041cfc9cd5e0cc99a8c1d"
+    },
+    {
+      "path": "docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json",
+      "beforeBlob": "9ee9049eef18f37e7f9cc48653947fb67dc1f98c",
+      "afterBlob": "a66e0aae37d526495cdf376d4418b4d2f8e51d5a",
+      "afterBytes": 17005,
+      "afterSHA256": "90bd8b96d993b580c0eb5af70c8480c3223bfba70d8e4b2c9d0006878ee75b86"
+    }
+  ],
+  "publicationRecovery": "Initial non-force branch update succeeded; immediate PR metadata readback assertion failed before body update. Later PR/ref/commit/full-tree verification confirmed the exact intended commit. Updated body only; no duplicate commit or repeated push.",
+  "historicalTraceBlob": "78c4a5f588b13097744746539c078acd9128220d",
+  "failedEvidence": "0290f72133b0379b359e9471857ba54c71d2c870",
+  "functionalValidation": "Prior revision source-failed; corrected head unexecuted",
+  "originalTraceFirstHold": true,
+  "localFunctionalExecution": false
+}

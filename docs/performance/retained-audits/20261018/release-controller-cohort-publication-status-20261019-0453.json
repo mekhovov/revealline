@@ -1,0 +1,421 @@
+{
+  "kind": "bounded-release-status-refresh",
+  "snapshotAt": "2026-10-19T04:53:08.603440+00:00",
+  "prs": [
+    {
+      "number": 1713,
+      "head": "d64d90c69a6ec21f16ca4e3607a1b86f7d486502",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "mergeCommit": "4d1ed8e2cf77f96a0037399dbe1bbe4e92ca5d69",
+      "mergeable": true,
+      "mergeableState": "unstable",
+      "updatedAt": "2026-10-19T04:23:42Z",
+      "labels": [],
+      "autoMerge": null,
+      "base": "4dc5abeb4aac9d3cf405ede364f71c615b13c370",
+      "counts": {
+        "queued": 11
+      },
+      "checkCount": 11,
+      "releaseReady": [],
+      "queuedOrFailed": [
+        {
+          "id": 117888595582,
+          "name": "feature (presentation)",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595582",
+          "external_id": "777d751e-8c7e-5ac8-bffd-3241de753cee",
+          "suite": 106219919945,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595567,
+          "name": "feature (recordings)",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595567",
+          "external_id": "9eb747c1-fb68-5cbc-8daa-cece6494b401",
+          "suite": 106219919945,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595552,
+          "name": "feature (rooms)",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595552",
+          "external_id": "fbc080ca-9f05-5d07-b36c-60dc53e50309",
+          "suite": 106219919945,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595541,
+          "name": "preflight",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249422/job/117888595541",
+          "external_id": "bf3368d1-9795-5513-a580-420c6f56064b",
+          "suite": 106219919751,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595527,
+          "name": "candidate",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249464/job/117888595527",
+          "external_id": "3060c1f4-5043-580e-9432-a00a1ff0e800",
+          "suite": 106219919885,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595369,
+          "name": "feature (gameplay)",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595369",
+          "external_id": "811f292b-67bd-59c6-9ac6-c0ccd01c15d0",
+          "suite": 106219919945,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595365,
+          "name": "feature (creator)",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595365",
+          "external_id": "ea417f99-2157-551d-9a9d-66cbe948ac9b",
+          "suite": 106219919945,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595247,
+          "name": "optional-practice",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249464/job/117888595247",
+          "external_id": "2f09b6d5-a9ab-5069-989f-43d37b25bfb7",
+          "suite": 106219919885,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595241,
+          "name": "reconcile",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249473/job/117888595241",
+          "external_id": "d749d2b0-04a7-56f7-8d53-a9c8e2661eea",
+          "suite": 106219919918,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595201,
+          "name": "feature (local-ux)",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249482/job/117888595201",
+          "external_id": "ae0d0e41-7af0-5ffd-8f82-eceed04457e0",
+          "suite": 106219919945,
+          "app": "github-actions"
+        },
+        {
+          "id": 117888595166,
+          "name": "record",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-19T04:23:46Z",
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39199249132/job/117888595166",
+          "external_id": "ded3d70b-c698-5566-8cdb-20182269cd10",
+          "suite": 106219918963,
+          "app": "github-actions"
+        }
+      ],
+      "statusComments": []
+    },
+    {
+      "number": 1620,
+      "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "mergedAt": null,
+      "mergeCommit": "513669732b51e55eafe734a431156057a4e6c5a9",
+      "mergeable": true,
+      "mergeableState": "clean",
+      "updatedAt": "2026-10-18T23:53:59Z",
+      "labels": [],
+      "autoMerge": null,
+      "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+      "counts": {
+        "success": 23,
+        "skipped": 3
+      },
+      "checkCount": 26,
+      "releaseReady": [
+        {
+          "id": 117803024912,
+          "name": "release-ready",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T22:42:26Z",
+          "completed_at": "2026-10-18T22:42:30Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117803024912",
+          "external_id": "bbc05035-c76b-57a5-b0ed-7738813360df",
+          "suite": 106115661454,
+          "app": "github-actions"
+        }
+      ],
+      "queuedOrFailed": [],
+      "statusComments": [
+        {
+          "id": 6253066024,
+          "body": "<!-- fastline-controller-status -->\n### Fastline queue status\n\n- Purpose: Observe bounded Missions stages in published browser checks\n- Target: unassigned\n- Predecessor: none declared\n- Blocker/status: browser concluded skipped on the exact head\n- Checked SHA: `eb2a71273125eaaf0f523f74bbdb1dd299a1dc18`\n- Next: Resolve the blocker, then rerun `release-ready` on the resulting exact head.\n\n_This single bot-owned comment is updated in place._",
+          "created_at": "2026-10-18T17:42:58Z",
+          "updated_at": "2026-10-18T23:53:59Z",
+          "html_url": "https://github.com/mekhovov/revealline/pull/1620#issuecomment-6253066024",
+          "author": "github-actions[bot]",
+          "type": "Bot"
+        }
+      ]
+    },
+    {
+      "number": 1621,
+      "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "mergedAt": null,
+      "mergeCommit": "46c917d2f52cf59140f3eaee327ba9238709b0a6",
+      "mergeable": true,
+      "mergeableState": "clean",
+      "updatedAt": "2026-10-19T00:11:36Z",
+      "labels": [],
+      "autoMerge": null,
+      "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+      "counts": {
+        "success": 17,
+        "skipped": 94
+      },
+      "checkCount": 111,
+      "releaseReady": [
+        {
+          "id": 117799599161,
+          "name": "release-ready",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T22:23:54Z",
+          "completed_at": "2026-10-18T22:23:56Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117799599161",
+          "external_id": "d784b3b7-c684-53e9-a6d4-25c5a660cedf",
+          "suite": 106107653817,
+          "app": "github-actions"
+        }
+      ],
+      "queuedOrFailed": [],
+      "statusComments": [
+        {
+          "id": 6253213719,
+          "body": "<!-- fastline-controller-status -->\n### Fastline queue status\n\n- Purpose: test: narrow frame tracing and preserve historical replay sources\n- Target: unassigned\n- Predecessor: none declared\n- Blocker/status: Operational observation rejected: PR or trusted main changed during snapshot.\n- Checked SHA: `4d28eb409e45a3db3b26ce4ec7a64437e5929a95`\n- Next: Resolve the blocker, then rerun `release-ready` on the resulting exact head.\n\n_This single bot-owned comment is updated in place._",
+          "created_at": "2026-10-18T17:57:30Z",
+          "updated_at": "2026-10-19T00:11:36Z",
+          "html_url": "https://github.com/mekhovov/revealline/pull/1621#issuecomment-6253213719",
+          "author": "github-actions[bot]",
+          "type": "Bot"
+        }
+      ]
+    },
+    {
+      "number": 1628,
+      "head": "62be652ce70b11f840b491c218609d5225374be4",
+      "state": "open",
+      "draft": false,
+      "merged": false,
+      "mergedAt": null,
+      "mergeCommit": "eddae79bb97c89931d627e7529a86d67931503b3",
+      "mergeable": true,
+      "mergeableState": "clean",
+      "updatedAt": "2026-10-19T02:16:33Z",
+      "labels": [],
+      "autoMerge": null,
+      "base": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "counts": {
+        "success": 17,
+        "skipped": 96
+      },
+      "checkCount": 113,
+      "releaseReady": [
+        {
+          "id": 117814060858,
+          "name": "release-ready",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T23:49:32Z",
+          "completed_at": "2026-10-18T23:49:35Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39163633429/job/117814060858",
+          "external_id": "8b4cc186-ed45-5eba-95a3-d953031bcb18",
+          "suite": 106127063163,
+          "app": "github-actions"
+        }
+      ],
+      "queuedOrFailed": [],
+      "statusComments": [
+        {
+          "id": 6253535255,
+          "body": "<!-- fastline-controller-status -->\n### Fastline queue status\n\n- Purpose: test: observe matching paused Demo geometry before comparison\n- Target: unassigned\n- Predecessor: #1621\n- Blocker/status: declared predecessor is not merged\n- Checked SHA: `62be652ce70b11f840b491c218609d5225374be4`\n- Next: Resolve the blocker, then rerun `release-ready` on the resulting exact head.\n\n_This single bot-owned comment is updated in place._",
+          "created_at": "2026-10-18T18:28:33Z",
+          "updated_at": "2026-10-19T02:16:33Z",
+          "html_url": "https://github.com/mekhovov/revealline/pull/1628#issuecomment-6253535255",
+          "author": "github-actions[bot]",
+          "type": "Bot"
+        }
+      ]
+    },
+    {
+      "number": 1676,
+      "head": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "mergeCommit": "e94fcc301cd4e4af3ff674ecf9482070309636ad",
+      "mergeable": true,
+      "mergeableState": "clean",
+      "updatedAt": "2026-10-18T23:15:57Z",
+      "labels": [],
+      "autoMerge": null,
+      "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "counts": {
+        "success": 23,
+        "skipped": 3
+      },
+      "checkCount": 26,
+      "releaseReady": [
+        {
+          "id": 117865180152,
+          "name": "release-ready",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-19T04:26:38Z",
+          "completed_at": "2026-10-19T04:26:41Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117865180152",
+          "external_id": "db468e95-59c1-53e6-a936-3b5050d0f422",
+          "suite": 106151519420,
+          "app": "github-actions"
+        }
+      ],
+      "queuedOrFailed": [],
+      "statusComments": [
+        {
+          "id": 6256388326,
+          "body": "<!-- fastline-controller-status -->\n### Fastline queue status\n\n- Purpose: test(pages): observe fresh progress backup through public controls\n- Target: unassigned\n- Predecessor: #1620\n- Blocker/status: pull request is draft or draft state is unknown\n- Checked SHA: `73eb20a2d32edf194cdc7915d6fb055753df8925`\n- Next: Resolve the blocker, then rerun `release-ready` on the resulting exact head.\n\n_This single bot-owned comment is updated in place._",
+          "created_at": "2026-10-18T23:15:57Z",
+          "updated_at": "2026-10-18T23:15:57Z",
+          "html_url": "https://github.com/mekhovov/revealline/pull/1676#issuecomment-6256388326",
+          "author": "github-actions[bot]",
+          "type": "Bot"
+        }
+      ]
+    }
+  ],
+  "published": {
+    "url": "https://mekhovov.github.io/revealline/game/build-info.json",
+    "status": 200,
+    "etag": "\"6ad5744b-8f\"",
+    "date": "Mon, 19 Oct 2026 04:53:08 GMT",
+    "age": "0",
+    "body": {
+      "formatVersion": 1,
+      "version": "0.151.1",
+      "sourceRevision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "entry": "game/index.html"
+    }
+  },
+  "latestSuccessfulController": {
+    "id": 39194903049,
+    "head_sha": "55393cdfa7787057c838aa58f1c767ad5f08ba01",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-19T03:29:07Z",
+    "updated_at": "2026-10-19T04:42:27Z",
+    "run_attempt": 1,
+    "path": ".github/workflows/fastline-auto-merge.yml",
+    "jobs": [
+      {
+        "id": 117875454232,
+        "name": "reconcile",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-19T04:42:14Z",
+        "completed_at": "2026-10-19T04:42:26Z"
+      }
+    ],
+    "actualCheckout": "16ebd7b51984387c39622380a8e51a60e745152e",
+    "interpretation": "A successful controller invocation is not a cohort merge decision; exact-head cohort status comments above are unchanged."
+  },
+  "observedPendingMainControllers": [
+    {
+      "id": 39201722646,
+      "head": "16ebd7b51984387c39622380a8e51a60e745152e",
+      "event": "workflow_run",
+      "status": "pending",
+      "created": "2026-10-19T04:53:19Z"
+    },
+    {
+      "id": 39201467841,
+      "head": "16ebd7b51984387c39622380a8e51a60e745152e",
+      "event": "workflow_run",
+      "status": "pending",
+      "created": "2026-10-19T04:50:13Z"
+    }
+  ],
+  "comparison": {
+    "priorReadyCohortSnapshot": "2026-10-19T03:53:47.965821+00:00",
+    "terminalChanges": [],
+    "readyCohortChecksUnchanged": true,
+    "newFailures": [],
+    "publishedIdentityUnchanged": true
+  },
+  "remaining": [
+    "1713 source/preflight/controller checks remain queued; the repair is still open and unqualified.",
+    "1620 remains blocked by the old skipped browser classification.",
+    "1621 needs the reviewed skip-classification repair and a fresh stable trusted-controller observation; its stale-main status comment is neither admission nor permission.",
+    "1628 still depends on unmerged1621.",
+    "1676 remains a draft and depends on unmerged1620; skipped browser is not a pass."
+  ],
+  "limits": [
+    "Read-only remote metadata and source/log inspection; no functional/native/browser execution.",
+    "No merge, dispatch, cancellation, release-intent or auto-merge mutation.",
+    "The first complete-inventory attempt rejected more than100 check runs; bounded pagination then collected111 and113 checks without truncation."
+  ],
+  "completeInventory": {
+    "blob": "8a334408a4ce04f557356faa244886001adac352",
+    "bytes": 109368,
+    "sha256": "d2d57d342c009bb207f2d92dcc37bd6bd035d26b15d219bc52d32f371e4b8c8b"
+  }
+}

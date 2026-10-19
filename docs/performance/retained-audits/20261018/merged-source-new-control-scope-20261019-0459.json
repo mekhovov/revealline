@@ -1,0 +1,459 @@
+{
+  "format": "revealline-bounded-source-artifact-snapshot.v1",
+  "window": {
+    "started": "2026-10-19T04:58:40.985139+00:00",
+    "artifactIndexesAt": "2026-10-19T04:59:13.997868+00:00"
+  },
+  "requestedPRs": [
+    1708,
+    1673,
+    1712,
+    1693
+  ],
+  "method": "One bounded snapshot only. Four PR-head reads, four exact-head run listings, eleven source/industrial/appearance artifact-index reads. Only the two newly available artifacts were downloaded into RAM. Their ZIP digests, source/run/repository scope and member identities were checked. One immutable commit-tree read and one exact-source test read verify content scope. No repeated polling.",
+  "heads": [
+    {
+      "number": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "headRef": "codex/solo-recording-cancellation",
+      "base": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+      "state": "closed",
+      "merged": true,
+      "updated_at": "2026-10-19T04:23:07Z"
+    },
+    {
+      "number": 1673,
+      "head": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+      "headRef": "codex/f81-responsive-tool-focus",
+      "base": "ac0a06f76a048bbcd0701c0c990785989673080c",
+      "state": "closed",
+      "merged": true,
+      "updated_at": "2026-10-19T04:33:17Z"
+    },
+    {
+      "number": 1712,
+      "head": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a",
+      "headRef": "codex/solo-backing-context-recovery",
+      "base": "ac0a06f76a048bbcd0701c0c990785989673080c",
+      "state": "closed",
+      "merged": true,
+      "updated_at": "2026-10-19T04:28:18Z"
+    },
+    {
+      "number": 1693,
+      "head": "360bc16a035ad11377a4bd5e5321d088763d336a",
+      "headRef": "codex/solo-resume-input-lifecycle",
+      "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "state": "open",
+      "merged": false,
+      "updated_at": "2026-10-19T04:34:56Z"
+    }
+  ],
+  "runSummary": [
+    {
+      "number": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "total": 8,
+      "runs": [
+        {
+          "id": 39196032359,
+          "name": "Industrial feature verification",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T03:43:25Z"
+        },
+        {
+          "id": 39196032389,
+          "name": "Appearance preview",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T03:43:25Z"
+        },
+        {
+          "id": 39196032363,
+          "name": "Validate source for continuous main",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "in_progress",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T04:58:47Z"
+        }
+      ]
+    },
+    {
+      "number": 1673,
+      "head": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+      "total": 6,
+      "runs": [
+        {
+          "id": 39198371389,
+          "name": "Validate source for continuous main",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T04:13:17Z"
+        },
+        {
+          "id": 39198371410,
+          "name": "Industrial feature verification",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T04:13:17Z"
+        },
+        {
+          "id": 39198371503,
+          "name": "Appearance preview",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T04:13:17Z"
+        }
+      ]
+    },
+    {
+      "number": 1712,
+      "head": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a",
+      "total": 6,
+      "runs": [
+        {
+          "id": 39197989826,
+          "name": "Validate source for continuous main",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T04:08:36Z"
+        },
+        {
+          "id": 39197989915,
+          "name": "Industrial feature verification",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T04:08:36Z"
+        }
+      ]
+    },
+    {
+      "number": 1693,
+      "head": "360bc16a035ad11377a4bd5e5321d088763d336a",
+      "total": 6,
+      "runs": [
+        {
+          "id": 39200193391,
+          "name": "Appearance preview",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T04:35:21Z"
+        },
+        {
+          "id": 39200193250,
+          "name": "Industrial feature verification",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "queued",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T04:34:59Z"
+        },
+        {
+          "id": 39200193242,
+          "name": "Validate source for continuous main",
+          "event": "pull_request",
+          "attempt": 1,
+          "status": "pending",
+          "conclusion": null,
+          "updatedAt": "2026-10-19T04:35:00Z"
+        }
+      ]
+    }
+  ],
+  "artifactIndexes": [
+    {
+      "number": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "runId": 39196032359,
+      "workflow": "Industrial feature verification",
+      "attempt": 1,
+      "total": 0,
+      "artifactIds": []
+    },
+    {
+      "number": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "runId": 39196032389,
+      "workflow": "Appearance preview",
+      "attempt": 1,
+      "total": 1,
+      "artifactIds": [
+        12163289764
+      ]
+    },
+    {
+      "number": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "runId": 39196032363,
+      "workflow": "Validate source for continuous main",
+      "attempt": 1,
+      "total": 1,
+      "artifactIds": [
+        12163844256
+      ]
+    },
+    {
+      "number": 1673,
+      "head": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+      "runId": 39198371389,
+      "workflow": "Validate source for continuous main",
+      "attempt": 1,
+      "total": 0,
+      "artifactIds": []
+    },
+    {
+      "number": 1673,
+      "head": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+      "runId": 39198371410,
+      "workflow": "Industrial feature verification",
+      "attempt": 1,
+      "total": 0,
+      "artifactIds": []
+    },
+    {
+      "number": 1673,
+      "head": "0fd780bba39ae36ae952172d4de2805cf8325c43",
+      "runId": 39198371503,
+      "workflow": "Appearance preview",
+      "attempt": 1,
+      "total": 0,
+      "artifactIds": []
+    },
+    {
+      "number": 1712,
+      "head": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a",
+      "runId": 39197989826,
+      "workflow": "Validate source for continuous main",
+      "attempt": 1,
+      "total": 0,
+      "artifactIds": []
+    },
+    {
+      "number": 1712,
+      "head": "3d565db52ef85cac2b7173df9e9d48a51e20bb3a",
+      "runId": 39197989915,
+      "workflow": "Industrial feature verification",
+      "attempt": 1,
+      "total": 0,
+      "artifactIds": []
+    },
+    {
+      "number": 1693,
+      "head": "360bc16a035ad11377a4bd5e5321d088763d336a",
+      "runId": 39200193391,
+      "workflow": "Appearance preview",
+      "attempt": 1,
+      "total": 0,
+      "artifactIds": []
+    },
+    {
+      "number": 1693,
+      "head": "360bc16a035ad11377a4bd5e5321d088763d336a",
+      "runId": 39200193250,
+      "workflow": "Industrial feature verification",
+      "attempt": 1,
+      "total": 0,
+      "artifactIds": []
+    },
+    {
+      "number": 1693,
+      "head": "360bc16a035ad11377a4bd5e5321d088763d336a",
+      "runId": 39200193242,
+      "workflow": "Validate source for continuous main",
+      "attempt": 1,
+      "total": 0,
+      "artifactIds": []
+    }
+  ],
+  "newArtifacts": [
+    {
+      "number": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "runId": 39196032389,
+      "attempt": 1,
+      "workflow": "Appearance preview",
+      "artifactId": 12163289764,
+      "artifactName": "appearance-admission-62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384-1",
+      "created_at": "2026-10-19T04:57:56Z",
+      "artifactBytes": 10415,
+      "listedArtifactBytes": 10415,
+      "archiveSHA256": "6935ae292d1f9b003903490541086422a4c1597024aa625ab6ce4051b5980e1a",
+      "archiveDigestVerified": true,
+      "runHeadRepositoryVerified": true,
+      "members": [
+        {
+          "path": "admission-proof.json",
+          "bytes": 2328,
+          "sha256": "3d0a8747d98a5ef72bf21a90df46609bc539e0104ea83bd20881382cd45eb18c",
+          "json": {
+            "format": "AppearanceAdmissionProofV1",
+            "sourceRevision": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+            "sourceTree": "0c871036de4a6898494b6010afe1a9e2add655e5",
+            "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39196032389",
+            "node": "v22.13.1",
+            "testPolicy": {
+              "policyMode": "required",
+              "mode": "required",
+              "runTests": "true",
+              "qualification": "tests-required",
+              "forced": false,
+              "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+              "policy": {
+                "format": "revealline-release-test-policy.v1",
+                "mode": "required",
+                "authorization": "explicit-user-request-20261004",
+                "scope": "automated-test-suites",
+                "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+                "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+              }
+            },
+            "result": "passed",
+            "executed": true,
+            "command": "node --test --test-concurrency=1",
+            "files": [
+              "game/test/journey-performance-admission.test.mjs",
+              "game/test/journey-performance-observation-admission.test.mjs",
+              "game/test/journey-profile-owned-transition.test.mjs",
+              "game/test/journey-required-progress-admission.test.mjs",
+              "game/test/solo-required-progress-preparation-host.test.mjs",
+              "game/test/owned-recorder.test.mjs",
+              "game/test/demo-library-indexeddb.test.mjs",
+              "game/test/optional-learning-admission.test.mjs",
+              "game/test/optional-replay-admission.test.mjs",
+              "game/test/solo-pending-verification-gameplay-host.test.mjs",
+              "game/test/edition-mastery-host.test.mjs",
+              "game/test/edition-lessons.test.mjs",
+              "game/test/capture-presentation-session.test.mjs",
+              "game/test/solo-dense-replay-persistence.test.mjs",
+              "game/test/library-entry.test.mjs",
+              "game/test/solo-lazy-library-host.test.mjs",
+              "game/test/solo-transition-performance-host.test.mjs"
+            ],
+            "output": {
+              "path": "admission-tests.tap",
+              "bytes": 41720,
+              "sha256": "67053568569eeff61c1d14453b843dc88268813124b41591d3912c530562451a"
+            }
+          }
+        },
+        {
+          "path": "admission-tests.tap",
+          "bytes": 41720,
+          "sha256": "67053568569eeff61c1d14453b843dc88268813124b41591d3912c530562451a"
+        }
+      ]
+    },
+    {
+      "number": 1708,
+      "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+      "runId": 39196032363,
+      "attempt": 1,
+      "workflow": "Validate source for continuous main",
+      "artifactId": 12163844256,
+      "artifactName": "admission-39196032363-1",
+      "created_at": "2026-10-19T04:58:58Z",
+      "artifactBytes": 474,
+      "listedArtifactBytes": 474,
+      "archiveSHA256": "c7b3df73ddd9747faaa44e729e8211fd2ac81fa453065fdc5004964e006ba172",
+      "archiveDigestVerified": true,
+      "runHeadRepositoryVerified": true,
+      "members": [
+        {
+          "path": "admission.json",
+          "bytes": 498,
+          "sha256": "9cf1775858671341460796e9238482f1232df51e71472cde5a17606b7b69af5e",
+          "json": {
+            "format": "revealline-admission.v1",
+            "headSha": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+            "baseSha": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+            "workflowRevision": "ecbb55475ac7aff3466dd2cdaec8ca737e28688e",
+            "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+            "classification": "maintenance",
+            "dependencies": [],
+            "paths": [
+              "game/journey/reaction-voice-cache.mjs",
+              "game/test/reaction-recording-cancellation.test.mjs",
+              "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "appearanceValidation": {
+    "treeMatchesExactCommit": true,
+    "outputBytesAndHashMatch": true,
+    "sourceRevision": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+    "sourceTree": "0c871036de4a6898494b6010afe1a9e2add655e5",
+    "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39196032389",
+    "result": "passed",
+    "executed": true,
+    "tests": 170,
+    "topLevelSubtests": 163,
+    "passed": 170,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "scope": "Existing 17-file appearance/correctness admission set. This is not physical device, browser performance, full appearance suite, full source workflow or release qualification.",
+    "newCancellationFile": "game/test/reaction-recording-cancellation.test.mjs",
+    "newCancellationFileBlob": "bb8585adb5812a3a73723fc1e938f2e884c2880c",
+    "newCancellationFileListed": false,
+    "newControlNames": [
+      {
+        "name": "recording cancellation before inspection does not read bytes or create media",
+        "present": false
+      },
+      {
+        "name": "cancellation during byte reading wins over a later malformed container",
+        "present": false
+      },
+      {
+        "name": "an uncancelled malformed recording retains structural validation",
+        "present": false
+      },
+      {
+        "name": "an uncancelled recording keeps metadata inspection and owned URL cleanup",
+        "present": false
+      },
+      {
+        "name": "cache cancellation owns a pending byte read until it settles and starts no media or decode",
+        "present": false
+      },
+      {
+        "name": "uncancelled demanded speech still prepares while playing with one decode and no playback",
+        "present": false
+      }
+    ],
+    "newControlsExecutedInArtifact": 0
+  },
+  "conclusions": [
+    "#1708 has two new exact-head artifacts. Appearance admission reports 170 passing tests, but none of the six new recording cancellation controls appears in its selected file list or TAP.",
+    "#1708's admission.json records source classification and changed paths only; it contains no functional test result. Its source workflow was in progress in the run snapshot.",
+    "#1673 and #1712 had zero artifacts across the requested source workflows in this snapshot; their checks remain without new source-test evidence here.",
+    "Corrected #1693 head exactly matches 360bc16a035ad11377a4bd5e5321d088763d336a. Its source run was pending and other requested runs queued; all three artifact indexes were empty.",
+    "No claim is made that an overall queued/in-progress run completed. Artifact observations and run-list statuses were read at different moments inside the bounded snapshot."
+  ],
+  "limits": [
+    "Stopped after this snapshot; no follow-up polling.",
+    "No local files, tests, generators, app execution, native work, release actions, source pushes or plan/index mutations.",
+    "First three PRs are already merged according to the head snapshot; merge state is not test evidence."
+  ]
+}

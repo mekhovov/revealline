@@ -1,0 +1,1233 @@
+{
+  "kind": "held-draft-source-qualification-audit",
+  "createdAt": "2026-10-19T05:01:37.029Z",
+  "rawEvidence": {
+    "blob": "0290f72133b0379b359e9471857ba54c71d2c870",
+    "bytes": 326716,
+    "sha256": "52666cc7e10d7cb066d8307cd640958080f3ac986056980f2e3e7c340871a3a3"
+  },
+  "snapshot": [
+    {
+      "number": 1699,
+      "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+      "run": 39185722862,
+      "attempt": 1,
+      "artifacts": {
+        "total": 5,
+        "items": [
+          {
+            "id": 12164370446,
+            "name": "focused-shard-39185722862-1-3",
+            "size_in_bytes": 30326,
+            "digest": "sha256:eeefb25adf8c0b93abaf2efdb92ce8462afd7b7e3c05256830c475a74aba5b4e",
+            "expired": false,
+            "created_at": "2026-10-19T04:48:33Z",
+            "updated_at": "2026-10-19T04:48:33Z",
+            "workflow_run": {
+              "id": 39185722862,
+              "repository_id": 1367404328,
+              "head_repository_id": 1367404328,
+              "head_branch": "codex/solo-retry-heap-retainers",
+              "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb"
+            }
+          },
+          {
+            "id": 12164330200,
+            "name": "focused-shard-39185722862-1-4",
+            "size_in_bytes": 6141,
+            "digest": "sha256:7384e3724ba4e3353e788064b061290294c9c744d04a47817ae57c17a9af7873",
+            "expired": false,
+            "created_at": "2026-10-19T04:47:59Z",
+            "updated_at": "2026-10-19T04:47:59Z",
+            "workflow_run": {
+              "id": 39185722862,
+              "repository_id": 1367404328,
+              "head_repository_id": 1367404328,
+              "head_branch": "codex/solo-retry-heap-retainers",
+              "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb"
+            }
+          },
+          {
+            "id": 12164171503,
+            "name": "focused-shard-39185722862-1-1",
+            "size_in_bytes": 20225,
+            "digest": "sha256:56c5fad89114d685d5a31017e7e31bcad81960992848b2acbb7f5edd05dff313",
+            "expired": false,
+            "created_at": "2026-10-19T04:49:33Z",
+            "updated_at": "2026-10-19T04:49:33Z",
+            "workflow_run": {
+              "id": 39185722862,
+              "repository_id": 1367404328,
+              "head_repository_id": 1367404328,
+              "head_branch": "codex/solo-retry-heap-retainers",
+              "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb"
+            }
+          },
+          {
+            "id": 12162629694,
+            "name": "focused-shard-39185722862-1-2",
+            "size_in_bytes": 6222,
+            "digest": "sha256:b245b4baf92407ffa511f4a2a6bbf4ff5ee4236c5e99186c2b94fcaf1da314c5",
+            "expired": false,
+            "created_at": "2026-10-19T04:40:01Z",
+            "updated_at": "2026-10-19T04:40:01Z",
+            "workflow_run": {
+              "id": 39185722862,
+              "repository_id": 1367404328,
+              "head_repository_id": 1367404328,
+              "head_branch": "codex/solo-retry-heap-retainers",
+              "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb"
+            }
+          },
+          {
+            "id": 12160828882,
+            "name": "admission-39185722862-1",
+            "size_in_bytes": 796,
+            "digest": "sha256:0978b7dfe35647098767a91c46c4f37eb67510de31cfe771b588decb8eefc051",
+            "expired": false,
+            "created_at": "2026-10-19T03:18:35Z",
+            "updated_at": "2026-10-19T03:18:35Z",
+            "workflow_run": {
+              "id": 39185722862,
+              "repository_id": 1367404328,
+              "head_repository_id": 1367404328,
+              "head_branch": "codex/solo-retry-heap-retainers",
+              "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb"
+            }
+          }
+        ]
+      },
+      "jobs": {
+        "total": 8,
+        "items": [
+          {
+            "id": 117847633789,
+            "name": "preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T03:18:39Z"
+          },
+          {
+            "id": 117872924257,
+            "name": "focused_shards (2)",
+            "status": "completed",
+            "conclusion": "failure",
+            "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:40:03Z"
+          },
+          {
+            "id": 117872924322,
+            "name": "focused_shards (1)",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:49:37Z"
+          },
+          {
+            "id": 117872924323,
+            "name": "focused_shards (3)",
+            "status": "completed",
+            "conclusion": "failure",
+            "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:48:36Z"
+          },
+          {
+            "id": 117872924325,
+            "name": "focused_shards (4)",
+            "status": "completed",
+            "conclusion": "failure",
+            "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:48:01Z"
+          },
+          {
+            "id": 117872925195,
+            "name": "test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T03:18:40Z"
+          },
+          {
+            "id": 117872926059,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T03:18:40Z"
+          },
+          {
+            "id": 117894994154,
+            "name": "focused",
+            "status": "queued",
+            "conclusion": null,
+            "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+            "run_attempt": 1,
+            "completed_at": null
+          }
+        ]
+      }
+    },
+    {
+      "number": 1703,
+      "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+      "run": 39189308444,
+      "attempt": 1,
+      "artifacts": {
+        "total": 1,
+        "items": [
+          {
+            "id": 12162848429,
+            "name": "admission-39189308444-1",
+            "size_in_bytes": 800,
+            "digest": "sha256:032185c6f1d105b564aeec5b7e3634de3be4ca56ec1b1c3ed33affa0ad4a69a9",
+            "expired": false,
+            "created_at": "2026-10-19T04:22:17Z",
+            "updated_at": "2026-10-19T04:22:17Z",
+            "workflow_run": {
+              "id": 39189308444,
+              "repository_id": 1367404328,
+              "head_repository_id": 1367404328,
+              "head_branch": "codex/solo-empirical-overhead-acceptance",
+              "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b"
+            }
+          }
+        ]
+      },
+      "jobs": {
+        "total": 7,
+        "items": [
+          {
+            "id": 117858371570,
+            "name": "preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:22:21Z"
+          },
+          {
+            "id": 117888238657,
+            "name": "focused_shards (2)",
+            "status": "queued",
+            "conclusion": null,
+            "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+            "run_attempt": 1,
+            "completed_at": null
+          },
+          {
+            "id": 117888238668,
+            "name": "focused_shards (4)",
+            "status": "queued",
+            "conclusion": null,
+            "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+            "run_attempt": 1,
+            "completed_at": null
+          },
+          {
+            "id": 117888238677,
+            "name": "focused_shards (1)",
+            "status": "queued",
+            "conclusion": null,
+            "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+            "run_attempt": 1,
+            "completed_at": null
+          },
+          {
+            "id": 117888238730,
+            "name": "focused_shards (3)",
+            "status": "queued",
+            "conclusion": null,
+            "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+            "run_attempt": 1,
+            "completed_at": null
+          },
+          {
+            "id": 117888239960,
+            "name": "test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:22:21Z"
+          },
+          {
+            "id": 117888240028,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "head_sha": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:22:21Z"
+          }
+        ]
+      }
+    },
+    {
+      "number": 1705,
+      "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+      "run": 39191168798,
+      "attempt": 1,
+      "artifacts": {
+        "total": 1,
+        "items": [
+          {
+            "id": 12162417375,
+            "name": "admission-39191168798-1",
+            "size_in_bytes": 427,
+            "digest": "sha256:0f2626d732aaa2af9796f0614cc497c4924dcf2846f4e67821295ad49eaa1bac",
+            "expired": false,
+            "created_at": "2026-10-19T04:10:42Z",
+            "updated_at": "2026-10-19T04:10:42Z",
+            "workflow_run": {
+              "id": 39191168798,
+              "repository_id": 1367404328,
+              "head_repository_id": 1367404328,
+              "head_branch": "codex/solo-measurement-provenance-helper",
+              "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e"
+            }
+          }
+        ]
+      },
+      "jobs": {
+        "total": 7,
+        "items": [
+          {
+            "id": 117864094414,
+            "name": "preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:10:45Z"
+          },
+          {
+            "id": 117885328072,
+            "name": "focused_shards (1)",
+            "status": "queued",
+            "conclusion": null,
+            "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e",
+            "run_attempt": 1,
+            "completed_at": null
+          },
+          {
+            "id": 117885328102,
+            "name": "focused_shards (4)",
+            "status": "queued",
+            "conclusion": null,
+            "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e",
+            "run_attempt": 1,
+            "completed_at": null
+          },
+          {
+            "id": 117885328129,
+            "name": "focused_shards (2)",
+            "status": "queued",
+            "conclusion": null,
+            "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e",
+            "run_attempt": 1,
+            "completed_at": null
+          },
+          {
+            "id": 117885328141,
+            "name": "focused_shards (3)",
+            "status": "queued",
+            "conclusion": null,
+            "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e",
+            "run_attempt": 1,
+            "completed_at": null
+          },
+          {
+            "id": 117885329384,
+            "name": "test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:10:45Z"
+          },
+          {
+            "id": 117885329710,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "head_sha": "c1c943344b29c456608632a7afc39d4436efd63e",
+            "run_attempt": 1,
+            "completed_at": "2026-10-19T04:10:45Z"
+          }
+        ]
+      }
+    }
+  ],
+  "scope": "Bounded current-head source qualification only. No reruns, source publication, holds changed, native adapter execution or performance admission.",
+  "results1699": {
+    "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+    "run": 39185722862,
+    "attempt": 1,
+    "allFourArtifactsVerified": true,
+    "selectedCommandIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "commandCount": 11,
+    "counts": {
+      "tests": 1226,
+      "pass": 1215,
+      "fail": 10,
+      "skipped": 1
+    },
+    "countLimit": "TAP outcomes include imported and repeated suites; they are not unique new tests.",
+    "newControlSourceJoins": [
+      {
+        "path": "scripts/solo-frame-trace-heap-tooling-admission.test.mjs",
+        "sha": "04510d22f8705164012c80ef97eb678cae5e757a",
+        "sha256": "36b284f727388d0d850cdb3672cfa8afe4523035ce906e37f9f5c611114d5083",
+        "literalTopLevelTests": 4,
+        "outcomes": [
+          {
+            "name": "separately named trace tooling successor changes only two exact tool identities",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 560 - separately named trace tooling successor changes only two exact tool identities"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 63 - separately named trace tooling successor changes only two exact tool identities"
+              }
+            ]
+          },
+          {
+            "name": "every non-tool field, extra field, replacement path and stale tool identity is rejected",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 561 - every non-tool field, extra field, replacement path and stale tool identity is rejected"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 64 - every non-tool field, extra field, replacement path and stale tool identity is rejected"
+              }
+            ]
+          },
+          {
+            "name": "unchanged original v2 pins still fail production admission before native work",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "not ok",
+                "skip": false,
+                "line": "not ok 562 - unchanged original v2 pins still fail production admission before native work"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "not ok",
+                "skip": false,
+                "line": "not ok 65 - unchanged original v2 pins still fail production admission before native work"
+              }
+            ]
+          },
+          {
+            "name": "current lane selects tooling successor with full inherited controls and unchanged owners",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 563 - current lane selects tooling successor with full inherited controls and unchanged owners"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 66 - current lane selects tooling successor with full inherited controls and unchanged owners"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "scripts/solo-frame-trace-tasks-admission.test.mjs",
+        "sha": "a6f6404e1d0020fd685fb64270e70e3d8e8ca4ef",
+        "sha256": "f4f29c0cac37c9fa1e35d32599d07805e21ba2ab450717f1ce81bddb59d5b1bf",
+        "literalTopLevelTests": 11,
+        "outcomes": [
+          {
+            "name": "named task/frame successor retains the exact runtime, caps and both failed predecessors",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 549 - named task/frame successor retains the exact runtime, caps and both failed predecessors"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 52 - named task/frame successor retains the exact runtime, caps and both failed predecessors"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 52 - named task/frame successor retains the exact runtime, caps and both failed predecessors"
+              }
+            ]
+          },
+          {
+            "name": "unknown protocols, broad categories, altered failure receipts and widened budgets fail admission",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 550 - unknown protocols, broad categories, altered failure receipts and widened budgets fail admission"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 53 - unknown protocols, broad categories, altered failure receipts and widened budgets fail admission"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 53 - unknown protocols, broad categories, altered failure receipts and widened budgets fail admission"
+              }
+            ]
+          },
+          {
+            "name": "new CLI selection is exact and keeps ordinary and v1 defaults",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 551 - new CLI selection is exact and keeps ordinary and v1 defaults"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 54 - new CLI selection is exact and keeps ordinary and v1 defaults"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 54 - new CLI selection is exact and keeps ordinary and v1 defaults"
+              }
+            ]
+          },
+          {
+            "name": "actual recorder requests only the five named categories with the original bounds",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 552 - actual recorder requests only the five named categories with the original bounds"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 55 - actual recorder requests only the five named categories with the original bounds"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 55 - actual recorder requests only the five named categories with the original bounds"
+              }
+            ]
+          },
+          {
+            "name": "missing task categories fail without fallback even though broad graphics categories are unnecessary",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 553 - missing task categories fail without fallback even though broad graphics categories are unnecessary"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 56 - missing task categories fail without fallback even though broad graphics categories are unnecessary"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 56 - missing task categories fail without fallback even though broad graphics categories are unnecessary"
+              }
+            ]
+          },
+          {
+            "name": "v2 still refuses data loss, a missing raw anchor, a full buffer and unsuccessful cleanup",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 554 - v2 still refuses data loss, a missing raw anchor, a full buffer and unsuccessful cleanup"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 57 - v2 still refuses data loss, a missing raw anchor, a full buffer and unsuccessful cleanup"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 57 - v2 still refuses data loss, a missing raw anchor, a full buffer and unsuccessful cleanup"
+              }
+            ]
+          },
+          {
+            "name": "v2 readback verifies bytes and category identity and rejects a relabeled v1 record",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 555 - v2 readback verifies bytes and category identity and rejects a relabeled v1 record"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 58 - v2 readback verifies bytes and category identity and rejects a relabeled v1 record"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 58 - v2 readback verifies bytes and category identity and rejects a relabeled v1 record"
+              }
+            ]
+          },
+          {
+            "name": "actual driver forwards v2 and assessment never promotes v1 or incomplete evidence",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 556 - actual driver forwards v2 and assessment never promotes v1 or incomplete evidence"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 59 - actual driver forwards v2 and assessment never promotes v1 or incomplete evidence"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 59 - actual driver forwards v2 and assessment never promotes v1 or incomplete evidence"
+              }
+            ]
+          },
+          {
+            "name": "every frozen v2 input is exact and historical adapter pins cannot start native work",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 557 - every frozen v2 input is exact and historical adapter pins cannot start native work"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 60 - every frozen v2 input is exact and historical adapter pins cannot start native work"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 60 - every frozen v2 input is exact and historical adapter pins cannot start native work"
+              }
+            ]
+          },
+          {
+            "name": "historical source adapter is test-only and refuses an altered witness",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 558 - historical source adapter is test-only and refuses an altered witness"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 61 - historical source adapter is test-only and refuses an altered witness"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 61 - historical source adapter is test-only and refuses an altered witness"
+              }
+            ]
+          },
+          {
+            "name": "frozen pre-heap lane selected v2 with complete controls and unchanged owner limits",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 559 - frozen pre-heap lane selected v2 with complete controls and unchanged owner limits"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 62 - frozen pre-heap lane selected v2 with complete controls and unchanged owner limits"
+              },
+              {
+                "artifact": 12164171503,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 62 - frozen pre-heap lane selected v2 with complete controls and unchanged owner limits"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "scripts/solo-qualification-heap-retainers.test.mjs",
+        "sha": "8956d110e0ace3545b600834dbe4b7e1b03f5a22",
+        "sha256": "9c104f76cad6052fe2b8a6c9baac553fa7488ff18a170b2b11c4fd1428509f92",
+        "literalTopLevelTests": 14,
+        "outcomes": [
+          {
+            "name": "heap opt-in is absent by default and accepts only the original local source797 Retry recipe",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 91 - heap opt-in is absent by default and accepts only the original local source797 Retry recipe"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 1 - heap opt-in is absent by default and accepts only the original local source797 Retry recipe"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 1 - heap opt-in is absent by default and accepts only the original local source797 Retry recipe"
+              }
+            ]
+          },
+          {
+            "name": "exact twenty completed boundaries capture only first and last and analyze after closed-browser proof",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 92 - exact twenty completed boundaries capture only first and last and analyze after closed-browser proof"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 2 - exact twenty completed boundaries capture only first and last and analyze after closed-browser proof"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 2 - exact twenty completed boundaries capture only first and last and analyze after closed-browser proof"
+              }
+            ]
+          },
+          {
+            "name": "active, wrong-source and changed-phase boundaries cannot take a heap",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 93 - active, wrong-source and changed-phase boundaries cannot take a heap"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 3 - active, wrong-source and changed-phase boundaries cannot take a heap"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 3 - active, wrong-source and changed-phase boundaries cannot take a heap"
+              }
+            ]
+          },
+          {
+            "name": "hidden document replacement between captures is rejected instead of comparing unrelated heaps",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 94 - hidden document replacement between captures is rejected instead of comparing unrelated heaps"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 4 - hidden document replacement between captures is rejected instead of comparing unrelated heaps"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 4 - hidden document replacement between captures is rejected instead of comparing unrelated heaps"
+              }
+            ]
+          },
+          {
+            "name": "incomplete progress is a retained failure with removed listeners and a closed partial file",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 95 - incomplete progress is a retained failure with removed listeners and a closed partial file"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 5 - incomplete progress is a retained failure with removed listeners and a closed partial file"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 5 - incomplete progress is a retained failure with removed listeners and a closed partial file"
+              }
+            ]
+          },
+          {
+            "name": "oversize chunks fail before writing and cannot produce a valid heap",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 96 - oversize chunks fail before writing and cannot produce a valid heap"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 6 - oversize chunks fail before writing and cannot produce a valid heap"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 6 - oversize chunks fail before writing and cannot produce a valid heap"
+              }
+            ]
+          },
+          {
+            "name": "the existing profile abort cancels collection without late chunk writes or browser handles",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 97 - the existing profile abort cancels collection without late chunk writes or browser handles"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 7 - the existing profile abort cancels collection without late chunk writes or browser handles"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 7 - the existing profile abort cancels collection without late chunk writes or browser handles"
+              }
+            ]
+          },
+          {
+            "name": "missing terminal capture, open browser and malformed heap data never qualify the diagnostic",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 98 - missing terminal capture, open browser and malformed heap data never qualify the diagnostic"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 8 - missing terminal capture, open browser and malformed heap data never qualify the diagnostic"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 8 - missing terminal capture, open browser and malformed heap data never qualify the diagnostic"
+              }
+            ]
+          },
+          {
+            "name": "post-closure comparisons verify digests and exclude weak retaining paths",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 99 - post-closure comparisons verify digests and exclude weak retaining paths"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 9 - post-closure comparisons verify digests and exclude weak retaining paths"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 9 - post-closure comparisons verify digests and exclude weak retaining paths"
+              }
+            ]
+          },
+          {
+            "name": "the inherited pause deadline is capped at ten seconds and never extends the scenario",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 100 - the inherited pause deadline is capped at ten seconds and never extends the scenario"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 10 - the inherited pause deadline is capped at ten seconds and never extends the scenario"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 10 - the inherited pause deadline is capped at ten seconds and never extends the scenario"
+              }
+            ]
+          },
+          {
+            "name": "aggregate bytes and chunk count fail closed at their separate limits",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 101 - aggregate bytes and chunk count fail closed at their separate limits"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 11 - aggregate bytes and chunk count fail closed at their separate limits"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 11 - aggregate bytes and chunk count fail closed at their separate limits"
+              }
+            ]
+          },
+          {
+            "name": "malformed progress cannot manufacture a completed heap stream",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 102 - malformed progress cannot manufacture a completed heap stream"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 12 - malformed progress cannot manufacture a completed heap stream"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 12 - malformed progress cannot manufacture a completed heap stream"
+              }
+            ]
+          },
+          {
+            "name": "close and rename failures remain explicit failed evidence with no leaked listeners",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 103 - close and rename failures remain explicit failed evidence with no leaked listeners"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 13 - close and rename failures remain explicit failed evidence with no leaked listeners"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 13 - close and rename failures remain explicit failed evidence with no leaked listeners"
+              }
+            ]
+          },
+          {
+            "name": "finish cannot use a fresh ten-second budget after the original owner deadline",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 104 - finish cannot use a fresh ten-second budget after the original owner deadline"
+              },
+              {
+                "artifact": 12164330200,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 14 - finish cannot use a fresh ten-second budget after the original owner deadline"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 14 - finish cannot use a fresh ten-second budget after the original owner deadline"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "scripts/solo-retry-heap-retainers-admission.test.mjs",
+        "sha": "2009b4cd9e868d2c80b10c4ed615d9f3f14525b7",
+        "sha256": "03626104945ae3c2c90bc19e0d0ea793094637fa878efd2ec8ac1a6a7a6975b1",
+        "literalTopLevelTests": 5,
+        "outcomes": [
+          {
+            "name": "heap successor is exactly one candidate Chromium row with original source, fixture and deadlines",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "not ok",
+                "skip": false,
+                "line": "not ok 476 - heap successor is exactly one candidate Chromium row with original source, fixture and deadlines"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "not ok",
+                "skip": false,
+                "line": "not ok 15 - heap successor is exactly one candidate Chromium row with original source, fixture and deadlines"
+              }
+            ]
+          },
+          {
+            "name": "heap scope mutations and extra native rows fail admission",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 477 - heap scope mutations and extra native rows fail admission"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 16 - heap scope mutations and extra native rows fail admission"
+              }
+            ]
+          },
+          {
+            "name": "actual Retry driver forwards only the explicit heap opt-in and keeps memory timing exclusion",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "not ok",
+                "skip": false,
+                "line": "not ok 478 - actual Retry driver forwards only the explicit heap opt-in and keeps memory timing exclusion"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "not ok",
+                "skip": false,
+                "line": "not ok 17 - actual Retry driver forwards only the explicit heap opt-in and keeps memory timing exclusion"
+              }
+            ]
+          },
+          {
+            "name": "every new declaration input has exact current bytes and stale input fails before native effects",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "not ok",
+                "skip": false,
+                "line": "not ok 479 - every new declaration input has exact current bytes and stale input fails before native effects"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "not ok",
+                "skip": false,
+                "line": "not ok 18 - every new declaration input has exact current bytes and stale input fails before native effects"
+              }
+            ]
+          },
+          {
+            "name": "existing manual lifecycle lane admits a single heap row and executes every source control first",
+            "matches": [
+              {
+                "artifact": 12164370446,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 480 - existing manual lifecycle lane admits a single heap row and executes every source control first"
+              },
+              {
+                "artifact": 12162629694,
+                "result": "ok",
+                "skip": false,
+                "line": "ok 19 - existing manual lifecycle lane admits a single heap row and executes every source control first"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "failures": [
+      {
+        "artifact": 12164370446,
+        "line": 104,
+        "text": "not ok 4 - real lifecycle binders match actual job/outer expressions for36 independent diagnostic observations\n  ---\n  duration_ms: 23.467237\n  location: '/home/runner/work/revealline/revealline/source/scripts/solo-native-measurement-consumer.test.mjs:417:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + true\n    - undefined\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  actual: true\n  operator: 'strictEqual'\n  stack: |-\n    validateSourceCohort (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:746:10)\n    validateSustainedPlan (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1503:20)\n    bindSustainedJob (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1663:10)\n    file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1681:20\n    Array.map (<anonymous>)\n    sustainedMatrix (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1680:23)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/solo-native-measurement-consumer.test.mjs:451:16)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ..."
+      },
+      {
+        "artifact": 12164370446,
+        "line": 2313,
+        "text": "not ok 392 - pre-heap witness binds all 27 immutable declarations to actual retained tool bodies\n  ---\n  duration_ms: 470.869181\n  location: '/home/runner/work/revealline/revealline/source/scripts/test-solo-readiness-rejoin-797e03.mjs:289:1'\n  failureType: 'testCodeFailure'\n  error: \"Cannot read properties of undefined (reading 'bytes')\"\n  code: 'ERR_TEST_FAILURE'\n  name: 'TypeError'\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/test-solo-readiness-rejoin-797e03.mjs:341:29)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ..."
+      },
+      {
+        "artifact": 12164370446,
+        "line": 2742,
+        "text": "not ok 476 - heap successor is exactly one candidate Chromium row with original source, fixture and deadlines\n  ---\n  duration_ms: 0.558147\n  location: '/home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:22:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + true\n    - undefined\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  actual: true\n  operator: 'strictEqual'\n  stack: |-\n    validateSourceCohort (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:746:10)\n    validateSustainedPlan (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1503:20)\n    bindSustainedJob (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1663:10)\n    bind (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:18:35)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:23:16)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n  ..."
+      },
+      {
+        "artifact": 12164370446,
+        "line": 2775,
+        "text": "not ok 478 - actual Retry driver forwards only the explicit heap opt-in and keeps memory timing exclusion\n  ---\n  duration_ms: 0.373634\n  location: '/home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:81:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + true\n    - undefined\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  actual: true\n  operator: 'strictEqual'\n  stack: |-\n    validateSourceCohort (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:746:10)\n    validateSustainedPlan (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1503:20)\n    bindSustainedJob (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1663:10)\n    bind (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:18:35)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:82:16)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n  ..."
+      },
+      {
+        "artifact": 12164370446,
+        "line": 2803,
+        "text": "not ok 479 - every new declaration input has exact current bytes and stale input fails before native effects\n  ---\n  duration_ms: 12.537617\n  location: '/home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:103:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + true\n    - undefined\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  actual: true\n  operator: 'strictEqual'\n  stack: |-\n    validateSourceCohort (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:746:10)\n    validateSustainedPlan (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1503:20)\n    bindSustainedJob (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1663:10)\n    bind (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:18:35)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:113:16)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ..."
+      },
+      {
+        "artifact": 12164370446,
+        "line": 3238,
+        "text": "not ok 562 - unchanged original v2 pins still fail production admission before native work\n  ---\n  duration_ms: 1.136803\n  location: '/home/runner/work/revealline/revealline/source/scripts/solo-frame-trace-heap-tooling-admission.test.mjs:92:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The expression evaluated to a falsy value:\n    \n      assert(checked > 0)\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/solo-frame-trace-heap-tooling-admission.test.mjs:112:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ..."
+      },
+      {
+        "artifact": 12164330200,
+        "line": 413,
+        "text": "not ok 65 - unchanged original v2 pins still fail production admission before native work\n  ---\n  duration_ms: 1.412279\n  location: '/home/runner/work/revealline/revealline/source/scripts/solo-frame-trace-heap-tooling-admission.test.mjs:92:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The expression evaluated to a falsy value:\n    \n      assert(checked > 0)\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/solo-frame-trace-heap-tooling-admission.test.mjs:112:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ..."
+      },
+      {
+        "artifact": 12162629694,
+        "line": 223,
+        "text": "not ok 15 - heap successor is exactly one candidate Chromium row with original source, fixture and deadlines\n  ---\n  duration_ms: 6.202558\n  location: '/home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:22:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + true\n    - undefined\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  actual: true\n  operator: 'strictEqual'\n  stack: |-\n    validateSourceCohort (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:746:10)\n    validateSustainedPlan (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1503:20)\n    bindSustainedJob (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1663:10)\n    bind (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:18:35)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:23:16)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n  ..."
+      },
+      {
+        "artifact": 12162629694,
+        "line": 256,
+        "text": "not ok 17 - actual Retry driver forwards only the explicit heap opt-in and keeps memory timing exclusion\n  ---\n  duration_ms: 0.65457\n  location: '/home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:81:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + true\n    - undefined\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  actual: true\n  operator: 'strictEqual'\n  stack: |-\n    validateSourceCohort (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:746:10)\n    validateSustainedPlan (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1503:20)\n    bindSustainedJob (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1663:10)\n    bind (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:18:35)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:82:16)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n  ..."
+      },
+      {
+        "artifact": 12162629694,
+        "line": 284,
+        "text": "not ok 18 - every new declaration input has exact current bytes and stale input fails before native effects\n  ---\n  duration_ms: 38.967165\n  location: '/home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:103:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + true\n    - undefined\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  actual: true\n  operator: 'strictEqual'\n  stack: |-\n    validateSourceCohort (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:746:10)\n    validateSustainedPlan (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1503:20)\n    bindSustainedJob (file:///home/runner/work/revealline/revealline/source/scripts/solo-remote-sustained.mjs:1663:10)\n    bind (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:18:35)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/scripts/solo-retry-heap-retainers-admission.test.mjs:113:16)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ..."
+      }
+    ],
+    "status": "Failed source checks. All four shards complete; focused aggregate queued at snapshot. No final admission.",
+    "diagnosis": [
+      "Production generic candidateOnly===undefined conflicts with strict recognized Retry heap candidateOnly===true; proposed repair must be confined to the exact source797 Retry lifecycle path before generic source-cohort returns.",
+      "Historical de332 sustained helper belongs to frozenTools, not adapterInputs; historical bytes remain unchanged.",
+      "Stale-original trace admission test passes trailing-slash repository root, causing containment rejection before intended digest mismatch; canonical root and precise mismatch assertion preserve strict rejection."
+    ],
+    "passingScope": "14/14 heap helper controls; 2/5 heap admission; 3/4 prospective trace-tooling controls; 11/11 original task-trace controls. The failed fixture/admission cases remain failed until corrected-head execution."
+  },
+  "remaining": [
+    {
+      "number": 1703,
+      "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+      "status": "Unverified: only admission artifact; all four focused source shards queued at bounded snapshot."
+    },
+    {
+      "number": 1705,
+      "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+      "status": "Unverified: only admission artifact; all four focused source shards queued at bounded snapshot."
+    },
+    "Original frame trace first, all diagnostic holds and native qualification ordering unchanged.",
+    "Proposed six-file repair has two authored source groups and static checks only; it is not evidence of a passing corrected run."
+  ],
+  "proposal": "622c4ce84b84e22e62bbafc2337b5c26376fb481"
+}
