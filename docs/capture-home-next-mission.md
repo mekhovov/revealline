@@ -48,3 +48,21 @@ its next fresh press, without changing the core, fixtures or timeout policy.
 Actual browser screen review, full repository lint and uninterrupted source
 validation remain separate pending gates. These checks do not qualify compact
 layout, hardware, offline/PWA behavior or physical rendering.
+
+## Desktop browser follow-up
+
+The root reviewer exercised exact candidate
+`83a2d654d3789576934afaebd8ebf6feaa0a86dc` in the actual local desktop browser at
+port 8992. English/Ukrainian first Home, normal Start, in-memory Resume and an
+actual reload followed by saved Continue passed. Ordinary Down input completed
+the opening mission at 34.3% coverage, 8,160 points, three lives and 1:08. Returning
+Home named the actual successor, Choose your share. Browse all → Back restored
+focus, and existing Continue launched that successor at its actual mission URL;
+the later attempt was paused at 0:19.
+
+This evidence belongs to that exact historical head and desktop flow. It does
+not qualify compact screens, physical devices, offline/PWA behavior or full
+repository gates. The subsequent copy correction puts the quoted Ukrainian
+mission title after «після місії», avoiding an undeclined title after «після».
+It changes no runtime or test behavior. Checks on the final successor remain
+separate from this historical browser evidence.

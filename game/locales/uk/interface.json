@@ -6042,6 +6042,6 @@
   "captureHomeRecommendation.first": "Пропонована місія: {{mission}}. Це перша місія цієї Подорожі.",
   "captureHomeRecommendation.selected": "Пропонована місія: {{mission}}. Продовжте вибрану місію цієї Подорожі.",
   "captureHomeRecommendation.retry": "Пропонована місія: {{mission}}. Ваша остання спроба тут завершилася; спробуйте цю місію знову.",
-  "captureHomeRecommendation.recordedNext": "Пропонована місія: {{mission}}. Вона йде після {{previous}}, завершення якої записано у вашому прогресі.",
+  "captureHomeRecommendation.recordedNext": "Пропонована місія: {{mission}}. Вона йде після місії «{{previous}}», завершення якої записано у вашому прогресі.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }
