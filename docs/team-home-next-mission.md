@@ -44,6 +44,40 @@ Together those six files and the new complete two-file execution cover the plann
 
 Finally restoration verified the two original test preimages, all nine original frozen feature hashes (`aff199dbf67c402b088f261f737aaee0c28127b642602088eaacb40703a04aa1`), and unchanged real HEAD, index and porcelain state. The original working checkout was preserved. The publication tree inherits the corrected fixture files from its explicit prerequisite, rather than including them in the nine-path feature diff.
 
+## Candidate source checks
+
+The published candidate `22c553942ae3bbc3459d1709d208ee87b4c9d556`, tree `58829ecd15f33240c31e7dcd952f0b4033e3520b`, passed eleven separately guarded source-check stages. The sequence runs configured lint, then localization once, then each of the nine remaining exact configured `validate` commands in fresh serialized Node 22.22.2 processes. The sequence was checked against `package.json`; it is not one uninterrupted npm invocation, a package build, a full test-suite result, or a newer-main/CI admission result.
+
+| Stage                       | Exit | Seconds including terminal source audit |
+| --------------------------- | ---- | --------------------------------------: |
+| Configured lint             | 0    |                                  25.881 |
+| Localization check          | 0    |                                 124.709 |
+| Game CLI validation         | 0    |                                  55.391 |
+| Presentation metadata       | 0    |                                   8.419 |
+| Reaction runtime projection | 0    |                                   7.871 |
+| Academy audio projection    | 0    |                                   5.719 |
+| Play shell projection       | 0    |                                   6.059 |
+| Presentation assets         | 0    |                                   5.603 |
+| Optional worker projection  | 0    |                                   5.700 |
+| World visuals projection    | 0    |                                   5.656 |
+| Industrial environments     | 0    |                                  24.865 |
+
+All stages exited zero without stderr, resource guards, capture errors or truncated output. Limits were 1536 MiB V8 old space, 2048 MiB process-group/descendant RSS, 180 seconds per child process, a 2 GiB free-disk floor and 4 MiB per stdout/stderr stream. Maximum sampled RSS was 1524.9 MiB during localization; 0.5-second sampling may miss peaks in very short projection processes. Final free disk was 2,677,878,784 bytes.
+
+The isolated APFS-clone snapshot contains **29,081 present tracked candidate files**, each verified against its exact Git blob and SHA256 with distinct source/snapshot inodes. It explicitly records 15,809 absent tracked paths and does not claim to contain every tracked file. All 6,873 defined build/lint/localization-scanner prerequisite paths are present. Only the candidate qualification document and the two already qualified prerequisite test blobs were substituted from retained local files; no Git objects were restored, assets hydrated, package installed, or build produced. `node_modules` is the sole dependency link and no `.git` is present.
+
+Before and after **every stage**, all present candidate file OIDs, SHA256 values, paths and executable modes matched audit `8722ed9fbb0272904516c9d88828460bfce2d15f1c7621592c0f2f815a63e16b`. Original B HEAD, real index, all nine frozen working files and dependency-link/root metadata remained unchanged. No owned child processes remained. This documentation-only successor preserves all eight non-documentation feature blobs; the source checks remain evidence at exact candidate 22c553, not a claim that they were rerun at a documentation successor.
+
+Complete unfiltered raw output is retained in the ignored publication evidence directory `f10-team-home-publication/full-gates/` as `<stage>.stdout.log` and `<stage>.stderr.log` for all eleven stages (3,286 stdout bytes total, zero stderr). Per-stage JSON receipts bind command, limits, exit, source audit and log hashes; `terminal-summary.json`, `configured-chain-receipt.json` and the parent directory’s `snapshot-manifest.json` retain the aggregate/component-equivalence and full input inventory. No raw output was silently filtered or replaced with a test-name subset.
+
+## Actual browser scope
+
+Root reviewed the exact published 22c553 source on desktop. EN Home showed the suggested first mission, Twin landings. Existing Start together launched the actual native mission at 0:00 with two reserves and no Home guidance during play. Pause showed 0:06/two reserves/0%. Home opened the existing discard guard; Stay preserved the attempt. This does **not** qualify a Home Continue flow or exact browser checkpoint bytes. A fresh visit used neutral Selected Twin landings wording. Native Settings language selection to Ukrainian, then Back, translated the selected explanation and restored focus to the Settings opener.
+
+Actual EN/UK selected Home review also covered 320×568 and 844×390 through a real-game iframe. The complete explanation and native Start remained readable; Start's accessible description referenced the exact owned paragraph. Native language change and Settings Back retained their owners/focus. Page and body had no horizontal overflow. Home still needed internal vertical scrolling: portrait height 568 had scroll height 702 UK / 690 EN; landscape height 390 had scroll height 482 UK. The lower landscape mode rail was initially clipped while primary Start and Settings remained visible. This is selected-state acceptance, not a claim that every Home control fits without scrolling.
+
+Root screenshots are `f10-team-home-en-actual.png`, `f10-team-home-uk-selected-actual.png`, `f10-team-home-en-discard-guard.png` and `f10-team-{320,844}-{uk,en}-selected-home.png` in the status evidence dated 2026-10-19. The discard-guard screenshot was renamed from an initial mislabel without changing its pixels. These checks do not qualify earned-clear successor guidance, a saved Home Continue browser flow, controllers, native iPhone/PWA-offline or Steam Deck behavior.
+
 ## Preserved failure history
 
 The first new-host attempt was 10/13 because an obsolete authored-route fixture failed its exact identity guard. The corrected host uses an independently replayed legal current eight-segment, 2154-command route before issuing the same public commands through the actual host; it passed 13/13 without injecting terminal state.
@@ -54,4 +88,4 @@ PR #1746 separately preserves the first corrected Difficulty 5/9 failure, the se
 
 Local ignored receipts and immutable preimages are under `.cache/improvements-evidence/2026-10-19/`, including `f10-team-combined-fixture-qualification/`, `team-journey-fixture-contract-source-proposal-v2/`, and `team-journey-fixture-contract-seven-preimages/`. Complete raw output is in the corresponding tool transcript. No newer-main or full repository gate is inferred from this bounded cohort.
 
-Actual compact EN/UK layout, focus, controller and browser review, full repository gates, newer-main admission and physical acceptance remain pending. No iPhone/PWA-offline or Steam Deck hardware is available. The approved F10 estimate remains 3–5 developer days for the feature group, excluding review/CI/hardware queues; this host slice does not complete Team onboarding, the Learn hub, or F25/shared-demo lesson recommendations. F10 remains partial overall.
+Additional earned-clear/Home Continue browser flows, controller review, newer-main admission, CI/release gates and physical acceptance remain pending. No iPhone/PWA-offline or Steam Deck hardware is available. The approved F10 estimate remains 3–5 developer days for the feature group, excluding review/CI/hardware queues; this host slice does not complete Team onboarding, the Learn hub, or F25/shared-demo lesson recommendations. F10 remains partial overall.
