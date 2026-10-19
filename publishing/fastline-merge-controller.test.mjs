@@ -2370,8 +2370,10 @@ test('workflow mutations, source failure and manual/native runs never become ski
       if (Array.isArray(result) && result[0]?.sha) result[0].sha = 'f'.repeat(40);
     },
     ({ result }) => {
-      if (result.workflows)
-        result.workflows.find((row) => row.id === 302).state = 'disabled_manually';
+      if (result.workflows) {
+        const workflow = result.workflows.find((row) => row.id === 302);
+        if (workflow) workflow.state = 'disabled_manually';
+      }
     },
     ({ result }) => {
       if (result.workflow_runs) result.workflow_runs.at(-1).event = 'workflow_dispatch';
