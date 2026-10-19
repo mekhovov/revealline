@@ -24,7 +24,10 @@ import {
   compileOverflightHuntProject,
 } from '../overflight/raid-project.mjs';
 
-function fixture(t, { mode = 'stick', coarse = true, deniedStorage = false } = {}) {
+function fixture(
+  t,
+  { mode = 'stick', coarse = true, deniedStorage = false, touchStorage = null } = {},
+) {
   const doc = new Document(),
     win = new Events(),
     values = new Map();
@@ -32,7 +35,9 @@ function fixture(t, { mode = 'stick', coarse = true, deniedStorage = false } = {
   win.matchMedia = () => ({ matches: coarse });
   const storage = {
     getItem: (key) => values.get(key) ?? null,
-    setItem: (key, value) => values.set(key, value),
+    setItem: (key, value) => {
+      if (touchStorage?.mode !== 'silent') values.set(key, value);
+    },
   };
   values.set(
     TOUCH_PREFERENCES_KEY,
@@ -394,6 +399,51 @@ for (const [name, project, compile, create, start, step, pause, resume] of [
     f.pointer(f.boost, 'pointerdown', 20, 20, 3);
     tick();
     assert.equal(run.stats.boostsUsed, 2);
+  });
+  test(`${name}: touch save recovery keeps the paused native state and held-action boundary`, (t) => {
+    const touchStorage = { mode: 'silent' },
+      f = fixture(t, { touchStorage });
+    const source = structuredClone(compile(project())),
+      gate = createOverflightInputGate();
+    source.encounters = [];
+    const run = create(source);
+    start(run);
+    step(run, gate.sample(f.input.sample()));
+    f.pointer(f.surface, 'pointerdown', 100, 100, 1);
+    f.pointer(f.surface, 'pointermove', 156, 100, 1);
+    f.pointer(f.boost, 'pointerdown', 20, 20, 2);
+    step(run, gate.sample(f.input.sample()));
+    assert.equal(run.stats.boostsUsed, 1);
+    pause(run);
+    f.active(false);
+    gate.release();
+    const paused = JSON.stringify(run),
+      saved = f.values.get(TOUCH_PREFERENCES_KEY);
+    const field = f.$('overflight-touch-mode'),
+      retry = f.$('overflight-touch-save-retry');
+    field.focus();
+    field.value = 'swipe';
+    field.emit('change');
+    assert.equal(f.values.get(TOUCH_PREFERENCES_KEY), saved);
+    assert.match(f.$('overflight-touch-save-status').textContent, /Session only.*did not confirm/);
+    f.win.emit('pageshow', { persisted: true });
+    assert.equal(field.value, 'swipe');
+    assert.equal(
+      f.input.actionsNeutral(),
+      false,
+      'A settings retry cannot release a physically held Boost.',
+    );
+    touchStorage.mode = 'working';
+    retry.focus();
+    retry.click();
+    assert.equal(f.doc.activeElement, field);
+    assert.equal(retry.hidden, true);
+    assert.equal(JSON.parse(f.values.get(TOUCH_PREFERENCES_KEY)).mode, 'swipe');
+    assert.equal(JSON.stringify(run), paused);
+    assert.deepEqual([...f.values.keys()], [TOUCH_PREFERENCES_KEY]);
+    f.pointer(f.win, 'pointerup', 0, 0, 1);
+    f.pointer(f.win, 'pointerup', 0, 0, 2);
+    assert.equal(f.input.actionsNeutral(), true);
   });
 }
 

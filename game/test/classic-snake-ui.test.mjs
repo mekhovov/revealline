@@ -138,6 +138,7 @@ async function harness({
   legacySavedRound = null,
   recordReceipt = { verified: true, saved: true },
   catalogue = CLASSIC_SNAKE_LEVELS,
+  touchStorage = null,
 } = {}) {
   const document = new Document();
   let harnessLocale = 'en';
@@ -458,7 +459,9 @@ async function harness({
         ...options,
         storage: {
           getItem: (key) => storage.get(key) ?? null,
-          setItem: (key, value) => storage.set(key, value),
+          setItem: (key, value) => {
+            if (touchStorage?.mode !== 'silent') storage.set(key, value);
+          },
         },
         eventTarget: window,
       }),
@@ -2696,3 +2699,53 @@ test('Snake live language refresh translates every stats view without changing t
     assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.settings);
   }
 });
+
+for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} Snake touch save Retry preserves the paused replay, other storage and input focus`, async (t) => {
+    const touchStorage = { mode: 'silent' };
+    const state = await harness({ mode, touchStorage });
+    t.after(() => state.disposeTools());
+    state.start();
+    const surface = state.$('snake-touch-0-surface');
+    surface.emit('pointerdown', {
+      pointerId: 41,
+      pointerType: 'touch',
+      button: 0,
+      clientX: 80,
+      clientY: 100,
+    });
+    surface.emit('pointermove', { pointerId: 41, pointerType: 'touch', clientX: 80, clientY: 65 });
+    assert.equal(state.created[0].history.at(-1).direction, 'up');
+    state.frame(0);
+    state.frame(100);
+    state.shell.elements.buttons.pause.click();
+    state.shell.elements.buttons.settings.click();
+    const paused = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const unrelated = () => [...state.storage].filter(([key]) => key !== 'revealline.touch.v1');
+    const saved = unrelated();
+    const field = state.$('snake-global-touch-mode');
+    const status = state.$('snake-global-touch-save-status');
+    const retry = state.$('snake-global-touch-save-retry');
+    field.focus();
+    field.value = 'dpad';
+    field.emit('change');
+    assert.match(status.textContent, /Session only.*did not confirm/);
+    state.window.emit('pageshow', { persisted: true });
+    assert.equal(field.value, 'dpad');
+    assert.equal(surface.hasPointerCapture(41), false);
+    touchStorage.mode = 'working';
+    retry.focus();
+    retry.click();
+    assert.equal(state.document.activeElement, field);
+    assert.equal(retry.hidden, true);
+    assert.equal(JSON.parse(state.storage.get('revealline.touch.v1')).mode, 'dpad');
+    state.frame(1000);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      paused,
+    );
+    assert.deepEqual(unrelated(), saved);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.equal(state.shell.elements.root.dataset.phase, 'paused');
+  });
+}
