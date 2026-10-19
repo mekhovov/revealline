@@ -31,7 +31,10 @@ import {
 } from '../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
 import { validateAircraftCoursePresentation } from '../optional-practice/civilian-fpv/advanced-ghost-path.mjs';
 import { createFlight } from '../optional-practice/civilian-fpv/model.mjs';
-import { BEGINNER_CATALOGUE } from '../optional-practice/civilian-fpv/world-catalogue.mjs';
+import {
+  WORLD_CATALOGUE,
+  BEGINNER_CATALOGUE,
+} from '../optional-practice/civilian-fpv/world-catalogue.mjs';
 import { FLIGHT_COURSES } from '../optional-practice/civilian-fpv/catalogue.mjs';
 import {
   listAircraftPresets,
@@ -46,6 +49,7 @@ import {
   createStaticCourseInputCursor,
   STATIC_COURSE_SIDECAR_BYTES,
   auditBuiltinAircraftCourse,
+  prepareBuiltinWorldCourse,
 } from './fpv-static-course-proof.mjs';
 
 await initAdvancedRuntime();
@@ -994,4 +998,209 @@ test('built-in audit aborts selected source mutation in a disposable repository 
     await Promise.all(sources.map((name) => readFile(path.join(root, name), 'utf8'))),
     before,
   );
+});
+
+// A short ordinary-input recording binds selection to real authored World data.
+// Preparation is not a flight proof and does not need a completed recording.
+const worldPreparationFlight = (() => {
+  let pending;
+  return () =>
+    (pending ??= record({
+      course: WORLD_CATALOGUE.find((entry) => entry.id === 'warehouse-01').course,
+      ticks: 8,
+      input: () => neutral,
+    }));
+})();
+const worldSelection = {
+  catalogue: 'WORLD_CATALOGUE',
+  id: 'warehouse-01',
+  revision: 'r1',
+};
+
+test('World preparation resolves full named catalog content without claiming verification or ownership', async () => {
+  const f = await worldPreparationFlight(),
+    before = canonicalJSON(f.archive),
+    entry = WORLD_CATALOGUE.find((item) => item.id === worldSelection.id),
+    result = prepareBuiltinWorldCourse(f.archive, worldSelection);
+  assert.equal(result.format, 'AircraftBuiltinWorldCoursePreparation.v1');
+  assert.deepEqual(result.builtinCourse, { ...worldSelection, packIdentity: entry.packIdentity });
+  assert.deepEqual(result.course, validateWorldCourse(entry.course));
+  assert.equal(result.archiveSha256, hash(f.archive));
+  assert.equal(result.courseSha256, hash(result.course));
+  assert.equal(result.catalogueContentSha256, hash(WORLD_CATALOGUE));
+  assert.equal(result.toolingOnly, true);
+  assert.equal(result.scored, false);
+  assert.equal(result.defaultEligible, false);
+  assert.deepEqual(result.verification, {
+    physics: 'not-run',
+    course: 'not-run',
+    nativeOwnership: 'not-established',
+  });
+  assert.equal(aircraftCourseComparisonEligibility(result, result).eligible, false);
+  assert.equal(isVerifiedStaticCourseProof(result), false);
+  assert.ok(Object.isFrozen(result));
+  assert.ok(Object.isFrozen(result.course.steps['self-level']));
+  assert.notEqual(result.course, entry.course);
+  assert.throws(() => (result.course.locales.en.title = 'Changed'), TypeError);
+  assert.equal(canonicalJSON(f.archive), before);
+  assert.equal(f.state.step, 0, 'A bound recording has not completed this authored course');
+  const diagnostic = await verifyStaticAircraftCourse(f.archive, f.sidecar);
+  assert.equal(diagnostic.physics.verified, true);
+  assert.equal(diagnostic.course.verified, false);
+  assert.equal(aircraftCourseComparisonEligibility(diagnostic, diagnostic).eligible, false);
+});
+
+test('World preparation keeps Flight School and World namespaces explicit', async () => {
+  const f = await record({ ticks: 8, input: () => neutral }),
+    selection = { catalogue: 'BEGINNER_CATALOGUE', id: 'beginner-01', revision: 'r1' },
+    result = prepareBuiltinWorldCourse(f.archive, selection);
+  assert.deepEqual(result.course, validateWorldCourse(lesson));
+  assert.equal(result.builtinCourse.catalogue, 'BEGINNER_CATALOGUE');
+  assert.equal(result.defaultEligible, false);
+  for (const selected of [
+    { ...selection, catalogue: 'WORLD_CATALOGUE' },
+    { ...worldSelection, catalogue: 'BEGINNER_CATALOGUE' },
+    { ...worldSelection, id: 'unknown' },
+  ])
+    assert.throws(() => prepareBuiltinWorldCourse(f.archive, selected), {
+      code: 'unknown-or-ambiguous-builtin-world-course',
+    });
+  assert.throws(
+    () => prepareBuiltinWorldCourse(f.archive, { ...worldSelection, id: 'flight-01' }),
+    { code: 'unsupported-builtin-world-course-family' },
+  );
+});
+
+test('World preparation rejects unbounded selectors and supplied authority fields', async () => {
+  const { archive } = await worldPreparationFlight();
+  for (const key of ['catalogue', 'id', 'revision'])
+    for (const value of [null, 1, {}, '', 'a'.repeat(81), '../warehouse-01', ' warehouse-01'])
+      assert.throws(() => prepareBuiltinWorldCourse(archive, { ...worldSelection, [key]: value }), {
+        code: 'invalid-builtin-world-selection',
+      });
+  for (const key of [
+    'course',
+    'sidecar',
+    'report',
+    'policy',
+    'courseAdapter',
+    'Worker',
+    'workerURL',
+    'scored',
+    'defaultEligible',
+  ])
+    assert.throws(
+      () => prepareBuiltinWorldCourse(archive, { ...worldSelection, [key]: {} }),
+      /not supported/i,
+    );
+  assert.throws(
+    () => prepareBuiltinWorldCourse(archive, { ...worldSelection, catalogue: 'FLIGHT_COURSES' }),
+    { code: 'unknown-builtin-world-catalogue' },
+  );
+  assert.throws(() => prepareBuiltinWorldCourse(archive, { ...worldSelection, revision: 'r9' }), {
+    code: 'builtin-world-course-revision-mismatch',
+  });
+});
+
+test('World preparation rejects unsupported dynamic and non-native course families', async () => {
+  const { archive } = await worldPreparationFlight();
+  const dynamic = WORLD_CATALOGUE.find(
+      (entry) =>
+        !entry.legacy && entry.course.format === 'FlightCourse.v2' && entry.course.actors.length,
+    ),
+    otherFamily = WORLD_CATALOGUE.find(
+      (entry) =>
+        !entry.legacy &&
+        entry.course.format !== 'FlightCourse.v2' &&
+        WORLD_CATALOGUE.filter((candidate) => candidate.id === entry.id).length === 1,
+    );
+  assert.ok(dynamic);
+  assert.ok(otherFamily);
+  const ambiguous = WORLD_CATALOGUE.find(
+    (entry) => WORLD_CATALOGUE.filter((candidate) => candidate.id === entry.id).length > 1,
+  );
+  assert.ok(ambiguous);
+  assert.throws(() => prepareBuiltinWorldCourse(archive, { ...worldSelection, id: ambiguous.id }), {
+    code: 'unknown-or-ambiguous-builtin-world-course',
+  });
+  assert.throws(
+    () =>
+      prepareBuiltinWorldCourse(archive, {
+        catalogue: 'BEGINNER_CATALOGUE',
+        id: 'beginner-43',
+        revision: 'r1',
+      }),
+    { code: 'unsupported-course-objective' },
+  );
+  for (const [entry, code] of [
+    [dynamic, 'unsupported-dynamic-course'],
+    [otherFamily, 'unsupported-builtin-world-course-family'],
+  ])
+    assert.throws(
+      () =>
+        prepareBuiltinWorldCourse(archive, {
+          catalogue: 'WORLD_CATALOGUE',
+          id: entry.id,
+          revision: entry.course.revision,
+        }),
+      { code },
+    );
+});
+
+test('World preparation binds complete course content and the archive host family', async () => {
+  const f = await worldPreparationFlight(),
+    changed = copy(f.course);
+  changed.locales.en.brief += ' Modified same-ID content.';
+  const altered = await record({ course: changed, ticks: 8, input: () => neutral });
+  assert.equal(
+    (await verifyStaticAircraftCourse(altered.archive, altered.sidecar)).physics.verified,
+    true,
+  );
+  assert.throws(() => prepareBuiltinWorldCourse(altered.archive, worldSelection), {
+    code: 'builtin-world-course-identity-mismatch',
+  });
+  const otherHost = packet(
+    f.archive.manifest.config,
+    f.archive.manifest.identity,
+    f.archive.segments,
+    {
+      host: 'academy',
+    },
+  );
+  assert.throws(() => prepareBuiltinWorldCourse(otherHost, worldSelection), {
+    code: 'unsupported-builtin-world-archive-host',
+  });
+  const otherFamily = await record({
+    course: f.course,
+    ticks: 8,
+    input: () => neutral,
+    alterOptions: (options) => ({
+      ...options,
+      configuration: {
+        ...options.configuration,
+        environment: { ...options.configuration.environment, host: 'academy' },
+      },
+    }),
+  });
+  assert.throws(() => prepareBuiltinWorldCourse(otherFamily.archive, worldSelection), {
+    code: 'course-family-mismatch',
+  });
+});
+
+test('World preparation rejects mutable catalog changes and preserves prepared copies', async () => {
+  const { archive } = await worldPreparationFlight(),
+    result = prepareBuiltinWorldCourse(archive, worldSelection),
+    before = canonicalJSON(result),
+    entry = WORLD_CATALOGUE.find((item) => item.id === 'warehouse-01'),
+    title = entry.course.locales.en.title;
+  try {
+    entry.course.locales.en.title = 'Modified source after preparation';
+    assert.throws(() => prepareBuiltinWorldCourse(archive, worldSelection), {
+      code: 'builtin-world-catalogue-changed',
+    });
+    assert.equal(canonicalJSON(result), before);
+  } finally {
+    entry.course.locales.en.title = title;
+  }
+  assert.deepEqual(prepareBuiltinWorldCourse(archive, worldSelection), result);
 });

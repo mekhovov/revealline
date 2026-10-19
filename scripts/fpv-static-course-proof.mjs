@@ -9,6 +9,10 @@ import { boundedJSON, canonicalJSON, dataIdentity, exactKeys } from '../game/dat
 import { validateFlightCourse } from '../optional-practice/civilian-fpv/model.mjs';
 import { FLIGHT_COURSES } from '../optional-practice/civilian-fpv/catalogue.mjs';
 import {
+  WORLD_CATALOGUE,
+  BEGINNER_CATALOGUE,
+} from '../optional-practice/civilian-fpv/world-catalogue.mjs';
+import {
   validateWorldCourse,
   createWorldFlight,
 } from '../optional-practice/civilian-fpv/world-model.mjs';
@@ -103,6 +107,86 @@ const builtinCourses = freeze(FLIGHT_COURSES.map(courseValue));
 const builtinSourceFiles = [...sourceFiles, 'optional-practice/civilian-fpv/catalogue.mjs'];
 function unchangedBuiltinCatalogue() {
   requireValue(same(FLIGHT_COURSES, builtinCourses), 'builtin-catalogue-changed');
+}
+
+// Data selection only. A later native World worker must establish proof ownership.
+const worldCatalogues = new Map(
+  [
+    ['WORLD_CATALOGUE', WORLD_CATALOGUE],
+    ['BEGINNER_CATALOGUE', BEGINNER_CATALOGUE],
+  ].map(([name, source]) => [
+    name,
+    {
+      source,
+      digest: sha256(source),
+      entries: freeze(
+        source.map((entry) => ({
+          id: entry.id,
+          legacy: entry.legacy,
+          packIdentity: entry.packIdentity,
+          course: structuredClone(entry.course),
+        })),
+      ),
+    },
+  ]),
+);
+
+/** Resolve repository-owned World content without verifying or admitting a flight. */
+export function prepareBuiltinWorldCourse(archiveSource, selection) {
+  exactKeys(selection, ['catalogue', 'id', 'revision'], 'Built-in World course selection');
+  const { catalogue, id, revision } = selection;
+  requireValue(
+    [catalogue, id, revision].every(
+      (value) => typeof value === 'string' && /^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/.test(value),
+    ),
+    'invalid-builtin-world-selection',
+  );
+  const selected = worldCatalogues.get(catalogue);
+  requireValue(selected, 'unknown-builtin-world-catalogue');
+  requireValue(sha256(selected.source) === selected.digest, 'builtin-world-catalogue-changed');
+  const matches = selected.entries.filter((entry) => entry.id === id);
+  requireValue(matches.length === 1, 'unknown-or-ambiguous-builtin-world-course');
+  const entry = matches[0];
+  requireValue(
+    entry.legacy === false && entry.course.format === 'FlightCourse.v2' && entry.course.id === id,
+    'unsupported-builtin-world-course-family',
+  );
+  const course = courseValue(entry.course);
+  requireValue(course.revision === revision, 'builtin-world-course-revision-mismatch');
+  requireValue(!course.actors?.length, 'unsupported-dynamic-course');
+  requireValue(
+    Object.values(course.steps).every((steps) =>
+      steps.every((step) => ['hold', 'gate', 'land'].includes(step.type)),
+    ),
+    'unsupported-course-objective',
+  );
+  const archive = validateAircraftArchivePackage(archiveSource),
+    { config } = archive.manifest;
+  requireValue(archive.manifest.host === 'world', 'unsupported-builtin-world-archive-host');
+  requireValue(config.configuration?.environment?.host === 'world', 'course-family-mismatch');
+  requireValue(!config.dynamicColliders?.length, 'unsupported-dynamic-course');
+  requireValue(config.configuration.challenge === undefined, 'unsupported-challenge-wrapper');
+  requireValue(
+    dataIdentity(course) === config.configuration.environment.course,
+    'builtin-world-course-identity-mismatch',
+  );
+  return freeze({
+    format: 'AircraftBuiltinWorldCoursePreparation.v1',
+    toolingOnly: true,
+    experimental: true,
+    scored: false,
+    defaultEligible: false,
+    verification: {
+      physics: 'not-run',
+      course: 'not-run',
+      nativeOwnership: 'not-established',
+    },
+    builtinCourse: { catalogue, id, revision, packIdentity: entry.packIdentity },
+    course: structuredClone(course),
+    archiveSha256: sha256(archive),
+    courseSha256: sha256(course),
+    catalogueContentSha256: selected.digest,
+  });
 }
 
 /** Offline preparation only: resolve shipped Academy content, never a supplied sidecar. */
