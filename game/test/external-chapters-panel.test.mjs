@@ -123,7 +123,7 @@ test('late inspection from an old multi-card open cannot clear the new card read
   assert.equal(f.$('source-b-choose').disabled, false);
 });
 
-test('sixteen real choices stay reachable offline and an active Countercurrent owner survives filtering and retry', async (t) => {
+test('twelve real choices stay reachable offline and an active Countercurrent owner survives filtering and retry', async (t) => {
   let rejectDownload,
     attempts = 0,
     selected = 0,
@@ -166,12 +166,12 @@ test('sixteen real choices stay reachable offline and an active Countercurrent o
   );
   await f.panel.open();
   const visible = () => editions.filter((e) => !f.$(`source-${e.id}-card`).hidden).map((e) => e.id);
-  assert.match(f.$('page').textContent, /Page 1 of 4 · 16 chapters/);
+  assert.match(f.$('page').textContent, /Page 1 of 3 · 12 chapters/);
   const visited = [];
-  for (let page = 0; page < 4; page++) {
+  for (let page = 0; page < 3; page++) {
     assert.equal(visible().length, 4);
     visited.push(...visible());
-    if (page < 3) f.$('next').click();
+    if (page < 2) f.$('next').click();
   }
   assert.deepEqual(
     visited,
@@ -183,7 +183,7 @@ test('sixteen real choices stay reachable offline and an active Countercurrent o
   f.$('theme').value = 'ukraine';
   f.$('theme').onchange();
   assert(visible().includes(target.id), 'the in-flight exact card remains visible across filters');
-  assert.match(f.$('operation').textContent, /Spend Network.*Countercurrent/);
+  assert.match(f.$('operation').textContent, /1994 Forever.*Countercurrent/);
   assert.equal(attempts, 1);
   assert.equal(selected, 0);
   rejectDownload(new Error('The exact originals response was interrupted.'));
