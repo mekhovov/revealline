@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { readFile, realpath } from 'node:fs/promises';
 import test from 'node:test';
 import { bindCpuProfileJob, prepareCpuProfileMode } from './solo-remote-cpu-profile.mjs';
 import {
@@ -90,24 +89,38 @@ test('every non-tool field, extra field, replacement path and stale tool identit
 });
 
 test('unchanged original v2 pins still fail production admission before native work', async () => {
+  const repository = await realpath(new URL('../', import.meta.url));
+  const references = [original.recipe, ...original.adapterInputs, ...original.frozenTools];
   let admitted = 0,
     effects = 0,
     checked = 0;
-  await assert.rejects(() =>
-    prepareCpuProfileMode({
-      plan: bindCpuProfileJob(original),
-      repository: fileURLToPath(new URL('../', import.meta.url)),
-      get admitted() {
-        admitted++;
-        throw Error('package admission must remain unread');
-      },
-      digest: async (path) => {
-        checked++;
-        const bytes = await readFile(path);
-        return { bytes: bytes.length, sha256: hash(bytes) };
-      },
-      required: async () => effects++,
-    }),
+  let checkedRef, checkedDigest;
+  await assert.rejects(
+    () =>
+      prepareCpuProfileMode({
+        plan: bindCpuProfileJob(original),
+        repository,
+        get admitted() {
+          admitted++;
+          throw Error('package admission must remain unread');
+        },
+        digest: async (path) => {
+          checked++;
+          checkedRef = references.find((ref) => path === repository + '/' + ref.path);
+          const bytes = await readFile(path);
+          checkedDigest = { bytes: bytes.length, sha256: hash(bytes) };
+          return checkedDigest;
+        },
+        required: async () => effects++,
+      }),
+    (error) => {
+      assert.equal(error.code, 'ERR_ASSERTION');
+      assert.equal(error.operator, 'deepStrictEqual');
+      assert(changedTools.includes(checkedRef?.path), 'A stale original tool must be checked.');
+      assert.deepEqual(error.expected, { bytes: checkedRef.bytes, sha256: checkedRef.sha256 });
+      assert.deepEqual(error.actual, checkedDigest);
+      return true;
+    },
   );
   assert(checked > 0);
   assert.equal(admitted, 0);

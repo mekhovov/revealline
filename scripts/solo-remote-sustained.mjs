@@ -624,6 +624,13 @@ function comparisonLabels(plan) {
 // Declaration checks only. The common runner must still verify each complete
 // package, V2 ready proof, source tree and CSP before admitting either role.
 function validateSourceCohort(plan, selected) {
+  if (heapRetainerPlan(plan))
+    assert(
+      selected === runtime797LifecycleSource &&
+        runtime797LifecyclePlan(plan) &&
+        plan.phase === 'retry',
+      'Heap-retainer diagnostics require the source797 Retry lifecycle.',
+    );
   if (plan.sourceCohort === undefined) {
     assert.equal(plan.release.sourceCohort, undefined);
     return null;
@@ -743,7 +750,7 @@ function validateSourceCohort(plan, selected) {
     }
     return selected;
   }
-  assert.equal(plan.candidateOnly, undefined);
+  assert.equal(plan.candidateOnly, heapRetainerPlan(plan) ? true : undefined);
   assert.equal(plan.nativeRouteProtocol, undefined);
   const reuse = plan.baseline.reusableArtifact;
   assert.equal(reuse?.format, 'SoloHostedNormalBaselineReuseV2');

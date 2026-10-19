@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import {
   bindSustainedJob,
+  bindTimingJob,
   sustainedMatrix,
   sustainedArguments,
   prepareSustainedMode,
@@ -153,4 +154,38 @@ test('existing manual lifecycle lane admits a single heap row and executes every
     assert(body.includes('            /' + path), path);
   assert(!body.includes('continue-on-error'));
   assert(body.includes('max-parallel: 1'));
+});
+
+test('candidate-only Retry admission requires the exact heap scope and a boolean opt-in', () => {
+  for (const candidateOnly of [undefined, false, 'true', 1]) {
+    const changed = structuredClone(manifest);
+    if (candidateOnly === undefined) delete changed.candidateOnly;
+    else changed.candidateOnly = candidateOnly;
+    assert.throws(() => bind(changed), { code: 'ERR_ASSERTION' });
+  }
+  const ordinary = structuredClone(prior);
+  ordinary.candidateOnly = true;
+  assert.throws(() => bindSustainedJob(ordinary, 'chromium', 1), { code: 'ERR_ASSERTION' });
+  const foreignProtocol = structuredClone(manifest);
+  foreignProtocol.heapRetainers.protocol = 'other';
+  assert.throws(() => bind(foreignProtocol), { code: 'ERR_ASSERTION' });
+});
+
+test('ordinary timing and non-Retry lifecycle cannot borrow the heap protocol', async () => {
+  for (const [path, bindPlan] of [
+    ['docs/performance/solo-797-timing-warm-first30-plan.json', bindTimingJob],
+    ['docs/performance/solo-797-lifecycle-soak-plan.json', bindSustainedJob],
+  ]) {
+    const ordinary = JSON.parse(await read(path));
+    assert.doesNotThrow(() => bindPlan(ordinary, 'chromium', 1));
+    for (const candidateOnly of [undefined, true]) {
+      const changed = structuredClone(ordinary);
+      changed.heapRetainers = structuredClone(manifest.heapRetainers);
+      if (candidateOnly !== undefined) changed.candidateOnly = candidateOnly;
+      assert.throws(
+        () => bindPlan(changed, 'chromium', 1),
+        /Heap-retainer diagnostics require the source797 Retry lifecycle/,
+      );
+    }
+  }
 });
