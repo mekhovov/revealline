@@ -14,12 +14,12 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "Admit reviewed foundations through required checks on each current revision",
-    "Complete and measure Classic Snake text scaling across all three play modes",
-    "Fix the remaining confirmed Ukrainian route briefing",
-    "Review exact Time Attack medal goals and preserve native eligibility",
-    "Continue remaining support-summary hosts and replay-aware upgrade availability",
-    "Continue Demo-dependent work after its predecessor; physical-only gates remain Not tested"
+    "Admit reviewed P1 foundations through checks on each current revision",
+    "Complete corrected Snake scaling across Solo, Duel and Team; assess next family",
+    "Review Capture medal explanation; Time Attack and reroll disclosure now ready",
+    "Continue remaining support-summary hosts and F59 localization findings",
+    "Implement scoped caption reading time without duplicating existing history",
+    "Continue Demo-dependent work after its predecessor; physical gates remain Not tested"
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -191,7 +191,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Admit four reviewed copy slices; translate source-confirmed Ukrainian reachable-route briefing through its existing key and native briefing regression. Broader terminology remains F59.",
+      "next": "Admit five reviewed copy slices; retain broader terminology and newly observed pluralization in F59.",
       "evidence": [
         "Source scan on20555cd found no missing rich slots or plain-label interpolation tokens in checked Solo Help/About/Couch/Team surfaces. This is not a browser closure.",
         "Current-source Solo Help EN browser shows no localization placeholders. About has build-time __REVEALLINE_VERSION__ only in source serving; exact F82 packaged About substitutes0.151.1. No shipped localization defect demonstrated by that token.",
@@ -253,12 +253,18 @@
         {
           "id": "reachable-route-briefing-uk",
           "priority": "P1",
-          "status": "assessment_complete",
+          "status": "ready_for_checks",
           "owner": "lane-c",
-          "next": "Translate existing routeCoverage key and regenerate catalog; verify native EN/UK route-based mission briefing, no new layout or goal owner.",
+          "next": "Required checks and admission for the existing Ukrainian route-goal translation; no layout change.",
           "evidence": [
-            "Exact native-admitted reachable-routes.v1 mission passed to public missionBriefing returns English goal/copy under UK; uk/gameplay.json:521 equals EN:495, owner mission-brief.mjs:55. Source/native-model finding; browser not yet run."
-          ]
+            "Exact native-admitted reachable-routes.v1 mission passed to public missionBriefing returns English goal/copy under UK; uk/gameplay.json:521 equals EN:495, owner mission-brief.mjs:55. Source/native-model finding; browser not yet run.",
+            "Existing key translated and generated catalog refreshed. Native admitted route mission EN→UK→EN preserves title/instructions/run/source; changed red/green case passes. Complete37/38 briefing suite retains one reproduced clean-bd15820 long-English-brief failure; filtered10 not counted. Full lint/changed format/uninterrupted validation and A/root source review pass; all18 generated namespaces independently match. Translation-only source/model qualification, no new browser geometry claim. Ready028; /tmp/revealline-f15a-route-evidence.json."
+          ],
+          "pr": "https://github.com/mekhovov/revealline/pull/1686",
+          "commit": "02809a21e8f9360333cb931f511ff4dd8d38d63e",
+          "deliveryState": "ready",
+          "observedRemoteHead": "02809a21e8f9360333cb931f511ff4dd8d38d63e",
+          "mergeState": "UNSTABLE"
         }
       ]
     },
@@ -558,17 +564,18 @@
           "id": "capture-context",
           "status": "ready_for_checks",
           "pr": "https://github.com/mekhovov/revealline/pull/1634",
-          "commit": "9c23a13f5ef1d58f520a9e12f35b2aa218312af1",
+          "commit": "c94051bf1f46d2d7c9bf4e065d533f79abb2b7f6",
           "evidence": [
             "Corrected shared Hunt labels; 54 context/title tests and full source gates. Earlier201f230 actual Capture EN/UK browsing/Back receipt retained; final Hunt correction source-tested. Independent review passed.",
             "Independent dd337 integration review confirms app/index feature patches and6 original feature blobs unchanged, all mainlocale values plus exact3 original additions retained.109 shared checks pass. Initial54-host cohort51passed/3failed after unchanged5second preparation timeout; unchanged exact case then passes3/3 isolated. Full validation and complete serial54-case rerun remain required; no timeout or assertion weakening.",
             "Final integrated 9c passes 109 shared checks, full lint/format/validation and the complete serial 54-case host cohort with zero skips under unchanged limits. Initial concurrent preparation failure remains recorded; no timeout/assertion change. Independent review clear, lease-pushed and ready.",
-            "Remote1634 advanced9c→c94051bf1f46d2d7c9bf4e065d533f79abb2b7f6 with user-authored test alignment. Reviewed9c source/browser receipts remain exact-scoped; c940 independent delta verification requested, no inherited full-validation claim."
+            "Remote1634 advanced9c→c94051bf1f46d2d7c9bf4e065d533f79abb2b7f6 with user-authored test alignment. Reviewed9c source/browser receipts remain exact-scoped; c940 independent delta verification requested, no inherited full-validation claim.",
+            "User c940 test-only delta independently reviewed: locale reset, real guidance/accessibility/title/focus assertions. Production blobs exactly9c. Root complete edition51/51 passes after restoring exact151MB edition fixtures; complete navigation4/4 passes after restoring132 exact compiled assets4MB. Earlier incomplete-fixture failures retained, not product failures or passes. A independent complete9c andc940 navigation4/4 also pass. No runtime/test assertion or timeout changes; user commit preserved. /tmp/revealline-f01-c940-root-edition-assets-complete.log; /tmp/revealline-f01-c940-root-navigation-full-presentation-assets.log."
           ],
           "deliveryState": "ready",
           "mergeState": "UNSTABLE",
           "observedRemoteHead": "c94051bf1f46d2d7c9bf4e065d533f79abb2b7f6",
-          "next": "Inspect external user-authored c940 test-only successor before attributing current-head qualification; preserve it while reconciling dependent stacks."
+          "next": "Current required checks and admission; preserve user-authored test-only successor and exact runtime/browser evidence scope."
         },
         {
           "id": "snake-context",
@@ -848,19 +855,19 @@
       "phase": "Phase 2 — Find, understand and start the right game",
       "description": "Explain upgrade commitments, available shield charges, caps and choice costs using existing before/after previews.",
       "impact": "H/M",
-      "effort": "First shield-refit slice 1–2d; commitments 2–4d; reroll policy 2–4d; optional utility copy 1–2d. Shared review may overlap.",
+      "effort": "Shield1–2d; commitments2–4d; reroll disclosure1–2d; utility copy1–2d. Review may overlap.",
       "featureId": "F19",
       "status": "developing",
       "owner": "lane-c",
       "qualification": {
-        "automated": "two_slices_focused_and_full_source_passed",
+        "automated": "three_slices_focused_and_full_source_passed",
         "browser": "staged_native_cards_scoped_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1680",
       "commit": "74e6a6cc203642652645f3fbc946c4e9b545debb",
-      "next": "Admit reviewed shield and Survival commitment slices; assess replay-aware reroll availability, then optional utility cost copy.",
+      "next": "Three reviewed explanation slices await admission. Utility choice-cost/up-to repair copy remains P3; no reroll rules change is planned.",
       "evidence": [
         "Current dd337 already provides native current/next Survival SVG and Raid canvas comparisons, rank/evolution markers, utility cap projections and same-rank refit explanations.24/24 existing card/preview/Raid-balance tests pass on byte-equivalent root snapshot, zero skips. Earlier actual normal390px Survival Wide Fan choice showed before/after1→3charges. No new feature complete or Raid earned-refit browser qualification claimed.",
         "Exactdd337 assessment credits existing current/next graphics, rank/evolution/refit labels and capped repair math. Executed legal plating2→ObjectiveShield2 refit advertises two hits but leaves available charges0/capacity2 and consumes one choice. First bounded P2 slice: truthful projected charges/capacity, current-rule recharge wording, EN/UK visible/accessible parity, no balance change. Further source-backed gaps: Survival primary/support/final-slot commitment, impossible-to-change reroll disclosure, utility choice-cost/up-to repair prose. Separate reroll behavior requires replay-aware policy; utility copy is P3 polish.31-file Git closure and executed model receipt retained."
@@ -905,11 +912,19 @@
           "mergeState": "UNSTABLE"
         },
         {
-          "id": "reroll-choice-availability",
+          "id": "reroll-cost-and-repeat-disclosure",
           "priority": "P2",
-          "status": "assessment_complete",
-          "next": "Bound no-alternative detection and replay compatibility before changing action availability; never promise that every card changes.",
-          "effort": "2–4d"
+          "status": "ready_for_checks",
+          "next": "Required checks and admission; preserve accepted native same-set rerolls and replay rules.",
+          "effort": "1–2d, presentation-only",
+          "pr": "https://github.com/mekhovov/revealline/pull/1687",
+          "commit": "6eeb58923d7bc7b1bb29c501c4efa48758135394",
+          "evidence": [
+            "Policy correction: no-alternative does not mean native action is invalid. Preserve existing accepted same-set reroll and disclose one-token cost plus possible repeated cards. Actual-source renderer/click and native-operation tests119/119/full source gates/A/root review pass. Browser EN Survival320 ordinary2→1→0/disabled; UK320 unchanged-card accepted reroll and UKRaid320 changed native cards each cost one token, retain tick/time/choices/encounter RNG and restore first-card focus. Hint wraps and describes button. Explicitly staged drafts/extracted production source, modeled shell/audio, omitted artwork; no earned flight/storage/live-locale/AT/device/audio claim. /tmp/f19c-6eeb-root-browser-receipt.json. Ready6eeb."
+          ],
+          "deliveryState": "ready",
+          "observedRemoteHead": "6eeb58923d7bc7b1bb29c501c4efa48758135394",
+          "mergeState": "UNSTABLE"
         },
         {
           "id": "utility-choice-cost-copy",
@@ -1011,7 +1026,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Review first complete Time Attack result slice, then assess Capture time/clean-lives medal explanation separately.",
+      "next": "Admit reviewed Time Attack slice; review Capture result, then calibrated accepted-attempt Snake move targets. Keep variable/uncalibrated/endless/imported outcomes excluded.",
       "evidence": [
         "Current native Time Attack already separates raw elapsed time, penalty, medal time and all authored thresholds. Missing next-medal shortfall can make a sub-hundredth miss display equal to its target. Preserve exact native <= eligibility; compare full precision, qualify rounded-up larger gaps and explicitly describe tiny positive gaps. Gold, incomplete and unavailable boundaries remain truthful."
       ],
@@ -1019,25 +1034,45 @@
         {
           "id": "time-attack-medal-shortfall",
           "priority": "P2",
-          "status": "browser_review",
+          "status": "ready_for_checks",
           "owner": "lane-a",
           "commit": "9332a5931f4cc3673bfbc2d1f334b8a6798a8a3b",
           "effort": "2–4d within F23 estimate",
-          "next": "Independent source, compact EN/UK native-result review and exact full validation; no award/record/retry rule changes.",
+          "next": "Required checks and admission; Capture and calibrated Snake result explanations remain distinct slices.",
           "evidence": [
             "Frozen9332 on current mainbd15820: existing result rows/copy plus six native-view/policy tests and scoped documentation.114/114 focused cases, full lint/changed format pass; full validation and browser review pending. Ordinary-input pilot reaches a native completed sortie in tests; this is model, not manual/browser/device qualification.",
-            "Draft1684 published at unchanged9332; C/root source review clear. Root6/6 complete test file passes, zero skips. Full validation and browser result review remain pending."
+            "Draft1684 published at unchanged9332; C/root source review clear. Root6/6 complete test file passes, zero skips. Full validation and browser result review remain pending.",
+            "Full source validation passed; native eligibility unchanged. Actual browser automated demonstration completes Gold19.80s/24450score/60cleared/0hull damage/0penalty; review achievements are not saved. Separate staged native-renderer fixtures cover UK320 Silver+penalty and sub-hundredth miss, EN390 Bronze5.13s rounded-up gap. New row wraps/reaches end; pre-existing four-column stat clipping retained for later Overflight scaling. No manual pilot/persistent record/live-locale/device claim. Root6/6 complete no-skip cases and independent review pass. Ready9332; /tmp/f23-9332-root-browser-receipt.json."
           ],
           "pr": "https://github.com/mekhovov/revealline/pull/1684",
-          "deliveryState": "draft",
+          "deliveryState": "ready",
           "observedRemoteHead": "9332a5931f4cc3673bfbc2d1f334b8a6798a8a3b",
           "mergeState": "UNSTABLE"
         },
         {
           "id": "capture-medal-explanation",
           "priority": "P2",
-          "status": "planned",
-          "next": "Assess exact time and clean-lives conditions through existing accepted record/rule owners after the Time Attack slice."
+          "status": "browser_review",
+          "next": "Actual earned compact result review; preserve native EPS/time and classic-versus-ordinary clean-life eligibility.",
+          "pr": "https://github.com/mekhovov/revealline/pull/1688",
+          "commit": "e56fff30f1d6d0f021bc4af82b87b2ce5336db48",
+          "owner": "lane-a",
+          "evidence": [
+            "Seven native/actual-host cases pass including legally earned grades, classic replacement lives, tiny/EPS miss and locale/checkpoint/profile/Retry preservation. Complete86/89 retains3 failures reproduced clean-bd15820; no weakening. Full lint/changed format/uninterrupted validation and18 generated catalogs pass; C source review clear. Immutable64622 exact e56 source available; browser pending."
+          ],
+          "deliveryState": "draft",
+          "observedRemoteHead": "e56fff30f1d6d0f021bc4af82b87b2ce5336db48",
+          "mergeState": "UNSTABLE"
+        },
+        {
+          "id": "snake-calibrated-move-target",
+          "priority": "P2",
+          "status": "developing",
+          "owner": "lane-a",
+          "next": "Explain accepted current-attempt move count against next calibrated star target beside result stars. Preserve pre-play criteria and exclude unsupported outcomes.",
+          "evidence": [
+            "Source assessment: existing exact move criteria live in briefing, not result summary. Reuse native rating and verifiedOutcome; never use historical personal best as current attempt. Runtime implementation starting; no completion claim."
+          ]
         }
       ]
     },
@@ -1852,11 +1887,30 @@
       },
       "blocker": null,
       "pr": null,
-      "commit": "627cc436a19f097c30218858d734e2771a8b5458",
-      "next": "Review frozen Classic Snake Solo/Versus/Team candidate on primarye40. Complete measured font and actual EN/UK compact/landscape family navigation before claiming200%; separate hub and other families keep fallback.",
+      "commit": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
+      "next": "Finish exact94d Classic Snake Solo/Duel/Team browser coverage and runtime-size samples. Three prior320px findings corrected; other game families and separate hub retain their own acceptance gates.",
       "evidence": [
         "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json.",
-        "Frozen627 on e40: complete play-family preference/first-paint/settings integration,377-module/21-sheet inventory,41 readable absolute declarations scaled once and2 arrow-art exclusions.138 host/bootstrap/global plus120 shared regressions and3 closure/runtime-theme tests pass; full lint pass, full validation/source/browser review pending. Thin source fixture8810, no automatic progress injection. No200% or device acceptance claimed."
+        "Frozen627 on e40: complete play-family preference/first-paint/settings integration,377-module/21-sheet inventory,41 readable absolute declarations scaled once and2 arrow-art exclusions.138 host/bootstrap/global plus120 shared regressions and3 closure/runtime-theme tests pass; full lint pass, full validation/source/browser review pending. Thin source fixture8810, no automatic progress injection. No200% or device acceptance claimed.",
+        "Original006 browser exposed squeezed Home utility, overlapping Pause labels and result footer covering focused Random action at UK320.94d corrects actual grid placement/ID specificity/nested-scroll owners and adds six runtime-authored font multipliers.157 complete tests/full lint/full uninterrupted validation/C source review pass;8 unchanged baseline format files disclosed. Root actual94d corrected Home/Pause/earned Solo result focus pass at UK320, landscape sampled; all-mode and runtime-font qualification continuing. Header-only stale short SHA corrected in wrapper; exact manifest/production source always94d. No blanket200% or hardware claim."
+      ],
+      "implementationSlices": [
+        {
+          "id": "classic-snake-play-family",
+          "priority": "P1",
+          "status": "browser_review",
+          "owner": "lane-b",
+          "commit": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
+          "pr": "https://github.com/mekhovov/revealline/pull/1689",
+          "dependency": "PR1672 e40b8983c1a94605beb1376fa85741ac5d40bf1c",
+          "next": "Complete native three-mode compact/landscape/font/runtime checks; retain draft until predecessor admission.",
+          "evidence": [
+            "Full corrected-head source gates and C/root correction review clear; actual browser qualification in progress. Legacy006 failures retained."
+          ],
+          "deliveryState": "draft",
+          "observedRemoteHead": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
+          "mergeState": "UNSTABLE"
+        }
       ]
     },
     {
@@ -1993,8 +2047,8 @@
       "impact": "H/M",
       "effort": "**2–4d**",
       "featureId": "F29",
-      "status": "planned",
-      "owner": null,
+      "status": "assessment",
+      "owner": "lane-c",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -2003,8 +2057,10 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Map graph, native soundtrack/imported media and reward media routes before designing one complete mono control; graph-only downmix would omit music.",
+      "evidence": [
+        "Current graph audio-output has no mono downmix, while soundtrack playback uses native media decks and master mute/volume routing. Source routing gap confirmed; full output coverage/compatibility and acoustic qualification need design. No product change or mono coverage claimed."
+      ]
     },
     {
       "id": "F30",
@@ -2033,10 +2089,10 @@
       "phase": "Phase 4 — Accessibility, comfort, input and sound",
       "description": "Adjustable cue-caption dwell and a small recent-cue history, with repetition control.",
       "impact": "M/M",
-      "effort": "**2–3d**",
+      "effort": "Timed-caption slice2–4d; any history gap estimated after existing-owner assessment.",
       "featureId": "F31",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-c",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -2045,8 +2101,26 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Implement Standard/Extended2× timed incidental-caption reading time through existing preference and reaction owner; retain indefinite results and existing critical-message history.",
+      "evidence": [
+        "Fresh bd15820 source already provides size/background/preview, text-based minimum and spoken-clip minimum, danger interruption preserving text, indefinite result captions, and bounded16-message critical-flight history. Avoid duplicate controls/readers. F31a extends only timed incidental text; all current shared consumers/projections, legacy/future/failed-save records and cancellation/locale/current-caption timer cases required. No listening/device claim."
+      ],
+      "implementationSlices": [
+        {
+          "id": "incidental-caption-reading-time",
+          "priority": "P2",
+          "status": "developing",
+          "owner": "lane-c",
+          "effort": "2–4d including review",
+          "next": "Implement and independently verify preference compatibility, timer semantics, current captions and native compact EN/UK timed preview."
+        },
+        {
+          "id": "recent-cue-history-coverage",
+          "priority": "P2",
+          "status": "assessment",
+          "next": "Credit existing critical-message history and assess which reaction histories add value without duplicate readers."
+        }
+      ]
     },
     {
       "id": "F32",
@@ -2151,7 +2225,9 @@
       "pr": null,
       "commit": null,
       "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "evidence": [
+        "Browser review confirms existing singular grammar \"1 rerolls left\" and \"1 замін залишилося\". Track bounded count-aware localization in a later F59 batch; F19c adds disclosure only."
+      ]
     },
     {
       "id": "F60a",
@@ -3397,6 +3473,11 @@
       "date": "2026-10-19",
       "item": "First Flight merged; paused progress and upgrade commitments ready",
       "reason": "Five merged/21 ready/29 draft feature PRs. F22 earned Capture browser review and F19b native-card review clear. Survival support integration complete. Classic Snake scaling and exact Time Attack medal goals developing; confirmed UK route briefing added as bounded P1 follow-up. No new live/device qualification."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Medal goals, reroll disclosure and Ukrainian route copy reviewed",
+      "reason": "5merged/24ready/30draft feature PRs. Exact Time Attack, reroll and route-copy slices ready. Snake browser findings corrected; final family review and Capture result review remain. Caption reading-time slice starts from existing owners; mono needs complete routing design. User c940 preserved and independently verified. No new live/device qualification."
     }
   ],
   "deliveryDependencies": [
@@ -3413,8 +3494,8 @@
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 21,
-    "featurePRsDraft": 29,
+    "featurePRsReady": 24,
+    "featurePRsDraft": 30,
     "deliverablesMerged": 5,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
