@@ -28,6 +28,127 @@
   );
   const officialKey = (hash) => new URL(`/.revealline-official/sha256/${hash}`, scope.origin).href;
   const sameScope = (url) => url.origin === scope.origin && url.pathname.startsWith(scope.pathname);
+  const recoveryPath = new URL('.offline-recovery.mjs', scope).pathname;
+  const startupRoutes = new Map(
+    (CONFIG.startupRoutes || []).map((route) => [new URL(route.path, scope).href, route.files]),
+  );
+  async function startupMissing(cache, url) {
+    const required = startupRoutes.get(url);
+    if (!required) return false;
+    // One bounded metadata read, no hashing or body reads on the launch path.
+    // Only this document's static startup closure is considered, not optional packs.
+    const available = new Set((await cache.keys()).map((request) => request.url));
+    return required.some((path) => !available.has(new URL(path, scope).href));
+  }
+  const escapeHTML = (value) =>
+    String(value).replace(
+      /[&<>"']/g,
+      (character) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character],
+    );
+  function recoveryDocument(request) {
+    const retry = new URL(request.url);
+    // A ZIP or branded distribution may have no launcher at a guessed parent
+    // address. Only offer the launcher this exact distribution actually ships.
+    const manage = files.has(new URL('app/index.html', scope).href)
+      ? new URL('app/?manage', scope)
+      : null;
+    return new Response(
+      `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#091324"><title>FPV / LINE · Offline recovery</title>
+<style>body{margin:0;padding:max(24px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left));background:#091324;color:#edf2e8;font:18px/1.5 system-ui}main{max-width:40rem;margin:auto}h1{font-size:1.8rem}button,a{box-sizing:border-box;display:inline-block;min-height:44px;padding:12px;margin:8px 8px 8px 0;font:inherit}a{color:#7fdbeb}button{border:1px solid #7fdbeb;border-radius:4px;background:#153049;color:#fff;cursor:pointer}button:disabled{opacity:.65}a:focus-visible,button:focus-visible{outline:3px solid #f6d572;outline-offset:3px}[role=status]{min-height:3em}.actions{display:flex;flex-wrap:wrap}</style>
+<script src="${escapeHTML(new URL('.offline-recovery.mjs', scope).href)}" defer></script></head>
+<body><main><p>FPV / LINE</p><h1 id="title">Your offline game needs repair</h1>
+<p id="help">Some files needed to open this game are unavailable. Connect to the internet, then repair this edition.</p>
+<p id="preservation">Repair replaces game files only. It does not change saved progress, imported pictures or music.</p>
+<p id="status" role="status" aria-live="polite">You can retry after reconnecting. This screen does not start a download automatically.</p>
+<div class="actions"><button id="repair" type="button" disabled>Repair game files</button>
+<a id="retry" href="${escapeHTML(retry.href)}">Try opening the game</a>
+${manage ? `<a id="manage" href="${escapeHTML(manage.href)}">Manage installed game</a>` : ''}</div>
+<noscript><p>Enable JavaScript to repair game files. You can still use the links above.</p></noscript>
+</main></body></html>`,
+      {
+        status: 503,
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'no-store',
+          'Content-Security-Policy':
+            "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'",
+        },
+      },
+    );
+  }
+  function recoveryScript() {
+    // This small script is served from the worker itself, so evicted application
+    // modules cannot disable the repair button. Repair uses the existing exact-build
+    // protocol; it never selects a new edition or opens a profile store.
+    return new Response(
+      `(() => {
+const buildId = ${JSON.stringify(CONFIG.buildId)}, scope = ${JSON.stringify(scope.href)};
+const protocol = 'revealline.offline-progress.v1';
+const $ = (id) => document.getElementById(id);
+const requested = new URL(location.href).searchParams.get('lang');
+let saved;
+try { saved = globalThis.localStorage?.getItem('revealline.locale.v1'); } catch { /* Storage can be unavailable. */ }
+const supported = (value) => ['en','uk'].includes(value);
+const detected = [...(navigator.languages || []), navigator.language].map(value => value?.split('-')[0]).find(supported);
+const locale = supported(requested) ? requested : supported(saved) ? saved : detected || 'en';
+const uk = locale === 'uk';
+const copy = uk ? {
+title:'Офлайн-гра потребує відновлення',
+help:'Деякі файли, потрібні для запуску гри, недоступні. Підключіться до інтернету та відновіть це видання.',
+preservation:'Відновлення замінює лише файли гри. Збережений прогрес, імпортовані зображення та музика не змінюються.',
+status:'Після підключення можна повторити спробу. Цей екран не починає завантаження автоматично.',
+repair:'Відновити файли гри',retry:'Спробувати відкрити гру',manage:'Керувати встановленою грою',
+working:'Перевіряємо та відновлюємо файли гри… Залишайте цей екран відкритим.',
+ready:'Файли гри відновлено. Тепер можна відкрити гру.',
+failed:'Не вдалося завершити відновлення. Перевірте підключення та вільне місце, потім повторіть спробу. Не очищайте дані сайту.',
+changed:'Видання змінилося. Відкрийте керування встановленою грою та перевірте оновлення.',
+waiting:'Перевірка ще не завершилася. Можна повторити її після підключення; вже збережені файли залишаються.'
+} : {
+working:'Checking and repairing game files… Keep this screen open.',
+ready:'Game files repaired. You can now open the game.',
+failed:'Repair could not finish. Check your connection and free space, then retry. Do not clear site data.',
+changed:'The edition changed. Open Manage installed game and check for an update.',
+waiting:'The check has not finished. Retry after reconnecting; files already saved are kept.'
+};
+document.documentElement.lang = locale;
+if (uk) for (const id of ['title','help','preservation','status','repair','retry','manage']) { const element = $(id); if (element) element.textContent = copy[id]; }
+for (const id of ['retry','manage']) { const element = $(id); if (element?.href) { const url = new URL(element.href); url.searchParams.set('lang', locale); element.href = url.href; } }
+let port, timer;
+function finish(message) { clearTimeout(timer); port?.close(); port = null; $('repair').disabled = !navigator.serviceWorker?.controller; $('status').textContent = message; }
+function observe() { clearTimeout(timer); timer = setTimeout(() => finish(copy.waiting), 30000); }
+$('repair').disabled = !navigator.serviceWorker?.controller;
+$('repair').onclick = () => {
+  const worker = navigator.serviceWorker?.controller;
+  if (!worker || port) return;
+  const channel = new MessageChannel(), requestId = 'startup-repair-' + Date.now();
+  port = channel.port1;
+  $('repair').disabled = true; $('status').textContent = copy.working;
+  port.onmessage = ({data}) => {
+    if (data?.format !== protocol || data.requestId !== requestId || data.scope !== scope) return;
+    if (data.buildId !== buildId && !(data.kind === 'terminal' && data.messageCode === 'differentBuild')) return;
+    observe();
+    if (data.kind === 'terminal') finish(data.status === 'ready' ? copy.ready : data.messageCode === 'differentBuild' ? copy.changed : copy.failed);
+  };
+  port.onmessageerror = () => finish(copy.failed);
+  observe();
+  try { worker.postMessage({type:'revealline.offline-prepare', protocol, requestId, scope, buildId}, [channel.port2]); }
+  catch { finish(copy.failed); }
+};
+addEventListener('pagehide', () => { if (port) finish(copy.waiting); });
+addEventListener('pageshow', () => { if (!port) $('repair').disabled = !navigator.serviceWorker?.controller; });
+navigator.serviceWorker?.addEventListener?.('controllerchange', () => {
+  if (port) finish(copy.changed);
+  else $('repair').disabled = !navigator.serviceWorker?.controller;
+});
+})();`,
+      {
+        headers: { 'Content-Type': 'text/javascript; charset=utf-8', 'Cache-Control': 'no-store' },
+      },
+    );
+  }
   async function requestedRange(response, request) {
     const range = request.headers?.get('Range');
     if (!range || response.status !== 200) return response;
@@ -410,6 +531,10 @@
     if (event.request.method !== 'GET') return;
     const url = new URL(event.request.url);
     if (!sameScope(url)) return;
+    if (url.pathname === recoveryPath) {
+      event.respondWith(Promise.resolve(recoveryScript()));
+      return;
+    }
     url.search = '';
     url.hash = '';
     if (url.pathname.endsWith('/')) url.pathname += 'index.html';
@@ -457,6 +582,8 @@
         let cache;
         try {
           cache = await caches.open(cacheName);
+          if (event.request.mode === 'navigate' && (await startupMissing(cache, url.href)))
+            return recoveryDocument(event.request);
           const hit = await cache.match(url.href);
           if (hit) return requestedRange(hit, event.request);
         } catch {
@@ -467,6 +594,8 @@
           await cache?.put(url.href, ownedResponse(owned)).catch(() => {});
           return requestedRange(ownedResponse(owned), event.request);
         } catch {
+          if (event.request.mode === 'navigate' && file.path.endsWith('.html'))
+            return recoveryDocument(event.request);
           return new Response(
             'This file is unavailable. Reconnect to play, or choose a chapter already downloaded for offline play.',
             { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } },

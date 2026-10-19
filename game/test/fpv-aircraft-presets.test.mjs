@@ -36,20 +36,22 @@ test('the offline catalog contains distinct immutable aircraft, independently of
   }
 });
 
-test('catalog expansion preserves all thirteen earlier complete default configurations byte for byte', () => {
-  // Original twelve captured before Mobula8; its hash captured before revision 3.
+test('Nazgul dimension correction preserves all fourteen other complete default configurations byte for byte', () => {
+  // Earlier baselines predate catalog revision 3; Cetus X and Protos were
+  // captured from cf13 before the Nazgul-only revision 4 correction.
   // Covers physics, response, controller, camera,
   // component baseline and pinned preset revision used by saved flight identities.
-  assert.equal(AIRCRAFT_CATALOG_REVISION, 3);
+  assert.equal(AIRCRAFT_CATALOG_REVISION, 4);
   const originalDefaults = {
     'mobula8-analog-2023': 'bc4c49364de93e47ce91299188af56f8a89035d7d32f9d3e71868685056223c2',
+    'cetus-x-betaflight-2022': '7f704557638fdaefc2b1b2b6f1f4e4ff4ccb241073aeab02c1a3571aa963c2e2',
+    'protos-16-aio-1-0': '4dfd3c0b84d6efa466f040e2cfaa717a248be40fd986acea6e0cc7fba04f2bc9',
     'air65-ii-racing-2026': 'bb0810c27292d9077c944fdf712c9e95ae841c9171ec4a04fe2eb0b4eb6733f4',
     'meteor75-analog-2022': 'f787e79d44ce7ed83843ac962f6ec6c7daf3268cc45c3a14c5ef8bbc081f94c7',
     'meteor75-pro-matrix': '35b1edd5860c1e93c61695baf311a526ca13630abdd72a6c34d0fb7415c569f0',
     'meteor85-analog': '12c94ae9d41433474a38ad75958e6c4327e1ae1a3a0326e9f57936c1a5ec0bb3',
     'pavo20-pro-ii-o4-4s': 'fca7fda1b907ad6993a3bba3fbcfc9822a79fe4fab11b5d00c49b6dd49f6f71f',
     'smart35-analog': '539e6bf442c4b759179f510712cf8054902cbb2b08183c8ec8129cd6c557c04d',
-    'nazgul-eco-xl5-v11': '33547e290356555cd9b1d3f9a865d960082935e4a682a8cdbffaf9e5e740905a',
     'mach-r5-sport-2050': 'ae487a74fdd8c04b6be7184d6d92a6e429c5ca886b26192ae53e756c4eb9ebae',
     'rekon7-pro-o3': 'f515e40bdfab754fee902687f58ac2413faeca9d644a59b10384ae2aeec8a407',
     'chimera7-pro-v2-o4': '94b4387e47e6792a114bde769a3386f4c76a9fe47fca6711c80b703240f3729d',
