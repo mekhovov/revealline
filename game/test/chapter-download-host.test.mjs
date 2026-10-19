@@ -30,7 +30,7 @@ function chapterFetch(t, intercept) {
 }
 
 // These are retained chapter-selector host/service tests. The current player
-// catalogue is covered by mission-library-solo-host/controller-host tests.
+// catalogue is covered by mission-library-solo-*/controller-host tests.
 // Mount only the native Legacy dialog boundary; keep the real shell pause/Home,
 // selector callbacks, download, replacement, artwork and storage authorities.
 const chapterParents = new WeakMap();

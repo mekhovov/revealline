@@ -820,6 +820,7 @@ test('native Marathon continuation retains its run when next-sortie settings cha
       run: original,
       renderer: {},
       preparing: false,
+      suspendBusy: false,
       runtimeFailed: false,
       retired: false,
       contextGuard: { blocked: () => false },
@@ -966,7 +967,7 @@ test('native Settings initialization preserves operation cards and navigation on
   const { Document } = await import('./helpers/couch-dom.mjs');
   const { mountModePlayShell } = await import('../ui/mode-play-shell.mjs');
   const { mountModeSettings } = await import('../ui/mode-settings-view.mjs');
-  const { attachSettingsPanels } = await import('../ui/settings-panels.mjs');
+  const { attachSettingsPanels, settingsPanelBack } = await import('../ui/settings-panels.mjs');
   const { createOverflightOperationCards } = await import('../overflight/operation-view.mjs');
   const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
   const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
@@ -996,9 +997,18 @@ test('native Settings initialization preserves operation cards and navigation on
       onSelect() {},
       onLeave() {},
     });
+    document.defaultView.innerWidth = 318;
+    const calls = [];
     const shell = mountModePlayShell({
       document,
       slots: { homeChoices: operationCards.root, settings: get('overflight-settings') },
+      services: { settingsPanelBack },
+      actions: {
+        open() {},
+        pause: () => calls.push('pause'),
+        retry: () => calls.push('retry'),
+        canResume: () => true,
+      },
     });
     const settingsView = runInNewContext(source.slice(settings.start, settings.end), {
       mountModeSettings,
@@ -1026,8 +1036,44 @@ test('native Settings initialization preserves operation cards and navigation on
       assert.equal(shell.elements.dialogs.settings.contains(card), false);
     }
     assert.equal(settingsView.panels.gameplay.contains(get('difficulty')), true);
-    shell.open('settings');
+    const retry = shell.elements.buttons['home-retry'];
+    assert.equal(settingsView.panels.gameplay.contains(retry), true);
+    assert.equal(settingsView.panels.extras.contains(shell.elements.buttons.expert), true);
+    const retiredSlot = ast.body.find(
+      (node) =>
+        node.type === 'ExpressionStatement' &&
+        node.expression.type === 'AssignmentExpression' &&
+        node.expression.left.type === 'MemberExpression' &&
+        node.expression.left.property.name === 'hidden' &&
+        node.expression.left.object.type === 'CallExpression' &&
+        node.expression.left.object.arguments[0]?.value === 'overflight-settings',
+    );
+    runInNewContext(source.slice(retiredSlot.start, retiredSlot.end), { $: get });
+    assert.deepEqual(
+      shell.elements.content.settings.children.filter((node) => !node.hidden),
+      [settingsView.panels.gameplay.parentNode],
+      'Only the category layout occupies the settings flex row, including at 318 px.',
+    );
+    assert.equal(retry.hidden, true, 'A fresh visit does not offer a paused-round Retry.');
+    shell.update({ phase: 'playing' });
+    shell.open('pause');
+    shell.update({ phase: 'paused' });
+    shell.elements.buttons['pause-settings'].click();
+    settingsView.tabs.controls.click();
     shell.back();
+    assert.equal(shell.elements.dialogs.settings.dataset.settingsView, 'categories');
+    assert.equal(document.activeElement, settingsView.tabs.controls);
+    shell.back();
+    assert.equal(shell.topDialog(), shell.elements.dialogs.pause);
+    assert.deepEqual(calls, ['pause'], 'Settings and Back never restart or resume the round.');
+    shell.elements.buttons['pause-settings'].click();
+    settingsView.tabs.gameplay.click();
+    assert.equal(retry.hidden, false);
+    retry.click();
+    assert.deepEqual(calls, ['pause', 'retry'], 'Only explicit Retry starts a fresh round.');
+    assert.equal(shell.blocksPlay(), false);
+    shell.update({ phase: 'results' });
+    assert.equal(retry.hidden, true);
     assert.equal(shell.elements.home.contains(operationCards.root), true);
     settingsView.destroy();
     shell.dispose();

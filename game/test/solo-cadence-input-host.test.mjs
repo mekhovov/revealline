@@ -188,6 +188,16 @@ async function preparedPage(t, source, mark) {
   const page = await soloPage(t, {
     campaign,
     readPads: () => (source === 'gamepad' ? [pad] : []),
+    ...(source === 'touch'
+      ? {
+          browserSetup: ({ globals }) => {
+            globals.navigator.maxTouchPoints = 1;
+            globals.matchMedia = (query) => ({
+              matches: ['(pointer: coarse)', '(any-pointer: coarse)'].includes(query),
+            });
+          },
+        }
+      : {}),
   });
   mark('fixture:class');
   page.change('class-select', 'bomber');
@@ -443,3 +453,93 @@ for (const source of ['keyboard', 'gamepad']) {
     },
   );
 }
+
+for (const source of ['keyboard', 'touch']) {
+  test(`actual Solo ${source} requests after Resume survive the neutral tick and catch-up once`, async (t) => {
+    const { page } = await preparedPage(t, source, () => {});
+    page.frame(FIXED_DT * 1000);
+    await activateHostAction(page.$('pause-button'));
+    for (const cadence of ['120Hz', '144Hz', 'catch-up']) {
+      page.frame(0);
+      await start(page);
+      const run = page.rendered.run,
+        reference = structuredClone(run),
+        beforeTick = run.tick;
+      if (source === 'keyboard') {
+        for (const code of ['KeyE', 'KeyR']) {
+          page.key(code);
+          page.key(code, false);
+        }
+      } else {
+        assert.equal(page.doc.body.dataset.screenControls, 'shown');
+        for (const id of ['action-button', 'pickup-button']) {
+          const button = page.$(id);
+          button.emit('pointerdown', { pointerId: 72, pointerType: 'touch', button: 0 });
+          button.emit('pointerup', { pointerId: 72, pointerType: 'touch', button: 0 });
+          button.click();
+        }
+      }
+      // Consume the local one-shot during a zero-tick callback before the
+      // required neutral tick. This also proves the app owns its pending pulse.
+      page.frame(0);
+      if (cadence === 'catch-up') {
+        page.frame(FIXED_DT * 1000 * 3);
+      } else {
+        const interval = cadence === '144Hz' ? 1000 / 144 : FIXED_DT * 1000;
+        const advanceTo = (tick) => {
+          for (let callbacks = 0; callbacks < 8 && run.tick < tick; callbacks++)
+            page.frame(interval);
+          assert.equal(
+            run.tick,
+            tick,
+            'The bounded callback schedule must advance to the expected tick.',
+          );
+        };
+        advanceTo(beforeTick + 1);
+        stepRun(reference, {}, FIXED_DT);
+        assert.equal(
+          checkpoint(run),
+          checkpoint(reference),
+          'Resume first submits a neutral tick.',
+        );
+        advanceTo(beforeTick + 3);
+      }
+      if (cadence === 'catch-up') stepRun(reference, {}, FIXED_DT);
+      stepRun(reference, { action: true, pickup: true }, FIXED_DT);
+      stepRun(reference, {}, FIXED_DT);
+      assert.equal(run.tick, beforeTick + 3);
+      assert.equal(checkpoint(run), checkpoint(reference));
+      await activateHostAction(page.$('pause-button'));
+      const behavior = recordedBehavior(savedReplay(page));
+      for (const kind of ['action', 'pickup'])
+        assert.deepEqual(
+          behavior.edges[kind].filter((tick) => tick > beforeTick),
+          [beforeTick + 2],
+        );
+      assert.deepEqual(page.errors, []);
+    }
+  });
+}
+
+test('actual Solo Pause retires a fresh request deferred behind the Resume neutral tick', async (t) => {
+  const { page } = await preparedPage(t, 'keyboard', () => {});
+  page.frame(FIXED_DT * 1000);
+  await activateHostAction(page.$('pause-button'));
+  await start(page);
+  const run = page.rendered.run,
+    beforeTick = run.tick;
+  page.key('KeyE');
+  page.key('KeyR');
+  page.frame(FIXED_DT * 1000);
+  assert.equal(run.tick, beforeTick + 1);
+  await activateHostAction(page.$('pause-button'));
+  await start(page);
+  // The same physical keys remain held through Pause/Resume; no new down event.
+  page.frame(FIXED_DT * 1000 * 3);
+  page.key('KeyE', false);
+  page.key('KeyR', false);
+  await activateHostAction(page.$('pause-button'));
+  const behavior = recordedBehavior(savedReplay(page));
+  assert.deepEqual(behavior.edges, { action: [], pickup: [] });
+  assert.deepEqual(page.errors, []);
+});
