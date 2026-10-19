@@ -1372,7 +1372,7 @@
       "impact": "H/H",
       "effort": "**8–15d**; F04a",
       "featureId": "F04",
-      "status": "draft_review",
+      "status": "ready_for_checks",
       "owner": "root",
       "qualification": {
         "automated": "focused_and_full_source_passed",
@@ -1382,7 +1382,7 @@
       "blocker": "F04a merged; current-main integration review and publication remain. Pages capacity and hardware gates stay separate.",
       "pr": "https://github.com/mekhovov/revealline/pull/1663",
       "commit": "b1cb147b7f0127a558153ce2374636626d6d1ec9",
-      "next": "86 combined checks and independent integration clear; current full lint and22 nongenerated changed formatting checks pass. Generated shell handwritten bytes unchanged from main; canonical projection governs generated block. Localization passes; first full attempt stops on missing task-sparse media.629 exact Git build inputs restored545337348bytes; uninterrupted full validation restarted. No content-validation completion or new package/browser claim yet.",
+      "next": "Ready1663 atb1cb:86 combined checks, full lint, uninterrupted full validation/canonical projections and independent integration review pass. Required CI/admission and separate package/browser/device gates remain.",
       "evidence": [
         "Assessment replay feasibility: legal earned run 19,856 ticks yields about1MiB command tuples; legitimate runs have no total duration cap. Favor bounded typed state over unbounded replay; keep trusted graph oracle test-only. Initial production codec/round-trip work underway.",
         "Typed bounded production decoder, exact package closure, atomic slot, paused adoption and durable records/mastery receipts implemented;113 focused+98 shared tests pass on initial candidate.",
@@ -1395,10 +1395,11 @@
         "Actualc1 restored flight ended legally at01:24 with218cleared/162salvage/3upgrades/300contactdamage. Results show First recorded run and Personal records saved; no mastery star earned on loss. Reload Savedflight reports no resumable flight, with Save/Restore/Recover disabled. Desktop Save→reload→paused Restore→Continue→terminal→reload retirement passes; no offline/hardware claim.",
         "Localc94 cleanly merges f465 current-main snapshot into priorc1.22of23 original feature blobs identical; generatedfullscreen feature patch identical while preserving main.44/44 checkpoint/storage/suspend cases plus31/31 native host cases pass zero skips; initial missing fake-indexeddb dependency linked and failedlog retained. Full lint/full uninterrupted validation/changedformat pass. APFS copy-on-write snapshot14807presenttracked blobs audited exact, independent inodes; completed snapshot released after retaining logs/audit because disk exhausted. Independent integration review pending; remote1663 remainsc1.",
         "b1cb retains all 23 original feature deltas against main6b05; CSS differs by one separator only. 86/86 combined tests, zero skips. Independent review clear. Current-head lint/full validation did not start because log creation failed ENOSPC; prior c94 full gates remain scoped to c94.",
-        "86 combined checks and independent integration clear; current full lint and22 nongenerated changed formatting checks pass. Generated shell handwritten bytes unchanged from main; canonical projection governs generated block. Localization passes; first full attempt stops on missing task-sparse media.629 exact Git build inputs restored545337348bytes; uninterrupted full validation restarted. No content-validation completion or new package/browser claim yet."
+        "86 combined checks and independent integration clear; current full lint and22 nongenerated changed formatting checks pass. Generated shell handwritten bytes unchanged from main; canonical projection governs generated block. Localization passes; first full attempt stops on missing task-sparse media.629 exact Git build inputs restored545337348bytes; uninterrupted full validation restarted. No content-validation completion or new package/browser claim yet.",
+        "Uninterrupted exactb1cb full validation nowPASS after all629 build inputs plus5 additional authored localization packs were restored from Git. Log/tmp/revealline-f04b-b1cb-complete-inputs-full-validate.log; earlier sparse-input failures retained. Current-head full lint,22 nongenerated changed formatting checks and generated canonical byte identity pass. Ready status promoted after successful run; requiredCI and source/live/device distinctions retained."
       ],
-      "deliveryState": "draft",
-      "mergeState": "UNKNOWN",
+      "deliveryState": "ready",
+      "mergeState": "UNSTABLE",
       "observedRemoteHead": "b1cb147b7f0127a558153ce2374636626d6d1ec9",
       "candidateCommit": "c94ac18f71de703a2d4ce629932e888a2229ebb6"
     },
@@ -2050,9 +2051,10 @@
           "pr": "https://github.com/mekhovov/revealline/pull/1707",
           "commit": "55393cdfa7787057c838aa58f1c767ad5f08ba01",
           "priority": "P1",
-          "next": "Published draft:86 focused checks and independent review clear. Full exact-head source validation and actual browser review pending.",
+          "next": "Full exact55393 tracked-only snapshot lint and uninterrupted validation pass;7491 Git blobs audited before/after with zero mismatch. Native compact browser review and requiredCI remain; draft retained.",
           "evidence": [
-            "Native Survival/Riy/Raid settings move existing generic Retry into Gameplay and Expert into Help & Extras, leaving only the category layout in its flex row. No CSS, preference, saving, input or restart semantics changed. Red30/31→green86/86 complete host/shell/settings files; changed lint/format/diff checks pass. Root independent source review clear. No browser geometry or physical-device claim."
+            "Native Survival/Riy/Raid settings move existing generic Retry into Gameplay and Expert into Help & Extras, leaving only the category layout in its flex row. No CSS, preference, saving, input or restart semantics changed. Red30/31→green86/86 complete host/shell/settings files; changed lint/format/diff checks pass. Root independent source review clear. No browser geometry or physical-device claim.",
+            "Exact55393 snapshotfullnpmrunlint+uninterruptednpmrunvalidate PASS. All7491 presenttrackedsource/snapshot blobs independently hash-checked, distinct-inode COW copies. Manifest/tmp/revealline-f09-55393-validation-source.json; full log/tmp/revealline-f09-55393-snapshot-full-validate.log. Earlier directcheckoutlint failed on143 preserveduntrackedfixture findings; directcheckoutvalidate interrupted,nevercountedpass. Snapshotexcludesuntrackedfiles; originalfixtures preserved."
           ],
           "deliveryState": "draft",
           "observedRemoteHead": "55393cdfa7787057c838aa58f1c767ad5f08ba01",
@@ -2406,7 +2408,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Duel live statistics fix reviewed ready1701. Continue remaining batch terminology, count-aware reroll grammar and other observed labels; existing Snake locale fix remains1677.",
+      "next": "Worlds ordinary retained-result language batch developing on426: refresh existing nodes/aria/actions without resetting verified results, focus or open details. Duel1701 ready; remaining practices/playback/regional, count-aware reroll grammar and terminology stay open.",
       "evidence": [
         "Browser review confirms existing singular grammar \"1 rerolls left\" and \"1 замін залишилося\". Track bounded count-aware localization in a later F59 batch; F19c adds disclosure only.",
         "Actual Worlds5363 native language switch after a verified result translates the new medal paragraph and enemy stats but leaves existing result heading, recording status, medal/score and action labels in English. Track bounded retained-result live-locale ownership; do not claim F23 new-paragraph fix covers existing nodes."
@@ -2426,6 +2428,19 @@
           "deliveryState": "ready",
           "observedRemoteHead": "2843ec10ef17423881f590185ebc8cea3c7a3f52",
           "mergeState": "UNSTABLE"
+        },
+        {
+          "id": "worlds-live-result-language",
+          "priority": "P2",
+          "status": "developing",
+          "owner": "root",
+          "commit": null,
+          "pr": null,
+          "dependency": "https://github.com/mekhovov/revealline/pull/1702",
+          "next": "Add native red→green tests and node-preserving live-copy bindings for ordinary retained results; then independent review and exact-head gates. Practice/checkpoint/playback/Regional flows remain separate.",
+          "evidence": [
+            "Native5363 confirmed newmedalparagraph/hoststats translate but existingheading/recording/metrics/score/actions stayEnglish. Implementation branchcodex/f59-worlds-live-result-language from426; originaluntrackedaccessibilitydocs hashed andpreserved."
+          ]
         }
       ]
     },
@@ -3701,6 +3716,14 @@
     {
       "date": "2026-10-19",
       "summary": "Published bounded Worlds426 and Duel4d9b layout corrections, reconciled touch-save1b226, and new Survival/Raid compact Settings55393 draft1707. Focused gates and independent reviews clear; browser attachment unavailable. Disk recovered6.9GiB after prior ENOSPC; exact source inputs restored and full serialized checks resumed. No new live or physical acceptance."
+    },
+    {
+      "date": "2026-10-19",
+      "summary": "Survival suspend b1cb uninterrupted full validation/canonical projections PASS after exact sparse-input recovery; full lint and22 nongenerated formatting pass. PR1663 promotedready; requiredCI/admission and separate package/browser/device qualification remain."
+    },
+    {
+      "date": "2026-10-19",
+      "summary": "Compact nativeSettings55393 exacttracked-onlysnapshot lint and uninterrupted validation PASS;7491blobafterauditclear. World426 ownsnextserializedfullslot. F59 ordinaryretainedWorldsresultlanguage starts as separatechild of426; sourceunchangedverification/focus/records is required."
     }
   ],
   "deliveryDependencies": [
@@ -3717,8 +3740,8 @@
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 19,
-    "featurePRsDraft": 29,
+    "featurePRsReady": 20,
+    "featurePRsDraft": 28,
     "deliverablesMerged": 20,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
