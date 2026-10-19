@@ -14,16 +14,16 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1: resolve the exact51b5 Journey result-supersession asynchronous wait failure without weakening stale-adoption assertions; seven complete files91/91 pass, file8 fails0/1, final two not run.",
-    "P1: publish the bounded controller-observation wording correction only after native checks; actual Academy report proved assignment unknown while old wording claimed assigned disconnection.",
-    "P1: primary support1661 current-main integration frozen for independent review and focused checks; reconcile foundations before dependent Team→Versus→Academy propagation.",
-    "P1: full builds and new source snapshots remain paused below2GiB reserve (about1.1GiB now); small source, focused memory-only checks and browser review continue.",
-    "P1: complete exact-source compact Duel/Team/Worlds browser checks, including touch-control geometry, native EN/UK and scroll/focus. Physical iPhone/PWA/SteamDeck remain Not tested.",
-    "P1: finish full current-head source checks and required admission for compatibility1668, Team/Versus/Academy support, touch recovery and other reviewed drafts when reserve permits.",
-    "P1: implement complete Worlds support adapter after shared observation wording; Rooms adapter remains. Keep original caps, actual Settings and synchronous disposal owners.",
-    "P1: finish current one-click Team input-test/docs and catalog-test reconciliations; withdrawn1718 runtime proposal remains historical.",
-    "P2: finish native search recovery, retained Worlds result language and Hunt result-reading acceptance; preserve exact attempts, achievements and record writes.",
-    "Continue all remaining approved phases and Demo-dependent work. F10 lesson recommendations still requireF25/D; PR counts are not a completion percentage."
+    "P1 · Home recommendation: finish the Journey navigation checks. A stale-result test expects immediate play where the current Solo flow requires Start; preserve every artwork and run-replacement safeguard in its correction.",
+    "P1 · Controller report: finish native checks for the wording fix. An observed connection must not imply an assigned, ready controller; actual English and Ukrainian absence messages now read correctly.",
+    "P1 · Shared foundations: finish support-summary reconciliation with main before updating the dependent Team, Versus and Academy PRs. Preserve every mode’s supported states and lifecycle.",
+    "P1 · Available space: small fixes, focused tests and browser review continue. Full builds and new source snapshots need at least 2 GiB free; about 1.1 GiB is currently available.",
+    "P1 · Compact play: review Duel, Team and Worlds on narrow and landscape layouts, including touch controls, language changes, scrolling and focus. Physical iPhone, offline PWA and Steam Deck checks remain Not tested.",
+    "P1 · Review and admission: complete current-source checks for text compatibility, recovery and the reviewed support adapters when space permits. Required CI and merge admission still apply.",
+    "P1 · Remaining support hosts: implement the complete Worlds adapter after the wording fix; Rooms remains next. Keep reports tied to actual Settings, pause, disposal and package ownership.",
+    "P1 · Team launch checks: finish the separate test, guide and catalog corrections while preserving the intended one-click native launch. The withdrawn runtime proposal stays closed.",
+    "P2 · Clarity and comfort: finish search-recovery screens, retained Worlds result language and Hunt result reading. Preserve exact attempt, achievement and save facts.",
+    "Continue the remaining approved phases. Lesson recommendations still depend on the Learn hub and shared demos; PR inventory does not measure whole-plan completion."
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -911,7 +911,7 @@
           "commit": "83a2d654d3789576934afaebd8ebf6feaa0a86dc",
           "effort": "1–2d bounded Home slice plus independent/source/browser qualification; overall F10 remains partial",
           "dependency": "Existing Journey destination owner and merged FirstFlight1655; future lesson recommendations still requireF25/D",
-          "next": "Diagnose complete file8 failure on frozen51b5; do not weaken stale replacement assertions. Seven files91/91 pass, file8 fails0/1, last two not run. Remote1729 remains83a until reviewed successor. Full source and remaining browser gates separate.",
+          "next": "Eight unchanged complete files pass112tests across separate per-file runs. Original result-supersession file fails0/1 because it expects immediate play instead of accepted Solo briefing. Final catalog-host file is running alone; preserve frozen51b5. Separate test-only correction approved; remote1729 remains83a until successor review.",
           "evidence": [
             "No new CTA or result action. Explain first mission, exact uncleared cursor, same accepted failed mission, or existing recorded-clear successor only when owned facts support it. Unknown/end/stale ownership produces no fabricated next mission. Unified-library rows are not progression order. Actual compact/landscape acceptance remains pending.",
             "Earlier focused15/15 complete pass. Two added recovery cases passed before broader10-file cohort ended exit7 after30 successes without TAP summary: INCOMPLETE, no aggregate pass or assumed cause. Root read-only review preserves exact original launch/destination policy; independent rerun pending.",
@@ -919,7 +919,8 @@
             "Actual IAB desktop1280x720 at exact83a: first-mission guidance visible in EN/UK, native Settings Back restores opener, Home after actual launch prioritizes Continue and removes recommendation. Screenshot paths in .cache/improvements-evidence/2026-10-19/capture-home-83a-{uk,resume}-desktop.png. Reload/earned-result/compact checks not yet complete; this is local-source browser evidence, not release/PWA/device acceptance.",
             "Actual exact83a desktop: reload/saved-flight Home keeps Continue primary with no recommendation; explicit Continue restores real flight. Earned legal win34.3%/8160points/3lives/1:08; Home explains actual Choose your share successor, Browse all→Back retains guidance and openerfocus, existing Continue reaches actual next mission. No fabricated mastery or new progression owner.",
             "Local51b5 successor changes only one Ukrainian recorded-next sentence, canonical catalogs and scoped review docs; runtime/tests identical83a. Actual iframe CSS viewport reviews320x480/568x320/844x390 use Standard and native Large/Plain, not device emulation. Primary guidance/Start visible; keyboard Tab scrolls Settings into view at320Large with focus. Suspected568clipping was retained scroll: fresh568load shows full guidance; no speculative layout change. PWA/offline/physical acceptance not inferred.",
-            "Serialized exact51b5 per-file checks: seven complete files91tests pass exit0/zero skips. Eighth actual authored result-supersession file fails0/1 exit1 atline86 asynchronous action did not settle. Final two files NOT RUN; diagnosis underway. Earlier incomplete aggregate remains incomplete, no assumed baseline attribution."
+            "Serialized exact51b5 per-file checks: seven complete files91tests pass exit0/zero skips. Eighth actual authored result-supersession file fails0/1 exit1 atline86 asynchronous action did not settle. Final two files NOT RUN; diagnosis underway. Earlier incomplete aggregate remains incomplete, no assumed baseline attribution.",
+            "Ninth unchanged complete file solo-result-continuation-host passes21/21 zero skips exit0 at exactclean51b5. Final mission-library-solo-host started separately and remains running; no aggregate result inferred. Root source review corroborates explicit Solo prepared briefing/Start contract; separate child test-only repair approved, retaining original stale artwork/checkpoint/focus assertions and joining actual owner promises."
           ],
           "candidateCommit": "51b5d9d466b32deb6861a2419d264b720321c43d"
         }
@@ -4032,6 +4033,16 @@
       "date": "2026-10-19",
       "item": "Academy draft, current-main compatibility, actual observation fix and honest Journey failure",
       "reason": "1730 published0e9;1668 returneddraftf807 with446pass/currentfullpending; primarymainintegration frozen/rootreviewpass. Actualbrowserproves sharedreportwordingbug, sixfilefix27pass/source+ENUKreview. F10sevenfiles91pass/eighth0of1fail/lasttwoNOTRUN. Counts27merged15ready35draft77active+1withdrawn; all113deliverables retained."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Whole-deliverable phase overview added to delivery board",
+      "reason": "The board now derives eight phase rows from all113 statuses, separates source-merged/review/in-progress/dependency/planned, and opens a phase filter with one click. Actual browser confirms Phase3 selects exactly12of113 rows and moves focus to phasefilter. Partial merged feature slices remain inprogress; no completion percentage inferred."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Journey test attribution and final unchanged checks",
+      "reason": "Actual Solo prepareResultAttempt explicitly prepares paused briefing on choose; original failure predicate requiring immediate running cannot settle. Adjacent native test confirms freshStartowner. Separate test-only child approved; file9 passes21/21, finalfile10running. No production/pollhelper/timeout relaxation."
     }
   ],
   "deliveryDependencies": [
@@ -4098,18 +4109,18 @@
   },
   "admissionReview": {
     "observedDate": "2026-10-19",
-    "scope": "All76 task-referenced feature candidates including withdrawn1718; dependency PRs separate",
+    "scope": "All78 task-referenced candidates:77 active/admitted +1withdrawn; separate dependencies excluded",
     "counts": {
       "merged": 27,
-      "ready": 16,
-      "draft": 32,
+      "ready": 15,
+      "draft": 35,
       "withdrawn": 1
     },
     "conflictedOpenPRs": [
-      1617, 1622, 1624, 1627, 1632, 1638, 1641, 1661, 1662, 1664, 1668, 1669, 1671, 1672, 1682,
-      1686, 1690, 1702, 1704, 1715, 1723
+      1617, 1622, 1624, 1627, 1632, 1638, 1641, 1661, 1662, 1664, 1669, 1671, 1672, 1682, 1686,
+      1690, 1702, 1704, 1723, 1729
     ],
-    "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1662, 1668, 1669, 1682, 1686, 1690],
-    "note": "Ready is authoring status, not current mergeability or completed required checks. No manual merges; earlier source passes do not qualify future integration. Historical inventory before1730 and1668 draft return; current counts are in deliverySnapshot. New remote-wide inventory pending."
+    "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1662, 1669, 1682, 1686, 1690],
+    "note": "Current remote-wide inventory rechecked. Ready is authoring status, not mergeability or passed checks.1668 returned draftf807;1661 integration pending. No manual merges or bypasses; older tests do not qualify new source."
   }
 }
