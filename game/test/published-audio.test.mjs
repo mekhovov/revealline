@@ -11,6 +11,7 @@ import { emptySoundtrackLibrary, BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 import { pcmWave, pcmWaveBlob } from './helpers/pcm-wave.mjs';
 import { Events } from './helpers/couch-dom.mjs';
+const audioDocument = () => Object.assign(new Events(), { getElementById: () => null });
 import {
   validateCampaignFeedback,
   CAMPAIGN_FEEDBACK_FORMAT,
@@ -459,7 +460,7 @@ test('published victory owns an authored campaign win; only an unavailable cue u
 
 test('page cue listeners use native actions only and cleanup leaves no active audio adapter', async () => {
   const h = audioHarness(),
-    document = new Events();
+    document = audioDocument();
   const calls = [];
   h.soundscape.publishedCue = (name) => calls.push(name);
   const owner = attachPublishedAudio({
@@ -543,7 +544,7 @@ test('release audio is fetched only on demand and rejects bad bytes and cancella
 });
 
 test('music-only Team binding leaves cue ownership untouched while retaining verified music', async () => {
-  const document = new Events(),
+  const document = audioDocument(),
     calls = [],
     tracks = [];
   const snapshot = {
@@ -589,7 +590,7 @@ test('music-only Team binding leaves cue ownership untouched while retaining ver
 
 test('music-only disposal cannot replace an existing cue owner or attach after late readiness', async () => {
   for (const rejectReady of [false, true]) {
-    const document = new Events(),
+    const document = audioDocument(),
       calls = [],
       tracks = [];
     let resolve, reject;
@@ -666,7 +667,7 @@ test('explicit retained audio adoption defeats late page readiness and invalidat
     sound: { setPublishedAudio: (read) => cues.push(read), publishedCue() {} },
     ready: pageReady,
     getHost: () => host,
-    document: new Events(),
+    document: audioDocument(),
   });
   owner.setPlayer({ setPublishedTrack: (track) => tracks.push(track) });
   owner.setPresentation(old);
@@ -713,7 +714,7 @@ test('switching presentation rejects an in-flight music read before the real pla
     sound: h.soundscape,
     ready: Promise.resolve(old),
     getHost: () => host,
-    document: new Events(),
+    document: audioDocument(),
   });
   try {
     await owner.ready;
@@ -782,7 +783,7 @@ test('switching presentation during cue decoding discards the old cache and uses
     sound: h.soundscape,
     ready: Promise.resolve(old),
     getHost: () => host,
-    document: new Events(),
+    document: audioDocument(),
   });
   try {
     await owner.ready;
