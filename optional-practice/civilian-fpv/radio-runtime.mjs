@@ -306,8 +306,13 @@ export function createRadioRuntime({
       } else if (cameraOffSeen) cameraPressed = true;
       previous = next;
       if (active) live = command;
-      else
-        reason = ['device-lost', 'invalid-sample'].includes(reason) ? reason : armReason(command);
+      else if (!['device-lost', 'invalid-sample'].includes(reason)) {
+        const nextReason = armReason(command);
+        reason =
+          nextReason === 'ready' && profile.switches.arm && !next.arm
+            ? 'arm-switch-off'
+            : nextReason;
+      }
       return active ? { ...live } : neutralFlightInput();
     },
     status() {

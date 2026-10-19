@@ -2269,6 +2269,8 @@ description=localizedMessage(
 ),
 browsingContext=null,
 random=Math.random,
+randomDownloadable=false,
+randomFilter=()=>true,
 renderPreview=()=>null,
 createArtworkView=null,
 retune={},
@@ -2827,7 +2829,14 @@ mode:modeFilter.value,
 collection:collection.value,
 lifecycle:lifecycle.value,
 })
-.filter((row)=>library.availability(row,modeFilter.value).state==='ready');
+.filter((row)=>{
+if(!randomFilter(row))return false;
+const state=library.availability(row,modeFilter.value);
+return(
+state.state==='ready'||
+(randomDownloadable&&(state.state==='download'||state.retry))
+);
+});
 }
 function playRandom({resetFilters=false}={}){
 if(destroyed|| !dialog.open||doc.hidden||doc.hasFocus?.()===false)return false;
@@ -3001,9 +3010,7 @@ lifecycle:lifecycle.value,
 // Campaigns are navigation anchors, never a hidden second filter. Every
 // matching campaign remains in this one scroll surface.
 const matches=railRows;
-randomLevel.disabled= !matches.some(
-(row)=>library.availability(row,modeFilter.value).state==='ready',
-);
+randomLevel.disabled= !readyRandomRows().length;
 resetFilters.hidden= !filtersActive();
 localizedText(status,()=>
 [
@@ -9590,7 +9597,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: a9c562864beebe5e5d73b9c4cef1bf2974b1c30c5d476948d4cd97b51973ee5c
+// Canonical source sha256: a878605004fbfd49d3809deb02e4081e808243f1a2a43d5499a981ff0e335055
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -10009,7 +10016,7 @@ const viewChanged= !root?.contains(doc.activeElement)
 :list?.contains(doc.activeElement)
 ?view('categories')
 :false;
-if(breakpointChanged||viewChanged){
+if(breakpointChanged||(nextCompact&&viewChanged)){
 generation++;
 onPresentationChange();
 }
@@ -10832,6 +10839,16 @@ else if(node===buttons.sound||node===buttons['pause-sound'])
 value=`${COPY[language].sound}: ${COPY[language][state.muted?'off':'on']}`;
 else if(node===briefingTitle)value=text(state.missionName)||value;
 put(node,'textContent',value);
+}
+const pauseIcon=
+state.phase==='paused'&& !state.pauseOpensMenu
+?'play'
+:state.pauseOpensMenu&&state.phase!=='playing'
+?'menu'
+:'pause';
+if(buttons.pause.dataset.modePauseIcon!==pauseIcon){
+buttons.pause.dataset.modePauseIcon=pauseIcon;
+services.setMenuIcon?.(buttons.pause,pauseIcon);
 }
 attribute(buttons.menu,'aria-label',COPY[language].menu);
 put(modeLabel,'textContent',text(modeName));
