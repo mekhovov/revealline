@@ -27,6 +27,8 @@ const observer = createIDBOwnershipObserver({
   indexedDB: window.indexedDB,
   captureExplicitClose:
     new URL(location.href).searchParams.get("idbCloseCalls") === "1",
+  captureTransactions:
+    new URL(location.href).searchParams.get("idbTransactions") === "1",
 });
 const originalEntry = document.documentElement.dataset.fpvWorlds;
 // Suppress only the module's default auto-mount, then invoke the same exported host.
@@ -67,7 +69,7 @@ title.id = "idb-diagnostic-title";
 title.textContent = "Authoring connection observation";
 dialog.setAttribute("aria-labelledby", title.id);
 help.textContent =
-  "Pause through the normal player before reading. This diagnostic boot uses a factory/window facade. Optional close interception changes observed instances’ method identity. Only events and owned source locations are exported; no player contents or liveness probe. Missing events cannot prove why the original 9196 connection closed.";
+  "Pause through the normal player before reading. This diagnostic boot uses a factory/window facade. Optional close and transaction interception change observed instances’ method identities. Transaction capture counts only known listing requests already issued by the player; no extra reads, contents, keys or liveness probe. Incomplete, failed and stopped capture cannot establish empty storage or explain the original public failures.";
 read.textContent = "Read captured events";
 save.textContent = "Export observation";
 stop.textContent = "Stop observing";
