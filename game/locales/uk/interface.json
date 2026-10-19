@@ -6095,5 +6095,7 @@
   "supportSummary.game.complete": "Політ завершено",
   "supportSummary.game.expired": "Час польоту вичерпано",
   "supportSummary.game.playback-ended": "Перегляд завершено",
+  "supportSummary.presence.connected": "Виявлено під’єднаний контролер. Це спостереження не підтверджує його призначення чи готовність до керування меню.",
+  "supportSummary.presence.disconnected": "Під’єднаного контролера не виявлено.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

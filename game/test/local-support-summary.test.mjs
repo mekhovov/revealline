@@ -391,3 +391,75 @@ test('Academy terminal playback remains distinct from live flight completion and
     assert.equal(value.controller.confirmBlocked, null);
   }
 });
+
+const observationCopy = {
+  en: {
+    presence:
+      'Connected controller observed. Assignment and menu readiness are not confirmed by this observation.',
+    absent: 'No connected controller was observed.',
+    ready: 'The game reports the controller ready.',
+    disconnected: 'The assigned controller disconnected. Reconnect and release the controls.',
+    waiting: 'Controller detected; release its buttons and movement stick.',
+    stale:
+      'The last game controller sample is old or the page was inactive. Return to the game and refresh.',
+  },
+  uk: {
+    presence:
+      'Виявлено під’єднаний контролер. Це спостереження не підтверджує його призначення чи готовність до керування меню.',
+    absent: 'Під’єднаного контролера не виявлено.',
+    ready: 'Гра повідомляє, що контролер готовий.',
+    disconnected:
+      'Призначений контролер від’єднано. Під’єднайте його та відпустіть елементи керування.',
+    waiting: 'Контролер виявлено; відпустіть кнопки та стік руху.',
+    stale:
+      'Останній зразок контролера застарів або сторінка була неактивна. Поверніться до гри й оновіть звіт.',
+  },
+};
+
+for (const [name, status, assigned, neutral, blocked, wording, monotonic = 1000] of [
+  ['unknown ownership', 'connected', null, null, null, 'presence'],
+  ['unknown assignment', 'connected', null, true, false, 'presence'],
+  ['unknown neutral', 'connected', true, null, false, 'presence'],
+  ['unknown Confirm', 'connected', true, true, null, 'presence'],
+  ['unassigned', 'connected', false, true, false, 'presence'],
+  ['not neutral', 'connected', true, false, false, 'presence'],
+  ['Confirm blocked', 'connected', true, true, true, 'presence'],
+  ['confirmed readiness', 'connected', true, true, false, 'ready'],
+  ['unknown missing assignment', 'disconnected', null, null, null, 'absent'],
+  ['explicitly unassigned missing', 'disconnected', false, null, null, 'absent'],
+  ['known assigned disconnect', 'disconnected', true, null, null, 'disconnected'],
+  ['authoritative waiting', 'waiting-neutral', true, false, true, 'waiting'],
+  ['stale presence', 'connected', null, null, null, 'stale', 4000],
+  ['stale readiness', 'connected', true, true, false, 'stale', 4000],
+])
+  test(`support controller wording distinguishes ${name} without changing captured/exported facts`, async () => {
+    const previous = getLocale(),
+      value = host();
+    value.controller = { sampledAt: 900, status, assigned, neutral, blocked };
+    const report = await collectSupportSummary({
+      host: value,
+      env: environment(),
+      clock: { ...clock, monotonic },
+    });
+    const h = panel({ collect: async () => report });
+    try {
+      setLocale('en', { persist: false });
+      h.$('prepare').focus();
+      assert.equal(await h.ui.refresh(), true);
+      const exact = h.$('json').textContent;
+      for (const language of ['en', 'uk']) {
+        setLocale(language, { persist: false });
+        assert.equal(h.$('controller').textContent, observationCopy[language][wording]);
+        assert.equal(h.doc.activeElement, h.$('prepare'));
+        assert.equal(h.$('json').textContent, exact);
+        assert.deepEqual(JSON.parse(exact), report);
+      }
+      await h.ui.download();
+      assert.deepEqual(h.exports, [
+        { value: report, name: 'revealline-local-support-summary.json' },
+      ]);
+    } finally {
+      h.ui.destroy();
+      setLocale(previous, { persist: false });
+    }
+  });
