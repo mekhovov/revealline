@@ -15,16 +15,16 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Duel Home guidance: five of seven remaining test files now pass, including departure and recovery. Finish language and start-cue checks, then review the complete feature for a draft PR based on its separate test prerequisite.",
-    "P1 · Controller report: draft #1731 has 141 focused checks and sampled English/Ukrainian browser evidence. Finish current-source and package checks. Physical connected-controller behavior remains untested.",
-    "P1 · Shared foundations: support reconciliation #1661 has 81 focused checks. Qualify the current version before admitting dependent Team, Duel and Academy changes.",
-    "P1 · Capacity: 2.6 GiB is available. Continue bounded implementation and focused tests while protecting a 2 GiB reserve; avoid large builds or source copies that would breach it.",
-    "P1 · Single Drone/Riy text scaling: finish menus, HUD, upgrade comparisons and results. Preserve the newly merged save/resume and caption-reading features, existing Standard/Large text, and simultaneous field/HUD/touch visibility.",
-    "P1 · Review and admission: finish current-version checks for text compatibility, recovery and support adapters. Required CI still governs merge; draft status does not establish release readiness.",
-    "P1 · Support hosts: Worlds #1733 passes 245 focused checks; Rooms #1734 passes 152. Both have sampled English/Ukrainian browser review. Full source/package checks, live-room behavior, exports and physical acceptance remain.",
-    "P1 · Team launch checks: finish the separate test, guide and catalog corrections while preserving the intended one-click mission launch. The withdrawn runtime proposal stays closed.",
-    "P2 · Language: pause-music #1737 now preserves the latest main version and awaits its complete 28-case rerun. Academy terminal-result meaning is scoped next. Worlds storage #1736 retains partitioned coverage and browser evidence.",
-    "Continue the remaining eight-phase plan. All 83 feature groups and 113 deliverables remain tracked. Lesson recommendations still need Learn and shared demos; source, release and physical-device gates remain separate."
+    "P1 · Text compatibility #1668: qualify the frozen current-main integration before updating its draft. Preserve desired text size, save/reentrancy behavior and all host fallbacks.",
+    "P1 · Single Drone/Riy: finish the complete Extra large menu, field/HUD, upgrade and result layouts, then actual compact English/Ukrainian review. Preserve simultaneous field, critical status and touch/action access.",
+    "P1 · Team repair #1740: five focused checks pass. Finish independent review and broader qualification for the retained navigation-context bug.",
+    "P1 · Duel Home #1741: review the clean draft on fixture prerequisite #1735. All11 files ran at recorded scopes (135 pass, one independently reproduced baseline Team failure). Compact/current-source/package gates remain.",
+    "P1 · Shared support foundations: #1661 has81 focused checks; controller #1731 has141; Worlds #1733 has245; Rooms #1734 has152. Complete current-source, package and admission gates before dependent delivery.",
+    "P1 · Capacity: continue bounded work while protecting2GiB free. Full builds and large captures require enough headroom; do not discard original work or evidence.",
+    "P2 · Academy language: fix the confirmed timeout/unscored result explanation, with ordinary success/replay/reset controls and unchanged proof/records.",
+    "P2 · Pause music #1737: complete28/28 current-source checks and actual Duel/Team EN/UK browser review pass. Full/package/admission, listening and physical acceptance remain.",
+    "P1 · Team launch prerequisites and remaining recovery adapters: preserve intended one-click play, exact checkpoints and existing owners. Required CI governs admission.",
+    "Continue all eight phases. All83 feature groups/113 deliverables remain tracked; lessons still need Learn/Demo dependencies. Physical iPhone PWA offline and Steam Deck checks remain Not tested."
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -897,10 +897,10 @@
         "browser": "scoped_desktop_and_iframe_passed",
         "physical": "not_tested"
       },
-      "blocker": "Seven remaining completefeaturefiles nowqualifying on preserved b452; full lessons stillF25/D dependent. Newer-main/source/package/admission gates separate.",
+      "blocker": "Capture and Duel explanations are separate drafts. Full lesson recommendations still require F25/Learn and Demo dependencies; later current-source, package, browser and admission checks remain.",
       "pr": null,
       "commit": null,
-      "next": "Finish Capture Home admission with independent fixture prerequisite1732. Develop a separate explained default Versus landing selection using its existing accepted owner. Team can follow separately; full lesson recommendations remain F25/D dependent.",
+      "next": "Review Capture #1729 and Duel #1741 with their independent test prerequisites. Team recommendations and contextual lessons remain separate deliverables.",
       "evidence": [
         "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced."
       ],
@@ -937,13 +937,13 @@
         {
           "id": "versus-journey-home-recommendation",
           "priority": "P1",
-          "status": "developing",
+          "status": "draft_review",
           "owner": "lane-b",
-          "pr": null,
-          "commit": null,
-          "dependency": "Independent fixture1732 exact8704; existing native Journey initial-selection owner, not F25/D",
+          "pr": "https://github.com/mekhovov/revealline/pull/1741",
+          "commit": "0f6497f8dd777f6ddd2e566afa7d9959d02a0877",
+          "dependency": "Independent fixture #1735, exact d5a346ebbb541787f27a2ccb625551ea196f5501; existing accepted Journey selection owner",
           "effort": "1–2d bounded reason/visibility slice plus native and compact browser review; queues excluded",
-          "next": "At b452, five of seven remaining complete files pass: default10, library19, continuous9, departure18 and recovery17. Localization/startcue pending. Publication preflight must exclude two unrelated Solo fixture paths while preserving all runtime/tested blobs; no featurePR yet.",
+          "next": "Draft #1741 explains the existing Duel landing selection. All 11 complete files were executed at their recorded source scopes: 135 pass and one confirmed pre-existing Team retirement failure. Separate repair #1740 passes 5/5. Finish current-source, compact browser, package and admission checks; full F10 remains partial.",
           "evidence": [
             "Read-only assessment: actual journeyCursor/cursorEntry/progressMission/initialJourneyMission already choose default first/current/recorded successor. Bind captured reason facts to acceptedroundRecipe.entry; suppress pending, late/stale/endfallback, incominghandoff/continuation and actuallive/paused states. Later accepted manual recipe uses neutral selected wording, never earned progress or opponent mastery. Versus controller restore stores assignment, not a generic saved flight: do not invent a save owner. Existing resultNext already names destination and needs no duplicate recommendation.",
             "Frozen64d0d3b414e8fc6d28c2b5fe443e22d8988a7c82fbc755077e9dad9a1b1afdb6 on8704 preserves twelve original production owners,5937EN/6049UK values plus3messages each and canonical18. Actual accepted recipe remains sole selection owner. Complete pure5/5 passes.",
@@ -960,10 +960,16 @@
             "ReadonlyF10integrationpreflight: all6d5afollowuppreimages exactlymatchpreservedde336;2newmetadata paths absentboth, no overwrite/conflict indicated. Projected11completefilemanifest1493cc145dbe12debd7c75f730f1961728b04d18ef07f6feeae457ad8f906cdd retainedintooloutput; first4(pure/newhost/shell/candidate) unchanged,3correctedfixturesfromd5a,last4departure/recovery/localization/startcue unchangedde336. All11runtimefeatureblobs pinned27bfa. Sevencompletefiles requirefeaturequalificationaftercapacity/integration; first4priorpasses retainexactscope, no gratuitouswholecohortrerunclaimed. No switch/cherrypick/native executed.",
             "Resumeactualdisk2.6GiB; ordinaryintegration b452/tree71b9459eacdac49e30c4f3c7b31740be7077efb4 clean,11featureblobs exact27bfa,all6fixturepreimages exact. Frozen11filemanifest98353519298558a0c2fd9f5ec3947f08a33d8b9c80619872e08a6c79e09e691f; first4priorpassesunchanged. Sevenqualificationfiles developing, no inferredpass.",
             "Integratedb452 complete perfile results: default10/10,38.59s/peak1227.1MiB; library19/19,152.17s/peak1892.5MiB; continuous9/9,56.51s/peak1032.8MiB. Allzero skips/cancellations/guards/stderr, exact20sourceaudit5e2592 unchangedbeforeafter, minfree>2GiB. Fourfilesstillpending atcheckpoint; no cohortpass inferred.",
-            "Fourth/fifth completeb452files departure18/18(70.90s,peak1479.8MiB) and recovery17/17(92.59s,peak1539.1MiB) PASS,zero skips/cancellations/guards/stderr,20sourceaudit/head/state unchanged andminfree>2GiB. Publicationpreflight planned afterfullcohort: clean1735base+feature27bfa only,18relevantblobs equal and2explicitunimportedSolo prerequisitesexcluded; whole runtime/testtreeparity tobeverifiedbeforeapproval. No source switch duringrun."
+            "Fourth/fifth completeb452files departure18/18(70.90s,peak1479.8MiB) and recovery17/17(92.59s,peak1539.1MiB) PASS,zero skips/cancellations/guards/stderr,20sourceaudit/head/state unchanged andminfree>2GiB. Publicationpreflight planned afterfullcohort: clean1735base+feature27bfa only,18relevantblobs equal and2explicitunimportedSolo prerequisitesexcluded; whole runtime/testtreeparity tobeverifiedbeforeapproval. No source switch duringrun.",
+            "Final b452f46d3651bc2855b46781640d24cf3d8640da localization file: 3/4 pass, one retired Team localization producer throws document is not defined. Final start-cue file: 3/3 pass, 12.44s TAP/13.326s wall, peak569.4MiB. Complete seven-file remainder has79pass/1fail; all11 recorded files total135pass/1fail, not an aggregate green result. No skips/cancellations/guards/stderr. Exact20-source audit5e2592f976e53143114ec5550bd4a20ed22532fb7fe0f646fa023023603b297d and11-filemanifest98353519298558a0c2fd9f5ec3947f08a33d8b9c80619872e08a6c79e09e691f unchanged.",
+            "Independent unchanged-production Team failure reproduced on b452f46d3651bc2855b46781640d24cf3d8640da, fixture-only prerequisite d5a346ebbb541787f27a2ccb625551ea196f5501, and captured main cdbda99ac881eb9cac62d536543d9078b92ac081. Separate runtime repair #1740 is not folded into or counted as passing the original F10 cohort.",
+            "Clean draft #1741 head0f6497f8dd777f6ddd2e566afa7d9959d02a0877/tree885a0c71cad511585c83119956a158152b999fea is based on actual codex/duel-context-fixture-current-contract. Root readback independently verifies exactly11 feature paths; fixture/Solo changes excluded. Whole tree differs from tested b452 only by two unrelated Solo exclusions and qualification document; runtime/helpers/all11 tested files exact. Browser proves retained visible0%/3lives/0points only; exact checkpoint assertions are automated. Full current-source/compact/device gates pending."
           ],
           "testPrerequisite": "https://github.com/mekhovov/revealline/pull/1735",
-          "candidateCommit": "b452f46d3651bc2855b46781640d24cf3d8640da"
+          "candidateCommit": "b452f46d3651bc2855b46781640d24cf3d8640da",
+          "observedRemoteHead": "0f6497f8dd777f6ddd2e566afa7d9959d02a0877",
+          "deliveryState": "draft",
+          "mergeState": "UNSTABLE"
         }
       ]
     },
@@ -2229,12 +2235,14 @@
             "All current readers preserve desiredXL/effectiveLarge, including legacy import. Source and actual browser evidence scoped above; old immutable published binaries excluded.",
             "Root independentlyverified40/43 nonlocale/nongenerated feature added/removed deltas unchanged vsbeb9; all5935EN/6045UKmainvalues+3compatibilitykeys/languagepreserved. RootcatalogBundle(current18namespaceJSON) byte-identicaltoactualcompressedcatalog; VMdecode18deep-equal. Receipts/tmp/revealline-f09a-e216-root-independent-review.json and-root-canonical-review.json. Currentfullgatesqueued; historicalbeb457/fullpass staysscopedtooldhead.",
             "Current e216:439/439 complete14-file cohort, zero skips, after repairing existing fake-indexeddb dependency link; initial339+file-import failure retained,54-case subset not added. Full lint/uninterrupted validation PASS, source clean before/after. Raw formatting check retains4 existing policy findings, canonical18-namespace generation independently identical. Promoted ready; required CI pending.",
-            "f807 tree959b16ba7d100814083b4586f22ebcd0629876d9 merges exacte746. Root independently preserves all40ordinary deltas,43feature paths, current-main values+3keys/language,18canonical namespaces and original appended host cases. Initial446total440pass/6ENOENTfail and diagnostic130total124pass/6fail retained; only missing unchanged tracked51KB Snake proofJSON restored after blobSHA verification. Final whole14files446/446 zero skips117.11s. PR returned draft before FF push; no bypass/force/manual merge. Current-head full gates pending."
+            "f807 tree959b16ba7d100814083b4586f22ebcd0629876d9 merges exacte746. Root independently preserves all40ordinary deltas,43feature paths, current-main values+3keys/language,18canonical namespaces and original appended host cases. Initial446total440pass/6ENOENTfail and diagnostic130total124pass/6fail retained; only missing unchanged tracked51KB Snake proofJSON restored after blobSHA verification. Final whole14files446/446 zero skips117.11s. PR returned draft before FF push; no bypass/force/manual merge. Current-head full gates pending.",
+            "Normal merge2e0cfde9d56690273db7aff0d453c8a96b3f196e/tree28102c6d4b1d9954c6f8bd8f7ca5baf3f517d049 preserves exact captured main cdbda99ac881eb9cac62d536543d9078b92ac081 with original43 compatibility paths. Four conflict resolutions exactly match reviewed50c2b888c179bbbe42cabe6979b9c226c194dd77 foundation unions; all main locale values plus3keys/language and read/persist/receive/notice/motionChanged owners preserved. All39 changedJS lint pass, cached diff clear, theme/SIM bootstrap checks byte-identical (305701bytes, no added package slots).43-file manifest4221231c019e658a69a966483d2f41c9c85cc4ab5bfe88de07e3ccaca2f49a6d. No current native/full gate inferred. Original untracked documents reversibly preserved with hashes before switching root-owned integration checkout."
           ],
           "deliveryState": "draft",
           "mergeState": "DIRTY",
           "observedRemoteHead": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33",
-          "next": "Compatibility1668 returned to draft and published bounded main-e746 reconciliationf807:446/446 full feature cohort; current-head full source/package gates pending. Earlier full-source passes remain e216-only."
+          "next": "Current-main integration2e0cfde9d56690273db7aff0d453c8a96b3f196e is frozen and independently source-reviewed:43 feature paths, current save/reentrancy owners retained,39JS lint and both bootstrap checks pass. Current14-file cohort and full gates remain pending; remote #1668 still retains earlier f807 qualification.",
+          "candidateCommit": "2e0cfde9d56690273db7aff0d453c8a96b3f196e"
         },
         {
           "id": "primary-200-percent",
@@ -2401,12 +2409,14 @@
           "commit": null,
           "dependency": "Compatibility1668 and complete SingleDrone/Riy typography/layout inventory; follow independent width repair",
           "effort": "Within original6–10d totalF09, not a second full estimate",
-          "next": "Resume preserved completefamilyWIP. Currentmaincdb adds Survival suspend and caption-reading owners: assess bounded normalintegration, preserve Save/Resume/UI semantics, reinventory newloadedtext before finalbootstrap/layout/native/browser qualification. No newfamilytest pass yet.",
+          "next": "Complete Single Drone/Riy responsive field/HUD, upgrade comparisons and existing Pause reading route, then native and actual compact EN/UK browser checks. Current-main save/caption owners are preserved. Keep critical HUD, complete field and touch/actions simultaneously reachable; do not add gameplay key routing.",
           "evidence": [
             "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred.",
-            "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed."
+            "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed.",
+            "Source resumed on normal current-main integration50c2b888c179bbbe42cabe6979b9c226c194dd77 after preserving partialcb461c6a639ed865043cad53b45cb7a45303b38a. Reinventory387modules/21stylesheets; suspend inherited text covered, unrelated comfort CSS not imported. Responsive CSS, exact-node secondary-copy helper and native-entry tests authored; theme/bootstrap and existing SIM slots regenerated306068bytes/no package slots. No native tests launched yet. Persistent secondary copy uses existing Pause reading/scroll owner; live timed notices, Riy actions/focus/cooldown remain live. Actual geometry remains a required gate."
           ],
-          "blocker": null
+          "blocker": null,
+          "candidateCommit": "50c2b888c179bbbe42cabe6979b9c226c194dd77"
         }
       ]
     },
@@ -2759,7 +2769,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Worlds storage draft1736 retains partitioned139/139 and actual EN/UK review. Shared pause-music draft1737 passes complete28/28; actual Duel first-pause and retained EN/UK label browser passes, full source/package/device gates pending. Remaining terminology/result/card work continues.",
+      "next": "Pause-music #1737 has current-source28/28 and actual Duel/Team EN/UK browser review. Team retired-context repair #1740 has5/5. Academy terminal meaning is in development after two valid baseline failures. Remaining language slices and broader gates continue.",
       "evidence": [
         "Browser review confirms existing singular grammar \"1 rerolls left\" and \"1 замін залишилося\". Track bounded count-aware localization in a later F59 batch; F19c adds disclosure only.",
         "Actual Worlds5363 native language switch after a verified result translates the new medal paragraph and enemy stats but leaves existing result heading, recording status, medal/score and action labels in English. Track bounded retained-result live-locale ownership; do not claim F23 new-paragraph fix covers existing nodes.",
@@ -2873,10 +2883,10 @@
           "status": "draft_review",
           "owner": "lane-c",
           "pr": "https://github.com/mekhovov/revealline/pull/1737",
-          "commit": "c127c384bfe00569afccd9b5d0d9498f5933b01d",
+          "commit": "feffba6a20ec33b392fce4e77dade278505bba1f",
           "dependency": "Existing shared pauseMusicAction owner; independent captured-main e746 base, not F10 or Worlds stack",
           "effort": "0.5d bounded fix plus focused/native/browser gates; queues excluded",
-          "next": "Normal currentmaincdb reconciliation41870 is frozen; root independently verified whole main tree unchanged outside originalfive featurepaths, allfive exactlyc127. Statics pass. Complete28 rerun waits native slot; no newqualifiedhead or PRpush yet.",
+          "next": "Draft #1737 now preserves captured current main and passes the complete28 checks. Actual Duel and Team browser journeys retain correct EN/UK first-pause and subsequent labels and Settings focus. Full source/package/admission, audible playback and physical checks remain.",
           "evidence": [
             "ActualF10desktop screenshot shows visible Ukrainian Nextsong in otherwiseEnglishPause afterlocalechangedbeforefirstPause. Source owner pause-menu and bootstrap byte-identical e746, B27bfa and C1736: detached shortcut intentionally skipped by global translation; first legitimate admission needs current-locale refresh.",
             "Valid complete componentRED2existingpass/2newracecoopfail, then approved stable label producer +existinglocalizedText reuse inrefresh; complete4/4GREEN. Earlier wrongUKliteral and stale textnode identity fixture errors corrected separately, not counted as productionred. Actual buttonidentity, subsequenttextnode/focus/order, missing/disabledtransport, oneexplicitNext, destroy/no-revival preserved. No playback/global localization/API change.",
@@ -2884,37 +2894,64 @@
             "Root independently reviewed stable producer/existing localizedText4line change and all5paths. Draft1737 exact7c4dd52 tree8afdfbc8 parentactuale746, remote head/main/draft/paths verified and attached. Finaldoc-only qualification update does not alter passing production/test blobs. Actual source browser8993 could not reach Pause because defaultFirstreturn picture did not load; this is not corrected-label browser acceptance. No audible/device/offline claim.",
             "Exact missingtrackedFirstreturnPNG404 fixed with ONE2,366,738byte already-local APFSclone, distinctinode/fullSHA3acf496d.. andHEADGitblob94d94509e0bd3fca988e15fc000bc53af091a543 verified, nofetch/build/bulkcopy; runtime/testsourceunchanged. NativeRetry→readyUK, DisplayEN→Back exactSettingsfocus→Start→Escape realPAUSED, Next songEnglish, Resumeprimaryfocus, Bothplayerspaused, soundoff. PausedDisplayUK→Back retainsUKНаступнакомпозиція/exactSettingsfocus. Screenshot pause-music-7c4-duel-uk-mount-en-first-pause.png. NoNextactivation/listening or browsercheckpointbyte/Teamdeviceclaim. Doc-onlyordinaryFFc127/treebe014974 published, original28passingcode/testblobs exact. Latestmain2d24remotecompare11commits/25paths no5pathorbootstrap/music/shellowner overlap, butadjacentnativehost/settingschanged; notlatestintegrationqualification.",
             "Readonlyexact2d24aee29448667a2cbe0381ef1755529f59fb11 integrationpreflight:11commits/58trees already-local;25changedtextblobs4,735,889bytes,noasset/no5featureoverlap/untrackedcollision.15missingblobs4,591,343bytes; expected<=12MiBsource/objectgrowth, nofetchneeded. Preservequalifiedc127ref,OIDverifiedexplicittextobjects only, normalmergeNO_LAZY_FETCH then samecomplete28cohort/rootreviewbeforeFF. Not executed due capacity. RequiredCIatobservedc127/c4fdnewdraftheads all8checksqueued; noadmission/bypass.",
-            "Normalmerge344969(qualifiedc127+2d24) then41870(tree7677a4861c6d5df970439860517aaeedffc24a50; parents344969+cdb). Onlyone924444byteworldreactiontextblob materialized/OIDverified, nofetch/assets/install. Root independent entirecdbtree parityoutside5featurepaths andall5c127blobs exact; trackedclean.64pathOIDmanifestd42efff19741615565f3dc95e369abaadcb453c76d111047e8670fd447187cb6,5featureSHA7f8da5e33bbb1bcfce8b0e31cb0db75252fc04dd008698d7b3e0b2495afb60c8. Changed4MJS lint/5fileformat/diff pass; native41870Notrunyet. Qualifiedc127and344refs preserved."
+            "Normalmerge344969(qualifiedc127+2d24) then41870(tree7677a4861c6d5df970439860517aaeedffc24a50; parents344969+cdb). Onlyone924444byteworldreactiontextblob materialized/OIDverified, nofetch/assets/install. Root independent entirecdbtree parityoutside5featurepaths andall5c127blobs exact; trackedclean.64pathOIDmanifestd42efff19741615565f3dc95e369abaadcb453c76d111047e8670fd447187cb6,5featureSHA7f8da5e33bbb1bcfce8b0e31cb0db75252fc04dd008698d7b3e0b2495afb60c8. Changed4MJS lint/5fileformat/diff pass; native41870Notrunyet. Qualifiedc127and344refs preserved.",
+            "Complete current-main integration41870f0d1997624da54059deca4370fc236efc22 rerun passes28/28 across all3 files (4component/22music/2native), zero skips/cancellations/guards/stderr, full unfiltered capture without truncation. Exact64pathOIDmanifestd42efff19741615565f3dc95e369abaadcb453c76d111047e8670fd447187cb6 before/after. Each test/source/head/status preserved.",
+            "Actual browser at41870f0d1997624da54059deca4370fc236efc22: both Duel and Team UK mount, native Settings Display English before first Pause, Back restores actual race-options/coop-settings-open focus; Start/Escape gives real PAUSED, Next song English and Resume primary. Paused Settings Ukrainian/Back gives ПАУЗА and Наступна композиція with exact opener focus. Sound off; no Next activation, audible, exact-browser-checkpoint, offline or physical claim. Four screenshots retained in status .cache/improvements-evidence/2026-10-19/.",
+            "Published ordinary fast-forward #1737 headfeffba6a20ec33b392fce4e77dade278505bba1f/tree7db274c6c952af770fd99dae3469cbe9c284bf6c. Root remote readback confirms draft/main/exact5 paths. Final document corrects real Team Settings opener; all4 passing code/test blobs retained. Final5-filemanifest18856ac1ebdd2d14c64c10200ce54b4d76d5252c13a1b54258b52b0c286e86e2."
           ],
           "deliveryState": "draft",
-          "observedRemoteHead": "c127c384bfe00569afccd9b5d0d9498f5933b01d",
+          "observedRemoteHead": "feffba6a20ec33b392fce4e77dade278505bba1f",
           "qualification": {
             "automated": "complete_focused_28_pass_full_pending",
-            "browser": "actual_duel_first_pause_and_en_uk_back_pass",
+            "browser": "actual_duel_and_team_first_pause_and_retained_en_uk_pass",
             "physical": "not_tested"
           },
           "blocker": null,
-          "mergeState": "CLEAN",
+          "mergeState": "UNSTABLE",
           "candidateCommit": "41870f0d1997624da54059deca4370fc236efc22"
         },
         {
           "id": "academy-terminal-result-language",
           "priority": "P2",
-          "status": "assessment",
+          "status": "developing",
           "owner": "lane-c",
           "pr": null,
           "commit": null,
-          "dependency": "Existing Academy completed/translated terminal owners; after1737 latest-main integration and capacity release",
+          "dependency": "Existing Academy terminal owners on captured main cdbda99ac881eb9cac62d536543d9078b92ac081; independent of pause-music stack",
           "effort": "0.5–1d bounded result-copy batch plus native/browser review; queues/hardware excluded",
-          "next": "Accepted three-path boundary: Academy app, fpv-flight-ui native tests, qualificationdoc. Keep actual expired/unscored meaning across EN/UK by one local painter using current terminalHandled/flight/tuning facts. No new result/proof/admission owner. Source/test edits Not started.",
+          "next": "Both selected native cases reproduce the result-copy bug on unchanged current-main production: real36000tick expiry and a real public-course unscored completion. Implement one local semantic painter, then cover ordinary success, replay and reset without new proof/admission/focus owners.",
           "evidence": [
-            "Sourceconfirmed translated1085–1086 always replaces complete-title/lesson with ordinarycoursecopy, overwriting completed1351–1387 Flight ended/retry or Draft test finished/unscored meaning on localechange. paint never restores specialcopy. No live reproduction or automated red yet. Native plan real36000tickexpiry via publicrendererFactory withoutretaineddraws, validpubliccourses tuningterminal, realEOF/normalwinning controls; exact nodes/focus/actions/model/proof/records/I/O acrosslocale. No fake shortdeadline/injectedterminal/completedreentry. Capacityhold."
+            "Sourceconfirmed translated1085–1086 always replaces complete-title/lesson with ordinarycoursecopy, overwriting completed1351–1387 Flight ended/retry or Draft test finished/unscored meaning on localechange. paint never restores specialcopy. No live reproduction or automated red yet. Native plan real36000tickexpiry via publicrendererFactory withoutretaineddraws, validpubliccourses tuningterminal, realEOF/normalwinning controls; exact nodes/focus/actions/model/proof/records/I/O acrosslocale. No fake shortdeadline/injectedterminal/completedreentry. Capacityhold.",
+            "Selected2 complete cases:0pass/2semanticfail/0skip/cancel/todo, exit1,25.395s, peak250944KiB, no guards. Original appGitOID436de86a7d18c7005221b266fb4e3372572fc8ed unchanged. Both real terminal states initially show correct EN meaning, then native Display Ukrainian incorrectly restores ordinary course title. Source/test2pathmanifestd04debf0fa6eedc70f89cc44a4f7022f4bdbe2313689c93e457ba5743318dbd4 exact before/after. Full2752byte stdoutSHA62f11ef9f944091259ab4e11322f2e5288289e42e99fd6e631d817e783858a36, stderr0, no truncation. Root reviewed valid RED and authorized bounded painter/control tests; no whole-file green yet."
           ],
           "qualification": {
-            "automated": "not_run",
+            "automated": "two_valid_baseline_red_cases_fix_in_progress",
             "browser": "not_run",
             "physical": "not_tested"
           }
+        },
+        {
+          "id": "team-retired-navigation-context",
+          "priority": "P1",
+          "status": "draft_review",
+          "owner": "lane-b",
+          "pr": "https://github.com/mekhovov/revealline/pull/1740",
+          "commit": "b2b9743d9c38d2b86c8de9d4f8ff216a0d5539e6",
+          "observedRemoteHead": "b2b9743d9c38d2b86c8de9d4f8ff216a0d5539e6",
+          "deliveryState": "draft",
+          "dependency": "Captured main cdbda99ac881eb9cac62d536543d9078b92ac081; independent of F10 and fixture stack",
+          "effort": "0.5d bounded ownership repair plus qualification; queues excluded",
+          "next": "Review separate three-path draft #1740. Complete localization file5/5 passes; retain broader source/browser/device gates. Do not retroactively relabel the F10 baseline failure as passed.",
+          "qualification": {
+            "automated": "complete_focused_5_pass_full_pending",
+            "browser": "not_run",
+            "physical": "not_tested"
+          },
+          "evidence": [
+            "Retained connected localization producer read selectedLevel through the later global document after page retirement. Failure reproduced on unchanged fixture-only base, F10 integration and captured current main. Capture the existing native selector once; retain selection policy, translator, save and input owners. Original4 test bytes retained exactly; fifth case supplies a conflicting legal foreign document and checks EN/UK while preserving both selections.",
+            "Current-main baseline complete4cases3pass/1fail; corrected complete5/5 pass12.900s TAP/14.717s wall, peak631.1MiB, no skips/cancellations/guards/stderr. Source audit unchanged before/after. Final doc-only manifestd727a1f3748e1a2dade5861466e8cefbe0dfc0dd6b9d693b5b0bb96aa037c812. Root independently verified draft/main/head/tree5299f1b686413d325dd32bcf1a7a89b5569ad578/exact3 paths."
+          ],
+          "mergeState": "UNSTABLE"
         }
       ]
     },
@@ -4332,6 +4369,11 @@
       "date": "2026-10-19",
       "item": "Progress follow-up PR1739 opened after original roadmap source merge",
       "reason": "Original1614 alreadymergedat160b; later3documentupdates nowreviewable in draft1739 exact2cb3. OriginalPRbodyclarifies frozenboundary. Board link corrected; nofeature/dependencycounts added for documentation. Duel3of7filespass andpause41870currentmainpreservation independentlyverified."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Two reviewable drafts and current-source language qualification",
+      "reason": "Duel Home1741 published clean11paths;135pass/1confirmedbaselinefailure retained. IndependentTeam1740complete5/5. Pause1737current28/28 and both-mode ENUKbrowserpass. Academy2validRED cases nowinfix; compatcurrentmain frozen/lint/generatorclear; SingleDrone/Riy completefamily layoutcontinues.85candidateinventory31merged12ready41draft1withdrawn;113deliverables retained."
     }
   ],
   "deliveryDependencies": [
@@ -4419,7 +4461,7 @@
   ],
   "deliverySnapshot": {
     "featurePRsReady": 12,
-    "featurePRsDraft": 39,
+    "featurePRsDraft": 41,
     "deliverablesMerged": 31,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
@@ -4428,11 +4470,11 @@
   },
   "admissionReview": {
     "observedDate": "2026-10-19",
-    "scope": "All83 unique task-referenced candidates; seven delivery dependencies excluded",
+    "scope": "All85 unique task-referenced candidates; seven delivery dependencies and documentation follow-up excluded",
     "counts": {
       "merged": 31,
       "ready": 12,
-      "draft": 39,
+      "draft": 41,
       "withdrawn": 1
     },
     "conflictedOpenPRs": [
@@ -4440,26 +4482,10 @@
       1686, 1690, 1702, 1704, 1721, 1729
     ],
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1662, 1669, 1682, 1686, 1690],
-    "note": "Remote metadata rechecked after source merges1616,1663,1691. Latestmaincdb is9commits beyond2d24; Overflight suspend/reading owners now require integration. Ready describes authoring status, not passedCI or mergeability. No manualmerges/checkbypasses.",
+    "note": "Remote metadata independently rechecked after #1740/#1741 publication.31merged/12ready/41draft/1withdrawn; source PR inventory is not plan completion. Ready is authoring status, not passed CI or mergeability. No manual merges or bypasses.",
     "latestMain": {
-      "revision": "9566d32099b37f7e0c14fcc8101ea75b0e8432b5",
-      "comparedWith": "e7465da3e4b1146b492f401fbb165a5e5a4a6202",
-      "aheadCommits": 8,
-      "changedPaths": [
-        "docs/accessibility/mission-search-recovery.md",
-        "docs/performance/solo-performance-followup-plan.md",
-        "game/i18n/catalogs.mjs",
-        "game/locales/en/interface.json",
-        "game/locales/uk/interface.json",
-        "game/snake/classic-app.mjs",
-        "game/test/classic-snake-ui.test.mjs",
-        "game/test/mission-library-search-recovery.test.mjs",
-        "game/test/sim-mission-library-projection.test.mjs",
-        "game/test/team-navigation-context-host.test.mjs",
-        "game/ui/mission-library-browser.mjs",
-        "optional-practice/civilian-fpv/flight-fullscreen.mjs"
-      ],
-      "note": "Search1715 source merged. Runtime inputs changed; captured-e746 and older receipts retain exactscope. No automaticrebase, fetchedassets or retaggedcurrent-mainpasses."
+      "revision": "cdbda99ac881eb9cac62d536543d9078b92ac081",
+      "note": "Captured current main rechecked; earlier test and browser receipts retain exact source scopes."
     }
   }
 }
