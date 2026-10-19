@@ -14,12 +14,13 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1: complete current local-support foundation1661 source gate and publish reviewed integration; preserve previous failure evidence",
-    "P1: finish independent Team preview fixture repair, then qualify Team2768 and remaining readable-text families",
-    "P1: keep source-qualified touchb48 draft for current-main admission reconciliation; source passes remain head-specific",
-    "P1: actual compact Duel/Worlds/Survival-Raid Settings acceptance when browser attachment is restored; iPhone/Deck remain Not tested",
-    "P2: review/publish fixed F77 search recovery253-case batch, then full gates and actual EN/UK compact browser review",
-    "Continue remaining phased features and Demo-dependent work; no whole-plan completion percentage inferred"
+    "P1: reconcile Team launch contract before promoting1718; later merged1108 explicitly specifies one-click launch and contradicts the older briefing guide/test",
+    "P1: reconcile separate metadata-authoritative Team fixture predecessors; retain every preview, artwork, focus, save and input assertion",
+    "P1: current-main admission for source-qualified support1661 and touch1704; required CI for ready foundations and Survival1663",
+    "P1: actual compact Duel/Team/Worlds/Survival-Raid Settings acceptance when browser attachment returns; iPhone/Deck remain Not tested",
+    "P1: native Team support1721 source reviewed; full gates held bydiskreserve, next Versus/SIM/Rooms adapters; two complete Overflight scaling families specified",
+    "P2: search recovery1715 full source checks pass; actual native EN/UK compact/landscape acceptance remains",
+    "Continue all remaining phased work and Demo-dependent features; no whole-plan completion percentage inferred"
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -51,7 +52,7 @@
       "impact": "H/H",
       "effort": "**2–4d**; attribute against clean base first; depend on D if introduced there",
       "featureId": "F83",
-      "status": "merged",
+      "status": "developing",
       "owner": "lane-a",
       "qualification": {
         "automated": "required_ci_passed",
@@ -61,7 +62,7 @@
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1613",
       "commit": "033e048b34",
-      "next": "Source merged. Remaining host, live, package and hardware qualification retain separate gates.",
+      "next": "Original Deck fixture1613 remains merged/published. Team draft1718 is held for a newly discovered contract conflict: later merged1108 specifies one-click launch, contradicting the older briefing guide/input test. Preserve current player behavior until the contract and regression oracle are reconciled; physical Deck remains untested.",
       "evidence": [
         "Failure reproduced before edits on clean main 20555cda6bd44a0736aa829e64c52e455b4e770c.",
         "Fixture mock clock is replaced during soloPage bootstrap; explicit waits are not reaching the runtime.",
@@ -76,7 +77,34 @@
       "deliveryState": "merged",
       "mergeState": "UNKNOWN",
       "observedRemoteHead": "033e048b346d7ffae7544b528d16890666b9e24a",
-      "publishedSourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b"
+      "publishedSourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+      "implementationSlices": [
+        {
+          "id": "native-team-launch-contract-reconciliation",
+          "priority": "P1",
+          "status": "contract_review",
+          "owner": "lane-a",
+          "commit": "1b74986f995dee607716e002c7df71be7b7f3d31",
+          "pr": "https://github.com/mekhovov/revealline/pull/1718",
+          "dependency": "PR1714 exact9e9073f3429983cd0357da2bab937ac483db0b97; separate library-count fixture remains",
+          "effort": "0.5–1.5d bounded adapter correction/native verification; browser/hardware waiting excluded",
+          "next": "Do not promote or integrate1718. Later mergedPR1108 and committed shared-mission-library guide explicitly require one-click native launch; the older briefing guide/test disagrees. Investigate whether the remaining input regression is a stale test contract, then replace or withdraw the candidate without manufacturing an accidental-regression claim.",
+          "evidence": [
+            "Initial interpretation, superseded by later contract review: captured maina94 calls activateDiscovery with briefingOnly=false and starts during deliberate card Play. Original5ac6/e03 required READY; mergee817 changed that boundary. Later merged1108 explicitly chose direct native launch, so this is not established as an accidental production regression.",
+            "Preserved, unadmitted candidate1b749 restores the earlier one-option briefing policy; its four native test changes validate that earlier policy. Candidate source/receipts remain historical review evidence only, not a proposed production repair after later1108 contract discovery. Full9-file174/178 and exact-main13/17 library inventory failure attribution remain truthful; fixture1719 separately repairs those counts.",
+            "Browser/controllers/iPhonePWA/SteamDeck/public release unqualified; no relation to a physical Deck report inferred.",
+            "Root independent source review confirms exactly one production adapter option, four native tests and two guides; complete input+installed12/12 zero skips independently pass. Draft1718 verified exact1b749 and basebranchcodex/team-discovery-inventory-fixture. /tmp/revealline-team-ready-1b749-root-independent-review.json. No full source gate run.",
+            "Review correction: mergedPR1108 (7October, mergee817) explicitly promises one-click native launch across main Solo/Team/Versus; its committed docs/verification/shared-mission-library/README.md says selecting a card launches directly. The earlier missing-option diagnosis establishes a behavior difference, not that the later change was accidental or wrong. Candidate1718 stays draft/frozen; no further runtime repair or fixture integration performed. Current contract attribution remains underway."
+          ],
+          "qualification": {
+            "automated": "candidate_passes_earlier_contract_intent_unresolved",
+            "browser": "not_run",
+            "physical": "not_tested"
+          },
+          "deliveryState": "draft",
+          "observedRemoteHead": "1b74986f995dee607716e002c7df71be7b7f3d31"
+        }
+      ]
     },
     {
       "id": "F83b",
@@ -883,7 +911,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Published draft1715 after both native ownership fixes and validArchive fixtures.253/253 native/shared cases plus5 complete SIM projection cases pass; independent review clear. Exact7498-file snapshot source gates running. Actual EN/UK compact/landscape browser acceptance remains pending.",
+      "next": "Exact f977 tracked-only7498-file snapshot full lint and uninterrupted validation PASS;253/253 complete native/shared plus5 SIM cases and independent source review clear. Draft remains for native EN/UK compact/landscape browser acceptance and current-main admission.",
       "evidence": [],
       "implementationSlices": [
         {
@@ -894,12 +922,13 @@
           "pr": "https://github.com/mekhovov/revealline/pull/1715",
           "commit": "f977731d1deee86a6b1427da09263dae391c5c0a",
           "effort": "1–2d bounded source/tests; complete F77 retains2–4d estimate excluding blocked browser time",
-          "next": "Published draft1715 after both native ownership fixes and validArchive fixtures.253/253 native/shared cases plus5 complete SIM projection cases pass; independent review clear. Exact7498-file snapshot source gates running. Actual EN/UK compact/landscape browser acceptance remains pending.",
+          "next": "Exact f977 tracked-only7498-file snapshot full lint and uninterrupted validation PASS;253/253 complete native/shared plus5 SIM cases and independent source review clear. Draft remains for native EN/UK compact/landscape browser acceptance and current-main admission.",
           "evidence": [
             "Read-only current-source audit confirms role=status and query-only Clear search/context handoff already exist. Zero matches only renders a count; selected collection/lifecycle/mode are hidden in collapsed filters, and existing resetFilters belongs to random launch. No browse-only recovery exists.",
             "Research19October: W3C status messages should expose brief search feedback without moving focus; Scottish Government filter pattern uses explicit category labels and understandable filter controls. Application here is a design inference, not AT/compliance evidence. https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html ; https://designsystem.gov.scot/patterns/search-results/search-filters",
             "Initial d11 implementation found two review bugs before publication: reused Snake chooser reset to constructor mode; Team remote UI/preview did not receive mode change. Fixed1137 uses validated live Snake host-mode getter and exactly one existing bubbling filter transaction.253/253 complete five-file cohort passes zero skips; source successor review pending. Initial invalid red fixture, stopped later red attempt and sparse cross-owner host failure remain excluded from pass evidence. No new browser/AT/full-source qualification.",
-            "Final f977 includes actual registered SIM shell regeneration after canonical check correctly detected stale output. Canonical recheck/generated lint and complete5-case SIM dynamic-copy coverage pass. Generated lexical compaction is governed by its actual tool; raw formatting finding is retained, not a handwritten formatter pass. Snapshot7498 Git blobs verified, no original untracked files copied or changed. Full source running; /tmp/revealline-f77-f977-validation-source.json."
+            "Final f977 includes actual registered SIM shell regeneration after canonical check correctly detected stale output. Canonical recheck/generated lint and complete5-case SIM dynamic-copy coverage pass. Generated lexical compaction is governed by its actual tool; raw formatting finding is retained, not a handwritten formatter pass. Snapshot7498 Git blobs verified, no original untracked files copied or changed. Full source running; /tmp/revealline-f77-f977-validation-source.json.",
+            "Terminal full source gates PASS on immutable7498-file exact f977 snapshot; all present tracked Git blobs audited before/after. Original untracked review fixtures remain preserved. Logs /tmp/revealline-f77-f977-snapshot-full-{lint,validate}.log; manifest /tmp/revealline-f77-f977-validation-source.json. No rendered-screen/device/public acceptance inferred."
           ],
           "deliveryState": "draft",
           "observedRemoteHead": "f977731d1deee86a6b1427da09263dae391c5c0a",
@@ -1609,7 +1638,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Primary, Snake and Survival/Raid integrations reviewed; remaining couch, SIM and Rooms summary hosts stay open.",
+      "next": "Primary1661eec8 full source gates pass but newer-main admission remains; nativeTeam1721 reviewed draft129/129, full gates held bydiskreserve. NativeVersusadapter developing on03af; Snake/Survival siblings require collector unions. SIM/Rooms remain open.",
       "evidence": [
         "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
         "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim."
@@ -1662,6 +1691,47 @@
           "mergeState": "CLEAN",
           "next": "Await predecessor and current exact-head admission; original actual export evidence retains its3df candidate scope.",
           "observedRemoteHead": "c330d3ddf115a95f9bb52a83eb61f517139b36f4"
+        },
+        {
+          "id": "native-team-host",
+          "priority": "P1",
+          "status": "draft_review",
+          "owner": "lane-c",
+          "pr": "https://github.com/mekhovov/revealline/pull/1721",
+          "commit": "03af2ad9145b2c9aaf322c55f9abbec74ac8fb08",
+          "dependency": "PR1661 exacteec8d4abb08947197a7af2ee5f8b70e21996dde7",
+          "effort": "2–3d source/native cases +0.5–1d actual browser review when available",
+          "next": "Published reviewed draft1721 on actual1661 branch codex/f58a-local-support-summary at exacteec8. Complete129/129 affected cases, independent15/15 and canonical/changed gates pass. Full source validation held bydiskreserve; actual native browser/export/device acceptance pending.",
+          "evidence": [
+            "Bounded adapter uses real coop-options dialog and existing view lifecycle. Cache physical presence/read-failure before virtual-pad mapping, aggregate assignment only; no extra polling/input consumption from Prepare/getHost. Neutral/Confirm/current save permission stay unknown without an authoritative current lease. No pad identity/index/profile/buttons/axes, raw host state or inferred save authorization exported. Retire cached sample on existing clear/suspend/disposal owners; native dialog/page-generation clearing remains owned by the view. Preserve all sibling support-kind/scope additions on later integration.",
+            "Independent root review clear: complete15/15 component/native tests rerun,9-file bounded delta and aggregate-cache/input/privacy ownership inspected; both locales change onlylimits with exactc330 sibling wording, all other values preserved. Full affected11-file129/129 pass zero skips. Canonical bundle and changed lint/format/diff pass. /tmp/revealline-f58-team-03af-review-receipt.json; /tmp/revealline-f58-team-03af-root-independent-review.json. Full source not run, no fresh browser/device claim."
+          ],
+          "qualification": {
+            "automated": "focused_and_independent_pass_full_pending",
+            "browser": "not_run",
+            "physical": "not_tested"
+          },
+          "deliveryState": "draft",
+          "observedRemoteHead": "03af2ad9145b2c9aaf322c55f9abbec74ac8fb08"
+        },
+        {
+          "id": "native-versus-host",
+          "priority": "P1",
+          "status": "developing",
+          "owner": "lane-c",
+          "pr": null,
+          "commit": null,
+          "dependency": "PR1721 exact03af2ad9145b2c9aaf322c55f9abbec74ac8fb08",
+          "effort": "1–2d bounded source/native verification, independent full/browser qualification separate",
+          "next": "Implement explicit default-preserving view visibility/invalidation and committed native Settings ownership, then complete native/lifecycle/export/controller tests; no hydration or full scan belowdiskreserve.",
+          "evidence": [
+            "Read-only exact03af assessment identifies non-dialog hidden/inert Settings, CSS-only compact category retirement, precommit shell transition and update-driven retirement, stopped category event propagation, and explicit controller action allowlist. Optional native-dialog defaults must remain exact; observe committed owner changes, not arbitrary clicks/MutationObserver/synthetic.open. No extra hardware reads/current-lease inference. /tmp/revealline-f58-versus-03af-readonly-assessment.md."
+          ],
+          "qualification": {
+            "automated": "developing",
+            "browser": "not_run",
+            "physical": "not_tested"
+          }
         }
       ]
     },
@@ -2026,12 +2096,13 @@
       "blocker": null,
       "pr": null,
       "commit": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
-      "next": "Duel requires both active boards fully within viewport, not just horizontal containment. Qualify correction886 at320/844, then Team051 and remaining game families.",
+      "next": "Duel4d9 and Team2768 full source checks pass, actual compact/landscape controls acceptance remains. Next complete native scaling slices: Single Drone+Riy together, then Raid+Time Attack+Marathon together; preserve separate readable preview owners, world geometry and operation-specific continuation controls.",
       "evidence": [
         "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json.",
         "Frozen627 on e40: complete play-family preference/first-paint/settings integration,377-module/21-sheet inventory,41 readable absolute declarations scaled once and2 arrow-art exclusions.138 host/bootstrap/global plus120 shared regressions and3 closure/runtime-theme tests pass; full lint pass, full validation/source/browser review pending. Thin source fixture8810, no automatic progress injection. No200% or device acceptance claimed.",
         "Original006 browser exposed squeezed Home utility, overlapping Pause labels and result footer covering focused Random action at UK320.94d corrects actual grid placement/ID specificity/nested-scroll owners and adds six runtime-authored font multipliers.157 complete tests/full lint/full uninterrupted validation/C source review pass;8 unchanged baseline format files disclosed. Root actual94d corrected Home/Pause/earned Solo result focus pass at UK320, landscape sampled; all-mode and runtime-font qualification continuing. Header-only stale short SHA corrected in wrapper; exact manifest/production source always94d. No blanket200% or hardware claim.",
-        "Additional compact318 source203 Survival/Raid Settings finding: existing generic Retry action stretches vertically and squeezes Controls. Saved feedback and Back remain accessible; no broad readability pass. Screenshot f15b-touch-203-raid318-saved.png; exact-base attribution pending."
+        "Additional compact318 source203 Survival/Raid Settings finding: existing generic Retry action stretches vertically and squeezes Controls. Saved feedback and Back remain accessible; no broad readability pass. Screenshot f15b-touch-203-raid318-saved.png; exact-base attribution pending.",
+        "19October read-only Overflight assessment: play.html shares Single Drone/Riy first-paint capability; raid.html shares Raid/Time Attack/Marathon presentation, including bank/next-contract decisions. Battlefield renderer has no readable-text draw owner; DOM HUD/results plus fixed-font SVG and Canvas upgrade previews require explicit typography qualification. Preserve Standard/Large painter streams, square flight pads/64px Large targets, paused RAF, offer IDs/focus and world geometry. Reconcile1668 foundation/shared wrappers and1707 Settings ownership. Actual320/390/844x390/desktop EN/UK both-font/scale journey acceptance remains unperformed. Two complete activation PRs are the next bounded family plan; preparatory plumbing alone is not a player feature."
       ],
       "implementationSlices": [
         {
@@ -2078,11 +2149,12 @@
           "status": "browser_review",
           "owner": "lane-b",
           "dependency": "Duel1692, exact predecessor admission remains required",
-          "next": "Published2768 on qualifiedDuel4d9, exact17Team+6Duel feature deltas preserved. Changed gates pass. Complete18file cohort188/196 passes; all8 exact-parent preview-card failures reproduced, no skipped tests. Full source/browser pending; separate native-filter fixture repair developing.",
+          "next": "Exact2768 full lint and uninterrupted validation PASS;29012 present Git blobs match before/after. Raw complete18-file test result remains188/196 with8 exact-parent preview fixture failures; separate1714 is not inherited into2768. Draft remains for required predecessors and actual320px/landscape geometry/input acceptance.",
           "evidence": [
             "Read-only inventory identifies native relay-rescue,45 absolute CSS declarations, six runtime variants and separate cue painter. Initial required-label tests cover240/292/362/1152px EN/UK; one existing Standard hash mismatch is being bound to exact predecessor. No complete Team acceptance claim.",
             "Frozen051 on3ff passes123 focused real-host/cue-density/navigation/picture-focus cases/full source gates/C review. Standard painter command stream equals exact parent; stale accepted hash attributed without weakening. Actual Team alone opts into2x; default painter fallback retained. Source reviewed dependent draft1700; browser pending.",
-            "Root independent preservation clear at2768; published by expected051 lease. Full raw188/196 with8 unchanged discovery-preview failures remains disclosed, not aggregatepass. ExactDuelparent repeats all8 same failure signatures (14/16 expected vs116/118 actual); separate fixture reliability dependency preserves every preview/no-awards/state assertion. /tmp/revealline-team-2768-root-independent-review.json."
+            "Root independent preservation clear at2768; published by expected051 lease. Full raw188/196 with8 unchanged discovery-preview failures remains disclosed, not aggregatepass. ExactDuelparent repeats all8 same failure signatures (14/16 expected vs116/118 actual); separate fixture reliability dependency preserves every preview/no-awards/state assertion. /tmp/revealline-team-2768-root-independent-review.json.",
+            "Full2768 source gates terminal0. All29012 present exact Git blobs unchanged before/after, zero unexpected files/hydration; two existing dependency links verified. Build classification corrected in separate companion:3380 actual compiled build inputs plus17 i18n inputs gives3385 union, zero missing; earlier5725 was only an include-prefix superset and is not a compiled count. Original manifest retained. /tmp/revealline-team-2768-full-{lint,validate}.log; /tmp/revealline-team-2768-full-{before,after}-audit.json; /tmp/revealline-team-2768-build-input-classification.json."
           ],
           "commit": "27680d34d98b198811419e8cebbeaca5e78c6d07",
           "pr": "https://github.com/mekhovov/revealline/pull/1700",
@@ -2453,7 +2525,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Worlds1709 and remaining-reroll1711 full source gates pass, actual browser acceptance pending. Duel1701 merged. Practice/checkpoint/playback/Regional/card-preview counts and wider terminology remain open.",
+      "next": "Reroll grammar1711 and Duel language1701 are source-merged. Worlds1709 full source gates pass, browser acceptance pending. Practice/checkpoint/playback/Regional/card-preview counts and wider terminology remain open.",
       "evidence": [
         "Browser review confirms existing singular grammar \"1 rerolls left\" and \"1 замін залишилося\". Track bounded count-aware localization in a later F59 batch; F19c adds disclosure only.",
         "Actual Worlds5363 native language switch after a verified result translates the new medal paragraph and enemy stats but leaves existing result heading, recording status, medal/score and action labels in English. Track bounded retained-result live-locale ownership; do not claim F23 new-paragraph fix covers existing nodes."
@@ -2497,18 +2569,21 @@
         {
           "id": "remaining-reroll-count-language",
           "priority": "P2",
-          "status": "draft_review",
+          "status": "merged",
           "owner": "lane-a",
           "commit": "5385fb52a2abd1b58e9aa10da42bca200117aa64",
           "pr": "https://github.com/mekhovov/revealline/pull/1711",
-          "next": "Current5385 full lint and uninterrupted validation PASS;107/107 complete focused cases and independent source review clear. Keep draft for actual native compact EN/UK language review; card-preview counts are separate.",
+          "next": "Source merged at the reviewed5385 head. Native compact EN/UK browser, device and live-publication qualification remain separate; card-preview counts are still open.",
           "evidence": [
             "Existing shared upgrade owner now uses canonical count message: EN one/other and UK one/few/many/other. Native2→1→0 consumption and explicitly staged formatter boundaries pass107/107 complete cases, zero skips. All27,618 prior messages preserved and18 namespaces canonical; changed gates/root independent source review clear. Full source/browser pending. /tmp/revealline-f59-reroll-count-5385-source-receipt.json.",
-            "Full5385 lint/uninterrupted validation terminal0; before/after HEAD/tracked status/all6 feature Git blobs and SHA256 unchanged. Canonical source checks pass; /tmp/revealline-f59-reroll-5385-full-gates-receipt.json. No fresh browser/device/public qualification."
+            "Full5385 lint/uninterrupted validation terminal0; before/after HEAD/tracked status/all6 feature Git blobs and SHA256 unchanged. Canonical source checks pass; /tmp/revealline-f59-reroll-5385-full-gates-receipt.json. No fresh browser/device/public qualification.",
+            "Remote PR1711 source merge confirmed19October04:21:38UTC, merge754bfd4fa6675cc8bc5f527819179ef3b95b0afc. This does not qualify unperformed browser, hardware or public-release scenarios."
           ],
-          "deliveryState": "draft",
+          "deliveryState": "merged",
           "observedRemoteHead": "5385fb52a2abd1b58e9aa10da42bca200117aa64",
-          "mergeState": "UNSTABLE"
+          "mergeState": "UNKNOWN",
+          "mergedAt": "2026-10-19T04:21:38Z",
+          "mergeCommit": "754bfd4fa6675cc8bc5f527819179ef3b95b0afc"
         }
       ]
     },
@@ -3812,6 +3887,10 @@
     {
       "date": "2026-10-19",
       "summary": "F58eec8 fullsource/auditPASS andpublished1661draft,new-mainconflictretained. F77finalf977published1715 after253native/shared+5SIMcases,canonicalprojectionfix;7498blob snapshotfullgatesrunning. Teamfixture1714publishedseparatedeliverydependency8/8focused;remainingheldConfirmfailsunchangedmainandisP1diagnosis. FeaturePRsnapshot71total(24merged/16ready/31draft); original113deliverablesunchanged."
+    },
+    {
+      "date": "2026-10-19",
+      "summary": "Reroll1711 source merged. Team2768 and searchf977 full source gates PASS with exact before/after input audit. Separate library fixture1719 passes17/17 independently; nativeTeamsummary1721 reviewed129/129+15independent, fullsourceheldbydiskreserve. Team1718 interpretation corrected afterlatermerged1108direct-launchcontractfound; candidateheldandtest/docsreconciliationreplacesruntimeassumption. Versus supportandfield-cardcountlanguage next boundedsourcework. All113deliverables retained; physicalhardwareNot tested."
     }
   ],
   "deliveryDependencies": [
@@ -3834,13 +3913,23 @@
       "commit": "9e9073f3429983cd0357da2bab937ac483db0b97",
       "scope": "Repair stale starter-Team preview fixture against metadata catalog growth, using full independent opaque-ID inventory then actual Classic/Custom UI filters; preserve original media/no-awards/state/URL/focus/Next assertions.",
       "evidence": "Current catalog2Classic+12Journey+96Expeditions+6Hunt=116; imported2Custom gives118. All8 failures reproduce on exactDuelparent and currenta94main. Initial inventory-only repair exposes12 legitimate schematic canvases; retained as failed attempt. No production changes or skipped/name-filtered tests. Fixed8/8 completecasespass;94/95originalassertionsverbatimretained,onlyobsoletecountassertionreplacedwithindependentfull/scopedopaqueIDchecks. No runtime/sharedhelper/timeoutchanges; /tmp/revealline-team-discovery-1714-summary.json.",
-      "next": "Published separate draft1714;8/8 focused pass, rawadjacent137/138 withoneunchangedheldConfirmfailure reproducedincomplete5caseexacta94baseline(4/5). Full current source gates remain; P1diagnosis distinguishes runtimeheld-inputbugfromfixtureclockissue beforeanyrepair."
+      "next": "Separate draft1714 focused8/8 passes; rawadjacent137/138 and exact-main4/5 retain one old briefing-contract failure. Later merged1108 explicitly chose direct card launch;1718 production option is held/being withdrawn. Reconcile the stale input oracle separately; no runtime fix/full source qualification inherited into1714."
+    },
+    {
+      "id": "CI-Team-library-catalog",
+      "status": "draft_review",
+      "priority": "P1",
+      "pr": "https://github.com/mekhovov/revealline/pull/1719",
+      "commit": "47e8e5dccf8fd97f44029aa7428dee34b81db5d5",
+      "scope": "Separate exact opaque-ID/metadata-authoritative Team library inventory correction after catalog growth; preserve all original scenario behavior assertions.",
+      "next": "Published separate reviewed draft1719 exact47e8 on1714 predecessor9e907. Complete17/17 independently confirmed;60originalbehaviorassertions retained. Full source gates held belowdiskreserve; no production change. Team1718 integration stopped while launch contract is reconciled.",
+      "evidence": "Four obsolete assertions expect14/12/15/14 rather than current116/114/117/116. Exact-main full file13/17 independently matches corrected native-Start candidate failures; do not count them as a pass or change them within the production fix."
     }
   ],
   "deliverySnapshot": {
     "featurePRsReady": 16,
-    "featurePRsDraft": 31,
-    "deliverablesMerged": 24,
+    "featurePRsDraft": 32,
+    "deliverablesMerged": 25,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
     "hardware": "unavailable"
