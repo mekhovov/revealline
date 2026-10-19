@@ -684,6 +684,10 @@ test('World Home context stays localized with its current flight while browsing 
     h.$('worlds-shell-action-missions').focus();
     h.$('worlds-shell-action-missions').click();
     assert.equal(h.$('journey-chooser').open, true);
+    assert.ok(
+      h.$('journey-chooser-status').textContent.includes(`${context.textContent} · `),
+      'The chooser keeps the exact localized host context while browsing.',
+    );
     h.doc.querySelectorAll('.journey-card')[1].focus();
     h.tick(2);
     h.$('journey-back').click();
