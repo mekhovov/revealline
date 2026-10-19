@@ -14,12 +14,12 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "Admit reviewed P1 foundations through checks on each current revision",
-    "Complete corrected Snake scaling across Solo, Duel and Team; assess next family",
-    "Review Capture medal explanation; Time Attack and reroll disclosure now ready",
-    "Continue remaining support-summary hosts and F59 localization findings",
-    "Implement scoped caption reading time without duplicating existing history",
-    "Continue Demo-dependent work after its predecessor; physical gates remain Not tested"
+    "Admit reviewed P1 foundations, including reconciled F05, through required current-head checks",
+    "Qualify Duel200% text; implement Team-specific scaling without dropping cue labels",
+    "Fix Capture320px medal visibility; admit reviewed Snake medal and caption slices",
+    "Continue support-summary hosts and F59 localization findings",
+    "Implement scoped Mono effects and voices; full-output mono remains a separate media-delivery task",
+    "Continue later phases and Demo-dependent work; physical gates remain Not tested"
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -359,18 +359,20 @@
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1622",
-      "commit": "e5405b462b6d7411ecd45d872892f0a26f720088",
-      "next": "Exact-head CI and merge reconciliation; rebase source gates passed.",
+      "commit": "5a5ca502b62b5eb6713383f7740fa539ccbfd176",
+      "next": "Reconciled First Flight integration published and ready. Required current-head checks/admission remain; earlier browser scope retained.",
       "evidence": [
         "90 title-entry/mode/operation checks and 68 menu/controller checks pass; lint, validation and changed-file formatting pass.",
         "Actual browser: saved Continue identifies Prologue / First return / Solo, verifies then resumes the flight; Pause → Home changes copy to paused-flight resume. Native window inspection only.",
         "Nine companion suite failures reproduce on clean 20555cd (old Sound selectors, craft feedback, save timestamps, old FPV link and mission localization). No waiver or pass claimed.",
         "Rebased onto461ace72; official locale build,90title,68menu/controller,full lint/validate and changed-format pass. Independent source review retained browser receipt.",
-        "Independent dd337 integration review:6 feature blobs byte-identical, app/index feature patches identical, all main locale values retained plus exact3 original keys.90+68 focused checks, full validation/lint/format pass; exact lease push complete. Current CI queued, no merge claimed."
+        "Independent dd337 integration review:6 feature blobs byte-identical, app/index feature patches identical, all main locale values retained plus exact3 original keys.90+68 focused checks, full validation/lint/format pass; exact lease push complete. Current CI queued, no merge claimed.",
+        "Local5a5ca502b62b5eb6713383f7740fa539ccbfd176 reconciles currentbd15820 First Flight adjacent Home markup. Root independent11paths/9unchangedblobs/app+index identical feature deltas clear.179/179 title/menu/First Flight/policy pass; changed companion pair14/23 has identical nine failures on clean exactbd15820. Full lint/validation continuing; remote remains e540 until complete. /tmp/revealline-f05-5a5-root-integration-review.json.",
+        "Final5a5 full validation passed13,673messages/9,058references; lint/changed format pass. Exact e540 lease publication complete and MERGEABLE/ready verified. /tmp/revealline-f05-5a5-qualification.json. No new integrated browser or merge claim."
       ],
       "deliveryState": "ready",
-      "mergeState": "DIRTY",
-      "observedRemoteHead": "e5405b462b6d7411ecd45d872892f0a26f720088"
+      "mergeState": "UNSTABLE",
+      "observedRemoteHead": "5a5ca502b62b5eb6713383f7740fa539ccbfd176"
     },
     {
       "id": "F12",
@@ -1026,7 +1028,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Admit reviewed Time Attack slice; review Capture result, then calibrated accepted-attempt Snake move targets. Keep variable/uncalibrated/endless/imported outcomes excluded.",
+      "next": "Time Attack ready; Snake calibrated result independently reviewed. Fix Capture compact/landscape guidance visibility before renewed browser review; other result hosts remain separate.",
       "evidence": [
         "Current native Time Attack already separates raw elapsed time, penalty, medal time and all authored thresholds. Missing next-medal shortfall can make a sub-hundredth miss display equal to its target. Preserve exact native <= eligibility; compare full precision, qualify rounded-up larger gaps and explicitly describe tiny positive gaps. Gold, incomplete and unavailable boundaries remain truthful."
       ],
@@ -1052,13 +1054,14 @@
         {
           "id": "capture-medal-explanation",
           "priority": "P2",
-          "status": "browser_review",
-          "next": "Actual earned compact result review; preserve native EPS/time and classic-versus-ordinary clean-life eligibility.",
+          "status": "developing",
+          "next": "Fix result-only content ownership: current footer is hidden at320/landscape. Repeat exact compact EN/UK earned-result review on corrected revision.",
           "pr": "https://github.com/mekhovov/revealline/pull/1688",
           "commit": "e56fff30f1d6d0f021bc4af82b87b2ce5336db48",
           "owner": "lane-a",
           "evidence": [
-            "Seven native/actual-host cases pass including legally earned grades, classic replacement lives, tiny/EPS miss and locale/checkpoint/profile/Retry preservation. Complete86/89 retains3 failures reproduced clean-bd15820; no weakening. Full lint/changed format/uninterrupted validation and18 generated catalogs pass; C source review clear. Immutable64622 exact e56 source available; browser pending."
+            "Seven native/actual-host cases pass including legally earned grades, classic replacement lives, tiny/EPS miss and locale/checkpoint/profile/Retry preservation. Complete86/89 retains3 failures reproduced clean-bd15820; no weakening. Full lint/changed format/uninterrupted validation and18 generated catalogs pass; C source review clear. Immutable64622 exact e56 source available; browser pending.",
+            "Root7/7 complete source tests and independent review pass after exact compiled-asset restoration; missing-fixture failures retained. Actual native ordinary Capture earned Bronze94.56s/2lives and Silver58.12s/3lives; wider EN/UK advice correct. At320 existing compact footer CSS hides the entire new medal guidance; actual Silver screenshot/AX records failure. Keep1688 draft; result-only reading-content correction required. Compact run explicitly session-only because another review tab owns saving. /tmp/f23b-e56-compact-browser-states.json."
           ],
           "deliveryState": "draft",
           "observedRemoteHead": "e56fff30f1d6d0f021bc4af82b87b2ce5336db48",
@@ -1067,12 +1070,18 @@
         {
           "id": "snake-calibrated-move-target",
           "priority": "P2",
-          "status": "developing",
+          "status": "ready_for_checks",
           "owner": "lane-a",
-          "next": "Explain accepted current-attempt move count against next calibrated star target beside result stars. Preserve pre-play criteria and exclude unsupported outcomes.",
+          "next": "Required current-head checks and admission; unsupported outcomes remain deliberately excluded.",
           "evidence": [
-            "Source assessment: existing exact move criteria live in briefing, not result summary. Reuse native rating and verifiedOutcome; never use historical personal best as current attempt. Runtime implementation starting; no completion claim."
-          ]
+            "Source assessment: existing exact move criteria live in briefing, not result summary. Reuse native rating and verifiedOutcome; never use historical personal best as current attempt. Runtime implementation starting; no completion claim.",
+            "Exact63b full135/135 tests/full source gates/C and root source review pass; eight unchanged full-format debts retained. Root independent3/3 new model cases pass after restoring exact1984B sparse replay; initial failure retained. Actual native automated keyboard run accepted129moves/2stars/117target/12gap/800score/25.8s/8caught. EN390/320 and native Settings→UK→same Results show correct wrapping and plural forms. Native saving active; no human-earned, save-byte, AT, device or audio claim. /tmp/f23c-63b-root-browser-receipt.json."
+          ],
+          "pr": "https://github.com/mekhovov/revealline/pull/1690",
+          "commit": "63b479075138e7f065f454b1d37f1078d2b3dbd5",
+          "deliveryState": "ready",
+          "observedRemoteHead": "63b479075138e7f065f454b1d37f1078d2b3dbd5",
+          "mergeState": "UNSTABLE"
         }
       ]
     },
@@ -1888,7 +1897,7 @@
       "blocker": null,
       "pr": null,
       "commit": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
-      "next": "Finish exact94d Classic Snake Solo/Duel/Team browser coverage and runtime-size samples. Three prior320px findings corrected; other game families and separate hub retain their own acceptance gates.",
+      "next": "Classic Snake family review complete; qualify actual couch Duel5a1 at compact/landscape widths. Team has a separate canvas/text integration in development; later families remain open.",
       "evidence": [
         "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json.",
         "Frozen627 on e40: complete play-family preference/first-paint/settings integration,377-module/21-sheet inventory,41 readable absolute declarations scaled once and2 arrow-art exclusions.138 host/bootstrap/global plus120 shared regressions and3 closure/runtime-theme tests pass; full lint pass, full validation/source/browser review pending. Thin source fixture8810, no automatic progress injection. No200% or device acceptance claimed.",
@@ -1898,18 +1907,46 @@
         {
           "id": "classic-snake-play-family",
           "priority": "P1",
-          "status": "browser_review",
+          "status": "reviewed_stack",
           "owner": "lane-b",
           "commit": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
           "pr": "https://github.com/mekhovov/revealline/pull/1689",
           "dependency": "PR1672 e40b8983c1a94605beb1376fa85741ac5d40bf1c",
-          "next": "Complete native three-mode compact/landscape/font/runtime checks; retain draft until predecessor admission.",
+          "next": "Await1672 predecessor admission, then current integrated checks. Scoped review does not qualify every theme, state or device.",
           "evidence": [
-            "Full corrected-head source gates and C/root correction review clear; actual browser qualification in progress. Legacy006 failures retained."
+            "Full corrected-head source gates and C/root correction review clear; actual browser qualification in progress. Legacy006 failures retained.",
+            "Root exact94d actual EN/UK320/390/844×390 Solo/Duel/Team review clear: corrected Home utilities, Pause labels and result focus/scroll; native Team two-board result and runtime HUD/status metrics sampled2×. Hub excluded and retains effective Large; plain font matches intended family. No win-layout, all-theme, AT, device, acoustic or save-byte claim. /tmp/f09b-94d-root-browser-receipt.json; failed006 findings retained."
           ],
           "deliveryState": "draft",
           "observedRemoteHead": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
           "mergeState": "UNSTABLE"
+        },
+        {
+          "id": "couch-duel-text-scaling",
+          "priority": "P1",
+          "status": "browser_review",
+          "owner": "lane-b",
+          "commit": "5a1cf9839da554e762e23178aba583b340555e9d",
+          "pr": "https://github.com/mekhovov/revealline/pull/1692",
+          "dependency": "PR1689 exact94d73cd63d81afbf25c978a6c54df99bd5654ff2",
+          "next": "Actual native compact/landscape Home, readers, paused/result/settings and both-board review. F08 added keyboard rows need later integration review.",
+          "evidence": [
+            "99 complete tests, full lint/uninterrupted validation/changed formatting and C source review pass. Eight full-format findings byte-identical parent; explicit Versus capability, default-one typography and text-only BoardPainter path. Team remains fallback. /tmp/revealline-f09b-duel-5a1-receipt.json."
+          ],
+          "deliveryState": "draft",
+          "observedRemoteHead": "5a1cf9839da554e762e23178aba583b340555e9d",
+          "mergeState": "UNSTABLE"
+        },
+        {
+          "id": "couch-team-text-scaling",
+          "priority": "P1",
+          "status": "developing",
+          "owner": "lane-b",
+          "dependency": "Duel1692, exact predecessor admission remains required",
+          "next": "Qualify Team-specific required cue retention at2× before enabling actual host; preserve simulation/world geometry. UI/readers/results and full gates remain.",
+          "evidence": [
+            "Read-only inventory identifies native relay-rescue,45 absolute CSS declarations, six runtime variants and separate cue painter. Initial required-label tests cover240/292/362/1152px EN/UK; one existing Standard hash mismatch is being bound to exact predecessor. No complete Team acceptance claim."
+          ]
         }
       ]
     },
@@ -2045,9 +2082,9 @@
       "phase": "Phase 4 — Accessibility, comfort, input and sound",
       "description": "Mono output preserving critical cues and category controls. Improves one-earbud and asymmetric-hearing play.",
       "impact": "H/M",
-      "effort": "**2–4d**",
+      "effort": "First complete effects/voices slice4–7d plus separate listening/device qualification; full-output mono remains separately estimated after media delivery design.",
       "featureId": "F29",
-      "status": "assessment",
+      "status": "developing",
       "owner": "lane-c",
       "qualification": {
         "automated": "not_run",
@@ -2057,9 +2094,30 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Map graph, native soundtrack/imported media and reward media routes before designing one complete mono control; graph-only downmix would omit music.",
+      "next": "Implement Mono effects and voices through both graph constructors, with explicit music/video exclusions. Preserve existing native-media playback; full-output mono remains open.",
       "evidence": [
-        "Current graph audio-output has no mono downmix, while soundtrack playback uses native media decks and master mute/volume routing. Source routing gap confirmed; full output coverage/compatibility and acoustic qualification need design. No product change or mono coverage claimed."
+        "Current graph audio-output has no mono downmix, while soundtrack playback uses native media decks and master mute/volume routing. Source routing gap confirmed; full output coverage/compatibility and acoustic qualification need design. No product change or mono coverage claimed.",
+        "Inventory covers Soundscape and canonical world-audio plus generated SIM projections; music/native soundtrack decks, imported audition and reward/story audio/video retain separate routes. Non-CORS release music cannot be routed wholesale through MediaElementAudioSourceNode without silencing it under W3C §1.22.4. First slice includes effects/menu/character voices, excludes all music/video explicitly;4–7d. Existing single-channel noise is credited but does not cover panned effects/stereo voices. https://www.w3.org/TR/2021/REC-webaudio-20210617/#MediaElementAudioSourceNode-security"
+      ],
+      "implementationSlices": [
+        {
+          "id": "mono-effects-and-voices",
+          "priority": "P2",
+          "status": "developing",
+          "owner": "lane-c",
+          "effort": "4–7d, review/CI and physical/listening time separate",
+          "dependency": "PR1691; preserve later1632 integration without duplicating master mute/volume ownership",
+          "next": "Both constructors, all shared mounts, bounded preference lifecycle, native-media continuity and actual OfflineAudioContext channel evidence before review.",
+          "evidence": [
+            "Accepted design: effect/menu/dialogue buses downmix before master; musicBus remains direct. Explicit help: music and videos keep original audio. Toggle must not create/resume contexts, restart voices or change media source/time/crossfade. Capability failure cannot claim mono applied."
+          ]
+        },
+        {
+          "id": "native-media-full-output-mono",
+          "priority": "P2",
+          "status": "assessment",
+          "next": "Design compatible same-origin/remote delivery and native soundtrack/reward/video routing before promising all-output mono; estimate after delivery assessment."
+        }
       ]
     },
     {
@@ -2101,7 +2159,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement Standard/Extended2× timed incidental-caption reading time through existing preference and reaction owner; retain indefinite results and existing critical-message history.",
+      "next": "Timed-caption slice1691 reviewed and ready. Assess remaining recent-cue history gaps against existing16-message critical history; do not duplicate readers.",
       "evidence": [
         "Fresh bd15820 source already provides size/background/preview, text-based minimum and spoken-clip minimum, danger interruption preserving text, indefinite result captions, and bounded16-message critical-flight history. Avoid duplicate controls/readers. F31a extends only timed incidental text; all current shared consumers/projections, legacy/future/failed-save records and cancellation/locale/current-caption timer cases required. No listening/device claim."
       ],
@@ -2109,10 +2167,18 @@
         {
           "id": "incidental-caption-reading-time",
           "priority": "P2",
-          "status": "developing",
+          "status": "ready_for_checks",
           "owner": "lane-c",
           "effort": "2–4d including review",
-          "next": "Implement and independently verify preference compatibility, timer semantics, current captions and native compact EN/UK timed preview."
+          "next": "Required current-head checks and admission; actual flight/listening/device acceptance separate.",
+          "pr": "https://github.com/mekhovov/revealline/pull/1691",
+          "commit": "3afc1b171c4fc6aed4c12dce7b7355127f63648e",
+          "evidence": [
+            "Full uninterrupted validation passed209s; lint/changed format/all64generated hashes/source review clear. Expanded cohort87/88 retains one Journey title failure reproduced on exact base; six sparse-artwork failures resolved, not baseline-labelled. All11new and root independently11/11pass, zero skips. Actual shared settings/caption browser EN/UK320 Standard≈3s/Extended≈6s, expiry preserves Preview focus; UK390 staged result persists and modeled failed-save/Retry correct. played0. No actual flight/acoustic/AT/device claim. /tmp/f31a-3afc-root-browser-receipt.json."
+          ],
+          "deliveryState": "ready",
+          "observedRemoteHead": "3afc1b171c4fc6aed4c12dce7b7355127f63648e",
+          "mergeState": "UNSTABLE"
         },
         {
           "id": "recent-cue-history-coverage",
@@ -3478,6 +3544,11 @@
       "date": "2026-10-19",
       "item": "Medal goals, reroll disclosure and Ukrainian route copy reviewed",
       "reason": "5merged/24ready/30draft feature PRs. Exact Time Attack, reroll and route-copy slices ready. Snake browser findings corrected; final family review and Capture result review remain. Caption reading-time slice starts from existing owners; mono needs complete routing design. User c940 preserved and independently verified. No new live/device qualification."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Compact medal finding, reviewed Snake and caption timing, next text/audio slices",
+      "reason": "Capture advice disappears at320 and stays draft for correction. Classic Snake scaling reviewed; Duel browser and Team development continue. Native accepted Snake medal and scoped caption timing reviewed. F05 First Flight reconciliation published ready after full gates. Mono split protects existing native music; full-output work remains open."
     }
   ],
   "deliveryDependencies": [
@@ -3494,8 +3565,8 @@
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 24,
-    "featurePRsDraft": 30,
+    "featurePRsReady": 26,
+    "featurePRsDraft": 31,
     "deliverablesMerged": 5,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
