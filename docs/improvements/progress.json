@@ -14,7 +14,7 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1: reconcile Team launch contract before promoting1718; later merged1108 explicitly specifies one-click launch and contradicts the older briefing guide/test",
+    "P1: finish Team test/docs reconciliation to current one-click launch; withdrawn1718 is preserved history, no runtime regression established",
     "P1: reconcile separate metadata-authoritative Team fixture predecessors; retain every preview, artwork, focus, save and input assertion",
     "P1: current-main admission for source-qualified support1661 and touch1704; required CI for ready foundations and Survival1663",
     "P1: actual compact Duel/Team/Worlds/Survival-Raid Settings acceptance when browser attachment returns; iPhone/Deck remain Not tested",
@@ -62,7 +62,7 @@
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1613",
       "commit": "033e048b34",
-      "next": "Original Deck fixture1613 remains merged/published. Team draft1718 is held for a newly discovered contract conflict: later merged1108 specifies one-click launch, contradicting the older briefing guide/input test. Preserve current player behavior until the contract and regression oracle are reconciled; physical Deck remains untested.",
+      "next": "Original1613 fixture source remains merged/published. Team1718 withdrawn afterlater1108 direct-launch contract attribution; separate test/docs-only reconciliation on1719 is developing. Do not restore the older extraStart step; physical Deck stillNot tested.",
       "evidence": [
         "Failure reproduced before edits on clean main 20555cda6bd44a0736aa829e64c52e455b4e770c.",
         "Fixture mock clock is replaced during soloPage bootstrap; explicit waits are not reaching the runtime.",
@@ -82,26 +82,27 @@
         {
           "id": "native-team-launch-contract-reconciliation",
           "priority": "P1",
-          "status": "contract_review",
+          "status": "withdrawn",
           "owner": "lane-a",
           "commit": "1b74986f995dee607716e002c7df71be7b7f3d31",
           "pr": "https://github.com/mekhovov/revealline/pull/1718",
           "dependency": "PR1714 exact9e9073f3429983cd0357da2bab937ac483db0b97; separate library-count fixture remains",
           "effort": "0.5–1.5d bounded adapter correction/native verification; browser/hardware waiting excluded",
-          "next": "Do not promote or integrate1718. Later mergedPR1108 and committed shared-mission-library guide explicitly require one-click native launch; the older briefing guide/test disagrees. Investigate whether the remaining input regression is a stale test contract, then replace or withdraw the candidate without manufacturing an accidental-regression claim.",
+          "next": "PR1718 closed with review correction afterlater1108 direct-launch contract was verified. Original1b749 source/receipts preserved, never promoted. New separate test/docs-only reconciliation develops on exact1719 predecessor47e8, preserving current deliberate one-click play.",
           "evidence": [
             "Initial interpretation, superseded by later contract review: captured maina94 calls activateDiscovery with briefingOnly=false and starts during deliberate card Play. Original5ac6/e03 required READY; mergee817 changed that boundary. Later merged1108 explicitly chose direct native launch, so this is not established as an accidental production regression.",
             "Preserved, unadmitted candidate1b749 restores the earlier one-option briefing policy; its four native test changes validate that earlier policy. Candidate source/receipts remain historical review evidence only, not a proposed production repair after later1108 contract discovery. Full9-file174/178 and exact-main13/17 library inventory failure attribution remain truthful; fixture1719 separately repairs those counts.",
             "Browser/controllers/iPhonePWA/SteamDeck/public release unqualified; no relation to a physical Deck report inferred.",
             "Root independent source review confirms exactly one production adapter option, four native tests and two guides; complete input+installed12/12 zero skips independently pass. Draft1718 verified exact1b749 and basebranchcodex/team-discovery-inventory-fixture. /tmp/revealline-team-ready-1b749-root-independent-review.json. No full source gate run.",
-            "Review correction: mergedPR1108 (7October, mergee817) explicitly promises one-click native launch across main Solo/Team/Versus; its committed docs/verification/shared-mission-library/README.md says selecting a card launches directly. The earlier missing-option diagnosis establishes a behavior difference, not that the later change was accidental or wrong. Candidate1718 stays draft/frozen; no further runtime repair or fixture integration performed. Current contract attribution remains underway."
+            "Review correction: mergedPR1108 (7October, mergee817) explicitly promises one-click native launch across main Solo/Team/Versus; its committed docs/verification/shared-mission-library/README.md says selecting a card launches directly. The earlier missing-option diagnosis establishes a behavior difference, not that the later change was accidental or wrong. Candidate1718 stays draft/frozen; no further runtime repair or fixture integration performed. Current contract attribution remains underway.",
+            "Later contract independently corroborated: unchanged complete discovery+installed files20/20 pass zero skips on main-identical runtime inB47e8, including direct bookmark/focus and fresh/restored replayable Hunt journals. Cardclick is deliberatePlay; focus-only merely recordsselection. /tmp/revealline-team-direct-contract-attribution.json. PR1718 closed; originalcandidate retained as withdrawn evidence only."
           ],
           "qualification": {
             "automated": "candidate_passes_earlier_contract_intent_unresolved",
             "browser": "not_run",
             "physical": "not_tested"
           },
-          "deliveryState": "draft",
+          "deliveryState": "closed",
           "observedRemoteHead": "1b74986f995dee607716e002c7df71be7b7f3d31"
         }
       ]
@@ -3194,7 +3195,9 @@
       "pr": null,
       "commit": null,
       "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "evidence": [
+        "Read-only eec8 source inventory: shared ui/hunt-status terminal text mixes current run facts with records.best exact-setup personal milestones in oneparagraph; no next missing style goal. Same owner serves primarySolo, bothVersusseats andTeam, including Snake-contextsuffix. Record complete()/best() already owns exact identity/onewrite/session fallback; preserve that boundary and compact liveHUD. Bounded nextimplementation: separate terminal currentattempt/personal labels, one missing existingstylegoal, preserve optionalbonus/quota objectives and no-awards ownership. /tmp/revealline-f64-hunt-progress-readonly-assessment.md; no source/test/browser result implied."
+      ]
     },
     {
       "id": "F35",
@@ -3922,16 +3925,27 @@
       "pr": "https://github.com/mekhovov/revealline/pull/1719",
       "commit": "47e8e5dccf8fd97f44029aa7428dee34b81db5d5",
       "scope": "Separate exact opaque-ID/metadata-authoritative Team library inventory correction after catalog growth; preserve all original scenario behavior assertions.",
-      "next": "Published separate reviewed draft1719 exact47e8 on1714 predecessor9e907. Complete17/17 independently confirmed;60originalbehaviorassertions retained. Full source gates held belowdiskreserve; no production change. Team1718 integration stopped while launch contract is reconciled.",
+      "next": "Published reviewed1719 exact47e8 on1714 predecessor9e907. Complete17/17 independently confirmed;60 original behavior assertions retained. Full source gates held bydiskreserve. New test/docs-only input reconciliation stacks on1719;1718 runtime candidate is closed.",
       "evidence": "Four obsolete assertions expect14/12/15/14 rather than current116/114/117/116. Exact-main full file13/17 independently matches corrected native-Start candidate failures; do not count them as a pass or change them within the production fix."
+    },
+    {
+      "id": "CI-Team-direct-launch-contract",
+      "priority": "P1",
+      "status": "developing",
+      "pr": null,
+      "commit": null,
+      "scope": "Reconcile stale held-Confirm input oracle and historical briefing guide to later merged1108 deliberate direct-card launch; no production change.",
+      "next": "LaneA source onexact1719 predecessor47e8; verify one deliberate start, held/release boundaries, picture/recipe ownership and genuine fresh pause/resume. Independent review beforepublication.",
+      "evidence": "Latercommittedsharedselector guide3–6/18–20 andPR1108 explicitlydirectlaunch;20/20unchangeddiscovery+installed cases independently corroboratebookmarks/checkpoints/journals. Theolder5ac6READYtest wasnotreconciled. Candidate1718waswithdrawn,notmerged."
     }
   ],
   "deliverySnapshot": {
     "featurePRsReady": 16,
-    "featurePRsDraft": 32,
+    "featurePRsDraft": 31,
     "deliverablesMerged": 25,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
-    "hardware": "unavailable"
+    "hardware": "unavailable",
+    "featurePRsClosed": 1
   }
 }
