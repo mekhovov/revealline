@@ -88,6 +88,18 @@ uncertainty and no inferred redistribution permission. Original source metadata
 remains in the wrapper's `sources`; `sliceKinds` distinguishes these two cases.
 Surface and electrical-input identities remain bound to the result.
 
+Sparse surfaces can produce more than the original path format's 32 intervals.
+The surface load adapter intersects complete coverage, then delegates bounded
+windows in order without changing that older limit. Only oversized calculated
+slices are restricted to their containing covered interval; original paths stay
+intact. `commonIntervals` records the complete common coverage, while
+`loadCoverage: 'bounded-window'` identifies a retained delegated window in `load`.
+The wrapper's status/reason describes the complete surface coverage; the nested
+load receipt describes its own window. A root below a later window is therefore
+reported as a coverage gap by the wrapper. Empty common coverage returns an
+unavailable result without delegation. Source eligibility is checked before
+window selection, so narrowing cannot hide missing current or unknown airspeed.
+
 Unknown/phase current, missing or negative current, nonmonotonic source voltage
 current, unsupported flow/scope, coverage holes and inadequate numerical
 resolution return explicit unavailable results. Nonmonotonic source current
@@ -111,6 +123,18 @@ checks and the 30 existing path/load checks. ESLint, scoped JavaScript/test
 Prettier and `git diff --check` also passed. The new source module remains outside
 the runtime dependency graph; no package, browser, device or physical-fidelity
 qualification is claimed by this receipt.
+
+Independent review identified two boundaries after that initial receipt: valid
+64-interval slices exceeded the older delegated format's 32-interval limit, and
+interpolated RPM/torque could violate the power bound even when both original
+samples passed it. The bounded-window adapter above fixes the first issue. The
+evaluator now diagnoses its final interpolated values, retaining negative or
+power-inconsistent readings without clamping; phase/unknown current still cannot
+produce an electrical-power comparison. Two new regressions fail on the original
+implementation and pass after these repairs. The updated focused suite passes
+**52/52** on Node 22.22.2, including early/late/endpoint roots across 64 disjoint
+cells, coverage gaps, touching and disjoint windows, mixed source units, diagnostic
+current limits and interpolated power. No runtime or original 1D format changed.
 
 ## API and example
 

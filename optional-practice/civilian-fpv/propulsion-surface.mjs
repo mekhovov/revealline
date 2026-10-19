@@ -9,6 +9,7 @@ import {
 import {
   PROPULSION_EVIDENCE_FIELDS,
   PROPULSION_EVIDENCE_FORMAT,
+  PROPULSION_EVIDENCE_LIMITS,
   createPropulsionEvidenceEvaluator,
 } from './propulsion-evidence.mjs';
 import { solvePropulsionEvidenceLoad } from './propulsion-load.mjs';
@@ -326,6 +327,28 @@ export function createPropulsionSurfaceEvaluator(source) {
     result.resultKind = result.status === 'sample' ? 'source-sample' : 'calculated';
     result.missingFields = FIELDS.filter((field) => result.values[field] === null);
     result.power = power(result.values, surface.currentBasis);
+    const diagnose = (code, fields) => {
+      if (!result.diagnostics.some((item) => item.code === code))
+        result.diagnostics.push({ code, fields, sample: null, severity: 'warning' });
+    };
+    const negative = ['thrust', 'torque', 'current'].filter(
+      (field) => result.values[field] !== null && result.values[field] < 0,
+    );
+    if (negative.length) diagnose('negative-load-reading', negative);
+    const { shaftWatts, electricalWatts } = result.power;
+    // Bilinear channel interpolation does not preserve inequalities between
+    // products (RPM × torque versus voltage × current). Diagnose the result.
+    if (
+      shaftWatts !== null &&
+      electricalWatts !== null &&
+      shaftWatts > electricalWatts + 1e-9 * Math.max(1, Math.abs(electricalWatts))
+    )
+      diagnose('shaft-power-exceeds-electrical-central-values', [
+        'rpm',
+        'torque',
+        'voltage',
+        'current',
+      ]);
     return result;
   }
   return Object.freeze({
@@ -339,7 +362,7 @@ export function createPropulsionSurfaceEvaluator(source) {
   });
 }
 
-function sourceCurrentReason(evaluator, command) {
+function sourceLoadReason(evaluator, command) {
   const { commands, surface } = evaluator;
   const exact = commands.indexOf(command),
     upper = commands.findIndex((value) => value > command);
@@ -347,6 +370,9 @@ function sourceCurrentReason(evaluator, command) {
   for (const index of indexes) {
     const path = createPropulsionEvidenceEvaluator(surface.paths[index]);
     const points = path.samples.map((sample) => sample.values);
+    if (path.evidence.conditions.scope !== 'single-rotor') return 'single-rotor-required';
+    if (path.evidence.conditions.flow !== 'static') return 'static-flow-required';
+    if (points.some((point) => point.airspeed !== 0)) return 'known-zero-airspeed-required';
     if (points.some((point) => point.current === null)) return 'current-unavailable';
     if (points.some((point) => point.current < 0)) return 'negative-current';
     if (points.some((point, i) => i > 0 && point.current < points[i - 1].current))
@@ -405,6 +431,98 @@ function voltageSlice(evaluator, command) {
       })),
     },
   };
+}
+
+function intersectIntervals(a, b) {
+  const result = [];
+  let i = 0,
+    j = 0;
+  while (i < a.length && j < b.length) {
+    const low = Math.max(a[i][0], b[j][0]),
+      high = Math.min(a[i][1], b[j][1]);
+    if (low <= high) result.push([low, high]);
+    if (a[i][1] < b[j][1]) i++;
+    else j++;
+  }
+  return result;
+}
+
+// A valid sparse surface may have more derived intervals than the older path
+// format admits. Keep that contract unchanged and solve bounded common windows.
+// Only oversized calculated slices are restricted; original paths stay intact.
+function solveSlices(slices, inputs) {
+  const solve = (evidence) =>
+    solvePropulsionEvidenceLoad({
+      evidence,
+      ...inputs,
+      currentBasis: 'dc-input-at-recorded-voltage',
+    });
+  const oversized = (slice) =>
+    slice.evidence.domain.intervals.length > PROPULSION_EVIDENCE_LIMITS.maxIntervals;
+  if (!slices.some(oversized)) {
+    const load = solve(slices.map((slice) => slice.evidence));
+    return {
+      load,
+      status: load.status,
+      reason: load.reason,
+      surfaceIndex: load.pathIndex,
+      loadCoverage: 'complete-slices',
+      commonIntervals: copy(load.intervals),
+    };
+  }
+  const toVolts = (evidence) => (evidence.units.voltage === 'mV' ? 0.001 : 1);
+  const coverage = slices.map(({ evidence }) =>
+    evidence.domain.intervals.map((interval) =>
+      interval.map((voltage) => voltage * toVolts(evidence)),
+    ),
+  );
+  let commonIntervals = coverage[0];
+  for (const intervals of coverage.slice(1))
+    commonIntervals = intersectIntervals(commonIntervals, intervals);
+  const result = {
+    loadCoverage: 'bounded-window',
+    commonIntervals,
+    load: null,
+    status: 'unavailable',
+    reason: 'no-common-coverage',
+    surfaceIndex: null,
+  };
+  for (let index = 0; index < commonIntervals.length; index++) {
+    const [low, high] = commonIntervals[index];
+    const evidence = slices.map((slice) => {
+      if (!oversized(slice)) return slice.evidence;
+      const source = slice.evidence,
+        scale = toVolts(source);
+      const interval = source.domain.intervals.find(
+        ([from, to]) => from * scale <= low && to * scale >= high,
+      );
+      // Every admitted cell has distinct observed voltage endpoints, so this
+      // interval retains at least two samples even for a point intersection.
+      return {
+        ...source,
+        domain: { ...source.domain, intervals: [interval] },
+        samples: source.samples.filter(
+          ({ values }) => values.voltage >= interval[0] && values.voltage <= interval[1],
+        ),
+      };
+    });
+    const load = solve(evidence);
+    result.load = load;
+    if (load.reason === 'root-above-coverage') {
+      result.reason = load.reason;
+      continue;
+    }
+    // The retained delegated receipt describes its window. The wrapper's
+    // reason describes the complete sparse coverage, including earlier windows.
+    return {
+      ...result,
+      status: load.status,
+      surfaceIndex: load.pathIndex,
+      reason:
+        load.reason === 'root-below-coverage' && index > 0 ? 'root-in-coverage-gap' : load.reason,
+    };
+  }
+  return result;
 }
 
 /** Non-activating bench calculation at independently specified commands. The
@@ -476,21 +594,14 @@ export function solvePropulsionSurfaceLoad(source) {
       return { ...result, reason: 'dc-input-current-required', surfaceIndex: i };
     const slice = voltageSlice(evaluators[i], options.loads[i].command);
     if (!slice) return { ...result, reason: 'command-outside-coverage', surfaceIndex: i };
-    const currentReason = sourceCurrentReason(evaluators[i], options.loads[i].command);
-    if (currentReason) return { ...result, reason: currentReason, surfaceIndex: i };
+    const sourceReason = sourceLoadReason(evaluators[i], options.loads[i].command);
+    if (sourceReason) return { ...result, reason: sourceReason, surfaceIndex: i };
     slices.push(slice);
   }
-  const load = solvePropulsionEvidenceLoad({
-    evidence: slices.map((slice) => slice.evidence),
-    ...inputs,
-    currentBasis: 'dc-input-at-recorded-voltage',
-  });
+  const solved = solveSlices(slices, inputs);
   return {
     ...result,
-    status: load.status,
-    reason: load.reason,
-    surfaceIndex: load.pathIndex,
+    ...solved,
     sliceKinds: slices.map((slice) => slice.kind),
-    load,
   };
 }

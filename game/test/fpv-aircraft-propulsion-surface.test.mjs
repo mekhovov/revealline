@@ -496,6 +496,120 @@ test('surface load retains original static-flow and finite-resolution eligibilit
   );
 });
 
+test('64 disjoint derived intervals solve covered windows without widening the original path format', () => {
+  const wide = (offset = 0) => {
+    const input = surface({
+      commands: [0, 1],
+      voltages: Array.from({ length: 128 }, (_, i) => i + 1 + offset),
+      cells: Array.from({ length: 64 }, (_, i) => [0, i * 2]),
+    });
+    for (const path of input.paths)
+      for (const sample of path.samples) sample.values.current = sample.values.voltage;
+    return input;
+  };
+  const input = wide();
+  assert.equal(validatePropulsionSurface(input).cells.length, 64);
+  for (const voltage of [1.5, 65.5, 128]) {
+    const result = solve(input, 0.5, { openVoltage: voltage * 2, resistance: 1 });
+    assert.equal(result.status, 'solved');
+    near(result.load.operatingPoint.voltage, voltage);
+    near(result.load.operatingPoint.current, voltage);
+    assert.equal(result.commonIntervals.length, 64);
+    assert.equal(result.loadCoverage, 'bounded-window');
+    assert.equal(result.load.intervals.length, 1);
+  }
+  assert.equal(solve(input, 0.5, { openVoltage: 5, resistance: 1 }).reason, 'root-in-coverage-gap');
+  assert.equal(solve(input, 0.5, { openVoltage: 1, resistance: 1 }).reason, 'root-below-coverage');
+  assert.equal(
+    solve(input, 0.5, { openVoltage: 260, resistance: 1 }).reason,
+    'root-above-coverage',
+  );
+  const second = wide(1),
+    loads = [
+      { surface: input, command: 0.5 },
+      { surface: second, command: 0.5 },
+    ];
+  const touching = solve(input, 0.5, { loads, openVoltage: 6, resistance: 1 });
+  assert.equal(touching.status, 'solved');
+  assert.equal(touching.load.operatingPoint.voltage, 2);
+  assert.equal(
+    solve(input, 0.5, { loads, openVoltage: 7.5, resistance: 1 }).reason,
+    'root-in-coverage-gap',
+  );
+  const separated = [
+    { surface: input, command: 0.5 },
+    { surface: wide(200), command: 0.5 },
+  ];
+  assert.equal(solve(input, 0.5, { loads: separated }).reason, 'no-common-coverage');
+  const limit = solve(input, 0.5, { openVoltage: 3, resistance: 1, currentLimit: 1 });
+  assert.equal(limit.status, 'limit-exceeded');
+  assert.equal(limit.load.operatingPoint.voltage, 1.5);
+  assert.deepEqual(input.paths[0].domain.intervals, [[1, 128]]);
+  const original = surface();
+  original.paths[0].units.voltage = 'mV';
+  original.paths[0].domain.intervals = [[1000, 5000]];
+  for (const sample of original.paths[0].samples) sample.values.voltage *= 1000;
+  const mixed = solve(input, 0.5, {
+    loads: [
+      { surface: input, command: 0.5 },
+      { surface: original, command: 0 },
+    ],
+    openVoltage: 3,
+  });
+  assert.equal(mixed.status, 'solved');
+  assert.equal(mixed.load.operatingPoint.voltage, 1.5);
+  assert.deepEqual(mixed.sliceKinds, ['calculated-command-slice', 'original-voltage-path']);
+  assert.equal(mixed.load.sources[1].source.kind, 'synthetic');
+  const unknownFlow = wide();
+  unknownFlow.paths[0].samples.at(-1).values.airspeed = null;
+  assert.equal(
+    solve(unknownFlow, 0.5, { openVoltage: 3, resistance: 1 }).reason,
+    'known-zero-airspeed-required',
+    'Selecting an early window must not hide unsupported source conditions',
+  );
+});
+
+test('interpolated power and negative-load diagnostics use blended values without clamping', () => {
+  const input = surface({ commands: [0, 1], voltages: [1, 2] });
+  input.paths.forEach((path, i) => {
+    for (const sample of path.samples) {
+      sample.values.current = 1;
+      sample.values.rpm = i === 0 ? 6000 : 600;
+      sample.values.torque = i === 0 ? 0.001 : 0.01;
+    }
+  });
+  const code = 'shaft-power-exceeds-electrical-central-values';
+  const evaluator = createPropulsionSurfaceEvaluator(input);
+  for (const command of [0, 1]) {
+    const endpoint = evaluator.evaluate({ command, voltage: 1 });
+    assert.ok(endpoint.power.shaftWatts < endpoint.power.electricalWatts);
+    assert.ok(!endpoint.diagnostics.some((item) => item.code === code));
+  }
+  const point = evaluator.evaluate({ command: 0.5, voltage: 1 });
+  near(point.power.shaftWatts, 1.900663555421825);
+  assert.equal(point.power.electricalWatts, 1);
+  assert.ok(point.diagnostics.some((item) => item.code === code));
+  assert.equal(point.values.rpm, 3300);
+  near(point.values.torque, 0.0055);
+  for (const currentBasis of ['phase-current', 'unknown']) {
+    const result = createPropulsionSurfaceEvaluator({ ...input, currentBasis }).evaluate({
+      command: 0.5,
+      voltage: 1,
+    });
+    assert.equal(result.power.electricalWatts, null);
+    assert.ok(!result.diagnostics.some((item) => item.code === code));
+  }
+  for (const sample of input.paths[0].samples) sample.values.thrust = -10;
+  for (const sample of input.paths[1].samples) sample.values.thrust = 2;
+  const negative = createPropulsionSurfaceEvaluator(input).evaluate({ command: 0.5, voltage: 1 });
+  assert.equal(negative.values.thrust, -4);
+  assert.ok(
+    negative.diagnostics.some(
+      (item) => item.code === 'negative-load-reading' && item.fields.includes('thrust'),
+    ),
+  );
+});
+
 test('bounded malformed documents and queries fail without getters, source mutation or numeric coercion', () => {
   const input = surface(),
     evaluator = createPropulsionSurfaceEvaluator(input);
