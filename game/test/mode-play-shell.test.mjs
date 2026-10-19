@@ -250,6 +250,8 @@ test('direct-level briefing can return to Select Mission without starting and lo
   });
   h.shell.setLocale('uk');
   assert.equal(h.shell.elements.header.querySelector('span').textContent, 'Змійка');
+  assert.equal(h.shell.elements.home.querySelector('.mode-play-edition').hidden, true);
+  assert.equal(h.shell.elements.modes.getAttribute('aria-describedby'), null);
   assert.equal(h.shell.elements.buttons.missions.textContent, 'Вибрати місію');
   assert.equal(h.shell.elements.buttons.sound.textContent, 'Звук: вимкнено');
   assert.equal(

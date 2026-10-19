@@ -5,6 +5,7 @@ import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { emptyLibrary, exportLibrary, updatePreferences } from '../library.mjs';
 import { resolveControllerBindings, controllerBindingLabels } from '../controller-bindings.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const keyboardPrompt = /Up\/Down scroll · Enter, Space or Escape returns/;
 const key = (element, value) => {
@@ -164,3 +165,61 @@ test('touch entry advertises the actual Done action and its native click returns
   assert.equal(f.done.disabled, true);
   f.assertUnchanged();
 });
+
+for (const modality of ['keyboard', 'controller', 'touch'])
+  test(`locale switches translate the actual ${modality} reading hint without changing its owner`, async (t) => {
+    const previousLocale = getLocale();
+    setLocale('en', { persist: false });
+    t.after(() => setLocale(previousLocale, { persist: false }));
+    const bindings = resolveControllerBindings();
+    bindings.menu.buttons.confirm = 5;
+    bindings.menu.buttons.back = 2;
+    bindings.glyphFamily = 'playstation';
+    const storage = memoryStorage({
+      'revealline.library.dev.v1': exportLibrary(
+        updatePreferences(emptyLibrary(), { controllerBindings: bindings }),
+      ),
+    });
+    const f = await help(t, { storage }),
+      pad = modality === 'controller' ? controller(f.h, t) : null;
+    f.entry.focus();
+    if (modality === 'controller') pad.pulse(5);
+    else if (modality === 'keyboard') key(f.entry, 'Enter');
+    else {
+      f.entry.emit('pointerdown', { pointerType: 'touch', button: 0, isPrimary: true });
+      f.entry.click();
+    }
+    f.region.scrollTop = 37;
+    for (const locale of ['uk', 'en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(f.h.doc.body.dataset.inputMode, modality);
+      assert.equal(f.h.doc.activeElement.id, f.region.id);
+      assert.equal(f.done.disabled, false);
+      assert.equal(f.region.scrollTop, 37);
+      for (const id of ['help-reading-hint', 'controller-ui-hint']) {
+        const hint = f.h.$(id).textContent;
+        assert.match(hint, locale === 'uk' ? /повернутися:/ : /returns/);
+        if (locale === 'uk') assert.doesNotMatch(hint, /returns| or /);
+        if (modality === 'keyboard')
+          assert.match(
+            hint,
+            locale === 'uk' ? /Enter, пробіл або Escape/ : /Enter, Space or Escape/,
+          );
+        else if (modality === 'touch')
+          assert.match(hint, locale === 'uk' ? /Завершити читання/ : /Done reading/);
+        else {
+          const labels = controllerBindingLabels(bindings).menu;
+          assert.ok(hint.includes(labels.confirm));
+          assert.ok(hint.includes(labels.back));
+          assert.match(hint, locale === 'uk' ? / або / : / or /);
+        }
+      }
+      f.assertUnchanged();
+    }
+    if (modality === 'controller') pad.pulse(2);
+    else if (modality === 'keyboard') key(f.region, 'Escape');
+    else f.done.click();
+    assert.equal(f.h.doc.activeElement.id, f.entry.id);
+    assert.equal(f.done.disabled, true);
+    f.assertUnchanged();
+  });
