@@ -23,6 +23,9 @@ import {
 } from '../ui/celebration.mjs';
 import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
+import { offlineAvailability } from '../offline.mjs';
+import { nativePlatform } from '../platform.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
 import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
@@ -286,6 +289,9 @@ const transition = createContinuousPlayController({
 });
 const gamepadState = new Map(),
   gamepadSeats = new Map();
+// Latest presence/assignment only, from the existing polling owner. Snake does
+// not produce the primary shell's neutral/Confirm readiness observations.
+const supportController = { sampledAt: null, status: 'unavailable', assigned: null };
 const effects = [createHuntDestruction(), createHuntDestruction()];
 let acceptedArtRevision = runtimeActorArtRevision(),
   acceptedAppearance = null,
@@ -2277,9 +2283,10 @@ doc.addEventListener('keydown', (event) => {
   event.preventDefault();
   if (!event.repeat) turn(mode !== 'solo' && key.startsWith('arrow') ? 1 : 0, direction);
 });
-function pollGamepads() {
+function pollGamepads(now) {
   const pads = Array.from(globalThis.navigator.getGamepads?.() ?? []).filter(Boolean),
     present = new Set();
+  let assigned = false;
   for (const pad of pads) {
     present.add(pad.index);
     if (!gamepadSeats.has(pad.index)) {
@@ -2291,6 +2298,7 @@ function pollGamepads() {
     }
     const seat = gamepadSeats.get(pad.index);
     if (mode === 'solo' && seat !== 0) continue;
+    assigned = true;
     const buttons = [
       pad.buttons[12]?.pressed || pad.axes[1] < -0.55,
       pad.buttons[15]?.pressed || pad.axes[0] > 0.55,
@@ -2342,6 +2350,16 @@ function pollGamepads() {
       gamepadSeats.delete(id);
       pause();
     }
+  const available = typeof globalThis.navigator.getGamepads === 'function';
+  supportController.sampledAt = now;
+  supportController.status = !available
+    ? 'unavailable'
+    : pads.length
+      ? 'observed'
+      : ['observed', 'disconnected'].includes(supportController.status)
+        ? 'disconnected'
+        : 'waiting-controller';
+  supportController.assigned = available ? assigned : null;
 }
 doc
   .querySelectorAll('#snake-settings details, #snake-help details, #snake-workshop details')
@@ -2444,7 +2462,7 @@ function frame(now) {
   }
   const elapsed = previousFrame === null ? 0 : Math.max(0, now - previousFrame);
   previousFrame = now;
-  pollGamepads();
+  pollGamepads(now);
   if (!ready && !paused && !result()) {
     if (elapsed > 1000 || !pageActive()) pause();
     else {
@@ -2825,6 +2843,40 @@ snakeGlobalSettings.update({
     audioCues: snakeAudioCues,
     touchPresentation: snakeTouchSettings,
     ...snakeGlobalTools.controls,
+  },
+});
+const snakeSupportRoot = el('section');
+snakeSupportRoot.id = 'support-summary-root';
+snakeSettingsView.panels.data.append(snakeSupportRoot);
+attachLocalSupportSummary({
+  document: doc,
+  window: globalThis,
+  root: snakeSupportRoot,
+  settings: playShell.elements.dialogs.settings,
+  getHost: () => {
+    const offline = offlineAvailability(),
+      version = doc.documentElement.dataset.buildVersion,
+      packaged = !!version && !version.includes('__');
+    return {
+      version: packaged ? version : null,
+      packaged,
+      kind: `snake-${mode}`,
+      state: result()
+        ? ['won', 'lost'].includes(result())
+          ? result()
+          : 'finished'
+        : ready
+          ? 'idle'
+          : paused
+            ? 'paused'
+            : 'running',
+      locale,
+      writable: sessionWriter.writable,
+      writerReason: sessionWriter.writable ? 'owned' : sessionWriter.reasonCode,
+      platform: nativePlatform() ?? 'browser',
+      offline: offline.available ? 'configured' : offline.messageCode,
+      controller: supportController,
+    };
   },
 });
 $('snake-settings').hidden = true;

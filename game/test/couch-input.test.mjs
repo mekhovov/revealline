@@ -625,3 +625,76 @@ test('shared-radio seats reach both couch gameplay commands without cross-contro
   commands = f.input.poll();
   assert.equal(commands[1].direction, 'up');
 });
+
+test('neutral Resume tick defers fresh local requests independently without releasing held pads', (t) => {
+  const f = fixture(t),
+    pad = makePad(0);
+  f.setPads([pad]);
+  f.input.poll();
+  pad.buttons[0].pressed = true;
+  f.resume();
+  f.input.poll();
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  assert.deepEqual(f.input.consume(), neutralPair(), 'A pad held through Resume is still blocked.');
+  pad.buttons[0].pressed = false;
+  f.input.poll();
+  f.key('KeyQ');
+  f.up('KeyQ');
+  f.down(1, 'pickup', 7);
+  f.lift(1, 'pickup', 7);
+  f.input.poll();
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  assert.deepEqual(
+    f.input.consume().map((c) => [c.action, c.pickup]),
+    [
+      [true, false],
+      [false, true],
+    ],
+  );
+  assert.deepEqual(f.input.consume(), neutralPair(), 'Local requests emit one pulse each.');
+  pad.buttons[0].pressed = true;
+  f.input.poll();
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  assert.equal(f.input.consume()[0].action, true);
+  assert.equal(
+    f.input.consume()[0].action,
+    true,
+    'Fresh controller input keeps its held semantics.',
+  );
+  pad.buttons[0].pressed = false;
+  f.input.poll();
+  f.input.consume();
+  pad.buttons[0].pressed = true;
+  pad.buttons[2].pressed = true;
+  f.input.poll();
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  pad.buttons[0].pressed = false;
+  pad.buttons[2].pressed = false;
+  f.input.poll();
+  assert.deepEqual(
+    f.input.consume().map((c) => [c.action, c.pickup]),
+    [
+      [true, true],
+      [false, false],
+    ],
+    'An admitted short pad press survives release before the next poll.',
+  );
+  assert.deepEqual(f.input.consume(), neutralPair());
+});
+
+test('clearing a deferred Resume request retires it before the next fixed tick', (t) => {
+  const f = fixture(t);
+  f.key('KeyQ');
+  f.down(1, 'pickup', 8);
+  assert.deepEqual(f.input.consume({ neutralActions: true }), neutralPair());
+  f.input.clearPlayer(0);
+  assert.deepEqual(
+    f.input.consume().map((c) => [c.action, c.pickup]),
+    [
+      [false, false],
+      [false, true],
+    ],
+  );
+  f.input.clearPhysical();
+  assert.deepEqual(f.input.consume(), neutralPair());
+});
