@@ -1021,11 +1021,13 @@ export async function addOfflineEntries(
     fail(
       `Offline distribution exceeds 2000 files or 80 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
     );
+  const { offlineStartupRoutes } = await import('./offline-startup.mjs');
   const config = {
     format: 'revealline-offline.v1',
     version: info.version,
     buildId,
     files,
+    startupRoutes: offlineStartupRoutes(entries, files),
     downloadOriginals: contentCatalogue.originals,
     ...(contentCatalogue.format === 'revealline-offline-content.v2'
       ? { packageConsent: true, navigationBootstraps: contentCatalogue.navigationBootstraps }
