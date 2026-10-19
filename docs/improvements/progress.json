@@ -15,11 +15,11 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Capture Home/menu performance: producer draft #1771 passes selected source CI (publishing529, cheapcontract2, configured validation). Dedicated ten-phase authoring/artifacts running. Then sender adapter and full journey qualification; preserve historical113, opening18/22 and three picture-setup failures.",
-    "P1 · Single Drone/Riy:54 authored formatting,30 syntax and all4 canonical outputs/8 source-only stages pass. Final58-file manifest independently verified. Prepare guarded original28 complete-file qualification, then both fonts/EN/UK/controls/player/package acceptance. Historical28/64 cases retain their versions.",
-    "P1 · Text compatibility #1668:22/23 source commands pass; preview1881/1891 has9Replay+1Studio fixture failures. Separate664 admissions pass. Shared prerequisite #1769 now passes both changed files83/83; its full configured source/preview remain pending before integration and rerun.",
+    "P1 · Menu loading: producer #1771 passes all ten authoring phases and selected source checks. Artifacts verified (654 KiB total). Next: sender adapter, unchanged cold-opening checks and complete player/package qualification. Earlier opening failures remain recorded.",
+    "P1 · Single Drone/Riy readability: all 54 authored formatting checks, 30 syntax checks and four canonical outputs pass. The final 58 files are verified. Next: all 28 complete native files, both fonts, English/Ukrainian, controls and player/package checks.",
+    "P1 · Text compatibility #1668: 22 of 23 source commands pass; preview has ten fixture failures. Four separate admission groups pass 664 cases. Shared fixture #1769 passes both changed files (83 cases); its configured source workflow also succeeds. Finish the broader preview before integration and a fresh run.",
     "P1 · Team Home #1747: source now merged. All nine admitted files match the independently reviewed local reconciliation. Prior 11 source checks remain bound to 22c553; finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
-    "P1 · Shared support #1762:8e passes8 whole files414/414 and overall source workflow; old-policy preview1877/1889 has9Replay,2FPV budget,1Studio fixture failures. Shared prerequisite1769 passes83 current changed-file cases, remaining checks pending. Then current integration, actual Data/modal/browser/package and remaining hosts.",
+    "P1 · Shared support #1762: eight whole files (414 cases) and source workflow pass. Its older preview has 12 failures. Finish shared fixture #1769 checks and current integration, then Data/modal navigation, package and remaining hosts.",
     "P2 · Room invitations #1744: source merged; 108 scoped checks, tracked-module lint and delayed QR focus review pass. Full source, Ukrainian host, manual fallback, package, sharing, scanning and device checks remain.",
     "P2 · Audio and terminology: preserve merged changes; finish remaining host copy, listening and player acceptance.",
     "Continue phases 0–8 with all 83 feature groups and 113 deliverables in their original priority order and estimates. Source merge is not full feature completion. Protect 2 GiB; physical iPhone offline startup, Steam Deck and suspend/resume remain Not tested."
@@ -1271,13 +1271,13 @@
           {
             "id": "team-display-producer",
             "deliverable": "Separate reviewed producer/checker and complete parity/provenance tests for three exact built-in Team factories; no sender activation",
-            "state": "published_draft_source_CI_pass_guarded_authoring_running",
+            "state": "published_draft_ten_authoring_phases_source_CI_artifact_rootreview_pass",
             "estimate": "1–2 engineering days plus hosted queue/review; provisional until payload/resource measurement"
           },
           {
             "id": "team-display-sender",
             "deliverable": "Dedicated immutable display artifact/reader and remote sender adapter; preserve editable clones, imports, locale and exact launch context",
-            "state": "depends_on_producer",
+            "state": "source_design_in_progress",
             "estimate": "1–2 engineering days after producer acceptance, plus qualification/review"
           },
           {
@@ -1288,7 +1288,7 @@
           }
         ],
         "scope": "ExistingF10 prerequisite, not newfeature/deliverable count; original definitions/priorities/estimates retained. Source proposal and hosted runner require review before execution/publication.",
-        "sourceReviewProgress": "Published draft1771/a396. Guard19/source18/doccheck pass. Exact-head selected source workflow succeeds (publishing529, cheapcontract2, configured validation); dedicated actual10 authoring phases/artifacts still running. Sender adapter unstarted; no performance/player acceptance.",
+        "sourceReviewProgress": "Stage1 at a396 passes all ten guarded authoring phases and selected source workflow. All33 terminals/full raw/source/dependencies/workflow/projections verified. Metadata669,955bytes total. Stage2 sender adapter source design is in progress; current player loading/performance/package acceptance remains pending.",
         "deliveryPrerequisite": "https://github.com/mekhovov/revealline/pull/1771"
       }
     },
@@ -2571,13 +2571,13 @@
         }
       ],
       "studioFixturePrerequisite": {
-        "status": "current569_complete_modal_file72_pass_configured_checks_pending",
+        "status": "current569_modal72_replay11_and_source_workflow_pass_preview_pending",
         "source": "public opener completion within original wait deadline; all existing assertions/controller flow retained",
         "manifestSHA256": "65233b91a96b1aeb383ed901aa78a9cced12f9f386387c662824ed4976d9ca0f",
         "formatReceiptSHA256": "e8995d4df3f412531445bd783ee186996f0e42abab4a7e38e35f0f79b81e29f3",
         "productionChanges": 0,
         "nativeExecuted": true,
-        "delivery": "Current569 complete Modal72/72 and Replay11/11 pass; configuredsource/preview pending. No admission or sourceunion yet.",
+        "delivery": "Current569 complete Modal72/72, Replay11/11 and configured source workflow pass; previewpending. Not yet admitted/integrated.",
         "staticReceiptSHA256": "0140dba7d6f94c23b8b1f6a676bf5118aa913030726dc2b0139ac772526617ad",
         "heldFourPathManifestSHA256": "db0e34ab6fc7d2c2cdcb2ebd0b615bd9e12dbe133aa26fd33a01696459da931b",
         "deliveryPrerequisite": "https://github.com/mekhovov/revealline/pull/1769",
@@ -5802,16 +5802,16 @@
     {
       "id": "CI-Replay-gameplay-audio-read-fixture",
       "priority": "P1",
-      "status": "draft_current_two_whole_files_83_pass_configured_checks_pending",
+      "status": "draft_current83_and_source_workflow_pass_preview_pending",
       "deliveryState": "draft",
       "owner": "lane-c",
       "pr": "https://github.com/mekhovov/revealline/pull/1769",
       "commit": "56980397d30971c6722cc4493686e552c6d4231d",
       "observedRemoteHead": "56980397d30971c6722cc4493686e552c6d4231d",
       "scope": "Nativepreviewfixture ownership: Replaylegitimategameplay-audio read/no-writes plusStudiopublicopen completion within ORIGINALreadinessdeadline, unchangedcontroller/editor/focus/assertions. Test+doconly4paths; no production/helper/timeout changes.",
-      "next": "At569803 both changed complete files pass83/83 (Modal72+Replay11); current navigationTeam5-file command249 passes separately. Configured validation/source overall and preview pending. No old-head result inherited.",
+      "next": "Current569 both changed files83/83, additional navigation249 and configured validation/source verifier/release-ready succeed. Broader preview pending before integration/source admission; no package or device pass.",
       "qualification": {
-        "automated": "current_complete_changed_files_83_pass_configured_source_preview_pending",
+        "automated": "current83_changed_file_cases_and_source_workflow_pass_preview_pending",
         "browser": "not_required_fixture_only",
         "physical": "not_required_fixture_only"
       },
@@ -5860,22 +5860,23 @@
         "sourceBeforeAfterExact": true,
         "modalProofSHA256": "097276810ca5dd3f8dfbbb75ec4e794e9e9eb5b51d06c20a48e5629534b137e9",
         "replayProofSHA256": "44d6ea81bbb8c33c39dd3ffcf851d93655cdb8366fdd3edd63116a1cea022c4a",
-        "overallSourceAndPreview": "configuredvalidate/sourceoverall/previewpending"
+        "overallSourceAndPreview": "overall configured sourceSUCCESS; previewpending",
+        "terminalSourceProofSHA256": "e4bb6031296fb21b48905f340bfa852d67c0c39ffd0868f0e4689a5f93a081d9"
       }
     },
     {
       "id": "CI-Team-display-authoring",
-      "status": "draft_guarded_authoring_running",
+      "status": "draft_ten_authoring_phases_and_source_CI_pass_artifact_review_clear",
       "priority": "P1",
       "pr": "https://github.com/mekhovov/revealline/pull/1771",
       "commit": "a39607b7bce39803a22000c88cd417d1e769d5c4",
       "observedRemoteHead": "a39607b7bce39803a22000c88cd417d1e769d5c4",
       "deliveryState": "draft",
       "scope": "Stage1 registered Team display producer/checker for CulturalV2/Expeditions/Hunt; deterministic metadata with exactreceiving/allpreset/locale/diagram parity. No sender/gameplay activation. ExistingF10scope; producer/adapter/fullqualification remain separate.",
-      "evidence": "Current19mock guard and18source checks plusdoccheck pass. ThreeNEWheavywrappers byteexactrenamed outside unchangeddefaultCLI discovery; onlycheapcontract automatic. Published12paths/everyunownedmainentry exact; independentremote readback470b385a. Actualdedicatedjob39337606560 present/running; currentcheapcontract2/2 andpublishing529/529 pass separately, other source/dedicated10phases pending. No artifact/performance/player/package/devicepass. Current sourceworkflow39337606463 now terminalSUCCESS: publishing529/529, cheapcontract2/2 and uninterrupted configured validate with exactsource postaudit. Dedicated10-phase authoring remains running and separate.",
-      "next": "Collectactualexacthead dedicatedworkflow/Node22/10completephases/projectionprovenance; keepdraftuntiljobpresence+allphases+artifactreview. ThenStage2senderadapter andwholeplayerjourney.",
+      "evidence": "Current 19 mocked guard tests, 18 source checks and final documentation check pass. Exact-head selected source workflow succeeds (publishing529, cheap contract2, configured validation). Dedicated run39337606560 passes all ten produce/check/parity phases; root verifies all33 terminal receipts, complete raw hashes, source/dependencies/Git/Node and executed workflow binding. No gameplay/sender activation or player-performance claim.",
+      "next": "Stage1 authoring is qualified at a396 with root and two independent artifact reviews clear. Source admission remains separate. Stage2 sender adapter source design is in progress; preserve receiver validation and complete current cold/player/package checks.",
       "sourceManifestSHA256": "9b16aa1f8736c60de868b65c9d604e1c04037030415b6aa4b908e275079491d4",
-      "nativeHostedAuthoring": "running_not_qualified",
+      "nativeHostedAuthoring": "ten_complete_authoring_phases_pass_exact_a396_no_sender_activation",
       "readiness": "Existingobservedcheckblockers+draftgate preserved; absentnewjobisnotautomaticrequiredcheck; explicitreviewcondition/no waiver",
       "mergeState": "UNSTABLE",
       "sourceWorkflow": {
@@ -5883,7 +5884,31 @@
         "head": "a39607b7bce39803a22000c88cd417d1e769d5c4",
         "result": "success",
         "scopes": ["publishing529", "cheapcontract2", "configured validate"],
-        "dedicatedAuthoring": "running_separate_not_qualified"
+        "dedicatedAuthoring": "tenphases_pass_artifact_rootreview_clear"
+      },
+      "authoringQualification": {
+        "head": "a39607b7bce39803a22000c88cd417d1e769d5c4",
+        "tree": "9854d544ed4526fedd98dc38317772cabaae1a7d",
+        "run": "https://github.com/mekhovov/revealline/actions/runs/39337606560",
+        "phases": 10,
+        "completeTestFiles": 4,
+        "cases": 5,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "projectionBytes": 669955,
+        "largestProjectionBytes": 552216,
+        "peakObservedOwnedRSSBytes": 299159552,
+        "campaignSeconds": 889.798429,
+        "sourceBeforeAfterExact": true,
+        "dependenciesGitNodeExact": true,
+        "rootProofSHA256": "406829abf903ab17083d8f42c2277c692660a867f08f9af3ea6ce8c8679853fb",
+        "artifactZIP_SHA256": "946b4a837e82cd2db606055a20f772435d456cb0369ef4a34c97e8884273457e",
+        "ordinaryGameplayOrSenderActivation": false,
+        "independentCProofSHA256": "d0d61d003e438fcc1833a7e06a41709c6d749209a12631e71df4ef98ca0666b5",
+        "independentBProofSHA256": "242af5c3d7e1ac364e49d3c495452336f9f9412454483f3ec15a7895382fc3ba",
+        "independentBFinalProofSHA256": "7eed307537dd77cc475dea2e8b9014468ad232d242fa5a60a18b8b28c30316ed",
+        "executedWorkflowBindingProofSHA256": "cb6c6c4361183cc7fb4404267a69b4143f0ae9a404f35e2b65e256ee9f04e477"
       }
     }
   ],
@@ -5910,7 +5935,7 @@
       1721, 1729
     ],
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1669, 1682, 1686],
-    "note": "48 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn;17 prerequisites separate. Compatibility559 source22/23 and preview1881/1891 fail known9Replay+1Studio fixtures;664 admission cases separately pass. Support8e414/source success, preview1877/1889 fails12. Current1769/569 changed files83/83 pass; source/preview pending. Menu1771 selected source workflow succeeds, dedicated authoring pending. No manual merge/promotion/check bypass.",
+    "note": "48 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn;17 prerequisites separate. Compatibility559 source22/23 and preview1881/1891 fail known9Replay+1Studio fixtures;664 admission cases separately pass. Support8e414/source success, preview1877/1889 fails12. Current1769/569 changed files83/83 and configured source workflow pass; preview pending. Menu1771 selected source workflow and all ten dedicated authoring phases succeed; root artifact review clear. Sender integration remains. No manual merge/promotion/check bypass.",
     "latestMain": {
       "revision": "8dc13432984e48dbda2c26beb84d49f4fc78318c",
       "note": "Six newer docs/package-policy/test paths are preserved. No compatibility43/78 overlap. Support8e remains version-specific; compatibility55901ae now published against8dc. Documentation1767 merged separately; not a feature-count increase."
