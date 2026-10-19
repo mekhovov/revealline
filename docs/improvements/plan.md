@@ -2,15 +2,15 @@
 
 **Review version: 19 October 2026**
 
-**Latest execution checkpoint:** **27 source slices merged, 15 feature PRs open for checks, 37 draft/dependent PRs; 79 active/admitted candidates and 1 withdrawn candidate.** All 113 deliverables retain individual status. These counts are delivery inventory, not a completion percentage.
+**Latest execution checkpoint:** **28 source slices merged,15 feature PRs open for checks,37 draft/dependent PRs;80 active/admitted and1 withdrawn.** All113 deliverables retain individual status. Seven delivery dependencies are separate. These are delivery counts, not a completion percentage.
 
-**Current priorities:** qualify Capture Home #1729 and its independent test prerequisite #1732; qualify Rooms #1734 and finish the explained default Versus selection. Worlds support is now [draft #1733](https://github.com/mekhovov/revealline/pull/1733), with **245/245 complete focused checks**, independent source review and actual paused-flight return evidence. Full source/package/admission gates remain.
+**New reviewable delivery:** Worlds support #1733 passes245 focused checks; Rooms #1734 passes152 across11 complete files; Worlds storage language #1736 covers139 cases through verified disjoint groups and passes the actual language-switch browser scenario. Each remains a draft with explicit full-source/package/admission and device gates. Storage’s interrupted monolithic attempts remain failed/incomplete.
 
-**Validation findings:** Rooms corrections now pass152/152 across11 complete files and are published as draft #1734; earlier failures remain recorded. Versus pure checks pass5/5, but its native host was protectively stopped after unusually high memory use; the original earlier SIGKILL cause remains unknown. Bounded diagnostics and lightweight complete checks precede any heavy retry. Neither is reported complete.
+**Current priorities:** finish Versus Home guidance and its independent test prerequisite #1735, qualify Capture Home and primary foundations, repair measured cramped Single Drone/Riy Settings, then complete their whole Extra large text group. A separate shared Versus/Team pause-music label correction is developing. Contextual lessons still require Learn/D.
 
-**New player-facing finding:** changing Worlds Settings from Ukrainian to English can retain the old-language storage status. A separate F59 slice will repaint cached semantic status without database reads or new permission prompts, preserving late-request/disposal ownership. Estimate0.5–1developer day plus review queues.
+**Corrected compact finding:** the initial zero-size selected panel is intentional category navigation. Actual category→controls→Back works; the operation context nevertheless leaves controls only154.77px wide at320px. The narrow repair preserves that navigation and all current actions.
 
-**Capacity and admission:** about1.0GiB remains. Small source work, bounded focused checks and browser review continue; full builds and new snapshots stay paused below2GiB reserve. No external-drive copy is authorized. Required checks and merge admission remain mandatory. Physical iPhone PWA/offline, Steam Deck and suspend/resume remain **Not tested** because hardware is unavailable. Source, browser, release and device gates remain distinct.
+**Admission and limits:** search #1715 is source-merged at latest main9566; current runtime/search inputs differ from capturede746. Older receipts retain their exact scope. About0.9–1.0GiB remains; full builds/new source snapshots stay paused below2GiB reserve, while small source, bounded tests and browser review continue. No external-drive copy is authorized. Physical iPhone PWA/offline, Steam Deck and suspend/resume remain **Not tested**. Source, browser, release and device gates stay separate.
 
 ## 1. Summary, priorities and current evidence
 
