@@ -1,0 +1,66 @@
+{
+  "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+  "label": "trail-merge-and-published-verification-metadata-20261019",
+  "limits": [
+    "Merge metadata does not establish the actor was a human or that trusted exact-head admission completed.",
+    "Source agent owns current-head validation inventory; this receipt does not claim it passed.",
+    "Published dd337c8 final verification is root/version/dependency inspection and does not establish gameplay smoke or include the later trail merge."
+  ],
+  "mergeCommit": {
+    "message": "Merge pull request #1696 from mekhovov/codex/solo-trail-allocation\n\nperf(core): avoid temporary trail copies during movement",
+    "parents": [
+      "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+      "73d56d3b674bcfba890656143c810f10ffd233b3"
+    ],
+    "sha": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+    "tree": "ce4e5657ff7fc28ef9089aa58e12dda424024a9f"
+  },
+  "mergedBy": "mekhovov",
+  "observedAt": "2026-10-19T03:47:47.522151+00:00",
+  "pr1696": {
+    "draft": false,
+    "merge_commit_sha": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+    "merged": true,
+    "merged_at": "2026-10-19T03:41:23Z",
+    "number": 1696,
+    "state": "closed"
+  },
+  "verificationArtifacts": [
+    {
+      "created_at": "2026-10-19T03:33:13Z",
+      "digest": "sha256:5fd3b989967381bd515a3780f09e4e6972fc9cd18a8d3eae21f3a282c59c644e",
+      "expired": false,
+      "expires_at": "2026-11-18T03:33:12Z",
+      "id": 12161467822,
+      "name": "practice-site-receipt-dd337c8120fd6f875544c1479713d3aa4299c323",
+      "size_in_bytes": 284
+    },
+    {
+      "created_at": "2026-10-18T23:53:38Z",
+      "digest": "sha256:4eac9b823c51615ffb003680c78f6624abab8e5f2cdabd79befc78403963f521",
+      "expired": false,
+      "expires_at": "2026-10-19T23:53:20Z",
+      "id": 12155720479,
+      "name": "github-pages",
+      "size_in_bytes": 825938881
+    },
+    {
+      "created_at": "2026-10-18T23:53:19Z",
+      "digest": "sha256:44b0bd051624e628a4e33106a9c1e8369b336771f7221f78f701038cf1cd5f04",
+      "expired": false,
+      "expires_at": "2026-11-17T23:53:18Z",
+      "id": 12155192478,
+      "name": "main-pages-receipt-dd337c8120fd6f875544c1479713d3aa4299c323",
+      "size_in_bytes": 519733
+    },
+    {
+      "created_at": "2026-10-18T23:53:41Z",
+      "digest": "sha256:2173cef5a1862f84b649854555a6d1e1db4cbbf69e58228a56b2de931ba80218",
+      "expired": false,
+      "expires_at": "2026-11-17T23:53:40Z",
+      "id": 12154794589,
+      "name": "main-pages-archive-receipt-dd337c8120fd6f875544c1479713d3aa4299c323",
+      "size_in_bytes": 544
+    }
+  ]
+}

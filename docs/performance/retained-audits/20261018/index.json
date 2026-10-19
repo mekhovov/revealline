@@ -1838,6 +1838,42 @@
       "blob": "bf6d5410db5a164690fb8056fd8839fa50d8eff9",
       "bytes": 1732,
       "sha256": "42101c7e633f1c02c92ba23b611311b42a1b1060729c54e97f3dbbdb21181a20"
+    },
+    {
+      "path": "release-current-head-and-published-verification-snapshot-20261019-0347.json",
+      "blob": "4d631424df7c3b981275bb9970894c3a3bc34ea4",
+      "bytes": 142540,
+      "sha256": "0b16c63972b231bf184679a1673c93d3188c5a3af4f8771535af96bfa35186ff"
+    },
+    {
+      "path": "trail-merge-before-source-qualification-20261019-0347.json",
+      "blob": "5b95c9ffd93b1bf506e93e0576922200242867b4",
+      "bytes": 1093,
+      "sha256": "d871f0ed1e1ad1691ccd5d40f6428b2ec703d9daab23f3e0197a401dbdd29f8e"
+    },
+    {
+      "path": "draft-source-terminal-delta-20261019-0347.json",
+      "blob": "fa7337029e374bbb3f5a120798592fea62bd6860",
+      "bytes": 35619,
+      "sha256": "11b5c31cb3a10932c5f1e75aaa71c530ed3157f49276d0931a96884db274f637"
+    },
+    {
+      "path": "trail-exact-head-gameplay-control-scope-20261019.json",
+      "blob": "8a24c546c88bfc898a7b3ed294dced7b8a15a291",
+      "bytes": 3289,
+      "sha256": "193feb6a922d13306e11507c5efa2db21b2b2630b2703d1ff82882e32ea60434"
+    },
+    {
+      "path": "published-dd337-selected-practice-receipt-scope-20261019.json",
+      "blob": "e13c143acb4d0d425e5fa7baf87b564ded27a27a",
+      "bytes": 700,
+      "sha256": "65fb39d2ed378e092aa11ad51630de13b85ec7e0f606f7482412e4e2c328bf92"
+    },
+    {
+      "path": "trail-merge-metadata-20261019-0347.json",
+      "blob": "98e68258ae6d37a03fdf546096f897d89eb0c161",
+      "bytes": 2586,
+      "sha256": "8d3bc271d97f9bf04a7130c357547f0dcd69f5d48f15870e7b8d286e319f5e6d"
     }
   ]
 }

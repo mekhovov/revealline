@@ -1,0 +1,16 @@
+{
+  "archiveBytes": 284,
+  "archiveSha256": "5fd3b989967381bd515a3780f09e4e6972fc9cd18a8d3eae21f3a282c59c644e",
+  "artifact": 12161467822,
+  "body": {
+    "checked": [],
+    "indexURL": "https://mekhovov.github.io/revealline/practice/index.json",
+    "missingCatalogueIsFailure": true
+  },
+  "entry": "practice-site-receipt.json",
+  "job": 117849023692,
+  "label": "published-practice-verification-receipt-dd337-20261019",
+  "observedAt": "2026-10-19T03:48:04.093690+00:00",
+  "run": 39168765766,
+  "scope": "Downloaded only the 284-byte retained verification receipt into RAM; no public browser or functional execution. This is published dependency closure verification, not gameplay acceptance."
+}

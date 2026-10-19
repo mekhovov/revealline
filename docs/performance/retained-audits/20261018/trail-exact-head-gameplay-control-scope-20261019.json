@@ -1,0 +1,79 @@
+{
+  "schema": "solo-trail-merged-gameplay-control-scope-v1",
+  "recordedAt": "2026-10-19T03:48:06.214419+00:00",
+  "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+  "run": 39184548462,
+  "job": 117844085248,
+  "artifact": {
+    "id": 12161449165,
+    "bytes": 19929,
+    "sha256": "14cf7fe553b61fb9d357f183ae316a39a2dbb2ec49652469b3f1ae7b90437fb3"
+  },
+  "members": [
+    {
+      "path": "73d56d3b674b-WyV85m/gameplay.json",
+      "bytes": 9545,
+      "sha256": "c31b94c44bc6bc4760d129c144a8a8286737f458789beb40f1583828a9127c02",
+      "selected": [
+        "      \"sourceRevision\": \"73d56d3b674bcfba890656143c810f10ffd233b3\",",
+        "      \"sourceTree\": \"ffe78c5631b3c7f23f8a3d31512d9de696d31fc1\",",
+        "  \"command\": ["
+      ]
+    },
+    {
+      "path": "73d56d3b674b-WyV85m/gameplay.tap",
+      "bytes": 82614,
+      "sha256": "fc2f45bca8f138b0495d74bd69eaccde12d7cbed7f18c2a676ec54acd5b6a4c5",
+      "selected": [
+        "# Subtest: a long authored legacy Focus upgrades to a bounded nonoverlapping command without changing the source",
+        "ok 253 - a long authored legacy Focus upgrades to a bounded nonoverlapping command without changing the source",
+        "# Subtest: one focus command moves escorts away from their normal cover route and damages the selected target",
+        "ok 263 - one focus command moves escorts away from their normal cover route and damages the selected target",
+        "# Subtest: same commands and inputs produce deterministic escort positions and damage; leaving range cancels focus",
+        "ok 267 - same commands and inputs produce deterministic escort positions and damage; leaving range cancels focus",
+        "# Subtest: native command input respects paused menus, fresh presses, retry and disposal",
+        "ok 268 - native command input respects paused menus, fresh presses, retry and disposal",
+        "# tests 339",
+        "# pass 339",
+        "# fail 0",
+        "# cancelled 0",
+        "# skipped 0"
+      ]
+    },
+    {
+      "path": "73d56d3b674b-WyV85m/run.json",
+      "bytes": 985,
+      "sha256": "47cd8a0df03925161dc66423302acd6319ca87de3bf1b4d4a01250479bbcf7f8",
+      "selected": [
+        "      \"sourceRevision\": \"73d56d3b674bcfba890656143c810f10ffd233b3\",",
+        "      \"sourceTree\": \"ffe78c5631b3c7f23f8a3d31512d9de696d31fc1\","
+      ]
+    }
+  ],
+  "newControlPresence": [
+    {
+      "name": "empty movement leaves an idle or live trail unchanged without constructing cell sets",
+      "present": false
+    },
+    {
+      "name": "long immutable bent trails retain exact earliest-contact horizons without changing run state",
+      "present": false
+    },
+    {
+      "name": "contact checks include earlier additions in the same movement and preserve reversal timing",
+      "present": false
+    },
+    {
+      "name": "cell-only contact preserves consecutive-cell immunity, repeated-cell failure and horizon order",
+      "present": false
+    },
+    {
+      "name": "contact reads retain tail ownership until append clips and merges the accepted movement",
+      "present": false
+    }
+  ],
+  "limits": [
+    "Existing gameplay suite passed after external merge; it does not establish the new controls absent from retained TAP.",
+    "No native performance acceptance."
+  ]
+}

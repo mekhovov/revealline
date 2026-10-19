@@ -1,0 +1,42 @@
+{
+  "number": 1696,
+  "state": "closed",
+  "draft": false,
+  "merged": true,
+  "merged_at": "2026-10-19T03:41:23Z",
+  "merge_commit_sha": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+  "closed_at": "2026-10-19T03:41:23Z",
+  "mergeable_state": "unknown",
+  "merged_by": {
+    "login": "mekhovov",
+    "id": 194539,
+    "type": "User"
+  },
+  "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+  "events": [
+    {
+      "event": "ready_for_review",
+      "created_at": "2026-10-19T03:41:12Z",
+      "commit_id": null,
+      "actor": "mekhovov"
+    },
+    {
+      "event": "merged",
+      "created_at": "2026-10-19T03:41:23Z",
+      "commit_id": "ae5ecbfcedb1d294cfe0264e0d0c04a2afaf99c1",
+      "actor": "mekhovov"
+    },
+    {
+      "event": "closed",
+      "created_at": "2026-10-19T03:41:23Z",
+      "commit_id": null,
+      "actor": "mekhovov"
+    }
+  ],
+  "observedAt": "2026-10-19T03:47:25.664308+00:00",
+  "limits": [
+    "Account identity does not establish human vs token actor.",
+    "No agent merge was performed.",
+    "Source shard gates remained queued in 03:47:01 snapshot."
+  ]
+}
