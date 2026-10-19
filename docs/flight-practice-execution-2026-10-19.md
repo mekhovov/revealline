@@ -1,11 +1,88 @@
 # Flight practice: local diagnosis and browser follow-up — 19 October 2026
 
 > **Latest planning review:** [current status, remaining work, ETAs and blockers](flight-practice-status-2026-10-19.md).
-> It adds the fresh PR/CI snapshot and ten newer accepted-main commits. This
+> It includes the accepted-main rebase, refreshed candidate and resource blocker. This
 > execution report preserves original source-bound results and its execution-time
 > observations; older queue/space readings below are not live state.
 
-## Current outcome
+## Integrated-candidate continuation — 19 October, 03:59 Berlin
+
+All 33 Practice commits were rebased onto accepted main
+`36e8bc426589ab952c2fcc4fd62df39800edfeca`; the preserved old branch is
+`codex/practice-before-main-36e8-20261019`. Range comparison marks all 33 patches
+equal. No conflicts or edits to the shared primary checkout occurred.
+
+Frozen checked source: `08fc3430c8f6670a76c1a749b3ad0b65bc9f9ded`, tree
+`5481b630d5433ad5e23f0dbbea639faf99363bd4`, Node 22.22.2. A serial, bounded
+selection of writer/CLI, coach, fullscreen, Capture First Flight, downloads and
+preferences tests passed **127/127** in **42.850 s**, with no skips. This is not
+the full required suite. Source identity remained unchanged before/after.
+
+The three standalone apps were built twice with identical artifacts, committed
+inputs verified and strict package admission passed. The child had a 512 MiB
+heap cap and unchanged 600 s deadline. Small outputs were written only to the
+approved SMB share, not the locally blocked full-site staging path:
+`/Volumes/alex/CodexMigrationStaging/flight-practice-main36-20261019-candidate`.
+Envelope SHA-256:
+`61ae470760baa9f276a0d6c9c22a3f536e4e5de8048246e454c07ef0e56e7270`.
+
+| App     | Admitted files / bytes | Package revision                                                   |
+| ------- | ---------------------- | ------------------------------------------------------------------ |
+| Gym     | 96 / 3,805,703         | `2fabcb0084773a5f9b36afac242bf9d0ecde85ef3bd7add73c0f6b427eb5504a` |
+| Academy | 148 / 12,091,056       | `19a1a790df96769b409a8471f3e5f4a8bc0884caa8607be6591c5f74264ef202` |
+| World   | 208 / 18,603,057       | `147ee81401ef4d78f4e22eab1b87b88125b0d5ed4c446735209b17d43d815cdb` |
+
+Exact ZIP comparison with candidate `6177d2cc8` shows 91/144/202 unchanged
+members and 5/4/6 changed members respectively, with no additions/removals.
+The changed sets include generated worker/manifest identities. Actual changed
+runtime includes shared fullscreen/settings in all apps and coach/mode-switch
+behavior in World. Stable launcher members are unchanged. These comparisons
+define affected rechecks; they do **not** transfer old browser acceptance to new
+payloads. All 24 new package gate decisions remain pending; publicEligible=false.
+
+### Bounded SMB hypotheses, not a production tuning change
+
+The first diagnostic used 128 pinned committed files and application worker
+counts 4/8/16/16/8/4. Write times were
+9.292/9.458/9.175/9.161/8.982/9.904 seconds: no useful observed gain from higher
+application concurrency alone. All 768 outputs were byte-verified.
+
+A second independent ABBA diagnostic held in-memory application workers at 16
+and started fresh children with I/O thread pools 4/16/16/4. Times were
+9.359/5.789/6.763/9.081 seconds; all 512 outputs were byte-verified. Inherited
+UV_THREADPOOL_SIZE was unset. Each child had a 25 s external deadline and all
+exited normally. Test-only output was removed after exact readback; receipts
+were retained. No user data, historical failed staging or unrelated files were
+removed.
+
+This tests an I/O scheduling hypothesis consistent with the
+[Node CLI documentation](https://nodejs.org/api/cli.html#uv_threadpool_sizesize):
+asynchronous filesystem work shares a bounded pool, and the setting must be
+provided before process startup. The fetched documentation is current, whereas
+the measured runtime was explicitly Node 22.22.2. The exact-version document
+could not be fetched by the web tool. Measurements, not documentation alone,
+support a contribution for this small workload. They do not attribute total
+preparation cost, demonstrate a complete build within 600 s, establish optimal
+concurrency or justify changing users' environments. Production remains at four
+application workers with no new environment override.
+
+### Resource and evidence boundary
+
+Local free space was most recently 661 MiB; the share approximately 51 GiB.
+No full build or new native-browser profile was started below existing guards.
+The pending owner request is to free at least 4 GiB locally or supply a fast
+local drive. Share capacity does not resolve local browser/profile pressure.
+Hosting, physical hardware and the historical World check remain deferred.
+
+Retained archive: `flight-practice-main36-20261019-evidence.tgz`, **30,536 bytes**,
+SHA-256 `94f398bc057546e14f86b026731f5d11f33933c8cb056594b57e1ac2a8e60847`.
+It contains 19 receipts/logs/observer scripts/metadata files plus a hash inventory;
+all members were extracted on the share and rehashed successfully. Actual
+candidate ZIPs remain in the immutable share directory; they are not duplicated
+in this small archive. The last pre-push remote snapshot still concerns old
+head `1b8dcb491` (eight successes, one running, five queued), not source `08fc3430`.
+
+## Earlier outcome — original source-bound results
 
 The owner-approved Mac mini folder is mounted and usable:
 `/Volumes/alex/CodexMigrationStaging`. It is an **SMB network share**, not a

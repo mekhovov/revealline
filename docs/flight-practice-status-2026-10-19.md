@@ -13,10 +13,59 @@ hashed evidence archives remain authoritative for the original test results.
 Earlier checkpoints retain their exact sources; their historical “next” steps,
 storage readings and PR state are not current instructions.
 
-This review changed documentation only. No rebase, implementation, build,
-browser qualification, approval, publication or remote execution was performed.
+The initial review changed documentation only. The continuation below integrated
+accepted main, reran selected checks and rebuilt standalone candidates. It did
+not publish, run a new browser profile or change simulator mechanics.
 
-## Fresh read-only observations
+## Current continuation checkpoint — accepted main integrated
+
+- Rebased all **33 Practice commits** onto accepted main
+  `36e8bc426589ab952c2fcc4fd62df39800edfeca` (14 commits beyond the previous
+  integrated main). All 33 patches compare equal before/after; no conflicts.
+  Preserved the old history at `codex/practice-before-main-36e8-20261019`.
+  The shared primary checkout remains untouched.
+- Frozen verification source: `08fc3430c8f6670a76c1a749b3ad0b65bc9f9ded`, tree
+  `5481b630d5433ad5e23f0dbbea639faf99363bd4`. **127 selected tests pass**, zero
+  failures/skips/cancellations, in 42.850 s. This includes build writer/CLI,
+  coach, fullscreen, First Flight Home, downloads and preference regressions;
+  it is not a complete suite or current-head CI result.
+- **All three standalone packages reproduce twice and pass strict admission**
+  from this source, with committed inputs verified. Output:
+  `/Volumes/alex/CodexMigrationStaging/flight-practice-main36-20261019-candidate`.
+  Envelope SHA-256:
+  `61ae470760baa9f276a0d6c9c22a3f536e4e5de8048246e454c07ef0e56e7270`.
+  Gym/Academy/World have 96/148/208 members. All 24 review decisions remain
+  pending and `publicEligible` remains false. Small standalone builds used
+  share-only output and a 512 MiB child heap cap; the full-site build did not run.
+- Exact old/new archive comparison found changed runtime files in **all three
+  apps**, no added/removed members. Gym changes shared fullscreen/settings;
+  Academy changes fullscreen/style; World also changes coach/mode switching.
+  Stable launcher members are unchanged. Older `6177d2cc8` browser receipts
+  remain preserved, **not promoted to this candidate**. Refresh affected play,
+  settings persistence, updates and offline journeys after resources recover.
+- The last pre-push PR snapshot is still old head `1b8dcb491`: **8 successes,
+  1 running, 5 queued**. It does not qualify the rebased head. Current-head CI
+  remains required after the rebased branch is pushed.
+- Local free space fell below 900 MiB, most recently **661 MiB**; share free
+  space was approximately **51 GiB**. Full builds and disposable native-browser
+  checks remain blocked by local headroom. The existing request to free 4 GiB
+  or provide a fast local drive is unanswered. No user cleanup was performed.
+- The six-case 128-file SMB probe found no useful improvement from application
+  worker counts 4/8/16 alone (8.982–9.904 s). A separate child-only ABBA probe,
+  holding application workers at 16, measured I/O thread pools 4/16/16/4 at
+  **9.359 / 5.789 / 6.763 / 9.081 s**, with all 512 outputs verified exactly.
+  This supports an I/O-scheduling contribution for that small workload only.
+  **Production remains at four workers with no environment override**; no
+  full-build acceleration or fix is claimed. Owned probe data was removed only
+  after byte verification; logs and receipts are retained.
+
+Evidence and exact changed-file hashes are retained in
+`flight-practice-main36-20261019-evidence.tgz`; see the execution report for its
+archive hash and diagnostic limitations. Rebase, selected checks and candidate
+reproduction are complete portions of R1; affected browser checks and required
+current-head CI remain open.
+
+## Initial read-only review — historical snapshot
 
 Snapshot refreshed: **19 October 2026, approximately 02:35 Europe/Berlin**. Remote state and
 free space may change after inspection.
@@ -52,6 +101,10 @@ free space may change after inspection.
 
 ## Completed, with scope boundaries
 
+The browser/full-suite rows below refer to retained candidate `6177d2cc8`.
+They remain completed historical evidence; the new `08fc3430c8` candidate has
+the narrower qualification described above and needs affected refreshes.
+
 | Area                                | Completed work / retained evidence                                                                                                                                                                                                                                                      | What this does not establish                                                                                                                          |
 | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Discovery and launch                | Three descriptor-driven cards with real previews, purposes, requirements, input support, version/size, EN/UK, Play/details, stable launchers, safe routes and v1 fallback. Empty/failure/retry/dated offline catalogue states are implemented.                                          | No claim that the public host currently lists or serves these packages.                                                                               |
@@ -78,7 +131,7 @@ or validation waiver is implied. The full-build fix has no reliable ETA.
 | Priority / ID         | Remaining deliverable and exit evidence                                                                                                                                                                                                                             | Why needed / impact if omitted                                                                                                                                                                  | Estimate and blockers                                                                                                                                                                                                                                                           |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | P0 / build            | Attribute preparation and SMB materialization cost, make an evidence-supported correction if warranted, then complete the normal full build within existing limits with unchanged input pins and original manifest/ZIP verification.                                | Without the actual current site output, its directory/main-shell integration cannot be qualified. A fixture build, isolated validator or older ZIP is not a substitute.                         | **Next diagnostic checkpoint: 2–4 h; fix/completion ETA unknown.** The instrumented `56acb4240` run reached expanded-files then timed out at 600 s. The latest `623918462` writer has no full retest. No blind retry or raised limit.                                           |
-| P0 / R1               | Integrate the ten accepted main commits in isolation, compare all package inputs, reproduce/re-admit changed candidate bytes and complete required affected tests/current-head CI. Preserve older evidence and SIM ownership.                                       | Prevents shipping stale coach/World behavior or claiming that queued checks passed. Mere absence of merge conflicts does not prove compatibility.                                               | **2–4 h engineering**, then unknown CI queue/run time and any fixes. Main may move again. The older remote local-UX timeout remains undiagnosed; a newer local pass does not explain it.                                                                                        |
+| P0 / R1               | Rebase, exact archive comparison, twice-reproduced three-app candidate and 127 selected tests are complete. Remaining: affected browser regression refresh and required current-head CI on the frozen integrated candidate.                                         | Prevents applying old browser/CI evidence to changed coach, fullscreen and persistence behavior.                                                                                                | **2–4 h focused refresh after safe local profile space**, plus unknown CI queue/run time and fixes. Main may move again; the older remote local-UX timeout is still unexplained.                                                                                                |
 | P0 / R3               | Exercise actual public exports and loss/recovery for applicable records, World projects/assets, aircraft archives and advertised controller/tuning libraries; demonstrate loss honestly, reinstall, import, compare semantic identities and finish offline flights. | The existing single older Academy proof and populated tuning restores do not establish recovery of all user data. Omitting this risks misleading backup instructions and unnoticed record loss. | **1–2 focused days** after candidate freeze and safe disposable-profile resources. Use maintained SIM controls; no hidden database seeding to invent genuine records, invented Gym persistence or affected-user-profile cleanup.                                                |
 | P0 / R4               | Capture native Cancel while real digest work is still outstanding; trace timing/ownership, settle work, prove no late Ready/write and preserve previous/sibling versions.                                                                                           | Held unit-test digests and cancellation of a delayed final-ready reply do not prove real browser scheduling. A race could leave incomplete data or invalidate a working installation.           | **4–8 h for a bounded investigation/test** after candidate freeze. No artificial digest delay or synthetic overlap. If natural overlap cannot be evidenced, outcome remains inconclusive, not complete.                                                                         |
 | Complete / R2 refresh | Keep the audited current Gym and Academy results; compare relevant changes after R1 and rerun only where source changes invalidate them.                                                                                                                            | Avoids both repeating already completed work as absent and extending its claim to new bytes. Historical Worlds is explicitly separate.                                                          | **No remaining current-candidate rerun.** Change-driven refresh is part of integration/qualification estimates. D3 has no scheduled ETA.                                                                                                                                        |
@@ -90,7 +143,7 @@ or validation waiver is implied. The full-build fix has no reliable ETA.
 
 ### Recommended execution order
 
-1. **Build diagnosis and R1 first**, as independent bounded work. Do not repeatedly
+1. **Remaining build diagnosis and R1 qualification first**, as independent bounded work. Rebase and candidate reproduction are now complete. Do not repeatedly
    rebase while source-bound runs are active. After accepted-main integration,
    freeze exact package/observer/source identities before more heavy verification.
 2. **R3 and R4 next**: prioritize data preservation and cancellation races over
@@ -127,18 +180,20 @@ work budgets, not guaranteed successful exits from open investigations.
   disk guard. Original-helper catalogue generation took 282.532 s in isolation;
   separate-process measurements and sampled CPU windows do not establish the
   entire timeout's cause. No validated full-build speedup is claimed.
-- **Local resource pressure:** approximately 1.8 GiB local free is below the
+- **Local resource pressure:** most recently 661 MiB local free is below the
   recent disposable-browser preflight floor of 2 GiB and the recommended 4 GiB
   workspace headroom. Equivalent heavy browser checks must wait for safe local
   space. The share supplies output space, not a
   fast local disk or remote CPU. Recheck system/profile space before heavy cases;
   no destructive user cleanup or remote access is authorized.
-- **Timing/CI uncertainty:** 12 current checks are queued. The older remote
+- **Timing/CI uncertainty:** the last pre-push old-head snapshot has eight successful,
+  one running and five queued checks; there is no rebased-head CI result. The older remote
   local-UX timeout is still unexplained, and the current-candidate Practice run
   had only about 35 s margin under its 600 s ceiling. Do not waive the deadline
   or turn a queued/skipped/incomplete job into a pass.
-- **Moving accepted SIM source:** the ten new main commits include simulator
-  files. Integrate accepted main only; do not copy active SIM worktrees or change
+- **Moving accepted SIM source:** 14 newer main commits were integrated through
+  `36e8bc426`; all three candidate payloads changed. Integrate accepted main only;
+  do not copy active SIM worktrees or change
   mechanics/training/rendering in this workstream. Hash-bound old evidence must
   remain tied to its actual package.
 - **Separate unresolved archive-retention incident:** the
