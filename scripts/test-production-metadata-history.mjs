@@ -51,10 +51,10 @@ async function fixture(t) {
   }
   return dir;
 }
-test('the immutable Fracture register authenticates historical presets after runtime appearance expansion', async () => {
+test('the retained Fracture register authenticates projected historical presets after runtime appearance expansion', async () => {
   assert.equal(old.path, 'authoring/motion-lab/presets.json');
   assert.equal(old.bytes, 19910);
-  assert.equal(old.sha256, "ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912");
+  assert.equal(old.sha256, 'ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912');
   assert.notEqual(hash(current), old.sha256);
   const result = await verifyProductionSources(register, { root });
   assert.equal(result.metadata, 'verified');
@@ -62,7 +62,7 @@ test('the immutable Fracture register authenticates historical presets after run
   assert(result.originals.every((p) => p.status === 'unverified'));
   const valid = validateProductionRegister(register, { previous });
   const summary = summarizeProduction(valid);
-  assert.equal(summary.uniquePictureWorks, 48);
+  assert.equal(summary.uniquePictureWorks, 36);
   assert.equal(summary.maps.approved, 0);
   assert.deepEqual(register.assessments, previous.assessments);
 });
@@ -118,11 +118,11 @@ test('history admits only finite complete JSON identities, with no arbitrary sna
 });
 test('the preserved FPV preset revision remains exact after a later runtime change', async (t) => {
   const retained = index.entries[1];
-  assert.equal(index.entries.length, 4);
+  assert.equal(index.entries.length, 5);
   assert.deepEqual(retained, {
     path: old.path,
     bytes: 34518,
-    sha256: "e16731f4065e5d1e76b84abc985874187c5133cf55776ea352a4479bded5cdb0",
+    sha256: 'e16731f4065e5d1e76b84abc985874187c5133cf55776ea352a4479bded5cdb0',
   });
   const name = `${historyRoot}/${retained.sha256}.json`;
   const bytes = await readFile(path.join(root, name));
@@ -153,25 +153,25 @@ test('a newly declared unarchived preset revision reads the current file and sti
   await assert.rejects(verifyProductionSources(next, { root: dir }), /changed authority/);
 });
 
-test('v2 preserves the exact prior renderer as inert source bytes and v1 still accepts JSON-only history', async (t) => {
+test('v2 preserves the exact projected renderer as inert source bytes and v1 still accepts JSON-only history', async (t) => {
   const retained = index.entries[2];
   assert.equal(index.format, 'revealline-production-metadata-history.v2');
   assert.deepEqual(retained, {
     path: 'game/ui/actor-presentation.mjs',
     bytes: 23588,
-    sha256: "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00",
+    sha256: '6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00',
   });
   const bytes = await readFile(path.join(root, `${historyRoot}/${retained.sha256}.mjs`));
   assert.equal(bytes.length, retained.bytes);
   assert.equal(hash(bytes), retained.sha256);
   const dir = await fixture(t);
   await writeFile(path.join(dir, retained.path), bytes);
-  // A v1 checkout must also carry the exact live catalogue it originally pinned.
-  const catalog = index.entries.find((entry) => entry.path === 'game/enemy-catalog.mjs');
-  await writeFile(
-    path.join(dir, catalog.path),
-    await readFile(path.join(root, `${historyRoot}/${catalog.sha256}.mjs`)),
-  );
+  // A v1 checkout carries every exact module body as its live source.
+  for (const module of index.entries.filter((entry) => entry.path.endsWith('.mjs')))
+    await writeFile(
+      path.join(dir, module.path),
+      await readFile(path.join(root, `${historyRoot}/${module.sha256}.mjs`)),
+    );
   await writeFile(
     path.join(dir, historyRoot, 'index.json'),
     JSON.stringify({
@@ -228,7 +228,7 @@ test('a private exact module snapshot is authenticated as bytes and never execut
   assert.equal(result.originalBytesVerified, false);
 });
 
-test('the original enemy catalogue remains pinned while the Journey catalogue evolves', async (t) => {
+test('the projected enemy catalogue remains pinned while the Journey catalogue evolves', async (t) => {
   const retained = index.entries.find((entry) => entry.path === 'game/enemy-catalog.mjs');
   assert.deepEqual(retained, {
     path: 'game/enemy-catalog.mjs',

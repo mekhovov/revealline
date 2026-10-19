@@ -38,7 +38,8 @@
       "Seven player classes times three themes times two treatments defines 42 slots. Enemies are supporting handles, not a second completed set.",
       "Thirteen licensed candidate songs remain separate unregistered intake context. Five synth recipes are not five finished, listened recordings.",
       "Files and source references do not perform inspection or permit changing saved, earned or released ownership.",
-      "Revision2 adds nine independently generated Sentinel theme stills and exact proposed owners; it adds no layout families or production assessments. The baseline source commit remains context, and new immutable source metadata is pinned per work."
+      "Revision2 adds nine independently generated Sentinel theme stills and exact proposed owners; it adds no layout families or production assessments. The baseline source commit remains context, and new immutable source metadata is pinned per work.",
+      "Projected metadata identities follow the retained content inputs. This rebinding does not approve artwork, sound, balance, or a release."
     ]
   },
   "layouts": [
@@ -47,8 +48,8 @@
       "title": "Orchard Crossing",
       "source": {
         "path": "authoring/library/four-worlds-chapters/chapters.json",
-        "bytes": 5847,
-        "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920"
+        "bytes": 4407,
+        "sha256": "9fa0e9f97d8837387f0f9e0ae138b00976bedd28de6823268af11e8bdd064079"
       },
       "variantOf": null,
       "owners": [
@@ -83,8 +84,8 @@
       "title": "Courtyard Exits",
       "source": {
         "path": "authoring/library/four-worlds-chapters/chapters.json",
-        "bytes": 5847,
-        "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920"
+        "bytes": 4407,
+        "sha256": "9fa0e9f97d8837387f0f9e0ae138b00976bedd28de6823268af11e8bdd064079"
       },
       "variantOf": null,
       "owners": [
@@ -119,8 +120,8 @@
       "title": "Night Crossfire",
       "source": {
         "path": "authoring/library/four-worlds-chapters/chapters.json",
-        "bytes": 5847,
-        "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920"
+        "bytes": 4407,
+        "sha256": "9fa0e9f97d8837387f0f9e0ae138b00976bedd28de6823268af11e8bdd064079"
       },
       "variantOf": null,
       "owners": [
@@ -156,7 +157,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "variantOf": null,
       "owners": [
@@ -186,7 +187,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "variantOf": null,
       "owners": [
@@ -216,7 +217,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "variantOf": null,
       "owners": [
@@ -299,8 +300,8 @@
       "title": "Listening Court",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "variantOf": "sentinel-listening",
       "owners": [
@@ -329,8 +330,8 @@
       "title": "Switchyard Gates",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "variantOf": "sentinel-switchyard",
       "owners": [
@@ -359,8 +360,8 @@
       "title": "Open the Circuit",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "variantOf": "sentinel-circuit",
       "owners": [
@@ -541,8 +542,8 @@
       "themeId": "fpv",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "orchard-crossing",
       "adapter": "pressure",
@@ -577,8 +578,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/fpv-pressure-art/provenance.json",
@@ -600,8 +601,8 @@
       "themeId": "fpv",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "courtyard-exits",
       "adapter": "pressure",
@@ -636,8 +637,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/fpv-pressure-art/provenance.json",
@@ -659,8 +660,8 @@
       "themeId": "fpv",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "night-crossfire",
       "adapter": "pressure",
@@ -695,8 +696,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/fpv-pressure-art/provenance.json",
@@ -718,8 +719,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "carpathian-woven-dawn",
       "adapter": "pressure",
@@ -748,8 +749,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/ukraine-atlas-art/provenance.json",
@@ -766,8 +767,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "petrykivka-sun-courtyard",
       "adapter": "pressure",
@@ -796,8 +797,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/ukraine-atlas-art/provenance.json",
@@ -814,8 +815,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "dnipro-autumn-watch",
       "adapter": "pressure",
@@ -844,8 +845,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/ukraine-atlas-art/provenance.json",
@@ -862,8 +863,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "midnight-arcade",
       "adapter": "pressure",
@@ -892,8 +893,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/1994-forever-art/provenance.json",
@@ -910,8 +911,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "rainy-video-rental",
       "adapter": "pressure",
@@ -940,8 +941,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/1994-forever-art/provenance.json",
@@ -958,8 +959,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "last-train-cassette",
       "adapter": "pressure",
@@ -988,8 +989,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/1994-forever-art/provenance.json",
@@ -1007,7 +1008,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "sourceId": "split-signal-foundry",
       "adapter": "route",
@@ -1050,7 +1051,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "sourceId": "crosswind-depot",
       "adapter": "route",
@@ -1093,7 +1094,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "sourceId": "signal-switchback",
       "adapter": "route",
@@ -1135,8 +1136,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "two-lanes-forge",
       "adapter": "world",
@@ -1188,8 +1189,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "crosswind-market-depot",
       "adapter": "world",
@@ -1241,8 +1242,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "carpathian-thread-relay",
       "adapter": "world",
@@ -1294,8 +1295,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "midnight-workshop",
       "adapter": "world",
@@ -1347,8 +1348,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "crosswind-courier",
       "adapter": "world",
@@ -1400,8 +1401,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "signal-thread",
       "adapter": "world",
@@ -1597,8 +1598,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "fpv-body",
       "adapter": "body",
@@ -1648,8 +1649,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "heavy-lift",
       "adapter": "body",
@@ -1699,8 +1700,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "retro-craft",
       "adapter": "body",
@@ -1750,8 +1751,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "scout-quad",
       "adapter": "body",
@@ -1801,8 +1802,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "ukrainian-bird",
       "adapter": "body",
@@ -2001,8 +2002,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-ukraine-poster-1",
       "adapter": "sentinel-world",
@@ -2036,8 +2037,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2049,8 +2050,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-ukraine-poster-2",
       "adapter": "sentinel-world",
@@ -2084,8 +2085,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2097,8 +2098,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-ukraine-poster-3",
       "adapter": "sentinel-world",
@@ -2132,8 +2133,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2145,8 +2146,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-retro-poster-1",
       "adapter": "sentinel-world",
@@ -2180,8 +2181,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2193,8 +2194,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-retro-poster-2",
       "adapter": "sentinel-world",
@@ -2228,8 +2229,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2241,8 +2242,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-retro-poster-3",
       "adapter": "sentinel-world",
@@ -2276,8 +2277,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     }
@@ -3716,18 +3717,18 @@
     },
     {
       "path": "authoring/library/four-worlds-chapters/distribution.json",
-      "bytes": 4255,
-      "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+      "bytes": 3280,
+      "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
     },
     {
       "path": "authoring/library/four-worlds-source/catalog.json",
-      "bytes": 12360,
-      "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      "bytes": 9287,
+      "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
     },
     {
       "path": "authoring/library/fpv-route-choices/distribution.json",
       "bytes": 3446,
-      "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+      "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
     },
     {
       "path": "authoring/library/route-worlds/descriptors/retro.json",
@@ -3741,8 +3742,8 @@
     },
     {
       "path": "authoring/library/route-worlds/editions.json",
-      "bytes": 2049,
-      "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      "bytes": 1411,
+      "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
     },
     {
       "path": "authoring/library/sentinel-circuit-external/descriptor.json",
@@ -3761,8 +3762,8 @@
     },
     {
       "path": "game/content/themes.json",
-      "bytes": 4266,
-      "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+      "bytes": 3198,
+      "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
     },
     {
       "path": "game/ui/music.mjs",
@@ -3771,13 +3772,13 @@
     },
     {
       "path": "authoring/library/sentinel-theme-chapters/editions.json",
-      "bytes": 8414,
-      "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+      "bytes": 5679,
+      "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
     },
     {
       "path": "authoring/library/sentinel-theme-art/provenance.json",
-      "bytes": 16174,
-      "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+      "bytes": 12200,
+      "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
     },
     {
       "path": "authoring/library/sentinel-theme-chapters/descriptors/ukraine.json",
