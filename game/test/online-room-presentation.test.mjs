@@ -128,7 +128,8 @@ for (const action of ['share', 'qr'])
     assert.equal(mounted.topDialog() === mounted.elements.dialogs.settings, true);
     mounted.back();
     assert.equal(mounted.topDialog() === mounted.elements.dialogs.missions, true);
-    assert.equal(button.disabled, true, 'Returning cannot create a second OS request owner.');
+    assert.equal(button.disabled, false, 'A usable pending action remains focusable on return.');
+    assert.equal(button.getAttribute('aria-disabled'), 'true');
     button.click();
     assert.equal(calls, 1);
     resolve({ src: 'data:image/svg+xml,local', size: 40 });
@@ -136,6 +137,7 @@ for (const action of ['share', 'qr'])
     assert.equal(doc.getElementById('invite-share-status').textContent, '');
     assert.equal(doc.getElementById('invite-qr-image').hidden, true);
     assert.equal(button.disabled, false);
+    assert.equal(button.getAttribute('aria-disabled'), 'false');
     assert.equal(readyCalls, 0);
     assert.equal(pauseCalls, 0);
     assert.equal($('invite').value.includes('token='), false);

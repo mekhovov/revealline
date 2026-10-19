@@ -23,9 +23,32 @@ const deferred = () => {
   });
   return { promise, resolve, reject };
 };
-function fixture(t, { navigator = {}, createQr, locale = 'en', secure = true } = {}) {
-  const doc = new Document(),
-    label = doc.createElement('label'),
+function fixture(
+  t,
+  { navigator = {}, createQr, locale = 'en', secure = true, nativeDisableBlur = false } = {},
+) {
+  const doc = new Document();
+  if (nativeDisableBlur) {
+    const create = doc.createElement.bind(doc);
+    doc.createElement = (...args) => {
+      const node = create(...args);
+      if (node.tagName === 'BUTTON') {
+        let disabled = node.disabled;
+        Object.defineProperty(node, 'disabled', {
+          configurable: true,
+          get: () => disabled,
+          set(value) {
+            disabled = !!value;
+            // The real-browser delayed QR reproduction blurs a focused native
+            // button when disabled. Model that boundary only in these cases.
+            if (disabled && doc.activeElement === node) node.blur();
+          },
+        });
+      }
+      return node;
+    };
+  }
+  const label = doc.createElement('label'),
     field = doc.createElement('input');
   field.id = 'invite';
   field.readOnly = true;
@@ -659,7 +682,8 @@ for (const [action, outcomes] of deferredOutcomes)
       elsewhere.focus();
       setLocale('uk', { persist: false });
       assert.equal(h.$(action) === button, true);
-      assert.equal(button.disabled, true);
+      assert.equal(button.disabled, false);
+      assert.equal(button.getAttribute('aria-disabled'), 'true');
       assert.equal(status.textContent, '');
       assert.equal(calls, 1);
       settleOutcome(job, outcome);
@@ -695,4 +719,110 @@ for (const [action, outcomes] of deferredOutcomes)
       );
       assert.equal(h.doc.activeElement === elsewhere, true);
       assert.equal(calls, 1);
+    });
+
+const focusOutcomes = [
+  ['copy', 'success'],
+  ['copy', 'failure'],
+  ['share', 'success'],
+  ['share', 'failure'],
+  ['share', 'cancel'],
+  ['qr', 'success'],
+  ['qr', 'failure'],
+];
+for (const [action, outcome] of focusOutcomes)
+  for (const focusOwner of ['retained', 'moved', 'retired-return'])
+    test(`deferred ${action} ${outcome} preserves ${focusOwner} focus with native disabled blur`, async (t) => {
+      const job = deferred(),
+        calls = { copy: 0, share: 0, qr: 0 };
+      const h = fixture(t, {
+        nativeDisableBlur: true,
+        navigator: {
+          clipboard: {
+            writeText() {
+              calls.copy++;
+              return job.promise;
+            },
+          },
+          share() {
+            calls.share++;
+            return job.promise;
+          },
+        },
+        createQr() {
+          calls.qr++;
+          return job.promise;
+        },
+      });
+      h.set(invitation());
+      const button = h.$(action),
+        operation = h.press(action);
+      assert.equal(
+        h.doc.activeElement === button,
+        true,
+        'A pending action must not natively blur its focused button.',
+      );
+      assert.equal(button.disabled, false);
+      assert.equal(button.getAttribute('aria-disabled'), 'true');
+      assert.equal(h.view.root.getAttribute('aria-busy'), 'true');
+      const elsewhere = h.doc.createElement('button');
+      h.doc.body.append(elsewhere);
+      if (focusOwner !== 'retained') elsewhere.focus();
+      if (focusOwner === 'retired-return') {
+        h.visible(false);
+        assert.equal(button.disabled, true, 'Unavailable actions remain natively disabled.');
+        h.visible(true);
+        h.set(invitation());
+        assert.equal(button.disabled, false);
+        assert.equal(button.getAttribute('aria-disabled'), 'true');
+      }
+      for (const other of ['copy', 'share', 'qr', 'select']) h.$(other).click();
+      assert.deepEqual(calls, {
+        copy: Number(action === 'copy'),
+        share: Number(action === 'share'),
+        qr: Number(action === 'qr'),
+      });
+      assert.equal(h.selections(), 0);
+      if (outcome === 'success')
+        job.resolve(action === 'qr' ? { src: 'data:image/svg+xml,test', size: 29 } : undefined);
+      else
+        job.reject(
+          Object.assign(new Error('test outcome'), {
+            name: outcome === 'cancel' ? 'AbortError' : 'Error',
+          }),
+        );
+      await operation;
+      assert.equal(
+        h.doc.activeElement === (focusOwner === 'retained' ? button : elsewhere),
+        true,
+        'Completion must neither lose retained focus nor steal moved focus.',
+      );
+      assert.equal(button.disabled, false);
+      assert.equal(button.getAttribute('aria-disabled'), 'false');
+      assert.equal(h.view.root.getAttribute('aria-busy'), 'false');
+      assert.equal(h.field.value, invitation());
+      assert.equal(h.selections(), 0);
+      if (focusOwner === 'retired-return') {
+        assert.equal(h.$('share-status').textContent, '');
+        assert.equal(h.$('qr-image').hidden, true);
+        assert.equal(h.$('qr-image').getAttribute('src'), null);
+      } else {
+        assert.match(
+          h.$('share-status').textContent,
+          action === 'qr'
+            ? outcome === 'success'
+              ? /^Scan to open the invitation/
+              : /copy the invitation/
+            : action === 'copy'
+              ? outcome === 'success'
+                ? /^Invitation copied/
+                : /^Copying is unavailable/
+              : outcome === 'success'
+                ? /^Share request completed/
+                : outcome === 'cancel'
+                  ? /^Sharing cancelled/
+                  : /^Sharing is unavailable/,
+        );
+        assert.equal(h.$('qr-image').hidden, !(action === 'qr' && outcome === 'success'));
+      }
     });
