@@ -1,0 +1,1146 @@
+{
+  "format": "SharedDemoSignal08X86ObservationV1",
+  "started": "2026-10-19T09:21:12.482Z",
+  "complete": true,
+  "checks": [
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "engine": "primary",
+      "replay": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json",
+        "sha256": "06642a1d92e6405531297802a2eb9632795ce7540029d35f34813525409aad4b",
+        "bytes": 13941
+      },
+      "sidecar": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.diagnostics.json",
+        "sha256": "2ef490e8c2aedba62874ee045181503ffd5a9db917382b8dda096a5507ce11d3",
+        "bytes": 5370
+      },
+      "match": false,
+      "diagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "28fc2e7ba2c0539c",
+          "actual": "5d5f527833603614"
+        }
+      ],
+      "actual": {
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-08",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+          "seed": 123,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "won",
+          "won": true,
+          "tick": 7322,
+          "time": 61.010105580691,
+          "lives": 2,
+          "score": 12330,
+          "coverage": 0.7632258064516129,
+          "claimedCount": 1183,
+          "totalClaimable": 1550,
+          "medal": "silver",
+          "objectives": {
+            "captured": 1,
+            "total": 1,
+            "required": 1
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "c9b1881bd08b8a93",
+          "sections": {
+            "identity": "2d88a59f014880bd",
+            "configuration": "786bbd305565a787",
+            "board": "620d2d05315a7608",
+            "player": "fe5606397901f03e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "5d5f527833603614",
+            "objectives": "a77a0767441490cd",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "83be6483dc2b7278",
+            "continuation": "a9d828ced6380d30",
+            "result": "4d4888fdb5494cc5"
+          }
+        }
+      },
+      "recorded": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "e75b8aa015be9306",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "28fc2e7ba2c0539c",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "83be6483dc2b7278",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "diagnostic": {
+        "code": "diagnostic-checkpoint-mismatch",
+        "firstMismatchingCheckpointTick": 600,
+        "expected": "67078d401c4d6b47",
+        "actual": "2de4810180a47587"
+      },
+      "at600": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "2de4810180a47587",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "dee67ee00cdbea01",
+          "player": "98b26a787c09feeb",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "dc5fb9c94acc1d3e",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "f5ad50b86f780000",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "initial": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "8727d2233effe1c4",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "32f55c9537c9bc3b",
+          "player": "24fef299027edf2c",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "42aceae022034c0f",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "54208135a591f510",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "captures": 12,
+      "claimedCount": 1183,
+      "clock": {
+        "status": "won",
+        "tick": 7322,
+        "time": 61.010105580691,
+        "lives": 2,
+        "score": 12330,
+        "respawnAt": 14.803932533904936,
+        "medal": "silver",
+        "cutStartedAt": null,
+        "failureCause": "enemy-trail"
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 29.218173638427537,
+          "y": 17.407292968261505,
+          "vx": 10.616778000287024,
+          "vy": 3.063743607520282,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 10.723016194851803,
+          "y": 17.939217105698834,
+          "vx": -5.495273336347686,
+          "vy": -9.586681957738364,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 34.5,
+          "y": 15.5,
+          "axis": "vertical",
+          "period": 6.512499999999999,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2,
+          "radius": 0.25,
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1,
+          "bossPhase": "warning",
+          "lane": 4.5,
+          "nextWarningAt": 67.1624999999972,
+          "warningUntil": 62.6499999999972,
+          "activeUntil": 63.8499999999972
+        }
+      ],
+      "ticks": 7322,
+      "finalCheckpoint": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "c9b1881bd08b8a93",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "5d5f527833603614",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "83be6483dc2b7278",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "matchesLinuxFinalEnemy": false,
+      "matchesLinuxFinalClock": true,
+      "matchesLinuxTick600": true
+    },
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "engine": "chromium",
+      "replay": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.replay.json",
+        "sha256": "05cfc23fd5add25ff44a5fb61201a5f60690ec97064624e030241cb4fa096982",
+        "bytes": 13941
+      },
+      "sidecar": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.diagnostics.json",
+        "sha256": "a5992afc38ee9268ea78e9b1838a11e92c3a382836e3b137a381b1150e9eca2c",
+        "bytes": 5370
+      },
+      "match": true,
+      "diagnostics": [],
+      "actual": {
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-08",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+          "seed": 123,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "won",
+          "won": true,
+          "tick": 7322,
+          "time": 61.010105580691,
+          "lives": 2,
+          "score": 12330,
+          "coverage": 0.7632258064516129,
+          "claimedCount": 1183,
+          "totalClaimable": 1550,
+          "medal": "silver",
+          "objectives": {
+            "captured": 1,
+            "total": 1,
+            "required": 1
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "c9b1881bd08b8a93",
+          "sections": {
+            "identity": "2d88a59f014880bd",
+            "configuration": "786bbd305565a787",
+            "board": "620d2d05315a7608",
+            "player": "fe5606397901f03e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "5d5f527833603614",
+            "objectives": "a77a0767441490cd",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "83be6483dc2b7278",
+            "continuation": "a9d828ced6380d30",
+            "result": "4d4888fdb5494cc5"
+          }
+        }
+      },
+      "recorded": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "c9b1881bd08b8a93",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "5d5f527833603614",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "83be6483dc2b7278",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "diagnostic": null,
+      "at600": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "2de4810180a47587",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "dee67ee00cdbea01",
+          "player": "98b26a787c09feeb",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "dc5fb9c94acc1d3e",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "f5ad50b86f780000",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "initial": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "8727d2233effe1c4",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "32f55c9537c9bc3b",
+          "player": "24fef299027edf2c",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "42aceae022034c0f",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "54208135a591f510",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "captures": 12,
+      "claimedCount": 1183,
+      "clock": {
+        "status": "won",
+        "tick": 7322,
+        "time": 61.010105580691,
+        "lives": 2,
+        "score": 12330,
+        "respawnAt": 14.803932533904936,
+        "medal": "silver",
+        "cutStartedAt": null,
+        "failureCause": "enemy-trail"
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 29.218173638427537,
+          "y": 17.407292968261505,
+          "vx": 10.616778000287024,
+          "vy": 3.063743607520282,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 10.723016194851803,
+          "y": 17.939217105698834,
+          "vx": -5.495273336347686,
+          "vy": -9.586681957738364,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 34.5,
+          "y": 15.5,
+          "axis": "vertical",
+          "period": 6.512499999999999,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2,
+          "radius": 0.25,
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1,
+          "bossPhase": "warning",
+          "lane": 4.5,
+          "nextWarningAt": 67.1624999999972,
+          "warningUntil": 62.6499999999972,
+          "activeUntil": 63.8499999999972
+        }
+      ],
+      "ticks": 7322,
+      "finalCheckpoint": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "c9b1881bd08b8a93",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "5d5f527833603614",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "83be6483dc2b7278",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "matchesLinuxFinalEnemy": false,
+      "matchesLinuxFinalClock": true,
+      "matchesLinuxTick600": true
+    },
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "engine": "firefox",
+      "replay": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.replay.json",
+        "sha256": "7d29830644a9e8029fe1cd35dcadbf45725918a4f498e8427bc0222e7a951c09",
+        "bytes": 13941
+      },
+      "sidecar": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.diagnostics.json",
+        "sha256": "257a3a6b39cb97247e0208838b6595467cdbb31855256272e7455e57958f41b3",
+        "bytes": 5370
+      },
+      "match": false,
+      "diagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "d7b102f8a9128e95",
+          "actual": "5d5f527833603614"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "9e232cdb3132c194",
+          "actual": "83be6483dc2b7278"
+        }
+      ],
+      "actual": {
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-08",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+          "seed": 123,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "won",
+          "won": true,
+          "tick": 7322,
+          "time": 61.010105580691,
+          "lives": 2,
+          "score": 12330,
+          "coverage": 0.7632258064516129,
+          "claimedCount": 1183,
+          "totalClaimable": 1550,
+          "medal": "silver",
+          "objectives": {
+            "captured": 1,
+            "total": 1,
+            "required": 1
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "c9b1881bd08b8a93",
+          "sections": {
+            "identity": "2d88a59f014880bd",
+            "configuration": "786bbd305565a787",
+            "board": "620d2d05315a7608",
+            "player": "fe5606397901f03e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "5d5f527833603614",
+            "objectives": "a77a0767441490cd",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "83be6483dc2b7278",
+            "continuation": "a9d828ced6380d30",
+            "result": "4d4888fdb5494cc5"
+          }
+        }
+      },
+      "recorded": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "088f8832794dd30d",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "d7b102f8a9128e95",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "9e232cdb3132c194",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "diagnostic": {
+        "code": "diagnostic-checkpoint-mismatch",
+        "firstMismatchingCheckpointTick": 600,
+        "expected": "a693a2b0126e2de9",
+        "actual": "2de4810180a47587"
+      },
+      "at600": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "2de4810180a47587",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "dee67ee00cdbea01",
+          "player": "98b26a787c09feeb",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "dc5fb9c94acc1d3e",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "f5ad50b86f780000",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "initial": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "8727d2233effe1c4",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "32f55c9537c9bc3b",
+          "player": "24fef299027edf2c",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "42aceae022034c0f",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "54208135a591f510",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "captures": 12,
+      "claimedCount": 1183,
+      "clock": {
+        "status": "won",
+        "tick": 7322,
+        "time": 61.010105580691,
+        "lives": 2,
+        "score": 12330,
+        "respawnAt": 14.803932533904936,
+        "medal": "silver",
+        "cutStartedAt": null,
+        "failureCause": "enemy-trail"
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 29.218173638427537,
+          "y": 17.407292968261505,
+          "vx": 10.616778000287024,
+          "vy": 3.063743607520282,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 10.723016194851803,
+          "y": 17.939217105698834,
+          "vx": -5.495273336347686,
+          "vy": -9.586681957738364,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 34.5,
+          "y": 15.5,
+          "axis": "vertical",
+          "period": 6.512499999999999,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2,
+          "radius": 0.25,
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1,
+          "bossPhase": "warning",
+          "lane": 4.5,
+          "nextWarningAt": 67.1624999999972,
+          "warningUntil": 62.6499999999972,
+          "activeUntil": 63.8499999999972
+        }
+      ],
+      "ticks": 7322,
+      "finalCheckpoint": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "c9b1881bd08b8a93",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "5d5f527833603614",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "83be6483dc2b7278",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "matchesLinuxFinalEnemy": false,
+      "matchesLinuxFinalClock": true,
+      "matchesLinuxTick600": true
+    },
+    {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "engine": "webkit",
+      "replay": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.replay.json",
+        "sha256": "d11a9014a1bcdf8de8c2387f8701acc2cd2aee33f833f73429a6292cfaa7134e",
+        "bytes": 13941
+      },
+      "sidecar": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.diagnostics.json",
+        "sha256": "9154d2bda3df4e701d71880dd9ac4b6c766bd3e004f72c31ee035e81b430e9e7",
+        "bytes": 5370
+      },
+      "match": false,
+      "diagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "ed391a595d4e2fb9",
+          "actual": "5d5f527833603614"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "ca39e0a04aa6d20e",
+          "actual": "83be6483dc2b7278"
+        }
+      ],
+      "actual": {
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-08",
+          "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+          "seed": 123,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "won",
+          "won": true,
+          "tick": 7322,
+          "time": 61.010105580691,
+          "lives": 2,
+          "score": 12330,
+          "coverage": 0.7632258064516129,
+          "claimedCount": 1183,
+          "totalClaimable": 1550,
+          "medal": "silver",
+          "objectives": {
+            "captured": 1,
+            "total": 1,
+            "required": 1
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "c9b1881bd08b8a93",
+          "sections": {
+            "identity": "2d88a59f014880bd",
+            "configuration": "786bbd305565a787",
+            "board": "620d2d05315a7608",
+            "player": "fe5606397901f03e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "5d5f527833603614",
+            "objectives": "a77a0767441490cd",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "83be6483dc2b7278",
+            "continuation": "a9d828ced6380d30",
+            "result": "4d4888fdb5494cc5"
+          }
+        }
+      },
+      "recorded": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "0ecb8c5346ff5738",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "ed391a595d4e2fb9",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "ca39e0a04aa6d20e",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "diagnostic": {
+        "code": "diagnostic-checkpoint-mismatch",
+        "firstMismatchingCheckpointTick": 600,
+        "expected": "a693a2b0126e2de9",
+        "actual": "2de4810180a47587"
+      },
+      "at600": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "2de4810180a47587",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "dee67ee00cdbea01",
+          "player": "98b26a787c09feeb",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "dc5fb9c94acc1d3e",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "f5ad50b86f780000",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "initial": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "8727d2233effe1c4",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "32f55c9537c9bc3b",
+          "player": "24fef299027edf2c",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "42aceae022034c0f",
+          "objectives": "07ea48484f26d13e",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "54208135a591f510",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      },
+      "captures": 12,
+      "claimedCount": 1183,
+      "clock": {
+        "status": "won",
+        "tick": 7322,
+        "time": 61.010105580691,
+        "lives": 2,
+        "score": 12330,
+        "respawnAt": 14.803932533904936,
+        "medal": "silver",
+        "cutStartedAt": null,
+        "failureCause": "enemy-trail"
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 29.218173638427537,
+          "y": 17.407292968261505,
+          "vx": 10.616778000287024,
+          "vy": 3.063743607520282,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 10.723016194851803,
+          "y": 17.939217105698834,
+          "vx": -5.495273336347686,
+          "vy": -9.586681957738364,
+          "radius": 0.3,
+          "course": "field-course.v2",
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 34.5,
+          "y": 15.5,
+          "axis": "vertical",
+          "period": 6.512499999999999,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2,
+          "radius": 0.25,
+          "stunnedUntil": 0,
+          "slowUntil": 0,
+          "slowFactor": 1,
+          "bossPhase": "warning",
+          "lane": 4.5,
+          "nextWarningAt": 67.1624999999972,
+          "warningUntil": 62.6499999999972,
+          "activeUntil": 63.8499999999972
+        }
+      ],
+      "ticks": 7322,
+      "finalCheckpoint": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "c9b1881bd08b8a93",
+        "sections": {
+          "identity": "2d88a59f014880bd",
+          "configuration": "786bbd305565a787",
+          "board": "620d2d05315a7608",
+          "player": "fe5606397901f03e",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "5d5f527833603614",
+          "objectives": "a77a0767441490cd",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "83be6483dc2b7278",
+          "continuation": "a9d828ced6380d30",
+          "result": "4d4888fdb5494cc5"
+        }
+      },
+      "matchesLinuxFinalEnemy": false,
+      "matchesLinuxFinalClock": true,
+      "matchesLinuxTick600": true
+    }
+  ],
+  "errors": [],
+  "errorOverflow": 0,
+  "headBefore": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceBefore": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsBefore": {
+    "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256": "4026d4523f43448694b0969359e63ba6754d3b325dad0d37b1aef503fd042629",
+  "originalNativeProbeSHA256": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb",
+  "emittedBefore": {
+    "manifest": {
+      "path": ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined/manifest.json",
+      "bytes": 1305172,
+      "sha256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+      "bytes": 2067388,
+      "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.inventory.json",
+      "bytes": 941657,
+      "sha256": "c54228729e1b24e9ee49de79463b47629aecf557fa1dccd2e04b666abca3062d"
+    },
+    "identity": {
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      }
+    }
+  },
+  "launcher": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/chrome-x86-signal08.sh",
+    "sha256": "7a95c11219d4b021a50c891ced4f5bed4c12ec15d04178365cd7315e038e4800",
+    "text": "#!/bin/sh\nexec /usr/bin/arch -x86_64 \"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" \"$@\"\n"
+  },
+  "rosettaUname": "x86_64",
+  "scope": "Read-only original four published signal-08 replay payloads in installed universal Chrome forced x86_64 on macOS under Rosetta, using exact held emitted modules. Observation completion is not replay admission or Linux qualification. No generated recording or checkpoint mutation.",
+  "preview": {
+    "url": "http://127.0.0.1:61703/",
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-2d24aee-b4688ca21-combined",
+      "manifestSHA256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "files": 5956,
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+        "runtime": {
+          "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+          "files": 10000,
+          "bytes": 404485348
+        },
+        "buildInput": {
+          "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+          "files": 9406,
+          "bytes": 348401321
+        }
+      }
+    }
+  },
+  "browserVersion": "155.0.8059.85",
+  "userAgent": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "platform": "MacIntel",
+    "highEntropy": {
+      "architecture": "arm",
+      "bitness": "64",
+      "brands": [
+        {
+          "brand": "Google Chrome",
+          "version": "155"
+        },
+        {
+          "brand": "Chromium",
+          "version": "155"
+        },
+        {
+          "brand": "Not(A:Brand",
+          "version": "24"
+        }
+      ],
+      "mobile": false,
+      "platform": "macOS"
+    }
+  },
+  "nativeArchitecture": [
+    {
+      "type": "browser",
+      "pid": 53439,
+      "identity": "53439 53336 Mon Oct 19 11:21:18 2026       502 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --remote-debugging-pipe --no-startup-window",
+      "codeType": "X86-64 (translated)",
+      "sample": {
+        "path": ".cache/signal08-x86-native-emitted-b4688ca21.browser.sample.txt",
+        "sha256": "6fabc92346dc970c86996814568779fdb1d2b8687fbc9a6250a5c5dbe74d59f6",
+        "bytes": 252882
+      },
+      "header": "Analysis of sampling Google Chrome (pid 53439) every 10 milliseconds\nProcess:         Google Chrome [53439]\nPath:            /Applications/Google Chrome.app/Contents/MacOS/Google Chrome\nLoad Address:    0x104496000\nIdentifier:      com.google.Chrome\nVersion:         155.0.8059.85 (8059.85)\nCode Type:       X86-64 (translated)\nPlatform:        macOS\nParent Process:  node [53336]\nTarget Type:     live task\n\nDate/Time:       2026-10-19 11:21:26.669 +0200\nLaunch Time:     2026-10-19 11:21:18.410 +0200\nOS Version:      macOS 26.7.1 (25G241)\nReport Version:  7\nAnalysis Tool:   /usr/bin/sample\n\nPhysical footprint:         154.8M\nPhysical footprint (peak):  154.8M\nIdle exit:                  untracked\n----\n\nCall graph:\n    84 Thread_1795109   DispatchQueue_1: com.apple.main-thread  (serial)\n    + 84 start  (in dyld) + 3240  [0x20471a1c8]\n    +   84 main  (in Google Chrome) + 205  [0x1044967bd]\n    +     84 ChromeMain  (in Google Chrome Framework) + 567  [0x12ba4a947]\n    +       84 ChromeMain  (in Google Chrome Framework) + 38892891  [0x12df61c6b]\n    +         84 ChromeMain  (in Google Chrome Framework) + 67238729  [0x12fa6a259]\n    +           84 ChromeMain  (in Google Chrome Framework) + 47041711  [0x12e7273bf]\n    +             84 ChromeMain  (in Google Chrome Framework) + 47042277  [0x12e7275f5]\n    +               84 ChromeMain  (in Google Chrome Framework) + 47043448  [0x12e727a88]\n    +                 84 ChromeMain  (in Google Chrome Framework) + 19352471  [0x12ccbf2a7]\n    +                   84 ChromeMain  (in Google Chrome Framework) + 19353991  [0x12ccbf897]\n    +                     84 ChromeMain  (in Google Chrome Framework) + 46983444  [0x12e719024]\n    +                       84 ChromeMain  (in Google Chrome Framework) + 51536152  [0x12eb70828]\n    +                         84 -[NSApplication run]  (in AppKit) + 472  [0x7ff80c16185c]\n    +                           84 ChromeMain  (in Google Chrome Framework) + 68575129  [0x12fbb06a9]\n    +                             84 ChromeMain  (in Google Chrome Framework) + 16266  [0x12ba4e69a]\n    +                               84 ChromeMain  (in Google Chrome Framework) + 77826463  [0x1304830af]\n    +                                 84 -[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]  (in AppKit) + 67  [0x7ff80ce1e951]\n    +                                   84 -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]  (in AppKit) + 1265  [0x7ff80ce1ee7b]\n    +                                     84 _DPSNextEvent  (in AppKit) + 800  [0x7ff80c1709c5]\n    +                                       84 _DPSBlockUntilNextEventMatchingListInMode  (in AppKit) + 172  [0x7ff80c87af94]\n    +                                         84 _BlockUntilNextEventMatchingListInMode  (in HIToolbox) + 37  [0x7ff81568c0ca]\n    +                                           84 ReceiveNextEventCommon  (in HIToolbox) + 599  [0x7ff815503c4d]\n    +                                             84 RunCurrentEventLoopInMode  (in HIToolbox) + 283  [0x7ff815500b8b]\n    +                                               84 _CFRunLoopRunSpecificWithOptions  (in CoreFoundation) + 496  [0x7ff80844c775]\n    +                                                 83 __CFRunLoopRun  (in CoreFoundation) + 1358  [0x7ff808384d01]\n    +                                                 ! 83 __CFRunLoopServiceMachPort  (in CoreFoundation) + 145  [0x7ff80838625a]\n    +                                                 !   83 mach_msg  (in libsystem_kernel.dylib) + 19  [0x7ff808286e56]\n    +                                                 !     83 mach_msg_overwrite  (in libsystem_kernel.dylib) + 586  [0x7ff80828db66]\n    +                                                 !       83 mach_msg2_internal  (in libsystem_kernel.dylib) + 83  [0x7ff808294f57]\n    +                                                 !         83 ???  (in <unknown binary>)  [0x7ff8947bf10c]\n    +                                                 !           83 ???  (in <unknown binary>)  [0x7ff8941eeb80]\n   "
+    },
+    {
+      "type": "renderer",
+      "pid": 53499,
+      "identity": "53499 53439 Mon Oct 19 11:21:24 2026       502 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --noerrdialogs --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21/playwright_chromiumdev_profile-MqYggv --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=en-US --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=8 --launch-time-ticks=21897335704 --shared-files --field-trial-handle=1718379636,r,5922246029209907362,12523616796093516438,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,11720469886224875515,6878291763853409775,4 --trace-process-track-uuid=3190708993808206286",
+      "codeType": "X86-64 (translated)",
+      "sample": {
+        "path": ".cache/signal08-x86-native-emitted-b4688ca21.renderer.sample.txt",
+        "sha256": "b40ccfe33979691b10bf870e6456a143005abcd828cd3f200db09bbfb685636f",
+        "bytes": 212770
+      },
+      "header": "Analysis of sampling Google Chrome Helper (Renderer) (pid 53499) every 10 milliseconds\nProcess:         Google Chrome Helper (Renderer) [53499]\nPath:            /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.85/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer)\nLoad Address:    0x100b92000\nIdentifier:      com.google.Chrome.helper.renderer\nVersion:         155.0.8059.85 (8059.85)\nCode Type:       X86-64 (translated)\nPlatform:        macOS\nParent Process:  Google Chrome [53439]\nTarget Type:     live task\n\nDate/Time:       2026-10-19 11:21:29.074 +0200\nLaunch Time:     2026-10-19 11:21:24.260 +0200\nOS Version:      macOS 26.7.1 (25G241)\nReport Version:  7\nAnalysis Tool:   /usr/bin/sample\n\nPhysical footprint:         41.3M\nPhysical footprint (peak):  41.3M\nIdle exit:                  untracked\n----\n\nCall graph:\n    85 Thread_1795610   DispatchQueue_1: com.apple.main-thread  (serial)\n    + 85 start  (in dyld) + 3240  [0x200e0d1c8]\n    +   85 main  (in Google Chrome Helper (Renderer)) + 358  [0x100b928d6]\n    +     85 ChromeMain  (in Google Chrome Framework) + 567  [0x128170947]\n    +       85 ChromeMain  (in Google Chrome Framework) + 38892891  [0x12a687c6b]\n    +         85 ChromeMain  (in Google Chrome Framework) + 67236415  [0x12c18f94f]\n    +           85 ChromeMain  (in Google Chrome Framework) + 35698713  [0x12a37bf29]\n    +             85 ChromeMain  (in Google Chrome Framework) + 19352471  [0x1293e52a7]\n    +               85 ChromeMain  (in Google Chrome Framework) + 19353991  [0x1293e5897]\n    +                 85 ChromeMain  (in Google Chrome Framework) + 67477172  [0x12c1ca5c4]\n    +                   85 ChromeMain  (in Google Chrome Framework) + 11892927  [0x128cc7fcf]\n    +                     85 mach_msg  (in libsystem_kernel.dylib) + 19  [0x7ff808286e56]\n    +                       85 mach_msg_overwrite  (in libsystem_kernel.dylib) + 586  [0x7ff80828db66]\n    +                         85 mach_msg2_internal  (in libsystem_kernel.dylib) + 83  [0x7ff808294f57]\n    +                           85 ???  (in <unknown binary>)  [0x7ff8947bf10c]\n    +                             85 ???  (in <unknown binary>)  [0x7ff8941eeb80]\n    85 Thread_1795612: com.apple.rosetta.exceptionserver\n    + 85 ???  (in Rosetta Runtime Routines)  [0x7ff7ffc4aed0]\n    85 Thread_1795626\n    + 85 start_wqthread  (in libsystem_pthread.dylib) + 15  [0x7ff8082c681b]\n    +   85 _pthread_wqthread  (in libsystem_pthread.dylib) + 387  [0x7ff8082c7878]\n    +     85 ???  (in <unknown binary>)  [0x7ff8947c1e6c]\n    +       85 ???  (in <unknown binary>)  [0x7ff8941eeb80]\n    85 Thread_1795632: PerfettoTrace\n    + 85 thread_start  (in libsystem_pthread.dylib) + 15  [0x7ff8082c682f]\n    +   85 _pthread_start  (in libsystem_pthread.dylib) + 115  [0x7ff8082cad49]\n    +     85 ChromeMain  (in Google Chrome Framework) + 12874360  [0x128db7988]\n    +       85 ChromeMain  (in Google Chrome Framework) + 36332121  [0x12a416969]\n    +         85 ChromeMain  (in Google Chrome Framework) + 36332568  [0x12a416b28]\n    +           85 ChromeMain  (in Google Chrome Framework) + 19352471  [0x1293e52a7]\n    +             85 ChromeMain  (in Google Chrome Framework) + 19353991  [0x1293e5897]\n    +               85 ChromeMain  (in Google Chrome Framework) + 67635258  [0x12c1f0f4a]\n    +                 85 ???  (in <unknown binary>)  [0x7ff8947d070c]\n    +                   85 ???  (in <unknown binary>)  [0x7ff8941eeb80]\n    85 Thread_1795635: HangWatcher\n    + 85 thread_start  (in libsystem_pthread.dylib) + 15  [0x7ff8082c682f]\n    +   85 _pthread_start  (in libsystem_pthread.dylib) + 115  [0x7ff8082cad49]\n    +     85 ChromeMain  (in Google Chrome Framework) + 12874360  [0x128db7988]\n    +       85 ChromeMain  (in Google Chrome Framework) + 158366235  [0x13187812b]\n    +         85 ChromeMain  (in Google Chrome Framework) + 158366013  [0x13187804d]\n    +           85 ChromeMain  (in Google Chrome Framework) + 11892927  [0x128cc7fcf]\n    +             85 mach_msg  (in libsystem"
+    }
+  ],
+  "linuxReference": {
+    "path": ".cache/hosted-demo-admission-failure-b4688ca21.json",
+    "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+    "environment": {
+      "node": "22.13.1",
+      "platform": "linux",
+      "arch": "x64"
+    },
+    "sourceFailure": {
+      "sourceId": "solo-qualified-478808a96f4fbf5e",
+      "levelId": "signal-08",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "attemptedURLs": [
+        "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json",
+        "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.diagnostics.json",
+        "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.replay.json",
+        "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.diagnostics.json",
+        "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.replay.json",
+        "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.diagnostics.json",
+        "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.replay.json",
+        "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.diagnostics.json"
+      ],
+      "omittedURLs": 0,
+      "diagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "ed391a595d4e2fb9",
+          "actual": "c3ba914e89640524"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "ca39e0a04aa6d20e",
+          "actual": "83be6483dc2b7278"
+        },
+        {
+          "code": "diagnostic-checkpoint-mismatch",
+          "firstMismatchingCheckpointTick": 600,
+          "expected": "a693a2b0126e2de9",
+          "actual": "2de4810180a47587"
+        }
+      ]
+    }
+  },
+  "observationCompleted": true,
+  "browserCloseCompleted": true,
+  "serverCleanup": {
+    "attempted": true,
+    "complete": true,
+    "timeoutMs": 3000,
+    "elapsedMs": 0.14199999999982538,
+    "finished": "2026-10-19T09:21:32.784Z"
+  },
+  "serverClosed": true,
+  "previewClosed": true,
+  "headAfter": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceAfter": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsAfter": {
+    "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256After": "4026d4523f43448694b0969359e63ba6754d3b325dad0d37b1aef503fd042629",
+  "emittedAfter": {
+    "manifest": {
+      "path": ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined/manifest.json",
+      "bytes": 1305172,
+      "sha256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+      "bytes": 2067388,
+      "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.inventory.json",
+      "bytes": 941657,
+      "sha256": "c54228729e1b24e9ee49de79463b47629aecf557fa1dccd2e04b666abca3062d"
+    },
+    "identity": {
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      }
+    }
+  },
+  "sourceUnchanged": true,
+  "finished": "2026-10-19T09:21:35.736Z"
+}

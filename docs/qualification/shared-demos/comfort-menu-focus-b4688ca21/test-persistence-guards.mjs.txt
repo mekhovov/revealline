@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { emptyLibrary, loadLibrary } from '../game/library.mjs';
+import { DISPLAY_PREFERENCES_KEY } from '../game/display-preferences.mjs';
+import { MENU_ANIMATION_KEY } from '../game/ui/menu-animation-preferences.mjs';
+const source = await readFile(new URL('./qualify-comfort-menu-focus-emitted.mjs', import.meta.url), 'utf8');
+const functionSource = source.slice(source.indexOf('function decodedProfile('), source.indexOf('async function assertDisplay('));
+const report = { seededProfileKey: 'qualification-profile' };
+const check = new Function('assert', 'loadLibrary', 'report', 'DISPLAY_PREFERENCES_KEY', 'MENU_ANIMATION_KEY', functionSource + '\nreturn assertComfortPersistence;')(assert, loadLibrary, report, DISPLAY_PREFERENCES_KEY, MENU_ANIMATION_KEY);
+const initial = { textFace: 'pixel', textSize: 'standard', reducedEffects: false };
+const applied = { textFace: 'plain', textSize: 'large', reducedEffects: true };
+const library = emptyLibrary();
+const before = { localStorage: { [report.seededProfileKey]: JSON.stringify(library), [DISPLAY_PREFERENCES_KEY]: JSON.stringify(initial), [MENU_ANIMATION_KEY]: 'on', 'saved-flight': 'unchanged' }, sessionStorage: { token: 'unchanged' } };
+const next = display => ({ localStorage: { ...before.localStorage, [report.seededProfileKey]: JSON.stringify({ format: 'xonix-library-storage.v1', generation: 'legacy', library: { ...library, preferences: { ...library.preferences, ...display } } }), [DISPLAY_PREFERENCES_KEY]: JSON.stringify(display), [MENU_ANIMATION_KEY]: display === applied ? 'off' : 'on' }, sessionStorage: { ...before.sessionStorage } });
+// Use the actual serializer envelope name exported by current source rather than approximating it.
+const librarySource = await readFile(new URL('../game/library.mjs', import.meta.url), 'utf8');
+const storageFormat = librarySource.match(/(?:export )?const LIBRARY_STORAGE_VERSION = '([^']+)'/)[1];
+const envelope = display => {
+ const value = next(display), encoded = JSON.parse(value.localStorage[report.seededProfileKey]);
+ encoded.format = storageFormat;
+ value.localStorage[report.seededProfileKey] = JSON.stringify(encoded);
+ return value;
+};
+let checks = 0;
+check(before, envelope(applied), applied, 'off'); checks++;
+check(before, envelope(initial), initial, 'on'); checks++;
+for (const mutate of [
+ value => value.sessionStorage.token = 'changed',
+ value => value.localStorage['saved-flight'] = 'changed',
+ value => { const profile = JSON.parse(value.localStorage[report.seededProfileKey]); profile.library.preferences.showGrid = !profile.library.preferences.showGrid; value.localStorage[report.seededProfileKey] = JSON.stringify(profile); },
+ value => { const profile = JSON.parse(value.localStorage[report.seededProfileKey]); profile.generation = 'generation-unexpected'; value.localStorage[report.seededProfileKey] = JSON.stringify(profile); },
+ value => value.localStorage[report.seededProfileKey] = '{invalid',
+ value => value.localStorage[MENU_ANIMATION_KEY] = 'on',
+]) {
+ const value = envelope(applied); mutate(value);
+ assert.throws(() => check(before, value, applied, 'off')); checks++;
+}
+console.log(JSON.stringify({ checks, pass: true, browserLaunched: false, scope: 'Only pure persistence assertion functions extracted from ignored preparation helper.' }));

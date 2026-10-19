@@ -1,0 +1,153 @@
+{
+  "format": "SharedDemoHostedQueueCapV1",
+  "observedAt": "2026-10-19T08:48:16.008409+00:00",
+  "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "queueAgeSeconds": 933.008,
+  "job": {
+    "id": 117964159940,
+    "name": "demo_admission",
+    "head_sha": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "status": "queued",
+    "conclusion": null,
+    "started_at": "2026-10-19T08:32:43Z",
+    "completed_at": null,
+    "runner_name": "",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964159940"
+  },
+  "steps": [],
+  "pr": {
+    "baseRefOid": "d6e2bdb5b3e80d1df55cb42190e6550faa171d7d",
+    "headRefOid": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "mergeStateStatus": "UNSTABLE",
+    "mergeable": "MERGEABLE",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964160460",
+        "name": "admission",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Appearance preview"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515756/job/117964156839",
+        "name": "optional-practice",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Company edition candidates"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157637",
+        "name": "feature (gameplay)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157345",
+        "name": "feature (creator)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157484",
+        "name": "feature (presentation)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157428",
+        "name": "feature (recordings)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964156982",
+        "name": "feature (rooms)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515794/job/117964157587",
+        "name": "feature (local-ux)",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Industrial feature verification"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964159940",
+        "name": "demo_admission",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Appearance preview"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515756/job/117964157047",
+        "name": "candidate",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Company edition candidates"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964161426",
+        "name": "team_admission",
+        "startedAt": "2026-10-19T08:32:44Z",
+        "status": "QUEUED",
+        "workflowName": "Appearance preview"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964160422",
+        "name": "installed_admission",
+        "startedAt": "2026-10-19T08:32:43Z",
+        "status": "QUEUED",
+        "workflowName": "Appearance preview"
+      }
+    ]
+  },
+  "scope": "Read-only bounded monitoring; no job reruns or source/workflow changes. A queued job with no assigned runner yields neither pass nor failure and cannot clear the original 1efd hosted failure.",
+  "previousCandidate": {
+    "head": "b28698671b997060f73509ff622e6b7bc57d5e89",
+    "demoJobId": 117961732156,
+    "conclusion": "cancelled",
+    "runnerAssigned": false
+  }
+}

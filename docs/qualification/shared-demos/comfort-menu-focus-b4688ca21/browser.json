@@ -1,0 +1,435 @@
+{
+  "format": "SharedDemoComfortAndNativeMenuFocusBrowserV1",
+  "originalNativeProbeSHA256": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb",
+  "pausedOriginObserverSHA256": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea",
+  "started": "2026-10-19T09:06:33.929Z",
+  "complete": true,
+  "checks": [
+    {
+      "type": "ordinary-solo-advanced-and-paused",
+      "origin": "solo",
+      "checkpoint": {
+        "phase": "paused",
+        "id": 1,
+        "tick": 16,
+        "status": "running",
+        "classId": "scout",
+        "levelId": "signal-01",
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "295b86f0607e601c",
+          "sections": {
+            "identity": "a87f904112d2e052",
+            "configuration": "67780a210840e2ad",
+            "board": "fdfff9d1d17aa722",
+            "player": "ecf72552f54d7009",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "69388d95182847a8",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "a5d4f3a961261284",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4"
+          }
+        }
+      }
+    },
+    {
+      "type": "comfort-preview-read-only",
+      "origin": "solo",
+      "persistence": {
+        "sha256": "25cb8b1127cb37ca56e674798602fc69bace161b2f05be619ebfe914e3f623d4",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1",
+            "revealline.display.v1",
+            "revealline.fpv.keyboard-preset.v1",
+            "revealline.library.release-0.151.1.v1",
+            "revealline.library.release-0.151.1.v1.last-selection.v1",
+            "revealline.menu-animation.v1",
+            "revealline.suspended.release-0.151.1.v1",
+            "revealline.touch.v1"
+          ],
+          "sessionStorage": []
+        }
+      }
+    },
+    {
+      "type": "comfort-apply-only-explicit-display-and-menu-intent",
+      "origin": "solo",
+      "persistence": {
+        "sha256": "a79a3ce8144b8d76ee72abbbd2f8dc1428a15ac6e333a15d2cce2a029a772d79",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1",
+            "revealline.display.v1",
+            "revealline.fpv.keyboard-preset.v1",
+            "revealline.library.release-0.151.1.v1",
+            "revealline.library.release-0.151.1.v1.last-selection.v1",
+            "revealline.menu-animation.v1",
+            "revealline.suspended.release-0.151.1.v1",
+            "revealline.touch.v1"
+          ],
+          "sessionStorage": []
+        }
+      }
+    },
+    {
+      "type": "comfort-undo-restores-values-profile-and-focus",
+      "origin": "solo",
+      "persistence": {
+        "sha256": "57f3b5bd761690ab58ff760293e68655baf9aa25f9acbec183e139e7cd59585e",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1",
+            "revealline.display.v1",
+            "revealline.fpv.keyboard-preset.v1",
+            "revealline.library.release-0.151.1.v1",
+            "revealline.library.release-0.151.1.v1.last-selection.v1",
+            "revealline.menu-animation.v1",
+            "revealline.suspended.release-0.151.1.v1",
+            "revealline.touch.v1"
+          ],
+          "sessionStorage": []
+        }
+      }
+    },
+    {
+      "type": "comfort-followed-by-demo-back-preserves-paused-game-and-storage",
+      "origin": "solo",
+      "scope": "current",
+      "source": "first-signal-left",
+      "mode": "solo",
+      "persistence": {
+        "sha256": "2a5c4e6144a88a0dfbaafacd1acb47ff5e4e1f68e41c1821198c078ebb9a4f93",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1",
+            "revealline.display.v1",
+            "revealline.fpv.keyboard-preset.v1",
+            "revealline.library.release-0.151.1.v1",
+            "revealline.library.release-0.151.1.v1.last-selection.v1",
+            "revealline.menu-animation.v1",
+            "revealline.suspended.release-0.151.1.v1",
+            "revealline.touch.v1"
+          ],
+          "sessionStorage": []
+        }
+      }
+    },
+    {
+      "type": "comfort-followed-by-demo-back-preserves-paused-game-and-storage",
+      "origin": "solo",
+      "scope": "all",
+      "source": "snake:classic-snake-open-loop:standard",
+      "mode": "snake",
+      "persistence": {
+        "sha256": "2a5c4e6144a88a0dfbaafacd1acb47ff5e4e1f68e41c1821198c078ebb9a4f93",
+        "keys": {
+          "localStorage": [
+            "revealline.access.revealline.v1",
+            "revealline.display.v1",
+            "revealline.fpv.keyboard-preset.v1",
+            "revealline.library.release-0.151.1.v1",
+            "revealline.library.release-0.151.1.v1.last-selection.v1",
+            "revealline.menu-animation.v1",
+            "revealline.suspended.release-0.151.1.v1",
+            "revealline.touch.v1"
+          ],
+          "sessionStorage": []
+        }
+      }
+    },
+    {
+      "type": "held-entry-and-neutral-remain-watching",
+      "origin": "snake",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "tick": "1",
+      "practice": false
+    },
+    {
+      "type": "focused-space-pauses-and-resumes-without-practice",
+      "origin": "snake",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "tick": "1",
+      "practice": false
+    },
+    {
+      "type": "focused-space-advances-performance-without-practice",
+      "origin": "snake",
+      "previousSource": "snake:classic-snake-open-loop:standard",
+      "mode": "snake",
+      "source": "snake:classic-operation-runner-valve:standard",
+      "phase": "playing",
+      "tick": "0",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-moves-within-shared-toolbar",
+      "origin": "snake",
+      "focusedControl": "demo-next",
+      "mode": "snake",
+      "source": "snake:classic-operation-runner-valve:standard",
+      "phase": "playing",
+      "tick": "0",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-confirms-once-without-practice",
+      "origin": "snake",
+      "previousSource": "snake:classic-operation-runner-valve:standard",
+      "mode": "snake",
+      "source": "snake:classic-field-lane-window:standard",
+      "phase": "playing",
+      "tick": "0",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-back-leaves-shared-demo",
+      "origin": "snake"
+    },
+    {
+      "type": "isolated-preferences-and-persistence",
+      "origin": "snake"
+    },
+    {
+      "type": "held-entry-and-neutral-remain-watching",
+      "origin": "sim",
+      "mode": "sim",
+      "source": "sim:snake-hunt-interception-two-return-lanes-self-level-5aa29fc9c2ba76ef",
+      "phase": "playing",
+      "tick": "18",
+      "practice": false
+    },
+    {
+      "type": "focused-space-pauses-and-resumes-without-practice",
+      "origin": "sim",
+      "mode": "sim",
+      "source": "sim:snake-hunt-interception-two-return-lanes-self-level-5aa29fc9c2ba76ef",
+      "phase": "playing",
+      "tick": "19",
+      "practice": false
+    },
+    {
+      "type": "focused-space-advances-performance-without-practice",
+      "origin": "sim",
+      "previousSource": "sim:snake-hunt-interception-two-return-lanes-self-level-5aa29fc9c2ba76ef",
+      "mode": "sim",
+      "source": "sim:adventure-solar-farm-05-acro-db63feaa5ca42699",
+      "phase": "playing",
+      "tick": "1",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-moves-within-shared-toolbar",
+      "origin": "sim",
+      "focusedControl": "demo-next",
+      "mode": "sim",
+      "source": "sim:adventure-solar-farm-05-acro-db63feaa5ca42699",
+      "phase": "playing",
+      "tick": "13",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-confirms-once-without-practice",
+      "origin": "sim",
+      "previousSource": "sim:adventure-solar-farm-05-acro-db63feaa5ca42699",
+      "mode": "sim",
+      "source": "sim:courtyard-06-acro-5691d8d404d3a9a8",
+      "phase": "playing",
+      "tick": "17",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-back-leaves-shared-demo",
+      "origin": "sim"
+    },
+    {
+      "type": "isolated-preferences-and-persistence",
+      "origin": "sim"
+    }
+  ],
+  "errors": [],
+  "errorOverflow": 0,
+  "headBefore": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceBefore": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsBefore": {
+    "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256": "47d23dc2c0eb3ef27f32aabf0b30492537196d78fa783324172d021659ed1c75",
+  "emittedBefore": {
+    "manifest": {
+      "path": ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined/manifest.json",
+      "bytes": 1305172,
+      "sha256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+      "bytes": 2067388,
+      "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.inventory.json",
+      "bytes": 941657,
+      "sha256": "c54228729e1b24e9ee49de79463b47629aecf557fa1dccd2e04b666abca3062d"
+    },
+    "identity": {
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      }
+    }
+  },
+  "evidenceHelperSHA256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+  "scope": "Real emitted Solo comfort Preview/Apply/Undo and current/mixed demo Back with an ordinary paused checkpoint, plus the unchanged native Snake/SIM fourteen menu checks. Existing narrow Phaser constructor observer retains only a WeakRef to the ordinary host for read-only authoritative checkpoint comparison; it adds no scheduling/listener hook. No runtime module or response routing. The preview changes access credentials only. Physical controllers/radios remain a separate human check.",
+  "preview": {
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-2d24aee-b4688ca21-combined",
+      "manifestSHA256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "files": 5956,
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+        "runtime": {
+          "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+          "files": 10000,
+          "bytes": 404485348
+        },
+        "buildInput": {
+          "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+          "files": 9406,
+          "bytes": 348401321
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "43d4661157e2d2d683fefcf981a10e859e980b740bd15a5fa5893f91d85fffee"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "a1b5a3f2495416809b59f5db97bd3e183d81d55f05fc09db523e16f746824002"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      },
+      {
+        "path": "game/snake/play.html",
+        "original": {
+          "bytes": 17647,
+          "sha256": "4bd6c8f22097d3c37a5ff2b965e6b941cf59a42ca22388583d4083d3d9a6d7d1"
+        },
+        "served": {
+          "bytes": 17621,
+          "sha256": "87387ee19d130e355d015487c0489cffb9049b1cdebae708424eafa4fc4e872b"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      },
+      {
+        "path": "optional-practice/fpv-worlds/index.html",
+        "original": {
+          "bytes": 49494,
+          "sha256": "f36752ecf688965c81db7828c0702fe4e41a3d2115602b8e6fd70ec8d085fe10"
+        },
+        "served": {
+          "bytes": 49468,
+          "sha256": "c793a25b5482c55229f65c9aafd7f784063063f71b0d9b5122a24ab2efd6d138"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "seededProfileKey": "revealline.library.release-0.151.1.v1",
+  "limitations": [
+    "Emitted bytes are verified against the held source; only local HTML access credentials differ. No offline HTML integrity or physical-controller claim."
+  ],
+  "browserEngine": "chromium",
+  "browserVersion": "155.0.8059.85",
+  "headAfter": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceAfter": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsAfter": {
+    "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256After": "47d23dc2c0eb3ef27f32aabf0b30492537196d78fa783324172d021659ed1c75",
+  "emittedAfter": {
+    "manifest": {
+      "path": ".cache/shared-demos-emitted-2d24aee-b4688ca21-combined/manifest.json",
+      "bytes": 1305172,
+      "sha256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+      "bytes": 2067388,
+      "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.inventory.json",
+      "bytes": 941657,
+      "sha256": "c54228729e1b24e9ee49de79463b47629aecf557fa1dccd2e04b666abca3062d"
+    },
+    "identity": {
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      }
+    }
+  },
+  "evidenceHelperSHA256After": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+  "pausedOriginObserverSHA256After": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea",
+  "sourceUnchanged": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T09:06:55.190Z",
+  "previewClosed": true
+}

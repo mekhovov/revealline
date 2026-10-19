@@ -1,0 +1,125 @@
+{
+  "format": "SharedDemoSignal08PortabilityAssessmentV1",
+  "observedAt": "2026-10-19T09:23:29.342617+00:00",
+  "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "originalFailure": {
+    "path": ".cache/hosted-demo-admission-failure-b4688ca21.json",
+    "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+    "bytes": 2874
+  },
+  "observation": {
+    "path": ".cache/signal08-x86-native-emitted-b4688ca21.json",
+    "sha256": "809a1e97f9d6cc3de7eb284a5af534772d3acaba84268e19156c55f830debf03",
+    "bytes": 50387
+  },
+  "supervision": {
+    "path": ".cache/signal08-x86-native-emitted-b4688ca21.supervision.json",
+    "sha256": "2c21ebd149ceb214567be804848965af0830412ac35701d532a669dc053e81a4",
+    "bytes": 59078
+  },
+  "initialArchitectureGuardFailure": {
+    "path": ".cache/signal08-x86-emitted-b4688ca21.json",
+    "sha256": "87c27c6e55ae281618244495beac8d18bd1b1a7f554c91372bd3ebfca07270aa",
+    "bytes": 6936
+  },
+  "sourcePins": [
+    {
+      "path": "game/demo-sources.mjs",
+      "sha256": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+      "bytes": 8049
+    },
+    {
+      "path": "game/demo-catalog.mjs",
+      "sha256": "82e90e4cecd8d2dc5dd0eaf9ce491bcb0296d1fe2c11bc7df7aee48446bf7101",
+      "bytes": 11812
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df",
+      "bytes": 987
+    },
+    {
+      "path": "game/replay-player.mjs",
+      "sha256": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+      "bytes": 10545
+    },
+    {
+      "path": "game/replay.mjs",
+      "sha256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+      "bytes": 33108
+    },
+    {
+      "path": "game/demo-replay-diagnostics.mjs",
+      "sha256": "c213fc37a6270fc5b6ed4f467f8730e04835acdba8ba94c2be20b8ff27dc4145",
+      "bytes": 2103
+    },
+    {
+      "path": "game/core/field-course.mjs",
+      "sha256": "fbd86842f281334088a35e1793c65ba4d323fe64209f81546e47a06f87af0e0d",
+      "bytes": 3605
+    },
+    {
+      "path": "scripts/qualify-solo-browser.mjs",
+      "sha256": "03f1eb36169cc8dd7e3d82f2562fc30f1588bddd2309a66194f592c26618f972",
+      "bytes": 18228
+    },
+    {
+      "path": "scripts/merge-solo-browser-demos.mjs",
+      "sha256": "c7f6e15210486bd4d61b3a52466076de6914eb48472ef3571f9834d96661b911",
+      "bytes": 3128
+    }
+  ],
+  "facts": [
+    "Hosted Linux Node22.13.1 x64 fails strict source solo-qualified-478808a96f4fbf5e /signal-08 after primary and all three browser payloads.",
+    "Qualified source always uses full strict prepareReplayPlayer. Existing legacy reviewed enemy-only compatibility cannot apply and remains unchanged.",
+    "All four published payloads have identical content/input trace and7322ticks terminalwin summary; their final enemy and some clock hashes differ.",
+    "Clock projection includes respawnAt and cutStartedAt, beyond terminal summary; a clock hash mismatch does not by itself establish a different terminal outcome.",
+    "Authored signal-08 has two field-course.v2 bouncers using ordinary Math.hypot/atan2/cos/sin collision variation and a lane boss. This is a relevant portability surface, not a proven cause of the Linux final mismatch.",
+    "Native OS process samples confirm both forced-Intel Chrome browser and renderer as X86-64(translated), even though UA high-entropy architecture reports hostarm.",
+    "Forced-Intel Chrome fully verifies existing Chromium payload; actual finalenemies5d5f527833603614 differs from Linuxc3ba914e89640524. First600hash2de4810180a47587 and finalclock83be6483dc2b7278 agree.",
+    "All four observed runs terminalwin at7322ticks with12captures and1183claimed cells; this does not admit failing variants or qualify Linux."
+  ],
+  "probeComplete": true,
+  "sourceStable": true,
+  "cleanupVerified": true,
+  "elapsedSeconds": 26.31160829199871,
+  "nativeArchitecture": [
+    {
+      "type": "browser",
+      "codeType": "X86-64 (translated)",
+      "sample": {
+        "path": ".cache/signal08-x86-native-emitted-b4688ca21.browser.sample.txt",
+        "sha256": "6fabc92346dc970c86996814568779fdb1d2b8687fbc9a6250a5c5dbe74d59f6",
+        "bytes": 252882
+      }
+    },
+    {
+      "type": "renderer",
+      "codeType": "X86-64 (translated)",
+      "sample": {
+        "path": ".cache/signal08-x86-native-emitted-b4688ca21.renderer.sample.txt",
+        "sha256": "b40ccfe33979691b10bf870e6456a143005abcd828cd3f200db09bbfb685636f",
+        "bytes": 212770
+      }
+    }
+  ],
+  "remaining": [
+    "Obtain actual hosted Node22.13.1 Linux capture or a local reproduction matching its complete authoritative result. Current x86Chrome is not that reproduction.",
+    "If actual capture retains exact content/input/duration, add the normally recorded/exported/reverified proof as one existing replayVariants entry (signal-08currently0of3), preserving all strict admission and browser preferences. Do not construct checkpoints from failure hashes.",
+    "Capture five-second sidecar checkpoints from real native simulation, independently replayto recordedterminal and verify meaningfulprogress. Then require exact-head hosted installed-source test to pass.",
+    "The existing one-enemy<=4000tick historical portability helper is outside scope for this7322tick/three-enemy source; do not silently relax those fixed diagnostic contracts."
+  ],
+  "prohibitedInferences": [
+    "Not Linux proof.",
+    "No exact math/library cause established.",
+    "First installed-source failure may stop before later catalog entries; passing this case alone cannot certify all17."
+  ],
+  "changes": {
+    "production": false,
+    "verification": false,
+    "recordings": false,
+    "trackedHarness": false,
+    "head": false,
+    "ignoredObservationFilesOnly": true
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "allocatedBytesBefore": 143523840,
+  "backupDirectoryIdentity": {
+    "device": 905969668,
+    "inode": 37568146,
+    "links": 1,
+    "mode": 16832,
+    "mtimeNs": 1792399535768678600,
+    "size": 16384,
+    "uid": 502
+  },
+  "backupEveryPathSizeAndHashVerified": true,
+  "complete": true,
+  "completedAt": "2026-10-19T08:45:49.771690+00:00",
+  "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-capture-1efd2b31f-20261019T084402Z-6b4ea08c",
+  "externalParentIdentity": {
+    "device": 905969668,
+    "inode": 37530202,
+    "links": 1,
+    "mode": 16832,
+    "mtimeNs": 1792399442208549500,
+    "size": 16384,
+    "uid": 502
+  },
+  "fileInventorySHA256": "1d340da17e2785f47cc819935e2c49f19de6bf7b62125203a546384553bca39d",
+  "format": "shared-demo-preserved-generated-capture.v1",
+  "freeBytesAfter": 867594240,
+  "freeBytesBefore": 728903680,
+  "inventorySHA256": "db7b1e402eb450bb608480502e600669484d7dac8f66b429605138ea72642a90",
+  "limitations": [
+    "SMB free-space and fsync semantics are those reported by the mounted filesystem.",
+    "Observed free-space changes can include concurrent activity outside this scoped operation."
+  ],
+  "logicalBytes": 142906583,
+  "manifestSHA256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+  "noOpenHandlesBefore": {
+    "returnCode": 1,
+    "stderrEmpty": true,
+    "stdoutEmpty": true
+  },
+  "noOpenHandlesBeforeRemoval": {
+    "returnCode": 1,
+    "stderrEmpty": true,
+    "stdoutEmpty": true
+  },
+  "observedFreeBytesChange": 138690560,
+  "phase": "complete",
+  "proofPath": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-capture-1efd2b31f-20261019T084402Z-6b4ea08c.file-proof.json",
+  "proofSHA256": "324a00abf21e8722e88278fed13bb1795d122459a80b8d109e08bfbc688c0113",
+  "regularFiles": 287,
+  "removedOnlyVerifiedGeneratedCapture": true,
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-1efd2b31f-storage-retry",
+  "sourceAudit": "docs/qualification/shared-demos/main-pages-demo-final-16ebd7b-1efd2b31f-storage-retry.json",
+  "sourceAuditSHA256": "2417b59a5ffca297cad6d67989669c2d3ff64f1067b188e9469b385509d9f70b",
+  "sourceIdentity": {
+    "device": 16777235,
+    "inode": 148192763,
+    "links": 4,
+    "mode": 16877,
+    "mtimeNs": 1792388365337141683,
+    "size": 128,
+    "uid": 502
+  },
+  "sourceRemoved": true,
+  "sourceUnchangedDuringCopy": true,
+  "startedAt": "2026-10-19T08:44:01.702875+00:00",
+  "verifiedAt": "2026-10-19T08:45:48.649908+00:00"
+}

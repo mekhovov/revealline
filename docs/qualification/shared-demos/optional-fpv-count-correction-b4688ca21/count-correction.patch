@@ -1,0 +1,45 @@
+--- a/scripts/test-optional-fpv-package.mjs
++++ b/scripts/test-optional-fpv-package.mjs
+@@ -336,7 +336,7 @@
+     admission = await validateOptionalPackageAdmission(f.envelope, f);
+   assert.deepEqual(first.zip, second.zip);
+   assert.equal(admission.publicEligible, false);
+-  assert.equal(admission.packages[0].files, 148);
++  assert.equal(admission.packages[0].files, 147);
+   for (const entry of first.entries.filter((entry) => entry.name.endsWith('.html'))) {
+     assert.match(entry.bytes.toString(), /access-gate:start/, entry.name);
+     assert.match(entry.bytes.toString(), /data-access-state="locked"/, entry.name);
+@@ -360,7 +360,7 @@
+   assert.equal(manifest.icons.length, 2);
+   assert.equal(manifest.id, '/revealline/practice/civilian-fpv/');
+   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
+-  assert.equal(source.size, 150);
++  assert.equal(source.size, 149);
+   assertSharedRadioClosure(first, source);
+   assert.ok(
+     [...source.values()].reduce((total, bytes) => total + bytes.length, 0) <= 12 * 1024 * 1024,
+@@ -475,13 +475,13 @@
+   assert.deepEqual(first.zip, second.zip);
+   assert.equal(first.manifest.id, 'civilian-fpv');
+   assert.equal(first.manifest.installation.id, '/revealline/practice/civilian-fpv/');
+-  assert.equal(first.entries.length, 148);
++  assert.equal(first.entries.length, 147);
+   assert.ok(first.entries.reduce((sum, item) => sum + item.bytes.length, 0) < 12 * 1024 * 1024);
+   assert.ok(first.entries.every(({ name }) => !name.includes('civilian-flight')));
+   const f = candidate(first);
+   const admitted = await validateOptionalPackageAdmission(f.envelope, f);
+   assert.equal(admitted.publicEligible, false);
+-  assert.equal(admitted.packages[0].files, 148);
++  assert.equal(admitted.packages[0].files, 147);
+   const localeProjection = first.entries
+     .find((entry) => entry.name === 'game/i18n/catalogs.mjs')
+     .bytes.toString();
+@@ -490,7 +490,7 @@
+   const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
+   assert.equal(inventory.licenses.find((item) => item.dependency === 'three').version, '0.186.1');
+   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
+-  assert.equal(source.size, 150);
++  assert.equal(source.size, 149);
+   for (const locale of ['en', 'uk'])
+     assert.ok(inventory.inputs.some((row) => row.path === `game/locales/${locale}/common.json`));
+   for (const asset of [

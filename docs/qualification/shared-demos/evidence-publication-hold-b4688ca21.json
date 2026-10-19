@@ -1,0 +1,274 @@
+{
+  "format": "SharedDemoEvidencePublicationHoldV1",
+  "reviewedAt": "2026-10-19T09:12:55.512616+00:00",
+  "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+  "readOnlyReview": true,
+  "workflows": [
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "bytes": 59546,
+      "sha256": "cbdb72e7c93bc3ce268caa5641f87c94f566e3297b74a8dff6a8ed02dd44fa6f",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "matchesCommittedBytes": true,
+      "excerpts": [
+        {
+          "startLine": 3,
+          "endLine": 8,
+          "text": "on:\n  pull_request:\n    paths:\n      - '.github/workflows/appearance-preview.yml'\n      - 'docs/appearance-preview-testing.md'\n      - 'game/app.mjs'"
+        },
+        {
+          "startLine": 20,
+          "endLine": 24,
+          "text": "      - 'game/replay.mjs'\n      - 'game/demo-library.mjs'\n      - 'game/demo-bot.mjs'\n      - 'game/demo-bot-player.mjs'\n      - 'game/demo-sources.mjs'"
+        },
+        {
+          "startLine": 45,
+          "endLine": 50,
+          "text": "      - 'game/test/owned-recorder.test.mjs'\n      - 'game/test/demo-library-indexeddb.test.mjs'\n      - 'game/test/demo-bot.test.mjs'\n      - 'game/test/demo-sources.test.mjs'\n      - 'game/test/demo-scene-transition.test.mjs'\n      - 'game/test/demo-loading-host.test.mjs'"
+        },
+        {
+          "startLine": 254,
+          "endLine": 259,
+          "text": "permissions:\n  contents: read\n\nconcurrency:\n  group: appearance-preview-${{ github.event.pull_request.number }}\n  cancel-in-progress: true"
+        },
+        {
+          "startLine": 405,
+          "endLine": 425,
+          "text": "  demo_admission:\n    runs-on: ubuntu-latest\n    timeout-minutes: 19\n    env:\n      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}\n      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\n    outputs:\n      proof: ${{ steps.admission_receipt.outputs.proof }}\n      artifactId: ${{ steps.admission_artifact.outputs.artifact-id }}\n      artifactURL: ${{ steps.admission_artifact.outputs.artifact-url }}\n      artifactDigest: ${{ steps.admission_artifact.outputs.artifact-digest }}\n    steps:\n      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5\n        timeout-minutes: 3\n        with:\n          ref: ${{ github.event.pull_request.head.sha }}\n          persist-credentials: false\n      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5\n        timeout-minutes: 2\n        with:\n          node-version: '22.13.1'"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "bytes": 9366,
+      "sha256": "8a0398db57717f2fc0109d4b9ec8f11ef14f3f448e1f30fd408dac9f5923d19e",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "matchesCommittedBytes": true,
+      "excerpts": [
+        {
+          "startLine": 3,
+          "endLine": 14,
+          "text": "on:\n  pull_request:\n    paths:\n      - 'game/**'\n      - 'optional-practice/**'\n      - 'authoring/motion-lab/**'\n      - 'authoring/company-studio/**'\n      - 'scripts/**'\n      - 'publishing/**'\n      - 'docs/verification/company-review*'\n      - 'package*.json'\n      - '.github/workflows/company-edition-candidate.yml'"
+        },
+        {
+          "startLine": 38,
+          "endLine": 40,
+          "text": "concurrency:\n  group: company-candidate-${{ github.event.pull_request.number || github.ref }}\n  cancel-in-progress: true"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/industrial-feature-tests.yml",
+      "bytes": 2192,
+      "sha256": "08a0d45b61439eac811424e3b0616ee24e89dbd62ab2a8e7ff6de050a74c0cd0",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "matchesCommittedBytes": true,
+      "excerpts": [
+        {
+          "startLine": 3,
+          "endLine": 14,
+          "text": "on:\n  pull_request:\n    paths:\n      - '.github/workflows/industrial-feature-tests.yml'\n      - 'publishing/**'\n      - 'scripts/**'\n      - 'game/**'\n      - 'services/rooms/**'\n      - 'optional-practice/**'\n      - 'authoring/**'\n      - 'package.json'\n      - 'package-lock.json'"
+        },
+        {
+          "startLine": 19,
+          "endLine": 21,
+          "text": "concurrency:\n  group: industrial-features-${{ github.event.pull_request.number }}\n  cancel-in-progress: true"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "bytes": 19972,
+      "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "matchesCommittedBytes": true,
+      "excerpts": [
+        {
+          "startLine": 3,
+          "endLine": 9,
+          "text": "on:\n  pull_request:\n    branches: [main]\n    # Metadata changes do not alter admission. Gate only source-head lifecycle\n    # events so title, labels, milestones, and draft promotion cannot create\n    # redundant queue work.\n    types: [opened, synchronize, reopened]"
+        },
+        {
+          "startLine": 14,
+          "endLine": 22,
+          "text": "concurrency:\n  group: source-gates-${{ github.ref }}\n  # Superseded PR heads cannot qualify the current source; do not queue behind them.\n  # Release routing and manual runs keep their existing serialization.\n  cancel-in-progress: ${{ github.event_name == 'pull_request' }}\n\n# `release-ready` is the single required status on protected `main`. Do not add\n# pull-request path filters above: a filtered workflow leaves a required check\n# pending forever. Maintenance is classified in preflight and exits quickly."
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/fastline-auto-merge.yml",
+      "bytes": 3061,
+      "sha256": "be28689f2eef8a104f37a85cee0858f3b45ec0c68455e261600b43a5c8264068",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "matchesCommittedBytes": true,
+      "excerpts": [
+        {
+          "startLine": 17,
+          "endLine": 31,
+          "text": "  pull_request:\n    branches: [main]\n    types:\n      [\n        opened,\n        reopened,\n        synchronize,\n        edited,\n        labeled,\n        unlabeled,\n        milestoned,\n        demilestoned,\n        ready_for_review,\n        converted_to_draft,\n      ]"
+        },
+        {
+          "startLine": 42,
+          "endLine": 46,
+          "text": "concurrency:\n  group: fastline-merge-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || github.run_id }}\n  # Metadata changes are cheap and read current state. Serializing them avoids\n  # cancelled controller checks poisoning GitHub's merge-state rollup.\n  cancel-in-progress: false"
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/stage-unallocated-pr.yml",
+      "bytes": 536,
+      "sha256": "9dfc2fbc3b4913f2cf66d380b1c8da01b553e4dfd05516d76616fbb2a841bef1",
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "matchesCommittedBytes": true,
+      "excerpts": [
+        {
+          "startLine": 3,
+          "endLine": 10,
+          "text": "on:\n  pull_request_target:\n    types:\n      [opened, reopened]\n\nconcurrency:\n  group: stage-unallocated-pr-${{ github.event.pull_request.number }}\n  cancel-in-progress: true"
+        }
+      ]
+    }
+  ],
+  "matchingExistingPRSourcePaths": [
+    "game/app.mjs",
+    "game/demo-sources.mjs",
+    "game/test/demo-sources.test.mjs"
+  ],
+  "pathFilterConclusion": "A documentation-only commit does not make this source-changing PR documentation-only. GitHub evaluates pull_request path filters against the complete three-dot topic-branch diff. These existing matched source paths remain in the PR; source-gates has no path filter at all.",
+  "concurrencyConclusion": "Appearance preview, Company candidates and Industrial features key concurrency by PR number and cancel-in-progress=true. Source validation keys by the PR merge ref and also cancels superseded PR runs. A new synchronized head can replace/cancel the pending or active run in each corresponding group, discarding its current queue position.",
+  "observedHostedState": {
+    "receipt": {
+      "path": "docs/qualification/shared-demos/hosted-b4688ca21-after-browser-audit-090930.json",
+      "bytes": 6485,
+      "sha256": "35527788fc93d017e92bd9785a3cd5086e8952d6e0354d1c7f55e05fdfb63815"
+    },
+    "observedAt": "2026-10-19 09:09:30 UTC",
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "mergeable": "MERGEABLE",
+    "counts": {
+      "QUEUED": 11,
+      "IN_PROGRESS": 2
+    },
+    "running": [
+      {
+        "name": "optional-practice",
+        "workflow": "Company edition candidates",
+        "startedAt": "2026-10-19T09:09:04Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39223515756/job/117964156839"
+      },
+      {
+        "name": "candidate",
+        "workflow": "Company edition candidates",
+        "startedAt": "2026-10-19T09:09:28Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39223515756/job/117964157047"
+      }
+    ],
+    "demoAdmission": {
+      "id": 117964159940,
+      "run_id": 39223515789,
+      "head_sha": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "status": "queued",
+      "conclusion": null,
+      "runner_id": 0,
+      "runner_name": "",
+      "steps": [],
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964159940"
+    },
+    "scope": "Exact retained09:09:30UTC snapshot. No live request made by this review; queued/in-progress are not passing results and queue cause/finish time remains unknown."
+  },
+  "localAcceptance": {
+    "additionalUncompletedLocalAutomatedGateFound": false,
+    "audits": [
+      {
+        "path": "docs/qualification/shared-demos/build-independent-review-b4688ca21.json",
+        "bytes": 8783,
+        "sha256": "da7391c13dafb0e3e5273cdb9e1c2a05edca2be39f42f4b90404d1d4fe7f4d89",
+        "complete": true,
+        "reviewedAt": "2026-10-19T09:01:50.157360+00:00"
+      },
+      {
+        "path": "docs/qualification/shared-demos/browser-independent-review-b4688ca21.json",
+        "bytes": 12410,
+        "sha256": "167d52411a2a81d6f20d2607422d0e7f5371ae2039b62a64ca87cec1351755e4",
+        "complete": true,
+        "reviewedAt": "2026-10-19T09:09:14.889201+00:00"
+      },
+      {
+        "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21-independent-review.json",
+        "bytes": 11176,
+        "sha256": "7f88a5557c29e25c32cb23b8d5e593c4f6a1f31a1bd121fb37713efa70a000c4",
+        "complete": true,
+        "reviewedAt": "2026-10-19T09:09:32.712019+00:00"
+      },
+      {
+        "path": "docs/qualification/shared-demos/packaging-candidates-b4688ca219-independent-review.json",
+        "bytes": 64186,
+        "sha256": "e24807db9b7731dcf4a05b8edeb267414a21b621fe8da0770b523c966adcd2ad",
+        "complete": true,
+        "reviewedAt": "2026-10-19T08:45:43.112870+00:00"
+      }
+    ],
+    "completedCounts": {
+      "canonicalPackages": 21,
+      "buildStages": 4,
+      "browserMatrixJobs": 11,
+      "browserMatrixChecks": 135,
+      "comfortNativeFocusChecks": 20
+    },
+    "humanAcceptanceComplete": false,
+    "requiredHostedAcceptanceComplete": false,
+    "remaining": "Capture all required hosted results and diagnose the exact Linux replay mismatch if it recurs; human/device review remains unscheduled. No unchanged native corpus/endurance rerun indicated."
+  },
+  "recommendation": "Keep published b468 unchanged until the outstanding hosted diagnostics/results settle. Preserve audited documentation/evidence locally and report the completed local milestone in the PR description. Then commit/push the evidence once, retaining original source identities and allowing the new head to satisfy its required checks. No workflow changes, job cancellations/restarts, commit suppression, branches or HEAD changes were performed.",
+  "metadataPublicationBoundary": "PR description edits do not trigger the default opened/synchronize/reopened source workflows. They can enqueue Fastline exact-head auto-merge reconciliation because it explicitly includes edited, but that uses a distinct fastline-merge concurrency group and cannot cancel Appearance/Company/Industrial/source-gate runs. The inspected controller rejects draft PRs. A comment is also outside these source triggers; no issue_comment subscription exists in the inspected workflows.",
+  "officialDocumentation": [
+    {
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#git-diff-comparisons",
+      "supports": "PR path-filter comparison uses the full three-dot diff."
+    },
+    {
+      "url": "https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency",
+      "supports": "Concurrency groups replace pending work and cancellation controls active work."
+    },
+    {
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request",
+      "supports": "Default PR activity types are opened, synchronize and reopened; ordinary comments use issue_comment."
+    }
+  ],
+  "documentationReview": {
+    "files": [
+      {
+        "path": "docs/shared-game-demos-plan.md",
+        "bytes": 15885,
+        "sha256": "3b1dfc67adbcb17200bf59aad100f65ebabb9b10d2da42d4a83c5d16e4688c1b"
+      },
+      {
+        "path": "docs/shared-game-demos.md",
+        "bytes": 15354,
+        "sha256": "caf42820cc084a87f1608ab2c655f21beb6ad9fbea9123fb02a27ede6eccac03"
+      },
+      {
+        "path": "docs/qualification/shared-demos/README.md",
+        "bytes": 85071,
+        "sha256": "f57a8ab96d0be563418ef2ba71c2baf6fe72967c98ef84efae6e5c69ded74de5"
+      }
+    ],
+    "scope": "Current working documentation reviewed after all four local audits were promoted; historical failed/incomplete evidence remains distinct. No further local automated item found. Parent owns final copy cleanup and publication."
+  },
+  "limitations": [
+    "Review of exact held workflow bytes and official documented behavior, not a push experiment.",
+    "Main was not fetched or rebased and no workflow/main changes were chased.",
+    "Successful local source-bound verification does not resolve an unassigned Linux job or physical acceptance."
+  ],
+  "draftController": {
+    "path": "publishing/fastline-merge-controller.mjs",
+    "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "matchesCommittedBytes": true,
+    "sha256": "eee8ca3661f04112f327ccc3d99fee3fe4866e8025dcb0fd8d09d41d2f77a9b4",
+    "bytes": 58466,
+    "startLine": 1082,
+    "endLine": 1083,
+    "text": "    if (pullRequest.draft !== false)\n      return \"pull request is draft or draft state is unknown\";"
+  }
+}

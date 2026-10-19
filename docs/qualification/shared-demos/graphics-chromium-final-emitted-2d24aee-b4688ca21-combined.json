@@ -1,0 +1,344 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T09:05:03.160Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-44273034491a74e4",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "solo-qualified-44273034491a74e4",
+        "modeId": "solo",
+        "at": 1792400709604,
+        "loadingMs": 1286.0999999977648,
+        "preparation": {
+          "status": "ready",
+          "stage": "source",
+          "elapsedMs": 1286,
+          "durationsMs": {
+            "preparation": 0.10000000149011612,
+            "prefetch": 0,
+            "retirement": 1.0999999977648258,
+            "adapter": 0,
+            "source": 1284.8,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · First return",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:chalk-quarry-haul-switchbacks:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "survival:chalk-quarry-haul-switchbacks:standard",
+        "modeId": "survival",
+        "at": 1792400713945,
+        "loadingMs": 3291.699999999255,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 3291.7,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0.9000000022351742,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.19999999925494194,
+            "payload": 0,
+            "verification": 3177.699999999255,
+            "scene-import": 9,
+            "artwork": 61.399999998509884,
+            "renderer": 42.4,
+            "mount": 0.10000000149011612
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19598,
+              "totalTicks": 19598,
+              "elapsedMs": 3177.7
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Haul Switchbacks",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 17
+        }
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:container-yard-02-acro-8b75f2fd5817aa83",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:container-yard-02-acro-8b75f2fd5817aa83",
+        "modeId": "sim",
+        "at": 1792400715336,
+        "loadingMs": 348.6000000014901,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 348.6,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0.8000000007450581,
+            "retirement": 0.09999999776482582,
+            "adapter": 0,
+            "source": 180.10000000149012,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 167.6
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Container survey",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-field-guard-return:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-field-guard-return:standard",
+        "modeId": "snake",
+        "at": 1792400715487,
+        "loadingMs": 46.599999997764826,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 46.6,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0.7999999970197678,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 45.70000000298023,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.1
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Guard Return",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "real-webgl-loss-recovery",
+      "mode": "snake",
+      "source": "snake:classic-expedition-clockwork-intercepts:standard",
+      "phase": "playing",
+      "failure": "sim:snake-hunt-approach-windows-staggered-roofs-acro-1d49ebd2e6260507 demo-mode-unavailable: SIM graphics context was lost.",
+      "failureDetails": {
+        "event": "playback-failed",
+        "sourceId": "sim:snake-hunt-approach-windows-staggered-roofs-acro-1d49ebd2e6260507",
+        "modeId": "sim",
+        "at": 1792400717030,
+        "loadingMs": null,
+        "preparation": null,
+        "code": "demo-mode-unavailable",
+        "message": "SIM graphics context was lost.",
+        "stack": "Error: SIM graphics context was lost.\n    at failMode (http://127.0.0.1:18773/game/demo-modes/sim.mjs:3:17)\n    at onContextLost (http://127.0.0.1:18773/game/demo-modes/sim.mjs:156:23)\n    at HTMLCanvasElement.lost (http://127.0.0.1:18773/optional-practice/civilian-fpv/renderer.mjs:3555:5)"
+      },
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-expedition-clockwork-intercepts:standard",
+        "modeId": "snake",
+        "at": 1792400717076,
+        "loadingMs": 42.900000002235174,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 42.9,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0.6000000014901161,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 42.19999999925494,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0.1
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Clockwork Intercepts",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "pause",
+      "mode": "snake"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-2d24aee-b4688ca21-combined",
+      "manifestSHA256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+      "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+      "files": 5956,
+      "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+      "sourceFingerprint": {
+        "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+        "files": 10000,
+        "bytes": 404485348
+      },
+      "buildInputFingerprint": {
+        "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+        "files": 9406,
+        "bytes": 348401321
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+        "runtime": {
+          "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+          "files": 10000,
+          "bytes": 404485348
+        },
+        "buildInput": {
+          "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+          "files": 9406,
+          "bytes": 348401321
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "43d4661157e2d2d683fefcf981a10e859e980b740bd15a5fa5893f91d85fffee"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "a1b5a3f2495416809b59f5db97bd3e183d81d55f05fc09db523e16f746824002"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "enduranceStarted": "2026-10-19T09:05:17.921Z",
+  "enduranceFinalObservation": {
+    "finalObservationGapMs": 0
+  },
+  "enduranceFinished": "2026-10-19T09:05:17.921Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T09:05:18.445Z",
+  "previewClosed": true
+}

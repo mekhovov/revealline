@@ -1,0 +1,316 @@
+{
+  "format": "SharedDemoIndependentBrowserReviewV1",
+  "reviewedAt": "2026-10-19T09:09:14.889201+00:00",
+  "complete": true,
+  "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "integrationBase": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+  "aggregate": {
+    "path": "docs/qualification/shared-demos/browser-refresh-final-emitted-2d24aee-b4688ca21-combined.json",
+    "sha256": "757aea2ab57c3ab20d6214015f597e4b6cf5bbddc1fe446201daf7771873cf80",
+    "bytes": 52087
+  },
+  "counts": {
+    "jobs": 11,
+    "checks": 135,
+    "browserErrors": 0
+  },
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "05cb055569df7fda6b9a26a7ac3767345e62846a3bea3bea7f91f364b2b78d88",
+    "bytes": 423
+  },
+  "currentRecomputedFingerprints": {
+    "runtime": {
+      "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+      "files": 10000,
+      "bytes": 404485348
+    },
+    "harness": {
+      "sha256": "254bda8654f625c557dcb964ce912b09371850413efb6a13429258cfb871b677",
+      "files": 933,
+      "bytes": 11161728
+    },
+    "buildInputs": {
+      "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+      "files": 9406,
+      "bytes": 348401321
+    }
+  },
+  "emittedManifest": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-2d24aee-b4688ca21-combined/manifest.json",
+    "sha256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+    "bytes": 1305172
+  },
+  "emittedInventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf",
+  "emittedFiles": 5956,
+  "emittedAudit": {
+    "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.json",
+    "sha256": "bc7fec30f0d3abc41a0cc088731379054cf63c73397c9f185dc2d2e79f59d2ba",
+    "bytes": 2067388
+  },
+  "emittedPublishedInventory": {
+    "path": "docs/qualification/shared-demos/main-pages-demo-final-2d24aee-b4688ca21-combined.inventory.json",
+    "sha256": "c54228729e1b24e9ee49de79463b47629aecf557fa1dccd2e04b666abca3062d",
+    "bytes": 941657
+  },
+  "children": [
+    {
+      "id": "restoration-webkit",
+      "path": "docs/qualification/shared-demos/restoration-webkit-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "810c1bf0e9dc1a8ac99f8b22aca38409fb65c566324936f5194b00cbd9f5873f",
+      "bytes": 62964,
+      "checks": 12,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "child-qualifier",
+      "script": {
+        "path": "scripts/qualify-demo-restoration-browser.mjs",
+        "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+        "bytes": 23633
+      }
+    },
+    {
+      "id": "restoration-chromium",
+      "path": "docs/qualification/shared-demos/restoration-chromium-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "a5544f86887fbb8a3ca79827ff940a581ba5011a8235779d1f872944b9be5c36",
+      "bytes": 54623,
+      "checks": 12,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "child-qualifier",
+      "script": {
+        "path": "scripts/qualify-demo-restoration-browser.mjs",
+        "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+        "bytes": 23633
+      }
+    },
+    {
+      "id": "restoration-firefox",
+      "path": "docs/qualification/shared-demos/restoration-firefox-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "4fea3606bc19a25e8ab2caf06ccc493b5f2b6dbebf3ac7a94baf59a5665892e6",
+      "bytes": 59177,
+      "checks": 12,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "child-qualifier",
+      "script": {
+        "path": "scripts/qualify-demo-restoration-browser.mjs",
+        "sha256": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+        "bytes": 23633
+      }
+    },
+    {
+      "id": "mixed-chromium",
+      "path": "docs/qualification/shared-demos/mixed-chromium-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "9c063ccc8962fcaf02b27a62b6d9f83ca501845762a9f42441e85a6f9cfd6f77",
+      "bytes": 39909,
+      "checks": 28,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "child-qualifier",
+      "script": {
+        "path": "scripts/qualify-shared-demo-browser.mjs",
+        "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+        "bytes": 18020
+      }
+    },
+    {
+      "id": "mixed-firefox",
+      "path": "docs/qualification/shared-demos/mixed-firefox-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "b852608d78b0f7b232f8a1f8a0e5ebd5587f2cceabb3853142e6364e5d094a28",
+      "bytes": 26089,
+      "checks": 27,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "child-qualifier",
+      "script": {
+        "path": "scripts/qualify-shared-demo-browser.mjs",
+        "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+        "bytes": 18020
+      }
+    },
+    {
+      "id": "mixed-webkit",
+      "path": "docs/qualification/shared-demos/mixed-webkit-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "080eb80657c73e9fe1875350eac5718efb1b2f180e731aad1d617e0bcc1b7e11",
+      "bytes": 25751,
+      "checks": 27,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "child-qualifier",
+      "script": {
+        "path": "scripts/qualify-shared-demo-browser.mjs",
+        "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+        "bytes": 18020
+      }
+    },
+    {
+      "id": "sim-fresh-chromium",
+      "path": "docs/qualification/shared-demos/sim-fresh-chromium-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "351725267e06550fc3be4e311ca9d618810e9b79d96aecef434b70352d3eb4c7",
+      "bytes": 866,
+      "checks": 2,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "refresh-wrapper",
+      "script": {
+        "path": "scripts/qualify-sim-fresh-browser.mjs",
+        "sha256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+        "bytes": 7317
+      }
+    },
+    {
+      "id": "sim-fresh-firefox",
+      "path": "docs/qualification/shared-demos/sim-fresh-firefox-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "ca371670f294fccd335f3dbf1e976476b8eb19a3a9aa2029503464483df42626",
+      "bytes": 873,
+      "checks": 2,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "refresh-wrapper",
+      "script": {
+        "path": "scripts/qualify-sim-fresh-browser.mjs",
+        "sha256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+        "bytes": 7317
+      }
+    },
+    {
+      "id": "sim-fresh-webkit",
+      "path": "docs/qualification/shared-demos/sim-fresh-webkit-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "8cea3bdc9dda41783de71a9f45c3d4e53d34bce24d415fb105c9c2bb43d2e820",
+      "bytes": 858,
+      "checks": 2,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "refresh-wrapper",
+      "script": {
+        "path": "scripts/qualify-sim-fresh-browser.mjs",
+        "sha256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+        "bytes": 7317
+      }
+    },
+    {
+      "id": "graphics-chromium",
+      "path": "docs/qualification/shared-demos/graphics-chromium-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "8231d9291bfd8113ec8451cef362a41fadcf5b4a35d38f318d9b001aab3d7c41",
+      "bytes": 10630,
+      "checks": 7,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "child-qualifier",
+      "script": {
+        "path": "scripts/qualify-shared-demo-browser.mjs",
+        "sha256": "f9f8257802d1817ade36b07341f7a96035363e79ffc7042431b8806e3a23da97",
+        "bytes": 18020
+      }
+    },
+    {
+      "id": "listeners-chromium",
+      "path": "docs/qualification/shared-demos/listeners-chromium-final-emitted-2d24aee-b4688ca21-combined.json",
+      "sha256": "5760172b9bad75ebb9c3eebf3d3b92cb62d5c0172908816daf4314c7653f6637",
+      "bytes": 420734,
+      "checks": 4,
+      "errors": 0,
+      "childExit": {
+        "code": 0,
+        "signal": null
+      },
+      "browserClosed": true,
+      "previewClosed": true,
+      "previewOwner": "refresh-wrapper",
+      "script": {
+        "path": "scripts/qualify-shared-demo-listeners.mjs",
+        "sha256": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+        "bytes": 14755
+      }
+    }
+  ],
+  "findings": [],
+  "checks": [
+    "All eleven unique intended jobs and exact check counts match durable child bytes and aggregate hashes.",
+    "Every child exited normally with code zero after report completion; browser and correct preview owner record completed cleanup before the next job.",
+    "All provider identities bind the same HEAD, runtime, build inputs, emitted manifest and 5956-entry inventory.",
+    "Independently recomputed current runtime, build-input and full scripts fingerprints match recorded before/after values; recorded changed-file lists are empty.",
+    "Three engines cover all four modes for native playback, localization, takeover/return and twelve retirements each; strict restoration gates pass all twelve checks per engine.",
+    "Three closed listener baselines retain the same paused ordinary owner/checkpoint and persistence, with no listener delta, pending demo preparation, native scene, practice world or observed worker handle."
+  ],
+  "rootVisualReview": {
+    "attribution": "Root reported visually inspecting these three narrow captures; this independent reviewer checked image hashes and did not view their pixels.",
+    "result": "Controls and guidance readable; no visible clipping reported.",
+    "images": [
+      {
+        "path": "docs/qualification/shared-demos/mixed-chromium-final-emitted-2d24aee-b4688ca21-combined-narrow.png",
+        "sha256": "705f50a7f4a25d053caa8f09dc1999a0264d505ee918d153a76aa91b28c16cd1",
+        "bytes": 66258
+      },
+      {
+        "path": "docs/qualification/shared-demos/mixed-firefox-final-emitted-2d24aee-b4688ca21-combined-narrow.png",
+        "sha256": "b9f11e37bde792964a8ce3e8bb0573b9193e1afc4d2f9e61d732f60b4491dc9f",
+        "bytes": 112125
+      },
+      {
+        "path": "docs/qualification/shared-demos/mixed-webkit-final-emitted-2d24aee-b4688ca21-combined-narrow.png",
+        "sha256": "8f4cfd36a712c511575804e3f8653e6fede725fa2b8a3b1b4a23a803a658d83a",
+        "bytes": 68943
+      }
+    ]
+  },
+  "limitations": [
+    "Structural audit of existing receipts and source identities; no browser rerun or new endurance evidence.",
+    "Fixture access credentials differ from published HTML; SIM Fresh/listener children retain declared document-credential routing. No offline integrity proof.",
+    "Current capture manifest and published inventory were rehashed; this review does not separately reread every emitted payload body.",
+    "Cleanup is supported by normal child closure and owned browser/server/resource receipts, not exhaustive GPU/OS allocation measurement.",
+    "Prior failures, full-corpus and two-hour receipts retain their original source scope. Physical controllers/SIM radios, mobile hardware, audible playback and unfamiliar-player review remain separate.",
+    "Comfort twenty-check probe is outside this eleven-job aggregate and is not counted here."
+  ]
+}

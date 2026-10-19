@@ -1,0 +1,813 @@
+﻿2026-10-19T09:09:45.9494041Z Current runner version: '2.337.0'
+2026-10-19T09:09:45.9520567Z ##[group]Runner Image Provisioner
+2026-10-19T09:09:45.9521532Z Hosted Compute Agent
+2026-10-19T09:09:45.9522459Z Version: 20261012.601
+2026-10-19T09:09:45.9523143Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-19T09:09:45.9523953Z Build Date: 2026-10-12T17:48:21Z
+2026-10-19T09:09:45.9524659Z Worker ID: {2ddec5f2-97a0-4acc-ae7d-395dfda1013c}
+2026-10-19T09:09:45.9525367Z Region: westus
+2026-10-19T09:09:45.9526006Z Cloud: Azure
+2026-10-19T09:09:45.9526555Z ##[endgroup]
+2026-10-19T09:09:45.9528650Z ##[group]Operating System
+2026-10-19T09:09:45.9529328Z Ubuntu
+2026-10-19T09:09:45.9529852Z 24.04.5
+2026-10-19T09:09:45.9530478Z LTS
+2026-10-19T09:09:45.9531007Z ##[endgroup]
+2026-10-19T09:09:45.9531600Z ##[group]Runner Image
+2026-10-19T09:09:45.9532459Z Image: ubuntu-24.04
+2026-10-19T09:09:45.9533045Z Version: 20261012.334.1
+2026-10-19T09:09:45.9534420Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-19T09:09:45.9536083Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-19T09:09:45.9537178Z ##[endgroup]
+2026-10-19T09:09:45.9538397Z ##[group]GITHUB_TOKEN Permissions
+2026-10-19T09:09:45.9540382Z Contents: read
+2026-10-19T09:09:45.9541014Z Metadata: read
+2026-10-19T09:09:45.9541712Z ##[endgroup]
+2026-10-19T09:09:45.9544298Z Secret source: Actions
+2026-10-19T09:09:45.9545372Z Cache mode: write
+2026-10-19T09:09:45.9546170Z Prepare workflow directory
+2026-10-19T09:09:46.0141484Z Prepare all required actions
+2026-10-19T09:09:46.0191636Z Getting action download info
+2026-10-19T09:09:46.3607594Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-10-19T09:09:46.4870961Z Download action repository 'actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444' (SHA:a0853c24544627f65ddf259abe73b1d18a591444)
+2026-10-19T09:09:46.6405688Z Download action repository 'actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+2026-10-19T09:09:46.8775256Z Complete job name: demo_admission
+2026-10-19T09:09:46.9557683Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-10-19T09:09:46.9558859Z with:
+2026-10-19T09:09:46.9559339Z   ref: b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:09:46.9560001Z   persist-credentials: false
+2026-10-19T09:09:46.9560569Z   repository: mekhovov/revealline
+2026-10-19T09:09:46.9565317Z   token: ***
+2026-10-19T09:09:46.9565776Z   ssh-strict: true
+2026-10-19T09:09:46.9566243Z   ssh-user: git
+2026-10-19T09:09:46.9566665Z   clean: true
+2026-10-19T09:09:46.9567140Z   sparse-checkout-cone-mode: true
+2026-10-19T09:09:46.9567710Z   fetch-depth: 1
+2026-10-19T09:09:46.9568168Z   fetch-tags: false
+2026-10-19T09:09:46.9568611Z   show-progress: true
+2026-10-19T09:09:46.9569090Z   lfs: false
+2026-10-19T09:09:46.9569494Z   submodules: false
+2026-10-19T09:09:46.9569962Z   set-safe-directory: true
+2026-10-19T09:09:46.9570512Z   allow-unsafe-pr-checkout: false
+2026-10-19T09:09:46.9571373Z env:
+2026-10-19T09:09:46.9573249Z   APPEARANCE_TEAM_TEST_FILES: game/test/couch-static-pictures.test.mjs game/test/couch-static-picture-host.test.mjs game/test/couch-shell.test.mjs game/test/controller-navigation.test.mjs game/test/controller-reading.test.mjs
+2026-10-19T09:09:46.9575245Z   APPEARANCE_INSTALLED_TEST_FILES: game/test/couch-installed-chapters.test.mjs
+2026-10-19T09:09:46.9580982Z   APPEARANCE_ADMISSION_TEST_FILES: game/test/journey-performance-admission.test.mjs game/test/journey-performance-observation-admission.test.mjs game/test/journey-profile-owned-transition.test.mjs game/test/journey-required-progress-admission.test.mjs game/test/solo-required-progress-preparation-host.test.mjs game/test/owned-recorder.test.mjs game/test/demo-library-indexeddb.test.mjs game/test/optional-learning-admission.test.mjs game/test/optional-replay-admission.test.mjs game/test/solo-pending-verification-gameplay-host.test.mjs game/test/edition-mastery-host.test.mjs game/test/edition-lessons.test.mjs game/test/capture-presentation-session.test.mjs game/test/solo-dense-replay-persistence.test.mjs game/test/library-entry.test.mjs game/test/solo-lazy-library-host.test.mjs game/test/solo-transition-performance-host.test.mjs
+2026-10-19T09:09:46.9588571Z   APPEARANCE_DEMO_TEST_FILES: game/test/demo-scene-transition.test.mjs game/test/victory-story-ui.test.mjs game/test/demo-bot.test.mjs game/test/demo-sources.test.mjs game/test/solo-demo-resources-host.test.mjs game/test/demo-loading-host.test.mjs
+2026-10-19T09:09:46.9590528Z   PREVIEW_HEAD_SHA: b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:09:46.9591462Z   PREVIEW_RUN_URL: https://github.com/mekhovov/revealline/actions/runs/39223515789
+2026-10-19T09:09:46.9592483Z ##[endgroup]
+2026-10-19T09:09:47.0749465Z Syncing repository: mekhovov/revealline
+2026-10-19T09:09:47.0752860Z ##[group]Getting Git version info
+2026-10-19T09:09:47.0754193Z Working directory is '/home/runner/work/revealline/revealline'
+2026-10-19T09:09:47.0757187Z [command]/usr/bin/git version
+2026-10-19T09:09:47.0884811Z git version 2.55.0
+2026-10-19T09:09:47.0914642Z ##[endgroup]
+2026-10-19T09:09:47.0931663Z Temporarily overriding HOME='/home/runner/work/_temp/91477050-6f14-4acd-a174-57f3b71c6b87' before making global git config changes
+2026-10-19T09:09:47.0934783Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-19T09:09:47.0940660Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+2026-10-19T09:09:47.0998670Z Deleting the contents of '/home/runner/work/revealline/revealline'
+2026-10-19T09:09:47.1005153Z ##[group]Initializing the repository
+2026-10-19T09:09:47.1013539Z [command]/usr/bin/git init /home/runner/work/revealline/revealline
+2026-10-19T09:09:47.1122579Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-19T09:09:47.1124737Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-19T09:09:47.1126704Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-19T09:09:47.1128510Z hint: call:
+2026-10-19T09:09:47.1131282Z hint:
+2026-10-19T09:09:47.1132656Z hint: 	git config --global init.defaultBranch <name>
+2026-10-19T09:09:47.1133961Z hint:
+2026-10-19T09:09:47.1135361Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-19T09:09:47.1137030Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-19T09:09:47.1139807Z hint:
+2026-10-19T09:09:47.1140639Z hint: 	git branch -m <name>
+2026-10-19T09:09:47.1141575Z hint:
+2026-10-19T09:09:47.1142986Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-19T09:09:47.1144689Z Initialized empty Git repository in /home/runner/work/revealline/revealline/.git/
+2026-10-19T09:09:47.1147695Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline
+2026-10-19T09:09:47.1199628Z ##[endgroup]
+2026-10-19T09:09:47.1201047Z ##[group]Disabling automatic garbage collection
+2026-10-19T09:09:47.1205435Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-19T09:09:47.1260704Z ##[endgroup]
+2026-10-19T09:09:47.1262318Z ##[group]Setting up auth
+2026-10-19T09:09:47.1263525Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T09:09:47.1313656Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T09:09:47.1705379Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T09:09:47.1747748Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T09:09:47.1997720Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T09:09:47.2040263Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T09:09:47.2282981Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-19T09:09:47.2330541Z ##[endgroup]
+2026-10-19T09:09:47.2332109Z ##[group]Fetching the repository
+2026-10-19T09:09:47.2341621Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:10:41.1612247Z From https://github.com/mekhovov/revealline
+2026-10-19T09:10:41.1614981Z  * branch              b4688ca2199c01fe9a063a7260946bc42c3642f4 -> FETCH_HEAD
+2026-10-19T09:10:41.1698353Z ##[endgroup]
+2026-10-19T09:10:41.1700457Z ##[group]Determining the checkout info
+2026-10-19T09:10:41.1702027Z ##[endgroup]
+2026-10-19T09:10:41.1702886Z [command]/usr/bin/git sparse-checkout disable
+2026-10-19T09:10:41.1705008Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-19T09:10:41.1729967Z ##[group]Checking out the ref
+2026-10-19T09:10:41.1734341Z [command]/usr/bin/git checkout --progress --force b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:10:42.2360653Z Updating files:  16% (8103/48721)
+2026-10-19T09:10:42.3135463Z Updating files:  17% (8283/48721)
+2026-10-19T09:10:42.3901432Z Updating files:  18% (8770/48721)
+2026-10-19T09:10:42.4374491Z Updating files:  19% (9257/48721)
+2026-10-19T09:10:42.4847188Z Updating files:  20% (9745/48721)
+2026-10-19T09:10:42.5318103Z Updating files:  21% (10232/48721)
+2026-10-19T09:10:42.5787150Z Updating files:  22% (10719/48721)
+2026-10-19T09:10:42.6283076Z Updating files:  23% (11206/48721)
+2026-10-19T09:10:42.6778712Z Updating files:  24% (11694/48721)
+2026-10-19T09:10:42.7254357Z Updating files:  25% (12181/48721)
+2026-10-19T09:10:42.7719190Z Updating files:  26% (12668/48721)
+2026-10-19T09:10:42.8290001Z Updating files:  27% (13155/48721)
+2026-10-19T09:10:42.8791242Z Updating files:  28% (13642/48721)
+2026-10-19T09:10:42.9637094Z Updating files:  29% (14130/48721)
+2026-10-19T09:10:43.0373362Z Updating files:  30% (14617/48721)
+2026-10-19T09:10:43.2449385Z Updating files:  31% (15104/48721)
+2026-10-19T09:10:43.5766268Z Updating files:  31% (15319/48721)
+2026-10-19T09:10:44.0122808Z Updating files:  32% (15591/48721)
+2026-10-19T09:10:44.2205305Z Updating files:  33% (16078/48721)
+2026-10-19T09:10:44.2646442Z Updating files:  33% (16485/48721)
+2026-10-19T09:10:44.3733825Z Updating files:  34% (16566/48721)
+2026-10-19T09:10:44.6086185Z Updating files:  35% (17053/48721)
+2026-10-19T09:10:44.6818326Z Updating files:  36% (17540/48721)
+2026-10-19T09:10:44.7483176Z Updating files:  37% (18027/48721)
+2026-10-19T09:10:44.8906641Z Updating files:  38% (18514/48721)
+2026-10-19T09:10:44.9367468Z Updating files:  39% (19002/48721)
+2026-10-19T09:10:44.9916849Z Updating files:  40% (19489/48721)
+2026-10-19T09:10:45.0582904Z Updating files:  41% (19976/48721)
+2026-10-19T09:10:45.2191442Z Updating files:  42% (20463/48721)
+2026-10-19T09:10:45.3301440Z Updating files:  42% (20768/48721)
+2026-10-19T09:10:45.5325601Z Updating files:  43% (20951/48721)
+2026-10-19T09:10:45.6716842Z Updating files:  44% (21438/48721)
+2026-10-19T09:10:45.7782449Z Updating files:  45% (21925/48721)
+2026-10-19T09:10:45.9479175Z Updating files:  46% (22412/48721)
+2026-10-19T09:10:46.0346045Z Updating files:  47% (22899/48721)
+2026-10-19T09:10:46.1157712Z Updating files:  48% (23387/48721)
+2026-10-19T09:10:46.1765578Z Updating files:  49% (23874/48721)
+2026-10-19T09:10:46.2198619Z Updating files:  50% (24361/48721)
+2026-10-19T09:10:46.2285534Z Updating files:  50% (24743/48721)
+2026-10-19T09:10:46.2835269Z Updating files:  51% (24848/48721)
+2026-10-19T09:10:46.3968581Z Updating files:  52% (25335/48721)
+2026-10-19T09:10:46.4392498Z Updating files:  53% (25823/48721)
+2026-10-19T09:10:46.4924286Z Updating files:  54% (26310/48721)
+2026-10-19T09:10:46.5477554Z Updating files:  55% (26797/48721)
+2026-10-19T09:10:46.6063186Z Updating files:  56% (27284/48721)
+2026-10-19T09:10:46.6497595Z Updating files:  57% (27771/48721)
+2026-10-19T09:10:46.6932907Z Updating files:  58% (28259/48721)
+2026-10-19T09:10:46.7638553Z Updating files:  59% (28746/48721)
+2026-10-19T09:10:46.8823404Z Updating files:  60% (29233/48721)
+2026-10-19T09:10:46.9794348Z Updating files:  61% (29720/48721)
+2026-10-19T09:10:47.0310869Z Updating files:  62% (30208/48721)
+2026-10-19T09:10:47.1265517Z Updating files:  63% (30695/48721)
+2026-10-19T09:10:47.1868499Z Updating files:  64% (31182/48721)
+2026-10-19T09:10:47.2189933Z Updating files:  65% (31669/48721)
+2026-10-19T09:10:47.2653101Z Updating files:  65% (31870/48721)
+2026-10-19T09:10:47.6792389Z Updating files:  66% (32156/48721)
+2026-10-19T09:10:48.1212509Z Updating files:  67% (32644/48721)
+2026-10-19T09:10:48.1530609Z Updating files:  68% (33131/48721)
+2026-10-19T09:10:48.1800467Z Updating files:  69% (33618/48721)
+2026-10-19T09:10:48.2065496Z Updating files:  70% (34105/48721)
+2026-10-19T09:10:48.2189520Z Updating files:  71% (34592/48721)
+2026-10-19T09:10:48.2517890Z Updating files:  71% (34836/48721)
+2026-10-19T09:10:48.5319973Z Updating files:  72% (35080/48721)
+2026-10-19T09:10:48.6170164Z Updating files:  73% (35567/48721)
+2026-10-19T09:10:48.6597336Z Updating files:  74% (36054/48721)
+2026-10-19T09:10:48.6998861Z Updating files:  75% (36541/48721)
+2026-10-19T09:10:48.7704814Z Updating files:  76% (37028/48721)
+2026-10-19T09:10:48.8063531Z Updating files:  77% (37516/48721)
+2026-10-19T09:10:48.8442708Z Updating files:  78% (38003/48721)
+2026-10-19T09:10:48.9137263Z Updating files:  79% (38490/48721)
+2026-10-19T09:10:48.9661114Z Updating files:  80% (38977/48721)
+2026-10-19T09:10:49.0927095Z Updating files:  81% (39465/48721)
+2026-10-19T09:10:49.1702691Z Updating files:  82% (39952/48721)
+2026-10-19T09:10:49.2256740Z Updating files:  83% (40439/48721)
+2026-10-19T09:10:49.2836077Z Updating files:  83% (40728/48721)
+2026-10-19T09:10:49.3264842Z Updating files:  84% (40926/48721)
+2026-10-19T09:10:49.3884311Z Updating files:  85% (41413/48721)
+2026-10-19T09:10:49.4603281Z Updating files:  86% (41901/48721)
+2026-10-19T09:10:49.4946203Z Updating files:  87% (42388/48721)
+2026-10-19T09:10:49.5425100Z Updating files:  88% (42875/48721)
+2026-10-19T09:10:49.6271029Z Updating files:  89% (43362/48721)
+2026-10-19T09:10:49.6885918Z Updating files:  90% (43849/48721)
+2026-10-19T09:10:49.7613649Z Updating files:  91% (44337/48721)
+2026-10-19T09:10:49.8566924Z Updating files:  92% (44824/48721)
+2026-10-19T09:10:49.9456209Z Updating files:  93% (45311/48721)
+2026-10-19T09:10:49.9959224Z Updating files:  94% (45798/48721)
+2026-10-19T09:10:50.0643681Z Updating files:  95% (46285/48721)
+2026-10-19T09:10:50.1220731Z Updating files:  96% (46773/48721)
+2026-10-19T09:10:50.2195829Z Updating files:  97% (47260/48721)
+2026-10-19T09:10:50.2462751Z Updating files:  97% (47604/48721)
+2026-10-19T09:10:50.2866528Z Updating files:  98% (47747/48721)
+2026-10-19T09:10:50.3282710Z Updating files:  99% (48234/48721)
+2026-10-19T09:10:50.3283501Z Updating files: 100% (48721/48721)
+2026-10-19T09:10:50.3283958Z Updating files: 100% (48721/48721), done.
+2026-10-19T09:10:50.4294472Z Note: switching to 'b4688ca2199c01fe9a063a7260946bc42c3642f4'.
+2026-10-19T09:10:50.4294987Z 
+2026-10-19T09:10:50.4295426Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-19T09:10:50.4296230Z changes and commit them, and you can discard any commits you make in this
+2026-10-19T09:10:50.4297020Z state without impacting any branches by switching back to a branch.
+2026-10-19T09:10:50.4297502Z 
+2026-10-19T09:10:50.4297788Z If you want to create a new branch to retain commits you create, you may
+2026-10-19T09:10:50.4298518Z do so (now or later) by using -c with the switch command. Example:
+2026-10-19T09:10:50.4298953Z 
+2026-10-19T09:10:50.4299169Z   git switch -c <new-branch-name>
+2026-10-19T09:10:50.4299464Z 
+2026-10-19T09:10:50.4299634Z Or undo this operation with:
+2026-10-19T09:10:50.4300319Z 
+2026-10-19T09:10:50.4300471Z   git switch -
+2026-10-19T09:10:50.4300669Z 
+2026-10-19T09:10:50.4301045Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-19T09:10:50.4301580Z 
+2026-10-19T09:10:50.4302514Z HEAD is now at b4688ca2 Keep shared demos within Company and optional package limits
+2026-10-19T09:10:50.4641560Z ##[endgroup]
+2026-10-19T09:10:50.4693377Z [command]/usr/bin/git log -1 --format=%H
+2026-10-19T09:10:50.4724745Z b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:10:50.4736430Z ##[group]Removing auth
+2026-10-19T09:10:50.4740894Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T09:10:50.4776052Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T09:10:50.5037992Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T09:10:50.5064442Z http.https://github.com/.extraheader
+2026-10-19T09:10:50.5074959Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-19T09:10:50.5110023Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T09:10:50.5365668Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T09:10:50.5399899Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T09:10:50.5656193Z ##[endgroup]
+2026-10-19T09:10:50.5920190Z ##[group]Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+2026-10-19T09:10:50.5920608Z with:
+2026-10-19T09:10:50.5920822Z   node-version: 22.13.1
+2026-10-19T09:10:50.5921061Z   package-manager-cache: false
+2026-10-19T09:10:50.5921315Z   always-auth: false
+2026-10-19T09:10:50.5921525Z   check-latest: false
+2026-10-19T09:10:50.5924615Z   token: ***
+2026-10-19T09:10:50.5924825Z env:
+2026-10-19T09:10:50.5925702Z   APPEARANCE_TEAM_TEST_FILES: game/test/couch-static-pictures.test.mjs game/test/couch-static-picture-host.test.mjs game/test/couch-shell.test.mjs game/test/controller-navigation.test.mjs game/test/controller-reading.test.mjs
+2026-10-19T09:10:50.5926794Z   APPEARANCE_INSTALLED_TEST_FILES: game/test/couch-installed-chapters.test.mjs
+2026-10-19T09:10:50.5930199Z   APPEARANCE_ADMISSION_TEST_FILES: game/test/journey-performance-admission.test.mjs game/test/journey-performance-observation-admission.test.mjs game/test/journey-profile-owned-transition.test.mjs game/test/journey-required-progress-admission.test.mjs game/test/solo-required-progress-preparation-host.test.mjs game/test/owned-recorder.test.mjs game/test/demo-library-indexeddb.test.mjs game/test/optional-learning-admission.test.mjs game/test/optional-replay-admission.test.mjs game/test/solo-pending-verification-gameplay-host.test.mjs game/test/edition-mastery-host.test.mjs game/test/edition-lessons.test.mjs game/test/capture-presentation-session.test.mjs game/test/solo-dense-replay-persistence.test.mjs game/test/library-entry.test.mjs game/test/solo-lazy-library-host.test.mjs game/test/solo-transition-performance-host.test.mjs
+2026-10-19T09:10:50.5934474Z   APPEARANCE_DEMO_TEST_FILES: game/test/demo-scene-transition.test.mjs game/test/victory-story-ui.test.mjs game/test/demo-bot.test.mjs game/test/demo-sources.test.mjs game/test/solo-demo-resources-host.test.mjs game/test/demo-loading-host.test.mjs
+2026-10-19T09:10:50.5935545Z   PREVIEW_HEAD_SHA: b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:10:50.5936017Z   PREVIEW_RUN_URL: https://github.com/mekhovov/revealline/actions/runs/39223515789
+2026-10-19T09:10:50.5936429Z ##[endgroup]
+2026-10-19T09:10:50.7424747Z Attempting to download 22.13.1...
+2026-10-19T09:10:50.7532288Z (node:2486) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-19T09:10:50.7533875Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-19T09:10:51.4987023Z Acquiring 22.13.1 - x64 from https://github.com/actions/node-versions/releases/download/22.13.1-12900459766/node-22.13.1-linux-x64.tar.gz
+2026-10-19T09:10:52.0395737Z Extracting ...
+2026-10-19T09:10:52.0517900Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/aa1a7ac0-94b4-4268-ba9a-69fbc05c0dee -f /home/runner/work/_temp/dde4e7bf-cce8-4b2f-9655-df9c5f7d8be2
+2026-10-19T09:10:53.2771878Z Adding to the cache ...
+2026-10-19T09:10:56.5529623Z ##[group]Environment details
+2026-10-19T09:10:56.9148111Z node: v22.13.1
+2026-10-19T09:10:56.9148537Z npm: 10.9.2
+2026-10-19T09:10:56.9148873Z yarn: 1.22.22
+2026-10-19T09:10:56.9149563Z ##[endgroup]
+2026-10-19T09:10:56.9340846Z ##[group]Run set -euo pipefail
+2026-10-19T09:10:56.9341234Z [36;1mset -euo pipefail[0m
+2026-10-19T09:10:56.9341591Z [36;1mtest "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"[0m
+2026-10-19T09:10:56.9342367Z [36;1mmkdir -p .cache/appearance-demo-admission[0m
+2026-10-19T09:10:56.9342725Z [36;1mnode publishing/test-policy.mjs[0m
+2026-10-19T09:10:56.9597877Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-19T09:10:56.9598256Z env:
+2026-10-19T09:10:56.9599194Z   APPEARANCE_TEAM_TEST_FILES: game/test/couch-static-pictures.test.mjs game/test/couch-static-picture-host.test.mjs game/test/couch-shell.test.mjs game/test/controller-navigation.test.mjs game/test/controller-reading.test.mjs
+2026-10-19T09:10:56.9600366Z   APPEARANCE_INSTALLED_TEST_FILES: game/test/couch-installed-chapters.test.mjs
+2026-10-19T09:10:56.9604352Z   APPEARANCE_ADMISSION_TEST_FILES: game/test/journey-performance-admission.test.mjs game/test/journey-performance-observation-admission.test.mjs game/test/journey-profile-owned-transition.test.mjs game/test/journey-required-progress-admission.test.mjs game/test/solo-required-progress-preparation-host.test.mjs game/test/owned-recorder.test.mjs game/test/demo-library-indexeddb.test.mjs game/test/optional-learning-admission.test.mjs game/test/optional-replay-admission.test.mjs game/test/solo-pending-verification-gameplay-host.test.mjs game/test/edition-mastery-host.test.mjs game/test/edition-lessons.test.mjs game/test/capture-presentation-session.test.mjs game/test/solo-dense-replay-persistence.test.mjs game/test/library-entry.test.mjs game/test/solo-lazy-library-host.test.mjs game/test/solo-transition-performance-host.test.mjs
+2026-10-19T09:10:56.9608363Z   APPEARANCE_DEMO_TEST_FILES: game/test/demo-scene-transition.test.mjs game/test/victory-story-ui.test.mjs game/test/demo-bot.test.mjs game/test/demo-sources.test.mjs game/test/solo-demo-resources-host.test.mjs game/test/demo-loading-host.test.mjs
+2026-10-19T09:10:56.9609472Z   PREVIEW_HEAD_SHA: b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:10:56.9609954Z   PREVIEW_RUN_URL: https://github.com/mekhovov/revealline/actions/runs/39223515789
+2026-10-19T09:10:56.9610366Z ##[endgroup]
+2026-10-19T09:10:57.0037677Z {"policy":{"format":"revealline-release-test-policy.v1","mode":"required","authorization":"explicit-user-request-20261004","scope":"automated-test-suites","reason":"User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.","restoration":"Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."},"policySha256":"ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2","policyMode":"required","mode":"required","runTests":"true","qualification":"tests-required","forced":false}
+2026-10-19T09:10:57.0133987Z ##[group]Run npm ci
+2026-10-19T09:10:57.0134250Z [36;1mnpm ci[0m
+2026-10-19T09:10:57.0199209Z shell: /usr/bin/bash -e {0}
+2026-10-19T09:10:57.0199637Z env:
+2026-10-19T09:10:57.0200521Z   APPEARANCE_TEAM_TEST_FILES: game/test/couch-static-pictures.test.mjs game/test/couch-static-picture-host.test.mjs game/test/couch-shell.test.mjs game/test/controller-navigation.test.mjs game/test/controller-reading.test.mjs
+2026-10-19T09:10:57.0201612Z   APPEARANCE_INSTALLED_TEST_FILES: game/test/couch-installed-chapters.test.mjs
+2026-10-19T09:10:57.0205304Z   APPEARANCE_ADMISSION_TEST_FILES: game/test/journey-performance-admission.test.mjs game/test/journey-performance-observation-admission.test.mjs game/test/journey-profile-owned-transition.test.mjs game/test/journey-required-progress-admission.test.mjs game/test/solo-required-progress-preparation-host.test.mjs game/test/owned-recorder.test.mjs game/test/demo-library-indexeddb.test.mjs game/test/optional-learning-admission.test.mjs game/test/optional-replay-admission.test.mjs game/test/solo-pending-verification-gameplay-host.test.mjs game/test/edition-mastery-host.test.mjs game/test/edition-lessons.test.mjs game/test/capture-presentation-session.test.mjs game/test/solo-dense-replay-persistence.test.mjs game/test/library-entry.test.mjs game/test/solo-lazy-library-host.test.mjs game/test/solo-transition-performance-host.test.mjs
+2026-10-19T09:10:57.0209295Z   APPEARANCE_DEMO_TEST_FILES: game/test/demo-scene-transition.test.mjs game/test/victory-story-ui.test.mjs game/test/demo-bot.test.mjs game/test/demo-sources.test.mjs game/test/solo-demo-resources-host.test.mjs game/test/demo-loading-host.test.mjs
+2026-10-19T09:10:57.0210365Z   PREVIEW_HEAD_SHA: b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:10:57.0210840Z   PREVIEW_RUN_URL: https://github.com/mekhovov/revealline/actions/runs/39223515789
+2026-10-19T09:10:57.0211259Z ##[endgroup]
+2026-10-19T09:11:00.3156903Z 
+2026-10-19T09:11:00.3157733Z added 89 packages, and audited 90 packages in 3s
+2026-10-19T09:11:00.3164222Z 
+2026-10-19T09:11:00.3164707Z 22 packages are looking for funding
+2026-10-19T09:11:00.3165452Z   run `npm fund` for details
+2026-10-19T09:11:00.3172704Z 
+2026-10-19T09:11:00.3173533Z found 0 vulnerabilities
+2026-10-19T09:11:00.3775031Z ##[group]Run set -euo pipefail
+2026-10-19T09:11:00.3775527Z [36;1mset -euo pipefail[0m
+2026-10-19T09:11:00.3776072Z [36;1mread -r -a test_files <<< "$APPEARANCE_DEMO_TEST_FILES"[0m
+2026-10-19T09:11:00.3777145Z [36;1mnode --test --test-concurrency=1 "${test_files[@]}" | tee .cache/appearance-demo-admission/demo-admission-tests.tap[0m
+2026-10-19T09:11:00.3864645Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-19T09:11:00.3865203Z env:
+2026-10-19T09:11:00.3866713Z   APPEARANCE_TEAM_TEST_FILES: game/test/couch-static-pictures.test.mjs game/test/couch-static-picture-host.test.mjs game/test/couch-shell.test.mjs game/test/controller-navigation.test.mjs game/test/controller-reading.test.mjs
+2026-10-19T09:11:00.3868619Z   APPEARANCE_INSTALLED_TEST_FILES: game/test/couch-installed-chapters.test.mjs
+2026-10-19T09:11:00.3874987Z   APPEARANCE_ADMISSION_TEST_FILES: game/test/journey-performance-admission.test.mjs game/test/journey-performance-observation-admission.test.mjs game/test/journey-profile-owned-transition.test.mjs game/test/journey-required-progress-admission.test.mjs game/test/solo-required-progress-preparation-host.test.mjs game/test/owned-recorder.test.mjs game/test/demo-library-indexeddb.test.mjs game/test/optional-learning-admission.test.mjs game/test/optional-replay-admission.test.mjs game/test/solo-pending-verification-gameplay-host.test.mjs game/test/edition-mastery-host.test.mjs game/test/edition-lessons.test.mjs game/test/capture-presentation-session.test.mjs game/test/solo-dense-replay-persistence.test.mjs game/test/library-entry.test.mjs game/test/solo-lazy-library-host.test.mjs game/test/solo-transition-performance-host.test.mjs
+2026-10-19T09:11:00.3882449Z   APPEARANCE_DEMO_TEST_FILES: game/test/demo-scene-transition.test.mjs game/test/victory-story-ui.test.mjs game/test/demo-bot.test.mjs game/test/demo-sources.test.mjs game/test/solo-demo-resources-host.test.mjs game/test/demo-loading-host.test.mjs
+2026-10-19T09:11:00.3883841Z   PREVIEW_HEAD_SHA: b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:11:00.3884339Z   PREVIEW_RUN_URL: https://github.com/mekhovov/revealline/actions/runs/39223515789
+2026-10-19T09:11:00.3884775Z ##[endgroup]
+2026-10-19T09:11:00.4403190Z TAP version 13
+2026-10-19T09:11:43.4353860Z # Subtest: live whitelist pins actual standard maps, rules and roster while allowing translated names
+2026-10-19T09:11:43.4358007Z ok 1 - live whitelist pins actual standard maps, rules and roster while allowing translated names
+2026-10-19T09:11:43.4358940Z   ---
+2026-10-19T09:11:43.4359378Z   duration_ms: 7.230619
+2026-10-19T09:11:43.4359830Z   ...
+2026-10-19T09:11:43.4361015Z # Subtest: orchard-crossing/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+2026-10-19T09:11:43.4363590Z ok 2 - orchard-crossing/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+2026-10-19T09:11:43.4364670Z   ---
+2026-10-19T09:11:43.4365059Z   duration_ms: 8769.07445
+2026-10-19T09:11:43.4365487Z   ...
+2026-10-19T09:11:43.4366863Z # {"seed":1,"ticks":3540,"status":"running","coverage":0.514505119453925,"captures":5,"bends":7,"endReason":"no-safe-macro","maxPlanningMs":1055}
+2026-10-19T09:11:43.4369292Z # {"seed":2,"ticks":3770,"status":"won","coverage":0.8528156996587031,"captures":4,"bends":5,"endReason":null,"maxPlanningMs":497}
+2026-10-19T09:11:43.4371484Z # {"seed":3,"ticks":3919,"status":"running","coverage":0.47696245733788395,"captures":5,"bends":6,"endReason":"no-safe-macro","maxPlanningMs":455}
+2026-10-19T09:11:43.4374318Z # Subtest: orchard-crossing/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+2026-10-19T09:11:43.4376633Z ok 3 - orchard-crossing/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+2026-10-19T09:11:43.4378120Z   ---
+2026-10-19T09:11:43.4378855Z   duration_ms: 11863.440042
+2026-10-19T09:11:43.4379774Z   ...
+2026-10-19T09:11:43.4382205Z # {"seed":1,"ticks":6311,"status":"won","coverage":0.7892491467576792,"captures":10,"bends":13,"endReason":null,"maxPlanningMs":478}
+2026-10-19T09:11:43.4384065Z # {"seed":2,"ticks":6139,"status":"won","coverage":0.7039249146757679,"captures":9,"bends":10,"endReason":null,"maxPlanningMs":516}
+2026-10-19T09:11:43.4385939Z # {"seed":3,"ticks":5346,"status":"won","coverage":0.7414675767918089,"captures":6,"bends":10,"endReason":null,"maxPlanningMs":699}
+2026-10-19T09:11:43.4387734Z # Subtest: courtyard-exits/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+2026-10-19T09:11:43.4389580Z ok 4 - courtyard-exits/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+2026-10-19T09:11:43.4390742Z   ---
+2026-10-19T09:11:43.4391368Z   duration_ms: 8883.252866
+2026-10-19T09:11:43.4392353Z   ...
+2026-10-19T09:11:43.4393695Z # {"seed":1,"ticks":3837,"status":"won","coverage":0.7707612456747405,"captures":6,"bends":5,"endReason":null,"maxPlanningMs":649}
+2026-10-19T09:11:43.4395595Z # {"seed":2,"ticks":5799,"status":"won","coverage":0.740484429065744,"captures":9,"bends":12,"endReason":null,"maxPlanningMs":502}
+2026-10-19T09:11:43.4406024Z # {"seed":3,"ticks":2256,"status":"running","coverage":0.45501730103806226,"captures":3,"bends":2,"endReason":"no-safe-macro","maxPlanningMs":493}
+2026-10-19T09:11:43.4408480Z # Subtest: courtyard-exits/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+2026-10-19T09:11:43.4410493Z ok 5 - courtyard-exits/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings
+2026-10-19T09:11:43.4412076Z   ---
+2026-10-19T09:11:43.4412741Z   duration_ms: 12243.393344
+2026-10-19T09:11:43.4413412Z   ...
+2026-10-19T09:11:43.4414844Z # {"seed":1,"ticks":5969,"status":"won","coverage":0.7768166089965398,"captures":10,"bends":13,"endReason":null,"maxPlanningMs":472}
+2026-10-19T09:11:43.4417263Z # {"seed":2,"ticks":6246,"status":"won","coverage":0.8209342560553633,"captures":11,"bends":15,"endReason":null,"maxPlanningMs":461}
+2026-10-19T09:11:43.4419508Z # {"seed":3,"ticks":4687,"status":"running","coverage":0.6384083044982699,"captures":6,"bends":7,"endReason":"no-safe-macro","maxPlanningMs":478}
+2026-10-19T09:11:43.4421333Z # Subtest: planning is deterministic and declines an exposed cut without changing it
+2026-10-19T09:11:43.4422998Z ok 6 - planning is deterministic and declines an exposed cut without changing it
+2026-10-19T09:11:43.4423966Z   ---
+2026-10-19T09:11:43.4424545Z   duration_ms: 819.141747
+2026-10-19T09:11:43.4425155Z   ...
+2026-10-19T09:11:52.0611462Z # Subtest: actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+2026-10-19T09:11:52.0615576Z ok 7 - actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+2026-10-19T09:11:52.0616861Z   ---
+2026-10-19T09:11:52.0617459Z   duration_ms: 6724.819592
+2026-10-19T09:11:52.0618037Z   ...
+2026-10-19T09:11:52.0619180Z # Subtest: background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+2026-10-19T09:11:52.0624998Z ok 8 - background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+2026-10-19T09:11:52.0625926Z   ---
+2026-10-19T09:11:52.0626269Z   duration_ms: 946.151202
+2026-10-19T09:11:52.0626655Z   ...
+2026-10-19T09:11:52.0627494Z # Subtest: background budget releases a rejected stale result to the unchanged fault boundary
+2026-10-19T09:11:52.0628445Z ok 9 - background budget releases a rejected stale result to the unchanged fault boundary
+2026-10-19T09:11:52.0628892Z   ---
+2026-10-19T09:11:52.0629097Z   duration_ms: 508.152674
+2026-10-19T09:11:52.0629319Z   ...
+2026-10-19T09:11:52.1141192Z # Subtest: background budget never bypasses the existing planning watchdog
+2026-10-19T09:11:52.1142141Z ok 10 - background budget never bypasses the existing planning watchdog
+2026-10-19T09:11:52.1145071Z   ---
+2026-10-19T09:11:52.1145570Z   duration_ms: 509.014332
+2026-10-19T09:11:52.1145828Z   ...
+2026-10-19T09:11:53.8470585Z # Subtest: missing Worker, abort and planning watchdog fail closed and release every worker
+2026-10-19T09:11:53.8493382Z ok 11 - missing Worker, abort and planning watchdog fail closed and release every worker
+2026-10-19T09:11:53.8494641Z   ---
+2026-10-19T09:11:53.8495521Z   duration_ms: 14.090854
+2026-10-19T09:11:53.8496282Z   ...
+2026-10-19T09:11:53.8497290Z # Subtest: future search exhaustion ends only after the current safe macro, never runs an old heading
+2026-10-19T09:11:53.8498768Z ok 12 - future search exhaustion ends only after the current safe macro, never runs an old heading
+2026-10-19T09:11:53.8499569Z   ---
+2026-10-19T09:11:53.8499885Z   duration_ms: 515.433627
+2026-10-19T09:11:53.8500345Z   ...
+2026-10-19T09:11:53.8501040Z # Subtest: a stale future plan remains a fault, not a successful exhaustion handoff
+2026-10-19T09:11:53.8502358Z ok 13 - a stale future plan remains a fault, not a successful exhaustion handoff
+2026-10-19T09:11:53.8503046Z   ---
+2026-10-19T09:11:53.8503409Z   duration_ms: 514.409287
+2026-10-19T09:11:53.8503803Z   ...
+2026-10-19T09:11:53.8504585Z # Subtest: live playback crosses the old 60 second cutoff without claiming completion
+2026-10-19T09:11:53.8505777Z ok 14 - live playback crosses the old 60 second cutoff without claiming completion
+2026-10-19T09:11:53.8506506Z   ---
+2026-10-19T09:11:53.8506864Z   duration_ms: 690.860839
+2026-10-19T09:11:53.8507246Z   ...
+2026-10-19T09:12:03.6363527Z # Subtest: full live admission rejects an exhausted route before display and resets a completed seed
+2026-10-19T09:12:03.6364396Z ok 15 - full live admission rejects an exhausted route before display and resets a completed seed
+2026-10-19T09:12:03.6364865Z   ---
+2026-10-19T09:12:03.6365073Z   duration_ms: 9785.229593
+2026-10-19T09:12:03.6365315Z   ...
+2026-10-19T09:12:03.6365792Z # Subtest: resource diagnostic observes Worker lifetime before initial preparation resolves
+2026-10-19T09:12:03.6366809Z ok 16 - resource diagnostic observes Worker lifetime before initial preparation resolves
+2026-10-19T09:12:03.6367239Z   ---
+2026-10-19T09:12:03.6367429Z   duration_ms: 3.492071
+2026-10-19T09:12:03.6367640Z   ...
+2026-10-19T09:12:03.6493541Z # Subtest: resource diagnostic callbacks cannot alter Worker watchdog or cleanup
+2026-10-19T09:12:03.6495062Z ok 17 - resource diagnostic callbacks cannot alter Worker watchdog or cleanup
+2026-10-19T09:12:03.6496017Z   ---
+2026-10-19T09:12:03.6496531Z   duration_ms: 18.020769
+2026-10-19T09:12:03.6497074Z   ...
+2026-10-19T09:12:08.4638374Z # Subtest: a pending scene picture releases its painter on deadline before the decoder settles
+2026-10-19T09:12:08.4640067Z ok 18 - a pending scene picture releases its painter on deadline before the decoder settles
+2026-10-19T09:12:08.4640814Z   ---
+2026-10-19T09:12:08.4641168Z   duration_ms: 4256.929671
+2026-10-19T09:12:08.4641558Z   ...
+2026-10-19T09:12:11.9023167Z # Subtest: a pending scene picture releases its painter on Back before the decoder settles
+2026-10-19T09:12:11.9024881Z ok 19 - a pending scene picture releases its painter on Back before the decoder settles
+2026-10-19T09:12:11.9025354Z   ---
+2026-10-19T09:12:11.9025570Z   duration_ms: 3438.375089
+2026-10-19T09:12:11.9025807Z   ...
+2026-10-19T09:12:11.9804680Z # Subtest: loading fades only the displayed frame and holds darkness until a prepared scene arrives
+2026-10-19T09:12:11.9807271Z ok 20 - loading fades only the displayed frame and holds darkness until a prepared scene arrives
+2026-10-19T09:12:11.9808319Z   ---
+2026-10-19T09:12:11.9808746Z   duration_ms: 1.294173
+2026-10-19T09:12:11.9818188Z   ...
+2026-10-19T09:12:11.9819254Z # Subtest: fast scene loading still finishes departure; privacy clearing discards the snapshot
+2026-10-19T09:12:11.9820826Z ok 21 - fast scene loading still finishes departure; privacy clearing discards the snapshot
+2026-10-19T09:12:11.9821670Z   ---
+2026-10-19T09:12:11.9822311Z   duration_ms: 0.188652
+2026-10-19T09:12:11.9822766Z   ...
+2026-10-19T09:12:11.9823997Z # Subtest: Next during arrival preserves its dimming and accepts the displayed reward frame
+2026-10-19T09:12:11.9825393Z ok 22 - Next during arrival preserves its dimming and accepts the displayed reward frame
+2026-10-19T09:12:11.9826195Z   ---
+2026-10-19T09:12:11.9826559Z   duration_ms: 0.221614
+2026-10-19T09:12:11.9826962Z   ...
+2026-10-19T09:12:11.9827793Z # Subtest: settled arrival and loading hold do not keep rewriting opacity
+2026-10-19T09:12:11.9829256Z ok 23 - settled arrival and loading hold do not keep rewriting opacity
+2026-10-19T09:12:11.9829988Z   ---
+2026-10-19T09:12:11.9830382Z   duration_ms: 0.331599
+2026-10-19T09:12:11.9830797Z   ...
+2026-10-19T09:12:11.9838793Z # Subtest: resource diagnostic retains only the currently allocated transition surface
+2026-10-19T09:12:11.9840364Z ok 24 - resource diagnostic retains only the currently allocated transition surface
+2026-10-19T09:12:11.9841497Z   ---
+2026-10-19T09:12:11.9842371Z   duration_ms: 1.682127
+2026-10-19T09:12:11.9842962Z   ...
+2026-10-19T09:12:14.1699660Z # Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+2026-10-19T09:12:14.1701470Z not ok 25 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+2026-10-19T09:12:14.1702761Z   ---
+2026-10-19T09:12:14.1703129Z   duration_ms: 1472.370329
+2026-10-19T09:12:14.1703974Z   location: '/home/runner/work/revealline/revealline/game/test/demo-sources.test.mjs:50:1'
+2026-10-19T09:12:14.1704862Z   failureType: 'testCodeFailure'
+2026-10-19T09:12:14.1705729Z   error: 'Replay verification failed. Its inputs do not reproduce the recorded final state.'
+2026-10-19T09:12:14.1706552Z   code: 'ERR_TEST_FAILURE'
+2026-10-19T09:12:14.1707029Z   name: 'ReplayVerificationError'
+2026-10-19T09:12:14.1707504Z   stack: |-
+2026-10-19T09:12:14.1708279Z     preparePlayer (file:///home/runner/work/revealline/revealline/game/replay-player.mjs:71:19)
+2026-10-19T09:12:14.1709867Z     async Object.create (file:///home/runner/work/revealline/revealline/game/demo-sources.mjs:89:26)
+2026-10-19T09:12:14.1711296Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/demo-sources.test.mjs:76:16)
+2026-10-19T09:12:14.1712589Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-19T09:12:14.1713403Z     async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+2026-10-19T09:12:14.1714074Z   ...
+2026-10-19T09:12:14.1726900Z # {"sourceId":"solo-qualified-478808a96f4fbf5e","levelId":"signal-08","campaignId":"first-signal","campaignKey":"first-signal/2/88639f3aab7b6cc1","attemptedURLs":["file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json","file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.diagnostics.json","file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.replay.json","file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.diagnostics.json","file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.replay.json","file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.diagnostics.json","file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.replay.json","file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.diagnostics.json"],"omittedURLs":0,"diagnostics":[{"code":"state-mismatch","section":"enemies","message":"Authoritative enemies differs.","expected":"ed391a595d4e2fb9","actual":"c3ba914e89640524"},{"code":"state-mismatch","section":"clock","message":"Authoritative clock differs.","expected":"ca39e0a04aa6d20e","actual":"83be6483dc2b7278"},{"code":"diagnostic-checkpoint-mismatch","firstMismatchingCheckpointTick":600,"expected":"a693a2b0126e2de9","actual":"2de4810180a47587"}]}
+2026-10-19T09:12:14.2248021Z # Subtest: same map IDs in separately installed themed owners do not collide
+2026-10-19T09:12:14.2249466Z ok 26 - same map IDs in separately installed themed owners do not collide
+2026-10-19T09:12:14.2250144Z   ---
+2026-10-19T09:12:14.2250398Z   duration_ms: 103.92766
+2026-10-19T09:12:14.2250622Z   ...
+2026-10-19T09:12:19.7714106Z # Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+2026-10-19T09:12:19.7716081Z ok 27 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+2026-10-19T09:12:19.7717040Z   ---
+2026-10-19T09:12:19.7717421Z   duration_ms: 5546.712266
+2026-10-19T09:12:19.7717839Z   ...
+2026-10-19T09:12:25.0553847Z # Subtest: actual public company editions expose only their own isolated installed levels
+2026-10-19T09:12:25.0556198Z ok 28 - actual public company editions expose only their own isolated installed levels
+2026-10-19T09:12:25.0557432Z   ---
+2026-10-19T09:12:25.0558064Z   duration_ms: 5283.809042
+2026-10-19T09:12:25.0558642Z   ...
+2026-10-19T09:12:25.1487889Z # Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+2026-10-19T09:12:25.1489952Z ok 29 - missing Worker and uninstalled content filter sources without downloading or installing packs
+2026-10-19T09:12:25.1491016Z   ---
+2026-10-19T09:12:25.1491644Z   duration_ms: 93.284606
+2026-10-19T09:12:25.1492339Z   ...
+2026-10-19T09:12:25.3103689Z # Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+2026-10-19T09:12:25.3105137Z ok 30 - manually kept local recordings join the catalogue without enabling automatic collection
+2026-10-19T09:12:25.3105913Z   ---
+2026-10-19T09:12:25.3106256Z   duration_ms: 161.290558
+2026-10-19T09:12:25.3106631Z   ...
+2026-10-19T09:12:25.3107434Z # Subtest: personal recording rotation metadata preserves its admitted difficulty identity
+2026-10-19T09:12:25.3109043Z ok 31 - personal recording rotation metadata preserves its admitted difficulty identity
+2026-10-19T09:12:25.3109775Z   ---
+2026-10-19T09:12:25.3110107Z   duration_ms: 0.431455
+2026-10-19T09:12:25.3110467Z   ...
+2026-10-19T09:12:25.5198441Z # Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+2026-10-19T09:12:25.5200231Z ok 32 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+2026-10-19T09:12:25.5201339Z   ---
+2026-10-19T09:12:25.5201920Z   duration_ms: 209.216659
+2026-10-19T09:12:25.5202768Z   ...
+2026-10-19T09:12:25.5517970Z # Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+2026-10-19T09:12:25.5525473Z ok 33 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+2026-10-19T09:12:25.5526244Z   ---
+2026-10-19T09:12:25.5526571Z   duration_ms: 31.119417
+2026-10-19T09:12:25.5526949Z   ...
+2026-10-19T09:12:25.5527874Z # Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+2026-10-19T09:12:25.5529266Z ok 34 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+2026-10-19T09:12:25.5530059Z   ---
+2026-10-19T09:12:25.5530390Z   duration_ms: 0.675309
+2026-10-19T09:12:25.5530741Z   ...
+2026-10-19T09:12:26.0519200Z # Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+2026-10-19T09:12:26.0520770Z ok 35 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+2026-10-19T09:12:26.0521610Z   ---
+2026-10-19T09:12:26.0522453Z   duration_ms: 499.594896
+2026-10-19T09:12:26.0523249Z   ...
+2026-10-19T09:12:28.2890557Z # Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+2026-10-19T09:12:28.2892116Z ok 36 - the ordinary game build includes every dynamic demo asset and Worker module
+2026-10-19T09:12:28.2892858Z   ---
+2026-10-19T09:12:28.2893251Z   duration_ms: 2237.595885
+2026-10-19T09:12:28.2893962Z   ...
+2026-10-19T09:12:28.3412189Z # Subtest: a personal cache that never settles times out without discarding bundled sources
+2026-10-19T09:12:28.3414247Z ok 37 - a personal cache that never settles times out without discarding bundled sources
+2026-10-19T09:12:28.3415158Z   ---
+2026-10-19T09:12:28.3415621Z   duration_ms: 51.120633
+2026-10-19T09:12:28.3417276Z   ...
+2026-10-19T09:12:28.3419219Z # Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+2026-10-19T09:12:28.3421105Z ok 38 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+2026-10-19T09:12:28.3422412Z   ---
+2026-10-19T09:12:28.3422822Z   duration_ms: 0.815501
+2026-10-19T09:12:28.3423310Z   ...
+2026-10-19T09:12:28.3853630Z # Subtest: resource diagnostic reaches live source rehearsal before its player can be returned
+2026-10-19T09:12:28.3855585Z ok 39 - resource diagnostic reaches live source rehearsal before its player can be returned
+2026-10-19T09:12:28.3856855Z   ---
+2026-10-19T09:12:28.3857418Z   duration_ms: 43.840177
+2026-10-19T09:12:28.3858010Z   ...
+2026-10-19T09:12:33.8703362Z # Subtest: manual resource export requires real Demo Pause and retains closed display across reopen
+2026-10-19T09:12:33.8704795Z ok 40 - manual resource export requires real Demo Pause and retains closed display across reopen
+2026-10-19T09:12:33.8705666Z   ---
+2026-10-19T09:12:33.8706032Z   duration_ms: 4871.066678
+2026-10-19T09:12:33.8706443Z   ...
+2026-10-19T09:12:36.7166885Z # Subtest: closed Demo retains unsettled scene reservation until ignored decode actually completes
+2026-10-19T09:12:36.7167860Z ok 41 - closed Demo retains unsettled scene reservation until ignored decode actually completes
+2026-10-19T09:12:36.7171662Z   ---
+2026-10-19T09:12:36.7172113Z   duration_ms: 2846.139931
+2026-10-19T09:12:36.7172687Z   ...
+2026-10-19T09:12:39.9323149Z # Subtest: manual resource export rejects advancing practice despite the retained interrupted spectator flag
+2026-10-19T09:12:39.9328305Z ok 42 - manual resource export rejects advancing practice despite the retained interrupted spectator flag
+2026-10-19T09:12:39.9329064Z   ---
+2026-10-19T09:12:39.9329358Z   duration_ms: 3215.824527
+2026-10-19T09:12:39.9329692Z   ...
+2026-10-19T09:12:40.4755240Z # Subtest: exact poster stays visible through silent preparation; explicit native action starts one segment without reward APIs
+2026-10-19T09:12:40.4757947Z ok 43 - exact poster stays visible through silent preparation; explicit native action starts one segment without reward APIs
+2026-10-19T09:12:40.4759737Z   ---
+2026-10-19T09:12:40.4760447Z   duration_ms: 44.818438
+2026-10-19T09:12:40.4765793Z   ...
+2026-10-19T09:12:40.4947467Z # Subtest: Skip and Replay preserve the same poster, seek the selected start and never mint a new result
+2026-10-19T09:12:40.4950489Z ok 44 - Skip and Replay preserve the same poster, seek the selected start and never mint a new result
+2026-10-19T09:12:40.4951668Z   ---
+2026-10-19T09:12:40.4952553Z   duration_ms: 20.020029
+2026-10-19T09:12:40.4953102Z   ...
+2026-10-19T09:12:40.5090573Z # Subtest: blocked play is truthful, returns music gain and offers a later native retry
+2026-10-19T09:12:40.5092266Z ok 45 - blocked play is truthful, returns music gain and offers a later native retry
+2026-10-19T09:12:40.5093068Z   ---
+2026-10-19T09:12:40.5093432Z   duration_ms: 17.434599
+2026-10-19T09:12:40.5093843Z   ...
+2026-10-19T09:12:40.5195848Z # Subtest: blur pauses pending play and a late successful promise cannot restart audible video
+2026-10-19T09:12:40.5197543Z ok 46 - blur pauses pending play and a late successful promise cannot restart audible video
+2026-10-19T09:12:40.5198373Z   ---
+2026-10-19T09:12:40.5198947Z   duration_ms: 12.528982
+2026-10-19T09:12:40.5199424Z   ...
+2026-10-19T09:12:40.5403948Z # Subtest: inactive-page pause releases hidden focus and needs explicit Resume story
+2026-10-19T09:12:40.5405477Z ok 47 - inactive-page pause releases hidden focus and needs explicit Resume story
+2026-10-19T09:12:40.5406507Z   ---
+2026-10-19T09:12:40.5406890Z   duration_ms: 22.05391
+2026-10-19T09:12:40.5407435Z   ...
+2026-10-19T09:12:40.5497623Z # Subtest: pause during Replay seek cancels its autoplay intent but allows later explicit Play
+2026-10-19T09:12:40.5500653Z ok 48 - pause during Replay seek cancels its autoplay intent but allows later explicit Play
+2026-10-19T09:12:40.5501225Z   ---
+2026-10-19T09:12:40.5501480Z   duration_ms: 9.518857
+2026-10-19T09:12:40.5501745Z   ...
+2026-10-19T09:12:40.5604541Z # Subtest: Skip before metadata keeps the exact poster and never starts after late readiness
+2026-10-19T09:12:40.5624952Z ok 49 - Skip before metadata keeps the exact poster and never starts after late readiness
+2026-10-19T09:12:40.5625845Z   ---
+2026-10-19T09:12:40.5626203Z   duration_ms: 9.701058
+2026-10-19T09:12:40.5626634Z   ...
+2026-10-19T09:12:40.5720724Z # Subtest: reduced motion stays opt-in, and enabling it during playback returns to the exact poster
+2026-10-19T09:12:40.5722385Z ok 50 - reduced motion stays opt-in, and enabling it during playback returns to the exact poster
+2026-10-19T09:12:40.5723116Z   ---
+2026-10-19T09:12:40.5723608Z   duration_ms: 11.219645
+2026-10-19T09:12:40.5724124Z   ...
+2026-10-19T09:12:40.5836309Z # Subtest: cinematic volume is independent and pause releases only this music lease
+2026-10-19T09:12:40.5837699Z ok 51 - cinematic volume is independent and pause releases only this music lease
+2026-10-19T09:12:40.5838550Z   ---
+2026-10-19T09:12:40.5838993Z   duration_ms: 11.766287
+2026-10-19T09:12:40.5839425Z   ...
+2026-10-19T09:12:40.5932384Z # Subtest: stale frame callback cannot clear the newer Replay poll or finish a different play epoch
+2026-10-19T09:12:40.5953430Z ok 52 - stale frame callback cannot clear the newer Replay poll or finish a different play epoch
+2026-10-19T09:12:40.5982728Z   ---
+2026-10-19T09:12:40.5992542Z   duration_ms: 9.671252
+2026-10-19T09:12:40.5993250Z   ...
+2026-10-19T09:12:40.6213853Z # Subtest: finite load, seek and play deadlines preserve poster and release temporary music
+2026-10-19T09:12:40.6216376Z ok 53 - finite load, seek and play deadlines preserve poster and release temporary music
+2026-10-19T09:12:40.6217313Z   ---
+2026-10-19T09:12:40.6217900Z   duration_ms: 27.973783
+2026-10-19T09:12:40.6218530Z   ...
+2026-10-19T09:12:40.6378681Z # Subtest: different playback dimensions or unhonored seek never show video
+2026-10-19T09:12:40.6379986Z ok 54 - different playback dimensions or unhonored seek never show video
+2026-10-19T09:12:40.6380537Z   ---
+2026-10-19T09:12:40.6380820Z   duration_ms: 17.09284
+2026-10-19T09:12:40.6381144Z   ...
+2026-10-19T09:12:40.6559185Z # Subtest: duration mutation and media decode failure stop the player without replacing earned art
+2026-10-19T09:12:40.6560938Z ok 55 - duration mutation and media decode failure stop the player without replacing earned art
+2026-10-19T09:12:40.6562050Z   ---
+2026-10-19T09:12:40.6562618Z   duration_ms: 18.303803
+2026-10-19T09:12:40.6563258Z   ...
+2026-10-19T09:12:40.6640825Z # Subtest: without frame callbacks the current-time observer still ends the selected segment
+2026-10-19T09:12:40.6643160Z ok 56 - without frame callbacks the current-time observer still ends the selected segment
+2026-10-19T09:12:40.6644134Z   ---
+2026-10-19T09:12:40.6644428Z   duration_ms: 8.213839
+2026-10-19T09:12:40.6644717Z   ...
+2026-10-19T09:12:40.6765598Z # Subtest: dispose/pagehide revokes one owned URL, all listeners/timers and late play success
+2026-10-19T09:12:40.6766651Z ok 57 - dispose/pagehide revokes one owned URL, all listeners/timers and late play success
+2026-10-19T09:12:40.6767120Z   ---
+2026-10-19T09:12:40.6767330Z   duration_ms: 8.338562
+2026-10-19T09:12:40.6767562Z   ...
+2026-10-19T09:12:40.6929406Z # Subtest: an external abort before or after opening releases owned media and keeps the caller poster
+2026-10-19T09:12:40.6931169Z ok 58 - an external abort before or after opening releases owned media and keeps the caller poster
+2026-10-19T09:12:40.6932343Z   ---
+2026-10-19T09:12:40.6932766Z   duration_ms: 20.151035
+2026-10-19T09:12:40.6933563Z   ...
+2026-10-19T09:12:40.7023097Z # Subtest: a broken music restoration adapter cannot prevent owned video cleanup and reports its limit
+2026-10-19T09:12:40.7032435Z ok 59 - a broken music restoration adapter cannot prevent owned video cleanup and reports its limit
+2026-10-19T09:12:40.7033746Z   ---
+2026-10-19T09:12:40.7034214Z   duration_ms: 8.954483
+2026-10-19T09:12:40.7034722Z   ...
+2026-10-19T09:12:40.7103530Z # Subtest: failed gain acquisition rolls back only the new lease and never starts media
+2026-10-19T09:12:40.7105239Z ok 60 - failed gain acquisition rolls back only the new lease and never starts media
+2026-10-19T09:12:40.7106299Z   ---
+2026-10-19T09:12:40.7107128Z   duration_ms: 8.891364
+2026-10-19T09:12:40.7107776Z   ...
+2026-10-19T09:12:40.7199752Z # Subtest: premature native end reports truncation instead of claiming the selected segment completed
+2026-10-19T09:12:40.7205304Z ok 61 - premature native end reports truncation instead of claiming the selected segment completed
+2026-10-19T09:12:40.7206305Z   ---
+2026-10-19T09:12:40.7206704Z   duration_ms: 8.231281
+2026-10-19T09:12:40.7207215Z   ...
+2026-10-19T09:12:40.7302247Z # Subtest: native focus follows visible story actions through Play, Pause, end and Replay
+2026-10-19T09:12:40.7305376Z ok 62 - native focus follows visible story actions through Play, Pause, end and Replay
+2026-10-19T09:12:40.7305959Z   ---
+2026-10-19T09:12:40.7306221Z   duration_ms: 11.229844
+2026-10-19T09:12:40.7306508Z   ...
+2026-10-19T09:12:40.7468104Z # Subtest: story completion preserves focus on volume or the enclosing Close action
+2026-10-19T09:12:40.7469760Z ok 63 - story completion preserves focus on volume or the enclosing Close action
+2026-10-19T09:12:40.7470528Z   ---
+2026-10-19T09:12:40.7471191Z   duration_ms: 16.303345
+2026-10-19T09:12:40.7471635Z   ...
+2026-10-19T09:12:40.7554905Z # Subtest: a deliberate focus change during native blur wins over story fallback
+2026-10-19T09:12:40.7558218Z ok 64 - a deliberate focus change during native blur wins over story fallback
+2026-10-19T09:12:40.7559309Z   ---
+2026-10-19T09:12:40.7559670Z   duration_ms: 8.511324
+2026-10-19T09:12:40.7560067Z   ...
+2026-10-19T09:12:40.7670908Z # Subtest: Skip and natural end move a disappearing Skip action to Replay without changing the earned poster
+2026-10-19T09:12:40.7672751Z ok 65 - Skip and natural end move a disappearing Skip action to Replay without changing the earned poster
+2026-10-19T09:12:40.7673502Z   ---
+2026-10-19T09:12:40.7673728Z   duration_ms: 11.31867
+2026-10-19T09:12:40.7673962Z   ...
+2026-10-19T09:12:40.7769055Z # Subtest: closing the presentation during a focus change cannot focus a retired story action
+2026-10-19T09:12:40.7770345Z ok 66 - closing the presentation during a focus change cannot focus a retired story action
+2026-10-19T09:12:40.7770836Z   ---
+2026-10-19T09:12:40.7771050Z   duration_ms: 9.00105
+2026-10-19T09:12:40.7771274Z   ...
+2026-10-19T09:12:40.7857029Z # Subtest: an obsolete play result cannot pause or redock a newer explicit play
+2026-10-19T09:12:40.7858412Z ok 67 - an obsolete play result cannot pause or redock a newer explicit play
+2026-10-19T09:12:40.7859139Z   ---
+2026-10-19T09:12:40.7859559Z   duration_ms: 9.796075
+2026-10-19T09:12:40.7859985Z   ...
+2026-10-19T09:12:40.7941732Z # Subtest: native media interruption releases music and requires explicit story Resume
+2026-10-19T09:12:40.7943731Z ok 68 - native media interruption releases music and requires explicit story Resume
+2026-10-19T09:12:40.7947133Z   ---
+2026-10-19T09:12:40.7947656Z   duration_ms: 8.802588
+2026-10-19T09:12:40.7948176Z   ...
+2026-10-19T09:12:40.8039032Z # Subtest: abort during video allocation cleans the returned unadopted video without loading an original
+2026-10-19T09:12:40.8040244Z ok 69 - abort during video allocation cleans the returned unadopted video without loading an original
+2026-10-19T09:12:40.8041361Z   ---
+2026-10-19T09:12:40.8041602Z   duration_ms: 9.304611
+2026-10-19T09:12:40.8118572Z   ...
+2026-10-19T09:12:40.8119894Z # Subtest: abort during URL allocation revokes the returned unadopted URL exactly once
+2026-10-19T09:12:40.8121260Z ok 70 - abort during URL allocation revokes the returned unadopted URL exactly once
+2026-10-19T09:12:40.8122361Z   ---
+2026-10-19T09:12:40.8122808Z   duration_ms: 8.199522
+2026-10-19T09:12:40.8123254Z   ...
+2026-10-19T09:12:40.8207540Z # Subtest: abort during gain acquisition releases the returned lease without starting video
+2026-10-19T09:12:40.8209537Z ok 71 - abort during gain acquisition releases the returned lease without starting video
+2026-10-19T09:12:40.8210384Z   ---
+2026-10-19T09:12:40.8210804Z   duration_ms: 8.345495
+2026-10-19T09:12:40.8211214Z   ...
+2026-10-19T09:12:40.8292159Z # Subtest: abort during status callback keeps disposed state after pending seek readiness
+2026-10-19T09:12:40.8293482Z ok 72 - abort during status callback keeps disposed state after pending seek readiness
+2026-10-19T09:12:40.8297296Z   ---
+2026-10-19T09:12:40.8297694Z   duration_ms: 8.611141
+2026-10-19T09:12:40.8298124Z   ...
+2026-10-19T09:12:40.8393214Z # Subtest: abort during gain release cannot reopen a disposed story as a static view
+2026-10-19T09:12:40.8394591Z ok 73 - abort during gain release cannot reopen a disposed story as a static view
+2026-10-19T09:12:40.8395300Z   ---
+2026-10-19T09:12:40.8395558Z   duration_ms: 10.005557
+2026-10-19T09:12:40.8395858Z   ...
+2026-10-19T09:12:40.8486137Z # Subtest: cinematic slider remains independent while explicit playback honors master attenuation and mute
+2026-10-19T09:12:40.8495957Z ok 74 - cinematic slider remains independent while explicit playback honors master attenuation and mute
+2026-10-19T09:12:40.8496993Z   ---
+2026-10-19T09:12:40.8497282Z   duration_ms: 9.267888
+2026-10-19T09:12:40.8497595Z   ...
+2026-10-19T09:12:40.8576728Z # Subtest: invalid master controls refuse without changing current cinematic controls
+2026-10-19T09:12:40.8578146Z ok 75 - invalid master controls refuse without changing current cinematic controls
+2026-10-19T09:12:40.8579021Z   ---
+2026-10-19T09:12:40.8579290Z   duration_ms: 8.765449
+2026-10-19T09:12:40.8579572Z   ...
+2026-10-19T09:12:40.8683123Z # Subtest: injected master applies once and synchronously without changing cinematic volume or story transport
+2026-10-19T09:12:40.8685270Z ok 76 - injected master applies once and synchronously without changing cinematic volume or story transport
+2026-10-19T09:12:40.8686500Z   ---
+2026-10-19T09:12:40.8686981Z   duration_ms: 10.129769
+2026-10-19T09:12:40.8687515Z   ...
+2026-10-19T09:12:40.8778248Z # Subtest: master mute survives pending story Play and owned cleanup releases only the story output
+2026-10-19T09:12:40.8779516Z ok 77 - master mute survives pending story Play and owned cleanup releases only the story output
+2026-10-19T09:12:40.8780184Z   ---
+2026-10-19T09:12:40.8780802Z   duration_ms: 10.186294
+2026-10-19T09:12:40.8781225Z   ...
+2026-10-19T09:12:40.8917356Z # Subtest: actual story controls keep modal Tab at Close and Cinematic volume without playing or changing volume
+2026-10-19T09:12:40.8919020Z ok 78 - actual story controls keep modal Tab at Close and Cinematic volume without playing or changing volume
+2026-10-19T09:12:40.8919776Z   ---
+2026-10-19T09:12:40.8920073Z   duration_ms: 12.633267
+2026-10-19T09:12:40.8920400Z   ...
+2026-10-19T09:12:40.9048502Z # Subtest: Ukrainian-first story controls and accepted notices switch without changing playback ownership
+2026-10-19T09:12:40.9050308Z ok 79 - Ukrainian-first story controls and accepted notices switch without changing playback ownership
+2026-10-19T09:12:40.9050870Z   ---
+2026-10-19T09:12:40.9051080Z   duration_ms: 13.205351
+2026-10-19T09:12:40.9051310Z   ...
+2026-10-19T09:12:40.9150862Z # Subtest: earned video starts once after its exact poster is ready, then stays available for replay
+2026-10-19T09:12:40.9153062Z ok 80 - earned video starts once after its exact poster is ready, then stays available for replay
+2026-10-19T09:12:40.9154754Z   ---
+2026-10-19T09:12:40.9155315Z   duration_ms: 9.870916
+2026-10-19T09:12:40.9155966Z   ...
+2026-10-19T09:12:40.9354310Z # Subtest: reduced motion and background cancellation prevent automatic earned-video playback
+2026-10-19T09:12:40.9355869Z ok 81 - reduced motion and background cancellation prevent automatic earned-video playback
+2026-10-19T09:12:40.9356737Z   ---
+2026-10-19T09:12:40.9357189Z   duration_ms: 19.032028
+2026-10-19T09:12:40.9357648Z   ...
+2026-10-19T09:12:40.9444152Z # Subtest: blocked earned autoplay leaves the exact poster and an explicit Play retry
+2026-10-19T09:12:40.9445981Z ok 82 - blocked earned autoplay leaves the exact poster and an explicit Play retry
+2026-10-19T09:12:40.9447054Z   ---
+2026-10-19T09:12:40.9447560Z   duration_ms: 9.374591
+2026-10-19T09:12:40.9448113Z   ...
+2026-10-19T09:12:40.9546414Z # Subtest: cinematic arrival keeps the exact poster through starting and fades only decoded playback
+2026-10-19T09:12:40.9548778Z ok 83 - cinematic arrival keeps the exact poster through starting and fades only decoded playback
+2026-10-19T09:12:40.9550018Z   ---
+2026-10-19T09:12:40.9550701Z   duration_ms: 10.858176
+2026-10-19T09:12:40.9551216Z   ...
+2026-10-19T09:12:40.9654483Z # Subtest: resource diagnostic counts exact native media owners without playing or allocating
+2026-10-19T09:12:40.9655640Z ok 84 - resource diagnostic counts exact native media owners without playing or allocating
+2026-10-19T09:12:40.9656180Z   ---
+2026-10-19T09:12:40.9656418Z   duration_ms: 9.856319
+2026-10-19T09:12:40.9656677Z   ...
+2026-10-19T09:12:40.9672814Z # Subtest: resource diagnostic distinguishes owned play cancellation from unobservable native settlement
+2026-10-19T09:12:40.9674501Z ok 85 - resource diagnostic distinguishes owned play cancellation from unobservable native settlement
+2026-10-19T09:12:40.9675490Z   ---
+2026-10-19T09:12:40.9677535Z   duration_ms: 10.844932
+2026-10-19T09:12:40.9677970Z   ...
+2026-10-19T09:12:40.9842543Z 1..85
+2026-10-19T09:12:40.9842982Z # tests 85
+2026-10-19T09:12:40.9844754Z # suites 0
+2026-10-19T09:12:40.9845073Z # pass 84
+2026-10-19T09:12:40.9845634Z # fail 1
+2026-10-19T09:12:40.9845891Z # cancelled 0
+2026-10-19T09:12:40.9846164Z # skipped 0
+2026-10-19T09:12:40.9846632Z # todo 0
+2026-10-19T09:12:40.9850395Z # duration_ms 100561.115146
+2026-10-19T09:12:40.9908320Z ##[error]Process completed with exit code 1.
+2026-10-19T09:12:41.0034777Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+2026-10-19T09:12:41.0035245Z with:
+2026-10-19T09:12:41.0035596Z   name: appearance-demo-admission-b4688ca2199c01fe9a063a7260946bc42c3642f4-1
+2026-10-19T09:12:41.0036057Z   path: .cache/appearance-demo-admission/
+2026-10-19T09:12:41.0036370Z   if-no-files-found: error
+2026-10-19T09:12:41.0036601Z   retention-days: 7
+2026-10-19T09:12:41.0036809Z   compression-level: 6
+2026-10-19T09:12:41.0037042Z   overwrite: false
+2026-10-19T09:12:41.0037256Z   include-hidden-files: false
+2026-10-19T09:12:41.0037509Z env:
+2026-10-19T09:12:41.0038408Z   APPEARANCE_TEAM_TEST_FILES: game/test/couch-static-pictures.test.mjs game/test/couch-static-picture-host.test.mjs game/test/couch-shell.test.mjs game/test/controller-navigation.test.mjs game/test/controller-reading.test.mjs
+2026-10-19T09:12:41.0039522Z   APPEARANCE_INSTALLED_TEST_FILES: game/test/couch-installed-chapters.test.mjs
+2026-10-19T09:12:41.0043347Z   APPEARANCE_ADMISSION_TEST_FILES: game/test/journey-performance-admission.test.mjs game/test/journey-performance-observation-admission.test.mjs game/test/journey-profile-owned-transition.test.mjs game/test/journey-required-progress-admission.test.mjs game/test/solo-required-progress-preparation-host.test.mjs game/test/owned-recorder.test.mjs game/test/demo-library-indexeddb.test.mjs game/test/optional-learning-admission.test.mjs game/test/optional-replay-admission.test.mjs game/test/solo-pending-verification-gameplay-host.test.mjs game/test/edition-mastery-host.test.mjs game/test/edition-lessons.test.mjs game/test/capture-presentation-session.test.mjs game/test/solo-dense-replay-persistence.test.mjs game/test/library-entry.test.mjs game/test/solo-lazy-library-host.test.mjs game/test/solo-transition-performance-host.test.mjs
+2026-10-19T09:12:41.0047485Z   APPEARANCE_DEMO_TEST_FILES: game/test/demo-scene-transition.test.mjs game/test/victory-story-ui.test.mjs game/test/demo-bot.test.mjs game/test/demo-sources.test.mjs game/test/solo-demo-resources-host.test.mjs game/test/demo-loading-host.test.mjs
+2026-10-19T09:12:41.0048597Z   PREVIEW_HEAD_SHA: b4688ca2199c01fe9a063a7260946bc42c3642f4
+2026-10-19T09:12:41.0049123Z   PREVIEW_RUN_URL: https://github.com/mekhovov/revealline/actions/runs/39223515789
+2026-10-19T09:12:41.0049539Z ##[endgroup]
+2026-10-19T09:12:41.1774118Z With the provided path, there will be 1 file uploaded
+2026-10-19T09:12:41.1775199Z Artifact name is valid!
+2026-10-19T09:12:41.1775717Z Root directory input is valid!
+2026-10-19T09:12:41.5475725Z Beginning upload of artifact content to blob storage
+2026-10-19T09:12:41.8584373Z Uploaded bytes 5756
+2026-10-19T09:12:41.9332846Z Finished uploading artifact content to blob storage!
+2026-10-19T09:12:41.9334564Z SHA256 digest of uploaded artifact zip is 5c79c6e58e5ddd343a21ed546fa9d04210b91a42a55f5ac5dfdcbac78a1984cc
+2026-10-19T09:12:41.9335813Z Finalizing artifact upload
+2026-10-19T09:12:42.3324799Z Artifact appearance-demo-admission-b4688ca2199c01fe9a063a7260946bc42c3642f4-1.zip successfully finalized. Artifact ID 12175965607
+2026-10-19T09:12:42.3327052Z Artifact appearance-demo-admission-b4688ca2199c01fe9a063a7260946bc42c3642f4-1 has been successfully uploaded! Final size is 5756 bytes. Artifact ID is 12175965607
+2026-10-19T09:12:42.3329475Z Artifact download URL: https://github.com/mekhovov/revealline/actions/runs/39223515789/artifacts/12175965607
+2026-10-19T09:12:42.3526798Z Post job cleanup.
+2026-10-19T09:12:42.4424023Z [command]/usr/bin/git version
+2026-10-19T09:12:42.4469321Z git version 2.55.0
+2026-10-19T09:12:42.4511477Z Temporarily overriding HOME='/home/runner/work/_temp/ff932da5-490e-4e73-8a8d-9703bfd2d654' before making global git config changes
+2026-10-19T09:12:42.4513244Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-19T09:12:42.4523433Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+2026-10-19T09:12:42.4563915Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T09:12:42.4609795Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T09:12:42.4910358Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T09:12:42.4953458Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T09:12:42.5267589Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T09:12:42.5314447Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T09:12:42.5785275Z Evaluate and set job outputs
+2026-10-19T09:12:42.5792967Z Set output 'artifactId'
+2026-10-19T09:12:42.5795028Z Set output 'artifactURL'
+2026-10-19T09:12:42.5795792Z Set output 'artifactDigest'
+2026-10-19T09:12:42.5796500Z Cleaning up orphan processes

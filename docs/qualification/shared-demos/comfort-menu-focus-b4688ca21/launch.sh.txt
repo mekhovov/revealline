@@ -1,0 +1,14 @@
+#!/bin/sh
+# Root may invoke only after its active browser matrix releases the browser slot.
+set -eu
+cd /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos
+export TMPDIR=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21
+export GIT_NO_LAZY_FETCH=1
+exec python3 .cache/qualify-comfort-menu-focus-emitted.py \
+  --run=approved \
+  --node=/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node \
+  --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 \
+  --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 \
+  --emitted-preview=.cache/shared-demos-emitted-2d24aee-b4688ca21-combined \
+  --report=.cache/comfort-menu-focus-emitted-2d24aee-b4688ca21.json \
+  --tmpdir="$TMPDIR"

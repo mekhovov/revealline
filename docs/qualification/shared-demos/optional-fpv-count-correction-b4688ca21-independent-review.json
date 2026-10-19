@@ -1,0 +1,147 @@
+{
+  "format": "SharedDemoOptionalFPVCountCorrectionIndependentReviewV1",
+  "complete": true,
+  "reviewedAt": "2026-10-19T09:28:48.969497+00:00",
+  "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "originalHosted": {
+    "jobURL": "https://github.com/mekhovov/revealline/actions/runs/39223515756/job/117964156839",
+    "tests": 1296,
+    "passed": 1294,
+    "failed": 2,
+    "strictComplete": false,
+    "knownFailure": "Two tests stopped at obsolete148-file runtime assertions; their remaining obsolete runtime/source count assertions were not reached."
+  },
+  "focusedCorrection": {
+    "tests": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "tapDurationMs": 5960.427917,
+    "supervisedElapsedSeconds": 6.695641,
+    "nodeVersion": "v22.22.2",
+    "platform": "darwin",
+    "sourceBeforeAfterExact": true,
+    "verifiedPinCount": 14,
+    "sourcePins": {
+      "publishing/edition-admission.mjs": "cffaa70c3613e9f0408df59132891c908c52447106e29ccc39c2d87754e3854c",
+      "publishing/edition-candidate.mjs": "2c1823bcb047f171ba16fcf92aa6613731014652b428b62e62e055d510c48d51",
+      "publishing/optional-package-admission.mjs": "552e4aaaa99c7479ffbb29d5663e1f77d6879ae73331eda3b141adaa5da367df",
+      "publishing/optional-package-candidate.mjs": "1c0defba04673d4b43ff31141d5d34257f9be1b088ccdec2ffa67a4fd1dddaf1",
+      "publishing/optional-package-policy.mjs": "d617d8105a6cbf25c691c0ffd1cc0a5f6dcfc0ef40982c83fdd22f26dd3267b3",
+      "scripts/build-optional-practice.mjs": "1b83312718bbc14dbed7c4be0a9e13ae578204a06773ed89bd32d4ec01670789",
+      "scripts/compile-edition.mjs": "5a1ab37ba578fa0d3b91a704b8920ef326395bbfaa8e7e84656caf7dfb42ab6b",
+      "scripts/edition-runtime.mjs": "1e1010ac4ee56154024e13357fec4bcb1b32af726f5f780193d17c2056592049",
+      "scripts/optional-launcher.mjs": "c5c030d44953a8ea0c1d051de536e650a018bb598eb283fffb2a7b3ce0ced325",
+      "game/test/edition-demo-packaging.test.mjs": "ee80cb6ef9635d040b67549f6ab8ce89e7c1e907a137f6b10caf94359e020197",
+      "publishing/optional-package-admission.test.mjs": "05b8745f3ab272e7053e4f06fef7c3ff377cf2d1221aed9142c54b16b7a645c0",
+      "scripts/test-bundle-editions.mjs": "960ac694e9e03c675638a116ce71b1511a493cf81aa1e8060f386845b56f66c5",
+      "scripts/test-optional-practice.mjs": "9c4e412d523422c341557986709c6442e4d91cd0d8f2434a84b484f8f255f973",
+      "scripts/test-optional-fpv-package.mjs": "5a744cc5cd4bdf71cddce76f61f9c9163ec50004d4385133042e11ee21e03617"
+    },
+    "wrapperExact": true,
+    "logCompleteUntruncated": true,
+    "childExit": 0
+  },
+  "change": {
+    "path": "scripts/test-optional-fpv-package.mjs",
+    "changedLines": 5,
+    "originalSHA256": "db6175f2aeeeb9d29b9d3339b56aa7366fa5885d9d133392457699dd357e003f",
+    "correctedSHA256": "5a744cc5cd4bdf71cddce76f61f9c9163ec50004d4385133042e11ee21e03617",
+    "runtimeArchiveFiles": 147,
+    "runtimeInventoryFiles": 146,
+    "sourceArchiveFiles": 149,
+    "fileLimit": 150,
+    "policyFileUnchangedFromHEAD": true,
+    "closureAdmissionTamperByteBudgetsReproducibilityAssertionsUnchanged": true,
+    "canonicalEvidence": {
+      "path": "docs/qualification/shared-demos/packaging-candidates-b4688ca219-independent-review.json",
+      "sha256": "e24807db9b7731dcf4a05b8edeb267414a21b621fe8da0770b523c966adcd2ad"
+    }
+  },
+  "ownedCleanup": {
+    "observedIdentities": 2,
+    "remaining": 0,
+    "signals": 0,
+    "verifiedBySupervisor": true,
+    "independentExactPIDSnapshotEmpty": true,
+    "observationLimitsExceeded": false
+  },
+  "bounds": {
+    "perTestTimeoutSeconds": 120,
+    "supervisorPolledExecutionSeconds": 300,
+    "logBytesLimit": 4194304,
+    "freeFloorBytes": 209715200,
+    "fixtureAllocationCapBytes": 314572800,
+    "minimumObservedFreeBytes": 530608128,
+    "maximumObservedFixtureBytes": 11210752
+  },
+  "styleChecks": {
+    "prettier": true,
+    "eslint": true,
+    "gitDiffCheck": true
+  },
+  "files": [
+    {
+      "original": ".cache/hosted-optional-package-failure-b4688ca21.json",
+      "path": "docs/qualification/shared-demos/optional-fpv-count-correction-b4688ca21/hosted-failure.json",
+      "bytes": 1376,
+      "sha256": "5927c19e829635c54c59fc1a64f17eaae7ac5b27c6d09885fbb62d15bf63d7f3"
+    },
+    {
+      "original": ".cache/hosted-b4688ca21-job-117964156839.log.txt",
+      "path": "docs/qualification/shared-demos/optional-fpv-count-correction-b4688ca21/hosted-failure.log.txt",
+      "bytes": 533022,
+      "sha256": "9f219cba6fce3b3e413865c1999a62890c3420f784aa1f9cf28750bbe51719a9"
+    },
+    {
+      "original": ".cache/optional-fpv-count-correction-b4688ca21-20261019T112319.json",
+      "path": "docs/qualification/shared-demos/optional-fpv-count-correction-b4688ca21/focused-correction.json",
+      "bytes": 8764,
+      "sha256": "cb921248bfb3dc580cb2fb526ca1539ea81bbf52b18acc210b0fdfeac7e611c2"
+    },
+    {
+      "original": ".cache/optional-fpv-count-correction-b4688ca21-20261019T112319.tap.txt",
+      "path": "docs/qualification/shared-demos/optional-fpv-count-correction-b4688ca21/focused-correction.tap.txt",
+      "bytes": 696,
+      "sha256": "c298f943864be94b3ea13b16d7f48ab97227272d977d8bdbd92330e9141289bc"
+    },
+    {
+      "original": ".cache/run-optional-fpv-count-correction.py",
+      "path": "docs/qualification/shared-demos/optional-fpv-count-correction-b4688ca21/focused-supervisor.py.txt",
+      "bytes": 7317,
+      "sha256": "4d93218de6ac049735753b8fdd1439a7aa2d5407e50610ac83899621f47dd2aa"
+    },
+    {
+      "original": ".cache/run-endurance-emitted-final.py",
+      "path": "docs/qualification/shared-demos/optional-fpv-count-correction-b4688ca21/owned-process-supervisor-source.py.txt",
+      "bytes": 26055,
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+    },
+    {
+      "original": ".cache/optional-fpv-count-correction-style-b4688ca21.json",
+      "path": "docs/qualification/shared-demos/optional-fpv-count-correction-b4688ca21/style-checks.json",
+      "bytes": 1002,
+      "sha256": "38b515a647c99307c8327452648842ff319b24c26fdf8bc1e3819afd9bb49386"
+    },
+    {
+      "original": ".cache/optional-fpv-exact-counts-b4688ca21.patch",
+      "path": "docs/qualification/shared-demos/optional-fpv-count-correction-b4688ca21/count-correction.patch",
+      "bytes": 2424,
+      "sha256": "d784bce83a391fe865d02b7ab16c43fda7d317a9d8ba2e010caa294a81c19f39"
+    },
+    {
+      "original": "scripts/test-optional-fpv-package.mjs",
+      "path": "docs/qualification/shared-demos/optional-fpv-count-correction-b4688ca21/corrected-test.mjs.txt",
+      "bytes": 27958,
+      "sha256": "5a744cc5cd4bdf71cddce76f61f9c9163ec50004d4385133042e11ee21e03617"
+    }
+  ],
+  "limitations": [
+    "This is two targeted tests on macOS Node22.22.2, not a full1296-test rerun or new hosted pass.",
+    "The original hosted failure report and raw log are preserved byte-exact, including its diagnosis-pending wording; this audit records the later count-only diagnosis.",
+    "Source stability covers the14 source/test paths and owner bytes recorded by the supervisor; no full runtime/build fingerprint rehash or replay/browser/build was performed for this audit.",
+    "The300-second supervisor bound is polled; synchronous filesystem/finalization I/O is not a hard-preemptive deadline. This run completed in6.696seconds.",
+    "No commit, deployment, runtime code change, package limit increase or native replay relaxation was made by this review."
+  ]
+}

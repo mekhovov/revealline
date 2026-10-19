@@ -1,0 +1,79 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, stat } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { verifyReplayAsync, authoritativeCheckpoint } from '../game/replay.mjs';
+import { createRun, stepRun, releaseInputs, FIXED_DT } from '../game/core/index.mjs';
+import { diagnoseDemoReplay } from '../game/demo-replay-diagnostics.mjs';
+import { loadDemoSources } from '../game/demo-sources.mjs';
+import { createExecutionCatalog } from '../game/campaign-contexts.mjs';
+import { demoIdentity, resolveDemoCatalog } from '../game/demo-catalog.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../game/gameplay-tuning.mjs';
+import { fingerprintDemoSources } from '../scripts/demo-source-fingerprint.mjs';
+const args=Object.fromEntries(process.argv.slice(2).map(arg=>arg.replace(/^--/,'').split('=')));
+assert.equal(args.run,'approved');assert.equal(process.version,'v22.13.1');assert.equal(process.arch,'x64');assert.equal(process.platform,'darwin');
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const head=()=>execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
+const pin=async path=>{const body=await readFile(path);return {path,sha256:sha(body),bytes:body.length};};
+for(const path of [args.report,args.report.replace(/\.json$/,'.mjs.txt')]){try{await stat(path);throw Error(`Refusing existing evidence ${path}`);}catch(error){if(error.code!=='ENOENT')throw error;}}
+const script=await readFile(new URL(import.meta.url));
+const report={format:'SharedDemoInstalledSoloNodeX64ObservationV1',complete:false,started:new Date().toISOString(),
+ environment:{version:process.version,arch:process.arch,platform:process.platform,versions:process.versions,executable:await pin(process.execPath)},
+ headBefore:head(),sourceBefore:await fingerprintDemoSources(process.cwd()),buildInputsBefore:await fingerprintDemoSources(process.cwd(),['scripts','authoring']),observerSHA256:sha(script),
+ checks:[],installed:[],errors:[],originalTest:await pin('game/test/demo-sources.test.mjs'),
+ scope:'Read-only four exact published signal-08 payloads and every actual Standard/Gentle installed replay source using production creation. Native verifier unchanged; existing reviewed-only compatibility retained by the source API. macOS x64 Node22.13.1 is not Linux qualification. Completion means every requested observation finished, not every replay was admitted.'};
+assert.equal(report.headBefore,args.head);assert.equal(report.sourceBefore.sha256,args.fingerprint);
+const readJSON=async path=>JSON.parse(await readFile(path,'utf8'));
+let active=null;
+try{
+ const sourceId='solo-qualified-478808a96f4fbf5e';const catalog=await readJSON('game/demo-data/catalog.json');const clip=catalog.clips.find(row=>row.id===sourceId);
+ const candidates=[clip,...clip.runtimePerformances];assert.equal(candidates.length,4);
+ const linux=await readJSON('.cache/hosted-demo-admission-failure-b4688ca21.json');report.linuxReference=await pin('.cache/hosted-demo-admission-failure-b4688ca21.json');
+ const last=linux.sourceFailure.diagnostics;
+ for(const candidate of candidates){
+  active={stage:'targeted-native-verification',engine:candidate.engine??'primary'};
+  const replayPath='game/'+candidate.replayURL.replace(/^\.\//,'');const diagnosticPath=replayPath.replace(/\.replay\.json$/,'.diagnostics.json');
+  const replay=await readJSON(replayPath),sidecar=await readJSON(diagnosticPath);
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),45000);
+  try{
+   const verified=await verifyReplayAsync(replay,{signal:controller.signal});
+   const diagnostic=await diagnoseDemoReplay(replay,sidecar,{signal:controller.signal});
+   const firstRun=createRun(replay.level,replay.options);
+   first: for(const segment of replay.segments){if(segment.releaseBefore)releaseInputs(firstRun);for(let tick=0;tick<segment.ticks;tick++){stepRun(firstRun,segment.input,FIXED_DT);if(firstRun.tick===600)break first;}}
+   assert.equal(firstRun.tick,600);const at600=authoritativeCheckpoint(firstRun);
+   const clockKeys=['status','tick','time','lives','score','respawnAt','medal','cutStartedAt','failureCause'];
+   const row={sourceId,engine:candidate.engine??'primary',replay:await pin(replayPath),sidecar:await pin(diagnosticPath),match:verified.match,diagnostics:verified.diagnostics,diagnostic,
+    actual:verified.actual,recorded:replay.checkpoint,at600,clock:Object.fromEntries(clockKeys.map(key=>[key,verified.state[key]])),enemies:verified.state.enemies,
+    matchesLinuxFinalEnemy:verified.actual.checkpoint.sections.enemies===last.find(row=>row.section==='enemies').actual,
+    matchesLinuxFinalClock:verified.actual.checkpoint.sections.clock===last.find(row=>row.section==='clock').actual,
+    matchesLinuxFirstCheckpoint:at600.hash===last.find(row=>row.code==='diagnostic-checkpoint-mismatch').actual};
+   report.checks.push(row);console.log(JSON.stringify({stage:active.stage,engine:row.engine,match:row.match,diagnostics:row.diagnostics,diagnostic:row.diagnostic,linux:[row.matchesLinuxFinalEnemy,row.matchesLinuxFinalClock,row.matchesLinuxFirstCheckpoint]}));
+  }finally{clearTimeout(timer);}
+ }
+ const campaign=await readJSON('game/content/campaign.json'),classRecipes=await readJSON('game/content/classes.json'),pack=await readJSON('game/content/packs/fpv-arcade-r5.json');campaign.classRecipes=classRecipes;
+ const entries=createExecutionCatalog([{campaign,classRecipes},{campaign:{...pack.campaigns[0],classRecipes:pack.classRecipes},classRecipes:pack.classRecipes}]).entries;
+ const requests=[];
+ class LazyWorker{constructor(){throw Error('Enumeration or preparation created an unexpected Worker.');}}
+ const sources=await loadDemoSources({entries,library:{list:async()=>[]},WorkerClass:LazyWorker,fetch:async url=>{requests.push(url.href);return{ok:true,text:async()=>readFile(url,'utf8')};}});
+ const replays=sources.filter(source=>source.kind==='replay');assert.equal(replays.length,resolveDemoCatalog(catalog,entries).length);assert.equal(replays.length,17);assert.equal(requests.length,1);
+ report.enumeration={replays:replays.length,sources:sources.length,metadataRequests:requests.length,ids:replays.map(source=>source.id)};
+ for(const source of replays){
+  active={stage:'installed-source-creation',sourceId:source.id};const offset=requests.length;const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),45000);
+  const started=performance.now();let player;
+  const row={sourceId:source.id,levelId:source.levelId,campaignId:source.campaignId,campaignKey:source.campaignKey,qualified:source.id.startsWith('solo-qualified-'),admitted:false};
+  try{
+   player=await source.create({signal:controller.signal});assert.equal(player.info.levelId,source.levelId);assert.equal(player.state.tick,0);assert.equal(player.phase,'paused');assert.equal(source.entry.difficulty,'standard');
+   assert.deepEqual(player.state.level,applyGameplayTuning(source.level,resolveGameplayTuning('standard')));assert.equal(source.identity,demoIdentity(source.level,source.entry.classRecipes));assert.notEqual(source.identity,source.recordingIdentity);
+   row.admitted=true;row.info=player.info;row.recordedStatus=player.recordedStatus;row.initialPhase=player.phase;row.initialTick=player.state.tick;
+  }catch(error){row.error={name:error.name,message:error.message,diagnostics:error.diagnostics??null};}
+  finally{clearTimeout(timer);if(player){await player.dispose();row.disposed=true;}row.elapsedMs=performance.now()-started;row.attemptedURLs=requests.slice(offset);assert.ok(row.attemptedURLs.length<=16);report.installed.push(row);console.log(JSON.stringify({stage:active.stage,...row}));}
+ }
+ report.counts={targeted:report.checks.length,targetedMatch:report.checks.filter(row=>row.match).length,installed:report.installed.length,installedAdmitted:report.installed.filter(row=>row.admitted).length,installedFailed:report.installed.filter(row=>!row.admitted).length};
+ report.complete=report.checks.length===4&&report.installed.length===17;
+}catch(error){report.complete=false;report.failure={name:error.name,message:error.message,stack:String(error.stack??error).slice(0,8192),active};}
+finally{
+ try{report.headAfter=head();report.sourceAfter=await fingerprintDemoSources(process.cwd());report.buildInputsAfter=await fingerprintDemoSources(process.cwd(),['scripts','authoring']);report.observerSHA256After=sha(await readFile(new URL(import.meta.url)));report.originalTestAfter=await pin('game/test/demo-sources.test.mjs');
+  assert.equal(report.headBefore,report.headAfter);assert.deepEqual(report.sourceBefore,report.sourceAfter);assert.deepEqual(report.buildInputsBefore,report.buildInputsAfter);assert.equal(report.observerSHA256,report.observerSHA256After);assert.deepEqual(report.originalTest,report.originalTestAfter);report.sourceUnchanged=true;
+ }catch(error){report.complete=false;report.sourceUnchanged=false;report.bindingFailure=String(error.stack??error);}
+ report.finished=new Date().toISOString();await writeFile(args.report.replace(/\.json$/,'.mjs.txt'),script,{flag:'wx'});await writeFile(args.report,JSON.stringify(report,null,2)+'\n',{flag:'wx'});if(!report.complete)process.exitCode=1;
+}

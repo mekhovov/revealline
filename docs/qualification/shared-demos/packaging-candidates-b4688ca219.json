@@ -1,0 +1,2518 @@
+{
+  "format": "SharedDemoSerialPackagingQualificationV1",
+  "complete": true,
+  "started": "2026-10-19T08:33:19.546745+00:00",
+  "sourceBefore": {
+    "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f"
+  },
+  "node": {
+    "path": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "version": "v22.22.2"
+  },
+  "platform": "darwin",
+  "output": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z",
+  "basePath": "/revealline/",
+  "selection": {
+    "company": [
+      "droneaid-community",
+      "droneaid-nl-careful-handoff",
+      "droneaid-nl-community",
+      "droneaid-nl-makers-together",
+      "droneaid-nl-parts-in-motion",
+      "droneaid-nl-shared-horizon",
+      "droneaid-nl-signals-of-support",
+      "droneaid-nl-workshop-lights",
+      "fpv-learning",
+      "social-drone-ua",
+      "ukraine-culture",
+      "victory-drones"
+    ],
+    "optional": [
+      "civilian-flight",
+      "civilian-fpv",
+      "fpv-worlds"
+    ]
+  },
+  "budgets": {
+    "company": {
+      "maxFiles": 2000,
+      "maxBytes": 83886080
+    },
+    "optional": {
+      "civilian-flight": {
+        "files": 98,
+        "bytes": 8388608
+      },
+      "civilian-fpv": {
+        "files": 150,
+        "bytes": 13107200
+      },
+      "fpv-worlds": {
+        "files": 210,
+        "bytes": 20971520
+      }
+    }
+  },
+  "limits": {
+    "companyChildSeconds": 300,
+    "companyTotalSeconds": 3600,
+    "optionalChildSeconds": 300,
+    "optionalTotalSeconds": 900,
+    "childLogBytes": 1048576,
+    "deadlineScope": "Child execution is polled; group deadline is also checked after validation. Synchronous filesystem/system calls can delay a check, so this is not a hard end-to-end I/O timeout."
+  },
+  "externalParent": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "device": 905969668,
+    "inode": 37530202
+  },
+  "sourcePins": {
+    "scripts/bundle-editions.mjs": "6d61c9f1368eca3779561a8583ac0bc911fec037fa54a095d555150ef5b7302a",
+    "scripts/bundle-optional-practice.mjs": "db18cd00aaab6d7badb93e3fbd0e78d0859c5b9ae3256da5fe1632dad963c942",
+    "scripts/frozen-source.mjs": "0c47791e58a64b462d4ae130cad454aa65cc9f287d6334319aa45a10682264e2",
+    "game/editions/catalog.json": "c934175c00eb5aa388f35db5c108473f62d96d7d1223686d355dedf289e5b778",
+    "game/editions/package-budget.mjs": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+    "publishing/optional-package-policy.mjs": "d617d8105a6cbf25c691c0ffd1cc0a5f6dcfc0ef40982c83fdd22f26dd3267b3"
+  },
+  "supervisorSHA256": "40cec0f2d26b26bfb6563e5ca48a37c0f07fdc428615fcaf7e632b68f5582f88",
+  "ownerSource": {
+    "path": ".cache/run-endurance-emitted-final.py",
+    "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+  },
+  "jobs": [
+    {
+      "kind": "company",
+      "id": "droneaid-community",
+      "started": "2026-10-19T08:35:23.351607+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "droneaid-community",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 14949,
+            "ppid": 13942,
+            "pgid": 14949,
+            "uid": 502,
+            "started": "Mon Oct 19 10:35:23 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-community --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:35:23.475109+00:00"
+          },
+          {
+            "pid": 14956,
+            "ppid": 14949,
+            "pgid": 14949,
+            "uid": 502,
+            "started": "Mon Oct 19 10:35:23 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              14949,
+              "Mon Oct 19 10:35:23 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-community --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:35:23.820354+00:00"
+          },
+          {
+            "pid": 15021,
+            "ppid": 14949,
+            "pgid": 14949,
+            "uid": 502,
+            "started": "Mon Oct 19 10:35:34 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              14949,
+              "Mon Oct 19 10:35:23 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-community --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:35:34.325439+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community.log",
+        "byteLimit": 1048576,
+        "totalBytes": 540,
+        "writtenBytes": 540,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 540,
+        "tailSHA256": "25f1db641a74de2d129cf84441dfe98b77e3d96134bd0059108faf11334f12dc",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"droneaid-community\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 190428,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:35:39.153194+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community/editions.json",
+          "bytes": 1044,
+          "sha256": "372009e06db492b4af4b9c80d8b7d49cf289bcc4a20f1fd101cfe9112c5da95c"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community/candidate-verification.json",
+          "bytes": 1358,
+          "sha256": "db3fdec4f677b185ffb27787761e921c2bf242648cdf80e69645eedecf535d2e"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community/manifest-droneaid-community.json",
+          "bytes": 185310,
+          "sha256": "5e939239ba7a93b731f02ccacbe00e3fde22f9aa3303e2e61140ff8fa1b90005"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-community/source-inventory-droneaid-community.json",
+          "bytes": 487046,
+          "sha256": "35eda9c837c18458dcc9804f5b2ca6a9cd85e1303d70596ae770c874cb5f0b4e"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "8adec078163fb6e63a92f33b5375b91e53773b9f52b62bb3f0fd1068183fdb7c",
+              "files": 1312,
+              "id": "droneaid-community",
+              "sourceArchiveSha256": "6aef4a8828ed2d71ad9b2484af7b8e319c54b663e48037c09001e357bae09e5d",
+              "totalBytes": 33535428
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 33925038,
+          "path": "distribution-droneaid-community.zip",
+          "sha256": "8adec078163fb6e63a92f33b5375b91e53773b9f52b62bb3f0fd1068183fdb7c"
+        },
+        "sourceArchive": {
+          "bytes": 59007946,
+          "path": "source-droneaid-community.zip",
+          "sha256": "6aef4a8828ed2d71ad9b2484af7b8e319c54b663e48037c09001e357bae09e5d"
+        },
+        "runtimeInventoryFiles": 1312,
+        "runtimeInventoryBytes": 33535428,
+        "sourceInventoryFiles": 1311,
+        "sourceInventoryBytes": 58314902,
+        "completeSourceArchiveFiles": 1312,
+        "completeSourceArchiveBytes": 58801948
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-careful-handoff",
+      "started": "2026-10-19T08:35:39.820839+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "droneaid-nl-careful-handoff",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 15071,
+            "ppid": 13942,
+            "pgid": 15071,
+            "uid": 502,
+            "started": "Mon Oct 19 10:35:39 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-careful-handoff --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:35:39.981653+00:00"
+          },
+          {
+            "pid": 15079,
+            "ppid": 15071,
+            "pgid": 15071,
+            "uid": 502,
+            "started": "Mon Oct 19 10:35:40 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              15071,
+              "Mon Oct 19 10:35:39 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-careful-handoff --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:35:40.498229+00:00"
+          },
+          {
+            "pid": 15243,
+            "ppid": 15071,
+            "pgid": 15071,
+            "uid": 502,
+            "started": "Mon Oct 19 10:35:52 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              15071,
+              "Mon Oct 19 10:35:39 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-careful-handoff --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:35:52.354718+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff.log",
+        "byteLimit": 1048576,
+        "totalBytes": 558,
+        "writtenBytes": 558,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 558,
+        "tailSHA256": "1957a5cbd0453bca1a8f3028b53e1252d1ae04ab6bae7832fafd852c9e93ae21",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"droneaid-nl-careful-handoff\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 192842,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:35:57.071426+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff/editions.json",
+          "bytes": 1092,
+          "sha256": "12389b2e05fcbd9b963f02ad261bc60530a9a963f86175074a0418f993fdf88f"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff/candidate-verification.json",
+          "bytes": 1585,
+          "sha256": "60b5eb067785384f763c47008510cd68d0db1f82a87fa4197a61ebf693eb6a81"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff/manifest-droneaid-nl-careful-handoff.json",
+          "bytes": 187386,
+          "sha256": "878e086493e3021eb4b968cd21d5e78c3b9d71d3a60da889d75ce31beef24622"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-careful-handoff/source-inventory-droneaid-nl-careful-handoff.json",
+          "bytes": 492467,
+          "sha256": "6e84e4a8dfd0fb173941bb0c51c28402396cbd4164da0cf71a2a7187b9f09994"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "40e814e9b28b94070e7c7f3d6986402d664ca09846ef4b63523d1d3d77306094",
+              "files": 1322,
+              "id": "droneaid-nl-careful-handoff",
+              "sourceArchiveSha256": "135eb1c971049694aef636604a1b0cfa274287148beac6535e72906628d2cdc3",
+              "totalBytes": 35758745
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 36153267,
+          "path": "distribution-droneaid-nl-careful-handoff.zip",
+          "sha256": "40e814e9b28b94070e7c7f3d6986402d664ca09846ef4b63523d1d3d77306094"
+        },
+        "sourceArchive": {
+          "bytes": 61436334,
+          "path": "source-droneaid-nl-careful-handoff.zip",
+          "sha256": "135eb1c971049694aef636604a1b0cfa274287148beac6535e72906628d2cdc3"
+        },
+        "runtimeInventoryFiles": 1322,
+        "runtimeInventoryBytes": 35758745,
+        "sourceInventoryFiles": 1322,
+        "sourceInventoryBytes": 60734963,
+        "completeSourceArchiveFiles": 1323,
+        "completeSourceArchiveBytes": 61227430
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-community",
+      "started": "2026-10-19T08:35:57.641085+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "droneaid-nl-community",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 15289,
+            "ppid": 13942,
+            "pgid": 15289,
+            "uid": 502,
+            "started": "Mon Oct 19 10:35:57 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-community --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:35:57.831217+00:00"
+          },
+          {
+            "pid": 15297,
+            "ppid": 15289,
+            "pgid": 15289,
+            "uid": 502,
+            "started": "Mon Oct 19 10:35:58 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              15289,
+              "Mon Oct 19 10:35:57 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-community --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:35:58.231955+00:00"
+          },
+          {
+            "pid": 15556,
+            "ppid": 15289,
+            "pgid": 15289,
+            "uid": 502,
+            "started": "Mon Oct 19 10:36:24 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              15289,
+              "Mon Oct 19 10:35:57 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-community --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:36:24.239154+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community.log",
+        "byteLimit": 1048576,
+        "totalBytes": 546,
+        "writtenBytes": 546,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 546,
+        "tailSHA256": "8b84cb288f09a9560b0c82a328804097ffa59f759ff21fab825c928bcebee8cd",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"droneaid-nl-community\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 205917,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:36:32.385112+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community/editions.json",
+          "bytes": 1704,
+          "sha256": "a85a7dc4cab42622eac5b4b177d3caf85b74586f18ec2814591cd56d0ff89162"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community/candidate-verification.json",
+          "bytes": 1769,
+          "sha256": "3fb7d3eba2c1459ae5de34576cb06a90bfb5ddf1bd917f96b775d86107c7c7a1"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community/manifest-droneaid-nl-community.json",
+          "bytes": 199707,
+          "sha256": "3b3e4a4f9423d6ab305482f24d4d69c1435f9f5d6f9af2b3ba5d4e77df415233"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-community/source-inventory-droneaid-nl-community.json",
+          "bytes": 522011,
+          "sha256": "69077728ed4cd19556b8e9eaf35793e31d56f06faa14584a002aea06215ad9d1"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "9445aac6a8f8ed5330348941e50915ac2e4be6a50b0f11255f40beb180805018",
+              "files": 1390,
+              "id": "droneaid-nl-community",
+              "sourceArchiveSha256": "1b81d7a87e07994976e3dcc2f3f1df965247c3f9bff14cc67b7c0467d13a62bb",
+              "totalBytes": 73144856
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 73567521,
+          "path": "distribution-droneaid-nl-community.zip",
+          "sha256": "9445aac6a8f8ed5330348941e50915ac2e4be6a50b0f11255f40beb180805018"
+        },
+        "sourceArchive": {
+          "bytes": 98459999,
+          "path": "source-droneaid-nl-community.zip",
+          "sha256": "1b81d7a87e07994976e3dcc2f3f1df965247c3f9bff14cc67b7c0467d13a62bb"
+        },
+        "runtimeInventoryFiles": 1390,
+        "runtimeInventoryBytes": 73144856,
+        "sourceInventoryFiles": 1389,
+        "sourceInventoryBytes": 97713422,
+        "completeSourceArchiveFiles": 1390,
+        "completeSourceArchiveBytes": 98235433
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-makers-together",
+      "started": "2026-10-19T08:36:32.935703+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "droneaid-nl-makers-together",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 15684,
+            "ppid": 13942,
+            "pgid": 15684,
+            "uid": 502,
+            "started": "Mon Oct 19 10:36:32 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-makers-together --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:36:33.053587+00:00"
+          },
+          {
+            "pid": 15692,
+            "ppid": 15684,
+            "pgid": 15684,
+            "uid": 502,
+            "started": "Mon Oct 19 10:36:33 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              15684,
+              "Mon Oct 19 10:36:32 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-makers-together --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:36:33.454493+00:00"
+          },
+          {
+            "pid": 15768,
+            "ppid": 15684,
+            "pgid": 15684,
+            "uid": 502,
+            "started": "Mon Oct 19 10:36:44 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              15684,
+              "Mon Oct 19 10:36:32 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-makers-together --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:36:44.927543+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together.log",
+        "byteLimit": 1048576,
+        "totalBytes": 558,
+        "writtenBytes": 558,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 558,
+        "tailSHA256": "70df66d688d1e9c1a0456d3e2e65894494127b0707a2fe2c4ca2c265f3f26a6f",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"droneaid-nl-makers-together\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 192836,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:36:49.982495+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together/editions.json",
+          "bytes": 1092,
+          "sha256": "3f8fabeaf7fd8cbd219a870f3c0831c73b1953c018c1972f062cd2e18d29b76b"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together/candidate-verification.json",
+          "bytes": 1585,
+          "sha256": "3d99735801fa48aa52472190c7b1f5c14fab2a33364fd3df830a7565f3724c16"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together/manifest-droneaid-nl-makers-together.json",
+          "bytes": 187380,
+          "sha256": "61458cebcb7c7dabc019ef747ddd54c824038c460e85494e9e6fb869998a99c7"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-makers-together/source-inventory-droneaid-nl-makers-together.json",
+          "bytes": 492455,
+          "sha256": "f00a3476724dc83adebe0bcf7c8421269b062572ba4e2dd3a93016d36f72b323"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "215bf8f9659d1f68ab3b0edc375c3c0c63284d92bc56023e0ff38b0a7c006195",
+              "files": 1322,
+              "id": "droneaid-nl-makers-together",
+              "sourceArchiveSha256": "7812a92640db7679ab45c62cb30d5d625a583f3f920d7bebd9b978123831e120",
+              "totalBytes": 35634169
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 36028673,
+          "path": "distribution-droneaid-nl-makers-together.zip",
+          "sha256": "215bf8f9659d1f68ab3b0edc375c3c0c63284d92bc56023e0ff38b0a7c006195"
+        },
+        "sourceArchive": {
+          "bytes": 61304130,
+          "path": "source-droneaid-nl-makers-together.zip",
+          "sha256": "7812a92640db7679ab45c62cb30d5d625a583f3f920d7bebd9b978123831e120"
+        },
+        "runtimeInventoryFiles": 1322,
+        "runtimeInventoryBytes": 35634169,
+        "sourceInventoryFiles": 1322,
+        "sourceInventoryBytes": 60602783,
+        "completeSourceArchiveFiles": 1323,
+        "completeSourceArchiveBytes": 61095238
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-parts-in-motion",
+      "started": "2026-10-19T08:36:50.574223+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "droneaid-nl-parts-in-motion",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 15846,
+            "ppid": 13942,
+            "pgid": 15846,
+            "uid": 502,
+            "started": "Mon Oct 19 10:36:50 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-parts-in-motion --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:36:50.745208+00:00"
+          },
+          {
+            "pid": 15870,
+            "ppid": 15846,
+            "pgid": 15846,
+            "uid": 502,
+            "started": "Mon Oct 19 10:36:51 2026",
+            "argv": "(git)",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              15846,
+              "Mon Oct 19 10:36:50 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-parts-in-motion --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:36:51.638509+00:00"
+          },
+          {
+            "pid": 15948,
+            "ppid": 15846,
+            "pgid": 15846,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:03 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              15846,
+              "Mon Oct 19 10:36:50 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-parts-in-motion --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:37:04.163238+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion.log",
+        "byteLimit": 1048576,
+        "totalBytes": 558,
+        "writtenBytes": 558,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 558,
+        "tailSHA256": "9f1d83610461aa1addd192432f33d717f1ba64b29b618ec81c107db9ab2887b2",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"droneaid-nl-parts-in-motion\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 193282,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:37:09.284016+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion/editions.json",
+          "bytes": 1092,
+          "sha256": "0f70b8e10e36460cadaa57121536d890f3be5d104e8deac7cfd157a67cdeb7dc"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion/candidate-verification.json",
+          "bytes": 1683,
+          "sha256": "bb65002684368d4f25c5bb7f6277bb541c2ec0a1fb81c0eee8f580c584a8f294"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion/manifest-droneaid-nl-parts-in-motion.json",
+          "bytes": 187728,
+          "sha256": "0994f53ebdd4f62a8c915f41f7e6ad3160ecf246e2bd66a46e3c82be83112b9d"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-parts-in-motion/source-inventory-droneaid-nl-parts-in-motion.json",
+          "bytes": 493089,
+          "sha256": "ff647668ff318aab0059330176d9df312a67508dd871fe81a34eae48e41f8eb7"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "4423333f8985d32803d062c2272bb479653b10736edf69f0fff940a572d0f702",
+              "files": 1324,
+              "id": "droneaid-nl-parts-in-motion",
+              "sourceArchiveSha256": "fbdf85e8e7d0827f3d933ee25456e3b0e901a199234cf58afe666558c539cadc",
+              "totalBytes": 36152331
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 36547621,
+          "path": "distribution-droneaid-nl-parts-in-motion.zip",
+          "sha256": "4423333f8985d32803d062c2272bb479653b10736edf69f0fff940a572d0f702"
+        },
+        "sourceArchive": {
+          "bytes": 61815460,
+          "path": "source-droneaid-nl-parts-in-motion.zip",
+          "sha256": "fbdf85e8e7d0827f3d933ee25456e3b0e901a199234cf58afe666558c539cadc"
+        },
+        "runtimeInventoryFiles": 1324,
+        "runtimeInventoryBytes": 36152331,
+        "sourceInventoryFiles": 1324,
+        "sourceInventoryBytes": 61113041,
+        "completeSourceArchiveFiles": 1325,
+        "completeSourceArchiveBytes": 61606130
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-shared-horizon",
+      "started": "2026-10-19T08:37:09.837654+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "droneaid-nl-shared-horizon",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 16002,
+            "ppid": 13942,
+            "pgid": 16002,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:09 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-shared-horizon --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:37:09.948429+00:00"
+          },
+          {
+            "pid": 16009,
+            "ppid": 16002,
+            "pgid": 16002,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:10 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              16002,
+              "Mon Oct 19 10:37:09 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-shared-horizon --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:37:10.316770+00:00"
+          },
+          {
+            "pid": 16171,
+            "ppid": 16002,
+            "pgid": 16002,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:22 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              16002,
+              "Mon Oct 19 10:37:09 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-shared-horizon --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:37:22.796428+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon.log",
+        "byteLimit": 1048576,
+        "totalBytes": 556,
+        "writtenBytes": 556,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 556,
+        "tailSHA256": "cda79c6c37c32a66466319ac265ddcd074b4d770095bd2274f867d50ce000236",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"droneaid-nl-shared-horizon\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 192804,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:37:27.943194+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon/editions.json",
+          "bytes": 1086,
+          "sha256": "7f0f99012ca66798563e27e9fa09358310c7208f2c7497b3a676a80078a9c2ce"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon/candidate-verification.json",
+          "bytes": 1583,
+          "sha256": "525d020abfb2924eccab228a0dbf15c61b138578f6b20c2526007700bd09dff1"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon/manifest-droneaid-nl-shared-horizon.json",
+          "bytes": 187363,
+          "sha256": "59311d8870dec25e46351aef41c6a3264cb17897faf57e04557211ac029ec2e0"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-shared-horizon/source-inventory-droneaid-nl-shared-horizon.json",
+          "bytes": 492417,
+          "sha256": "a3a294d651eb441c85986c00cfa3fc957fe41e661c0c62a398e554fb840fe0de"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "5cb5b80322bfaccb92f067e8e3dbf3262143ad7097336d7ab777f4f57ed32030",
+              "files": 1322,
+              "id": "droneaid-nl-shared-horizon",
+              "sourceArchiveSha256": "80ce85770e51dbb1fd339515a042d88c1dde524d5a8135ed165fdd687b32be75",
+              "totalBytes": 35945151
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 36339606,
+          "path": "distribution-droneaid-nl-shared-horizon.zip",
+          "sha256": "5cb5b80322bfaccb92f067e8e3dbf3262143ad7097336d7ab777f4f57ed32030"
+        },
+        "sourceArchive": {
+          "bytes": 61638700,
+          "path": "source-droneaid-nl-shared-horizon.zip",
+          "sha256": "80ce85770e51dbb1fd339515a042d88c1dde524d5a8135ed165fdd687b32be75"
+        },
+        "runtimeInventoryFiles": 1322,
+        "runtimeInventoryBytes": 35945151,
+        "sourceInventoryFiles": 1322,
+        "sourceInventoryBytes": 60937421,
+        "completeSourceArchiveFiles": 1323,
+        "completeSourceArchiveBytes": 61429838
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-signals-of-support",
+      "started": "2026-10-19T08:37:28.510109+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "droneaid-nl-signals-of-support",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 16224,
+            "ppid": 13942,
+            "pgid": 16224,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:28 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-signals-of-support --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:37:28.620861+00:00"
+          },
+          {
+            "pid": 16232,
+            "ppid": 16224,
+            "pgid": 16224,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:28 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              16224,
+              "Mon Oct 19 10:37:28 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-signals-of-support --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:37:29.014803+00:00"
+          },
+          {
+            "pid": 16336,
+            "ppid": 16224,
+            "pgid": 16224,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:40 2026",
+            "argv": "(git)",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              16224,
+              "Mon Oct 19 10:37:28 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-signals-of-support --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:37:41.113536+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support.log",
+        "byteLimit": 1048576,
+        "totalBytes": 564,
+        "writtenBytes": 564,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 564,
+        "tailSHA256": "560d36c3331bc5e73d3d4ee56ef0bc139a9e7c14e9788e3c04ab7a010503ef74",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"droneaid-nl-signals-of-support\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 192956,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:37:45.880844+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support/editions.json",
+          "bytes": 1110,
+          "sha256": "8cb02c474989b9945c2b396d5db851963096dbd4342bf8bf272135aa1317418c"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support/candidate-verification.json",
+          "bytes": 1591,
+          "sha256": "23a4a6ecf7710bdfa8d2d04460a3c434cf6141367c0a3c02f9b7fcb2a15245a8"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support/manifest-droneaid-nl-signals-of-support.json",
+          "bytes": 187455,
+          "sha256": "d6cc3eb1f2a99d52f7f50dcaf4e3f85af63e452b0832c97c07dd135a682635ba"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-signals-of-support/source-inventory-droneaid-nl-signals-of-support.json",
+          "bytes": 492617,
+          "sha256": "afcab0e1f3150a68be87409c3e00e6385d67f6d3eb60c1af3d8c610daffcacf5"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "f371eda0612e1ee0f2242a9b44b1a34a9b1a507bc67b146077b39fcb566efa5b",
+              "files": 1322,
+              "id": "droneaid-nl-signals-of-support",
+              "sourceArchiveSha256": "99d0845f29590e1c4ad676a267c6b94f41047ca9e194dc63a524185f33ee393d",
+              "totalBytes": 35745562
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 36140285,
+          "path": "distribution-droneaid-nl-signals-of-support.zip",
+          "sha256": "f371eda0612e1ee0f2242a9b44b1a34a9b1a507bc67b146077b39fcb566efa5b"
+        },
+        "sourceArchive": {
+          "bytes": 61452151,
+          "path": "source-droneaid-nl-signals-of-support.zip",
+          "sha256": "99d0845f29590e1c4ad676a267c6b94f41047ca9e194dc63a524185f33ee393d"
+        },
+        "runtimeInventoryFiles": 1322,
+        "runtimeInventoryBytes": 35745562,
+        "sourceInventoryFiles": 1322,
+        "sourceInventoryBytes": 60750504,
+        "completeSourceArchiveFiles": 1323,
+        "completeSourceArchiveBytes": 61243121
+      }
+    },
+    {
+      "kind": "company",
+      "id": "droneaid-nl-workshop-lights",
+      "started": "2026-10-19T08:37:46.552395+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "droneaid-nl-workshop-lights",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 16372,
+            "ppid": 13942,
+            "pgid": 16372,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:46 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-workshop-lights --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:37:46.670848+00:00"
+          },
+          {
+            "pid": 16380,
+            "ppid": 16372,
+            "pgid": 16372,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:46 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              16372,
+              "Mon Oct 19 10:37:46 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-workshop-lights --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:37:47.082690+00:00"
+          },
+          {
+            "pid": 16450,
+            "ppid": 16372,
+            "pgid": 16372,
+            "uid": 502,
+            "started": "Mon Oct 19 10:37:59 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              16372,
+              "Mon Oct 19 10:37:46 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions droneaid-nl-workshop-lights --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:37:59.791010+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights.log",
+        "byteLimit": 1048576,
+        "totalBytes": 558,
+        "writtenBytes": 558,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 558,
+        "tailSHA256": "5f8afe0842516788103f2d141da8a6026f3a3586a0120e1678ec2ae0baf9701e",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"droneaid-nl-workshop-lights\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 192921,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:38:04.433013+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights/editions.json",
+          "bytes": 1092,
+          "sha256": "620fc3822c06331957c8e996ee6371b5fabd1c750459056ab123a19982625197"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights/candidate-verification.json",
+          "bytes": 1683,
+          "sha256": "b6b63ff6b71d9746df6bd5debd146eb676fe927cad73cd00b71c575f1cc8a5f7"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights/manifest-droneaid-nl-workshop-lights.json",
+          "bytes": 187367,
+          "sha256": "2faef94102d0ff47b73b8b291389bf7cb4d9ab0555180c722fb3f72712ba0c1a"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-droneaid-nl-workshop-lights/source-inventory-droneaid-nl-workshop-lights.json",
+          "bytes": 491864,
+          "sha256": "b4fdc8f21836ac3be7d2866e4d8f8c0faa8c83f4f4f17ca327ec355c174cecae"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "660047068b6aca2c5f18053f99bd28aadfc1342cb09cf5b23b7f7a5988f9d6f2",
+              "files": 1322,
+              "id": "droneaid-nl-workshop-lights",
+              "sourceArchiveSha256": "407eb9e11a1eaef350d1833567226782c1e918a38984fb28ad3c7cdd754fab8f",
+              "totalBytes": 34443635
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 34838104,
+          "path": "distribution-droneaid-nl-workshop-lights.zip",
+          "sha256": "660047068b6aca2c5f18053f99bd28aadfc1342cb09cf5b23b7f7a5988f9d6f2"
+        },
+        "sourceArchive": {
+          "bytes": 60121704,
+          "path": "source-droneaid-nl-workshop-lights.zip",
+          "sha256": "407eb9e11a1eaef350d1833567226782c1e918a38984fb28ad3c7cdd754fab8f"
+        },
+        "runtimeInventoryFiles": 1322,
+        "runtimeInventoryBytes": 34443635,
+        "sourceInventoryFiles": 1322,
+        "sourceInventoryBytes": 59420970,
+        "completeSourceArchiveFiles": 1323,
+        "completeSourceArchiveBytes": 59912834
+      }
+    },
+    {
+      "kind": "company",
+      "id": "fpv-learning",
+      "started": "2026-10-19T08:38:05.039319+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "fpv-learning",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 16493,
+            "ppid": 13942,
+            "pgid": 16493,
+            "uid": 502,
+            "started": "Mon Oct 19 10:38:05 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions fpv-learning --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:38:05.227316+00:00"
+          },
+          {
+            "pid": 16500,
+            "ppid": 16493,
+            "pgid": 16493,
+            "uid": 502,
+            "started": "Mon Oct 19 10:38:05 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              16493,
+              "Mon Oct 19 10:38:05 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions fpv-learning --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:38:05.572753+00:00"
+          },
+          {
+            "pid": 16978,
+            "ppid": 16493,
+            "pgid": 16493,
+            "uid": 502,
+            "started": "Mon Oct 19 10:39:31 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              16493,
+              "Mon Oct 19 10:38:05 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions fpv-learning --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:39:31.693778+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning.log",
+        "byteLimit": 1048576,
+        "totalBytes": 528,
+        "writtenBytes": 528,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 528,
+        "tailSHA256": "87c74e7c0c8e75a97977b750f45be65852e830c6821dc5411a49334068844fbf",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"fpv-learning\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 207091,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:39:37.155097+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning/editions.json",
+          "bytes": 1835,
+          "sha256": "dce69772ef5cbca24a881db658faa029d4a791cc8c79917ea1826e9d392842e3"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning/candidate-verification.json",
+          "bytes": 2143,
+          "sha256": "070ca80cac5fd3e9c458a5a123463b6e9137be5a72d8034daec94b345b67a45b"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning/manifest-fpv-learning.json",
+          "bytes": 200439,
+          "sha256": "5474036b2e54206c9968940ff93243d97aaac44f60f074c71416848143751120"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-fpv-learning/source-inventory-fpv-learning.json",
+          "bytes": 518268,
+          "sha256": "b9ab360ba356fdbcae89eef2b23b188f58803a9e3e623a49dc2171f838c8fdb0"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "74bd2b4fc9270838822bde6256e9a62e7d76ed0240aa71db1863641101777ef2",
+              "files": 1404,
+              "id": "fpv-learning",
+              "sourceArchiveSha256": "ab5b0cef9839dd0dcf1dd7fe556446793f28db12ad69bac90a5d2a38ebac6533",
+              "totalBytes": 42258551
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 42681664,
+          "path": "distribution-fpv-learning.zip",
+          "sha256": "74bd2b4fc9270838822bde6256e9a62e7d76ed0240aa71db1863641101777ef2"
+        },
+        "sourceArchive": {
+          "bytes": 66718091,
+          "path": "source-fpv-learning.zip",
+          "sha256": "ab5b0cef9839dd0dcf1dd7fe556446793f28db12ad69bac90a5d2a38ebac6533"
+        },
+        "runtimeInventoryFiles": 1404,
+        "runtimeInventoryBytes": 42258551,
+        "sourceInventoryFiles": 1404,
+        "sourceInventoryBytes": 65975431,
+        "completeSourceArchiveFiles": 1405,
+        "completeSourceArchiveBytes": 66493699
+      }
+    },
+    {
+      "kind": "company",
+      "id": "social-drone-ua",
+      "started": "2026-10-19T08:39:37.737011+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "social-drone-ua",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 17098,
+            "ppid": 13942,
+            "pgid": 17098,
+            "uid": 502,
+            "started": "Mon Oct 19 10:39:37 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions social-drone-ua --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:39:37.977033+00:00"
+          },
+          {
+            "pid": 17106,
+            "ppid": 17098,
+            "pgid": 17098,
+            "uid": 502,
+            "started": "Mon Oct 19 10:39:38 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              17098,
+              "Mon Oct 19 10:39:37 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions social-drone-ua --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:39:38.392363+00:00"
+          },
+          {
+            "pid": 19495,
+            "ppid": 17098,
+            "pgid": 17098,
+            "uid": 502,
+            "started": "Mon Oct 19 10:40:13 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              17098,
+              "Mon Oct 19 10:39:37 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions social-drone-ua --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:40:13.894978+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua.log",
+        "byteLimit": 1048576,
+        "totalBytes": 534,
+        "writtenBytes": 534,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 534,
+        "tailSHA256": "9215b228d287706647c8baa3c5a476b0e5ac109dcaf8dd13e3af840af6486a18",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"social-drone-ua\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 197843,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:40:19.491012+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua/editions.json",
+          "bytes": 1291,
+          "sha256": "fbd6d355c342381d2d09dd3b56cb908745b61bb31147f123da3ac8aa18991f7f"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua/candidate-verification.json",
+          "bytes": 2247,
+          "sha256": "719dfbb56b073f49e08f3067b8dc09ceef10ef80c8cee06bf0716b11f6d91115"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua/manifest-social-drone-ua.json",
+          "bytes": 191610,
+          "sha256": "c757caa98a7a652bff8257615ac34d233733ff7c0812e87457eed25d3f81e8a9"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-social-drone-ua/source-inventory-social-drone-ua.json",
+          "bytes": 499053,
+          "sha256": "2f737318fab6ddd9d50d13d51f79c41a4cb93088208938ac90653acd5360e887"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "dd422c6627ebe5c42502f2e2cd8f8d081e320d6e2f3f9f5e40ebc6fbbf666db7",
+              "files": 1348,
+              "id": "social-drone-ua",
+              "sourceArchiveSha256": "a70513624482ff278bea5bb7107fd8febe1e2425c01636c0b19b58a6c3734d0d",
+              "totalBytes": 41056444
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 41460326,
+          "path": "distribution-social-drone-ua.zip",
+          "sha256": "dd422c6627ebe5c42502f2e2cd8f8d081e320d6e2f3f9f5e40ebc6fbbf666db7"
+        },
+        "sourceArchive": {
+          "bytes": 65530125,
+          "path": "source-social-drone-ua.zip",
+          "sha256": "a70513624482ff278bea5bb7107fd8febe1e2425c01636c0b19b58a6c3734d0d"
+        },
+        "runtimeInventoryFiles": 1348,
+        "runtimeInventoryBytes": 41056444,
+        "sourceInventoryFiles": 1348,
+        "sourceInventoryBytes": 64817082,
+        "completeSourceArchiveFiles": 1349,
+        "completeSourceArchiveBytes": 65316135
+      }
+    },
+    {
+      "kind": "company",
+      "id": "ukraine-culture",
+      "started": "2026-10-19T08:40:20.135642+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "ukraine-culture",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 20124,
+            "ppid": 13942,
+            "pgid": 20124,
+            "uid": 502,
+            "started": "Mon Oct 19 10:40:20 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions ukraine-culture --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:40:20.277386+00:00"
+          },
+          {
+            "pid": 20175,
+            "ppid": 20124,
+            "pgid": 20124,
+            "uid": 502,
+            "started": "Mon Oct 19 10:40:20 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              20124,
+              "Mon Oct 19 10:40:20 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions ukraine-culture --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:40:20.792705+00:00"
+          },
+          {
+            "pid": 24772,
+            "ppid": 20124,
+            "pgid": 20124,
+            "uid": 502,
+            "started": "Mon Oct 19 10:41:26 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              20124,
+              "Mon Oct 19 10:40:20 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions ukraine-culture --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:41:26.170778+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture.log",
+        "byteLimit": 1048576,
+        "totalBytes": 534,
+        "writtenBytes": 534,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 534,
+        "tailSHA256": "43e1ce5424809a33b39119bc01338ef830fe2213508a53d95adf6f72bc0f1df8",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"ukraine-culture\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 203052,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:41:32.905353+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture/editions.json",
+          "bytes": 1643,
+          "sha256": "4dcbcad1735238553c9341d10b6ecd797453830d5743db9d166e47e251007dea"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture/candidate-verification.json",
+          "bytes": 2051,
+          "sha256": "7c5ce8293bfac901944e6b4b4b95fecaa09763578b37b98fc9fb3d2c923b4362"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture/manifest-ukraine-culture.json",
+          "bytes": 196663,
+          "sha256": "b44036316d7f31bfd1a955faf7b9bebf051bbd954e36d085ad4bc435540ff644"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-ukraine-culture/source-inventory-ukraine-culture.json",
+          "bytes": 510256,
+          "sha256": "ecd4e0fd1c4c9cb3056444df0101f1371b8207bc5c80c882a5726e0e648a4d70"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "a345b586ebd16c80f2b2e6f431ba9327d8d2148dffea751be4f08471400f04ae",
+              "files": 1379,
+              "id": "ukraine-culture",
+              "sourceArchiveSha256": "5f0f25b99d0df65dfd8681151c252be39d5825f51a34fb3cd1d04fa2382c4423",
+              "totalBytes": 51145863
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 51560850,
+          "path": "distribution-ukraine-culture.zip",
+          "sha256": "a345b586ebd16c80f2b2e6f431ba9327d8d2148dffea751be4f08471400f04ae"
+        },
+        "sourceArchive": {
+          "bytes": 75611243,
+          "path": "source-ukraine-culture.zip",
+          "sha256": "5f0f25b99d0df65dfd8681151c252be39d5825f51a34fb3cd1d04fa2382c4423"
+        },
+        "runtimeInventoryFiles": 1379,
+        "runtimeInventoryBytes": 51145863,
+        "sourceInventoryFiles": 1379,
+        "sourceInventoryBytes": 74880945,
+        "completeSourceArchiveFiles": 1380,
+        "completeSourceArchiveBytes": 75391201
+      }
+    },
+    {
+      "kind": "company",
+      "id": "victory-drones",
+      "started": "2026-10-19T08:41:33.887647+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-editions.mjs",
+        "--editions",
+        "victory-drones",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 24840,
+            "ppid": 13942,
+            "pgid": 24840,
+            "uid": 502,
+            "started": "Mon Oct 19 10:41:34 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions victory-drones --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:41:34.406826+00:00"
+          },
+          {
+            "pid": 24888,
+            "ppid": 24840,
+            "pgid": 24840,
+            "uid": 502,
+            "started": "Mon Oct 19 10:41:34 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              24840,
+              "Mon Oct 19 10:41:34 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions victory-drones --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:41:34.968346+00:00"
+          },
+          {
+            "pid": 25099,
+            "ppid": 24840,
+            "pgid": 24840,
+            "uid": 502,
+            "started": "Mon Oct 19 10:41:57 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              24840,
+              "Mon Oct 19 10:41:34 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-editions.mjs --editions victory-drones --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:41:57.939008+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones.log",
+        "byteLimit": 1048576,
+        "totalBytes": 532,
+        "writtenBytes": 532,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 532,
+        "tailSHA256": "4d74080d5fa4dc9df2bbfbe43995b262c76eb4dea0b9793c7e520f05e6630e0d",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"editionIds\": [\n    \"victory-drones\"\n  ],\n  \"zipMembersVerified\": true,\n  \"reproducibleBuilds\": 2,\n  \"verifiedPresentationReceipts\": 1,\n  \"capacityMetadataFiles\": 5,\n  \"capacityMetadataBytes\": 194136,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:42:02.310801+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones/editions.json",
+          "bytes": 1168,
+          "sha256": "bf4d29d6b0ea7fe2e8f2fbb0aa3b04bc44d4dbe64ed79dcf35c09f0008e928fb"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones/candidate-verification.json",
+          "bytes": 1853,
+          "sha256": "449f99ebd210407df182f40288e3f43d690b68499497fb4f87268b632f550a95"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones/manifest-victory-drones.json",
+          "bytes": 188427,
+          "sha256": "8f3a9c2abc5f0f6d2ee07e8f687b0c4f48bf4ea27b411d93ff1b7fee1ff33279"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/company-victory-drones/source-inventory-victory-drones.json",
+          "bytes": 492575,
+          "sha256": "de3f067de7d73bffd64598ea140dbf5fb0863882d5346c7f15124eb2d93210c1"
+        },
+        "admission": {
+          "editions": [
+            {
+              "distributionSha256": "f591398a33bb4997e10631a9b5ec935ac9dd08d7cc2bd37e30260747a9504544",
+              "files": 1328,
+              "id": "victory-drones",
+              "sourceArchiveSha256": "e4a5ff7125e3bc44b7f5ea356e2c25245316d860fe982c6122bc88d604f6ab0d",
+              "totalBytes": 30738956
+            }
+          ],
+          "format": "revealline-editions-admission.v1",
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "status": "verified-candidate-members",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 31135843,
+          "path": "distribution-victory-drones.zip",
+          "sha256": "f591398a33bb4997e10631a9b5ec935ac9dd08d7cc2bd37e30260747a9504544"
+        },
+        "sourceArchive": {
+          "bytes": 55218057,
+          "path": "source-victory-drones.zip",
+          "sha256": "e4a5ff7125e3bc44b7f5ea356e2c25245316d860fe982c6122bc88d604f6ab0d"
+        },
+        "runtimeInventoryFiles": 1328,
+        "runtimeInventoryBytes": 30738956,
+        "sourceInventoryFiles": 1328,
+        "sourceInventoryBytes": 54515304,
+        "completeSourceArchiveFiles": 1329,
+        "completeSourceArchiveBytes": 55007879
+      }
+    },
+    {
+      "kind": "optional",
+      "id": "civilian-flight",
+      "started": "2026-10-19T08:42:02.957735+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-optional-practice.mjs",
+        "--packages",
+        "civilian-flight",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 25180,
+            "ppid": 13942,
+            "pgid": 25180,
+            "uid": 502,
+            "started": "Mon Oct 19 10:42:03 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --packages civilian-flight --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:42:03.223522+00:00"
+          },
+          {
+            "pid": 25187,
+            "ppid": 25180,
+            "pgid": 25180,
+            "uid": 502,
+            "started": "Mon Oct 19 10:42:03 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              25180,
+              "Mon Oct 19 10:42:03 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --packages civilian-flight --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:42:03.536254+00:00"
+          },
+          {
+            "pid": 25219,
+            "ppid": 25180,
+            "pgid": 25180,
+            "uid": 502,
+            "started": "Mon Oct 19 10:42:05 2026",
+            "argv": "(git)",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              25180,
+              "Mon Oct 19 10:42:03 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --packages civilian-flight --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:42:05.384682+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight.log",
+        "byteLimit": 1048576,
+        "totalBytes": 468,
+        "writtenBytes": 468,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 468,
+        "tailSHA256": "5bf74ddd3dd855ef5dc1be1592541a2eee77e497a02e3a01d8ced70de98cc602",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"packageIds\": [\n    \"civilian-flight\"\n  ],\n  \"reproducibleBuilds\": 2,\n  \"committedInputsVerified\": true,\n  \"zipMembersVerified\": true,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:42:06.929287+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight/optional-packages.json",
+          "bytes": 1024,
+          "sha256": "0bee5b6f392dba527d96b342c7227667a1322fc4363cfd49621de6c4421c2e13"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight/optional-candidate-verification.json",
+          "bytes": 889,
+          "sha256": "976180fbe91c5ba8ebdfeee499db3a02d003a219641a7e0ee2821186119d8bf9"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight/manifest-optional-civilian-flight.json",
+          "bytes": 16934,
+          "sha256": "ff5b6ec28c3e97bb7c6d7a00a902e3e050e4ee708a80eeda9ad1d04026c61767"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-flight/source-inventory-optional-civilian-flight.json",
+          "bytes": 28106,
+          "sha256": "4c0b644b654d0f0788470c26143dfc7c196ae92291d5e482b6310a67c71395ad"
+        },
+        "admission": {
+          "format": "revealline-optional-package-admission.v1",
+          "packages": [
+            {
+              "bytes": 3795470,
+              "files": 95,
+              "id": "civilian-flight",
+              "revision": "820081b0ce867bef059f4dd9d2f0c2b94603d46f271c7c0e4a52ba8466a626a7"
+            }
+          ],
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 3809346,
+          "path": "distribution-optional-civilian-flight.zip",
+          "sha256": "fb6bfdd71dec021eb1834f711c0e976db036132e18682f7232960415ece9fd61"
+        },
+        "sourceArchive": {
+          "bytes": 3844905,
+          "path": "source-optional-civilian-flight.zip",
+          "sha256": "dbcb3d6395bca3d9833a04d1cad4fa23c560e19e65811881adcba60bc2c378d9"
+        },
+        "runtimeInventoryFiles": 94,
+        "runtimeInventoryBytes": 3778536,
+        "sourceInventoryFiles": 96,
+        "sourceInventoryBytes": 3802587,
+        "completeSourceArchiveFiles": 97,
+        "completeSourceArchiveBytes": 3830693
+      }
+    },
+    {
+      "kind": "optional",
+      "id": "civilian-fpv",
+      "started": "2026-10-19T08:42:07.620472+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-optional-practice.mjs",
+        "--packages",
+        "civilian-fpv",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 25239,
+            "ppid": 13942,
+            "pgid": 25239,
+            "uid": 502,
+            "started": "Mon Oct 19 10:42:07 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --packages civilian-fpv --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:42:07.730752+00:00"
+          },
+          {
+            "pid": 25246,
+            "ppid": 25239,
+            "pgid": 25239,
+            "uid": 502,
+            "started": "Mon Oct 19 10:42:07 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              25239,
+              "Mon Oct 19 10:42:07 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --packages civilian-fpv --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:42:08.038478+00:00"
+          },
+          {
+            "pid": 25278,
+            "ppid": 25239,
+            "pgid": 25239,
+            "uid": 502,
+            "started": "Mon Oct 19 10:42:10 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              25239,
+              "Mon Oct 19 10:42:07 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --packages civilian-fpv --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:42:10.711697+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv.log",
+        "byteLimit": 1048576,
+        "totalBytes": 462,
+        "writtenBytes": 462,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 462,
+        "tailSHA256": "56b19c1a9a479e0deff8f1fff51c2931bc4f85d65d1f6b13f4fa49d8cab4d981",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"packageIds\": [\n    \"civilian-fpv\"\n  ],\n  \"reproducibleBuilds\": 2,\n  \"committedInputsVerified\": true,\n  \"zipMembersVerified\": true,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:42:13.063208+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv/optional-packages.json",
+          "bytes": 1008,
+          "sha256": "8b18b4e5a76436d0a105f6ee7f2e3bac2c6310077572008b9a914841b33a0ccc"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv/optional-candidate-verification.json",
+          "bytes": 888,
+          "sha256": "c9f294873f9d8abf0e625f36253a0e050da36f5ffc13cc06eb167f8eda4c5b54"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv/manifest-optional-civilian-fpv.json",
+          "bytes": 26768,
+          "sha256": "f2d7e49ea636f216e71c0ff1b31a82962ca430f96d52a6024763895c3a22a3ea"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-civilian-fpv/source-inventory-optional-civilian-fpv.json",
+          "bytes": 45038,
+          "sha256": "c3b03fa8647ab274b61d9025c173474d7d49226de8ea44fdd523215f71b65e1c"
+        },
+        "admission": {
+          "format": "revealline-optional-package-admission.v1",
+          "packages": [
+            {
+              "bytes": 12084764,
+              "files": 147,
+              "id": "civilian-fpv",
+              "revision": "b95d8fd94c7c5f6c2e3183c7a54f98974f58167fbf7bdb9860b029c7f6ef29ae"
+            }
+          ],
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 12108134,
+          "path": "distribution-optional-civilian-fpv.zip",
+          "sha256": "35ec91c6eba43f12ee4b98221fb3da6f51c490775e288c9a3ebd9dcc1973a603"
+        },
+        "sourceArchive": {
+          "bytes": 12150940,
+          "path": "source-optional-civilian-fpv.zip",
+          "sha256": "05705d906e6734056c26147e7c3302be5121a70f166bd7424c29dcd3ad323d69"
+        },
+        "runtimeInventoryFiles": 146,
+        "runtimeInventoryBytes": 12057996,
+        "sourceInventoryFiles": 148,
+        "sourceInventoryBytes": 12082228,
+        "completeSourceArchiveFiles": 149,
+        "completeSourceArchiveBytes": 12127266
+      }
+    },
+    {
+      "kind": "optional",
+      "id": "fpv-worlds",
+      "started": "2026-10-19T08:42:13.626067+00:00",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "scripts/bundle-optional-practice.mjs",
+        "--packages",
+        "fpv-worlds",
+        "--out",
+        "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds",
+        "--base-path",
+        "/revealline/"
+      ],
+      "complete": true,
+      "childExit": 0,
+      "ownedProcesses": {
+        "rootObserved": true,
+        "identityFields": [
+          "pid",
+          "started",
+          "uid",
+          "argv"
+        ],
+        "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+        "observationLimits": {
+          "ownershipLimit": 256,
+          "ownershipCount": 3,
+          "actionLimit": 1024,
+          "actionCount": 0,
+          "exceeded": false
+        },
+        "observed": [
+          {
+            "pid": 25322,
+            "ppid": 13942,
+            "pgid": 25322,
+            "uid": 502,
+            "started": "Mon Oct 19 10:42:13 2026",
+            "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --packages fpv-worlds --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds --base-path /revealline/",
+            "profile": null,
+            "ownership": "exact newly spawned child",
+            "observedAt": "2026-10-19T08:42:13.754954+00:00"
+          },
+          {
+            "pid": 25329,
+            "ppid": 25322,
+            "pgid": 25322,
+            "uid": 502,
+            "started": "Mon Oct 19 10:42:13 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              25322,
+              "Mon Oct 19 10:42:13 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --packages fpv-worlds --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:42:14.063491+00:00"
+          },
+          {
+            "pid": 25360,
+            "ppid": 25322,
+            "pgid": 25322,
+            "uid": 502,
+            "started": "Mon Oct 19 10:42:17 2026",
+            "argv": "/Library/Developer/CommandLineTools/usr/bin/git status --porcelain --untracked-files=normal",
+            "profile": null,
+            "ownership": "observed descendant",
+            "parentIdentity": [
+              25322,
+              "Mon Oct 19 10:42:13 2026",
+              502,
+              "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --packages fpv-worlds --out /Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds --base-path /revealline/"
+            ],
+            "observedAt": "2026-10-19T08:42:17.257494+00:00"
+          }
+        ],
+        "actions": [],
+        "ownershipEvidenceTruncated": false,
+        "actionEvidenceTruncated": false,
+        "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "remaining": [],
+        "remainingCount": 0,
+        "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "remainingEvidenceTruncated": false,
+        "verified": true
+      },
+      "log": {
+        "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds.log",
+        "byteLimit": 1048576,
+        "totalBytes": 458,
+        "writtenBytes": 458,
+        "truncatedBytes": 0,
+        "tailLimit": 16384,
+        "tailBytes": 458,
+        "tailSHA256": "569e0abcdb9bfc6b5cfb4e4d69c0dbcea8ed0fe58c7c46311a7123d572666edb",
+        "tail": "{\n  \"output\": \"/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds\",\n  \"version\": \"v0.151.1\",\n  \"sourceRevision\": \"b4688ca2199c01fe9a063a7260946bc42c3642f4\",\n  \"sourceTree\": \"f3f713be0db398e1963bd31e5b17655eee6bbb3f\",\n  \"packageIds\": [\n    \"fpv-worlds\"\n  ],\n  \"reproducibleBuilds\": 2,\n  \"committedInputsVerified\": true,\n  \"zipMembersVerified\": true,\n  \"publicEligible\": false\n}\n",
+        "limitExceeded": false,
+        "complete": true,
+        "error": null
+      },
+      "finished": "2026-10-19T08:42:20.436403+00:00",
+      "result": {
+        "envelope": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds/optional-packages.json",
+          "bytes": 996,
+          "sha256": "a46898f8e1e14a0286b57347baef795799043ba2ae445d466dadf571694d37fc"
+        },
+        "verification": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds/optional-candidate-verification.json",
+          "bytes": 886,
+          "sha256": "31fd6463845ed7819f2448c1068ad71deb21d3101b3e5472f2daffd238fa60a9"
+        },
+        "manifest": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds/manifest-optional-fpv-worlds.json",
+          "bytes": 38416,
+          "sha256": "bf9463c7ddb6040c0ff74b49152b1c0f742ef335eaaa33495c4d504d7d6ead53"
+        },
+        "sourceInventory": {
+          "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/packaging-b4688ca219-20261019T083200Z/optional-fpv-worlds/source-inventory-optional-fpv-worlds.json",
+          "bytes": 64774,
+          "sha256": "34570191bc216994a5624048d5c309d3f1685ec21d3ffa64755148db769a9695"
+        },
+        "admission": {
+          "format": "revealline-optional-package-admission.v1",
+          "packages": [
+            {
+              "bytes": 18601822,
+              "files": 208,
+              "id": "fpv-worlds",
+              "revision": "806d011aa1f824ec9a1596bf9079ee77a4a94bf09ac8f6d2c63cb775a173a6a8"
+            }
+          ],
+          "publicEligible": false,
+          "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+          "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f",
+          "version": "v0.151.1",
+          "zipMembersVerified": true
+        },
+        "reproducibleBuilds": 2,
+        "distribution": {
+          "bytes": 18636590,
+          "path": "distribution-optional-fpv-worlds.zip",
+          "sha256": "603aa7d1e85cb85b2ef308e58c0803f279ffd61cdf7ed6e0d7986fd639e38e16"
+        },
+        "sourceArchive": {
+          "bytes": 18687492,
+          "path": "source-optional-fpv-worlds.zip",
+          "sha256": "c5b5e60430bac938d93b4d04222ba5b3bea11be95eb5fe816d83520c0605b8b9"
+        },
+        "runtimeInventoryFiles": 207,
+        "runtimeInventoryBytes": 18563406,
+        "sourceInventoryFiles": 209,
+        "sourceInventoryBytes": 18587646,
+        "completeSourceArchiveFiles": 210,
+        "completeSourceArchiveBytes": 18652420
+      }
+    }
+  ],
+  "publicEligible": false,
+  "scope": "Each edition/package gets its own canonical process and immutable candidate. Each CLI builds twice, verifies original committed inputs and admits real source/runtime ZIP members. No combined release envelope, publication, device evidence or human signoff is claimed.",
+  "sourceAfter": {
+    "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "sourceTree": "f3f713be0db398e1963bd31e5b17655eee6bbb3f"
+  },
+  "bindingsStable": true,
+  "finished": "2026-10-19T08:42:21.057556+00:00",
+  "remaining": []
+}
