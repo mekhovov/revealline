@@ -1,0 +1,58 @@
+{
+  "schema": "revealline.final-plan-header-consistency-review.v1",
+  "at": "2026-10-19T01:45:20.463Z",
+  "candidate": {
+    "bytes": 29875,
+    "sha256": "f728c76475c101c147ad333bf76ad1e45a5307217942294dcdcb17bf8228f086",
+    "gitBlob": "f31f33aa4ef6ecf096155bc64b75678df28270ac"
+  },
+  "scope": "Current header delta and supported new status only; no plan branch mutation.",
+  "statusEvidence": {
+    "bytes": 19086,
+    "sha256": "a46172bd664191cef397f56eb94363cfd39391686f65dab5032071953a982e38",
+    "gitBlob": "a15590f5715881570b3fb3a13f5e134693e6ead9"
+  },
+  "cancellationEvidence": {
+    "bytes": 1393,
+    "sha256": "b5478d0e359601f35a31a8e291d56ede8ed6d29ce3341183e35fc19a08fab672",
+    "gitBlob": "3bbdfdece17c235f4a31c58be5949878598965a5"
+  },
+  "verdict": "Two minor stale labels; otherwise coherent within scope.",
+  "corrections": [
+    {
+      "location": "#1631 Remaining table cell",
+      "from": "Publication and native cache/startup benefit.",
+      "to": "Final publisher verification and native cache/startup benefit.",
+      "reason": "dd337 deployment and independent public metadata are now confirmed; final verify remains queued."
+    },
+    {
+      "location": "Opening paragraph artwork/trail baseline",
+      "from": "draft PRs against current main",
+      "to": "draft PRs including bd15820",
+      "reason": "Current main is nowc5cf; detailed table correctly records their bd158 integration baseline and disjoint later doc/test changes."
+    }
+  ],
+  "findings": [
+    "No new native/performance/physical-device pass is claimed.",
+    "New #1619 exact head retains fresh-check requirements; older green results remain historical.",
+    "Source qualification is independent of native holds; heap source guard pending justifies staggered overhead PR admission without requiring original trace first.",
+    "Original trace outcome remains explicitly required before heap/overhead merge or native dispatch.",
+    "Controller normal cancellation is accurately completed; replacement still has a queued unassigned job. No old captured SHA is invented.",
+    "Currentmain doc/test-only update, publicdd337 and queued final verification agree with exact retained status evidence.",
+    "Complete Backup source/Industrial scoped progress remains distinct from pending aggregation/full Appearance/native observation."
+  ],
+  "tail": {
+    "headerBoundaryTextUnchanged": true,
+    "fullTailNotIncluded": true,
+    "required": "Publisher must append and verify original complete tail byte-for-byte; this header-only review cannot certify absent tail bytes."
+  },
+  "publicationPlaceholders": [
+    "@STAMP@",
+    "Evidence index metadata pending intentional substitution"
+  ],
+  "noActions": [
+    "No local application/test/build/generator execution",
+    "No branch or PR mutation",
+    "No native dispatch or rerun"
+  ]
+}

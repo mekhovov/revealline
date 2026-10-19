@@ -1,0 +1,66 @@
+{
+  "kind": "ObsoleteUnassignedPlanReporterCancellationV1",
+  "at": "2026-10-19T01:47:11.882059+00:00",
+  "pr": 1623,
+  "currentHead": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+  "oldRun": 39179522076,
+  "replacementRun": 39186804451,
+  "jobsBefore": [
+    {
+      "id": 117829436056,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": 0,
+      "steps": []
+    },
+    {
+      "id": 117850828910,
+      "name": "release-ready",
+      "status": "queued",
+      "conclusion": null,
+      "runner_id": 0,
+      "steps": []
+    },
+    {
+      "id": 117850829052,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": null,
+      "steps": []
+    },
+    {
+      "id": 117850829355,
+      "name": "focused",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": null,
+      "steps": []
+    },
+    {
+      "id": 117850829422,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": null,
+      "steps": []
+    },
+    {
+      "id": 117850829551,
+      "name": "focused_shards",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": null,
+      "steps": []
+    }
+  ],
+  "action": "normal cancel request accepted",
+  "after": {
+    "status": "queued",
+    "conclusion": null,
+    "updated_at": "2026-10-19T01:47:11Z"
+  },
+  "rationale": "Only the superseded revision's aggregation reporter remained queued; no job had run functional steps. The current revision has its own Source run.",
+  "limits": "No force cancellation, rerun, functional test cancellation or new trigger. Completion must be read back."
+}

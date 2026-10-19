@@ -1,0 +1,147 @@
+{
+  "schema": "revealline-superseded-docs-report-only-audit.v1",
+  "observedAt": "2026-10-19T01:45:59.036Z",
+  "scope": "Read-only guard inspection; no cancellation or rerun performed.",
+  "plan": {
+    "number": 1623,
+    "state": "open",
+    "draft": true,
+    "currentHead": "0ccecca0f545c35a4fde789098702ec2b55a9b90"
+  },
+  "superseded": {
+    "id": 39179522076,
+    "name": "Validate source for continuous main",
+    "path": ".github/workflows/deploy-pages.yml",
+    "event": "pull_request",
+    "headSha": "653afd1282cc8753d220ee0dcdbe32ec68d635a6",
+    "status": "queued",
+    "conclusion": null,
+    "attempt": 1,
+    "createdAt": "2026-10-19T00:09:49Z",
+    "updatedAt": "2026-10-19T01:45:27Z",
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39179522076",
+    "prs": [
+      1623
+    ]
+  },
+  "jobs": [
+    {
+      "id": 117829436056,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runnerId": 0,
+      "startedAt": "2026-10-19T00:11:16Z",
+      "completedAt": "2026-10-19T01:45:26Z",
+      "steps": []
+    },
+    {
+      "id": 117850828910,
+      "name": "release-ready",
+      "status": "queued",
+      "conclusion": null,
+      "runnerId": null,
+      "startedAt": "2026-10-19T01:45:27Z",
+      "completedAt": null,
+      "steps": []
+    },
+    {
+      "id": 117850829052,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runnerId": null,
+      "startedAt": "2026-10-19T01:45:27Z",
+      "completedAt": "2026-10-19T01:45:27Z",
+      "steps": []
+    },
+    {
+      "id": 117850829355,
+      "name": "focused",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runnerId": null,
+      "startedAt": "2026-10-19T01:45:27Z",
+      "completedAt": "2026-10-19T01:45:27Z",
+      "steps": []
+    },
+    {
+      "id": 117850829422,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runnerId": null,
+      "startedAt": "2026-10-19T01:45:27Z",
+      "completedAt": "2026-10-19T01:45:27Z",
+      "steps": []
+    },
+    {
+      "id": 117850829551,
+      "name": "focused_shards",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runnerId": null,
+      "startedAt": "2026-10-19T01:45:27Z",
+      "completedAt": "2026-10-19T01:45:27Z",
+      "steps": []
+    }
+  ],
+  "replacement": [
+    {
+      "id": 39186804451,
+      "name": "Validate source for continuous main",
+      "path": ".github/workflows/deploy-pages.yml",
+      "event": "pull_request",
+      "headSha": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+      "status": "pending",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T01:45:26Z",
+      "updatedAt": "2026-10-19T01:45:27Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39186804451",
+      "prs": [
+        1623
+      ]
+    }
+  ],
+  "newHeadChecksAtSnapshot": 0,
+  "reporterProof": {
+    "path": ".github/workflows/deploy-pages.yml",
+    "revision": "653afd1282cc8753d220ee0dcdbe32ec68d635a6",
+    "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+    "bytes": 19972,
+    "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+    "releaseReadyBody": "  release-ready:\n    if: always() && github.event_name == 'pull_request'\n    needs: [preflight, focused, test, build]\n    runs-on: ubuntu-latest\n    steps:\n      - name: Apply the selected PR gate policy\n        env:\n          ADMISSION: ${{ needs.preflight.outputs.admission }}\n          BUILD_RESULT: ${{ needs.build.result }}\n          FOCUSED_RESULT: ${{ needs.focused.result }}\n          FOCUSED_REQUIRED: ${{ needs.preflight.outputs.focusedRequired }}\n          FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}\n          PREFLIGHT_RESULT: ${{ needs.preflight.result }}\n          TEST_RESULT: ${{ needs.test.result }}\n        run: |\n          test \"$PREFLIGHT_RESULT\" = success\n          if [ \"$ADMISSION\" != hold ]; then\n            if [ \"$FOCUSED_REQUIRED\" = true ]; then\n              test \"$FOCUSED_RESULT\" = success\n            else\n              test \"$FOCUSED_REQUIRED\" = false\n              test \"$FOCUSED_RESULT\" = skipped\n            fi\n          fi\n          if [ \"$ADMISSION\" = maintenance ]; then\n            echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'\n            exit 0\n          fi\n          if [ \"$ADMISSION\" = scheduled ]; then\n            echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'\n            exit 0\n          fi\n          if [ \"$ADMISSION\" = release-evidence ]; then\n            echo 'Docs-only post-merge release evidence: exact-source validation is required without allocating another product version.'\n            test \"$BUILD_RESULT\" = success\n            exit 0\n          fi\n          if [ \"$ADMISSION\" != release ]; then\n            echo '::error::This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.'\n            exit 1\n          fi\n          test \"$BUILD_RESULT\" = success\n          if [ \"$FULL_CI\" = true ]; then\n            test \"$TEST_RESULT\" = success\n          else\n            echo \"Full tests are deferred and do not block this PR.\"\n          fi\n",
+    "interpretation": "Only checks needs/results using a shell. No checkout, functional tests or product build. All other jobs already terminal cancelled, none has any executed step."
+  },
+  "heap": {
+    "run": {
+      "id": 39185723029,
+      "name": "Solo verified package consumer",
+      "path": ".github/workflows/solo-native-package-consumer.yml",
+      "event": "pull_request",
+      "headSha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T01:31:13Z",
+      "updatedAt": "2026-10-19T01:31:13Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39185723029",
+      "prs": [
+        1699
+      ]
+    },
+    "nonSkipped": [
+      {
+        "id": 117847634680,
+        "name": "replay-portability-source",
+        "status": "queued",
+        "conclusion": null,
+        "runnerId": 0,
+        "startedAt": "2026-10-19T01:31:13Z",
+        "completedAt": null
+      }
+    ]
+  },
+  "recommendation": "Old653afd Source is a report-only obsolete cleanup candidate, subject to parent fresh-read guards; preserve replacement0cce and all heap/source work. No action taken by this reviewer."
+}

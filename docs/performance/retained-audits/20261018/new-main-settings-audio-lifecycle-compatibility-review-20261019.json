@@ -1,0 +1,185 @@
+{
+  "schema": "revealline.source-review.v1",
+  "reviewedAt": "2026-10-19T01:58:11.210Z",
+  "subject": "New-main continuous-play preference feedback and localized About versus pending shared Audio/editor and lifecycle repairs",
+  "verdict": "No concrete interaction defect found within the reviewed boundaries; source-only compatibility, not functional or native acceptance.",
+  "heads": {
+    "main": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+    "mainBefore": "c5cf97d87e5ae9c5cfa683d1c4ddaf9bfb7c50af",
+    "demand1619": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+    "authoring1675": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+    "lifecycle1693": "d1c6e236d8fb17448b3faaf89d11408ac302dba1"
+  },
+  "method": [
+    "Read and hash-verified the exact nine-path main delta; reviewed all three changed canonical runtime modules in full.",
+    "Read actual main native-menu/control adoption and localization binding owners, plus exact pending Solo/Couch/shared Soundtrack settings and authoring lifecycle source.",
+    "Compared all seven lifecycle paths to their main base, reviewed new preference/tools controls without executing them.",
+    "No app, tests, build, generator, browser, filesystem writes, refs, PRs, dispatches or queue actions. Only this evidence Git blob was created."
+  ],
+  "sources": [
+    {
+      "path": "game/ui/continuous-play.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "44fe211abd96b33cdd8122ccb66e4f716fa5d26a",
+      "bytes": 16013,
+      "sha256": "47197f333ad6a115eb7c3e3c51d7da4149b5220c3e1f1006deda8c91fd50a3dc",
+      "gitBlob": "44fe211abd96b33cdd8122ccb66e4f716fa5d26a"
+    },
+    {
+      "path": "game/ui/global-settings-view.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "a36ff5f1ee56e83c133480c02121279578baef1c",
+      "bytes": 13351,
+      "sha256": "9295c33801db889e0fa38032787787a4f54de3d841451b37143007e0515da664",
+      "gitBlob": "a36ff5f1ee56e83c133480c02121279578baef1c"
+    },
+    {
+      "path": "game/ui/global-settings-tools.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "5dd2ba796d24413567c9dc031db574f9c8670669",
+      "bytes": 14032,
+      "sha256": "af378dd806d1450b0b908ed0ec21ee1fbe5805cdd01708c3e9b3879bc3699182",
+      "gitBlob": "5dd2ba796d24413567c9dc031db574f9c8670669"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "6f27527b63bf33cac9ed84afd52cc197d0afa72f",
+      "bytes": 32897,
+      "sha256": "37c667a50de294c07a14031e095231475f5d794d3c595c62a5a8ca5ffc37cd63",
+      "gitBlob": "6f27527b63bf33cac9ed84afd52cc197d0afa72f"
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "33379101498879c8a49cfa3340f727f2d50c1c11",
+      "bytes": 29545,
+      "sha256": "83cec52089e149ec8d9a10b526974f24a8b0523d820fa279f4695d5249c22f5d",
+      "gitBlob": "33379101498879c8a49cfa3340f727f2d50c1c11"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "288ba637ec5ab5feb0e1cca94ddfd80a9ac14b20",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "gitBlob": "288ba637ec5ab5feb0e1cca94ddfd80a9ac14b20"
+    },
+    {
+      "path": "game/ui/native-menus.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "390e5f4f5b85585e7de632c7babdc610b20a8d63",
+      "bytes": 26045,
+      "sha256": "dbb10c23f4dddadfa200df77d043083e6ac25c57c422e592817a4c99dea5c54d",
+      "gitBlob": "390e5f4f5b85585e7de632c7babdc610b20a8d63"
+    },
+    {
+      "path": "game/ui/field-kit-surfaces.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "f0fcc221253f3658b58b7d15a61d4130937d7f0b",
+      "bytes": 3756,
+      "sha256": "676ad23d4697089babe755ee7cbccd66368e3d36a990eb384511d6a2311c5c97",
+      "gitBlob": "f0fcc221253f3658b58b7d15a61d4130937d7f0b"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "498c93a5f5a32dab3d12e68d7b23fa2dbaebb899",
+      "bytes": 13699,
+      "sha256": "f7757adb8ee1f9c53fc0f249bbed6bc9377ff175453543198d3561338fcfc3af",
+      "gitBlob": "498c93a5f5a32dab3d12e68d7b23fa2dbaebb899"
+    },
+    {
+      "path": "game/ui/settings-panels.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "98e3cf3fa323d9ae41016f69bad21f0fa33fec9f",
+      "bytes": 8253,
+      "sha256": "870927e1385255b968ad4d295844da97ad2fb2ded556c7742a6646cd8e670e9d",
+      "gitBlob": "98e3cf3fa323d9ae41016f69bad21f0fa33fec9f"
+    },
+    {
+      "key": "1675-panel",
+      "path": "game/ui/soundtrack-panel.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "6b0ff488f6b4011ecdf7857975b2f6b3e703d021",
+      "bytes": 150465,
+      "sha256": "5e9caf6659a2d44deb51772c3b5d1c04d2fe3ffc8d833ef91c67785be02c77c0"
+    },
+    {
+      "key": "1675-app",
+      "path": "game/app.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+      "bytes": 619315,
+      "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+    },
+    {
+      "key": "1675-couch",
+      "path": "game/couch/couch-music-host.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "2e4de410d668a8c0150d3851de7cba9fd7b1c3bd",
+      "bytes": 17098,
+      "sha256": "14a5bad008466a9744466e2a9ac52de10c10e52fbf3f05dbe797ccbac50fb8f9"
+    },
+    {
+      "key": "demandPanel",
+      "path": "game/ui/soundtrack-panel.mjs",
+      "revision": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "blob": "8f7894242e9572eccff97bb997aba9361e17a699",
+      "bytes": 152677,
+      "sha256": "a9df4484f1ea7bf26c795ac591aae2ccccd0b0528957f71e07ceed4c721abfc2"
+    },
+    {
+      "path": "game/test/continuous-play-preferences.test.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "ad02e230e261359493626065ae962a384c51deb0",
+      "bytes": 8973,
+      "sha256": "8a39a8ecf2c9d619710e4ac6325462a1d1205b53339135adc308b4c9ffcf4640",
+      "gitBlob": "ad02e230e261359493626065ae962a384c51deb0"
+    },
+    {
+      "path": "game/test/global-settings-tools.test.mjs",
+      "revision": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+      "blob": "9344b49a00c15141da4753134da15002b8ea31e7",
+      "bytes": 7916,
+      "sha256": "60be64e728c29e1760548038e7695e38ef20e8c55ad46f1c46a0e796fea0b319",
+      "gitBlob": "9344b49a00c15141da4753134da15002b8ea31e7"
+    }
+  ],
+  "findings": [
+    {
+      "boundary": "Gesture activation and existing Audio controls",
+      "evidence": "global-settings-view.mjs invoke calls operation() before inspecting then/rendering; this introduces no await before binding.set. native-menus.mjs:526-607 adopts real master controls/library nodes and preserves their existing handlers. Existing Solo setMasterMuted/setMasterVolume and Couch session/play paths remain independently owned. The new retry UI exists on synthetic fields, and feedback/retry are supplied only by continuous-play bindings in the reviewed mount.",
+      "conclusion": "No loss of original user gesture or rerouting of music Play/Studio/volume found."
+    },
+    {
+      "boundary": "Selected Audio and lazy Studio owners",
+      "evidence": "soundtrack-panel.mjs at #1675:3779-3822 retains the connected identity, selected tab, hidden/inert, visibility and rendered rectangle checks. New preference render updates its own Gameplay row; it does not select/focus the Audio tab or mount Studio. #1675:1531-1580 and3607-3693 still bind authoring to dialog/visit/visibility and retire on close.",
+      "conclusion": "No path from preference save feedback or About localization to unwanted catalogue demand or late authoring mount found."
+    },
+    {
+      "boundary": "Persistence Retry versus gameplay Retry",
+      "evidence": "continuousPlayBindings.retry calls only preferences.retry. It repeats a synchronous verified storage write, preserves pending local preferences, and notifies snapshot subscribers. createContinuousPlayController subscriber only cancels an active countdown/ready phase when disabled; it never dispatches from a preference notification. Solo app:1381-1386 only updates automaticNextEnabled and clears auto-advance when disabled.",
+      "conclusion": "Retry saving is not mission Retry and cannot accept Resume or advance simulation through this notification path."
+    },
+    {
+      "boundary": "Localization and paused child-tool ownership",
+      "evidence": "global-settings-tools.mjs changes About copy and registers the iframe title via localizedAttribute; src/showModal/close/focus/owner checks are unchanged. bootstrap.mjs:98-143 replaces the existing per-node title producer and updates only that attribute; it does not navigate or recreate the iframe.",
+      "conclusion": "No change to paused parent identity, child input ownership or accepted close/Resume boundaries found."
+    },
+    {
+      "boundary": "Lifecycle repair compatibility",
+      "evidence": "The #1693 delta changes app pending action/pickup retirement around neutral Resume/recovery, Couch neutralActions consumption, Versus accepted Resume last=0, and Team accepted Start last=null. None of the nine new-main paths changes these owners; reviewed preference callbacks only cancel presentation auto-advance.",
+      "conclusion": "No identified clock/input ordering conflict with #1693. A combined native run remains required."
+    }
+  ],
+  "limits": [
+    "This is a bounded source review, not an all-app proof and not a performance result.",
+    "No functional tests completed or executed in this review. Existing and new checks must be qualified against the eventual combined source.",
+    "The generated FPV projection was deliberately excluded because another reviewer owns that exact closure.",
+    "Native focus, media-activation policies, storage denial and actual browser pause/resume still require hosted/browser evidence."
+  ],
+  "relatedEvidence": [
+    "44dee59a29b3cd837b3751bf3ef35dd362d72809"
+  ]
+}

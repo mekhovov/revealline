@@ -1,0 +1,180 @@
+{
+  "kind": "FinalSourceReleaseAndCancellationReadbackV1",
+  "at": "2026-10-19T01:50:11.068059+00:00",
+  "main": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+  "prs": [
+    {
+      "pr": 1619,
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "draft": false,
+      "merged": false,
+      "checks": {
+        "queued": 14
+      },
+      "failures": []
+    },
+    {
+      "pr": 1620,
+      "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "draft": false,
+      "merged": false,
+      "checks": {
+        "success": 23,
+        "skipped": 3
+      },
+      "failures": []
+    },
+    {
+      "pr": 1621,
+      "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "draft": false,
+      "merged": false,
+      "checks": {
+        "success": 17,
+        "skipped": 94
+      },
+      "failures": []
+    },
+    {
+      "pr": 1628,
+      "head": "62be652ce70b11f840b491c218609d5225374be4",
+      "draft": false,
+      "merged": false,
+      "checks": {
+        "success": 17,
+        "skipped": 96
+      },
+      "failures": []
+    },
+    {
+      "pr": 1674,
+      "head": "98f666a20d133d9a81eb07104076c3147fd165aa",
+      "draft": true,
+      "merged": false,
+      "checks": {
+        "skipped": 3,
+        "queued": 16,
+        "success": 2
+      },
+      "failures": []
+    },
+    {
+      "pr": 1675,
+      "head": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "draft": true,
+      "merged": false,
+      "checks": {
+        "queued": 13
+      },
+      "failures": []
+    },
+    {
+      "pr": 1676,
+      "head": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+      "draft": true,
+      "merged": false,
+      "checks": {
+        "queued": 2,
+        "skipped": 3,
+        "success": 20
+      },
+      "failures": []
+    },
+    {
+      "pr": 1693,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "draft": true,
+      "merged": false,
+      "checks": {
+        "queued": 15
+      },
+      "failures": []
+    },
+    {
+      "pr": 1694,
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "draft": true,
+      "merged": false,
+      "checks": {
+        "queued": 15
+      },
+      "failures": []
+    },
+    {
+      "pr": 1695,
+      "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+      "draft": true,
+      "merged": false,
+      "checks": {
+        "queued": 15
+      },
+      "failures": []
+    },
+    {
+      "pr": 1696,
+      "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+      "draft": true,
+      "merged": false,
+      "checks": {
+        "queued": 11
+      },
+      "failures": []
+    },
+    {
+      "pr": 1699,
+      "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+      "draft": true,
+      "merged": false,
+      "checks": {
+        "skipped": 65,
+        "queued": 12
+      },
+      "failures": []
+    }
+  ],
+  "runs": [
+    {
+      "id": 39179522076,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "head_sha": "653afd1282cc8753d220ee0dcdbe32ec68d635a6",
+      "updated_at": "2026-10-19T01:49:27Z"
+    },
+    {
+      "id": 39186804451,
+      "status": "queued",
+      "conclusion": null,
+      "head_sha": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+      "updated_at": "2026-10-19T01:49:27Z"
+    },
+    {
+      "id": 39185723029,
+      "status": "queued",
+      "conclusion": null,
+      "head_sha": "739a87f66a80d4956f1af77c60c032821bf799fb",
+      "updated_at": "2026-10-19T01:31:13Z"
+    },
+    {
+      "id": 39168765766,
+      "status": "queued",
+      "conclusion": null,
+      "head_sha": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "updated_at": "2026-10-19T01:37:21Z"
+    },
+    {
+      "id": 39186433775,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "head_sha": "c5cf97d87e5ae9c5cfa683d1c4ddaf9bfb7c50af",
+      "updated_at": "2026-10-19T01:45:16Z"
+    },
+    {
+      "id": 39182301808,
+      "status": "queued",
+      "conclusion": null,
+      "head_sha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "updated_at": "2026-10-19T01:42:38Z"
+    }
+  ],
+  "limits": "Read-only snapshot; queued/skipped checks are not passes. Old plan reporter cancellation completed; current revision and functional validation preserved."
+}

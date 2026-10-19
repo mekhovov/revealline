@@ -1,0 +1,46 @@
+{
+  "kind": "UnresponsiveObsoleteReporterForcedCancellationV1",
+  "at": "2026-10-19T01:49:27.670523+00:00",
+  "normalRequestReceipt": "3bcd350b2455c8ba8e098e27e48354f1ad7196b1",
+  "normalRequestElapsedSeconds": 134.229873,
+  "sourceProof": "be2f0710a145717cf64888cc3bc4231d43bf4aa6",
+  "guidance": "https://docs.github.com/en/rest/actions/workflow-runs#force-cancel-a-workflow-run",
+  "run": 39179522076,
+  "oldHead": "653afd1282cc8753d220ee0dcdbe32ec68d635a6",
+  "currentHead": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+  "replacementRun": 39186804451,
+  "soleRemainingJob": {
+    "id": 117850828910,
+    "run_id": 39179522076,
+    "workflow_name": "Validate source for continuous main",
+    "head_branch": "codex/solo-performance-status-20261018-late",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39179522076",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAbcHTwbg",
+    "head_sha": "653afd1282cc8753d220ee0dcdbe32ec68d635a6",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117850828910",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39179522076/job/117850828910",
+    "status": "queued",
+    "conclusion": null,
+    "created_at": "2026-10-19T01:45:27Z",
+    "started_at": "2026-10-19T01:45:27Z",
+    "completed_at": null,
+    "name": "release-ready",
+    "steps": [],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117850828910",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 0,
+    "runner_name": "",
+    "runner_group_id": 0,
+    "runner_group_name": ""
+  },
+  "action": "force-cancel request accepted after normal cancellation left only the obsolete unassigned always() reporter queued",
+  "after": {
+    "status": "queued",
+    "conclusion": null,
+    "updated_at": "2026-10-19T01:49:27Z"
+  },
+  "limits": "No functional work or current revision gate cancelled. Historical results retained. No repository setting, workflow, main, Pages run or other task changed. Completion readback still required."
+}

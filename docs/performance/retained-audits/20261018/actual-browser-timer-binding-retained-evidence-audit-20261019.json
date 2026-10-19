@@ -1,0 +1,630 @@
+{
+  "format": "SoloHistoricalTimerBinaryConfigurationAuditV1",
+  "reviewedAt": "2026-10-19T01:51:04.259Z",
+  "repository": "mekhovov/revealline",
+  "currentSourceReviewed": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "scope": "Read-only remote archive/source inspection. No browser, test, app, generator, build or native execution; no rerun or branch mutation. Historical failures and unresolved outcomes remain unchanged.",
+  "historicalRuntime": {
+    "revision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+    "tree": "6b13627e324f695b6ee8d9f2dee2eeeb7217c332"
+  },
+  "historicalTooling": {
+    "revision": "c41a02216c0811952232a387fd1743e09452c269",
+    "tree": "7fff7e134c67aa268e63cab5b08a7f3473bb5703"
+  },
+  "verification": "Fetched four original artifacts entirely in RAM, checked exact length/SHA256 against retained final-native progress records, parsed ZIP members with CRC verification, read all 80 arm reports and 84 command receipts. Retained selected member hashes and complete census. This does not reproduce native measurements or verify the large runtime payload again.",
+  "findings": [
+    {
+      "status": "retained",
+      "item": "Actual Chromium executable already identified",
+      "detail": "Both app-diagnostics and journal-cost summaries record the same actual 290614600-byte chrome binary SHA256 0b20b130e7edd9dd51873be867761295fe0cfad490c2b9a64f95bd3cfc08fa71. It is not merely a version or launcher hash. Playwright 1.62.1 registry binds intended chromium revision1234/version151.0.7922.34. All 40 Chromium measured arms report that browser version; ownership command receipts identify that binary path."
+    },
+    {
+      "status": "partial",
+      "item": "WebKit launcher identified; actual engine build remains incomplete",
+      "detail": "Both WebKit summaries record pw_run.sh, 3049 bytes/SHA256 a85baad3d8c07173ac387a59b41500c382b21ed692afe0964d29aac247ccc63b. Registry declares webkit2336/version26.5; all40 measured arms report26.5. Owned command receipts identify minibrowser-wpe/bin/MiniBrowser, WPEWebProcess and WPENetworkProcess, but no digest or exact source/build identity for those executables or the loaded WebKit/JavaScriptCore shared libraries is retained in this evidence. Hashing the wrapper does not bind compiled timer implementation."
+    },
+    {
+      "status": "retained",
+      "item": "Package and observer identities",
+      "detail": "All four artifacts share Playwright package lock SHA256 2cea5324052ffbb9e1a67ef75209306dd4d51cabfd98bac87413bdeda715d4 and registry SHA256 f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99. Manifests preserve exact observer/probe/lifecycle source hashes. This supports tooling identity but not observer cost equivalence with a prospective new timing method."
+    },
+    {
+      "status": "partial",
+      "item": "Measured context configuration",
+      "detail": "All four separate timer pages record crossOriginIsolated=false and browser version. All80 actual measured-arm reports inspected lack a direct crossOriginIsolated/isSecureContext snapshot. The archived HTTP headers omit COOP/COEP, which supports the intended non-isolated setup but is not per-arm runtime attestation. WebKit journal arms explicitly use persistent mobile context400x850/DPR3, whereas timer-probe launches an ephemeral1280x800 page. That context difference is not itself evidence of a different timer branch, but prevents silently treating the probe as identical context evidence."
+    },
+    {
+      "status": "unresolved",
+      "item": "Source-to-binary timer-policy binding",
+      "detail": "An actual Chromium digest closes binary identity, not provenance from the reviewed upstream source tag to that exact compiled executable and its active timer policy. WebKit also lacks engine/library identity. No retained executable build/source attestation or complete runtime timer-policy settings proves the reviewed source branches were active for each measured arm. Source envelopes and observed minimum positive increments must remain conditional; observed minimum is never an error bound."
+    }
+  ],
+  "existingHooks": [
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "lines": "1270-1287",
+      "purpose": "Existing report.playwright provenance hashes browserType.executablePath(); for WebKit this resolves to pw_run.sh. If a future finite clock method needs stronger binary binding, extend this existing preflight owner to retain actual browser/engine build provenance and owned engine/library digests, with bounded path and resource handling. Do not add per-frame work."
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "lines": "377-395",
+      "purpose": "Existing app diagnostics report records browser/version/viewport but no actual page isolation/security configuration. A prospective method could add the bounded configuration snapshot before active measurement and after pausing, using existing lifecycle ownership."
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "lines": "1166-1174",
+      "purpose": "Existing initial-ready environment snapshot records UA/display. This is the narrow place for actual page crossOriginIsolated/isSecureContext and relevant declared context flags, outside measured gameplay. Maintain source-bound declarations and historical frozen tools rather than mutating old evidence."
+    },
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "lines": "142-185",
+      "purpose": "Existing independent timer probe is ephemeral1280x800 and records empirical steps/COI. Either explicitly scope it as empirical calibration only or match the context in any future method; neither change alone proves a duration error bound."
+    }
+  ],
+  "minimalFollowup": "No product change or retrospective rerun is needed for this finding. Preserve failed/unresolved historical classifications. If the project selects a source-derived finite-error prospective method, two small existing-report extensions (actual engine build provenance; per-arm paused/prepared configuration snapshot) are justified but are not sufficient alone: the reviewed source-to-build mapping, full policy/float-conversion envelope and observer cost still require review. No new implementation proposal was prepared.",
+  "limits": [
+    "Four historical cohorts only; no claim about every retained run or physical Safari/Steam Deck.",
+    "Actual binary identity is distinct from upstream source/build attestation.",
+    "Process command-line inventories establish launched path/options, not all internal runtime settings.",
+    "No changed measurement or qualification result."
+  ],
+  "sources": {
+    "scripts/run-solo-remote-correctness.mjs": {
+      "blob": "ce977d2d6c0c2bf58d3357f9276b602542b4312b",
+      "bytes": 74932,
+      "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+    },
+    "scripts/qualify-solo-diagnostics.mjs": {
+      "blob": "954d79349078934e4c22ee0f3e26156a9da0196c",
+      "bytes": 18407,
+      "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f"
+    },
+    "scripts/observe-solo-performance.mjs": {
+      "blob": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda",
+      "bytes": 19115,
+      "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+    },
+    "scripts/qualify-solo-runtime.mjs": {
+      "blob": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54",
+      "bytes": 95425,
+      "sha256": "bba8114b4b553e8681ec641d91c45b7270f02e58ccd207385818a13070c98373"
+    },
+    "context": {
+      "blob": "ccf6ac62a7e456c77e1f48c5973ead2b0cd0b3d9",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    }
+  },
+  "priorSourceReview": {
+    "blob": "cfe88bd7e1d12c1de33f852ae0ae791af1a34418",
+    "bytes": 8309,
+    "sha256": "6e95512a0f753a98f9c0fa15c9c2555aecde5001bb014a9f4d2d1970d1539990",
+    "scope": "Used only as prior reviewed-source context; this audit does not repeat timer-source derivation."
+  },
+  "artifacts": [
+    {
+      "id": 12094697863,
+      "run": 39015298491,
+      "attempt": 1,
+      "bytes": 867024,
+      "sha256": "ff585a3df75db03cdfecf29a9c74778b65a600c8155d84f1ba8479691218b731",
+      "memberCount": 92,
+      "summary": {
+        "path": "solo-linux-final-app-diagnostics-v2-chromium/evidence/summary.json",
+        "bytes": 23569,
+        "sha256": "5a9f483c083cddd4a51aae558abc92ac4cb9a98a76945da7171a7f6db05b4a99",
+        "format": "SoloHostedDiagnosticsCohortV1",
+        "status": "failed",
+        "playwright": {
+          "version": "1.62.1",
+          "engines": {
+            "chromium": {
+              "executable": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome",
+              "identity": {
+                "bytes": 290614600,
+                "sha256": "0b20b130e7edd9dd51873be867761295fe0cfad490c2b9a64f95bd3cfc08fa71"
+              }
+            }
+          },
+          "registryIdentity": {
+            "bytes": 1780,
+            "sha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99"
+          }
+        }
+      },
+      "manifest": {
+        "path": "solo-linux-final-app-diagnostics-v2-chromium/evidence/diagnostics-chromium-candidate/manifest.json",
+        "bytes": 304238,
+        "sha256": "6f63192413d039de8e43f0313576cda31b0d8237c0e6b033840e04313adae8a8",
+        "value": {
+          "format": "SoloDiagnosticsQualificationV1",
+          "createdAt": "2026-10-17T07:56:30.981Z",
+          "node": "v22.13.1",
+          "observerSha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91",
+          "observerLifecycleSha256": "3b94fa9c52f4356a0fcaded21863bb47c1e26c031e4a59efb38a3216aea14554",
+          "finishedAt": "2026-10-17T08:09:44.072Z",
+          "failure": null
+        },
+        "configuration": {
+          "sourceRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+          "pairs": 10,
+          "seed": 1544,
+          "durationMs": 30000,
+          "browser": "chromium",
+          "cpuRate": 1
+        }
+      },
+      "timer": {
+        "path": "solo-linux-final-app-diagnostics-v2-chromium/evidence/diagnostics-chromium-candidate/timer.json",
+        "bytes": 649,
+        "sha256": "64cee2f90703d3df13b04a533cd49bd900dddcdf70ab2d450621e5b4926830e8",
+        "value": {
+          "status": "observed",
+          "startedAt": "2026-10-17T07:56:31.104Z",
+          "browser": "chromium 151.0.7922.34",
+          "minimumPositiveStepMs": 0.09999999997671694,
+          "maximumPositiveStepMs": 8.299999999988358,
+          "positiveSteps": 780,
+          "iterations": 198260,
+          "crossOriginIsolated": false,
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36",
+          "address": "http://127.0.0.1:42821/game/?journey=opening",
+          "scope": "Separate same-origin page before timing. Observed minimum positive step estimates precision; not a guarantee against privacy jitter or later clock-policy changes."
+        }
+      },
+      "selectedSetupReceipts": [
+        {
+          "path": "solo-linux-final-app-diagnostics-v2-chromium/evidence/candidate-payload-metadata/_headers",
+          "bytes": 528,
+          "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8"
+        },
+        {
+          "path": "solo-linux-setup/browser-install.log",
+          "bytes": 24,
+          "sha256": "4aaef3acc3c4b16766abf61c4f4aa2d3bd413e2fe822d3edd6cfa9d7e7334efa"
+        },
+        {
+          "path": "solo-linux-setup/browser-package-lock.json",
+          "bytes": 1601,
+          "sha256": "2cea5324052ffbb9e1a67ef75209306dd4d51cabfdcd98bac87413bdeda715d4"
+        }
+      ],
+      "armCount": 20,
+      "armCensus": {
+        "0.browser": {
+          "count": 20,
+          "values": [
+            "chromium 151.0.7922.34"
+          ]
+        },
+        "0.viewport": {
+          "count": 20,
+          "values": [
+            {
+              "width": 1280,
+              "height": 800
+            }
+          ]
+        }
+      },
+      "commandCount": 21,
+      "browserExecutablePathCounts": {
+        "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome": 168,
+        "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome_crashpad_handler": 42
+      }
+    },
+    {
+      "id": 12094923018,
+      "run": 39015298491,
+      "attempt": 1,
+      "bytes": 698682,
+      "sha256": "d64bb1181fdcf2e4d384f95dd605658b486a8e4eb565ce83e1966c67d0664eef",
+      "memberCount": 92,
+      "summary": {
+        "path": "solo-linux-final-app-diagnostics-v2-webkit/evidence/summary.json",
+        "bytes": 12898,
+        "sha256": "4f9dc3b4ef3a4bceccdf49c0007000996139e1c4938e6349e81ba77b741afb75",
+        "format": "SoloHostedDiagnosticsCohortV1",
+        "status": "failed",
+        "playwright": {
+          "version": "1.62.1",
+          "engines": {
+            "webkit": {
+              "executable": "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/pw_run.sh",
+              "identity": {
+                "bytes": 3049,
+                "sha256": "a85baad3d8c07173ac387a59b41500c382b21ed692afe0964d29aac247ccc63b"
+              }
+            }
+          },
+          "registryIdentity": {
+            "bytes": 1780,
+            "sha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99"
+          }
+        }
+      },
+      "manifest": {
+        "path": "solo-linux-final-app-diagnostics-v2-webkit/evidence/diagnostics-webkit-candidate/manifest.json",
+        "bytes": 83552,
+        "sha256": "d24bb959a51e14bcf129ef8b280c72f8378b3e0234ea5aa3dae3665c615a4aca",
+        "value": {
+          "format": "SoloDiagnosticsQualificationV1",
+          "createdAt": "2026-10-17T08:13:13.814Z",
+          "node": "v22.13.1",
+          "observerSha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91",
+          "observerLifecycleSha256": "3b94fa9c52f4356a0fcaded21863bb47c1e26c031e4a59efb38a3216aea14554",
+          "finishedAt": "2026-10-17T08:29:27.856Z",
+          "failure": null
+        },
+        "configuration": {
+          "sourceRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+          "pairs": 10,
+          "seed": 1544,
+          "durationMs": 30000,
+          "browser": "webkit",
+          "cpuRate": 1
+        }
+      },
+      "timer": {
+        "path": "solo-linux-final-app-diagnostics-v2-webkit/evidence/diagnostics-webkit-candidate/timer.json",
+        "bytes": 612,
+        "sha256": "8e9fbbf36e937cbcde2c94208a4fd34a8ed6e07b58269ac0497ba2df58d953dd",
+        "value": {
+          "status": "observed",
+          "startedAt": "2026-10-17T08:13:13.931Z",
+          "browser": "webkit 26.5",
+          "minimumPositiveStepMs": 1,
+          "maximumPositiveStepMs": 1,
+          "positiveSteps": 100,
+          "iterations": 821148,
+          "crossOriginIsolated": false,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15",
+          "address": "http://127.0.0.1:33607/game/?journey=opening",
+          "scope": "Separate same-origin page before timing. Observed minimum positive step estimates precision; not a guarantee against privacy jitter or later clock-policy changes."
+        }
+      },
+      "selectedSetupReceipts": [
+        {
+          "path": "solo-linux-final-app-diagnostics-v2-webkit/evidence/candidate-payload-metadata/_headers",
+          "bytes": 528,
+          "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8"
+        },
+        {
+          "path": "solo-linux-setup/browser-install.log",
+          "bytes": 24,
+          "sha256": "4aaef3acc3c4b16766abf61c4f4aa2d3bd413e2fe822d3edd6cfa9d7e7334efa"
+        },
+        {
+          "path": "solo-linux-setup/browser-package-lock.json",
+          "bytes": 1601,
+          "sha256": "2cea5324052ffbb9e1a67ef75209306dd4d51cabfdcd98bac87413bdeda715d4"
+        }
+      ],
+      "armCount": 20,
+      "armCensus": {
+        "0.browser": {
+          "count": 20,
+          "values": [
+            "webkit 26.5"
+          ]
+        },
+        "0.viewport": {
+          "count": 20,
+          "values": [
+            {
+              "width": 1280,
+              "height": 800
+            }
+          ]
+        }
+      },
+      "commandCount": 21,
+      "browserExecutablePathCounts": {
+        "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/pw_run.sh": 21,
+        "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/minibrowser-wpe/bin/MiniBrowser": 21,
+        "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/minibrowser-wpe/bin/WPENetworkProcess": 21,
+        "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/minibrowser-wpe/bin/WPEWebProcess": 21,
+        "/usr/lib/x86_64-linux-gnu/../../lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner": 1
+      }
+    },
+    {
+      "id": 12095192232,
+      "run": 39015298574,
+      "attempt": 1,
+      "bytes": 1749576,
+      "sha256": "d03b93206a2bc63d8db46dd8a73d25d46d56f0913b1a6df5f79de0cac00420d8",
+      "memberCount": 122,
+      "summary": {
+        "path": "solo-linux-final-journal-cost-v2-chromium/evidence/summary.json",
+        "bytes": 23762,
+        "sha256": "f3b80ed93b2d475ad6daa4f34ae2ed79cd0110f6aa5eba3319bda75d6b12e693",
+        "format": "SoloHostedDiagnosticsCohortV1",
+        "status": "failed",
+        "playwright": {
+          "version": "1.62.1",
+          "engines": {
+            "chromium": {
+              "executable": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome",
+              "identity": {
+                "bytes": 290614600,
+                "sha256": "0b20b130e7edd9dd51873be867761295fe0cfad490c2b9a64f95bd3cfc08fa71"
+              }
+            }
+          },
+          "registryIdentity": {
+            "bytes": 1780,
+            "sha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99"
+          }
+        }
+      },
+      "manifest": {
+        "path": "solo-linux-final-journal-cost-v2-chromium/evidence/journal-cost-chromium-candidate/manifest.json",
+        "bytes": 552259,
+        "sha256": "5e9ffbf73fd73c16e9623808e7cad45e857ee547823963a070b5e7aac9a56520",
+        "value": {
+          "format": "SoloJournalHookCostCohortV1",
+          "createdAt": "2026-10-17T08:00:49.090Z",
+          "node": "v22.13.1",
+          "observerSha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f",
+          "journalCostProbeSha256": "8589b149d8d1588cd326d30ac1b0370d8a9b30b7d86578781974642511a62cda",
+          "hitchJournalSha256": "393afd9eb51c9262168c7382c022de56234d3838357427e947f8d4812954161d",
+          "finishedAt": "2026-10-17T08:16:31.014Z",
+          "failure": null
+        },
+        "configuration": {
+          "sourceRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+          "engine": "chromium",
+          "browserVersion": "151.0.7922.34",
+          "pairs": 10,
+          "seed": 1544,
+          "durationMs": 30000,
+          "cpuRate": 1
+        }
+      },
+      "timer": {
+        "path": "solo-linux-final-journal-cost-v2-chromium/evidence/journal-cost-chromium-candidate/timer.json",
+        "bytes": 650,
+        "sha256": "bf6991428278f7e4e5f54987b616f351a5e07b046aecd450c1dbda868fffbff9",
+        "value": {
+          "status": "observed",
+          "startedAt": "2026-10-17T08:00:49.193Z",
+          "browser": "chromium 151.0.7922.34",
+          "minimumPositiveStepMs": 0.09999999997671694,
+          "maximumPositiveStepMs": 3.7999999999883585,
+          "positiveSteps": 909,
+          "iterations": 401834,
+          "crossOriginIsolated": false,
+          "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36",
+          "address": "http://127.0.0.1:43075/game/?journey=opening",
+          "scope": "Separate same-origin page before timing. Observed minimum positive step estimates precision; not a guarantee against privacy jitter or later clock-policy changes."
+        }
+      },
+      "selectedSetupReceipts": [
+        {
+          "path": "solo-linux-final-journal-cost-v2-chromium/evidence/candidate-payload-metadata/_headers",
+          "bytes": 528,
+          "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8"
+        },
+        {
+          "path": "solo-linux-setup/browser-install.log",
+          "bytes": 24,
+          "sha256": "4aaef3acc3c4b16766abf61c4f4aa2d3bd413e2fe822d3edd6cfa9d7e7334efa"
+        },
+        {
+          "path": "solo-linux-setup/browser-package-lock.json",
+          "bytes": 1601,
+          "sha256": "2cea5324052ffbb9e1a67ef75209306dd4d51cabfdcd98bac87413bdeda715d4"
+        }
+      ],
+      "armCount": 20,
+      "armCensus": {
+        "0.environment.contextMode": {
+          "count": 20,
+          "values": [
+            "ephemeral"
+          ]
+        },
+        "0.environment.requestedDisplay.viewport": {
+          "count": 20,
+          "values": [
+            {
+              "width": 1280,
+              "height": 800
+            }
+          ]
+        },
+        "0.environment.requestedDisplay.deviceScaleFactor": {
+          "count": 20,
+          "values": [
+            1
+          ]
+        },
+        "0.environment.browserVersion": {
+          "count": 20,
+          "values": [
+            "151.0.7922.34"
+          ]
+        },
+        "0.environment.userAgent": {
+          "count": 20,
+          "values": [
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36"
+          ]
+        }
+      },
+      "commandCount": 21,
+      "browserExecutablePathCounts": {
+        "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome": 328,
+        "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome_crashpad_handler": 82
+      }
+    },
+    {
+      "id": 12096156782,
+      "run": 39015298574,
+      "attempt": 1,
+      "bytes": 1314499,
+      "sha256": "af096780fa5d039d4ee2f4f1ff61e6f6c3151198bdfad17fb75ab959bbc4f686",
+      "memberCount": 121,
+      "summary": {
+        "path": "solo-linux-final-journal-cost-v2-webkit/evidence/summary.json",
+        "bytes": 13092,
+        "sha256": "ae7f7ddd25c1b876164e0b80b50743bce7ea564654f8acb1df11202a681f01fc",
+        "format": "SoloHostedDiagnosticsCohortV1",
+        "status": "failed",
+        "playwright": {
+          "version": "1.62.1",
+          "engines": {
+            "webkit": {
+              "executable": "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/pw_run.sh",
+              "identity": {
+                "bytes": 3049,
+                "sha256": "a85baad3d8c07173ac387a59b41500c382b21ed692afe0964d29aac247ccc63b"
+              }
+            }
+          },
+          "registryIdentity": {
+            "bytes": 1780,
+            "sha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99"
+          }
+        }
+      },
+      "manifest": {
+        "path": "solo-linux-final-journal-cost-v2-webkit/evidence/journal-cost-webkit-candidate/manifest.json",
+        "bytes": 122716,
+        "sha256": "040f36e29def47a540045386cd4f1953c29f6809310d7eb78e4ae5291f9cb42b",
+        "value": {
+          "format": "SoloJournalHookCostCohortV1",
+          "createdAt": "2026-10-17T08:33:08.041Z",
+          "node": "v22.13.1",
+          "observerSha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f",
+          "journalCostProbeSha256": "8589b149d8d1588cd326d30ac1b0370d8a9b30b7d86578781974642511a62cda",
+          "hitchJournalSha256": "393afd9eb51c9262168c7382c022de56234d3838357427e947f8d4812954161d",
+          "finishedAt": "2026-10-17T08:57:04.108Z",
+          "failure": null
+        },
+        "configuration": {
+          "sourceRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+          "engine": "webkit",
+          "browserVersion": "26.5",
+          "pairs": 10,
+          "seed": 1544,
+          "durationMs": 30000,
+          "cpuRate": 1
+        }
+      },
+      "timer": {
+        "path": "solo-linux-final-journal-cost-v2-webkit/evidence/journal-cost-webkit-candidate/timer.json",
+        "bytes": 612,
+        "sha256": "caadbcf5ad3fe710dc229b19c5f11d7570c9eeb2b48273b041787d8f76c9c5a8",
+        "value": {
+          "status": "observed",
+          "startedAt": "2026-10-17T08:33:08.181Z",
+          "browser": "webkit 26.5",
+          "minimumPositiveStepMs": 1,
+          "maximumPositiveStepMs": 1,
+          "positiveSteps": 100,
+          "iterations": 852694,
+          "crossOriginIsolated": false,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15",
+          "address": "http://127.0.0.1:38897/game/?journey=opening",
+          "scope": "Separate same-origin page before timing. Observed minimum positive step estimates precision; not a guarantee against privacy jitter or later clock-policy changes."
+        }
+      },
+      "selectedSetupReceipts": [
+        {
+          "path": "solo-linux-final-journal-cost-v2-webkit/evidence/candidate-payload-metadata/_headers",
+          "bytes": 528,
+          "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8"
+        },
+        {
+          "path": "solo-linux-setup/browser-install.log",
+          "bytes": 24,
+          "sha256": "4aaef3acc3c4b16766abf61c4f4aa2d3bd413e2fe822d3edd6cfa9d7e7334efa"
+        },
+        {
+          "path": "solo-linux-setup/browser-package-lock.json",
+          "bytes": 1601,
+          "sha256": "2cea5324052ffbb9e1a67ef75209306dd4d51cabfdcd98bac87413bdeda715d4"
+        }
+      ],
+      "armCount": 20,
+      "armCensus": {
+        "0.environment.contextMode": {
+          "count": 20,
+          "values": [
+            "persistent"
+          ]
+        },
+        "0.environment.requestedDisplay.viewport": {
+          "count": 20,
+          "values": [
+            {
+              "width": 400,
+              "height": 850
+            }
+          ]
+        },
+        "0.environment.requestedDisplay.deviceScaleFactor": {
+          "count": 20,
+          "values": [
+            3
+          ]
+        },
+        "0.environment.browserVersion": {
+          "count": 20,
+          "values": [
+            "26.5"
+          ]
+        },
+        "0.environment.userAgent": {
+          "count": 20,
+          "values": [
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15"
+          ]
+        }
+      },
+      "commandCount": 21,
+      "browserExecutablePathCounts": {
+        "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/pw_run.sh": 40,
+        "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/minibrowser-wpe/bin/MiniBrowser": 40,
+        "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/minibrowser-wpe/bin/WPENetworkProcess": 40,
+        "/home/runner/work/_temp/solo-browser-binaries/webkit-2336/minibrowser-wpe/bin/WPEWebProcess": 60,
+        "/usr/lib/x86_64-linux-gnu/../../lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner": 1
+      }
+    }
+  ],
+  "sharedPlaywright": {
+    "version": "1.62.1",
+    "registryIdentity": {
+      "bytes": 1780,
+      "sha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99"
+    },
+    "moduleIdentity": {
+      "bytes": 704,
+      "sha256": "a0f5715ea22354f922791a9c53dc012d5d5c067ff9cc4cd35ffb7cd272071a9f"
+    },
+    "registryEntries": [
+      {
+        "name": "chromium",
+        "revision": "1234",
+        "installByDefault": true,
+        "browserVersion": "151.0.7922.34",
+        "title": "Chrome for Testing"
+      },
+      {
+        "name": "webkit",
+        "revision": "2336",
+        "installByDefault": true,
+        "revisionOverrides": {
+          "mac14": "2251",
+          "mac14-arm64": "2251",
+          "ubuntu20.04-x64": "2092",
+          "ubuntu20.04-arm64": "2092"
+        },
+        "browserVersion": "26.5",
+        "title": "WebKit"
+      }
+    ]
+  }
+}

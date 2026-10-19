@@ -1406,6 +1406,90 @@
       "blob": "a15590f5715881570b3fb3a13f5e134693e6ead9",
       "bytes": 19086,
       "sha256": "a46172bd664191cef397f56eb94363cfd39391686f65dab5032071953a982e38"
+    },
+    {
+      "path": "plan-publication-source-admission-20261019.json",
+      "blob": "b701e37c1917679dfa2897df25f457fd71b337f4",
+      "bytes": 874,
+      "sha256": "33d2e74ed55bd06c5d8380a52b9971d6150d19c0cdd7128fc7ddca128248cb9f"
+    },
+    {
+      "path": "final-current-plan-priority-consistency-review-20261019.json",
+      "blob": "a7e0a14db18810d2ffe8b34fb7d809a049cd5539",
+      "bytes": 2845,
+      "sha256": "81e869539cf33210d02fd97acfda72c29d1496fd292b73a8754e5c942c65c992"
+    },
+    {
+      "path": "superseded-plan-reporter-cancellation-20261019.json",
+      "blob": "3bcd350b2455c8ba8e098e27e48354f1ad7196b1",
+      "bytes": 1706,
+      "sha256": "76577bfd03f772ed0ca2c6b8831e148d283d404304295fd981be01845b634f0a"
+    },
+    {
+      "path": "superseded-plan-reporter-cleanup-guards-20261019.json",
+      "blob": "be2f0710a145717cf64888cc3bc4231d43bf4aa6",
+      "bytes": 6703,
+      "sha256": "e19ad1d4000055d5148a39ee246eb70f1f05ce8a84a9afd40d419c27618714be"
+    },
+    {
+      "path": "obsolete-plan-reporter-unresponsive-cancellation-20261019.json",
+      "blob": "2665113652b11f527d423780d90b66bd701b89c9",
+      "bytes": 2057,
+      "sha256": "8eea64f011674f3487ae6fad8358e4d8c888e09ab82db0ae0e6fa581712c0afe"
+    },
+    {
+      "path": "source-release-and-queue-cleanup-final-readback-20261019.json",
+      "blob": "d240ad91ea4a6f23046675d53073d5ea0990ac83",
+      "bytes": 4158,
+      "sha256": "3d518371472816b2beb161d00a3017158f0993fa4d68d123910cc9e707e73f35"
+    },
+    {
+      "path": "actual-browser-timer-binding-retained-evidence-audit-20261019.json",
+      "blob": "0eb1cc1e0c087c03bdb658464645e1363ec60c24",
+      "bytes": 28220,
+      "sha256": "9e9e7e7641663a604485d23fb07ca50be8c99a5a74d2bf7963cf74377752ebab"
+    },
+    {
+      "path": "new-main-settings-audio-lifecycle-compatibility-review-20261019.json",
+      "blob": "83e6c5d2a21ada8af6ff4aee486076954391c001",
+      "bytes": 10246,
+      "sha256": "8920988368ecc6cc5e087ca51b537595787149d5b6229b181f06fd3af8f27946"
+    },
+    {
+      "path": "main-settings-generated-module-composition-audit-20261019.json",
+      "blob": "7ffdad8ee0c2479ffd9406a95184c3254e5117d8",
+      "bytes": 364046,
+      "sha256": "0340ae889e2b4d4f9606b87a8bbdcc60b20b7826d46fc9210cc182b0baa2878a"
+    },
+    {
+      "path": "capture-navigation-main-integration-composition-audit-20261019.json",
+      "blob": "713abfe01511374ede3b62a5d9a941ee9b2cd38d",
+      "bytes": 376853,
+      "sha256": "396d49b20a7d2bc9e6ecfca9f696635a16ac44e732a4b603bc67e4279fe419a4"
+    },
+    {
+      "path": "prospective-browser-provenance-not-source-admitted-20261019.json",
+      "blob": "0a2f942373a377c508b7654c584e9b5503f49c38",
+      "bytes": 268897,
+      "sha256": "9f002d2c3eefe8e37d907d5689485246ff478db7f885a5fdbee1b7f78c6b28a6"
+    },
+    {
+      "path": "soundtrack-merge-with-current-head-validation-pending-20261019.json",
+      "blob": "083e9eb97b92396c01420575874f549c4119864a",
+      "bytes": 36756,
+      "sha256": "04f3f3d722d811c2072443d8493047501314a50937df6ad5c9eadc2e436c6ebc"
+    },
+    {
+      "path": "prospective-browser-provenance-final-held-map-20261019.json",
+      "blob": "a4cc16a7997f434461133c77678cb07381180642",
+      "bytes": 270110,
+      "sha256": "afc304588f05188ccc4d4a37f8133390a5c96dff2ac7ada45d2ee473f1aafe12"
+    },
+    {
+      "path": "final-plan-merge-validation-and-priority-delta-review-20261019.json",
+      "blob": "2bf8389e6af4d4a20537150f638772fb755e44a3",
+      "bytes": 3700,
+      "sha256": "3b8fea21c152df1d993b14da0cda9e78c013c3f0210de9535cb77f22581adaac"
     }
   ]
 }

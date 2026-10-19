@@ -1,0 +1,762 @@
+{
+  "schema": "merged-pr-pending-current-source-evidence-v1",
+  "at": "2026-10-19T02:03:25.491Z",
+  "repository": "mekhovov/revealline",
+  "pr": 1619,
+  "url": "https://github.com/mekhovov/revealline/pull/1619",
+  "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+  "merged": true,
+  "mergedAt": "2026-10-19T01:59:48Z",
+  "mergedBy": "mekhovov",
+  "mergeCommit": {
+    "sha": "444707792f1dca6867ce227fc3467267d6061855",
+    "tree": "09560df2d4960a41f9f864672831f6cb966e526f",
+    "parents": [
+      "f46580679adae008284b5998c45eaf3f7ac7c967",
+      "0991a7de3d613a2c5491fe06eadcdef47fc23be5"
+    ],
+    "author": {
+      "name": "Oleksandr Mekhovov",
+      "email": "oleksandr.mekhovov@coupa.com",
+      "date": "2026-10-19T01:59:47Z"
+    },
+    "committer": {
+      "name": "GitHub",
+      "email": "noreply@github.com",
+      "date": "2026-10-19T01:59:47Z"
+    },
+    "verified": true
+  },
+  "events": [
+    {
+      "id": 33595069634,
+      "event": "ready_for_review",
+      "actor": "mekhovov",
+      "createdAt": "2026-10-18T22:13:37Z",
+      "commit": null
+    },
+    {
+      "id": 33603852656,
+      "event": "merged",
+      "actor": "mekhovov",
+      "createdAt": "2026-10-19T01:59:48Z",
+      "commit": "444707792f1dca6867ce227fc3467267d6061855"
+    },
+    {
+      "id": 33603852725,
+      "event": "closed",
+      "actor": "mekhovov",
+      "createdAt": "2026-10-19T01:59:48Z",
+      "commit": null
+    }
+  ],
+  "exactHeadChecks": {
+    "total": 14,
+    "rows": [
+      {
+        "id": 117850179702,
+        "name": "reconcile",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T01:42:38Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301808/job/117850179702"
+      },
+      {
+        "id": 117837434800,
+        "name": "preflight",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:43Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182302063/job/117837434800"
+      },
+      {
+        "id": 117837433903,
+        "name": "feature (rooms)",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433903"
+      },
+      {
+        "id": 117837433813,
+        "name": "feature (local-ux)",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433813"
+      },
+      {
+        "id": 117837433770,
+        "name": "feature (recordings)",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433770"
+      },
+      {
+        "id": 117837433740,
+        "name": "feature (creator)",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433740"
+      },
+      {
+        "id": 117837433734,
+        "name": "feature (gameplay)",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433734"
+      },
+      {
+        "id": 117837433728,
+        "name": "optional-practice",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301775/job/117837433728"
+      },
+      {
+        "id": 117837433670,
+        "name": "installed_admission",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301772/job/117837433670"
+      },
+      {
+        "id": 117837433634,
+        "name": "demo_admission",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301772/job/117837433634"
+      },
+      {
+        "id": 117837433591,
+        "name": "feature (presentation)",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433591"
+      },
+      {
+        "id": 117837433582,
+        "name": "team_admission",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301772/job/117837433582"
+      },
+      {
+        "id": 117837433522,
+        "name": "candidate",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301775/job/117837433522"
+      },
+      {
+        "id": 117837433481,
+        "name": "admission",
+        "status": "queued",
+        "conclusion": null,
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "startedAt": "2026-10-19T00:46:42Z",
+        "completedAt": null,
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39182301772/job/117837433481"
+      }
+    ],
+    "classicStatuses": {
+      "state": "pending",
+      "total": 0,
+      "statuses": []
+    }
+  },
+  "currentHeadRuns": [
+    {
+      "id": 39182301772,
+      "name": "Appearance preview",
+      "path": ".github/workflows/appearance-preview.yml",
+      "event": "pull_request",
+      "headSha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T00:46:42Z",
+      "updatedAt": "2026-10-19T00:46:42Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39182301772",
+      "prs": []
+    },
+    {
+      "id": 39182301794,
+      "name": "Industrial feature verification",
+      "path": ".github/workflows/industrial-feature-tests.yml",
+      "event": "pull_request",
+      "headSha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T00:46:42Z",
+      "updatedAt": "2026-10-19T00:46:42Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39182301794",
+      "prs": []
+    },
+    {
+      "id": 39182301775,
+      "name": "Company edition candidates",
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "event": "pull_request",
+      "headSha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T00:46:42Z",
+      "updatedAt": "2026-10-19T00:46:42Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39182301775",
+      "prs": []
+    },
+    {
+      "id": 39182302063,
+      "name": "Validate source for continuous main",
+      "path": ".github/workflows/deploy-pages.yml",
+      "event": "pull_request",
+      "headSha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T00:46:42Z",
+      "updatedAt": "2026-10-19T00:46:42Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39182302063",
+      "prs": []
+    },
+    {
+      "id": 39182301808,
+      "name": "Fastline exact-head auto-merge",
+      "path": ".github/workflows/fastline-auto-merge.yml",
+      "event": "pull_request",
+      "headSha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "status": "queued",
+      "conclusion": null,
+      "attempt": 1,
+      "createdAt": "2026-10-19T00:46:42Z",
+      "updatedAt": "2026-10-19T01:42:38Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39182301808",
+      "prs": []
+    }
+  ],
+  "controller": {
+    "exactPRBoundJob": {
+      "id": 117850179702,
+      "run_id": 39182301808,
+      "workflow_name": "Fastline exact-head auto-merge",
+      "head_branch": "codex/solo-demanded-soundtrack-catalogue",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39182301808",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAbcGsIdg",
+      "head_sha": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117850179702",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39182301808/job/117850179702",
+      "status": "queued",
+      "conclusion": null,
+      "created_at": "2026-10-19T01:42:38Z",
+      "started_at": "2026-10-19T01:42:38Z",
+      "completed_at": null,
+      "name": "reconcile",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117850179702",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 0,
+      "runner_name": "",
+      "runner_group_id": 0,
+      "runner_group_name": ""
+    },
+    "recentThirtyObserved": [
+      {
+        "id": 39188065639,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "444707792f1dca6867ce227fc3467267d6061855",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T02:02:20Z",
+        "updatedAt": "2026-10-19T02:02:21Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39188065639",
+        "prs": []
+      },
+      {
+        "id": 39188033331,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "444707792f1dca6867ce227fc3467267d6061855",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T02:01:55Z",
+        "updatedAt": "2026-10-19T02:01:56Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39188033331",
+        "prs": []
+      },
+      {
+        "id": 39187873298,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "444707792f1dca6867ce227fc3467267d6061855",
+        "status": "completed",
+        "conclusion": "skipped",
+        "attempt": 1,
+        "createdAt": "2026-10-19T02:00:00Z",
+        "updatedAt": "2026-10-19T02:00:01Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187873298",
+        "prs": []
+      },
+      {
+        "id": 39187790076,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "ee6999522b7b218d6c836a3b262dcaeb83ae855e",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:58:50Z",
+        "updatedAt": "2026-10-19T01:58:51Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187790076",
+        "prs": [
+          1640
+        ]
+      },
+      {
+        "id": 39187775795,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "a1c0795f2bf8aa4758f377ac1d37ef1c591106a3",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:58:39Z",
+        "updatedAt": "2026-10-19T01:58:40Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187775795",
+        "prs": [
+          1637
+        ]
+      },
+      {
+        "id": 39187731474,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "f46580679adae008284b5998c45eaf3f7ac7c967",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:58:04Z",
+        "updatedAt": "2026-10-19T01:58:05Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187731474",
+        "prs": []
+      },
+      {
+        "id": 39187651932,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "f46580679adae008284b5998c45eaf3f7ac7c967",
+        "status": "completed",
+        "conclusion": "skipped",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:56:59Z",
+        "updatedAt": "2026-10-19T01:57:00Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187651932",
+        "prs": []
+      },
+      {
+        "id": 39187640989,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:56:50Z",
+        "updatedAt": "2026-10-19T01:56:51Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187640989",
+        "prs": [
+          1615
+        ]
+      },
+      {
+        "id": 39187538955,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "d4eaffc0a98c5da6987c7014ef84c37fe74bbade",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:55:27Z",
+        "updatedAt": "2026-10-19T01:55:28Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187538955",
+        "prs": [
+          1614
+        ]
+      },
+      {
+        "id": 39187528825,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:55:20Z",
+        "updatedAt": "2026-10-19T01:56:51Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187528825",
+        "prs": [
+          1615
+        ]
+      },
+      {
+        "id": 39187491755,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "216c9a6809376863fa5cecffbeb646560998c958",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:54:50Z",
+        "updatedAt": "2026-10-19T01:55:21Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187491755",
+        "prs": []
+      },
+      {
+        "id": 39187491405,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "216c9a6809376863fa5cecffbeb646560998c958",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:54:50Z",
+        "updatedAt": "2026-10-19T01:54:51Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187491405",
+        "prs": []
+      },
+      {
+        "id": 39187491204,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "216c9a6809376863fa5cecffbeb646560998c958",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:54:50Z",
+        "updatedAt": "2026-10-19T01:54:51Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187491204",
+        "prs": []
+      },
+      {
+        "id": 39187487590,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:54:47Z",
+        "updatedAt": "2026-10-19T01:54:51Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187487590",
+        "prs": [
+          1615
+        ]
+      },
+      {
+        "id": 39187483599,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "216c9a6809376863fa5cecffbeb646560998c958",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:54:44Z",
+        "updatedAt": "2026-10-19T01:54:45Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187483599",
+        "prs": []
+      },
+      {
+        "id": 39187339475,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "2b9c5b6703fc1f3ec30f54446cb8de7974367d8c",
+        "status": "queued",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:52:48Z",
+        "updatedAt": "2026-10-19T01:52:48Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187339475",
+        "prs": []
+      },
+      {
+        "id": 39187229017,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "a0ec7a02c3d054edfbc23030b7bdadb712c2931c",
+        "status": "completed",
+        "conclusion": "skipped",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:51:16Z",
+        "updatedAt": "2026-10-19T01:51:17Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187229017",
+        "prs": []
+      },
+      {
+        "id": 39187159113,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:50:20Z",
+        "updatedAt": "2026-10-19T01:50:21Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187159113",
+        "prs": []
+      },
+      {
+        "id": 39187158734,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:50:20Z",
+        "updatedAt": "2026-10-19T01:50:21Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187158734",
+        "prs": []
+      },
+      {
+        "id": 39187158634,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:50:20Z",
+        "updatedAt": "2026-10-19T01:50:21Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187158634",
+        "prs": []
+      },
+      {
+        "id": 39187113346,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:49:43Z",
+        "updatedAt": "2026-10-19T01:49:43Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187113346",
+        "prs": []
+      },
+      {
+        "id": 39187098392,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:49:30Z",
+        "updatedAt": "2026-10-19T01:49:31Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187098392",
+        "prs": []
+      },
+      {
+        "id": 39187078774,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "2843ec10ef17423881f590185ebc8cea3c7a3f52",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:49:14Z",
+        "updatedAt": "2026-10-19T01:49:14Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187078774",
+        "prs": [
+          1701
+        ]
+      },
+      {
+        "id": 39187066121,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:49:03Z",
+        "updatedAt": "2026-10-19T01:49:04Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187066121",
+        "prs": []
+      },
+      {
+        "id": 39187015438,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "2843ec10ef17423881f590185ebc8cea3c7a3f52",
+        "status": "queued",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:48:19Z",
+        "updatedAt": "2026-10-19T01:48:19Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39187015438",
+        "prs": [
+          1701
+        ]
+      },
+      {
+        "id": 39186934468,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+        "status": "pending",
+        "conclusion": null,
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:47:12Z",
+        "updatedAt": "2026-10-19T01:47:13Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39186934468",
+        "prs": []
+      },
+      {
+        "id": 39186927840,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "7564b49b352475b924db97c2ff779e7dbd87ca1b",
+        "status": "completed",
+        "conclusion": "skipped",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:47:06Z",
+        "updatedAt": "2026-10-19T01:47:07Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39186927840",
+        "prs": []
+      },
+      {
+        "id": 39186804840,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:45:26Z",
+        "updatedAt": "2026-10-19T01:49:31Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39186804840",
+        "prs": [
+          1623
+        ]
+      },
+      {
+        "id": 39186804704,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "workflow_run",
+        "headSha": "36e8bc426589ab952c2fcc4fd62df39800edfeca",
+        "status": "completed",
+        "conclusion": "skipped",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:45:26Z",
+        "updatedAt": "2026-10-19T01:45:35Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39186804704",
+        "prs": []
+      },
+      {
+        "id": 39186804459,
+        "name": "Fastline exact-head auto-merge",
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "event": "pull_request",
+        "headSha": "0ccecca0f545c35a4fde789098702ec2b55a9b90",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "attempt": 1,
+        "createdAt": "2026-10-19T01:45:26Z",
+        "updatedAt": "2026-10-19T01:45:27Z",
+        "url": "https://github.com/mekhovov/revealline/actions/runs/39186804459",
+        "prs": [
+          1623
+        ]
+      }
+    ],
+    "conclusion": "Exact-head PR-bound controller remains queued, runner 0, no steps. No successful controller action proving this merge was found in the bounded recent inventory. Actor account alone does not identify whether a human or a token-based automation performed the merge."
+  },
+  "newSourceControls": {
+    "since": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "file": "game/test/couch-audio-catalogue-demand.test.mjs",
+    "blob": "a124930b551bf56aaac34c01b21cdc4e60bfc6e4",
+    "count": 15,
+    "countMethod": "Two positive cases for each race/coop prefix (4), plus eleven explicit retired-owner cases (11).",
+    "patch": "@@ -0,0 +1,231 @@\n+import test from 'node:test';\n+import assert from 'node:assert/strict';\n+import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';\n+import { attachSettingsPanels } from '../ui/settings-panels.mjs';\n+import { createAudioMaster } from '../ui/audio-master.mjs';\n+import { createManagedMediaStore } from '../managed-media-store.mjs';\n+import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';\n+import { emptySoundtrackLibrary, upgradeSoundtrackLibrary } from '../soundtrack.mjs';\n+import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';\n+import { Document, Element } from './helpers/couch-dom.mjs';\n+import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';\n+import { memoryIndexedDB, structuralProbe } from './helpers/soundtrack-fixtures.mjs';\n+import { publicCatalogueResponse } from './helpers/soundtrack-public-catalogue.mjs';\n+\n+const microtasks = () => new Promise((resolve) => setImmediate(resolve));\n+\n+async function setup(t, prefix = 'race') {\n+  const doc = new Document();\n+  const audio = audioHarness();\n+  const memory = memoryIndexedDB();\n+  const master = createAudioMaster({ muted: true, volume: 0.65 });\n+  const manager = createManagedMediaStore({\n+    indexedDB: memory.indexedDB,\n+    soundtrackCatalogue: true,\n+  });\n+  await manager.commitDomain(\n+    'audio',\n+    await prepareSoundtrackLibrary(upgradeSoundtrackLibrary(emptySoundtrackLibrary()), [], {\n+      probeMedia: structuralProbe,\n+    }),\n+    { expectedGeneration: 0, publicStyles: ['fpv'] },\n+  );\n+  manager.close();\n+  const globals = new Map(\n+    ['indexedDB', 'fetch'].map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]),\n+  );\n+  const unexpectedRequests = [];\n+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: memory.indexedDB });\n+  Object.defineProperty(globalThis, 'fetch', {\n+    configurable: true,\n+    value: async (url) => {\n+      unexpectedRequests.push(String(url));\n+      throw new Error(`Unexpected host network request: ${url}`);\n+    },\n+  });\n+  const create = doc.createElement.bind(doc);\n+  const mediaElements = [];\n+  doc.createElement = (tag) => {\n+    if (tag !== 'audio') return create(tag);\n+    const media = mediaElements.length === 0 ? audio.media : audioHarness().media;\n+    const element = new Element(doc, 'audio');\n+    for (const [key, value] of Object.entries(element))\n+      if (!Object.hasOwn(media, key)) media[key] = value;\n+    Object.setPrototypeOf(media, Object.getPrototypeOf(element));\n+    mediaElements.push(media);\n+    return media;\n+  };\n+  // The real Couch entry passes its authored Audio panel to attachCouchMusicHost.\n+  // Only geometry/DOM and native media are modeled; both host and tab owner execute.\n+  const root = doc.createElement('section');\n+  const list = doc.createElement('div');\n+  list.className = 'field-kit-settings-tabs';\n+  list.setAttribute('role', 'tablist');\n+  root.append(list);\n+  const tabs = {},\n+    panels = {};\n+  for (const category of ['controls', 'audio', 'display']) {\n+    const tab = doc.createElement('button'),\n+      panel = doc.createElement('section');\n+    tab.id = `${prefix}-settings-tab-${category}`;\n+    panel.id = `${prefix}-settings-panel-${category}`;\n+    tab.setAttribute('role', 'tab');\n+    tab.setAttribute('aria-controls', panel.id);\n+    tab.setAttribute('aria-selected', String(category === 'controls'));\n+    panel.setAttribute('role', 'tabpanel');\n+    panel.setAttribute('aria-labelledby', tab.id);\n+    list.append(tab);\n+    root.append(panel);\n+    tabs[category] = tab;\n+    panels[category] = panel;\n+  }\n+  doc.body.append(root);\n+  const settings = attachSettingsPanels({ root, document: doc });\n+  const requests = [];\n+  const host = attachCouchMusicHost({\n+    document: doc,\n+    root: panels.audio,\n+    prefix,\n+    soundscape: audio.soundscape,\n+    audioMaster: master,\n+    onlineCatalogueDownload: {\n+      fetch: async (url) => {\n+        requests.push(url);\n+        assert.equal(url, ONLINE_SOUNDTRACK_CATALOGUE_URL);\n+        return publicCatalogueResponse();\n+      },\n+    },\n+  });\n+  t.after(async () => {\n+    host.dispose();\n+    settings.destroy();\n+    await audio.soundscape.dispose();\n+    master.dispose();\n+    for (const [key, descriptor] of globals) {\n+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);\n+      else delete globalThis[key];\n+    }\n+    assert.deepEqual(unexpectedRequests, [], 'No speculative host network demand');\n+  });\n+  await settleUntil(\n+    () =>\n+      host.session.snapshot().readyForStart &&\n+      doc.getElementById('soundtrack-settings-play-styles')?.disabled === false,\n+  );\n+  await microtasks();\n+  const before = { master: master.snapshot(), puts: memory.allPuts.length };\n+  assert.deepEqual(\n+    requests,\n+    [],\n+    'Muted boot and local saved-style hydration do not request metadata',\n+  );\n+  assert(mediaElements.every((media) => media.plays === 0));\n+  assert.equal(doc.getElementById('soundtrack-settings-style-fpv').checked, true);\n+  return {\n+    doc,\n+    audio,\n+    memory,\n+    master,\n+    mediaElements,\n+    root,\n+    tabs,\n+    panels,\n+    settings,\n+    host,\n+    requests,\n+    before,\n+  };\n+}\n+\n+async function assertSaved(f) {\n+  const manager = createManagedMediaStore({\n+    indexedDB: f.memory.indexedDB,\n+    soundtrackCatalogue: true,\n+  });\n+  try {\n+    const saved = await manager.readDomain('audio');\n+    assert.equal(saved.generation, 1);\n+    assert.deepEqual(saved.publicStyles, ['fpv']);\n+  } finally {\n+    manager.close();\n+  }\n+  assert.deepEqual(f.master.snapshot(), f.before.master);\n+  assert.equal(f.memory.allPuts.length, f.before.puts);\n+}\n+\n+for (const prefix of ['race', 'coop']) {\n+  test(`${prefix}: actual selected Audio owner demands metadata without playback or save`, async (t) => {\n+    const f = await setup(t, prefix);\n+    assert.equal(f.panels.audio.hidden, true);\n+    f.tabs.audio.focus();\n+    f.tabs.audio.click();\n+    assert.equal(f.settings.selected(), f.tabs.audio.id);\n+    assert.equal(f.panels.audio.hidden, false);\n+    await settleUntil(() => f.requests.length === 1);\n+    await settleUntil(\n+      () => f.doc.getElementById('soundtrack-settings-style-fpv').parentNode.hidden === false,\n+    );\n+    assert.deepEqual(f.requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);\n+    assert(f.mediaElements.every((media) => media.plays === 0));\n+    assert.equal(f.audio.context.state, 'suspended');\n+    assert.equal(f.host.root(), null, 'Audio browse does not open Studio');\n+    await assertSaved(f);\n+  });\n+\n+  test(`${prefix}: saved FPV Play owns demand without visiting Audio or changing mute/storage`, async (t) => {\n+    const f = await setup(t, prefix);\n+    const playing = f.host.session.play();\n+    assert.equal(f.audio.context.state, 'running', 'Audio wake stays in the Play activation turn');\n+    assert.equal(await playing, true);\n+    assert.deepEqual(f.requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);\n+    assert.equal(f.host.player.snapshot().track.title, 'FPV');\n+    assert.equal(f.host.player.snapshot().playing, true);\n+    assert.equal(f.panels.audio.hidden, true);\n+    assert.equal(f.host.root(), null);\n+    await assertSaved(f);\n+  });\n+}\n+\n+for (const retirement of [\n+  'deselected',\n+  'disabled',\n+  'aria-disabled',\n+  'inert',\n+  'hidden',\n+  'replaced-tab',\n+  'replaced-owner',\n+  'moved-content',\n+  'hidden-document',\n+  'hidden-visibility',\n+  'disposed',\n+]) {\n+  test(`actual Couch Audio browse rejects ${retirement} ownership before admission`, async (t) => {\n+    const f = await setup(t);\n+    f.tabs.audio.click();\n+    if (retirement === 'deselected') f.tabs.display.click();\n+    else if (retirement === 'disabled') f.tabs.audio.disabled = true;\n+    else if (retirement === 'aria-disabled') f.tabs.audio.setAttribute('aria-disabled', 'true');\n+    else if (retirement === 'inert') f.panels.audio.inert = true;\n+    else if (retirement === 'hidden') f.panels.audio.hidden = true;\n+    else if (retirement === 'replaced-tab') {\n+      f.tabs.audio.remove();\n+      const tab = f.doc.createElement('button');\n+      tab.id = f.tabs.audio.id;\n+      f.root.append(tab);\n+    } else if (retirement === 'replaced-owner') {\n+      f.panels.audio.remove();\n+      const panel = f.doc.createElement('section');\n+      panel.id = f.panels.audio.id;\n+      f.root.append(panel);\n+    } else if (retirement === 'moved-content') {\n+      const section = f.panels.audio.querySelector('[data-couch-music]');\n+      f.doc.body.append(section);\n+    } else if (retirement === 'hidden-document') f.doc.hidden = true;\n+    else if (retirement === 'hidden-visibility') f.doc.visibilityState = 'hidden';\n+    else f.host.dispose();\n+    await microtasks();\n+    assert.deepEqual(f.requests, []);\n+    assert(f.mediaElements.every((media) => media.plays === 0));\n+    if (retirement !== 'disposed') await assertSaved(f);\n+  });\n+}",
+    "executedReceipt": null
+  },
+  "limits": [
+    "Merged is confirmed, current-head qualification is not. All 14 current-head checks were queued; no new 15-control pass receipt can honestly be supplied.",
+    "Historical green 0eef evidence must not be relabelled as evidence for substantive 0991.",
+    "No new dispatch, cancellation, merge, branch change, local write or functional execution was performed.",
+    "Recommended plan status: merged on main, current-head source and broader validation pending; perform the already planned combined-package/public checks after valid source evidence."
+  ]
+}
