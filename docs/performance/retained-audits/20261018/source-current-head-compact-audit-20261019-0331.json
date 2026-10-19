@@ -1,0 +1,887 @@
+{
+  "schema": "solo-source-results-compact-v1",
+  "observedAt": "2026-10-19T03:31:57.388283+00:00",
+  "fullAudit": {
+    "blob": "670b15a3870d27d24abbf42b09d2bcb94bc3e961",
+    "bytes": 485338,
+    "sha256": "bbb6f7fd7b7dd041d3fa10b0f8323502f60f497b60b5f26aaa6e89aad5b9ff12"
+  },
+  "rows": [
+    {
+      "pr": 1674,
+      "head": "ada002b653d3a4d5f4fe9f5bf5ea5ef80dcb55ff",
+      "checkCounts": {
+        "queued": 13,
+        "skipped": 1,
+        "success": 1
+      },
+      "failed": [],
+      "newLogs": [
+        {
+          "job": 117861495277,
+          "rawBytes": 42409,
+          "rawSha256": "f8f70ef9c682e98243b425fa8191dcc83d7445f59728b1be0f4a5a87dc5e9d6d",
+          "footer": [
+            "2026-10-19T02:40:36.0895712Z # tests 44",
+            "2026-10-19T02:40:36.0901124Z # pass 44",
+            "2026-10-19T02:40:36.0901245Z # fail 0",
+            "2026-10-19T02:40:36.0901349Z # cancelled 0",
+            "2026-10-19T02:40:36.0901464Z # skipped 0"
+          ]
+        }
+      ]
+    },
+    {
+      "pr": 1675,
+      "head": "34761ede2f39de93a4d125995b63f65a64ac7b0b",
+      "checkCounts": {
+        "queued": 13
+      },
+      "failed": [],
+      "newLogs": []
+    },
+    {
+      "pr": 1676,
+      "head": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+      "checkCounts": {
+        "queued": 1,
+        "success": 22,
+        "skipped": 3
+      },
+      "failed": [],
+      "newLogs": [
+        {
+          "job": 117842549290,
+          "rawBytes": 23099,
+          "rawSha256": "36d13f4b19b3f3e51f535122b6855cd113ab582cd7b9581c886ccb5aa68f982b",
+          "footer": [
+            "2026-10-19T02:46:18.1833484Z All four focused shards passed: {\"shards\":4,\"commands\":11,\"sourceTree\":\"56e1268dff01fb21056ab57f6a563da7483145ad\",\"planSha256\":\"360db954d7b96a4ef09328698fa7cd512db7f81b48f207907e1664f1ea9e76d6\"}"
+          ]
+        },
+        {
+          "job": 117831951270,
+          "rawBytes": 828938,
+          "rawSha256": "90793334de2b104a70a47189a472f638d61bf23cf5ae0ae0216066930160777c",
+          "footer": [
+            "2026-10-19T02:30:42.2897366Z # tests 1781",
+            "2026-10-19T02:30:42.2898027Z # pass 1781",
+            "2026-10-19T02:30:42.2898329Z # fail 0",
+            "2026-10-19T02:30:42.2910116Z # cancelled 0",
+            "2026-10-19T02:30:42.2910422Z # skipped 0"
+          ]
+        }
+      ]
+    },
+    {
+      "pr": 1693,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "checkCounts": {
+        "queued": 8,
+        "skipped": 2,
+        "success": 12
+      },
+      "failed": [],
+      "newLogs": [
+        {
+          "job": 117841118898,
+          "rawBytes": 52241,
+          "rawSha256": "5c8c3d428a468a8614aaf9da95c9ffd5dc37e9efbf8f606750f4673de3ea272c",
+          "footer": [
+            "2026-10-19T02:54:21.4356821Z # tests 27",
+            "2026-10-19T02:54:21.4357549Z # pass 27",
+            "2026-10-19T02:54:21.4357896Z # fail 0",
+            "2026-10-19T02:54:21.4358359Z # cancelled 0",
+            "2026-10-19T02:54:21.4359078Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117841118892,
+          "rawBytes": 169839,
+          "rawSha256": "b0b70e94f38aea0d981de8dc25bb96c41af6db93185e72fccfce9af20627d915",
+          "footer": [
+            "2026-10-19T03:02:50.0427972Z # tests 354",
+            "2026-10-19T03:02:50.0436491Z # pass 354",
+            "2026-10-19T03:02:50.0436816Z # fail 0",
+            "2026-10-19T03:02:50.0437136Z # cancelled 0",
+            "2026-10-19T03:02:50.0437485Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117841118857,
+          "rawBytes": 108305,
+          "rawSha256": "d554412c9c2931fedfd27b77f0a9d2b0d5d98bb40a118e154c899b38b3717f86",
+          "footer": [
+            "2026-10-19T02:48:09.8519311Z # tests 170",
+            "2026-10-19T02:48:09.8528616Z # pass 170",
+            "2026-10-19T02:48:09.8528901Z # fail 0",
+            "2026-10-19T02:48:09.8529105Z # cancelled 0",
+            "2026-10-19T02:48:09.8529314Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117841118690,
+          "rawBytes": 74908,
+          "rawSha256": "57ccae5031019c1bcdfbbc39967ccb2ea49a9d481c9c71cd9d5bfa99fb3103e9",
+          "footer": [
+            "2026-10-19T02:40:40.8397761Z # tests 84",
+            "2026-10-19T02:40:40.8398965Z # pass 84",
+            "2026-10-19T02:40:40.8399304Z # fail 0",
+            "2026-10-19T02:40:40.8399701Z # cancelled 0",
+            "2026-10-19T02:40:40.8400045Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117841118664,
+          "rawBytes": 31886,
+          "rawSha256": "20886d22123e5f41761f5cbbf00598b6bb314689baef5b61b9e2887ed1b6f57d",
+          "footer": [
+            "2026-10-19T02:55:18.6602481Z # tests 18",
+            "2026-10-19T02:55:18.6603323Z # pass 18",
+            "2026-10-19T02:55:18.6603739Z # fail 0",
+            "2026-10-19T02:55:18.6605158Z # cancelled 0",
+            "2026-10-19T02:55:18.6627145Z # skipped 0",
+            "2026-10-19T03:01:17.5321149Z {\"phase\":\"gameplay\",\"tests\":339,\"pass\":339,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/d1c6e236d8fb-rJT7gW/gameplay.tap\"}"
+          ]
+        },
+        {
+          "job": 117841118610,
+          "rawBytes": 31983,
+          "rawSha256": "27528e4bbb73fcdd880a58d78cdce23a70f22b30b3090c12eb50494c6cff09f1",
+          "footer": [
+            "2026-10-19T02:52:06.3927278Z # tests 18",
+            "2026-10-19T02:52:06.3940305Z # pass 18",
+            "2026-10-19T02:52:06.3954740Z # fail 0",
+            "2026-10-19T02:52:06.3955192Z # cancelled 0",
+            "2026-10-19T02:52:06.3955636Z # skipped 0",
+            "2026-10-19T02:54:19.6511600Z {\"phase\":\"presentation\",\"tests\":402,\"pass\":402,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/d1c6e236d8fb-QPDW7I/presentation.tap\"}"
+          ]
+        },
+        {
+          "job": 117841118600,
+          "rawBytes": 31624,
+          "rawSha256": "9a3d4e951063974274fa4c09da890a203184c7416c603857f44f3c28abd73d5d",
+          "footer": [
+            "2026-10-19T02:54:08.0888032Z # tests 18",
+            "2026-10-19T02:54:08.0888650Z # pass 18",
+            "2026-10-19T02:54:08.0888897Z # fail 0",
+            "2026-10-19T02:54:08.0889147Z # cancelled 0",
+            "2026-10-19T02:54:08.0889384Z # skipped 0",
+            "2026-10-19T02:56:27.3279149Z {\"phase\":\"creator\",\"tests\":259,\"pass\":259,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/d1c6e236d8fb-Mz9Qt7/creator.tap\"}"
+          ]
+        },
+        {
+          "job": 117841118481,
+          "rawBytes": 678193,
+          "rawSha256": "586c69353bd4b6cc5b25aea9da564cd7e4333d4de2dbc6452add45b98768a9a1",
+          "footer": [
+            "2026-10-19T02:58:18.7473874Z # tests 1364",
+            "2026-10-19T02:58:18.7474265Z # pass 1364",
+            "2026-10-19T02:58:18.7474451Z # fail 0",
+            "2026-10-19T02:58:18.7474642Z # cancelled 0",
+            "2026-10-19T02:58:18.7474836Z # skipped 0",
+            "2026-10-19T02:58:18.9312259Z # tests 16",
+            "2026-10-19T02:58:18.9313556Z # pass 16",
+            "2026-10-19T02:58:18.9325890Z # fail 0",
+            "2026-10-19T02:58:18.9326161Z # cancelled 0",
+            "2026-10-19T02:58:18.9326393Z # skipped 0",
+            "2026-10-19T02:58:41.6062912Z # tests 54",
+            "2026-10-19T02:58:41.6063747Z # pass 54",
+            "2026-10-19T02:58:41.6063945Z # fail 0",
+            "2026-10-19T02:58:41.6064139Z # cancelled 0",
+            "2026-10-19T02:58:41.6064342Z # skipped 0",
+            "2026-10-19T02:58:47.8676006Z # tests 51",
+            "2026-10-19T02:58:47.8676378Z # pass 51",
+            "2026-10-19T02:58:47.8676580Z # fail 0",
+            "2026-10-19T02:58:47.8676781Z # cancelled 0",
+            "2026-10-19T02:58:47.8676980Z # skipped 0",
+            "2026-10-19T02:58:53.9866057Z # tests 157",
+            "2026-10-19T02:58:53.9866764Z # pass 157",
+            "2026-10-19T02:58:53.9867122Z # fail 0",
+            "2026-10-19T02:58:53.9867489Z # cancelled 0",
+            "2026-10-19T02:58:53.9867873Z # skipped 0",
+            "2026-10-19T02:58:54.9269897Z # tests 74",
+            "2026-10-19T02:58:54.9270768Z # pass 74",
+            "2026-10-19T02:58:54.9271163Z # fail 0",
+            "2026-10-19T02:58:54.9271661Z # cancelled 0",
+            "2026-10-19T02:58:54.9272176Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117841118261,
+          "rawBytes": 556874,
+          "rawSha256": "51d1450ead61274d36b78ca4d320067986dfaf26dea23d0076bdd866174937ee",
+          "footer": [
+            "2026-10-19T02:47:59.6182300Z # tests 1229",
+            "2026-10-19T02:47:59.6182478Z # pass 1229",
+            "2026-10-19T02:47:59.6182566Z # fail 0",
+            "2026-10-19T02:47:59.6182662Z # cancelled 0",
+            "2026-10-19T02:47:59.6182748Z # skipped 0",
+            "2026-10-19T02:48:00.1616929Z # tests 10",
+            "2026-10-19T02:48:00.1617591Z # pass 10",
+            "2026-10-19T02:48:00.1618071Z # fail 0",
+            "2026-10-19T02:48:00.1618411Z # cancelled 0",
+            "2026-10-19T02:48:00.1618787Z # skipped 0",
+            "2026-10-19T02:48:14.9351211Z # tests 171",
+            "2026-10-19T02:48:14.9351760Z # pass 170",
+            "2026-10-19T02:48:14.9351954Z # fail 0",
+            "2026-10-19T02:48:14.9352155Z # cancelled 0",
+            "2026-10-19T02:48:14.9352354Z # skipped 1"
+          ]
+        }
+      ]
+    },
+    {
+      "pr": 1694,
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "checkCounts": {
+        "queued": 8,
+        "skipped": 2,
+        "success": 11,
+        "in_progress": 1
+      },
+      "failed": [],
+      "newLogs": [
+        {
+          "job": 117841290237,
+          "rawBytes": 32001,
+          "rawSha256": "a5a0fd310195bab081c8648509ae2513ed5f22cd89644066453eebe3dc8d48c2",
+          "footer": [
+            "2026-10-19T03:25:13.2852203Z # tests 18",
+            "2026-10-19T03:25:13.2853106Z # pass 18",
+            "2026-10-19T03:25:13.2853692Z # fail 0",
+            "2026-10-19T03:25:13.2854180Z # cancelled 0",
+            "2026-10-19T03:25:13.2854738Z # skipped 0",
+            "2026-10-19T03:28:03.5832190Z {\"phase\":\"creator\",\"tests\":259,\"pass\":259,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/d350d8bc4ec9-5AVbvo/creator.tap\"}"
+          ]
+        },
+        {
+          "job": 117841289918,
+          "rawBytes": 31954,
+          "rawSha256": "785d52293a3c8eb9339dbf1cde684e070b963aed539007ed1af4fff68e288d1f",
+          "footer": [
+            "2026-10-19T03:12:23.1499703Z # tests 18",
+            "2026-10-19T03:12:23.1500822Z # pass 18",
+            "2026-10-19T03:12:23.1501511Z # fail 0",
+            "2026-10-19T03:12:23.1502097Z # cancelled 0",
+            "2026-10-19T03:12:23.1502640Z # skipped 0",
+            "2026-10-19T03:18:30.6345526Z {\"phase\":\"gameplay\",\"tests\":339,\"pass\":339,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/d350d8bc4ec9-mMRmCh/gameplay.tap\"}"
+          ]
+        },
+        {
+          "job": 117841289895,
+          "rawBytes": 677793,
+          "rawSha256": "a158e4ca8e849ac1e3f03a3456f308968f0d473afd5b0a3a89fcf5ab81a62b36",
+          "footer": [
+            "2026-10-19T03:10:21.8420370Z # tests 1364",
+            "2026-10-19T03:10:21.8420691Z # pass 1364",
+            "2026-10-19T03:10:21.8420845Z # fail 0",
+            "2026-10-19T03:10:21.8421002Z # cancelled 0",
+            "2026-10-19T03:10:21.8421164Z # skipped 0",
+            "2026-10-19T03:10:21.9788551Z # tests 16",
+            "2026-10-19T03:10:21.9789005Z # pass 16",
+            "2026-10-19T03:10:21.9789227Z # fail 0",
+            "2026-10-19T03:10:21.9789539Z # cancelled 0",
+            "2026-10-19T03:10:21.9790162Z # skipped 0",
+            "2026-10-19T03:10:39.6587402Z # tests 54",
+            "2026-10-19T03:10:39.6587713Z # pass 54",
+            "2026-10-19T03:10:39.6587865Z # fail 0",
+            "2026-10-19T03:10:39.6588040Z # cancelled 0",
+            "2026-10-19T03:10:39.6588209Z # skipped 0",
+            "2026-10-19T03:10:44.9095336Z # tests 51",
+            "2026-10-19T03:10:44.9095747Z # pass 51",
+            "2026-10-19T03:10:44.9095950Z # fail 0",
+            "2026-10-19T03:10:44.9096142Z # cancelled 0",
+            "2026-10-19T03:10:44.9096389Z # skipped 0",
+            "2026-10-19T03:10:49.6119741Z # tests 157",
+            "2026-10-19T03:10:49.6120413Z # pass 157",
+            "2026-10-19T03:10:49.6120647Z # fail 0",
+            "2026-10-19T03:10:49.6120890Z # cancelled 0",
+            "2026-10-19T03:10:49.6121136Z # skipped 0",
+            "2026-10-19T03:10:50.3656998Z # tests 74",
+            "2026-10-19T03:10:50.3657456Z # pass 74",
+            "2026-10-19T03:10:50.3657687Z # fail 0",
+            "2026-10-19T03:10:50.3657910Z # cancelled 0",
+            "2026-10-19T03:10:50.3658158Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117841289881,
+          "rawBytes": 169825,
+          "rawSha256": "01c44960b8584e0aef1e685f9e8afdbe3116822b1eb87646fafb1cab34cb88bc",
+          "footer": [
+            "2026-10-19T03:04:23.6461029Z # tests 354",
+            "2026-10-19T03:04:23.6461479Z # pass 354",
+            "2026-10-19T03:04:23.6461654Z # fail 0",
+            "2026-10-19T03:04:23.6468231Z # cancelled 0",
+            "2026-10-19T03:04:23.6468446Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117841289880,
+          "rawBytes": 74666,
+          "rawSha256": "4fe25e404d1f453c3e98b3ca50ee3b6b69db7335927e7cabab15129b2ea9e3f1",
+          "footer": [
+            "2026-10-19T03:09:03.6994366Z # tests 84",
+            "2026-10-19T03:09:03.6994913Z # pass 84",
+            "2026-10-19T03:09:03.6995670Z # fail 0",
+            "2026-10-19T03:09:03.6996148Z # cancelled 0",
+            "2026-10-19T03:09:03.6996425Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117841289774,
+          "rawBytes": 51725,
+          "rawSha256": "1e1937b4dea4e239ddff15cc9a4462e9398a82faf1a290828d269b421a058edd",
+          "footer": [
+            "2026-10-19T03:01:34.2776832Z # tests 27",
+            "2026-10-19T03:01:34.2777323Z # pass 27",
+            "2026-10-19T03:01:34.2777475Z # fail 0",
+            "2026-10-19T03:01:34.2777637Z # cancelled 0",
+            "2026-10-19T03:01:34.2794359Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117841289637,
+          "rawBytes": 557164,
+          "rawSha256": "81697ba89198e9f9fde1a29245932fe7759f1736eee100cbbe7a19ff2ffb59b7",
+          "footer": [
+            "2026-10-19T02:57:28.5299792Z # tests 1229",
+            "2026-10-19T02:57:28.5299965Z # pass 1229",
+            "2026-10-19T02:57:28.5300050Z # fail 0",
+            "2026-10-19T02:57:28.5300140Z # cancelled 0",
+            "2026-10-19T02:57:28.5300223Z # skipped 0",
+            "2026-10-19T02:57:29.1024974Z # tests 10",
+            "2026-10-19T02:57:29.1025830Z # pass 10",
+            "2026-10-19T02:57:29.1027155Z # fail 0",
+            "2026-10-19T02:57:29.1027495Z # cancelled 0",
+            "2026-10-19T02:57:29.1027865Z # skipped 0",
+            "2026-10-19T02:57:44.2318999Z # tests 171",
+            "2026-10-19T02:57:44.2319888Z # pass 170",
+            "2026-10-19T02:57:44.2320218Z # fail 0",
+            "2026-10-19T02:57:44.2320630Z # cancelled 0",
+            "2026-10-19T02:57:44.2321005Z # skipped 1"
+          ]
+        },
+        {
+          "job": 117841289546,
+          "rawBytes": 108331,
+          "rawSha256": "68928e4da92419e70ee01fd8ebc550d76b3ec9fdbed5ea6aadee3f6d20ea8995",
+          "footer": [
+            "2026-10-19T02:57:53.6799694Z # tests 170",
+            "2026-10-19T02:57:53.6800404Z # pass 170",
+            "2026-10-19T02:57:53.6802349Z # fail 0",
+            "2026-10-19T02:57:53.6802631Z # cancelled 0",
+            "2026-10-19T02:57:53.6802910Z # skipped 0"
+          ]
+        }
+      ]
+    },
+    {
+      "pr": 1695,
+      "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+      "checkCounts": {
+        "skipped": 2,
+        "queued": 7,
+        "success": 11,
+        "in_progress": 1
+      },
+      "failed": [],
+      "newLogs": [
+        {
+          "job": 117843840185,
+          "rawBytes": 52232,
+          "rawSha256": "3e6ed12f4a5de3dad3d34b5e824992b745444038f2f9c5dac5859631f66d657f",
+          "footer": [
+            "2026-10-19T03:23:28.2595635Z # tests 27",
+            "2026-10-19T03:23:28.2597609Z # pass 27",
+            "2026-10-19T03:23:28.2597935Z # fail 0",
+            "2026-10-19T03:23:28.2598249Z # cancelled 0",
+            "2026-10-19T03:23:28.2598604Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117843840177,
+          "rawBytes": 108302,
+          "rawSha256": "907e8c71ecdcca26a026e42c705ced8f61e89de8c5dfbfc899bbe2445e71a07e",
+          "footer": [
+            "2026-10-19T03:12:29.1075919Z # tests 170",
+            "2026-10-19T03:12:29.1076635Z # pass 170",
+            "2026-10-19T03:12:29.1089510Z # fail 0",
+            "2026-10-19T03:12:29.1089892Z # cancelled 0",
+            "2026-10-19T03:12:29.1090162Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117843840087,
+          "rawBytes": 170036,
+          "rawSha256": "49529eebd3bcbcc6b1c40feab1f944734c663f50c18e0f5aae4dbfa7b16bb75e",
+          "footer": [
+            "2026-10-19T03:15:04.2309834Z # tests 354",
+            "2026-10-19T03:15:04.2310443Z # pass 354",
+            "2026-10-19T03:15:04.2310797Z # fail 0",
+            "2026-10-19T03:15:04.2311219Z # cancelled 0",
+            "2026-10-19T03:15:04.2311595Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117843839839,
+          "rawBytes": 556625,
+          "rawSha256": "d6bcfdd8bf290f5dbe59df65525df552c796558d2c0dda1e508dc6488b4bd274",
+          "footer": [
+            "2026-10-19T03:17:35.6793054Z # tests 1229",
+            "2026-10-19T03:17:35.6793157Z # pass 1229",
+            "2026-10-19T03:17:35.6793211Z # fail 0",
+            "2026-10-19T03:17:35.6793265Z # cancelled 0",
+            "2026-10-19T03:17:35.6793318Z # skipped 0",
+            "2026-10-19T03:17:36.1169599Z # tests 10",
+            "2026-10-19T03:17:36.1169968Z # pass 10",
+            "2026-10-19T03:17:36.1170104Z # fail 0",
+            "2026-10-19T03:17:36.1170274Z # cancelled 0",
+            "2026-10-19T03:17:36.1170469Z # skipped 0",
+            "2026-10-19T03:17:48.0650412Z # tests 171",
+            "2026-10-19T03:17:48.0650809Z # pass 170",
+            "2026-10-19T03:17:48.0650986Z # fail 0",
+            "2026-10-19T03:17:48.0651157Z # cancelled 0",
+            "2026-10-19T03:17:48.0651361Z # skipped 1"
+          ]
+        },
+        {
+          "job": 117843839754,
+          "rawBytes": 31743,
+          "rawSha256": "00944f3dbd4d582d28d470e84dbcbbcadcf0a82d2a13372c6640c885860489cb",
+          "footer": [
+            "2026-10-19T03:02:53.1414509Z # tests 18",
+            "2026-10-19T03:02:53.1415009Z # pass 18",
+            "2026-10-19T03:02:53.1415283Z # fail 0",
+            "2026-10-19T03:02:53.1415602Z # cancelled 0",
+            "2026-10-19T03:02:53.1415891Z # skipped 0",
+            "2026-10-19T03:04:57.2141806Z {\"phase\":\"creator\",\"tests\":259,\"pass\":259,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/7d964856a2ee-325enK/creator.tap\"}"
+          ]
+        },
+        {
+          "job": 117843839599,
+          "rawBytes": 32224,
+          "rawSha256": "f373137625eb1a7f227393f063fdb2c7cfa5f4edd0f8ece268ef1ce8d721d5e2",
+          "footer": [
+            "2026-10-19T03:00:44.2745871Z # tests 18",
+            "2026-10-19T03:00:44.2748172Z # pass 18",
+            "2026-10-19T03:00:44.2748546Z # fail 0",
+            "2026-10-19T03:00:44.2748871Z # cancelled 0",
+            "2026-10-19T03:00:44.2749228Z # skipped 0",
+            "2026-10-19T03:02:57.5255409Z {\"phase\":\"presentation\",\"tests\":402,\"pass\":402,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/7d964856a2ee-yEOuE0/presentation.tap\"}"
+          ]
+        },
+        {
+          "job": 117843839509,
+          "rawBytes": 678051,
+          "rawSha256": "623a7bb0b8e43693a07ddcbe9f600afa98914d0f7fe5596470d5f919bbfc3c96",
+          "footer": [
+            "2026-10-19T03:09:05.5979617Z # tests 1364",
+            "2026-10-19T03:09:05.5979982Z # pass 1364",
+            "2026-10-19T03:09:05.5980166Z # fail 0",
+            "2026-10-19T03:09:05.5980343Z # cancelled 0",
+            "2026-10-19T03:09:05.5980527Z # skipped 0",
+            "2026-10-19T03:09:05.7718582Z # tests 16",
+            "2026-10-19T03:09:05.7719820Z # pass 16",
+            "2026-10-19T03:09:05.7720202Z # fail 0",
+            "2026-10-19T03:09:05.7720589Z # cancelled 0",
+            "2026-10-19T03:09:05.7721195Z # skipped 0",
+            "2026-10-19T03:09:27.2166896Z # tests 54",
+            "2026-10-19T03:09:27.2167283Z # pass 54",
+            "2026-10-19T03:09:27.2167465Z # fail 0",
+            "2026-10-19T03:09:27.2167651Z # cancelled 0",
+            "2026-10-19T03:09:27.2168118Z # skipped 0",
+            "2026-10-19T03:09:33.1681645Z # tests 51",
+            "2026-10-19T03:09:33.1682237Z # pass 51",
+            "2026-10-19T03:09:33.1682591Z # fail 0",
+            "2026-10-19T03:09:33.1682885Z # cancelled 0",
+            "2026-10-19T03:09:33.1683196Z # skipped 0",
+            "2026-10-19T03:09:38.8967451Z # tests 157",
+            "2026-10-19T03:09:38.8967841Z # pass 157",
+            "2026-10-19T03:09:38.8968029Z # fail 0",
+            "2026-10-19T03:09:38.8968215Z # cancelled 0",
+            "2026-10-19T03:09:38.8968409Z # skipped 0",
+            "2026-10-19T03:09:39.8235510Z # tests 74",
+            "2026-10-19T03:09:39.8238839Z # pass 74",
+            "2026-10-19T03:09:39.8239358Z # fail 0",
+            "2026-10-19T03:09:39.8239860Z # cancelled 0",
+            "2026-10-19T03:09:39.8240372Z # skipped 0"
+          ]
+        },
+        {
+          "job": 117843839354,
+          "rawBytes": 31431,
+          "rawSha256": "f11473146143e166680ac5a947a27fdf99db9bc9908cf572427c5a277e3f7ab4",
+          "footer": [
+            "2026-10-19T03:00:32.9091131Z # tests 18",
+            "2026-10-19T03:00:32.9091738Z # pass 18",
+            "2026-10-19T03:00:32.9092000Z # fail 0",
+            "2026-10-19T03:00:32.9092218Z # cancelled 0",
+            "2026-10-19T03:00:32.9092450Z # skipped 0",
+            "2026-10-19T03:04:50.6426615Z {\"phase\":\"gameplay\",\"tests\":339,\"pass\":339,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/7d964856a2ee-FqbUXJ/gameplay.tap\"}"
+          ]
+        }
+      ]
+    },
+    {
+      "pr": 1696,
+      "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+      "checkCounts": {
+        "skipped": 2,
+        "queued": 8,
+        "success": 7
+      },
+      "failed": [],
+      "newLogs": [
+        {
+          "job": 117844085215,
+          "rawBytes": 557147,
+          "rawSha256": "3e5ec2eb3673eefff3d1a51d904f99ccd617a56f8b677ca4bb498a3ca8089b54",
+          "footer": [
+            "2026-10-19T03:19:55.5980653Z # tests 1229",
+            "2026-10-19T03:19:55.5981046Z # pass 1229",
+            "2026-10-19T03:19:55.5981234Z # fail 0",
+            "2026-10-19T03:19:55.5981462Z # cancelled 0",
+            "2026-10-19T03:19:55.5981669Z # skipped 0",
+            "2026-10-19T03:19:56.1665672Z # tests 10",
+            "2026-10-19T03:19:56.1666588Z # pass 10",
+            "2026-10-19T03:19:56.1666993Z # fail 0",
+            "2026-10-19T03:19:56.1667641Z # cancelled 0",
+            "2026-10-19T03:19:56.1668145Z # skipped 0",
+            "2026-10-19T03:20:11.7188453Z # tests 171",
+            "2026-10-19T03:20:11.7189053Z # pass 170",
+            "2026-10-19T03:20:11.7189250Z # fail 0",
+            "2026-10-19T03:20:11.7189442Z # cancelled 0",
+            "2026-10-19T03:20:11.7189642Z # skipped 1"
+          ]
+        },
+        {
+          "job": 117844085170,
+          "rawBytes": 31926,
+          "rawSha256": "f1aa05215856d29aed453bbe8a08fd7b4aba4f6ec1279aeb4fe0bc2ed862a813",
+          "footer": [
+            "2026-10-19T03:26:35.2065476Z # tests 18",
+            "2026-10-19T03:26:35.2066672Z # pass 18",
+            "2026-10-19T03:26:35.2067394Z # fail 0",
+            "2026-10-19T03:26:35.2068080Z # cancelled 0",
+            "2026-10-19T03:26:35.2068519Z # skipped 0",
+            "2026-10-19T03:29:28.4698732Z {\"phase\":\"creator\",\"tests\":259,\"pass\":259,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/73d56d3b674b-tVGJjg/creator.tap\"}"
+          ]
+        },
+        {
+          "job": 117844084977,
+          "rawBytes": 31394,
+          "rawSha256": "edbcd4b6b5ada1dd87d198e9d188ed7d9b300ae1fffc72042c1c0150189b3cdf",
+          "footer": [
+            "2026-10-19T03:14:51.5896881Z # tests 18",
+            "2026-10-19T03:14:51.5897208Z # pass 18",
+            "2026-10-19T03:14:51.5897361Z # fail 0",
+            "2026-10-19T03:14:51.5897514Z # cancelled 0",
+            "2026-10-19T03:14:51.5897695Z # skipped 0",
+            "2026-10-19T03:16:05.6887289Z {\"phase\":\"presentation\",\"tests\":402,\"pass\":402,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/73d56d3b674b-7ivOSH/presentation.tap\"}"
+          ]
+        },
+        {
+          "job": 117844084946,
+          "rawBytes": 678264,
+          "rawSha256": "6ec744058c239f164de3f9b0ad463af3203ea102bc98a0833097505548bc3522",
+          "footer": [
+            "2026-10-19T03:09:36.2631170Z # tests 1364",
+            "2026-10-19T03:09:36.2631765Z # pass 1364",
+            "2026-10-19T03:09:36.2632273Z # fail 0",
+            "2026-10-19T03:09:36.2632572Z # cancelled 0",
+            "2026-10-19T03:09:36.2632873Z # skipped 0",
+            "2026-10-19T03:09:36.4476873Z # tests 16",
+            "2026-10-19T03:09:36.4477983Z # pass 16",
+            "2026-10-19T03:09:36.4478301Z # fail 0",
+            "2026-10-19T03:09:36.4478880Z # cancelled 0",
+            "2026-10-19T03:09:36.4479358Z # skipped 0",
+            "2026-10-19T03:09:59.7016186Z # tests 54",
+            "2026-10-19T03:09:59.7016566Z # pass 54",
+            "2026-10-19T03:09:59.7016753Z # fail 0",
+            "2026-10-19T03:09:59.7016944Z # cancelled 0",
+            "2026-10-19T03:09:59.7017144Z # skipped 0",
+            "2026-10-19T03:10:06.1710043Z # tests 51",
+            "2026-10-19T03:10:06.1710597Z # pass 51",
+            "2026-10-19T03:10:06.1710789Z # fail 0",
+            "2026-10-19T03:10:06.1710983Z # cancelled 0",
+            "2026-10-19T03:10:06.1711186Z # skipped 0",
+            "2026-10-19T03:10:12.6718507Z # tests 157",
+            "2026-10-19T03:10:12.6719077Z # pass 157",
+            "2026-10-19T03:10:12.6719358Z # fail 0",
+            "2026-10-19T03:10:12.6719640Z # cancelled 0",
+            "2026-10-19T03:10:12.6719949Z # skipped 0",
+            "2026-10-19T03:10:13.6778117Z # tests 74",
+            "2026-10-19T03:10:13.6802813Z # pass 74",
+            "2026-10-19T03:10:13.6803185Z # fail 0",
+            "2026-10-19T03:10:13.6803465Z # cancelled 0",
+            "2026-10-19T03:10:13.6803768Z # skipped 0"
+          ]
+        }
+      ]
+    },
+    {
+      "pr": 1699,
+      "head": "739a87f66a80d4956f1af77c60c032821bf799fb",
+      "checkCounts": {
+        "skipped": 68,
+        "queued": 10,
+        "success": 4,
+        "in_progress": 2
+      },
+      "failed": [],
+      "newLogs": [
+        {
+          "job": 117847634082,
+          "rawBytes": 32055,
+          "rawSha256": "843fc77356d114bf1b2d8e28d989055a9bac2ddce3b6e5817701aa226d6eb08b",
+          "footer": [
+            "2026-10-19T03:25:40.1855354Z # tests 18",
+            "2026-10-19T03:25:40.1856169Z # pass 18",
+            "2026-10-19T03:25:40.1856568Z # fail 0",
+            "2026-10-19T03:25:40.1856972Z # cancelled 0",
+            "2026-10-19T03:25:40.1857407Z # skipped 0",
+            "2026-10-19T03:31:09.8192140Z {\"phase\":\"gameplay\",\"tests\":339,\"pass\":339,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/739a87f66a80-k8wxr0/gameplay.tap\"}"
+          ]
+        },
+        {
+          "job": 117847633861,
+          "rawBytes": 31918,
+          "rawSha256": "a3de8843d595020fde7e0f9db6c932938f056c0a65087324d8476746702d29f2",
+          "footer": [
+            "2026-10-19T03:17:15.0112278Z # tests 18",
+            "2026-10-19T03:17:15.0113180Z # pass 18",
+            "2026-10-19T03:17:15.0113388Z # fail 0",
+            "2026-10-19T03:17:15.0113704Z # cancelled 0",
+            "2026-10-19T03:17:15.0114151Z # skipped 0",
+            "2026-10-19T03:20:06.7126521Z {\"phase\":\"creator\",\"tests\":259,\"pass\":259,\"fail\":0,\"cancelled\":0,\"skipped\":0,\"todo\":0,\"exitCode\":0,\"signal\":null,\"passed\":true,\"log\":\"/home/runner/work/revealline/revealline/.cache/industrial-verification/739a87f66a80-dVNvXk/creator.tap\"}"
+          ]
+        }
+      ]
+    },
+    {
+      "pr": 1703,
+      "head": "c933e9bf81c8ff3af275342f0ab1780c808bc67b",
+      "checkCounts": {
+        "skipped": 70,
+        "queued": 11,
+        "success": 1
+      },
+      "failed": [],
+      "newLogs": []
+    },
+    {
+      "pr": 1705,
+      "head": "c1c943344b29c456608632a7afc39d4436efd63e",
+      "checkCounts": {
+        "queued": 11
+      },
+      "failed": [],
+      "newLogs": []
+    }
+  ],
+  "addedControlMatches": [
+    {
+      "pr": 1693,
+      "addedNames": [
+        {
+          "path": "game/test/couch-input.test.mjs",
+          "name": "neutral Resume tick defers fresh local requests independently without releasing held pads",
+          "pattern": "neutral\\ Resume\\ tick\\ defers\\ fresh\\ local\\ requests\\ independently\\ without\\ releasing\\ held\\ pads"
+        },
+        {
+          "path": "game/test/couch-input.test.mjs",
+          "name": "clearing a deferred Resume request retires it before the next fixed tick",
+          "pattern": "clearing\\ a\\ deferred\\ Resume\\ request\\ retires\\ it\\ before\\ the\\ next\\ fixed\\ tick"
+        },
+        {
+          "path": "game/test/couch-lifecycle-clock.test.mjs",
+          "name": "Versus accepted Resume excludes the prior ${gap}ms menu interval",
+          "pattern": "Versus\\ accepted\\ Resume\\ excludes\\ the\\ prior\\ .+?ms\\ menu\\ interval"
+        },
+        {
+          "path": "game/test/couch-lifecycle-clock.test.mjs",
+          "name": "Versus fresh Resume requests survive the neutral tick with catch-up=${catchUp}",
+          "pattern": "Versus\\ fresh\\ Resume\\ requests\\ survive\\ the\\ neutral\\ tick\\ with\\ catch\\-up=.+?"
+        },
+        {
+          "path": "game/test/couch-lifecycle-clock.test.mjs",
+          "name": "Team fresh Start and confirmed Retry exclude the prior ${gap}ms menu interval",
+          "pattern": "Team\\ fresh\\ Start\\ and\\ confirmed\\ Retry\\ exclude\\ the\\ prior\\ .+?ms\\ menu\\ interval"
+        },
+        {
+          "path": "game/test/solo-cadence-input-host.test.mjs",
+          "name": "actual Solo ${source} requests after Resume survive the neutral tick and catch-up once",
+          "pattern": "actual\\ Solo\\ .+?\\ requests\\ after\\ Resume\\ survive\\ the\\ neutral\\ tick\\ and\\ catch\\-up\\ once"
+        },
+        {
+          "path": "game/test/solo-cadence-input-host.test.mjs",
+          "name": "actual Solo Pause retires a fresh request deferred behind the Resume neutral tick",
+          "pattern": "actual\\ Solo\\ Pause\\ retires\\ a\\ fresh\\ request\\ deferred\\ behind\\ the\\ Resume\\ neutral\\ tick"
+        }
+      ],
+      "executed": []
+    },
+    {
+      "pr": 1694,
+      "addedNames": [
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "name": "downloaded playback uses one real worker inspection and no main-realm Blob materialization",
+          "pattern": "downloaded\\ playback\\ uses\\ one\\ real\\ worker\\ inspection\\ and\\ no\\ main\\-realm\\ Blob\\ materialization"
+        },
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "name": "local originals still receive worker validation without acquisition",
+          "pattern": "local\\ originals\\ still\\ receive\\ worker\\ validation\\ without\\ acquisition"
+        },
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "name": "custom reader inspection reuse is bound to one successful exact Blob: ",
+          "pattern": "custom\\ reader\\ inspection\\ reuse\\ is\\ bound\\ to\\ one\\ successful\\ exact\\ Blob:\\ .+?"
+        },
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "name": "worker-unavailable playback holds fetch and inspection until a safe fallback phase",
+          "pattern": "worker\\-unavailable\\ playback\\ holds\\ fetch\\ and\\ inspection\\ until\\ a\\ safe\\ fallback\\ phase"
+        },
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "name": "the unchanged acquisition deadline cancels queued fallback and releases both reservations",
+          "pattern": "the\\ unchanged\\ acquisition\\ deadline\\ cancels\\ queued\\ fallback\\ and\\ releases\\ both\\ reservations"
+        },
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "name": "transport cancellation retires inspection even when a custom reader supplies another signal",
+          "pattern": "transport\\ cancellation\\ retires\\ inspection\\ even\\ when\\ a\\ custom\\ reader\\ supplies\\ another\\ signal"
+        },
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "name": "active current-plus-next loading reuses one worker but never carries facts across acquisitions",
+          "pattern": "active\\ current\\-plus\\-next\\ loading\\ reuses\\ one\\ worker\\ but\\ never\\ carries\\ facts\\ across\\ acquisitions"
+        },
+        {
+          "path": "game/test/soundtrack-source.test.mjs",
+          "name": "acquisition returns the exact owned Blob inspected by the supplied operation",
+          "pattern": "acquisition\\ returns\\ the\\ exact\\ owned\\ Blob\\ inspected\\ by\\ the\\ supplied\\ operation"
+        },
+        {
+          "path": "game/test/soundtrack-source.test.mjs",
+          "name": "delegated inspection preserves pinned facts and rejects completion after cancellation",
+          "pattern": "delegated\\ inspection\\ preserves\\ pinned\\ facts\\ and\\ rejects\\ completion\\ after\\ cancellation"
+        }
+      ],
+      "executed": []
+    },
+    {
+      "pr": 1695,
+      "addedNames": [
+        {
+          "path": "game/test/content-assets.test.mjs",
+          "name": "binary artwork retains verified original bytes without preview encoding or a serializable background",
+          "pattern": "binary\\ artwork\\ retains\\ verified\\ original\\ bytes\\ without\\ preview\\ encoding\\ or\\ a\\ serializable\\ background"
+        },
+        {
+          "path": "game/test/content-assets.test.mjs",
+          "name": "binary artwork keeps exact length, digest, raster, dimensions and redirect rejection",
+          "pattern": "binary\\ artwork\\ keeps\\ exact\\ length,\\ digest,\\ raster,\\ dimensions\\ and\\ redirect\\ rejection"
+        },
+        {
+          "path": "game/test/content-assets.test.mjs",
+          "name": "binary artwork cancellation settles while an admitted digest is still held",
+          "pattern": "binary\\ artwork\\ cancellation\\ settles\\ while\\ an\\ admitted\\ digest\\ is\\ still\\ held"
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "name": "binary picture URLs survive complete decode and display transfer until their single owner releases",
+          "pattern": "binary\\ picture\\ URLs\\ survive\\ complete\\ decode\\ and\\ display\\ transfer\\ until\\ their\\ single\\ owner\\ releases"
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "name": "binary picture verification rejects forged, mismatched and serialized media before URL allocation",
+          "pattern": "binary\\ picture\\ verification\\ rejects\\ forged,\\ mismatched\\ and\\ serialized\\ media\\ before\\ URL\\ allocation"
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "name": "binary decode failures and wrong dimensions revoke their URL without publishing a picture",
+          "pattern": "binary\\ decode\\ failures\\ and\\ wrong\\ dimensions\\ revoke\\ their\\ URL\\ without\\ publishing\\ a\\ picture"
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "name": "binary abort and decode deadline revoke promptly while late decoded images are disposed once",
+          "pattern": "binary\\ abort\\ and\\ decode\\ deadline\\ revoke\\ promptly\\ while\\ late\\ decoded\\ images\\ are\\ disposed\\ once"
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "name": "binary attempt preparation preserves default preview serialization, authoritative runs and recorder contents",
+          "pattern": "binary\\ attempt\\ preparation\\ preserves\\ default\\ preview\\ serialization,\\ authoritative\\ runs\\ and\\ recorder\\ contents"
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "name": "binary preparation options remain explicit and never accept a missing injected loader",
+          "pattern": "binary\\ preparation\\ options\\ remain\\ explicit\\ and\\ never\\ accept\\ a\\ missing\\ injected\\ loader"
+        },
+        {
+          "path": "game/test/solo-cadence-readiness-host.test.mjs",
+          "name": "actual Main Start decodes owned binary artwork before play and retains it through paused Resume",
+          "pattern": "actual\\ Main\\ Start\\ decodes\\ owned\\ binary\\ artwork\\ before\\ play\\ and\\ retains\\ it\\ through\\ paused\\ Resume"
+        },
+        {
+          "path": "game/test/solo-cadence-readiness-host.test.mjs",
+          "name": "Solo fixture teardown retires unadopted native image and audio URL references",
+          "pattern": "Solo\\ fixture\\ teardown\\ retires\\ unadopted\\ native\\ image\\ and\\ audio\\ URL\\ references"
+        },
+        {
+          "path": "game/test/solo-cadence-readiness-host.test.mjs",
+          "name": "create page-owned URL references without a runtime picture owner",
+          "pattern": "create\\ page\\-owned\\ URL\\ references\\ without\\ a\\ runtime\\ picture\\ owner"
+        }
+      ],
+      "executed": []
+    },
+    {
+      "pr": 1696,
+      "addedNames": [
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "name": "empty movement leaves an idle or live trail unchanged without constructing cell sets",
+          "pattern": "empty\\ movement\\ leaves\\ an\\ idle\\ or\\ live\\ trail\\ unchanged\\ without\\ constructing\\ cell\\ sets"
+        },
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "name": "long immutable bent trails retain exact earliest-contact horizons without changing run state",
+          "pattern": "long\\ immutable\\ bent\\ trails\\ retain\\ exact\\ earliest\\-contact\\ horizons\\ without\\ changing\\ run\\ state"
+        },
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "name": "contact checks include earlier additions in the same movement and preserve reversal timing",
+          "pattern": "contact\\ checks\\ include\\ earlier\\ additions\\ in\\ the\\ same\\ movement\\ and\\ preserve\\ reversal\\ timing"
+        },
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "name": "cell-only contact preserves consecutive-cell immunity, repeated-cell failure and horizon order",
+          "pattern": "cell\\-only\\ contact\\ preserves\\ consecutive\\-cell\\ immunity,\\ repeated\\-cell\\ failure\\ and\\ horizon\\ order"
+        },
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "name": "contact reads retain tail ownership until append clips and merges the accepted movement",
+          "pattern": "contact\\ reads\\ retain\\ tail\\ ownership\\ until\\ append\\ clips\\ and\\ merges\\ the\\ accepted\\ movement"
+        }
+      ],
+      "executed": []
+    }
+  ],
+  "overheadGuard": {
+    "job": 117858371749,
+    "rawBytes": 31937,
+    "rawSha256": "a93a95b465b42689180776984be3856dce73eff875abc7cab65aa014d0996b36",
+    "rows": [
+      "2026-10-19T02:27:20.3467510Z node --test --test-concurrency=1 scripts/solo-replay-portability-diagnostic.test.mjs scripts/test-solo-replay-portability-hook.mjs 2>&1 | head -c 4194304 > \"$RUNNER_TEMP/solo-replay-source/source-controls.tap\""
+    ]
+  },
+  "limits": [
+    "No native testing was performed or inferred.",
+    "Loader controls, heap controls, overhead controls and provenance helper controls remain unverified unless separately evidenced.",
+    "A matched executed TAP row establishes that control only, not all-plan or native-performance acceptance."
+  ]
+}

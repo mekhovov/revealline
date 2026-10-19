@@ -1,0 +1,20 @@
+{
+  "kind": "SoloSupersededPlanControllerCancellationV1",
+  "at": "2026-10-19T03:34:12.424465+00:00",
+  "pr": 1706,
+  "head": "ffb2c8f8806f97c9bcef44bbeed96918c1dc9d45",
+  "obsoleteRun": 39191850350,
+  "obsoleteHead": "8a4e9377c0a2cb70136fcfbc9f23e658059cc802",
+  "unassignedJob": {
+    "id": 117866178868,
+    "runner": 0,
+    "steps": []
+  },
+  "currentReplacement": {
+    "run": 39192522314,
+    "head": "ffb2c8f8806f97c9bcef44bbeed96918c1dc9d45",
+    "status": "pending"
+  },
+  "normalCancellationResult": {},
+  "functionalValidationCancelled": false
+}

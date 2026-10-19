@@ -1,0 +1,45 @@
+{
+  "allOtherGeneratedBytesIdentical": true,
+  "canonicalProposalBlob": "8e3affdf689232f558ec197fb5b8aa844d0e24fe",
+  "checks": [
+    {
+      "arm": "before",
+      "entireModuleASTEqual": true,
+      "entireModuleProjectionByteEqual": true,
+      "moduleBytes": 7451
+    },
+    {
+      "arm": "after",
+      "entireModuleASTEqual": true,
+      "entireModuleProjectionByteEqual": true,
+      "moduleBytes": 7506
+    }
+  ],
+  "decision": "Approve the three-file source map for draft admission. The prior two-file peer review remains valid for the canonical fix and six controls but was insufficient for generated repository closure.",
+  "fixedMain": "a2c0b33c43d56adbdbb666c618d5f489cbdd32e7",
+  "format": "SoloReactionRecordingGeneratedClosurePeerV1",
+  "formatterConfigBlob": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+  "generatedFile": {
+    "after": {
+      "bytes": 920513,
+      "gitBlob": "8226ca941523b3af1190be8fb287e0a25a43c6b4",
+      "sha256": "5e0980ee2e68a4cd45c45b380afbbab514937bb29385ac4ba4ec8dcd9234a262"
+    },
+    "before": {
+      "bytes": 920458,
+      "gitBlob": "83e5c1248a24e6d7e73173cdfa6bdbe097c4fb1c",
+      "sha256": "814a783138b25b78b828324a3b089d3d0bec706b984d2e85013c71aea1969f97"
+    },
+    "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+  },
+  "generatorBlob": "c55bffd0d44ea7b705c1529e2c126f7049b6fe0c",
+  "notes": [
+    "Independent source-only projection of the complete before/after module reproduces the actual generated module byte-for-byte using the generator import/export transform, verified formatter config/tabWidth0, and lexical whitespace compaction.",
+    "The only remaining generated-file change is the exact SHA-256 entry for canonical reaction-voice-cache.mjs. All other module bytes, recordings, URL ownership, metadata cleanup, simulation and policies remain byte-identical.",
+    "Six new controls remain unexecuted. No generator, application, functional tests or native browser runs executed; only in-memory source parsing/formatting/projection.",
+    "No source branch, PR, plan or index mutations; only this peer receipt was retained."
+  ],
+  "observedAt": "2026-10-19T03:42:29.229428+00:00",
+  "thirdFileMapBlob": "b16efc5ca1dfbdc883114a97ef9fc3fa4186b83c",
+  "uniqueEdits": 2
+}

@@ -1,0 +1,68 @@
+{
+  "decision": "Approve the narrow two-file source proposal for draft admission; six controls remain unexecuted and no native performance result is established.",
+  "format": "SoloReactionRecordingCancellationPeerReviewV1",
+  "limitations": [
+    "No functional test/application execution locally; source parsing and formatting only.",
+    "Cannot cancel the already-running Blob byte read or synchronously running parser; the improvement avoids starting structural parsing when cancellation is already observable after await.",
+    "No worker, scheduling, browser/device timing or universal performance claim.",
+    "Hosted controls and normal exact-source checks must complete after admission."
+  ],
+  "mutations": "Only this retained review blob was created; no branch, PR, plan or evidence index was modified.",
+  "newControls": 6,
+  "observedAt": "2026-10-19T03:38:50.091425+00:00",
+  "proposal": {
+    "blob": "8e3affdf689232f558ec197fb5b8aa844d0e24fe",
+    "bytes": 31397,
+    "sha256": "c469a3fd4b522e9d899db8b4e931b3c5064cb9bf33d3b17e5e41dfa5a7220189"
+  },
+  "proposalBase": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+  "publicationBase": "a2c0b33c43d56adbdbb666c618d5f489cbdd32e7",
+  "scope": [
+    "Exact production diff is only splitting await of Blob.arrayBuffer, testing the same AbortSignal before inspectRecordingContainer, preserving the existing post-parser abort check.",
+    "No library resolver, demanded/background priority, captions, playback scheduling, memory limits, native decode, 10-second timeout, metadata ownership or URL cleanup changes.",
+    "Existing source bytes match fixed a2c0b33 and new test path is absent there.",
+    "Both deliberately held byte reads now register cleanup that cancels, resolves the gate, and settles observed promises; cache cleanup subsequently disposes/closes. The requested fixture failure-cleanup correction is verified.",
+    "PCM fixture is valid: RIFF total8044, fmt16, PCM1 mono1,8000Hz,8000byte/s,align1,bits8,data8000 gives exactly1second.",
+    "Delayed malformed-after-abort controls discriminate the old ordering by expecting AbortError instead of unsupported-container error; uncancelled malformed bytes retain validation."
+  ],
+  "sourceFiles": [
+    {
+      "afterIdentity": {
+        "bytes": 9094,
+        "gitBlob": "30a907c63d1724d341e34347205db363eb8eb6f1",
+        "sha256": "18e387079bf3409030f9ac5d7372614031c8bfaea2c286bd54419b24d707ca3b"
+      },
+      "beforeBlob": "c507b47ad3f295344404c86b4eac05fcb650d168",
+      "path": "game/journey/reaction-voice-cache.mjs"
+    },
+    {
+      "afterIdentity": {
+        "bytes": 8113,
+        "gitBlob": "bb8585adb5812a3a73723fc1e938f2e884c2880c",
+        "sha256": "70908dc18b24cfbe20b177c015ff85905660d843e0d48615ce81f199fbbe1a1f"
+      },
+      "beforeBlob": null,
+      "path": "game/test/reaction-recording-cancellation.test.mjs"
+    }
+  ],
+  "staticChecks": [
+    {
+      "path": "game/journey/reaction-voice-cache.mjs",
+      "statements": 7,
+      "testNames": []
+    },
+    {
+      "path": "game/test/reaction-recording-cancellation.test.mjs",
+      "statements": 14,
+      "testNames": [
+        "recording cancellation before inspection does not read bytes or create media",
+        "cancellation during byte reading wins over a later malformed container",
+        "an uncancelled malformed recording retains structural validation",
+        "an uncancelled recording keeps metadata inspection and owned URL cleanup",
+        "cache cancellation owns a pending byte read until it settles and starts no media or decode",
+        "uncancelled demanded speech still prepares while playing with one decode and no playback"
+      ]
+    }
+  ],
+  "testsExecuted": 0
+}

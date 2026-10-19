@@ -1,0 +1,120 @@
+{
+  "kind": "SoloMainDeltaAndPlanControllerCompletionV1",
+  "at": "2026-10-19T03:35:24.816553+00:00",
+  "base": "1b4928f05fdfeb36918f6de161ad63bcac2e4cb2",
+  "target": "a2c0b33c43d56adbdbb666c618d5f489cbdd32e7",
+  "commits": 40,
+  "files": [
+    {
+      "path": "docs/current-delivery-plan.md",
+      "status": "modified",
+      "sha": "a540efaa0b3f67e17b0f496d886c156137d29676"
+    },
+    {
+      "path": "docs/fpv-aircraft-mission-adapter-qualification.json",
+      "status": "added",
+      "sha": "3db63236c073781c4b573f189a47e226612a48d3"
+    },
+    {
+      "path": "docs/fpv-aircraft-presets.md",
+      "status": "modified",
+      "sha": "7cf4b9121078b84438cbb1d78a02acf00c70d603"
+    },
+    {
+      "path": "docs/improvements/plan.md",
+      "status": "added",
+      "sha": "8908add0bcdb26d65bb797e5ce90448f13df84e5"
+    },
+    {
+      "path": "docs/improvements/progress.json",
+      "status": "added",
+      "sha": "77472ea85364c54a01ea91363709042f45c3411d"
+    },
+    {
+      "path": "docs/improvements/progress.md",
+      "status": "added",
+      "sha": "9f5ce82c96f6f40d15dc216b6fdced2b5da96a64"
+    },
+    {
+      "path": "game/test/fixtures/fpv-aircraft-mission-v1.json",
+      "status": "added",
+      "sha": "c762d35a3424cb82ce8095658b95eaa56c28ae54"
+    },
+    {
+      "path": "game/test/fixtures/fpv-nazgul-revision1.json",
+      "status": "added",
+      "sha": "3ad98c4efd8964c90e68ebdcde23131111bb75ce"
+    },
+    {
+      "path": "game/test/fpv-aircraft-mission-adapter.test.mjs",
+      "status": "added",
+      "sha": "506111c85d8050f68673269bfea2835adf4b7628"
+    },
+    {
+      "path": "game/test/fpv-aircraft-presets.test.mjs",
+      "status": "modified",
+      "sha": "03d33f5b5e0276c1dead18674e6d5c44650e614f"
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "status": "modified",
+      "sha": "1fa27460ad33ecb15391c33942e38a16198512fc"
+    },
+    {
+      "path": "game/test/fpv-nazgul-diameter.test.mjs",
+      "status": "added",
+      "sha": "252f1cb258eb6055fa9365cd9b5c7b8624c6e440"
+    },
+    {
+      "path": "game/test/fpv-tuning-ui.test.mjs",
+      "status": "modified",
+      "sha": "a3819cd37e0be6672acca412aa7fc58043d61764"
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "status": "modified",
+      "sha": "705be4d623bdb1c8ee388b51013c50a4cd07a43e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-challenge.mjs",
+      "status": "modified",
+      "sha": "1b61deceded34c51b8febcc03674ae5dbfaf06e6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+      "status": "modified",
+      "sha": "d6422c39cf80d2dd17633f065b2641363f35cec4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-presets.mjs",
+      "status": "modified",
+      "sha": "be3c7599ca3b416e8de7464db5e991c887be5dc9"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "status": "modified",
+      "sha": "c6fc8b0258077d377cbc5d8f9c549e44521ef444"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "status": "modified",
+      "sha": "d1a11b1f5aaa1ab27570ac15fc3b2ed689819741"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "status": "modified",
+      "sha": "178ed36c630d003c2fe1dd8dff4440ffb72d35bf"
+    }
+  ],
+  "scope": "FPV source/tests and documentation only; no Solo/shared audio, workflow, publication policy or historical measurement changes in this fixed comparison",
+  "combinedExecution": false,
+  "controllerCleanup": {
+    "run": 39191850350,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "updatedAt": "2026-10-19T03:34:13Z",
+    "request": "6c921d7e7386a2ac4c3f2637e13a9040c5866e1c",
+    "onlySupersededUnassignedController": true
+  },
+  "mainTipClaim": false
+}

@@ -1,0 +1,47 @@
+{
+  "kind": "SoloReactionCancellationDraftPublicationV1",
+  "at": "2026-10-19T03:43:23.293490+00:00",
+  "pr": 1708,
+  "url": "https://github.com/mekhovov/revealline/pull/1708",
+  "branch": "codex/solo-recording-cancellation",
+  "base": "a2c0b33c43d56adbdbb666c618d5f489cbdd32e7",
+  "head": "62dcb6c7bdfce2c5dc7bd8df7f69c5a4f712b384",
+  "tree": "0c871036de4a6898494b6010afe1a9e2add655e5",
+  "files": [
+    {
+      "path": "game/journey/reaction-voice-cache.mjs",
+      "before": "c507b47ad3f295344404c86b4eac05fcb650d168",
+      "after": {
+        "bytes": 9094,
+        "sha256": "18e387079bf3409030f9ac5d7372614031c8bfaea2c286bd54419b24d707ca3b",
+        "gitBlob": "30a907c63d1724d341e34347205db363eb8eb6f1"
+      }
+    },
+    {
+      "path": "game/test/reaction-recording-cancellation.test.mjs",
+      "before": null,
+      "after": {
+        "bytes": 8113,
+        "sha256": "70908dc18b24cfbe20b177c015ff85905660d843e0d48615ce81f199fbbe1a1f",
+        "gitBlob": "bb8585adb5812a3a73723fc1e938f2e884c2880c"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "before": "83e5c1248a24e6d7e73173cdfa6bdbe097c4fb1c",
+      "after": {
+        "bytes": 920513,
+        "sha256": "5e0980ee2e68a4cd45c45b380afbbab514937bb29385ac4ba4ec8dcd9234a262",
+        "gitBlob": "8226ca941523b3af1190be8fb287e0a25a43c6b4"
+      }
+    }
+  ],
+  "canonicalProposal": "8e3affdf689232f558ec197fb5b8aa844d0e24fe",
+  "canonicalPeer": "7fde423bcb6fb912f5388cafa014540751df2c26",
+  "closureProposal": "b16efc5ca1dfbdc883114a97ef9fc3fa4186b83c",
+  "closurePeer": "b66e6f3836af53b2fb129369e1f9d18932eed949",
+  "newControls": 6,
+  "testsExecuted": 0,
+  "functionalExecution": false,
+  "nativeDispatch": false
+}
