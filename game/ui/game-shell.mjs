@@ -38,6 +38,7 @@ export function attachGameShell({
   focusBriefing,
   focusGame = () => doc.getElementById('start-button')?.focus(),
   getAppearanceDefault = () => null,
+  comfortSettings,
 } = {}) {
   // A registered embedded lesson already owns a token-checked return action.
   // Its shell must not expose campaign destinations inside the practice frame.
@@ -810,7 +811,7 @@ export function attachGameShell({
     event.preventDefault();
   };
   doc.addEventListener('keydown', keydown);
-  surfaces.refreshGlobalSettings();
+  surfaces.refreshGlobalSettings({ comfort: comfortSettings });
   if (initial) openHome({ focus: initialFocus });
   return {
     get qualityObservationOwner() {
