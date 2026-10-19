@@ -63,6 +63,27 @@ const acquire = (root, head, extra = {}) =>
   });
 const normalized = (inputs) => ({ ...inputs, repositoryFiles: [...inputs.repositoryFiles].sort() });
 
+test('deleted test selection uses Git objects even when the worktree is incomplete or stale', () =>
+  fixture(async ({ root, git }) => {
+    const removed = 'game/test/a.test.mjs',
+      retained = 'game/test/b.test.mjs';
+    git('rm', removed);
+    git('commit', '--quiet', '-m', 'remove obsolete test');
+    await fs.writeFile(path.join(root, removed), '// stale untracked copy');
+    await fs.rm(path.join(root, retained));
+    const selected = [removed, retained].map((name) => ({
+      id: `changed-test:${name}`,
+      command: 'node',
+      args: ['--test', name],
+    }));
+    const acquired = await acquireFocusedGitInputs(selected, root, {
+      expectedSource: git('rev-parse', 'HEAD'),
+      loadInputs: loadFocusedExecutionInputs,
+      readShellSemantics: packageScriptShellSemantics,
+    });
+    assert.deepEqual(acquired.deletedTests, [removed]);
+  }));
+
 test('tiny real Git snapshot matches filesystem inputs without executing candidate scripts', () =>
   fixture(async ({ root, git, head }) => {
     const before = {

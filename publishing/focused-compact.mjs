@@ -165,6 +165,7 @@ export async function buildCompactFocusedPacket(
   };
   const { plan, selection } = prepareCompactFocusedExecution({
     paths: options.admission.paths,
+    deletedTests: source.deletedTests ?? [],
     manifestBytes: options.manifestBytes,
     testPolicyBytes: options.testPolicyBytes,
     inputs: source.inputs,

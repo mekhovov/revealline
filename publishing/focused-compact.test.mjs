@@ -112,6 +112,23 @@ test('prepare, reconstruct, execute and aggregate retain the exact nonempty comm
   }
 });
 
+test('deleted changed tests are recorded and workers reject a different deletion inventory', async () => {
+  const x = fixture();
+  x.options.admission.paths = ['game/example.mjs', 'game/test/removed.test.mjs'];
+  const deleted = x.options.admission.paths[1];
+  const acquire = x.dependencies.acquire;
+  x.dependencies.acquire = async () => ({ ...(await acquire()), deletedTests: [deleted] });
+  const packet = await buildCompactFocusedPacket(x.options, x.dependencies);
+  assert.deepEqual(packet.selection.selected.deletedTests, [deleted]);
+  assert.equal(packet.plan.commands.length, 1);
+  await executeCompactFocusedShard(packet, packet.plan.sha256, 1, x.options, x.dependencies);
+  x.dependencies.acquire = acquire;
+  await assert.rejects(
+    executeCompactFocusedShard(packet, packet.plan.sha256, 1, x.options, x.dependencies),
+    /reconstruct/,
+  );
+});
+
 test('typed zero work requires skipped workers and never creates a test receipt', async () => {
   const x = fixture(0),
     packet = await buildCompactFocusedPacket(x.options, x.dependencies);
