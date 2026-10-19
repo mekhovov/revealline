@@ -14,13 +14,13 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1: restore validation capacity: only about115MiB free and actual ENOSPC observed. New tests/builds/source edits paused pending freed space or mounted-drive authorization.",
+    "P1: keep full builds/snapshots paused below2GiB reserve; free space recovered to about1.6GiB. Small source fixes, focused memory-only checks and native browser review have resumed.",
     "P1: reconcile12 currently conflicted non-draft feature PRs with main, starting with shared foundations; preserve original deltas and rerun exact-head required checks.",
     "P1: finish the Team input-test and guide reconciliation to current one-click launch; the withdrawn runtime proposal remains historical evidence",
     "P1: admit the separate Team catalog-test repairs and preserve all original preview, save, focus and controller assertions",
     "P1: reconcile current-main conflicts in reviewed foundations and complete required checks for text compatibility and Survival suspend",
-    "P1: develop the explained Capture Home recommendation without competing with Resume or inventing Learn routes",
-    "P1: review compact Duel, Team and Worlds screens when browser controls return; iPhone and Steam Deck physical checks remain Not tested",
+    "P1: qualify Capture Home draft1729: independent17/17 passes; complete remaining broader files and native browser/device scope.",
+    "P1: browser controls restored. Review exact-source compact Duel/Team/Worlds, locale and navigation; iPhone/Steam Deck physical checks remain Not tested.",
     "P1: finish Versus support-summary review, then full checks for Team and Versus when disk space permits; SIM and Rooms adapters remain",
     "P2: review search recovery and field-card wording in English/Ukrainian; develop the Hunt attempt-versus-achievement slice",
     "Continue the remaining approved phases and Demo-dependent work; PR counts are not a completion percentage"
@@ -890,11 +890,11 @@
       "status": "developing",
       "owner": "lane-b",
       "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
+        "automated": "focused_passed_full_pending",
+        "browser": "partial_desktop_source",
         "physical": "not_tested"
       },
-      "blocker": "Disk reserve; complete broader/independent checks before publication",
+      "blocker": "Full source reserve; remaining broader/browser acceptance; parent lessons depend on F25/D",
       "pr": null,
       "commit": null,
       "next": "Develop one explained Capture-Journey Home recommendation on the existing Start/Continue action. Preserve genuine Resume priority and Browse all. Full lesson/context recommendations remain dependent on the Learn hub and shared demos.",
@@ -905,16 +905,18 @@
         {
           "id": "capture-journey-home-recommendation",
           "priority": "P1",
-          "status": "developing",
+          "status": "draft_review",
           "owner": "lane-b",
-          "pr": null,
+          "pr": "https://github.com/mekhovov/revealline/pull/1729",
           "commit": "83a2d654d3789576934afaebd8ebf6feaa0a86dc",
           "effort": "1–2d bounded Home slice plus independent/source/browser qualification; overall F10 remains partial",
           "dependency": "Existing Journey destination owner and merged FirstFlight1655; future lesson recommendations still requireF25/D",
-          "next": "Frozen clean unpublished source. Resume complete focused/broader cohort and independent rerun after disk recovery; full/browser checks remain pending.",
+          "next": "Complete eight remaining broader files individually, preserve original incomplete cohort, full source checks and compact/browser qualification. Contextual lessons remain F25/D dependent.",
           "evidence": [
             "No new CTA or result action. Explain first mission, exact uncleared cursor, same accepted failed mission, or existing recorded-clear successor only when owned facts support it. Unknown/end/stale ownership produces no fabricated next mission. Unified-library rows are not progression order. Actual compact/landscape acceptance remains pending.",
-            "Earlier focused15/15 complete pass. Two added recovery cases passed before broader10-file cohort ended exit7 after30 successes without TAP summary: INCOMPLETE, no aggregate pass or assumed cause. Root read-only review preserves exact original launch/destination policy; independent rerun pending."
+            "Earlier focused15/15 complete pass. Two added recovery cases passed before broader10-file cohort ended exit7 after30 successes without TAP summary: INCOMPLETE, no aggregate pass or assumed cause. Root read-only review preserves exact original launch/destination policy; independent rerun pending.",
+            "Root independent complete two-file run at83a:17/17 pass, zero skipped/cancelled,46.9s. Independent AST review confirms original four launch/progression functions byte-identical;5935EN/6045UK old values preserved, four additions each. Published draft1729; full gates remain pending.",
+            "Actual IAB desktop1280x720 at exact83a: first-mission guidance visible in EN/UK, native Settings Back restores opener, Home after actual launch prioritizes Continue and removes recommendation. Screenshot paths in .cache/improvements-evidence/2026-10-19/capture-home-83a-{uk,resume}-desktop.png. Reload/earned-result/compact checks not yet complete; this is local-source browser evidence, not release/PWA/device acceptance."
           ]
         }
       ]
@@ -3246,14 +3248,15 @@
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": "Disk reserve and reading-region placement followup",
+      "blocker": "Full source reserve and actual terminal/compact browser acceptance",
       "pr": "https://github.com/mekhovov/revealline/pull/1727",
-      "commit": "6e9ee67bd866fa6cdfda631df63361bbc18cc77c",
-      "next": "Place primary Hunt result inside existing overlay-reading; requalify successor and complete full/browser checks.",
+      "commit": "ad50a9b0a865851b4e666b1c47f9b719113577d1",
+      "next": "Reading-owner correction published in existing draft1727; complete full source and actual terminal/compact review. Original6e9 proofs stay scoped.",
       "evidence": [
         "Read-only eec8 source inventory: shared ui/hunt-status terminal text mixes current run facts with records.best exact-setup personal milestones in oneparagraph; no next missing style goal. Same owner serves primarySolo, bothVersusseats andTeam, including Snake-contextsuffix. Record complete()/best() already owns exact identity/onewrite/session fallback; preserve that boundary and compact liveHUD. Bounded nextimplementation: separate terminal currentattempt/personal labels, one missing existingstylegoal, preserve optionalbonus/quota objectives and no-awards ownership. /tmp/revealline-f64-hunt-progress-readonly-assessment.md; no source/test/browser result implied.",
         "Implementation started on an isolated branch from captured maina94 after the read-only owner assessment. Original input and withdrawn policy candidates remain preserved. No completed implementation or screen/device qualification claimed yet.",
-        "Draft1727 published:66/66 affected and29/29 independent cases pass. Primary result placement is outside existing reading region; minimal correction pending, no demonstrated rendered clipping. Actual terminal/core fixtures remain separate from browser acceptance."
+        "Draft1727 published:66/66 affected and29/29 independent cases pass. Primary result placement is outside existing reading region; minimal correction pending, no demonstrated rendered clipping. Actual terminal/core fixtures remain separate from browser acceptance.",
+        "Reading placement successorad50: exactly one production container change puts primary Hunt result inside existing overlay-reading. Complete native/read-owner3-file run74/74 zero skipped/cancelled,21.7s; root independent source/test review approved bounded draft successor. Original6e9 retained; no new CSS/reader/action/record owner. Existing draft1727 FF updated; full/pixel/device qualification pending."
       ]
     },
     {
@@ -3973,6 +3976,11 @@
       "date": "2026-10-19",
       "item": "Admission/F58 review",
       "reason": "All76 feature candidate PRs rechecked:27 merged/16 ready/32draft/1withdrawn. Twelve non-draft and21 total open candidates conflict with later main. Academy terminal-playback diagnostics need a source correction and native regression. Disk reserve still blocks mutation/validation."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "F10/F64/resume",
+      "reason": "Narrowed disk pause to heavy work: source fixes and memory-only focused checks resumed at144MiB, later space recovered1.6GiB. Root F10 complete17/17 and exact-source review pass; draft1729 published. Browser attachment restored and exact83a desktop Home EN/UK/Resume review started. F64 reading fixad50 published after74/74 and root review. Academy playback/cache fixes under native red/green; full checks remain below reserve."
     }
   ],
   "deliveryDependencies": [
@@ -4030,7 +4038,7 @@
   ],
   "deliverySnapshot": {
     "featurePRsReady": 16,
-    "featurePRsDraft": 32,
+    "featurePRsDraft": 33,
     "deliverablesMerged": 27,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
