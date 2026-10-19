@@ -5,6 +5,63 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 16 October — bounded Library-listing component accepted
+
+Library metadata increment [#1537](https://github.com/mekhovov/revealline/pull/1537)
+merged normally at **02:08:52Z** as `741948b14a09a816e49054c443511186bb99eb41`,
+reviewed unchanged head `bc9bc71f`. It replaces one full retained-row `getAll()`
+result with cursor deliveries that retain metadata between callbacks, preserving
+active-first/exact-revision order and readonly transaction rejection. Every row
+is still read/cloned; per-row events are added. This bounds delivered payload
+fan-out, not a measured heap/GC/time or player-latency improvement.
+
+Independent source review and five-case rerun pass, along with 20 focused cases,
+existing repair/removal scenarios and all 14 applicable PR checks. Generic source
+`test`/`build` remain **policy-skipped**, not passed. Exact original optional and
+selected Company packages pass checksum/member/budget/closure qualification;
+these captured candidate packages are not combined post-merge R6 UI evidence.
+
+The coordinator's visible non-WebGL native check passes first Seed/List/deliberate
+readonly abort/List and normal tab close/reopen/reuse/List on the exact packaged
+module. All six actions preserve fingerprint, generation 7 and counts; native
+cursor deliveries contain at most one retained asset-bearing row. Only the
+explicitly named tiny test DB and disclosed supplied-factory facade are involved:
+32 retained rows, 2,048 total tiny Blob references including active shadows.
+[Original reports, receipt and limitations](evidence/fpv-library-listing-native-20261016/README.md)
+are preserved. Receipt SHA-256:
+`175b89ed7ac8d38a3aec4095d334337ce5947c9a149779a447a630ab779e53ef`.
+The two preserved PNG names are byte-identical; distinct JSON exports support
+the separate visits. A reproducible authoring helper validates the supplied
+original archive and stages unchanged browser files plus its exact module outside
+the repository, refusing overwrites. No duplicate production module is committed;
+new stages explicitly do not inherit native acceptance.
+
+**Still OPEN:** actual normal-player Library refresh/download/Fly and public
+integration, native heap/time, the original public closing-connection and
+zero-visible-saved-map cause/recovery, all-24 retention above 256 MiB, full
+application restart/network offline/quota/eviction, authored two-hour endurance,
+physical-device acceptance and final representative art. This component does not
+identify or repair either original public failure. Stable internal free space
+remains below the 3 GiB heavy-work floor; all preparation/checks stay external/cloud.
+No player data, capacity, schema, runtime write/reconnect behavior or acceptance
+threshold changed. Pages run [38838919718](https://github.com/mekhovov/revealline/actions/runs/38838919718)
+subsequently completes successfully: actual public marker `741948b1` and
+17,516-byte WorldStore match the original qualified module SHA-256 exactly.
+[HTTP/source receipt](evidence/fpv-library-listing-native-20261016/public-http-identity.json)
+passes independently; no public-player/UI qualification is inferred.
+
+Separately, Library family UI [#1540](https://github.com/mekhovov/revealline/pull/1540)
+remains Draft after the frozen `81c0d658` native review on 9213 repeatedly loses
+focus during redundant open-before-refresh placement at 390 × 844 and 1280 × 800.
+Focus lands on BODY and Versions is not retained after the primary changes.
+[Negative review](https://github.com/mekhovov/revealline/pull/1540#issuecomment-6206683188),
+receipt SHA-256 `e86aa7c0f7b5a15db65d3bc3cc88ab8f78014647d858a51fb08575eb7dd8b5e4`,
+is preserved; a guarded-reinsert child/test/fresh native stage is pending. Other
+sampled EN/UK layouts, 24 offers/all ten families, unknown retained IDs, exact Fly,
+keyboard disclosures and ArrowDown pass their bounded component checks. No
+DB/WebGL/physical/full-player acceptance or original public-storage cause is
+inferred. The reviewed tab is closed; no elapsed run or renderer is active.
+
 ## Current priorities — 16 October research and delivery review
 
 The [current review and priority plan](fpv-plan-review-20261016.md) supersedes the
@@ -18,7 +75,7 @@ replayable activities; P3 later authored regions. Integrated recovery and D6 pro
 in parallel. Existing package, recording, physics and protected-publication contracts
 remain in force; no runtime change is made by this planning update.
 
-Main `aac03bf0` includes merged Alpine R6 Library admission #1535 at reviewed
+The earlier catalogue review on main `aac03bf0` includes merged Alpine R6 Library admission #1535 at reviewed
 `39a80bdd`, with exact original package and bounded local native gates accepted.
 The public `aac03bf0` marker, canonical 24-offer catalogue/capability and R6
 descriptor are now independently verified after Pages run 38830488894. The last

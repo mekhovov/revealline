@@ -1384,3 +1384,10 @@ button:disabled {
   background: #e6b85c;
   color: #10231d;
 }
+
+.overflight-reroll-hint {
+  flex-basis: 100%;
+  min-inline-size: 0;
+  margin: 0;
+  overflow-wrap: break-word;
+}
