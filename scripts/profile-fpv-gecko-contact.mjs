@@ -8,10 +8,15 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { replayContactTape } from "../game/test/helpers/fpv-contact-tape.mjs";
 
-const [playwrightModule, outputDirectory] = process.argv.slice(2);
-if (!playwrightModule || !outputDirectory || process.argv.length !== 4)
+const [playwrightModule, executable, outputDirectory] = process.argv.slice(2);
+if (
+  !playwrightModule ||
+  !executable ||
+  !outputDirectory ||
+  process.argv.length !== 5
+)
   throw new Error(
-    "Usage: node scripts/profile-fpv-gecko-contact.mjs <installed-playwright> <new-output-directory>",
+    "Usage: node scripts/profile-fpv-gecko-contact.mjs <installed-playwright> <installed-firefox> <new-output-directory>",
   );
 const root = fileURLToPath(new URL("../", import.meta.url)),
   directory = path.resolve(outputDirectory),
@@ -182,13 +187,13 @@ const timer = setTimeout(
   45000,
 );
 try {
-  const { firefox } = await import(pathToFileURL(playwrightModule)),
-    executable = firefox.executablePath();
+  const { firefox } = await import(pathToFileURL(playwrightModule));
   report.executable = {
     path: executable,
     sha256: hash(await readFile(executable)),
   };
   browser = await firefox.launch({
+    executablePath: executable,
     headless: true,
     env: { ...process.env, ...environment },
   });
