@@ -216,3 +216,27 @@ test('switching, leaving, ended and destroyed views never invoke disabled course
   assert.equal($('select').value, 'empty-side');
   assert.deepEqual(calls, []);
 });
+
+test('Home entry uses the existing optional course owner and retires with the presenter', async (t) => {
+  const { view, $, calls } = await setup(t);
+  view.render({ entry: { homeAvailable: true, helpAvailable: true } });
+  assert.equal($('home-enter').hidden, false);
+  $('home-enter').emit('pointerdown');
+  assert.deepEqual(calls, []);
+  $('home-enter').emit('click');
+  assert.deepEqual(calls, ['enter']);
+  view.render({ entry: { homeAvailable: true, helpAvailable: true, pending: true } });
+  assert.equal($('home-enter').disabled, true);
+  $('home-enter').emit('click');
+  assert.deepEqual(calls, ['enter'], 'Pending entry cannot submit twice.');
+  view.render({ entry: { homeAvailable: false, helpAvailable: true } });
+  assert.equal($('home-enter').hidden, true);
+  $('home-enter').emit('click');
+  assert.deepEqual(calls, ['enter'], 'Other hosts keep their existing Help entry.');
+  view.render(state());
+  assert.equal($('home-enter').hidden, true, 'An active course cannot enter itself.');
+  view.render({ entry: { homeAvailable: true } });
+  view.destroy();
+  $('home-enter').emit('click');
+  assert.deepEqual(calls, ['enter']);
+});
