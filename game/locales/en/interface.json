@@ -5935,5 +5935,8 @@
   "captureMedal.cleanMet": "No lives lost in this attempt.",
   "captureMedal.cleanMissing": "A life was lost; complete a retry without losing a life.",
   "overflight.rerollsRemaining_one": "{{count}} reroll left",
-  "overflight.rerollsRemaining_other": "{{count}} rerolls left"
+  "overflight.rerollsRemaining_other": "{{count}} rerolls left",
+  "versusHomeRecommendation.first": "Suggested race: {{mission}}. Start with the first mission in this Journey.",
+  "versusHomeRecommendation.selected": "Selected race: {{mission}}. Start uses this exact mission and your current match setup.",
+  "versusHomeRecommendation.recordedNext": "Suggested race: {{mission}}. It follows {{previous}}, whose completion is recorded in your Journey progress."
 }

@@ -6047,5 +6047,8 @@
   "overflight.rerollsRemaining_one": "Залишилася {{count}} заміна",
   "overflight.rerollsRemaining_few": "Залишилося {{count}} заміни",
   "overflight.rerollsRemaining_many": "Залишилося {{count}} замін",
-  "overflight.rerollsRemaining_other": "Залишилося {{count}} заміни"
+  "overflight.rerollsRemaining_other": "Залишилося {{count}} заміни",
+  "versusHomeRecommendation.first": "Пропонована місія для змагання: {{mission}}. Почніть із першої місії цієї подорожі.",
+  "versusHomeRecommendation.selected": "Обрана місія для змагання: {{mission}}. Початок змагання використовує саме цю місію та поточні налаштування матчу.",
+  "versusHomeRecommendation.recordedNext": "Пропонована місія для змагання: {{mission}}. Вона йде після місії «{{previous}}», завершення якої записано у вашому прогресі."
 }

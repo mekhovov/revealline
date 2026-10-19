@@ -75,6 +75,11 @@ export function createCouchShell({
   controllerNeedsTouch = () => false,
   getSceneContext = () => ({}),
 } = {}) {
+  const recommendation = doc.getElementById('race-home-recommendation');
+  const recommendationHome = {
+    parent: recommendation.parentNode,
+    next: recommendation.nextSibling,
+  };
   const nativeMenu = prepareNativeMenus({ document: doc, mode: 'versus', getSceneContext });
   const $ = (id) => doc.getElementById(id),
     view = doc.defaultView,
@@ -145,6 +150,7 @@ export function createCouchShell({
       { element: $('versus-landing-fullscreen-status') },
     ],
   });
+  $('race-start').closest('.race-menu-actions').before(recommendation);
   let screen = 'main',
     status = null,
     opener = null,
@@ -627,6 +633,7 @@ export function createCouchShell({
     format = 'single',
     contentBusy = false,
     focusTransition = true,
+    startRecommendation = null,
   }) {
     if (destroyed) return;
     // Authored native/modified links need the edition before activation. Legacy
@@ -647,6 +654,16 @@ export function createCouchShell({
     }
     const series = format === 'first-to-two';
     setText('race-summary', summary);
+    const explanation = status === 'ready' && !contentBusy ? startRecommendation?.() : null;
+    setText('race-home-recommendation', explanation ? startRecommendation : '');
+    recommendation.hidden = !explanation;
+    const start = $('race-start');
+    const describedBy = (start.getAttribute('aria-describedby') || '')
+      .split(/\s+/)
+      .filter((id) => id && id !== recommendation.id);
+    if (explanation) describedBy.push(recommendation.id);
+    if (describedBy.length) start.setAttribute('aria-describedby', describedBy.join(' '));
+    else start.removeAttribute('aria-describedby');
     setText('race-format-note', () =>
       series ? t('interface:couch.seriesNote') : t('interface:couch.singleRaceNote'),
     );
@@ -772,6 +789,20 @@ export function createCouchShell({
       modeChoices.dispose();
       pauseMenu?.destroy();
       nativeMenu?.destroy();
+      recommendationHome.parent.insertBefore(
+        recommendation,
+        recommendationHome.next?.parentNode === recommendationHome.parent
+          ? recommendationHome.next
+          : null,
+      );
+      recommendation.hidden = true;
+      setText('race-home-recommendation', '');
+      const start = $('race-start');
+      const describedBy = (start.getAttribute('aria-describedby') || '')
+        .split(/\s+/)
+        .filter((id) => id && id !== recommendation.id);
+      if (describedBy.length) start.setAttribute('aria-describedby', describedBy.join(' '));
+      else start.removeAttribute('aria-describedby');
       for (const remove of removers) remove();
     },
   };
