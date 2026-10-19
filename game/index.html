@@ -3264,16 +3264,31 @@ No offline check yet.</pre
           >
             Back to lesson
           </button>
-          <button id="shell-featured" type="button" class="button primary">
+          <button
+            id="shell-featured"
+            type="button"
+            class="button primary"
+            aria-describedby="shell-destination shell-action-detail"
+          >
             <span data-field-kit-copy="navigation.start" data-i18n="interface:start">Start</span>
             <span aria-hidden="true">→</span>
           </button>
-          <button id="shell-continue" type="button" class="button primary" hidden>
+          <button
+            id="shell-continue"
+            type="button"
+            class="button primary"
+            aria-describedby="shell-destination shell-action-detail"
+            hidden
+          >
             <span data-field-kit-copy="navigation.continue" data-i18n="common:actions.continue"
               >Continue</span
             >
             <span aria-hidden="true">→</span>
           </button>
+          <div id="shell-action-context" class="home-action-context" aria-live="polite" hidden>
+            <p id="shell-destination" class="home-destination"></p>
+            <p id="shell-action-detail" class="home-action-detail" hidden></p>
+          </div>
           <button id="first-flight-home-enter" type="button" class="button secondary" hidden>
             <span data-i18n="interface:firstFlight">First Flight</span>
             <span aria-hidden="true"> · </span>
@@ -3374,7 +3389,6 @@ No offline check yet.</pre
             Sound: off
           </button>
         </nav>
-        <p id="shell-destination" class="home-destination" aria-live="polite"></p>
         <details id="shell-play-options" class="home-play-options" data-course-hide>
           <summary data-i18n="interface:home.difficultyAppearance">
             Difficulty &amp; appearance

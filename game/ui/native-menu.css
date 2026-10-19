@@ -255,6 +255,20 @@
     border: 0;
     background: none;
   }
+  body.field-kit .native-landing .home-action-context {
+    max-width: 100%;
+    padding: 0 12px 6px;
+    overflow-wrap: anywhere;
+  }
+  body.field-kit .native-landing .home-action-context p {
+    max-width: none;
+    margin: 0;
+    color: var(--fk-text-muted);
+    font: 400 var(--fk-text-secondary) / 1.5 var(--fk-font-ui, sans-serif);
+  }
+  body.field-kit .native-landing .home-action-context .home-destination {
+    color: var(--fk-text);
+  }
   body.field-kit .native-landing .native-menu-actions > :is(button, a) {
     display: flex;
     align-items: center;
