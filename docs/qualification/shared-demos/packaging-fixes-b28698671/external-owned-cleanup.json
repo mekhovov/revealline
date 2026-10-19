@@ -1,0 +1,343 @@
+{
+  "format": "SharedDemoInterruptedPackagingCleanupV1",
+  "complete": false,
+  "started": "2026-10-19T08:24:51.235588+00:00",
+  "reason": "Parent-directed interruption after direct non-frozen input-contract failure. The original wrapper did not finish promptly after requested SIGTERM; one descendant was observed in uninterruptible I/O. The supervisor cancellation delay itself was not determined. No test pass is claimed.",
+  "originalExecSession": 55662,
+  "originalSupervisorIdentity": {
+    "pid": 90254,
+    "ppid": 3293,
+    "pgid": 90254,
+    "uid": 502,
+    "started": "Mon Oct 19 10:14:08 2026",
+    "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py",
+    "profile": null
+  },
+  "sourceHead": "f51d2597a3bcc711c229bbc51445e7150bfee1db",
+  "probe": {
+    "canonicalNavigationInput": false,
+    "inputFiles": 87,
+    "inputBytes": 4984403
+  },
+  "measuredOwnedExternalAllocationKiB": 55196,
+  "cleanup": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Exact previously spawned supervisor from exec session55662, with matching PID/start time/UID/argv, and its observed descendants only. No name/group-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 13,
+      "actionLimit": 1024,
+      "actionCount": 4,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 90254,
+        "ppid": 3293,
+        "pgid": 90254,
+        "uid": 502,
+        "started": "Mon Oct 19 10:14:08 2026",
+        "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T08:24:51.235255+00:00"
+      },
+      {
+        "pid": 90265,
+        "ppid": 90254,
+        "pgid": 90265,
+        "uid": 502,
+        "started": "Mon Oct 19 10:14:08 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:24:51.235493+00:00"
+      },
+      {
+        "pid": 90479,
+        "ppid": 90265,
+        "pgid": 90265,
+        "uid": 502,
+        "started": "Mon Oct 19 10:14:36 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90265,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:24:51.235499+00:00"
+      },
+      {
+        "pid": 10763,
+        "ppid": 90254,
+        "pgid": 90254,
+        "uid": 0,
+        "started": "Mon Oct 19 10:24:52 2026",
+        "argv": "ps -axo pid=,ppid=,pgid=,uid=,lstart=,command=",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:24:52.079268+00:00"
+      },
+      {
+        "pid": 10780,
+        "ppid": 90254,
+        "pgid": 90254,
+        "uid": 0,
+        "started": "Mon Oct 19 10:24:53 2026",
+        "argv": "ps -axo pid=,ppid=,pgid=,uid=,lstart=,command=",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:24:53.359559+00:00"
+      },
+      {
+        "pid": 10795,
+        "ppid": 90254,
+        "pgid": 90254,
+        "uid": 0,
+        "started": "Mon Oct 19 10:24:54 2026",
+        "argv": "ps -axo pid=,ppid=,pgid=,uid=,lstart=,command=",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:24:54.413486+00:00"
+      },
+      {
+        "pid": 10808,
+        "ppid": 90254,
+        "pgid": 90254,
+        "uid": 0,
+        "started": "Mon Oct 19 10:24:55 2026",
+        "argv": "ps -axo pid=,ppid=,pgid=,uid=,lstart=,command=",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:24:55.496473+00:00"
+      },
+      {
+        "pid": 10819,
+        "ppid": 90254,
+        "pgid": 90254,
+        "uid": 0,
+        "started": "Mon Oct 19 10:24:56 2026",
+        "argv": "(ps)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:24:56.317350+00:00"
+      },
+      {
+        "pid": 10833,
+        "ppid": 90254,
+        "pgid": 90254,
+        "uid": 0,
+        "started": "Mon Oct 19 10:24:57 2026",
+        "argv": "(ps)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:24:57.373890+00:00"
+      },
+      {
+        "pid": 10871,
+        "ppid": 90254,
+        "pgid": 90254,
+        "uid": 0,
+        "started": "Mon Oct 19 10:24:59 2026",
+        "argv": "(ps)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:24:59.168164+00:00"
+      },
+      {
+        "pid": 10887,
+        "ppid": 90254,
+        "pgid": 90254,
+        "uid": 0,
+        "started": "Mon Oct 19 10:25:00 2026",
+        "argv": "(ps)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:25:00.217682+00:00"
+      },
+      {
+        "pid": 10905,
+        "ppid": 90254,
+        "pgid": 90254,
+        "uid": 0,
+        "started": "Mon Oct 19 10:25:01 2026",
+        "argv": "(ps)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:25:01.274785+00:00"
+      },
+      {
+        "pid": 90265,
+        "ppid": 90254,
+        "pgid": 90265,
+        "uid": 502,
+        "started": "Mon Oct 19 10:14:08 2026",
+        "argv": "<defunct>",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "observedAt": "2026-10-19T08:25:01.692650+00:00"
+      }
+    ],
+    "actions": [
+      {
+        "pid": 90254,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "at": "2026-10-19T08:24:51.381245+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 90254,
+          "ppid": 3293,
+          "pgid": 90254,
+          "uid": 502,
+          "started": "Mon Oct 19 10:14:08 2026",
+          "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      },
+      {
+        "pid": 90254,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          90254,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py"
+        ],
+        "at": "2026-10-19T08:25:01.517599+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 90254,
+          "ppid": 3293,
+          "pgid": 90254,
+          "uid": 502,
+          "started": "Mon Oct 19 10:14:08 2026",
+          "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python .cache/run-packaging-focused.py",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      },
+      {
+        "pid": 90265,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          90265,
+          "Mon Oct 19 10:14:08 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs"
+        ],
+        "at": "2026-10-19T08:25:01.563342+00:00",
+        "verifiedBeforeSignal": {
+          "pid": 90265,
+          "ppid": 90254,
+          "pgid": 90265,
+          "uid": 502,
+          "started": "Mon Oct 19 10:14:08 2026",
+          "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs",
+          "profile": null
+        },
+        "result": "signalled exact owned process"
+      },
+      {
+        "pid": 90479,
+        "signal": "SIGTERM",
+        "expectedIdentity": [
+          90479,
+          "Mon Oct 19 10:14:36 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "at": "2026-10-19T08:25:01.608292+00:00",
+        "result": "not signalled: exited or identity changed"
+      }
+    ],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "0bf6921a4d04ef738521c6dc2a0643c706791c2a095e6b4b6a67d2522e2c0a17",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "finished": "2026-10-19T08:25:01.882919+00:00"
+}

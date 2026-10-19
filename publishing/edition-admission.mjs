@@ -430,6 +430,7 @@ export async function validateEditionAdmission(envelope, { read } = {}) {
           ),
           'selected-themes': (catalog.editions ?? []).some((item) => item.boot?.themes === name),
           'selected-practice-presentation': name === 'game/content/scenarios/line-impact-demo.json',
+          'selected-demo-catalog': name === 'game/demo-data/catalog.json',
           'selected-runtime-imports': /\.(?:mjs|js)$/.test(name),
         };
         if (
@@ -455,6 +456,7 @@ export async function validateEditionAdmission(envelope, { read } = {}) {
         'game/i18n/bootstrap.mjs',
         'game/i18n/content-registry.mjs',
         'game/content/scenarios/line-impact-demo.json',
+        'game/demo-data/catalog.json',
         ...(catalog.editions ?? []).map((item) => item.boot?.themes).filter(Boolean),
       ];
       for (const name of aggregates)

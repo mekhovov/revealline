@@ -1,0 +1,473 @@
+{
+  "format": "SharedDemoFocusedPackagingVerificationV1",
+  "complete": false,
+  "started": "2026-10-19T08:27:13.137809+00:00",
+  "headBefore": "b28698671b997060f73509ff622e6b7bc57d5e89",
+  "sourceBefore": {
+    "publishing/edition-admission.mjs": "cffaa70c3613e9f0408df59132891c908c52447106e29ccc39c2d87754e3854c",
+    "publishing/edition-candidate.mjs": "2c1823bcb047f171ba16fcf92aa6613731014652b428b62e62e055d510c48d51",
+    "publishing/optional-package-admission.mjs": "552e4aaaa99c7479ffbb29d5663e1f77d6879ae73331eda3b141adaa5da367df",
+    "publishing/optional-package-candidate.mjs": "1c0defba04673d4b43ff31141d5d34257f9be1b088ccdec2ffa67a4fd1dddaf1",
+    "publishing/optional-package-policy.mjs": "d617d8105a6cbf25c691c0ffd1cc0a5f6dcfc0ef40982c83fdd22f26dd3267b3",
+    "scripts/build-optional-practice.mjs": "1b83312718bbc14dbed7c4be0a9e13ae578204a06773ed89bd32d4ec01670789",
+    "scripts/compile-edition.mjs": "5a1ab37ba578fa0d3b91a704b8920ef326395bbfaa8e7e84656caf7dfb42ab6b",
+    "scripts/edition-runtime.mjs": "1e1010ac4ee56154024e13357fec4bcb1b32af726f5f780193d17c2056592049",
+    "scripts/optional-launcher.mjs": "c5c030d44953a8ea0c1d051de536e650a018bb598eb283fffb2a7b3ce0ced325",
+    "game/test/edition-demo-packaging.test.mjs": "ee80cb6ef9635d040b67549f6ab8ce89e7c1e907a137f6b10caf94359e020197",
+    "publishing/optional-package-admission.test.mjs": "05b8745f3ab272e7053e4f06fef7c3ff377cf2d1221aed9142c54b16b7a645c0",
+    "scripts/test-bundle-editions.mjs": "960ac694e9e03c675638a116ce71b1511a493cf81aa1e8060f386845b56f66c5"
+  },
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "game/test/edition-demo-packaging.test.mjs",
+    "publishing/edition-admission.test.mjs",
+    "scripts/test-bundle-editions.mjs",
+    "publishing/optional-package-admission.test.mjs",
+    "scripts/test-bundle-optional-practice.mjs",
+    "scripts/test-optional-practice.mjs"
+  ],
+  "nodeVersion": "v22.22.2",
+  "platform": "darwin",
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/packaging-focused-local-b28698671-20261019T102713-tmp",
+  "timeoutSeconds": 1200,
+  "localStorage": {
+    "freeFloorBytes": 209715200,
+    "allocationCapBytes": 314572800,
+    "freeBeforeBytes": 724996096,
+    "minimumObservedFreeBytes": 649842688,
+    "maximumObservedFixtureBytes": 48619520
+  },
+  "ownerSHA256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+  "wrapperSHA256": "7127ef78d5f2a5497f04bce41146211421c857cdac6a03544dc7f656074b737c",
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 22,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 11493,
+        "ppid": 11481,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:13 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T08:27:13.459178+00:00"
+      },
+      {
+        "pid": 11499,
+        "ppid": 11493,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:13 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 game/test/edition-demo-packaging.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11493,
+          "Mon Oct 19 10:27:13 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:13.772086+00:00"
+      },
+      {
+        "pid": 11499,
+        "ppid": 11493,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:13 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11493,
+          "Mon Oct 19 10:27:13 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:14.525001+00:00"
+      },
+      {
+        "pid": 11505,
+        "ppid": 11493,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:14 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 publishing/optional-package-admission.test.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11493,
+          "Mon Oct 19 10:27:13 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:14.775501+00:00"
+      },
+      {
+        "pid": 11671,
+        "ppid": 11493,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:23 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-editions.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11493,
+          "Mon Oct 19 10:27:13 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:24.060021+00:00"
+      },
+      {
+        "pid": 11681,
+        "ppid": 11493,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:24 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11493,
+          "Mon Oct 19 10:27:13 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:24.315791+00:00"
+      },
+      {
+        "pid": 11684,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:24 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --input-type=module -e await import(\"./publishing/fastline-release-publisher.mjs\")",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:24.825354+00:00"
+      },
+      {
+        "pid": 11688,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:24 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --input-type=module -e await import(\"./scripts/verify-practice-site.mjs\")",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:25.075501+00:00"
+      },
+      {
+        "pid": 11731,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:27 2026",
+        "argv": "/Library/Developer/CommandLineTools/usr/bin/git add .",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:27.953853+00:00"
+      },
+      {
+        "pid": 11756,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:28 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --preview .cache/preview",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:28.735097+00:00"
+      },
+      {
+        "pid": 11756,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:28 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:31.318730+00:00"
+      },
+      {
+        "pid": 11854,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:34 2026",
+        "argv": "/Library/Developer/CommandLineTools/usr/bin/git add .",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:34.993771+00:00"
+      },
+      {
+        "pid": 11867,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:35 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --out .cache/first",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:35.509890+00:00"
+      },
+      {
+        "pid": 11867,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:35 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:37.106198+00:00"
+      },
+      {
+        "pid": 11921,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:37 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --out .cache/second",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:37.365121+00:00"
+      },
+      {
+        "pid": 11937,
+        "ppid": 11921,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:37 2026",
+        "argv": "(git)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11921,
+          "Mon Oct 19 10:27:37 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --out .cache/second"
+        ],
+        "observedAt": "2026-10-19T08:27:37.365154+00:00"
+      },
+      {
+        "pid": 12004,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:38 2026",
+        "argv": "git rev-parse HEAD",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:38.950226+00:00"
+      },
+      {
+        "pid": 12010,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:39 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --out .cache/both --packages civilian-fpv,civilian-flight",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:39.203927+00:00"
+      },
+      {
+        "pid": 12104,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:41 2026",
+        "argv": "(node)",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:42.056200+00:00"
+      },
+      {
+        "pid": 12113,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:42 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --out .cache/dirty-icon",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:42.309911+00:00"
+      },
+      {
+        "pid": 12125,
+        "ppid": 11681,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:42 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node scripts/bundle-optional-practice.mjs --out .cache/dirty",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11681,
+          "Mon Oct 19 10:27:24 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-bundle-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:42.567142+00:00"
+      },
+      {
+        "pid": 12140,
+        "ppid": 11493,
+        "pgid": 11493,
+        "uid": 502,
+        "started": "Mon Oct 19 10:27:42 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 scripts/test-optional-practice.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          11493,
+          "Mon Oct 19 10:27:13 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap game/test/edition-demo-packaging.test.mjs publishing/edition-admission.test.mjs scripts/test-bundle-editions.mjs publishing/optional-package-admission.test.mjs scripts/test-bundle-optional-practice.mjs scripts/test-optional-practice.mjs"
+        ],
+        "observedAt": "2026-10-19T08:27:43.083420+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/packaging-focused-local-b28698671-20261019T102713.tap.txt",
+    "byteLimit": 4194304,
+    "totalBytes": 11898,
+    "writtenBytes": 11898,
+    "truncatedBytes": 0,
+    "tailLimit": 32768,
+    "tailBytes": 11898,
+    "tailSHA256": "f9ca25bd7be61cc096e43d1dcb87c99ea91e2667b1dda9c779e198cac049d36e",
+    "tail": "TAP version 13\n# Subtest: selected Company demo metadata uses execution campaign identity and preserves retained keys\nok 1 - selected Company demo metadata uses execution campaign identity and preserves retained keys\n  ---\n  duration_ms: 168.179959\n  type: 'test'\n  ...\n# Subtest: Company projection accepts an empty catalog but still rejects malformed excluded clips\nok 2 - Company projection accepts an empty catalog but still rejects malformed excluded clips\n  ---\n  duration_ms: 3.379625\n  type: 'test'\n  ...\n# Subtest: compiler derives selected demo bodies from its supplied catalog and keeps Snake resources\nok 3 - compiler derives selected demo bodies from its supplied catalog and keeps Snake resources\n  ---\n  duration_ms: 52.604167\n  type: 'test'\n  ...\n# Subtest: public runtime verifies original asset bytes and excludes private or authoring history\nok 4 - public runtime verifies original asset bytes and excludes private or authoring history\n  ---\n  duration_ms: 0.893625\n  type: 'test'\n  ...\n# Subtest: source archive gate includes unselected assets and permits public repository metadata\nok 5 - source archive gate includes unselected assets and permits public repository metadata\n  ---\n  duration_ms: 0.559959\n  type: 'test'\n  ...\n# Subtest: public development template requires the exact reviewed bytes\nok 6 - public development template requires the exact reviewed bytes\n  ---\n  duration_ms: 2.229709\n  type: 'test'\n  ...\n# Subtest: edition envelope binds exact source and original descriptors without changing legacy artifacts\nok 7 - edition envelope binds exact source and original descriptors without changing legacy artifacts\n  ---\n  duration_ms: 2.415333\n  type: 'test'\n  ...\n# Subtest: Company Snake entry projections survive original-byte archive admission\nok 8 - Company Snake entry projections survive original-byte archive admission\n  ---\n  duration_ms: 1.300416\n  type: 'test'\n  ...\n# Subtest: missing, duplicate, over-budget and mismatched source bindings reject admission\nok 9 - missing, duplicate, over-budget and mismatched source bindings reject admission\n  ---\n  duration_ms: 1.761375\n  type: 'test'\n  ...\n# Subtest: Company admission independently rejects runtime overflow before inspecting archive members\nok 10 - Company admission independently rejects runtime overflow before inspecting archive members\n  ---\n  duration_ms: 2.252042\n  type: 'test'\n  ...\n# Subtest: original ZIP inspection rejects injected undeclared members even with a valid outer hash\nok 11 - original ZIP inspection rejects injected undeclared members even with a valid outer hash\n  ---\n  duration_ms: 0.303292\n  type: 'test'\n  ...\n# Subtest: source archive cannot self-attest private inputs eligible\nok 12 - source archive cannot self-attest private inputs eligible\n  ---\n  duration_ms: 0.613042\n  type: 'test'\n  ...\n# Subtest: undeclared company font originals cannot enter a public source archive\nok 13 - undeclared company font originals cannot enter a public source archive\n  ---\n  duration_ms: 0.224834\n  type: 'test'\n  ...\n# Subtest: whole-source eligibility permits existing Unicode and native scale filenames without relaxing runtime paths\nok 14 - whole-source eligibility permits existing Unicode and native scale filenames without relaxing runtime paths\n  ---\n  duration_ms: 0.361416\n  type: 'test'\n  ...\n# Subtest: archive admission rejects a missing transitive import even when member hashes and counts match\nok 15 - archive admission rejects a missing transitive import even when member hashes and counts match\n  ---\n  duration_ms: 164.642625\n  type: 'test'\n  ...\n# Subtest: SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure\nok 16 - SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure\n  ---\n  duration_ms: 1280.828708\n  type: 'test'\n  ...\n# Subtest: optional candidate is byte-reproducible and inventories only its selected public dependency closure\nok 17 - optional candidate is byte-reproducible and inventories only its selected public dependency closure\n  ---\n  duration_ms: 296.021125\n  type: 'test'\n  ...\n# Subtest: tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission\nok 18 - tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission\n  ---\n  duration_ms: 387.128584\n  type: 'test'\n  ...\n# Subtest: source and generated-worker provenance are mandatory and bounded\nok 19 - source and generated-worker provenance are mandatory and bounded\n  ---\n  duration_ms: 483.191292\n  type: 'test'\n  ...\n# Subtest: pinned generated launcher code still must match its committed template and isolated closure\nok 20 - pinned generated launcher code still must match its committed template and isolated closure\n  ---\n  duration_ms: 436.1655\n  type: 'test'\n  ...\n# Subtest: pending human/device gates never become promotion approval and reviewed evidence pins are exact\nok 21 - pending human/device gates never become promotion approval and reviewed evidence pins are exact\n  ---\n  duration_ms: 434.915875\n  type: 'test'\n  ...\n# Subtest: civilian-flight retains one complete launcher navigation module with its original input pin\nok 22 - civilian-flight retains one complete launcher navigation module with its original input pin\n  ---\n  duration_ms: 286.193541\n  type: 'test'\n  ...\n# Subtest: civilian-fpv retains one complete launcher navigation module with its original input pin\nok 23 - civilian-fpv retains one complete launcher navigation module with its original input pin\n  ---\n  duration_ms: 1322.685292\n  type: 'test'\n  ...\n# Subtest: fpv-worlds retains one complete launcher navigation module with its original input pin\nok 24 - fpv-worlds retains one complete launcher navigation module with its original input pin\n  ---\n  duration_ms: 1749.947917\n  type: 'test'\n  ...\n# Subtest: launcher alias admission rejects forged canonical input pins and unknown projection inputs\nok 25 - launcher alias admission rejects forged canonical input pins and unknown projection inputs\n  ---\n  duration_ms: 462.139917\n  type: 'test'\n  ...\n# Subtest: source discovery preserves canonical launcher inputs before frozen packaging\nok 26 - source discovery preserves canonical launcher inputs before frozen packaging\n  ---\n  duration_ms: 98.28775\n  type: 'test'\n  ...\n# Subtest: explicit launcher inputs retain the optional-package no-network admission rule\nok 27 - explicit launcher inputs retain the optional-package no-network admission rule\n  ---\n  duration_ms: 335.135209\n  type: 'test'\n  ...\n# Subtest: candidate CI defaults cover every currently public company audience edition\nok 28 - candidate CI defaults cover every currently public company audience edition\n  ---\n  duration_ms: 2.874916\n  type: 'test'\n  ...\n# Subtest: candidate CI keeps separate bounded budgets for edition and optional-practice qualification\nok 29 - candidate CI keeps separate bounded budgets for edition and optional-practice qualification\n  ---\n  duration_ms: 0.522292\n  type: 'test'\n  ...\n# Subtest: capacity CI artifact whitelists small metadata after qualification checks without replacing full candidates\nok 30 - capacity CI artifact whitelists small metadata after qualification checks without replacing full candidates\n  ---\n  duration_ms: 0.496209\n  type: 'test'\n  ...\n# Subtest: complete candidate files reproduce byte for byte regardless of source Map insertion order\nok 31 - complete candidate files reproduce byte for byte regardless of source Map insertion order\n  ---\n  duration_ms: 3.522667\n  type: 'test'\n  ...\n# Subtest: ZIP reader independently verifies structures, original CRCs, hashes, names and closed inventory\nok 32 - ZIP reader independently verifies structures, original CRCs, hashes, names and closed inventory\n  ---\n  duration_ms: 5.301083\n  type: 'test'\n  ...\n# Subtest: candidate construction fails closed for private source sentinels and unapproved media\nok 33 - candidate construction fails closed for private source sentinels and unapproved media\n  ---\n  duration_ms: 0.398666\n  type: 'test'\n  ...\n# Subtest: source archive ships exact selected projections with original input hashes, never aggregate content\nok 34 - source archive ships exact selected projections with original input hashes, never aggregate content\n  ---\n  duration_ms: 1.420916\n  type: 'test'\n  ...\n# Subtest: candidate sources bind the selected demo catalog and exclude unselected recording bodies\nok 35 - candidate sources bind the selected demo catalog and exclude unselected recording bodies\n  ---\n  duration_ms: 3.499459\n  type: 'test'\n  ...\n# Subtest: sparse publication checkouts include the full admitted directory import closure\nok 36 - sparse publication checkouts include the full admitted directory import closure\n  ---\n  duration_ms: 418.043417\n  type: 'test'\n  ...\n# Subtest: maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication\nok 37 - maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication\n  ---\n  duration_ms: 8908.821542\n  type: 'test'\n  ...\n# Subtest: frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs\nok 38 - frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs\n  ---\n  duration_ms: 8842.121458\n  type: 'test'\n  ...\n# Subtest: optional practice archives are reproducible, admitted completely and absent from core build inputs\nok 39 - optional practice archives are reproducible, admitted completely and absent from core build inputs\n  ---\n  duration_ms: 1297.594708\n  type: 'test'\n  ...\n# Subtest: release-qualified practice retains the full shared menu stylesheet closure within its limit\nnot ok 40 - release-qualified practice retains the full shared menu stylesheet closure within its limit\n  ---\n  duration_ms: 107.618292\n  type: 'test'\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/test-optional-practice.mjs:85:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    95 !== 96\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 96\n  actual: 95\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/test-optional-practice.mjs:91:10)\n    async Test.run (node:internal/test_runner/test:1054:7)\n    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)\n  ...\n# Subtest: an unexpected runtime import fails closed before a package can be published\nok 41 - an unexpected runtime import fails closed before a package can be published\n  ---\n  duration_ms: 224.980625\n  type: 'test'\n  ...\n# Subtest: worker reports progress, validates cached dependencies and detects eviction\nok 42 - worker reports progress, validates cached dependencies and detects eviction\n  ---\n  duration_ms: 4.072792\n  type: 'test'\n  ...\n# Subtest: cancel discards only the incomplete version and keeps previous and foreign caches\nok 43 - cancel discards only the incomplete version and keeps previous and foreign caches\n  ---\n  duration_ms: 0.456708\n  type: 'test'\n  ...\n# Subtest: optional worker verifies every byte before activation and only replaces its own scope cache\nok 44 - optional worker verifies every byte before activation and only replaces its own scope cache\n  ---\n  duration_ms: 0.971917\n  type: 'test'\n  ...\n# Subtest: corruption or quota prevents optional activation and preserves previously installed caches\nok 45 - corruption or quota prevents optional activation and preserves previously installed caches\n  ---\n  duration_ms: 1.305291\n  type: 'test'\n  ...\n1..45\n# tests 45\n# suites 0\n# pass 44\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 31033.758458\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 1,
+  "sourceAfter": {
+    "publishing/edition-admission.mjs": "cffaa70c3613e9f0408df59132891c908c52447106e29ccc39c2d87754e3854c",
+    "publishing/edition-candidate.mjs": "2c1823bcb047f171ba16fcf92aa6613731014652b428b62e62e055d510c48d51",
+    "publishing/optional-package-admission.mjs": "552e4aaaa99c7479ffbb29d5663e1f77d6879ae73331eda3b141adaa5da367df",
+    "publishing/optional-package-candidate.mjs": "1c0defba04673d4b43ff31141d5d34257f9be1b088ccdec2ffa67a4fd1dddaf1",
+    "publishing/optional-package-policy.mjs": "d617d8105a6cbf25c691c0ffd1cc0a5f6dcfc0ef40982c83fdd22f26dd3267b3",
+    "scripts/build-optional-practice.mjs": "1b83312718bbc14dbed7c4be0a9e13ae578204a06773ed89bd32d4ec01670789",
+    "scripts/compile-edition.mjs": "5a1ab37ba578fa0d3b91a704b8920ef326395bbfaa8e7e84656caf7dfb42ab6b",
+    "scripts/edition-runtime.mjs": "1e1010ac4ee56154024e13357fec4bcb1b32af726f5f780193d17c2056592049",
+    "scripts/optional-launcher.mjs": "c5c030d44953a8ea0c1d051de536e650a018bb598eb283fffb2a7b3ce0ced325",
+    "game/test/edition-demo-packaging.test.mjs": "ee80cb6ef9635d040b67549f6ab8ce89e7c1e907a137f6b10caf94359e020197",
+    "publishing/optional-package-admission.test.mjs": "05b8745f3ab272e7053e4f06fef7c3ff377cf2d1221aed9142c54b16b7a645c0",
+    "scripts/test-bundle-editions.mjs": "960ac694e9e03c675638a116ce71b1511a493cf81aa1e8060f386845b56f66c5"
+  },
+  "sourceStable": true,
+  "headAfter": "b28698671b997060f73509ff622e6b7bc57d5e89",
+  "finished": "2026-10-19T08:27:44.951732+00:00"
+}
