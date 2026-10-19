@@ -363,7 +363,7 @@ test("separate host preparation preserves original bytes and refuses overwrite, 
   assert(html.includes(`<base href="${base}"`));
   assert(html.includes('src="/authoring/fpv-worlds/idb-ownership/host.mjs"'));
   assert(html.includes('data-access-type="module"'));
-  assert.equal(Object.keys(identity.modules).length, 4);
+  assert.equal(Object.keys(identity.modules).length, 5);
   await assert.rejects(
     prepareDiagnosticHost({ player, output, base }),
     /not be overwritten/,

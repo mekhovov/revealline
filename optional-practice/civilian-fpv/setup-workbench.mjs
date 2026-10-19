@@ -404,6 +404,23 @@ export function mountWorkbenchPhysics({
   };
 }
 
+/** Convert client coordinates through the SVG's centered, aspect-preserving
+ * viewBox. The plot remains usable at narrow sizes and browser zoom. */
+export function workbenchCurvePosition(svg, clientX) {
+  const box = svg.getBoundingClientRect();
+  if (
+    !Number.isFinite(clientX) ||
+    !Number.isFinite(box.width) ||
+    !Number.isFinite(box.height) ||
+    box.width <= 0 ||
+    box.height <= 0
+  )
+    return null;
+  const scale = Math.min(box.width / 600, box.height / 245);
+  const x = (clientX - box.left - (box.width - 600 * scale) / 2) / scale;
+  return Math.min(1, Math.max(0, (x - 52) / 512));
+}
+
 export function drawWorkbenchCurve(
   doc,
   svg,
@@ -451,6 +468,53 @@ export function drawWorkbenchCurve(
     title.textContent = label;
     path.append(title);
   }
+  let cursor = null;
+  return {
+    inspect(position) {
+      cursor?.remove();
+      cursor = null;
+      if (!Number.isFinite(position) || position < 0 || position > 1) return;
+      cursor = part('g', {
+        'data-curve-inspection': '',
+        'aria-hidden': 'true',
+        'pointer-events': 'none',
+      });
+      const mark = (tag, attributes, text) => {
+        const node = part(tag, attributes, text);
+        cursor.append(node);
+        return node;
+      };
+      const x = 52 + position * 512;
+      mark('line', {
+        x1: x,
+        x2: x,
+        y1: 32,
+        y2: 200,
+        stroke: '#edf5ff',
+        'stroke-width': 1.5,
+        'stroke-dasharray': '3 3',
+      });
+      mark(
+        'text',
+        { x, y: 28, fill: '#edf5ff', 'text-anchor': 'middle', 'font-size': 13 },
+        `${Math.round(position * 100)}%`,
+      );
+      for (const { evaluate, color, dashed, label } of series) {
+        const value = evaluate(position);
+        const point = mark('circle', {
+          cx: x,
+          cy: 200 - (value / maximum) * 168,
+          r: dashed ? 5 : 3,
+          fill: dashed ? '#07141e' : color,
+          stroke: color,
+          'stroke-width': 2,
+        });
+        const title = doc.createElementNS('http://www.w3.org/2000/svg', 'title');
+        title.textContent = `${label}: ${value.toFixed(1)} ${yLabel}`;
+        point.append(title);
+      }
+    },
+  };
 }
 export function paintCameraFraming(doc, svg, tilt, fov, t) {
   svg.replaceChildren();

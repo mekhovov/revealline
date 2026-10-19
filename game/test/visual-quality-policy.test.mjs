@@ -270,3 +270,124 @@ test('foreground title stalls cannot combine across an explicit ownership bounda
   for (let now = 1400; now <= 2600; now += 600) policy.observe(now, 600, 1, true);
   assert.equal(policy.snapshot().tier, 'full');
 });
+
+// Prime the first inclusive window cheaply. Every following window has exactly
+// forty 25ms observations, so two over-budget samples are exactly five percent.
+function tailPolicy(baseline = 25) {
+  const policy = createVisualQualityPolicy();
+  policy.setBaseline(baseline);
+  policy.observe(0, 25, 2);
+  return { policy, now: workWindow(policy, 0, 0) };
+}
+
+function workWindow(policy, start, expensiveSamples = 3, expensiveWork = 12) {
+  let now = start;
+  for (let index = 0; index < 40; index++) {
+    now += 25;
+    policy.observe(now, 25, index < expensiveSamples ? expensiveWork : 2);
+  }
+  return now;
+}
+
+test('repeated work tails request relief despite a low mean and steady cadence', () => {
+  const { policy, now: start } = tailPolicy();
+  // Each full window has 37*2+3*12=110ms work: mean 2.75ms, no missed
+  // cadence samples and one interval bin. The prior predicates do not overload.
+  let now = workWindow(policy, start);
+  assert.equal(policy.snapshot().tier, 'full', 'One tail window is insufficient.');
+  workWindow(policy, now);
+  assert.equal(policy.snapshot().tier, 'reduced');
+});
+
+test('work-tail admission is strict at both the work budget and five-percent fraction', () => {
+  for (const [samples, cost] of [
+    [2, 12],
+    [40, 10],
+  ]) {
+    const { policy, now: start } = tailPolicy();
+    let now = start;
+    for (let window = 0; window < 12; window++) now = workWindow(policy, now, samples, cost);
+    assert.equal(policy.snapshot().tier, 'full', samples + ' samples at ' + cost + 'ms');
+  }
+  const { policy, now } = tailPolicy();
+  const first = workWindow(policy, now, 3, 10.001);
+  workWindow(policy, first, 3, 10.001);
+  assert.equal(policy.snapshot().tier, 'reduced');
+});
+
+test('work tails use the smaller ten-ms and native-baseline budget without altering baseline cadence', () => {
+  for (const baseline of [4, 8, 16, 25, 50]) {
+    const { policy, now } = tailPolicy(baseline);
+    const cost = Math.min(10, baseline * 0.6) + 0.001;
+    const first = workWindow(policy, now, 3, cost);
+    workWindow(policy, first, 3, cost);
+    assert.equal(policy.snapshot().tier, 'reduced', 'Baseline ' + baseline + 'ms');
+  }
+  const cheap = createVisualQualityPolicy();
+  cheap.setBaseline(1000 / 30);
+  feed(cheap, 0, 30, 1000 / 30, 2);
+  assert.equal(cheap.snapshot().tier, 'full', 'Cheap stable 30Hz still retains decoration.');
+  const costly = createVisualQualityPolicy();
+  costly.setBaseline(1000 / 30);
+  feed(costly, 0, 2.2, 1000 / 30, 11);
+  assert.equal(costly.snapshot().tier, 'reduced', 'The ten-ms cap also applies at 30Hz.');
+});
+
+test('one tail window and isolated over-budget callbacks cannot become sustained overload', () => {
+  const { policy, now: start } = tailPolicy();
+  let now = start;
+  for (let pair = 0; pair < 12; pair++) {
+    now = workWindow(policy, now);
+    assert.equal(policy.snapshot().tier, 'full');
+    now = workWindow(policy, now, 1);
+    assert.equal(policy.snapshot().tier, 'full');
+  }
+});
+
+test('tail windows cannot join across pause-owner transitions, interruption or baseline reset', () => {
+  for (const boundary of ['safe-transition', 'interruption', 'baseline']) {
+    const { policy, now: start } = tailPolicy();
+    let now = workWindow(policy, start);
+    assert.equal(policy.snapshot().tier, 'full');
+    if (boundary === 'safe-transition') policy.safeTransition(now);
+    else if (boundary === 'baseline') policy.setBaseline(25);
+    else {
+      now += 251;
+      policy.observe(now, 251, 2);
+    }
+    // The first sample starts the reset window; neither its bounded tail nor the
+    // next completed window may inherit the old owner's overload count.
+    policy.observe(now, 25, 2);
+    now = workWindow(policy, now);
+    assert.equal(policy.snapshot().tier, 'full', boundary);
+    workWindow(policy, now);
+    assert.equal(policy.snapshot().tier, 'reduced', boundary);
+  }
+});
+
+test('continued work tails preserve the ten-second dwell between presentation reductions', () => {
+  const { policy, now: start } = tailPolicy();
+  let now = workWindow(policy, start);
+  now = workWindow(policy, now);
+  assert.equal(now, 3000);
+  assert.equal(policy.snapshot().tier, 'reduced');
+  for (let window = 0; window < 9; window++) now = workWindow(policy, now);
+  assert.equal(now, 12000);
+  assert.equal(policy.snapshot().tier, 'reduced');
+  workWindow(policy, now);
+  assert.equal(policy.snapshot().tier, 'minimal');
+});
+
+test('tail-driven relief restores only at a safe transition and retains the reduced preference floor', () => {
+  const { policy, now: start } = tailPolicy();
+  let now = workWindow(policy, start);
+  now = workWindow(policy, now);
+  for (let window = 0; window < 12; window++) now = workWindow(policy, now, 0);
+  assert.equal(policy.snapshot().tier, 'reduced', 'Headroom alone cannot restore during play.');
+  assert.equal(policy.safeTransition(now).tier, 'full');
+  const preferred = tailPolicy();
+  preferred.policy.setReducedPreference(true);
+  const first = workWindow(preferred.policy, preferred.now);
+  workWindow(preferred.policy, first);
+  assert.equal(preferred.policy.snapshot().tier, 'minimal');
+});

@@ -1,3 +1,7 @@
+import {
+  assertDeclaredReadinessTool,
+  modelCurrentReadinessTools,
+} from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -462,3 +466,274 @@ test('missing owners remain inconclusive and budget/protocol failures remain fai
   assert.equal(baseline.status, 'inconclusive');
   assert.equal(baseline.ownedResourceAssessment.rows.length, 5);
 });
+
+const actualFirstEightProof = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+      import.meta.url,
+    ),
+  ),
+).proof;
+for (const sourceLabel of ['de332', '797']) {
+  const sourceRevision =
+    sourceLabel === '797'
+      ? '797e03f28743921842df6aa57520a72016ba3dfc'
+      : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+  async function de332SoakManifest() {
+    const m = JSON.parse(
+      await load(`docs/performance/solo-${sourceLabel}-lifecycle-soak-plan.json`),
+    );
+    if (sourceLabel === '797') {
+      assert.equal(m.release.status, 'reviewed-diagnostic-only');
+      assert.deepEqual(m.release.firstEightEvidence, actualFirstEightProof);
+      assert.equal(bindSustainedJob(m, 'chromium', 1).rows.length, 2);
+      return m;
+    }
+    assert.equal(m.release.status, 'held-for-review');
+    assert.throws(() => bindSustainedJob(m, 'chromium', 1));
+    // Test-only release facts exercise the actual adapter, not release authority.
+    Object.assign(m.release, {
+      status: 'reviewed-diagnostic-only',
+      predecessorRun: 1,
+      noUnclosedOwners: true,
+      allPriorPlannedJobsClosed: true,
+      priorProofInspected: true,
+      evidence: [
+        {
+          runId: 1,
+          artifactId: 2,
+          artifactSHA256: '0'.repeat(64),
+          summarySHA256: '0'.repeat(64),
+          disposition: 'failed-reviewed',
+        },
+      ],
+    });
+    if (sourceLabel === '797') {
+      m.release.firstEightAllCorrectnessPassed = true;
+      m.release.firstEightEvidence = {
+        format: 'SoloFirstEightCorrectnessEvidenceV1',
+        sourceRevision,
+        runId: 1,
+        artifactId: 2,
+        artifactSHA256: '0'.repeat(64),
+        summarySHA256: '0'.repeat(64),
+        correctness: 'passed',
+        ownersClosed: true,
+      };
+    }
+    return m;
+  }
+
+  test(`${sourceLabel}: soak retains thirty-minute elapsed duty, twelve arms and exact current source bindings`, async () => {
+    const m = await de332SoakManifest();
+    assert.equal(m.sourceCohort, `soak-main8b-candidate${sourceLabel}-v1`);
+    assert.equal(m.candidate.revision, sourceRevision);
+    assert.equal(m.candidate.artifact, sourceLabel === '797' ? 12128990483 : 12123463810);
+    assert.equal(m.baseline.reusableArtifact.artifact, 12088541389);
+    for (const ref of [...m.frozenTools, ...m.adapterInputs, ...Object.values(m.recipes)]) {
+      if (
+        await assertDeclaredReadinessTool(
+          `docs/performance/solo-${sourceLabel}-lifecycle-soak-plan.json`,
+          ref,
+        )
+      )
+        continue;
+      assert.deepEqual(await reference(ref.path), ref);
+    }
+    assert.equal(recipe.actions.find((a) => a.type === 'repeat').atLeastMs, 1800000);
+    const jobs = sustainedMatrix(m).include;
+    assert.equal(jobs.length, 6);
+    assert(
+      jobs.every(
+        (j) => j.jobMinutes === 192 && j.stepMinutes === 148 && j.outerSeconds === 147 * 60,
+      ),
+    );
+    let arms = 0;
+    for (const engine of ['chromium', 'webkit'])
+      for (const repetition of [1, 2, 3]) {
+        const p = bindSustainedJob(m, engine, repetition);
+        arms += p.rows.length;
+        assert.deepEqual(
+          p.rows.map((r) => r.source),
+          repetition === 2 ? ['candidate', 'baseline'] : ['baseline', 'candidate'],
+        );
+        assert(p.rows.every((r) => r.timeoutMs === 2640000 && r.performanceExclusion));
+        assert.equal(p.helperTimeoutMs, 145 * 60000);
+        assert.equal(p.rowEvidenceBytes, 128 * 1024 ** 2);
+        assert.equal(p.evidenceBytes, 512 * 1024 ** 2);
+        assert.equal(p.setupTimeoutMs, 40 * 60000);
+        assert.equal(p.calibrationTimeoutMs, 300000);
+        assert.equal(p.release.firstEightRequired, sourceLabel === '797');
+        for (const mutate of [
+          ...(sourceLabel === '797'
+            ? [
+                (p) => (p.release.firstEightRequired = false),
+                (p) => (p.release.firstEightEvidence = null),
+                (p) =>
+                  (p.release.firstEightEvidence.sourceRevision =
+                    '73a345cec696d7789198cf295ca5c37b17ca0e71'),
+                (p) => (p.release.firstEightEvidence.correctness = 'failed'),
+                (p) => (p.release.firstEightEvidence.ownersClosed = false),
+                (p) => (p.release.firstEightEvidence.artifactSHA256 = 'invalid'),
+                (p) => (p.release.firstEightEvidence.runId = 0),
+                (p) => (p.release.firstEightEvidence.unreviewed = true),
+              ]
+            : []),
+          (p) => {
+            p.candidate.tree = '0'.repeat(40);
+          },
+          (p) => {
+            p.baseline.reusableArtifact.artifact++;
+          },
+          (p) => {
+            p.recipes.soak.bytes++;
+          },
+          (p) => {
+            p.ownedResources = undefined;
+          },
+          (p) => {
+            p.release.status = 'reviewed-and-released';
+          },
+          (p) => {
+            p.release.predecessorRun = null;
+          },
+          (p) => {
+            p.release.noUnclosedOwners = false;
+          },
+          (p) => {
+            p.release.dispatch.phase = 'retry';
+          },
+          (p) => {
+            p.release.firstEightAllCorrectnessPassed = sourceLabel !== '797';
+          },
+          (p) => {
+            p.rows[0].timeoutMs++;
+          },
+        ]) {
+          const q = structuredClone(p);
+          mutate(q);
+          assert.throws(() => validateSustainedPlan(q));
+        }
+      }
+    assert.equal(arms, 12);
+  });
+
+  test(`${sourceLabel}: soak uses actual anchored preparation, chunk hydration and final-document journal`, async (t) => {
+    const p = bindSustainedJob(
+        await modelCurrentReadinessTools(
+          `docs/performance/solo-${sourceLabel}-lifecycle-soak-plan.json`,
+          await de332SoakManifest(),
+        ),
+        'webkit',
+        1,
+      ),
+      dir = await temporary(t),
+      work = join(dir, 'work');
+    await mkdir(work);
+    const ctx = {
+      plan: p,
+      repository: root,
+      here: join(root, 'scripts'),
+      work,
+      evidence: dir,
+      report: {},
+      admitted: { artifacts: { candidate: {} } },
+      ensureBaseline: async () => {},
+      required: async () => assert.fail('No browser/calibration in pure preparation control'),
+      digest: async (path) => {
+        const b = await readFile(path);
+        return { bytes: b.length, sha256: sha(b) };
+      },
+    };
+    ctx.modeState = await prepareSustainedMode(ctx);
+    assert.deepEqual(await readFile(ctx.modeState.recipePath), recipeBytes);
+    assert.deepEqual(ctx.modeState.snapshotStorage, {
+      maximumBytes: 96 * 1024 ** 2,
+      maximumIndexBytes: 4 * 1024 ** 2,
+      maximumSnapshotBytes: 1024 ** 2,
+      maximumSnapshots: 512,
+    });
+    const args = sustainedArguments(
+      ctx,
+      p.rows[1],
+      'http://127.0.0.1:4321/game/?journey=opening',
+      dir,
+    );
+    assert(args.includes('--snapshot-chunks'));
+    assert(!args.includes('--memory-profile'));
+    assert.equal(
+      qualificationHitchJournalOptions(args, recipe, recipeBytes).preparationPolicy,
+      'first-return-anchored-v1',
+    );
+    const admitted = bindSustainedJob(await de332SoakManifest(), 'chromium', 1),
+      f = await journal(t, admitted);
+    const limits = qualificationSnapshotStorage(['--snapshot-chunks'], recipe);
+    const writer = await createQualificationSnapshotStore(f.output, limits);
+    await writer.save(f.value);
+    const hydrated = await readQualificationSnapshotReport(f.output, limits);
+    assert.deepEqual(hydrated, f.value);
+    const verified = await verifyTimingHitchJournal(admitted, hydrated, f.output, f.url);
+    assert.equal(verified.status, 'complete', verified.failure);
+    assert.equal(verified.documents, 2);
+    const result = await anchoredSoakAssessment(
+      admitted,
+      admitted.rows[1],
+      hydrated,
+      closed,
+      '123.4',
+      verified,
+    );
+    assert.equal(result.numericObservationStatus, 'passed');
+    assert.equal(result.ownedResourceBoundsStatus, 'pass');
+    assert.equal(result.ownedResourceAssessment.rows.length, 10);
+    assert.equal(result.retentionQualification, 'review-required');
+    assert.equal(result.status, 'review-required');
+    assert.equal(result.performanceQualification, 'not-qualified-diagnostic-only');
+    assert.equal(result.firstEightRequired, sourceLabel === '797');
+    assert.equal(result.firstEightAllCorrectnessPassed, sourceLabel === '797' ? true : undefined);
+    const missing = structuredClone(hydrated);
+    missing.hitchJournal.documents.shift();
+    assert.equal(
+      (await verifyTimingHitchJournal(admitted, missing, f.output, f.url)).status,
+      'invalid-evidence',
+    );
+  });
+
+  test(`${sourceLabel}: soak preserves missing-owner uncertainty and elapsed, native, raw and cleanup failures`, async () => {
+    const p = bindSustainedJob(await de332SoakManifest(), 'chromium', 1);
+    const assess = (r, command = closed, journal = { status: 'complete' }) =>
+      anchoredSoakAssessment(p, p.rows[1], r, command, '123.4', journal);
+    const missing = raw(p);
+    delete missing.snapshots[0].application.resources.soundtrack.inspection.workerOwned;
+    assert.equal((await assess(missing)).status, 'inconclusive');
+    for (const mutate of [
+      (r) => {
+        r.actions[0].elapsedMs = 1799999;
+      },
+      (r) => {
+        r.actions[0].iterations = 361;
+      },
+      (r) => {
+        r.replay.nativeVerification.status = 'fail';
+      },
+      (r) => {
+        r.performanceGateStatus = 'fail';
+      },
+      (r) => {
+        r.failure = 'original failure';
+      },
+      (r) => {
+        r.snapshots[0].application.resources.pcm.published.decodedBytes = 32 * 1024 ** 2 + 1;
+      },
+    ]) {
+      const value = raw(p);
+      mutate(value);
+      const result = await assess(value);
+      assert.equal(result.status, 'failed');
+      assert.equal(result.rawPerformanceGateStatus, value.performanceGateStatus);
+    }
+    assert.equal((await assess(raw(p), { status: 'failed', exitCode: 2 })).status, 'failed');
+    assert.equal((await assess(raw(p), closed, { status: 'invalid-evidence' })).status, 'failed');
+  });
+}

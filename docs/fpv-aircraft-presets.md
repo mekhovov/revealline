@@ -9,6 +9,9 @@ replace historical simulation or recording identities.
 Later archive, optional challenge and propulsion-evidence increments are tracked in
 [the implementation and evidence-gate record](fpv-aircraft-completion.md). This
 document retains the scope and measurements of the first playable release.
+For the current catalog, backend follow-ups and open priorities,
+use the [current completion plan](fpv-current-completion-plan.md) and
+[all-aircraft flight audit](fpv-all-aircraft-flight-audit.md).
 
 ## First-release behavior
 
@@ -57,7 +60,7 @@ These aircraft are representative examples, not a sales ranking or an endorsemen
 | Meteor85 analog, 11000 KV | 50.8 / 85 mm | LAVA 2S 450 mAh | 69.95 g |
 | Pavo20 Pro II, O4 Pro, ELRS, 5500 KV | 55.88 / 93.9 mm | LAVA II 4S 580 mAh | 171.2 g |
 | SMART35 analog, 3850 KV | 88.9 / 155 mm | Storm 2.0 4S 850 mAh | 226.4 g |
-| Nazgul ECO XL5 V1.1 analog, 1800 KV | 127 / 245 mm | 6S 1400 mAh reference | 652 g |
+| Nazgul ECO XL5 V1.1 analog, 1800 KV (preset revision 2) | 129.54 / 245 mm | 6S 1400 mAh reference | 652 g |
 | Mach R5 Sport European canopy, 2050 KV | 127 / 210 mm | 6S 1400 mAh reference | 525 g |
 | Rekon7 PRO O3, HQ DP7×4×3, 1350 KV | 177.8 / 324 mm | 6S 3000 mAh reference LiPo | 1029 g |
 | Chimera7 Pro V2 O4, HQ 7.5×3.7×3, 1250 KV | 190.5 / 327 mm | 6S 8000 mAh Li-ion | 1621 g |
@@ -71,6 +74,46 @@ named camera system. Battery and explicitly absent receiver mass are added once.
 Pavo uses the camera-equipped 116.2 g figure before its battery, not the 72.6 g PNP
 configuration. X650 freezes the documented MN4014 revision. Descriptions and links
 stay in catalog metadata; recordings retain bounded numerical behavior.
+
+### Nazgul diameter correction — 18 October 2026
+
+Catalog revision 4 changes newly selected Nazgul ECO XL5 V1.1 setups to preset
+revision 2. The [original EU V1.1 specification](https://iflight-rc.eu/en/products/nazgul-xl5-eco-v1-1-6s-analog)
+names Nazgul F5 propellers. The [manufacturer's exact V1.1 product](https://shop.iflight.com/Nazgul-XL5-ECO-6S-Pro2193)
+also names the installed F5 in its specification and packing list, and its related
+product entry links [F5 SKU 964](https://shop.iflight.com/nazgul-5140-tri-blades-cw-ccw-propellers-3sets-6-pairs-pro964).
+That SKU specifies a 5.1-inch diameter: 5.1 × 25.4 = **129.54 mm**, rather than the
+127 mm inferred from the five-inch aircraft class. These primary pages were checked
+on 18 October 2026. The current F5 specification, rather than the older `5140` URL
+slug, identifies the propeller. The checked pages give no separate F5 dimension
+revision.
+
+The complete new default changes only `aircraft.geometry.propellerRadius`
+(0.0635 to 0.06477 m) and `preset.revision` (1 to 2). Its rotor collision cylinders
+and rendered propellers therefore grow by 1.27 mm in radius. The larger existing
+enclosing radius stays unchanged, as do mass, inertia, body dimensions, drag,
+thrust, motor lag, electrical assumptions, controller gains, rates and camera.
+The existing **estimated** reaction-torque coefficient, 0.0127, is explicitly
+retained instead of being recalculated from the corrected diameter; neither this
+coefficient nor the other propulsion estimates becomes a measurement.
+
+Saved setups keep their complete physical configuration and original revision.
+Reopening, importing, editing installed components, and replaying recordings do
+not consult the current preset to replace that geometry. Explicitly selecting the
+built-in Nazgul again creates revision 2. A fixture captured from
+`cf13bcad9a59a387be7c31c9af8d30d74e7c1860` retains the complete revision 1 default
+and recordings for both aircraft backend versions. Tests also retain the complete
+configuration hashes of all fourteen other aircraft.
+
+Targeted Node checks verify both historical replay hashes, unchanged free-flight
+trajectories in Acro and self-level, the actual Rapier rotor-cylinder radii, and
+40 m/s thin-wall contacts at 500 and 2,000 Hz. Existing all-aircraft rotational
+step tests continue to pass the 2% numerical-reference gate. These checks do not
+establish real-flight equivalence or add a browser/device qualification result.
+
+This is a documented dimension correction, not measured flight-fidelity
+qualification. It adds no matched motor/propeller dataset and does not close the
+remaining propulsion, torque, transient or airflow evidence gates.
 
 ## Physics and compatibility
 

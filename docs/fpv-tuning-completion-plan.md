@@ -1,5 +1,7 @@
 # FPV tuning: reviewed completion plan
 
+Current cross-plan priorities and remaining acceptance: [SIM completion plan](fpv-current-completion-plan.md). Dated completion receipts below remain historical evidence for their named revisions.
+
 ## Latest completion review
 
 Main was fetched and the branch rebased before this continuation, starting from

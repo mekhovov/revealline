@@ -15,6 +15,38 @@ const root = new URL('../', import.meta.url),
   read = (p) => readFile(new URL(p, root));
 const original = JSON.parse(await read('docs/performance/solo-remote-worker-diagnostic-plan.json'));
 const packagePlan = JSON.parse(await read('docs/performance/solo-final-soak-plan.json'));
+
+const priorDeclarationPath = 'docs/performance/solo-final-worker-diagnostic-plan.json';
+const priorSourcePath =
+  'docs/performance/fixtures/solo-worker-diagnostic/f179-declared-source.json';
+function priorWorkerSource(bytes, declaration) {
+  assert.equal(bytes.length, 1139);
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '9bf9baecad951bc7bf3e4b0facdaaba38d944a5fdbe2778b261d0d19def94a60',
+  );
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.format, 'SoloFinalWorkerDeclaredSourceV1');
+  assert.equal(witness.revision, 'f1798f323204b02898d4e7d45a7c5b69df73914d');
+  assert.equal(witness.tree, '2c0faa46fc9ed42aa4e8c7af1be44f2899ab582f');
+  assert.deepEqual(
+    witness.records.map((r) => r.path),
+    [
+      'docs/performance/solo-final-worker-diagnostic-plan.json',
+      'scripts/solo-remote-worker-diagnostic.mjs',
+      'scripts/run-solo-remote-correctness.mjs',
+    ],
+  );
+  const refs = new Map(witness.records.map((r) => [r.path, r]));
+  assert.equal(declaration.length, refs.get(priorDeclarationPath).bytes);
+  assert.equal(
+    createHash('sha256').update(declaration).digest('hex'),
+    refs.get(priorDeclarationPath).sha256,
+  );
+  refs.delete(priorDeclarationPath);
+  return refs;
+}
+
 async function finalPlan() {
   const p = structuredClone(original);
   p.sourceCohort = FINAL_WORKER_COHORT;
@@ -220,10 +252,17 @@ test('concrete final worker release binds actual package, all source tools and o
     revision: packagePlan.baseline.revision,
     tree: packagePlan.baseline.tree,
   });
+  const prior = priorWorkerSource(await read(priorSourcePath), await read(priorDeclarationPath));
   for (const ref of [...p.adapterInputs, ...p.frozenTools]) {
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256);
+    const historical = prior.get(ref.path);
+    if (historical) {
+      assert.equal(historical.bytes, ref.bytes);
+      assert.equal(historical.sha256, ref.sha256);
+    } else {
+      const bytes = await read(ref.path);
+      assert.equal(bytes.length, ref.bytes);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256);
+    }
   }
   const wf = (
     await read('.github/workflows/solo-remote-final-worker-diagnostic-temporary.yml')
@@ -268,4 +307,19 @@ test('concrete final worker release binds actual package, all source tools and o
       ).test(wf),
     );
   assert(!wf.includes('npm ci --prefix baseline'));
+});
+
+test('exact prior final worker readback refuses altered witness or declaration', async () => {
+  const witness = await read(priorSourcePath),
+    declaration = await read(priorDeclarationPath);
+  assert.equal(priorWorkerSource(witness, declaration).size, 2);
+  for (const [w, d] of [
+    [Buffer.concat([witness, Buffer.from(' ')]), declaration],
+    [witness, Buffer.concat([declaration, Buffer.from(' ')])],
+    [
+      Buffer.from(JSON.stringify({ ...JSON.parse(witness), revision: '0'.repeat(40) })),
+      declaration,
+    ],
+  ])
+    assert.throws(() => priorWorkerSource(w, d));
 });

@@ -1,3 +1,4 @@
+import { modelCurrentReadinessTools } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from 'node:fs/promises';
@@ -7,6 +8,7 @@ import { execFileSync } from 'node:child_process';
 import test from 'node:test';
 import {
   bindSustainedJob,
+  prepareSustainedMode,
   bindTimingJob,
   SUSTAINED_PHASES,
   TIMING_PHASES,
@@ -1312,14 +1314,16 @@ async function finalJournalManifest(phase) {
   });
   return m;
 }
-async function finalJournalFixture(t, phase) {
+async function finalJournalFixture(t, phase, prospective = null) {
   const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-final-hitch-')));
   t.after(() => rm(dir, { recursive: true, force: true }));
   const output = join(dir, 'report.json'),
     url = 'http://127.0.0.1:4321/game/?journey=opening';
-  const heavy = ['sentry', 'long-rail'].includes(phase),
+  const heavy = prospective
+      ? !['cold-first30', 'warm-first30'].includes(phase)
+      : ['sentry', 'long-rail'].includes(phase),
     warm = phase === 'warm-first30';
-  const policy = heavy ? 'timing-heavy-v1' : undefined;
+  const policy = heavy ? (prospective ? 'representative-timing-v1' : 'timing-heavy-v1') : undefined;
   const store = createHitchJournalStore(output, () => 100, {
     soloURL: url,
     preparationPolicy: policy,
@@ -1369,7 +1373,7 @@ async function finalJournalFixture(t, phase) {
       spec.boundary,
     );
   }
-  const p = bindTimingJob(await finalJournalManifest(phase), 'chromium', 1);
+  const p = bindTimingJob(prospective ?? (await finalJournalManifest(phase)), 'chromium', 1);
   const raw = report(p);
   raw.hitchJournal = store.finish();
   return { p, raw, output, url };
@@ -1477,3 +1481,297 @@ test('heavy preparation policy cannot be applied to altered or unrelated recipe 
   );
   assert.throws(() => qualificationHitchJournalOptions(flags, JSON.parse(bytes), bytes));
 });
+
+const actualFirstEightProof = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+      import.meta.url,
+    ),
+  ),
+).proof;
+for (const sourceLabel of ['de332', '797']) {
+  const sourceRevision =
+    sourceLabel === '797'
+      ? '797e03f28743921842df6aa57520a72016ba3dfc'
+      : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+  const representativePhases = [
+    'cold-first30',
+    'warm-first30',
+    'sentry-latency',
+    'long-rail-latency',
+    'large-capture-erosion',
+    'jammer-steering',
+  ];
+  async function representative(phase, reviewed = true) {
+    const m = JSON.parse(
+      await readFile(
+        new URL(
+          `../docs/performance/solo-${sourceLabel}-timing-${phase}-plan.json`,
+          import.meta.url,
+        ),
+      ),
+    );
+    if (sourceLabel === '797' && phase === 'warm-first30') return m;
+    if (reviewed) {
+      // Synthetic model-only evidence for phases whose actual declarations remain held.
+      m.release.status = 'reviewed-and-released';
+      for (const key of [
+        'noUnclosedOwners',
+        'allPriorPlannedJobsClosed',
+        'priorProofInspected',
+        'firstEightAllCorrectnessPassed',
+      ])
+        m.release[key] = true;
+      m.release.evidence = [
+        {
+          runId: 1,
+          artifactId: 2,
+          artifactSHA256: '0'.repeat(64),
+          summarySHA256: '0'.repeat(64),
+          disposition: 'passed',
+        },
+      ];
+    }
+    if (reviewed && sourceLabel === '797') {
+      m.release.firstEightAllCorrectnessPassed = true;
+      m.release.firstEightEvidence = {
+        format: 'SoloFirstEightCorrectnessEvidenceV1',
+        sourceRevision,
+        runId: 1,
+        artifactId: 2,
+        artifactSHA256: '0'.repeat(64),
+        summarySHA256: '0'.repeat(64),
+        correctness: 'passed',
+        ownersClosed: true,
+      };
+    }
+    return m;
+  }
+  test(`${sourceLabel}: prospective six-phase map retains all72 declared roles, three AB/BA/AB pairs, package and ordinary gates`, async () => {
+    let rows = 0;
+    for (const phase of representativePhases) {
+      const held = await representative(phase, false);
+      const released = sourceLabel === '797' && ['cold-first30', 'warm-first30'].includes(phase);
+      if (released) {
+        assert.equal(held.release.status, 'reviewed-and-released');
+        assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
+        assert.equal(timingMatrix(held).include.length, 6);
+      } else {
+        assert.equal(held.release.status, 'held-for-review');
+        assert.equal(held.release.firstEightAllCorrectnessPassed, false);
+        if (sourceLabel === '797') assert.equal(held.release.firstEightEvidence, null);
+      }
+      assert.deepEqual(held.phaseOrder, representativePhases);
+      assert.equal(held.cohort, `${sourceLabel}-${phase}-matched-timing-v1`);
+      assert.equal(held.performanceExclusion, false);
+      assert.deepEqual(
+        held.deadlines.scenarioTimeoutMs,
+        Object.fromEntries(
+          representativePhases.map((name) => [name, name === 'warm-first30' ? 360000 : 240000]),
+        ),
+      );
+      if (!released) assert.throws(() => timingMatrix(held));
+      const m = released ? held : await representative(phase);
+      const matrix = timingMatrix(m);
+      assert.equal(matrix.include.length, 6);
+      for (const { engine, repetition, jobMinutes, stepMinutes, outerSeconds } of matrix.include) {
+        assert.equal(jobMinutes, 122);
+        assert.equal(stepMinutes, 78);
+        assert.equal(outerSeconds, 4620);
+        const p = bindTimingJob(m, engine, repetition);
+        assert.deepEqual(
+          p.rows.map((r) => r.source),
+          repetition === 2 ? ['candidate', 'baseline'] : ['baseline', 'candidate'],
+        );
+        assert.equal(p.helperTimeoutMs, 4500000);
+        assert.equal(p.calibrationPreset, 'mid');
+        assert.equal(p.performanceExclusion, false);
+        assert.equal(p.candidate.revision, sourceRevision);
+        assert.equal(p.baseline.reusableArtifact.artifact, 12088541389);
+        for (const row of p.rows) {
+          rows++;
+          assert.equal(row.timeoutMs, 480000);
+          const raw = report(p, row.source);
+          for (const gate of [
+            'pass-observed-window',
+            'fail-observed-window',
+            'inconclusive-observed-window',
+          ]) {
+            raw.performanceGateStatus = gate;
+            const result = timingAssessment(
+              p,
+              row,
+              raw,
+              { ...closed, exitCode: gate === 'pass-observed-window' ? 0 : 2 },
+              '123.4',
+              { status: 'complete' },
+            );
+            assert.equal(result.rawPerformanceGateStatus, gate);
+            assert.equal(result.status, gate === 'pass-observed-window' ? 'passed' : 'failed');
+          }
+          raw.performanceGateStatus = 'pass-observed-window';
+          raw.replay.nativeVerification.status = 'fail';
+          assert.equal(
+            timingAssessment(p, row, raw, closed, '123.4', { status: 'complete' }).status,
+            'failed',
+          );
+        }
+      }
+      const p = bindTimingJob(m, 'webkit', 1);
+      for (const mutate of [
+        ...(sourceLabel === '797'
+          ? [
+              (p) => (p.release.firstEightRequired = false),
+              (p) => (p.release.firstEightEvidence = null),
+              (p) =>
+                (p.release.firstEightEvidence.sourceRevision =
+                  '73a345cec696d7789198cf295ca5c37b17ca0e71'),
+              (p) => (p.release.firstEightEvidence.correctness = 'failed'),
+              (p) => (p.release.firstEightEvidence.ownersClosed = false),
+              (p) => (p.release.firstEightEvidence.artifactSHA256 = 'invalid'),
+              (p) => (p.release.firstEightEvidence.runId = 0),
+              (p) => (p.release.firstEightEvidence.unreviewed = true),
+            ]
+          : []),
+        (x) => x.candidate.artifact++,
+        (x) => (x.candidate.inner.sha256 = 'f'.repeat(64)),
+        (x) => x.baseline.reusableArtifact.artifact++,
+        (x) => (x.release.firstEightAllCorrectnessPassed = false),
+        (x) => (x.release.status = 'reviewed-diagnostic-only'),
+        (x) => (x.release.noUnclosedOwners = false),
+        (x) => (x.release.dispatch.phase = 'other'),
+        (x) => (x.release.dispatch.ref = 'refs/heads/other'),
+        (x) => x.recipes[phase].bytes++,
+        (x) => (x.recipes[phase].sha256 = 'f'.repeat(64)),
+        (x) => delete x.recipes['jammer-steering-level'],
+        (x) => x.rows.reverse(),
+        (x) => x.rows[0].timeoutMs++,
+        (x) => (x.calibrationPreset = 'low'),
+        (x) => (x.performanceExclusion = true),
+      ]) {
+        const q = structuredClone(p);
+        mutate(q);
+        assert.throws(() => validateTimingPlan(q));
+      }
+    }
+    assert.equal(rows, 72);
+    assert.deepEqual(Object.keys(TIMING_PHASES), [
+      'cold-first30',
+      'warm-first30',
+      'sentry',
+      'long-rail',
+    ]);
+  });
+  test(`${sourceLabel}: prospective actual preparation copies exact upload bytes and assembles unchanged native commands`, async (t) => {
+    const repository = await realpath(new URL('../', import.meta.url));
+    for (const phase of representativePhases) {
+      const p = bindTimingJob(
+        await modelCurrentReadinessTools(
+          `docs/performance/solo-${sourceLabel}-timing-${phase}-plan.json`,
+          await representative(phase),
+        ),
+        'webkit',
+        1,
+      );
+      const work = await realpath(await mkdtemp(join(tmpdir(), 'solo-representative-prepare-')));
+      t.after(() => rm(work, { recursive: true, force: true }));
+      let baselineCalls = 0;
+      const ctx = {
+        plan: p,
+        repository,
+        work,
+        report: {},
+        admitted: { artifacts: { candidate: {} } },
+        ensureBaseline: async () => {
+          baselineCalls++;
+        },
+        digest: async (path) => {
+          const b = await readFile(path);
+          return { bytes: b.length, sha256: createHash('sha256').update(b).digest('hex') };
+        },
+      };
+      const mode = await prepareSustainedMode(ctx);
+      assert.equal(baselineCalls, 1);
+      const bytes = await readFile(mode.recipePath);
+      const recipe = JSON.parse(bytes);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), p.recipes[phase].sha256);
+      validateQualification(recipe);
+      assert(recipe.actions.filter((a) => a.type === 'key').length >= 20);
+      for (const action of recipe.actions.filter((a) => a.type === 'upload')) {
+        const retained = await readFile(join(work, 'sustained-inputs', action.file));
+        const ref = p.recipes[phase + '-level'];
+        assert.equal(retained.length, ref.bytes);
+        assert.equal(createHash('sha256').update(retained).digest('hex'), ref.sha256);
+      }
+      for (const row of p.rows) {
+        const args = sustainedArguments(
+          { ...ctx, here: '/tools', modeState: mode },
+          row,
+          'https://example.test/game/?journey=opening',
+          work,
+        );
+        assert(args.includes(`--source-revision=${p[row.source].revision}`));
+        assert.equal(args.includes('--baseline-runtime'), row.source === 'baseline');
+        for (const flag of [
+          '--work-probe',
+          '--hitch-journal',
+          '--cadence=settled120',
+          '--context=persistent',
+          '--viewport=400x850',
+          '--dpr=3',
+          '--mobile-context',
+        ])
+          assert(args.includes(flag));
+        assert(!args.some((a) => /--(cpu-profile|memory-profile|audio-proof)/.test(a)));
+        const options = qualificationHitchJournalOptions(args, recipe, bytes);
+        assert.equal(
+          options.preparationPolicy,
+          ['cold-first30', 'warm-first30'].includes(phase) ? undefined : 'representative-timing-v1',
+        );
+        if (options.preparationPolicy) {
+          for (const bad of [
+            args.filter((a) => !a.startsWith('--source-revision=')),
+            args.map((a) =>
+              a.startsWith('--source-revision=') ? '--source-revision=' + 'f'.repeat(40) : a,
+            ),
+            [...args, '--source-revision=' + p[row.source].revision],
+          ])
+            assert.throws(() => qualificationHitchJournalOptions(bad, recipe, bytes));
+          assert.throws(() =>
+            qualificationHitchJournalOptions(
+              args,
+              recipe,
+              Buffer.concat([bytes, Buffer.from(' ')]),
+            ),
+          );
+          assert.throws(() =>
+            qualificationHitchJournalOptions(args, { ...recipe, id: 'other' }, bytes),
+          );
+        }
+      }
+    }
+  });
+  test(`${sourceLabel}: prospective real binary store retains cold, warm and four public-upload document boundaries`, async (t) => {
+    for (const phase of representativePhases) {
+      const f = await finalJournalFixture(t, phase, await representative(phase));
+      const good = await verifyTimingHitchJournal(f.p, f.raw, f.output, f.url);
+      assert.equal(good.status, 'complete', good.failure);
+      assert.equal(good.documents, phase === 'cold-first30' ? 1 : 2);
+      assert(good.activeFrames > 0 && good.activeWorkWindows > 0);
+      for (const mutate of [
+        (raw) => (raw.hitchJournal.documents[0].identity.action = 'other'),
+        (raw) => (raw.hitchJournal.preparationPolicy = 'timing-heavy-v1'),
+        (raw) => raw.hitchJournal.documents.pop(),
+        (raw) => (raw.hitchJournal.documents[0].header.firstOverflowAt = 1),
+      ]) {
+        const raw = structuredClone(f.raw);
+        mutate(raw);
+        assert.equal(
+          (await verifyTimingHitchJournal(f.p, raw, f.output, f.url)).status,
+          'invalid-evidence',
+        );
+      }
+    }
+  });
+}

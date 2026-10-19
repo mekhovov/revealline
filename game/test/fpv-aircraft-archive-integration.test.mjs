@@ -17,11 +17,11 @@ import { createEnduranceFixture } from '../../authoring/fpv-worlds/regions/endur
 
 await initAdvancedRuntime();
 const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
-function createClient() {
+function createClient(recordingOptions = { segmentBytes: 1 }) {
   let simulation;
   return {
     async initialize(options) {
-      simulation = createAdvancedSimulation({ ...options, recordingOptions: { segmentBytes: 1 } });
+      simulation = createAdvancedSimulation({ ...options, recordingOptions });
       return { telemetry: simulation.telemetry() };
     },
     async step(sample, motions) {
@@ -73,7 +73,8 @@ for (const host of ['academy', 'regional'])
   test(`${host} archive controls persist real sealed physics, restore an evicted checkpoint range and finish its tail`, async (t) => {
     const preset = createPresetConfiguration('meteor75-analog-2022');
     const region = host === 'regional' ? await createEnduranceFixture() : null;
-    async function createSession() {
+    async function createSession(segmentBytes = 1) {
+      const clientOptions = { createClient: () => createClient({ segmentBytes }) };
       const session =
         host === 'academy'
           ? createAircraftCourseSession(
@@ -87,7 +88,7 @@ for (const host of ['academy', 'regional'])
                   advanced: { aircraft: preset.aircraft, controller: preset.controller },
                 },
               },
-              { createClient },
+              clientOptions,
             )
           : createAdvancedRegionalSession(
               {
@@ -97,7 +98,7 @@ for (const host of ['academy', 'regional'])
                 response: preset.response,
                 mode: 'acro',
               },
-              { createClient },
+              clientOptions,
             );
       t.after(() => session.dispose());
       await session.prepare();
@@ -126,12 +127,13 @@ for (const host of ['academy', 'regional'])
         .find((button) => button.textContent === 'Finish current archive')
         .click();
     update();
-    await waitForRows(store, (rows) => rows.length === 1);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal((await store.list()).length, 0, 'prepared aircraft creates no persistent archive');
     session.arm();
     for (let tick = 0; tick < 5; tick++) {
       await session.step(neutral);
       update();
-      await waitForRows(store, (rows) => rows[0].endTick === tick + 1);
+      await waitForRows(store, (rows) => rows[0]?.endTick === tick + 1);
     }
     const saved = await session.exportRecovery();
     session.pause();
@@ -160,20 +162,40 @@ for (const host of ['academy', 'regional'])
     session.arm();
     await session.step(neutral);
     assert.equal(session.snapshot().ticks, 6, 'Finishing an archive does not end practice');
-    session = await createSession();
+    session = await createSession(1024 * 1024);
     update();
-    await waitForRows(store, (entries) => entries.length === 3);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(
+      (await store.list()).length,
+      2,
+      'switching aircraft while paused creates no archive',
+    );
     session.arm();
     await session.step(neutral);
     update();
     await waitForRows(store, (entries) =>
-      entries.some((entry) => entry.id === `real-${host}-3` && entry.endTick === 1),
+      entries.some((entry) => entry.id === `real-${host}-3` && entry.endTick === 0),
+    );
+    assert.equal(
+      (await session.readSealedSegment()).segment,
+      null,
+      'short flight has no sealed segment yet',
     );
     finish();
     await waitForRows(store, (entries) =>
       entries.some((entry) => entry.id === `real-${host}-3` && entry.state === 'ended'),
     );
-    const completed = await verifyAircraftArchive(await store.exportPackage(`real-${host}-3`));
+    const packet = await store.exportPackage(`real-${host}-3`);
+    assert.equal(packet.manifest.startTick, 0);
+    assert.equal(packet.manifest.endTick, 1, 'explicit Finish captures even a one-tick flight');
+    const completed = await verifyAircraftArchive(packet);
     assert.equal(completed.verificationScope, 'complete-session');
     assert.equal(completed.scored, false);
+    session.arm();
+    await session.step(neutral);
+    assert.equal(
+      session.snapshot().ticks,
+      2,
+      'finalizing a short archive still permits continued flight',
+    );
   });

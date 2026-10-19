@@ -191,6 +191,87 @@ test('native Darwin SDK source contains bounded, double-checked identity and pri
   assert.doesNotMatch(source, /\bkill\(|\bprintf\([^\n]*expected|\bprintf\([^\n]*bytes/);
 });
 
+// Both the prerequisite and browser-owner boundary must retain the explicitly
+// selected evidence format. This changes evidence only, never the verdict.
+const hostedAmbiguityInventories = (mode) =>
+  mode === 'identity-maps-v2' ? 'identity-maps-v2' : mode === 'identity-maps-v1';
+
+test('actual hosted prerequisite forwards evidence mode and retains failures before assertions', async () => {
+  const source = await readFile(new URL(import.meta.url), 'utf8');
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const native = tree.body.find(
+    (node) =>
+      node.type === 'ExpressionStatement' &&
+      node.expression.callee?.name === 'test' &&
+      node.expression.arguments[0]?.value ===
+        'hosted Darwin native owner closes a short leader and rejects forced deadline cleanup',
+  ).expression.arguments[2];
+  for (const [mode, expected] of [
+    ['identity-maps-v2', 'identity-maps-v2'],
+    ['identity-maps-v1', true],
+    [undefined, false],
+    ['identity-maps-v3', false],
+  ]) {
+    const options = [],
+      receipts = [];
+    let fail = false;
+    const dependencies = {
+      assert,
+      Buffer,
+      join,
+      hostedAmbiguityInventories,
+      process: {
+        execPath: '/modeled/node',
+        env: {
+          SOLO_DARWIN_AMBIGUITY_EVIDENCE: mode,
+          SOLO_DARWIN_OWNER_EVIDENCE: '/modeled/evidence',
+        },
+      },
+      tmpdir: () => '/modeled',
+      realpath: async (path) => path,
+      mkdtemp: async (path) => path + 'control',
+      rm: async () => {},
+      mkdir: async () => {},
+      writeFile: async (path, bytes, flags) => {
+        assert.equal(flags.flag, 'wx');
+        receipts.push(JSON.parse(bytes));
+      },
+      ownedCommand: async (command, opts) => {
+        options.push(opts);
+        const normal = command[2].includes('short owned leader');
+        return {
+          processInventory: { platform: 'darwin' },
+          initialLeaderCapture: 'direct-child-birth',
+          survivors: [],
+          ambiguous: [],
+          status: normal ? 'closed' : 'failed',
+          forcedCleanup: !normal,
+          violation: normal ? null : fail ? 'unattributed-new-browser' : 'deadline',
+        };
+      },
+    };
+    const callback = new Function(
+      ...Object.keys(dependencies),
+      `return (${source.slice(native.start, native.end)});`,
+    )(...Object.values(dependencies));
+    await callback({ after() {} });
+    assert.deepEqual(
+      options.map((opts) => [opts.timeoutMs, opts.retainAmbiguityInventories]),
+      [
+        [10000, expected],
+        [100, expected],
+      ],
+    );
+    assert.deepEqual(
+      receipts.map((row) => row.case),
+      ['normal', 'deadline'],
+    );
+    fail = true;
+    await assert.rejects(callback({ after() {} }), /unattributed-new-browser/);
+    assert.equal(receipts.at(-1).result.violation, 'unattributed-new-browser');
+  }
+});
+
 test(
   'hosted Darwin native owner closes a short leader and rejects forced deadline cleanup',
   {
@@ -209,8 +290,9 @@ test(
         env: process.env,
         log: join(dir, `${id}.log`),
         timeoutMs,
-        retainAmbiguityInventories:
-          process.env.SOLO_DARWIN_AMBIGUITY_EVIDENCE === 'identity-maps-v1',
+        retainAmbiguityInventories: hostedAmbiguityInventories(
+          process.env.SOLO_DARWIN_AMBIGUITY_EVIDENCE,
+        ),
       });
       if (process.env.SOLO_DARWIN_OWNER_EVIDENCE) {
         const bytes = JSON.stringify({ case: id, result }, null, 2) + '\n';
@@ -1404,4 +1486,534 @@ test('actual owner opts in only to the exact identity evidence protocol when the
   ])
     assert.equal(choose(value), false);
   assert.equal(choose({ SOLO_DARWIN_AMBIGUITY_EVIDENCE: 'identity-maps-v1' }), true);
+});
+
+const compactMaps = (m) => captureIdentityMaps(m, true, 'identity-maps-v2');
+
+function cocoaLauncherModel() {
+  const m = shellAmbiguityModel();
+  m.all.delete(m.row.pid);
+  // Actual first latch from run39098132775 attempt2. Later identities below
+  // are modeled; that run retained no successor identity for PID3527.
+  m.row = {
+    ...m.row,
+    pid: 3527,
+    pgid: 1,
+    birth: '00000000000000003527',
+    version: 7300,
+    argv: '/usr/libexec/xpcproxy',
+  };
+  m.all.set(m.row.pid, m.row);
+  m.record.violation = 'unattributed-new-browser';
+  m.record.status = 'failed';
+  m.record.forcedCleanup = true;
+  return m;
+}
+
+test('V2 cleanup follow-up preserves first failure and later same-lifetime exec without ownership', () => {
+  const m = cocoaLauncherModel(),
+    plain = cocoaLauncherModel();
+  assert.deepEqual(compactMaps(m), collectModel(plain));
+  assert.equal(m.record.firstAmbiguousIdentityFollowup, undefined);
+  const first = structuredClone(m.record.firstAmbiguousInventory);
+  const maps = structuredClone(m.record.firstAmbiguousIdentityMaps);
+  const owned = structuredClone(m.owned);
+  assert.deepEqual(compactMaps(m), collectModel(plain));
+  assert.equal(m.record.firstAmbiguousIdentityFollowup.last.kind, 'same-exec-identity');
+  assert.equal(m.record.firstAmbiguousIdentityFollowup.firstChange, null);
+  const successor = {
+    ...m.row,
+    version: 7301,
+    pgid: m.row.pid,
+    argv: observedMetalCompilerModel().row.argv,
+  };
+  m.all.set(successor.pid, successor);
+  plain.all.set(successor.pid, { ...successor });
+  assert.deepEqual(compactMaps(m), collectModel(plain));
+  const followup = structuredClone(m.record.firstAmbiguousIdentityFollowup);
+  assert.equal(followup.firstChange.kind, 'later-exec-version');
+  const [retained] = JSON.parse(followup.firstChange.snapshot.rowsJSON);
+  assert.equal(retained.pid, 3527);
+  assert.equal(retained.birth, first.row.birth);
+  assert.equal(retained.version, 7301);
+  assert.equal(retained.executable, successor.argv);
+  assert.equal(retained.rss, null);
+  assert.equal(retained.ownerTagged, null);
+  successor.argv = '/mutated-after-read';
+  assert.equal(
+    JSON.parse(followup.firstChange.snapshot.rowsJSON)[0].executable,
+    retained.executable,
+  );
+  m.all.delete(3527);
+  plain.all.delete(3527);
+  assert.deepEqual(compactMaps(m), collectModel(plain));
+  assert.equal(m.record.firstAmbiguousIdentityFollowup.last.kind, 'absent');
+  assert.equal(m.record.firstAmbiguousIdentityFollowup.last.snapshot, null);
+  assert.deepEqual(m.record.firstAmbiguousIdentityFollowup.firstChange, followup.firstChange);
+  assert.deepEqual(m.record.firstAmbiguousInventory, first);
+  assert.deepEqual(m.record.firstAmbiguousIdentityMaps, maps);
+  assert.deepEqual(m.owned, owned);
+  assert.equal(m.record.violation, 'unattributed-new-browser');
+  assert.equal(m.record.status, 'failed');
+  assert.equal(m.record.forcedCleanup, true);
+});
+
+test('V2 follow-up never exempts browser exec, PID reuse, missing rows or incomplete identity', () => {
+  for (const [patch, kind] of [
+    [{ version: 7301, argv: '/unowned/WebKitWebProcess' }, 'later-exec-version'],
+    [{ birth: '00000000000000999999', argv: '/unowned/WebKitWebProcess' }, 'pid-reused'],
+    [{ version: 7299 }, 'inconsistent-exec-identity'],
+    [{ argv: '/unowned/WebKitWebProcess' }, 'inconsistent-exec-identity'],
+    [{ pathInspection: 'unavailable', argv: 'untrusted fallback' }, 'path-unavailable'],
+    [{ version: -1 }, 'identity-unavailable'],
+    [null, 'absent'],
+  ]) {
+    const m = cocoaLauncherModel(),
+      plain = cocoaLauncherModel();
+    compactMaps(m);
+    collectModel(plain);
+    for (const model of [m, plain]) {
+      if (patch) model.all.set(3527, { ...model.row, ...patch });
+      else model.all.delete(3527);
+    }
+    assert.deepEqual(compactMaps(m), collectModel(plain));
+    assert.equal(m.record.firstAmbiguousIdentityFollowup.last.kind, kind);
+    const snapshot = m.record.firstAmbiguousIdentityFollowup.last.snapshot;
+    if (kind === 'path-unavailable')
+      assert.equal(JSON.parse(snapshot.rowsJSON)[0].executable, null);
+    if (kind === 'identity-unavailable') assert.equal(snapshot.status, 'unavailable');
+    assert(!m.owned.has(3527));
+    assert.equal(m.record.violation, 'unattributed-new-browser');
+    assert.equal(m.record.status, 'failed');
+  }
+});
+
+test('V2 follow-up is absent for ordinary, V1, Linux and noneligible original latches', () => {
+  for (const [darwin, mode, patch] of [
+    [true, false, {}],
+    [true, true, {}],
+    [false, 'identity-maps-v2', {}],
+    [true, 'identity-maps-v2', { argv: '/bin/bash' }],
+    [true, 'identity-maps-v2', { euid: 501 }],
+    [true, 'identity-maps-v2', { pgid: 3527 }],
+    [true, 'identity-maps-v2', { pathInspection: 'unavailable' }],
+  ]) {
+    const m = cocoaLauncherModel();
+    Object.assign(m.row, patch);
+    captureIdentityMaps(m, darwin, mode);
+    m.all.delete(3527);
+    captureIdentityMaps(m, darwin, mode);
+    assert.equal(m.record.firstAmbiguousIdentityFollowup, undefined);
+  }
+});
+
+test('V2 follow-up retains fixed-size immutable snapshots across repeated existing inventories', () => {
+  const m = cocoaLauncherModel();
+  compactMaps(m);
+  for (let version = 7301; version < 8000; version++) {
+    m.all.set(3527, { ...m.row, version, argv: '/unowned/WebKitWebProcess' });
+    assert.equal(compactMaps(m).length, 1);
+  }
+  const proof = m.record.firstAmbiguousIdentityFollowup;
+  assert.equal(JSON.parse(proof.firstChange.snapshot.rowsJSON)[0].version, 7301);
+  assert.equal(JSON.parse(proof.last.snapshot.rowsJSON)[0].version, 7999);
+  assert.equal(Object.keys(proof).length, 6);
+  assert(
+    Buffer.byteLength(JSON.stringify(proof, null, 2).replace(/^/gm, ' '.repeat(24))) <= 16 * 1024,
+  );
+  assert(Buffer.byteLength(JSON.stringify(m.record, null, 2)) < 1024 * 1024);
+  assert.equal(m.record.violation, 'unattributed-new-browser');
+});
+
+test('V2 follow-up reports escaped-byte overflow without truncating or granting classification', () => {
+  let overflow;
+  for (let length = 700; length <= 1900; length += 100) {
+    const m = cocoaLauncherModel();
+    compactMaps(m);
+    m.all.set(3527, { ...m.row, version: 7301, argv: '/"'.repeat(length) });
+    assert.equal(compactMaps(m).length, 1);
+    if (m.record.firstAmbiguousIdentityFollowup.status === 'overflow') {
+      overflow = m;
+      break;
+    }
+  }
+  assert(overflow, 'Actual escaped enclosing snapshot reaches its fixed cap');
+  const retained = structuredClone(overflow.record.firstAmbiguousIdentityFollowup);
+  assert.equal(retained.firstChange, null);
+  assert.equal(retained.last, null);
+  assert(retained.minimumSerializationBytes > retained.maximumBytes);
+  overflow.all.delete(3527);
+  compactMaps(overflow);
+  assert.deepEqual(overflow.record.firstAmbiguousIdentityFollowup, retained);
+  assert.equal(overflow.record.violation, 'unattributed-new-browser');
+});
+const nestedIdentityBytes = (snapshot) =>
+  Buffer.byteLength(JSON.stringify(snapshot, null, 2).replace(/^/gm, ' '.repeat(24)));
+
+test('compact evidence preserves every V1 scalar, order and hash without changing ambiguity or ownership', () => {
+  const original = shellAmbiguityModel(),
+    compact = shellAmbiguityModel();
+  for (const m of [original, compact]) {
+    m.all.set(3457, {
+      ...m.row,
+      pid: 3457,
+      pgid: 1,
+      birth: '00000000000000003457',
+      version: 7239,
+      argv: '/usr/libexec/xpcproxy',
+    });
+    m.all.set(3458, {
+      ...m.row,
+      pid: 3458,
+      birth: '00000000000000003458',
+      state: 'Z',
+      euid: 501,
+      ruid: 501,
+      argv: '/owned/WebKitWebProcess',
+    });
+  }
+  assert.deepEqual(compactMaps(compact), captureIdentityMaps(original));
+  assert.deepEqual(compact.owned, original.owned);
+  assert.deepEqual(compact.record.firstAmbiguousInventory, original.record.firstAmbiguousInventory);
+  const actual = compact.record.firstAmbiguousIdentityMaps;
+  assert.equal(actual.format, 'SoloFirstAmbiguousIdentityMapsV2');
+  for (const key of ['before', 'current', 'owned']) {
+    const old = original.record.firstAmbiguousIdentityMaps[key],
+      next = actual[key];
+    assert.equal(next.status, 'complete');
+    assert.equal(next.encoding, 'compact-json-array');
+    assert.deepEqual(JSON.parse(next.rowsJSON), old.rows);
+    assert.equal(next.bytes, old.bytes);
+    assert.equal(next.sha256, old.sha256);
+    assert.equal(next.encodedRowsBytes, Buffer.byteLength(JSON.stringify(next.rowsJSON)));
+    assert(nestedIdentityBytes(next) <= next.maximumBytes);
+  }
+  const rows = JSON.parse(actual.current.rowsJSON);
+  assert.equal(rows.find((r) => r.pid === 3457).executable, '/usr/libexec/xpcproxy');
+  assert.equal(rows.find((r) => r.pid === 3457).ownerTagged, null);
+  assert.equal(rows.find((r) => r.pid === 3457).rss, null);
+  assert.equal(rows.find((r) => r.pid === 3458).state, 'Z');
+});
+
+test('compact 445/454-row modeled maps fit unchanged bounds and the actual enclosing Cocoa receipt', () => {
+  // Counts match the failed native inventory, but these row contents are a model.
+  // The discarded native before/current maps cannot be reconstructed.
+  const m = shellAmbiguityModel();
+  let pid = 20000;
+  const add = () => {
+    const row = {
+      ...m.row,
+      pid,
+      birth: String(pid).padStart(20, '0'),
+      pgid: pid,
+      argv: pid % 2 ? '/owned/WebKitWebProcess' : '/System/Library/Frameworks/example-service',
+      state: pid % 5 ? 'R' : 'Z',
+      euid: pid % 3 ? 501 : 0,
+      ruid: pid % 3 ? 501 : 0,
+    };
+    pid++;
+    return row;
+  };
+  while (m.before.size < 445) {
+    const row = add();
+    m.before.set(row.pid, row);
+    m.all.set(row.pid, { ...row });
+  }
+  while (m.all.size < 454) {
+    const row = add();
+    m.all.set(row.pid, row);
+  }
+  const legacy = structuredClone(m);
+  assert.deepEqual(compactMaps(m), captureIdentityMaps(legacy));
+  for (const name of ['before', 'current']) {
+    assert.equal(legacy.record.firstAmbiguousIdentityMaps[name].status, 'overflow');
+    assert.equal(legacy.record.firstAmbiguousIdentityMaps[name].reason, 'byte-cap');
+  }
+  const proof = m.record.firstAmbiguousIdentityMaps;
+  assert.equal(proof.before.totalRows, 445);
+  assert.equal(proof.current.totalRows, 454);
+  for (const [name, map] of [
+    ['before', m.before],
+    ['current', m.all],
+    ['owned', m.owned],
+  ]) {
+    assert.equal(proof[name].status, 'complete');
+    assert.equal(JSON.parse(proof[name].rowsJSON).length, map.size);
+    assert(nestedIdentityBytes(proof[name]) <= proof[name].maximumBytes);
+  }
+  assert(Buffer.byteLength(JSON.stringify(m.record, null, 2) + '\n') <= 1024 * 1024);
+  assert(
+    Buffer.byteLength(JSON.stringify({ case: 'deadline', result: m.record }, null, 2) + '\n') <=
+      1024 * 1024,
+  );
+});
+
+test('compact cap counts escaped outer bytes and containing indentation at the exact byte boundary', async () => {
+  const source = await readFile(
+    new URL('./run-solo-remote-correctness.mjs', import.meta.url),
+    'utf8',
+  );
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const node = ast.body.find(
+    (n) => n.type === 'FunctionDeclaration' && n.id.name === 'compactIdentitySnapshot',
+  );
+  assert(node, 'Actual compact serializer exists');
+  const encode = new Function('hash', `return (${source.slice(node.start, node.end)})`)((bytes) =>
+    createHash('sha256').update(bytes).digest('hex'),
+  );
+  const payload = JSON.stringify([
+    { executable: '/"\\é\n'.repeat(100), rss: null, ownerTagged: null },
+  ]);
+  let cap = 256 * 1024;
+  for (let i = 0; i < 4; i++) {
+    const next = encode(payload, 1, cap);
+    cap = next.status === 'complete' ? nestedIdentityBytes(next) : next.minimumSerializationBytes;
+  }
+  for (const delta of [-1, 0, 1]) {
+    const result = encode(payload, 1, cap + delta);
+    assert.equal(result.status, delta < 0 ? 'overflow' : 'complete');
+    if (delta < 0) {
+      assert.equal(result.rowsJSON, null);
+      assert.equal(result.sha256, undefined);
+      assert.equal(result.minimumSerializationBytes, cap);
+    } else {
+      assert.equal(nestedIdentityBytes(result), cap);
+      assert.equal(result.encodedRowsBytes, Buffer.byteLength(JSON.stringify(payload)));
+      assert(result.encodedRowsBytes > result.bytes);
+      assert.equal(JSON.parse(result.rowsJSON)[0].ownerTagged, null);
+    }
+  }
+});
+
+test('compact overflow, invalid rows and row cap never retain a partial identity map', () => {
+  const long = shellAmbiguityModel();
+  for (let i = 0; i < 100; i++)
+    long.all.set(10000 + i, {
+      ...long.row,
+      pid: 10000 + i,
+      birth: String(10000 + i).padStart(20, '0'),
+      argv: '/' + '"'.repeat(4094),
+    });
+  assert.equal(compactMaps(long).length, 101);
+  const snapshot = long.record.firstAmbiguousIdentityMaps.current;
+  assert.equal(snapshot.status, 'overflow');
+  assert.equal(snapshot.reason, 'byte-cap');
+  assert(snapshot.minimumEncodedRowsBytes > snapshot.maximumBytes);
+  assert.equal(snapshot.rowsJSON, null);
+  assert.equal(snapshot.sha256, undefined);
+  const many = shellAmbiguityModel();
+  for (let i = 0; i < 16384; i++) many.before.set(20000 + i, {});
+  compactMaps(many);
+  assert.equal(many.record.firstAmbiguousIdentityMaps.before.reason, 'row-cap');
+  assert.equal(many.record.firstAmbiguousIdentityMaps.before.rows, null);
+  const invalid = shellAmbiguityModel();
+  invalid.before.get(900).version = -1;
+  assert.deepEqual(compactMaps(invalid), [invalid.row]);
+  assert.equal(invalid.record.firstAmbiguousIdentityMaps.before.status, 'unavailable');
+  assert.equal(invalid.record.firstAmbiguousIdentityMaps.before.rows, null);
+});
+
+test('compact latch owns its data and excludes unreadable guesses, argument text and arbitrary fields', () => {
+  const m = shellAmbiguityModel();
+  m.row.pathInspection = 'unavailable';
+  m.row.argv = 'secret-argument';
+  m.row.extra = 'secret-argument';
+  m.owned.set(m.leader, { ...m.owned.get(m.leader), argv: 'secret-argument' });
+  compactMaps(m);
+  const retained = structuredClone(m.record.firstAmbiguousIdentityMaps);
+  assert(!JSON.stringify(retained).includes('secret-argument'));
+  assert.equal(
+    JSON.parse(retained.current.rowsJSON).find((r) => r.pid === m.row.pid).executable,
+    null,
+  );
+  m.row.pathInspection = 'complete';
+  m.row.argv = '/changed';
+  m.row.version++;
+  m.before.get(900).version++;
+  m.owned.get(m.leader).ppid++;
+  m.all.delete(m.row.pid);
+  assert.deepEqual(compactMaps(m), []);
+  m.all.set(m.row.pid, { ...m.row, birth: '00000000000000009999' });
+  assert.equal(compactMaps(m).length, 1);
+  assert.deepEqual(m.record.firstAmbiguousIdentityMaps, retained);
+  const linux = shellAmbiguityModel();
+  assert.equal(captureIdentityMaps(linux, false, 'identity-maps-v2').length, 1);
+  assert.equal(linux.record.firstAmbiguousIdentityMaps, undefined);
+});
+
+test('only the actual Cocoa owner boundary explicitly selects V2; common and ordinary preflight defaults stay V1', async () => {
+  const source = await readFile(new URL('./solo-native-mp3-control.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const calls = [];
+  const visit = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (node.type === 'CallExpression' && node.callee?.name === 'ownedCommand') calls.push(node);
+    for (const value of Object.values(node))
+      if (Array.isArray(value)) value.forEach(visit);
+      else if (value && typeof value === 'object') visit(value);
+  };
+  visit(ast);
+  const optIns = calls.filter((n) =>
+    source.slice(n.arguments[1].start, n.arguments[1].end).includes('identity-maps-v2'),
+  );
+  assert.equal(optIns.length, 1);
+  const call = optIns[0];
+  assert.equal(call.arguments[0].elements[2].value, 'child-cocoa-owner');
+  const options = source.slice(call.arguments[1].start, call.arguments[1].end);
+  const choose = new Function(
+    'cocoaEnvironment',
+    'options',
+    'plan',
+    'join',
+    'output',
+    `return (${options})`,
+  );
+  for (const value of [undefined, 'identity-maps-v1', 'identity-maps-v2', 'identity-maps-v3']) {
+    const actual = choose(
+      { SOLO_DARWIN_AMBIGUITY_EVIDENCE: value },
+      {},
+      { ownerPreflightTimeoutMs: 120000 },
+      join,
+      '/output',
+    );
+    assert.equal(
+      actual.retainAmbiguityInventories,
+      value === 'identity-maps-v2' ? value : undefined,
+    );
+    assert.equal(actual.timeoutMs, 120000);
+    assert.equal(actual.receipt, '/output/owner-preflight-command.json');
+  }
+  // The existing actual common-owner AST control above still rejects V2 env
+  // alone. Ordinary preflight has no explicit V2 selector or override.
+  const preflight = await readFile(
+    new URL('./solo-darwin-owner-preflight.mjs', import.meta.url),
+    'utf8',
+  );
+  assert(!preflight.includes('identity-maps-v2'));
+  assert(!preflight.includes('retainAmbiguityInventories'));
+});
+
+function observedCVMModel() {
+  // Exact final ambiguous scalar row in run39105057083/artifact12128351464,
+  // owner-preflight-command.json. Surrounding maps use the existing controlled
+  // model; this does not reclassify the original failed native observation.
+  const m = observedPsModel();
+  m.all.delete(m.row.pid);
+  m.row = {
+    pid: 6410,
+    ppid: 1,
+    pgid: 6410,
+    birth: '00000000000000006410',
+    state: 'R',
+    rss: 0,
+    argv: '/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/CVMServer',
+    ownerTagged: false,
+    inspectionIncomplete: true,
+    pathInspection: 'complete',
+    rssInspection: 'unavailable',
+    ownerTagInspection: 'unavailable',
+    identityKind: 'private-unique-id-uint64',
+    euid: 0,
+    ruid: 0,
+    parentUniqueId: '1',
+    version: 13372,
+  };
+  m.all.set(m.row.pid, m.row);
+  return m;
+}
+const cvmWitness = (m) =>
+  darwinKnownNonBrowserProcessWitness(m.row, m.before, m.all, m.owned, m.leader);
+
+test('retained CVM root kernel row classifies only the exact graphics service with unknown resources', () => {
+  const m = observedCVMModel(),
+    owned = [...m.owned];
+  assert.deepEqual(collectModel(m), []);
+  const witness = m.record.foreignSystemProcesses[0];
+  assert.equal(witness.format, 'SoloKnownNonBrowserProcessWitnessV1');
+  assert.equal(witness.process.executable, m.row.argv);
+  assert.equal(witness.process.birth, '00000000000000006410');
+  assert.equal(witness.process.version, 13372);
+  assert.equal(witness.process.rss, null);
+  assert.equal(witness.process.ownerTagged, null);
+  assert.equal(m.row.inspectionIncomplete, true);
+  assert.deepEqual([...m.owned], owned);
+  assert.deepEqual(collectModel(m, false), [m.row]);
+});
+
+test('CVM classification rejects altered path, privilege, launchd lineage and incomplete kernel provenance', () => {
+  for (const mutate of [
+    (m) => (m.row.argv += '-helper'),
+    (m) => (m.row.argv += ' -- WebKit'),
+    (m) => (m.row.argv = '/tmp/CVMServer'),
+    (m) => (m.row.argv = '/owned/WebKitWebProcess'),
+    (m) => (m.row.ppid = 2),
+    (m) => (m.row.parentUniqueId = '2'),
+    (m) => (m.row.pgid = 2),
+    (m) => (m.row.euid = 501),
+    (m) => (m.row.ruid = 501),
+    (m) => (m.row.pathInspection = 'unavailable'),
+    (m) => (m.row.pathInspection = 'unobserved'),
+    (m) => (m.row.ownerTagged = true),
+    (m) => (m.row.ownerTagInspection = 'present'),
+    (m) => (m.row.ownerTagInspection = 'unobserved'),
+    (m) => (m.row.rssInspection = 'unobserved'),
+    (m) => (m.row.rss = 1),
+    (m) => (m.row.identityKind = 'timestamp'),
+    (m) => (m.row.birth = '0'),
+    (m) => (m.row.version = -1),
+    (m) => delete m.owned.get(m.leader).euid,
+    (m) => (m.owned.get(m.leader).ruid = 0),
+  ]) {
+    const m = observedCVMModel();
+    mutate(m);
+    assert.equal(cvmWitness(m), null, String(mutate));
+    assert.deepEqual(collectModel(m), [m.row], String(mutate));
+    assert.equal(m.record.foreignSystemProcesses.length, 0);
+  }
+  const contradictory = observedCVMModel();
+  contradictory.row.inspectionIncomplete = false;
+  assert.equal(cvmWitness(contradictory), null);
+});
+
+test('CVM classification never admits owned/reused identities or a changed current executable', () => {
+  for (const mutate of [
+    (m) => m.before.set(m.row.pid, { ...m.row }),
+    (m) => m.owned.set(m.row.pid, { ...m.row }),
+    (m) => (m.row.pgid = m.leader),
+    (m) => (m.row.ppid = m.leader),
+    (m) => m.all.set(m.row.pid, { ...m.row, birth: '00000000000000906410' }),
+    (m) => m.all.set(m.row.pid, { ...m.row, version: m.row.version + 1 }),
+    (m) => m.all.set(m.row.pid, { ...m.row, argv: '/owned/WebKitWebProcess' }),
+    (m) => m.all.set(m.row.pid, { ...m.row, pathInspection: 'unavailable' }),
+  ]) {
+    const m = observedCVMModel();
+    mutate(m);
+    assert.equal(cvmWitness(m), null, String(mutate));
+    assert.equal(m.record.foreignSystemProcesses.length, 0);
+  }
+});
+
+test('CVM exception leaves a simultaneous unowned browser ambiguous and preserves cap failure', () => {
+  const m = observedCVMModel();
+  const browser = {
+    ...m.row,
+    pid: 6411,
+    pgid: 6411,
+    birth: '00000000000000006411',
+    euid: 501,
+    ruid: 501,
+    argv: '/owned/WebKitWebProcess',
+  };
+  m.all.set(browser.pid, browser);
+  assert.deepEqual(collectModel(m), [browser]);
+  assert.equal(m.record.foreignSystemProcesses.length, 1);
+  const full = observedCVMModel();
+  for (let i = 0; i < 64; i++) {
+    const pid = 17000 + i;
+    full.all.set(pid, { ...full.row, pid, pgid: pid, birth: String(pid).padStart(20, '0') });
+  }
+  assert.equal(collectModel(full).length, 1);
+  assert.equal(full.record.foreignSystemProcesses.length, 64);
+  assert.equal(full.record.foreignSystemProcessOverflow, true);
+  assert.deepEqual([...full.owned.keys()], [3266]);
 });

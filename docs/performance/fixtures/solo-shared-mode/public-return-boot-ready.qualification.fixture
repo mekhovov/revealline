@@ -1,0 +1,124 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "legacy-team-versus-public-return-boot-v2",
+  "kind": "recovery",
+  "sharedModeProtocol": "shared-mode-public-return-v1",
+  "timeoutMs": 180000,
+  "query": {
+    "journey": "legacy"
+  },
+  "readySelector": "#shell-home[open]",
+  "readyHiddenSelector": "html[data-boot-state='ready'] #boot-screen",
+  "coverage": [
+    "Public guarded Home→Team→Solo→Versus→Solo navigation",
+    "Two native player key sets and advancing public clock in each mode",
+    "Explicit Pause and visible Home/discard confirmation",
+    "Final Solo Start/movement/Pause with strict same-engine public replay; intermediate resources/checkpoints unobserved"
+  ],
+  "actions": [
+    {
+      "type": "shared-mode-public-return",
+      "timeoutMs": 120000
+    },
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1000
+    },
+    {
+      "type": "wait",
+      "ms": 1000
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "replayRequirements": {
+    "movingTicks": 120
+  },
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v1",
+      "id": "signal-01",
+      "revision": "1",
+      "name": "First Signal",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "roamer",
+          "type": "bouncer",
+          "x": 37.5,
+          "y": 24.5,
+          "vx": 2.2,
+          "vy": 1.6,
+          "radius": 0.3
+        }
+      ],
+      "objectives": [],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.45
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [40, 73],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "seed": 1,
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  }
+}

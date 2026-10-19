@@ -199,7 +199,72 @@ async function preparedPage(t, source, mark) {
     page.frame(0);
   }
   await start(page, mark);
-  return { page, setControls };
+  return { page, setControls, pad };
+}
+
+for (const activation of ['Menu', 'Confirm']) {
+  test(`actual Solo controller ${activation} Resume cannot spend the paused callback interval`, async (t) => {
+    const { page, setControls, pad } = await preparedPage(t, 'gamepad', () => {});
+    page.frame(1000 / 60);
+    await activateHostAction(page.$('pause-button'));
+    page.frame(0);
+    const run = page.rendered.run,
+      before = checkpoint(run),
+      beforeTick = run.tick,
+      reference = structuredClone(run);
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    page.$('start-button').focus();
+    const button = pad.buttons[activation === 'Menu' ? 9 : 0];
+    button.pressed = true;
+    button.value = 1;
+    if (activation === 'Confirm') {
+      // Actual Confirm owns the press and commits the visible Resume on release.
+      page.frame(0);
+      assert.equal(page.doc.body.dataset.flightState, 'paused');
+      assert.equal(checkpoint(run), before);
+      button.pressed = false;
+      button.value = 0;
+    }
+    const reads = page.padReads;
+    page.frame(100);
+    assert.ok(page.padReads > reads, 'The paused callback still polls the real controller.');
+    assert.equal(
+      page.doc.body.dataset.flightState,
+      'running',
+      'Cached Resume commits in this callback.',
+    );
+    assert.ok(page.rendered.run === run, 'Resume keeps the accepted run.');
+    assert.equal(checkpoint(run), before, 'The 100 ms before Resume is not gameplay time.');
+    button.pressed = false;
+    button.value = 0;
+    page.frame(1000 / 60);
+    assert.equal(
+      checkpoint(run),
+      before,
+      'The first active clock sample only establishes its boundary.',
+    );
+    setControls({ boost: true, action: true, pickup: true });
+    page.frame(FIXED_DT * 1000);
+    stepRun(reference, {}, FIXED_DT);
+    assert.equal(
+      checkpoint(run),
+      checkpoint(reference),
+      'The first real tick preserves neutral Resume input.',
+    );
+    page.frame(FIXED_DT * 1000);
+    stepRun(reference, { boost: true, action: true, pickup: true }, FIXED_DT);
+    assert.equal(run.tick, beforeTick + 2, 'Only fresh 120 Hz intervals advance simulation.');
+    assert.equal(checkpoint(run), checkpoint(reference));
+    setControls();
+    page.frame(0);
+    await activateHostAction(page.$('pause-button'));
+    const replay = savedReplay(page),
+      behavior = recordedBehavior(replay);
+    assert.deepEqual(behavior.edges, { action: [beforeTick + 2], pickup: [beforeTick + 2] });
+    assert.equal(behavior.counts.boost, 1);
+    assert.equal(replay.checkpoint.hash, checkpoint(reference));
+    assert.deepEqual(page.errors, []);
+  });
 }
 
 for (const source of ['keyboard', 'gamepad']) {

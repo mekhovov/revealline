@@ -25,6 +25,7 @@ const BOUNDS = Object.freeze([
   250,
   Infinity,
 ]);
+const FRAME_FIELDS = 8;
 const INPUT_KINDS = Object.freeze(['keyboard', 'touch', 'pointer', 'controller']);
 const EVENT_KINDS = Object.freeze([
   'run-adopted',
@@ -43,6 +44,62 @@ const EVENT_KINDS = Object.freeze([
   'terminal-hud-values',
   'terminal-hud-controls',
   'terminal-hud-end',
+  // Rare synchronous pause/save substages reuse the same bounded ring.
+  'pause-begin',
+  'pause-phase',
+  'pause-input',
+  'pause-audio',
+  'pause-snapshot-begin',
+  'pause-snapshot-end',
+  'pause-snapshot-failed',
+  'pause-save-begin',
+  'pause-save-end',
+  'pause-save-failed',
+  'pause-readback-begin',
+  'pause-readback-end',
+  'pause-readback-failed',
+  'pause-persist-failed',
+  'pause-save-skipped',
+  'pause-overlay',
+  'pause-hud',
+  'pause-link',
+  'pause-end',
+  // Rare optional Missions observations share the existing fixed ring.
+  'missions-opening',
+  'missions-after-pause',
+  'missions-build-cached',
+  'missions-build-joined',
+  'missions-imports-begin',
+  'missions-imports-end',
+  'missions-data-begin',
+  'missions-data-end',
+  'missions-sources-begin',
+  'missions-sources-end',
+  'missions-supplemental-imports-begin',
+  'missions-supplemental-imports-end',
+  'missions-hunt-begin',
+  'missions-hunt-end',
+  'missions-duel-begin',
+  'missions-duel-end',
+  'missions-team-begin',
+  'missions-team-end',
+  'missions-installed-begin',
+  'missions-installed-end',
+  'missions-chooser-build-begin',
+  'missions-chooser-build-end',
+  'missions-refresh-begin',
+  'missions-refresh-end',
+  'missions-open-begin',
+  'missions-campaigns-begin',
+  'missions-campaigns-end',
+  'missions-render-begin',
+  'missions-render-end',
+  'missions-modal-begin',
+  'missions-modal-end',
+  'missions-complete',
+  'missions-cancelled',
+  'missions-failed',
+  'missions-observer-overflow',
 ]);
 const EVENT_CAPACITY = 256;
 const clean = (value) => (Number.isFinite(value) && value >= 0 ? value : 0);
@@ -113,6 +170,7 @@ export function createPerformanceSession({
     previousPhase = 0,
     hiddenSinceFrame = false,
     frameCount = 0,
+    unattributedWorkFrames = 0,
     transitionCount = 0,
     inputSerial = 0,
     inputOverwrites = 0,
@@ -123,8 +181,8 @@ export function createPerformanceSession({
     baselineMs = 1000 / 60,
     worstCount = 0,
     smallestWorst = 0;
-  const frames = new Float64Array(capacity * 7);
-  const worst = new Float64Array(16 * 7);
+  const frames = new Float64Array(capacity * FRAME_FIELDS);
+  const worst = new Float64Array(16 * FRAME_FIELDS);
   const transitions = new Float64Array(64 * 2);
   const failureTimes = new Float64Array(16 * 2);
   const failureMessages = new Array(16);
@@ -135,6 +193,7 @@ export function createPerformanceSession({
   const phaseDraw = PHASES.map(aggregate);
   const phaseHUD = PHASES.map(aggregate);
   const phaseSimulation = PHASES.map(aggregate);
+  const callbackWork = PHASES.map(aggregate);
   const totals = aggregate();
   const update = aggregate(),
     draw = aggregate(),
@@ -177,6 +236,7 @@ export function createPerformanceSession({
     hudMs = 0,
     simulationMs = 0,
     totalWorkMs = updateMs + drawMs,
+    workPhase = null,
   ) {
     if (!enabled || !Number.isFinite(atMs) || atMs < previous) return;
     const interval = atMs - previous;
@@ -198,7 +258,12 @@ export function createPerformanceSession({
     collect(phaseDraw[attribution], drawMs);
     collect(phaseHUD[attribution], hudMs);
     collect(phaseSimulation[attribution], simulationMs);
-    const offset = (frameCount++ % capacity) * 7;
+    // The interval belongs to the previous callback. Current callback work is
+    // labeled only by an explicit entry-phase observation, never the final phase.
+    const workAttribution = PHASES.indexOf(workPhase);
+    if (workAttribution < 0) unattributedWorkFrames++;
+    else collect(callbackWork[workAttribution], totalWorkMs);
+    const offset = (frameCount++ % capacity) * FRAME_FIELDS;
     frames[offset] = atMs;
     frames[offset + 1] = interval;
     frames[offset + 2] = attribution;
@@ -206,14 +271,19 @@ export function createPerformanceSession({
     frames[offset + 4] = clean(drawMs);
     frames[offset + 5] = clean(hudMs);
     frames[offset + 6] = clean(simulationMs);
+    frames[offset + 7] = workAttribution;
     // Retain the worst foreground frames even after the recent ring wraps.
     // Hidden suspension cannot evict useful active-play evidence.
-    if (attribution !== 6 && (worstCount < 16 || interval > worst[smallestWorst * 7 + 1])) {
+    if (
+      attribution !== 6 &&
+      (worstCount < 16 || interval > worst[smallestWorst * FRAME_FIELDS + 1])
+    ) {
       const row = worstCount < 16 ? worstCount++ : smallestWorst;
-      for (let i = 0; i < 7; i++) worst[row * 7 + i] = frames[offset + i];
+      for (let i = 0; i < FRAME_FIELDS; i++) worst[row * FRAME_FIELDS + i] = frames[offset + i];
       smallestWorst = 0;
       for (let i = 1; i < worstCount; i++)
-        if (worst[i * 7 + 1] < worst[smallestWorst * 7 + 1]) smallestWorst = i;
+        if (worst[i * FRAME_FIELDS + 1] < worst[smallestWorst * FRAME_FIELDS + 1])
+          smallestWorst = i;
     }
     previous = atMs;
     previousPhase = phase;
@@ -347,6 +417,7 @@ export function createPerformanceSession({
         atMs: storage[offset],
         intervalMs: storage[offset + 1],
         phase: PHASES[storage[offset + 2]],
+        workPhase: PHASES[storage[offset + 7]] ?? null,
         updateMs: storage[offset + 3],
         drawMs: storage[offset + 4],
         hudMs: storage[offset + 5],
@@ -354,11 +425,12 @@ export function createPerformanceSession({
       });
       const recentFrames = [];
       for (let i = Math.max(0, frameCount - capacity); i < frameCount; i++) {
-        const offset = (i % capacity) * 7;
+        const offset = (i % capacity) * FRAME_FIELDS;
         recentFrames.push({
           atMs: frames[offset],
           intervalMs: frames[offset + 1],
           phase: PHASES[frames[offset + 2]],
+          workPhase: PHASES[frames[offset + 7]] ?? null,
           updateMs: frames[offset + 3],
           drawMs: frames[offset + 4],
           hudMs: frames[offset + 5],
@@ -374,7 +446,7 @@ export function createPerformanceSession({
         });
       }
       const worstHitches = [];
-      for (let i = 0; i < worstCount; i++) worstHitches.push(frameSummary(worst, i * 7));
+      for (let i = 0; i < worstCount; i++) worstHitches.push(frameSummary(worst, i * FRAME_FIELDS));
       worstHitches.sort((a, b) => b.intervalMs - a.intervalMs);
       const recentFailures = [];
       for (let i = Math.max(0, failureCount - 16); i < failureCount; i++) {
@@ -432,6 +504,16 @@ export function createPerformanceSession({
             },
           ]),
         ),
+        callbackWork: {
+          version: 1,
+          definition:
+            'Completed PRE_STEP-to-POST_RENDER elapsed work labeled by the phase observed immediately before the application update. workPhase is a caller-supplied entry observation, not a claim that every substage ran in that phase. It includes a playing callback that pauses, wins or fails during update. Missing entry observations remain null and unattributed. The existing phase fields, interval counts and legacy phase work/stage buckets retain prior-interval attribution, including hidden suspension. This additive view does not change those metrics or prove CPU time, browser composition, physical presentation or a frame-gap cause.',
+          attributedFrameCount: frameCount - unattributedWorkFrames,
+          unattributedFrameCount: unattributedWorkFrames,
+          phases: Object.fromEntries(
+            PHASES.map((name, index) => [name, { work: summarize(callbackWork[index]) }]),
+          ),
+        },
         stages: {
           work: summarize(appWork),
           update: summarize(update),
@@ -444,7 +526,7 @@ export function createPerformanceSession({
         eventWitnesses: {
           version: 1,
           definition:
-            'Host observations on the performance.now time origin. Accepted events are observed after stepRun returns; generation identifies a host-local accepted run, not a persistent identity. rAF stamps share this origin but are not callback execution start times. Markers do not change frame attribution or establish asynchronous durability. Terminal HUD markers delimit inclusive elapsed substages in the immediate post-terminal callback, not CPU time; a missing end marker remains incomplete.',
+            'Host observations on the performance.now time origin. Accepted events are observed after stepRun returns; generation identifies a host-local accepted run, not a persistent identity. rAF stamps share this origin but are not callback execution start times. Markers do not change frame attribution or establish asynchronous durability. Terminal HUD markers delimit inclusive elapsed substages in the immediate post-terminal callback, not CPU time; a missing end marker remains incomplete. Pause markers delimit the synchronous full unfinished-flight pause path: phase includes owner/phase/cancellation; input includes clearing/paused state; audio includes optional flush invocation, sound and warning; snapshot/save/readback have separate boundaries; overlay/HUD/link record synchronous work only. Failure kinds retain the failed substage and suppress pause-end. Early-return pause branches remain prefixes. A completed span does not prove storage durability, asynchronous flush/link completion, CPU time or the cause of the preceding frame gap. Missions markers delimit inclusive first-open import, construction, refresh and open/render work. Missing ends remain incomplete; cancellation closes only the observer. Joined builds do not inherit another opening observer. These are not CPU samples, import network attribution, or proof that a received pending stage caused a page hang.',
           capacity: EVENT_CAPACITY,
           total: eventCount,
           retained: recentEvents.length,

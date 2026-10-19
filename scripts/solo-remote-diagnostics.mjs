@@ -11,6 +11,7 @@ import {
   DIAGNOSTICS_FORMAT,
 } from './solo-diagnostics-analysis.mjs';
 import { diagnosticsArguments, observerArguments } from './qualify-solo-diagnostics.mjs';
+import { PROSPECTIVE_OVERHEAD_METHOD } from './solo-overhead-interval.mjs';
 
 const MiB = 1024 ** 2;
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -27,10 +28,87 @@ const finalSource = Object.freeze({
   runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
   journalCohort: 'cold-main8b-candidatea6e',
 });
+export const DE332_DIAGNOSTICS_COHORT = 'diagnostics-candidatede332-endpoint-box-v1';
+const de332Package = {
+  revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+  run: 39091745654,
+  artifact: 12123463810,
+  outer: {
+    bytes: 1094606342,
+    sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+  },
+  inner: {
+    bytes: 1075789325,
+    sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+  },
+  manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+  producer:
+    'Exact successful Appearance39091745654, Node22.13.1; full remote package/source/CSP verification remains mandatory.',
+};
+const de332Source = Object.freeze({
+  revision: de332Package.revision,
+  tree: de332Package.tree,
+  runtime: de332Package.revision,
+  journalCohort: 'timing-main8b-candidatede332-v1',
+});
+export const RUNTIME797_DIAGNOSTICS_COHORT = 'diagnostics-candidate797-endpoint-box-v1';
+const runtime797Package = {
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  run: 39104551453,
+  artifact: 12128990483,
+  outer: {
+    bytes: 1094639112,
+    sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
+  },
+  inner: {
+    bytes: 1075807530,
+    sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
+  },
+  manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
+  producer:
+    'Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer.',
+};
+const runtime797Source = Object.freeze({
+  revision: runtime797Package.revision,
+  tree: runtime797Package.tree,
+  runtime: runtime797Package.revision,
+  journalCohort: 'timing-main8b-candidate797-v1',
+});
+function validate797FirstEight(release) {
+  assert.equal(release.firstEightRequired, true);
+  assert.equal(release.firstEightAllCorrectnessPassed, true);
+  const proof = release.firstEightEvidence;
+  assert(proof && typeof proof === 'object' && !Array.isArray(proof));
+  assert.deepEqual(
+    Object.keys(proof).sort(),
+    [
+      'format',
+      'sourceRevision',
+      'runId',
+      'artifactId',
+      'artifactSHA256',
+      'summarySHA256',
+      'correctness',
+      'ownersClosed',
+    ].sort(),
+  );
+  assert.equal(proof.format, 'SoloFirstEightCorrectnessEvidenceV1');
+  assert.equal(proof.sourceRevision, '797e03f28743921842df6aa57520a72016ba3dfc');
+  for (const key of ['runId', 'artifactId'])
+    assert(Number.isSafeInteger(proof[key]) && proof[key] > 0);
+  for (const key of ['artifactSHA256', 'summarySHA256']) assert.match(proof[key], /^[a-f0-9]{64}$/);
+  assert.equal(proof.correctness, 'passed');
+  assert.equal(proof.ownersClosed, true);
+}
+const prospectiveSource = (source) => source === de332Source || source === runtime797Source;
 // Admission is source-specific. Actual archive and producer identity still need
 // the common full readback; a pending producer never supplies those bytes.
 function diagnosticsSource(plan) {
   if (plan.sourceCohort === undefined) return legacySource;
+  if (plan.sourceCohort === DE332_DIAGNOSTICS_COHORT) return de332Source;
+  if (plan.sourceCohort === RUNTIME797_DIAGNOSTICS_COHORT) return runtime797Source;
   assert.equal(plan.sourceCohort, FINAL_DIAGNOSTICS_COHORT);
   return finalSource;
 }
@@ -76,6 +154,16 @@ export const DIAGNOSTICS_SETUP_SUCCESSORS = Object.freeze({
   },
 });
 function validateSetupSuccessor(plan, source, journal) {
+  if (prospectiveSource(source)) {
+    assert.equal(plan.setupSuccessor, undefined);
+    assert.equal(plan.release.onceOnlyBefore, undefined);
+    assert.deepEqual(plan.release.dispatch, {
+      workflow: '.github/workflows/solo-native-package-consumer.yml',
+      ref: 'refs/heads/main',
+      lane: journal ? 'journal-cost' : 'app-overhead',
+    });
+    return;
+  }
   if (plan.setupSuccessor === undefined) {
     assert.equal(plan.release.onceOnlyBefore, source.revision);
     return;
@@ -139,7 +227,45 @@ export function validateDiagnosticsPlan(plan) {
   const journal = journalCostMode(plan);
   const source = diagnosticsSource(plan);
   assert.equal(plan.release.sourceCohort, plan.sourceCohort);
-  if (source === finalSource) assert.equal(plan.runtimeRevision, source.runtime);
+  if (source === finalSource || prospectiveSource(source))
+    assert.equal(plan.runtimeRevision, source.runtime);
+  if (prospectiveSource(source)) {
+    assert.equal(plan.analysisMethod, PROSPECTIVE_OVERHEAD_METHOD);
+    assert.deepEqual(
+      plan.candidate,
+      source === runtime797Source ? runtime797Package : de332Package,
+    );
+    assert.equal(plan.release.status, 'reviewed-diagnostic-only');
+    assert.equal(plan.release.clockErrorAssumption, 'observed-minimum-step-bounds-duration-error');
+    assert.equal(plan.release.unconditionalClockGuarantee, false);
+    if (source === runtime797Source) validate797FirstEight(plan.release);
+    else {
+      assert.equal(plan.release.firstEightRequired, false);
+      assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    }
+    assert(
+      Array.isArray(plan.release.evidence) &&
+        plan.release.evidence.length > 0 &&
+        plan.release.evidence.length <= 32,
+    );
+    for (const ref of plan.release.evidence) {
+      assert(Number.isSafeInteger(ref.runId) && ref.runId > 0);
+      assert(Number.isSafeInteger(ref.artifactId) && ref.artifactId > 0);
+      assert.match(ref.artifactSHA256, /^[a-f0-9]{64}$/);
+      assert.match(ref.summarySHA256, /^[a-f0-9]{64}$/);
+      assert(['passed', 'failed-reviewed'].includes(ref.disposition));
+    }
+    for (const path of ['scripts/solo-overhead-interval.mjs', ...DIAGNOSTICS_SETUP_DYNAMIC_ROOTS])
+      assert(
+        plan.frozenTools.some((ref) => ref.path === path),
+        `Missing prospective helper ${path}`,
+      );
+  } else {
+    assert(
+      !Object.hasOwn(plan, 'analysisMethod'),
+      'Historical native plans retain their original method',
+    );
+  }
   assert(journal || plan.probe === undefined, 'Unknown diagnostics subtype');
   assert.equal(
     plan.status,
@@ -192,7 +318,7 @@ export function validateDiagnosticsPlan(plan) {
   );
   assert.equal(plan.release.candidateRevision, source.revision);
   validateSetupSuccessor(plan, source, journal);
-  assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
+  if (!prospectiveSource(source)) assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.gameplayPerformanceQualification, false);
   assert.equal(plan.release.hitchJournalOverheadQualification, false);
   for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
@@ -324,7 +450,11 @@ export async function prepareDiagnosticsMode(ctx) {
       ? { synchronousJournalHookOverhead: 'unobserved', fullJournalOverheadQualification: false }
       : {}),
     gameplayPerformanceQualification: false,
-    firstEightAllCorrectnessPassed: false,
+    ...(diagnosticsSource(ctx.plan) === runtime797Source
+      ? { firstEightRequired: true, firstEightAllCorrectnessPassed: true }
+      : prospectiveSource(diagnosticsSource(ctx.plan))
+        ? { firstEightRequired: false }
+        : { firstEightAllCorrectnessPassed: false }),
   });
   let recipePath = null;
   if (journalCostMode(ctx.plan)) {
@@ -408,6 +538,9 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
     configuration,
     node: process.version,
     timerResolution: null,
+    ...(prospectiveSource(diagnosticsSource(ctx.plan))
+      ? { analysisMethod: ctx.plan.analysisMethod }
+      : {}),
     ...(journalCostMode(ctx.plan)
       ? {
           observerSha256: ctx.plan.frozenTools.find((ref) =>

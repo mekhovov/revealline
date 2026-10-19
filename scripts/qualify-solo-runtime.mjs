@@ -20,7 +20,11 @@ import {
   waitQualificationControl,
   waitQualificationPreparation,
 } from './solo-qualification-export.mjs';
-import { createQualificationCpuProfile } from './solo-qualification-cpu-profile.mjs';
+import {
+  createQualificationCpuProfile,
+  createQualificationFrameTrace,
+  qualificationFrameTraceOptions,
+} from './solo-qualification-cpu-profile.mjs';
 import { createQualificationReplayIdentity } from './solo-qualification-replay-identity.mjs';
 import {
   qualificationContextMode,
@@ -77,6 +81,12 @@ const nextRouteModule =
     ? await import('./solo-qualification-next-route.mjs')
     : null;
 const nextRouteOptions = nextRouteModule?.qualificationNextRouteOptions(flags, scenario, bytes);
+const sharedModeModule =
+  scenario.sharedModeProtocol !== undefined ||
+  flags.some((flag) => flag.startsWith('--shared-mode-public-return'))
+    ? await import('./solo-qualification-shared-mode.mjs')
+    : null;
+const sharedModeOptions = sharedModeModule?.qualificationSharedModeOptions(flags, scenario, bytes);
 const display = qualificationDisplayOptions(flags);
 const snapshotStorageOptions = qualificationSnapshotStorage(flags, scenario);
 const engine = option('browser', 'chromium'),
@@ -86,6 +96,7 @@ const profileMode = qualificationProfileMode(flags, engine, scenario);
 const memoryProfile = profileMode === 'memory-profile',
   audioProof = profileMode === 'audio-proof',
   cpuProfile = profileMode === 'cpu-profile';
+const frameTraceOptions = qualificationFrameTraceOptions(flags, engine, bytes);
 const audioOptions = audioProofOptions(flags, scenario.audioRequirements, audioProof);
 const exportsReplay = (actions) =>
   actions.some(
@@ -192,14 +203,22 @@ assert(
     ['localhost', '127.0.0.1', '[::1]'].includes(localURL.hostname),
   'Access fixture requires a local transport',
 );
-const cacheMode = qualificationCacheMode(scenario, { workProbe, fixtureAccess, mirrored });
+const cacheMode = qualificationCacheMode(scenario, {
+  workProbe,
+  fixtureAccess,
+  mirrored,
+});
 if (scenario.query)
   for (const [key, value] of Object.entries(scenario.query)) url.searchParams.set(key, value);
 url.searchParams.set('performance', '1');
 const report = {
   format: 'SoloQualificationReportV1',
   scenario: scenario.id,
-  kind: readinessOptions ? 'readiness-diagnostic' : (profileMode ?? scenario.kind),
+  kind: frameTraceOptions
+    ? 'frame-trace-diagnostic'
+    : readinessOptions
+      ? 'readiness-diagnostic'
+      : (profileMode ?? scenario.kind),
   scenarioKind: scenario.kind,
   cacheMode,
   baselineRuntime,
@@ -277,7 +296,12 @@ const report = {
           'Original origin is preserved. All manifest-admitted deployment paths use local transport, including authoring imports. Missing deployment paths are blocked; only the explicit sibling soundtrack publication may use the live public origin. Policy is unchanged.',
         ]
       : []),
-    ...(scenario.kind === 'recovery'
+    ...(sharedModeOptions
+      ? [
+          'Public shared-mode return diagnostic: unfinished Team/Versus checkpoints, recording verification, resource release, per-player motion and raster equality are unobserved. Final Solo public recording is independently verified; real mode links do not carry the optional diagnostics query.',
+        ]
+      : []),
+    ...(scenario.kind === 'recovery' && !sharedModeOptions
       ? [
           'Synthetic lifecycle/Canvas events test application handlers only; they do not lose or restore a native context.',
         ]
@@ -296,11 +320,16 @@ const report = {
 if (readinessOptions) {
   report.readinessPilot = {
     protocol: readinessOptions.protocol,
+    ...(readinessOptions.requiredClickIdentityObservation
+      ? { requiredClickIdentityObservation: readinessOptions.requiredClickIdentityObservation }
+      : {}),
     ...(readinessOptions.requiredStartRetention
       ? { requiredStartRetention: readinessOptions.requiredStartRetention }
       : {}),
     ...(readinessOptions.cancelBoundaryObservation
-      ? { cancelBoundaryObservation: readinessOptions.cancelBoundaryObservation }
+      ? {
+          cancelBoundaryObservation: readinessOptions.cancelBoundaryObservation,
+        }
       : {}),
     ...(readinessOptions.settlementObservation
       ? { settlementObservation: readinessOptions.settlementObservation }
@@ -356,6 +385,7 @@ async function save() {
 }
 await save();
 let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder, persistentOwner;
+let frameRecorder;
 let activeAction = null;
 let partialReplay = false;
 let memorySnapshots = 0;
@@ -395,7 +425,10 @@ async function sealHitchDocument(boundary) {
 async function profileMemory() {
   if (!memoryProfile) return undefined;
   if (memorySnapshots++ >= 64)
-    return { status: 'unobserved-cap', reason: '64 pause-only profiles per run maximum.' };
+    return {
+      status: 'unobserved-cap',
+      reason: '64 pause-only profiles per run maximum.',
+    };
   const read = async () => {
     const [heap, dom] = await Promise.all([
       cdp.send('Runtime.getHeapUsage'),
@@ -429,7 +462,11 @@ async function profileMemory() {
 }
 try {
   playwright = await import(pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href);
-  const contextOptions = { ...display, reducedMotion: 'no-preference', serviceWorkers: 'block' };
+  const contextOptions = {
+    ...display,
+    reducedMotion: 'no-preference',
+    serviceWorkers: 'block',
+  };
   if (contextMode === 'persistent') {
     persistentOwner = createPersistentQualificationOwner({
       browserType: playwright.webkit,
@@ -452,8 +489,12 @@ try {
   report.limitations.push(
     'Service workers are explicitly blocked for controlled online qualification; offline/update lifecycle is separate.',
   );
-  page = await context.newPage();
-  if (memoryProfile || cpuProfile || cpu !== 1) cdp = await context.newCDPSession(page);
+  if (sharedModeOptions && contextMode === 'persistent') {
+    const provenance = (report.environment.sharedModePageInitialization = {});
+    page = await sharedModeModule.claimSharedModeInitialPage(context, provenance);
+  } else page = await context.newPage();
+  if (memoryProfile || cpuProfile || frameTraceOptions || cpu !== 1)
+    cdp = await context.newCDPSession(page);
   page.on('pageerror', (error) => {
     if (report.pageErrors.length < 100) {
       report.pageErrorWitnesses.push({
@@ -468,7 +509,10 @@ try {
   });
   page.on('response', (response) => {
     if (response.status() >= 400 && report.failedResponses.length < 100)
-      report.failedResponses.push({ url: response.url(), status: response.status() });
+      report.failedResponses.push({
+        url: response.url(),
+        status: response.status(),
+      });
   });
   if (selectedFontReadiness)
     selectedFontHold = readinessModule.createSelectedFontHold(url.href, {
@@ -491,7 +535,10 @@ try {
       const decision = mirror?.(requested.href);
       if (decision?.kind === 'blocked') {
         if (report.failedResponses.length < 100)
-          report.failedResponses.push({ url: requested.href, blocked: decision.reason });
+          report.failedResponses.push({
+            url: requested.href,
+            blocked: decision.reason,
+          });
         return route.abort('blockedbyclient');
       }
       const mapped = decision?.kind === 'local' ? decision.url : null;
@@ -583,6 +630,7 @@ try {
 ${observationInitScript}
 ${quality ? `window.soloQualificationCreateSubmittedTierObservation = ${createSubmittedTierObservation.toString()};` : ''}
 ${readiness ? `window.soloQualificationCreateReadinessProbe = ${readinessModule.createBrowserReadinessProbe.toString()};` : ''}
+${options.requiredClickIdentityObservation ? `window.soloQualificationCreateRequiredRejoinObservation = ${readinessModule.createRequiredRejoinObservation.toString()};` : ''}
 ${options.requiredOriginal ? `window.soloQualificationInstallRequiredOriginalWitness = ${readinessModule.installRequiredOriginalRequestWitness.toString()};` : ''}
 ${nextRoute ? `window.soloQualificationCreateNextRouteReader = ${nextRouteModule.createNextRouteReader.toString()};` : ''}
 ${cost ? journalCostModule.journalCostInitScript() : ''}
@@ -603,6 +651,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       readinessGeometry,
       requiredOriginal,
       requiredStartRetention,
+      requiredClickIdentityObservation,
       faultEntryURL,
       qualityObservation,
       nextRoute,
@@ -615,7 +664,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       const counts = phases.map(() => new Float64Array(bounds.length));
       const totals = new Float64Array(phases.length * 5),
         tail = new Float64Array(256 * 4);
-      let observedGame, phaser, costScene;
+      let observedGame, phaser, costScene, observedReadinessSceneClass;
       const workBounds = [
         0.25,
         0.5,
@@ -662,10 +711,22 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             constructor(...args) {
               super(...args);
               observedGame = this;
+              if (requiredClickIdentityObservation) observedReadinessSceneClass = args[0]?.scene;
             }
           };
         },
       });
+      let requiredCheckpoint = null;
+      const requiredRejoin = requiredClickIdentityObservation
+        ? window.soloQualificationCreateRequiredRejoinObservation(
+            () => observedGame?.scene?.scenes ?? [],
+            (run) => {
+              if (!requiredCheckpoint) throw Error('Source-native checkpoint unavailable');
+              return requiredCheckpoint(run);
+            },
+            () => observedReadinessSceneClass,
+          )
+        : null;
       const readiness = readinessProbe
         ? window.soloQualificationCreateReadinessProbe(
             () => {
@@ -679,9 +740,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             readinessGeometry,
             readinessCancelBoundary === true,
             requiredStartRetention ? (event) => requiredWitness.captureStart(event) : null,
+            requiredRejoin,
           )
         : null;
-      let requiredCheckpoint = null;
       const requiredWitness = requiredOriginal
         ? window.soloQualificationInstallRequiredOriginalWitness(
             () => observedGame?.scene?.scenes ?? [],
@@ -891,7 +952,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         ...(nextRouteRead ? { nextRouteRead } : {}),
         readinessBoundary: (label) => readiness?.boundary(label),
         ...(readinessCancelBoundary
-          ? { completeSelectedFontCancellation: () => readiness.cancelCommandComplete() }
+          ? {
+              completeSelectedFontCancellation: () => readiness.cancelCommandComplete(),
+            }
           : {}),
         ...(requiredWitness
           ? {
@@ -949,6 +1012,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       requiredOriginal: requiredOriginalReadiness,
       ...(readinessOptions?.requiredStartRetention
         ? { requiredStartRetention: readinessOptions.requiredStartRetention }
+        : {}),
+      ...(readinessOptions?.requiredClickIdentityObservation
+        ? { requiredClickIdentityObservation: readinessOptions.requiredClickIdentityObservation }
         : {}),
       ...(requiredOriginalReadiness ? { faultEntryURL: url.href } : {}),
       ...(readinessOptions?.geometryObservation ? { readinessGeometry: true } : {}),
@@ -1112,6 +1178,20 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
     assert(time > 0, 'Scenario deadline exceeded');
     return time;
   };
+  if (frameTraceOptions) {
+    frameRecorder = createQualificationFrameTrace(cdp, {
+      protocol: frameTraceOptions.protocol,
+      file: resolve(output) + '.frame-trace.json',
+      remainingMs: () => deadline - Date.now(),
+      onLimit: async () => {
+        report.scenarioStatus = 'fail';
+        process.exitCode = 1;
+        await context?.close().catch(() => {});
+        await browser?.close();
+      },
+    });
+    report.frameTrace = frameRecorder.report;
+  }
   async function execute(actions, prefix = '') {
     for (let index = 0; index < actions.length; index++) {
       const action = actions[index],
@@ -1126,11 +1206,23 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       report.actions.push(record);
       const previousAction = activeAction;
       activeAction = { path, type: action.type };
-      const timeout = remaining(action),
-        locator = action.selector ? page.locator(action.selector) : null;
+      let timeout = remaining(action);
+      const locator = action.selector ? page.locator(action.selector) : null;
       try {
+        // Hash-bound warm recipe: setup precedes public Start without extending its deadline.
+        if (frameRecorder && path === '3') {
+          const setupStarted = Date.now(),
+            actionDeadline = setupStarted + timeout;
+          await frameRecorder.start();
+          report.frameTrace.preStartSetupMs = Date.now() - setupStarted;
+          timeout = Math.min(remaining(action), actionDeadline - Date.now());
+          assert(timeout > 0, 'Frame trace setup exhausted the original public Start deadline');
+        }
         if (selectedFontSettlement && action.label === 'selected-theme') {
-          selectedFontSettlementOwner = readinessModule.createSelectedFontSettlementOwner({ page });
+          selectedFontSettlementOwner = readinessModule.createSelectedFontSettlementOwner({
+            page,
+            sourceRevision: readinessOptions.sourceRevision,
+          });
           await selectedFontSettlementOwner.install();
           report.selectedFontSettlement = selectedFontSettlementOwner.snapshot();
         }
@@ -1200,7 +1292,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
               record.preparation,
             );
           }
-          const href = await locator.getAttribute('href', { timeout: followRemaining() });
+          const href = await locator.getAttribute('href', {
+            timeout: followRemaining(),
+          });
           assert(href, 'Missing prepared UI link');
           const destination = new URL(href, page.url());
           assert.equal(
@@ -1331,6 +1425,16 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
               throw error;
             }
           }
+        } else if (action.type === 'shared-mode-public-return') {
+          assert(sharedModeOptions, 'Exact shared-mode opt-in required');
+          const observation = {};
+          report.sharedModeObservation = observation;
+          await sharedModeModule.executeSharedModePublicReturn({
+            page,
+            deadline: performance.now() + Math.min(timeout, deadline - Date.now()),
+            record: observation,
+          });
+          report.sharedModeAssessment = sharedModeModule.assessSharedModePublicReturn(observation);
         } else if (action.type === 'authored-next-route') {
           assert(nextRouteOptions, 'Exact authored route opt-in required');
           await nextRouteModule.executeNextRoute({
@@ -1454,8 +1558,10 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             if (!target) throw new Error('Missing injected-event target');
             target.dispatchEvent(
               new Event(
-                { 'canvas-loss': 'contextlost', 'canvas-restore': 'contextrestored' }[event] ??
-                  event,
+                {
+                  'canvas-loss': 'contextlost',
+                  'canvas-restore': 'contextrestored',
+                }[event] ?? event,
               ),
             );
           }, action);
@@ -1637,6 +1743,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             readinessModule.assertOptionalIconFallback(report.optionalIconFallback);
           }
         }
+        if (frameRecorder && path === '7') frameRecorder.afterDirectionThree();
         if (record.status === 'running') record.status = 'pass';
       } catch (error) {
         record.status = 'fail';
@@ -1664,7 +1771,11 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   if (scenario.expectAudio) {
     const probe = await page.evaluate(() => window.soloQualificationProbe.export());
     const audio = report.snapshots.at(-1)?.application?.audio;
-    report.audioCheck = { observed: probe.audio, master: audio, requirement: scenario.expectAudio };
+    report.audioCheck = {
+      observed: probe.audio,
+      master: audio,
+      requirement: scenario.expectAudio,
+    };
     if (audio || !baselineRuntime) {
       assert.equal(
         audio?.muted,
@@ -1742,6 +1853,17 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       report.scenarioStatus = 'fail';
       report.selectedFontFailure =
         'Original selected-font response did not complete within its owned fault protocol.';
+      process.exitCode = 1;
+    }
+  }
+  if (frameRecorder) {
+    await frameRecorder.finish(
+      report.scenarioStatus === 'fail' ? 'scenario-failure' : 'actions-ended',
+    );
+    if (report.frameTrace.status !== 'retained') {
+      report.scenarioStatus = 'fail';
+      report.frameTraceFailure =
+        'Complete bounded frame trace unavailable; partial evidence retained.';
       process.exitCode = 1;
     }
   }
@@ -1894,7 +2016,8 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       process.exitCode = 1;
     }
   }
-  if (cpuProfile) report.performanceGateStatus = 'excluded-cpu-profiling';
+  if (frameTraceOptions) report.performanceGateStatus = 'excluded-browser-frame-tracing';
+  else if (cpuProfile) report.performanceGateStatus = 'excluded-cpu-profiling';
   else if (audioProof) report.performanceGateStatus = 'excluded-audio-identity-profiling';
   else if (memoryProfile) {
     report.performanceGateStatus = 'excluded-memory-profiling';
@@ -1916,7 +2039,10 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       report.performanceGateStatus = 'invalid-evidence';
       report.performanceGateFailure = String(error.stack ?? error);
     }
-  } else report.performanceGateStatus = 'excluded-synthetic-recovery';
+  } else
+    report.performanceGateStatus = sharedModeOptions
+      ? 'excluded-public-shared-mode-recovery'
+      : 'excluded-synthetic-recovery';
   if (hitchStore && hitchStore.finish().status !== 'complete') {
     report.performanceGateStatusBeforeHitchJournal = report.performanceGateStatus;
     report.performanceGateStatus = 'invalid-evidence';
@@ -1944,6 +2070,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         cleanupFailure: report.mediaFaultCleanupFailure,
         audioCheck: report.audioCheck,
         startRetention: readinessOptions.requiredStartRetention ?? null,
+        requiredClickIdentityObservation: readinessOptions.requiredClickIdentityObservation ?? null,
       });
     } else if (selectedFontReadiness) {
       report.readinessAssessment = selectedFontSettlement
@@ -1953,6 +2080,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             readinessDocuments,
             report.selectedFontTransport,
             report.selectedFontSettlement,
+            readinessOptions.sourceRevision,
           )
         : selectedFontPostCommand
           ? readinessModule.assessSelectedFontPostCommandReadiness(

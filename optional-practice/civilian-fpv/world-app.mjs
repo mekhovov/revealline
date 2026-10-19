@@ -85,8 +85,7 @@ import {
   SIM_RADIO_AUDIO_KEY,
   createSimDisplayPreferences,
   attachSimThemeFamilyControls,
-  getSimMenuAnimation,
-  setSimMenuAnimation,
+  simMenuAnimationBinding,
   subscribeSimMenuAnimation,
   simAttachSettingsPanels,
   simSettingsPanelBack,
@@ -1294,6 +1293,7 @@ export function mountWorldApp({
     }
   };
   const txt = (en, uk) => (locale === 'uk' ? uk : en);
+  const navigationContext = () => txt('FPV SIM · Worlds', 'FPV SIM · Світи');
   const localized = (value) =>
     typeof value === 'string' ? value : (value?.[locale] ?? value?.en ?? '');
   // Creator labels may use the current theme name; exact authored/recorded
@@ -2025,7 +2025,11 @@ export function mountWorldApp({
       if (typeof message === 'string') status(message);
     },
   });
-  const input = createFlightInput({ window: win, document: doc, onPause: () => pauseFlight() });
+  const input = createFlightInput({
+    window: win,
+    document: doc,
+    onPause: (reason) => pauseFlight(true, reason),
+  });
   const inputDiagnostics = createFlightInputDiagnostics({ now: () => win.performance.now() });
   input.touchResponse($('flight-touch-response').value);
   input.keyboardPreset($('flight-keyboard-preset').value);
@@ -2168,6 +2172,15 @@ export function mountWorldApp({
     onStart: () => {
       if (flight) updateHUD(flight.snapshot());
       $('world-arm').click();
+    },
+    onLessonMode: async (mode) => {
+      if (!current?.beginner || !['self-level', 'acro'].includes(mode)) return;
+      try {
+        await changeFlightMode(mode);
+      } catch (error) {
+        reportError(error);
+        throw error;
+      }
     },
     onPause: () => pauseFlight(),
     onRetry: () => $('world-retry').click(),
@@ -4169,6 +4182,7 @@ export function mountWorldApp({
         ),
         muted: !audio.enabled(),
         transitionActive: !['idle', 'cancelled'].includes(continuousPlay.snapshot().phase),
+        navigationContext,
         missionName: titleCourse?.locales?.[locale]?.title ?? '',
         summary: titleCourse?.locales?.[locale]?.brief ?? '',
         phase: 'ready',
@@ -4532,7 +4546,9 @@ export function mountWorldApp({
     }
     if (savedFlightToken === flightToken) recovery = saved;
   }
-  function pauseFlight(freezeRadio = true) {
+  // Background checkpoint reads must not consume a deliberate Arm click.
+  const pendingFlightSteps = new WeakSet();
+  function pauseFlight(freezeRadio = true, reason = 'paused') {
     continuousPlay.cancel('paused');
     regionalManifestRequest?.abort();
     if (pausing) return;
@@ -4546,8 +4562,12 @@ export function mountWorldApp({
     huntReactions.suspend();
     audio.pause();
     presentation.resume();
-    input.enable(false);
-    input.clear();
+    if (reason === 'paused' && !replayProof)
+      input.pause({
+        session: flight,
+        retainKeyboardThrottle: flight?.snapshot().status === 'active',
+      });
+    else input.enable(false);
     if (freezeRadio) radio.freeze('paused');
     if (regionalPreparing && current?.regional) flight?.cancelPreparation();
     if (flight) flight.pause();
@@ -5188,6 +5208,7 @@ export function mountWorldApp({
             ? 'playing'
             : state.status,
       pauseOpensMenu: Boolean(current?.regional),
+      navigationContext,
       missionName: $('flight-title').textContent,
       summary: $('flight-menu-brief').textContent,
       canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status) &&
@@ -5914,7 +5935,7 @@ export function mountWorldApp({
     try {
       advanceFrame(now);
     } catch (error) {
-      pauseFlight();
+      pauseFlight(true, 'error');
       reportError(error);
     }
   }
@@ -5929,19 +5950,15 @@ export function mountWorldApp({
       $('flight-dialog').open &&
       (executionDelta > 250 || (lastTime !== null && now - lastTime > 250))
     ) {
-      // Cold source/graphics preparation may delay a callback while flight is
-      // already disarmed. Discard that elapsed time without cancelling staging.
-      // Active flight and every explicit pause/blur/context-loss path still freeze.
-      if (
-        current?.regional &&
-        regionalPreparing &&
-        ['paused', 'disarmed'].includes(flight.snapshot().status)
-      ) {
+      // A paused flight cannot consume elapsed time. Checkpoint/terrain work
+      // may delay this callback; pausing again would cancel its recovery.
+      // Explicit pause, blur and context-loss handlers still clear ownership.
+      if (['paused', 'disarmed'].includes(flight.snapshot().status)) {
         lastTime = null;
         accumulator = 0;
         return;
       }
-      pauseFlight();
+      pauseFlight(true, 'focus-lost');
       return;
     }
     pollGamepad(executedAt);
@@ -5960,7 +5977,7 @@ export function mountWorldApp({
     continuousPlay.advance(elapsed);
     lastTime = now;
     if (elapsed > 250) {
-      pauseFlight();
+      pauseFlight(true, 'focus-lost');
       return;
     }
     // Observe a deliberate radio OFF→ON edge while paused as well as flying.
@@ -5971,6 +5988,7 @@ export function mountWorldApp({
       !(current?.regionalAdvanced && regionalAdvancedControls?.busy) &&
       (!current.regional || flight.snapshot().reason === 'prepared') &&
       !ghostLookup &&
+      !pendingFlightSteps.has(flight) &&
       !replayProof &&
       $('flight-source').value === 'radio' &&
       ['paused', 'disarmed'].includes(flight.snapshot().status) &&
@@ -6052,6 +6070,7 @@ export function mountWorldApp({
               },
         );
         if (result && typeof result.then === 'function') {
+          pendingFlightSteps.add(selectedFlight);
           // Render the committed state while the worker owns a mission interval.
           void result
             .then((state) => {
@@ -6075,15 +6094,16 @@ export function mountWorldApp({
                   state.reason,
                 )
               )
-                pauseFlight();
+                pauseFlight(true, state.reason);
               updateHUD(state);
             })
             .catch((error) => {
               if (disposed || flight !== selectedFlight) return;
-              pauseFlight();
+              pauseFlight(true, 'error');
               updateHUD(selectedFlight.snapshot());
               reportError(error);
-            });
+            })
+            .finally(() => pendingFlightSteps.delete(selectedFlight));
           break;
         }
         if (current.regional && flight.snapshot().reason === 'terrain-required') {
@@ -6225,7 +6245,7 @@ export function mountWorldApp({
     regionalPreparationIssue = regionalPreparationFeedback({ contextLost: true });
     sceneReady = false;
     qualityPreparing = false;
-    pauseFlight();
+    pauseFlight(true, 'context-lost');
     $('flight-status').textContent = txt(
       'Graphics interrupted. Open Menu and Retry after graphics recover.',
       'Графіку перервано. Відкрийте меню й повторіть політ після її відновлення.',
@@ -6349,7 +6369,7 @@ export function mountWorldApp({
     if (regionalAdvanced && typeof win.Worker !== 'function')
       throw new Error(txt('Advanced is unavailable on this platform.', 'Advanced недоступний на цій платформі.'));
     if (regionalAdvanced) {
-      regionalNativeLifecycle ??= onNativeInactive(() => pauseFlight(), { locationRef: win.location })
+      regionalNativeLifecycle ??= onNativeInactive(() => pauseFlight(true, 'focus-lost'), { locationRef: win.location })
         .then((remove) => {
           if (disposed) return Promise.resolve(remove());
           removeRegionalNativeInactive = remove;
@@ -6661,6 +6681,11 @@ export function mountWorldApp({
       (!checkpointRequest || checkpointRequest.watch) &&
       learningById.get(entry.beginner);
     if (learning) {
+      tuningStore.refresh();
+      const selectedLibrary = tuningStore.snapshot();
+      const selectedSetup = selectedLibrary.setups.find(
+        (setup) => setup.id === selectedLibrary.selectedSetupId,
+      );
       learningPreferences ??= {
         'flight-camera': $('flight-camera').value,
       };
@@ -6679,6 +6704,12 @@ export function mountWorldApp({
         ),
         practice: Boolean(options.recover),
         replay: Boolean(options.replayProof || checkpointRequest?.watch),
+        practiceAircraftName:
+          !options.replayProof &&
+          !checkpointRequest &&
+          selectedSetup?.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
+            ? selectedSetup.name
+            : null,
       });
     } else {
       beginnerCoach.close();
@@ -7683,6 +7714,13 @@ export function mountWorldApp({
       (replayProof && finished)
     )
       return;
+    if (pendingFlightSteps.has(flight)) {
+      $('flight-status').textContent = txt(
+        'Finishing the current flight step. Press Resume again when ready.',
+        'Завершується поточний крок польоту. Після цього натисніть «Продовжити» ще раз.',
+      );
+      return;
+    }
     if (!replayProof && $('flight-source').value === 'radio') {
       restoreRadio();
       radio.poll();
@@ -7702,7 +7740,10 @@ export function mountWorldApp({
         return;
       }
     }
-    input.enable(!replayProof);
+    flight.arm();
+    if (flight.snapshot().status !== 'active') return;
+    if (replayProof) input.enable(false);
+    else input.resume(flight, flight.snapshot().lastInput.throttle / 1000);
     if (checkpointSession) {
       const throttle = flight.snapshot().lastInput.throttle / 1000;
       input.seedThrottle(throttle);
@@ -7715,7 +7756,6 @@ export function mountWorldApp({
     fire = false;
     lastTime = null;
     lastExecutionTime = win.performance?.now?.() ?? null;
-    flight.arm();
     huntReactions.resume();
     appearanceSession.arm(flight.snapshot().status);
     $('flight-status').textContent = replayProof
@@ -8066,8 +8106,8 @@ export function mountWorldApp({
     restoreRadio();
     paintInput(flight?.snapshot());
   });
-  on($('flight-mode'), 'change', () => {
-    const selectedMode = $('flight-mode').value;
+  function changeFlightMode(requestedMode) {
+    const selectedMode = typeof requestedMode === 'string' ? requestedMode : $('flight-mode').value;
     const preserveFocus = Boolean(playShell?.elements.dialogs.pause.open);
     // Selecting another flight mode starts a new attempt. Only this explicit
     // action releases the mode-specific overlay; Retry keeps its accepted pin.
@@ -8083,6 +8123,7 @@ export function mountWorldApp({
       const hasSection = checkpointRequest.index < current.course.steps[selectedMode].length;
       const proof = hasSection ? demonstrationFor(current, selectedMode) : null;
       return startFlight(proof ? demonstrationEntry(modeEntry) : modeEntry, {
+        mode: selectedMode,
         paused: true,
         preserveFocus,
         checkpoint: {
@@ -8098,20 +8139,29 @@ export function mountWorldApp({
       return startFlight(
         proof ? demonstrationEntry(modeEntry) : modeEntry,
         proof
-          ? { preview: true, replayProof: proof, demonstration: true, paused: true, preserveFocus }
-          : { paused: true, preserveFocus },
+          ? {
+              mode: selectedMode,
+              preview: true,
+              replayProof: proof,
+              demonstration: true,
+              paused: true,
+              preserveFocus,
+            }
+          : { mode: selectedMode, paused: true, preserveFocus },
       );
     }
     if (current && $('flight-dialog').open)
       return startFlight(modeEntry, {
         ...retainedDraftOptions(),
+        mode: selectedMode,
         preview: preview && !modePractice,
         paused: true,
         preserveFocus,
         playlist: playingPlaylist,
         index: playlistIndex,
       });
-  });
+  }
+  on($('flight-mode'), 'change', changeFlightMode);
   on($('flight-touch-response'), 'change', () => {
     pauseFlight();
     input.touchResponse($('flight-touch-response').value);
@@ -8330,7 +8380,7 @@ export function mountWorldApp({
     if (!replayProof && $('flight-source').value === 'radio') radio.disconnect(e.gamepad.index);
   });
   on(win, 'focus', () => restoreRadio());
-  on(win, 'pagehide', () => pauseFlight());
+  on(win, 'pagehide', () => pauseFlight(true, 'focus-lost'));
   const ready = (async () => {
     const results = await Promise.allSettled([
       openWorldStore({ indexedDB: win.indexedDB }),
@@ -8421,6 +8471,7 @@ export function mountWorldApp({
     document: doc,
     library: missionLibrary,
     supportedModes: ['solo'],
+    browsingContext: ({ label }) => `${navigationContext()} · ${label}`,
     description: () =>
       txt(
         'Every world and school lesson in one list. Choose a route; your flight settings and lesson coach stay with it.',
@@ -8578,7 +8629,7 @@ export function mountWorldApp({
     wordmarkURL: shellWordmarkURL,
     // The arcade return can be outside a standalone package's offline scope.
     artworkURL: new URL('../../menu-scenes/fpv.webp', shellWordmarkURL).href,
-    modeName: () => (locale === 'uk' ? 'FPV SIM · Світи' : 'FPV SIM · Worlds'),
+    modeName: navigationContext,
     locale,
     services: {
       settingsPanelBack: simSettingsPanelBack,
@@ -9017,7 +9068,7 @@ export function mountWorldApp({
       const entry =
         tuningReturnEntry ?? current ?? catalogue.find((item) => !item.beginner && !item.legacy);
       tuningReturnEntry = null;
-      if (entry) void startFlight(entry).catch(reportError);
+      if (entry) void startFlight(entry, { paused: true }).catch(reportError);
     },
     onTest(configuration) {
       if ($('sim-settings').open) closeSettings({ force: true });
@@ -9238,11 +9289,7 @@ export function mountWorldApp({
       textFace: displayBinding('textFace'),
       textSize: displayBinding('textSize'),
       reducedEffects: displayBinding('reducedEffects'),
-      menuAnimation: {
-        get: () => getSimMenuAnimation(win),
-        set: (value) => setSimMenuAnimation(value, win),
-        subscribe: (listener) => subscribeSimMenuAnimation(listener, win),
-      },
+      menuAnimation: simMenuAnimationBinding(win),
       masterMuted: {
         get: () => audio.masterSnapshot().muted,
         set: (value) => audio.setEnabled(!value),
@@ -9273,6 +9320,7 @@ export function mountWorldApp({
   });
 
   const cueSettings = {
+    gameplayOutput: audio.gameplayOutput,
     // This preference is global; the 3D engine has no separate radio bus.
     // The canonical Soundscape consumes the same record in supported modes.
     get radioSettings() {

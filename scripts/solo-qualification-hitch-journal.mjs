@@ -58,6 +58,37 @@ export function qualificationHitchJournalOptions(flags, scenario, scenarioBytes)
       assert.equal(scenario.actions[4].selector, '#open-preview');
       return { ...HITCH_LIMITS, preparationPolicy: 'first-return-retry-anchored-v1' };
     }
+    if (preparation[0] === '--hitch-journal-preparation=representative-timing-v1') {
+      assert.deepEqual(preparation, ['--hitch-journal-preparation=representative-timing-v1']);
+      const revisions = flags.filter((flag) => flag.startsWith('--source-revision='));
+      assert.equal(revisions.length, 1, 'One exact representative source required');
+      assert(
+        [
+          '--source-revision=8b01991942dc764b8aa4726851699ce1985e53ae',
+          '--source-revision=de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+          '--source-revision=797e03f28743921842df6aa57520a72016ba3dfc',
+        ].includes(revisions[0]),
+      );
+      const ids = {
+        '225c05486cb28516086acf3bbefb2bd4bcdabe30d5e1a990c7c07137f583a5d9':
+          'sentry-detour-capture-projectile-v2-meaningful-steering-v1',
+        '95521abcc88e38128b574dbea8d12e5958c1a98fd7a7789a4a8cfbd7df079768':
+          'long-rail-anchored-meaningful-steering-v1',
+        cd5aab3aa2c3f200588438feae32a3bf36b43d52b0c6c56806c30ea1777416a4:
+          'first-fracture-large-capture-erosion-steering-v1',
+        '9169d2a4d583b563cb322d5e374bb62179ef5d6dfa2c2f3d5351926969e5b78f':
+          'signal-07-thirty-second-border-steering-v1',
+      };
+      const hash = createHash('sha256').update(scenarioBytes).digest('hex');
+      assert(ids[hash], 'Unreviewed representative timing recipe');
+      assert.deepEqual(scenario, JSON.parse(scenarioBytes), 'Preparation recipe bytes changed');
+      assert.equal(scenario.id, ids[hash]);
+      assert.equal(scenario.entryPath, 'playground/');
+      assert.equal(scenario.readySelector, '#import-file');
+      assert.equal(scenario.actions[4].type, 'follow');
+      assert.equal(scenario.actions[4].selector, '#open-preview');
+      return { ...HITCH_LIMITS, preparationPolicy: 'representative-timing-v1' };
+    }
     if (preparation[0] === '--hitch-journal-preparation=timing-heavy-v1') {
       assert.deepEqual(preparation, ['--hitch-journal-preparation=timing-heavy-v1']);
       const hash = createHash('sha256').update(scenarioBytes).digest('hex');
@@ -499,9 +530,12 @@ export async function verifyHitchJournalFile(path, expectedBytes, expectedSha256
 export function createHitchJournalStore(output, now = () => performance.now(), options = {}) {
   assert(
     options.preparationPolicy === undefined ||
-      ['first-return-anchored-v1', 'first-return-retry-anchored-v1', 'timing-heavy-v1'].includes(
-        options.preparationPolicy,
-      ),
+      [
+        'first-return-anchored-v1',
+        'first-return-retry-anchored-v1',
+        'timing-heavy-v1',
+        'representative-timing-v1',
+      ].includes(options.preparationPolicy),
   );
   assert(
     options.activeDocumentPolicy === undefined ||

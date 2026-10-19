@@ -215,7 +215,8 @@ export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, lea
     (row?.argv === '/bin/ps' && row.ppid > 1) ||
     ((row?.argv === '/usr/libexec/thermald' ||
       row?.argv ===
-        '/System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService') &&
+        '/System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService' ||
+      row?.argv === '/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/CVMServer') &&
       row.ppid === 1 &&
       row.parentUniqueId === '1' &&
       row.pgid === row.pid);
@@ -273,12 +274,40 @@ export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, lea
 // Optional failed-observation evidence only. These are parser-accepted identity
 // maps, never new ownership inputs. Full-or-overflow avoids a partial inventory
 // looking complete; only kernel paths are retained, never argv/environment text.
-function ambiguityIdentityMap(map, maximumBytes, owned = false) {
+function compactIdentitySnapshot(rowsJSON, totalRows, maximumBytes) {
+  const snapshot = {
+    status: 'complete',
+    totalRows,
+    maximumBytes,
+    encoding: 'compact-json-array',
+    bytes: Buffer.byteLength(rowsJSON),
+    encodedRowsBytes: Buffer.byteLength(JSON.stringify(rowsJSON)),
+    sha256: hash(rowsJSON),
+    rowsJSON,
+  };
+  // Count the actual escaped outer JSON, including the same maximum containing
+  // indentation reserved by V1. Only the fixed metadata lines are indented;
+  // rows remain one JSON string even in pretty-printed containing receipts.
+  const nested = JSON.stringify(snapshot, null, 2).replace(/^/gm, ' '.repeat(24));
+  const serializationBytes = Buffer.byteLength(nested);
+  if (serializationBytes > maximumBytes)
+    return {
+      status: 'overflow',
+      reason: 'byte-cap',
+      totalRows,
+      maximumBytes,
+      minimumSerializationBytes: serializationBytes,
+      rowsJSON: null,
+    };
+  return snapshot;
+}
+function ambiguityIdentityMap(map, maximumBytes, owned = false, compact = false) {
   const totalRows = map.size;
   if (totalRows >= 16384)
     return { status: 'overflow', reason: 'row-cap', totalRows, maximumBytes, rows: null };
   const rows = [];
   let serializationBytes = 2;
+  let encodedRowsBytes = 4; // The escaped outer string's quotes and [] framing.
   for (const row of map.values()) {
     if (
       !darwinKernelIdentity(row) ||
@@ -328,6 +357,21 @@ function ambiguityIdentityMap(map, maximumBytes, owned = false) {
           }
         : {}),
     };
+    if (compact) {
+      const encoded = JSON.stringify(selected);
+      encodedRowsBytes += Buffer.byteLength(JSON.stringify(encoded)) - 2 + (rows.length ? 1 : 0);
+      if (encodedRowsBytes > maximumBytes)
+        return {
+          status: 'overflow',
+          reason: 'byte-cap',
+          totalRows,
+          maximumBytes,
+          minimumEncodedRowsBytes: encodedRowsBytes,
+          rowsJSON: null,
+        };
+      rows.push(encoded);
+      continue;
+    }
     const encoded = JSON.stringify(selected, null, 2);
     // Reserve up to 24 extra indent bytes per line for the existing nested
     // command/host receipts; the budget is conservative, not truncation.
@@ -343,6 +387,7 @@ function ambiguityIdentityMap(map, maximumBytes, owned = false) {
       };
     rows.push(selected);
   }
+  if (compact) return compactIdentitySnapshot(`[${rows.join(',')}]`, totalRows, maximumBytes);
   return {
     status: 'complete',
     totalRows,
@@ -353,16 +398,83 @@ function ambiguityIdentityMap(map, maximumBytes, owned = false) {
     rows,
   };
 }
-function ambiguityIdentityMaps(before, all, owned, leaderPid) {
+function ambiguityIdentityMaps(before, all, owned, leaderPid, compact = false) {
   return {
-    format: 'SoloFirstAmbiguousIdentityMapsV1',
+    format: compact ? 'SoloFirstAmbiguousIdentityMapsV2' : 'SoloFirstAmbiguousIdentityMapsV1',
     scope:
       'First ambiguous observation only; no ownership, signalling, classification or argument authority.',
     leaderPid,
-    before: ambiguityIdentityMap(before, 256 * 1024),
-    current: ambiguityIdentityMap(all, 256 * 1024),
-    owned: ambiguityIdentityMap(owned, 64 * 1024, true),
+    before: ambiguityIdentityMap(before, 256 * 1024, false, compact),
+    current: ambiguityIdentityMap(all, 256 * 1024, false, compact),
+    owned: ambiguityIdentityMap(owned, 64 * 1024, true, compact),
   };
+}
+
+// Reuse only inventories already collected after the first failure. Never wait
+// for an exec, query another process, or feed this evidence back into admission.
+function retainAmbiguousIdentityFollowup(all, record) {
+  const first = record.firstAmbiguousInventory?.row;
+  if (
+    record.firstAmbiguousIdentityMaps?.format !== 'SoloFirstAmbiguousIdentityMapsV2' ||
+    !darwinKernelIdentity(first) ||
+    first.state !== 'R' ||
+    first.euid !== 0 ||
+    first.ruid !== 0 ||
+    first.ppid !== 1 ||
+    first.pgid !== 1 ||
+    first.parentUniqueId !== '1' ||
+    first.pathInspection !== 'complete' ||
+    first.argv !== '/usr/libexec/xpcproxy' ||
+    first.argvTruncated !== false ||
+    first.argvCodeUnits !== first.argv.length ||
+    record.firstAmbiguousIdentityFollowup?.status === 'overflow'
+  )
+    return;
+  const row = all.get(first.pid);
+  const snapshot = row
+    ? ambiguityIdentityMap(new Map([[first.pid, row]]), 8 * 1024, false, true)
+    : null;
+  const kind = !row
+    ? 'absent'
+    : snapshot.status !== 'complete'
+      ? 'identity-unavailable'
+      : row.birth !== first.birth
+        ? 'pid-reused'
+        : row.version < first.version ||
+            (row.version === first.version &&
+              row.pathInspection === 'complete' &&
+              row.argv !== first.argv)
+          ? 'inconsistent-exec-identity'
+          : row.version > first.version
+            ? 'later-exec-version'
+            : row.pathInspection !== 'complete'
+              ? 'path-unavailable'
+              : 'same-exec-identity';
+  const last = { kind, snapshot };
+  const next = {
+    format: 'SoloFirstAmbiguousIdentityFollowupV1',
+    status: 'observed',
+    maximumBytes: 16 * 1024,
+    scope:
+      'Later existing inventories only; no service, ownership, signalling or closure authority.',
+    firstChange:
+      record.firstAmbiguousIdentityFollowup?.firstChange ??
+      (kind === 'same-exec-identity' ? null : last),
+    last,
+  };
+  const bytes = Buffer.byteLength(JSON.stringify(next, null, 2).replace(/^/gm, ' '.repeat(24)));
+  record.firstAmbiguousIdentityFollowup =
+    bytes <= next.maximumBytes
+      ? next
+      : {
+          format: next.format,
+          status: 'overflow',
+          reason: 'byte-cap',
+          maximumBytes: next.maximumBytes,
+          minimumSerializationBytes: bytes,
+          firstChange: null,
+          last: null,
+        };
 }
 
 export function collectUnattributedProcesses(
@@ -374,6 +486,8 @@ export function collectUnattributedProcesses(
   darwin = false,
   retainInventories = false,
 ) {
+  if (darwin && retainInventories === 'identity-maps-v2')
+    retainAmbiguousIdentityFollowup(all, record);
   const ambiguous = [];
   for (const row of all.values()) {
     if (
@@ -405,7 +519,13 @@ export function collectUnattributedProcesses(
   // This is bounded evidence only, never ownership or signal authority.
   if (ambiguous.length && !record.firstAmbiguousInventory) {
     if (darwin && retainInventories)
-      record.firstAmbiguousIdentityMaps = ambiguityIdentityMaps(before, all, owned, leaderPid);
+      record.firstAmbiguousIdentityMaps = ambiguityIdentityMaps(
+        before,
+        all,
+        owned,
+        leaderPid,
+        retainInventories === 'identity-maps-v2',
+      );
     const row = ambiguous[0],
       argv = row.argv ?? '';
     record.firstAmbiguousInventory = {
@@ -865,7 +985,9 @@ async function main() {
             ? 'auxiliary'
             : plan.format === 'SoloHostedDemoActivePlanV1'
               ? 'demo-active'
-              : plan.format === 'SoloHostedDemoRecoveryPlanV1'
+              : ['SoloHostedDemoRecoveryPlanV1', 'SoloHostedDemoResourcePlanV1'].includes(
+                    plan.format,
+                  )
                 ? 'demo'
                 : plan.format === 'SoloHostedRasterPlanV1'
                   ? 'raster'
@@ -941,7 +1063,9 @@ async function main() {
             : extension === 'demo-active'
               ? 'SoloHostedDemoScopedRafCohortV1'
               : extension === 'demo'
-                ? 'SoloHostedDemoRecoveryCohortV1'
+                ? plan.format === 'SoloHostedDemoResourcePlanV1'
+                  ? 'SoloHostedDemoResourceCohortV1'
+                  : 'SoloHostedDemoRecoveryCohortV1'
                 : extension === 'raster'
                   ? 'SoloHostedNativeRasterCohortV1'
                   : extension === 'worker-diagnostic'

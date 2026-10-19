@@ -160,9 +160,103 @@ export const COMPACT_WARM_READINESS_PILOT = Object.freeze({
   scenarioSHA256: 'bc65978e26f21507b84d8c999928c069478b0ac1d91fc4866a2c2a7616314829',
   geometryObservation: 'phase-boundary-v1',
 });
+export const DE332_READINESS_REVISION = 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+export const DE332_READINESS_PILOTS = Object.freeze({
+  'first-running-v1': Object.freeze({
+    ...geometryReadinessPilot('first-running-v1'),
+    sourceRevision: DE332_READINESS_REVISION,
+  }),
+  'warm-resume-v1': Object.freeze({
+    ...COMPACT_WARM_READINESS_PILOT,
+    sourceRevision: DE332_READINESS_REVISION,
+  }),
+  'saved-resume-v1': Object.freeze({
+    ...geometryReadinessPilot('saved-resume-v1'),
+    sourceRevision: DE332_READINESS_REVISION,
+  }),
+  'selected-font-request-settlement-v4': Object.freeze({
+    ...SELECTED_FONT_SETTLEMENT_PILOT,
+    sourceRevision: DE332_READINESS_REVISION,
+    scenarioSHA256: '10e8ea2983a25dc3c7a4c5ff90a906256b1acf9ddd3f935faf9e0ce3b600565f',
+  }),
+  'required-original-cancel-v1': Object.freeze({
+    ...REQUIRED_ORIGINAL_START_PILOT,
+    sourceRevision: DE332_READINESS_REVISION,
+    scenarioSHA256: '88f5c21bd2bbd5f75eb99bcb848e053e1b6b96632ae49e7f4c870a0aed9c46a6',
+  }),
+  'optional-icon-missing-v1': Object.freeze({
+    ...MEDIA_FAULT_PILOTS['optional-icon-missing-v1'],
+    sourceRevision: DE332_READINESS_REVISION,
+    scenarioSHA256: '2fe33ea0291018b09174338ac777a66ae62b22ccc9c911e02d4af1dcbe0ca1b7',
+  }),
+});
+export const RUNTIME73_READINESS_REVISION = '73a345cec696d7789198cf295ca5c37b17ca0e71';
+export const RUNTIME73_READINESS_PILOTS = Object.freeze(
+  Object.fromEntries(
+    Object.entries(DE332_READINESS_PILOTS).map(([protocol, pilot]) => [
+      protocol,
+      Object.freeze({
+        ...pilot,
+        sourceRevision: RUNTIME73_READINESS_REVISION,
+        scenarioSHA256:
+          {
+            'selected-font-request-settlement-v4':
+              'cdc15760dde72ce57901001099129e6c25d6b8cce4e5c479d1dc2f687b3ea7a6',
+            'required-original-cancel-v1':
+              '2d5f47d74cad4000a41d781b62cb24a93f177b8215dcd9b83a5853707354dbb4',
+            'optional-icon-missing-v1':
+              'bdb592d359b92d0421ef272ec9b56211e2845ca8a65f33b73ce125afa2e85809',
+          }[protocol] ?? pilot.scenarioSHA256,
+      }),
+    ]),
+  ),
+);
+export const RUNTIME797_READINESS_REVISION = '797e03f28743921842df6aa57520a72016ba3dfc';
+export const RUNTIME797_READINESS_PILOTS = Object.freeze(
+  Object.fromEntries(
+    Object.entries(DE332_READINESS_PILOTS).map(([protocol, pilot]) => [
+      protocol,
+      Object.freeze({
+        ...pilot,
+        sourceRevision: RUNTIME797_READINESS_REVISION,
+        scenarioSHA256:
+          {
+            'selected-font-request-settlement-v4':
+              'b116ec74c2687c11ebb8e9ef3ebce3a529788e39fa038e131f88fc884a586eae',
+            'required-original-cancel-v1':
+              '9d29ade54065dffc23c8f33942edeb32cda2e930cda625e843d0780922043716',
+            'optional-icon-missing-v1':
+              'ae9b01b4d9ff5a59aed103edf60983cfa4466f6d962098a4ac56b79945983be7',
+          }[protocol] ?? pilot.scenarioSHA256,
+      }),
+    ]),
+  ),
+);
+export function selectedFontSourceBinding(sourceRevision = SELECTED_FONT_SOURCE_BINDING.revision) {
+  assert(
+    [
+      SELECTED_FONT_SOURCE_BINDING.revision,
+      DE332_READINESS_REVISION,
+      RUNTIME73_READINESS_REVISION,
+      RUNTIME797_READINESS_REVISION,
+    ].includes(sourceRevision),
+    'Undeclared font source binding',
+  );
+  return sourceRevision === SELECTED_FONT_SOURCE_BINDING.revision
+    ? SELECTED_FONT_SOURCE_BINDING
+    : Object.freeze({ ...SELECTED_FONT_SOURCE_BINDING, revision: sourceRevision });
+}
+
 export function qualificationReadinessOptions(flags, scenario, bytes) {
   const selected = flags.filter((flag) => flag.startsWith('--readiness-probe'));
   const requiredStart = flags.filter((flag) => flag.startsWith('--readiness-required-start'));
+  const requiredRejoin = flags.filter((flag) => flag.startsWith('--readiness-required-rejoin'));
+  if (requiredRejoin.length) {
+    assert.deepEqual(requiredRejoin, ['--readiness-required-rejoin=retained-reference-rejoin-v1']);
+    assert.deepEqual(requiredStart, ['--readiness-required-start=trusted-initial-start-v1']);
+    assert.deepEqual(selected, ['--readiness-probe=required-original-cancel-v1']);
+    assert(flags.includes('--source-revision=' + RUNTIME797_READINESS_REVISION));
+  }
   if (requiredStart.length) {
     assert.deepEqual(requiredStart, ['--readiness-required-start=trusted-initial-start-v1']);
     assert.deepEqual(selected, ['--readiness-probe=required-original-cancel-v1']);
@@ -208,33 +302,45 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
   const successorSaved =
     protocol === 'saved-resume-v1' &&
     flags.includes('--source-revision=c696af41857840359ae473558b90682f3d71f2db');
-  const pilot =
-    protocol === 'optional-audio-start-missing-v1' &&
-    scenario.mediaReadinessFault?.route === 'settings-gameplay-v2'
-      ? OPTIONAL_AUDIO_SETTINGS_PILOT
-      : requiredStart.length
-        ? REQUIRED_ORIGINAL_START_PILOT
-        : geometry.length
-          ? protocol === 'warm-resume-v1' &&
-            flags.includes('--source-revision=' + COMPACT_WARM_READINESS_PILOT.sourceRevision)
-            ? COMPACT_WARM_READINESS_PILOT
-            : geometryReadinessPilot(protocol)
-          : successorSaved
-            ? COMPACT_SAVED_READINESS_PILOT
-            : protocol === READINESS_PILOT.protocol
-              ? READINESS_PILOT
-              : protocol === SELECTED_FONT_PILOT.protocol
-                ? SELECTED_FONT_PILOT
-                : protocol === SELECTED_FONT_JOINED_PILOT.protocol
-                  ? flags.includes('--source-revision=' + SELECTED_FONT_PILOT.sourceRevision)
-                    ? SELECTED_FONT_JOINED_C696_PILOT
-                    : SELECTED_FONT_JOINED_PILOT
-                  : protocol === SELECTED_FONT_POST_COMMAND_PILOT.protocol
-                    ? SELECTED_FONT_POST_COMMAND_PILOT
-                    : protocol === SELECTED_FONT_SETTLEMENT_PILOT.protocol
-                      ? SELECTED_FONT_SETTLEMENT_PILOT
-                      : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
+  const de332 = flags.includes('--source-revision=' + DE332_READINESS_REVISION);
+  const runtime73 = flags.includes('--source-revision=' + RUNTIME73_READINESS_REVISION);
+  const runtime797 = flags.includes('--source-revision=' + RUNTIME797_READINESS_REVISION);
+  const pilot = runtime797
+    ? RUNTIME797_READINESS_PILOTS[protocol]
+    : runtime73
+      ? RUNTIME73_READINESS_PILOTS[protocol]
+      : de332
+        ? DE332_READINESS_PILOTS[protocol]
+        : protocol === 'optional-audio-start-missing-v1' &&
+            scenario.mediaReadinessFault?.route === 'settings-gameplay-v2'
+          ? OPTIONAL_AUDIO_SETTINGS_PILOT
+          : requiredStart.length
+            ? REQUIRED_ORIGINAL_START_PILOT
+            : geometry.length
+              ? protocol === 'warm-resume-v1' &&
+                flags.includes('--source-revision=' + COMPACT_WARM_READINESS_PILOT.sourceRevision)
+                ? COMPACT_WARM_READINESS_PILOT
+                : geometryReadinessPilot(protocol)
+              : successorSaved
+                ? COMPACT_SAVED_READINESS_PILOT
+                : protocol === READINESS_PILOT.protocol
+                  ? READINESS_PILOT
+                  : protocol === SELECTED_FONT_PILOT.protocol
+                    ? SELECTED_FONT_PILOT
+                    : protocol === SELECTED_FONT_JOINED_PILOT.protocol
+                      ? flags.includes('--source-revision=' + SELECTED_FONT_PILOT.sourceRevision)
+                        ? SELECTED_FONT_JOINED_C696_PILOT
+                        : SELECTED_FONT_JOINED_PILOT
+                      : protocol === SELECTED_FONT_POST_COMMAND_PILOT.protocol
+                        ? SELECTED_FONT_POST_COMMAND_PILOT
+                        : protocol === SELECTED_FONT_SETTLEMENT_PILOT.protocol
+                          ? SELECTED_FONT_SETTLEMENT_PILOT
+                          : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
   assert(pilot, 'Unknown readiness protocol');
+  if (de332 || runtime73 || runtime797) {
+    assert.equal(geometry.length, pilot.geometryObservation ? 1 : 0);
+    assert.equal(requiredStart.length, pilot.requiredStartRetention ? 1 : 0);
+  }
   if (MEDIA_FAULT_PILOTS[protocol]) {
     assert.deepEqual(scenario.mediaReadinessFault, {
       protocol,
@@ -260,6 +366,9 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       SELECTED_FONT_JOINED_C696_PILOT,
       SELECTED_FONT_POST_COMMAND_PILOT,
       SELECTED_FONT_SETTLEMENT_PILOT,
+      DE332_READINESS_PILOTS['selected-font-request-settlement-v4'],
+      RUNTIME73_READINESS_PILOTS['selected-font-request-settlement-v4'],
+      RUNTIME797_READINESS_PILOTS['selected-font-request-settlement-v4'],
     ].includes(pilot)
   )
     assert(
@@ -291,6 +400,9 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       SELECTED_FONT_JOINED_C696_PILOT,
       SELECTED_FONT_POST_COMMAND_PILOT,
       SELECTED_FONT_SETTLEMENT_PILOT,
+      DE332_READINESS_PILOTS['selected-font-request-settlement-v4'],
+      RUNTIME73_READINESS_PILOTS['selected-font-request-settlement-v4'],
+      RUNTIME797_READINESS_PILOTS['selected-font-request-settlement-v4'],
     ].includes(pilot)
   ) {
     assert.equal(scenario.kind, 'lifecycle');
@@ -305,11 +417,108 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       ),
     );
   }
-  if ([SELECTED_FONT_POST_COMMAND_PILOT, SELECTED_FONT_SETTLEMENT_PILOT].includes(pilot)) {
+  if (
+    [
+      SELECTED_FONT_POST_COMMAND_PILOT,
+      SELECTED_FONT_SETTLEMENT_PILOT,
+      DE332_READINESS_PILOTS['selected-font-request-settlement-v4'],
+      RUNTIME73_READINESS_PILOTS['selected-font-request-settlement-v4'],
+      RUNTIME797_READINESS_PILOTS['selected-font-request-settlement-v4'],
+    ].includes(pilot)
+  ) {
     assert.equal(scenario.selectedFontCancellation.protocol, pilot.protocol);
     assert.equal(scenario.selectedFontCancellation.sourceRevision, pilot.sourceRevision);
   }
-  return pilot;
+  return requiredRejoin.length
+    ? { ...pilot, requiredClickIdentityObservation: 'retained-reference-rejoin-v1' }
+    : pilot;
+}
+
+// Serialized only for the named required-original successor. This retains a
+// reference, not an observation of private current run or a current painted board.
+// All reads occur at the existing four click/phase boundaries.
+export function createRequiredRejoinObservation(getScenes, checkpoint, getSceneClass) {
+  if (
+    typeof getScenes !== 'function' ||
+    typeof checkpoint !== 'function' ||
+    typeof getSceneClass !== 'function'
+  )
+    throw Error('Required rejoin needs the existing scene inventory and checkpoint');
+  const kinds = ['start-click', 'start-click', 'first-running', 'after-running'];
+  let scene = null,
+    run = null,
+    initialCheckpoint = null,
+    index = 0,
+    disposed = false;
+  return {
+    observe(kind) {
+      if (disposed || kinds[index] !== kind) throw Error('Invalid required rejoin boundary');
+      const inventory = getScenes();
+      if (!Array.isArray(inventory) || inventory.length > 64)
+        throw Error('Invalid required rejoin scene inventory');
+      // Exact797 app constructs one Phaser.Game with scene: FieldScene and no
+      // scene additions. Capture that public constructor, not any object that
+      // happens to expose prepared(). Future/multiple scene inventories fail.
+      const expectedClass = getSceneClass(),
+        current = inventory[0];
+      if (
+        inventory.length !== 1 ||
+        typeof expectedClass !== 'function' ||
+        !current ||
+        current.constructor !== expectedClass ||
+        typeof current.prepared !== 'function'
+      )
+        throw Error('Missing, foreign or ambiguous required rejoin scene');
+      if (scene && current !== scene) throw Error('Required rejoin scene removed or replaced');
+      if (!scene) {
+        if (!current.lastPaint?.run || current.submittedRun !== current.lastPaint.run)
+          throw Error('Initial required rejoin needs the submitted run');
+        scene = current;
+        run = current.lastPaint.run;
+      }
+      if (current.lastPaint?.run && current.lastPaint.run !== run)
+        throw Error('Required rejoin painted run replaced');
+      if (current.submittedRun !== run) throw Error('Required rejoin submitted identity replaced');
+      if (run.level?.id !== 'first-return' || !Number.isSafeInteger(run.tick) || run.tick < 0)
+        throw Error('Invalid required rejoin retained identity');
+      const value = checkpoint(run),
+        text = JSON.stringify(value);
+      if (
+        !value ||
+        typeof value !== 'object' ||
+        Array.isArray(value) ||
+        !text ||
+        new TextEncoder().encode(text).byteLength > 2048
+      )
+        throw Error('Invalid required rejoin checkpoint');
+      if (index === 0) initialCheckpoint = text;
+      if (index < 3 && (run.tick !== 0 || text !== initialCheckpoint))
+        throw Error('Required rejoin retained run advanced or changed');
+      if (index !== 1 && current.lastPaint?.run !== run)
+        throw Error('Required rejoin needs an actual current painted run at this boundary');
+      const result = {
+        scene: current,
+        retainedRun: run,
+        evidence: {
+          format: 'SoloRequiredRejoinReferenceV1',
+          sceneAttached: true,
+          identityEvidence: 'retained-reference-only',
+          currentPaintObserved: current.lastPaint?.run === run,
+          tick: run.tick,
+          levelId: run.level.id,
+          checkpoint: JSON.parse(text),
+        },
+      };
+      index++;
+      return result;
+    },
+    dispose() {
+      disposed = true;
+      scene = null;
+      run = null;
+      initialCheckpoint = null;
+    },
+  };
 }
 
 // Serialized unchanged into the top document. Called only on actual trusted
@@ -321,6 +530,7 @@ export function createBrowserReadinessProbe(
   geometryObservation = false,
   cancelBoundaryObservation = false,
   initialRequiredStart = null,
+  requiredRejoin = null,
 ) {
   if (
     ![
@@ -348,6 +558,14 @@ export function createBrowserReadinessProbe(
     (protocol !== 'required-original-cancel-v1' || typeof initialRequiredStart !== 'function')
   )
     throw new Error('Required-original Start callback requires its explicit protocol');
+  if (
+    requiredRejoin !== null &&
+    (protocol !== 'required-original-cancel-v1' ||
+      !initialRequiredStart ||
+      typeof requiredRejoin.observe !== 'function' ||
+      typeof requiredRejoin.dispose !== 'function')
+  )
+    throw Error('Required rejoin needs its explicit initial Start observer');
   let initialRequiredStartSeen = false;
   const resume = protocol.endsWith('-resume-v1'),
     postCommand = [
@@ -540,7 +758,8 @@ export function createBrowserReadinessProbe(
       return;
     }
     try {
-      const scene = getScene(),
+      const retained = requiredRejoin?.observe(kind),
+        scene = retained ? retained.scene : getScene(),
         run = scene?.lastPaint?.run,
         c = scene?.cadence?.snapshot(),
         phase = documentRef.body?.dataset.flightState;
@@ -576,6 +795,13 @@ export function createBrowserReadinessProbe(
             }
           : null,
       };
+      if (retained) {
+        if (!runs.has(retained.retainedRun)) runs.set(retained.retainedRun, ++runSequence);
+        row.requiredRejoin = {
+          ...retained.evidence,
+          run: runs.get(retained.retainedRun),
+        };
+      }
       if (protocol === 'optional-audio-start-missing-v1') {
         // MainScene retains the exact submitted lease; painter options are derived separately.
         const style = scene?.lastPaint?.actors?.pin?.()?.style;
@@ -696,6 +922,7 @@ export function createBrowserReadinessProbe(
   function dispose() {
     if (disposed) return;
     disposed = true;
+    requiredRejoin?.dispose();
     cancelEvent = null;
     cancelPath = null;
     documentRef.removeEventListener('click', click, true);
@@ -750,10 +977,14 @@ export function createBrowserReadinessProbe(
         errors,
         disposed,
         ...(geometryObservation ? { geometryObservation: 'phase-boundary-v1' } : {}),
+        ...(requiredRejoin
+          ? { requiredClickIdentityObservation: 'retained-reference-rejoin-v1' }
+          : {}),
         records: records.map((row) => ({
           ...row,
           cadence: row.cadence && { ...row.cadence },
           ...(row.geometry ? { geometry: { ...row.geometry } } : {}),
+          ...(row.requiredRejoin ? { requiredRejoin: structuredClone(row.requiredRejoin) } : {}),
           ...(row.cancelBoundary ? { cancelBoundary: structuredClone(row.cancelBoundary) } : {}),
           ...(postCommand && row.font ? { font: structuredClone(row.font) } : {}),
         })),
@@ -2750,6 +2981,7 @@ export function assessReadinessMediaFault({
   cleanupFailure,
   audioCheck,
   startRetention = null,
+  requiredClickIdentityObservation = null,
 }) {
   const failures = [];
   let projected;
@@ -2760,6 +2992,14 @@ export function assessReadinessMediaFault({
     assertReadinessMediaTransport(transport, protocol);
     const required = protocol === 'required-original-cancel-v1';
     if (startRetention !== null) assert(required && startRetention === 'trusted-initial-start-v1');
+    if (requiredClickIdentityObservation !== null) {
+      assert(required && startRetention === 'trusted-initial-start-v1');
+      assert.equal(requiredClickIdentityObservation, 'retained-reference-rejoin-v1');
+      assert.equal(observation.requiredClickIdentityObservation, requiredClickIdentityObservation);
+    } else {
+      assert.equal(observation.requiredClickIdentityObservation, undefined);
+      assert(observation.records.every((row) => row.requiredRejoin === undefined));
+    }
     if (required)
       assert.equal(
         witness?.format,
@@ -2791,9 +3031,40 @@ export function assessReadinessMediaFault({
         assert(
           witness.initialStart.atMs >= first.atMs && witness.initialStart.atMs - first.atMs <= 1000,
         );
-        for (const row of records.slice(1)) {
-          assert.equal(row.run, first.run, 'Fresh Start must rejoin the initially submitted run');
-          assert.equal(row.submittedRunMatches, true, 'Rejoin requires current submitted board');
+        if (requiredClickIdentityObservation) {
+          assert(Number.isSafeInteger(first.run) && first.run > 0);
+          for (const [index, row] of records.entries()) {
+            const reference = row.requiredRejoin;
+            assert.equal(reference?.format, 'SoloRequiredRejoinReferenceV1');
+            assert.equal(reference.sceneAttached, true);
+            assert.equal(reference.identityEvidence, 'retained-reference-only');
+            assert.equal(reference.run, first.run);
+            assert.equal(reference.levelId, 'first-return');
+            if (index < 3) {
+              assert.equal(reference.tick, 0);
+              assert.deepEqual(reference.checkpoint, witness.initialStart.checkpoint);
+            }
+            assert.equal(reference.currentPaintObserved, row.run !== null);
+            if (row.run === null) {
+              assert.equal(index, 1, 'Only fresh click may have invalidated painted state');
+              assert.equal(row.tick, null);
+              assert.equal(row.levelId, null);
+              assert.equal(row.prepared, false);
+              assert.equal(row.displayedBoardValid, false);
+              assert.equal(row.preparedRunMatches, null);
+              assert.equal(row.submittedRunMatches, null);
+            } else {
+              assert.equal(row.run, first.run);
+              assert.equal(row.submittedRunMatches, true);
+              assert.equal(reference.tick, row.tick);
+              assert.equal(reference.levelId, row.levelId);
+            }
+          }
+        } else {
+          for (const row of records.slice(1)) {
+            assert.equal(row.run, first.run, 'Fresh Start must rejoin the initially submitted run');
+            assert.equal(row.submittedRunMatches, true, 'Rejoin requires current submitted board');
+          }
         }
       }
     } else if (protocol === 'optional-audio-start-missing-v1') {
@@ -3295,10 +3566,12 @@ export function createSelectedFontSettlementProbe(environment = globalThis) {
 // deadline. Unsettled native work never authorizes the next public action.
 export function createSelectedFontSettlementOwner({
   page,
+  sourceRevision = SELECTED_FONT_SOURCE_BINDING.revision,
   now = () => performance.now(),
   setTimer = setTimeout,
   clearTimer = clearTimeout,
 }) {
+  const sourceBinding = selectedFontSourceBinding(sourceRevision);
   const started = now(),
     deadline = started + 60000,
     cleanupDeadline = deadline + 2000;
@@ -3414,7 +3687,7 @@ export function createSelectedFontSettlementOwner({
     snapshot() {
       return {
         format: 'SoloSelectedFontSettlementOwnerV1',
-        sourceBinding: SELECTED_FONT_SOURCE_BINDING,
+        sourceBinding,
         bounds: { durationMs: 60000, operationMs: 2000, cleanupMs: 2000, operations: 5 },
         installed,
         closed,
@@ -3561,13 +3834,14 @@ export function assessSelectedFontSettlementReadiness(
   documents,
   transport,
   owner,
+  sourceRevision = SELECTED_FONT_SOURCE_BINDING.revision,
 ) {
   const failures = [];
   let attribution = null;
   try {
     assert.equal(documents, 1);
     assert.equal(owner?.format, 'SoloSelectedFontSettlementOwnerV1');
-    assert.deepEqual(owner.sourceBinding, SELECTED_FONT_SOURCE_BINDING);
+    assert.deepEqual(owner.sourceBinding, selectedFontSourceBinding(sourceRevision));
     assert(owner.installed && owner.closed && !owner.stopped);
     assert.deepEqual(owner.failures, []);
     assert.deepEqual(

@@ -2,6 +2,7 @@ import {
   mountWorkbenchChrome,
   mountWorkbenchPhysics,
   drawWorkbenchCurve,
+  workbenchCurvePosition,
   paintCameraFraming,
 } from './setup-workbench.mjs';
 import { createSetupDraft } from './setup-draft.mjs';
@@ -27,6 +28,7 @@ import {
 import { aircraftPerformance } from './aircraft-physics.mjs';
 import { createAircraftPreview } from './aircraft-preview.mjs';
 import { exportJSONFile, exportTextFile } from '../../game/platform.mjs';
+import { canonicalJSON } from '../../game/data-json.mjs';
 import {
   previewBetaflightImport,
   previewNativeRateImport,
@@ -94,7 +96,6 @@ export function mountFlightTuning({
     completeDraft,
     editedSetup,
     editedSetupId,
-    savedState = false,
     library,
     selected,
     draft,
@@ -106,6 +107,7 @@ export function mountFlightTuning({
     axisInputs = {},
     evaluator,
     savedEvaluator,
+    rateCurve,
     imported = null,
     importComparison = null,
     importReviewPanel = null,
@@ -278,6 +280,8 @@ export function mountFlightTuning({
   );
   rateChoice.value = 'defaults';
   const aircraftSummary = el('p', undefined, aircraftPanel);
+  const aircraftNotice = el('p', undefined, aircraftPanel);
+  aircraftNotice.dataset.aircraftNotice = 'true';
   const aircraftPreview = el('div', undefined, aircraftPanel);
   const aircraftEvidence = el('details', undefined, aircraftPanel);
   el(
@@ -290,6 +294,8 @@ export function mountFlightTuning({
     const preset = getAircraftPreset(aircraftSelect.value);
     const configuration = createPresetConfiguration(preset.id);
     aircraftSummary.textContent = `${preset.flyingMassGrams} ${t('g flying weight', 'г польотної маси')} · ${preset.propellerDiameterMm} ${t('mm propellers', 'мм пропелери')} · ${preset.wheelbaseMm} ${t('mm wheelbase', 'мм база')} · ${preset.battery.name}`;
+    aircraftNotice.textContent = preset.notice ? t(preset.notice.en, preset.notice.uk) : '';
+    aircraftNotice.hidden = !preset.notice;
     aircraftPreview.replaceChildren(
       createAircraftPreview({
         document: doc,
@@ -351,26 +357,42 @@ export function mountFlightTuning({
     );
     const kinds = {
       manufacturer: t('Manufacturer specification', 'Характеристика виробника'),
+      'reviewer-reported': t(
+        'Published reviewer measurement',
+        'Вимірювання з опублікованого огляду',
+      ),
+      inferred: t('Inferred from sources', 'Припущення за джерелами'),
       calculated: t('Calculated', 'Розраховано'),
       estimated: t('Estimated', 'Оцінка'),
     };
     const fields = {
       assembledMass: t('Assembled mass', 'Маса зібраного дрона'),
       batteryMass: t('Battery mass', 'Маса батареї'),
+      flyingMass: t('Flying mass', 'Польотна маса'),
+      batteryCapacity: t('Battery capacity', 'Ємність батареї'),
+      nominalVoltage: t('Nominal battery voltage', 'Номінальна напруга батареї'),
+      fullVoltage: t('Fully charged battery voltage', 'Напруга повністю зарядженої батареї'),
       propeller: t('Propeller dimensions', 'Розміри пропелера'),
       inertia: t('Inertia', 'Інерція'),
       propulsion: t('Propulsion', 'Тяга й двигуни'),
       drag: t('Aerodynamic drag', 'Аеродинамічний опір'),
+      batteryElectrical: t('Electrical response', 'Електрична характеристика'),
+      controller: t('Controller behavior', 'Поведінка контролера'),
     };
-    for (const [field, label] of Object.entries(fields))
-      el('p', `${label}: ${kinds[preset.evidence[field].kind]}`, aircraftDetails, false);
-    if (preset.evidence.propeller.note)
-      el(
-        'p',
-        `${t('Source note (original language)', 'Примітка джерела (мовою оригіналу)')}: ${preset.evidence.propeller.note}`,
-        aircraftDetails,
-        false,
-      );
+    for (const [field, label] of Object.entries(fields)) {
+      const evidence = preset.evidence[field];
+      if (!evidence) continue;
+      el('p', `${label}: ${kinds[evidence.kind]}`, aircraftDetails, false);
+      // Important source limitations stay inert original-language text, beside
+      // the specific evidence label rather than implying all values are measured.
+      if (evidence.note && (preset.notice || field === 'propeller'))
+        el(
+          'p',
+          `${t('Source note (original language)', 'Примітка джерела (мовою оригіналу)')}: ${evidence.note}`,
+          aircraftDetails,
+          false,
+        );
+    }
     if (preset.evidence.batteryMass.kind === 'estimated')
       el(
         'p',
@@ -651,6 +673,18 @@ export function mountFlightTuning({
     t('Rate curves: zero to full stick', 'Криві рейтів від нуля до повного стіка'),
   );
   preview.append(svg);
+  const inspected = el('p', '', preview);
+  translatedAttribute(inspected, 'aria-label', t('Inspected rate', 'Рейт у вибраній точці'));
+  svg.style.cursor = 'crosshair';
+  svg.style.touchAction = 'pan-y';
+  el(
+    'p',
+    t(
+      'Point or drag across the curve to compare saved and draft rates. Use the exact stick position below for keyboard adjustment.',
+      'Наведіть вказівник або проведіть по кривій, щоб порівняти збережені рейти й чернетку. Для клавіатури використовуйте точне положення стіка нижче.',
+    ),
+    preview,
+  );
   const readouts = el('pre', undefined, preview);
   const demonstration = el('div', undefined, preview);
   demonstration.className = 'tuning-demonstration';
@@ -708,6 +742,59 @@ export function mountFlightTuning({
   listen(previewStick, 'input', () => {
     previewExact.value = previewStick.value;
   });
+  let curvePointer = null;
+  function releaseCurvePointer() {
+    const pointer = curvePointer;
+    curvePointer = null;
+    if (pointer !== null && svg.hasPointerCapture?.(pointer)) svg.releasePointerCapture(pointer);
+  }
+  function canInspectCurve() {
+    return (
+      !busy &&
+      root.open &&
+      !doc.hidden &&
+      workbench?.current() === 'rates' &&
+      previewDisclosure.open
+    );
+  }
+  function inspectCurve(event) {
+    const position = workbenchCurvePosition(svg, event.clientX);
+    if (position === null) return;
+    previewStick.value = previewExact.value = String(Math.round(position * 100));
+    paintInspected();
+  }
+  listen(svg, 'pointerdown', (event) => {
+    if (
+      !canInspectCurve() ||
+      curvePointer !== null ||
+      event.isPrimary === false ||
+      event.button !== 0
+    )
+      return;
+    event.preventDefault();
+    event.stopPropagation();
+    curvePointer = event.pointerId;
+    svg.setPointerCapture?.(curvePointer);
+    inspectCurve(event);
+  });
+  listen(svg, 'pointermove', (event) => {
+    if (!canInspectCurve() || event.isPrimary === false) return;
+    if (
+      curvePointer !== null
+        ? event.pointerId !== curvePointer
+        : event.pointerType === 'touch' || event.buttons !== 0
+    )
+      return;
+    event.stopPropagation();
+    inspectCurve(event);
+  });
+  for (const eventName of ['pointerup', 'pointercancel', 'lostpointercapture'])
+    listen(svg, eventName, (event) => {
+      if (event.pointerId !== curvePointer) return;
+      event.stopPropagation();
+      releaseCurvePointer();
+    });
+  listen(svg, 'click', (event) => event.stopPropagation());
   const motion = field(t('Animate rotation preview', 'Анімувати обертання'), 'checkbox', preview);
   const diagnostics = el('pre', undefined, preview);
   translatedAttribute(diagnostics, 'aria-label', t('Input diagnostics', 'Діагностика введення'));
@@ -1587,9 +1674,28 @@ export function mountFlightTuning({
     t('Restore library backup', 'Відновити бібліотеку'),
     async () => {
       await mutate(() => store.restore(text.value, library.revision));
-      drafts.clear();
-      setupDrafts.clear();
-      load();
+      if (disposed) return;
+      // A replacement library may remove the setup being edited. Reset the
+      // complete editor baseline only after persistence has succeeded.
+      try {
+        drafts.clear();
+        setupDrafts.clear();
+        editedSetup = null;
+        editedSetupId = library.selectedSetupId;
+        completeDraft = null;
+        responseBench?.invalidate();
+        load();
+        status.textContent = t(
+          'Library restored. The current attempt keeps its original configuration.',
+          'Бібліотеку відновлено. Поточна спроба зберігає початкові налаштування.',
+        );
+      } catch (failure) {
+        // Rendering cannot undo the committed restore or report it as failed.
+        status.textContent = `${t(
+          'Library restored, but the editor could not refresh. Choose Refresh library to reload the saved settings.',
+          'Бібліотеку відновлено, але редактор не вдалося оновити. Виберіть «Оновити бібліотеку», щоб завантажити збережені налаштування.',
+        )} ${failure.message}`;
+      }
     },
     transfer,
   );
@@ -1694,7 +1800,6 @@ export function mountFlightTuning({
     editedSetupId = store.snapshot().selectedSetupId;
     completeDraft = null;
     load();
-    savedState = true;
     updateWorkbench();
     onSaved(store.effective());
     status.textContent = t(
@@ -1761,6 +1866,7 @@ export function mountFlightTuning({
       editedSetupId = store.snapshot().selectedSetupId;
       completeDraft = null;
       load();
+      if (!store.status().error) status.textContent = '';
     },
     actions,
   );
@@ -2432,21 +2538,23 @@ export function mountFlightTuning({
     setupPreviewReadouts.textContent = `${t('Camera', 'Камера')}: ${t('tilt', 'нахил')} ${setup.camera.tilt}° · ${t('vertical FOV', 'вертикальне поле зору')} ${setup.camera.verticalFov}°\n${t('Rates', 'Рейти')}: ${assigned.name} · ${rateAlgorithm(assigned.response)}${setup.profileId ? '' : ` · ${t('Player default', 'Типовий профіль гравця')}`}\n${rateReadouts(assigned.response, compile(assigned.response))}`;
   }
   function paintInspected() {
-    if (evaluator)
-      inspected.textContent = `${previewStick.value}% · ${axisName(previewAxis.value)} ${evaluator.rate(previewAxis.value, Number(previewStick.value) / 100).toFixed(1)} °/s`;
+    if (evaluator && savedEvaluator) {
+      const position = Number(previewStick.value) / 100;
+      inspected.textContent = `${previewStick.value}% · ${axisName(previewAxis.value)} · ${t('Saved', 'Збережене')} ${savedEvaluator.rate(previewAxis.value, position).toFixed(1)} °/s · ${t('Draft', 'Чернетка')} ${evaluator.rate(previewAxis.value, position).toFixed(1)} °/s`;
+      rateCurve?.inspect(Math.abs(position));
+    }
   }
   function paintPreview() {
     if (!draft) return;
     try {
       paintReceipt();
       evaluator = compile(draft);
-      paintInspected();
       savedEvaluator = compile(library.profiles.find((p) => p.id === selected).response);
       const maximum = Math.max(
         1,
         ...axes.flatMap((axis) => [evaluator.rate(axis, 1), savedEvaluator.rate(axis, 1)]),
       );
-      drawWorkbenchCurve(doc, svg, {
+      rateCurve = drawWorkbenchCurve(doc, svg, {
         maximum,
         xLabel: t('Stick travel (%)', 'Хід стіка (%)'),
         series: axes.flatMap((axis, i) =>
@@ -2467,6 +2575,7 @@ export function mountFlightTuning({
             : [],
         ),
       });
+      paintInspected();
       if (throttleSvg)
         drawWorkbenchCurve(doc, throttleSvg, {
           maximum: 100,
@@ -2585,6 +2694,16 @@ export function mountFlightTuning({
   }
   function open({ keepDraft = false, openerElement = doc.activeElement } = {}) {
     if (disposed || busy) return;
+    // This confirmation describes the previous save action, not the attempt
+    // that may have been restarted since. Keep errors and import review text.
+    if (
+      status.textContent ===
+      t(
+        'Saved for the next flight. The current attempt keeps its original configuration.',
+        'Збережено для наступного польоту. Поточна спроба зберігає початкові налаштування.',
+      )
+    )
+      status.textContent = '';
     openEpoch++;
     opener = openerElement;
     onOpen();
@@ -2606,6 +2725,7 @@ export function mountFlightTuning({
     responseBench?.invalidate();
     controllerTunes?.invalidate();
     clearImportPreview();
+    releaseCurvePointer();
     remember();
     if (root.open) root.close();
     if (frame !== null) win.cancelAnimationFrame(frame);
@@ -2617,6 +2737,7 @@ export function mountFlightTuning({
   }
   listen(doc, 'visibilitychange', () => {
     if (doc.hidden) {
+      releaseCurvePointer();
       if (frame !== null) win.cancelAnimationFrame(frame);
       frame = null;
       previousTime = null;
@@ -2654,6 +2775,7 @@ export function mountFlightTuning({
     status,
     onSection(section) {
       if (section === 'rates') return;
+      releaseCurvePointer();
       capturePreview.checked = false;
       captureStatus.textContent = t('Sticks navigate menus.', 'Стіки керують меню.');
     },
@@ -2819,12 +2941,13 @@ export function mountFlightTuning({
   );
   preview.append(throttleSvg);
   el('h4', t('Commanded rotation', 'Задане обертання'), demonstration);
-  const inspected = el('p', '', preview);
-  translatedAttribute(inspected, 'aria-label', t('Inspected rate', 'Рейт у вибраній точці'));
   listen(previewStick, 'input', paintInspected);
   listen(previewAxis, 'change', paintInspected);
   const previewDisclosure = doc.createElement('details');
   previewDisclosure.open = true;
+  listen(previewDisclosure, 'toggle', () => {
+    if (!previewDisclosure.open) releaseCurvePointer();
+  });
   el(
     'summary',
     t('Visual previews and comparisons', 'Наочні перегляди й порівняння'),
@@ -2945,12 +3068,30 @@ export function mountFlightTuning({
     } catch {
       /* Incomplete text stays editable. Save validates the complete setup. */
     }
-    for (const { exact, slider } of cameraSliders)
-      if (exact.value.trim() && Number.isFinite(Number(exact.value))) slider.value = exact.value;
+    for (const { exact, slider } of cameraSliders) {
+      const value = cameraValue(exact, false);
+      // Native ranges clamp out-of-bounds assignments. Keep the last valid
+      // slider/preview while the exact field retains unfinished numeric text.
+      if (value !== null) slider.value = String(value);
+    }
     const changes = completeDraft?.changes() ?? [];
     const invalid = [...root.querySelectorAll('[aria-invalid="true"]')].length;
+    const flightConfiguration = getFlightConfiguration();
+    const usedByFlight =
+      flightConfiguration &&
+      canonicalJSON(flightConfiguration.response) === canonicalJSON(draft) &&
+      canonicalJSON(flightConfiguration.camera) === canonicalJSON(setup.camera) &&
+      canonicalJSON(flightConfiguration.advanced ?? null) === canonicalJSON(setup.advanced ?? null);
+    // A saved configuration can become active after restarting or launching
+    // elsewhere. Derive ownership from the frozen attempt, not a past save.
+    const draftState =
+      changes.length || invalid
+        ? t('Draft', 'Чернетка')
+        : usedByFlight
+          ? t('Used by this flight', 'Використовується цим польотом')
+          : t('Saved for next flight', 'Збережено для наступного польоту');
     workbench.summary(
-      `${setupName.value} · ${profileName.value} · ${changes.length} ${t('changes', 'змін')}${invalid ? ` · ${invalid} ${t('unfinished values', 'незавершених значень')}` : ''} · ${changes.length || invalid ? t('Draft', 'Чернетка') : savedState ? t('Saved for next flight', 'Збережено для наступного польоту') : getFlightConfiguration() && JSON.stringify(getFlightConfiguration().response) === JSON.stringify(draft) && JSON.stringify(getFlightConfiguration().camera) === JSON.stringify(setup.camera) && JSON.stringify(getFlightConfiguration().advanced) === JSON.stringify(setup.advanced) ? t('Used by this flight', 'Використовується цим польотом') : t('Saved for next flight', 'Збережено для наступного польоту')}`,
+      `${setupName.value} · ${profileName.value} · ${changes.length} ${t('changes', 'змін')}${invalid ? ` · ${invalid} ${t('unfinished values', 'незавершених значень')}` : ''} · ${draftState}`,
     );
     changesList.replaceChildren();
     for (const change of changes)
@@ -3238,6 +3379,7 @@ export function mountFlightTuning({
     dispose() {
       if (disposed) return;
       disposed = true;
+      releaseCurvePointer();
       responseBench?.dispose();
       controllerTunes?.dispose();
       if (frame !== null) win.cancelAnimationFrame(frame);
