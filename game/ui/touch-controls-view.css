@@ -35,7 +35,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font: 13px/1.4 var(--fk-font-ui, sans-serif);
+    font: calc(13px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
   }
   .shared-touch-surface > span:first-child {
     font: 54px/1.3 var(--fk-font-ui, sans-serif);

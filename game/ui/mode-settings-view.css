@@ -46,7 +46,8 @@ body .mode-settings-view[open] {
 
 .mode-settings-view > header :is(h1, h2) {
   margin: 0;
-  font: 600 22px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
+  font: 600 calc(22px * var(--primary-text-scale, 1)) / 1.3
+    var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
   letter-spacing: normal;
 }
 
@@ -75,7 +76,8 @@ body .mode-settings-view[open] [data-settings-back] {
   min-height: 44px;
   height: auto;
   padding: 8px 12px;
-  font: 600 14px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
+  font: 600 calc(14px * var(--primary-text-scale, 1)) / 1.3
+    var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
 }
 
 body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
@@ -216,7 +218,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
 
   .mode-settings-view > header :is(h1, h2) {
-    font-size: 18px;
+    font-size: calc(18px * var(--primary-text-scale, 1));
   }
 
   .mode-settings-view .mode-settings-layout {

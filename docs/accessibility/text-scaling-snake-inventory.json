@@ -1,0 +1,820 @@
+{
+  "format": "revealline-snake-text-inventory.v1",
+  "baseline": "e40b8983c1a94605beb1376fa85741ac5d40bf1c",
+  "entry": "game/snake/play.html",
+  "moduleCount": 377,
+  "scope": "Static and literal deferred import closure; not computed/browser or device qualification.",
+  "styles": [
+    {
+      "path": "game/access-gate.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(17px * var(--primary-text-scale, 1)) / 1.5 'Field Kit UI',\n      system-ui,\n      sans-serif",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(2rem, 8vw, 3.4rem) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/presentation/industrial-workshop.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(var(--iw-text-size) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--iw-text-size) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "max(calc(18px * var(--primary-text-scale, 1)), 1em)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(13px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--iw-text-size, 16px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(16px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.75rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-secondary) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/snake/classic.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "12px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "clamp(32px, 5vw, 56px)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "12px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "20px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font",
+          "value": "12px/1.4 var(--fk-font-mono, monospace)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font",
+          "value": "12px var(--fk-font-mono, monospace)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font",
+          "value": "600 20px/1.2 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "20px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "13px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "14px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "14px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "max(14px, var(--fk-text-secondary, 14px))",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "16px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "13px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "13px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "24px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "12px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "16px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "10px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "16px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "10px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "16px",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.85rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.875rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.7rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "2rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "clamp(0.75rem, 2.8vw, 0.95rem)",
+          "alreadyWrapped": false
+        }
+      ]
+    },
+    {
+      "path": "game/ui/brand-identity.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/controller-field-editor.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(16px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "calc(16px * var(--primary-text-scale, 1)) / 1.4 monospace",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(12px, 2vw, 18px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/field-kit-fonts.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/global-settings-tools.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(18px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/global-settings-view.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "600 calc(12px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/install-offline-panel.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(1.1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/journey.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(clamp(1.5rem, 4vw, 2.5rem) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.72rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.85rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.35rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(2rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.85rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.85rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.85rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.75rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.95rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.25rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.35rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.75rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.9rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.94rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.7rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.7rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.68rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.82rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.65rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.35rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.72rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.68rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.5rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/menu-scenes.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-secondary, 14px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(clamp(11px, 2.6vw, 16px) * var(--primary-text-scale, 1)) / 1.2\n    var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(9px * var(--primary-text-scale, 1)) / 1 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(11px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(16px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(14px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(20px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(12px, 3.5vw, 16px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(14px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(20px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/mode-play-shell.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "0.85rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "clamp(1.25rem, 3vw, 2rem)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "clamp(2rem, 7vw, 4rem)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.9rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "clamp(12px, 3.3vw, 16px)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "1rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "clamp(12px, 3.3vw, 16px)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font",
+          "value": "600 18px/1.3 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": false
+        }
+      ]
+    },
+    {
+      "path": "game/ui/mode-settings-view.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "600 22px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font",
+          "value": "600 14px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "18px",
+          "alreadyWrapped": false
+        }
+      ]
+    },
+    {
+      "path": "game/ui/optional-practice-panel.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(1.25rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/pause-menu.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "600 calc(11px * var(--primary-text-scale, 1)) / 1.2 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(14px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(11px, 2.8vw, 14px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(20px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(18px * var(--primary-text-scale, 1)) / 1.25 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(11px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(20px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/profile-recovery-dialog.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(22px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/quick-music-controls.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(14px * var(--primary-text-scale, 1)) / 1.5 var(--fk-font-mono, monospace)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(20px, 3vw, 30px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(16px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(18px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(16px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(11px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(23px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(14px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(11px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/touch-controls-view.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "13px/1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font",
+          "value": "54px/1.3 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font",
+          "value": "bold 25px/1 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": false
+        }
+      ]
+    },
+    {
+      "path": "game/ui/touch-steering.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(13px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "calc(54px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "bold calc(25px * var(--primary-text-scale, 1)) / 1 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        }
+      ]
+    }
+  ],
+  "runtimeExceptions": [
+    {
+      "path": "game/content-design/mission-card.mjs",
+      "reason": "Seat ordinal inside the thumbnail diagram; gameplay labels remain DOM text."
+    },
+    {
+      "path": "game/snake/classic-operation-view.mjs",
+      "reason": "Letters, checkmarks and cargo tags belong to logical cell artwork. DOM operation status carries the live objective."
+    },
+    {
+      "path": "game/ui/touch-controls-view.css",
+      "reason": "54px surface direction and 25px direction arrows are visual control glyphs; 13px readable control text enlarges."
+    }
+  ],
+  "dynamicBoundaries": [
+    {
+      "path": "game/platform.mjs",
+      "source": "import(new URL('../native/bridge.mjs', import.meta.url).href)"
+    },
+    {
+      "path": "game/ui/direct-tool-launch.js",
+      "source": "import(moduleURL)"
+    }
+  ]
+}
