@@ -81,7 +81,7 @@ export function createTouchPreferences({
       for (let attempt = 0; attempt < 3; attempt++) {
         const current = read();
         if (disposed || revision !== expected) {
-          reason = 'changed';
+          reason = sessionOnly ? 'session' : 'changed';
           return;
         }
         if (current.reason) {
@@ -91,7 +91,7 @@ export function createTouchPreferences({
         const next = resolveTouchControls({ ...(current.value ?? value), ...pending });
         const confirmation = read();
         if (disposed || revision !== expected) {
-          reason = 'changed';
+          reason = sessionOnly ? 'session' : 'changed';
           return;
         }
         if (confirmation.reason) {
@@ -103,12 +103,12 @@ export function createTouchPreferences({
         const encoded = JSON.stringify(next);
         current.target.setItem(TOUCH_PREFERENCES_KEY, encoded);
         if (disposed || revision !== expected) {
-          reason = 'changed';
+          reason = sessionOnly ? 'session' : 'changed';
           return;
         }
         const verified = read();
         if (disposed || revision !== expected) {
-          reason = 'changed';
+          reason = sessionOnly ? 'session' : 'changed';
           return;
         }
         if (verified.reason) {
