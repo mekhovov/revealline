@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-19T03:41:38.312944+00:00",
+  "base": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+  "target": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+  "incomingPaths": 19,
+  "checkedBlobs": 31,
+  "missingBefore": [],
+  "hydrated": [],
+  "source": "GitHub Git blob API; exact SHA1/header/size checked before additive local object insertion; GIT_NO_LAZY_FETCH=1",
+  "complete": true
+}

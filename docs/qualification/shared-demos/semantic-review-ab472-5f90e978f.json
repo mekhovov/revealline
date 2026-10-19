@@ -1,0 +1,127 @@
+{
+  "schema": "SharedDemoScopedSemanticReview.v1",
+  "at": "2026-10-19T03:50:01.424160+00:00",
+  "beforeCommit": "45aec58e1c4f533b9e5463993a7939e55ca7c93c",
+  "afterCommit": "5f90e978f6abf52b8ebbacf9dc3ba951f7796ce8",
+  "reviewedPaths": [
+    {
+      "path": "game/app.mjs",
+      "beforeObject": "bfea51d436900ab1d498a693870b470ebb1f4b3a",
+      "afterObject": "eca37b10f8f8717a7224d59896bec25089c9b161"
+    },
+    {
+      "path": "game/index.html",
+      "beforeObject": "edf2c052f6219a5402418c03ae8297505f0c7bc6",
+      "afterObject": "5e7beb236e5c3ed0b849e474e751de087b2a8467"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "beforeObject": "43c269a4671708ddc5e6e6f8cabe02f6a5ce3335",
+      "afterObject": "c6fc8b0258077d377cbc5d8f9c549e44521ef444"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "beforeObject": "4f45cafacd00429bf769b527d36afd1b8ee97fb8",
+      "afterObject": "55f002e00ccf0d4e1485243a416283eac87e2217"
+    }
+  ],
+  "result": "pass",
+  "actionableFindings": [],
+  "observations": [
+    {
+      "path": "game/app.mjs",
+      "lines": [
+        9292,
+        9316,
+        9489
+      ],
+      "finding": "The incoming Capture medal goal is a read-only ordinary result projection. It appears only for a won non-practice, non-course, non-admin run. Existing demo entry pauses the ordinary game; isolated demo/practice presentation does not call this ordinary won overlay. The demonstration/imported-map no-unlocks copy remains."
+    },
+    {
+      "path": "game/ui/capture-medal-goal.mjs",
+      "lines": [
+        5,
+        49
+      ],
+      "finding": "Inspected the new imported dependency: reads accepted status, medal, time and lives to produce localized text; it does not award medals or write player state."
+    },
+    {
+      "path": "game/index.html",
+      "lines": [
+        526
+      ],
+      "finding": "Adds one initially hidden ordinary result paragraph, separate from the shared Demo shell and its focus/input controls."
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "lines": [
+        224,
+        2136
+      ],
+      "finding": "Adds only a localized Academy browsing-context callback; existing launch, persistence and chooser ownership remain unchanged."
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "lines": [
+        1306,
+        8439
+      ],
+      "finding": "Adds only a localized Worlds browsing-context callback. Existing current-launch guards, demonstrated response and Fresh launch remain unchanged. The shared demo frame still returns before ordinary simulation work."
+    }
+  ],
+  "unchangedCommonObjects": [
+    {
+      "path": "game/ui/demo-host.mjs",
+      "before": "210d037ecee2fae3a445239a195b8a35a2280c37",
+      "after": "210d037ecee2fae3a445239a195b8a35a2280c37",
+      "equal": true
+    },
+    {
+      "path": "game/ui/demo-input.mjs",
+      "before": "49d8150ce9e10ac2a6aca56f035774f2ba6d32b7",
+      "after": "49d8150ce9e10ac2a6aca56f035774f2ba6d32b7",
+      "equal": true
+    },
+    {
+      "path": "game/ui/demo-entry.mjs",
+      "before": "1edd6b5dd5366f1621d759e59e9cf68b0b3c5345",
+      "after": "1edd6b5dd5366f1621d759e59e9cf68b0b3c5345",
+      "equal": true
+    },
+    {
+      "path": "game/ui/demo-controller.mjs",
+      "before": "e52d85b79c3719c851c0aef497270af26042ebd8",
+      "after": "e52d85b79c3719c851c0aef497270af26042ebd8",
+      "equal": true
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-input.mjs",
+      "before": "44691d4797e5d297b15dee45acc5ba7c7ed54b7d",
+      "after": "44691d4797e5d297b15dee45acc5ba7c7ed54b7d",
+      "equal": true
+    },
+    {
+      "path": "game/demo-modes",
+      "before": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+      "after": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+      "equal": true
+    },
+    {
+      "path": "game/demo-director.mjs",
+      "before": "2f5adc478115d7b2aa658e028344ef462cd5350d",
+      "after": "2f5adc478115d7b2aa658e028344ef462cd5350d",
+      "equal": true
+    },
+    {
+      "path": "game/demo-rotation.mjs",
+      "before": "113aebdd5c55ea541da36277666a3bc91bbb686f",
+      "after": "113aebdd5c55ea541da36277666a3bc91bbb686f",
+      "equal": true
+    }
+  ],
+  "limits": [
+    "Read-only semantic review, not a test run or browser/build result.",
+    "No new replay qualification or device acceptance is claimed.",
+    "Generators and five affected test files are owned by the parent task."
+  ]
+}
