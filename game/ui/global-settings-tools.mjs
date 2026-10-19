@@ -1,4 +1,4 @@
-import { localizedText, t } from '../i18n/index.mjs';
+import { localizedAttribute, localizedText, t } from '../i18n/index.mjs';
 import { attachProfileRecoveryDialog } from './profile-recovery-dialog.mjs';
 import { attachStorageRetention } from './storage-retention.mjs';
 import { attachInstallOfflinePanel } from './install-offline-panel.mjs';
@@ -301,7 +301,7 @@ export function mountGlobalSettingsTools({
       });
     }
     localizedText(doc.getElementById(`${prefix}-tool-title`), () => t(title));
-    toolFrame.title = t(title);
+    localizedAttribute(toolFrame, 'title', () => t(title));
     toolFrame.src = url.href;
     doc.getElementById(`${prefix}-tool-open-page`).href = url.href;
     toolDialog.showModal();
@@ -317,7 +317,7 @@ export function mountGlobalSettingsTools({
         'controls',
       ],
       ['creatorTools', 'extras', 'interface:nativeMenu.creatorTools', 'creator/', 'content'],
-      ['about', 'extras', 'interface:about', '../site/about.html#versions', 'info'],
+      ['about', 'extras', 'common:navigation.aboutCredits', '../site/about.html#versions', 'info'],
     ]) {
       if (controls[key] || !panels[category]) continue;
       const { button } = row(key, category, title, icon);
