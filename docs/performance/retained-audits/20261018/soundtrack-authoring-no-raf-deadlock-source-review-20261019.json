@@ -1,0 +1,80 @@
+{
+  "schema": "revealline-source-investigation-v1",
+  "repository": "mekhovov/revealline",
+  "capturedAt": "2026-10-19T00:50:34.308Z",
+  "pullRequest": 1675,
+  "head": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+  "tree": "8763bfc452d22373a6733984fc19d2aa09a3c3c9",
+  "scope": "Read-only inspection of whether optional Soundtrack authoring publication requires a missing fixture animation callback.",
+  "sources": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 619315,
+      "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa",
+      "gitBlob": "ec8c2d1179c42b603987cfd725d45f20f4af6251"
+    },
+    {
+      "path": "game/ui/audio.mjs",
+      "bytes": 44314,
+      "sha256": "e98576d5153262130e6556edaf758cdf15ed69700472066fb2f4d92c8a70c538",
+      "gitBlob": "291fa9c94be79c7ef1b162d63baa1e2370eaaef7"
+    },
+    {
+      "path": "game/ui/media-preparation.mjs",
+      "bytes": 5332,
+      "sha256": "9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad",
+      "gitBlob": "be4547b8ff6eb740e79b968b1f4a2860a5f5d8fd"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 150152,
+      "sha256": "bd0cc68c7caa90897062a50b4b0e3404c0b4a32f2fa95da2453550b51cf9c46b",
+      "gitBlob": "1ee9a23035bf11ea89157589577a76a423a369b4"
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "bytes": 61492,
+      "sha256": "be2dc8359a2b530df10b529dd0bd0a9ec0566a5687b3d3c0a70dda15460b24c4",
+      "gitBlob": "2045b6f6babf476fa567bd6c5ab4b66261095b18"
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "bytes": 35091,
+      "sha256": "f73fe5e2a5d54b76a59f094f8dfc4f7b0f564229c15c8c7c6d4b81d3fdcfdcff",
+      "gitBlob": "11edae6ed89c9fa2d74034a4912112277bf13e03"
+    },
+    {
+      "path": "game/test/helpers/soundtrack-authoring-loader.mjs",
+      "bytes": 1596,
+      "sha256": "5adfcaaaeb9dfebce562e838a3e2db053a11dd0af22284879c9d3d4e0ab8ec8b",
+      "gitBlob": "d4675908a823ad3c45defbdb364985f1b7de40bf"
+    }
+  ],
+  "findings": [
+    "No direct RAF dependency established: app2304–2305 injects sound.mediaPreparation; audio52 constructs the plain queue and90–91 forwards phase changes; panel175–181 delegates publish to preparation.run(main); drain uses Promise microtasks, releases slots and drains on completion/setPhase.",
+    "Studio onOpen app2326–2329 invokes pause(true), whose10999 phase transition precedes early returns. Visible restoreListening12926–12929 directly restores playing/paused/menu. Panel open3606–3662 awaits local reload/authoring outside an occupied main-slot callback.",
+    "Fixture waitFor130–135 uses100×5ms timers without frame pumping. Those timers permit Promise microtasks. solo-dom813–815 only pumps preparedFrame/cadence automatically; the source does not establish authoring starvation.",
+    "Authoring tests await opening after gate.release. No per-test timeout is declared in the file; job deadline remains. This is a diagnosability limit, not evidence explaining duration.",
+    "Pinned Node22.13.1 getModuleJobForImport invokes resolve; customizations are routed before cachedDefaultResolve. Prior optional-module loading alone does not prove a missed resolve hook."
+  ],
+  "primarySources": [
+    {
+      "url": "https://raw.githubusercontent.com/nodejs/node/v22.13.1/lib/internal/modules/esm/loader.js",
+      "bytes": 35495,
+      "sha256": "0261049132a6e147cc5001f50946eb51b5d0a5414ad2d81a15af86ed9b954180",
+      "gitBlob": "c5594e07d667c356dbf8ccd61b04da89c68a7e6f",
+      "excerpts": [
+        "  async getModuleJobForImport(specifier, parentURL, importAttributes) {\n    const resolveResult = await this.resolve(specifier, parentURL, importAttributes);\n    return this.#getJobFromResolveResult(resolveResult, parentURL, importAttributes, false);\n  }\n",
+        "   */\n  resolve(specifier, parentURL, importAttributes) {\n    specifier = `${specifier}`;\n    if (this.#customizations) {  // Only has module.register hooks.\n      return this.#customizations.resolve(specifier, parentURL, importAttributes);\n    }\n    return this.#cachedDefaultResolve(specifier, parentURL, importAttributes);\n  }\n"
+      ]
+    },
+    {
+      "url": "https://nodejs.org/download/release/v22.13.1/docs/api/module.html#customization-hooks",
+      "scope": "Pinned API documentation independently checked by qualification peer; register data/transferList and resolve parentURL match fixture shape."
+    }
+  ],
+  "limitations": [
+    "No app, tests, build or generator execution; no source/workflow change.",
+    "Running-job duration did not establish failure or its stage. A new terminal failure was reported by peer after this source investigation; peer is independently collecting logs. This audit does not classify that failure."
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "format": "revealline-held-two-parent-integration.v1",
+  "repository": "mekhovov/revealline",
+  "createdAt": "2026-10-19T01:09:05.149Z",
+  "main": {
+    "head": "bd15820bee10a33ba64534071d22657fbd7326d3",
+    "tree": "11a3e3f847a0ba9424b888f090de369adcd8fae0"
+  },
+  "commonBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "policy": {
+    "mode": "required",
+    "digest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+    "files": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "bytes": 19972,
+        "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8"
+      },
+      {
+        "path": "publishing/admission-binding.mjs",
+        "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+        "bytes": 3561,
+        "sha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214"
+      },
+      {
+        "path": "publishing/admission-preflight.mjs",
+        "gitBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+        "bytes": 2473,
+        "sha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf"
+      },
+      {
+        "path": "publishing/focused-tests.mjs",
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "bytes": 33959,
+        "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669"
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "bytes": 14501,
+        "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479"
+      },
+      {
+        "path": "publishing/test-policy.json",
+        "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+        "bytes": 578,
+        "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2"
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "bytes": 4134,
+        "sha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b"
+      }
+    ],
+    "unchanged": true,
+    "sourceAdmissionAudit": {
+      "gitBlob": "80e415cea26aaba19091a9eb1912d9a0227853b2",
+      "bytes": 24558,
+      "sha256": "dcd08be986967c35bb873e933b47894d9706ec9c9771edbbf484462dbd5e0583"
+    }
+  },
+  "guards": [
+    "Re-read current main and exact held branch before mutation; stop/reconcile if either differs.",
+    "Open only as DRAFT for ordinary source qualification, after lifecycle/MP3 admission. Keep every current ready head unchanged.",
+    "Do not dispatch native qualification, change observer pins, merge or publish to Pages.",
+    "Require fresh source/head/base/policy receipt and all registered checks before any later promotion; preserve historical failures."
+  ],
+  "actions": {
+    "localWrites": false,
+    "functionalExecution": false,
+    "tests": false,
+    "build": false,
+    "branchMutation": false,
+    "commitCreated": false,
+    "treeCreated": false,
+    "prCreated": false,
+    "workflowDispatch": false
+  },
+  "branch": "codex/solo-trail-allocation",
+  "observedHeld": {
+    "head": "d1cec960ca866c3c27a7959856f4dd3e331052dd",
+    "tree": "74a0445745cd0ae91150b0ee8ebdc7439612db64",
+    "parent": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "associatedPRs": []
+  },
+  "proposedMerge": {
+    "parents": [
+      "d1cec960ca866c3c27a7959856f4dd3e331052dd",
+      "bd15820bee10a33ba64534071d22657fbd7326d3"
+    ],
+    "message": "Merge latest main into trail allocation source qualification",
+    "baseTree": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+    "expectedTree": "ffe78c5631b3c7f23f8a3d31512d9de696d31fc1",
+    "entries": [
+      {
+        "path": "game/core/capture.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bb381f963cf857b62ef6b9b635238e43d79c342e"
+      },
+      {
+        "path": "game/test/core-capture.test.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f05cbae7bdf291aab5b392a7966685e2b90c0ffe"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "path": "game/core/capture.mjs",
+      "beforeMain": {
+        "gitBlob": "7f3207d69107d058b6986bf8099052d1ed554044",
+        "mode": "100644"
+      },
+      "after": {
+        "gitBlob": "bb381f963cf857b62ef6b9b635238e43d79c342e",
+        "bytes": 7865,
+        "sha256": "8847c26ec7459a706261303f185b86c2a4f83691f110bf1809173bc2cc43a6b3"
+      },
+      "diff": "@@ -57,17 +57,23 @@ function samePoint(a, b) {\n   return Math.abs(a.x - b.x) < EPS && Math.abs(a.y - b.y) < EPS;\n }\n export function selfContact(state, trace, horizon) {\n-  const previous = state.trailSegments.map((s) => ({ ...s }));\n   let best = null;\n-  const visited = new Set(state.trail.map((c) => c.index));\n-  let last = state.trail.at(-1)?.index;\n-  for (const cell of trace.cells) {\n-    if (cell.time > horizon + EPS) break;\n-    if (visited.has(cell.index) && cell.index !== last)\n-      best = Math.min(best ?? Infinity, cell.time);\n-    visited.add(cell.index);\n-    last = cell.index;\n+  if (trace.cells.length) {\n+    const visited = new Set();\n+    for (const cell of state.trail) visited.add(cell.index);\n+    let last = state.trail.at(-1)?.index;\n+    for (const cell of trace.cells) {\n+      if (cell.time > horizon + EPS) break;\n+      if (visited.has(cell.index) && cell.index !== last)\n+        best = Math.min(best ?? Infinity, cell.time);\n+      visited.add(cell.index);\n+      last = cell.index;\n+    }\n   }\n+  if (!trace.additions.length) return best;\n+  // Existing segments are read-only until appendTrail runs after contact selection.\n+  // Own the array because each new trace segment joins subsequent contact checks.\n+  const previous = state.trailSegments.slice();\n   for (const s of trace.additions) {\n     if (s.t0 > horizon + EPS) break;\n     const fraction = s.t1 > s.t0 ? Math.min(1, (horizon - s.t0) / (s.t1 - s.t0)) : 1;\n@@ -103,16 +109,19 @@ export function appendTrail(state, trace, time) {\n     state.cutStartedAt = state.time + trace.started;\n     state.events.push({ type: 'cut.started', tick: state.tick, time: state.time + trace.started });\n   }\n-  const have = new Set(state.trail.map((c) => c.index));\n-  for (const c of trace.cells)\n-    if (c.time < time + EPS && !have.has(c.index)) {\n-      have.add(c.index);\n-      state.trail.push({\n-        x: c.index % state.width,\n-        y: Math.floor(c.index / state.width),\n-        index: c.index,\n-      });\n-    }\n+  if (trace.cells.length) {\n+    const have = new Set();\n+    for (const cell of state.trail) have.add(cell.index);\n+    for (const c of trace.cells)\n+      if (c.time < time + EPS && !have.has(c.index)) {\n+        have.add(c.index);\n+        state.trail.push({\n+          x: c.index % state.width,\n+          y: Math.floor(c.index / state.width),\n+          index: c.index,\n+        });\n+      }\n+  }\n   for (const s of trace.additions) {\n     if (s.t0 >= time - EPS) continue;\n     const end = pointAt("
+    },
+    {
+      "path": "game/test/core-capture.test.mjs",
+      "beforeMain": {
+        "gitBlob": "feddfdbf24d245a9e7f3326163d8b4fad074791a",
+        "mode": "100644"
+      },
+      "after": {
+        "gitBlob": "f05cbae7bdf291aab5b392a7966685e2b90c0ffe",
+        "bytes": 15692,
+        "sha256": "0124c14a24c0f0df65fae418d2bbee8f9385b7d355bde33b3ac76da3e691b7bf"
+      },
+      "diff": "@@ -2,7 +2,8 @@ import test from 'node:test';\n import assert from 'node:assert/strict';\n import { readFileSync } from 'node:fs';\n import { createRun, stepRun, validateLevel, CELL, FIXED_DT } from '../core/index.mjs';\n-import { commitCapture } from '../core/capture.mjs';\n+import { commitCapture, selfContact, appendTrail } from '../core/capture.mjs';\n+import { authoritativeCheckpoint } from '../replay.mjs';\n \n const base = (extra = {}) => ({\n   version: 'xonix-level.v1',\n@@ -287,3 +288,140 @@ test('wall contact blocks movement without closing or destroying a valid live cu\n   assert.equal(s.player.cutting, true);\n   assert.equal(s.claimedCount, 0);\n });\n+\n+test('empty movement leaves an idle or live trail unchanged without constructing cell sets', () => {\n+  for (const cutting of [false, true]) {\n+    const state = run();\n+    if (cutting) cutFixture(state);\n+    const before = authoritativeCheckpoint(state),\n+      trail = state.trail,\n+      segments = state.trailSegments,\n+      trace = { started: null, cells: [], additions: [] },\n+      NativeSet = globalThis.Set;\n+    let sets = 0,\n+      contact;\n+    // Observe only these two synchronous calls; restore before assertions or hashing.\n+    globalThis.Set = class extends NativeSet {\n+      constructor(...args) {\n+        super(...args);\n+        sets++;\n+      }\n+    };\n+    try {\n+      contact = selfContact(state, trace, FIXED_DT);\n+      appendTrail(state, trace, FIXED_DT);\n+    } finally {\n+      globalThis.Set = NativeSet;\n+    }\n+    assert.equal(contact, null);\n+    assert.equal(sets, 0);\n+    assert.equal(state.trail, trail);\n+    assert.equal(state.trailSegments, segments);\n+    assert.deepEqual(authoritativeCheckpoint(state), before);\n+  }\n+});\n+\n+test('long immutable bent trails retain exact earliest-contact horizons without changing run state', () => {\n+  const state = run(),\n+    segments = [];\n+  for (let row = 0; row < 32; row++) {\n+    const y = row + 2.5,\n+      left = row % 2 === 0;\n+    segments.push(Object.freeze({ x1: left ? 4.5 : 44.5, y1: y, x2: left ? 44.5 : 4.5, y2: y }));\n+    if (row < 31)\n+      segments.push(\n+        Object.freeze({ x1: left ? 44.5 : 4.5, y1: y, x2: left ? 44.5 : 4.5, y2: y + 1 }),\n+      );\n+  }\n+  state.player.cutting = true;\n+  state.trailSegments = Object.freeze(segments);\n+  const before = authoritativeCheckpoint(state),\n+    trace = Object.freeze({\n+      cells: Object.freeze([]),\n+      additions: Object.freeze([\n+        Object.freeze({ x1: 4.5, y1: 33.5, x2: 4.5, y2: 31.5, t0: 0.25, t1: 0.75 }),\n+      ]),\n+    });\n+  assert.equal(segments.length, 63);\n+  assert.equal(selfContact(state, trace, 0.375), null);\n+  assert.equal(selfContact(state, trace, 0.5), 0.5);\n+  assert.equal(selfContact(state, trace, 1), 0.5);\n+  assert.equal(state.trailSegments, segments);\n+  assert.deepEqual(authoritativeCheckpoint(state), before);\n+});\n+\n+test('contact checks include earlier additions in the same movement and preserve reversal timing', () => {\n+  const state = run(),\n+    before = authoritativeCheckpoint(state),\n+    trace = {\n+      cells: [],\n+      additions: [\n+        { x1: 10.5, y1: 10.5, x2: 14.5, y2: 10.5, t0: 0, t1: 0.25 },\n+        { x1: 14.5, y1: 10.5, x2: 14.5, y2: 14.5, t0: 0.25, t1: 0.5 },\n+        { x1: 14.5, y1: 14.5, x2: 12.5, y2: 14.5, t0: 0.5, t1: 0.75 },\n+        { x1: 12.5, y1: 14.5, x2: 12.5, y2: 8.5, t0: 0.75, t1: 1.5 },\n+      ],\n+    };\n+  assert.equal(selfContact(state, trace, 1), null);\n+  assert.equal(selfContact(state, trace, 1.25), 1.25);\n+  assert.equal(selfContact(state, trace, 1.5), 1.25);\n+  assert.deepEqual(authoritativeCheckpoint(state), before);\n+  state.trailSegments = Object.freeze([Object.freeze({ x1: 24.5, y1: 1, x2: 24.5, y2: 4.5 })]);\n+  const reversal = {\n+    cells: [],\n+    additions: [{ x1: 24.5, y1: 4.5, x2: 24.5, y2: 3.5, t0: 0.25, t1: 0.75 }],\n+  };\n+  assert.equal(selfContact(state, reversal, 0.125), null);\n+  assert.equal(selfContact(state, reversal, 0.5), 0.25);\n+});\n+\n+test('cell-only contact preserves consecutive-cell immunity, repeated-cell failure and horizon order', () => {\n+  const state = run();\n+  state.trail = [\n+    { x: 24, y: 1, index: 72 },\n+    { x: 24, y: 2, index: 120 },\n+  ];\n+  const before = authoritativeCheckpoint(state),\n+    trace = {\n+      additions: [],\n+      cells: [\n+        { index: 120, time: 0 },\n+        { index: 168, time: 0.25 },\n+        { index: 72, time: 0.5 },\n+      ],\n+    };\n+  assert.equal(selfContact(state, trace, 0.25), null);\n+  assert.equal(selfContact(state, trace, 0.5), 0.5);\n+  assert.equal(selfContact(state, trace, 1), 0.5);\n+  assert.deepEqual(authoritativeCheckpoint(state), before);\n+});\n+\n+test('contact reads retain tail ownership until append clips and merges the accepted movement', () => {\n+  const state = run();\n+  state.player.cutting = true;\n+  state.trail = [1, 2, 3].map((y) => ({ x: 24, y, index: y * 48 + 24 }));\n+  const tail = { x1: 24.5, y1: 1, x2: 24.5, y2: 3.5 };\n+  state.trailSegments = [tail];\n+  const trace = {\n+      started: null,\n+      cells: [\n+        { index: 168, time: 0 },\n+        { index: 216, time: 0.25 },\n+        { index: 264, time: 0.75 },\n+      ],\n+      additions: [{ x1: 24.5, y1: 3.5, x2: 24.5, y2: 5.5, t0: 0, t1: 1 }],\n+    },\n+    originalTrace = structuredClone(trace),\n+    before = authoritativeCheckpoint(state);\n+  assert.equal(selfContact(state, trace, 0.5), null);\n+  assert.deepEqual(authoritativeCheckpoint(state), before);\n+  appendTrail(state, trace, 0.5);\n+  assert.equal(state.trailSegments.length, 1);\n+  assert.equal(state.trailSegments[0], tail);\n+  assert.deepEqual(tail, { x1: 24.5, y1: 1, x2: 24.5, y2: 4.5 });\n+  assert.deepEqual(\n+    state.trail.map(({ index }) => index),\n+    [72, 120, 168, 216],\n+  );\n+  assert.deepEqual(trace, originalTrace);\n+});"
+    }
+  ],
+  "treeProof": {
+    "expectedRoot": "ffe78c5631b3c7f23f8a3d31512d9de696d31fc1",
+    "ancestors": [
+      {
+        "path": "game/test",
+        "before": "eeffdd19867b76827b84b2f68edf291ce3f047b9",
+        "after": "367e70f5e3ed03b42c1a57d6acdd4ac4c1b5fd52",
+        "entries": 1926
+      },
+      {
+        "path": "game/core",
+        "before": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+        "after": "bf56faec341bd33c7633cd707decc5c86783763b",
+        "entries": 32
+      },
+      {
+        "path": "game",
+        "before": "b46ea0f8c7368bf3390697cabf76aa5edac742f9",
+        "after": "e7afd631c5516bd0303f52f0d7b4195d596537d8",
+        "entries": 232
+      },
+      {
+        "path": "",
+        "before": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+        "after": "ffe78c5631b3c7f23f8a3d31512d9de696d31fc1",
+        "entries": 23
+      }
+    ],
+    "mainChangeOverlap": [],
+    "mainChangesPreserved": [
+      "game/app.mjs",
+      "game/index.html",
+      "game/test/first-flight-home-host.test.mjs",
+      "game/test/first-flight-view.test.mjs",
+      "game/ui/first-flight-view.mjs"
+    ],
+    "allOtherEntriesUnchanged": true,
+    "allOriginalAncestorTreeIdentitiesRecomputed": true
+  },
+  "reviewedImplementation": {
+    "heldCommitExact": true,
+    "sourceUnmodified": true,
+    "scope": "Remove temporary cell-index arrays and segment object copies, skip empty movement allocations, retain the owned segment array and unchanged contact math/order.",
+    "controls": {
+      "added": 5,
+      "executed": false
+    },
+    "sourceReview": "Root re-reviewed this exact held two-file diff without a new concern; independent integration review remains required before admission.",
+    "compatibility": "No simulation state, cache, save or replay format change; archival golden/runtime declarations stay unchanged. Existing strict replay/portability and later native checkpoint qualification remain mandatory."
+  },
+  "sourceAdmission": {
+    "head": "d1cec960ca866c3c27a7959856f4dd3e331052dd",
+    "categories": [],
+    "unknownRuntime": [
+      "game/core/capture.mjs",
+      "game/test/core-capture.test.mjs"
+    ],
+    "tests": [
+      {
+        "path": "game/test/core-capture.test.mjs",
+        "deferred": []
+      }
+    ],
+    "fallback": [
+      {
+        "id": "unknown-runtime-validate",
+        "command": "npm",
+        "args": [
+          "run",
+          "validate"
+        ],
+        "timeoutMs": 1800000
+      }
+    ],
+    "focusedLogicGitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+    "focusedManifestGitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+    "changedTestCommand": {
+      "command": "node",
+      "args": [
+        "--test",
+        "game/test/core-capture.test.mjs"
+      ]
+    },
+    "limits": "This two-file unknown-runtime change selects validate plus its changed test. No complete product build, replay suite or native performance pass is inferred from that selection; all registered broader gates and release obligations must be reviewed."
+  },
+  "generatedAndBuild": {
+    "packageGitBlob": "03292ddd5d31da1722f32bed186d9127f6628c85",
+    "validateCommand": "npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs && node scripts/refresh-fpv-reaction-runtime.mjs --check && node scripts/refresh-fpv-academy-audio.mjs --check && node scripts/refresh-fpv-play-shell.mjs --check && node scripts/refresh-fpv-presentation-assets.mjs --check && node scripts/refresh-optional-worker.mjs --check && node scripts/refresh-fpv-world-visuals.mjs --check && node scripts/produce-industrial-environments.mjs --check",
+    "playShell": {
+      "gitBlob": "3c16fe0e7f450cde67af9d241875afdf28414d56",
+      "changedCoreFileInFiniteProjection": false
+    },
+    "noGeneratedBytesChanged": true,
+    "noNewModulesAssetsOrWorkerImports": true,
+    "requiredRemote": [
+      "Run all five new direct controls and existing core capture tests on the exact merged head.",
+      "Complete npm run validate including all generator --check commands; resolve genuine output drift without weakening checks.",
+      "Complete existing strict replay/portability coverage and ordinary production/package validation required for release. Preserve historical golden runtime identities.",
+      "Leave native gameplay/checkpoint/performance qualification pending the separately reviewed release observation window."
+    ],
+    "limit": "No functional test, generator or build was executed in this integration audit."
+  },
+  "draftPR": {
+    "title": "perf(core): avoid temporary trail copies during movement",
+    "body": "Trail contact checks currently copy every prior segment and allocate temporary cell-index arrays, including callbacks with no movement. Reuse read-only segment references and construct cell sets directly only when needed, preserving contact order, clipping and collision calculations.\n\nAdds five controls for empty movement, immutable long trails, contact horizons, repeated cells and append ownership. The reviewed implementation is unchanged; this merge only brings in current main. Hosted source checks are pending. Keep draft for qualification; no measured speed or replay-compatibility pass is claimed."
+  }
+}

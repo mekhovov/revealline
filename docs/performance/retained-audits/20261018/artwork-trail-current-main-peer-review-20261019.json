@@ -1,0 +1,144 @@
+{
+  "format": "revealline.integration-peer-review.v1",
+  "scope": "Independent source-only review for draft source qualification. Remote Git objects read into RAM; no local writes, product/tests/build/generator execution, native/browser actions or source branch mutations.",
+  "verdict": "Both artwork and trail exact two-parent integrations are clean within declared scope; hosted and final release qualification remain pending.",
+  "artwork": {
+    "proposal": {
+      "blob": "fd9d7102f71cfca5a0d0ac7f9a2bca867f3dbd5c",
+      "bytes": 38857,
+      "sha256": "e228cf0d442c8a062f7c5898c21b0f4e7fa9f8cc5af871631961e190e7407c43"
+    },
+    "independent": {
+      "proposal": "fd9d7102f71cfca5a0d0ac7f9a2bca867f3dbd5c",
+      "parents": [
+        "e2cf2cbc2a268028c39afb1a5b4235e1d4faaadf",
+        "bd15820bee10a33ba64534071d22657fbd7326d3"
+      ],
+      "leftTree": "c359da2b12d43a35d97e4ddc43bede62c39156c7",
+      "mainTree": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+      "candidateTree": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5",
+      "leafCount": 44793,
+      "mainIncomingPaths": [
+        "game/app.mjs",
+        "game/index.html",
+        "game/test/first-flight-home-host.test.mjs",
+        "game/test/first-flight-view.test.mjs",
+        "game/ui/first-flight-view.mjs"
+      ],
+      "heldSourcePaths": [
+        "game/app.mjs",
+        "game/content-design/assets.mjs",
+        "game/content-design/attempt.mjs",
+        "game/content-design/picture.mjs",
+        "game/content-design/solo-host.mjs",
+        "game/test/content-assets.test.mjs",
+        "game/test/content-picture.test.mjs",
+        "game/test/gameplay-pressure-host.test.mjs",
+        "game/test/helpers/solo-dom.mjs",
+        "game/test/solo-cadence-readiness-host.test.mjs"
+      ],
+      "allTenHeldContentsExactlyMatch73a9": true,
+      "appOnlyAddsHomeAvailable": true,
+      "allSevenPolicyFilesUnchanged": true,
+      "matchedCategories": [
+        "content-artwork-preparation",
+        "company-editions"
+      ],
+      "changedTests": [
+        "game/test/content-assets.test.mjs",
+        "game/test/content-picture.test.mjs",
+        "game/test/gameplay-pressure-host.test.mjs",
+        "game/test/solo-cadence-readiness-host.test.mjs"
+      ],
+      "deferredChangedTests": [],
+      "draft": {
+        "title": "perf(solo): keep prepared artwork in owned binary images",
+        "body": "Solo candidate artwork currently becomes a base64 data URL before decoding. Keep the verified image bytes binary through the existing picture owner, with the URL retained until decode and display ownership finish. Studio serialization remains compatible, and cancellation/release still dispose owned resources.\n\nAdds eleven top-level controls plus one nested cleanup control for integrity, decoding, cancellation, Main readiness and URL ownership. The held source is unchanged by this main integration. Source review is complete; hosted source and build checks are pending. Keep draft for qualification; no device or measured performance pass is claimed."
+      }
+    },
+    "findings": [
+      "Complete parent and candidate Git trees independently reconstructed from every leaf using canonical Git serialization; candidate is eb40c274cb91b663ba3ebd5d519e9f524aec2cb5.",
+      "All ten held contents were independently compared against full final reviewed proposal73a9cfd270604cb0f29cd953ad6fb0c22d30a97e. The only synthesized code is current-main homeAvailable app hunk; reversing it reproduces complete held app.",
+      "Source admission includes four edited test files with no deferral plus content-artwork-preparation and Company cohorts. Eleven top-level plus one nested new control remain unexecuted in this review.",
+      "Prior generated/CSP/offline closure is preserved; existing generator checks, production build and native image ownership qualification remain mandatory. The integration does not establish those results."
+    ]
+  },
+  "trail": {
+    "proposal": {
+      "blob": "19d0703fcbebb1f9a6efeeb1e5499f261a623f97",
+      "bytes": 18645,
+      "sha256": "8ae616d16d2810fdd3dae32617c3fc65215075400a047676a43266743b6b4852"
+    },
+    "independent": {
+      "proposal": "19d0703fcbebb1f9a6efeeb1e5499f261a623f97",
+      "parents": [
+        "d1cec960ca866c3c27a7959856f4dd3e331052dd",
+        "bd15820bee10a33ba64534071d22657fbd7326d3"
+      ],
+      "leftTree": "74a0445745cd0ae91150b0ee8ebdc7439612db64",
+      "mainTree": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+      "candidateTree": "ffe78c5631b3c7f23f8a3d31512d9de696d31fc1",
+      "leafCount": 44793,
+      "mainIncomingPaths": [
+        "game/app.mjs",
+        "game/index.html",
+        "game/test/first-flight-home-host.test.mjs",
+        "game/test/first-flight-view.test.mjs",
+        "game/ui/first-flight-view.mjs"
+      ],
+      "heldSourcePaths": [
+        "game/core/capture.mjs",
+        "game/test/core-capture.test.mjs"
+      ],
+      "bothHeldContentsUnchanged": true,
+      "allSevenPolicyFilesUnchanged": true,
+      "matchedCategories": [],
+      "changedTests": [
+        "game/test/core-capture.test.mjs"
+      ],
+      "deferredChangedTests": [],
+      "files": [
+        {
+          "path": "game/core/capture.mjs",
+          "before": {
+            "gitBlob": "7f3207d69107d058b6986bf8099052d1ed554044",
+            "mode": "100644"
+          },
+          "after": {
+            "gitBlob": "bb381f963cf857b62ef6b9b635238e43d79c342e",
+            "bytes": 7865,
+            "sha256": "8847c26ec7459a706261303f185b86c2a4f83691f110bf1809173bc2cc43a6b3"
+          }
+        },
+        {
+          "path": "game/test/core-capture.test.mjs",
+          "before": {
+            "gitBlob": "feddfdbf24d245a9e7f3326163d8b4fad074791a",
+            "mode": "100644"
+          },
+          "after": {
+            "gitBlob": "f05cbae7bdf291aab5b392a7966685e2b90c0ffe",
+            "bytes": 15692,
+            "sha256": "0124c14a24c0f0df65fae418d2bbee8f9385b7d355bde33b3ac76da3e691b7bf"
+          }
+        }
+      ],
+      "draft": {
+        "title": "perf(core): avoid temporary trail copies during movement",
+        "body": "Trail contact checks currently copy every prior segment and allocate temporary cell-index arrays, including callbacks with no movement. Reuse read-only segment references and construct cell sets directly only when needed, preserving contact order, clipping and collision calculations.\n\nAdds five controls for empty movement, immutable long trails, contact horizons, repeated cells and append ownership. The reviewed implementation is unchanged; this merge only brings in current main. Hosted source checks are pending. Keep draft for qualification; no measured speed or replay-compatibility pass is claimed."
+      }
+    },
+    "findings": [
+      "Complete parent and candidate Git trees independently reconstructed; candidate ffe78c5631b3c7f23f8a3d31512d9de696d31fc1 contains exactly the two reviewed held blobs over current main.",
+      "Source diff retains the five direct controls and removes no validation, rule, state, replay or save boundary. Historical golden/runtime declarations are unchanged. No runtime-sensitive golden loop was reintroduced.",
+      "Changed core-capture.test.mjs is directly admitted and not deferred; no named category matches, so existing unknown-runtime validate fallback remains. This does not replace strict replay/portability or final native checkpoint qualification.",
+      "Draft wording describes the allocation change and five unexecuted controls and avoids measured speed/replay-pass claims."
+    ]
+  },
+  "sharedFindings": [
+    "All seven source-policy blobs identical between both parents and each candidate.",
+    "Both preserve all five current-main First Flight paths. No unrelated leaf deletion or modification was found.",
+    "Draft status and fresh main/head guards are required at publication; release-ready promotion, native dispatch and Pages publication are outside this admission."
+  ],
+  "executedFunctionalTests": false
+}

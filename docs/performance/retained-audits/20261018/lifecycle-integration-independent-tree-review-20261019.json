@@ -1,0 +1,45 @@
+{
+  "format": "revealline-integration-peer-review.v1",
+  "observedAt": "2026-10-19T01:02:07.911Z",
+  "proposal": {
+    "gitBlob": "92c48842af8086029b5c418b056d5b64aac7f3cd",
+    "bytes": 839394,
+    "sha256": "d978255f10dce0daaed4d303bbb81b4108698826197d75cf038ce0573ede21d4"
+  },
+  "parents": [
+    "bdfcd56b86ca5b7b6d5ae7160d2cf030fc76a967",
+    "bd15820bee10a33ba64534071d22657fbd7326d3"
+  ],
+  "result": "clean focused source and exact-tree review",
+  "checks": {
+    "allFiveAfterReceipts": true,
+    "appSingleHomeAvailableHunkReversesToHeldBlob": "c9e316b639d399299490aa538a037d2b08077cf6",
+    "independentlyRebuiltExpectedTree": "4bb44157295ed7e170d60ce3276f790d920ea014",
+    "construction": "Started independently from exact current-main root/game/test/couch trees; retained all unchanged entries; applied six unchanged lifecycle blobs plus the synthesized app; recomputed Git object hashes bottom-up.",
+    "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+    "policyFilesUnchanged": true,
+    "changedTestsAdmittedWithoutDeferral": [
+      {
+        "path": "game/test/couch-input.test.mjs",
+        "deferredBy": [],
+        "alreadyExplicit": []
+      },
+      {
+        "path": "game/test/couch-lifecycle-clock.test.mjs",
+        "deferredBy": [],
+        "alreadyExplicit": []
+      },
+      {
+        "path": "game/test/solo-cadence-input-host.test.mjs",
+        "deferredBy": [],
+        "alreadyExplicit": []
+      }
+    ]
+  },
+  "scope": "Source/tree review only. Twelve new controls remain unexecuted; no build, functional test, native/browser qualification, mutation or release.",
+  "relatedAdmissionAudit": {
+    "gitBlob": "80e415cea26aaba19091a9eb1912d9a0227853b2",
+    "bytes": 24558,
+    "sha256": "dcd08be986967c35bb873e933b47894d9706ec9c9771edbbf484462dbd5e0583"
+  }
+}

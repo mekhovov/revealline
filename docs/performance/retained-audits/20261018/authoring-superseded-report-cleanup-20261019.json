@@ -1,0 +1,347 @@
+{
+  "format": "revealline.superseded-report-cleanup.v1",
+  "repository": "mekhovov/revealline",
+  "pullRequest": 1675,
+  "successor": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+  "sourceRun": 39183206863,
+  "appearanceRun": 39183206777,
+  "companyRun": 39183206830,
+  "industrialRun": 39183206766,
+  "scope": "Root authorized only superseded #1675 reporting-only queued aggregates once all actual functional jobs are terminal and no runner/work remains.",
+  "guards": "Before each request, freshly verified PR head; old run head8499225d; all functional jobs terminal; sole incomplete job117837424113 named focused, queued, runner_id0, empty steps.",
+  "normalCancellation": {
+    "at": "2026-10-19T00:59:40.861075+00:00",
+    "operation": "normal cancellation of superseded Source reporting-only aggregate",
+    "prHead": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+    "run": {
+      "id": 39173025193,
+      "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+      "status": "queued",
+      "conclusion": null,
+      "updated_at": "2026-10-19T00:46:40Z"
+    },
+    "jobs": [
+      {
+        "id": 117809866195,
+        "name": "preflight",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043255,
+        "runner_name": "GitHub Actions 1000043255",
+        "steps": {
+          "count": 10,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818839739,
+        "name": "focused_shards (4)",
+        "status": "completed",
+        "conclusion": "failure",
+        "runner_id": 1000043498,
+        "runner_name": "GitHub Actions 1000043498",
+        "steps": {
+          "count": 17,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818839744,
+        "name": "focused_shards (2)",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043468,
+        "runner_name": "GitHub Actions 1000043468",
+        "steps": {
+          "count": 17,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818839749,
+        "name": "focused_shards (1)",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043472,
+        "runner_name": "GitHub Actions 1000043472",
+        "steps": {
+          "count": 17,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818839770,
+        "name": "focused_shards (3)",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043481,
+        "runner_name": "GitHub Actions 1000043481",
+        "steps": {
+          "count": 17,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818840634,
+        "name": "test",
+        "status": "completed",
+        "conclusion": "skipped",
+        "runner_id": null,
+        "runner_name": null,
+        "steps": []
+      },
+      {
+        "id": 117818840719,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "skipped",
+        "runner_id": null,
+        "runner_name": null,
+        "steps": []
+      },
+      {
+        "id": 117837424113,
+        "name": "focused",
+        "status": "queued",
+        "conclusion": null,
+        "runner_id": 0,
+        "runner_name": "",
+        "steps": []
+      }
+    ],
+    "response": "{}"
+  },
+  "normalReadback": {
+    "at": "2026-10-19T00:59:53.664308+00:00",
+    "old": {
+      "id": 39173025193,
+      "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+      "status": "queued",
+      "conclusion": null,
+      "run_attempt": 1,
+      "updated_at": "2026-10-19T00:59:40Z"
+    },
+    "remaining": [
+      {
+        "id": 117837424113,
+        "name": "focused",
+        "status": "queued",
+        "conclusion": null,
+        "runner_id": 0,
+        "runner_name": "",
+        "steps": []
+      }
+    ],
+    "new": {
+      "id": 39183206863,
+      "head_sha": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "status": "pending",
+      "conclusion": null,
+      "run_attempt": 1,
+      "updated_at": "2026-10-19T00:58:58Z"
+    }
+  },
+  "forceCancellation": {
+    "at": "2026-10-19T01:00:08.964365+00:00",
+    "operation": "force-cancel sole superseded queued reporting-only aggregate after normal cancellation retained it",
+    "prHead": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+    "run": {
+      "id": 39173025193,
+      "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+      "status": "queued",
+      "conclusion": null,
+      "updated_at": "2026-10-19T00:59:40Z"
+    },
+    "jobs": [
+      {
+        "id": 117809866195,
+        "name": "preflight",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043255,
+        "runner_name": "GitHub Actions 1000043255",
+        "steps": {
+          "count": 10,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818839739,
+        "name": "focused_shards (4)",
+        "status": "completed",
+        "conclusion": "failure",
+        "runner_id": 1000043498,
+        "runner_name": "GitHub Actions 1000043498",
+        "steps": {
+          "count": 17,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818839744,
+        "name": "focused_shards (2)",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043468,
+        "runner_name": "GitHub Actions 1000043468",
+        "steps": {
+          "count": 17,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818839749,
+        "name": "focused_shards (1)",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043472,
+        "runner_name": "GitHub Actions 1000043472",
+        "steps": {
+          "count": 17,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818839770,
+        "name": "focused_shards (3)",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043481,
+        "runner_name": "GitHub Actions 1000043481",
+        "steps": {
+          "count": 17,
+          "allTerminal": true
+        }
+      },
+      {
+        "id": 117818840634,
+        "name": "test",
+        "status": "completed",
+        "conclusion": "skipped",
+        "runner_id": null,
+        "runner_name": null,
+        "steps": []
+      },
+      {
+        "id": 117818840719,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "skipped",
+        "runner_id": null,
+        "runner_name": null,
+        "steps": []
+      },
+      {
+        "id": 117837424113,
+        "name": "focused",
+        "status": "queued",
+        "conclusion": null,
+        "runner_id": 0,
+        "runner_name": "",
+        "steps": []
+      }
+    ],
+    "response": "{}"
+  },
+  "terminalReadback": {
+    "at": "2026-10-19T01:00:18.764847+00:00",
+    "old": {
+      "id": 39173025193,
+      "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "updated_at": "2026-10-19T01:00:09Z"
+    },
+    "jobs": [
+      {
+        "id": 117809866195,
+        "name": "preflight",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043255,
+        "stepCount": 10
+      },
+      {
+        "id": 117818839739,
+        "name": "focused_shards (4)",
+        "status": "completed",
+        "conclusion": "failure",
+        "runner_id": 1000043498,
+        "stepCount": 17
+      },
+      {
+        "id": 117818839744,
+        "name": "focused_shards (2)",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043468,
+        "stepCount": 17
+      },
+      {
+        "id": 117818839749,
+        "name": "focused_shards (1)",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043472,
+        "stepCount": 17
+      },
+      {
+        "id": 117818839770,
+        "name": "focused_shards (3)",
+        "status": "completed",
+        "conclusion": "success",
+        "runner_id": 1000043481,
+        "stepCount": 17
+      },
+      {
+        "id": 117818840634,
+        "name": "test",
+        "status": "completed",
+        "conclusion": "skipped",
+        "runner_id": null,
+        "stepCount": 0
+      },
+      {
+        "id": 117818840719,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "skipped",
+        "runner_id": null,
+        "stepCount": 0
+      },
+      {
+        "id": 117837424113,
+        "name": "focused",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "runner_id": 0,
+        "stepCount": 0
+      }
+    ],
+    "new": {
+      "id": 39183206863,
+      "head_sha": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "status": "queued",
+      "conclusion": null,
+      "updated_at": "2026-10-19T01:00:09Z"
+    }
+  },
+  "otherRunScope": {
+    "oldAppearance": {
+      "id": 39173025211,
+      "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "run_attempt": 2,
+      "created_at": "2026-10-18T22:37:13Z",
+      "updated_at": "2026-10-19T00:58:58Z"
+    },
+    "automaticSupersession": "Old Appearance attempt2 had already completed cancelled at00:58:58 before these requests; queued installed retry never acquired a runner (runner_id0, steps[]). No Appearance cancellation request sent by this agent."
+  },
+  "evidencePreserved": {
+    "failureAudit": "89ce020e208874d4c3eadc3fd554650e86d48b67",
+    "previousSuccessAudit": "a06834c4c42da784ac0842b1115c3f1698ecafc2",
+    "interpretation": "Source run cancellation is a reporting cleanup, not a passing source verdict. Actual shard4 failure remains recorded and preserved."
+  },
+  "noLocalExecution": true
+}

@@ -1,0 +1,579 @@
+{
+  "format": "revealline.current-ci-status.v1",
+  "snapshot": {
+    "at": "2026-10-19T01:04:33.758887+00:00",
+    "main": "bd15820bee10a33ba64534071d22657fbd7326d3",
+    "public": {
+      "url": "https://mekhovov.github.io/revealline/game/build-info.json",
+      "status": 200,
+      "data": {
+        "formatVersion": 1,
+        "version": "0.151.1",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "entry": "game/index.html"
+      }
+    },
+    "pullRequests": [
+      {
+        "number": 1693,
+        "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+        "expectedMatches": true,
+        "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+        "state": "open",
+        "draft": true,
+        "runs": [
+          {
+            "id": 39183531271,
+            "name": "Industrial feature verification",
+            "path": ".github/workflows/industrial-feature-tests.yml",
+            "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T01:03:07Z",
+            "updated_at": "2026-10-19T01:03:07Z"
+          },
+          {
+            "id": 39183531250,
+            "name": "Company edition candidates",
+            "path": ".github/workflows/company-edition-candidate.yml",
+            "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T01:03:07Z",
+            "updated_at": "2026-10-19T01:03:07Z"
+          },
+          {
+            "id": 39183531296,
+            "name": "Appearance preview",
+            "path": ".github/workflows/appearance-preview.yml",
+            "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T01:03:07Z",
+            "updated_at": "2026-10-19T01:03:07Z",
+            "jobs": [
+              {
+                "id": 117841118690,
+                "name": "demo_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:07Z",
+                "completed_at": null
+              },
+              {
+                "id": 117841118857,
+                "name": "admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:07Z",
+                "completed_at": null
+              },
+              {
+                "id": 117841118892,
+                "name": "team_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:07Z",
+                "completed_at": null
+              },
+              {
+                "id": 117841118898,
+                "name": "installed_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:07Z",
+                "completed_at": null
+              }
+            ]
+          },
+          {
+            "id": 39183531423,
+            "name": "Validate source for continuous main",
+            "path": ".github/workflows/deploy-pages.yml",
+            "head_sha": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T01:03:07Z",
+            "updated_at": "2026-10-19T01:03:07Z",
+            "jobs": [
+              {
+                "id": 117841118902,
+                "name": "preflight",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:07Z",
+                "completed_at": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "number": 1694,
+        "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+        "expectedMatches": true,
+        "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+        "state": "open",
+        "draft": true,
+        "runs": [
+          {
+            "id": 39183587746,
+            "name": "Company edition candidates",
+            "path": ".github/workflows/company-edition-candidate.yml",
+            "head_sha": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T01:03:52Z",
+            "updated_at": "2026-10-19T01:03:52Z"
+          },
+          {
+            "id": 39183587745,
+            "name": "Validate source for continuous main",
+            "path": ".github/workflows/deploy-pages.yml",
+            "head_sha": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T01:03:52Z",
+            "updated_at": "2026-10-19T01:03:52Z",
+            "jobs": [
+              {
+                "id": 117841289559,
+                "name": "preflight",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:52Z",
+                "completed_at": null
+              }
+            ]
+          },
+          {
+            "id": 39183587814,
+            "name": "Industrial feature verification",
+            "path": ".github/workflows/industrial-feature-tests.yml",
+            "head_sha": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T01:03:52Z",
+            "updated_at": "2026-10-19T01:03:52Z"
+          },
+          {
+            "id": 39183587761,
+            "name": "Appearance preview",
+            "path": ".github/workflows/appearance-preview.yml",
+            "head_sha": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T01:03:52Z",
+            "updated_at": "2026-10-19T01:03:52Z",
+            "jobs": [
+              {
+                "id": 117841289546,
+                "name": "admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:52Z",
+                "completed_at": null
+              },
+              {
+                "id": 117841289774,
+                "name": "installed_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:52Z",
+                "completed_at": null
+              },
+              {
+                "id": 117841289880,
+                "name": "demo_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:52Z",
+                "completed_at": null
+              },
+              {
+                "id": 117841289881,
+                "name": "team_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:03:52Z",
+                "completed_at": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "number": 1674,
+        "head": "98f666a20d133d9a81eb07104076c3147fd165aa",
+        "expectedMatches": true,
+        "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "state": "open",
+        "draft": true,
+        "runs": [
+          {
+            "id": 39179292744,
+            "name": "Appearance preview",
+            "path": ".github/workflows/appearance-preview.yml",
+            "head_sha": "98f666a20d133d9a81eb07104076c3147fd165aa",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T00:06:49Z",
+            "updated_at": "2026-10-19T00:06:49Z",
+            "jobs": [
+              {
+                "id": 117828423954,
+                "name": "admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:06:49Z",
+                "completed_at": null
+              },
+              {
+                "id": 117828424137,
+                "name": "installed_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:06:49Z",
+                "completed_at": null
+              },
+              {
+                "id": 117828424203,
+                "name": "team_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:06:49Z",
+                "completed_at": null
+              },
+              {
+                "id": 117828424213,
+                "name": "demo_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:06:49Z",
+                "completed_at": null
+              }
+            ]
+          },
+          {
+            "id": 39179292743,
+            "name": "Industrial feature verification",
+            "path": ".github/workflows/industrial-feature-tests.yml",
+            "head_sha": "98f666a20d133d9a81eb07104076c3147fd165aa",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T00:06:49Z",
+            "updated_at": "2026-10-19T00:06:50Z"
+          },
+          {
+            "id": 39179292845,
+            "name": "Company edition candidates",
+            "path": ".github/workflows/company-edition-candidate.yml",
+            "head_sha": "98f666a20d133d9a81eb07104076c3147fd165aa",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T00:06:49Z",
+            "updated_at": "2026-10-19T00:07:58Z"
+          },
+          {
+            "id": 39179292792,
+            "name": "Validate source for continuous main",
+            "path": ".github/workflows/deploy-pages.yml",
+            "head_sha": "98f666a20d133d9a81eb07104076c3147fd165aa",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T00:06:49Z",
+            "updated_at": "2026-10-19T00:11:15Z",
+            "jobs": [
+              {
+                "id": 117829433874,
+                "name": "preflight",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:11:15Z",
+                "completed_at": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "number": 1675,
+        "head": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+        "expectedMatches": true,
+        "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "state": "open",
+        "draft": true,
+        "runs": [
+          {
+            "id": 39183206830,
+            "name": "Company edition candidates",
+            "path": ".github/workflows/company-edition-candidate.yml",
+            "head_sha": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T00:58:57Z",
+            "updated_at": "2026-10-19T00:58:57Z"
+          },
+          {
+            "id": 39183206777,
+            "name": "Appearance preview",
+            "path": ".github/workflows/appearance-preview.yml",
+            "head_sha": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T00:58:57Z",
+            "updated_at": "2026-10-19T00:58:58Z",
+            "jobs": [
+              {
+                "id": 117840169505,
+                "name": "team_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:58:58Z",
+                "completed_at": null
+              },
+              {
+                "id": 117840169891,
+                "name": "demo_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:58:58Z",
+                "completed_at": null
+              },
+              {
+                "id": 117840170083,
+                "name": "installed_admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:58:58Z",
+                "completed_at": null
+              },
+              {
+                "id": 117840170114,
+                "name": "admission",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:58:58Z",
+                "completed_at": null
+              }
+            ]
+          },
+          {
+            "id": 39183206766,
+            "name": "Industrial feature verification",
+            "path": ".github/workflows/industrial-feature-tests.yml",
+            "head_sha": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T00:58:57Z",
+            "updated_at": "2026-10-19T00:58:58Z"
+          },
+          {
+            "id": 39183206863,
+            "name": "Validate source for continuous main",
+            "path": ".github/workflows/deploy-pages.yml",
+            "head_sha": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-19T00:58:57Z",
+            "updated_at": "2026-10-19T01:00:09Z",
+            "jobs": [
+              {
+                "id": 117840426623,
+                "name": "preflight",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:00:09Z",
+                "completed_at": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "number": 1676,
+        "head": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+        "expectedMatches": true,
+        "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "state": "open",
+        "draft": true,
+        "runs": [
+          {
+            "id": 39173029692,
+            "name": "Industrial feature verification",
+            "path": ".github/workflows/industrial-feature-tests.yml",
+            "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-18T22:37:17Z",
+            "updated_at": "2026-10-18T22:37:17Z"
+          },
+          {
+            "id": 39173029621,
+            "name": "Company edition candidates",
+            "path": ".github/workflows/company-edition-candidate.yml",
+            "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+            "status": "completed",
+            "conclusion": "success",
+            "run_attempt": 1,
+            "created_at": "2026-10-18T22:37:17Z",
+            "updated_at": "2026-10-18T23:50:08Z"
+          },
+          {
+            "id": 39173029622,
+            "name": "Appearance preview",
+            "path": ".github/workflows/appearance-preview.yml",
+            "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+            "status": "queued",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-18T22:37:17Z",
+            "updated_at": "2026-10-19T00:22:21Z",
+            "jobs": [
+              {
+                "id": 117809880712,
+                "name": "admission",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-10-18T23:30:50Z",
+                "completed_at": "2026-10-18T23:33:27Z"
+              },
+              {
+                "id": 117809880940,
+                "name": "demo_admission",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-10-18T23:38:37Z",
+                "completed_at": "2026-10-18T23:40:35Z"
+              },
+              {
+                "id": 117809880974,
+                "name": "installed_admission",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-10-18T23:53:06Z",
+                "completed_at": "2026-10-18T23:58:20Z"
+              },
+              {
+                "id": 117809881869,
+                "name": "team_admission",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-10-19T00:18:03Z",
+                "completed_at": "2026-10-19T00:22:21Z"
+              },
+              {
+                "id": 117831951270,
+                "name": "preview",
+                "status": "queued",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:22:21Z",
+                "completed_at": null
+              }
+            ]
+          },
+          {
+            "id": 39173029629,
+            "name": "Validate source for continuous main",
+            "path": ".github/workflows/deploy-pages.yml",
+            "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+            "status": "in_progress",
+            "conclusion": null,
+            "run_attempt": 1,
+            "created_at": "2026-10-18T22:37:17Z",
+            "updated_at": "2026-10-19T01:04:01Z",
+            "jobs": [
+              {
+                "id": 117809880606,
+                "name": "preflight",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-10-18T23:22:49Z",
+                "completed_at": "2026-10-18T23:23:01Z"
+              },
+              {
+                "id": 117819513720,
+                "name": "focused_shards (1)",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-10-19T00:25:05Z",
+                "completed_at": "2026-10-19T00:28:29Z"
+              },
+              {
+                "id": 117819513761,
+                "name": "focused_shards (3)",
+                "status": "in_progress",
+                "conclusion": null,
+                "started_at": "2026-10-19T00:51:14Z",
+                "completed_at": null
+              },
+              {
+                "id": 117819513779,
+                "name": "focused_shards (4)",
+                "status": "completed",
+                "conclusion": "success",
+                "started_at": "2026-10-19T00:52:58Z",
+                "completed_at": "2026-10-19T00:57:36Z"
+              },
+              {
+                "id": 117819513782,
+                "name": "focused_shards (2)",
+                "status": "in_progress",
+                "conclusion": null,
+                "started_at": "2026-10-19T01:04:00Z",
+                "completed_at": null
+              },
+              {
+                "id": 117819514613,
+                "name": "test",
+                "status": "completed",
+                "conclusion": "skipped",
+                "started_at": "2026-10-18T23:23:01Z",
+                "completed_at": "2026-10-18T23:23:01Z"
+              },
+              {
+                "id": 117819515014,
+                "name": "build",
+                "status": "completed",
+                "conclusion": "skipped",
+                "started_at": "2026-10-18T23:23:01Z",
+                "completed_at": "2026-10-18T23:23:01Z"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "scope": "One exact-head remote status census for draft CI admission and existing P0 outcomes; published build-info fetched read-only over HTTPS. No test/build/browser execution, local file writes, reruns, cancellation, dispatch or release mutation in this census.",
+  "interpretation": [
+    "#1693 lifecycle and #1694 MP3 are open drafts on exact declared heads. Their Source preflights and all initial Appearance cohorts are queued; workflow scheduling is verified, not a passing admission result.",
+    "#1674 current diagnostics and #1675 successor are likewise queued. Historical failures remain retained; corrected source has not completed functional checks.",
+    "#1676 current source shards1/4 have completed successfully; shards2/3 run. Complete Source and full Appearance preview remain incomplete. Appearance initial cohorts and Company success are metadata observations in this census; detailed evidence must remain attached to their independent audits.",
+    "Protected main is bd15820bee10a33ba64534071d22657fbd7326d3; ordinary published game/build-info.json still reports e4400303952d4d6dcfd6416d6d085131ce71466b. This single metadata read is not a native smoke or full asset equality check."
+  ],
+  "retainedEvidence": {
+    "source1675Failure": "89ce020e208874d4c3eadc3fd554650e86d48b67",
+    "source1676Shard4": "f11cd1f658caf3d18196d021fed68ce8ee9aad53",
+    "priorScopedSourcePasses": "a06834c4c42da784ac0842b1115c3f1698ecafc2",
+    "reviewedLifecycleMP3Integration": "db2d68318e26708e1e1d23d28171852e3bd7c362",
+    "superseded1675ReportingCleanup": "ab334c5520cce9ca970909232760f23ec3593f14"
+  }
+}

@@ -1,0 +1,345 @@
+{
+  "format": "revealline-source-admission-dependency-audit.v1",
+  "observedAt": "2026-10-19T00:58:41.286Z",
+  "repository": "mekhovov/revealline",
+  "sourceBase": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "question": "Do P1 lifecycle or MP3 source qualification require #1654 or completed P0 native/public observation?",
+  "conclusion": "No. These holds are plan sequencing, not source-runtime or workflow prerequisites. Draft source qualification can start now without releasing, changing ready heads or dispatching native measurements.",
+  "heldChanges": [
+    {
+      "head": "bdfcd56b86ca5b7b6d5ae7160d2cf030fc76a967",
+      "tree": "6881ff93c2399823f6d19535834dd69abe684830",
+      "parent": [
+        "dd337c8120fd6f875544c1479713d3aa4299c323"
+      ],
+      "message": "Fix accepted gameplay clocks and fresh Resume actions\n\nKeep fresh Solo and Versus requests through the neutral tick, retire them on existing cancellation boundaries, and reset Team/Versus entry clocks. Add twelve bounded behavioral controls. Source reviewed; functional and native qualification remain pending.",
+      "files": [
+        {
+          "path": "game/app.mjs",
+          "status": "modified",
+          "gitBlob": "c9e316b639d399299490aa538a037d2b08077cf6",
+          "changes": 14
+        },
+        {
+          "path": "game/couch/couch-input.mjs",
+          "status": "modified",
+          "gitBlob": "2d54f29a47b0044447feb8c4fce3d27b6590a41b",
+          "changes": 29
+        },
+        {
+          "path": "game/couch/couch.mjs",
+          "status": "modified",
+          "gitBlob": "234d63e3371e3d84ad733eb2593b5518fbee0f01",
+          "changes": 24
+        },
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "status": "modified",
+          "gitBlob": "6c9cc0cd45a41c49d3c095ba622b821b70d22288",
+          "changes": 2
+        },
+        {
+          "path": "game/test/couch-input.test.mjs",
+          "status": "modified",
+          "gitBlob": "a7a26793f572e9b7caac0ea2451cef7148eb0f38",
+          "changes": 73
+        },
+        {
+          "path": "game/test/couch-lifecycle-clock.test.mjs",
+          "status": "added",
+          "gitBlob": "7184ce721c075b05527c4aeaa948891b1dd50209",
+          "changes": 132
+        },
+        {
+          "path": "game/test/solo-cadence-input-host.test.mjs",
+          "status": "modified",
+          "gitBlob": "075a75d413c5b8c8785652a789885d5b3f8ee100",
+          "changes": 100
+        }
+      ]
+    },
+    {
+      "head": "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+      "tree": "93d369be4d6ac29a113fe091693df245ef68a1ab",
+      "parent": [
+        "dd337c8120fd6f875544c1479713d3aa4299c323"
+      ],
+      "message": "Keep downloaded soundtrack validation in the playback inspector",
+      "files": [
+        {
+          "path": "game/soundtrack-source.mjs",
+          "status": "modified",
+          "gitBlob": "106eb9d719004c12aad2ab4ad95488b79dff20ca",
+          "changes": 12
+        },
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "status": "modified",
+          "gitBlob": "354b19260773058c4a0b401ed2bab167d4ffeef1",
+          "changes": 270
+        },
+        {
+          "path": "game/test/soundtrack-source.test.mjs",
+          "status": "modified",
+          "gitBlob": "588d449fc42de183962f8caa7ae64ea345fbc20c",
+          "changes": 64
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "status": "modified",
+          "gitBlob": "640acdf98815047953d4131e67b13e32cfd78a56",
+          "changes": 72
+        }
+      ]
+    }
+  ],
+  "freshMainComposition": {
+    "heldBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "mainChanges": [
+      {
+        "path": "game/app.mjs",
+        "gitBlob": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb",
+        "patch": "@@ -4025,6 +4025,10 @@ try {\n       entry: {\n         available: !practice && !courseSession && !started && !courseEntry,\n         helpAvailable: !practice && !courseSession,\n+        homeAvailable:\n+          !practice &&\n+          !courseSession &&\n+          !['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id),\n         pending: !!courseEntry,\n         message: courseEntryMessage,\n       },"
+      },
+      {
+        "path": "game/index.html",
+        "gitBlob": "93af395bf479b57f5d617761b78fe6d1202c5282"
+      },
+      {
+        "path": "game/test/first-flight-home-host.test.mjs",
+        "gitBlob": "2ac53a27c8e5287760d69d9883acb6877870c6c0"
+      },
+      {
+        "path": "game/test/first-flight-view.test.mjs",
+        "gitBlob": "f250b6bd262c525c900b12f037b93150f4f9993c"
+      },
+      {
+        "path": "game/ui/first-flight-view.mjs",
+        "gitBlob": "1bd67ea6c167081fb29ca3f737deea6b14d5e334"
+      }
+    ],
+    "lifecycleAppDiff": "@@ -11964,6 +11964,8 @@ try {\n           controls,\n         });\n         if (beforeStatus === 'respawning' || run.status === 'respawning') {\n+          pendingAction = false;\n+          pendingPickup = false;\n           input.clear();\n           controller.clear();\n           controls = { direction: null, boost: false, action: false, pickup: false };\n@@ -11974,6 +11976,8 @@ try {\n           controller.clear();\n           controllerFrame = null;\n           controls = { direction: null, boost: false, action: false, pickup: false };\n+          pendingAction = false;\n+          pendingPickup = false;\n           pendingSwitch = null;\n         }\n         refreshControllerBoostCue();\n@@ -11989,9 +11993,13 @@ try {\n               message: t('interface:liveGoalTrackingIsUnavailableYourPictureProgressIsKept'),\n             };\n           }\n-        pendingAction = false;\n-        pendingPickup = false;\n-        if (!resuming) pendingSwitch = null;\n+        // A fresh request after accepted Resume waits behind its neutral tick.\n+        // Recovery and capture-stop above still retire these pending actions.\n+        if (!resuming) {\n+          pendingAction = false;\n+          pendingPickup = false;\n+          pendingSwitch = null;\n+        }\n         accumulator -= FIXED_DT;\n         if (!recordingStopped)\n           try {",
+    "result": "Lifecycle app hunks near original lines11964–11993 are disjoint from main First Flight hunk4025. MP3 has no changed-path overlap. Normal fresh-main compositions must preserve both and receive exact-head checks."
+  },
+  "policy": {
+    "mode": "required",
+    "digest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+    "files": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "bytes": 19972,
+        "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8"
+      },
+      {
+        "path": "publishing/admission-binding.mjs",
+        "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+        "bytes": 3561,
+        "sha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214"
+      },
+      {
+        "path": "publishing/admission-preflight.mjs",
+        "gitBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+        "bytes": 2473,
+        "sha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf"
+      },
+      {
+        "path": "publishing/focused-tests.mjs",
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "bytes": 33959,
+        "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669"
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "bytes": 14501,
+        "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479"
+      },
+      {
+        "path": "publishing/test-policy.json",
+        "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+        "bytes": 578,
+        "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2"
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "bytes": 4134,
+        "sha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b"
+      }
+    ],
+    "heldCommitsChangeNone": true,
+    "pr1654": {
+      "head": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+      "draft": true,
+      "files": [
+        {
+          "path": ".github/workflows/deploy-pages.yml",
+          "patch": "@@ -233,11 +233,12 @@ jobs:\n \n   focused:\n     # Keep the existing required status: no individual shard can qualify the gate.\n+    # Aggregate failed dependencies, but let cancellation retire an obsolete run.\n     if: >-\n-      always() && github.event_name == 'pull_request' &&\n+      ${{ !cancelled() && github.event_name == 'pull_request' &&\n       needs.preflight.result == 'success' &&\n       needs.preflight.outputs.admission != 'hold' &&\n-      needs.preflight.outputs.focusedRequired == 'true'\n+      needs.preflight.outputs.focusedRequired == 'true' }}\n     needs: [preflight, focused_shards]\n     runs-on: ubuntu-latest\n     timeout-minutes: 5\n@@ -438,7 +439,8 @@ jobs:\n           node .source-gate-automation/scripts/check-source-identity.mjs --root .\n \n   release-ready:\n-    if: always() && github.event_name == 'pull_request'\n+    # A cancelled run cannot qualify a head and must release its concurrency slot.\n+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}\n     needs: [preflight, focused, test, build]\n     runs-on: ubuntu-latest\n     steps:"
+        },
+        {
+          "path": "publishing/fastline-merge-controller.test.mjs",
+          "patch": "@@ -1544,13 +1544,18 @@ test(\"changed heads invalidate admission and disarm an existing request\", () =>\n   });\n });\n \n-test(\"a failed required rerun disarms an already admitted exact head\", () => {\n-  const input = fixture({ auto_merge: { enabled_at: \"now\" } });\n-  input.requiredCheck.conclusion = \"failure\";\n-  assert.deepEqual(decideMergeAction(input), {\n-    action: \"disarm\",\n-    reason: \"release-ready is not successful on the exact head\",\n-  });\n+test('failed, cancelled or skipped required gates never admit an exact head', () => {\n+  for (const conclusion of ['failure', 'cancelled', 'skipped']) {\n+    for (const auto_merge of [null, { enabled_at: 'now' }]) {\n+      const input = fixture({ auto_merge });\n+      input.requiredCheck.conclusion = conclusion;\n+      input.checkRuns[0].conclusion = conclusion;\n+      assert.deepEqual(decideMergeAction(input), {\n+        action: auto_merge ? 'disarm' : 'wait',\n+        reason: 'release-ready is not successful on the exact head',\n+      });\n+    }\n+  }\n });\n \n test(\"missing or stale admission receipts disarm even a successful exact head\", () => {"
+        },
+        {
+          "path": "publishing/source-workflow.test.mjs",
+          "patch": "@@ -204,7 +204,7 @@ test('aggregate preserves the required focused status and rejects any nonsuccess\n   const { spawnSync } = await import('node:child_process');\n   const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');\n   const aggregate = source.split('\\n  focused:\\n')[1]?.split('\\n  test:\\n')[0];\n-  assert.match(aggregate, /always\\(\\) && github.event_name == 'pull_request'/u);\n+  assert.match(aggregate, /!cancelled\\(\\) && github.event_name == 'pull_request'/u);\n   for (const condition of [\n     \"needs.preflight.result == 'success'\",\n     \"needs.preflight.outputs.admission != 'hold'\",\n@@ -238,8 +238,54 @@ test('aggregate preserves the required focused status and rejects any nonsuccess\n   assert.ok(aggregate.includes('--admission \"$RUNNER_TEMP/preflight-admission/admission.json\"'));\n   assert.ok(aggregate.includes('--test-policy automation/publishing/test-policy.json'));\n   const ready = source.split('\\n  release-ready:\\n')[1];\n+  assert.match(ready, /if: \\$\\{\\{ !cancelled\\(\\) && github.event_name == 'pull_request' \\}\\}/u);\n   assert.match(ready, /needs: \\[preflight, focused, test, build\\]/u);\n   assert.match(ready, /FOCUSED_RESULT: \\$\\{\\{ needs.focused.result \\}\\}/u);\n   assert.ok(ready.includes('test \"$FOCUSED_RESULT\" = success'));\n   assert.ok(ready.includes('test \"$FOCUSED_RESULT\" = skipped'));\n });\n+\n+test('release policy rejects failed dependencies and keeps only explicit policy skips', async () => {\n+  const { spawnSync } = await import('node:child_process');\n+  const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');\n+  const ready = source.split('\\n  release-ready:\\n')[1];\n+  const body = ready?.split('        run: |\\n')[1]?.replace(/^ {10}/gmu, '');\n+  assert.ok(body);\n+  const passing = {\n+    ADMISSION: 'release',\n+    PREFLIGHT_RESULT: 'success',\n+    FOCUSED_REQUIRED: 'true',\n+    FOCUSED_RESULT: 'success',\n+    BUILD_RESULT: 'success',\n+    FULL_CI: 'true',\n+    TEST_RESULT: 'success',\n+  };\n+  const check = (overrides, expected) => {\n+    // Exercise the workflow's actual gate body; this does not model GitHub's\n+    // scheduler or claim that cancellation was observed on a hosted runner.\n+    const result = spawnSync('bash', ['-e', '-o', 'pipefail', '-c', body], {\n+      env: { ...process.env, ...passing, ...overrides },\n+      timeout: 1000,\n+    });\n+    assert.equal(result.error, undefined);\n+    assert.equal(result.status === 0, expected, JSON.stringify(overrides));\n+  };\n+  check({}, true);\n+  // A dependency reporting cancelled while its workflow remains live must\n+  // still fail admission. Whole-workflow cancellation stops the job instead.\n+  for (const name of ['PREFLIGHT_RESULT', 'FOCUSED_RESULT', 'BUILD_RESULT', 'TEST_RESULT']) {\n+    for (const status of ['failure', 'cancelled', 'skipped', '']) {\n+      check({ [name]: status }, false);\n+    }\n+  }\n+  for (const ADMISSION of ['maintenance', 'scheduled']) {\n+    check({ ADMISSION, BUILD_RESULT: 'skipped', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);\n+  }\n+  check({ ADMISSION: 'release-evidence', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);\n+  check({ FOCUSED_REQUIRED: 'false', FOCUSED_RESULT: 'skipped' }, true);\n+  check({ FOCUSED_REQUIRED: 'false', FOCUSED_RESULT: 'success' }, false);\n+  check({ FOCUSED_REQUIRED: '' }, false);\n+  check({ ADMISSION: 'hold' }, false);\n+  check({ ADMISSION: 'unknown' }, false);\n+  check({ TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);\n+});"
+        }
+      ],
+      "impact": "Only focused/release-ready aggregate guards change from always() to !cancelled(), plus source/controller controls. Workflow is included in POLICY_FILES, so its merge changes the trusted digest and old-policy receipts are not current release authority. It can reduce obsolete aggregate retention; it is not a prerequisite to run P1 source checks."
+    }
+  },
+  "verifiedRules": {
+    "sourceWorkflow": {
+      "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "lines": [
+        1,
+        49
+      ],
+      "events": [
+        "pull_request.opened",
+        "pull_request.synchronize",
+        "pull_request.reopened"
+      ],
+      "draftFilter": false,
+      "permissions": "contents:read",
+      "concurrency": "source-gates-${github.ref}",
+      "sourceCheckout": "exact pull_request.head.sha; full filtered checkout; source identity verification before/after commands",
+      "excerpt": "name: Validate source for continuous main\n\non:\n  pull_request:\n    branches: [main]\n    # Metadata changes do not alter admission. Gate only source-head lifecycle\n    # events so title, labels, milestones, and draft promotion cannot create\n    # redundant queue work.\n    types: [opened, synchronize, reopened]\n\npermissions:\n  contents: read\n\nconcurrency:\n  group: source-gates-${{ github.ref }}\n  # Superseded PR heads cannot qualify the current source; do not queue behind them.\n  # Release routing and manual runs keep their existing serialization.\n  cancel-in-progress: ${{ github.event_name == 'pull_request' }}\n\n# `release-ready` is the single required status on protected `main`. Do not add\n# pull-request path filters above: a filtered workflow leaves a required check\n# pending forever. Maintenance is classified in preflight and exits quickly.\n\njobs:\n  preflight:\n    if: github.event_name == 'pull_request'\n    outputs:\n      runTests: ${{ steps.test_policy.outputs.runTests }}\n      testMode: ${{ steps.test_policy.outputs.mode }}\n      admission: ${{ steps.admission.outputs.mode }}\n      focusedRequired: ${{ steps.admission.outputs.focusedRequired }}\n    runs-on: ubuntu-latest\n    steps:\n      - name: Check out the workflow's test policy\n        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5\n        with:\n          ref: ${{ github.workflow_sha }}\n          path: .source-gate-automation\n          fetch-depth: 1\n          persist-credentials: false\n          sparse-checkout: |\n            .github/workflows/deploy-pages.yml\n            publishing/admission-binding.mjs\n            publishing/admission-preflight.mjs\n            publishing/focused-test-map.json\n            publishing/focused-tests.mjs\n            publishing/test-policy.json\n            publishing/test-policy.mjs\n          sparse-checkout-cone-mode: false"
+    },
+    "classification": {
+      "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "excerpt": "export function classification(_pull, paths) {\n  if (!Array.isArray(paths) || !paths.length) throw new Error('Empty changed-path inventory.');\n  // Queue admission deliberately does not restrict implementation paths. The\n  // exact changed-path inventory remains in the receipt for focused testing;\n  // titles, milestones, and labels cannot alter an admitted PR's class.\n  return 'maintenance';\n}\n\n",
+      "effect": "All nonempty bounded source inventories receive maintenance classification; selected focused validation remains required, and source-only gates do not imply complete product-build or performance qualification."
+    },
+    "mergeController": {
+      "gitBlob": "a8b71ef43d7afbf18bc169bfc75ff924c634fd93",
+      "lines": [
+        1076,
+        1105
+      ],
+      "excerpt": "  const reason = (() => {\n    if (!/^[0-9a-f]{40}$/u.test(observedHeadSha || \"\"))\n      return \"event has no exact head SHA\";\n    if (pullRequest.head?.sha !== observedHeadSha)\n      return \"head changed after inspection\";\n    if (pullRequest.state !== \"open\") return \"pull request is not open\";\n    if (pullRequest.draft !== false)\n      return \"pull request is draft or draft state is unknown\";\n    if (dependencies.some((dependency) => !dependency.merged_at))\n      return \"declared predecessor is not merged\";\n    if (\n      !requiredCheck ||\n      requiredCheck.status !== \"completed\" ||\n      requiredCheck.conclusion !== \"success\" ||\n      requiredCheck.head_sha !== observedHeadSha\n    )\n      return \"release-ready is not successful on the exact head\";\n    if (requiredCheck.admissionMatches !== true)\n      return \"source or admission metadata changed since the successful gate\";\n    if (!checkInventoryComplete || checkInventory?.complete !== true)\n      return \"exact-head check inventory is incomplete\";\n    const selected = inventoryReleaseReady(checkInventory, observedHeadSha);\n    if (\n      !selected ||\n      selected.id !== requiredCheck.id ||\n      !equal(selected.actionsProvenance, requiredCheck.actionsProvenance)\n    )\n      return \"release-ready identity is not uniquely verified on the exact head\";\n    const checkBlocker = inventoryCheckBlocker(checkInventory, observedHeadSha);\n    if (checkBlocker) return checkBlocker;",
+      "effect": "Draft state stops merger independently of completed source checks. Dependencies and exact-head successful fresh admission remain required."
+    },
+    "freshness": {
+      "bindingGitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "fields": [
+        "headSha",
+        "baseSha",
+        "workflowRevision",
+        "policyDigest",
+        "classification",
+        "dependencies",
+        "paths"
+      ],
+      "effect": "Fresh base/head/policy observations and newly qualifying receipts are required; historical results cannot be relabeled."
+    },
+    "sourcePublication": "The source workflow has contents:read and no Pages deployment/dispatch step. Appearance has no Pages/native qualification dispatch. Neither P1 commit changes native measurement tools, declarations or adapter pins."
+  },
+  "testSelection": {
+    "logicGitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+    "manifestGitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+    "changedTestRulesLines": [
+      96,
+      122
+    ],
+    "selection": [
+      {
+        "head": "bdfcd56b86ca5b7b6d5ae7160d2cf030fc76a967",
+        "paths": [
+          "game/app.mjs",
+          "game/couch/couch-input.mjs",
+          "game/couch/couch.mjs",
+          "game/couch/relay-rescue.mjs",
+          "game/test/couch-input.test.mjs",
+          "game/test/couch-lifecycle-clock.test.mjs",
+          "game/test/solo-cadence-input-host.test.mjs"
+        ],
+        "categories": [
+          "localization",
+          "player-navigation-team",
+          "company-editions"
+        ],
+        "explicitChangedTests": [
+          {
+            "path": "game/test/couch-input.test.mjs",
+            "deferredBy": [],
+            "alreadyExplicit": []
+          },
+          {
+            "path": "game/test/couch-lifecycle-clock.test.mjs",
+            "deferredBy": [],
+            "alreadyExplicit": []
+          },
+          {
+            "path": "game/test/solo-cadence-input-host.test.mjs",
+            "deferredBy": [],
+            "alreadyExplicit": []
+          }
+        ],
+        "policyFilesChanged": [],
+        "nativeAdapterChanged": false
+      },
+      {
+        "head": "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+        "paths": [
+          "game/soundtrack-source.mjs",
+          "game/test/soundtrack-player.test.mjs",
+          "game/test/soundtrack-source.test.mjs",
+          "game/ui/soundtrack-player.mjs"
+        ],
+        "categories": [],
+        "explicitChangedTests": [
+          {
+            "path": "game/test/soundtrack-player.test.mjs",
+            "deferredBy": [],
+            "alreadyExplicit": []
+          },
+          {
+            "path": "game/test/soundtrack-source.test.mjs",
+            "deferredBy": [],
+            "alreadyExplicit": []
+          }
+        ],
+        "policyFilesChanged": [],
+        "nativeAdapterChanged": false
+      }
+    ],
+    "mp3Fallback": [
+      {
+        "id": "unknown-runtime-validate",
+        "command": "npm",
+        "args": [
+          "run",
+          "validate"
+        ],
+        "timeoutMs": 1800000
+      }
+    ],
+    "actualExecution": "No local or remote tests executed by this audit; existing new controls remain unexecuted. Registered source/Appearance/Industrial/Company gates and eventual exact-head evidence still apply."
+  },
+  "recommendedSequence": [
+    "Compose lifecycle onto freshly rechecked main and open a draft source-qualification PR; leave all ready branches unchanged.",
+    "Admit MP3 as a separate draft after lifecycle composition is concrete; no runtime dependency on #1654, P0 or optional menu/authoring/backup work.",
+    "Retain useful current-policy source evidence and fix actual failures. Keep release/native dispatch held for its explicit reviewed windows.",
+    "After #1654 changes protected policy or main advances, reconcile and obtain current source/base/policy receipts before promotion and guarded merge.",
+    "Keep original trace observer collection before changing shared heap/overhead adapters; these two P1 branches do not alter that observer."
+  ],
+  "tradeoffs": [
+    "New source jobs consume hosted queue capacity; no faster start/finish or fairness is inferred.",
+    "Opening and then repeatedly superseding heads can reproduce old aggregate cancellation retention until #1654 lands. Publish coherent reviewed drafts and avoid unnecessary head churn.",
+    "Source gates and normal feature CI are evidence for those exact sources; they do not establish physical-device, sustained performance or public P0 success."
+  ],
+  "actions": {
+    "localFilesWritten": false,
+    "appExecution": false,
+    "tests": false,
+    "newDispatch": false,
+    "branchChange": false,
+    "prChange": false,
+    "readinessChange": false,
+    "merge": false,
+    "cancel": false,
+    "retry": false
+  }
+}

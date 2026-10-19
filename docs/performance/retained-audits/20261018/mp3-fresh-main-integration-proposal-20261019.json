@@ -1,0 +1,328 @@
+{
+  "format": "revealline-held-two-parent-integration.v1",
+  "createdAt": "2026-10-19T01:00:41.155Z",
+  "repository": "mekhovov/revealline",
+  "purpose": "Fresh-main MP3 source qualification as a separate draft; no release or native dispatch.",
+  "currentHeld": {
+    "head": "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+    "tree": "93d369be4d6ac29a113fe091693df245ef68a1ab",
+    "parent": "dd337c8120fd6f875544c1479713d3aa4299c323"
+  },
+  "main": {
+    "head": "bd15820bee10a33ba64534071d22657fbd7326d3",
+    "tree": "11a3e3f847a0ba9424b888f090de369adcd8fae0"
+  },
+  "proposedMerge": {
+    "parents": [
+      "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+      "bd15820bee10a33ba64534071d22657fbd7326d3"
+    ],
+    "message": "Merge latest main into downloaded soundtrack inspection source qualification",
+    "expectedTree": "c11225baa8c0dcca055f058d31889c98a999ad04",
+    "expectedChangedPathsAgainstMain": [
+      "game/soundtrack-source.mjs",
+      "game/test/soundtrack-player.test.mjs",
+      "game/test/soundtrack-source.test.mjs",
+      "game/ui/soundtrack-player.mjs"
+    ],
+    "commitCreated": false,
+    "treeCreated": false
+  },
+  "treeConstruction": {
+    "baseTree": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+    "entries": [
+      {
+        "path": "game/soundtrack-source.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "106eb9d719004c12aad2ab4ad95488b79dff20ca"
+      },
+      {
+        "path": "game/test/soundtrack-player.test.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "354b19260773058c4a0b401ed2bab167d4ffeef1"
+      },
+      {
+        "path": "game/test/soundtrack-source.test.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "588d449fc42de183962f8caa7ae64ea345fbc20c"
+      },
+      {
+        "path": "game/ui/soundtrack-player.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "640acdf98815047953d4131e67b13e32cfd78a56"
+      }
+    ],
+    "originalTrees": [
+      {
+        "path": "",
+        "gitTree": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+        "entryCount": 23,
+        "truncated": false,
+        "gitTreeHashRecomputedAndMatched": true
+      },
+      {
+        "path": "game",
+        "gitTree": "b46ea0f8c7368bf3390697cabf76aa5edac742f9",
+        "entryCount": 232,
+        "truncated": false,
+        "gitTreeHashRecomputedAndMatched": true
+      },
+      {
+        "path": "game/test",
+        "gitTree": "eeffdd19867b76827b84b2f68edf291ce3f047b9",
+        "entryCount": 1926,
+        "truncated": false,
+        "gitTreeHashRecomputedAndMatched": true
+      },
+      {
+        "path": "game/ui",
+        "gitTree": "9b654266172f3031087219dd92e9c8a2cf417f56",
+        "entryCount": 332,
+        "truncated": false,
+        "gitTreeHashRecomputedAndMatched": true
+      }
+    ],
+    "expectedTrees": [
+      {
+        "path": "game/test",
+        "sha": "eef89f7863f706468ae805243068a2d5c750f14d"
+      },
+      {
+        "path": "game/ui",
+        "sha": "23820bece3d83e15aa5a89e6434eca6222425d27"
+      },
+      {
+        "path": "game",
+        "sha": "84da0e55366c829c987b792edaf375c1ffba0ffe"
+      },
+      {
+        "path": "",
+        "sha": "c11225baa8c0dcca055f058d31889c98a999ad04"
+      }
+    ],
+    "procedure": "Recomputed each original non-recursive tree SHA-1 from Git mode/name/NUL/binary-hash bytes and verified its API identity. Replaced only the four existing blob entries, rebuilt test/ui then game then root, retaining all other entries, modes and subtrees. No additional object or branch was created.",
+    "unionProof": {
+      "commonBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "mainChangedPaths": [
+        "game/app.mjs",
+        "game/index.html",
+        "game/test/first-flight-home-host.test.mjs",
+        "game/test/first-flight-view.test.mjs",
+        "game/ui/first-flight-view.mjs"
+      ],
+      "heldChangedPaths": [
+        "game/soundtrack-source.mjs",
+        "game/test/soundtrack-player.test.mjs",
+        "game/test/soundtrack-source.test.mjs",
+        "game/ui/soundtrack-player.mjs"
+      ],
+      "overlap": [],
+      "firstFlightChanges": "Preserved from current main; none overlap the four held MP3 files."
+    }
+  },
+  "files": [
+    {
+      "path": "game/soundtrack-source.mjs",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "7a0d3b7d7d6fad7c9d545cfaa54afe892f155505",
+        "bytes": 4918,
+        "sha256": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83"
+      },
+      "after": {
+        "gitBlob": "106eb9d719004c12aad2ab4ad95488b79dff20ca",
+        "bytes": 5305,
+        "sha256": "cbad7bf6561138d35851e37430d1c7219e9413495e4a11f385d735b6b9c1549e"
+      },
+      "diff": "@@ -4,7 +4,7 @@ import { canonicalJSON, required } from './data-json.mjs';\n import { resolveSoundtrackCatalogue, soundtrackRights, SOUNDTRACK_LIMITS } from './soundtrack.mjs';\n import { createSoundtrackArchiveResolver } from './soundtrack-archive.mjs';\n import { resolveBundledSoundtrackAssets } from './soundtrack-bundled.mjs';\n-import { inspectMP3, throwIfSoundtrackAborted } from './mp3.mjs';\n+import { inspectMP3, ownSoundtrackBlob, throwIfSoundtrackAborted } from './mp3.mjs';\n import {\n   soundtrackDownloadURL,\n   readSoundtrackDownload,\n@@ -44,9 +44,11 @@ export function createSoundtrackSource({\n         download = false,\n         purpose = download ? 'offline' : 'playback',\n         localOnly = false,\n+        inspect = inspectMP3,\n       } = {},\n     ) {\n       required(typeof localOnly === 'boolean', 'Invalid local soundtrack acquisition policy.');\n+      required(typeof inspect === 'function', 'Invalid soundtrack inspection operation.');\n       required(\n         ['playback', 'offline', 'export'].includes(purpose),\n         'Unknown soundtrack byte purpose.',\n@@ -92,12 +94,16 @@ export function createSoundtrackSource({\n             cleanupTimeoutMs,\n             ...(track.archiveId && !core ? { credentials: 'omit', mode: 'cors' } : {}),\n           });\n-          const actual = await inspectMP3(blob, { signal: current });\n+          // Playback supplies its existing worker-backed inspector. Other byte consumers\n+          // retain complete default validation, and every path checks the pinned facts.\n+          const original = ownSoundtrackBlob(blob);\n+          const actual = await inspect(original, { signal: current });\n+          throwIfSoundtrackAborted(current);\n           required(\n             canonicalJSON(actual) === canonicalJSON(track.asset),\n             'Downloaded recording differs from its pinned catalogue original.',\n           );\n-          return blob.slice(0, blob.size, 'audio/mpeg');\n+          return original;\n         },\n         { signal, timeoutMs: 60000 },\n       );"
+    },
+    {
+      "path": "game/test/soundtrack-player.test.mjs",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "6a2400b0d5c5881d1e475ef6a48d7b8c03ec514a",
+        "bytes": 81316,
+        "sha256": "a8cac3d5e9cc61ddf8b4b034ddac683ae5ad11be940bc457f9f118244175e60e"
+      },
+      "after": {
+        "gitBlob": "354b19260773058c4a0b401ed2bab167d4ffeef1",
+        "bytes": 91273,
+        "sha256": "aa7692b36a8382fec722633ed8b1294e16849fc34e635d2c7e7b346903e03cf7"
+      },
+      "diff": "@@ -1,6 +1,9 @@\n import assert from 'node:assert/strict';\n import test from 'node:test';\n import { setTimeout as delay } from 'node:timers/promises';\n+import { Worker as NodeWorker } from 'node:worker_threads';\n+import { createSoundtrackSource } from '../soundtrack-source.mjs';\n+import { responseFor } from './helpers/soundtrack-albums.mjs';\n import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';\n import { createAudioMaster } from '../ui/audio-master.mjs';\n import {\n@@ -2179,3 +2182,270 @@ test('user-owned local MP3 playback still accepts an upload without a public lic\n   assert.equal(h.player.snapshot().track.kind, 'mp3');\n   assert.equal(reads, 1);\n });\n+\n+// The production browser worker is imported in a separate Node worker realm.\n+// Main-realm Blob read counters therefore cannot hide source-side inspection.\n+function inspectionWorkers(t, mode = 'real') {\n+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'Worker');\n+  const live = [],\n+    counts = { scans: 0, created: 0, terminated: 0 };\n+  Object.defineProperty(globalThis, 'Worker', {\n+    configurable: true,\n+    value: function () {\n+      if (mode === 'unavailable') throw new Error('Worker unavailable');\n+      counts.created++;\n+      if (mode === 'blocked')\n+        return {\n+          postMessage() {\n+            counts.scans++;\n+          },\n+          terminate() {\n+            counts.terminated++;\n+          },\n+          addEventListener() {},\n+          removeEventListener() {},\n+        };\n+      const module = new URL('../mp3-inspection-worker.mjs', import.meta.url).href;\n+      const code =\n+        'import { parentPort } from \"node:worker_threads\";' +\n+        'globalThis.addEventListener = (type, callback) => parentPort.on(type, data => callback({ data }));' +\n+        'globalThis.postMessage = data => parentPort.postMessage(data);' +\n+        'await import(' +\n+        JSON.stringify(module) +\n+        ');';\n+      const worker = new NodeWorker(new URL('data:text/javascript,' + encodeURIComponent(code)));\n+      live.push(worker);\n+      const listeners = new Map();\n+      return {\n+        postMessage(value) {\n+          counts.scans++;\n+          worker.postMessage(value);\n+        },\n+        terminate() {\n+          counts.terminated++;\n+          return worker.terminate();\n+        },\n+        addEventListener(type, callback) {\n+          const listener = type === 'message' ? (data) => callback({ data }) : callback;\n+          if (type === 'message') listeners.set(callback, listener);\n+          worker.on(type, listener);\n+        },\n+        removeEventListener(type, callback) {\n+          worker.off(type, type === 'message' ? listeners.get(callback) : callback);\n+          if (type === 'message') listeners.delete(callback);\n+        },\n+      };\n+    },\n+  });\n+  t.after(async () => {\n+    if (descriptor) Object.defineProperty(globalThis, 'Worker', descriptor);\n+    else delete globalThis.Worker;\n+    await Promise.allSettled(live.map((worker) => worker.terminate()));\n+  });\n+  return counts;\n+}\n+\n+async function downloadInspectionPlayer(\n+  t,\n+  { readAsset, readLocal = () => null, repeat = 'off', secondAudioElement } = {},\n+) {\n+  const bytes = new Uint8Array(await original.blob.arrayBuffer());\n+  const track = {\n+    ...original.track,\n+    id: 'builtin.catalog.worker-test',\n+    edition: 'test-1',\n+    path: 'optional/soundtracks/worker-test.mp3',\n+    tags: { genres: ['ukrainian'], role: 'any', energy: 3, themes: [] },\n+  };\n+  const catalogue = {\n+    format: 'revealline-soundtrack-catalogue.v1',\n+    edition: 'test-1',\n+    tracks: [track],\n+  };\n+  const base = setCatalogueTracks(emptySoundtrackLibrary(), [track]);\n+  let requests = 0;\n+  const source = createSoundtrackSource({\n+    catalogue,\n+    localPlayback: () => false,\n+    readLocal,\n+    readOfficial: () => null,\n+    baseURL: 'https://example.test/',\n+    fetch: async (url) => {\n+      requests++;\n+      return responseFor(bytes, url);\n+    },\n+  });\n+  const h = setup({\n+    catalogue,\n+    library: {\n+      ...base,\n+      playlists: [\n+        {\n+          id: 'worker.only',\n+          title: 'Worker recording',\n+          trackIds: [track.id],\n+          order: 'ordered',\n+          repeat,\n+        },\n+      ],\n+      selection: { playlistId: 'worker.only' },\n+      listening: { ...base.listening, installedOnly: false },\n+    },\n+    readAsset: readAsset ?? source.readAsset,\n+    secondAudioElement,\n+  });\n+  t.after(() => h.player.dispose());\n+  return { ...h, track, source, requests: () => requests };\n+}\n+\n+test('downloaded playback uses one real worker inspection and no main-realm Blob materialization', async (t) => {\n+  const workers = inspectionWorkers(t);\n+  const h = await downloadInspectionPlayer(t);\n+  let mainReads = 0;\n+  const read = Blob.prototype.arrayBuffer;\n+  t.mock.method(Blob.prototype, 'arrayBuffer', function () {\n+    mainReads++;\n+    return read.call(this);\n+  });\n+  h.soundscape.mediaPreparation.setPhase('playing');\n+  assert.equal(await h.player.play(), true);\n+  assert.equal(h.player.snapshot().track.id, h.track.id);\n+  assert.equal(h.requests(), 1);\n+  assert.equal(workers.scans, 1);\n+  assert.equal(mainReads, 0);\n+  assert.equal(h.created.length, 1);\n+  assert.equal(h.created[0].blob.type, 'audio/mpeg');\n+  assert.deepEqual(h.soundscape.mediaPreparation.snapshot().active, {\n+    fetch: 0,\n+    decode: 0,\n+    inspect: 0,\n+    main: 0,\n+  });\n+});\n+\n+test('local originals still receive worker validation without acquisition', async (t) => {\n+  const workers = inspectionWorkers(t);\n+  const h = await downloadInspectionPlayer(t, { readLocal: () => original.blob });\n+  assert.equal(await h.player.play(), true);\n+  assert.equal(h.requests(), 0);\n+  assert.equal(workers.scans, 1);\n+});\n+\n+for (const variant of ['ignored', 'same', 'different', 'failed'])\n+  test(\n+    'custom reader inspection reuse is bound to one successful exact Blob: ' + variant,\n+    async (t) => {\n+      const workers = inspectionWorkers(t);\n+      let retainedInspect;\n+      const h = await downloadInspectionPlayer(t, {\n+        async readAsset(_hash, { inspect, signal }) {\n+          retainedInspect = inspect;\n+          if (variant === 'failed')\n+            await assert.rejects(inspect(new Blob(['not an MP3']), { signal }));\n+          else if (variant !== 'ignored') await inspect(original.blob, { signal });\n+          return variant === 'different' ? original.blob.slice() : original.blob;\n+        },\n+      });\n+      assert.equal(await h.player.play(), true);\n+      assert.equal(workers.scans, ['different', 'failed'].includes(variant) ? 2 : 1);\n+      const scans = workers.scans;\n+      await assert.rejects(retainedInspect(original.blob), { name: 'AbortError' });\n+      assert.equal(workers.scans, scans, 'retired acquisition cannot start a later scan');\n+    },\n+  );\n+\n+test('worker-unavailable playback holds fetch and inspection until a safe fallback phase', async (t) => {\n+  inspectionWorkers(t, 'unavailable');\n+  const h = await downloadInspectionPlayer(t);\n+  const queue = h.soundscape.mediaPreparation;\n+  queue.setPhase('playing');\n+  let mainReads = 0;\n+  const read = Blob.prototype.arrayBuffer;\n+  t.mock.method(Blob.prototype, 'arrayBuffer', function () {\n+    mainReads++;\n+    return read.call(this);\n+  });\n+  const playing = h.player.play();\n+  await settleUntil(() => queue.snapshot().queued === 1 && queue.snapshot().active.inspect === 1);\n+  assert.equal(queue.snapshot().active.fetch, 1);\n+  assert.equal(mainReads, 0);\n+  assert.equal(h.created.length, 0);\n+  queue.setPhase('paused');\n+  assert.equal(await playing, true);\n+  assert.equal(mainReads, 1, 'the fallback validates once, then the exact source result is reused');\n+  assert.equal(queue.snapshot().queued, 0);\n+  assert.deepEqual(queue.snapshot().active, { fetch: 0, decode: 0, inspect: 0, main: 0 });\n+});\n+\n+test('the unchanged acquisition deadline cancels queued fallback and releases both reservations', async (t) => {\n+  inspectionWorkers(t, 'unavailable');\n+  const h = await downloadInspectionPlayer(t);\n+  const queue = h.soundscape.mediaPreparation;\n+  queue.setPhase('playing');\n+  let deadline;\n+  const schedule = globalThis.setTimeout;\n+  t.mock.method(globalThis, 'setTimeout', (callback, ms, ...args) => {\n+    if (ms === 60000) deadline = callback;\n+    return schedule(callback, ms, ...args);\n+  });\n+  const playing = h.player.play();\n+  await settleUntil(\n+    () => deadline && queue.snapshot().queued === 1 && queue.snapshot().active.inspect === 1,\n+  );\n+  assert.equal(queue.snapshot().active.fetch, 1);\n+  deadline();\n+  assert.equal(await playing, false);\n+  assert.equal(h.created.length, 0);\n+  assert.match(h.player.snapshot().notice, /timed out/);\n+  assert.equal(queue.snapshot().queued, 0);\n+  assert.deepEqual(queue.snapshot().active, { fetch: 0, decode: 0, inspect: 0, main: 0 });\n+  queue.setPhase('paused');\n+  await Promise.resolve();\n+  assert.equal(h.created.length, 0);\n+});\n+\n+test('transport cancellation retires inspection even when a custom reader supplies another signal', async (t) => {\n+  const workers = inspectionWorkers(t, 'blocked');\n+  const other = new AbortController();\n+  const h = await downloadInspectionPlayer(t, {\n+    async readAsset(_hash, { inspect }) {\n+      await inspect(original.blob, { signal: other.signal });\n+      return original.blob;\n+    },\n+  });\n+  const playing = h.player.play();\n+  await settleUntil(() => workers.scans === 1);\n+  h.player.pause();\n+  assert.equal(await playing, false);\n+  assert.equal(other.signal.aborted, false);\n+  assert.equal(workers.terminated, 1);\n+  assert.equal(h.created.length, 0);\n+  assert.deepEqual(h.soundscape.mediaPreparation.snapshot().active, {\n+    fetch: 0,\n+    decode: 0,\n+    inspect: 0,\n+    main: 0,\n+  });\n+});\n+\n+test('active current-plus-next loading reuses one worker but never carries facts across acquisitions', async (t) => {\n+  const workers = inspectionWorkers(t);\n+  const h = await downloadInspectionPlayer(t, {\n+    repeat: 'all',\n+    secondAudioElement: audioHarness().media,\n+  });\n+  let mainReads = 0;\n+  const read = Blob.prototype.arrayBuffer;\n+  t.mock.method(Blob.prototype, 'arrayBuffer', function () {\n+    mainReads++;\n+    return read.call(this);\n+  });\n+  h.soundscape.mediaPreparation.setPhase('playing');\n+  assert.equal(await h.player.play(), true);\n+  await settleUntil(() => h.created.length === 2);\n+  assert.equal(h.player.snapshot().playing, true);\n+  assert.equal(h.requests(), 2);\n+  assert.equal(workers.created, 1);\n+  assert.equal(workers.scans, 2, 'each acquired original is independently validated exactly once');\n+  assert.equal(mainReads, 0);\n+});"
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "533eb352210c38dd3d967822be96081e9544b410",
+        "bytes": 11720,
+        "sha256": "4ef3895e384549bcd24561a8a1bddab44367716e47b5b2c0fa0915f4ca91d179"
+      },
+      "after": {
+        "gitBlob": "588d449fc42de183962f8caa7ae64ea345fbc20c",
+        "bytes": 13731,
+        "sha256": "8b209957d3316e89c5964e20311c28b391ad06f7c1e997288dd62be2e89e8a78"
+      },
+      "diff": "@@ -4,6 +4,7 @@ import { createSoundtrackSource, fetchSoundtrackCatalogue } from '../soundtrack-\n import { resolveCatalogueTrack } from '../soundtrack.mjs';\n import { fixture } from './helpers/soundtrack-fixtures.mjs';\n import { responseFor } from './helpers/soundtrack-albums.mjs';\n+import { inspectMP3 } from '../mp3.mjs';\n \n const original = await fixture('source');\n const track = resolveCatalogueTrack({\n@@ -343,3 +344,66 @@ test('same-recording catalogue aliases cannot widen bundled playback, storage or\n     }\n   }\n });\n+\n+test('acquisition returns the exact owned Blob inspected by the supplied operation', async () => {\n+  const controller = new AbortController();\n+  let inspected,\n+    childSignal,\n+    inspections = 0;\n+  const source = createSoundtrackSource({\n+    catalogue,\n+    localPlayback: () => false,\n+    readOfficial: () => null,\n+    baseURL: 'https://example.test/',\n+    fetch: async (url) => responseFor(body, url),\n+  });\n+  const result = await source.readAsset(track.asset.sha256, {\n+    signal: controller.signal,\n+    async inspect(blob, { signal }) {\n+      inspected = blob;\n+      childSignal = signal;\n+      inspections++;\n+      assert.equal(blob.type, 'audio/mpeg');\n+      return inspectMP3(blob, { signal });\n+    },\n+  });\n+  assert.equal(inspections, 1);\n+  assert.equal(result, inspected);\n+  assert.notEqual(childSignal, controller.signal);\n+  assert.equal(childSignal.aborted, false);\n+  assert.deepEqual(await inspectMP3(result), track.asset);\n+});\n+\n+test('delegated inspection preserves pinned facts and rejects completion after cancellation', async () => {\n+  const source = createSoundtrackSource({\n+    catalogue,\n+    localPlayback: () => false,\n+    readOfficial: () => null,\n+    baseURL: 'https://example.test/',\n+    fetch: async (url) => responseFor(body, url),\n+  });\n+  await assert.rejects(\n+    source.readAsset(track.asset.sha256, {\n+      async inspect(blob, options) {\n+        return { ...(await inspectMP3(blob, options)), frames: track.asset.frames + 1 };\n+      },\n+    }),\n+    /differs from its pinned/,\n+  );\n+  const controller = new AbortController();\n+  await assert.rejects(\n+    source.readAsset(track.asset.sha256, {\n+      signal: controller.signal,\n+      async inspect(blob, options) {\n+        const actual = await inspectMP3(blob, options);\n+        controller.abort();\n+        return actual;\n+      },\n+    }),\n+    { name: 'AbortError' },\n+  );\n+  await assert.rejects(\n+    source.readAsset(track.asset.sha256, { inspect: true }),\n+    /inspection operation/,\n+  );\n+});"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "mode": "100644",
+      "before": {
+        "gitBlob": "fc2c8b5bd334ecb589ae32022e8158c8b0618f4a",
+        "bytes": 62236,
+        "sha256": "63ce0b026ff6dfdc5a165cfba0e0049e6dd6fb6560a26fa6d69abf259b7f1115"
+      },
+      "after": {
+        "gitBlob": "640acdf98815047953d4131e67b13e32cfd78a56",
+        "bytes": 64273,
+        "sha256": "9033a34d3b8f26faa06ceaf06ab808786e5b03d9457e173580be0185dc620e6c"
+      },
+      "diff": "@@ -579,18 +579,61 @@ export function createSoundtrackPlayer({\n       installDeckURL(deck, track, track.url, { owned: false });\n       return true;\n     }\n-    const original = await preparationQueue.run(\n-      'fetch',\n-      () =>\n-        track.kind === 'published'\n-          ? track.readBlob({ signal })\n-          : readAsset(track.asset.sha256, {\n-              signal,\n-              purpose: 'playback',\n-              localOnly: localOnly || localPlayback,\n-            }),\n-      { signal, priority: token === null ? 'demand' : 'required' },\n-    );\n+    // Share inspection only within this acquisition and only for the exact Blob\n+    // validated by our inspector. Local/custom readers that ignore the operation,\n+    // or return another Blob, still receive ordinary validation below.\n+    const loadGeneration = generation,\n+      acquisitionController = new AbortController();\n+    let acquisitionOpen = true,\n+      inspected = null,\n+      downloadInspection = null,\n+      original;\n+    const checkAcquisition = () => {\n+      throwIfSoundtrackAborted(signal);\n+      if (!acquisitionOpen || disposed || loadGeneration !== generation)\n+        throw new DOMException(t('interface:musicTransitionCancelled'), 'AbortError');\n+    };\n+    const inspectDownloaded = async (source, { signal: sourceSignal = signal } = {}) => {\n+      checkAcquisition();\n+      throwIfSoundtrackAborted(sourceSignal);\n+      const controller = new AbortController(),\n+        cancelInspection = () => controller.abort();\n+      signal?.addEventListener('abort', cancelInspection, { once: true });\n+      sourceSignal?.addEventListener('abort', cancelInspection, { once: true });\n+      acquisitionController.signal.addEventListener('abort', cancelInspection, { once: true });\n+      try {\n+        const actual = await mp3Inspector.inspect(source, { signal: controller.signal });\n+        checkAcquisition();\n+        throwIfSoundtrackAborted(sourceSignal);\n+        inspected = { source, actual };\n+        return actual;\n+      } finally {\n+        signal?.removeEventListener('abort', cancelInspection);\n+        sourceSignal?.removeEventListener('abort', cancelInspection);\n+        acquisitionController.signal.removeEventListener('abort', cancelInspection);\n+      }\n+    };\n+    try {\n+      original = await preparationQueue.run(\n+        'fetch',\n+        () =>\n+          track.kind === 'published'\n+            ? track.readBlob({ signal })\n+            : readAsset(track.asset.sha256, {\n+                signal,\n+                purpose: 'playback',\n+                localOnly: localOnly || localPlayback,\n+                inspect: inspectDownloaded,\n+              }),\n+        { signal, priority: token === null ? 'demand' : 'required' },\n+      );\n+      checkAcquisition();\n+      downloadInspection = inspected;\n+    } finally {\n+      acquisitionOpen = false;\n+      acquisitionController.abort();\n+      inspected = null;\n+    }\n     throwIfSoundtrackAborted(signal);\n     if (localOnly && original == null) return false;\n     const blob = track.kind === 'published' ? original : ownSoundtrackBlob(original);\n@@ -611,7 +654,10 @@ export function createSoundtrackPlayer({\n         };\n         emit();\n       }\n-      const actual = await mp3Inspector.inspect(blob, { signal });\n+      const actual =\n+        downloadInspection?.source === original\n+          ? downloadInspection.actual\n+          : await mp3Inspector.inspect(original, { signal });\n       required(\n         canonicalJSON(actual) === canonicalJSON(track.asset),\n         t('interface:storedAudioBytesDoNotMatchThisTrack'),"
+    }
+  ],
+  "priorSourceReview": {
+    "proposal": {
+      "gitBlob": "c5dbf33da538de4fe686347df44fdd7d5da84de3",
+      "bytes": 368214,
+      "sha256": "d04d6453243dba926e1181304ee26aa6ffaa1378e46c34d393a01f8529fc1474"
+    },
+    "peerReceipt": "58607551daa8d1251e732164e51be93f0e301735",
+    "closureReceipt": "4a25fcfc074111646d0aa842811bb8f961859b5a",
+    "status": "Focused source review clean; twelve added controls unexecuted. This integration changes no held implementation or tests."
+  },
+  "policy": {
+    "mode": "required",
+    "digest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+    "files": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "bytes": 19972,
+        "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8"
+      },
+      {
+        "path": "publishing/admission-binding.mjs",
+        "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+        "bytes": 3561,
+        "sha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214"
+      },
+      {
+        "path": "publishing/admission-preflight.mjs",
+        "gitBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+        "bytes": 2473,
+        "sha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf"
+      },
+      {
+        "path": "publishing/focused-tests.mjs",
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "bytes": 33959,
+        "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669"
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "bytes": 14501,
+        "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479"
+      },
+      {
+        "path": "publishing/test-policy.json",
+        "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+        "bytes": 578,
+        "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2"
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "bytes": 4134,
+        "sha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b"
+      }
+    ],
+    "unchanged": true,
+    "sourceOnlyAdmissionAudit": {
+      "gitBlob": "80e415cea26aaba19091a9eb1912d9a0227853b2",
+      "bytes": 24558,
+      "sha256": "dcd08be986967c35bb873e933b47894d9706ec9c9771edbbf484462dbd5e0583"
+    },
+    "warning": "Later trusted-policy changes require fresh release receipts; this proposal does not claim previous policy gates as current."
+  },
+  "sourceSelection": {
+    "logic": {
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "lines": [
+        96,
+        122
+      ]
+    },
+    "manifest": {
+      "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    "directCommands": [
+      {
+        "command": "node",
+        "args": [
+          "--test",
+          "game/test/soundtrack-player.test.mjs"
+        ]
+      },
+      {
+        "command": "node",
+        "args": [
+          "--test",
+          "game/test/soundtrack-source.test.mjs"
+        ]
+      }
+    ],
+    "deferredChangedTests": [],
+    "unknownRuntimeFallback": [
+      {
+        "id": "unknown-runtime-validate",
+        "command": "npm",
+        "args": [
+          "run",
+          "validate"
+        ],
+        "timeoutMs": 1800000
+      }
+    ],
+    "appearance": {
+      "gitBlob": "3eba59c40de952d8353ee0ac487cf2382b88abde",
+      "trigger": "game/ui/soundtrack-player.mjs",
+      "existingTestEntry": "game/test/soundtrack-player.test.mjs",
+      "checkout": "Existing full source checkout retains actual worker/source dependencies."
+    },
+    "nativeDispatch": false,
+    "productionDeployment": false,
+    "requiredGates": "Retain every registered exact-head source, Appearance, Industrial and Company check. Draft status blocks Fastline promotion independently."
+  },
+  "draftPR": {
+    "title": "perf(audio): reuse playback inspection for downloaded recordings",
+    "body": "Current and next soundtrack recordings were fully scanned synchronously before reaching the playback inspector. Route that scan through the existing reusable inspector, then reuse its validated facts only for the same acquired Blob. Digest and descriptor validation, bounded fallback, and source/transport cancellation remain enforced.\n\nAdds twelve controls for worker execution, current/next playback, validation identity, cancellation, timeout and paused fallback. Source review is complete; hosted execution is pending. Keep this PR draft for source qualification. No performance or device pass is claimed."
+  },
+  "publicationGuards": [
+    "Re-read protected main and held branch before constructing the merge; stop and reconcile if either differs from this receipt.",
+    "Create the normal two-parent commit only if the tree returned from base main plus four exact blob replacements equals c11225baa8c0dcca055f058d31889c98a999ad04.",
+    "Open as draft; do not edit or rebase any current ready PR. Do not dispatch native/browser qualification or publish to Pages from this step.",
+    "Wait for and review exact merged-head source results; preserve all old failures and current-policy receipt provenance."
+  ],
+  "actions": {
+    "localWrites": false,
+    "testsExecuted": false,
+    "build": false,
+    "commitCreated": false,
+    "treeCreated": false,
+    "branchMutated": false,
+    "prCreated": false,
+    "dispatch": false
+  },
+  "branchResolution": "Use the existing held MP3 branch after verifying its exact head is 3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933; this receipt does not infer its name.",
+  "supersedes": {
+    "gitBlob": "53a570652089e75a043a7cf6055d1e26c478540d",
+    "reason": "Removed an unverified branch-name label; all source, parent, tree and policy receipts are unchanged."
+  }
+}

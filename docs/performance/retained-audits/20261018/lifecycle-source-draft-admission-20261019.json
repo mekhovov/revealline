@@ -1,0 +1,26 @@
+{
+  "kind": "SoloLifecycleSourceAdmissionV1",
+  "at": "2026-10-19T01:03:04.796739+00:00",
+  "pr": 1693,
+  "url": "https://github.com/mekhovov/revealline/pull/1693",
+  "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+  "tree": "4bb44157295ed7e170d60ce3276f790d920ea014",
+  "parents": [
+    "bdfcd56b86ca5b7b6d5ae7160d2cf030fc76a967",
+    "bd15820bee10a33ba64534071d22657fbd7326d3"
+  ],
+  "changedPathsAgainstMain": [
+    "game/app.mjs",
+    "game/couch/couch-input.mjs",
+    "game/couch/couch.mjs",
+    "game/couch/relay-rescue.mjs",
+    "game/test/couch-input.test.mjs",
+    "game/test/couch-lifecycle-clock.test.mjs",
+    "game/test/solo-cadence-input-host.test.mjs"
+  ],
+  "proposal": "92c48842af8086029b5c418b056d5b64aac7f3cd",
+  "review": "9065916a9a6fd6f0d788e4e09554c0e5b455f932",
+  "functionalExecution": false,
+  "draft": true,
+  "sourceQualificationPending": true
+}

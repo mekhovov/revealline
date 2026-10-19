@@ -1,0 +1,29 @@
+{
+  "kind": "SoloReviewedSourceDraftAdmissionV1",
+  "at": "2026-10-19T01:14:39.476768+00:00",
+  "pr": 1695,
+  "url": "https://github.com/mekhovov/revealline/pull/1695",
+  "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+  "tree": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5",
+  "parents": [
+    "e2cf2cbc2a268028c39afb1a5b4235e1d4faaadf",
+    "bd15820bee10a33ba64534071d22657fbd7326d3"
+  ],
+  "changedPathsAgainstMain": [
+    "game/app.mjs",
+    "game/content-design/assets.mjs",
+    "game/content-design/attempt.mjs",
+    "game/content-design/picture.mjs",
+    "game/content-design/solo-host.mjs",
+    "game/test/content-assets.test.mjs",
+    "game/test/content-picture.test.mjs",
+    "game/test/gameplay-pressure-host.test.mjs",
+    "game/test/helpers/solo-dom.mjs",
+    "game/test/solo-cadence-readiness-host.test.mjs"
+  ],
+  "proposal": "fd9d7102f71cfca5a0d0ac7f9a2bca867f3dbd5c",
+  "review": "583490950e1f0f97de60b658be84e2df71b605eb",
+  "functionalExecution": false,
+  "draft": true,
+  "sourceQualificationPending": true
+}

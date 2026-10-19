@@ -1,0 +1,23 @@
+{
+  "kind": "SoloMP3SourceAdmissionV1",
+  "at": "2026-10-19T01:03:50.071864+00:00",
+  "pr": 1694,
+  "url": "https://github.com/mekhovov/revealline/pull/1694",
+  "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+  "tree": "c11225baa8c0dcca055f058d31889c98a999ad04",
+  "parents": [
+    "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+    "bd15820bee10a33ba64534071d22657fbd7326d3"
+  ],
+  "changedPathsAgainstMain": [
+    "game/soundtrack-source.mjs",
+    "game/test/soundtrack-player.test.mjs",
+    "game/test/soundtrack-source.test.mjs",
+    "game/ui/soundtrack-player.mjs"
+  ],
+  "proposal": "21dd5ffe638728ac900a85e53eaa9a6812f3a1f9",
+  "review": "db2d68318e26708e1e1d23d28171852e3bd7c362",
+  "functionalExecution": false,
+  "draft": true,
+  "sourceQualificationPending": true
+}

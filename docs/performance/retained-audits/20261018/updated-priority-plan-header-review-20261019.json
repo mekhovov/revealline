@@ -1,0 +1,69 @@
+{
+  "format": "solo-plan-active-header-peer-review.v1",
+  "createdAt": "2026-10-19T01:05:30.350Z",
+  "repository": "mekhovov/revealline",
+  "reviewedHeader": {
+    "bytes": 25066,
+    "sha256": "f47f8a7e85a5dd00efdfd856a7accfa96f5ebf0261c657ee51c5f9079ce9a2d0",
+    "gitBlob": "0eacf4f1fa76e399c1bd117d134d70276168a85c"
+  },
+  "baselinePlan": {
+    "head": "653afd1282cc8753d220ee0dcdbe32ec68d635a6",
+    "blob": "a44ae5d6837ac745612a4124ad0f38e7011c9703"
+  },
+  "result": "clean within supplied active-header scope",
+  "verifiedDrafts": [
+    {
+      "number": 1693,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "tree": "4bb44157295ed7e170d60ce3276f790d920ea014",
+      "parents": [
+        "bdfcd56b86ca5b7b6d5ae7160d2cf030fc76a967",
+        "bd15820bee10a33ba64534071d22657fbd7326d3"
+      ],
+      "draft": true
+    },
+    {
+      "number": 1694,
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "tree": "c11225baa8c0dcca055f058d31889c98a999ad04",
+      "parents": [
+        "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+        "bd15820bee10a33ba64534071d22657fbd7326d3"
+      ],
+      "draft": true
+    },
+    {
+      "number": 1675,
+      "head": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "tree": "e1238102f1a57afbdc53d04b3668c12954cf32aa",
+      "parents": [
+        "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+        "0991a7de3d613a2c5491fe06eadcdef47fc23be5"
+      ],
+      "draft": true
+    }
+  ],
+  "checks": [
+    "Input header size, SHA256 and Git blob verified.",
+    "#1693 exact merge tree4bb44157295ed7e170d60ce3276f790d920ea014 matches independently reviewed lifecycle integration.",
+    "#1694 and #1675 exact heads, trees, draft status and normal parents independently read.",
+    "Old #1619 0eef and #1675 849 source results remain clearly scoped; no new-head or native pass is inferred.",
+    "P1 source admission is separated from later release/native qualification; the previous first-CI wait is correctly described as scheduling rather than a runtime/policy dependency.",
+    "Policy revalidation after #1654, original-trace prerequisite before adapter changes, P0 exact public identity and native failures remain explicit.",
+    "All implementation and final qualification categories remain recognized, including devices, memory/retainers, raster/recovery, long recordings/durability, media, clock uncertainty and sustained conditions.",
+    "Conditional estimates do not promise queue completion; six aggregate browser-hours and three hours per device match the specified sustained repetitions.",
+    "Included historical marker and preamble are byte-identical to baseline."
+  ],
+  "historyLimit": "The supplied blob is a replacement header only. The full historical/acceptance/research tail is absent and must be appended from the unchanged baseline then byte-verified by the publisher; this review does not claim to have compared an absent full tail.",
+  "expectedPublisherSubstitutions": [
+    "Replace @STAMP@ with observed publication UTC/Berlin time.",
+    "Update the187-record immutable evidence index only after the new append-only index is verified."
+  ],
+  "optionalWording": "Use three unchanged ready heads instead of unchanged ready heads in the release-order paragraph for immediate precision.",
+  "notPerformed": [
+    "No functional test/app/build execution.",
+    "No CI polling or new completion claim; qualification peer owns fresh CI census.",
+    "No branch, PR, policy or workflow mutation."
+  ]
+}

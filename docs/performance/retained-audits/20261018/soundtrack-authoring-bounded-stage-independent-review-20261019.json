@@ -1,0 +1,124 @@
+{
+  "format": "revealline.source-peer-review.v1",
+  "proposal": {
+    "blob": "d519eb11df83fec2045cdf9bc0cef777b911dd48",
+    "bytes": 94427,
+    "sha256": "f2e0d3d4167b5357039de42286036a359c131f0d4b7dd5f4b4d7cf1094f00069"
+  },
+  "base": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+  "scope": "One test file only; no production edits, local product/test/build/browser execution, source publication or rerun.",
+  "verdict": "clean for guarded source publication; hosted diagnostics must execute before inferring repair or hang cause",
+  "file": [
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "before": {
+        "bytes": 61492,
+        "sha256": "be2dc8359a2b530df10b529dd0bd0a9ec0566a5687b3d3c0a70dda15460b24c4",
+        "gitBlob": "2045b6f6babf476fa567bd6c5ab4b66261095b18"
+      },
+      "after": {
+        "bytes": 66352,
+        "sha256": "805fd884942c80b239f6e39886bc101d24423e76d59ee1b5a36c5ed022f51ef7",
+        "gitBlob": "989b686be3e67c06fbfd2b4bcecaa8335f78fc89"
+      }
+    }
+  ],
+  "assertionAudit": {
+    "beforeAssertions": 324,
+    "afterAssertions": 325,
+    "missingAssertions": 0,
+    "legacyBodyIdentical": true
+  },
+  "helperSources": [
+    {
+      "path": "game/test/helpers/wait-for.mjs",
+      "blob": "8199ac599dbc1379dbad5d41c39cbed1d59da14c",
+      "bytes": 714,
+      "sha256": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6",
+      "lines": [
+        "1:import assert from 'node:assert/strict';",
+        "2:import { hrtime } from 'node:process';",
+        "3:import { setTimeout as delay } from 'node:timers/promises';",
+        "4:",
+        "5:// Real Blob/WebCrypto work can finish after hundreds of immediate callbacks.",
+        "6:// Keep the observable predicate authoritative and bound elapsed waiting instead.",
+        "7:// Host fixtures may freeze performance.now for gameplay/controller input.",
+        "8:const monotonicNow = () => Number(hrtime.bigint()) / 1e6;",
+        "9:export async function waitFor(",
+        "10:  predicate,",
+        "11:  { message = 'Asynchronous test action did not settle.', timeoutMs = 5000 } = {},",
+        "12:) {",
+        "13:  const deadline = monotonicNow() + timeoutMs;",
+        "14:  while (!predicate()) {",
+        "15:    assert.ok(monotonicNow() < deadline, message);",
+        "16:    await delay(5);",
+        "17:  }",
+        "18:}"
+      ]
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "blob": "11edae6ed89c9fa2d74034a4912112277bf13e03",
+      "bytes": 35091,
+      "sha256": "f73fe5e2a5d54b76a59f094f8dfc4f7b0f564229c15c8c7c6d4b81d3fdcfdcff",
+      "lines": [
+        "222:export async function settle(",
+        "223:  predicate,",
+        "224:  message = 'Asynchronous host action did not settle.',",
+        "225:  options = {},",
+        "226:) {",
+        "227:  // The focused gate runs independent host processes concurrently. Its runner",
+        "228:  // can schedule a valid asynchronous handoff later than the interactive",
+        "229:  // fixture's five-second default; retain the fast local feedback while",
+        "230:  // giving CI a deterministic scheduler allowance.",
+        "231:  const timeoutMs = options.timeoutMs ?? (process.env.CI ? 20_000 : 5_000);",
+        "232:  await waitFor(",
+        "233:    () => {",
+        "234:      // A real browser continues to submit paused preparation frames while an",
+        "235:      // async action settles. Keep simulated time controlled by each test.",
+        "236:      for (const frame of waitingHosts) frame(0);",
+        "237:      return predicate();",
+        "238:    },",
+        "239:    { ...options, timeoutMs, message },",
+        "240:  );",
+        "241:}",
+        "242:export function clickVisibleSimulator(page) {",
+        "243:  const simulator = page.$('solo-fpv-sim');",
+        "244:  if (simulator.hidden) simulator.parentElement.querySelector('[data-mode-more]')?.click();",
+        "245:  assert.equal(simulator.hidden, false, 'SIM must be revealed through More before launch.');",
+        "246:  simulator.click();",
+        "247:}",
+        "248:let sequence = 0;",
+        "249:export async function soloPage(",
+        "250:  t,",
+        "251:  {",
+        "252:    campaign,",
+        "253:    storage = memoryStorage(),",
+        "254:    // Historical host tests exercise Legacy unless they explicitly request the",
+        "255:    // ordinary public entry with search: '' or a particular Journey edition.",
+        "256:    search = '?journey=legacy',",
+        "257:    previewStorage = memoryStorage(),",
+        "258:    titleScreen = false,",
+        "259:    fetchJSON,",
+        "260:    fetchResponse,",
+        "261:    presentationFixture,",
+        "262:    buildInfo,",
+        "263:    audio,",
+        "264:    soundtrackIndexedDB,",
+        "265:    assetIndexedDB,",
+        "266:    journeyIndexedDB,"
+      ]
+    }
+  ],
+  "findings": [
+    "Every real action invocation is immediately observed; synchronous invocation exceptions still fail directly. Action joins preserve and rethrow original rejection values rather than hiding them in a catch.",
+    "Teardown attempts gate release and each recorded action join, then throws the original single error or AggregateError. Already rejected actions remain failures.",
+    "Existing gate acknowledgement frame pumping is retained using settle(...,{timeoutMs:5000}); new action joins use the existing hrtime-based wait-for helper without adding scene frames. The new per-test20-second bounds cover nine host cases through eight declarations; no existing command/job deadline is enlarged.",
+    "Diagnostic serialization reads only bounded action/gate state and known public fixture fields. Error/status strings are capped160 characters, page errors capped4; no circular DOM objects or unbounded source/artifact content is serialized.",
+    "All324 original assertion ASTs were independently compared as multisets after stripping source locations/raw literal spelling and remain present;325 after. Legacy test body is byte-identical.",
+    "The variadic DOM fixture correction is a separate reviewed proposal4a5e7ef; neither source review establishes the later hang cause or a passing host result."
+  ],
+  "failureAudit": "89ce020e208874d4c3eadc3fd554650e86d48b67",
+  "admission": "Existing changed soundtrack-host test is directly selected by Source and already included in full Appearance preview. Added wait-for import is already a transitive dependency through solo-dom.",
+  "executedTests": false
+}

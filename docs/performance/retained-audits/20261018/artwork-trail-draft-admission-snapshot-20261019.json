@@ -1,0 +1,77 @@
+{
+  "kind": "SoloArtworkTrailDraftAdmissionSnapshotV1",
+  "at": "2026-10-19 01:17:18 UTC",
+  "prs": [
+    {
+      "pr": 1695,
+      "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+      "draft": true,
+      "mergeable": true,
+      "runs": [
+        {
+          "id": 39184462903,
+          "name": "Validate source for continuous main",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 39184462952,
+          "name": "Company edition candidates",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 39184462945,
+          "name": "Industrial feature verification",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 39184463031,
+          "name": "Appearance preview",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 39184462924,
+          "name": "Fastline exact-head auto-merge",
+          "status": "queued",
+          "conclusion": null
+        }
+      ]
+    },
+    {
+      "pr": 1696,
+      "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+      "draft": true,
+      "mergeable": true,
+      "runs": [
+        {
+          "id": 39184548434,
+          "name": "Validate source for continuous main",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 39184548494,
+          "name": "Company edition candidates",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 39184548462,
+          "name": "Industrial feature verification",
+          "status": "queued",
+          "conclusion": null
+        },
+        {
+          "id": 39184548448,
+          "name": "Fastline exact-head auto-merge",
+          "status": "queued",
+          "conclusion": null
+        }
+      ]
+    }
+  ],
+  "qualification": "Queued only; no new-head functional or native pass."
+}

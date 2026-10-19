@@ -1,0 +1,144 @@
+{
+  "format": "solo-p1-source-admission-sequencing-review.v1",
+  "observedAt": "2026-10-19T01:01:33.340Z",
+  "repository": "mekhovov/revealline",
+  "main": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "plan": {
+    "pullRequest": 1623,
+    "head": "653afd1282cc8753d220ee0dcdbe32ec68d635a6",
+    "blob": "a44ae5d6837ac745612a4124ad0f38e7011c9703",
+    "reviewedRule": "First CI for held worker and lifecycle repairs follows finite #1654 policy step."
+  },
+  "held": {
+    "mp3": {
+      "head": "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+      "branch": "codex/solo-playback-inspection-owner",
+      "paths": [
+        "game/soundtrack-source.mjs",
+        "game/test/soundtrack-player.test.mjs",
+        "game/test/soundtrack-source.test.mjs",
+        "game/ui/soundtrack-player.mjs"
+      ]
+    },
+    "lifecycle": {
+      "head": "bdfcd56b86ca5b7b6d5ae7160d2cf030fc76a967",
+      "branch": "codex/solo-resume-input-lifecycle",
+      "paths": [
+        "game/app.mjs",
+        "game/couch/couch-input.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/couch-lifecycle-clock.test.mjs",
+        "game/test/solo-cadence-input-host.test.mjs"
+      ]
+    }
+  },
+  "policyIdentity": [
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "main": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "mp3": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "lifecycle": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+    },
+    {
+      "path": "publishing/admission-binding.mjs",
+      "main": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "mp3": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "lifecycle": "bbc451129f21407143e4d3034d819711e5539dd2"
+    },
+    {
+      "path": "publishing/admission-preflight.mjs",
+      "main": "9750b8dc5aef171f9124563966f726c2cbe15237",
+      "mp3": "9750b8dc5aef171f9124563966f726c2cbe15237",
+      "lifecycle": "9750b8dc5aef171f9124563966f726c2cbe15237"
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "main": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "mp3": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "lifecycle": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "main": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+      "mp3": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+      "lifecycle": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    {
+      "path": "publishing/test-policy.json",
+      "main": "e067e704a165e16e449761989e3e1b611dc35181",
+      "mp3": "e067e704a165e16e449761989e3e1b611dc35181",
+      "lifecycle": "e067e704a165e16e449761989e3e1b611dc35181"
+    },
+    {
+      "path": "publishing/test-policy.mjs",
+      "main": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+      "mp3": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+      "lifecycle": "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+    }
+  ],
+  "sourceRefs": [
+    {
+      "path": "publishing/fastline-merge-controller.mjs",
+      "bytes": 58466,
+      "sha256": "eee8ca3661f04112f327ccc3d99fee3fe4866e8025dcb0fd8d09d41d2f77a9b4",
+      "gitBlob": "a8b71ef43d7afbf18bc169bfc75ff924c634fd93"
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "bytes": 19972,
+      "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+      "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "bytes": 33959,
+      "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+    },
+    {
+      "path": "publishing/admission-binding.mjs",
+      "bytes": 3561,
+      "sha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214",
+      "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2"
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "bytes": 14501,
+      "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    },
+    {
+      "path": "publishing/test-policy.json",
+      "bytes": 578,
+      "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+      "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181"
+    },
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "bytes": 59546,
+      "sha256": "cbdb72e7c93bc3ce268caa5641f87c94f566e3297b74a8dff6a8ed02dd44fa6f",
+      "gitBlob": "3eba59c40de952d8353ee0ac487cf2382b88abde"
+    },
+    {
+      "path": ".github/workflows/solo-native-package-consumer.yml",
+      "bytes": 436631,
+      "sha256": "0d2230c71ec56f256412aefe1fc76a2096f65f666ad7d322d72897ce724af86a",
+      "gitBlob": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6"
+    }
+  ],
+  "findings": [
+    "All seven trusted policy blobs match current main and both held repair heads. Neither repair requires #1654 runtime or policy behavior to execute source tests.",
+    "Source workflow runs opened/synchronize/reopened PRs without a draft predicate. Its source-gates concurrency group is the individual PR ref, so opening independent drafts does not replace the current release-head runs; hosted runner capacity remains shared.",
+    "The three changed lifecycle tests and two changed MP3 tests receive existing changed-test admission; no policy relaxation or new workflow is necessary.",
+    "The held paths do not change native qualification scripts, declarations or package source pins. Native execution is not started by source admission.",
+    "Current main adds five First Flight paths relative to the held base. MP3 is path-disjoint; lifecycle shares app only at the exact disjoint homeAvailable hunk. Lifecycle integration proposal92c48842 records the complete union and exact expected tree.",
+    "Lifecycle shares app with Missions/Worlds/Backup work, but those hunks are outside the repaired fixed-step input block. Full combined-source checks remain necessary before release.",
+    "The existing plan postponement is a scheduling decision, not a source or admission dependency. Starting source qualification is compatible with holding main release during P0 public observation.",
+    "Merging #1654 later changes the trusted policy digest. If P1 repairs remain unmerged then, their old-policy receipts cannot be used for release under the new policy; reconcile exact heads and obtain fresh receipts. No trusted exception is proposed."
+  ],
+  "recommendation": "Permit normal fresh-main draft source admission of the two reviewed P1 repairs now. Keep every current release head unchanged, preserve the finite #1654 hold, and retain release/native holds. Do not confuse source-check completion with published or device qualification; explicitly plan any later policy revalidation.",
+  "minimalPlanAmendment": "Source qualification for the reviewed P1 lifecycle and MP3 acquisition repairs may begin now on separate fresh-main drafts. Their release and native checks remain held through the P0 observation and exact-head gate review. They do not depend on #1654; if that policy change lands before their release, reconcile their heads and obtain fresh policy-bound receipts. The original-trace prerequisite still applies to heap/overhead adapter changes.",
+  "mutations": "Evidence blob only; no refs, PRs, jobs, policy settings, local files or functional tests changed."
+}

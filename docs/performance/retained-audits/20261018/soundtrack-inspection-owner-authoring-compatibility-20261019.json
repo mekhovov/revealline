@@ -1,0 +1,241 @@
+{
+  "schema": "revealline-bounded-source-review-v1",
+  "reviewedAt": "2026-10-19T01:19:13.308077+00:00",
+  "review": "Cross-PR soundtrack acquisition, demanded catalogue and lazy authoring compatibility",
+  "heads": {
+    "1619": {
+      "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+      "state": "open",
+      "draft": false
+    },
+    "1675": {
+      "head": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "state": "open",
+      "draft": true
+    },
+    "1694": {
+      "head": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+      "state": "open",
+      "draft": true
+    }
+  },
+  "verdict": "No actionable cross-PR source defect found within the inspected boundaries. This is a static compatibility review, not combined-runtime qualification.",
+  "method": "Authenticated exact-revision GitHub content reads in memory; source and SHA-256 receipts; current head readback. No local writes, application/test/build/browser execution, branch changes, dispatch or retry.",
+  "sources": [
+    {
+      "key": "1694-source",
+      "path": "game/soundtrack-source.mjs",
+      "revision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "blob": "106eb9d719004c12aad2ab4ad95488b79dff20ca",
+      "bytes": 5305,
+      "sha256": "cbad7bf6561138d35851e37430d1c7219e9413495e4a11f385d735b6b9c1549e"
+    },
+    {
+      "key": "1694-player",
+      "path": "game/ui/soundtrack-player.mjs",
+      "revision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "blob": "640acdf98815047953d4131e67b13e32cfd78a56",
+      "bytes": 64273,
+      "sha256": "9033a34d3b8f26faa06ceaf06ab808786e5b03d9457e173580be0185dc620e6c"
+    },
+    {
+      "key": "1694-inspector",
+      "path": "game/mp3-inspection.mjs",
+      "revision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "blob": "962e33c0c9d69673e1915f69cc52bcff03a6e7e4",
+      "bytes": 5487,
+      "sha256": "ca767a143f1aa51a8327c63df0926af3a197f90b08e8965c60f9514331b14fa1"
+    },
+    {
+      "key": "1675-panel",
+      "path": "game/ui/soundtrack-panel.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "6b0ff488f6b4011ecdf7857975b2f6b3e703d021",
+      "bytes": 150465,
+      "sha256": "5e9caf6659a2d44deb51772c3b5d1c04d2fe3ffc8d833ef91c67785be02c77c0"
+    },
+    {
+      "key": "inspector-owner",
+      "path": "game/ui/mp3-inspector.mjs",
+      "revision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "blob": "7635aa12b27d0fcff28301688199f1a6ea2c2cef",
+      "bytes": 4084,
+      "sha256": "55e366fab87020cf84176b6fec678e62abd5fbdbe8b44be5715d48bd19ef2533"
+    },
+    {
+      "key": "admission",
+      "path": "game/ui/media-preparation.mjs",
+      "revision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "blob": "be4547b8ff6eb740e79b968b1f4a2860a5f5d8fd",
+      "bytes": 5332,
+      "sha256": "9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad"
+    },
+    {
+      "key": "1675-app",
+      "path": "game/app.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+      "bytes": 619315,
+      "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+    },
+    {
+      "key": "1675-couch",
+      "path": "game/couch/couch-music-host.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "2e4de410d668a8c0150d3851de7cba9fd7b1c3bd",
+      "bytes": 17098,
+      "sha256": "14a5bad008466a9744466e2a9ac52de10c10e52fbf3f05dbe797ccbac50fb8f9"
+    },
+    {
+      "key": "player-controls",
+      "path": "game/test/soundtrack-player.test.mjs",
+      "revision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "blob": "354b19260773058c4a0b401ed2bab167d4ffeef1",
+      "bytes": 91273,
+      "sha256": "aa7692b36a8382fec722633ed8b1294e16849fc34e635d2c7e7b346903e03cf7"
+    },
+    {
+      "key": "source-controls",
+      "path": "game/test/soundtrack-source.test.mjs",
+      "revision": "d350d8bc4ec93f48ace4ccb93ba4d2edf9d57500",
+      "blob": "588d449fc42de183962f8caa7ae64ea345fbc20c",
+      "bytes": 13731,
+      "sha256": "8b209957d3316e89c5964e20311c28b391ad06f7c1e997288dd62be2e89e8a78"
+    },
+    {
+      "key": "panel-controls",
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "acdb6fa9c2b5d3ad3463e14bcb27a2dd45dc481a",
+      "bytes": 208100,
+      "sha256": "8091222276f493f374ad4fcfcfb969bb4c3d5d8c8e21f244f243739c302789df"
+    },
+    {
+      "key": "host-controls",
+      "path": "game/test/soundtrack-host.test.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "989b686be3e67c06fbfd2b4bcecaa8335f78fc89",
+      "bytes": 66352,
+      "sha256": "805fd884942c80b239f6e39886bc101d24423e76d59ee1b5a36c5ed022f51ef7"
+    },
+    {
+      "key": "owner-at1675",
+      "path": "game/ui/mp3-inspector.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "7635aa12b27d0fcff28301688199f1a6ea2c2cef",
+      "bytes": 4084,
+      "sha256": "55e366fab87020cf84176b6fec678e62abd5fbdbe8b44be5715d48bd19ef2533"
+    },
+    {
+      "key": "queue-at1675",
+      "path": "game/ui/media-preparation.mjs",
+      "revision": "79622d061fa2b2b58ecf222d00ee0d396722a302",
+      "blob": "be4547b8ff6eb740e79b968b1f4a2860a5f5d8fd",
+      "bytes": 5332,
+      "sha256": "9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad"
+    },
+    {
+      "key": "demandPanel",
+      "path": "game/ui/soundtrack-panel.mjs",
+      "revision": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+      "blob": "8f7894242e9572eccff97bb997aba9361e17a699",
+      "bytes": 152677,
+      "sha256": "a9df4484f1ea7bf26c795ac591aae2ccccd0b0528957f71e07ceed4c721abfc2"
+    }
+  ],
+  "findings": [
+    {
+      "area": "Integration ownership",
+      "result": "1694 changes only soundtrack-source/player and their two tests. 1619 and 1675 do not edit those production files. Current 1675 already incorporates 1619; its shared Couch host is the exact 1619 blob. The selected-visible-Audio catalogue admission block is byte-identical between 1619 and 1675. Inspector and admission owner blobs are identical at 1694 and 1675.",
+      "evidence": [
+        "1694 changed-path inventory",
+        "1619 changed-path inventory",
+        "1675 changed-path inventory",
+        "game/ui/soundtrack-panel.mjs:3779-3822"
+      ]
+    },
+    {
+      "area": "Inspection callback reaches actual acquisition",
+      "result": "Solo supplies source.readAsset directly to player and panel. Shared Couch forwards the complete options object, so it preserves the new inspect callback. Player supplies its existing worker-backed inspector for playback; source validates the pinned descriptor before returning the exact inspected owned Blob.",
+      "evidence": [
+        "game/app.mjs:2218-2244",
+        "game/app.mjs:2304-2317",
+        "game/couch/couch-music-host.mjs:190-208",
+        "game/couch/couch-music-host.mjs:232-240",
+        "game/soundtrack-source.mjs:41-116",
+        "game/ui/soundtrack-player.mjs:564-668"
+      ]
+    },
+    {
+      "area": "Bounded current and next",
+      "result": "Current/next selection remains in the existing two-deck transport. prepareNext admits only one next MP3 when desired, unmuted and playing, and refuses a second preload or transition. Remote streams return directly through the persistent media element path; no full soundtrack PCM decoding is introduced. Existing fetch priorities and two-fetch/one-inspection slots remain.",
+      "evidence": [
+        "game/ui/soundtrack-player.mjs:573-580",
+        "game/ui/soundtrack-player.mjs:617-628",
+        "game/ui/soundtrack-player.mjs:748-793",
+        "game/ui/media-preparation.mjs:8-14"
+      ]
+    },
+    {
+      "area": "Fallback does not begin scanning during active play",
+      "result": "Worker unavailable is the only fallback trigger. Byte materialization, structural scan and hash initiation each pass separately through the shared main admission. Main work is held while playing and rechecked after admission in the microtask; suspended phase holds work. No 1694 path bypasses that policy. Source's existing 60-second child acquisition deadline remains.",
+      "evidence": [
+        "game/ui/mp3-inspector.mjs:95-120",
+        "game/mp3-inspection.mjs:124-156",
+        "game/ui/media-preparation.mjs:39-80",
+        "game/soundtrack-source.mjs:117-119"
+      ]
+    },
+    {
+      "area": "Cancellation and reuse",
+      "result": "Inspection reuse is confined to one successful exact Blob identity in one current acquisition. Parent/source/acquisition signals and player generation are checked; all temporary abort listeners are removed and the acquisition is retired after readAsset returns. Ignored/different/custom source results receive ordinary worker verification. Pause/disposal retires existing transport requests and preloads.",
+      "evidence": [
+        "game/ui/soundtrack-player.mjs:492-519",
+        "game/ui/soundtrack-player.mjs:582-668",
+        "game/ui/soundtrack-player.mjs:1650-1663",
+        "game/ui/soundtrack-player.mjs:1808-1816"
+      ]
+    },
+    {
+      "area": "Activation and optional authoring remain separate",
+      "result": "Studio transport controls invoke wakeAudio and work() before their first await, independent of authoring import completion. Solo Studio onOpen pauses gameplay. Lazy authoring publication uses existing main admission and visit/modal/visibility eligibility; Close retires load, pending Play and metadata ownership. Explicit Audio/Studio/Play demands remain; attachment does not restore a hidden catalogue preload or whole-bank effects preparation.",
+      "evidence": [
+        "game/ui/soundtrack-panel.mjs:175-182",
+        "game/ui/soundtrack-panel.mjs:1530-1574",
+        "game/ui/soundtrack-panel.mjs:3446-3465",
+        "game/ui/soundtrack-panel.mjs:3607-3616",
+        "game/ui/soundtrack-panel.mjs:3665-3676",
+        "game/ui/soundtrack-panel.mjs:3779-3822",
+        "game/app.mjs:2326-2329"
+      ]
+    }
+  ],
+  "inspectedControls": [
+    {
+      "path": "game/test/soundtrack-player.test.mjs",
+      "scope": "Source-reviewed controls for worker realm/no main Blob materialization, local and custom exact-identity validation, held fallback, unchanged deadline cleanup, cancellation with another reader signal, and current-plus-next reusable worker. This review did not execute them."
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "scope": "Source-reviewed controls for exact returned inspected Blob, pinned facts, cancelled completion and invalid inspection adapter. This review did not execute them."
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "scope": "Existing/new source controls cover explicit activation, Settings before optional authoring, atomic existing owner adoption and Couch stable modal while import is pending. This review did not execute them."
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "scope": "Actual-host source controls cover muted cold demand, held discovery Play/cancel, same-turn wake while authoring held, and late import retirement/retry/new visit. Current successor diagnostics and fixture correction still require remote execution; old failures are not erased."
+    }
+  ],
+  "limits": [
+    "No combined-source tests or native browser measurement were performed; exact-head CI and final combined runtime qualification remain required.",
+    "Worker-unavailable playback may wait for a safe phase or expire at the unchanged acquisition deadline. This is deliberate responsiveness protection, not a guarantee of uninterrupted music on browsers without a usable worker.",
+    "Direct source callers for export/offline/editor audition retain ordinary complete validation. This review does not claim all editor/save/offline work has moved off the main thread.",
+    "No whole-bank preparation call was introduced by these inspected diffs; this is not a whole-application work census.",
+    "Physical iPhone 17 Pro Safari and Steam Deck OLED qualification remains unavailable."
+  ]
+}

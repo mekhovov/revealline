@@ -1,0 +1,724 @@
+{
+  "format": "revealline-held-two-parent-integration.v1",
+  "repository": "mekhovov/revealline",
+  "createdAt": "2026-10-19T01:09:05.149Z",
+  "main": {
+    "head": "bd15820bee10a33ba64534071d22657fbd7326d3",
+    "tree": "11a3e3f847a0ba9424b888f090de369adcd8fae0"
+  },
+  "commonBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "policy": {
+    "mode": "required",
+    "digest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+    "files": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "bytes": 19972,
+        "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8"
+      },
+      {
+        "path": "publishing/admission-binding.mjs",
+        "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+        "bytes": 3561,
+        "sha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214"
+      },
+      {
+        "path": "publishing/admission-preflight.mjs",
+        "gitBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+        "bytes": 2473,
+        "sha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf"
+      },
+      {
+        "path": "publishing/focused-tests.mjs",
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "bytes": 33959,
+        "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669"
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "bytes": 14501,
+        "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479"
+      },
+      {
+        "path": "publishing/test-policy.json",
+        "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+        "bytes": 578,
+        "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2"
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "bytes": 4134,
+        "sha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b"
+      }
+    ],
+    "unchanged": true,
+    "sourceAdmissionAudit": {
+      "gitBlob": "80e415cea26aaba19091a9eb1912d9a0227853b2",
+      "bytes": 24558,
+      "sha256": "dcd08be986967c35bb873e933b47894d9706ec9c9771edbbf484462dbd5e0583"
+    }
+  },
+  "guards": [
+    "Re-read current main and exact held branch before mutation; stop/reconcile if either differs.",
+    "Open only as DRAFT for ordinary source qualification, after lifecycle/MP3 admission. Keep every current ready head unchanged.",
+    "Do not dispatch native qualification, change observer pins, merge or publish to Pages.",
+    "Require fresh source/head/base/policy receipt and all registered checks before any later promotion; preserve historical failures."
+  ],
+  "actions": {
+    "localWrites": false,
+    "functionalExecution": false,
+    "tests": false,
+    "build": false,
+    "branchMutation": false,
+    "commitCreated": false,
+    "treeCreated": false,
+    "prCreated": false,
+    "workflowDispatch": false
+  },
+  "branch": "codex/solo-owned-binary-artwork",
+  "observedHeld": {
+    "head": "e2cf2cbc2a268028c39afb1a5b4235e1d4faaadf",
+    "tree": "c359da2b12d43a35d97e4ddc43bede62c39156c7",
+    "parent": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "associatedPRs": []
+  },
+  "proposedMerge": {
+    "parents": [
+      "e2cf2cbc2a268028c39afb1a5b4235e1d4faaadf",
+      "bd15820bee10a33ba64534071d22657fbd7326d3"
+    ],
+    "message": "Merge latest main into owned binary artwork source qualification",
+    "baseTree": "c359da2b12d43a35d97e4ddc43bede62c39156c7",
+    "expectedTree": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5",
+    "entries": [
+      {
+        "path": "game/app.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7750742b85eac5697f9d227a1485567e0865c321"
+      },
+      {
+        "path": "game/index.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "93af395bf479b57f5d617761b78fe6d1202c5282"
+      },
+      {
+        "path": "game/test/first-flight-home-host.test.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2ac53a27c8e5287760d69d9883acb6877870c6c0"
+      },
+      {
+        "path": "game/test/first-flight-view.test.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f250b6bd262c525c900b12f037b93150f4f9993c"
+      },
+      {
+        "path": "game/ui/first-flight-view.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1bd67ea6c167081fb29ca3f737deea6b14d5e334"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "path": "game/app.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "beforeHeld": {
+        "gitBlob": "55f0c500e9776c2cafed475f544e4a5ca93c5671",
+        "mode": "100644"
+      },
+      "incomingMain": {
+        "gitBlob": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb"
+      },
+      "after": {
+        "gitBlob": "7750742b85eac5697f9d227a1485567e0865c321",
+        "bytes": 619755,
+        "sha256": "e240bd9a6b1d89d7f00d061efb20cb99531ff36a2fc67132207565c75fdfd61c"
+      },
+      "afterContentReference": {
+        "gitBlob": "7750742b85eac5697f9d227a1485567e0865c321",
+        "encoding": "raw-source"
+      },
+      "diff": "@@ -4025,6 +4025,10 @@ try {\n       entry: {\n         available: !practice && !courseSession && !started && !courseEntry,\n         helpAvailable: !practice && !courseSession,\n+        homeAvailable:\n+          !practice &&\n+          !courseSession &&\n+          !['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id),\n         pending: !!courseEntry,\n         message: courseEntryMessage,\n       },"
+    },
+    {
+      "path": "game/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "beforeHeld": {
+        "gitBlob": "e52026e2c91901d09185d0e63734ab0d6f6ff475",
+        "mode": "100644"
+      },
+      "incomingMain": {
+        "gitBlob": "93af395bf479b57f5d617761b78fe6d1202c5282"
+      },
+      "after": {
+        "bytes": 143246,
+        "sha256": "62913fc6f145596ff7425e13b3f3f19e2937ec6254b112cbc22691e28eb2ca6a",
+        "gitBlob": "93af395bf479b57f5d617761b78fe6d1202c5282"
+      },
+      "afterContentReference": {
+        "gitBlob": "93af395bf479b57f5d617761b78fe6d1202c5282",
+        "encoding": "raw-source"
+      },
+      "diff": "@@ -3274,6 +3274,11 @@ <h1 id=\"shell-title\" data-i18n-rich=\"interface:reveal\">\n             >\n             <span aria-hidden=\"true\">→</span>\n           </button>\n+          <button id=\"first-flight-home-enter\" type=\"button\" class=\"button secondary\" hidden>\n+            <span data-i18n=\"interface:firstFlight\">First Flight</span>\n+            <span aria-hidden=\"true\"> · </span>\n+            <span data-i18n=\"interface:learnByPlaying\">Learn by playing</span>\n+          </button>\n           <button\n             id=\"shell-play\"\n             type=\"button\""
+    },
+    {
+      "path": "game/test/first-flight-home-host.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "beforeHeld": null,
+      "incomingMain": {
+        "gitBlob": "2ac53a27c8e5287760d69d9883acb6877870c6c0"
+      },
+      "after": {
+        "bytes": 8163,
+        "sha256": "698faa3eb7713e449f3d769eed8f37fd5e4a5118cf17b732c1d2108d093649c0",
+        "gitBlob": "2ac53a27c8e5287760d69d9883acb6877870c6c0"
+      },
+      "afterContentReference": {
+        "gitBlob": "2ac53a27c8e5287760d69d9883acb6877870c6c0",
+        "encoding": "raw-source"
+      },
+      "diff": "@@ -0,0 +1,178 @@\n+// Actual Solo title/course/retention owners; DOM, Phaser and document navigation\n+// are finite browser boundaries. No course transition or saved checkpoint is mocked.\n+import test from 'node:test';\n+import assert from 'node:assert/strict';\n+import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';\n+import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';\n+import { nativeCaptureSession } from '../capture-presentation-session.mjs';\n+import { FIRST_FLIGHT_LESSONS } from '../first-flight.mjs';\n+import { getLocale, setLocale, translateDOM } from '../i18n/index.mjs';\n+\n+const slot = 'revealline.suspended.dev.v1';\n+function navigation(page) {\n+  const destinations = [];\n+  page.win.location.assign = (url) => destinations.push(url);\n+  return destinations;\n+}\n+async function pausedFlight(t, storage) {\n+  const page = await soloPage(t, { titleScreen: true, storage });\n+  page.$('shell-featured').click();\n+  await settle(() => page.doc.body.dataset.flightState === 'running');\n+  page.key('ArrowDown');\n+  for (let i = 0; i < 12; i++) page.frame();\n+  page.key('ArrowDown', false);\n+  assert.equal(page.rendered.run.player.cutting, true);\n+  page.$('shell-menu').click();\n+  page.frame(0);\n+  assert.equal(page.rendered.paused, true);\n+  return page;\n+}\n+\n+test('fresh Capture Home exposes optional First Flight in EN/UK without replacing normal Start', async (t) => {\n+  const prior = getLocale();\n+  t.after(() => setLocale(prior, { persist: false }));\n+  setLocale('en', { persist: false });\n+  const page = await soloPage(t, { titleScreen: true, search: '', waitForPictures: false });\n+  const entry = page.$('first-flight-home-enter');\n+  // The finite DOM is created after the process-wide browser bootstrap. Bind\n+  // this real static label through that same HTML translator before switching.\n+  translateDOM(entry);\n+  assert.equal(entry.hidden, false);\n+  assert.ok(entry.closest('dialog') === page.$('shell-home'));\n+  assert.match(entry.textContent, /First Flight.*Learn by playing/s);\n+  assert.equal(page.$('shell-featured').hidden, false);\n+  assert.ok(page.doc.activeElement === page.$('shell-featured'));\n+  const destinations = navigation(page),\n+    before = [...page.storage.map];\n+  entry.focus();\n+  entry.emit('pointerdown');\n+  assert.deepEqual(destinations, []);\n+  setLocale('uk', { persist: false });\n+  assert.match(entry.textContent, /Перший політ.*Навчатися в грі/s);\n+  assert.ok(page.doc.activeElement === entry);\n+  entry.click();\n+  await settle(() => destinations.length === 1);\n+  const target = new URL(destinations[0]);\n+  assert.equal(target.searchParams.get('course'), 'first-flight');\n+  assert.equal(target.searchParams.get('lesson'), FIRST_FLIGHT_LESSONS[0].id);\n+  assert.equal(target.searchParams.get('turn-policy'), page.rendered.run.turnPolicy);\n+  assert.deepEqual(\n+    [...page.storage.map],\n+    before,\n+    'An unstarted title does not overwrite stored play.',\n+  );\n+  assert.deepEqual(page.errors, []);\n+});\n+\n+test('Home First Flight retains the exact paused Capture attempt before its one course departure', async (t) => {\n+  const page = await pausedFlight(t),\n+    destinations = navigation(page),\n+    checkpoint = authoritativeCheckpoint(page.rendered.run),\n+    previous = nativeCaptureSession(JSON.parse(page.storage.getItem(slot))),\n+    entry = page.$('first-flight-home-enter');\n+  assert.equal(entry.hidden, false);\n+  entry.focus();\n+  entry.click();\n+  assert.equal(entry.disabled, true);\n+  entry.click();\n+  await settle(() => destinations.length === 1);\n+  const retained = nativeCaptureSession(JSON.parse(page.storage.getItem(slot)));\n+  assert.deepEqual(retained.replay.checkpoint, previous.replay.checkpoint);\n+  assert.deepEqual(retained.presentationPins, previous.presentationPins);\n+  assert.deepEqual(retained.continuation, previous.continuation);\n+  assert.equal(verifyReplay(retained.replay).match, true);\n+  page.frame(0);\n+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);\n+  assert.equal(page.rendered.paused, true);\n+  assert.deepEqual(page.errors, []);\n+});\n+\n+test('Home introduction preserves a saved attempt that has not been resumed', async (t) => {\n+  let savedProfile;\n+  await t.test('retain a real paused attempt', async (t) => {\n+    const page = await pausedFlight(t);\n+    savedProfile = Object.fromEntries(page.storage.map);\n+    assert.ok(savedProfile[slot]);\n+  });\n+  await t.test('enter from the next title without overwriting that attempt', async (t) => {\n+    const storage = memoryStorage(savedProfile),\n+      page = await soloPage(t, { titleScreen: true, storage }),\n+      destinations = navigation(page);\n+    assert.equal(page.$('continue-saved').hidden, false);\n+    assert.equal(page.$('first-flight-home-enter').hidden, false);\n+    const before = [...storage.map];\n+    page.$('first-flight-home-enter').click();\n+    await settle(() => destinations.length === 1);\n+    assert.deepEqual([...storage.map], before);\n+    assert.equal(storage.getItem(slot), savedProfile[slot]);\n+    assert.deepEqual(page.errors, []);\n+  });\n+});\n+\n+test('Home course entry keeps the flight and prior save when retention cannot write', async (t) => {\n+  const storage = memoryStorage(),\n+    page = await pausedFlight(t, storage),\n+    destinations = navigation(page),\n+    checkpoint = authoritativeCheckpoint(page.rendered.run),\n+    saved = storage.getItem(slot),\n+    write = storage.setItem;\n+  storage.setItem = (key, value) => {\n+    if (key === slot) throw new DOMException('Modeled full storage', 'QuotaExceededError');\n+    write(key, value);\n+  };\n+  page.$('first-flight-home-enter').click();\n+  await settle(() => /remains paused/.test(page.$('first-flight-entry-status').textContent));\n+  assert.deepEqual(destinations, []);\n+  assert.equal(storage.getItem(slot), saved);\n+  assert.equal(page.$('help-dialog').open, true);\n+  assert.equal(page.$('first-flight-home-enter').disabled, false);\n+  assert.equal(page.$('first-flight-help-enter').disabled, false);\n+  page.frame(0);\n+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);\n+  assert.equal(page.rendered.paused, true);\n+  assert.deepEqual(page.errors, []);\n+});\n+\n+test('existing First Flight can be skipped, replayed and left for normal play without awarding progress', async (t) => {\n+  const storage = memoryStorage({ sentinel: 'Keep existing profile' });\n+  const page = await soloPage(t, { storage, search: '?course=first-flight&lesson=close-line' }),\n+    destinations = navigation(page),\n+    before = [...storage.map];\n+  assert.equal(page.$('first-flight-home-enter').hidden, true);\n+  page.$('first-flight-skip').click();\n+  assert.equal(page.$('first-flight-select').value, FIRST_FLIGHT_LESSONS[1].id);\n+  page.change('first-flight-select', FIRST_FLIGHT_LESSONS[0].id);\n+  await settle(() => page.$('first-flight-select').value === FIRST_FLIGHT_LESSONS[0].id);\n+  assert.equal(page.$('start-button').hidden, false);\n+  page.$('start-button').click();\n+  await settle(() => page.doc.body.dataset.flightState === 'running');\n+  page.key('ArrowDown');\n+  for (let i = 0; i < 27; i++) page.frame();\n+  page.key('ArrowDown', false);\n+  page.key('ArrowRight');\n+  page.frame();\n+  page.key('ArrowRight', false);\n+  assert.equal(page.rendered.run.player.cutting, true, 'The existing first lesson is playable.');\n+  page.$('pause-button').click();\n+  page.frame(0);\n+  assert.equal(page.rendered.paused, true);\n+  page.$('first-flight-exit').click();\n+  assert.equal(destinations.length, 1);\n+  const target = new URL(destinations[0]);\n+  assert.equal(target.pathname, '/game/');\n+  assert.equal(target.searchParams.has('course'), false);\n+  assert.deepEqual([...storage.map], before);\n+  assert.deepEqual(page.errors, []);\n+});\n+\n+for (const route of ['humanoid-hunt-v1', 'snake-hunt-v1'])\n+  test(`the Capture introduction is not presented as ${route} onboarding`, async (t) => {\n+    const page = await soloPage(t, {\n+      titleScreen: true,\n+      search: `?journey=${route}${route === 'snake-hunt-v1' ? '&snake-style=capture' : ''}`,\n+      waitForPictures: false,\n+    });\n+    assert.equal(page.$('first-flight-home-enter').hidden, true);\n+    assert.equal(page.$('first-flight-help-enter').hidden, false);\n+    assert.deepEqual(page.errors, []);\n+  });"
+    },
+    {
+      "path": "game/test/first-flight-view.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "beforeHeld": {
+        "gitBlob": "7a9e79115c3f2979bbd40c6e813324a8556b62e5",
+        "mode": "100644"
+      },
+      "incomingMain": {
+        "gitBlob": "f250b6bd262c525c900b12f037b93150f4f9993c"
+      },
+      "after": {
+        "bytes": 9063,
+        "sha256": "8fa8d4efec487e22cffb0382b4c7fcb106f26896e2e35ecde547c5c57fa355a0",
+        "gitBlob": "f250b6bd262c525c900b12f037b93150f4f9993c"
+      },
+      "afterContentReference": {
+        "gitBlob": "f250b6bd262c525c900b12f037b93150f4f9993c",
+        "encoding": "raw-source"
+      },
+      "diff": "@@ -216,3 +216,27 @@ test('switching, leaving, ended and destroyed views never invoke disabled course\n   assert.equal($('select').value, 'empty-side');\n   assert.deepEqual(calls, []);\n });\n+\n+test('Home entry uses the existing optional course owner and retires with the presenter', async (t) => {\n+  const { view, $, calls } = await setup(t);\n+  view.render({ entry: { homeAvailable: true, helpAvailable: true } });\n+  assert.equal($('home-enter').hidden, false);\n+  $('home-enter').emit('pointerdown');\n+  assert.deepEqual(calls, []);\n+  $('home-enter').emit('click');\n+  assert.deepEqual(calls, ['enter']);\n+  view.render({ entry: { homeAvailable: true, helpAvailable: true, pending: true } });\n+  assert.equal($('home-enter').disabled, true);\n+  $('home-enter').emit('click');\n+  assert.deepEqual(calls, ['enter'], 'Pending entry cannot submit twice.');\n+  view.render({ entry: { homeAvailable: false, helpAvailable: true } });\n+  assert.equal($('home-enter').hidden, true);\n+  $('home-enter').emit('click');\n+  assert.deepEqual(calls, ['enter'], 'Other hosts keep their existing Help entry.');\n+  view.render(state());\n+  assert.equal($('home-enter').hidden, true, 'An active course cannot enter itself.');\n+  view.render({ entry: { homeAvailable: true } });\n+  view.destroy();\n+  $('home-enter').emit('click');\n+  assert.deepEqual(calls, ['enter']);\n+});"
+    },
+    {
+      "path": "game/ui/first-flight-view.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "beforeHeld": {
+        "gitBlob": "421e17c28baf52b6f1018dbf8fe7d38ee8ce7638",
+        "mode": "100644"
+      },
+      "incomingMain": {
+        "gitBlob": "1bd67ea6c167081fb29ca3f737deea6b14d5e334"
+      },
+      "after": {
+        "bytes": 7917,
+        "sha256": "e94601c1488848884c2e629dac356cc47865b6f5ffbfb4effff79404e5103767",
+        "gitBlob": "1bd67ea6c167081fb29ca3f737deea6b14d5e334"
+      },
+      "afterContentReference": {
+        "gitBlob": "1bd67ea6c167081fb29ca3f737deea6b14d5e334",
+        "encoding": "raw-source"
+      },
+      "diff": "@@ -15,6 +15,7 @@ export function attachFirstFlightView({\n } = {}) {\n   const ids = [\n     'first-flight-enter',\n+    'first-flight-home-enter',\n     'first-flight-help-enter',\n     'first-flight-entry-status',\n     'first-flight-entry-cancel',\n@@ -52,6 +53,7 @@ export function attachFirstFlightView({\n     listeners.push(() => node.removeEventListener(type, listener));\n   }\n   listen('enter', 'click', onEnter);\n+  listen('home-enter', 'click', onEnter);\n   listen('help-enter', 'click', onEnter);\n   listen('entry-cancel', 'click', onCancelEnter);\n   listen('next', 'click', onNext);\n@@ -112,8 +114,9 @@ export function attachFirstFlightView({\n         : null;\n     current = { request: lesson ? request : null };\n     $('enter').hidden = !!lesson || !entry.available;\n+    $('home-enter').hidden = !!lesson || !entry.homeAvailable;\n     $('help-enter').hidden = !!lesson || !entry.helpAvailable;\n-    $('enter').disabled = $('help-enter').disabled = !!entry.pending;\n+    $('enter').disabled = $('home-enter').disabled = $('help-enter').disabled = !!entry.pending;\n     $('entry-cancel').hidden = !entry.pending;\n     const entryMessage = typeof entry.message === 'string' ? entry.message : '';\n     text('entry-status', entryMessage);"
+    }
+  ],
+  "reviewedImplementation": {
+    "proposal": {
+      "gitBlob": "73a9cfd270604cb0f29cd953ad6fb0c22d30a97e",
+      "bytes": 817240,
+      "sha256": "0baee057cb7f7febdb62ba70a82fffbf63f1c09425cf988b29be58c02f74cd01"
+    },
+    "peerReceipt": "2a0fdebd734a39c1767da469e545cd78ce023016",
+    "allTenHeldContentsExactlyMatchReviewedProposal": true,
+    "files": [
+      {
+        "path": "game/app.mjs",
+        "beforeMain": {
+          "gitBlob": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "55f0c500e9776c2cafed475f544e4a5ca93c5671",
+          "bytes": 619603,
+          "sha256": "839f8567726d92360cef4458997d96035e40fb18b63ecad03bb4115feea4bab8"
+        },
+        "after": {
+          "gitBlob": "7750742b85eac5697f9d227a1485567e0865c321",
+          "bytes": 619755,
+          "sha256": "e240bd9a6b1d89d7f00d061efb20cb99531ff36a2fc67132207565c75fdfd61c"
+        }
+      },
+      {
+        "path": "game/content-design/assets.mjs",
+        "beforeMain": {
+          "gitBlob": "90e8760b31da083025d05a8375ddc76781c143cf",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "84a81918c05cc70662fd5464113c8f05bcf82e35",
+          "bytes": 8521,
+          "sha256": "c0c90faba93e267071722fdeb07e85e2e440ef298fc10dccd0cad70b8b48dedf"
+        },
+        "after": {
+          "gitBlob": "84a81918c05cc70662fd5464113c8f05bcf82e35",
+          "bytes": 8521,
+          "sha256": "c0c90faba93e267071722fdeb07e85e2e440ef298fc10dccd0cad70b8b48dedf"
+        }
+      },
+      {
+        "path": "game/content-design/attempt.mjs",
+        "beforeMain": {
+          "gitBlob": "579a88dafed97cd3a4cbe70d5a08c471c3c960b5",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "c0dabdf2b85e9a01d4d8c69b692672954971fc7d",
+          "bytes": 9457,
+          "sha256": "38ce2a01301090e643fa6e751de8b37c6b2e2b90bab4ecfd641d028a4c824128"
+        },
+        "after": {
+          "gitBlob": "c0dabdf2b85e9a01d4d8c69b692672954971fc7d",
+          "bytes": 9457,
+          "sha256": "38ce2a01301090e643fa6e751de8b37c6b2e2b90bab4ecfd641d028a4c824128"
+        }
+      },
+      {
+        "path": "game/content-design/picture.mjs",
+        "beforeMain": {
+          "gitBlob": "9aeae436794227805ba4151b353d9d0a87de0e8f",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "65850a3aa05e21e2bcd089f1a3ced25571e94cd1",
+          "bytes": 4728,
+          "sha256": "6f68be66630a78a002d1e733a090adc4624cd56efd3b4015978dc628eaafb779"
+        },
+        "after": {
+          "gitBlob": "65850a3aa05e21e2bcd089f1a3ced25571e94cd1",
+          "bytes": 4728,
+          "sha256": "6f68be66630a78a002d1e733a090adc4624cd56efd3b4015978dc628eaafb779"
+        }
+      },
+      {
+        "path": "game/content-design/solo-host.mjs",
+        "beforeMain": {
+          "gitBlob": "28943f21e4f67ee2f3f9fca1364fb30c8e8d579b",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "e1257db1079eda6b1382d0d0b362f99372e93e2f",
+          "bytes": 3357,
+          "sha256": "2e036f584f8126497e54fb226b845923080ddf54ca5c9624764115a462567b96"
+        },
+        "after": {
+          "gitBlob": "e1257db1079eda6b1382d0d0b362f99372e93e2f",
+          "bytes": 3357,
+          "sha256": "2e036f584f8126497e54fb226b845923080ddf54ca5c9624764115a462567b96"
+        }
+      },
+      {
+        "path": "game/test/content-assets.test.mjs",
+        "beforeMain": {
+          "gitBlob": "32948c66b07856d2fc58a93d6bd68f440897a806",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "711ad8900cc24eb53c261dc2554781c6aba5f57e",
+          "bytes": 14640,
+          "sha256": "3a4af62369c47886ac659fb4fe0300b5565034eefebe944894fa2cc079ff249d"
+        },
+        "after": {
+          "gitBlob": "711ad8900cc24eb53c261dc2554781c6aba5f57e",
+          "bytes": 14640,
+          "sha256": "3a4af62369c47886ac659fb4fe0300b5565034eefebe944894fa2cc079ff249d"
+        }
+      },
+      {
+        "path": "game/test/content-picture.test.mjs",
+        "beforeMain": {
+          "gitBlob": "e81aba76ec30760c2f22dddea67a033cc9a102d1",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "9c94c20e3d94cc2b0c1f6fc3f688fd1ebdee5c20",
+          "bytes": 24758,
+          "sha256": "c1a39032042fcfb9f85ce3a9d50901d63ece24360cdb237dc2d0ca8a918267bf"
+        },
+        "after": {
+          "gitBlob": "9c94c20e3d94cc2b0c1f6fc3f688fd1ebdee5c20",
+          "bytes": 24758,
+          "sha256": "c1a39032042fcfb9f85ce3a9d50901d63ece24360cdb237dc2d0ca8a918267bf"
+        }
+      },
+      {
+        "path": "game/test/gameplay-pressure-host.test.mjs",
+        "beforeMain": {
+          "gitBlob": "4449c95d769f3cfde134499647094c48b1c1214e",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "4cc2995d7b14d0e9a1a7dcfb1a91cd16e8ea4309",
+          "bytes": 5583,
+          "sha256": "0af60c978a4a1d4e15445443d0edc4e0cebf8ba5d937603381855e43e1a57686"
+        },
+        "after": {
+          "gitBlob": "4cc2995d7b14d0e9a1a7dcfb1a91cd16e8ea4309",
+          "bytes": 5583,
+          "sha256": "0af60c978a4a1d4e15445443d0edc4e0cebf8ba5d937603381855e43e1a57686"
+        }
+      },
+      {
+        "path": "game/test/helpers/solo-dom.mjs",
+        "beforeMain": {
+          "gitBlob": "11edae6ed89c9fa2d74034a4912112277bf13e03",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "f54a1a1beb7f2be968db251e819f3fd13c0e251d",
+          "bytes": 35660,
+          "sha256": "36bea0e9563f9888787fd3d5eea4fa603d41bbba42d4cef7bfbdd3d53fc7b794"
+        },
+        "after": {
+          "gitBlob": "f54a1a1beb7f2be968db251e819f3fd13c0e251d",
+          "bytes": 35660,
+          "sha256": "36bea0e9563f9888787fd3d5eea4fa603d41bbba42d4cef7bfbdd3d53fc7b794"
+        }
+      },
+      {
+        "path": "game/test/solo-cadence-readiness-host.test.mjs",
+        "beforeMain": {
+          "gitBlob": "10d57a3a923f4b83db3978ddcb248a8fd800e517",
+          "mode": "100644"
+        },
+        "held": {
+          "gitBlob": "43cb1ba55f4294d829b9a13ae7186d03007a372e",
+          "bytes": 23437,
+          "sha256": "92da276fc5a78a0dd6c9c3e7ac94428f6aa6ac27ab3e3e0b4af8a6eca378f098"
+        },
+        "after": {
+          "gitBlob": "43cb1ba55f4294d829b9a13ae7186d03007a372e",
+          "bytes": 23437,
+          "sha256": "92da276fc5a78a0dd6c9c3e7ac94428f6aa6ac27ab3e3e0b4af8a6eca378f098"
+        }
+      }
+    ],
+    "onlyIntegrationSynthesis": "Unique four-line main homeAvailable addition; reversing it reproduces the exact held app blob. Binary artwork behavior and test fixtures are unchanged."
+  },
+  "treeProof": {
+    "expectedRoot": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5",
+    "mainPlusHeldTen": [
+      {
+        "path": "game/test/helpers",
+        "before": "099bdcad107cf1e1bdf7bb2ef9b05a5b36bfb793",
+        "after": "011090b53cca842c5d6b346e37200500db9d36ae",
+        "entries": 98
+      },
+      {
+        "path": "game/test",
+        "before": "eeffdd19867b76827b84b2f68edf291ce3f047b9",
+        "after": "a559b995f5256f9f0c33a2147b72927e064f196b",
+        "entries": 1926
+      },
+      {
+        "path": "game/content-design",
+        "before": "b648eddd27edb61fec4a2f9e6c14671df23d2e2c",
+        "after": "4134d41ed068057b601083dc3a4789b51e5e83c2",
+        "entries": 219
+      },
+      {
+        "path": "game",
+        "before": "b46ea0f8c7368bf3390697cabf76aa5edac742f9",
+        "after": "b6981bb42e1f1e8f5ae8fa000aaa31046355d7b0",
+        "entries": 232
+      },
+      {
+        "path": "",
+        "before": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+        "after": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5",
+        "entries": 23
+      }
+    ],
+    "heldPlusIncomingFive": {
+      "root": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5",
+      "game": "b6981bb42e1f1e8f5ae8fa000aaa31046355d7b0",
+      "test": "a559b995f5256f9f0c33a2147b72927e064f196b",
+      "ui": "9b654266172f3031087219dd92e9c8a2cf417f56"
+    },
+    "bothConstructionDirectionsAgree": true,
+    "allOtherEntriesUnchanged": true,
+    "allOriginalAncestorTreeIdentitiesRecomputed": true
+  },
+  "sourceAdmission": {
+    "head": "e2cf2cbc2a268028c39afb1a5b4235e1d4faaadf",
+    "categories": [
+      {
+        "id": "content-artwork-preparation",
+        "commands": [
+          {
+            "id": "content-artwork-preparation",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/content-assets.test.mjs",
+              "game/test/content-attempt.test.mjs",
+              "game/test/content-picture.test.mjs",
+              "game/test/candidate-team-pictures.test.mjs"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "company-editions",
+        "commands": [
+          {
+            "id": "company-generated-source-and-media",
+            "command": "npm",
+            "args": [
+              "run",
+              "company:check"
+            ]
+          },
+          {
+            "id": "company-runtime-and-publication",
+            "command": "npm",
+            "args": [
+              "run",
+              "company:test"
+            ],
+            "timeoutMs": 2700000
+          },
+          {
+            "id": "company-review-measurements",
+            "command": "node",
+            "args": [
+              "--test",
+              "scripts/test-company-review.mjs"
+            ]
+          },
+          {
+            "id": "edition-appearance-contracts",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/actor-appearance-pin.test.mjs",
+              "game/test/actor-appearance-lease.test.mjs",
+              "game/test/replay-presentation.test.mjs",
+              "game/test/replay-actor-context.test.mjs"
+            ]
+          },
+          {
+            "id": "edition-persistence-compatibility",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/installed-app.test.mjs",
+              "game/test/profile-transfer.test.mjs",
+              "game/test/profile-channel-reader.test.mjs",
+              "scripts/test-offline-publication.mjs"
+            ]
+          }
+        ]
+      }
+    ],
+    "unknownRuntime": [
+      "game/content-design/solo-host.mjs",
+      "game/test/gameplay-pressure-host.test.mjs",
+      "game/test/helpers/solo-dom.mjs",
+      "game/test/solo-cadence-readiness-host.test.mjs"
+    ],
+    "tests": [
+      {
+        "path": "game/test/content-assets.test.mjs",
+        "deferred": []
+      },
+      {
+        "path": "game/test/content-picture.test.mjs",
+        "deferred": []
+      },
+      {
+        "path": "game/test/gameplay-pressure-host.test.mjs",
+        "deferred": []
+      },
+      {
+        "path": "game/test/solo-cadence-readiness-host.test.mjs",
+        "deferred": []
+      }
+    ],
+    "fallback": [
+      {
+        "id": "unknown-runtime-validate",
+        "command": "npm",
+        "args": [
+          "run",
+          "validate"
+        ],
+        "timeoutMs": 1800000
+      }
+    ],
+    "focusedLogicGitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+    "focusedManifestGitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+    "appearanceGitBlob": "3eba59c40de952d8353ee0ac487cf2382b88abde",
+    "controls": {
+      "topLevel": 11,
+      "child": 1,
+      "executed": false
+    }
+  },
+  "generatedAndBuild": {
+    "closureUnchanged": {
+      "imports": [
+        {
+          "path": "game/content-design/assets.mjs",
+          "added": [],
+          "removed": []
+        },
+        {
+          "path": "game/content-design/picture.mjs",
+          "added": [],
+          "removed": []
+        },
+        {
+          "path": "game/content-design/attempt.mjs",
+          "added": [],
+          "removed": []
+        },
+        {
+          "path": "game/content-design/solo-host.mjs",
+          "added": [],
+          "removed": []
+        },
+        {
+          "path": "game/app.mjs",
+          "added": [
+            "./content-design/picture.mjs"
+          ],
+          "removed": []
+        },
+        {
+          "path": "game/test/content-assets.test.mjs",
+          "added": [],
+          "removed": []
+        },
+        {
+          "path": "game/test/content-picture.test.mjs",
+          "added": [
+            "node:buffer"
+          ],
+          "removed": []
+        },
+        {
+          "path": "game/test/solo-cadence-readiness-host.test.mjs",
+          "added": [
+            "node:buffer"
+          ],
+          "removed": []
+        },
+        {
+          "path": "game/test/helpers/solo-dom.mjs",
+          "added": [],
+          "removed": []
+        },
+        {
+          "path": "game/test/gameplay-pressure-host.test.mjs",
+          "added": [
+            "./helpers/png-image.mjs"
+          ],
+          "removed": []
+        }
+      ],
+      "fpv": {
+        "path": "scripts/refresh-fpv-play-shell.mjs",
+        "gitBlob": "3c16fe0e7f450cde67af9d241875afdf28414d56",
+        "bytes": 10768,
+        "sha256": "b52dae963bb8894824f06ced5be9808edeb4038a66b6810d0091df223ee00d8b",
+        "finding": "All five changed production files are outside the finite projectGlobalServices included set and the four separate canonical shell inputs. All six CSS inputs and generator/indentation inputs remain unchanged. The generator rejects imports outside its finite set. No generated output changes are required; no generator execution claimed."
+      },
+      "csp": {
+        "path": "scripts/game-cli.mjs",
+        "gitBlob": "099d15b351c504da7e4f1de641d0d5aeadb339a7",
+        "finding": "Existing PUBLIC_SECURITY_HEADERS already allow img-src 'self' data: blob:; no policy change."
+      },
+      "packaging": {
+        "finding": "No runtime module or asset fetch path is added. Main adds a direct import of content-design/picture.mjs, which was already eagerly imported transitively by its existing ui/candidate-flight-pictures.mjs import. The same original assets are fetched before constructing the owned Blob URL; serialized authoring/edition output stays default.",
+        "existingOwner": {
+          "path": "game/ui/candidate-flight-pictures.mjs",
+          "gitBlob": "50a29148385824befca8ffeb23a6ae1ecafa1abf",
+          "bytes": 5144,
+          "sha256": "aab6724745f7c8493d316e8b2a14562dde766c05f1f323f70281f164ff2a16c9",
+          "imports": "../content-design/picture.mjs"
+        }
+      },
+      "sourceAdmission": {
+        "paths": [
+          {
+            "path": "scripts/game-cli.mjs",
+            "gitBlob": "099d15b351c504da7e4f1de641d0d5aeadb339a7",
+            "bytes": 94310,
+            "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+          },
+          {
+            "path": "publishing/focused-test-map.json",
+            "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+            "bytes": 14501,
+            "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479"
+          },
+          {
+            "path": "publishing/focused-tests.mjs",
+            "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+            "bytes": 33959,
+            "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669"
+          },
+          {
+            "path": ".github/workflows/appearance-preview.yml",
+            "gitBlob": "3eba59c40de952d8353ee0ac487cf2382b88abde",
+            "bytes": 59546,
+            "sha256": "cbdb72e7c93bc3ce268caa5641f87c94f566e3297b74a8dff6a8ed02dd44fa6f"
+          },
+          {
+            "path": "scripts/offline-content.mjs",
+            "gitBlob": "1c71e187cbced929dd8ab4fd104029c5d182f522",
+            "bytes": 27538,
+            "sha256": "f4f28d1b45a8c03479a9e3a0dfcde5eedf56794efe9090bb6d0e07480ff1641d"
+          }
+        ],
+        "workflow": {
+          "path": ".github/workflows/qualify-release-source.yml",
+          "gitBlob": "6e475250787754aff2854f8fb5f46a636e5c1622",
+          "bytes": 17391,
+          "sha256": "3f7fa933aea5f6291b0674efbfe911fe5305eed5373d0bf63cd56346d9722253"
+        },
+        "finding": "The four edited existing .test.mjs paths are automatically selected by focused-tests changed-test admission. Content-artwork-preparation maps assets/attempt/picture to affected existing tests. Source test jobs use full source checkout; Appearance already includes solo-dom helper and the actual Solo cadence host in its trigger and the host in its executable cohort. New test imports are node:buffer and the existing PNGImage helper. No new runtime dependency module or sparse checkout addition."
+      }
+    },
+    "exactGeneratorAtMain": {
+      "path": "scripts/refresh-fpv-play-shell.mjs",
+      "gitBlob": "3c16fe0e7f450cde67af9d241875afdf28414d56"
+    },
+    "mainCLIUnchanged": "099d15b351c504da7e4f1de641d0d5aeadb339a7",
+    "requiredRemote": [
+      "All eleven added controls, corrected gameplay-pressure host, and existing asset, picture, attempt, creator/preview, candidate Team and broad Solo host controls, including audio-plus-image fixtures",
+      "Source validation including canonical FPV generator --check; default compile-edition serialization",
+      "Full Appearance/Company/Industrial and production/offline/CSP build closure",
+      "Published native image/Start/Resume and repeated transition resource lifetime qualification after release admission"
+    ],
+    "validateCommand": "npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs && node scripts/refresh-fpv-reaction-runtime.mjs --check && node scripts/refresh-fpv-academy-audio.mjs --check && node scripts/refresh-fpv-play-shell.mjs --check && node scripts/refresh-fpv-presentation-assets.mjs --check && node scripts/refresh-optional-worker.mjs --check && node scripts/refresh-fpv-world-visuals.mjs --check && node scripts/produce-industrial-environments.mjs --check",
+    "limit": "No generator or build was executed; source exclusion and existing packaging/CSP are not a production build pass."
+  },
+  "draftPR": {
+    "title": "perf(solo): keep prepared artwork in owned binary images",
+    "body": "Solo candidate artwork currently becomes a base64 data URL before decoding. Keep the verified image bytes binary through the existing picture owner, with the URL retained until decode and display ownership finish. Studio serialization remains compatible, and cancellation/release still dispose owned resources.\n\nAdds eleven top-level controls plus one nested cleanup control for integrity, decoding, cancellation, Main readiness and URL ownership. The held source is unchanged by this main integration. Source review is complete; hosted source and build checks are pending. Keep draft for qualification; no device or measured performance pass is claimed."
+  }
+}

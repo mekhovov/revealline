@@ -1,0 +1,22 @@
+{
+  "kind": "SoloReviewedSourceDraftAdmissionV1",
+  "at": "2026-10-19T01:15:40.905775+00:00",
+  "pr": 1696,
+  "url": "https://github.com/mekhovov/revealline/pull/1696",
+  "head": "73d56d3b674bcfba890656143c810f10ffd233b3",
+  "tree": "ffe78c5631b3c7f23f8a3d31512d9de696d31fc1",
+  "parents": [
+    "d1cec960ca866c3c27a7959856f4dd3e331052dd",
+    "bd15820bee10a33ba64534071d22657fbd7326d3"
+  ],
+  "changedPathsAgainstMain": [
+    "game/core/capture.mjs",
+    "game/test/core-capture.test.mjs"
+  ],
+  "proposal": "19d0703fcbebb1f9a6efeeb1e5499f261a623f97",
+  "review": "583490950e1f0f97de60b658be84e2df71b605eb",
+  "publicationRecovery": "Initial immediate ref readback disagreed after successful fast-forward; later exact commit, both parents and full tree verified. No repeated commit or ref mutation.",
+  "functionalExecution": false,
+  "draft": true,
+  "sourceQualificationPending": true
+}

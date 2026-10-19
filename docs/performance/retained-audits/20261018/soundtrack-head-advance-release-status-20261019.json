@@ -1,0 +1,347 @@
+{
+  "format": "revealline-readonly-release-audit.v1",
+  "observedAt": "2026-10-19T00:55:37.684Z",
+  "repository": "mekhovov/revealline",
+  "scope": "Meaningful #1619 head advance and exact dependency compatibility; remote status and public metadata only.",
+  "main": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "headAdvance": {
+    "pr": 1619,
+    "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+    "tree": "cb8af43d44f4abd27ee62e7324c472adebe24574",
+    "parent": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "message": "fix: bind Couch Audio discovery to its current settings owner",
+    "committedAt": "2026-10-19T00:46:32Z",
+    "sourceActor": "mekhovov",
+    "sourceTriggeringActor": "mekhovov",
+    "provenanceLimit": "API actor identifies the account/token; it does not identify which human or task initiated the write.",
+    "kind": "Substantive single-parent source change, not a rebase.",
+    "files": [
+      {
+        "path": "game/couch/couch-music-host.mjs",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0,
+        "sha": "2e4de410d668a8c0150d3851de7cba9fd7b1c3bd",
+        "patch": "@@ -232,6 +232,7 @@ export function attachCouchMusicHost({\n   panel = attachSoundtrackPanel({\n     document: doc,\n     settingsRoot: section,\n+    settingsOwner: root,\n     onlineCatalogueDownload,\n     onlineSourceStore,\n     catalogue: source.catalogue,"
+      },
+      {
+        "path": "game/test/couch-audio-catalogue-demand.test.mjs",
+        "status": "added",
+        "additions": 231,
+        "deletions": 0,
+        "sha": "a124930b551bf56aaac34c01b21cdc4e60bfc6e4",
+        "patch": "@@ -0,0 +1,231 @@\n+import test from 'node:test';\n+import assert from 'node:assert/strict';\n+import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';\n+import { attachSettingsPanels } from '../ui/settings-panels.mjs';\n+import { createAudioMaster } from '../ui/audio-master.mjs';\n+import { createManagedMediaStore } from '../managed-media-store.mjs';\n+import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';\n+import { emptySoundtrackLibrary, upgradeSoundtrackLibrary } from '../soundtrack.mjs';\n+import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';\n+import { Document, Element } from './helpers/couch-dom.mjs';\n+import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';\n+import { memoryIndexedDB, structuralProbe } from './helpers/soundtrack-fixtures.mjs';\n+import { publicCatalogueResponse } from './helpers/soundtrack-public-catalogue.mjs';\n+\n+const microtasks = () => new Promise((resolve) => setImmediate(resolve));\n+\n+async function setup(t, prefix = 'race') {\n+  const doc = new Document();\n+  const audio = audioHarness();\n+  const memory = memoryIndexedDB();\n+  const master = createAudioMaster({ muted: true, volume: 0.65 });\n+  const manager = createManagedMediaStore({\n+    indexedDB: memory.indexedDB,\n+    soundtrackCatalogue: true,\n+  });\n+  await manager.commitDomain(\n+    'audio',\n+    await prepareSoundtrackLibrary(upgradeSoundtrackLibrary(emptySoundtrackLibrary()), [], {\n+      probeMedia: structuralProbe,\n+    }),\n+    { expectedGeneration: 0, publicStyles: ['fpv'] },\n+  );\n+  manager.close();\n+  const globals = new Map(\n+    ['indexedDB', 'fetch'].map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]),\n+  );\n+  const unexpectedRequests = [];\n+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: memory.indexedDB });\n+  Object.defineProperty(globalThis, 'fetch', {\n+    configurable: true,\n+    value: async (url) => {\n+      unexpectedRequests.push(String(url));\n+      throw new Error(`Unexpected host network request: ${url}`);\n+    },\n+  });\n+  const create = doc.createElement.bind(doc);\n+  const mediaElements = [];\n+  doc.createElement = (tag) => {\n+    if (tag !== 'audio') return create(tag);\n+    const media = mediaElements.length === 0 ? audio.media : audioHarness().media;\n+    const element = new Element(doc, 'audio');\n+    for (const [key, value] of Object.entries(element))\n+      if (!Object.hasOwn(media, key)) media[key] = value;\n+    Object.setPrototypeOf(media, Object.getPrototypeOf(element));\n+    mediaElements.push(media);\n+    return media;\n+  };\n+  // The real Couch entry passes its authored Audio panel to attachCouchMusicHost.\n+  // Only geometry/DOM and native media are modeled; both host and tab owner execute.\n+  const root = doc.createElement('section');\n+  const list = doc.createElement('div');\n+  list.className = 'field-kit-settings-tabs';\n+  list.setAttribute('role', 'tablist');\n+  root.append(list);\n+  const tabs = {},\n+    panels = {};\n+  for (const category of ['controls', 'audio', 'display']) {\n+    const tab = doc.createElement('button'),\n+      panel = doc.createElement('section');\n+    tab.id = `${prefix}-settings-tab-${category}`;\n+    panel.id = `${prefix}-settings-panel-${category}`;\n+    tab.setAttribute('role', 'tab');\n+    tab.setAttribute('aria-controls', panel.id);\n+    tab.setAttribute('aria-selected', String(category === 'controls'));\n+    panel.setAttribute('role', 'tabpanel');\n+    panel.setAttribute('aria-labelledby', tab.id);\n+    list.append(tab);\n+    root.append(panel);\n+    tabs[category] = tab;\n+    panels[category] = panel;\n+  }\n+  doc.body.append(root);\n+  const settings = attachSettingsPanels({ root, document: doc });\n+  const requests = [];\n+  const host = attachCouchMusicHost({\n+    document: doc,\n+    root: panels.audio,\n+    prefix,\n+    soundscape: audio.soundscape,\n+    audioMaster: master,\n+    onlineCatalogueDownload: {\n+      fetch: async (url) => {\n+        requests.push(url);\n+        assert.equal(url, ONLINE_SOUNDTRACK_CATALOGUE_URL);\n+        return publicCatalogueResponse();\n+      },\n+    },\n+  });\n+  t.after(async () => {\n+    host.dispose();\n+    settings.destroy();\n+    await audio.soundscape.dispose();\n+    master.dispose();\n+    for (const [key, descriptor] of globals) {\n+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);\n+      else delete globalThis[key];\n+    }\n+    assert.deepEqual(unexpectedRequests, [], 'No speculative host network demand');\n+  });\n+  await settleUntil(\n+    () =>\n+      host.session.snapshot().readyForStart &&\n+      doc.getElementById('soundtrack-settings-play-styles')?.disabled === false,\n+  );\n+  await microtasks();\n+  const before = { master: master.snapshot(), puts: memory.allPuts.length };\n+  assert.deepEqual(\n+    requests,\n+    [],\n+    'Muted boot and local saved-style hydration do not request metadata',\n+  );\n+  assert(mediaElements.every((media) => media.plays === 0));\n+  assert.equal(doc.getElementById('soundtrack-settings-style-fpv').checked, true);\n+  return {\n+    doc,\n+    audio,\n+    memory,\n+    master,\n+    mediaElements,\n+    root,\n+    tabs,\n+    panels,\n+    settings,\n+    host,\n+    requests,\n+    before,\n+  };\n+}\n+\n+async function assertSaved(f) {\n+  const manager = createManagedMediaStore({\n+    indexedDB: f.memory.indexedDB,\n+    soundtrackCatalogue: true,\n+  });\n+  try {\n+    const saved = await manager.readDomain('audio');\n+    assert.equal(saved.generation, 1);\n+    assert.deepEqual(saved.publicStyles, ['fpv']);\n+  } finally {\n+    manager.close();\n+  }\n+  assert.deepEqual(f.master.snapshot(), f.before.master);\n+  assert.equal(f.memory.allPuts.length, f.before.puts);\n+}\n+\n+for (const prefix of ['race', 'coop']) {\n+  test(`${prefix}: actual selected Audio owner demands metadata without playback or save`, async (t) => {\n+    const f = await setup(t, prefix);\n+    assert.equal(f.panels.audio.hidden, true);\n+    f.tabs.audio.focus();\n+    f.tabs.audio.click();\n+    assert.equal(f.settings.selected(), f.tabs.audio.id);\n+    assert.equal(f.panels.audio.hidden, false);\n+    await settleUntil(() => f.requests.length === 1);\n+    await settleUntil(\n+      () => f.doc.getElementById('soundtrack-settings-style-fpv').parentNode.hidden === false,\n+    );\n+    assert.deepEqual(f.requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);\n+    assert(f.mediaElements.every((media) => media.plays === 0));\n+    assert.equal(f.audio.context.state, 'suspended');\n+    assert.equal(f.host.root(), null, 'Audio browse does not open Studio');\n+    await assertSaved(f);\n+  });\n+\n+  test(`${prefix}: saved FPV Play owns demand without visiting Audio or changing mute/storage`, async (t) => {\n+    const f = await setup(t, prefix);\n+    const playing = f.host.session.play();\n+    assert.equal(f.audio.context.state, 'running', 'Audio wake stays in the Play activation turn');\n+    assert.equal(await playing, true);\n+    assert.deepEqual(f.requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);\n+    assert.equal(f.host.player.snapshot().track.title, 'FPV');\n+    assert.equal(f.host.player.snapshot().playing, true);\n+    assert.equal(f.panels.audio.hidden, true);\n+    assert.equal(f.host.root(), null);\n+    await assertSaved(f);\n+  });\n+}\n+\n+for (const retirement of [\n+  'deselected',\n+  'disabled',\n+  'aria-disabled',\n+  'inert',\n+  'hidden',\n+  'replaced-tab',\n+  'replaced-owner',\n+  'moved-content',\n+  'hidden-document',\n+  'hidden-visibility',\n+  'disposed',\n+]) {\n+  test(`actual Couch Audio browse rejects ${retirement} ownership before admission`, async (t) => {\n+    const f = await setup(t);\n+    f.tabs.audio.click();\n+    if (retirement === 'deselected') f.tabs.display.click();\n+    else if (retirement === 'disabled') f.tabs.audio.disabled = true;\n+    else if (retirement === 'aria-disabled') f.tabs.audio.setAttribute('aria-disabled', 'true');\n+    else if (retirement === 'inert') f.panels.audio.inert = true;\n+    else if (retirement === 'hidden') f.panels.audio.hidden = true;\n+    else if (retirement === 'replaced-tab') {\n+      f.tabs.audio.remove();\n+      const tab = f.doc.createElement('button');\n+      tab.id = f.tabs.audio.id;\n+      f.root.append(tab);\n+    } else if (retirement === 'replaced-owner') {\n+      f.panels.audio.remove();\n+      const panel = f.doc.createElement('section');\n+      panel.id = f.panels.audio.id;\n+      f.root.append(panel);\n+    } else if (retirement === 'moved-content') {\n+      const section = f.panels.audio.querySelector('[data-couch-music]');\n+      f.doc.body.append(section);\n+    } else if (retirement === 'hidden-document') f.doc.hidden = true;\n+    else if (retirement === 'hidden-visibility') f.doc.visibilityState = 'hidden';\n+    else f.host.dispose();\n+    await microtasks();\n+    assert.deepEqual(f.requests, []);\n+    assert(f.mediaElements.every((media) => media.plays === 0));\n+    if (retirement !== 'disposed') await assertSaved(f);\n+  });\n+}"
+      },
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "status": "modified",
+        "additions": 10,
+        "deletions": 3,
+        "sha": "8f7894242e9572eccff97bb997aba9361e17a699",
+        "patch": "@@ -116,6 +116,7 @@ export function attachSoundtrackPanel({\n   onMasterVolume = null,\n   beforeAudio = async () => {},\n   settingsRoot = null,\n+  settingsOwner = settingsRoot,\n   albumDownload = {},\n   onlineCatalogueDownload = {},\n   onlineSourceManager = null,\n@@ -3942,7 +3943,7 @@ export function attachSoundtrackPanel({\n   renderSources();\n   renderSettingsStyleStatus();\n   void loadSourcePreferences();\n-  const settingsTab = doc.getElementById?.(settingsRoot?.getAttribute('aria-labelledby'));\n+  const settingsTab = doc.getElementById?.(settingsOwner?.getAttribute('aria-labelledby'));\n   let settingsBrowseQueued = false;\n   const requestSettingsCatalogue = () => {\n     if (disposed || settingsBrowseQueued) return;\n@@ -3955,13 +3956,19 @@ export function attachSoundtrackPanel({\n         doc.hidden ||\n         doc.visibilityState === 'hidden' ||\n         !settingsRoot?.isConnected ||\n-        doc.getElementById?.(settingsRoot.id) !== settingsRoot ||\n+        !settingsOwner?.isConnected ||\n+        !settingsOwner.contains(settingsRoot) ||\n+        doc.getElementById?.(settingsOwner.id) !== settingsOwner ||\n         !settingsTab?.isConnected ||\n         settingsTab.disabled ||\n         settingsTab.getAttribute('aria-disabled') === 'true' ||\n         doc.getElementById?.(settingsTab.id) !== settingsTab ||\n-        settingsTab.getAttribute('aria-controls') !== settingsRoot.id ||\n+        settingsTab.getAttribute('aria-controls') !== settingsOwner.id ||\n         settingsTab.getAttribute('aria-selected') !== 'true' ||\n+        settingsOwner.hidden ||\n+        settingsOwner.inert ||\n+        settingsOwner.closest('[hidden],[inert],[aria-hidden=\"true\"]') ||\n+        !settingsOwner.getClientRects?.().length ||\n         settingsRoot.hidden ||\n         settingsRoot.inert ||\n         settingsRoot.closest('[hidden],[inert],[aria-hidden=\"true\"]') ||"
+      }
+    ],
+    "oldGreenEvidence": "0eef99dfa3fef571281b32d260c1b4d00efb625d checks remain historical only.",
+    "currentChecks": [
+      {
+        "id": 117837434800,
+        "name": "preflight",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:43Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182302063/job/117837434800"
+      },
+      {
+        "id": 117837433903,
+        "name": "feature (rooms)",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433903"
+      },
+      {
+        "id": 117837433813,
+        "name": "feature (local-ux)",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433813"
+      },
+      {
+        "id": 117837433770,
+        "name": "feature (recordings)",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433770"
+      },
+      {
+        "id": 117837433740,
+        "name": "feature (creator)",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433740"
+      },
+      {
+        "id": 117837433734,
+        "name": "feature (gameplay)",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433734"
+      },
+      {
+        "id": 117837433728,
+        "name": "optional-practice",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301775/job/117837433728"
+      },
+      {
+        "id": 117837433670,
+        "name": "installed_admission",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301772/job/117837433670"
+      },
+      {
+        "id": 117837433634,
+        "name": "demo_admission",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301772/job/117837433634"
+      },
+      {
+        "id": 117837433591,
+        "name": "feature (presentation)",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301794/job/117837433591"
+      },
+      {
+        "id": 117837433582,
+        "name": "team_admission",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301772/job/117837433582"
+      },
+      {
+        "id": 117837433522,
+        "name": "candidate",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301775/job/117837433522"
+      },
+      {
+        "id": 117837433481,
+        "name": "admission",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-19T00:46:42Z",
+        "completed_at": null,
+        "details_url": "https://github.com/mekhovov/revealline/actions/runs/39182301772/job/117837433481"
+      }
+    ],
+    "draft": false,
+    "merged": false
+  },
+  "policy": {
+    "mode": "required",
+    "testPolicyBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+    "testPolicySHA256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+    "unchangedByHeadAdvance": true,
+    "reason": "Complete three-file commit comparison contains no workflow or policy path."
+  },
+  "otherReadyPRs": [
+    {
+      "number": 1620,
+      "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "draft": false,
+      "merged": false,
+      "state": "open",
+      "checkTotal": 26,
+      "counts": {
+        "success": 23,
+        "skipped": 3
+      }
+    },
+    {
+      "number": 1621,
+      "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "draft": false,
+      "merged": false,
+      "state": "open",
+      "checkTotal": 111,
+      "counts": {
+        "success": 17,
+        "skipped": 94
+      }
+    },
+    {
+      "number": 1628,
+      "head": "62be652ce70b11f840b491c218609d5225374be4",
+      "draft": false,
+      "merged": false,
+      "state": "open",
+      "checkTotal": 113,
+      "counts": {
+        "success": 17,
+        "skipped": 96
+      }
+    }
+  ],
+  "controllers": {
+    "previous1619": {
+      "id": 39174214314,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "updated_at": "2026-10-19T00:46:43Z",
+      "jobs": []
+    },
+    "currentAndPending": [
+      {
+        "id": 39182301808,
+        "event": "pull_request",
+        "head": "0991a7de3d613a2c5491fe06eadcdef47fc23be5",
+        "status": "pending",
+        "conclusion": null,
+        "updated_at": "2026-10-19T00:46:43Z",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39182301808",
+        "pull_requests": [
+          1619
+        ]
+      },
+      {
+        "id": 39173406631,
+        "event": "workflow_run",
+        "head": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "status": "queued",
+        "conclusion": null,
+        "updated_at": "2026-10-18T23:54:02Z",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39173406631",
+        "pull_requests": []
+      },
+      {
+        "id": 39172047962,
+        "event": "workflow_run",
+        "head": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "status": "queued",
+        "conclusion": null,
+        "updated_at": "2026-10-19T00:11:38Z",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39172047962",
+        "pull_requests": []
+      }
+    ]
+  },
+  "publisher": {
+    "id": 39168765766,
+    "jobs": [
+      {
+        "id": 117813536487,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-18T23:45:54Z",
+        "completed_at": "2026-10-18T23:53:43Z",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39168765766/job/117813536487"
+      },
+      {
+        "id": 117825738848,
+        "name": "deploy",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-18T23:53:44Z",
+        "completed_at": null,
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39168765766/job/117825738848"
+      }
+    ]
+  },
+  "publicMetadata": [
+    {
+      "path": "main-deployment.json",
+      "status": 200,
+      "bytes": 303,
+      "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+      "value": {
+        "format": "revealline-main-deployment.v1",
+        "channel": "main",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "sourceCommittedAt": "2026-10-18T21:05:19Z",
+        "buildVersion": "main-e4400303952d",
+        "play": "game/",
+        "releases": "https://github.com/mekhovov/revealline/releases"
+      }
+    },
+    {
+      "path": "release.json",
+      "status": 200,
+      "bytes": 303,
+      "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+      "value": {
+        "format": "revealline-main-deployment.v1",
+        "channel": "main",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "sourceCommittedAt": "2026-10-18T21:05:19Z",
+        "buildVersion": "main-e4400303952d",
+        "play": "game/",
+        "releases": "https://github.com/mekhovov/revealline/releases"
+      }
+    },
+    {
+      "path": "game/build-info.json",
+      "status": 200,
+      "bytes": 143,
+      "sha256": "f4993b007304ab787c4431932a6f8037c1d75ab58fdff755807382f0060ce05a",
+      "value": {
+        "formatVersion": 1,
+        "version": "0.151.1",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "entry": "game/index.html"
+      }
+    }
+  ],
+  "dependencyCompatibility": {
+    "pr": 1675,
+    "head": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+    "draft": true,
+    "proposal": {
+      "gitBlob": "a0030a73291f0179a6f3a370461cae63629b145f",
+      "bytes": 371407,
+      "sha256": "fe0c31fa145974bc099295cdcd8436b4e08168150d74476f9de433e5e1c1ac6e"
+    },
+    "latestMainNotAncestor": true,
+    "mergeBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "result": "All three incoming panel hunks match exactly once; Couch host unchanged before incoming one-line owner argument; new test absent. Preserve authoring lifetime changes and integrate by reviewed normal dependency merge only."
+  },
+  "recommendedNextAction": "Treat #1619 as newly queued source, await/review exact-head checks and its existing pending controller. Do not rerun unsettled completion controllers or infer global runner capacity. Root may compose the three-path #1675 dependency map with its separately reviewed fixture successor; this audit made no branch mutation.",
+  "actions": {
+    "localWrites": false,
+    "tests": false,
+    "build": false,
+    "browser": false,
+    "retry": false,
+    "dispatch": false,
+    "cancel": false,
+    "readinessChange": false,
+    "branchChange": false
+  }
+}

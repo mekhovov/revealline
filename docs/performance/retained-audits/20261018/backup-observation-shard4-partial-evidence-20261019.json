@@ -1,0 +1,314 @@
+{
+  "format": "revealline.source-cohort-audit.v1",
+  "repository": "mekhovov/revealline",
+  "pullRequest": 1676,
+  "sourceRevision": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+  "sourceTree": "56e1268dff01fb21056ab57f6a563da7483145ad",
+  "run": 39173029629,
+  "job": 117819513779,
+  "jobStartedAt": "2026-10-19T00:52:58Z",
+  "jobCompletedAt": "2026-10-19T00:57:36Z",
+  "artifact": {
+    "artifact": 12157420558,
+    "bytes": 3070,
+    "sha256": "5eb2c9b6049d5806b3cb5813efa82100c70d7400e4d45eafd26d86b8f66dfc0b",
+    "files": [
+      {
+        "name": "output.log",
+        "bytes": 5954,
+        "sha256": "efbf3c3eec690a3dbd4992028c09ccae195690e2e3a672dddea511e7a6a012e1",
+        "text": "### Focused release gate\n\nCategories: publishing, company-editions\nCommands: 11\nFallback validation: game/mission-library/multiplayer-expeditions.mjs, game/test/mission-library-stage-observation.test.mjs, game/test/performance-session.test.mjs, game/ui/mission-library-browser.mjs, game/ui/performance-session.mjs, scripts/run-solo-pages-smoke.mjs, scripts/solo-pages-backup.mjs, scripts/solo-pages-backup.test.mjs, scripts/solo-pages-smoke.mjs, scripts/solo-pages-smoke.test.mjs, scripts/test-appearance-preview-policy.mjs\nFocused shard 4/4: 2/11 commands; plan 360db954d7b96a4ef09328698fa7cd512db7f81b48f207907e1664f1ea9e76d6\n\n[focused:company-review-measurements] node --test scripts/test-company-review.mjs\n\n[focused:changed-test:game/test/mission-library-stage-observation.test.mjs] node --test game/test/mission-library-stage-observation.test.mjs\nTAP version 13\nTAP version 13\n# Subtest: review targets stay on the same server and never navigate outside a company player\nok 1 - review targets stay on the same server and never navigate outside a company player\n  ---\n  duration_ms: 1.943912\n  ...\n# Subtest: review viewport has independent bounded width and height\nok 2 - review viewport has independent bounded width and height\n  ---\n  duration_ms: 0.826342\n  ...\n# Subtest: frame summaries retain slow frames, reject invalid samples and do not fabricate empty measurements\nok 3 - frame summaries retain slow frames, reject invalid samples and do not fabricate empty measurements\n  ---\n  duration_ms: 0.317597\n  ...\n# Subtest: resource counts retain cached/zero-transfer entries without presenting them as network downloads\nok 4 - resource counts retain cached/zero-transfer entries without presenting them as network downloads\n  ---\n  duration_ms: 0.241704\n  ...\n# Subtest: observer requires enabled successful bootstrap and consecutive visible ready frames; slow readiness is not a passing timing\nok 5 - observer requires enabled successful bootstrap and consecutive visible ready frames; slow readiness is not a passing timing\n  ---\n  duration_ms: 3.132885\n  ...\n# Subtest: 20-second observations retain the original label and identify animation callbacks without granting qualification\nok 6 - 20-second observations retain the original label and identify animation callbacks without granting qualification\n  ---\n  duration_ms: 13.085804\n  ...\n# Subtest: shared Solo redirect observes real boot, pictures, activation and flight state without legacy nodes\nok 7 - shared Solo redirect observes real boot, pictures, activation and flight state without legacy nodes\n  ---\n  duration_ms: 9.756148\n  ...\n# Subtest: measurement can be armed while Solo is paused and never starts or resumes the game itself\nok 8 - measurement can be armed while Solo is paused and never starts or resumes the game itself\n  ---\n  duration_ms: 10.813535\n  ...\n# Subtest: focus interruption discards an active sample even when the game resumes before the next RAF\nok 9 - focus interruption discards an active sample even when the game resumes before the next RAF\n  ---\n  duration_ms: 3.457104\n  ...\n# Subtest: arming excludes an activation RAF timestamp from before preparation but retains later long frames\nok 10 - arming excludes an activation RAF timestamp from before preparation but retains later long frames\n  ---\n  duration_ms: 5.997697\n  ...\n# Subtest: review layout reports vertical overflow and applies the selected landscape height\nok 11 - review layout reports vertical overflow and applies the selected landscape height\n  ---\n  duration_ms: 1.148968\n  ...\n# Subtest: review layout distinguishes native scroll access from unreachable overflow and fixed descendants\nok 12 - review layout distinguishes native scroll access from unreachable overflow and fixed descendants\n  ---\n  duration_ms: 1.498285\n  ...\n# Subtest: paused, hidden and navigated samples are discarded and a full reload detaches the old observer\nok 13 - paused, hidden and navigated samples are discarded and a full reload detaches the old observer\n  ---\n  duration_ms: 2.000268\n  ...\n# Subtest: same-origin redirects are revalidated and old controls stay disabled for inaccessible documents\nok 14 - same-origin redirects are revalidated and old controls stay disabled for inaccessible documents\n  ---\n  duration_ms: 0.559462\n  ...\n# Subtest: frame arrays, retained observations and layout detail stay bounded\nok 15 - frame arrays, retained observations and layout detail stay bounded\n  ---\n  duration_ms: 70.489493\n  ...\n# Subtest: hidden mission preparation and Resource Timing resets cannot become invented successful request counts\nok 16 - hidden mission preparation and Resource Timing resets cannot become invented successful request counts\n  ---\n  duration_ms: 0.658918\n  ...\n1..16\n# tests 16\n# suites 0\n# pass 16\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 225.809245\n# Subtest: actual ordinary Missions remains uninstrumented with the same paused run and no diagnostic sink\nok 1 - actual ordinary Missions remains uninstrumented with the same paused run and no diagnostic sink\n  ---\n  duration_ms: 19857.148229\n  ...\n# Subtest: actual first-open sources, render and reopen produce bounded stage records without granting runtime authority\nok 2 - actual first-open sources, render and reopen produce bounded stage records without granting runtime authority\n  ---\n  duration_ms: 15604.633068\n  ...\n# Subtest: actual cancelled first-open cannot stamp a newer overlapping open when its held fetch resolves\nok 3 - actual cancelled first-open cannot stamp a newer overlapping open when its held fetch resolves\n  ---\n  duration_ms: 15479.86618\n  ...\n# Subtest: actual metadata failure retains a failed prefix and the existing public Retry path\nok 4 - actual metadata failure retains a failed prefix and the existing public Retry path\n  ---\n  duration_ms: 15039.55099\n  ...\n1..4\n# tests 4\n# suites 0\n# pass 4\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 66696.636894\n"
+      },
+      {
+        "name": "receipt.json",
+        "bytes": 3261,
+        "sha256": "6846d9cfbb3ecf9330f813171219a7333c6855483d4dfea9b8abc8e118141fb6",
+        "text": "{\"format\":\"revealline-focused-shard.v1\",\"state\":\"complete\",\"shard\":{\"index\":4,\"total\":4},\"identity\":{\"sourceRevision\":\"73eb20a2d32edf194cdc7915d6fb055753df8925\",\"workflowRevision\":\"e94fcc301cd4e4af3ff674ecf9482070309636ad\",\"policyDigest\":\"bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142\",\"testPolicySha256\":\"ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2\",\"manifestSha256\":\"d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479\",\"changedPathsSha256\":\"b1adf78cd44529a523ec7689dfd10f8261ef0723979f570e040f75b42970e10d\",\"fallbackHandled\":false,\"sourceTree\":\"56e1268dff01fb21056ab57f6a563da7483145ad\"},\"plan\":{\"commands\":[{\"id\":\"publishing-controller\",\"command\":\"node\",\"args\":[\"--test\",\"publishing/focused-tests.test.mjs\",\"publishing/fastline-merge-controller.test.mjs\",\"publishing/fastline-release-inputs.test.mjs\",\"publishing/fastline-release-objects.test.mjs\",\"publishing/fastline-release-publisher.test.mjs\",\"publishing/source-workflow.test.mjs\",\"scripts/test-pages-capacity-evidence.mjs\",\"scripts/test-pages-archive-evidence.mjs\",\"scripts/test-pages-recovery.mjs\",\"scripts/test-pages-capacity-report.mjs\",\"scripts/test-main-pages-metadata.mjs\",\"scripts/test-pages-candidate-contract.mjs\",\"scripts/test-pages-candidate-overlay.mjs\",\"scripts/test-pages-candidate-archive.mjs\",\"scripts/test-pages-candidate-measurement.mjs\",\"scripts/test-pages-candidate-stack.mjs\",\"scripts/test-pages-stack-contract.mjs\",\"scripts/test-pages-stack-source.mjs\",\"scripts/test-pages-stack-packet.mjs\",\"scripts/test-pages-stack-measurement.mjs\",\"scripts/test-pages-stack-artifacts.mjs\",\"scripts/test-pages-stack-e2e.mjs\",\"publishing/test-policy.test.mjs\"]},{\"id\":\"company-generated-source-and-media\",\"command\":\"npm\",\"args\":[\"run\",\"company:check\"]},{\"id\":\"company-runtime-and-publication\",\"command\":\"npm\",\"args\":[\"run\",\"company:test\"],\"timeoutMs\":2700000},{\"id\":\"company-review-measurements\",\"command\":\"node\",\"args\":[\"--test\",\"scripts/test-company-review.mjs\"]},{\"id\":\"edition-appearance-contracts\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/actor-appearance-pin.test.mjs\",\"game/test/actor-appearance-lease.test.mjs\",\"game/test/replay-presentation.test.mjs\",\"game/test/replay-actor-context.test.mjs\"]},{\"id\":\"edition-persistence-compatibility\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/installed-app.test.mjs\",\"game/test/profile-transfer.test.mjs\",\"game/test/profile-channel-reader.test.mjs\",\"scripts/test-offline-publication.mjs\"]},{\"id\":\"unknown-runtime-validate\",\"command\":\"npm\",\"args\":[\"run\",\"validate\"],\"timeoutMs\":1800000},{\"id\":\"changed-test:game/test/mission-library-stage-observation.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/mission-library-stage-observation.test.mjs\"]},{\"id\":\"changed-test:game/test/performance-session.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/performance-session.test.mjs\"]},{\"id\":\"changed-test:scripts/solo-pages-backup.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"scripts/solo-pages-backup.test.mjs\"]},{\"id\":\"changed-test:scripts/solo-pages-smoke.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"scripts/solo-pages-smoke.test.mjs\"]}],\"sha256\":\"360db954d7b96a4ef09328698fa7cd512db7f81b48f207907e1664f1ea9e76d6\"},\"indices\":[3,7],\"result\":{\"attempted\":2,\"failures\":[],\"exitCode\":0}}\n"
+      }
+    ]
+  },
+  "scope": "Read-only RAM validation; ZIP hash/CRC and source/plan receipt verified. No local test/product/build execution, source mutation or retry.",
+  "results": [
+    {
+      "command": "node --test scripts/test-company-review.mjs",
+      "tests": 16,
+      "pass": 16,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "completeFooter": true
+    },
+    {
+      "command": "node --test game/test/mission-library-stage-observation.test.mjs",
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "completeFooter": true
+    }
+  ],
+  "interpretation": "Two scoped commands passed on exact #1676 source. This is not a complete Source or Appearance verdict, no new Backup native or contract-case pass is claimed by this shard, and no native Missions timing qualification is implied.",
+  "snapshot": {
+    "at": "2026-10-19T00:58:13.815030+00:00",
+    "results": [
+      {
+        "run": {
+          "id": 39173025193,
+          "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 1,
+          "created_at": "2026-10-18T22:37:13Z",
+          "updated_at": "2026-10-19T00:46:40Z"
+        },
+        "jobs": [
+          {
+            "id": 117809866195,
+            "name": "preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:19:37Z",
+            "completed_at": "2026-10-18T23:19:52Z"
+          },
+          {
+            "id": 117818839739,
+            "name": "focused_shards (4)",
+            "status": "completed",
+            "conclusion": "failure",
+            "started_at": "2026-10-19T00:34:03Z",
+            "completed_at": "2026-10-19T00:46:39Z"
+          },
+          {
+            "id": 117818839744,
+            "name": "focused_shards (2)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:23:21Z",
+            "completed_at": "2026-10-19T00:33:04Z"
+          },
+          {
+            "id": 117818839749,
+            "name": "focused_shards (1)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:24:37Z",
+            "completed_at": "2026-10-19T00:27:13Z"
+          },
+          {
+            "id": 117818839770,
+            "name": "focused_shards (3)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:27:15Z",
+            "completed_at": "2026-10-19T00:30:37Z"
+          },
+          {
+            "id": 117818840634,
+            "name": "test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:19:53Z",
+            "completed_at": "2026-10-18T23:19:52Z"
+          },
+          {
+            "id": 117818840719,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:19:53Z",
+            "completed_at": "2026-10-18T23:19:52Z"
+          },
+          {
+            "id": 117837424113,
+            "name": "focused",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:46:40Z",
+            "completed_at": null
+          }
+        ]
+      },
+      {
+        "run": {
+          "id": 39179292792,
+          "head_sha": "98f666a20d133d9a81eb07104076c3147fd165aa",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 1,
+          "created_at": "2026-10-19T00:06:49Z",
+          "updated_at": "2026-10-19T00:11:15Z"
+        },
+        "jobs": [
+          {
+            "id": 117829433874,
+            "name": "preflight",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:11:15Z",
+            "completed_at": null
+          }
+        ]
+      },
+      {
+        "run": {
+          "id": 39179292744,
+          "head_sha": "98f666a20d133d9a81eb07104076c3147fd165aa",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 1,
+          "created_at": "2026-10-19T00:06:49Z",
+          "updated_at": "2026-10-19T00:06:49Z"
+        },
+        "jobs": [
+          {
+            "id": 117828423954,
+            "name": "admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:06:49Z",
+            "completed_at": null
+          },
+          {
+            "id": 117828424137,
+            "name": "installed_admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:06:49Z",
+            "completed_at": null
+          },
+          {
+            "id": 117828424203,
+            "name": "team_admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:06:49Z",
+            "completed_at": null
+          },
+          {
+            "id": 117828424213,
+            "name": "demo_admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:06:49Z",
+            "completed_at": null
+          }
+        ]
+      },
+      {
+        "run": {
+          "id": 39173029629,
+          "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 1,
+          "created_at": "2026-10-18T22:37:17Z",
+          "updated_at": "2026-10-18T23:23:01Z"
+        },
+        "jobs": [
+          {
+            "id": 117809880606,
+            "name": "preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:22:49Z",
+            "completed_at": "2026-10-18T23:23:01Z"
+          },
+          {
+            "id": 117819513720,
+            "name": "focused_shards (1)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:25:05Z",
+            "completed_at": "2026-10-19T00:28:29Z"
+          },
+          {
+            "id": 117819513761,
+            "name": "focused_shards (3)",
+            "status": "in_progress",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:51:14Z",
+            "completed_at": null
+          },
+          {
+            "id": 117819513779,
+            "name": "focused_shards (4)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:52:58Z",
+            "completed_at": "2026-10-19T00:57:36Z"
+          },
+          {
+            "id": 117819513782,
+            "name": "focused_shards (2)",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": null
+          },
+          {
+            "id": 117819514613,
+            "name": "test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": "2026-10-18T23:23:01Z"
+          },
+          {
+            "id": 117819515014,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": "2026-10-18T23:23:01Z"
+          }
+        ]
+      },
+      {
+        "run": {
+          "id": 39173025211,
+          "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 2,
+          "created_at": "2026-10-18T22:37:13Z",
+          "updated_at": "2026-10-18T23:34:11Z"
+        },
+        "jobs": [
+          {
+            "id": 117821813077,
+            "name": "installed_admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:34:12Z",
+            "completed_at": null
+          },
+          {
+            "id": 117821814124,
+            "name": "team_admission",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:28:12Z",
+            "completed_at": "2026-10-18T23:32:36Z"
+          },
+          {
+            "id": 117821841325,
+            "name": "demo_admission",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:28:22Z",
+            "completed_at": "2026-10-18T23:31:11Z"
+          },
+          {
+            "id": 117821846814,
+            "name": "admission",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:22:07Z",
+            "completed_at": "2026-10-18T23:24:58Z"
+          }
+        ]
+      }
+    ]
+  }
+}

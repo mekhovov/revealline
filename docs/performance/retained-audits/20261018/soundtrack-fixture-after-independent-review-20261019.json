@@ -1,0 +1,102 @@
+{
+  "format": "revealline.source-peer-review.v1",
+  "proposal": {
+    "blob": "4a5e7ef1971f9c31d220c516ce00aef8da75a0cd",
+    "bytes": 68437,
+    "sha256": "b857a12dca15cb02082f820937499c94903a79f43cafc87ded6670a78d5088aa"
+  },
+  "base": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+  "verdict": "clean for guarded test-only publication; hosted execution remains required",
+  "method": "RAM-only exact GitData readback and full source diff review; every before blob and before/after byte count/SHA256 verified. No product/test/build execution, local file writes, branch mutation or PR mutation.",
+  "files": [
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "before": {
+        "blob": "c58b151c995f375dc404bb37e0124fee1c3c336e",
+        "bytes": 20230,
+        "sha256": "63e5281b573f58da58c87708f0477bc92b51dfae701dafd6e187b6a5a99a34c9"
+      },
+      "after": {
+        "bytes": 20764,
+        "sha256": "db3bd00411046889d4874e99c7d957e737be51f21c9ddf92fc0ef54d3f0ed06d"
+      }
+    },
+    {
+      "path": "game/test/couch-dom-query.test.mjs",
+      "before": {
+        "blob": "4e37f2bbd9decbeaf93aacadc58feb4c3f27890d",
+        "bytes": 8268,
+        "sha256": "85acba3de9ecba1efccade75136c0846a207103bf4bc76d843d5ef89bf380d8c"
+      },
+      "after": {
+        "bytes": 11446,
+        "sha256": "8f5f90cd0da91d87375a9c3f0cd63acb171437d547124afb578b89a52896aa9f"
+      }
+    }
+  ],
+  "findings": [
+    "Variadic after now inserts all four real authoring sections and exposes their descendant IDs; production mount code is unchanged.",
+    "The captured viable sibling excludes moved arguments before detachment, preserving existing sibling/receiver/duplicate ordering. The successor fixes the review finding about TextNode lacking nextSibling by searching parent.children directly.",
+    "Four added contract controls cover all-section connection/lookup, existing siblings/duplicate/receiver moves, mixed text and node order including an existing moved text sibling, and empty/detached no-op ownership. The previous nine controls remain unchanged.",
+    "This is a scoped lightweight DOM fixture model, not a universal DOM conformance claim; no native regression or timeout resolution is claimed before hosted evidence."
+  ],
+  "spec": "https://dom.spec.whatwg.org/#dom-childnode-after",
+  "specReview": "Read current normative algorithm: retain parent; return if absent; choose first following sibling not in arguments; convert nodes and insert before retained sibling.",
+  "admission": {
+    "source": "Changed existing game/test/couch-dom-query.test.mjs is directly selected by publishing/focused-tests.mjs97–121, with no matching deferred patterns. Its filename additionally selects the existing five-file player-navigation-team cohort.",
+    "appearance": "Neither contract test filename is present in fixed Appearance file cohorts or path triggers. Existing #1675 runtime/host paths already trigger Appearance, whose real host cohorts indirectly use the corrected shared helper. No extra workflow change is required for direct Source contract execution.",
+    "sources": {
+      "manifestBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+      "manifestSHA": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "matchingCategories": [
+        {
+          "id": "player-navigation-team",
+          "pathPatterns": [
+            "^game/(?:team|navigation)/",
+            "^game/couch/(?!coop-(?:picture-bindings|presentation)\\.mjs$)",
+            "^game/test/(?!solo-result-continuation-host\\.test\\.mjs$).*(couch|team|navigation|pause|result).*\\.test\\.mjs$"
+          ],
+          "commands": [
+            {
+              "id": "player-navigation-team",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/couch-navigation.test.mjs",
+                "game/test/couch-composite-menu-navigation.test.mjs",
+                "game/test/mission-library-controller-host.test.mjs",
+                "game/test/content-team-navigation.test.mjs",
+                "game/test/controller-navigation.test.mjs"
+              ],
+              "timeoutMs": 1200000
+            }
+          ]
+        }
+      ],
+      "appearanceCouchReferences": [
+        "264:  APPEARANCE_TEAM_TEST_FILES: >-",
+        "270:  APPEARANCE_INSTALLED_TEST_FILES: >-",
+        "272:  APPEARANCE_ADMISSION_TEST_FILES: >-",
+        "290:  APPEARANCE_DEMO_TEST_FILES: >-",
+        "341:          read -r -a test_files <<< \"$APPEARANCE_ADMISSION_TEST_FILES\"",
+        "389:            files: process.env.APPEARANCE_ADMISSION_TEST_FILES.trim().split(/\\s+/),",
+        "449:          read -r -a test_files <<< \"$APPEARANCE_DEMO_TEST_FILES\"",
+        "497:            files: process.env.APPEARANCE_DEMO_TEST_FILES.trim().split(/\\s+/),",
+        "557:          read -r -a test_files <<< \"$APPEARANCE_TEAM_TEST_FILES\"",
+        "605:            files: process.env.APPEARANCE_TEAM_TEST_FILES.trim().split(/\\s+/),",
+        "665:          read -r -a test_files <<< \"$APPEARANCE_INSTALLED_TEST_FILES\"",
+        "713:            files: process.env.APPEARANCE_INSTALLED_TEST_FILES.trim().split(/\\s+/),",
+        "740:      APPEARANCE_TEST_FILES: >-",
+        "910:          read -r -a test_files <<< \"$APPEARANCE_TEST_FILES\"",
+        "981:            ['ADMISSION', 'APPEARANCE_ADMISSION_TEST_FILES', 'admission'],",
+        "982:            ['TEAM_ADMISSION', 'APPEARANCE_TEAM_TEST_FILES', 'team-admission'],",
+        "983:            ['DEMO_ADMISSION', 'APPEARANCE_DEMO_TEST_FILES', 'demo-admission'],",
+        "984:            ['INSTALLED_ADMISSION', 'APPEARANCE_INSTALLED_TEST_FILES', 'installed-admission'],",
+        "1045:              files: process.env.APPEARANCE_TEST_FILES.trim().split(/\\s+/),"
+      ],
+      "deferred": []
+    }
+  },
+  "failureAudit": "89ce020e208874d4c3eadc3fd554650e86d48b67",
+  "unexecutedNewControls": 4
+}

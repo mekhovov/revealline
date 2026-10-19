@@ -1124,6 +1124,204 @@
       "blob": "53c5b335128337d74023efb729f12b295b0f4c3d",
       "bytes": 4884,
       "sha256": "712b6791eeb089b2d12729c88c85e19d23fbb42898f73a71248e603b78de6ab2"
+    },
+    {
+      "path": "soundtrack-authoring-no-raf-deadlock-source-review-20261019.json",
+      "blob": "062f56b2338b6a09b40a4889837975d32a556dc0",
+      "bytes": 4777,
+      "sha256": "8ffb3733e1f0b0f51ad0da9ca84c2851395842c0d868535d5d2d13066d95f8c7"
+    },
+    {
+      "path": "soundtrack-authoring-shard4-failure-20261019.json",
+      "blob": "89ce020e208874d4c3eadc3fd554650e86d48b67",
+      "bytes": 27525,
+      "sha256": "48a961b685d8cb720a850318d23a8c9f58893561124fa44214c9279e24aa5370"
+    },
+    {
+      "path": "soundtrack-fixture-after-proposal-initial-20261019.json",
+      "blob": "7369cf008de6a6ec3d1ad6883a8e3ad5f66e70f0",
+      "bytes": 67888,
+      "sha256": "27a760f68ef8fb21b03b737fd8f9ed9b205869e79e107dbc2a48c5273e4a739d"
+    },
+    {
+      "path": "soundtrack-fixture-after-proposal-corrected-20261019.json",
+      "blob": "4a5e7ef1971f9c31d220c516ce00aef8da75a0cd",
+      "bytes": 68437,
+      "sha256": "b857a12dca15cb02082f820937499c94903a79f43cafc87ded6670a78d5088aa"
+    },
+    {
+      "path": "soundtrack-current-owner-dependency-integration-20261019.json",
+      "blob": "a0030a73291f0179a6f3a370461cae63629b145f",
+      "bytes": 371407,
+      "sha256": "fe0c31fa145974bc099295cdcd8436b4e08168150d74476f9de433e5e1c1ac6e"
+    },
+    {
+      "path": "soundtrack-head-advance-release-status-20261019.json",
+      "blob": "32afff00ce7ce35b07c21df8a4d78ede47f6c59f",
+      "bytes": 23136,
+      "sha256": "34b9086262a0180eada440fb4654d8fdebd9f5d270785c4557efa48bc1577826"
+    },
+    {
+      "path": "soundtrack-fixture-after-independent-review-20261019.json",
+      "blob": "aaef06254f063d90ae9e035ff6e245f3490ac816",
+      "bytes": 5914,
+      "sha256": "df1c190e91eec27ae8de43d2b5da7bf0cfccb7c712770b3c9fef24e2b4d8d353"
+    },
+    {
+      "path": "soundtrack-authoring-bounded-stage-proposal-20261019.json",
+      "blob": "d519eb11df83fec2045cdf9bc0cef777b911dd48",
+      "bytes": 94427,
+      "sha256": "f2e0d3d4167b5357039de42286036a359c131f0d4b7dd5f4b4d7cf1094f00069"
+    },
+    {
+      "path": "soundtrack-authoring-bounded-stage-independent-review-20261019.json",
+      "blob": "b7cc63b87f44f98645aa32f812b74e448cf258d2",
+      "bytes": 6531,
+      "sha256": "b8ba384ae85e23937b91d3eb27e5327d74747acb5c8a9e512a54fa8c9d5c86cc"
+    },
+    {
+      "path": "soundtrack-authoring-fixture-diagnostics-publication-20261019.json",
+      "blob": "93d80c373cf9a2941f987ea5c4437a3b380ae43f",
+      "bytes": 32640,
+      "sha256": "b0c3abee17d9af25aa3a2293d69b63f6e779eab47fb5c962f63827c6cf2a7d8e"
+    },
+    {
+      "path": "backup-observation-shard4-partial-evidence-20261019.json",
+      "blob": "f11cd1f658caf3d18196d021fed68ce8ee9aad53",
+      "bytes": 19369,
+      "sha256": "a5d80bc67858f62da05599519badb2d23c004d66490124240e278548c053774b"
+    },
+    {
+      "path": "priority-repairs-independent-source-admission-audit-20261019.json",
+      "blob": "80e415cea26aaba19091a9eb1912d9a0227853b2",
+      "bytes": 24558,
+      "sha256": "dcd08be986967c35bb873e933b47894d9706ec9c9771edbbf484462dbd5e0583"
+    },
+    {
+      "path": "authoring-superseded-report-cleanup-20261019.json",
+      "blob": "ab334c5520cce9ca970909232760f23ec3593f14",
+      "bytes": 9702,
+      "sha256": "ab1b8e1c81d316f4e3c0e5f57996cfece064395e805aab465ad118176e96f8f3"
+    },
+    {
+      "path": "lifecycle-fresh-main-integration-proposal-20261019.json",
+      "blob": "92c48842af8086029b5c418b056d5b64aac7f3cd",
+      "bytes": 839394,
+      "sha256": "d978255f10dce0daaed4d303bbb81b4108698826197d75cf038ce0573ede21d4"
+    },
+    {
+      "path": "mp3-fresh-main-integration-proposal-20261019.json",
+      "blob": "21dd5ffe638728ac900a85e53eaa9a6812f3a1f9",
+      "bytes": 31554,
+      "sha256": "6b0d117dc69c7daa1ea81c3316927bb1f76c074e0e9b4fd15937002026acd239"
+    },
+    {
+      "path": "priority-repairs-source-sequencing-review-20261019.json",
+      "blob": "562081ce4a7f58b46da068c201838596389dda13",
+      "bytes": 7423,
+      "sha256": "d99e8aab1573ee3e3f0a7e1920ed3944c9737ddf86c5745b9450f5d5f6e4a72a"
+    },
+    {
+      "path": "lifecycle-integration-independent-tree-review-20261019.json",
+      "blob": "9065916a9a6fd6f0d788e4e09554c0e5b455f932",
+      "bytes": 1834,
+      "sha256": "a7a3558ae5d5d7bc554b77654cda4b2ea55e8dea7903af12e80a8e0c2710b46f"
+    },
+    {
+      "path": "lifecycle-source-draft-admission-20261019.json",
+      "blob": "f0003177b6e0099dd405a83da787c19a91dd298c",
+      "bytes": 878,
+      "sha256": "7942bc9b6cd4edfac641980379a4e51c1badd2ebad02d61c15fda3715e6fd9f3"
+    },
+    {
+      "path": "priority-repairs-fresh-main-independent-review-20261019.json",
+      "blob": "db2d68318e26708e1e1d23d28171852e3bd7c362",
+      "bytes": 16016,
+      "sha256": "73402b675977c51122e705c39bded70b573fb2799d2a9292069df52420863c3e"
+    },
+    {
+      "path": "mp3-source-draft-admission-20261019.json",
+      "blob": "c3b8da2ad797bc92f3e54300a73456433aa395e8",
+      "bytes": 778,
+      "sha256": "bc0d8b9a5971df9dc4bb6c56146c751d7fe8561a5ac2cf85d6466db31c168008"
+    },
+    {
+      "path": "new-priority-drafts-admission-status-20261019.json",
+      "blob": "20476f86e9e25e0144b593a9c2331e57812884cd",
+      "bytes": 21508,
+      "sha256": "7f3fe9d73f0e56cddf2c54c7c41835a0662ace278801b75c98b4d5ab7dfbb707"
+    },
+    {
+      "path": "updated-priority-plan-header-review-20261019.json",
+      "blob": "5292e8509c6278a6996adb2be6ba2f2191536ff6",
+      "bytes": 3490,
+      "sha256": "5ca107bd26c3b962a93c578362bef5597f565172906a6bd483cc69ce9efc79a9"
+    },
+    {
+      "path": "artwork-fresh-main-integration-proposal-20261019.json",
+      "blob": "fd9d7102f71cfca5a0d0ac7f9a2bca867f3dbd5c",
+      "bytes": 38857,
+      "sha256": "e228cf0d442c8a062f7c5898c21b0f4e7fa9f8cc5af871631961e190e7407c43"
+    },
+    {
+      "path": "trail-fresh-main-integration-proposal-20261019.json",
+      "blob": "19d0703fcbebb1f9a6efeeb1e5499f261a623f97",
+      "bytes": 18645,
+      "sha256": "8ae616d16d2810fdd3dae32617c3fc65215075400a047676a43266743b6b4852"
+    },
+    {
+      "path": "artwork-trail-current-main-peer-review-20261019.json",
+      "blob": "583490950e1f0f97de60b658be84e2df71b605eb",
+      "bytes": 7992,
+      "sha256": "82bdc5719ecb19684ea7f019047e38b08e4ecbdc484c76f336827ceb0afdde8c"
+    },
+    {
+      "path": "artwork-current-main-draft-publication-20261019.json",
+      "blob": "e322a15c9bea3882b0ec3183fc8f3c1819fe7856",
+      "bytes": 1030,
+      "sha256": "bcd3bf5f5482fff4247d2906df17ff7b5b193fa10fdb5e548a4abb12d4f913e2"
+    },
+    {
+      "path": "trail-current-main-draft-publication-20261019.json",
+      "blob": "f5dc14fcc5294b40171e1b8cd50c82069f861c0e",
+      "bytes": 890,
+      "sha256": "d4ade191f1ccafb2750b3af8a5787b028fa0cba08c3c7c40527cd12c099705e2"
+    },
+    {
+      "path": "artwork-trail-draft-admission-snapshot-20261019.json",
+      "blob": "ece8a393b9753e9fef353726aa34f1e3d7e67da3",
+      "bytes": 1938,
+      "sha256": "a9a72216af14a200178187cf9b5dbb1544113cefaae70a9787fcb4120e2ccbda"
+    },
+    {
+      "path": "lifecycle-artwork-joint-source-review-20261019.json",
+      "blob": "1de1f0fefe2acaedf6a26732b2baacdb8b1fc36a",
+      "bytes": 9559,
+      "sha256": "28df544b08a0baa21c61ef427192759f4ed03d6bf0788318ba112f3ba01feaee"
+    },
+    {
+      "path": "backup-complete-source-shards-seventeen-controls-20261019.json",
+      "blob": "63680d136a4d030336b6c9231befb9211c5ddf8a",
+      "bytes": 58685,
+      "sha256": "7e3c4819286ec0ed457610678b95c8aa3797c13fd86e3565cc7acfaa78552ab1"
+    },
+    {
+      "path": "soundtrack-inspection-owner-authoring-compatibility-20261019.json",
+      "blob": "44dee59a29b3cd837b3751bf3ef35dd362d72809",
+      "bytes": 12248,
+      "sha256": "b6f6c5a9b8ee4ad66a2c493596908c6f16ada03ccbf5f636393066c3feaf586d"
+    },
+    {
+      "path": "current-main-release-publication-queue-snapshot-20261019.json",
+      "blob": "1396a910058e1229d37c05f992e04b1dce8ecc51",
+      "bytes": 35292,
+      "sha256": "2239fbd566ec7704e9ef6b92122e73815b86ecdd12858061518bc0ed0ce7f5c2"
+    },
+    {
+      "path": "source-admission-plan-final-delta-review-20261019.json",
+      "blob": "5d334a9d786433e39a6fc9f687377252d9c741c3",
+      "bytes": 3349,
+      "sha256": "4ab2c50bc28b93a4e608f2e4cc6f07430db19753469ae2b066413cdfbc1578c4"
     }
   ]
 }

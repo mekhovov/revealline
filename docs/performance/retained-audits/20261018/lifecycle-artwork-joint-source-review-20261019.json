@@ -1,0 +1,179 @@
+{
+  "schema": "revealline.source-review.v1",
+  "observedAt": "2026-10-19T01:18:54.496Z",
+  "scope": "Bounded source-only compatibility review of lifecycle #1693 and owned binary artwork #1695; no combined release, branch mutation, app execution or functional tests.",
+  "base": "bd15820bee10a33ba64534071d22657fbd7326d3",
+  "candidates": [
+    {
+      "pr": 1693,
+      "head": "d1c6e236d8fb17448b3faaf89d11408ac302dba1",
+      "tree": "4bb44157295ed7e170d60ce3276f790d920ea014"
+    },
+    {
+      "pr": 1695,
+      "head": "7d964856a2ee46b8b6ca245d6b66154ab697543b",
+      "tree": "eb40c274cb91b663ba3ebd5d519e9f524aec2cb5"
+    }
+  ],
+  "sharedPaths": [
+    "game/app.mjs"
+  ],
+  "appHunks": [
+    {
+      "pr": 1693,
+      "appBlob": "082b593bf58c4f405e8f2f9588722410b4c0ce3b",
+      "ranges": [
+        {
+          "beforeStart": 11968,
+          "beforeCount": 6,
+          "afterStart": 11968,
+          "afterCount": 8
+        },
+        {
+          "beforeStart": 11978,
+          "beforeCount": 6,
+          "afterStart": 11980,
+          "afterCount": 8
+        },
+        {
+          "beforeStart": 11993,
+          "beforeCount": 9,
+          "afterStart": 11997,
+          "afterCount": 13
+        }
+      ],
+      "patch": "@@ -11968,6 +11968,8 @@ try {\n           controls,\n         });\n         if (beforeStatus === 'respawning' || run.status === 'respawning') {\n+          pendingAction = false;\n+          pendingPickup = false;\n           input.clear();\n           controller.clear();\n           controls = { direction: null, boost: false, action: false, pickup: false };\n@@ -11978,6 +11980,8 @@ try {\n           controller.clear();\n           controllerFrame = null;\n           controls = { direction: null, boost: false, action: false, pickup: false };\n+          pendingAction = false;\n+          pendingPickup = false;\n           pendingSwitch = null;\n         }\n         refreshControllerBoostCue();\n@@ -11993,9 +11997,13 @@ try {\n               message: t('interface:liveGoalTrackingIsUnavailableYourPictureProgressIsKept'),\n             };\n           }\n-        pendingAction = false;\n-        pendingPickup = false;\n-        if (!resuming) pendingSwitch = null;\n+        // A fresh request after accepted Resume waits behind its neutral tick.\n+        // Recovery and capture-stop above still retire these pending actions.\n+        if (!resuming) {\n+          pendingAction = false;\n+          pendingPickup = false;\n+          pendingSwitch = null;\n+        }\n         accumulator -= FIXED_DT;\n         if (!recordingStopped)\n           try {"
+    },
+    {
+      "pr": 1695,
+      "appBlob": "7750742b85eac5697f9d227a1485567e0865c321",
+      "ranges": [
+        {
+          "beforeStart": 102,
+          "beforeCount": 6,
+          "afterStart": 102,
+          "afterCount": 7
+        },
+        {
+          "beforeStart": 729,
+          "beforeCount": 6,
+          "afterStart": 730,
+          "afterCount": 8
+        },
+        {
+          "beforeStart": 1913,
+          "beforeCount": 6,
+          "afterStart": 1916,
+          "afterCount": 7
+        }
+      ],
+      "patch": "@@ -102,6 +102,7 @@ import { publishedRouteViews } from './content-design/published-journey.mjs';\n import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';\n import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';\n import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';\n+import { acquireCandidatePicture } from './content-design/picture.mjs';\n import {\n   resolveInstalledMissionTarget,\n   installedMissionExecutionIndex,\n@@ -729,6 +730,8 @@ try {\n   const authoredJourney = !!authoredRoute;\n   const candidateHost = authoredJourney\n     ? await createSoloRouteHost(authoredRoute, {\n+        // Main adopts the owned decoded picture, not a portable Studio scenario.\n+        serializeArtwork: false,\n         getEncounterVariant: () => encounterChoices.snapshot().variant,\n         themes:\n           runtimeContent?.themes ??\n@@ -1913,6 +1916,7 @@ try {\n           },\n           asset: manifest.background,\n           picture: candidatePicture,\n+          acquire: (asset, options) => acquireCandidatePicture(asset, { ...options, binary: true }),\n         }),\n       );\n     }"
+    }
+  ],
+  "sourceIdentities": [
+    {
+      "path": "game/app.mjs",
+      "owner": "base",
+      "bytes": 619467,
+      "sha256": "c1a489711a970e580fe8c4fbc9a4a486e97d96d18097320e1331ffc436965f9b",
+      "gitBlob": "fc98726a1be20dc03ae584b45c3b7a908b20b1bb"
+    },
+    {
+      "path": "game/app.mjs",
+      "owner": "lifecycle",
+      "bytes": 619784,
+      "sha256": "07b8986a0dadd299c0e3dc3243f5419226ad936a29d4078f37398479b225420c",
+      "gitBlob": "082b593bf58c4f405e8f2f9588722410b4c0ce3b"
+    },
+    {
+      "path": "game/content-design/solo-host.mjs",
+      "owner": "artwork",
+      "bytes": 3357,
+      "sha256": "2e036f584f8126497e54fb226b845923080ddf54ca5c9624764115a462567b96",
+      "gitBlob": "e1257db1079eda6b1382d0d0b362f99372e93e2f"
+    },
+    {
+      "path": "game/content-design/attempt.mjs",
+      "owner": "artwork",
+      "bytes": 9457,
+      "sha256": "38ce2a01301090e643fa6e751de8b37c6b2e2b90bab4ecfd641d028a4c824128",
+      "gitBlob": "c0dabdf2b85e9a01d4d8c69b692672954971fc7d"
+    },
+    {
+      "path": "game/content-design/assets.mjs",
+      "owner": "artwork",
+      "bytes": 8521,
+      "sha256": "c0c90faba93e267071722fdeb07e85e2e440ef298fc10dccd0cad70b8b48dedf",
+      "gitBlob": "84a81918c05cc70662fd5464113c8f05bcf82e35"
+    },
+    {
+      "path": "game/ui/candidate-flight-pictures.mjs",
+      "owner": "artwork",
+      "bytes": 5144,
+      "sha256": "aab6724745f7c8493d316e8b2a14562dde766c05f1f323f70281f164ff2a16c9",
+      "gitBlob": "50a29148385824befca8ffeb23a6ae1ecafa1abf"
+    },
+    {
+      "path": "game/content-design/picture.mjs",
+      "owner": "artwork",
+      "bytes": 4728,
+      "sha256": "6f68be66630a78a002d1e733a090adc4624cd56efd3b4015978dc628eaafb779",
+      "gitBlob": "65850a3aa05e21e2bcd089f1a3ced25571e94cd1"
+    },
+    {
+      "path": "game/app.mjs",
+      "owner": "artwork",
+      "bytes": 619755,
+      "sha256": "e240bd9a6b1d89d7f00d061efb20cb99531ff36a2fc67132207565c75fdfd61c",
+      "gitBlob": "7750742b85eac5697f9d227a1485567e0865c321"
+    }
+  ],
+  "unchangedGuardExcerpts": [
+    {
+      "marker": "function clearInput(",
+      "bytes": 800,
+      "sha256": "9668c87b4c47e67e38f35d568f8b71710a42fac2d1ffa65a2a8cfbba581114e5",
+      "presentInArtwork": true,
+      "presentInLifecycle": true
+    },
+    {
+      "marker": "    pictureResume = null;\n    // Readiness may finish",
+      "bytes": 1500,
+      "sha256": "9a43562362fcd7221d16320c0b8e0d2272f8e4b1a5a895fbd7ba9056a199fcfb",
+      "presentInArtwork": true,
+      "presentInLifecycle": true
+    }
+  ],
+  "findings": [
+    {
+      "status": "clean-within-scope",
+      "detail": "The sole shared path is game/app.mjs. Artwork changes only its import, route-host serializeArtwork option, and candidate-picture acquire injection. Lifecycle changes only pending action/pickup retirement in the fixed-step loop. Exact common-base diff ranges do not overlap."
+    },
+    {
+      "status": "clean-within-scope",
+      "detail": "Artwork attempt.mjs 149–167 still loads verified bytes and awaits full owned decode with cancellation/current checks before candidate transfer. Its take() 223–231 transfers the picture once. App preparation/adoption paths retain generation, focus/visibility and owner checks; cancelled or abandoned tickets release the picture."
+    },
+    {
+      "status": "clean-within-scope",
+      "detail": "App accepted activation at artwork lines10924–10949 clears preparation/recovery, calls clearInput() (including scene-clock reset), then marks neutralResumeTick and sets playing. These source excerpts are byte-identical in base, artwork and lifecycle heads. Async image preparation time cannot enter play through either changed hunk."
+    },
+    {
+      "status": "clean-within-scope",
+      "detail": "Lifecycle preserves only fresh pending action/pickup behind the accepted neutral tick and explicitly clears them on respawn/capture stop. No image-owner or preparation callback reads/writes those flags; artwork does not change the fixed-step loop, clock, input polling or interruption threshold."
+    },
+    {
+      "status": "clean-within-scope",
+      "detail": "The binary picture URL remains owned through decode and rendering, and release clears/closes the owned image before revoking the URL. It is not added to checkpoints/replays. The lifecycle hunk neither changes picture adoption nor releases this owner."
+    },
+    {
+      "status": "clean-within-scope",
+      "detail": "Artwork solo-dom fixture changes only Blob URL registry routing and teardown. Lifecycle cadence/input controls use ordinary campaign plus optional readPads/touch setup; they do not inject an audio URL registry or custom candidate loader. No frame/timing/input fixture conflict found."
+    }
+  ],
+  "conclusion": "No concrete ordering, scene-clock or image-ownership conflict found in this bounded source review. Preserve both reviewed implementations when integrating.",
+  "limits": [
+    "No combined app was executed and no regression/performance pass is inferred.",
+    "Actual combined-head source, strict replay, production package and native-browser qualification remain required.",
+    "Other PRs and whole-app behavior are outside this bounded joint-hunk review."
+  ]
+}

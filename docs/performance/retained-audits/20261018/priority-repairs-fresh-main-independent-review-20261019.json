@@ -1,0 +1,353 @@
+{
+  "format": "revealline.integration-peer-review.v1",
+  "scope": "Independent RAM-only source/tree review for draft CI admission; no source writes, branch changes, app/test/build/browser execution or native/release dispatch.",
+  "verdict": "Both declared normal two-parent source integrations are clean within reviewed scope; hosted exact-head qualification remains required.",
+  "lifecycle": {
+    "proposal": {
+      "blob": "92c48842af8086029b5c418b056d5b64aac7f3cd",
+      "bytes": 839394,
+      "sha256": "d978255f10dce0daaed4d303bbb81b4108698826197d75cf038ce0573ede21d4"
+    },
+    "independent": {
+      "proposal": "92c48842af8086029b5c418b056d5b64aac7f3cd",
+      "parents": [
+        "bdfcd56b86ca5b7b6d5ae7160d2cf030fc76a967",
+        "bd15820bee10a33ba64534071d22657fbd7326d3"
+      ],
+      "leftTreeVerified": "6881ff93c2399823f6d19535834dd69abe684830",
+      "rightTreeVerified": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+      "candidateTreeVerified": "4bb44157295ed7e170d60ce3276f790d920ea014",
+      "leafCount": 44794,
+      "leftDiff": [
+        "game/app.mjs",
+        "game/index.html",
+        "game/test/first-flight-home-host.test.mjs",
+        "game/test/first-flight-view.test.mjs",
+        "game/ui/first-flight-view.mjs"
+      ],
+      "mainDiff": [
+        "game/app.mjs",
+        "game/couch/couch-input.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/couch-lifecycle-clock.test.mjs",
+        "game/test/solo-cadence-input-host.test.mjs"
+      ],
+      "allLifecycleBlobsRetained": true,
+      "appComposition": "Removing only incoming homeAvailable hunk exactly reproduces full reviewed lifecycle app; removing same hunk from main app exactly reproduces merge-base app.",
+      "policy": [
+        {
+          "path": ".github/workflows/deploy-pages.yml",
+          "sha": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+        },
+        {
+          "path": "publishing/admission-binding.mjs",
+          "sha": "bbc451129f21407143e4d3034d819711e5539dd2"
+        },
+        {
+          "path": "publishing/admission-preflight.mjs",
+          "sha": "9750b8dc5aef171f9124563966f726c2cbe15237"
+        },
+        {
+          "path": "publishing/focused-tests.mjs",
+          "sha": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+        },
+        {
+          "path": "publishing/focused-test-map.json",
+          "sha": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+        },
+        {
+          "path": "publishing/test-policy.json",
+          "sha": "e067e704a165e16e449761989e3e1b611dc35181"
+        },
+        {
+          "path": "publishing/test-policy.mjs",
+          "sha": "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+        }
+      ],
+      "files": [
+        {
+          "path": "game/app.mjs",
+          "after": {
+            "bytes": 619784,
+            "sha256": "07b8986a0dadd299c0e3dc3243f5419226ad936a29d4078f37398479b225420c",
+            "gitBlob": "082b593bf58c4f405e8f2f9588722410b4c0ce3b"
+          }
+        },
+        {
+          "path": "game/index.html",
+          "after": {
+            "bytes": 143246,
+            "sha256": "62913fc6f145596ff7425e13b3f3f19e2937ec6254b112cbc22691e28eb2ca6a",
+            "gitBlob": "93af395bf479b57f5d617761b78fe6d1202c5282"
+          }
+        },
+        {
+          "path": "game/test/first-flight-home-host.test.mjs",
+          "after": {
+            "bytes": 8163,
+            "sha256": "698faa3eb7713e449f3d769eed8f37fd5e4a5118cf17b732c1d2108d093649c0",
+            "gitBlob": "2ac53a27c8e5287760d69d9883acb6877870c6c0"
+          }
+        },
+        {
+          "path": "game/test/first-flight-view.test.mjs",
+          "after": {
+            "bytes": 9063,
+            "sha256": "8fa8d4efec487e22cffb0382b4c7fcb106f26896e2e35ecde547c5c57fa355a0",
+            "gitBlob": "f250b6bd262c525c900b12f037b93150f4f9993c"
+          }
+        },
+        {
+          "path": "game/ui/first-flight-view.mjs",
+          "after": {
+            "bytes": 7917,
+            "sha256": "e94601c1488848884c2e629dac356cc47865b6f5ffbfb4effff79404e5103767",
+            "gitBlob": "1bd67ea6c167081fb29ca3f737deea6b14d5e334"
+          }
+        }
+      ],
+      "sourceAdmission": {
+        "classification": "maintenance as defined by current admission-binding.mjs; source inspection only, not an executed receipt.",
+        "matchedCategories": [
+          {
+            "id": "localization",
+            "matchedPaths": [
+              "game/couch/couch-input.mjs",
+              "game/couch/couch.mjs",
+              "game/couch/relay-rescue.mjs"
+            ],
+            "commands": [
+              {
+                "id": "i18n-check",
+                "command": "npm",
+                "args": [
+                  "run",
+                  "i18n:check"
+                ]
+              },
+              {
+                "id": "localization-runtime",
+                "command": "node",
+                "args": [
+                  "--test",
+                  "game/test/localization.test.mjs",
+                  "game/test/localization-couch-host.test.mjs",
+                  "game/test/localization-gameplay-copy.test.mjs",
+                  "game/test/localization-team-copy.test.mjs",
+                  "game/test/about-navigation-host.test.mjs"
+                ]
+              }
+            ],
+            "deferredChangedTestPatterns": []
+          },
+          {
+            "id": "player-navigation-team",
+            "matchedPaths": [
+              "game/couch/couch-input.mjs",
+              "game/couch/couch.mjs",
+              "game/couch/relay-rescue.mjs",
+              "game/test/couch-input.test.mjs",
+              "game/test/couch-lifecycle-clock.test.mjs"
+            ],
+            "commands": [
+              {
+                "id": "player-navigation-team",
+                "command": "node",
+                "args": [
+                  "--test",
+                  "game/test/couch-navigation.test.mjs",
+                  "game/test/couch-composite-menu-navigation.test.mjs",
+                  "game/test/mission-library-controller-host.test.mjs",
+                  "game/test/content-team-navigation.test.mjs",
+                  "game/test/controller-navigation.test.mjs"
+                ],
+                "timeoutMs": 1200000
+              }
+            ],
+            "deferredChangedTestPatterns": []
+          },
+          {
+            "id": "company-editions",
+            "matchedPaths": [
+              "game/app.mjs"
+            ],
+            "commands": [
+              {
+                "id": "company-generated-source-and-media",
+                "command": "npm",
+                "args": [
+                  "run",
+                  "company:check"
+                ]
+              },
+              {
+                "id": "company-runtime-and-publication",
+                "command": "npm",
+                "args": [
+                  "run",
+                  "company:test"
+                ],
+                "timeoutMs": 2700000
+              },
+              {
+                "id": "company-review-measurements",
+                "command": "node",
+                "args": [
+                  "--test",
+                  "scripts/test-company-review.mjs"
+                ]
+              },
+              {
+                "id": "edition-appearance-contracts",
+                "command": "node",
+                "args": [
+                  "--test",
+                  "game/test/actor-appearance-pin.test.mjs",
+                  "game/test/actor-appearance-lease.test.mjs",
+                  "game/test/replay-presentation.test.mjs",
+                  "game/test/replay-actor-context.test.mjs"
+                ]
+              },
+              {
+                "id": "edition-persistence-compatibility",
+                "command": "node",
+                "args": [
+                  "--test",
+                  "game/test/installed-app.test.mjs",
+                  "game/test/profile-transfer.test.mjs",
+                  "game/test/profile-channel-reader.test.mjs",
+                  "scripts/test-offline-publication.mjs"
+                ]
+              }
+            ],
+            "deferredChangedTestPatterns": []
+          }
+        ],
+        "changedTests": [
+          "game/test/couch-input.test.mjs",
+          "game/test/couch-lifecycle-clock.test.mjs",
+          "game/test/solo-cadence-input-host.test.mjs"
+        ],
+        "changedTestAdmission": "publishing/focused-tests.mjs lines98–120 adds each changed .test.mjs when not already present and not explicitly deferred; these three are not deferred.",
+        "appearance": "game/app.mjs and game/couch/couch.mjs trigger existing Appearance workflow.",
+        "native": "No lifecycle changed path matches solo-native-package-consumer pull_request path filters. No workflow_dispatch is requested. Existing pinned/native strict replay and final lifecycle qualification remain pending release obligations."
+      },
+      "draft": {
+        "title": "Preserve fresh Resume actions and reset accepted gameplay clocks",
+        "body": "Solo and Versus can discard a fresh action or pickup on the mandatory neutral Resume tick. Team Start/Retry and Versus Resume can also inherit a prior menu interval. Preserve fresh requests in the existing input owners, retain cancellation and held-controller blocking, and reset accepted entry clocks without changing 120 Hz simulation or replay formats.\n\nSource reviewed independently. Twelve new bounded controls cover high-refresh and zero-tick polling, catch-up, fresh controller/touch requests and stale menu gaps; functional tests have not run yet. This draft starts exact-head source/build qualification. Strict replay/shared-mode validation and final native lifecycle checks remain required. Keep release and native execution held; no other release head or policy is changed."
+      }
+    },
+    "findings": [
+      "Both complete parent Git tree identities and candidate tree were independently reproduced from Git tree serialization, not inferred from selected diffs.",
+      "The sole overlapping app file contains exactly incoming homeAvailable lines. Removing that hunk reproduces every byte of reviewed lifecycle app; removing it from current-main app reproduces merge-base app. Fresh action/pickup retention, shared clock changes and all lifecycle tests remain unchanged.",
+      "The three changed lifecycle test files are directly admitted by existing focused-tests selection and have no deferred patterns; existing app/couch Appearance triggers remain.",
+      "Draft body describes the defects, twelve unexecuted controls and strict replay/native remaining obligations without claiming completion."
+    ]
+  },
+  "mp3": {
+    "proposal": {
+      "blob": "21dd5ffe638728ac900a85e53eaa9a6812f3a1f9",
+      "bytes": 31554,
+      "sha256": "6b0d117dc69c7daa1ea81c3316927bb1f76c074e0e9b4fd15937002026acd239"
+    },
+    "independent": {
+      "proposal": "21dd5ffe638728ac900a85e53eaa9a6812f3a1f9",
+      "parents": [
+        "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+        "bd15820bee10a33ba64534071d22657fbd7326d3"
+      ],
+      "leftTreeVerified": "93d369be4d6ac29a113fe091693df245ef68a1ab",
+      "mainTreeVerified": "11a3e3f847a0ba9424b888f090de369adcd8fae0",
+      "candidateTreeVerified": "c11225baa8c0dcca055f058d31889c98a999ad04",
+      "leafCount": 44793,
+      "leftDiff": [
+        "game/app.mjs",
+        "game/index.html",
+        "game/test/first-flight-home-host.test.mjs",
+        "game/test/first-flight-view.test.mjs",
+        "game/ui/first-flight-view.mjs"
+      ],
+      "mainDiff": [
+        "game/soundtrack-source.mjs",
+        "game/test/soundtrack-player.test.mjs",
+        "game/test/soundtrack-source.test.mjs",
+        "game/ui/soundtrack-player.mjs"
+      ],
+      "allReviewedMP3BlobsRetained": true,
+      "allSevenPolicyBlobsUnchanged": true,
+      "sourceMatchedCategories": [],
+      "deferredChangedTests": [],
+      "files": [
+        {
+          "path": "game/soundtrack-source.mjs",
+          "before": {
+            "gitBlob": "7a0d3b7d7d6fad7c9d545cfaa54afe892f155505",
+            "bytes": 4918,
+            "sha256": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83"
+          },
+          "after": {
+            "gitBlob": "106eb9d719004c12aad2ab4ad95488b79dff20ca",
+            "bytes": 5305,
+            "sha256": "cbad7bf6561138d35851e37430d1c7219e9413495e4a11f385d735b6b9c1549e"
+          }
+        },
+        {
+          "path": "game/test/soundtrack-player.test.mjs",
+          "before": {
+            "gitBlob": "6a2400b0d5c5881d1e475ef6a48d7b8c03ec514a",
+            "bytes": 81316,
+            "sha256": "a8cac3d5e9cc61ddf8b4b034ddac683ae5ad11be940bc457f9f118244175e60e"
+          },
+          "after": {
+            "gitBlob": "354b19260773058c4a0b401ed2bab167d4ffeef1",
+            "bytes": 91273,
+            "sha256": "aa7692b36a8382fec722633ed8b1294e16849fc34e635d2c7e7b346903e03cf7"
+          }
+        },
+        {
+          "path": "game/test/soundtrack-source.test.mjs",
+          "before": {
+            "gitBlob": "533eb352210c38dd3d967822be96081e9544b410",
+            "bytes": 11720,
+            "sha256": "4ef3895e384549bcd24561a8a1bddab44367716e47b5b2c0fa0915f4ca91d179"
+          },
+          "after": {
+            "gitBlob": "588d449fc42de183962f8caa7ae64ea345fbc20c",
+            "bytes": 13731,
+            "sha256": "8b209957d3316e89c5964e20311c28b391ad06f7c1e997288dd62be2e89e8a78"
+          }
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "before": {
+            "gitBlob": "fc2c8b5bd334ecb589ae32022e8158c8b0618f4a",
+            "bytes": 62236,
+            "sha256": "63ce0b026ff6dfdc5a165cfba0e0049e6dd6fb6560a26fa6d69abf259b7f1115"
+          },
+          "after": {
+            "gitBlob": "640acdf98815047953d4131e67b13e32cfd78a56",
+            "bytes": 64273,
+            "sha256": "9033a34d3b8f26faa06ceaf06ab808786e5b03d9457e173580be0185dc620e6c"
+          }
+        }
+      ],
+      "draft": {
+        "title": "perf(audio): reuse playback inspection for downloaded recordings",
+        "body": "Current and next soundtrack recordings were fully scanned synchronously before reaching the playback inspector. Route that scan through the existing reusable inspector, then reuse its validated facts only for the same acquired Blob. Digest and descriptor validation, bounded fallback, and source/transport cancellation remain enforced.\n\nAdds twelve controls for worker execution, current/next playback, validation identity, cancellation, timeout and paused fallback. Source review is complete; hosted execution is pending. Keep this PR draft for source qualification. No performance or device pass is claimed."
+      }
+    },
+    "findings": [
+      "Complete parent and candidate trees independently reproduced; all four held MP3 source/test blobs remain byte-identical and all five incoming main paths are disjoint and preserved.",
+      "Before/after Git identities, byte counts and SHA256 receipts verified for all four files. Seven trusted source/policy files are unchanged between both parents and candidate.",
+      "No named category matches these paths. Existing changed-test logic directly admits soundtrack-player.test and soundtrack-source.test; unknown-runtime validation remains required. Existing Appearance trigger and full source checkout retain worker dependencies.",
+      "Draft body accurately describes inspection reuse and preserved validation/cancellation, and explicitly marks twelve controls as unexecuted and device/performance evidence absent."
+    ]
+  },
+  "limits": [
+    "Integration review does not rerun prior functional validation and does not assert that either exact candidate passes CI.",
+    "Parent must recheck main/branch identities immediately before mutation; any advance requires reconciliation.",
+    "No current ready head, protected main, native declaration or release policy is changed by this audit."
+  ]
+}

@@ -1,0 +1,404 @@
+{
+  "format": "revealline.source-failure-audit.v1",
+  "scope": "Read-only exact-source hosted evidence; no functional execution, source mutation, rerun or cancellation.",
+  "repository": "mekhovov/revealline",
+  "pullRequest": 1675,
+  "sourceRevision": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+  "sourceTree": "8763bfc452d22373a6733984fc19d2aa09a3c3c9",
+  "run": 39173025193,
+  "job": 117818839739,
+  "runAttempt": 1,
+  "jobConclusion": "failure",
+  "jobStartedAt": "2026-10-19T00:34:03Z",
+  "jobCompletedAt": "2026-10-19T00:46:39Z",
+  "artifact": {
+    "artifact": 12156139659,
+    "bytes": 3638,
+    "sha256": "801b81fdb71716347bf03e98a66f57a3b39f74774602a505102c2078035ae99a",
+    "files": [
+      {
+        "name": "output.log",
+        "bytes": 9277,
+        "sha256": "eb8bfee62b195b23b51b041095a4f9c4311f2a8055464c10ccab48bda070f9fa",
+        "text": "### Focused release gate\n\nCategories: publishing\nCommands: 5\nFallback validation: game/test/helpers/soundtrack-authoring-loader.mjs, game/test/solo-soundtrack-admission-host.test.mjs, game/test/soundtrack-host.test.mjs, game/test/soundtrack-panel.test.mjs, game/ui/soundtrack-authoring-view.mjs, game/ui/soundtrack-panel.mjs\nFocused shard 4/4: 1/5 commands; plan 9edf85b3f595c1313f2c8c4b9ef168602b1b4b22ab26185cc48b990c13ce9674\n\n[focused:changed-test:game/test/soundtrack-host.test.mjs] node --test game/test/soundtrack-host.test.mjs\nTAP version 13\n# Subtest: silent Solo Start defers native audio until unmute in its control gesture\nok 1 - silent Solo Start defers native audio until unmute in its control gesture\n  ---\n  duration_ms: 2854.180916\n  ...\n# Subtest: silent Solo Start defers native audio until volume rises in its control gesture\nok 2 - silent Solo Start defers native audio until volume rises in its control gesture\n  ---\n  duration_ms: 2096.321539\n  ...\n# Subtest: deferred Solo activation preserves an explicit music Pause when master sound is restored\nok 3 - deferred Solo activation preserves an explicit music Pause when master sound is restored\n  ---\n  duration_ms: 2157.634108\n  ...\n# Subtest: muted fresh Solo browses metadata only on Studio demand and acquires no recordings before Play\nok 4 - muted fresh Solo browses metadata only on Studio demand and acquires no recordings before Play\n  ---\n  duration_ms: 1309.774577\n  ...\n# Subtest: failed explicit Audio catalogue metadata is reported and Studio retries it once without acquiring recordings\nok 5 - failed explicit Audio catalogue metadata is reported and Studio retries it once without acquiring recordings\n  ---\n  duration_ms: 1321.745552\n  ...\n# Subtest: Settings music text follows master immediately and remains coherent after transport notifications\nok 6 - Settings music text follows master immediately and remains coherent after transport notifications\n  ---\n  duration_ms: 1162.363125\n  ...\n# Subtest: Solo playing banners and Audio summary expose creator links and clear them on a sourceless track\nok 7 - Solo playing banners and Audio summary expose creator links and clear them on a sourceless track\n  ---\n  duration_ms: 1202.893875\n  ...\n# Subtest: trusted Solo creator-link gestures cannot start, retry or restore music\nok 8 - trusted Solo creator-link gestures cannot start, retry or restore music\n  ---\n  duration_ms: 1334.695267\n  ...\n# Subtest: late Settings Play cancellation cannot replace a newer Library Pause label\nok 9 - late Settings Play cancellation cannot replace a newer Library Pause label\n  ---\n  duration_ms: 1211.938483\n  ...\n# Subtest: blocked Settings Play feedback survives master edits until a real transport retry\nok 10 - blocked Settings Play feedback survives master edits until a real transport retry\n  ---\n  duration_ms: 1158.821973\n  ...\n# Subtest: actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight\nok 11 - actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight\n  ---\n  duration_ms: 3751.388157\n  ...\n# Subtest: actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection\nok 12 - actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection\n  ---\n  duration_ms: 11366.809031\n  ...\n# Subtest: actual master, music and SFX controls remain independent and the studio fader persists to game settings\nok 13 - actual master, music and SFX controls remain independent and the studio fader persists to game settings\n  ---\n  duration_ms: 1294.698499\n  ...\n# Subtest: Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight\nok 14 - Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight\n  ---\n  duration_ms: 1208.89256\n  ...\n# Subtest: actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume\nok 15 - actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume\n  ---\n  duration_ms: 2433.198389\n  ...\n# Subtest: missing file-audio API disables Studio and leaves the original synth fallback usable\nok 16 - missing file-audio API disables Studio and leaves the original synth fallback usable\n  ---\n  duration_ms: 1092.481586\n  ...\n# Subtest: actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight\nok 17 - actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight\n  ---\n  duration_ms: 1256.500238\n  ...\n# Subtest: a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight\nok 18 - a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight\n  ---\n  duration_ms: 2158.517378\n  ...\n# Subtest: actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight\nnot ok 19 - actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight\n  ---\n  duration_ms: 2064.547759\n  location: '/home/runner/work/revealline/revealline/source/game/test/soundtrack-host.test.mjs:857:1'\n  failureType: 'testCodeFailure'\n  error: \"Cannot read properties of null (reading 'addEventListener')\"\n  code: 'ERR_TEST_FAILURE'\n  name: 'TypeError'\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/soundtrack-host.test.mjs:869:8)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ...\n# Subtest: closing Studio during pending Play respects play with saved audio disabled when flight starts\nok 20 - closing Studio during pending Play respects play with saved audio disabled when flight starts\n  ---\n  duration_ms: 1978.805776\n  ...\n# Subtest: closing Studio during pending Play respects pause with saved audio disabled when flight starts\nok 21 - closing Studio during pending Play respects pause with saved audio disabled when flight starts\n  ---\n  duration_ms: 1978.024041\n  ...\n# Subtest: closing Studio during pending Play respects pause with saved audio enabled when flight starts\nok 22 - closing Studio during pending Play respects pause with saved audio enabled when flight starts\n  ---\n  duration_ms: 2103.912086\n  ...\n# Subtest: closing Studio during pending Play respects mute with saved audio enabled when flight starts\nok 23 - closing Studio during pending Play respects mute with saved audio enabled when flight starts\n  ---\n  duration_ms: 2003.592531\n  ...\n# Subtest: Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner\nok 24 - Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner\n  ---\n  duration_ms: 1196.657866\n  ...\n# Subtest: Settings Audio Play/Pause stays out of landing and Pause while Pause Next uses the shared transport\nok 25 - Settings Audio Play/Pause stays out of landing and Pause while Pause Next uses the shared transport\n  ---\n  duration_ms: 2378.735198\n  ...\n# Subtest: quick Solo keyboard retry owns its blocked playback gesture exactly once\nok 26 - quick Solo keyboard retry owns its blocked playback gesture exactly once\n  ---\n  duration_ms: 1178.902186\n  ...\n# Subtest: quick Solo pointer retry owns its blocked playback gesture exactly once\nok 27 - quick Solo pointer retry owns its blocked playback gesture exactly once\n  ---\n  duration_ms: 1173.737563\n  ...\n# Subtest: Solo reload uses saved fpv on generic start without rewriting preferences\nok 28 - Solo reload uses saved fpv on generic start without rewriting preferences\n  ---\n  duration_ms: 2077.126339\n  ...\n# Subtest: Solo reload uses saved fusion on generic play without rewriting preferences\nok 29 - Solo reload uses saved fusion on generic play without rewriting preferences\n  ---\n  duration_ms: 1299.555832\n  ...\n# Subtest: closing Studio cancels a pending saved-style Play without a late stream\nok 30 - closing Studio cancels a pending saved-style Play without a late stream\n  ---\n  duration_ms: 1281.107855\n  ...\n# Subtest: generic saved-style Play wins while Studio discovery is still pending\nok 31 - generic saved-style Play wins while Studio discovery is still pending\n  ---\n  duration_ms: 1381.132766\n  ...\n# Subtest: generic saved-style Play is cancelled on close while Studio discovery is still pending\nok 32 - generic saved-style Play is cancelled on close while Studio discovery is still pending\n  ---\n  duration_ms: 1358.690582\n  ...\n# Subtest: cold Solo Start and Audio settings do not load or construct optional soundtrack authoring\nok 33 - cold Solo Start and Audio settings do not load or construct optional soundtrack authoring\n  ---\n  duration_ms: 2583.806355\n  ...\n[focused:changed-test:game/test/soundtrack-host.test.mjs] failed {\"id\":\"changed-test:game/test/soundtrack-host.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/soundtrack-host.test.mjs\"],\"status\":1,\"signal\":null,\"error\":null,\"timedOut\":true,\"timeoutMs\":600000,\"timeoutReason\":\"command-deadline\"}\n"
+      },
+      {
+        "name": "receipt.json",
+        "bytes": 2578,
+        "sha256": "490968c084ddfa63ba3c4be3a7024e6140b25e9cefc18ed025703cfdb1a69645",
+        "text": "{\"format\":\"revealline-focused-shard.v1\",\"state\":\"complete\",\"shard\":{\"index\":4,\"total\":4},\"identity\":{\"sourceRevision\":\"8499225d1d4391372e52903a3a0e8ecaab1b3aad\",\"workflowRevision\":\"c8147b613fac1c250655e8c6f02e52e05ba8e86f\",\"policyDigest\":\"bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142\",\"testPolicySha256\":\"ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2\",\"manifestSha256\":\"d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479\",\"changedPathsSha256\":\"cb9cc98aa0df459ff69894ae5985485b54adfb413b97d188233128aeff70e610\",\"fallbackHandled\":false,\"sourceTree\":\"8763bfc452d22373a6733984fc19d2aa09a3c3c9\"},\"plan\":{\"commands\":[{\"id\":\"publishing-controller\",\"command\":\"node\",\"args\":[\"--test\",\"publishing/focused-tests.test.mjs\",\"publishing/fastline-merge-controller.test.mjs\",\"publishing/fastline-release-inputs.test.mjs\",\"publishing/fastline-release-objects.test.mjs\",\"publishing/fastline-release-publisher.test.mjs\",\"publishing/source-workflow.test.mjs\",\"scripts/test-pages-capacity-evidence.mjs\",\"scripts/test-pages-archive-evidence.mjs\",\"scripts/test-pages-recovery.mjs\",\"scripts/test-pages-capacity-report.mjs\",\"scripts/test-main-pages-metadata.mjs\",\"scripts/test-pages-candidate-contract.mjs\",\"scripts/test-pages-candidate-overlay.mjs\",\"scripts/test-pages-candidate-archive.mjs\",\"scripts/test-pages-candidate-measurement.mjs\",\"scripts/test-pages-candidate-stack.mjs\",\"scripts/test-pages-stack-contract.mjs\",\"scripts/test-pages-stack-source.mjs\",\"scripts/test-pages-stack-packet.mjs\",\"scripts/test-pages-stack-measurement.mjs\",\"scripts/test-pages-stack-artifacts.mjs\",\"scripts/test-pages-stack-e2e.mjs\",\"publishing/test-policy.test.mjs\"]},{\"id\":\"unknown-runtime-validate\",\"command\":\"npm\",\"args\":[\"run\",\"validate\"],\"timeoutMs\":1800000},{\"id\":\"changed-test:game/test/solo-soundtrack-admission-host.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/solo-soundtrack-admission-host.test.mjs\"]},{\"id\":\"changed-test:game/test/soundtrack-host.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/soundtrack-host.test.mjs\"]},{\"id\":\"changed-test:game/test/soundtrack-panel.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/soundtrack-panel.test.mjs\"]}],\"sha256\":\"9edf85b3f595c1313f2c8c4b9ef168602b1b4b22ab26185cc48b990c13ce9674\"},\"indices\":[3],\"result\":{\"attempted\":1,\"failures\":[{\"id\":\"changed-test:game/test/soundtrack-host.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/soundtrack-host.test.mjs\"],\"status\":1,\"signal\":null,\"error\":null,\"timedOut\":true,\"timeoutMs\":600000,\"timeoutReason\":\"command-deadline\"}],\"exitCode\":124}}\n"
+      }
+    ]
+  },
+  "findings": [
+    "Retained artifact ZIP size/SHA256/CRC and exact-source receipt were verified in RAM. Both extracted members, their byte lengths, SHA256 hashes and complete text are retained here.",
+    "Command node --test game/test/soundtrack-host.test.mjs attempted once and reached the unchanged 600000 ms command deadline, exit124; no complete TAP footer exists.",
+    "Partial output contains32 passed and1 failed test. Existing case19 failed with TypeError: Cannot read properties of null (reading 'addEventListener') at soundtrack-host.test.mjs869:8, after openStudio awaited connected soundtrack-tracks plus library readiness.",
+    "Cases20–33 printed pass after case19. The last reported case33 is the new cold authoring control; this does not identify which subsequent promise blocked.",
+    "The failure is a test assertion-path exception followed by a command timeout, not the prior Appearance checkout failure.",
+    "Of eleven new authoring controls, earlier complete panel cohort evidence proves two passed and this partial host output proves the cold control passed; eight remaining host controls have no completed passing evidence.",
+    "Source review: couch-dom fixture after(node) accepts only one node while production mountAuthoringView calls originalSection.after(tracks,playlist,assignment,transfer). This explains a tracks-connected fixture without the retained backup link. It is not evidence of a native DOM regression or the cause of the later command timeout.",
+    "No test deadline has been enlarged, failure discarded, or passing release verdict inferred."
+  ],
+  "newControlEvidence": {
+    "passed": [
+      "Settings commits before authoring mounts and later preserves an unrelated editor draft",
+      "shared Couch owner and modal facade remain usable while authoring import is pending",
+      "cold Solo Start and Audio settings do not load or construct optional soundtrack authoring"
+    ],
+    "uncompletedHostControls": 8,
+    "priorAudit": "a06834c4c42da784ac0842b1115c3f1698ecafc2"
+  },
+  "sourceReceipts": [
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "blob": "2045b6f6babf476fa567bd6c5ab4b66261095b18",
+      "bytes": 61492,
+      "sha256": "be2dc8359a2b530df10b529dd0bd0a9ec0566a5687b3d3c0a70dda15460b24c4"
+    },
+    {
+      "path": "game/test/helpers/soundtrack-authoring-loader.mjs",
+      "blob": "d4675908a823ad3c45defbdb364985f1b7de40bf",
+      "bytes": 1596,
+      "sha256": "5adfcaaaeb9dfebce562e838a3e2db053a11dd0af22284879c9d3d4e0ab8ec8b"
+    }
+  ],
+  "snapshot": {
+    "at": "2026-10-19T00:49:55.004541+00:00",
+    "results": [
+      {
+        "run": {
+          "id": 39173025193,
+          "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 1,
+          "created_at": "2026-10-18T22:37:13Z",
+          "updated_at": "2026-10-19T00:46:40Z"
+        },
+        "jobs": [
+          {
+            "id": 117809866195,
+            "name": "preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:19:37Z",
+            "completed_at": "2026-10-18T23:19:52Z",
+            "activeStep": null
+          },
+          {
+            "id": 117818839739,
+            "name": "focused_shards (4)",
+            "status": "completed",
+            "conclusion": "failure",
+            "started_at": "2026-10-19T00:34:03Z",
+            "completed_at": "2026-10-19T00:46:39Z",
+            "activeStep": null
+          },
+          {
+            "id": 117818839744,
+            "name": "focused_shards (2)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:23:21Z",
+            "completed_at": "2026-10-19T00:33:04Z",
+            "activeStep": null
+          },
+          {
+            "id": 117818839749,
+            "name": "focused_shards (1)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:24:37Z",
+            "completed_at": "2026-10-19T00:27:13Z",
+            "activeStep": null
+          },
+          {
+            "id": 117818839770,
+            "name": "focused_shards (3)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:27:15Z",
+            "completed_at": "2026-10-19T00:30:37Z",
+            "activeStep": null
+          },
+          {
+            "id": 117818840634,
+            "name": "test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:19:53Z",
+            "completed_at": "2026-10-18T23:19:52Z",
+            "activeStep": null
+          },
+          {
+            "id": 117818840719,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:19:53Z",
+            "completed_at": "2026-10-18T23:19:52Z",
+            "activeStep": null
+          },
+          {
+            "id": 117837424113,
+            "name": "focused",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:46:40Z",
+            "completed_at": null,
+            "activeStep": null
+          }
+        ]
+      },
+      {
+        "run": {
+          "id": 39179292792,
+          "head_sha": "98f666a20d133d9a81eb07104076c3147fd165aa",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 1,
+          "created_at": "2026-10-19T00:06:49Z",
+          "updated_at": "2026-10-19T00:11:15Z"
+        },
+        "jobs": [
+          {
+            "id": 117829433874,
+            "name": "preflight",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:11:15Z",
+            "completed_at": null,
+            "activeStep": null
+          }
+        ]
+      },
+      {
+        "run": {
+          "id": 39179292744,
+          "head_sha": "98f666a20d133d9a81eb07104076c3147fd165aa",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 1,
+          "created_at": "2026-10-19T00:06:49Z",
+          "updated_at": "2026-10-19T00:06:49Z"
+        },
+        "jobs": [
+          {
+            "id": 117828423954,
+            "name": "admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:06:49Z",
+            "completed_at": null,
+            "activeStep": null
+          },
+          {
+            "id": 117828424137,
+            "name": "installed_admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:06:49Z",
+            "completed_at": null,
+            "activeStep": null
+          },
+          {
+            "id": 117828424203,
+            "name": "team_admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:06:49Z",
+            "completed_at": null,
+            "activeStep": null
+          },
+          {
+            "id": 117828424213,
+            "name": "demo_admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-19T00:06:49Z",
+            "completed_at": null,
+            "activeStep": null
+          }
+        ]
+      },
+      {
+        "run": {
+          "id": 39173029629,
+          "head_sha": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 1,
+          "created_at": "2026-10-18T22:37:17Z",
+          "updated_at": "2026-10-18T23:23:01Z"
+        },
+        "jobs": [
+          {
+            "id": 117809880606,
+            "name": "preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:22:49Z",
+            "completed_at": "2026-10-18T23:23:01Z",
+            "activeStep": null
+          },
+          {
+            "id": 117819513720,
+            "name": "focused_shards (1)",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-19T00:25:05Z",
+            "completed_at": "2026-10-19T00:28:29Z",
+            "activeStep": null
+          },
+          {
+            "id": 117819513761,
+            "name": "focused_shards (3)",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": null,
+            "activeStep": null
+          },
+          {
+            "id": 117819513779,
+            "name": "focused_shards (4)",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": null,
+            "activeStep": null
+          },
+          {
+            "id": 117819513782,
+            "name": "focused_shards (2)",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": null,
+            "activeStep": null
+          },
+          {
+            "id": 117819514613,
+            "name": "test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": "2026-10-18T23:23:01Z",
+            "activeStep": null
+          },
+          {
+            "id": 117819515014,
+            "name": "build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "started_at": "2026-10-18T23:23:01Z",
+            "completed_at": "2026-10-18T23:23:01Z",
+            "activeStep": null
+          }
+        ]
+      },
+      {
+        "run": {
+          "id": 39173025211,
+          "head_sha": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+          "status": "queued",
+          "conclusion": null,
+          "run_attempt": 2,
+          "created_at": "2026-10-18T22:37:13Z",
+          "updated_at": "2026-10-18T23:34:11Z"
+        },
+        "jobs": [
+          {
+            "id": 117821813077,
+            "name": "installed_admission",
+            "status": "queued",
+            "conclusion": null,
+            "started_at": "2026-10-18T23:34:12Z",
+            "completed_at": null,
+            "activeStep": null
+          },
+          {
+            "id": 117821814124,
+            "name": "team_admission",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:28:12Z",
+            "completed_at": "2026-10-18T23:32:36Z",
+            "activeStep": null
+          },
+          {
+            "id": 117821841325,
+            "name": "demo_admission",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:28:22Z",
+            "completed_at": "2026-10-18T23:31:11Z",
+            "activeStep": null
+          },
+          {
+            "id": 117821846814,
+            "name": "admission",
+            "status": "completed",
+            "conclusion": "success",
+            "started_at": "2026-10-18T23:22:07Z",
+            "completed_at": "2026-10-18T23:24:58Z",
+            "activeStep": null
+          }
+        ]
+      }
+    ]
+  },
+  "admissionScope": {
+    "manifestBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+    "manifestSHA": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+    "matchingCategories": [
+      {
+        "id": "player-navigation-team",
+        "pathPatterns": [
+          "^game/(?:team|navigation)/",
+          "^game/couch/(?!coop-(?:picture-bindings|presentation)\\.mjs$)",
+          "^game/test/(?!solo-result-continuation-host\\.test\\.mjs$).*(couch|team|navigation|pause|result).*\\.test\\.mjs$"
+        ],
+        "commands": [
+          {
+            "id": "player-navigation-team",
+            "command": "node",
+            "args": [
+              "--test",
+              "game/test/couch-navigation.test.mjs",
+              "game/test/couch-composite-menu-navigation.test.mjs",
+              "game/test/mission-library-controller-host.test.mjs",
+              "game/test/content-team-navigation.test.mjs",
+              "game/test/controller-navigation.test.mjs"
+            ],
+            "timeoutMs": 1200000
+          }
+        ]
+      }
+    ],
+    "appearanceCouchReferences": [
+      "264:  APPEARANCE_TEAM_TEST_FILES: >-",
+      "270:  APPEARANCE_INSTALLED_TEST_FILES: >-",
+      "272:  APPEARANCE_ADMISSION_TEST_FILES: >-",
+      "290:  APPEARANCE_DEMO_TEST_FILES: >-",
+      "341:          read -r -a test_files <<< \"$APPEARANCE_ADMISSION_TEST_FILES\"",
+      "389:            files: process.env.APPEARANCE_ADMISSION_TEST_FILES.trim().split(/\\s+/),",
+      "449:          read -r -a test_files <<< \"$APPEARANCE_DEMO_TEST_FILES\"",
+      "497:            files: process.env.APPEARANCE_DEMO_TEST_FILES.trim().split(/\\s+/),",
+      "557:          read -r -a test_files <<< \"$APPEARANCE_TEAM_TEST_FILES\"",
+      "605:            files: process.env.APPEARANCE_TEAM_TEST_FILES.trim().split(/\\s+/),",
+      "665:          read -r -a test_files <<< \"$APPEARANCE_INSTALLED_TEST_FILES\"",
+      "713:            files: process.env.APPEARANCE_INSTALLED_TEST_FILES.trim().split(/\\s+/),",
+      "740:      APPEARANCE_TEST_FILES: >-",
+      "910:          read -r -a test_files <<< \"$APPEARANCE_TEST_FILES\"",
+      "981:            ['ADMISSION', 'APPEARANCE_ADMISSION_TEST_FILES', 'admission'],",
+      "982:            ['TEAM_ADMISSION', 'APPEARANCE_TEAM_TEST_FILES', 'team-admission'],",
+      "983:            ['DEMO_ADMISSION', 'APPEARANCE_DEMO_TEST_FILES', 'demo-admission'],",
+      "984:            ['INSTALLED_ADMISSION', 'APPEARANCE_INSTALLED_TEST_FILES', 'installed-admission'],",
+      "1045:              files: process.env.APPEARANCE_TEST_FILES.trim().split(/\\s+/),"
+    ],
+    "deferred": []
+  },
+  "limits": "Partial output is preserved; no full source aggregate, Appearance package, native performance or current-main release pass is claimed. Appearance attempt2 remains the single checkout retry, with earlier successful cohorts belonging to attempt1."
+}
