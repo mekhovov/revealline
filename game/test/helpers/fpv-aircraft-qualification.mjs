@@ -225,11 +225,12 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
   const { createAdvancedWorkerClient } = await import(
     '../../../optional-practice/civilian-fpv/advanced-worker-client.mjs'
   );
-  const { verifyAdvancedRecovery } = await import(
+  const { verifyAdvancedRecovery, replayAdvancedRecording } = await import(
     '../../../optional-practice/civilian-fpv/advanced-simulation.mjs'
   );
   await initAdvancedRuntime();
   const results = [];
+  const capacities = [];
   for (const preset of listAircraftPresets())
     for (const mode of ['acro', 'self-level']) {
       const config = {
@@ -260,12 +261,42 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
       await initialize();
       try {
         let saved;
+        const started = performance.now();
         for (let tick = 0; tick < 80; tick++) {
           await step(tick);
           if (tick === 39) saved = await snapshot();
         }
+        capacities.push({
+          preset: preset.id,
+          mode,
+          capacity: 1600 / (performance.now() - started),
+        });
         const final = await snapshot();
         const recording = await sim.recording();
+        check(
+          recording.config.backend === 'civilian-quad-aircraft.v3',
+          'Qualification must use current v3',
+        );
+        check(recording.config.frequency === 1000, 'Qualification must use frozen 1000 Hz');
+        check(
+          recording.startMissionTick === 0 && recording.missionTicks === 80,
+          'Qualification replay must retain its whole bounded flight',
+        );
+        check(recording.finalHash === final.hash, `${preset.id} recording hash diverged`);
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        check((await snapshot()).hash === final.hash, `${preset.id} paused owner advanced`);
+        const replay = worker
+          ? await sim.verifyRecording(recording)
+          : await replayAdvancedRecording(recording);
+        check(
+          replay.verified && replay.verificationScope === 'checkpoint-clip',
+          `${preset.id} replay failed`,
+        );
+        check(
+          worker ? replay.sourceSampleCount === 81 : replay.snapshot.hash === final.hash,
+          `${preset.id} complete replay diverged`,
+        );
+        check((await snapshot()).hash === final.hash, `${preset.id} replay changed live state`);
         if (worker) {
           sim.dispose();
           sim = createAdvancedWorkerClient();
@@ -278,13 +309,25 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
           final.hash === continued.hash,
           `${preset.id} ${mode} ${worker ? 'worker' : 'direct'} recovery diverged`,
         );
+        await sim.reset();
+        for (let tick = 0; tick < 80; tick++) await step(tick);
+        const reset = await snapshot();
+        check(final.hash === reset.hash, `${preset.id} ${mode} reset diverged`);
         results.push({
           preset: preset.id,
           mode,
           identity: final.identity,
           finalHash: final.hash,
           continuationHash: continued.hash,
+          resetHash: reset.hash,
           recordedFinalHash: recording.finalHash,
+          replayVerified: replay.verified,
+          replayScope: replay.verificationScope,
+          replayFromMission: recording.startMissionTick,
+          replayThroughMission: recording.missionTicks,
+          backend: recording.config.backend,
+          periodicHashes: recording.segments.flatMap((segment) => segment.hashes),
+          pausedHash: final.hash,
           consumedSequence: final.checkpoint.state.consumedSequence,
           consumedTimestampUs: final.checkpoint.state.consumedTimestampUs,
         });
@@ -292,5 +335,5 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
         sim.dispose();
       }
     }
-  return { frequency: AIRCRAFT_FREQUENCY, worker, cases: results };
+  return { frequency: AIRCRAFT_FREQUENCY, worker, cases: results, capacities };
 }
