@@ -122,6 +122,40 @@
   padding-inline: 6px;
   font-weight: 650;
 }
+.fpv-advanced-practice {
+  grid-template-columns: minmax(0, 1fr);
+  overflow-wrap: anywhere;
+}
+.fpv-advanced-practice :is(details, fieldset, label) {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.fpv-advanced-practice :is(input, select, textarea, button) {
+  max-width: 100%;
+}
+.propulsion-evidence-panel :is(fieldset, legend) {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.propulsion-evidence-panel label > span {
+  display: block;
+}
+.propulsion-evidence-panel :is(input:not([type='checkbox']), textarea) {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.propulsion-evidence-panel label:has(input[type='checkbox']) {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.propulsion-evidence-panel input[type='checkbox'] {
+  flex-shrink: 0;
+}
 .fpv-aircraft-course-filter {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr);

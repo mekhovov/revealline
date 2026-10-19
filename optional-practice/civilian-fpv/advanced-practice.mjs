@@ -460,7 +460,7 @@ export function mountAdvancedPractice({
   tunePreview.setAttribute('role', 'status');
   const tuneFields = el('div', '', tuning);
   tuneFields.style.cssText =
-    'display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px';
+    'display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:10px';
   const fieldInputs = [];
   let evidencePanel = null;
   const batteryLabel = el('label', copy.batteryDepletion, settings),
