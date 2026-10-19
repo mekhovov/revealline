@@ -5910,5 +5910,12 @@
   "flightLimits.collection.journey": "This mission keeps Journey clears and pictures separately from Classic collection records; their two-hour limit does not apply here. Recording-dependent results still need a complete recording, and storage and reward rules still apply.",
   "flightLimits.recordingWarning": "Recording and new recoverable saves end at 30 minutes of play. Pause and check Flight saves before leaving the game.",
   "flightLimits.collectionWarning": "Approaching two hours of play: a later completion cannot be kept in the Classic collection. Pause and check Flight saves.",
-  "flightLimits.collectionExpired": "The two-hour Classic collection limit has passed. This flight can continue, but its completion cannot be kept in the Classic collection. Earlier progress is unchanged."
+  "flightLimits.collectionExpired": "The two-hour Classic collection limit has passed. This flight can continue, but its completion cannot be kept in the Classic collection. Earlier progress is unchanged.",
+  "touchSave.session": "Session only. These touch controls apply for this visit; saving is disabled here.",
+  "touchSave.unconfirmed": "Session only. The browser did not confirm the save. Your selected touch controls remain active for this visit.",
+  "touchSave.full": "Session only. Browser storage is full. Your selected touch controls remain active for this visit.",
+  "touchSave.blocked": "Session only. Browser storage blocked saving. Your selected touch controls remain active for this visit.",
+  "touchSave.unavailable": "Session only. Saving is unavailable. Your selected touch controls remain active for this visit.",
+  "touchSave.preserved": "Session only. Existing saved touch settings could not be read safely and were kept. Your selected controls apply for this visit.",
+  "touchSave.changed": "Session only. Touch settings changed while saving. Retry to save your current selection."
 }
