@@ -98,7 +98,7 @@ export const COUNTERCURRENT_SOURCES = Object.freeze([
     kind: 'text',
     title: () => t('tools:countercurrentGuideAndCaveats'),
     path: 'authoring/library/countercurrent-art/README.md',
-    bytes: 5552,
-    sha256: '58f9b5ae620949b1070e0ba165e07bf5d776113f54f2ead53c7f2d412ec6bc66',
+    bytes: 2034,
+    sha256: 'f9a1c023decef7e12a244b0322e907d0424ef22088f9eb5519b1fb685f63d9ec',
   }),
 ]);

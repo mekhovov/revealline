@@ -17,9 +17,9 @@ export const SOURCE_PINS = Object.freeze({
     '350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74',
   'game/replays/fpv-arcade-r5-routes.json':
     '0fff81cd1db68106695b3fb92ddbba04025c379597e6d4fa6dc5a8bd0b7825de',
-  'game/content/themes.json': '93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774',
+  'game/content/themes.json': '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2',
   'authoring/library/four-worlds-source/catalog.json':
-    'dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29',
+    'ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d',
 });
 export const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export const packFile = (id) => `${CHAPTER_ROOT}/packs/${id}.json`;
@@ -179,9 +179,9 @@ export async function readOriginalChapters() {
   }
   const ids = recipe.chapters.flatMap((c) => c.maps.map((m) => m.imageId));
   assert.deepEqual([...ids].sort(), [...images.keys()].sort());
-  assert.equal(new Set([...images.values()].map((i) => i.record.sha256)).size, 12);
-  assert.equal(new Set(recipe.chapters.flatMap((c) => c.maps.map((m) => m.id))).size, 12);
-  assert.equal(new Set(recipe.chapters.map((c) => c.campaignId)).size, 4);
+  assert.equal(new Set([...images.values()].map((i) => i.record.sha256)).size, 9);
+  assert.equal(new Set(recipe.chapters.flatMap((c) => c.maps.map((m) => m.id))).size, 9);
+  assert.equal(new Set(recipe.chapters.map((c) => c.campaignId)).size, 3);
   const prior = inputs['game/content/packs/fpv-arcade-r5.json'];
   const packs = recipe.chapters.map((c) =>
     compileOriginalChapter(prior, inputs['game/content/themes.json'].themes, c, images),
@@ -206,7 +206,7 @@ export function distributionFor(source) {
     includedInDefaultBuild: false,
     sourceCatalog: 'authoring/library/four-worlds-source/catalog.json',
     sourceCatalogSha256: SOURCE_PINS['authoring/library/four-worlds-source/catalog.json'],
-    distinctImages: 12,
+    distinctImages: 9,
     distinctReusedGeometries: 3,
     combinedLibraryBytes: Buffer.byteLength(
       JSON.stringify({ format: 'xonix-pack-library.v1', packs: source.packs }),

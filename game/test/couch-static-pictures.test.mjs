@@ -539,7 +539,7 @@ test('a reentrant status selection joins the published operation promise before 
   assert.equal(f.reads(), 1);
 });
 
-test('the 51 existing static combinations resolve exact authored owners without touching gameplay records', async (t) => {
+test('the 39 retained static combinations resolve exact authored owners without touching gameplay records', async (t) => {
   const source = await json('../content/packs/fpv-arcade-r5.json');
   const prepared = await preparePack(source, {
     decodeImage: async (dataUrl) => {
@@ -587,8 +587,8 @@ test('the 51 existing static combinations resolve exact authored owners without 
         assert.equal(result.choice.identity.themeId, theme.id);
         assert.equal(pictures.confirm(row, { raceId }) === result, true);
       }
-  assert.equal(combinations.size, 51);
-  assert.equal(raceId, 51);
+  assert.equal(combinations.size, 39);
+  assert.equal(raceId, 39);
   assert.equal(JSON.stringify(entries), before);
 });
 

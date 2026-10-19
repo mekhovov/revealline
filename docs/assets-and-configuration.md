@@ -13,7 +13,7 @@ The [playground](http://127.0.0.1:8768/game/playground/) edits real game data an
 | Scenario | `xonix-playground.v1`; [validator](../game/content.mjs) | One level/theme, seed, class, steering, optional custom recipes, image overrides and presentation |
 | Character presentation | [presets.json](../authoring/motion-lab/presets.json) | Body files, display dimensions, rotor anchors and animation component recipes shared by the playable renderer |
 
-The playable theme IDs are `fpv`, `ukraine`, `retro` and `coupa`; their family labels are `fpv`, `atlas`, `retro` and `navi`. Historical prompt families such as `fpv-front` and `navi-network` are prompt-selection vocabulary, not a replacement for these runtime IDs. Start from actual exported data before changing a format.
+The playable theme IDs are `fpv`, `ukraine` and `retro`; their family labels are `fpv`, `atlas` and `retro`. Historical prompt families such as `fpv-front` are prompt-selection vocabulary, not a replacement for these runtime IDs. Start from actual exported data before changing a format.
 
 A scenario requires `format`, `level`, `theme`, `settings` and `visualOverrides`. `settings` has `classId`, `turnPolicy` (`immediate` or `grid-center`) and a uint32 `seed`. Optional `classRecipes` carries a complete validated registry; omitted recipes use the caller's default registry. Optional `presentation` contains `style` (`microtile`, `props` or `hybrid`) and boolean `showGrid`. Current style differences are deliberately modest: compact versus decorated wall rendering, with independent grid visibility. They do not change terrain behavior or register a new shader.
 
@@ -72,7 +72,7 @@ The playable class registry has seven recipes using five primitives: `scan`, `st
 
 Class values are fictional cells/seconds for an arcade challenge, not real equipment performance. A new primitive, enemy algorithm, capture rule or loadout capability needs code, validation, contact-order decisions and meaningful tests. Supported numerical changes stay data. Class revision and the core's `loadoutHash` distinguish gameplay setups; changing the displayed body must not modify them. Preserve the authored steering policy when comparing cosmetics and test both policies when changing movement logic.
 
-For FPV art, retain explicit Ukrainian, hostile military and neutral identity in the authoring record, with no Z markings in current concepts. Do not infer allegiance from a shared vehicle silhouette or make civilian nationality a threat role. Ukrainian culture, retro and business worlds keep their own imagery; fictional business points are not actual savings or an official Coupa claim.
+For FPV art, retain explicit Ukrainian, hostile military and neutral identity in the authoring record, with no Z markings in current concepts. Do not infer allegiance from a shared vehicle silhouette or make civilian nationality a threat role. Ukrainian culture and retro worlds keep their own imagery.
 
 ## Review a configuration
 

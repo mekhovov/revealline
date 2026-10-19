@@ -50,7 +50,7 @@ bytes under the unchanged 64 MiB cap. These receipts do not qualify subsequent m
 
 | Area                          | Passed evidence and its scope                                                                                                                                                               | Remaining observation                                                                                                                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Installation identity         | Generated manifests have distinct stable edition IDs, exact icons, scoped launchers and immutable release worker paths.                                                                     | Install Coupa and Netherlands editions as two real OS apps; close the browser and launch both from the OS. Desktop and phone results must name their actual device.                                       |
+| Installation identity         | Generated manifests have distinct stable edition IDs, exact icons, scoped launchers and immutable release worker paths.                                                                     | Install Community Relay and Netherlands editions as two real OS apps; close the browser and launch both from the OS. Desktop and phone results must name their actual device.                                       |
 | Offline completeness          | Generated-worker tests check every byte, reject corrupt/overlong downloads and enforce 64 MiB / 2,000 files. Earlier desktop browser cache reloads succeeded with the local server stopped. | Repeat the offline launch and mission/tool checks on the final frozen artifact in each target installed browser.                                                                                          |
 | Update and rollback           | Tests keep the previous selection through interruption, waiting workers and failed verification; explicit rollback preserves both versions.                                                 | Observe two distinct frozen versions on one origin, then offline rollback. A published-artifact rollback remains a separate deployment check.                                                             |
 | Edition isolation             | Worker/message ownership, stable writer leases, backup audience checks and selector tests pass.                                                                                             | Run both installed editions together, update only one and confirm the other's selection, progress and offline files remain usable. These namespaces are not a security boundary against same-origin code. |
@@ -119,7 +119,7 @@ Use another loopback port or disposable profile for backup recovery. Keep the ho
 service workers untouched. Browser preparation and app installation are distinct actions.
 
 1. **Stage original bytes.** Choose two independently verified frozen versions, A and B,
-   containing `coupa-all` and `droneaid-nl-community`. For each selected distribution, verify
+   containing `droneaid-community` and `droneaid-nl-community`. For each selected distribution, verify
    its envelope descriptor and inspect the ZIP with `inspectEditionZip` against the matching
    manifest. Stage its original members under
    `/revealline/editions/<id>/releases/<version>/site/`. Copy the selected frozen `app/`
@@ -136,7 +136,7 @@ service workers untouched. Browser preparation and app installation are distinct
    ```
 
    Use the allocated port printed by the server; do not replace an existing development
-   server. Open `/revealline/editions/coupa-all/app/` on that origin and the corresponding
+   server. Open `/revealline/editions/droneaid-community/app/` on that origin and the corresponding
    `droneaid-nl-community/app/` address. Both must name their own edition. From **Check
    available edition**, open version A. In Settings → data, choose **Prepare this edition
    for offline play**. Only after verification enables it, choose **Use this edition in

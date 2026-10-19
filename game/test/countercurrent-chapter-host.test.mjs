@@ -330,7 +330,7 @@ const routeFor = (levelId) =>
       r.classId === 'scout',
   );
 
-test('four Countercurrent owners download with explicit Stay, then Play without a second Start; exact earned and saved data recover', async (t) => {
+test('three Countercurrent owners download with explicit Stay, then Play without a second Start; exact earned and saved data recover', async (t) => {
   const f = {};
   let receipts,
     stories,
@@ -341,7 +341,7 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
     setupComplete = false,
     saveComplete = false;
   await t.test(
-    'four Arcade Download & play decisions retain the paused base run after Stay and earn separate exact first pictures',
+    'three Arcade Download & play decisions retain the paused base run after Stay and earn separate exact first pictures',
     async (t) => {
       const p = await page(t, f, true);
       p.$('start-button').click();
@@ -396,8 +396,8 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
       const library = loadLibrary(f.storage, profile).library;
       receipts = structuredClone(library.pictureReceipts);
       stories = structuredClone(library.storyReceipts);
-      assert.equal(receipts.length, 4);
-      assert.equal(stories.length, 4);
+      assert.equal(receipts.length, 3);
+      assert.equal(stories.length, 3);
       for (const e of allEditions)
         assert.equal(
           receipts.find(

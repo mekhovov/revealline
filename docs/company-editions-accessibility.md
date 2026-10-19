@@ -66,9 +66,8 @@ Browser observations on the local candidate, 2026-09-26:
   tab can subsequently reserve saving. A simultaneous second healthy tab reports that it
   is session-only, keeping export available.
 
-Static palette contrast against the brand ink is 16.24:1 (Coupa white), 9.70:1 (Coupa accent),
-11.33:1 (Coupa safe), 7.91:1 (Coupa danger); DroneAid equivalents are 15.46:1, 9.39:1, 9.42:1,
-and 8.44:1. These token checks do not establish contrast over every generated image or
+Static DroneAid palette contrast against the brand ink is 15.46:1 (white),
+9.39:1 (accent), 9.42:1 (safe), and 8.44:1 (danger). These token checks do not establish contrast over every generated image or
 gradient. Image-backed copy, focus at browser zoom, nonvisual gameplay access and assistive
 technology behavior remain part of the release accessibility review.
 

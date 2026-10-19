@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Embed three original PNGs without changing Workshop's gameplay identity. */
+/** Embed the two retained original PNGs without changing Workshop's gameplay identity. */
 import assert from 'node:assert/strict';
 import { constants } from 'node:fs';
 import { lstat, open, realpath, rename, unlink } from 'node:fs/promises';
@@ -17,9 +17,10 @@ const SOURCE_BYTES = 64 * 1024;
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export const WORKSHOP_BASELINE = Object.freeze({
   path: `${SOURCE}/previous/equipment-workshop-1.0.0.json`,
-  sourceRevision: '8fb6b5782a6fee85211b9bbbfb3d13a1d1a60c43',
-  bytes: 18389,
-  sha256: '91876d315417252a65a36b1a46f3f3e03737ec26ccc08224f52e9c376f76ea1a',
+  sourceRevision: '48d775a7b16e02a4949ef30c68eee21f3c8a6bab',
+  projectionReceipt: 'docs/migrations/retained-pack-source.json',
+  bytes: 14180,
+  sha256: 'f6be571a46086ed78ce18178d90326456eb4ebd114baef5e127d7656cee77002',
 });
 export const WORKSHOP_PICTURES = Object.freeze(
   [
@@ -32,11 +33,6 @@ export const WORKSHOP_PICTURES = Object.freeze(
       levelId: 'workshop-02',
       title: 'Neon Switchboard',
       description: 'An imagined neighborhood computer and arcade room glows after school.',
-    },
-    {
-      levelId: 'workshop-03',
-      title: 'Clear Ledger',
-      description: 'A miniature exchange city connects its workshops, warehouse and canal.',
     },
   ].map(Object.freeze),
 );
@@ -133,12 +129,12 @@ export async function buildWorkshopPack({ root = ROOT, write = false } = {}) {
   const baselineBytes = await readRegular(
     await localFile(project, WORKSHOP_BASELINE.path),
     SOURCE_BYTES,
-    'Workshop v1.0.0 baseline',
+    'Retained Workshop v1.0.0 baseline',
   );
   assert.ok(
     baselineBytes.length === WORKSHOP_BASELINE.bytes &&
       sha(baselineBytes) === WORKSHOP_BASELINE.sha256,
-    'Workshop v1.0.0 baseline must retain the exact frozen bytes.',
+    'Retained Workshop v1.0.0 baseline must retain the exact frozen bytes.',
   );
   const baseline = JSON.parse(baselineBytes);
   const sourceBytes = await readRegular(
@@ -247,7 +243,7 @@ export async function buildWorkshopPack({ root = ROOT, write = false } = {}) {
       output: OUTPUT,
       wrote: write,
       validation:
-        'Structure, exact source bytes and image headers checked. Actual browser installation must fully decode and visually review all three images.',
+        'Structure, exact source bytes and image headers checked. Actual browser installation must fully decode and visually review both retained images.',
     },
   };
 }

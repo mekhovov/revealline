@@ -1870,7 +1870,9 @@ try {
     const pictureEntry = pictureExecutionForEntry(entry),
       pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
     const guarded = (owner) =>
-      runtimeContent && candidateHost?.owns(entry)
+      // Installed editions own their complete picture closure, including their
+      // practice adapters. They have no main-game download controller.
+      runtimeContent
         ? owner
         : withOfflinePictureGate(owner, async ({ signal }) => {
             if (candidateHost?.owns(entry)) {

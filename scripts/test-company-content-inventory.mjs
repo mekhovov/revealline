@@ -16,6 +16,12 @@ test('every registered current and retained edition is inventoried without multi
   );
   assert.equal(result.summary.editions, catalog.editions.length);
   assert.equal(
+    result.summary.pixelDecodedPictures + result.summary.headerOnlyPictures,
+    result.summary.originalPictures,
+  );
+  assert.ok(result.summary.headerOnlyPictures > 0);
+  assert.match(result.limitations.join(' '), /their pixels are not compared/);
+  assert.equal(
     result.summary.retainedPresentations,
     catalog.editions.reduce((sum, edition) => sum + (edition.presentationHistory ?? []).length, 0),
   );
@@ -83,7 +89,15 @@ test('historical originals retain their exact source, presentation, campaign and
       assert.ok(instance.originalIdentity.simulationIdentity);
       if (instance.artwork) {
         const art = artById.get(instance.artwork);
-        assert.ok(art.pixelsSha256);
+        if (art.pixelVerification === 'full-rgb8-png') {
+          assert.equal(art.mime, 'image/png');
+          assert.match(art.pixelsSha256, /^[a-f0-9]{64}$/);
+          assert.equal(art.pixelVerification, 'full-rgb8-png');
+        } else {
+          assert.ok(['image/png', 'image/jpeg', 'image/webp'].includes(art.mime));
+          assert.equal(art.pixelsSha256, null);
+          assert.equal(art.pixelVerification, 'not-decoded');
+        }
         assert.ok(
           context.dependencies.some((file) => file.sha256 === art.id && file.bytes === art.bytes),
         );

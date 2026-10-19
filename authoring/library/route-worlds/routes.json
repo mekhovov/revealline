@@ -6,10 +6,13 @@
   },
   "sourceProof": {
     "path": "authoring/library/fpv-route-choices/routes.json",
-    "sha256": "d6af87beb11f55b81cf33b6b07254c51d19923d8823d2d80c17606db0e4c1245"
+    "sha256": "9f8aba09b7d2825223e75e555922014ec7e0ea3f9d630ba7f2a0e1c890ed7975"
   },
   "mode": "Tactical",
-  "themes": ["ukraine", "retro"],
+  "themes": [
+    "ukraine",
+    "retro"
+  ],
   "layoutsReused": 3,
   "newlyAuthoredGeometry": 0,
   "worlds": [
@@ -3726,7 +3729,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -3954,7 +3959,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -4159,7 +4166,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -4364,7 +4373,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -5016,7 +5027,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": false,
           "speedFactor": 0.25,
           "boostBlocked": true,
@@ -5234,7 +5247,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": false,
           "speedFactor": 0.25,
           "boostBlocked": true,
@@ -7916,7 +7931,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -8144,7 +8161,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -8349,7 +8368,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -8554,7 +8575,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -12550,7 +12573,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -12778,7 +12803,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -12983,7 +13010,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -13188,7 +13217,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -13840,7 +13871,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": false,
           "speedFactor": 0.25,
           "boostBlocked": true,
@@ -14058,7 +14091,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": false,
           "speedFactor": 0.25,
           "boostBlocked": true,
@@ -16740,7 +16775,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -16968,7 +17005,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -17173,7 +17212,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -17378,7 +17419,9 @@
         },
         "pressure": [],
         "signal": {
-          "zoneIds": ["switchback-band"],
+          "zoneIds": [
+            "switchback-band"
+          ],
           "resistant": true,
           "speedFactor": 1,
           "boostBlocked": false,
@@ -17893,11 +17936,11 @@
     }
   ],
   "totals": {
-    "contexts": 114,
-    "wins": 84,
-    "failures": 30,
-    "ticks": 91620,
-    "savedContinuations": 114,
-    "originalPictures": 9
+    "contexts": 76,
+    "wins": 56,
+    "failures": 20,
+    "ticks": 61080,
+    "savedContinuations": 76,
+    "originalPictures": 6
   }
 }

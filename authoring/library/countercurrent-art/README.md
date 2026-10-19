@@ -1,34 +1,17 @@
 # Countercurrent reward-art candidates
 
-Open the [review gallery](index.html) for twelve small previews, each linked to its full original. The [manifest](manifest.json) fixes independent cell IDs, original paths and hashes; [full prompts](prompts.json), [tool results](generation-results.json) and [provenance](provenance.json) preserve generation and observations. No reference image was supplied, and no original was cropped, stretched, resampled or re-encoded.
+The [review gallery](index.html) contains nine retained originals: three maps each for FPV Front, Ukraine Atlas and 1994 Forever. [manifest.json](manifest.json) records independent cell IDs, titles, paths and exact byte hashes. The original PNG files are unchanged.
 
-| -------------- | ---------------------------- | ----------------------------- | ---------------------------- | --------------------------- |
-| Offset Docks   | Lanterns at the Offset Piers | The Boatbuilders’ Morning     | Records across the Canal     | The Shared Receiving Courts |
-| Sandbar Braid  | The Four Sandbar Relays      | Four Gardens beside the River | Last Platforms of Summer     | Four Workshops, One Garden  |
-| Crossing Watch | Two Quiet Signal Posts       | The Ferry Lights Return       | After-Hours Rooftop Exchange | The Two Caretaker Houses    |
+[Full prompts](prompts.json), [generation records](generation-results.json), [provenance](provenance.json), and [layout briefs](layout-briefs.json) retain the selected sources. Scenic features echo the authored layouts without changing collision geometry. Warning lanes remain gameplay overlays.
 
-The [layout cues](layout-briefs.json) preserve the separately authored source-layout hash and three finite obstacle silhouettes: opposite hooks, four staggered bars, and two unequal islands. The pictures echo those large forms in perspective. Scenic piers, paths and bridges are not collision geometry; Crossing Watch’s dynamic warning lanes are deliberately absent. Art adds no gameplay proof or new geometry family.
+## Retained verification
 
-## Verification and review derivatives
+This is a derived selection from the original authoring batch. Updated metadata hashes and totals describe these nine retained sources; they are not the original historical release certificate. The migration receipt records that distinction. Existing PNG/JPEG byte identities, dimensions and source associations remain exact.
 
-```sh
-node authoring/library/countercurrent-art/verify.mjs
-```
+The [derivative record](derivatives.json) describes nine 384 × 192 JPEG review copies totaling 345,995 bytes. They preserve the original 2:1 aspect ratio and remain separate from full reward originals. The retained PNGs total 23,175,876 bytes at 1774 × 887 pixels each. No crop, resampling, recompression or image edit is part of this ownership migration.
 
-The verifier reuses the existing bounded full RGB8 PNG decoder: every chunk CRC, chunk order, bounded inflate and scanline filter is checked, alongside dimensions, source hashes, full prompt hashes, the exact twelve-cell set, ordinary-file inventory and protected dependencies. `--tool-originals` additionally compares workspace copies with the local default tool outputs. Initial `--record --tool-originals` writes an exclusive receipt; an existing receipt is never overwritten. Portable verification requires no access to default generator files.
-
-The [derivative record](derivatives.json) describes twelve **384 × 192 JPEG review copies**, 483,255 bytes total. Original aspect is preserved without cropping; nearest-neighbor Canvas sampling retains the pixel clusters, followed by quality-90 JPEG encoding. These small previews are not substitutes for future reward originals. The generator decodes every JPEG through the existing Canvas library and records its pixel hash. Portable verification checks its exact bytes, JPEG structure and source associations; it does not claim cross-platform encoder determinism.
-
-To make a separate review set with the existing optional Canvas tooling:
-
-```sh
-node authoring/library/countercurrent-art/render-previews.mjs \
-  --canvas-module /absolute/path/to/@napi-rs/canvas/index.js \
-  --out /absolute/new/review-directory
-```
-
-The output must be new and outside the source folder. It contains twelve JPEGs, a labeled contact sheet and a derivative record. The first buffer-loader attempt rejected the PNG’s embedded C2PA SVG icon; that failed attempt remains in authoring cache. Loading the same unchanged local PNG path through Canvas succeeded, without stripping provenance or altering originals.
+Run `node authoring/library/countercurrent-art/verify.mjs` for the bounded source check. Full PNG checks cover chunk CRCs, bounded inflate and scanline filters; JPEG checks cover exact bytes and source associations. These checks do not establish visual quality, cross-platform encoder determinism or gameplay acceptance.
 
 ## Independent replacement
 
-Replace one cell through a fresh original generation and visual review, retain the previous original and prompt evidence, then update that cell’s manifest/provenance/tool record and explicit verifier pin. Regenerate its review derivative in a new output directory and record the input/output hashes. A changed pixel body is a new candidate; never relabel an existing saved or earned original as the replacement. Runtime compilation, descriptor/owner identity, original availability, partial reveal, gameplay and device acceptance require a separate adoption slice. This batch provides no animation or human-quality certification.
+Create a separate original for any future visual change, preserve its parent and record new hashes and provenance. Regenerate review derivatives in a new output directory. Runtime assignment, partial-reveal readability, gameplay and device acceptance remain separate review steps. A changed picture must never be relabeled as a previously earned or verified original.

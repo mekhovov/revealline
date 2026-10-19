@@ -5,7 +5,7 @@
       "themeId": "fpv",
       "id": "countercurrent-fpv",
       "artRoot": "authoring/library/countercurrent-art",
-      "provenanceSha256": "41f8d87480fa488bddcbd29f66b9dd239ece2acbf860c143f6eef82c6fc733e4",
+      "provenanceSha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98",
       "images": [
         {
           "sourceCellId": "countercurrent/offset-docks/fpv",
@@ -37,7 +37,7 @@
       "themeId": "ukraine",
       "id": "countercurrent-ukraine",
       "artRoot": "authoring/library/countercurrent-art",
-      "provenanceSha256": "41f8d87480fa488bddcbd29f66b9dd239ece2acbf860c143f6eef82c6fc733e4",
+      "provenanceSha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98",
       "images": [
         {
           "sourceCellId": "countercurrent/offset-docks/ukraine",
@@ -69,7 +69,7 @@
       "themeId": "retro",
       "id": "countercurrent-retro",
       "artRoot": "authoring/library/countercurrent-art",
-      "provenanceSha256": "41f8d87480fa488bddcbd29f66b9dd239ece2acbf860c143f6eef82c6fc733e4",
+      "provenanceSha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98",
       "images": [
         {
           "sourceCellId": "countercurrent/offset-docks/retro",

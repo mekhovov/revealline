@@ -332,7 +332,7 @@ const routeFor = (levelId) =>
       r.route === 'south',
   );
 
-test('four Fracture owners download with explicit Stay, then Play without a second Start; exact earned and saved data recover', async (t) => {
+test('three Fracture owners download with explicit Stay, then Play without a second Start; exact earned and saved data recover', async (t) => {
   const f = {};
   let receipts,
     stories,
@@ -343,7 +343,7 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
     setupComplete = false,
     saveComplete = false;
   await t.test(
-    'four Arcade Download & play decisions retain the paused base run after Stay and earn separate exact first pictures',
+    'three Arcade Download & play decisions retain the paused base run after Stay and earn separate exact first pictures',
     async (t) => {
       const p = await page(t, f, true);
       p.$('start-button').click();
@@ -397,8 +397,8 @@ test('four Fracture owners download with explicit Stay, then Play without a seco
       const library = loadLibrary(f.storage, profile).library;
       receipts = structuredClone(library.pictureReceipts);
       stories = structuredClone(library.storyReceipts);
-      assert.equal(receipts.length, 4);
-      assert.equal(stories.length, 4);
+      assert.equal(receipts.length, 3);
+      assert.equal(stories.length, 3);
       for (const e of allEditions)
         assert.equal(
           receipts.find(
