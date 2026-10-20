@@ -848,14 +848,22 @@ export function positionFpvAircraftVisual(
   // The complete swept disc stays outside the middle half of the viewport.
   // Derive clearance from its furthest depth, not a favourable blade angle.
   const radius = visual.rotors[0]?.userData.radius ?? 0.127;
-  const pitch = 1.25 - Math.max(-20, Math.min(60, tilt)) * 0.002,
-    reach = Math.min(halfWidth * 0.5, halfHeight * 0.85, (depth * 0.65) / Math.cos(pitch)),
-    depthReach = reach * Math.cos(pitch),
-    x = Math.max(halfWidth * 1.12, halfWidth * 0.55 * (1 + depthReach / depth) + reach);
+  // Blades are authored in the aircraft's XZ rotor plane. A 1.25-radian
+  // camera-facing pitch turned that plane into a vertical fan. Keep a shallow
+  // overhead mounting angle and undo the actual camera tilt in this layer.
+  const cameraTilt = (Math.max(-20, Math.min(60, tilt)) * Math.PI) / 180,
+    pitch = 0.1 - cameraTilt,
+    depthCosine = Math.abs(Math.cos(pitch)),
+    reach = Math.min(halfWidth * 0.46, halfHeight * 0.58, (depth * 0.38) / depthCosine),
+    depthReach = reach * depthCosine,
+    heightReach = reach * Math.abs(Math.sin(pitch)),
+    furthestScale = 1 + depthReach / depth,
+    x = Math.max(halfWidth * 1.04, halfWidth * 0.55 * furthestScale + reach),
+    y = Math.max(halfHeight * 0.76, halfHeight * 0.55 * furthestScale + heightReach);
   for (const [index, side] of visual.sides.entries()) {
     side.position.set(
       (index ? 1 : -1) * x,
-      halfHeight * (0.36 - Math.max(-20, Math.min(60, tilt)) * 0.002),
+      y,
       -depth,
     );
     side.scale.setScalar(reach / radius);
