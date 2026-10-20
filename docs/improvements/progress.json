@@ -7,7 +7,7 @@
     "audit": "e2bf4f0e61218c85a1b0bb5779884b622ec03925",
     "implementation": "20555cda6bd44a0736aa829e64c52e455b4e770c",
     "originalWorkspace": "Preserved; no implementation edits.",
-    "latestObservedMain": "e719544a872bca315cf8173da223d919549f127c"
+    "latestObservedMain": "46ba4a75e86952b7bc46e439b738e3f277cbeb03"
   },
   "featureCount": 83,
   "setup": {
@@ -15,8 +15,8 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Mission-menu correction published in draft #1773. Complete its opening/retry/continuation/cold-start tests and source/authoring checks, then browser/package review.",
-    "P1 · Readability #1774: controlled comparison #1776 confirms both parent and feature OOM under identical limits. Review the test-only lifecycle correction, qualify prepared fixture/generated-output corrections and complete native/browser/package acceptance.",
+    "P1 · Mission browser #1773: follow fixed-package browser prerequisite #1778; retain three failing source commands and qualify source-mode opening separately. Then complete current package/player acceptance.",
+    "P1 · Readability #1774: 68-file successor prepared (63 source/test files and five controls); all31 mocked guard cases, AST3/format2 and World fixture format/syntax pass. Verify fresh-main ownership before publication; run original28 whole files plus complete Overflight host, then browser/package acceptance.",
     "P1 · Compatibility #1668 source merged at the exact qualified revision. Finish current browser/inner-package/offline acceptance; physical checks remain separate.",
     "P1 · Team Home #1747: source merged. All nine admitted files match the independently reviewed local reconciliation. Finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
     "P1 · Shared support #1762: source merged externally at b723. Its eight complete files pass 414 cases; the older preview retains 12 failures. Qualify current-main fixtures and actual Data/modal navigation, exports, package and remaining hosts.",
@@ -3460,7 +3460,7 @@
       "blocker": null,
       "pr": null,
       "commit": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
-      "next": "P1 · Readability1774: finish the two fixture corrections and memory-failure diagnosis; publish the complete generated-output/source correction, then rerun meaningful current gates and browser/package acceptance.",
+      "next": "P1 · Readability #1774: 68-file successor prepared (63 source/test files and five controls); all31 mocked guard cases, AST3/format2 and World fixture format/syntax pass. Verify fresh-main ownership before publication; run original28 whole files plus complete Overflight host, then browser/package acceptance.",
       "evidence": [
         "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json.",
         "Frozen627 on e40: complete play-family preference/first-paint/settings integration,377-module/21-sheet inventory,41 readable absolute declarations scaled once and2 arrow-art exclusions.138 host/bootstrap/global plus120 shared regressions and3 closure/runtime-theme tests pass; full lint pass, full validation/source/browser review pending. Thin source fixture8810, no automatic progress injection. No200% or device acceptance claimed.",
@@ -3583,7 +3583,7 @@
           "commit": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
           "dependency": "Compatibility1668 and complete SingleDrone/Riy typography/layout inventory; follow independent width repair",
           "effort": "Within original6–10d totalF09, not a second full estimate",
-          "next": "P1 · Readability1774: finish the two fixture corrections and memory-failure diagnosis; publish the complete generated-output/source correction, then rerun meaningful current gates and browser/package acceptance.",
+          "next": "P1 · Readability #1774: 68-file successor prepared (63 source/test files and five controls); all31 mocked guard cases, AST3/format2 and World fixture format/syntax pass. Verify fresh-main ownership before publication; run original28 whole files plus complete Overflight host, then browser/package acceptance.",
           "evidence": [
             "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred.",
             "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed.",
@@ -3606,7 +3606,7 @@
             "Separate recovery-only wrapper fa313a loads immutable c7a transition in memory with256MiB emergency reserve solely for integrity/rename restoration; native2GiBreserve/runner/status untouched. Read-only completeA29246manifest f49860fc and all164Cpreimages/owners/deps/native evidence exact. Explicit recovery retains143Acopies by rename and restores164 originalC inodes, removes only owned authoring symlink, full29267restoredsource4ef4ac8f, no postflight errors. Root independently verifies164originalCbytes/OIDs/dev/inode/mtime and143retainedAcopies. Recoveryreceipt080ddd0a, native evidence47c6b3f7/cohortbabb unchanged. Recovery is not test/package qualification; heavy checks remain held belowreserve.",
             "Draft1774 published at2d15ac0, solefirstparenta7:58 feature paths plus5 validation controls;95 temporary main diff includes32 inherited compatibility-only paths. Complete actual63 source/58 leaf/control readback, then sealed initial and fresh prelaunch receipts, preceded opening the PR and its first actual28-file native workflow. Every unowned parent entry is exact; original work untouched. Source-only28 mocks are not gameplay acceptance."
           ],
-          "blocker": "Current2d15 failed complete-file/fixture/memory gates remain. Generated outputs, two fixtures and62-control mocks/statics prepared; staged67-path feature successor awaits controlled memory evidence and native/browser/package qualification.",
+          "blocker": "Current published2d15 native/source/preview failures remain. Prepared68-file successor has source-only qualification; fresh-main ownership/publication and full original28+host native/browser/package acceptance pending.",
           "candidateCommit": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
           "qualification": {
             "automated": "actual2d15_source_preview_industrial_native28_gates_FAILED_scopes_retained_source60fixes_prepared",
@@ -3765,7 +3765,29 @@
               }
             }
           },
-          "deliveryPrerequisite": "https://github.com/mekhovov/revealline/pull/1776"
+          "deliveryPrerequisite": "https://github.com/mekhovov/revealline/pull/1776",
+          "prepared68Successor": {
+            "status": "source_only_qualified_not_published",
+            "sourceFiles": 63,
+            "controls": 5,
+            "totalOwnedPaths": 68,
+            "sourceReferenceSHA256": "bf7ff0f387005741aa08837f5069afd54ec4f850292a0e934f0fc9fdaee5ac98",
+            "sourceLeafSHA256": "24f15a8109a74175f7f8df34170c742162346e134ecdb156e6875be5c45f81e6",
+            "controlFreezeSHA256": "4bfe010337901c96b32385070368819118fcc60ea573b6d08efc96905e5f85b4",
+            "qualificationReceipt": "/tmp/revealline-overflight-1774-controls63-toy-static-v2-private/receipt.json",
+            "qualificationReceiptSHA256": "54167aa923f119f634525dad8e36dac1b870ec6390d2aa71d7344c9f14d5665b",
+            "rootFullRawReadbackSHA256": "d93842cfdb64fcab0697d2d99e43d035898a8be17bbfce6e3d109d7c9f779741",
+            "sourceChecks": "31 mocked cases PASS; Python AST3 PASS; read-only formatting2 PASS",
+            "native": "NOT_RUN; original28 complete files plus additional whole Overflight host retained",
+            "WorldFixture": {
+              "candidateOID": "6c50c3e360282a97ebcf801cb89885d42fc5c17e",
+              "SHA256": "2e69afc8b107f0024febffe40b20bfc4003db3a6b3d585501175ebba5f16f423",
+              "sourceChecks": "format and Node22 syntax PASS, not115 native cases",
+              "receiptSHA256": "7373ba9bacaba0893cd5c63e65eef0a44268acf1c9253ab41e69502d3f992e0c",
+              "scope": "After successful app disposal, remove terminated registry entries by reverse splice. All115 case registrations/assertions and worker behavior retained. Retention contribution remains hypothesis."
+            },
+            "next": "Fresh main68 before-owner proof; remote staged body/tree proofs before normal fast-forward and hosted native qualification."
+          }
         }
       ],
       "sourceReconciliation": {
@@ -6080,6 +6102,16 @@
       "date": "2026-10-20",
       "item": "DELIVERY",
       "reason": "Controlledca197 pair terminalverified: botha7 and2d15 V8OOM atsameboundary underunchangedcontrols;14purePASS each; fullraw/10sealedterminals/source/deps/Git/Node proofs exact. Baselinefailure excludesfeature-exclusiveOOM, no retentioncause/115qualification. Test-onlylifecycleproposal nownextP1gate; otherchatsrunning."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "DELIVERY",
+      "reason": "Fixed-package browser prerequisite1778 published after10format/4syntax/8contract source PASS and exact10/unowned-main proofs; actual browser run started. Readability68 successor source guards31/AST3/format2 PASS and Worldfixture2staticsPASS, all native pending. Mainafd external1628 unrelated14 paths preserved. Other chats keep running; original83/113 definitions/estimates unchanged."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "DELIVERY",
+      "reason": "Prior roadmap1777 merged externally at exactebba via46ba. New checkpoint uses a fresh follow-up branch; application source is unchanged by that docs merge."
     }
   ],
   "deliveryDependencies": [
@@ -6633,10 +6665,10 @@
         "proofSHA256": "160c4f00f614cecc151b0d02869edef559a3cbd542f84774cfe242a70e41fc9e"
       },
       "conditionalFixtureInvestigation": {
-        "status": "test_only_lifecycle_proposal_under_review_no_native_fix_qualification",
+        "status": "test_only_source_format_syntax_pass_native_unrun",
         "finding": "RegionalWorker.instances retains disposed workers and cloned messages. All23 reads use latest worker, none uses previous-test history. Consider clearing registry only after existing awaited app disposal if controlled evidence supports fixture memory work.",
         "inventorySHA256": "1921e4d5b05249ef02398296aca5f8af63794bf059143a75623476883ef77a71",
-        "next": "A prepares a separate exact immutablec464 donor patch; original A WIP stays untouched. Scope and multiple-fixture cleanup ordering reviewed before any application or test."
+        "next": "Actual115-case file and original28+additionalhost must complete under unchanged1536MiB heap/2048MiB RSS/180s; source-only fixture pass is not cause or gameplay qualification."
       },
       "historicalProvenanceSetupFailure": {
         "head": "857d86ca20adf5cdfd833708cbacf93e4fcbe87b",
@@ -6798,6 +6830,31 @@
         "rootProof": "/tmp/revealline-world-memory-ca197-c-evidence/root-pair-readback.json",
         "interpretation": "Whole unchanged test OOM reproduced on baseline a7 and feature2d15 under identical controls; excludes a feature-exclusive OOM under these controls, does not identify retention cause or qualify115cases."
       }
+    },
+    {
+      "id": "CI-fixed-compiled-menu-browser-37ec",
+      "priority": "P1",
+      "pr": "https://github.com/mekhovov/revealline/pull/1778",
+      "status": "draft_source_qualified_hosted_browser_in_progress",
+      "commit": "887829cf1f5b4e9253dd0cb99386596ded5399ad",
+      "observedRemoteHead": "887829cf1f5b4e9253dd0cb99386596ded5399ad",
+      "scope": "Fixed37ec package browser observation through ordinary password form and native EN/UK controls; no source admission policy change. Verification prerequisite, not a new feature.",
+      "qualification": {
+        "automated": "10 formatting checks, four Node22 syntax checks and8/8 contract cases PASS; actual remote10 bodies and all2873 unowned Merkle entries independently verified before PR.",
+        "browser": "in_progress; actual run39368078857; no acceptance yet",
+        "physical": "not_tested_hardware_unavailable"
+      },
+      "currentRun": "https://github.com/mekhovov/revealline/actions/runs/39368078857",
+      "publication": {
+        "head": "887829cf1f5b4e9253dd0cb99386596ded5399ad",
+        "tree": "ffc6d7d8ffe070fbf55069f1f128503b9e172631",
+        "parent": "afd020483c1174ea11adf78a2b4253809eaf4d86",
+        "ownedPaths": 10,
+        "sourceQualificationReceiptSHA256": "9edb1ac0c7925ef2f89c5918edfecff8775c08f3ada5fa640b03ce4bd7ffd0cd",
+        "initialProofSHA256": "a2e5bc40bf67e4b293b6c4b4eb9b6b95d5fa4225cbca29ad9fae076a55aebc6d",
+        "freshPrePRProofSHA256": "78f347908d77e54ecace28d50facae687fc8c47365ce5a34a9036c2da7b42cbe"
+      },
+      "next": "Verify actual browser/job/package evidence; preserve #1773 source3 failures independently. No local1.1GB archive download or hardware claim."
     }
   ],
   "deliverySnapshot": {
@@ -6848,10 +6905,10 @@
       1682,
       1686
     ],
-    "note": "50 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn;18 prerequisites separate. Compatibility1668 merged externally at tested a7 after2309 source and1908 preview checks. Menu37ec passes16/19 source commands,20/22 ordinary Solo cases; exact preview passes118 complete files/1903 cases and builds. Browser and inner-package acceptance remain. Readability2d15 retains fixture/memory failures; qualified source corrections remain unpublished. Diagnostic1776: prior857 both13/13 pure PASS, native NOT_RUN due JSON tuple/list setup defect; reviewed additive14-case correction passes14 and AST2 locally and read-only format3 passes after a three-quote YAML correction. Exactca197 published normally; controlled comparison39364916396 records BOTH parent and feature OOM under identical limits, no complete115-case pass. Test-only lifecycle proposal under review. No memory cause established. Original83/113 scope unchanged; other chats keep running.",
+    "note": "50 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn;19 prerequisites separate. Compatibility1668 merged externally at tested a7 after2309 source and1908 preview checks. Menu37ec passes16/19 source commands,20/22 ordinary Solo cases; exact preview passes118 complete files/1903 cases and builds. Browser and inner-package acceptance remain. Readability2d15 retains fixture/memory failures; qualified source corrections remain unpublished. Diagnostic1776: prior857 both13/13 pure PASS, native NOT_RUN due JSON tuple/list setup defect; reviewed additive14-case correction passes14 and AST2 locally and read-only format3 passes after a three-quote YAML correction. Exactca197 published normally; controlled comparison39364916396 records BOTH parent and feature OOM under identical limits, no complete115-case pass. Test-only lifecycle proposal under review. No memory cause established. Original83/113 scope unchanged; other chats keep running. Current63+5 readability source controls pass31mock/AST3/format2; native pending. New fixed-package browser prerequisite1778 is published at887829c and its hosted observation is in progress.",
     "latestMain": {
-      "revision": "e719544a872bca315cf8173da223d919549f127c",
-      "note": "External1775 documentation merge, exact db3 source. Three roadmap files only; no new feature source completion or manual merge by root."
+      "revision": "46ba4a75e86952b7bc46e439b738e3f277cbeb03",
+      "note": "External1777 merge of prior three roadmap files at exactebba; preceded by external1628 (14 Solo-demo/probe paths outside plan). No new tracked feature completion or manual root merge."
     },
     "queryEvidence": "/tmp/revealline-complete-inventory-109-result.json",
     "inventoryCorrection": "Previously omitted1673 is an existing merged settings follow-up; correcting45→46 is accounting, not new implementation.",
@@ -6869,7 +6926,15 @@
       "source": "GitHub GraphQL; compact results retained in task memory, local writes capacity-held",
       "rawSHA256": "7ea4d914c11630ce2bb9d6930c0e993163d3c788e638c82400ac00fe6f818137",
       "main": "f4b45a498b5c69bc93e8e74a4cd8a592de77438e",
-      "note": "Feature/prerequisite PR states unchanged; laterca197 exactsource normalFF and actualrun discovery verified separately."
+      "note": "Feature/prerequisite PR states unchanged; laterca197 exactsource normalFF and actualrun discovery verified separately.",
+      "laterPrerequisite": {
+        "PR": 1778,
+        "status": "OPEN DRAFT",
+        "head": "887829cf1f5b4e9253dd0cb99386596ded5399ad",
+        "trackedTotalAfterAddition": 111,
+        "deliveryPrerequisites": 19,
+        "featureCountsUnchanged": true
+      }
     }
   }
 }
