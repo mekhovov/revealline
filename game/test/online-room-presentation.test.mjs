@@ -61,6 +61,7 @@ test('private-room title shows the stored mute before joining and follows later 
       `(function () { let shell; ${mountSource}\nreturn {shell, stopAudio}; })()`,
       {
         doc,
+        supportSummary: null,
         $,
         audioMaster,
         getLocale: () => locale,

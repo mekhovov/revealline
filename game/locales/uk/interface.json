@@ -6098,5 +6098,10 @@
   "supportSummary.presence.connected": "Виявлено під’єднаний контролер. Це спостереження не підтверджує його призначення чи готовність до керування меню.",
   "supportSummary.presence.disconnected": "Під’єднаного контролера не виявлено.",
   "supportSummary.game.failed": "Політ завершився невдачею",
+  "supportSummary.game.connecting": "Підключення до кімнати",
+  "supportSummary.game.recovering": "Відновлення зв’язку з кімнатою",
+  "supportSummary.game.waiting": "Очікування готовності в кімнаті",
+  "supportSummary.game.playing": "Гра в кімнаті",
+  "supportSummary.game.abandoned": "Кімнату залишено",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }
