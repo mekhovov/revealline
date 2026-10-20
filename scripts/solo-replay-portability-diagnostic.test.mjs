@@ -474,8 +474,8 @@ test('derived Node mirror executes its checked modules and removes all owned fil
     assert(root.href.startsWith('file:'));
     assert.notEqual(root.href, new URL('../', import.meta.url).href);
     const catalog = await readFile(new URL('game/i18n/catalogs.mjs', root));
-    assert.equal(catalog.length, 1261767);
-    assert.equal(sha(catalog), '0b8a2d882650815ef03b020c8e5f58a0ff9ee1f6c0f65d5ac1c2b54d9b28266a');
+    assert.equal(catalog.length, 1261607);
+    assert.equal(sha(catalog), '0f4661c71926c1f79ad159ef7d8e15d03e72d4f34a8de2e8b194eae915f0cd71');
     const core = await import(new URL('game/core/index.mjs', root));
     const replay = await import(new URL('game/replay.mjs', root));
     assert.equal(typeof core.createRun, 'function');
